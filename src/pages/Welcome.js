@@ -1,9 +1,25 @@
+// Imports for styling
+import styled from "styled-components";
+
 const Welcome = () => {
   return (
-    <div>
+    <StyledWelcome>
       <p>Welcome to Wallfair.</p>
-    </div>
+      <a href="/auth">
+        <button>Trade now!</button>
+      </a>
+    </StyledWelcome>
   );
 };
+
+// Styled Components
+const StyledWelcome = styled.div`
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default Welcome;
