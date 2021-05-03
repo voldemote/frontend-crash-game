@@ -9,6 +9,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     max-width: 100vw;
 }
+
+.App {
+    height: 100vh;
+}
 `;
 
 export default GlobalStyle;
