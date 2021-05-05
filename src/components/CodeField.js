@@ -56,21 +56,17 @@ const CodeFieldWrapper = styled.div`
 
 const Item = styled.div`
   flex: 1;
-  margin: 0 10px;
-  height: 60px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  margin: 0 4px;
+  height: 72px;
+  font-family: ${props => props.theme.fonts.light};
+  font-size: 36px;
+  line-height: 39.6px;
   
-  &:nth-first-child {
+  &:first-child {
     margin-left: 0;
   }
   
-  &:nth-last-child {
+  &:last-child {
     margin-right: 0;
   }
 `;
@@ -81,11 +77,10 @@ const InActiveItem = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
-  height: 60px;
   color: black;
-  background-color: #80808059;
+  background-color: ${props => props.theme.colors.gray_light};
 `;
 
 const ActiveItem = styled.div`
@@ -94,11 +89,11 @@ const ActiveItem = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-  border: 1px solid #16c1b1b5;
-  height: 60px;
+  border-radius: 10px;
+  border: 2px solid ${props => props.theme.colors.primary_light};
   color: black;
-  background-color: #80808014;
+  background-color: white;
+  box-shadow: 0 0 0 2px ${props => props.theme.colors.yellow};
 `;
 
 const CompleteItem = styled.div`
@@ -107,11 +102,10 @@ const CompleteItem = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-  border: 1px solid #80808059;
-  height: 60px;
+  border-radius: 10px;
+  border: 2px solid ${props => props.theme.colors.gray_light};
   color: black;
-  background-color: #80808014;
+  background-color: white;
 `;
 
 export default CodeField;

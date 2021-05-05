@@ -1,121 +1,158 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
-import darkModeLogo from '../data/images/logo-darkmode.svg';
+import darkModeLogo from 'data/images/logo-darkmode.svg';
+import { NextBtn } from 'themes/CommonStyle';
 
 const Welcome = () => {
+  const history = useHistory();
   return (
-    <WelcomeBackGround>
-      <WelcomeMask>
-        <TopLayer>
+    <BackGround>
+      <Mask>
+        <Layer>
           <Logo src={darkModeLogo} alt="" />
 
-          <WelcomeTitle>
+          <Title>
             Hello, we are  WallFair!
-          </WelcomeTitle>
-          <WelcomeTitle>
+          </Title>
+          <Title>
             Simple betting for <HighLight> everyone </HighLight> and everything.
-          </WelcomeTitle>
-        </TopLayer>
+          </Title>
+        </Layer>
 
-        <BottomLayer>
-          <TradeButton href="/auth">
+        <Layer>
+          <TradeButton onClick={() => history.push('/auth')}>
             Let's trade!
           </TradeButton>
-          <WelcomeDescription>
+
+          <Description>
             By continuing I accept the Term and Conditions and privacy policy. Also I confirm that I am over 18 years old.
-          </WelcomeDescription>
-        </BottomLayer>
-      </WelcomeMask>
-    </WelcomeBackGround>
+          </Description>
+        </Layer>
+      </Mask>
+    </BackGround>
   );
 };
 
-// Styled Components
-const WelcomeBackGround = styled.div`
+// Style
+const BackGround = styled.div`
   width: 100%;
   height: 100%;
   background: url('images/welcome_bg.png');
   background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+    background-position: 35%;
+    background-size: 200% 100%;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.xs}px) {
+    background-position: 35%;
+    background-size: 340% 100%;
+  }
 `;
 
-const WelcomeMask = styled.div`
+const Mask = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 50px 40px;
+  padding: 60px 0;
   width: 100%;
   height: 100%;
-  background-color: #0E0927;
+  background-color: ${props => props.theme.colors.primary};
   opacity: 0.86;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    padding: 50px 0;
+  }
 `;
 
-const TopLayer = styled.div`
+const Layer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 0 35px;
 `;
 
 const Logo = styled.img`
   margin-bottom: 50px;
-  width: 250px;
-`;
-
-const WelcomeTitle = styled.h1`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  color: white;
-  font-size: 4vw;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  text-align: center;
-`;
-
-const HighLight = styled.span`
-  margin: 0 1vw;
-  color: #E2FF54;
-`;
-
-const BottomLayer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-const TradeButton = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
-  padding: 15px 80px;
-  min-width: 200px;
-  background-color: #E2FF54;
-  color: black;
-  font-size: 20px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  text-decoration: none;
+  width: 150px;
   
-  &:hover {
-    cursor: pointer;
-    background-color: #f6ff54;
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    margin-bottom: 20px;
   }
 `;
 
-const WelcomeDescription = styled.p`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+const Title = styled.h1`
   color: white;
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
+  font-size: 40px;
+  font-family: ${props => props.theme.fonts.bold};
+  line-height: 46px;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    font-size: 30px;
+    line-height: 35px;
+  }
+  
+  @media (min-width: ${props => props.theme.breakpoints.xs}px) {
+    text-align: center;
+  }
+`;
+
+const HighLight = styled.span`
+  padding: 0 10px;
+  color: #E2FF54;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    padding: 0 5px;
+  }
+`;
+
+const TradeButton = styled(NextBtn)`
+  margin-bottom: 30px;
+  width: 250px;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xs}px) {
+    width: 100%;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    height: 45px;
+  }
+`;
+
+const Description = styled.p`
+  margin-bottom: 30px;
+  color: white;
+  font-size: 13px;
+  font-family: ${props => props.theme.fonts.regular};
+  line-height: 19.6px;
+  letter-spacing: 0;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    margin-bottom: 10px;
+    font-size: 9px;
+    line-height: 12px;
+  }
+  
+  @media (min-width: ${props => props.theme.breakpoints.xs}px) {
+    margin: 0 20px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+  }
+  
+  @media (min-width: ${props => props.theme.breakpoints.sm}px) {
+    margin: 0 20px;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+  }
 `;
 
 export default Welcome;

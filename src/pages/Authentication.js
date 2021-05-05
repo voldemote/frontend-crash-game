@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
-import lightModeLogo from '../data/images/logo-lightmode.svg';
-import InputBox from '../components/InputBox';
-import StepBar from '../components/StepBar';
-import CodeField from '../components/CodeField';
+import InputBox from 'components/InputBox';
+import StepBar from 'components/StepBar';
+import CodeField from 'components/CodeField';
+import { NextBtn } from 'themes/CommonStyle';
 
 const titleList = [
   {id: 0, text: `Verify your <br /> phone number`},
@@ -31,7 +31,7 @@ const codeFieldLength = 6;
 
 const Authentication = () => {
   const [step, setStep] = useState(0);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('49');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [code, setCode] = useState([]);
   const [firstName, setFirstName] = useState('');
@@ -75,20 +75,18 @@ const Authentication = () => {
 
   return (
     <Background>
-      <Logo src={lightModeLogo} alt="" />
-
-      <StepBarWrapper>
-        <StepBar size={4} step={step}/>
-      </StepBarWrapper>
-
       <Wrapper>
+        <StepBarWrapper>
+          <StepBar size={4} step={step}/>
+        </StepBarWrapper>
+
         <Heading dangerouslySetInnerHTML={{ __html: titleList.find((item) => (item.id === step)).text}} />
 
-        <Description>
+        <Description step={step}>
           {descriptionList.find((item) => (item.id === step)).text}
         </Description>
 
-        <InputBoxWrapper>
+        <InputBoxWrapper step={step}>
           {step === 0 &&
             <InputBox
               type="number"
@@ -96,8 +94,8 @@ const Authentication = () => {
               placeholder="phone number"
               setValue={setPhoneNumber}
               value={phoneNumber}
-              phone={country}
-              setPhone={setCountry}
+              country={country}
+              setCountry={setCountry}
             />
           }
 
@@ -131,9 +129,9 @@ const Authentication = () => {
             <Resend>Resend a new code</Resend>
           </>
         )}
-
-        <ConfirmButton onClick={onConfirm}>{confirmBtnList.find((item) => (item.id === step)).text}</ConfirmButton>
       </Wrapper>
+
+      <ConfirmButton onClick={onConfirm}>{confirmBtnList.find((item) => (item.id === step)).text}</ConfirmButton>
     </Background>
   );
 };
@@ -143,111 +141,126 @@ const Background = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px;
+  justify-content: space-between;
   width: 100%;
-`;
-
-const Logo = styled.img`
-  margin-bottom: 30px;
-  width: 250px;
-`;
-
-const StepBarWrapper = styled.div`
-  margin-top: 30px;
-  width: 350px;
+  height: 100%;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
-  width: 40%;
-  min-width: 350px;
+  padding: 50px 30px;
+  width: 100%;
+  max-width: 600px;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    padding: 40px 20px;
+  }
+`;
+
+const StepBarWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 0 62px;
+  width: 100%;
 `;
 
 const Heading = styled.p`
+  margin-top: 50px;
   width: 100%;
-  color: black;
-  font-family: 'Poppins', sans-serif;
+  color: ${props => props.theme.colors.primary};
+  font-family: ${props => props.theme.fonts.bold};
   font-size: 36px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.1;
-  letter-spacing: normal;
+  line-height: 39.6px;
+  letter-spacing: 0;
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    font-size: 30px;
+    line-height: 35px;
+  }
 `;
 
 const Description = styled.p`
   margin-top: 30px;
+  padding-right: 40px;
   width: 100%;
-  color: black;
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  color: ${props => props.theme.colors.primary};
+  font-family: ${props => props.theme.fonts.regular};
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  
+  ${props => props.step !== 2 && css`
+    margin-top: 30px;
+  `}
+  
+  ${props => props.step === 2 && css`
+    margin-top: 65px;
+  `}
 `;
 
 const InputBoxWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  margin-top: 50px;
   width: 100%;
-  min-width: 350px;
+  
+  ${props => props.step === 0 && css`
+    margin-top: 55px;
+  `}
+  
+  ${props => props.step === 1 && css`
+    margin-top: 40px;
+  `}
+  
+  ${props => props.step === 2 && css`
+    margin-top: 10px;
+  `}
+  
+  ${props => props.step === 3 && css`
+    margin-top: 68px;
+  `}
 `;
 
 const Label = styled.p`
-  margin-top: 30px;
+  margin-top: 41px;
   width: 100%;
-  color: #0e092773;
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  color: ${props => props.theme.colors.primary};
+  font-family: ${props => props.theme.fonts.regular};
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: 0;
   text-align: center;
+  opacity: 0.246;
 `;
 
 const Resend = styled.span`
+  margin-top: 1px;
   width: 100%;
-  color: black;
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  color: ${props => props.theme.colors.primary};
+  font-family: ${props => props.theme.fonts.regular};
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
   text-align: center;
   
   &:hover {
     cursor: pointer;
-    color: #0e092773;
+    opacity: 0.5;
   }
 `;
 
-const ConfirmButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 40px auto;
-  padding: 15px;
+const ConfirmButton = styled(NextBtn)`
+  margin-bottom: 200px;
   width: 300px;
-  background-color: #E2FF54;
-  color: black;
-  font-size: 20px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  text-decoration: none;
   
-  &:hover {
-    cursor: pointer;
-    background-color: #f6ff54;
+  @media (max-width: ${props => props.theme.breakpoints.xs}px) {
+    width: 100%;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
+    margin-bottom: 50px;
   }
 `;
 

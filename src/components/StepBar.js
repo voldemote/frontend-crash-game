@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import styled from 'styled-components';
 
-import checkIcon from '../data/icons/check-icon.svg';
+import checkIcon from 'data/icons/check-icon.svg';
 
 const StepBar = ({size, step}) => {
 
@@ -44,7 +44,7 @@ const StepBarLine = styled.div`
   top: 50%;
   width: 100%;
   height: 1px;
-  background-color: #d0d1d5;
+  background-color: ${props => props.theme.colors.gray_light};
   z-index: -1;
 `;
 
@@ -66,32 +66,24 @@ const StepItemWrapper = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 1px solid #d0d1d5;
+  border: 1px solid ${props => props.theme.colors.gray_light};
   width: 30px;
   height: 30px;
   background-color: white;
 `;
 
 const StepActiveItem = styled.span`
-  color: black;
-  font-family: 'Poppins', sans-serif;
+  color: ${props => props.theme.colors.primary};
+  font-family: ${props => props.theme.fonts.regular};
   font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  line-height: 21px;
 `;
 
 const StepInActiveItem = styled.span`
-  color: #d0d1d5;
-  font-family: 'Poppins', sans-serif;
+  color: ${props => props.theme.colors.gray_light};
+  font-family: ${props => props.theme.fonts.regular};
   font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  line-height: 21px;
 `;
 
 export default StepBar;

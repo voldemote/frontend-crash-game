@@ -3,22 +3,23 @@ import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
 
-import xCircle from '../data/icons/x-circle.svg';
+import xCircle from 'data/icons/x-circle.svg';
 
-const InputBox = ({type, placeholder, phone, setPhone, hasCountry, value, setValue}) => {
+const InputBox = ({type, placeholder, country, setCountry, hasCountry, value, setValue}) => {
 
   return (
     <InputWrapper>
       {hasCountry &&
         <PhoneInput
-          containerStyle={{display: 'flex', alignItems: 'center', width: 120}}
-          inputStyle={{ width: 120, height: 40, backgroundColor: '#f1f2f6', fontSize: 12, outline: 'none', border: 'none' }}
+          containerStyle={{display: 'flex', alignItems: 'center', width: 100}}
+          inputStyle={{ width: 100, height: 40, backgroundColor: '#f1f2f6', fontSize: 16, outline: 'none', border: 'none' }}
           dropdownStyle={{height: 300, width: 200, overflowY: 'auto', backgroundColor: 'white', borderRadius: 20}}
-          country='no'
-          value={phone}
+          searchStyle={{width: 140}}
+          value={country}
           inputProps={{ name: 'phoneNumber' }}
-          onChange={(phone) => setPhone(phone)}
+          onChange={(country) => setCountry(country)}
           enableClickOutside={true}
+          enableSearch={true}
         />
       }
 
@@ -36,23 +37,19 @@ const InputWrapper = styled.div`
   padding: 15px 20px;
   width: 100%;
   height: 60px;
-  background-color: #f1f2f6;
+  background-color: ${props => props.theme.colors.gray_light};
 `;
 
 const Input = styled.input`
   flex: 1;
-  margin: 0 20px;
+  margin-right: 20px;
   border: none;
   min-width: 100px!important;
-  color: #0e0927;
-  background-color: #f1f2f6;
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+  color: ${props => props.theme.colors.primary};
+  background-color: ${props => props.theme.colors.gray_light};
+  font-family: ${props => props.theme.fonts.regular};
+  font-size: 16px;
+  line-height: 24px;
   
   &:focus {
     outline: none;
@@ -61,9 +58,10 @@ const Input = styled.input`
 
 const InputDeleteIcon = styled.img`
   position: absolute;
-  right: 20px;
-  top: 20px;
-  width: 22px;
+  right: 17px;
+  top: 17px;
+  width: 25px;
+  height: 25px;
   
   &:hover {
     cursor: pointer;
