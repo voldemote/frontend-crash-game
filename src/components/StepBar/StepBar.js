@@ -1,36 +1,10 @@
+import classNames          from 'classnames';
 import IconCheck           from '../../data/icons/check-icon.svg';
 import PropTypes           from 'prop-types';
 import React, { Fragment } from 'react';
 import style               from './styles.module.scss';
-import Theme               from '../../themes/theme.js';
 
 class StepBar extends React.Component {
-    getStepBarLineStyle = () => {
-        return {
-            backgroundColor: Theme.colors.gray_light,
-        };
-    };
-
-    getStepBarItemIncompleteStyle = () => {
-        return {
-            border: `'1px solid ${Theme.colors.gray_light};'`,
-        };
-    };
-
-    getStepBarActiveItemStyle = () => {
-        return {
-            fontFamily: Theme.fonts.regular,
-            color:      Theme.colors.primary,
-        };
-    };
-
-    getStepBarInactiveItemStyle = () => {
-        return {
-            fontFamily: Theme.fonts.regular,
-            color:      Theme.colors.gray_light,
-        };
-    };
-
     render () {
         const size = this.props.size;
         const step = this.props.step;
@@ -39,7 +13,6 @@ class StepBar extends React.Component {
             <div className={style.stepBar}>
                 <div
                     className={style.stepBarLine}
-                    style={this.getStepBarLineStyle()}
                 >
                 </div>
                 {[...Array(size)].map((arr, index) => (
@@ -67,19 +40,22 @@ class StepBar extends React.Component {
         return (
             <div
                 className={style.stepBarItemIncomplete}
-                style={this.getStepBarItemIncompleteStyle()}
             >
                 {index === step ? (
                     <span
-                        className={style.stepBarItem}
-                        style={this.getStepBarActiveItemStyle()}
+                        className={classNames(
+                            style.stepBarItem,
+                            style.stepBarActiveItem,
+                        )}
                     >
                         {index + 1}
                     </span>
                 ) : (
                     <span
-                        className={style.stepBarItem}
-                        style={this.getStepBarInactiveItemStyle()}
+                        className={classNames(
+                            style.stepBarItem,
+                            style.stepBarInactiveItem,
+                        )}
                     >
                         {index + 1}
                     </span>
