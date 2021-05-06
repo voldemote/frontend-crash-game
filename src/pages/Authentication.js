@@ -1,43 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import styled, {css} from 'styled-components';
+// Imports from React
+import { useEffect, useState } from "react";
 
-import InputBox from 'components/InputBox';
-import StepBar from 'components/StepBar';
-import CodeField from 'components/CodeField';
-import { NextBtn } from 'themes/CommonStyle';
+// Import of components
+import InputBox from "../components/InputBox";
+import StepBar from "../components/StepBar";
+import CodeField from "../components/CodeField";
 
+// Imports for styling
+import styled, { css } from "styled-components";
+import { NextBtn } from "../themes/CommonStyle";
+
+// Array of Headings for the different signup steps
 const titleList = [
-  {id: 0, text: `Verify your <br /> phone number`},
-  {id: 1, text: `Code <br /> Verification`},
-  {id: 2, text: `What is your <br /> First Name?`},
-  {id: 3, text: `What about your <br /> E-Mail address?`},
+  { id: 0, text: `Verify your <br /> phone number` },
+  { id: 1, text: `Code <br /> Verification` },
+  { id: 2, text: `What is your <br /> First Name?` },
+  { id: 3, text: `What about your <br /> E-Mail address?` },
 ];
 
+// Array of Descriptions for the different signup steps
 const descriptionList = [
-  {id: 0, text: 'We’ll send you a SMS with a 6-digit-code to verify your number.'},
-  {id: 1, text: 'Enter your Code here'},
-  {id: 2, text: 'Call me...'},
-  {id: 3, text: ''},
+  {
+    id: 0,
+    text: `We’ll send you a SMS with a 6-digit-code <br /> to verify your number.`,
+  },
+  { id: 1, text: "Enter your Code here" },
+  { id: 2, text: "Call me..." },
+  { id: 3, text: "" },
 ];
 
+// Array of Button texts for the different signup steps
 const confirmBtnList = [
-  {id: 0, text: 'Send verification code'},
-  {id: 1, text: 'Verify'},
-  {id: 2, text: 'Go to last step'},
-  {id: 3, text: 'Start trading!'},
+  { id: 0, text: "Send verification code" },
+  { id: 1, text: "Verify" },
+  { id: 2, text: "Go to last step" },
+  { id: 3, text: "Start trading!" },
 ];
 
 const codeFieldLength = 6;
 
 const Authentication = () => {
+  // State for the Signup / Login State the user currently is on
   const [step, setStep] = useState(0);
-  const [country, setCountry] = useState('49');
-  const [phoneNumber, setPhoneNumber] = useState('');
+
+  // State for the Area Code of the users telephone number
+  const [country, setCountry] = useState("49");
+
+  // State for the users telephone number
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  // State for the code the user has to input to validate
   const [code, setCode] = useState([]);
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
+
+  // State for the users First name that has to be given when signing up
+  const [firstName, setFirstName] = useState("");
+
+  // State for the users E-Mail Address that has to be given when signing up
+  const [email, setEmail] = useState("");
+
+  // State to check the inputs of the user and break the process if something is wrong
   const [confirm, setConfirm] = useState(false);
 
+  // Using useEffect to validate the users Input on all steps
   useEffect(() => {
     const validation = () => {
       switch (step) {
@@ -60,34 +84,37 @@ const Authentication = () => {
         default:
       }
     };
-
     validation();
   });
 
+  // Function to handle the step bar
   const onConfirm = () => {
     if (step < 3) {
       if (confirm) {
         setStep(step + 1);
         setConfirm(false);
-      } else alert('Please fill all field!!!');
+      } else alert("Please fill all field!!!");
     }
   };
 
   return (
-    <Background>
-      <Wrapper>
-        <StepBarWrapper>
-          <StepBar size={4} step={step}/>
-        </StepBarWrapper>
-
-        <Heading dangerouslySetInnerHTML={{ __html: titleList.find((item) => (item.id === step)).text}} />
-
-        <Description step={step}>
-          {descriptionList.find((item) => (item.id === step)).text}
-        </Description>
-
-        <InputBoxWrapper step={step}>
-          {step === 0 &&
+    <StyledAuthentication>
+      <AuthenticationContent>
+        <AuthenticationContentStepBar>
+          <StepBar size={4} step={step} />
+        </AuthenticationContentStepBar>
+        <AuthenticationContentHeading
+          dangerouslySetInnerHTML={{
+            __html: titleList.find((item) => item.id === step).text,
+          }}
+        />
+        <AuthenticationContentDescription
+          dangerouslySetInnerHTML={{
+            __html: descriptionList.find((item) => item.id === step).text,
+          }}
+        />
+        <AuthenticationContentInputBox step={step}>
+          {step === 0 && (
             <InputBox
               type="number"
               hasCountry={true}
@@ -97,171 +124,154 @@ const Authentication = () => {
               country={country}
               setCountry={setCountry}
             />
-          }
-
-          {step === 1 &&
-            <CodeField fieldLength={codeFieldLength} value={code} setValue={setCode}/>
-          }
-
-          {step === 2 &&
+          )}
+          {step === 1 && (
+            <CodeField
+              fieldLength={codeFieldLength}
+              value={code}
+              setValue={setCode}
+            />
+          )}
+          {step === 2 && (
             <InputBox
               type="text"
               placeholder="John"
               value={firstName}
               setValue={setFirstName}
             />
-          }
-
-          {step === 3 &&
+          )}
+          {step === 3 && (
             <InputBox
               type="text"
               placeholder="john.doe@gmail.com"
               value={email}
               setValue={setEmail}
             />
-          }
-        </InputBoxWrapper>
-
+          )}
+        </AuthenticationContentInputBox>
         {step === 1 && (
           <>
-            <Label>Didn't you received any code?</Label>
-
+            <Label>Didn't you receive any code?</Label>
             <Resend>Resend a new code</Resend>
           </>
         )}
-      </Wrapper>
-
-      <ConfirmButton onClick={onConfirm}>{confirmBtnList.find((item) => (item.id === step)).text}</ConfirmButton>
-    </Background>
+      </AuthenticationContent>
+      <AuthenticationContentCTA onClick={onConfirm}>
+        {confirmBtnList.find((item) => item.id === step).text}
+      </AuthenticationContentCTA>
+    </StyledAuthentication>
   );
 };
 
 // Styled components
-const Background = styled.div`
+const StyledAuthentication = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  height: 100%;
 `;
 
-const Wrapper = styled.div`
+const AuthenticationContent = styled.div`
+  width: 85%;
   display: flex;
   flex-direction: column;
-  padding: 50px 30px;
-  width: 100%;
-  max-width: 600px;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    padding: 40px 20px;
-  }
 `;
 
-const StepBarWrapper = styled.div`
+const AuthenticationContentStepBar = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  padding: 0 62px;
-  width: 100%;
+  margin-top: 36px;
 `;
 
-const Heading = styled.p`
-  margin-top: 50px;
+const AuthenticationContentHeading = styled.p`
   width: 100%;
-  color: ${props => props.theme.colors.primary};
-  font-family: ${props => props.theme.fonts.bold};
+  margin-top: 54px;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 36px;
   line-height: 39.6px;
   letter-spacing: 0;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    font-size: 30px;
-    line-height: 35px;
-  }
+  color: ${(props) => props.theme.colors.primary};
 `;
 
-const Description = styled.p`
-  margin-top: 30px;
-  padding-right: 40px;
+const AuthenticationContentDescription = styled.p`
   width: 100%;
-  color: ${props => props.theme.colors.primary};
-  font-family: ${props => props.theme.fonts.regular};
+  margin-top: 25px;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0;
-  
-  ${props => props.step !== 2 && css`
-    margin-top: 30px;
-  `}
-  
-  ${props => props.step === 2 && css`
-    margin-top: 65px;
-  `}
+  color: ${(props) => props.theme.colors.primary};
+  ${(props) =>
+    props.step !== 2 &&
+    css`
+      margin-top: 30px;
+    `}
+  ${(props) =>
+    props.step === 2 &&
+    css`
+      margin-top: 65px;
+    `}
 `;
 
-const InputBoxWrapper = styled.div`
+const AuthenticationContentInputBox = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  
-  ${props => props.step === 0 && css`
-    margin-top: 55px;
-  `}
-  
-  ${props => props.step === 1 && css`
-    margin-top: 40px;
-  `}
-  
-  ${props => props.step === 2 && css`
-    margin-top: 10px;
-  `}
-  
-  ${props => props.step === 3 && css`
-    margin-top: 68px;
-  `}
+  ${(props) =>
+    props.step === 0 &&
+    css`
+      margin-top: 56px;
+    `}
+  ${(props) =>
+    props.step === 1 &&
+    css`
+      margin-top: 40px;
+    `}
+  ${(props) =>
+    props.step === 2 &&
+    css`
+      margin-top: 10px;
+    `}
+  ${(props) =>
+    props.step === 3 &&
+    css`
+      margin-top: 68px;
+    `}
 `;
 
 const Label = styled.p`
-  margin-top: 41px;
   width: 100%;
-  color: ${props => props.theme.colors.primary};
-  font-family: ${props => props.theme.fonts.regular};
+  margin-top: 41px;
+  text-align: center;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 16px;
   line-height: 25px;
   letter-spacing: 0;
-  text-align: center;
   opacity: 0.246;
+  color: ${(props) => props.theme.colors.primary};
 `;
 
 const Resend = styled.span`
-  margin-top: 1px;
   width: 100%;
-  color: ${props => props.theme.colors.primary};
-  font-family: ${props => props.theme.fonts.regular};
+  margin-top: 1px;
+  text-align: center;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0;
-  text-align: center;
-  
+  color: ${(props) => props.theme.colors.primary};
   &:hover {
     cursor: pointer;
     opacity: 0.5;
   }
 `;
 
-const ConfirmButton = styled(NextBtn)`
-  margin-bottom: 200px;
-  width: 300px;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xs}px) {
-    width: 100%;
-  }
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    margin-bottom: 50px;
-  }
+const AuthenticationContentCTA = styled(NextBtn)`
+  width: 100vw;
+  margin-top: 94px;
 `;
 
 export default Authentication;

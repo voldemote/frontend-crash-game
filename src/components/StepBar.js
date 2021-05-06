@@ -1,59 +1,63 @@
-import React, {Fragment} from 'react';
-import styled from 'styled-components';
+// Imports from React
+import { Fragment } from "react";
 
-import checkIcon from 'data/icons/check-icon.svg';
+// Import of icons and images
+import checkIcon from "../data/icons/check-icon.svg";
 
-const StepBar = ({size, step}) => {
+// Imports for styling
+import styled from "styled-components";
 
+const StepBar = ({ size, step }) => {
   return (
-    <StepBarWrapper>
+    <StyledStepBar>
       <StepBarLine />
       {[...Array(size)].map((arr, index) => (
         <Fragment key={index}>
-          {index < step ?
-            <StepCompleteItemWrapper>
+          {index < step ? (
+            <StepBarItemComplete>
               <StepCompleteIcon src={checkIcon} alt="" />
-            </StepCompleteItemWrapper> :
-            <StepItemWrapper>
-              {index === step ?
-                <StepActiveItem>{index + 1}</StepActiveItem> :
-                <StepInActiveItem>{index + 1}</StepInActiveItem>
-              }
-            </StepItemWrapper>
-          }
+            </StepBarItemComplete>
+          ) : (
+            <StepBarItemIncomplete>
+              {index === step ? (
+                <StepBarActiveItem>{index + 1}</StepBarActiveItem>
+              ) : (
+                <StepBarInactiveItem>{index + 1}</StepBarInactiveItem>
+              )}
+            </StepBarItemIncomplete>
+          )}
         </Fragment>
       ))}
-    </StepBarWrapper>
+    </StyledStepBar>
   );
 };
 
-const StepBarWrapper = styled.div`
+const StyledStepBar = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  width: 100%;
+  width: 60%;
   height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: transparent;
 `;
 
 const StepBarLine = styled.div`
-  position: absolute;
-  left: 0;
-  top: 50%;
   width: 100%;
   height: 1px;
-  background-color: ${props => props.theme.colors.gray_light};
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background-color: ${(props) => props.theme.colors.gray_light};
   z-index: -1;
 `;
 
-const StepCompleteItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const StepBarItemComplete = styled.div`
   width: 30px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StepCompleteIcon = styled.img`
@@ -61,29 +65,29 @@ const StepCompleteIcon = styled.img`
   height: 100%;
 `;
 
-const StepItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid ${props => props.theme.colors.gray_light};
+const StepBarItemIncomplete = styled.div`
   width: 30px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid ${(props) => props.theme.colors.gray_light};
+  border-radius: 50%;
   background-color: white;
 `;
 
-const StepActiveItem = styled.span`
-  color: ${props => props.theme.colors.primary};
-  font-family: ${props => props.theme.fonts.regular};
+const StepBarActiveItem = styled.span`
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 16px;
   line-height: 21px;
+  color: ${(props) => props.theme.colors.primary};
 `;
 
-const StepInActiveItem = styled.span`
-  color: ${props => props.theme.colors.gray_light};
-  font-family: ${props => props.theme.fonts.regular};
+const StepBarInactiveItem = styled.span`
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 16px;
   line-height: 21px;
+  color: ${(props) => props.theme.colors.gray_light};
 `;
 
 export default StepBar;

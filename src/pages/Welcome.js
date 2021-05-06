@@ -1,158 +1,90 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+// Imports from React-Router-Dom
+import { useHistory } from "react-router-dom";
 
-import darkModeLogo from 'data/images/logo-darkmode.svg';
-import { NextBtn } from 'themes/CommonStyle';
+// Import of icons and images
+import darkModeLogo from "../data/images/logo-darkmode.svg";
+
+// Imports for styling
+import styled from "styled-components";
+import { NextBtn } from "../themes/CommonStyle";
 
 const Welcome = () => {
   const history = useHistory();
   return (
-    <BackGround>
-      <Mask>
-        <Layer>
-          <Logo src={darkModeLogo} alt="" />
-
-          <Title>
-            Hello, we are  WallFair!
-          </Title>
-          <Title>
-            Simple betting for <HighLight> everyone </HighLight> and everything.
-          </Title>
-        </Layer>
-
-        <Layer>
-          <TradeButton onClick={() => history.push('/auth')}>
+    <StyledWelcome>
+      <WelcomeContent>
+        <WelcomeContentHolder>
+          <WelcomeLogo src={darkModeLogo} alt="" />
+          <WelcomeTitle>
+            Hello, we are WallFair! <br /> Simple betting <br /> for{" "}
+            <HighLight> everyone </HighLight> <br /> and everything.
+          </WelcomeTitle>
+          <WelcomeCTA onClick={() => history.push("/auth")}>
             Let's trade!
-          </TradeButton>
-
-          <Description>
-            By continuing I accept the Term and Conditions and privacy policy. Also I confirm that I am over 18 years old.
-          </Description>
-        </Layer>
-      </Mask>
-    </BackGround>
+          </WelcomeCTA>
+          <WelcomeSmallPrint>
+            By continuing I accept the Term and Conditions and privacy policy.
+            Also I confirm that I am over 18 years old.
+          </WelcomeSmallPrint>
+        </WelcomeContentHolder>
+      </WelcomeContent>
+    </StyledWelcome>
   );
 };
 
-// Style
-const BackGround = styled.div`
+// Styled components
+const StyledWelcome = styled.div`
   width: 100%;
   height: 100%;
-  background: url('images/welcome_bg.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  
-  @media (max-width: ${props => props.theme.breakpoints.sm}px) {
-    background-position: 35%;
-    background-size: 200% 100%;
-  }
-  
-  @media (max-width: ${props => props.theme.breakpoints.xs}px) {
-    background-position: 35%;
-    background-size: 340% 100%;
-  }
 `;
 
-const Mask = styled.div`
+const WelcomeContent = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  padding: 60px 0;
-  width: 100%;
-  height: 100%;
-  background-color: ${props => props.theme.colors.primary};
-  opacity: 0.86;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    padding: 50px 0;
-  }
+  align-items: center;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
-const Layer = styled.div`
+const WelcomeContentHolder = styled.div`
+  width: 85%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  padding: 0 35px;
 `;
 
-const Logo = styled.img`
-  margin-bottom: 50px;
+const WelcomeLogo = styled.img`
   width: 150px;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    margin-bottom: 20px;
-  }
+  margin-top: 62px;
 `;
 
-const Title = styled.h1`
-  color: white;
+const WelcomeTitle = styled.h1`
+  margin-top: 53px;
   font-size: 40px;
-  font-family: ${props => props.theme.fonts.bold};
+  font-family: ${(props) => props.theme.fonts.bold};
   line-height: 46px;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    font-size: 30px;
-    line-height: 35px;
-  }
-  
-  @media (min-width: ${props => props.theme.breakpoints.xs}px) {
-    text-align: center;
-  }
+  color: white;
 `;
 
 const HighLight = styled.span`
-  padding: 0 10px;
-  color: #E2FF54;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    padding: 0 5px;
-  }
+  color: #e2ff54;
 `;
 
-const TradeButton = styled(NextBtn)`
-  margin-bottom: 30px;
-  width: 250px;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xs}px) {
-    width: 100%;
-  }
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    height: 45px;
-  }
+const WelcomeCTA = styled(NextBtn)`
+  width: 100%;
+  margin-top: 25vh;
 `;
 
-const Description = styled.p`
-  margin-bottom: 30px;
-  color: white;
+const WelcomeSmallPrint = styled.p`
+  width: 100%;
+  margin: 25px 0 36px 0;
   font-size: 13px;
-  font-family: ${props => props.theme.fonts.regular};
+  font-family: ${(props) => props.theme.fonts.regular};
   line-height: 19.6px;
   letter-spacing: 0;
-  
-  @media (max-width: ${props => props.theme.breakpoints.xxs}px) {
-    margin-bottom: 10px;
-    font-size: 9px;
-    line-height: 12px;
-  }
-  
-  @media (min-width: ${props => props.theme.breakpoints.xs}px) {
-    margin: 0 20px;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-  }
-  
-  @media (min-width: ${props => props.theme.breakpoints.sm}px) {
-    margin: 0 20px;
-    font-size: 18px;
-    line-height: 25px;
-    text-align: center;
-  }
+  color: white;
 `;
 
 export default Welcome;

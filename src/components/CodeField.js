@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
+// Imports from React
+import { useEffect } from "react";
 
-const CodeField = ({fieldLength, value, setValue}) => {
+// Imports for styling
+import styled from "styled-components";
+
+const CodeField = ({ fieldLength, value, setValue }) => {
   const step = value.length;
 
+  // Using useEffect to recognize if user presses keys
   useEffect(() => {
-    window.addEventListener('keydown', onKeyDownHandler);
+    window.addEventListener("keydown", onKeyDownHandler);
     return () => {
-      window.removeEventListener('keydown', onKeyDownHandler);
-    }
+      window.removeEventListener("keydown", onKeyDownHandler);
+    };
   });
 
+  // Function to handle if user presses keys
   const onKeyDownHandler = (e) => {
     let key = Number.parseInt(e.key);
     if (step < fieldLength && key > -1) {
@@ -18,7 +23,7 @@ const CodeField = ({fieldLength, value, setValue}) => {
       temp.push(key);
       setValue(temp);
     }
-    if (e.key === 'Backspace') {
+    if (e.key === "Backspace") {
       let temp = [...value];
       temp.pop();
       setValue(temp);
@@ -26,26 +31,27 @@ const CodeField = ({fieldLength, value, setValue}) => {
   };
 
   return (
-    <CodeFieldWrapper>
+    <StyledCodeField>
       {[...Array(fieldLength)].map((arr, index) => (
-        <Item key={index}>
-          {index > step -1 ?
-            <InActiveItem />
-            :
+        <CodeFieldItem key={index}>
+          {index > step - 1 ? (
+            <InactiveItem />
+          ) : (
             <>
-              {index === step -1 ?
-                <ActiveItem>{value[index]}</ActiveItem> :
-                <CompleteItem>{value[index]}</CompleteItem>
-              }
+              {index === step - 1 ? (
+                <ActiveItem>{value[index]}</ActiveItem>
+              ) : (
+                <CompletedItem>{value[index]}</CompletedItem>
+              )}
             </>
-          }
-        </Item>
+          )}
+        </CodeFieldItem>
       ))}
-    </CodeFieldWrapper>
+    </StyledCodeField>
   );
 };
 
-const CodeFieldWrapper = styled.div`
+const StyledCodeField = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,56 +60,54 @@ const CodeFieldWrapper = styled.div`
   height: 60px;
 `;
 
-const Item = styled.div`
+const CodeFieldItem = styled.div`
+  height: 72px;
   flex: 1;
   margin: 0 4px;
-  height: 72px;
-  font-family: ${props => props.theme.fonts.light};
+  font-family: ${(props) => props.theme.fonts.light};
   font-size: 36px;
   line-height: 39.6px;
-  
   &:first-child {
     margin-left: 0;
   }
-  
   &:last-child {
     margin-right: 0;
   }
 `;
 
-const InActiveItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const InactiveItem = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
   border: none;
   color: black;
-  background-color: ${props => props.theme.colors.gray_light};
+  background-color: ${(props) => props.theme.colors.gray_light};
 `;
 
 const ActiveItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid ${(props) => props.theme.colors.primary_light};
   border-radius: 10px;
-  border: 2px solid ${props => props.theme.colors.primary_light};
   color: black;
   background-color: white;
-  box-shadow: 0 0 0 2px ${props => props.theme.colors.yellow};
+  box-shadow: 0 0 0 2px ${(props) => props.theme.colors.yellow};
 `;
 
-const CompleteItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const CompletedItem = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid ${(props) => props.theme.colors.gray_light};
   border-radius: 10px;
-  border: 2px solid ${props => props.theme.colors.gray_light};
   color: black;
   background-color: white;
 `;

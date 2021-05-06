@@ -1,5 +1,5 @@
 // Dependencies
-import styled from 'styled-components'
+import styled from "styled-components";
 
 // Export body
 export const NextBtn = styled.div`
@@ -7,14 +7,12 @@ export const NextBtn = styled.div`
   align-items: center;
   justify-content: center;
   height: 60px;
-  background-color: ${props => props.theme.colors.yellow};
-  color: ${props => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.yellow};
+  color: ${(props) => props.theme.colors.primary};
   font-size: 20px;
-  font-family: ${props => props.theme.fonts.bold};
+  font-family: ${(props) => props.theme.fonts.bold};
   letter-spacing: 0;
-  
   &:hover {
     cursor: pointer;
-    background-color: ${props => props.theme.colors.yellow_light};
   }
 `;
