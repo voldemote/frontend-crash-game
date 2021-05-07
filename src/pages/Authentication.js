@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // Import of components
 import InputBox from "../components/Authentication/InputBox";
-import StepBar from "../components/Authentication/StepBar";
+import StepBar from "../components/StepBar";
 import ReactCodeInput from "react-verification-code-input";
 import "../themes/codeFields.css";
 
