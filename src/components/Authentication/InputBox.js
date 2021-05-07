@@ -1,5 +1,5 @@
 // Import of icons and images
-import xCircle from "../data/icons/x-circle.svg";
+import xCircle from "../../data/icons/x-circle.svg";
 
 // Imports for styling
 import styled from "styled-components";

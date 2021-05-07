@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 
 // Import of components
-import InputBox from "../components/InputBox";
-import StepBar from "../components/StepBar";
-import CodeField from "../components/CodeField";
+import InputBox from "../components/Authentication/InputBox";
+import StepBar from "../components/Authentication/StepBar";
+import ReactCodeInput from "react-verification-code-input";
+import "../themes/codeFields.css";
 
 // Imports for styling
 import styled, { css } from "styled-components";
@@ -126,10 +127,12 @@ const Authentication = () => {
             />
           )}
           {step === 1 && (
-            <CodeField
-              fieldLength={codeFieldLength}
-              value={code}
-              setValue={setCode}
+            <ReactCodeInput
+              className="codeFields"
+              fields={6}
+              required={true}
+              autoFocus={true}
+              onComplete={(val) => setCode(val)}
             />
           )}
           {step === 2 && (
@@ -170,6 +173,8 @@ const StyledAuthentication = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
 `;
 
 const AuthenticationContent = styled.div`
@@ -220,10 +225,11 @@ const AuthenticationContentInputBox = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   ${(props) =>
     props.step === 0 &&
     css`
-      margin-top: 56px;
+      margin-top: 40px;
     `}
   ${(props) =>
     props.step === 1 &&
@@ -270,8 +276,9 @@ const Resend = styled.span`
 `;
 
 const AuthenticationContentCTA = styled(NextBtn)`
-  width: 100vw;
-  margin-top: 94px;
+  padding: 0 2rem;
+  margin-top: 40px;
+  border-radius: 10px;
 `;
 
 export default Authentication;

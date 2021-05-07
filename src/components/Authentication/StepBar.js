@@ -2,7 +2,7 @@
 import { Fragment } from "react";
 
 // Import of icons and images
-import checkIcon from "../data/icons/check-icon.svg";
+import checkIcon from "../../data/icons/check-icon.svg";
 
 // Imports for styling
 import styled from "styled-components";
