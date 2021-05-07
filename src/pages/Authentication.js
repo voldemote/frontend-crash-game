@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 
 // Import of components
-import InputBox from "../components/InputBox";
-import StepBar from "../components/StepBar";
-import CodeField from "../components/CodeField";
-import ReactCodeInput from 'react-verification-code-input';
-import '../codeFields.css'
+import InputBox from "../components/Authentication/InputBox";
+import StepBar from "../components/Authentication/StepBar";
+import ReactCodeInput from "react-verification-code-input";
+import "../themes/codeFields.css";
 
 // Imports for styling
 import styled, { css } from "styled-components";
@@ -128,12 +127,13 @@ const Authentication = () => {
             />
           )}
           {step === 1 && (
-            // <CodeField
-            //   fieldLength={codeFieldLength}
-            //   value={code}
-            //   setValue={setCode}
-            // />
-            <ReactCodeInput className="codeFields" fields={6} required={true} autoFocus={true} onComplete={val => setCode(val)} />
+            <ReactCodeInput
+              className="codeFields"
+              fields={6}
+              required={true}
+              autoFocus={true}
+              onComplete={(val) => setCode(val)}
+            />
           )}
           {step === 2 && (
             <InputBox
