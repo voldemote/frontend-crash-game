@@ -3,6 +3,7 @@ $colorPrimary:      #0e0927;
 $colorPrimaryLight: #02061e;
 $colorYellow:       #e2ff54;
 $colorYellowLight:  #f6ff54;
+$colorWhite:        #ffffff;
 
 :export
 {
@@ -11,4 +12,5 @@ $colorYellowLight:  #f6ff54;
     colorPrimaryLight: $colorPrimaryLight;
     colorYellow:       $colorYellow;
     colorYellowLight:  $colorYellowLight;
+    colorWhite:        $colorWhite;
 }
