@@ -1,43 +1,50 @@
 // Imports from React-Router-Dom
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 // Import of icons and images
-import darkModeLogo from "../data/images/logo-darkmode.svg";
+import darkModeLogo      from '../data/images/logo-darkmode.svg';
+import DesktopBackground from '../data/images/three-guys-coach-background.jpg';
 
 // Imports for styling
-import styled from "styled-components";
-import { NextBtn } from "../themes/CommonStyle";
-import Authentication from "./Authentication";
+import styled         from 'styled-components';
+import { NextBtn }    from '../themes/CommonStyle';
+import Authentication from './Authentication';
 
 const Welcome = () => {
-  const history = useHistory();
-  return (
-    <StyledWelcome>
-      <WelcomeContent>
-        <WelcomeContentHolder>
-          <WelcomeLogo src={darkModeLogo} alt="" />
-          <WelcomeTitle>
-            Hello, we are WallFair! <br /> Simple betting <br /> for{" "}
-            <HighLight> everyone </HighLight> <br /> and everything.
-          </WelcomeTitle>
-          <WelcomeCTA onClick={() => history.push("/auth")}>
-            Let's trade!
-          </WelcomeCTA>
-          <WelcomeSmallPrint>
-            By continuing I accept the Term and Conditions and privacy policy.
-            Also I confirm that I am over 18 years old.
-          </WelcomeSmallPrint>
-        </WelcomeContentHolder>
-      </WelcomeContent>
-      <WelcomeAuth>
-        <Authentication />
-        <WelcomeSmallPrintDesktop>
-          By continuing I accept the Term and Conditions and privacy policy.
-          Also I confirm that I am over 18 years old.
-        </WelcomeSmallPrintDesktop>
-      </WelcomeAuth>
-    </StyledWelcome>
-  );
+    const history = useHistory();
+    return (
+        <StyledWelcome>
+            <WelcomeContent>
+                <WelcomeContentOverlay />
+                <WelcomeContentHolder>
+                    <WelcomeLogo
+                        src={darkModeLogo}
+                        alt=""
+                    />
+                    <WelcomeTitle>
+                        Hello, we are <br />WallFair!<br />Simple betting <br /> for{' '}
+                        <HighLight> everyone </HighLight>
+                        <br />
+                        and everything.
+                    </WelcomeTitle>
+                    <WelcomeCTA onClick={() => history.push('/auth')}>
+                        Let's trade!
+                    </WelcomeCTA>
+                    <WelcomeSmallPrint>
+                        By continuing I accept the Term and Conditions and privacy policy.
+                        Also I confirm that I am over 18 years old.
+                    </WelcomeSmallPrint>
+                </WelcomeContentHolder>
+            </WelcomeContent>
+            <WelcomeAuth>
+                <Authentication />
+                <WelcomeSmallPrintDesktop>
+                    By continuing I accept the Term and Conditions and privacy policy.
+                    Also I confirm that I am over 18 years old.
+                </WelcomeSmallPrintDesktop>
+            </WelcomeAuth>
+        </StyledWelcome>
+    );
 };
 
 // Styled components
@@ -49,6 +56,7 @@ const StyledWelcome = styled.div`
 `;
 
 const WelcomeContent = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -56,6 +64,9 @@ const WelcomeContent = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.theme.colors.primary};
+  background: url("${DesktopBackground}");
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const WelcomeAuth = styled.div`
@@ -73,6 +84,7 @@ justify-content: space-between;
 
 const WelcomeContentHolder = styled.div`
   width: 85%;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,6 +92,16 @@ const WelcomeContentHolder = styled.div`
   @media (min-width: 800px) {
     align-items: flex-start;
   }
+`;
+
+const WelcomeContentOverlay = styled.div`
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  opacity: 0.86;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
 const WelcomeLogo = styled.img`
