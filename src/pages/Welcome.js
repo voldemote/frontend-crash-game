@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 // Import of icons and images
 import darkModeLogo      from '../data/images/logo-darkmode.svg';
-import DesktopBackground from '../data/images/three-guys-coach-background.jpg';
+import DesktopBackground from '../data/images/three-guys-couch-background.jpg';
 
 // Imports for styling
 import styled         from 'styled-components';
