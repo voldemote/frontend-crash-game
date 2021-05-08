@@ -67,6 +67,7 @@ const WelcomeContent = styled.div`
   background: url("${DesktopBackground}");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: cover;
 `;
 
 const WelcomeAuth = styled.div`
