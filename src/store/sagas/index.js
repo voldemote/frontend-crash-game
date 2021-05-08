@@ -4,15 +4,20 @@ import { REHYDRATE }  from 'redux-persist';
 import { takeLatest } from 'redux-saga/effects';
 
 // Types
+import { AuthorizationTypes } from '../actions/authorization';
 
 // Actions
 
 // Sagas
+import AuthorizationSagas from './authorization';
 
 const root = function* () {
     yield all([
         // @formatter:off
-        takeLatest([REHYDRATE], rehydrationDone),
+        takeLatest([AuthorizationTypes.VERIFY_SMS],  AuthorizationSagas.verifySms),
+        takeLatest([AuthorizationTypes.REQUEST_SMS], AuthorizationSagas.requestSms),
+        takeLatest([AuthorizationTypes.SET_EMAIL],   AuthorizationSagas.setAdditionalInformation),
+        takeLatest([REHYDRATE],                      rehydrationDone),
         // @formatter:on
     ]);
 };

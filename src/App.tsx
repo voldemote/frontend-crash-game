@@ -15,9 +15,11 @@ import store             from './store';
 import { history }       from './store';
 import { ThemeProvider } from 'styled-components';
 
+const configuredStore = store();
+
 const App = () => {
     return (
-        <Provider store={store()}>
+        <Provider store={configuredStore}>
             <ThemeProvider theme={theme}>
                 <GlobalStyle />
                 <ConnectedRouter history={history}>
