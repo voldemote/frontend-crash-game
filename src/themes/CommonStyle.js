@@ -7,6 +7,7 @@ export const NextBtn = styled.div`
   align-items: center;
   justify-content: center;
   height: 60px;
+  border-radius: 10px;
   background-color: ${(props) => props.theme.colors.yellow};
   color: ${(props) => props.theme.colors.primary};
   font-size: 20px;
