@@ -2,17 +2,18 @@
 import { useEffect, useState } from 'react';
 
 // Import of components
-import InputBox       from '../components/Authentication/InputBox';
 import StepBar        from '../components/StepBar';
 import { connect }    from 'react-redux';
 import { requestSms } from '../store/actions/authorization';
 
 // Imports for styling
 import styled, { css }          from 'styled-components';
-import { NextBtn }              from '../themes/CommonStyle';
 import CodeInputFields          from '../components/CodeInputFields';
 import { AuthorizationActions } from '../store/actions/authorization';
 import AuthState                from '../constants/AuthState';
+import InputBox                 from '../components/InputBox';
+import Button                   from '../components/Button';
+import ButtonTheme              from '../components/Button/ButtonTheme';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -214,9 +215,12 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                 )}
             </AuthenticationContent>
             {authState !== AuthState.LOGGED_IN && (
-                <AuthenticationContentCTA onClick={onConfirm}>
+                <Button
+                    theme={ButtonTheme.authenticationScreenButton}
+                    onClick={onConfirm}
+                >
                     {confirmBtnList.find((item) => item.id === step).text}
-                </AuthenticationContentCTA>
+                </Button>
             )}
         </StyledAuthentication>
     );
@@ -328,12 +332,6 @@ const Resend = styled.span`
     cursor: pointer;
     opacity: 0.5;
   }
-`;
-
-const AuthenticationContentCTA = styled(NextBtn)`
-  padding: 0 2rem;
-  margin-top: 40px;
-  border-radius: 10px;
 `;
 
 function mapStateToProps (state) {

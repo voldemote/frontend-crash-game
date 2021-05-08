@@ -1,0 +1,32 @@
+@import '../../styles/all';
+
+.phoneInputContainer
+{
+    display:     flex;
+    align-items: center;
+    width:       100px;
+}
+
+.phoneInput
+{
+    width:            100px;
+    height:           40px;
+    background-color: #f1f2f6;
+    font-size:        16px;
+    outline:          none;
+    border:           none;
+}
+
+.phoneInputDropdown
+{
+    height:           300px;
+    width:            200px;
+    overflow-y:       auto;
+    background-color: white;
+    border-radius:    20px;
+}
+
+.phoneInputSearch
+{
+    width: 140px;
+}

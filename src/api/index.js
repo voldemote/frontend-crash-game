@@ -19,8 +19,6 @@ const Api = createInstance(ApiUrls.BACKEND_URL, '/');
 const setToken = (token) => {
     const authorization = 'Bearer ' + token;
 
-    console.log('API: setToken', token, authorization);
-
     Api.defaults.headers.common['Authorization'] = authorization;
 };
 

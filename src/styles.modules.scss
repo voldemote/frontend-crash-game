@@ -36,3 +36,8 @@
     box-sizing: border-box;
     max-width:  100vw;
 }
+
+.appContainer {
+    width: 100%;
+    height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+}
