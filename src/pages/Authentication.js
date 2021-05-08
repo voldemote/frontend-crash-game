@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 // Import of components
 import InputBox       from '../components/Authentication/InputBox';
 import StepBar        from '../components/StepBar';
-import ReactCodeInput from 'react-verification-code-input';
+import { connect }    from 'react-redux';
+import { requestSms } from '../store/actions/authorization';
 
 // Imports for styling
-import styled, { css } from 'styled-components';
-import { NextBtn }     from '../themes/CommonStyle';
-import CodeInputFields from '../components/CodeInputFields';
+import styled, { css }          from 'styled-components';
+import { NextBtn }              from '../themes/CommonStyle';
+import CodeInputFields          from '../components/CodeInputFields';
+import { AuthorizationActions } from '../store/actions/authorization';
+import AuthState                from '../constants/AuthState';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -17,6 +20,7 @@ const titleList = [
     { id: 1, text: `Code <br /> Verification` },
     { id: 2, text: `What is your <br /> First Name?` },
     { id: 3, text: `What about your <br /> E-Mail address?` },
+    { id: 4, text: `Logged in` },
 ];
 
 // Array of Descriptions for the different signup steps
@@ -28,6 +32,7 @@ const descriptionList = [
     { id: 1, text: 'Enter your Code here' },
     { id: 2, text: 'Call me...' },
     { id: 3, text: '' },
+    { id: 4, text: 'You can start betting now!' },
 ];
 
 // Array of Button texts for the different signup steps
@@ -40,9 +45,24 @@ const confirmBtnList = [
 
 const codeFieldLength = 6;
 
-const Authentication = () => {
+const Authentication = ({ authState, requestSms, verifySms, setName, setEmail }) => {
     // State for the Signup / Login State the user currently is on
-    const [step, setStep] = useState(0);
+    const getStepByAuthState = () => {
+        switch (authState) {
+            case AuthState.LOGGED_OUT:
+                return 0;
+            case AuthState.SMS_SENT:
+                return 1;
+            case AuthState.SET_NAME:
+                return 2;
+            case AuthState.SET_EMAIL:
+                return 3;
+            case AuthState.LOGGED_IN:
+                return 4;
+        }
+    };
+
+    const step = getStepByAuthState();
 
     // State for the Area Code of the users telephone number
     const [country, setCountry] = useState('49');
@@ -57,7 +77,7 @@ const Authentication = () => {
     const [firstName, setFirstName] = useState('');
 
     // State for the users E-Mail Address that has to be given when signing up
-    const [email, setEmail] = useState('');
+    const [email, setInputEmail] = useState('');
 
     // State to check the inputs of the user and break the process if something is wrong
     const [confirm, setConfirm] = useState(false);
@@ -100,14 +120,32 @@ const Authentication = () => {
         validation();
     });
 
+    const resendRequestSms = () => {
+        requestSms({});
+    };
+
     // Function to handle the step bar
     const onConfirm = () => {
-        if (step < 3) {
+        console.debug(step, confirm);
+        if (step <= 3) {
             if (confirm) {
-                setStep(step + 1);
-                setConfirm(false);
+                if (step === 0) {
+                    const phone = country + phoneNumber;
+
+                    requestSms({ phone });
+                } else if (step === 1) {
+                    const smsToken = code;
+
+                    verifySms({ smsToken });
+                } else if (step === 2) {
+                    const name = firstName;
+
+                    setName({ name });
+                } else {
+                    setEmail({ email });
+                }
             } else {
-                alert('Please fill all field!!!');
+                alert('Please fill all fields!');
             }
         }
     };
@@ -164,20 +202,22 @@ const Authentication = () => {
                             type="text"
                             placeholder="john.doe@gmail.com"
                             value={email}
-                            setValue={setEmail}
+                            setValue={setInputEmail}
                         />
                     )}
                 </AuthenticationContentInputBox>
                 {step === 1 && (
                     <>
                         <Label>Didn't you receive any code?</Label>
-                        <Resend>Resend a new code</Resend>
+                        <Resend onClick={resendRequestSms}>Resend a new code</Resend>
                     </>
                 )}
             </AuthenticationContent>
-            <AuthenticationContentCTA onClick={onConfirm}>
-                {confirmBtnList.find((item) => item.id === step).text}
-            </AuthenticationContentCTA>
+            {authState !== AuthState.LOGGED_IN && (
+                <AuthenticationContentCTA onClick={onConfirm}>
+                    {confirmBtnList.find((item) => item.id === step).text}
+                </AuthenticationContentCTA>
+            )}
         </StyledAuthentication>
     );
 };
@@ -296,4 +336,30 @@ const AuthenticationContentCTA = styled(NextBtn)`
   border-radius: 10px;
 `;
 
-export default Authentication;
+function mapStateToProps (state) {
+    return {
+        authState: state.authorization.authState,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        requestSms: (phone) => {
+            dispatch(AuthorizationActions.requestSms(phone));
+        },
+        verifySms:  (smsToken) => {
+            dispatch(AuthorizationActions.verifySms(smsToken));
+        },
+        setName:    (name) => {
+            dispatch(AuthorizationActions.setName(name));
+        },
+        setEmail:   (email) => {
+            dispatch(AuthorizationActions.setEmail(email));
+        },
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Authentication);
