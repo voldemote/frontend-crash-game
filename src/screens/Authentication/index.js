@@ -1,5 +1,9 @@
+import AuthenticationComponent from '../../components/Authentication';
+
 const Authentication = () => {
-    return null;
+    return (
+        <AuthenticationComponent />
+    );
 };
 
 export default Authentication;
