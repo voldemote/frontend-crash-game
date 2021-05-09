@@ -4,7 +4,7 @@ import classNames      from 'classnames';
 import SelectionHelper from '../../helper/SelectionHelper';
 import ButtonTheme     from './ButtonTheme';
 
-const Button = ({ content, theme, onClick }) => {
+const Button = ({ theme, onClick }) => {
     return (
         <span
             className={classNames(
@@ -13,12 +13,13 @@ const Button = ({ content, theme, onClick }) => {
                     theme,
                     {
                         [ButtonTheme.authenticationScreenButton]: style.authenticationScreenButton,
+                        [ButtonTheme.welcomeScreenButton]:        style.welcomeScreenButton,
                     },
                 ),
             )}
             onClick={onClick}
         >
-            {{ content }}
+            lol
         </span>
     );
 };

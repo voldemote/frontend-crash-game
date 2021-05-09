@@ -36,10 +36,11 @@ const InputBox = ({
             />
             <div
                 className={style.inputDeleteIconContainer}
-                onClick={() => setValue('')}
+                onClick={() => {
+                    setValue('');
+                }}
             >
                 <Icon
-                    className={}
                     iconType={IconType.x}
                 />
             </div>

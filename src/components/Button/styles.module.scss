@@ -24,4 +24,15 @@
         margin-top:    40px;
         border-radius: 10px;
     }
+
+    &.welcomeScreenButton
+    {
+        width:      100%;
+        margin-top: 25vh;
+
+        @media (min-width: 800px)
+        {
+            display: none;
+        }
+    }
 }

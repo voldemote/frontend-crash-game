@@ -1,16 +1,11 @@
-// Imports from React-Router-Dom
+import Authentication              from './screens/Authentication';
+import store                       from './store';
+import styles                      from './styles.module.scss';
+import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
+import { history }                 from './store';
 import { Provider }                from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
-
-// Import of pages
-import Welcome        from './screens/Welcome';
-import Authentication from './screens/Authentication';
-
-// Imports for styling
-import style       from './styles.modules.scss';
-import store       from './store';
-import { history } from './store';
 
 const configuredStore = store();
 
@@ -18,7 +13,7 @@ const App = () => {
     return (
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
-                <div className={style.appContainer}>
+                <div className={styles.appContainer}>
                     <Switch>
                         <Route
                             exact
@@ -30,7 +25,6 @@ const App = () => {
                             path="/auth"
                             component={Authentication}
                         />
-                        <Redirect to="/" />
                     </Switch>
                 </div>
             </ConnectedRouter>

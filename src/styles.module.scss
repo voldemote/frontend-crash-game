@@ -1,7 +1,6 @@
 @import 'styles/all';
 
 // Global Style
-
 @font-face
 {
     font-family: $fontBold;
@@ -37,7 +36,8 @@
     max-width:  100vw;
 }
 
-.appContainer {
-    width: 100%;
+.appContainer
+{
+    width:  100%;
     height: 100vh; /* Fallback for browsers that do not support Custom Properties */
 }

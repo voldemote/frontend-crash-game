@@ -1,0 +1,121 @@
+@import '../../styles/all';
+
+.welcomeContainer
+{
+    width:           100%;
+    height:          100%;
+    display:         flex;
+    justify-content: center;
+
+    .welcomeContentContainer
+    {
+        position:        relative;
+        width:           100%;
+        height:          100%;
+        display:         flex;
+        flex-direction:  column;
+        justify-content: space-between;
+        align-items:     center;
+        background:      $colorPrimary url('../../data/images/three-guys-couch-background.jpg') no-repeat center;
+        background-size: cover;
+
+        .welcomeContentOverlay
+        {
+            position:         absolute;
+            z-index:          1;
+            width:            100%;
+            height:           100%;
+            display:          flex;
+            opacity:          0.86;
+            background-color: $colorPrimary;
+        }
+
+        .welcomeContent
+        {
+            width:          85%;
+            z-index:        2;
+            display:        flex;
+            flex-direction: column;
+            align-items:    center;
+
+            @media (min-width: 800px)
+            {
+                align-items: flex-start;
+            }
+
+            .welcomeLogo
+            {
+                width:      150px;
+                margin-top: 62px;
+            }
+
+            .welcomeTitle
+            {
+                margin-top:  53px;
+                font-size:   40px;
+                font-family: $fontBold;
+                line-height: 46px;
+                color:       white;
+
+                @media (min-width: 800px)
+                {
+                    font-size:   55px;
+                    line-height: 54px;
+                }
+
+                .welcomeTitleHighlight
+                {
+                    color: $colorYellow;
+                }
+            }
+
+            .welcomeSmallPrint
+            {
+                width:          100%;
+                margin:         25px 0 36px 0;
+                font-size:      13px;
+                font-family:    $fontRegular;
+                line-height:    19.6px;
+                letter-spacing: 0;
+                color:          white;
+
+                @media (min-width: 800px)
+                {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .welcomeAuthContainer
+    {
+        display:         none;
+        width:           100%;
+        max-width:       600px;
+        flex-direction:  column;
+        height:          100%;
+        justify-content: space-between;
+
+        @media (min-width: 800px)
+        {
+            display: flex;
+        }
+
+        .authenticationSmallPrint
+        {
+            width:          85%;
+            margin:         2rem auto;
+            font-size:      13px;
+            font-family:    $fontRegular;
+            line-height:    19.6px;
+            letter-spacing: 0;
+            color:          rgba(2, 6, 30, 0.36);
+            display:        none;
+
+            @media (min-width: 800px)
+            {
+                display: block;
+            }
+        }
+    }
+}
