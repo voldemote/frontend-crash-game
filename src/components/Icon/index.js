@@ -1,9 +1,9 @@
-import IconX           from '../../data/icons/x-circle.svg';
-import React           from 'react';
-import style           from './styles.module.scss';
-import SelectionHelper from '../../helper/SelectionHelper';
-import IconType        from './IconType';
-import classNames      from 'classnames';
+import classNames                  from 'classnames';
+import IconType                    from './IconType';
+import { ReactComponent as IconX } from '../../data/icons/x-circle.svg';
+import React                       from 'react';
+import SelectionHelper             from '../../helper/SelectionHelper';
+import style                       from './styles.module.scss';
 
 const Icon = ({ className, iconType }) => {
     const renderIcon = () => {

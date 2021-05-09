@@ -4,7 +4,7 @@ import classNames      from 'classnames';
 import SelectionHelper from '../../helper/SelectionHelper';
 import ButtonTheme     from './ButtonTheme';
 
-const Button = ({ theme, onClick }) => {
+const Button = ({ children, theme, onClick }) => {
     return (
         <span
             className={classNames(
@@ -19,7 +19,7 @@ const Button = ({ theme, onClick }) => {
             )}
             onClick={onClick}
         >
-            lol
+            {children}
         </span>
     );
 };

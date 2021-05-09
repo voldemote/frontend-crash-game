@@ -25,6 +25,7 @@ const App = () => {
                             path="/auth"
                             component={Authentication}
                         />
+                        <Redirect to="/" />
                     </Switch>
                 </div>
             </ConnectedRouter>
