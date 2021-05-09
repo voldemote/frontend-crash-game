@@ -29,7 +29,7 @@ export default class Api {
     }
 }
 
-export const PRODUCTION_BACKEND_URL              = 'http://wallfair-api.herokuapp.com';
+export const PRODUCTION_BACKEND_URL              = 'https://wallfair.herokuapp.com';
 export const LOCAL_BACKEND_URL                   = 'http://localhost:8000';
 export const BACKEND_URL                         = Api.getBackendUrl();
 export const API_AUTHORIZATION_REQUEST_SMS_URL   = 'api/user/login';
