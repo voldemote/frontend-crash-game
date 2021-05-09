@@ -1,3 +1,4 @@
+import 'react-phone-input-2/lib/style.css';
 import React           from 'react';
 import ReactPhoneInput from 'react-phone-input-2';
 
