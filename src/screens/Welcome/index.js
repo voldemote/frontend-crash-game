@@ -1,9 +1,9 @@
 import Authentication from '../../components/Authentication';
+import Button         from '../../components/Button';
+import ButtonTheme    from '../../components/Button/ButtonTheme';
 import darkModeLogo   from '../../data/images/logo-darkmode.svg';
 import styles         from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
-import Button         from '../../components/Button';
-import ButtonTheme    from '../../components/Button/ButtonTheme';
 
 const Welcome = () => {
     const history = useHistory();

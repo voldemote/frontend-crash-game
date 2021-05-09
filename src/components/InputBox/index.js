@@ -1,9 +1,9 @@
-import React      from 'react';
-import style      from './styles.module.scss';
-import PhoneInput from '../PhoneInput';
-import Input      from '../Input';
 import Icon       from '../Icon';
 import IconType   from '../Icon/IconType';
+import Input      from '../Input';
+import PhoneInput from '../PhoneInput';
+import React      from 'react';
+import style      from './styles.module.scss';
 
 const InputBox = ({
                       type,

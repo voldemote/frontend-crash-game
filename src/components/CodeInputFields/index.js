@@ -1,6 +1,6 @@
 import React          from 'react';
-import style          from './styles.module.scss';
 import ReactCodeInput from 'react-verification-code-input';
+import style          from './styles.module.scss';
 
 const CodeInputFields = ({ fields, required, autoFocus, onComplete }) => {
     return (

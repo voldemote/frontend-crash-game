@@ -1,8 +1,8 @@
-import React           from 'react';
-import style           from './styles.module.scss';
-import classNames      from 'classnames';
-import SelectionHelper from '../../helper/SelectionHelper';
 import ButtonTheme     from './ButtonTheme';
+import classNames      from 'classnames';
+import React           from 'react';
+import SelectionHelper from '../../helper/SelectionHelper';
+import style           from './styles.module.scss';
 
 const Button = ({ children, theme, onClick }) => {
     return (
