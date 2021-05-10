@@ -1,3 +1,4 @@
+import AlertBox                    from './components/AlertBox';
 import Authentication              from './screens/Authentication';
 import store                       from './store';
 import styles                      from './styles.module.scss';
@@ -14,6 +15,7 @@ const App = () => {
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
                 <div className={styles.appContainer}>
+                    <AlertBox />
                     <Switch>
                         <Route
                             exact

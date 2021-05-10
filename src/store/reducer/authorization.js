@@ -1,7 +1,6 @@
 import update                 from 'immutability-helper';
 import { AuthorizationTypes } from '../actions/authorization';
 import AuthState              from '../../constants/AuthState';
-import { saveAdditionalInfo } from '../../api';
 
 const initialState = {
     userId:    null,
