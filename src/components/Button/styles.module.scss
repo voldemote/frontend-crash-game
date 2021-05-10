@@ -1,0 +1,38 @@
+@import '../../styles/all';
+
+.button
+{
+    display:          flex;
+    align-items:      center;
+    justify-content:  center;
+    height:           60px;
+    border-radius:    10px;
+    background-color: $colorYellow;
+    color:            $colorPrimary;
+    font-size:        20px;
+    font-family:      $fontBold;
+    letter-spacing:   0;
+
+    &:hover
+    {
+        cursor: pointer;
+    }
+
+    &.authenticationScreenButton
+    {
+        padding:       0 2rem;
+        margin-top:    40px;
+        border-radius: 10px;
+    }
+
+    &.welcomeScreenButton
+    {
+        width:      100%;
+        margin-top: 25vh;
+
+        @media (min-width: 800px)
+        {
+            display: none;
+        }
+    }
+}

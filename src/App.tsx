@@ -1,45 +1,34 @@
-// Imports from React-Router-Dom
+import Authentication              from './screens/Authentication';
+import store                       from './store';
+import styles                      from './styles.module.scss';
+import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
+import { history }                 from './store';
 import { Provider }                from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
-
-// Import of pages
-import Welcome        from './pages/Welcome';
-import Authentication from './pages/Authentication';
-
-// Imports for styling
-import GlobalStyle       from './themes/GlobalStyle';
-import theme             from './themes/theme';
-import styled            from 'styled-components';
-import store             from './store';
-import { history }       from './store';
-import { ThemeProvider } from 'styled-components';
 
 const configuredStore = store();
 
 const App = () => {
     return (
         <Provider store={configuredStore}>
-            <ThemeProvider theme={theme}>
-                <GlobalStyle />
-                <ConnectedRouter history={history}>
-                    <StyledApp>
-                        <Switch>
-                            <Route
-                                exact
-                                path="/"
-                                component={Welcome}
-                            />
-                            <Route
-                                exact
-                                path="/auth"
-                                component={Authentication}
-                            />
-                            <Redirect to="/" />
-                        </Switch>
-                    </StyledApp>
-                </ConnectedRouter>
-            </ThemeProvider>
+            <ConnectedRouter history={history}>
+                <div className={styles.appContainer}>
+                    <Switch>
+                        <Route
+                            exact
+                            path="/"
+                            component={Welcome}
+                        />
+                        <Route
+                            exact
+                            path="/auth"
+                            component={Authentication}
+                        />
+                        <Redirect to="/" />
+                    </Switch>
+                </div>
+            </ConnectedRouter>
         </Provider>
     );
 };
@@ -50,15 +39,8 @@ let vh = window.innerHeight * 0.01;
 // Recalculating after resizing screen
 window.addEventListener('resize', () => {
     let vh = window.innerHeight * 0.01;
-    
+
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
-
-// Styled components
-const StyledApp = styled.div`
-  width: 100%;
-  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-  height: calc(var(--vh, 1px * ${vh}) * 100);
-`;
 
 export default App;
