@@ -1,5 +1,6 @@
 import classNames          from 'classnames';
-import IconCheck           from '../../data/icons/check-icon.svg';
+import Icon                from '../Icon';
+import IconType            from '../Icon/IconType';
 import React, { Fragment } from 'react';
 import style               from './styles.module.scss';
 
@@ -7,10 +8,9 @@ const StepBar = ({ size, step }) => {
     const renderStepBarItemComplete = () => {
         return (
             <div className={style.stepBarItemComplete}>
-                <img
+                <Icon
                     className={style.stepCompleteItem}
-                    src={IconCheck}
-                    alt=""
+                    iconType={IconType.check}
                 />
             </div>
         );

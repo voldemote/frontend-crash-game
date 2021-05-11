@@ -1,8 +1,10 @@
+import alertReducer         from '../reducer/alert';
+import authorizationReducer from '../reducer/authorization';
 import { combineReducers }  from 'redux';
 import { connectRouter }    from 'connected-react-router';
-import authorizationReducer from '../reducer/authorization';
 
 export default (history) => combineReducers({
+    alert:         alertReducer,
     authorization: authorizationReducer,
     router:        connectRouter(history),
 })
