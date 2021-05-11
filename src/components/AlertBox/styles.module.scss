@@ -12,6 +12,7 @@
     top:             0;
     z-index:         $zIndexAlertContainer;
     padding:         25px 10px 10px;
+    pointer-events:  none;
 
     @media (min-width: $screen-sm)
     {

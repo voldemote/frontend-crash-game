@@ -1,7 +1,10 @@
 import AlertBox                    from './components/AlertBox';
 import Authentication              from './screens/Authentication';
+import PrivacyPolicy               from './screens/PrivacyPolicy';
+import Routes                      from './constants/Routes';
 import store                       from './store';
 import styles                      from './styles.module.scss';
+import TermsAndConditions          from './screens/TermsAndConditions';
 import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
@@ -19,15 +22,25 @@ const App = () => {
                     <Switch>
                         <Route
                             exact
-                            path="/"
+                            path={Routes.welcome}
                             component={Welcome}
                         />
                         <Route
                             exact
-                            path="/auth"
+                            path={Routes.termsAndConditions}
+                            component={TermsAndConditions}
+                        />
+                        <Route
+                            exact
+                            path={Routes.privacyPolicy}
+                            component={PrivacyPolicy}
+                        />
+                        <Route
+                            exact
+                            path={Routes.authentication}
                             component={Authentication}
                         />
-                        <Redirect to="/" />
+                        <Redirect to={Routes.welcome} />
                     </Switch>
                 </div>
             </ConnectedRouter>

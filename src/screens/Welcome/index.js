@@ -4,6 +4,8 @@ import ButtonTheme    from '../../components/Button/ButtonTheme';
 import darkModeLogo   from '../../data/images/logo-darkmode.svg';
 import styles         from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
+import Link           from '../../components/Link';
+import Routes         from '../../constants/Routes';
 
 const Welcome = () => {
     const history = useHistory();
@@ -34,7 +36,12 @@ const Welcome = () => {
                         Let's trade!
                     </Button>
                     <p className={styles.welcomeSmallPrint}>
-                        By continuing I accept the Term and Conditions and privacy policy.
+                        By continuing I accept the
+                        <Link to={Routes.termsAndConditions}>
+                            Terms and Conditions
+                        </Link> and <Link to={Routes.privacyPolicy}>
+                        Privacy Policy
+                    </Link>.
                         Also I confirm that I am over 18 years old.
                     </p>
                 </div>
@@ -42,7 +49,11 @@ const Welcome = () => {
             <div className={styles.welcomeAuthContainer}>
                 <Authentication />
                 <p className={styles.authenticationSmallPrint}>
-                    By continuing I accept the Term and Conditions and privacy policy.
+                    By continuing I accept the <Link to={Routes.termsAndConditions}>
+                    Terms and Conditions
+                </Link> and <Link to={Routes.privacyPolicy}>
+                    Privacy Policy
+                </Link>.
                     Also I confirm that I am over 18 years old.
                 </p>
             </div>
