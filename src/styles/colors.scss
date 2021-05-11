@@ -1,16 +1,9 @@
-$colorGrayLight:    #f1f2f6;
-$colorPrimary:      #0e0927;
-$colorPrimaryLight: #02061e;
-$colorYellow:       #e2ff54;
-$colorYellowLight:  #f6ff54;
-$colorWhite:        #ffffff;
-
-:export
-{
-    colorGrayLight:    $colorGrayLight;
-    colorPrimary:      $colorPrimary;
-    colorPrimaryLight: $colorPrimaryLight;
-    colorYellow:       $colorYellow;
-    colorYellowLight:  $colorYellowLight;
-    colorWhite:        $colorWhite;
-}
+$colorGrayLight:      #f1f2f6;
+$colorPrimary:        #0e0927;
+$colorPrimaryLight20: rgba(2, 6, 30, 0.20);
+$colorPrimaryLight:   #02061e;
+$colorRedDark:        #c00000;
+$colorRedLight:       #ff5858;
+$colorWhite:          #ffffff;
+$colorYellow:         #e2ff54;
+$colorYellowLight:    #f6ff54;

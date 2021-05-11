@@ -9,6 +9,7 @@ import { AuthorizationActions } from '../../store/actions/authorization';
 import { connect }              from 'react-redux';
 import { requestSms }           from '../../store/actions/authorization';
 import { useEffect, useState }  from 'react';
+import { useIsMount }           from '../../helper/useIsMount';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -26,8 +27,8 @@ const descriptionList = [
         text: `We’ll send you a SMS with a 6-digit-code <br /> to verify your number.`,
     },
     { id: 1, text: 'Enter your Code here' },
-    { id: 2, text: 'Call me...' },
-    { id: 3, text: '' },
+    { id: 2, text: null },
+    { id: 3, text: null },
     { id: 4, text: 'You can start betting now!' },
 ];
 
@@ -60,6 +61,8 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
     const step = getStepByAuthState();
 
+    const isMount = useIsMount();
+
     // State for the Area Code of the users telephone number
     const [country, setCountry] = useState('49');
 
@@ -77,39 +80,49 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
     // State to check the inputs of the user and break the process if something is wrong
     const [confirm, setConfirm] = useState(false);
+    const [error, setError]     = useState(null);
 
     // Using useEffect to validate the users Input on all steps
     useEffect(() => {
+        console.trace('lol');
         const validation = () => {
             switch (step) {
                 case 0:
                     if (country && phoneNumber) {
+                        setError(null);
                         setConfirm(true);
                     } else {
+                        setError('Please enter a valid phone number!');
                         setConfirm(false);
                     }
 
                     break;
                 case 1:
                     if (code.length === codeFieldLength) {
+                        setError(null);
                         setConfirm(true);
                     } else {
+                        setError('Please enter a valid code!');
                         setConfirm(false);
                     }
 
                     break;
                 case 2:
                     if (firstName) {
+                        setError(null);
                         setConfirm(true);
                     } else {
+                        setError('Please enter your name!');
                         setConfirm(false);
                     }
 
                     break;
                 case 3:
                     if (email) {
+                        setError(null);
                         setConfirm(true);
                     } else {
+                        setError('Please enter a valid email!');
                         setConfirm(false);
                     }
 
@@ -117,7 +130,9 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
             }
         };
 
-        validation();
+        if (!isMount) {
+            validation();
+        }
     });
 
     const resendRequestSms = () => {
@@ -143,8 +158,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                 } else {
                     setEmail({ email });
                 }
-            } else {
-                alert('Please fill all fields!');
             }
         }
     };
@@ -152,7 +165,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
     const getAuthenticationContentDescriptionStyle = () => {
         if (step !== 2) {
             return {
-                marginTop: 30,
+                marginTop: 25,
             };
         }
 
@@ -161,35 +174,12 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
         };
     };
 
-    const getInputBoxContainerStyle = () => {
-        let marginTop = null;
-
-        switch (step) {
-            case 0:
-            case 1:
-                marginTop = 40;
-
-                break;
-            case 2:
-                marginTop = 10;
-
-                break;
-            case 3:
-                marginTop = 68;
-
-                break;
-        }
-
-        return {
-            marginTop: marginTop,
-        };
-    };
-
     const renderButton = () => {
         if (authState !== AuthState.LOGGED_IN) {
             return (
                 <Button
                     theme={ButtonTheme.authenticationScreenButton}
+                    className={styles.authenticationButton}
                     onClick={onConfirm}
                 >
                     {confirmBtnList.find((item) => item.id === step).text}
@@ -220,17 +210,67 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
         return null;
     };
 
+    const renderStepBar = () => {
+        return (
+            <div className={styles.authenticationStepBarContainer}>
+                <StepBar
+                    size={4}
+                    step={step}
+                />
+            </div>
+        );
+    };
+
+    const renderHeadline = () => {
+        const headline = titleList.find(
+            (item) => item.id === step,
+        ).text;
+
+        if (headline && headline.length) {
+            return (
+                <p
+                    className={styles.authenticationHeadline}
+                    dangerouslySetInnerHTML={{
+                        __html: headline,
+                    }}
+                />
+            );
+        }
+
+        return null;
+    };
+
+    const renderDescription = () => {
+        const description = descriptionList.find(
+            (item) => item.id === step,
+        ).text;
+
+        if (description && description.length) {
+            return (
+                <p
+                    className={styles.authenticationDescription}
+                    style={getAuthenticationContentDescriptionStyle()}
+                    dangerouslySetInnerHTML={{
+                        __html: description,
+                    }}
+                />
+            );
+        }
+
+        return null;
+    };
+
     const renderInputBoxes = () => {
         return (
             <div
                 className={styles.authenticationInputBoxContainer}
-                style={getInputBoxContainerStyle()}
             >
                 {step === 0 && (
                     <InputBox
                         type="number"
                         hasCountry={true}
                         placeholder="phone number"
+                        errorText={error}
                         setValue={setPhoneNumber}
                         value={phoneNumber}
                         country={country}
@@ -248,6 +288,8 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                 {step === 2 && (
                     <InputBox
                         type="text"
+                        invitationText={'Call me'}
+                        errorText={error}
                         placeholder="John"
                         value={firstName}
                         setValue={setFirstName}
@@ -256,6 +298,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                 {step === 3 && (
                     <InputBox
                         type="text"
+                        errorText={error}
                         placeholder="john.doe@gmail.com"
                         value={email}
                         setValue={setInputEmail}
@@ -268,31 +311,13 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
     return (
         <div className={styles.authenticationContainer}>
             <div className={styles.authenticationContentContainer}>
-                <div className={styles.authenticationStepBarContainer}>
-                    <StepBar
-                        size={4}
-                        step={step}
-                    />
-                </div>
-                <p
-                    className={styles.authenticationHeadline}
-                    dangerouslySetInnerHTML={{
-                        __html: titleList.find(
-                            (item) => item.id === step,
-                        ).text,
-                    }}
-                />
-                <p
-                    className={styles.authenticationDescription}
-                    style={getAuthenticationContentDescriptionStyle()}
-                    dangerouslySetInnerHTML={{
-                        __html: descriptionList.find((item) => item.id === step).text,
-                    }}
-                />
+                {renderStepBar()}
+                {renderHeadline()}
+                {renderDescription()}
                 {renderInputBoxes()}
                 {renderResendCodeContainer()}
+                {renderButton()}
             </div>
-            {renderButton()}
         </div>
     );
 };
