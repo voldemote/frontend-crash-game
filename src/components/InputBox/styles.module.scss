@@ -29,17 +29,6 @@
             height:   25px;
             right:    17px;
             top:      17px;
-
-            .clearButton
-            {
-                svg
-                {
-                    *
-                    {
-                        stroke: $colorPrimaryLight20;
-                    }
-                }
-            }
         }
     }
 
@@ -47,8 +36,8 @@
     {
         display:          flex;
         align-items:      center;
-        height:           40px;
-        padding:          7px 106px 9px 21px;
+        min-height:       40px;
+        padding:          12px 12px 12px 21px;
         border-radius:    8px;
         background-color: rgba(255, 88, 88, 0.1);
         color:            $colorRedDark;
@@ -59,13 +48,7 @@
             width:        18px;
             margin-right: 16px;
 
-            svg
-            {
-                *
-                {
-                    fill: $colorRedLight;
-                }
-            }
+            @include svgSelectorColor($colorRedLight)
         }
     }
 }

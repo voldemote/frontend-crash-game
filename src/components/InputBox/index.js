@@ -4,6 +4,7 @@ import Input      from '../Input';
 import PhoneInput from '../PhoneInput';
 import React      from 'react';
 import styles     from './styles.module.scss';
+import IconTheme  from '../Icon/IconTheme';
 
 const InputBox = ({
                       type,
@@ -75,7 +76,7 @@ const InputBox = ({
                     }}
                 >
                     <Icon
-                        className={styles.clearButton}
+                        iconTheme={IconTheme.primaryLightTransparent}
                         iconType={IconType.x}
                     />
                 </div>

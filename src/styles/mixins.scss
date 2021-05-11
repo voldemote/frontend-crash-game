@@ -1,0 +1,29 @@
+@mixin svgColor($color)
+{
+    @include svgColorFill($color);
+    @include svgColorStroke($color);
+}
+
+@mixin svgSelectorColor($color)
+{
+    svg
+    {
+        @include svgColor($color)
+    }
+}
+
+@mixin svgColorFill($color)
+{
+    *
+    {
+        fill: $color;
+    }
+}
+
+@mixin svgColorStroke($color)
+{
+    *
+    {
+        stroke: $color;
+    }
+}

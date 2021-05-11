@@ -3,6 +3,7 @@ import IconType       from '../Icon/IconType';
 import React          from 'react';
 import styles         from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
+import IconTheme      from '../Icon/IconTheme';
 
 const HeaderWithHeadline = ({ headline }) => {
     const history = useHistory();
@@ -15,6 +16,7 @@ const HeaderWithHeadline = ({ headline }) => {
         <div className={styles.headerWithHeadlineContainer}>
             <Icon
                 className={styles.backIcon}
+                iconTheme={IconTheme.primary}
                 iconType={IconType.left}
                 onClick={backIconClick}
             />
