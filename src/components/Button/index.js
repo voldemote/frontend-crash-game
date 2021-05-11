@@ -4,11 +4,12 @@ import React           from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
 
-const Button = ({ children, theme, onClick }) => {
+const Button = ({ children, className, theme, onClick }) => {
     return (
         <span
             className={classNames(
                 style.button,
+                className,
                 SelectionHelper.get(
                     theme,
                     {

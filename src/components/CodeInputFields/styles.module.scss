@@ -12,7 +12,7 @@
         > input
         {
             font-family:      $fontLight;
-            background-color: #f1f2f6;
+            background-color: $colorGrayLight;
             height:           72px !important;
             width:            100% !important;
             margin:           0 4px;
@@ -20,6 +20,7 @@
             border:           2px solid $colorWhite !important;
             border-radius:    10px !important;
             color:            black;
+            caret-color:      transparent !important;
 
             @media (min-width: $screen-sm)
             {

@@ -1,22 +1,71 @@
 @import '../../styles/all';
 
-.inputBox
+.inputBoxContainer
 {
-    width:            100%;
-    height:           60px;
-    position:         relative;
-    display:          flex;
-    align-items:      center;
-    padding:          15px 20px;
-    border-radius:    8px;
-    background-color: $colorGrayLight;
-}
+    display:        flex;
+    flex-direction: column;
+    width:          100%;
 
-.inputDeleteIconContainer
-{
-    position: absolute;
-    width:    25px;
-    height:   25px;
-    right:    17px;
-    top:      17px;
+    > *:not(:last-child)
+    {
+        margin-bottom: 11px;
+    }
+
+    .inputBox
+    {
+        width:            100%;
+        height:           60px;
+        position:         relative;
+        display:          flex;
+        align-items:      center;
+        padding:          15px 20px;
+        border-radius:    8px;
+        background-color: $colorGrayLight;
+
+        .inputDeleteIconContainer
+        {
+            position: absolute;
+            width:    25px;
+            height:   25px;
+            right:    17px;
+            top:      17px;
+
+            .clearButton
+            {
+                svg
+                {
+                    *
+                    {
+                        stroke: $colorPrimaryLight20;
+                    }
+                }
+            }
+        }
+    }
+
+    .errorTextContainer
+    {
+        display:          flex;
+        align-items:      center;
+        height:           40px;
+        padding:          7px 106px 9px 21px;
+        border-radius:    8px;
+        background-color: rgba(255, 88, 88, 0.1);
+        color:            $colorRedDark;
+
+        .errorTextIcon
+        {
+            height:       18px;
+            width:        18px;
+            margin-right: 16px;
+
+            svg
+            {
+                *
+                {
+                    fill: $colorRedLight;
+                }
+            }
+        }
+    }
 }
