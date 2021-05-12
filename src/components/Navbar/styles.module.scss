@@ -1,0 +1,51 @@
+@import '../../styles/all';
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 3rem;
+
+    img {
+        margin-right: 2rem;
+    }
+
+    .navbarItems {
+        display: flex;
+        align-items: center;
+
+        a {
+            color: $colorWhite;
+            opacity: 0.5;
+            text-decoration: none;
+            padding: 0 0.5rem;
+            font-family: $fontLight;
+        }
+
+        button {
+            color: $colorWhite;
+            border: none;
+            background-color: transparent;
+            padding: 0 0.5rem;
+            font-family: $fontBold;
+        }
+
+        .profile {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-left: 1rem;
+            background-color: $colorGrayLight;
+        }
+
+        .active {
+            opacity: 1;
+            font-family: $fontBold;
+        }
+    }
+}

@@ -1,0 +1,149 @@
+@import '../../styles/all';
+
+.pill {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.pillFooter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgba(241, 242, 246, 0.33);
+    padding: 1rem 1.5rem;
+
+    .countdown {
+        color: $colorWhite;
+        font-family: $fontLight;
+        font-size: 12px;
+    }
+}
+
+.pillContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $colorWhite;
+    padding: 1rem 1.5rem;
+
+    .justify {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: $colorGrayLight;
+        margin: 0 0.5rem;
+    }
+
+    .desc {
+        margin: 0 0.5rem;
+
+        p {
+            display: block;
+            font-family: $fontBold;
+        }
+
+        span {
+            display: block;
+            font-family: $fontLight;
+            color: #bebebe;
+            font-size: 12px;
+        }
+    }
+
+    .tag {
+        border-radius: 4px;
+        background-color: rgba(255, 88, 88, 0.1);
+        font-family: $fontLight;
+        padding: 0.25rem 0.8rem;
+        font-size: 12px;
+        margin: 0 0.5rem;
+    }
+
+    .input {
+        border-radius: 6px;
+        border: solid 1px #f1f2f6;
+        background-color: #f1f2f6;
+        height: 59px;
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem;
+
+        label {
+            font-size: 10px;
+            font-family: $fontLight;
+            color: #120e27;
+        }
+
+        input {
+            background-color: transparent;
+            border: none;
+            font-family: $fontBold;
+            max-width: 80px;
+        }
+
+        span {
+            color: #bebebe;
+            font-family: $fontBold;
+        }
+    }
+
+    .btnBetLeft {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 0.5rem;
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        border: solid 2.5px #acffce;
+        background-color: #ffffff;
+        font-family: $fontBold;
+        cursor: pointer;
+
+        span {
+            font-family: $fontLight;
+            color: #bebebe;
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    .btnBetRight {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 0.5rem;
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        border: solid 2.5px #acc4ff;
+        background-color: #ffffff;
+        font-family: $fontBold;
+        cursor: pointer;
+
+        span {
+            color: #bebebe;
+            font-family: $fontLight;
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    .goToEvent {
+        font-family: $fontLight;
+        color: #120e27;
+        font-size: 0.6rem;
+        text-decoration: none;
+        margin: 0 0.5rem;
+    }
+}
