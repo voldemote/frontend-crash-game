@@ -1,6 +1,7 @@
 import './styles.module.scss';
 import AlertBox                    from './components/AlertBox';
 import Authentication              from './screens/Authentication';
+import Home                        from './screens/Home';
 import PrivacyPolicy               from './screens/PrivacyPolicy';
 import Routes                      from './constants/Routes';
 import store                       from './store';
@@ -38,6 +39,11 @@ const App = () => {
                         exact
                         path={Routes.authentication}
                         component={Authentication}
+                    />
+                    <Route
+                        exact
+                        path={Routes.home}
+                        component={Home}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>
