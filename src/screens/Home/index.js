@@ -2,16 +2,13 @@
 import { useHistory } from 'react-router-dom';
 
 // Imports for components
-import Navbar         from '../components/Navbar/index';
-import Header         from '../components/Header/index';
-import EventBetPill   from '../components/EventBetPill/index';
+import Navbar         from '../../components/Navbar/index';
+import Header         from '../../components/Header/index';
+import EventBetPill   from '../../components/EventBetPill/index';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import EventCard      from '../components/EventCard/index';
-
-// Imports for styling
-import styled         from 'styled-components';
-import { NextBtn }    from '../themes/CommonStyle';
+import EventCard      from '../../components/EventCard/index';
+import styles         from './styles.module.scss';
 
 const Home = () => {
     const history = useHistory();
@@ -43,7 +40,9 @@ const Home = () => {
             <div style={{ padding: "0 3rem" }}>
                 <EventBetPill />
                 <EventBetPill />
-                <Headline>🔥 Most popular Live Events</Headline>
+                <h1 className={styles.headline}>
+                    🔥 Most popular Live Events
+                </h1>
             </div>
             <div style={{ paddingLeft: "3rem" }}>
                 <Carousel responsive={responsive}>
@@ -55,7 +54,9 @@ const Home = () => {
                 </Carousel>
             </div>
             <div style={{ padding: "0 3rem" }}>
-                <Headline>🔥 Most popular Bets</Headline>
+                <h1 className={styles.headline}>
+                    🔥 Most popular Bets
+                </h1>
             </div>
             <div style={{ paddingLeft: "3rem" }}>
                 <Carousel responsive={responsive}>
@@ -69,13 +70,5 @@ const Home = () => {
         </div>
     );
 };
-
-// Styled components
-const Headline = styled.h1`
-  color: #ffffff;
-  font-family: ${(props) => props.theme.fonts.bold};
-  font-size: 24px;
-  margin: 8rem 0 1rem 0;
-`;
 
 export default Home;

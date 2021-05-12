@@ -3,4 +3,5 @@ export default {
     authentication:     '/auth',
     termsAndConditions: '/terms-and-conditions',
     privacyPolicy:      '/privacy-policy',
+    home:               '/home',
 };
