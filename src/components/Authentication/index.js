@@ -84,7 +84,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
     // Using useEffect to validate the users Input on all steps
     useEffect(() => {
-        console.trace('lol');
         const validation = () => {
             switch (step) {
                 case 0:

@@ -36,10 +36,9 @@ const Welcome = () => {
                         Let's trade!
                     </Button>
                     <p className={styles.welcomeSmallPrint}>
-                        By continuing I accept the
-                        <Link to={Routes.termsAndConditions}>
-                            Terms and Conditions
-                        </Link> and <Link to={Routes.privacyPolicy}>
+                        By continuing I accept the <Link to={Routes.termsAndConditions}>
+                        Terms and Conditions
+                    </Link> and <Link to={Routes.privacyPolicy}>
                         Privacy Policy
                     </Link>.
                         Also I confirm that I am over 18 years old.

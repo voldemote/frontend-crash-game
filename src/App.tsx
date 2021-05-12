@@ -1,9 +1,9 @@
+import './styles.module.scss';
 import AlertBox                    from './components/AlertBox';
 import Authentication              from './screens/Authentication';
 import PrivacyPolicy               from './screens/PrivacyPolicy';
 import Routes                      from './constants/Routes';
 import store                       from './store';
-import styles                      from './styles.module.scss';
 import TermsAndConditions          from './screens/TermsAndConditions';
 import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
@@ -17,32 +17,30 @@ const App = () => {
     return (
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
-                <div className={styles.appContainer}>
-                    <AlertBox />
-                    <Switch>
-                        <Route
-                            exact
-                            path={Routes.welcome}
-                            component={Welcome}
-                        />
-                        <Route
-                            exact
-                            path={Routes.termsAndConditions}
-                            component={TermsAndConditions}
-                        />
-                        <Route
-                            exact
-                            path={Routes.privacyPolicy}
-                            component={PrivacyPolicy}
-                        />
-                        <Route
-                            exact
-                            path={Routes.authentication}
-                            component={Authentication}
-                        />
-                        <Redirect to={Routes.welcome} />
-                    </Switch>
-                </div>
+                <AlertBox />
+                <Switch>
+                    <Route
+                        exact
+                        path={Routes.welcome}
+                        component={Welcome}
+                    />
+                    <Route
+                        exact
+                        path={Routes.termsAndConditions}
+                        component={TermsAndConditions}
+                    />
+                    <Route
+                        exact
+                        path={Routes.privacyPolicy}
+                        component={PrivacyPolicy}
+                    />
+                    <Route
+                        exact
+                        path={Routes.authentication}
+                        component={Authentication}
+                    />
+                    <Redirect to={Routes.welcome} />
+                </Switch>
             </ConnectedRouter>
         </Provider>
     );

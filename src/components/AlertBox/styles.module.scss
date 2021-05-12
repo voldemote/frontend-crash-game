@@ -34,6 +34,7 @@
         transform:       scale(0);
         color:           $colorPrimary;
         opacity:         0;
+        pointer-events:  all;
         overflow:        hidden;
         animation:       scale-in .3s ease-out forwards,
                          expand .35s .25s ease-out forwards;
