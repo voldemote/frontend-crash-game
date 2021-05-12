@@ -1,62 +1,39 @@
 @import '../../styles/all';
 
-.eventCard {
-    background: linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,.6)),url('https://gameinfinitus.com/wp-content/uploads/2021/03/pubg-update.jpeg');
-    background-repeat: no-repeat;
+.eventCard
+{
+    background:          linear-gradient(0deg, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://gameinfinitus.com/wp-content/uploads/2021/03/pubg-update.jpeg');
+    background-repeat:   no-repeat;
     background-position: center;
-    background-size: cover;
-    margin-right: 1rem;
-    border-radius: 6px;
-    font-family: $fontLight;
-    color: $colorWhite;
-    min-height: 200px;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    background-size:     cover;
+    margin-right:        1rem;
+    border-radius:       6px;
+    font-family:         $fontLight;
+    color:               $colorWhite;
+    min-height:          200px;
+    padding:             1rem;
+    display:             flex;
+    justify-content:     space-between;
+    flex-direction:      column;
+    user-select:         none;
+    cursor:              pointer;
 
-    .live {
-        background-color: #ff5858;
-        font-family: $fontLight;
-        text-transform: uppercase;
-        padding: 0.25rem 0.5rem;
-        font-size: 12px;
-        border-radius: 4px;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 0.5rem;
-
-        div {
-            width: 8px;
-            height: 8px;
-            background-color: $colorWhite;
-            border-radius: 50%;
-            margin-right: 0.25rem;
-        }
-    }
-
-    .viewers {
-        background-color: rgba(0,0,0,.6);
-        font-size: 12px;
-        border-radius: 4px;
-        padding: 0.25rem 0.5rem;
-        display: inline-flex;
-    }
-
-    .title {
+    .title
+    {
         font-family: $fontBold;
     }
 
-    .tags {
-        display: flex;
+    .tags
+    {
+        display:         flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items:     center;
 
-        span {
-            display: inline-block;
-            color: #bebebe;
-            font-size: 12px;
+        span
+        {
+            display:      inline-block;
+            color:        #bebebe;
+            font-size:    12px;
             margin-right: 0.5rem;
         }
     }

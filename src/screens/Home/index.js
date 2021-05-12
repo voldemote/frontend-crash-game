@@ -53,25 +53,78 @@ const Home = () => {
             </div>
             <div style={{ paddingLeft: '3rem' }}>
                 <Carousel responsive={responsive}>
-                    <EventCard />
-                    <EventCard />
-                    <EventCard />
-                    <EventCard />
-                    <EventCard />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
                 </Carousel>
             </div>
             <div style={{ padding: '0 3rem' }}>
                 <h1 className={styles.headline}>
-                    🔥 Most popular Bets
+                    🚀 Most popular Bets
                 </h1>
             </div>
             <div style={{ paddingLeft: '3rem' }}>
                 <Carousel responsive={responsive}>
-                    <EventCard />
-                    <EventCard />
-                    <EventCard />
-                    <EventCard />
-                    <EventCard />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
+                    <EventCard
+                        title={'eSports Alliance'}
+                        organizer={'JIB PUBG'}
+                        viewers={12345}
+                        live={true}
+                        tags={['esports', 'shooter']}
+                    />
                 </Carousel>
             </div>
         </div>

@@ -1,21 +1,31 @@
-import classNames          from 'classnames';
-import React, { Fragment } from 'react';
-import style               from './styles.module.scss';
-import darkModeLogo        from '../../data/images/logo-darkmode.svg';
+import React       from 'react';
+import styles      from './styles.module.scss';
+import LiveBadge   from '../LiveBadge';
+import ViewerBadge from '../ViewerBadge';
 
-const EventCard = () => {
-
+const EventCard = ({ title, organizer, live, viewers, tags }) => {
     return (
-        <div className={style.eventCard}>
+        <div className={styles.eventCard}>
             <div>
-                <span className={style.live}><div></div>Live</span>
-                <span className={style.viewers}>🔥 3.456 Viewers</span>
+                {live && (
+                    <>
+                        <LiveBadge />
+                        <ViewerBadge viewers={viewers} />
+                    </>
+                )}
             </div>
             <div>
-                <span className={style.title}>eSports Alliance<br/>JIB PUBG</span>
-                <div className={style.tags}>
-                    <span>#esports</span>
-                    <span>#shooter</span>
+                <span className={styles.title}>
+                    {title}
+                    <br />
+                    {organizer}
+                </span>
+                <div className={styles.tags}>
+                    {
+                        tags.map(
+                            (tag) => <span>{tag}</span>,
+                        )
+                    }
                 </div>
             </div>
         </div>
