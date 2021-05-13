@@ -1,9 +1,13 @@
 class SelectionHelper {
-    static get (currentValue, mapping, fallback) {
+    static get (currentValue, mapping, fallback, typeCompare = true) {
         const mappingValues = Object.keys(mapping);
 
         for (const mappingValue of mappingValues) {
-            if (mappingValue === currentValue) {
+            if (
+                typeCompare ?
+                    mappingValue === currentValue :
+                    mappingValue == currentValue
+            ) {
                 return mapping[currentValue];
             }
         }

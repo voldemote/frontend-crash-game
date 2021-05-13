@@ -7,6 +7,7 @@ import Navbar                from '../../components/Navbar/index';
 import styles                from './styles.module.scss';
 import ExampleProfilePicture from '../../data/images/doge.jpg';
 import { useHistory }        from 'react-router-dom';
+import CarouselContainer     from '../../components/CarouselContainer';
 
 const Home = () => {
     const history = useHistory();
@@ -47,6 +48,38 @@ const Home = () => {
                     eventEnd={eventEnd}
                 />
                 <EventBetPill />
+            </div>
+            <CarouselContainer title={'🚀 Most popular Bets'}>
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                />
+            </CarouselContainer>
+            <div>
                 <h1 className={styles.headline}>
                     🔥 Most popular Live Events
                 </h1>
@@ -60,43 +93,6 @@ const Home = () => {
                         live={true}
                         tags={['esports', 'shooter']}
                     />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                </Carousel>
-            </div>
-            <div style={{ padding: '0 3rem' }}>
-                <h1 className={styles.headline}>
-                    🚀 Most popular Bets
-                </h1>
-            </div>
-            <div style={{ paddingLeft: '3rem' }}>
-                <Carousel responsive={responsive}>
                     <EventCard
                         title={'eSports Alliance'}
                         organizer={'JIB PUBG'}

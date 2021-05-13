@@ -1,0 +1,32 @@
+@import '../../styles/all';
+
+.carouselContainer
+{
+    margin-top: 140px;
+
+    .titleContainer
+    {
+        display:         flex;
+        flex-direction:  row;
+        align-items:     center;
+        justify-content: space-between;
+        padding:         0 3rem;
+        margin-bottom:   30px;
+
+        .title
+        {
+            color:       $colorWhite;
+            font-family: $fontBold;
+            font-size:   24px;
+        }
+
+    }
+
+    .carousel
+    {
+        display:        flex;
+        position:       relative;
+        flex-direction: column-reverse;
+        padding-left:   3rem;
+    }
+}
