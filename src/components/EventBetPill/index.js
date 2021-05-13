@@ -2,15 +2,15 @@ import React           from 'react';
 import style           from './styles.module.scss';
 import TimeLeftCounter from '../TimeLeftCounter';
 
-const EventBetPill = ({ userProfilePicture, userName, marketQuestion, hotBet, eventEnd, outcomes }) => {
+const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     const getProfileStyle = () => {
         return {
-            backgroundImage: 'url("' + userProfilePicture + '")',
+            backgroundImage: 'url("' + user.profilePicture + '")',
         };
     };
     const renderHotBetTag = () => {
         return (
-            <div className={style.tag}>
+            <div className={style.hotBetTag}>
                 🔥 Hot Bet
             </div>
         );
@@ -38,7 +38,7 @@ const EventBetPill = ({ userProfilePicture, userName, marketQuestion, hotBet, ev
                     </div>
                     <div className={style.desc}>
                         <span>
-                            {userName}
+                            {user.name}
                         </span>
                         <p>
                             {marketQuestion}

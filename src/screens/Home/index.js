@@ -32,8 +32,12 @@ const Home = () => {
         },
     };
 
-    const currentDate = new Date();
-    const eventEnd    = new Date(currentDate.getTime() + 70 * 60000);
+    const currentDate       = new Date();
+    const user              = {
+        name:           'John Doe',
+        profilePicture: ExampleProfilePicture,
+    };
+    const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
 
     return (
         <div style={{ backgroundColor: '#120e27', paddingBottom: '8rem' }}>
@@ -41,13 +45,17 @@ const Home = () => {
             <Header />
             <div style={{ padding: '0 3rem' }}>
                 <EventBetPill
-                    userProfilePicture={ExampleProfilePicture}
-                    userName={'John Doe'}
+                    user={user}
                     marketQuestion={'Who will win Red Bull Rampage?'}
                     hotBet={true}
-                    eventEnd={eventEnd}
+                    eventEnd={new Date(currentDate.getTime() + 70 * 60000)}
                 />
-                <EventBetPill />
+                <EventBetPill
+                    user={user}
+                    marketQuestion={'Will Elon Musk tweet about EVNT token by next week?'}
+                    hotBet={true}
+                    eventEnd={new Date(currentDate.getTime() + 120 * 60000)}
+                />
             </div>
             <CarouselContainer title={'🚀 Most popular Bets'}>
                 <EventCard
@@ -56,6 +64,7 @@ const Home = () => {
                     viewers={12345}
                     live={true}
                     tags={['esports', 'shooter']}
+                    image={exampleEventImage}
                 />
                 <EventCard
                     title={'eSports Alliance'}
@@ -63,6 +72,7 @@ const Home = () => {
                     viewers={12345}
                     live={true}
                     tags={['esports', 'shooter']}
+                    image={exampleEventImage}
                 />
                 <EventCard
                     title={'eSports Alliance'}
@@ -70,6 +80,7 @@ const Home = () => {
                     viewers={12345}
                     live={true}
                     tags={['esports', 'shooter']}
+                    image={exampleEventImage}
                 />
                 <EventCard
                     title={'eSports Alliance'}
@@ -77,52 +88,51 @@ const Home = () => {
                     viewers={12345}
                     live={true}
                     tags={['esports', 'shooter']}
+                    image={exampleEventImage}
                 />
             </CarouselContainer>
-            <div>
-                <h1 className={styles.headline}>
-                    🔥 Most popular Live Events
-                </h1>
-            </div>
-            <div style={{ paddingLeft: '3rem' }}>
-                <Carousel responsive={responsive}>
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                    <EventCard
-                        title={'eSports Alliance'}
-                        organizer={'JIB PUBG'}
-                        viewers={12345}
-                        live={true}
-                        tags={['esports', 'shooter']}
-                    />
-                </Carousel>
-            </div>
+            <CarouselContainer title={'🔥 Most popular Live Events'}>
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                    image={exampleEventImage}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                    image={exampleEventImage}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                    image={exampleEventImage}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                    image={exampleEventImage}
+                />
+                <EventCard
+                    title={'eSports Alliance'}
+                    organizer={'JIB PUBG'}
+                    viewers={12345}
+                    live={true}
+                    tags={['esports', 'shooter']}
+                    image={exampleEventImage}
+                />
+            </CarouselContainer>
         </div>
     );
 };

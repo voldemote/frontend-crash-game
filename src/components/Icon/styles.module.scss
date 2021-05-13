@@ -23,6 +23,5 @@
     &.iconWhite
     {
         @include svgColorStroke($colorWhite)
-        @include svgColorFill($colorWhite)
     }
 }

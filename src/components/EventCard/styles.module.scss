@@ -2,21 +2,35 @@
 
 .eventCard
 {
-    background:          linear-gradient(0deg, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://gameinfinitus.com/wp-content/uploads/2021/03/pubg-update.jpeg');
-    background-repeat:   no-repeat;
-    background-position: center;
-    background-size:     cover;
-    margin-right:        1rem;
-    border-radius:       6px;
-    font-family:         $fontLight;
-    color:               $colorWhite;
-    min-height:          200px;
-    padding:             1rem;
-    display:             flex;
-    justify-content:     space-between;
-    flex-direction:      column;
-    user-select:         none;
-    cursor:              pointer;
+    width:           300px;
+    margin-right:    20px !important;
+    border-radius:   6px;
+    font-family:     $fontLight;
+    color:           $colorWhite;
+    min-height:      200px;
+    padding:         1rem;
+    display:         flex;
+    position:        relative;
+    justify-content: space-between;
+    flex-direction:  column;
+    user-select:     none;
+    cursor:          pointer;
+    overflow:        hidden;
+
+    .eventCardBackground
+    {
+        position:            absolute;
+        top:                 0;
+        left:                0;
+        width:               100%;
+        height:              100%;
+        z-index:             -1;
+        background-repeat:   no-repeat;
+        background-position: center;
+        background-size:     cover;
+        filter:              blur(2px);
+        -webkit-filter:      blur(2px);
+    }
 
     .title
     {

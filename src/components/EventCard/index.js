@@ -3,9 +3,20 @@ import styles      from './styles.module.scss';
 import LiveBadge   from '../LiveBadge';
 import ViewerBadge from '../ViewerBadge';
 
-const EventCard = ({ title, organizer, live, viewers, tags }) => {
+const EventCard = ({ title, organizer, image, live, viewers, tags }) => {
+    const getEventCardStyle = () => {
+        return {
+            backgroundImage: 'url("' + image + '")',
+        };
+    };
     return (
-        <div className={styles.eventCard}>
+        <div
+            className={styles.eventCard}
+        >
+            <div
+                className={styles.eventCardBackground}
+                style={getEventCardStyle()}
+            ></div>
             <div>
                 {live && (
                     <>
@@ -23,7 +34,7 @@ const EventCard = ({ title, organizer, live, viewers, tags }) => {
                 <div className={styles.tags}>
                     {
                         tags.map(
-                            (tag) => <span>{tag}</span>,
+                            (tag) => <span>#{tag}</span>,
                         )
                     }
                 </div>

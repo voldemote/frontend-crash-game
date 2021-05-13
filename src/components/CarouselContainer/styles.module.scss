@@ -30,3 +30,11 @@
         padding-left:   3rem;
     }
 }
+
+:global
+{
+    .react-multi-carousel-item
+    {
+        width: unset !important;
+    }
+}
