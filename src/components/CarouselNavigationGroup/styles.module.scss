@@ -27,6 +27,8 @@
         {
             opacity: 0.36;
         }
+
+        @include svgSelectorColor($colorWhite)
     }
 
     @media (max-width: $screen-sm)

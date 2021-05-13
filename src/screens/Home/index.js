@@ -8,6 +8,7 @@ import styles                from './styles.module.scss';
 import ExampleProfilePicture from '../../data/images/doge.jpg';
 import { useHistory }        from 'react-router-dom';
 import CarouselContainer     from '../../components/CarouselContainer';
+import BetCard               from '../../components/BetCard';
 
 const Home = () => {
     const history = useHistory();
@@ -38,6 +39,7 @@ const Home = () => {
         profilePicture: ExampleProfilePicture,
     };
     const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
+    const exampleBetImage   = 'https://static.dw.com/image/57473723_303.jpg';
 
     return (
         <div style={{ backgroundColor: '#120e27', paddingBottom: '8rem' }}>
@@ -57,40 +59,6 @@ const Home = () => {
                     eventEnd={new Date(currentDate.getTime() + 120 * 60000)}
                 />
             </div>
-            <CarouselContainer title={'🚀 Most popular Bets'}>
-                <EventCard
-                    title={'eSports Alliance'}
-                    organizer={'JIB PUBG'}
-                    viewers={12345}
-                    live={true}
-                    tags={['esports', 'shooter']}
-                    image={exampleEventImage}
-                />
-                <EventCard
-                    title={'eSports Alliance'}
-                    organizer={'JIB PUBG'}
-                    viewers={12345}
-                    live={true}
-                    tags={['esports', 'shooter']}
-                    image={exampleEventImage}
-                />
-                <EventCard
-                    title={'eSports Alliance'}
-                    organizer={'JIB PUBG'}
-                    viewers={12345}
-                    live={true}
-                    tags={['esports', 'shooter']}
-                    image={exampleEventImage}
-                />
-                <EventCard
-                    title={'eSports Alliance'}
-                    organizer={'JIB PUBG'}
-                    viewers={12345}
-                    live={true}
-                    tags={['esports', 'shooter']}
-                    image={exampleEventImage}
-                />
-            </CarouselContainer>
             <CarouselContainer title={'🔥 Most popular Live Events'}>
                 <EventCard
                     title={'eSports Alliance'}
@@ -124,13 +92,42 @@ const Home = () => {
                     tags={['esports', 'shooter']}
                     image={exampleEventImage}
                 />
-                <EventCard
-                    title={'eSports Alliance'}
-                    organizer={'JIB PUBG'}
-                    viewers={12345}
-                    live={true}
-                    tags={['esports', 'shooter']}
-                    image={exampleEventImage}
+            </CarouselContainer>
+            <CarouselContainer title={'🚀 Most popular Bets'}>
+                <BetCard
+                    image={exampleBetImage}
+                    user={user}
+                    marketQuestion={'Will Elon Musk tweet about EVNT token by next week?'}
+                    hot={true}
+                    eventEnd={new Date(currentDate.getTime() + 12 * 60000)}
+                />
+                <BetCard
+                    image={exampleBetImage}
+                    user={user}
+                    marketQuestion={'Will Elon Musk tweet about EVNT token by next week?'}
+                    hot={true}
+                    eventEnd={new Date(currentDate.getTime() + 12 * 60000)}
+                />
+                <BetCard
+                    image={exampleBetImage}
+                    user={user}
+                    marketQuestion={'Will Elon Musk tweet about EVNT token by next week?'}
+                    hot={true}
+                    eventEnd={new Date(currentDate.getTime() + 12 * 60000)}
+                />
+                <BetCard
+                    image={exampleBetImage}
+                    user={user}
+                    marketQuestion={'Will Elon Musk tweet about EVNT token by next week?'}
+                    hot={true}
+                    eventEnd={new Date(currentDate.getTime() + 12 * 60000)}
+                />
+                <BetCard
+                    image={exampleBetImage}
+                    user={user}
+                    marketQuestion={'Will Elon Musk tweet about EVNT token by next week?'}
+                    hot={true}
+                    eventEnd={new Date(currentDate.getTime() + 12 * 60000)}
                 />
             </CarouselContainer>
         </div>

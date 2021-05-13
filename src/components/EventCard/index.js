@@ -14,9 +14,14 @@ const EventCard = ({ title, organizer, image, live, viewers, tags }) => {
             className={styles.eventCard}
         >
             <div
-                className={styles.eventCardBackground}
+                className={styles.eventCardBackgroundBlur}
                 style={getEventCardStyle()}
-            ></div>
+            >
+            </div>
+            <div
+                className={styles.eventCardBackground}
+            >
+            </div>
             <div>
                 {live && (
                     <>

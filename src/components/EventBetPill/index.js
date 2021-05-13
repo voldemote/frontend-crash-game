@@ -1,19 +1,13 @@
 import React           from 'react';
 import style           from './styles.module.scss';
 import TimeLeftCounter from '../TimeLeftCounter';
+import HotBetBadge     from '../HotBetBadge';
 
 const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     const getProfileStyle = () => {
         return {
             backgroundImage: 'url("' + user.profilePicture + '")',
         };
-    };
-    const renderHotBetTag = () => {
-        return (
-            <div className={style.hotBetTag}>
-                🔥 Hot Bet
-            </div>
-        );
     };
 
     const renderFooter = () => {
@@ -44,7 +38,7 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
                             {marketQuestion}
                         </p>
                     </div>
-                    {hotBet && renderHotBetTag()}
+                    {hotBet && <HotBetBadge />}
                 </div>
                 <div className={style.justify}>
                     <div className={style.input}>
