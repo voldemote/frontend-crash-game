@@ -1,9 +1,20 @@
 @import '../../styles/all';
 
-.headline
+.homeContainer
 {
-    color:       #ffffff;
-    font-family: $fontBold;
-    font-size:   24px;
-    margin:      8rem 0 1rem 0;
+    background-color: $colorPrimaryDark;
+    padding-bottom:   8rem;
+
+    .headline
+    {
+        color:       #ffffff;
+        font-family: $fontBold;
+        font-size:   24px;
+        margin:      8rem 0 1rem 0;
+    }
+
+    .betPillContainer
+    {
+        padding: 0 3rem;
+    }
 }

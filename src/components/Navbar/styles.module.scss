@@ -1,50 +1,76 @@
 @import '../../styles/all';
 
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    display: flex;
-    flex-direction: row;
+.navbar
+{
+    position:        absolute;
+    top:             0;
+    width:           100%;
+    height:          60px;
+    display:         flex;
+    flex-direction:  row;
     justify-content: space-between;
-    align-items: center;
-    padding: 3rem 3rem;
+    align-items:     center;
+    padding:         3rem 3rem;
+    z-index:         $zIndexNavbar;
 
-    img {
+    img
+    {
         margin-right: 2rem;
     }
 
-    .navbarItems {
-        display: flex;
+    .navbarItems
+    {
+        display:     flex;
         align-items: center;
 
-        a {
-            color: $colorWhite;
-            opacity: 0.5;
+        &.hideOnMobile
+        {
+            @media (max-width: $screen-xs-max)
+            {
+                display: none;
+            }
+        }
+
+        &:not(.hideOnMobile)
+        {
+            @media (max-width: $screen-xs-max)
+            {
+                width:           100%;
+                justify-content: space-between;
+                flex-direction:  row-reverse;
+            }
+        }
+
+        a
+        {
+            color:           $colorWhite;
+            opacity:         0.5;
             text-decoration: none;
-            padding: 0 0.5rem;
-            font-family: $fontLight;
+            padding:         0 0.5rem;
+            font-family:     $fontLight;
         }
 
-        button {
-            color: $colorWhite;
-            border: none;
+        button
+        {
+            color:            $colorWhite;
+            border:           none;
             background-color: transparent;
-            padding: 0 0.5rem;
-            font-family: $fontBold;
+            padding:          0 0.5rem;
+            font-family:      $fontBold;
         }
 
-        .profile {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            margin-left: 1rem;
+        .profile
+        {
+            height:           50px;
+            width:            50px;
+            border-radius:    50%;
+            margin-left:      1rem;
             background-color: $colorGrayLight;
         }
 
-        .active {
-            opacity: 1;
+        .active
+        {
+            opacity:     1;
             font-family: $fontBold;
         }
     }

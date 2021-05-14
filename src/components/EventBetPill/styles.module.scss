@@ -89,7 +89,7 @@
         {
             font-size:   10px;
             font-family: $fontLight;
-            color:       #120e27;
+            color:       $colorPrimaryDark;
         }
 
         input
@@ -154,7 +154,7 @@
     .goToEvent
     {
         font-family:     $fontLight;
-        color:           #120e27;
+        color:           $colorPrimaryDark;
         font-size:       0.6rem;
         text-decoration: none;
         margin:          0 0.5rem;

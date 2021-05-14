@@ -1,13 +1,20 @@
-import classNames          from 'classnames';
-import React, { Fragment } from 'react';
-import style               from './styles.module.scss';
-import darkModeLogo        from '../../data/images/logo-darkmode.svg';
+import React  from 'react';
+import styles from './styles.module.scss';
 
-const Header = () => {
+const Header = ({ backgroundImage }) => {
+    const getContainerStyle = () => {
+        return {
+            backgroundImage: 'url("' + backgroundImage + '")',
+        };
+    };
 
     return (
-        <div className={style.header}>
-
+        <div
+            className={styles.header}
+            style={getContainerStyle()}
+        >
+            <div className={styles.headerOverlay}>
+            </div>
         </div>
     );
 };

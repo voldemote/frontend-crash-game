@@ -11,41 +11,20 @@ import CarouselContainer     from '../../components/CarouselContainer';
 import BetCard               from '../../components/BetCard';
 
 const Home = () => {
-    const history = useHistory();
-
-    const responsive = {
-        superLargeDesktop: {
-            // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
-            items:      5,
-        },
-        desktop:           {
-            breakpoint: { max: 3000, min: 1024 },
-            items:      3,
-        },
-        tablet:            {
-            breakpoint: { max: 1024, min: 464 },
-            items:      2,
-        },
-        mobile:            {
-            breakpoint: { max: 464, min: 0 },
-            items:      1,
-        },
-    };
-
-    const currentDate       = new Date();
-    const user              = {
+    const currentDate           = new Date();
+    const user                  = {
         name:           'John Doe',
         profilePicture: ExampleProfilePicture,
     };
-    const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
-    const exampleBetImage   = 'https://static.dw.com/image/57473723_303.jpg';
+    const examplePreviewBgImage = 'https://thumbnails.mtb-news.de/cache/2000_1066_1_1_0/87/aHR0cHM6Ly93d3cubXRiLW5ld3MuZGUvbmV3cy93cC1jb250ZW50L3VwbG9hZHMvMjAyMC8wOS9iMzFjOTZjNzFkMWM1MTBiNjY1OGUwZmZmZTY5NjJlOWQyYmE0MDdmLXNjYWxlZC5qcGc.jpg';
+    const exampleEventImage     = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
+    const exampleBetImage       = 'https://static.dw.com/image/57473723_303.jpg';
 
     return (
-        <div style={{ backgroundColor: '#120e27', paddingBottom: '8rem' }}>
+        <div className={styles.homeContainer}>
             <Navbar />
-            <Header />
-            <div style={{ padding: '0 3rem' }}>
+            <Header backgroundImage={examplePreviewBgImage} />
+            <div className={styles.betPillContainer}>
                 <EventBetPill
                     user={user}
                     marketQuestion={'Who will win Red Bull Rampage?'}
