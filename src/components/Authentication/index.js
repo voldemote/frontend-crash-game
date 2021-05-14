@@ -32,7 +32,6 @@ const descriptionList = [
     { id: 1, text: 'Enter your Code here' },
     { id: 2, text: null },
     { id: 3, text: null },
-    { id: 4, text: 'You can start betting now!' },
 ];
 
 // Array of Button texts for the different signup steps
@@ -237,9 +236,13 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
     };
 
     const renderHeadline = () => {
-        const headline = titleList.find(
+        let headline = titleList.find(
             (item) => item.id === step,
-        ).text;
+        );
+
+        if (headline) {
+            headline = headline.text;
+        }
 
         if (headline && headline.length) {
             return (
@@ -256,9 +259,13 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
     };
 
     const renderDescription = () => {
-        const description = descriptionList.find(
+        let description = descriptionList.find(
             (item) => item.id === step,
-        ).text;
+        );
+
+        if (description) {
+            description = description.text;
+        }
 
         if (description && description.length) {
             return (

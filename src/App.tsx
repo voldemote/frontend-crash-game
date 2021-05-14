@@ -2,6 +2,7 @@ import './styles.module.scss';
 import AlertBox                    from './components/AlertBox';
 import Authentication              from './screens/Authentication';
 import Home                        from './screens/Home';
+import Logout                      from './screens/Logout';
 import PrivacyPolicy               from './screens/PrivacyPolicy';
 import Routes                      from './constants/Routes';
 import store                       from './store';
@@ -20,6 +21,11 @@ const App = () => {
             <ConnectedRouter history={history}>
                 <AlertBox />
                 <Switch>
+                    <Route
+                        exact
+                        path={Routes.logout}
+                        component={Logout}
+                    />
                     <Route
                         exact
                         path={Routes.welcome}

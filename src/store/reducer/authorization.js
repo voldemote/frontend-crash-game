@@ -82,6 +82,7 @@ const saveAdditionalInfoSucceeded = (action, state) => {
 };
 
 const logout = (action, state) => {
+    console.debug(initialState);
     return update(state, {
         $set: initialState,
     });
@@ -90,11 +91,12 @@ const logout = (action, state) => {
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
+        case AuthorizationTypes.LOGOUT:                         return logout(action, state);
         case AuthorizationTypes.REQUEST_SMS_SUCCEEDED:          return requestSmsSucceeded(action, state);
-        case AuthorizationTypes.VERIFY_SMS_SUCCEEDED:           return requestSmsVerified(action, state);
-        case AuthorizationTypes.SET_NAME:                       return setName(action, state);
-        case AuthorizationTypes.SET_EMAIL:                      return setEmail(action, state);
         case AuthorizationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED: return saveAdditionalInfoSucceeded(action, state);
+        case AuthorizationTypes.SET_EMAIL:                      return setEmail(action, state);
+        case AuthorizationTypes.SET_NAME:                       return setName(action, state);
+        case AuthorizationTypes.VERIFY_SMS_SUCCEEDED:           return requestSmsVerified(action, state);
         default:                                                return state;
         // @formatter:on
     }
