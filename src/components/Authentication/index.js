@@ -3,13 +3,15 @@ import Button                   from '../Button';
 import ButtonTheme              from '../Button/ButtonTheme';
 import CodeInputFields          from '../CodeInputFields';
 import InputBox                 from '../InputBox';
+import Link                     from '../Link';
+import Routes                   from '../../constants/Routes';
 import StepBar                  from '../StepBar';
 import styles                   from './styles.module.scss';
 import { AuthorizationActions } from '../../store/actions/authorization';
 import { connect }              from 'react-redux';
 import { requestSms }           from '../../store/actions/authorization';
-import { useEffect, useState }  from 'react';
 import { useIsMount }           from '../../helper/useIsMount';
+import { useState }             from 'react';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -82,57 +84,50 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
     const [confirm, setConfirm] = useState(false);
     const [error, setError]     = useState(null);
 
-    // Using useEffect to validate the users Input on all steps
-    useEffect(() => {
-        const validation = () => {
-            switch (step) {
-                case 0:
-                    if (country && phoneNumber) {
-                        setError(null);
-                        setConfirm(true);
-                    } else {
-                        setError('Please enter a valid phone number!');
-                        setConfirm(false);
-                    }
+    const validation = () => {
+        switch (step) {
+            case 0:
+                if (country && phoneNumber) {
+                    setError(null);
+                    setConfirm(true);
+                } else {
+                    setError('Please enter a valid phone number!');
+                    setConfirm(false);
+                }
 
-                    break;
-                case 1:
-                    if (code.length === codeFieldLength) {
-                        setError(null);
-                        setConfirm(true);
-                    } else {
-                        setError('Please enter a valid code!');
-                        setConfirm(false);
-                    }
+                break;
+            case 1:
+                if (code.length === codeFieldLength) {
+                    setError(null);
+                    setConfirm(true);
+                } else {
+                    setError('Please enter a valid code!');
+                    setConfirm(false);
+                }
 
-                    break;
-                case 2:
-                    if (firstName) {
-                        setError(null);
-                        setConfirm(true);
-                    } else {
-                        setError('Please enter your name!');
-                        setConfirm(false);
-                    }
+                break;
+            case 2:
+                if (firstName) {
+                    setError(null);
+                    setConfirm(true);
+                } else {
+                    setError('Please enter your name!');
+                    setConfirm(false);
+                }
 
-                    break;
-                case 3:
-                    if (email) {
-                        setError(null);
-                        setConfirm(true);
-                    } else {
-                        setError('Please enter a valid email!');
-                        setConfirm(false);
-                    }
+                break;
+            case 3:
+                if (email) {
+                    setError(null);
+                    setConfirm(true);
+                } else {
+                    setError('Please enter a valid email!');
+                    setConfirm(false);
+                }
 
-                    break;
-            }
-        };
-
-        if (!isMount) {
-            validation();
+                break;
         }
-    });
+    };
 
     const resendRequestSms = () => {
         requestSms();
@@ -140,6 +135,8 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
     // Function to handle the step bar
     const onConfirm = () => {
+        validation();
+
         if (step <= 3) {
             if (confirm) {
                 if (step === 0) {
@@ -307,6 +304,19 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
         );
     };
 
+    const renderTermsAgreement = () => {
+        return (
+            <p className={styles.authenticationTermsAgreement}>
+                By continuing I accept the <Link to={Routes.termsAndConditions}>
+                Terms and Conditions
+            </Link> and <Link to={Routes.privacyPolicy}>
+                Privacy Policy
+            </Link>.
+                Also I confirm that I am over 18 years old.
+            </p>
+        );
+    };
+
     return (
         <div className={styles.authenticationContainer}>
             <div className={styles.authenticationContentContainer}>
@@ -316,6 +326,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                 {renderInputBoxes()}
                 {renderResendCodeContainer()}
                 {renderButton()}
+                {renderTermsAgreement()}
             </div>
         </div>
     );

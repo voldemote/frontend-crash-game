@@ -47,14 +47,6 @@ const Welcome = () => {
             </div>
             <div className={styles.welcomeAuthContainer}>
                 <Authentication />
-                <p className={styles.authenticationSmallPrint}>
-                    By continuing I accept the <Link to={Routes.termsAndConditions}>
-                    Terms and Conditions
-                </Link> and <Link to={Routes.privacyPolicy}>
-                    Privacy Policy
-                </Link>.
-                    Also I confirm that I am over 18 years old.
-                </p>
             </div>
         </div>
     );
