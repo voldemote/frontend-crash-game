@@ -1,9 +1,9 @@
-import * as Api                 from '../../api';
-import AuthState                from '../../constants/AuthState';
-import Routes                   from '../../constants/Routes';
-import { AuthorizationActions } from '../actions/authorization';
-import { push }                 from 'connected-react-router';
-import { put, call, select }    from 'redux-saga/effects';
+import * as Api                  from '../../api';
+import AuthState                 from '../../constants/AuthState';
+import Routes                    from '../../constants/Routes';
+import { AuthenticationActions } from '../actions/authentication';
+import { push }                  from 'connected-react-router';
+import { put, call, select }     from 'redux-saga/effects';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
@@ -12,7 +12,7 @@ const routesToRedirectWithoutSession = [
 ];
 
 const requestSms = function* (action) {
-    const statePhone = yield select(state => state.authorization.phone);
+    const statePhone = yield select(state => state.authentication.phone);
     let phone        = action.phone;
 
     if (!phone) {
@@ -32,20 +32,20 @@ const requestSms = function* (action) {
         if (response) {
             const data = response.data;
 
-            yield put(AuthorizationActions.requestSmsSucceeded({
+            yield put(AuthenticationActions.requestSmsSucceeded({
                 ...data,
             }));
             return;
         }
     }
 
-    yield put(AuthorizationActions.requestSmsFailed({
+    yield put(AuthenticationActions.requestSmsFailed({
         phone,
     }));
 };
 
 const verifySms = function* (action) {
-    const phone    = yield select(state => state.authorization.phone);
+    const phone    = yield select(state => state.authentication.phone);
     const smsToken = action.smsToken;
 
     if (phone) {
@@ -61,20 +61,20 @@ const verifySms = function* (action) {
 
             Api.setToken(data.session);
 
-            yield put(AuthorizationActions.verifySmsSucceeded({
+            yield put(AuthenticationActions.verifySmsSucceeded({
                 ...data,
             }));
         } else {
-            yield put(AuthorizationActions.verifySmsFailed());
+            yield put(AuthenticationActions.verifySmsFailed());
         }
     } else {
-        yield put(AuthorizationActions.verifySmsFailed());
+        yield put(AuthenticationActions.verifySmsFailed());
     }
 };
 
 const setAdditionalInformation = function* (action) {
-    const email = yield select(state => state.authorization.email);
-    const name  = yield select(state => state.authorization.name);
+    const email = yield select(state => state.authentication.email);
+    const name  = yield select(state => state.authentication.name);
 
     const response = yield call(
         Api.saveAdditionalInfo,
@@ -85,11 +85,11 @@ const setAdditionalInformation = function* (action) {
     if (response) {
         const data = response.data;
 
-        yield put(AuthorizationActions.saveAdditionalInfoSucceeded({
+        yield put(AuthenticationActions.saveAdditionalInfoSucceeded({
             ...data,
         }));
     } else {
-        yield put(AuthorizationActions.saveAdditionalInfoFailed());
+        yield put(AuthenticationActions.saveAdditionalInfoFailed());
     }
 };
 
@@ -106,9 +106,9 @@ const logout = function* () {
 const restoreToken = function* () {
     const browserPathname = window.location.pathname;
     const pathname        = yield select(state => state.router.location.pathname);
-    const authorization   = yield select(state => state.authorization);
-    const token           = authorization.token;
-    const authState       = authorization.authState;
+    const authentication  = yield select(state => state.authentication);
+    const token           = authentication.token;
+    const authState       = authentication.authState;
 
     if (token) {
         Api.setToken(token);

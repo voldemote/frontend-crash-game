@@ -1,18 +1,17 @@
-import AuthState                from '../../constants/AuthState';
-import Button                   from '../Button';
-import ButtonTheme              from '../Button/ButtonTheme';
-import CodeInputFields          from '../CodeInputFields';
-import InputBox                 from '../InputBox';
-import Link                     from '../Link';
-import Routes                   from '../../constants/Routes';
-import StepBar                  from '../StepBar';
-import styles                   from './styles.module.scss';
-import { AuthorizationActions } from '../../store/actions/authorization';
-import { connect }              from 'react-redux';
-import { requestSms }           from '../../store/actions/authorization';
-import { useIsMount }           from '../../helper/useIsMount';
-import { useState }             from 'react';
-import { useEffect }            from 'react';
+import AuthState                 from '../../constants/AuthState';
+import Button                    from '../Button';
+import ButtonTheme               from '../Button/ButtonTheme';
+import CodeInputFields           from '../CodeInputFields';
+import InputBox                  from '../InputBox';
+import Link                      from '../Link';
+import Routes                    from '../../constants/Routes';
+import StepBar                   from '../StepBar';
+import styles                    from './styles.module.scss';
+import { AuthenticationActions } from '../../store/actions/authentication';
+import { connect }               from 'react-redux';
+import { requestSms }            from '../../store/actions/authentication';
+import { useEffect, useState }   from 'react';
+import { useIsMount }            from '../../helper/useIsMount';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -44,7 +43,7 @@ const confirmBtnList = [
 
 const codeFieldLength = 6;
 
-const Authentication = ({ authState, requestSms, verifySms, setName, setEmail }) => {
+const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, loading }) => {
     const getStepByAuthState = () => {
         switch (authState) {
             case AuthState.LOGGED_OUT:
@@ -137,7 +136,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
         requestSms();
     };
 
-    // Function to handle the step bar
     const onConfirm = () => {
         validateInput();
 
@@ -195,6 +193,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                     theme={ButtonTheme.authenticationScreenButton}
                     className={styles.authenticationButton}
                     onClick={onConfirm}
+                    disabled={loading}
                 >
                     {confirmBtnList.find((item) => item.id === step).text}
                 </Button>
@@ -361,23 +360,24 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
 function mapStateToProps (state) {
     return {
-        authState: state.authorization.authState,
+        authState: state.authentication.authState,
+        loading:   state.authentication.loading,
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         requestSms: (phone) => {
-            dispatch(AuthorizationActions.requestSms(phone));
+            dispatch(AuthenticationActions.requestSms(phone));
         },
         verifySms:  (smsToken) => {
-            dispatch(AuthorizationActions.verifySms(smsToken));
+            dispatch(AuthenticationActions.verifySms(smsToken));
         },
         setName:    (name) => {
-            dispatch(AuthorizationActions.setName(name));
+            dispatch(AuthenticationActions.setName(name));
         },
         setEmail:   (email) => {
-            dispatch(AuthorizationActions.setEmail(email));
+            dispatch(AuthenticationActions.setEmail(email));
         },
     };
 };

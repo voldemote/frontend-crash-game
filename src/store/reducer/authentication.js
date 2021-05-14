@@ -1,8 +1,9 @@
-import update                 from 'immutability-helper';
-import { AuthorizationTypes } from '../actions/authorization';
-import AuthState              from '../../constants/AuthState';
+import update                  from 'immutability-helper';
+import { AuthenticationTypes } from '../actions/authentication';
+import AuthState               from '../../constants/AuthState';
 
 const initialState = {
+    loading:   false,
     userId:    null,
     name:      '',
     phone:     '',
@@ -13,6 +14,9 @@ const initialState = {
 
 const requestSmsSucceeded = (action, state) => {
     return update(state, {
+        loading:   {
+            $set: false,
+        },
         phone:     {
             $set: action.phone,
         },
@@ -36,6 +40,9 @@ const requestSmsVerified = (action, state) => {
     }
 
     return update(state, {
+        loading:   {
+            $set: false,
+        },
         userId:    {
             $set: action.userId,
         },
@@ -67,7 +74,10 @@ const setName = (action, state) => {
 
 const setEmail = (action, state) => {
     return update(state, {
-        email: {
+        loading: {
+            $set: true,
+        },
+        email:   {
             $set: action.email,
         },
     });
@@ -75,6 +85,9 @@ const setEmail = (action, state) => {
 
 const saveAdditionalInfoSucceeded = (action, state) => {
     return update(state, {
+        loading:   {
+            $set: false,
+        },
         authState: {
             $set: AuthState.LOGGED_IN,
         },
@@ -82,21 +95,41 @@ const saveAdditionalInfoSucceeded = (action, state) => {
 };
 
 const logout = (action, state) => {
-    console.debug(initialState);
     return update(state, {
         $set: initialState,
+    });
+};
+
+const resetLoading = (action, state) => {
+    return update(state, {
+        loading: {
+            $set: false,
+        },
+    });
+};
+
+const setLoading = (action, state) => {
+    return update(state, {
+        loading: {
+            $set: true,
+        },
     });
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
-        case AuthorizationTypes.LOGOUT:                         return logout(action, state);
-        case AuthorizationTypes.REQUEST_SMS_SUCCEEDED:          return requestSmsSucceeded(action, state);
-        case AuthorizationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED: return saveAdditionalInfoSucceeded(action, state);
-        case AuthorizationTypes.SET_EMAIL:                      return setEmail(action, state);
-        case AuthorizationTypes.SET_NAME:                       return setName(action, state);
-        case AuthorizationTypes.VERIFY_SMS_SUCCEEDED:           return requestSmsVerified(action, state);
+        case AuthenticationTypes.LOGOUT:                         return logout(action, state);
+        case AuthenticationTypes.SET_EMAIL:                      return setEmail(action, state);
+        case AuthenticationTypes.SET_NAME:                       return setName(action, state);
+        case AuthenticationTypes.REQUEST_SMS_SUCCEEDED:          return requestSmsSucceeded(action, state);
+        case AuthenticationTypes.VERIFY_SMS_SUCCEEDED:           return requestSmsVerified(action, state);
+        case AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED: return saveAdditionalInfoSucceeded(action, state);
+        case AuthenticationTypes.REQUEST_SMS:
+        case AuthenticationTypes.VERIFY_SMS:                     return setLoading(action, state);
+        case AuthenticationTypes.REQUEST_SMS_FAILED:
+        case AuthenticationTypes.VERIFY_SMS_FAILED:
+        case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:   return resetLoading(action, state);
         default:                                                return state;
         // @formatter:on
     }

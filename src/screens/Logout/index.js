@@ -1,7 +1,7 @@
-import React                    from 'react';
-import { AlertActions }         from '../../store/actions/alert';
-import { AuthorizationActions } from '../../store/actions/authorization';
-import { connect }              from 'react-redux';
+import React                     from 'react';
+import { AlertActions }          from '../../store/actions/alert';
+import { AuthenticationActions } from '../../store/actions/authentication';
+import { connect }               from 'react-redux';
 
 const Logout = ({ removeAlerts, logout }) => {
     removeAlerts();
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(AlertActions.removeAlerts());
         },
         logout:       () => {
-            dispatch(AuthorizationActions.logout());
+            dispatch(AuthenticationActions.logout());
         },
     };
 };

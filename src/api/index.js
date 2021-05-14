@@ -1,7 +1,6 @@
-import * as ApiUrls                            from '../constants/Api';
-import axios                                   from 'axios';
-import ContentTypes                            from '../constants/ContentTypes';
-import { API_AUTHORIZATION_SAVE_ADD_INFO_URL } from '../constants/Api';
+import * as ApiUrls from '../constants/Api';
+import axios        from 'axios';
+import ContentTypes from '../constants/ContentTypes';
 
 const createInstance = (host, apiPath) => {
     return axios.create({
@@ -17,14 +16,14 @@ const createInstance = (host, apiPath) => {
 const Api = createInstance(ApiUrls.BACKEND_URL, '/');
 
 const setToken = (token) => {
-    const authorization = 'Bearer ' + token;
+    const authentication = 'Bearer ' + token;
 
-    Api.defaults.headers.common['Authorization'] = authorization;
+    Api.defaults.headers.common['Authentication'] = authentication;
 };
 
 const requestSms = (phone) => {
     return Api.post(
-        ApiUrls.API_AUTHORIZATION_REQUEST_SMS_URL,
+        ApiUrls.API_AUTHENTICATION_REQUEST_SMS_URL,
         {
             phone,
         },
@@ -34,7 +33,7 @@ const requestSms = (phone) => {
 
 const verifySms = (phone, smsToken) => {
     return Api.post(
-        ApiUrls.API_AUTHORIZATION_VERIFY_SMS_URL,
+        ApiUrls.API_AUTHENTICATION_VERIFY_SMS_URL,
         {
             phone,
             smsToken,
@@ -45,7 +44,7 @@ const verifySms = (phone, smsToken) => {
 
 const saveAdditionalInfo = (name, email) => {
     return Api.post(
-        ApiUrls.API_AUTHORIZATION_SAVE_ADD_INFO_URL,
+        ApiUrls.API_AUTHENTICATION_SAVE_ADD_INFO_URL,
         {
             name,
             email,

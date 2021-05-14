@@ -4,7 +4,7 @@ import React           from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
 
-const Button = ({ children, className, theme, onClick }) => {
+const Button = ({ children, className, theme, onClick, disabled }) => {
     return (
         <span
             className={classNames(
@@ -17,8 +17,14 @@ const Button = ({ children, className, theme, onClick }) => {
                         [ButtonTheme.welcomeScreenButton]:        style.welcomeScreenButton,
                     },
                 ),
+                SelectionHelper.get(
+                    disabled,
+                    {
+                        [true]: style.buttonDisabled,
+                    },
+                ),
             )}
-            onClick={onClick}
+            onClick={disabled ? null : onClick}
         >
             {children}
         </span>

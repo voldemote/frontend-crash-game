@@ -3,29 +3,29 @@ import { REHYDRATE }  from 'redux-persist';
 import { takeLatest } from 'redux-saga/effects';
 
 // Types
-import { AuthorizationTypes } from '../actions/authorization';
+import { AuthenticationTypes } from '../actions/authentication';
 
 // Actions
 
 // Sagas
-import AuthorizationSagas from './authorization';
-import AlertSagas         from './alert';
+import AuthenticationSagas from './authentication';
+import AlertSagas          from './alert';
 
 const root = function* () {
     yield all([
         // @formatter:off
-        takeLatest([AuthorizationTypes.LOGOUT],                         AuthorizationSagas.logout),
-        takeLatest([AuthorizationTypes.VERIFY_SMS],                     AuthorizationSagas.verifySms),
-        takeLatest([AuthorizationTypes.REQUEST_SMS],                    AuthorizationSagas.requestSms),
-        takeLatest([AuthorizationTypes.SET_EMAIL],                      AuthorizationSagas.setAdditionalInformation),
-        takeLatest([AuthorizationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED], AuthorizationSagas.saveAdditionalInformationSucceeded),
+        takeLatest([AuthenticationTypes.LOGOUT],                         AuthenticationSagas.logout),
+        takeLatest([AuthenticationTypes.VERIFY_SMS],                     AuthenticationSagas.verifySms),
+        takeLatest([AuthenticationTypes.REQUEST_SMS],                    AuthenticationSagas.requestSms),
+        takeLatest([AuthenticationTypes.SET_EMAIL],                      AuthenticationSagas.setAdditionalInformation),
+        takeLatest([AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED], AuthenticationSagas.saveAdditionalInformationSucceeded),
         takeLatest([
-            AuthorizationTypes.REQUEST_SMS_FAILED,
-            AuthorizationTypes.VERIFY_SMS_FAILED,
-            AuthorizationTypes.SAVE_ADDITIONAL_INFO_FAILED,
-        ],                                                                     AlertSagas.handleFail),
-        takeLatest([REHYDRATE],                                         AuthorizationSagas.restoreToken),
-        takeLatest([REHYDRATE],                                         rehydrationDone),
+            AuthenticationTypes.REQUEST_SMS_FAILED,
+            AuthenticationTypes.VERIFY_SMS_FAILED,
+            AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
+        ],                                                                      AlertSagas.handleFail),
+        takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
+        takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
     ]);
 };

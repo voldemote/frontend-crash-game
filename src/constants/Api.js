@@ -29,9 +29,9 @@ export default class Api {
     }
 }
 
-export const PRODUCTION_BACKEND_URL              = 'https://wallfair.herokuapp.com';
-export const LOCAL_BACKEND_URL                   = 'http://localhost:8000';
-export const BACKEND_URL                         = Api.getBackendUrl();
-export const API_AUTHORIZATION_REQUEST_SMS_URL   = 'api/user/login';
-export const API_AUTHORIZATION_VERIFY_SMS_URL    = 'api/user/verifyLogin';
-export const API_AUTHORIZATION_SAVE_ADD_INFO_URL = 'api/user/saveAdditionalInformation';
+export const PRODUCTION_BACKEND_URL               = 'https://wallfair.herokuapp.com';
+export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
+export const BACKEND_URL                          = Api.getBackendUrl();
+export const API_AUTHENTICATION_REQUEST_SMS_URL   = 'api/user/login';
+export const API_AUTHENTICATION_VERIFY_SMS_URL    = 'api/user/verifyLogin';
+export const API_AUTHENTICATION_SAVE_ADD_INFO_URL = 'api/user/saveAdditionalInformation';
