@@ -12,6 +12,7 @@ import { connect }              from 'react-redux';
 import { requestSms }           from '../../store/actions/authorization';
 import { useIsMount }           from '../../helper/useIsMount';
 import { useState }             from 'react';
+import { useEffect }            from 'react';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -45,7 +46,6 @@ const confirmBtnList = [
 const codeFieldLength = 6;
 
 const Authentication = ({ authState, requestSms, verifySms, setName, setEmail }) => {
-    // State for the Signup / Login State the user currently is on
     const getStepByAuthState = () => {
         switch (authState) {
             case AuthState.LOGGED_OUT:
@@ -65,69 +65,74 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
     const isMount = useIsMount();
 
-    // State for the Area Code of the users telephone number
-    const [country, setCountry] = useState('49');
-
-    // State for the users telephone number
+    const [country, setCountry]         = useState('49');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [code, setCode]               = useState([]);
+    const [firstName, setFirstName]     = useState('');
+    const [email, setInputEmail]        = useState('');
+    const [error, setError]             = useState(null);
 
-    // State for the code the user has to input to validate
-    const [code, setCode] = useState([]);
+    const phoneNumberIsValid = () => {
+        return country && phoneNumber && phoneNumber.length > 3;
+    };
 
-    // State for the users First name that has to be given when signing up
-    const [firstName, setFirstName] = useState('');
+    const codeIsValid = () => {
+        return code.length === codeFieldLength;
+    };
 
-    // State for the users E-Mail Address that has to be given when signing up
-    const [email, setInputEmail] = useState('');
+    const emailIsValid = () => {
+        return email && email.length >= 4;
+    };
 
-    // State to check the inputs of the user and break the process if something is wrong
-    const [confirm, setConfirm] = useState(false);
-    const [error, setError]     = useState(null);
+    const nameIsValid = () => {
+        return firstName && firstName.length >= 3;
+    };
 
-    const validation = () => {
+    const validateInput = () => {
         switch (step) {
             case 0:
-                if (country && phoneNumber) {
+                if (phoneNumberIsValid()) {
                     setError(null);
-                    setConfirm(true);
                 } else {
                     setError('Please enter a valid phone number!');
-                    setConfirm(false);
                 }
 
                 break;
             case 1:
-                if (code.length === codeFieldLength) {
+                if (codeIsValid()) {
                     setError(null);
-                    setConfirm(true);
                 } else {
                     setError('Please enter a valid code!');
-                    setConfirm(false);
                 }
 
                 break;
             case 2:
-                if (firstName) {
+                if (nameIsValid()) {
                     setError(null);
-                    setConfirm(true);
                 } else {
                     setError('Please enter your name!');
-                    setConfirm(false);
                 }
 
                 break;
             case 3:
-                if (email) {
+                if (emailIsValid()) {
                     setError(null);
-                    setConfirm(true);
                 } else {
                     setError('Please enter a valid email!');
-                    setConfirm(false);
                 }
 
                 break;
         }
     };
+
+    useEffect(
+        () => {
+            if (!isMount) {
+                validateInput();
+            }
+        },
+        [country, phoneNumber, code, firstName],
+    );
 
     const resendRequestSms = () => {
         requestSms();
@@ -135,26 +140,40 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
 
     // Function to handle the step bar
     const onConfirm = () => {
-        validation();
+        validateInput();
 
-        if (step <= 3) {
-            if (confirm) {
-                if (step === 0) {
+        switch (step) {
+            case 0:
+                if (phoneNumberIsValid()) {
                     const phone = country + phoneNumber;
 
                     requestSms({ phone });
-                } else if (step === 1) {
+                }
+
+                break;
+
+            case 1:
+                if (codeIsValid()) {
                     const smsToken = code;
 
                     verifySms({ smsToken });
-                } else if (step === 2) {
+                }
+
+                break;
+            case 2:
+                if (nameIsValid()) {
                     const name = firstName;
 
                     setName({ name });
-                } else {
+                }
+
+                break;
+            case 3:
+                if (emailIsValid()) {
                     setEmail({ email });
                 }
-            }
+
+                break;
         }
     };
 
@@ -275,10 +294,11 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail })
                 )}
                 {step === 1 && (
                     <CodeInputFields
-                        fields={6}
+                        fields={codeFieldLength}
                         required={true}
                         autoFocus={true}
-                        onComplete={(val) => setCode(val)}
+                        onComplete={onConfirm}
+                        onChange={setCode}
                     />
                 )}
                 {step === 2 && (
