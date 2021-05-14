@@ -2,10 +2,16 @@ import React                     from 'react';
 import { AlertActions }          from '../../store/actions/alert';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect }               from 'react-redux';
+import { useEffect }             from 'react';
 
 const Logout = ({ removeAlerts, logout }) => {
-    removeAlerts();
-    logout();
+    useEffect(
+        () => {
+            removeAlerts();
+            logout();
+        },
+        [],
+    );
 
     return <></>;
 };

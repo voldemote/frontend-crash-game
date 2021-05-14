@@ -18,7 +18,10 @@ const root = function* () {
         takeLatest([AuthenticationTypes.VERIFY_SMS],                     AuthenticationSagas.verifySms),
         takeLatest([AuthenticationTypes.REQUEST_SMS],                    AuthenticationSagas.requestSms),
         takeLatest([AuthenticationTypes.SET_EMAIL],                      AuthenticationSagas.setAdditionalInformation),
-        takeLatest([AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED], AuthenticationSagas.saveAdditionalInformationSucceeded),
+        takeLatest([
+            AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
+            AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED,
+        ],                                                                      AuthenticationSagas.authenticationSucceeded),
         takeLatest([
             AuthenticationTypes.REQUEST_SMS_FAILED,
             AuthenticationTypes.VERIFY_SMS_FAILED,

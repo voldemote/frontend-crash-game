@@ -57,7 +57,6 @@ const verifySms = function* (action) {
 
         if (response) {
             const data = response.data;
-            console.debug(response, data);
 
             Api.setToken(data.session);
 
@@ -93,8 +92,12 @@ const setAdditionalInformation = function* (action) {
     }
 };
 
-const saveAdditionalInformationSucceeded = function* (action) {
-    yield put(push(afterLoginRoute));
+const authenticationSucceeded = function* (action) {
+    const authState = yield select(state => state.authentication.authState);
+
+    if (authState === AuthState.LOGGED_IN) {
+        yield put(push(afterLoginRoute));
+    }
 };
 
 const logout = function* () {
@@ -134,7 +137,7 @@ export default {
     requestSms,
     verifySms,
     setAdditionalInformation,
-    saveAdditionalInformationSucceeded,
+    authenticationSucceeded,
     logout,
     restoreToken,
 };
