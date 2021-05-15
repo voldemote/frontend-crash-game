@@ -16,7 +16,7 @@ const Home = () => {
         name:           'John Doe',
         profilePicture: ExampleProfilePicture,
     };
-    const examplePreviewBgImage = 'https://thumbnails.mtb-news.de/cache/2000_1066_1_1_0/87/aHR0cHM6Ly93d3cubXRiLW5ld3MuZGUvbmV3cy93cC1jb250ZW50L3VwbG9hZHMvMjAyMC8wOS9iMzFjOTZjNzFkMWM1MTBiNjY1OGUwZmZmZTY5NjJlOWQyYmE0MDdmLXNjYWxlZC5qcGc.jpg';
+    const examplePreviewBgImage = 'https://img.redbull.com/images/c_limit,w_1500,h_1000,f_auto,q_auto/redbullcom/2019/10/28/47151ddd-f5ad-48d9-a24a-6189a647cc1f/redbullrampage_2019_utah_landscape_hero';
     const exampleEventImage     = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
     const exampleBetImage       = 'https://static.dw.com/image/57473723_303.jpg';
 

@@ -2,6 +2,7 @@ import React           from 'react';
 import style           from './styles.module.scss';
 import TimeLeftCounter from '../TimeLeftCounter';
 import HotBetBadge     from '../HotBetBadge';
+import classNames      from 'classnames';
 
 const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     const getProfileStyle = () => {
@@ -24,7 +25,12 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     return (
         <div className={style.pill}>
             <div className={style.pillContent}>
-                <div className={style.justify}>
+                <div
+                    className={classNames(
+                        style.justify,
+                        style.profileContainer,
+                    )}
+                >
                     <div
                         className={style.profile}
                         style={getProfileStyle()}
@@ -38,8 +44,11 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
                             {marketQuestion}
                         </p>
                     </div>
-                    {hotBet && <HotBetBadge />}
+                    <div className={style.hotBetBadgeContainer}>
+                        {hotBet && <HotBetBadge />}
+                    </div>
                 </div>
+                <hr className={style.divider} />
                 <div className={style.justify}>
                     <div className={style.input}>
                         <label for="amount">Your bet:</label>
