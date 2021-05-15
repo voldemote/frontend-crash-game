@@ -23,7 +23,11 @@ const Home = () => {
     return (
         <div className={styles.homeContainer}>
             <Navbar />
-            <Header backgroundImage={examplePreviewBgImage} />
+            <Header
+                backgroundImage={examplePreviewBgImage}
+                title={'RedBull Rampage 2021 LIVE'}
+                tags={['sports', 'redbull']}
+            />
             <div className={styles.betPillContainer}>
                 <EventBetPill
                     user={user}

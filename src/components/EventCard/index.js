@@ -2,6 +2,7 @@ import React       from 'react';
 import styles      from './styles.module.scss';
 import LiveBadge   from '../LiveBadge';
 import ViewerBadge from '../ViewerBadge';
+import Tags        from '../Tags';
 
 const EventCard = ({ title, organizer, image, live, viewers, tags }) => {
     const getEventCardStyle = () => {
@@ -36,13 +37,7 @@ const EventCard = ({ title, organizer, image, live, viewers, tags }) => {
                     <br />
                     {organizer}
                 </span>
-                <div className={styles.tags}>
-                    {
-                        tags.map(
-                            (tag) => <span>#{tag}</span>,
-                        )
-                    }
-                </div>
+                <Tags tags={tags} />
             </div>
         </div>
     );

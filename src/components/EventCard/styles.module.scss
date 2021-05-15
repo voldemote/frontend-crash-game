@@ -42,19 +42,4 @@
     {
         font-family: $fontBold;
     }
-
-    .tags
-    {
-        display:         flex;
-        justify-content: flex-start;
-        align-items:     center;
-
-        span
-        {
-            display:      inline-block;
-            color:        #bebebe;
-            font-size:    12px;
-            margin-right: 0.5rem;
-        }
-    }
 }
