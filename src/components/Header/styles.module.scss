@@ -40,13 +40,17 @@
         .title
         {
             margin-bottom:  25px;
-            width:          400px;
             font-size:      40px;
             font-weight:    bold;
             font-stretch:   normal;
             font-style:     normal;
             line-height:    1.07;
             letter-spacing: 1px;
+
+            @media (min-width: 400px)
+            {
+                width: 400px;
+            }
         }
     }
 }
