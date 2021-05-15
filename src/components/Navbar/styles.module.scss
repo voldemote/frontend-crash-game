@@ -62,15 +62,25 @@
             background-color: transparent;
             padding:          0 0.5rem;
             font-family:      $fontBold;
+            text-align:       right;
+
+            span {
+                display:         block;
+                font-family:     $fontLight;
+                color:           $colorGrayLight2 !important;
+            }
         }
 
         .profile
         {
-            height:           50px;
-            width:            50px;
-            border-radius:    50%;
-            margin-left:      1rem;
-            background-color: $colorGrayLight;
+            height:              50px;
+            width:               50px;
+            border-radius:       50%;
+            background-color:    $colorGrayLight;
+            margin:              0 0.5rem;
+            background-size:     cover;
+            background-position: center center;
+            border: 2px solid    $colorWhite;
         }
 
         .active

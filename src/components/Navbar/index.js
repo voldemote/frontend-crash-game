@@ -3,7 +3,13 @@ import style               from './styles.module.scss';
 import darkModeLogo        from '../../data/images/logo-darkmode.svg';
 import classNames          from 'classnames';
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
+    const getProfileStyle = () => {
+        return {
+            backgroundImage: 'url("' + user.profilePicture + '")',
+        };
+    };
+
     return (
         <div className={style.navbar}>
             <div
@@ -26,8 +32,11 @@ const Navbar = () => {
                 <a href="/">My Wallet</a>
             </div>
             <div className={style.navbarItems}>
-                <button onClick={true}>500 EVNT</button>
-                <div className={style.profile}></div>
+                <button onClick={true}>
+                    <span>Your actual Balance</span>
+                    500 EVNT
+                </button>
+                <div className={style.profile} style={getProfileStyle()}></div>
             </div>
         </div>
     );

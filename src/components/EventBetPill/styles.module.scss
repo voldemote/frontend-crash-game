@@ -42,11 +42,18 @@
         flex-direction: row;
     }
 
+    .label
+    {
+        font-size:   10px;
+        font-family: $fontLight;
+        color:       $colorPrimaryDark;
+    }
+
     .justify
     {
         display:         flex;
         flex-direction:  column;
-        align-items:     flex-start;
+        align-items:     center;
         justify-content: space-between;
 
         @media (min-width: $screen-sm)
@@ -60,6 +67,14 @@
         {
             flex-direction: row;
             flex-flow:      wrap;
+
+            span
+            {
+                display:     block;
+                font-family: $fontLight;
+                color:       $colorGrayLight2;
+                font-size:   12px;
+            }
 
             @media (min-width: $screen-sm)
             {
@@ -96,31 +111,29 @@
 
     .profile
     {
-        height:              50px;
-        width:               50px;
+        height:              25px;
+        width:               25px;
         border-radius:       50%;
+        margin-right:        0.5rem;
         background-color:    $colorGrayLight;
-        margin:              0 0.5rem;
         background-size:     cover;
         background-position: center center;
+
+        @media (min-width: $screen-sm)
+        {
+            height: 50px;
+            width:  50px;
+        }
     }
 
     .desc
     {
-        margin: 0 0.5rem;
+        margin: 1rem 0;
 
         p
         {
             display:     block;
             font-family: $fontBold;
-        }
-
-        span
-        {
-            display:     block;
-            font-family: $fontLight;
-            color:       $colorGrayLight2;
-            font-size:   12px;
         }
     }
 
@@ -135,7 +148,8 @@
         align-items:      flex-start;
         flex-direction:   column;
         padding:          0.5rem 1rem;
-        margin:           0 0.5rem;
+        margin:           1rem 0.5rem;
+        width:            100%;
 
         label
         {
@@ -149,7 +163,6 @@
             background-color: transparent;
             border:           none;
             font-family:      $fontBold;
-            max-width:        80px;
         }
 
         span
@@ -159,56 +172,103 @@
         }
     }
 
-    .btnBetLeft
+    .onWinInput
     {
-        display:          inline-flex;
-        justify-content:  center;
-        align-items:      center;
-        flex-direction:   column;
-        margin:           0 0.5rem;
-        padding:          0.5rem 1.5rem;
-        border-radius:    4px;
-        border:           solid 2.5px #acffce;
+        border-radius:    6px;
+        border:           solid 1px #f1f2f6;
         background-color: $colorWhite;
-        font-family:      $fontBold;
-        cursor:           pointer;
+        height:           59px;
+        display:          inline-flex;
+        justify-content:  space-between;
+        align-items:      flex-start;
+        flex-direction:   column;
+        padding:          0.5rem 1rem;
+        margin:           0.5rem 0.5rem;
+        width:            100%;
+
+        label
+        {
+            font-size:   10px;
+            font-family: $fontLight;
+            color:       $colorPrimaryDark;
+        }
+
+        input
+        {
+            background-color: transparent;
+            border:           none;
+            font-family:      $fontBold;
+        }
 
         span
         {
-            font-family:   $fontLight;
-            color:         $colorGrayLight2;
-            margin-bottom: 0.25rem;
+            color:       $colorGrayLight2;
+            font-family: $fontBold;
         }
     }
 
-    .btnBetRight
-    {
-        display:          inline-flex;
-        justify-content:  center;
-        align-items:      center;
-        flex-direction:   column;
-        margin:           0 0.5rem;
-        padding:          0.5rem 1.5rem;
-        border-radius:    4px;
-        border:           solid 2.5px #acc4ff;
-        background-color: $colorWhite;
-        font-family:      $fontBold;
-        cursor:           pointer;
+    .buttonContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        span
+        .btnBetLeft
         {
-            color:         $colorGrayLight2;
-            font-family:   $fontLight;
-            margin-bottom: 0.25rem;
+            display:          inline-flex;
+            justify-content:  center;
+            align-items:      center;
+            flex-direction:   column;
+            margin-right:     0.25rem;
+            padding:          0.5rem 1.5rem;
+            border-radius:    10px;
+            border:           solid 2.5px #acffce;
+            background-color: $colorWhite;
+            font-family:      $fontBold;
+            cursor:           pointer;
+            font-size:        18px;
+            width:            100%;
+    
+            span
+            {
+                font-family:   $fontLight;
+                color:         $colorGrayLight2;
+                margin-bottom: 0.25rem;
+                font-size:     12px;
+            }
         }
-    }
-
-    .goToEvent
-    {
-        font-family:     $fontLight;
-        color:           $colorPrimaryDark;
-        font-size:       0.6rem;
-        text-decoration: none;
-        margin:          0 0.5rem;
+    
+        .btnBetRight
+        {
+            display:          inline-flex;
+            justify-content:  center;
+            align-items:      center;
+            flex-direction:   column;
+            margin-left:      0.25rem;
+            padding:          0.5rem 1.5rem;
+            border-radius:    10px;
+            border:           solid 2.5px #acc4ff;
+            background-color: $colorWhite;
+            font-family:      $fontBold;
+            cursor:           pointer;
+            font-size:        18px;
+            width:            100%;
+    
+            span
+            {
+                color:         $colorGrayLight2;
+                font-family:   $fontLight;
+                margin-bottom: 0.25rem;
+                font-size:     12px;
+            }
+        }
+    
+        .goToEvent
+        {
+            font-family:     $fontLight;
+            color:           $colorPrimaryDark;
+            font-size:       0.6rem;
+            text-decoration: none;
+            margin:          0 0.5rem;
+        }
     }
 }

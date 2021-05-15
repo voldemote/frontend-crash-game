@@ -22,7 +22,9 @@ const Home = () => {
 
     return (
         <div className={styles.homeContainer}>
-            <Navbar />
+            <Navbar 
+                user={user}
+            />
             <Header
                 backgroundImage={examplePreviewBgImage}
                 title={'RedBull Rampage 2021 LIVE'}
