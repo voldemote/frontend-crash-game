@@ -1,4 +1,5 @@
 import './styles.module.scss';
+import * as serviceWorker          from './serviceWorker';
 import AlertBox                    from './components/AlertBox';
 import Authentication              from './screens/Authentication';
 import Home                        from './screens/Home';
@@ -16,6 +17,8 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 const configuredStore = store();
 
 const App = () => {
+    serviceWorker.register();
+
     return (
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
