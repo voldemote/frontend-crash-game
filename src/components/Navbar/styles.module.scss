@@ -10,8 +10,13 @@
     flex-direction:  row;
     justify-content: space-between;
     align-items:     center;
-    padding:         3rem 3rem;
+    padding:         3rem 30px;
     z-index:         $zIndexNavbar;
+
+    @media (min-width: $screen-sm)
+    {
+        padding: 3rem;
+    }
 
     img
     {

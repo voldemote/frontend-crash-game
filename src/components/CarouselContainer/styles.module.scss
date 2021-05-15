@@ -27,7 +27,12 @@
         display:        flex;
         position:       relative;
         flex-direction: column-reverse;
-        padding-left:   3rem;
+        padding-left:   30px;
+
+        @media (min-width: $screen-sm)
+        {
+            padding-left: 3rem;
+        }
     }
 }
 

@@ -15,6 +15,11 @@
 
     .betPillContainer
     {
-        padding: 0 3rem;
+        padding: 0 30px;
+
+        @media (min-width: $screen-sm)
+        {
+            padding: 0 3rem;
+        }
     }
 }
