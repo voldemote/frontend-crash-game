@@ -55,7 +55,7 @@
             font-family:     $fontLight;
         }
 
-        button
+        .balanceOverview
         {
             color:            $colorWhite;
             border:           none;
@@ -64,10 +64,16 @@
             font-family:      $fontBold;
             text-align:       right;
 
-            span {
-                display:         block;
-                font-family:     $fontLight;
-                color:           $colorGrayLight2 !important;
+            .actualBalanceText
+            {
+                display:     block;
+                font-family: $fontLight;
+                color:       $colorGrayLight2 !important;
+
+                @media (min-width: $screen-sm)
+                {
+                    display: none;
+                }
             }
         }
 
@@ -80,7 +86,7 @@
             margin:              0 0.5rem;
             background-size:     cover;
             background-position: center center;
-            border: 2px solid    $colorWhite;
+            border:              2px solid $colorWhite;
         }
 
         .active

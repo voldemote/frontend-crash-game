@@ -15,6 +15,7 @@ const Home = () => {
     const user                  = {
         name:           'John Doe',
         profilePicture: ExampleProfilePicture,
+        currentTokens:  500,
     };
     const examplePreviewBgImage = 'https://img.redbull.com/images/c_limit,w_1500,h_1000,f_auto,q_auto/redbullcom/2019/10/28/47151ddd-f5ad-48d9-a24a-6189a647cc1f/redbullrampage_2019_utah_landscape_hero';
     const exampleEventImage     = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
@@ -22,7 +23,7 @@ const Home = () => {
 
     return (
         <div className={styles.homeContainer}>
-            <Navbar 
+            <Navbar
                 user={user}
             />
             <Header

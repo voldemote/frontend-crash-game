@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import style               from './styles.module.scss';
-import darkModeLogo        from '../../data/images/logo-darkmode.svg';
-import classNames          from 'classnames';
+import React        from 'react';
+import style        from './styles.module.scss';
+import darkModeLogo from '../../data/images/logo-darkmode.svg';
+import classNames   from 'classnames';
 
 const Navbar = ({ user }) => {
     const getProfileStyle = () => {
@@ -32,11 +32,20 @@ const Navbar = ({ user }) => {
                 <a href="/">My Wallet</a>
             </div>
             <div className={style.navbarItems}>
-                <button onClick={true}>
-                    <span>Your actual Balance</span>
-                    500 EVNT
+                <button
+                    onClick={true}
+                    className={style.balanceOverview}
+                >
+                    <span className={style.actualBalanceText}>
+                        Your actual Balance
+                    </span>
+                    {user.currentTokens} EVNT
                 </button>
-                <div className={style.profile} style={getProfileStyle()}></div>
+                <div
+                    className={style.profile}
+                    style={getProfileStyle()}
+                >
+                </div>
             </div>
         </div>
     );
