@@ -8,7 +8,6 @@ import { put, call, select }     from 'redux-saga/effects';
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
     Routes.welcome,
-    Routes.authentication,
     Routes.home,
 ];
 
@@ -121,9 +120,7 @@ const restoreToken = function* () {
     if (token && authState === AuthState.LOGGED_IN) {
         if (
             pathname === Routes.welcome ||
-            browserPathname === Routes.welcome ||
-            pathname === Routes.authentication ||
-            browserPathname === Routes.authentication) {
+            browserPathname === Routes.welcome) {
             yield put(push(afterLoginRoute));
         }
     } else if (

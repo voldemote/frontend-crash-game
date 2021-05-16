@@ -1,18 +1,38 @@
-import Authentication from '../../components/Authentication';
-import Button         from '../../components/Button';
-import ButtonTheme    from '../../components/Button/ButtonTheme';
-import darkModeLogo   from '../../data/images/logo-darkmode.svg';
-import styles         from './styles.module.scss';
-import { useHistory } from 'react-router-dom';
-import Link           from '../../components/Link';
-import Routes         from '../../constants/Routes';
+import Authentication      from '../../components/Authentication';
+import Button              from '../../components/Button';
+import ButtonTheme         from '../../components/Button/ButtonTheme';
+import classNames          from 'classnames';
+import darkModeLogo        from '../../data/images/logo-darkmode.svg';
+import Link                from '../../components/Link';
+import Routes              from '../../constants/Routes';
+import styles              from './styles.module.scss';
+import useWindowDimensions from '../../helper/WindowDimensionsHook';
+import { useState }        from 'react';
 
 const Welcome = () => {
-    const history = useHistory();
+    const { width }                                 = useWindowDimensions();
+    const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
+
+    const shouldShowWelcomeScreen = () => {
+        return width >= 768 || showWelcomeScreen;
+    };
+
+    const shouldShowAuthScreen = () => {
+        return width >= 768 || !shouldShowWelcomeScreen();
+    };
+
+    const onLetsTradeClick = () => {
+        setShowWelcomeScreen(false);
+    };
 
     return (
         <div className={styles.welcomeContainer}>
-            <div className={styles.welcomeContentContainer}>
+            <div
+                className={classNames(
+                    styles.welcomeContentContainer,
+                    shouldShowWelcomeScreen() ? null : styles.hidden,
+                )}
+            >
                 <div className={styles.welcomeContentOverlay}>
                 </div>
                 <div className={styles.welcomeContent}>
@@ -31,7 +51,7 @@ const Welcome = () => {
                     </h1>
                     <Button
                         theme={ButtonTheme.welcomeScreenButton}
-                        onClick={() => history.push('/auth')}
+                        onClick={onLetsTradeClick}
                     >
                         Let's trade!
                     </Button>
@@ -45,7 +65,12 @@ const Welcome = () => {
                     </p>
                 </div>
             </div>
-            <div className={styles.welcomeAuthContainer}>
+            <div
+                className={classNames(
+                    styles.welcomeAuthContainer,
+                    shouldShowAuthScreen() ? null : styles.hidden,
+                )}
+            >
                 <Authentication />
             </div>
         </div>

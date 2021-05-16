@@ -1,7 +1,6 @@
 import './styles.module.scss';
 import * as serviceWorker          from './serviceWorker';
 import AlertBox                    from './components/AlertBox';
-import Authentication              from './screens/Authentication';
 import Home                        from './screens/Home';
 import Logout                      from './screens/Logout';
 import PrivacyPolicy               from './screens/PrivacyPolicy';
@@ -43,11 +42,6 @@ const App = () => {
                         exact
                         path={Routes.privacyPolicy}
                         component={PrivacyPolicy}
-                    />
-                    <Route
-                        exact
-                        path={Routes.authentication}
-                        component={Authentication}
                     />
                     <Route
                         exact

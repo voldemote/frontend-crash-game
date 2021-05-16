@@ -1,5 +1,4 @@
 export default {
-    authentication:     '/auth',
     home:               '/home',
     logout:             '/logout',
     privacyPolicy:      '/privacy-policy',

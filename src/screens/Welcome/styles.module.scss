@@ -19,6 +19,11 @@
         background:      $colorPrimary url('../../data/images/three-guys-couch-background.jpg') no-repeat center;
         background-size: cover;
 
+        &.hidden
+        {
+            display: none;
+        }
+
         .welcomeContentOverlay
         {
             position:         absolute;
@@ -90,21 +95,16 @@
 
     .welcomeAuthContainer
     {
-        display:         none;
+        display:         flex;
         width:           100%;
         max-width:       600px;
         flex-direction:  column;
         height:          100%;
         justify-content: space-between;
 
-        @media (min-width: $screen-sm)
+        &.hidden
         {
-            display: flex;
-        }
-
-        .authenticationSmallPrint
-        {
-
+            display: none;
         }
     }
 }
