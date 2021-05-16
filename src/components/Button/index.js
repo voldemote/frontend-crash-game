@@ -17,15 +17,10 @@ const Button = ({ children, className, theme, onClick, disabled }) => {
                         [ButtonTheme.welcomeScreenButton]:        style.welcomeScreenButton,
                     },
                 ),
-                SelectionHelper.get(
-                    disabled,
-                    {
-                        [true]: style.buttonDisabled,
-                    },
-                ),
             )}
             onClick={disabled ? null : onClick}
         >
+            {disabled && <span className={style.buttonDisabledOverlay}></span>}
             {children}
         </span>
     );
