@@ -207,9 +207,10 @@
         }
     }
 
-    .buttonContainer {
-        display: flex;
-        align-items: center;
+    .buttonContainer
+    {
+        display:         flex;
+        align-items:     center;
         justify-content: center;
 
         .btnBetLeft
@@ -227,7 +228,7 @@
             cursor:           pointer;
             font-size:        18px;
             width:            100%;
-    
+
             span
             {
                 font-family:   $fontLight;
@@ -236,7 +237,7 @@
                 font-size:     12px;
             }
         }
-    
+
         .btnBetRight
         {
             display:          inline-flex;
@@ -252,7 +253,7 @@
             cursor:           pointer;
             font-size:        18px;
             width:            100%;
-    
+
             span
             {
                 color:         $colorGrayLight2;
@@ -261,14 +262,21 @@
                 font-size:     12px;
             }
         }
-    
-        .goToEvent
+    }
+
+    .goToEventContainer
+    {
+        min-width:       80px;
+        display:         flex;
+        flex-direction:  column;
+        align-items:     center;
+        text-align:      center;
+        text-decoration: none;
+        font-size:       10px;
+
+        .goToEventIcon
         {
-            font-family:     $fontLight;
-            color:           $colorPrimaryDark;
-            font-size:       0.6rem;
-            text-decoration: none;
-            margin:          0 0.5rem;
+            margin-bottom: 5px;
         }
     }
 }

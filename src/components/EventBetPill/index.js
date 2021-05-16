@@ -3,6 +3,9 @@ import style           from './styles.module.scss';
 import TimeLeftCounter from '../TimeLeftCounter';
 import HotBetBadge     from '../HotBetBadge';
 import classNames      from 'classnames';
+import Link            from '../Link';
+import Icon            from '../Icon';
+import IconType        from '../Icon/IconType';
 
 const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     const getProfileStyle = () => {
@@ -26,7 +29,10 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
         <div className={style.pill}>
             <div className={style.pillContent}>
                 <div className={classNames(style.justify, style.profileContainer)}>
-                    <div className={style.profile} style={getProfileStyle()}></div>
+                    <div
+                        className={style.profile}
+                        style={getProfileStyle()}
+                    ></div>
                     <span>{user.name}</span>
                 </div>
                 <div className={style.desc}>
@@ -38,16 +44,29 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
 
                 <hr className={style.divider} />
 
-                <div className={style.justify} style={{width: "100%"}}>
+                <div
+                    className={style.justify}
+                    style={{ width: '100%' }}
+                >
 
-                    <div style={{width: "100%"}}>
-                        <label for="choice" className={style.label}>Your choice:</label>
+                    <div style={{ width: '100%' }}>
+                        <label
+                            for="choice"
+                            className={style.label}
+                        >Your choice:
+                        </label>
                         <div className={style.buttonContainer}>
-                            <button onClick={() => console.log('bet placed')} className={style.btnBetLeft}>
+                            <button
+                                onClick={() => console.log('bet placed')}
+                                className={style.btnBetLeft}
+                            >
                                 Paul
                                 <span>Quote 2.0</span>
                             </button>
-                            <button onClick={() => console.log('bet placed')} className={style.btnBetRight}>
+                            <button
+                                onClick={() => console.log('bet placed')}
+                                className={style.btnBetRight}
+                            >
                                 John
                                 <span>Quote 1.2</span>
                             </button>
@@ -55,24 +74,53 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
                     </div>
 
                     <div className={style.input}>
-                        <label for="amount" className={style.label}>Your bet:</label>
+                        <label
+                            for="amount"
+                            className={style.label}
+                        >Your bet:
+                        </label>
                         <div>
-                            <input id="amount" type="number" name="amount"/>
+                            <input
+                                id="amount"
+                                type="number"
+                                name="amount"
+                            />
                             <span>EVNT</span>
                         </div>
                     </div>
 
                     <div className={style.onWinInput}>
-                        <label for="amount" className={style.label}>On win you get:</label>
+                        <label
+                            for="amount"
+                            className={style.label}
+                        >On win you get:
+                        </label>
                         <div>
-                            <input id="amount" value="1000" type="number" name="amount" readOnly/>
+                            <input
+                                id="amount"
+                                value="1000"
+                                type="number"
+                                name="amount"
+                                readOnly
+                            />
                             <span>EVNT</span>
                         </div>
                     </div>
 
-                    <a href="/" className={style.goToEvent}>
-                        Go to event
-                    </a>
+                    <Link
+                        className={style.goToEventContainer}
+                    >
+                        <Icon
+                            width={18}
+                            height={18}
+                            iconType={IconType.featherArrowUpRight}
+                            className={style.goToEventIcon}
+                            circle={true}
+                        />
+                        <span>
+                            Go to event
+                        </span>
+                    </Link>
                 </div>
             </div>
             {renderFooter()}

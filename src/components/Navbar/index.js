@@ -25,7 +25,8 @@ const Navbar = ({ user }) => {
                 <a
                     href="/"
                     className={style.active}
-                >Home
+                >
+                    Home
                 </a>
                 <a href="/">Discover</a>
                 <a href="/">My Bets</a>
