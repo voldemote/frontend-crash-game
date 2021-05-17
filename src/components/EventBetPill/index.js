@@ -28,99 +28,60 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     return (
         <div className={style.pill}>
             <div className={style.pillContent}>
-                <div className={classNames(style.justify, style.profileContainer)}>
-                    <div
-                        className={style.profile}
-                        style={getProfileStyle()}
-                    ></div>
-                    <span>{user.name}</span>
-                </div>
+
                 <div className={style.desc}>
+                    <div className={style.profileContainer}>
+                        <div className={style.profile} style={getProfileStyle()}></div>
+                        <span>{user.name}</span>
+                    </div>
                     <p>{marketQuestion}</p>
-                </div>
-                <div className={style.hotBetBadgeContainer}>
                     {hotBet && <HotBetBadge />}
                 </div>
 
                 <hr className={style.divider} />
 
-                <div
-                    className={style.justify}
-                    style={{ width: '100%' }}
-                >
+                <div className={style.justify}>
 
-                    <div style={{ width: '100%' }}>
-                        <label
-                            for="choice"
-                            className={style.label}
-                        >Your choice:
-                        </label>
-                        <div className={style.buttonContainer}>
-                            <button
-                                onClick={() => console.log('bet placed')}
-                                className={style.btnBetLeft}
-                            >
-                                Paul
-                                <span>Quote 2.0</span>
-                            </button>
-                            <button
-                                onClick={() => console.log('bet placed')}
-                                className={style.btnBetRight}
-                            >
-                                John
-                                <span>Quote 1.2</span>
-                            </button>
+                    <div className={style.buttonContainer}>
+                        <label for="choice" className={style.label} style={{ paddingBottom: "0.5rem", display: "inline-block" }}>Your choice:</label>
+                        <div className={style.quoteButtons}>
+                            <div>
+                                <input type="radio" value="quote1" name="bet" id="bet1" required />
+                                <label htmlFor="bet1">Paul <span>Quote 2.0</span></label>
+                            </div>
+                            <div>
+                                <input type="radio" value="quote2" name="bet" id="bet2" required />
+                                <label htmlFor="bet2">John <span>Quote 1.2</span></label>
+                            </div>
                         </div>
                     </div>
 
-                    <div className={style.input}>
-                        <label
-                            for="amount"
-                            className={style.label}
-                        >Your bet:
-                        </label>
-                        <div>
-                            <input
-                                id="amount"
-                                type="number"
-                                name="amount"
-                            />
+                    <div className={style.inputWrapper}>
+                        <label for="amount" className={style.label}>Your bet:</label>
+                        <div className={style.input}>
+                            <input id="amount" type="number" name="amount" />
                             <span>EVNT</span>
                         </div>
                     </div>
 
-                    <div className={style.onWinInput}>
-                        <label
-                            for="amount"
-                            className={style.label}
-                        >On win you get:
-                        </label>
-                        <div>
-                            <input
-                                id="amount"
-                                value="1000"
-                                type="number"
-                                name="amount"
-                                readOnly
-                            />
+                    <div className={classNames(style.inputWrapper, style.onWin)}>
+                        <label for="amount" className={style.label}>On win you get:</label>
+                        <div className={style.input}>
+                            <input id="amount" type="number" name="amount" value={1000} readOnly />
                             <span>EVNT</span>
                         </div>
                     </div>
 
-                    <Link
-                        className={style.goToEventContainer}
-                    >
-                        <Icon
+                    <button onClick={() => console.log('bet placed')} className={style.betButton}>
+                        {/* <Icon
                             width={18}
                             height={18}
                             iconType={IconType.featherArrowUpRight}
                             className={style.goToEventIcon}
                             circle={true}
-                        />
-                        <span>
-                            Go to event
-                        </span>
-                    </Link>
+                        /> */}
+                        <span>Bet!</span>
+                    </button>
                 </div>
             </div>
             {renderFooter()}
