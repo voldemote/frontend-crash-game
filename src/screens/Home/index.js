@@ -1,4 +1,3 @@
-import 'react-multi-carousel/lib/styles.css';
 import EventBetPill          from '../../components/EventBetPill/index';
 import EventCard             from '../../components/EventCard/index';
 import Header                from '../../components/Header/index';

@@ -52,6 +52,7 @@
             padding:        30px;
             left:           0;
             top:            0;
+            width:          100%;
 
             .profileInfo
             {
@@ -74,11 +75,11 @@
 
             .betCardMarketQuestion
             {
-                flex:            1;
-                display:         flex;
-                justify-content: center;
-                align-items:     center;
-                font-size:       20px;
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+                height: 100%;
+                white-space: normal;
             }
         }
     }

@@ -1,27 +1,11 @@
-import Carousel                from 'react-multi-carousel';
+import Carousel                from 'react-horizontal-scrolling-menu';
 import CarouselNavigationGroup from '../CarouselNavigationGroup';
-import React                   from 'react';
+import React, { useRef } from 'react';
 import styles                  from './styles.module.scss';
 
 const CarouselContainer = ({ title, children }) => {
-    const responsive = {
-        superLargeDesktop: {
-            breakpoint: { max: 4000, min: 3000 },
-            items:      5,
-        },
-        desktop:           {
-            breakpoint: { max: 3000, min: 1024 },
-            items:      3,
-        },
-        tablet:            {
-            breakpoint: { max: 1024, min: 464 },
-            items:      2,
-        },
-        mobile:            {
-            breakpoint: { max: 464, min: 0 },
-            items:      1,
-        },
-    };
+
+    const CarouselRef = useRef();
 
     return (
         <div className={styles.carouselContainer}>
@@ -29,17 +13,14 @@ const CarouselContainer = ({ title, children }) => {
                 <span className={styles.title}>
                     {title}
                 </span>
+
+                <div className={styles.scrollButtons}>
+                    <button onClick={() => { CarouselRef.handleArrowClick() }} className={styles.arrowPrev}><span></span></button>
+                    <button onClick={() => { CarouselRef.handleArrowClickRight() }} className={styles.arrowNext}><span></span></button>
+                </div>
             </div>
             <div className={styles.carousel}>
-                <Carousel
-                    responsive={responsive}
-                    keyBoardControl={false}
-                    arrows={false}
-                    renderButtonGroupOutside
-                    customButtonGroup={<CarouselNavigationGroup />}
-                >
-                    {children}
-                </Carousel>
+                <Carousel ref={CarouselRef} data={children} alignCenter={false} hideArrows={true} />
             </div>
         </div>
     );
