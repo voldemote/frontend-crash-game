@@ -11,7 +11,7 @@ import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect }               from 'react-redux';
 import { requestSms }            from '../../store/actions/authentication';
 import { useEffect, useState }   from 'react';
-import { useIsMount }            from '../../helper/useIsMount';
+import { useIsMount }            from '../hoc/useIsMount';
 
 // Array of Headings for the different signup steps
 const titleList = [

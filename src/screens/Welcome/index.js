@@ -6,7 +6,7 @@ import darkModeLogo        from '../../data/images/logo-darkmode.svg';
 import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
-import useWindowDimensions from '../../helper/WindowDimensionsHook';
+import useWindowDimensions from '../../components/hoc/useWindowDimensions';
 import { useState }        from 'react';
 
 const Welcome = () => {

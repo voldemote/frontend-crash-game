@@ -18,75 +18,86 @@
         background: linear-gradient(180deg, rgba(0, 0, 0, .6), $colorPrimaryDark);
     }
 
-    .headerWrapper {
-        display:            flex;
-        justify-content:    space-between;
-        flex-direction:     row;
-        align-items:        flex-end;
-        position:           absolute;
-        bottom:             0;
-        width:              100%;
-        padding:            3rem 30px;
+    .headerWrapper
+    {
+        display:         flex;
+        justify-content: space-between;
+        flex-direction:  row;
+        align-items:     flex-end;
+        position:        absolute;
+        bottom:          0;
+        width:           100%;
+        padding:         3rem 30px;
 
-        .switchButtons {
-            display: flex;
+        .switchButtons
+        {
+            display:         flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            align-items:     center;
+            flex-direction:  column;
 
-            .goToPreviousSlide {
+            .goToPreviousSlide,
+            .goToNextSlide
+            {
                 background-color: transparent;
-                border: none;
-                border-radius: 50%;
-                margin-bottom: 0.5rem;
-                height: 60px;
-                width: 60px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                border-radius:    50%;
+                margin-bottom:    0.5rem;
+                height:           60px;
+                width:            60px;
+                display:          flex;
+                justify-content:  center;
+                align-items:      center;
+                transition:       border-color .3s ease-in-out;
+                border:           2px solid $colorWhite10;
+                cursor:           pointer;
 
-                span:before {
-                    border-color: rgba(255, 255, 255, .3);
-                    border-style: solid;
-                    border-width: 2px 2px 0 0;
-                    content: '';
-                    display: inline-block;
-                    height: 15px;
-                    left: 4px;
-                    position: relative;
-                    top: 0;
-                    transform: rotate(-135deg);
-                    width: 15px;
+                span
+                {
+                    &:before
+                    {
+                        border-color: $colorWhite;
+                        border-style: solid;
+                        border-width: 2px 2px 0 0;
+                        content:      '';
+                        display:      inline-block;
+                        height:       15px;
+                        position:     relative;
+                        top:          0;
+                        width:        15px;
+                    }
                 }
-            }
 
-            .goToNextSlide {
-                background-color: transparent;
-                border: 2px solid rgba(255, 255, 255, .3);
-                border-radius: 50%;
-                margin-top: 0.5rem;
-                height: 60px;
-                width: 60px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                span:before {
-                    border-color: #fff;
-                    border-style: solid;
-                    border-width: 2px 2px 0 0;
-                    content: '';
-                    display: inline-block;
-                    height: 15px;
-                    left: -4px;
-                    position: relative;
-                    top: 0;
-                    transform: rotate(45deg);
-                    vertical-align: top;
-                    width: 15px;
+                &:hover,
+                &:active
+                {
+                    border-color: $colorWhite;
                 }
+
+                &.goToPreviousSlide
+                {
+                    span
+                    {
+                        &:before
+                        {
+                            left:      4px;
+                            transform: rotate(-135deg);
+                        }
+                    }
+                }
+
+                &.goToNextSlide
+                {
+                    span
+                    {
+                        &:before
+                        {
+                            left:      -4px;
+                            transform: rotate(45deg);
+                        }
+                    }
+                }
+
             }
-        
         }
 
         @media (min-width: $screen-sm)
@@ -106,8 +117,9 @@
             margin-bottom: 30px;
         }
 
-        .tags {
-            color: #b0b0b0;
+        .tags
+        {
+            color:     #b0b0b0;
             font-size: 12px;
         }
 
@@ -127,18 +139,20 @@
             }
         }
 
-        .goToEvent {
-            margin-top: 2rem;
-            display: inline-flex;
-            justify-content: space-around;
-            align-items: center;
-            text-decoration: none;
-            padding: 1rem 2rem;
+        .goToEvent
+        {
+            margin-top:       2rem;
+            display:          inline-flex;
+            justify-content:  space-around;
+            align-items:      center;
+            text-decoration:  none;
+            padding:          1rem 2rem;
             background-color: rgba(8, 6, 17, 0.42);
-            font-family: $fontBold;
+            font-family:      $fontBold;
 
-            span {
-                display: none;
+            span
+            {
+                display:      none;
                 margin-right: 1rem;
 
                 @media (min-width: $screen-sm)
@@ -147,24 +161,26 @@
                 }
             }
 
-            .arrowRight {
-                display: block;
-                position: relative;
-                width: 10px;
-                height: 10px;
-                border-top: 2px solid #fff;
-                border-left: 2px solid #fff;
-                transform: rotate(90deg);
+            .arrowRight
+            {
+                display:     block;
+                position:    relative;
+                width:       10px;
+                height:      10px;
+                border-top:  2px solid #ffffff;
+                border-left: 2px solid #ffffff;
+                transform:   rotate(90deg);
 
-                &:after {
-                    content: "";
-                    position: absolute;
-                    width: 2px;
-                    height: 15px;
-                    background-color: #fff;
-                    transform: rotate(-45deg) translate(4.5px, 1px);
-                    left: 0;
-                    top: 0;
+                &:after
+                {
+                    content:          "";
+                    position:         absolute;
+                    width:            2px;
+                    height:           15px;
+                    background-color: #ffffff;
+                    transform:        rotate(-45deg) translate(4.5px, 1px);
+                    left:             0;
+                    top:              0;
                 }
             }
         }
