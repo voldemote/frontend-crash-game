@@ -18,7 +18,7 @@ const Api = createInstance(ApiUrls.BACKEND_URL, '/');
 const setToken = (token) => {
     const authentication = 'Bearer ' + token;
 
-    Api.defaults.headers.common['Authentication'] = authentication;
+    Api.defaults.headers.common['Authorization'] = authentication;
 };
 
 const requestSms = (phone) => {
