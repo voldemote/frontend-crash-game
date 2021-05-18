@@ -1,11 +1,9 @@
 import AuthState                 from '../../constants/AuthState';
-import Button                    from '../Button';
-import ButtonTheme               from '../Button/ButtonTheme';
 import CodeInputFields           from '../CodeInputFields';
 import InputBox                  from '../InputBox';
 import Link                      from '../Link';
 import Routes                    from '../../constants/Routes';
-import StepBar                   from '../StepBar';
+import StepsContainer            from '../StepsContainer';
 import styles                    from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect }               from 'react-redux';
@@ -186,23 +184,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
         };
     };
 
-    const renderButton = () => {
-        if (authState !== AuthState.LOGGED_IN) {
-            return (
-                <Button
-                    theme={ButtonTheme.authenticationScreenButton}
-                    className={styles.authenticationButton}
-                    onClick={onConfirm}
-                    disabled={loading}
-                >
-                    {confirmBtnList.find((item) => item.id === step).text}
-                </Button>
-            );
-        }
-
-        return null;
-    };
-
     const renderResendCodeContainer = () => {
         if (step === 1) {
             return (
@@ -217,40 +198,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
                         Resend a new code
                     </span>
                 </>
-            );
-        }
-
-        return null;
-    };
-
-    const renderStepBar = () => {
-        return (
-            <div className={styles.authenticationStepBarContainer}>
-                <StepBar
-                    size={4}
-                    step={step}
-                />
-            </div>
-        );
-    };
-
-    const renderHeadline = () => {
-        let headline = titleList.find(
-            (item) => item.id === step,
-        );
-
-        if (headline) {
-            headline = headline.text;
-        }
-
-        if (headline && headline.length) {
-            return (
-                <p
-                    className={styles.authenticationHeadline}
-                    dangerouslySetInnerHTML={{
-                        __html: headline,
-                    }}
-                />
             );
         }
 
@@ -309,7 +256,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
                 )}
                 {step === 2 && (
                     <InputBox
-                        type="text"
                         invitationText={'Call me'}
                         errorText={error}
                         placeholder="John"
@@ -319,7 +265,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
                 )}
                 {step === 3 && (
                     <InputBox
-                        type="text"
                         errorText={error}
                         placeholder="john.doe@gmail.com"
                         value={email}
@@ -343,18 +288,40 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
         );
     };
 
+    const getButtonContent = () => {
+        const buttonContent = confirmBtnList.find(
+            (item) => item.id === step,
+        ).text;
+
+        return buttonContent;
+    };
+
+    const getHeadline = () => {
+        let headline = titleList.find(
+            (item) => item.id === step,
+        );
+
+        if (headline) {
+            headline = headline.text;
+        }
+
+        return headline;
+    };
+
     return (
-        <div className={styles.authenticationContainer}>
-            <div className={styles.authenticationContentContainer}>
-                {renderStepBar()}
-                {renderHeadline()}
-                {renderDescription()}
-                {renderInputBoxes()}
-                {renderResendCodeContainer()}
-                {renderButton()}
-                {renderTermsAgreement()}
-            </div>
-        </div>
+        <StepsContainer
+            size={4}
+            step={step}
+            buttonContent={getButtonContent()}
+            headline={getHeadline()}
+            onButtonClick={onConfirm}
+            buttonDisabled={loading}
+            renderFooter={renderTermsAgreement}
+        >
+            {renderDescription()}
+            {renderInputBoxes()}
+            {renderResendCodeContainer()}
+        </StepsContainer>
     );
 };
 
