@@ -1,5 +1,4 @@
 import Carousel                from 'react-horizontal-scrolling-menu';
-import CarouselNavigationGroup from '../CarouselNavigationGroup';
 import React, { useRef } from 'react';
 import styles                  from './styles.module.scss';
 
@@ -15,8 +14,8 @@ const CarouselContainer = ({ title, children }) => {
                 </span>
 
                 <div className={styles.scrollButtons}>
-                    <button onClick={() => { CarouselRef.handleArrowClick() }} className={styles.arrowPrev}><span></span></button>
-                    <button onClick={() => { CarouselRef.handleArrowClickRight() }} className={styles.arrowNext}><span></span></button>
+                    <button onClick={() => { CarouselRef.current.handleArrowClick() }} className={styles.arrowPrev}><span></span></button>
+                    <button onClick={() => { CarouselRef.current.handleArrowClickRight() }} className={styles.arrowNext}><span></span></button>
                 </div>
             </div>
             <div className={styles.carousel}>
