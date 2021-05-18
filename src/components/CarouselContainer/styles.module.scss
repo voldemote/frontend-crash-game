@@ -22,8 +22,9 @@
 
     }
 
-    .carousel {
-        padding-left:   30px;
+    .carousel
+    {
+        padding-left: 30px;
 
         @media (min-width: $screen-sm)
         {
@@ -32,59 +33,84 @@
     }
 }
 
-.scrollButtons {
-    display: none;
+.scrollButtons
+{
+    display:         none;
     justify-content: center;
-    align-items: center;
+    align-items:     center;
 
     @media (min-width: $screen-md)
     {
         display: flex;
     }
 
-    .arrowNext {
+    .arrowNext,
+    .arrowPrev
+    {
         background-color: transparent;
-        border: none;
-        height: 60px;
-        width: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    
-        span:before {
-            border-color: #fff;
-            border-style: solid;
-            border-width: 2px 2px 0 0;
-            content: '';
-            display: inline-block;
-            height: 15px;
-            position: relative;
-            transform: rotate(45deg);
-            vertical-align: middle;
-            width: 15px;
+        border:           none;
+        height:           60px;
+        width:            60px;
+        display:          flex;
+        justify-content:  center;
+        align-items:      center;
+
+        span
+        {
+            cursor: pointer;
+
+            &:before
+            {
+                border-style:   solid;
+                border-width:   2px 2px 0 0;
+                content:        '';
+                display:        inline-block;
+                height:         15px;
+                position:       relative;
+                vertical-align: middle;
+                width:          15px;
+                transition:     border-color .2s ease-in;
+                border-color:   $colorWhite30;
+            }
+
+            &:hover:before
+            {
+                border-color: $colorWhite50;
+            }
+
         }
-    }
-    
-    .arrowPrev {
-        background-color: transparent;
-        border: none;
-        height: 60px;
-        width: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    
-        span:before {
-            border-color: rgba(255, 255, 255, .3);
-            border-style: solid;
-            border-width: 2px 2px 0 0;
-            content: '';
-            display: inline-block;
-            height: 15px;
-            position: relative;
-            vertical-align: middle;
-            transform: rotate(-135deg);
-            width: 15px;
+
+        &.active
+        {
+            span
+            {
+                &:before
+                {
+                    border-color: #ffffff;
+                }
+
+                &:hover:before
+                {
+                    border-color: $colorWhite70;
+                }
+            }
+        }
+
+        &.arrowNext
+        {
+
+            span:before
+            {
+                transform: rotate(45deg);
+            }
+        }
+
+        &.arrowPrev
+        {
+            span:before
+            {
+                transform: rotate(-135deg);
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ const Tags = ({ tags }) => {
         <div className={styles.tags}>
             {
                 tags.map(
-                    (tag) => <span>#{tag}</span>,
+                    (tag, index) => <span key={index}>#{tag}</span>,
                 )
             }
         </div>

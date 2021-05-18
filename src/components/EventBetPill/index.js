@@ -43,7 +43,7 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
                 <div className={style.justify}>
 
                     <div className={style.buttonContainer}>
-                        <label for="choice" className={style.label} style={{ paddingBottom: "0.5rem", display: "inline-block" }}>Your choice:</label>
+                        <label htmlFor={'choice'} className={style.label} style={{ paddingBottom: "0.5rem", display: "inline-block" }}>Your choice:</label>
                         <div className={style.quoteButtons}>
                             <div>
                                 <input type="radio" value="quote1" name="bet" id="bet1" required />
@@ -57,7 +57,7 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
                     </div>
 
                     <div className={style.inputWrapper}>
-                        <label for="amount" className={style.label}>Your bet:</label>
+                        <label htmlFor={'amount'} className={style.label}>Your bet:</label>
                         <div className={style.input}>
                             <input id="amount" type="number" name="amount" />
                             <span>EVNT</span>
@@ -65,7 +65,7 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
                     </div>
 
                     <div className={classNames(style.inputWrapper, style.onWin)}>
-                        <label for="amount" className={style.label}>On win you get:</label>
+                        <label htmlFor={'amount'} className={style.label}>On win you get:</label>
                         <div className={style.input}>
                             <input id="amount" type="number" name="amount" value={1000} readOnly />
                             <span>EVNT</span>

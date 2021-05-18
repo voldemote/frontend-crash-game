@@ -34,7 +34,6 @@ const Navbar = ({ user }) => {
             </div>
             <div className={style.navbarItems}>
                 <button
-                    onClick={true}
                     className={style.balanceOverview}
                 >
                     <span className={style.actualBalanceText}>
