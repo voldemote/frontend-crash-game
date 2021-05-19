@@ -67,11 +67,6 @@
 
     .divider
     {
-        width:      100%;
-        border:     none;
-        border-top: 2px dashed #e7e8ee;
-        margin:     1rem 0;
-
         @media (min-width: $screen-md)
         {
             display: none;
@@ -89,44 +84,6 @@
             font-family: $fontBold;
             font-size:   1.2rem;
             margin:      0.5rem 0;
-        }
-
-        .profileContainer
-        {
-            flex-direction: row;
-            flex-flow:      wrap;
-            display:        flex;
-            align-items:    center;
-    
-            span
-            {
-                display:     block;
-                font-family: $fontLight;
-                color:       $colorGrayLight2;
-                font-size:   12px;
-            }
-    
-            @media (min-width: $screen-md)
-            {
-                flex-flow: nowrap;
-            }
-    
-            .profile
-            {
-                height:              25px;
-                width:               25px;
-                border-radius:       50%;
-                margin-right:        0.5rem;
-                background-color:    $colorGrayLight;
-                background-size:     cover;
-                background-position: center center;
-        
-                @media (min-width: $screen-md)
-                {
-                    height: 30px;
-                    width:  30px;
-                }
-            }
         }
     }
 

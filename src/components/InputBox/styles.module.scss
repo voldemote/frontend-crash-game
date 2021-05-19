@@ -41,7 +41,6 @@
             right:    17px;
             top:      17px;
         }
-
     }
 
     .errorTextContainer
@@ -84,5 +83,23 @@
     .MuiInputBase-input
     {
         font-family: $fontRegular !important;
+    }
+
+    .MuiPickersToolbar-toolbar,
+    .MuiPickersClockPointer-pointer,
+    .MuiPickersClockPointer-noPoint,
+    .MuiPickersDay-daySelected
+    {
+        background-color: $colorPrimary !important;
+
+        &.MuiPickersClockPointer-noPoint
+        {
+            border-color: $colorPrimary !important;
+        }
+    }
+
+    .MuiButton-textPrimary
+    {
+        color: $colorPrimary !important;
     }
 }

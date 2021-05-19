@@ -1,196 +1,373 @@
-import _              from 'lodash';
-import InputBox       from '../../components/InputBox';
-import StepsContainer from '../../components/StepsContainer';
-import styles         from './styles.module.scss';
-import { useState }   from 'react';
-import InputBoxTheme  from '../../components/InputBox/InputBoxTheme';
+import _                     from 'lodash';
+import classNames            from 'classnames';
+import ExampleData           from '../../helper/ExampleData';
+import InputBox              from '../../components/InputBox';
+import InputBoxTheme         from '../../components/InputBox/InputBoxTheme';
+import ProfileContainer      from '../../components/ProfileContainer';
+import RippedTicketContainer from '../../components/RippedTicketContainer';
+import StepsContainer        from '../../components/StepsContainer';
+import styles                from './styles.module.scss';
+import { isValidURL }        from '../../helper/Url';
+import { useEffect }         from 'react';
+import { useIsMount }        from '../../components/hoc/useIsMount';
+import { useState }          from 'react';
+import Divider               from '../../components/Divider';
+import TimeLeftCounter       from '../../components/TimeLeftCounter';
+import React                 from 'react';
+import moment                from 'moment';
+import Link                  from '../../components/Link';
 
 const BetCreation = () => {
-    const [step, setStep]                     = useState(0);
-    const [error, setError]                   = useState(null);
-    const [marketQuestion, setMarketQuestion] = useState(null);
-    const [selectedDate, setSelectedDate]     = useState(null);
-    const [selectedTime, setSelectedTime]     = useState(null);
-    const [outcomes, setOutcomes]             = useState([{ probability: 50 }, { probability: 50 }]);
+          const [step, setStep]                     = useState(0);
+          const [error, setError]                   = useState(null);
+          const [marketQuestion, setMarketQuestion] = useState(null);
+          const [eventUrl, setEventUrl]             = useState(null);
+          const [selectedDate, setSelectedDate]     = useState(null);
+          const [selectedTime, setSelectedTime]     = useState(null);
+          const [outcomes, setOutcomes]             = useState([{ probability: 50 }, { probability: 50 }]);
+          const isMount                             = useIsMount();
 
-    const getButtonContent = () => {
-        if (step <= 1) {
-            return 'Next Step';
-        } else if (step === 2) {
-            return 'Last Step';
-        }
+          const validateInput = () => {
+              switch (step) {
+                  case 0:
+                      if (marketQuestionIsValid()) {
+                          setError(null);
+                      } else {
+                          setError('Please enter a market question!');
+                          return false;
+                      }
 
-        return 'See Summary';
-    };
+                      break;
+                  case 2:
+                      if (eventUrlIsValid()) {
+                          setError(null);
+                      } else {
+                          setError('Please enter a valid event url!');
+                          return false;
+                      }
 
-    const getHeadline = () => {
-        switch (step) {
-            case 0:
-                return 'Create Bet';
-            case 1:
-                return 'Define outcomes';
-            case 2:
-                return 'Choose Event';
-            case 3:
-                return 'When does the event end?';
-            default:
-                return 'Awesome, that looks great';
-        }
-    };
+                      break;
+                  case 3:
+                      if (dateIsValid()) {
+                          setError(null);
+                      } else {
+                          setError('Please enter a valid date!');
+                          return false;
+                      }
 
-    const onConfirm = () => {
-        setStep(step + 1);
-    };
+                      if (timeIsValid()) {
+                          setError(null);
+                      } else {
+                          setError('Please enter a valid time!');
+                          return false;
+                      }
 
-    const setOutcomeValue = (index) => {
-        return (value) => {
-            let newOutcomes = [...outcomes];
+                      break;
+              }
 
-            newOutcomes[index].value = value;
+              return true;
+          };
 
-            setOutcomes(newOutcomes);
-        };
-    };
+          const marketQuestionIsValid = () => {
+              return marketQuestion && marketQuestion.length;
+          };
 
-    const setOutcomeProbability = (index) => {
-        return (value) => {
-            let newOutcomes  = [...outcomes];
-            const floatValue = parseFloat(value);
+          const eventUrlIsValid = () => {
+              return eventUrl && isValidURL(eventUrl);
+          };
 
-            if (_.isNaN(floatValue) || floatValue < 1 || floatValue > 99) {
-                return;
-            }
+          const dateIsValid = () => {
+              return selectedDate && selectedDate.isValid();
+          };
 
-            newOutcomes[index].probability = floatValue;
+          const timeIsValid = () => {
+              return selectedTime && selectedTime.isValid();
+          };
 
-            setOutcomes(newOutcomes);
-        };
-    };
+          useEffect(
+              () => {
+                  if (!isMount) {
+                      validateInput();
+                  }
+              },
+              [marketQuestion, eventUrl, selectedDate, selectedTime],
+          );
 
-    const renderOutcomeInputs = () => {
-        const size = outcomes.length;
+          const getEndDateTime = () => {
+              const dateTime = moment(selectedDate);
 
-        return (
-            _.times(
-                size,
-                (index) => {
-                    const outcome = outcomes[index];
+              dateTime.hours(selectedTime.hours());
+              dateTime.minutes(selectedTime.minutes());
+              dateTime.seconds(selectedTime.seconds());
 
-                    return (
-                        <div className={styles.outcomeRow}>
-                            <div>
-                                <InputBox
-                                    value={outcome.value}
-                                    placeholder={'Outcome #' + (
-                                        index + 1
-                                    )}
-                                    setValue={setOutcomeValue(index)}
-                                    theme={InputBoxTheme.coloredBorder}
-                                />
-                            </div>
-                            <div>
-                                <InputBox
-                                    type={'number'}
-                                    value={outcome.probability}
-                                    placeholder={''}
-                                    min={1}
-                                    max={99}
-                                    setValue={setOutcomeProbability(index)}
-                                    theme={InputBoxTheme.coloredBorder}
-                                    showDeleteIcon={false}
-                                />
-                            </div>
-                        </div>
-                    );
-                },
-            )
-        );
-    };
+              return dateTime;
+          };
 
-    const renderOutcomeCreator = () => {
-        return (
-            <div className={styles.outcomeCreator}>
-                <div className={styles.outcomeRow}>
-                    <div>
-                        Event outcomes
-                    </div>
-                    <div>
-                        Probability
-                    </div>
-                </div>
-                {renderOutcomeInputs()}
-            </div>
-        );
-    };
+          const getButtonContent = () => {
+              if (step <= 1) {
+                  return 'Next Step';
+              } else if (step === 2) {
+                  return 'Last Step';
+              } else if (step === 3) {
+                  return 'See Summary';
+              }
 
-    const renderDateAndTime = () => {
-        return (
-            <div className={styles.dateAndTimeContainer}>
-                <InputBox
-                    type={'date'}
-                    invitationText={'Choose Date'}
-                    value={selectedDate}
-                    setValue={setSelectedDate}
-                    placeholder={'Today'}
-                    showDeleteIcon={false}
-                />
-                <InputBox
-                    type={'time'}
-                    invitationText={'Choose Time'}
-                    value={selectedTime}
-                    setValue={setSelectedTime}
-                    placeholder={'02:30 PM'}
-                    showDeleteIcon={false}
-                />
-            </div>
-        );
-    };
+              return 'Publish Bet';
+          };
 
-    const renderContent = () => {
-        if (step === 0) {
-            return (
-                <InputBox
-                    type={'text'}
-                    invitationText={'What to bet on?'}
-                    errorText={error}
-                    placeholder={'Who will win the race?'}
-                    value={marketQuestion}
-                    setValue={setMarketQuestion}
-                />
-            );
-        } else if (step === 1) {
-            return renderOutcomeCreator();
-        } else if (step === 2) {
-            return (
-                <InputBox
-                    type={'text'}
-                    invitationText={'Put URL or choose for existing'}
-                    errorText={error}
-                    placeholder={'https://www.twitch.com/user/12345'}
-                    value={marketQuestion}
-                    setValue={setMarketQuestion}
-                />
-            );
-        } else if (step === 3) {
-            return renderDateAndTime();
-        }
-    };
+          const getHeadline = () => {
+              switch (step) {
+                  case 0:
+                      return 'Create Bet';
+                  case 1:
+                      return 'Define outcomes';
+                  case 2:
+                      return 'Choose Event';
+                  case 3:
+                      return 'When does the event end?';
+                  case 4:
+                      return 'Awesome, that looks great!';
+              }
 
-    return (
-        <StepsContainer
-            step={step}
-            size={4}
-            headline={getHeadline()}
-            buttonContent={getButtonContent()}
-            onButtonClick={onConfirm}
-        >
-            <div
-                className={styles.contentContainer}
-            >
-                {renderContent()}
-            </div>
-        </StepsContainer>
-    );
-};
+              return null;
+          };
+
+          const onConfirm = () => {
+              const validInput = validateInput();
+
+              if (validInput) {
+                  if (step <= 3) {
+                      setStep(step + 1);
+                  } else {
+                      // TODO publish bet
+                  }
+              }
+          };
+
+          const setOutcomeValue = (index) => {
+              return (value) => {
+                  let newOutcomes = [...outcomes];
+
+                  newOutcomes[index].value = value;
+
+                  setOutcomes(newOutcomes);
+              };
+          };
+
+          const setOutcomeProbability = (index) => {
+              return (value) => {
+                  let newOutcomes  = [...outcomes];
+                  const floatValue = parseFloat(value);
+
+                  if (_.isNaN(floatValue) || floatValue < 1 || floatValue > 99) {
+                      return;
+                  }
+
+                  newOutcomes[index].probability = floatValue;
+
+                  setOutcomes(newOutcomes);
+              };
+          };
+
+          const renderOutcomeInputs = () => {
+              const size = outcomes.length;
+
+              return (
+                  _.times(
+                      size,
+                      (index) => {
+                          const outcome = outcomes[index];
+
+                          return (
+                              <div className={styles.outcomeRow}>
+                                  <div>
+                                      <InputBox
+                                          value={outcome.value}
+                                          placeholder={'Outcome #' + (
+                                              index + 1
+                                          )}
+                                          setValue={setOutcomeValue(index)}
+                                          theme={InputBoxTheme.coloredBorder}
+                                      />
+                                  </div>
+                                  <div>
+                                      <InputBox
+                                          type={'number'}
+                                          value={outcome.probability}
+                                          placeholder={''}
+                                          min={1}
+                                          max={99}
+                                          setValue={setOutcomeProbability(index)}
+                                          theme={InputBoxTheme.defaultInput}
+                                          showDeleteIcon={false}
+                                      />
+                                  </div>
+                              </div>
+                          );
+                      },
+                  )
+              );
+          };
+
+          const renderOutcomeCreator = () => {
+              return (
+                  <div className={styles.outcomeCreator}>
+                      <div className={styles.outcomeRow}>
+                          <div>
+                              Event outcomes
+                          </div>
+                          <div>
+                              Probability
+                          </div>
+                      </div>
+                      {renderOutcomeInputs()}
+                  </div>
+              );
+          };
+
+          const renderDateAndTime = () => {
+              return (
+                  <div className={styles.dateAndTimeContainer}>
+                      <InputBox
+                          type={'date'}
+                          invitationText={'Choose Date'}
+                          value={selectedDate}
+                          setValue={setSelectedDate}
+                          placeholder={'Today'}
+                          showDeleteIcon={false}
+                          errorText={error}
+                      />
+                      <InputBox
+                          type={'time'}
+                          invitationText={'Choose Time'}
+                          value={selectedTime}
+                          setValue={setSelectedTime}
+                          placeholder={'02:30 PM'}
+                          showDeleteIcon={false}
+                          errorText={error}
+                      />
+                  </div>
+              );
+          };
+
+          const renderSummaryRow = (key, value, isLink = false) => {
+              return (
+                  <div className={styles.summaryTicketRow}>
+                      <span>
+                          {key}
+                      </span>
+                      {
+                          isLink ?
+                              (
+                                  <Link
+                                      to={value}
+                                      target={'_blank'}
+                                  >
+                                      {value}
+                                  </Link>
+                              ) :
+                              (
+                                  <span>
+                                      {value}
+                                  </span>
+                              )
+                      }
+                  </div>
+              );
+          };
+
+          const renderSummaryOutcomes = () => {
+              return outcomes.map(
+                  (outcome, index) => (
+                      <>
+                          <Divider />
+                          {
+                              renderSummaryRow('Outcome #' + (
+                                  index + 1
+                              ), outcome.value)
+                          }
+                          {
+                              renderSummaryRow('Probability #' + (
+                                  index + 1
+                              ), outcome.probability)
+                          }
+                      </>
+                  ),
+              );
+          };
+
+          const renderSummary = () => {
+              return (
+                  <RippedTicketContainer className={styles.summaryTicketContainer}>
+                      <ProfileContainer user={ExampleData.user} />
+                      <span className={styles.summaryTicketHeadline}>
+                          {marketQuestion}
+                      </span>
+                      {renderSummaryOutcomes()}
+                      <Divider />
+                      {renderSummaryRow('Event Link:', eventUrl, true)}
+                      {renderSummaryRow('Event Title:', 'TBD')}
+                      <div className={styles.summaryTimeLeftContainer}>
+                          <span>
+                              Event ends in:
+                          </span>
+                          <TimeLeftCounter endDate={getEndDateTime()} />
+                      </div>
+                  </RippedTicketContainer>
+              );
+          };
+
+          const renderContent = () => {
+              if (step === 0) {
+                  return (
+                      <InputBox
+                          type={'text'}
+                          invitationText={'What to bet on?'}
+                          errorText={error}
+                          placeholder={'Who will win the race?'}
+                          value={marketQuestion}
+                          setValue={setMarketQuestion}
+                      />
+                  );
+              } else if (step === 1) {
+                  return renderOutcomeCreator();
+              } else if (step === 2) {
+                  return (
+                      <InputBox
+                          type={'text'}
+                          invitationText={'Put URL or choose for existing'}
+                          errorText={error}
+                          placeholder={'https://www.twitch.com/user/12345'}
+                          value={eventUrl}
+                          setValue={setEventUrl}
+                      />
+                  );
+              } else if (step === 3) {
+                  return renderDateAndTime();
+              } else if (step === 4) {
+                  return renderSummary();
+              }
+          };
+
+          return (
+              <StepsContainer
+                  step={step}
+                  size={4}
+                  headline={getHeadline()}
+                  buttonContent={getButtonContent()}
+                  onButtonClick={onConfirm}
+              >
+                  <div
+                      className={classNames(
+                          styles.contentContainer,
+                          step >= 4 ? styles.fullHeightContentContainer : null,
+                      )}
+                  >
+                      {renderContent()}
+                  </div>
+              </StepsContainer>
+          );
+      }
+;
 
 export default BetCreation;
