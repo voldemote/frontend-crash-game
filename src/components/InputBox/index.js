@@ -1,13 +1,17 @@
-import Icon            from '../Icon';
-import IconType        from '../Icon/IconType';
-import Input           from '../Input';
-import PhoneInput      from '../PhoneInput';
-import React           from 'react';
-import styles          from './styles.module.scss';
-import IconTheme       from '../Icon/IconTheme';
-import InputBoxTheme   from './InputBoxTheme';
-import classNames      from 'classnames';
-import SelectionHelper from '../../helper/SelectionHelper';
+import Icon                        from '../Icon';
+import IconType                    from '../Icon/IconType';
+import Input                       from '../Input';
+import PhoneInput                  from '../PhoneInput';
+import React                       from 'react';
+import styles                      from './styles.module.scss';
+import IconTheme                   from '../Icon/IconTheme';
+import InputBoxTheme               from './InputBoxTheme';
+import classNames                  from 'classnames';
+import SelectionHelper             from '../../helper/SelectionHelper';
+import MomentUtils                 from '@date-io/moment';
+import { KeyboardDatePicker }      from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardTimePicker }      from '@material-ui/pickers';
 
 const InputBox = ({
                       type = 'text',
@@ -19,6 +23,8 @@ const InputBox = ({
                       hasCountry,
                       value,
                       setValue,
+                      min,
+                      max,
                       theme = InputBoxTheme.defaultInput,
                       className,
                       showDeleteIcon = true,
@@ -69,6 +75,42 @@ const InputBox = ({
         return null;
     };
 
+    const renderInput = () => {
+        if (type === 'date') {
+            return (
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        variant={'inline'}
+                        format={'MM/DD/yyyy'}
+                        value={value}
+                        onChange={setValue}
+                    />
+                </MuiPickersUtilsProvider>
+            );
+        } else if (type === 'time') {
+            return (
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <KeyboardTimePicker
+                        value={value}
+                        onChange={setValue}
+                    />
+                </MuiPickersUtilsProvider>
+            );
+        }
+
+        return (
+            <Input
+                placeholder={placeholder}
+                type={type}
+                value={value}
+                min={min}
+                max={max}
+                onChange={(event) => setValue(event.target.value)}
+            />
+        );
+    };
+
     const renderDeleteIcon = () => {
         if (showDeleteIcon) {
             return (
@@ -106,13 +148,7 @@ const InputBox = ({
                 )}
             >
                 {renderPhoneInput()}
-                <Input
-                    placeholder={placeholder}
-                    type={type}
-                    value={value}
-                    min={0}
-                    onChange={(event) => setValue(event.target.value)}
-                />
+                {renderInput()}
                 {renderDeleteIcon()}
             </div>
             {renderErrorText()}

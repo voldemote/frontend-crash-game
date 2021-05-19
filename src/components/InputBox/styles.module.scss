@@ -22,6 +22,16 @@
         border-radius: 8px;
         border:        3px solid transparent;
 
+        &.defaultInputBox
+        {
+            background-color: $colorGrayLight;
+        }
+
+        &.coloredBorder
+        {
+            border-color: $colorYellow;
+        }
+
         .inputDeleteIconContainer
         {
             cursor:   pointer;
@@ -32,15 +42,6 @@
             top:      17px;
         }
 
-        &.defaultInputBox
-        {
-            background-color: $colorGrayLight;
-        }
-
-        &.coloredBorder
-        {
-            border-color: $colorYellow;
-        }
     }
 
     .errorTextContainer
@@ -61,5 +62,27 @@
 
             @include svgSelectorColor($colorRedLight)
         }
+    }
+}
+
+:global
+{
+    .MuiTextField-root
+    {
+        width: 100%;
+    }
+
+    .MuiInput-underline
+    {
+        &:after,
+        &:before
+        {
+            display: none !important;
+        }
+    }
+
+    .MuiInputBase-input
+    {
+        font-family: $fontRegular !important;
     }
 }

@@ -9,12 +9,14 @@ const BetCreation = () => {
     const [step, setStep]                     = useState(0);
     const [error, setError]                   = useState(null);
     const [marketQuestion, setMarketQuestion] = useState(null);
-    const [outcomes, setOutcomes]             = useState([{}, {}]);
+    const [selectedDate, setSelectedDate]     = useState(null);
+    const [selectedTime, setSelectedTime]     = useState(null);
+    const [outcomes, setOutcomes]             = useState([{ probability: 50 }, { probability: 50 }]);
 
     const getButtonContent = () => {
-        if (step <= 2) {
+        if (step <= 1) {
             return 'Next Step';
-        } else if (step === 3) {
+        } else if (step === 2) {
             return 'Last Step';
         }
 
@@ -50,6 +52,21 @@ const BetCreation = () => {
         };
     };
 
+    const setOutcomeProbability = (index) => {
+        return (value) => {
+            let newOutcomes  = [...outcomes];
+            const floatValue = parseFloat(value);
+
+            if (_.isNaN(floatValue) || floatValue < 1 || floatValue > 99) {
+                return;
+            }
+
+            newOutcomes[index].probability = floatValue;
+
+            setOutcomes(newOutcomes);
+        };
+    };
+
     const renderOutcomeInputs = () => {
         const size = outcomes.length;
 
@@ -72,7 +89,16 @@ const BetCreation = () => {
                                 />
                             </div>
                             <div>
-
+                                <InputBox
+                                    type={'number'}
+                                    value={outcome.probability}
+                                    placeholder={''}
+                                    min={1}
+                                    max={99}
+                                    setValue={setOutcomeProbability(index)}
+                                    theme={InputBoxTheme.coloredBorder}
+                                    showDeleteIcon={false}
+                                />
                             </div>
                         </div>
                     );
@@ -89,10 +115,33 @@ const BetCreation = () => {
                         Event outcomes
                     </div>
                     <div>
-                        Quote
+                        Probability
                     </div>
                 </div>
                 {renderOutcomeInputs()}
+            </div>
+        );
+    };
+
+    const renderDateAndTime = () => {
+        return (
+            <div className={styles.dateAndTimeContainer}>
+                <InputBox
+                    type={'date'}
+                    invitationText={'Choose Date'}
+                    value={selectedDate}
+                    setValue={setSelectedDate}
+                    placeholder={'Today'}
+                    showDeleteIcon={false}
+                />
+                <InputBox
+                    type={'time'}
+                    invitationText={'Choose Time'}
+                    value={selectedTime}
+                    setValue={setSelectedTime}
+                    placeholder={'02:30 PM'}
+                    showDeleteIcon={false}
+                />
             </div>
         );
     };
@@ -111,6 +160,19 @@ const BetCreation = () => {
             );
         } else if (step === 1) {
             return renderOutcomeCreator();
+        } else if (step === 2) {
+            return (
+                <InputBox
+                    type={'text'}
+                    invitationText={'Put URL or choose for existing'}
+                    errorText={error}
+                    placeholder={'https://www.twitch.com/user/12345'}
+                    value={marketQuestion}
+                    setValue={setMarketQuestion}
+                />
+            );
+        } else if (step === 3) {
+            return renderDateAndTime();
         }
     };
 
