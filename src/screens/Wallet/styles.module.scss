@@ -1,0 +1,192 @@
+@import '../../styles/all';
+
+.wallet {
+    background-color: #f7f7f7;
+    height: 100%;
+    color: $colorPrimary;
+
+    .header {
+        background-color: $colorWhite;
+        padding: 0 20px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+
+        .arrowBack
+        {
+            background-color: transparent;
+            border:           none;
+            height:           10px;
+            width:            10px;
+            display:          flex;
+            justify-content:  center;
+            align-items:      center;
+            transform: rotate(-135deg);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            position: relative;
+    
+            span
+            {
+                cursor: pointer;
+    
+                &:before
+                {
+                    border-style:   solid;
+                    border-width:   2px 2px 0 0;
+                    content:        '';
+                    display:        inline-block;
+                    height:         10px;
+                    position:       relative;
+                    vertical-align: middle;
+                    width:          10px;
+                    transition:     border-color .2s ease-in;
+                    border-color:   $colorPrimary;
+                }
+            }
+        }
+
+        .headline {
+            font-size: 24px;
+            font-family: $fontBold;
+            text-align: center;
+            background-color: $colorWhite;
+            width: 100%;
+        }
+    }
+    
+    .walletContainer {
+        padding-bottom: 2rem;
+        padding: 0 20px;
+        background-color: $colorWhite;
+    
+        .accountBallance {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            border: 1px dashed #eaeaef;
+            border-radius: 4px;
+            padding: 0.8rem 1.5rem;
+            font-size: 40px;
+    
+            sup {
+                font-size: 16px;
+                font-family: $fontLight;
+                margin-left: 0.5rem;
+            }
+    
+            small {
+                font-size: 16px;
+                color: #0e0927;
+                font-family: $fontLight;
+                opacity: 0.4;
+            }
+        }
+    
+        .activitiesButton {
+            background-color: $colorWhite;
+            border: solid 1px #eaeaef;
+            border-radius: 4px;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-family: $fontLight;
+            margin-top: 1rem;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            strong {
+                font-family: $fontBold;
+            }
+
+            i
+            {
+                background-color: transparent;
+                border:           none;
+                height:           10px;
+                width:            10px;
+                position:         relative;
+                cursor:           pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+        
+                &:before
+                {
+                    border-style:   solid;
+                    border-width:   2px 2px 0 0;
+                    content:        '';
+                    display:        inline-flex;
+                    height:         10px;
+                    position:       absolute;
+                    width:          10px;
+                    transition:     border-color .2s ease-in;
+                    border-color:   $colorPrimary;
+                    transform:      rotate(45deg);
+                }
+            }
+        }
+    }
+    
+    .switchViewsContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-top: 3rem;
+        background-color: $colorWhite;
+    
+        .switchViews {
+            display: block;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.8rem;
+            cursor: pointer;
+            font-size: 16px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+    
+            .text {
+                opacity: 0.2;
+                transition: opacity 0.2s ease-in-out;
+            }
+    
+            input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+    
+            input:checked ~ .line {
+                opacity: 1;
+            }
+    
+            input:checked ~ .text {
+                font-family: $fontBold;
+                opacity: 1;
+            }
+    
+            .line {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                width: 100%;
+                background-color: #e2ff54;
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
+            }
+        }
+    }
+
+    .cardContainer {
+        padding: 20px 20px;
+    }
+}
