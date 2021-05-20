@@ -20,8 +20,8 @@ import Link                  from '../../components/Link';
 const BetCreation = () => {
           const [step, setStep]                     = useState(0);
           const [error, setError]                   = useState(null);
-          const [marketQuestion, setMarketQuestion] = useState(null);
-          const [eventUrl, setEventUrl]             = useState(null);
+          const [marketQuestion, setMarketQuestion] = useState('');
+          const [eventUrl, setEventUrl]             = useState('');
           const [selectedDate, setSelectedDate]     = useState(null);
           const [selectedTime, setSelectedTime]     = useState(null);
           const [outcomes, setOutcomes]             = useState([{}, {}]);
