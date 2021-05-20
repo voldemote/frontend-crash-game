@@ -27,9 +27,14 @@
             background-color: $colorGrayLight;
         }
 
-        &.coloredBorder
+        &.coloredBorderMint
         {
-            border-color: $colorYellow;
+            border-color: $colorMint;
+        }
+
+        &.coloredBorderLightPurple
+        {
+            border-color: $colorLightPurple;
         }
 
         .inputDeleteIconContainer
@@ -39,27 +44,6 @@
             width:    25px;
             height:   25px;
             right:    17px;
-            top:      17px;
-        }
-    }
-
-    .errorTextContainer
-    {
-        display:          flex;
-        align-items:      center;
-        min-height:       40px;
-        padding:          12px 12px 12px 21px;
-        border-radius:    8px;
-        background-color: rgba(255, 88, 88, 0.1);
-        color:            $colorRedDark;
-
-        .errorTextIcon
-        {
-            height:       18px;
-            width:        18px;
-            margin-right: 16px;
-
-            @include svgSelectorColor($colorRedLight)
         }
     }
 }
@@ -88,14 +72,20 @@
     .MuiPickersToolbar-toolbar,
     .MuiPickersClockPointer-pointer,
     .MuiPickersClockPointer-noPoint,
-    .MuiPickersDay-daySelected
+    .MuiPickersDay-daySelected,
+    .MuiPickersClock-pin
     {
         background-color: $colorPrimary !important;
 
-        &.MuiPickersClockPointer-noPoint
+        &.MuiPickersClockPointer-noPoint,
         {
             border-color: $colorPrimary !important;
         }
+    }
+
+    .MuiPickersClockPointer-thumb
+    {
+        border-color: $colorPrimary !important;
     }
 
     .MuiButton-textPrimary

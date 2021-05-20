@@ -2,19 +2,29 @@
 
 .contentContainer
 {
-    width:           100%;
     position:        relative;
     display:         flex;
     align-items:     center;
     justify-content: center;
-    margin-top:      60px;
+    margin-top:      35px;
     padding:         $padding;
+
+    @media(min-width: $screen-sm)
+    {
+        margin-top: 60px;
+    }
 
     &.fullHeightContentContainer
     {
         height:           100%;
-        padding:          40px 25px 60px;
+        padding:          40px 25px 120px;
         background-color: $colorGrayLight3;
+    }
+
+    .contentContentContainer
+    {
+        height:     100%;
+        overflow-x: scroll;
     }
 
     .outcomeCreator

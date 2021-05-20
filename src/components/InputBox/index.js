@@ -12,6 +12,7 @@ import MomentUtils                 from '@date-io/moment';
 import { KeyboardDatePicker }      from '@material-ui/pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { KeyboardTimePicker }      from '@material-ui/pickers';
+import ErrorHint                   from '../ErrorHint';
 
 const InputBox = ({
                       type = 'text',
@@ -35,24 +36,6 @@ const InputBox = ({
                 <span>
                     {invitationText}
                 </span>
-            );
-        }
-
-        return null;
-    };
-
-    const renderErrorText = () => {
-        if (errorText && errorText.length) {
-            return (
-                <div className={styles.errorTextContainer}>
-                    <Icon
-                        className={styles.errorTextIcon}
-                        iconType={IconType.error}
-                    />
-                    <span>
-                        {errorText}
-                    </span>
-                </div>
             );
         }
 
@@ -141,8 +124,9 @@ const InputBox = ({
                     SelectionHelper.get(
                         theme,
                         {
-                            [InputBoxTheme.defaultInput]:  styles.defaultInputBox,
-                            [InputBoxTheme.coloredBorder]: styles.coloredBorder,
+                            [InputBoxTheme.defaultInput]:             styles.defaultInputBox,
+                            [InputBoxTheme.coloredBorderMint]:        styles.coloredBorderMint,
+                            [InputBoxTheme.coloredBorderLightPurple]: styles.coloredBorderLightPurple,
                         },
                     ),
                 )}
@@ -151,7 +135,7 @@ const InputBox = ({
                 {renderInput()}
                 {renderDeleteIcon()}
             </div>
-            {renderErrorText()}
+            <ErrorHint errorText={errorText} />
         </div>
     );
 };

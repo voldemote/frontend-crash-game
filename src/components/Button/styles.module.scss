@@ -20,6 +20,12 @@
         cursor: pointer;
     }
 
+    &.buttonFixed
+    {
+        position: fixed;
+        bottom:   0;
+    }
+
     &.authenticationScreenButton
     {
         padding:       0 2rem;

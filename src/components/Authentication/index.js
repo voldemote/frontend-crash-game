@@ -314,6 +314,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
             step={step}
             buttonContent={getButtonContent()}
             headline={getHeadline()}
+            buttonDesktopMargin={true}
             onButtonClick={onConfirm}
             buttonDisabled={loading}
             renderFooter={renderTermsAgreement}

@@ -3,6 +3,7 @@ import styles      from './styles.module.scss';
 import Button      from '../Button';
 import ButtonTheme from '../Button/ButtonTheme';
 import StepBar     from '../StepBar';
+import classNames  from 'classnames';
 
 const StepsContainer = (
     {
@@ -12,6 +13,7 @@ const StepsContainer = (
         headline,
         showButton = true,
         onButtonClick,
+        buttonDesktopMargin,
         buttonDisabled = false,
         children,
         renderFooter,
@@ -48,7 +50,10 @@ const StepsContainer = (
             return (
                 <Button
                     theme={ButtonTheme.authenticationScreenButton}
-                    className={styles.stepsButton}
+                    className={classNames(
+                        styles.stepsButton,
+                        buttonDesktopMargin ? styles.desktopMargin : null,
+                    )}
                     onClick={onButtonClick}
                     disabled={buttonDisabled}
                 >

@@ -1,4 +1,5 @@
 export default {
-    defaultInput:  'defaultInput',
-    coloredBorder: 'coloredBorder',
+    defaultInput:             'defaultInput',
+    coloredBorderMint:        'coloredBorderMint',
+    coloredBorderLightPurple: 'coloredBorderLightPurple',
 };

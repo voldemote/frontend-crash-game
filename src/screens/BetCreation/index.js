@@ -16,56 +16,71 @@ import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import React                 from 'react';
 import moment                from 'moment';
 import Link                  from '../../components/Link';
+import ReactDropdown         from 'react-dropdown';
+import Dropdown              from '../../components/Dropdown';
 
 const BetCreation = () => {
           const [step, setStep]                     = useState(0);
           const [error, setError]                   = useState(null);
           const [marketQuestion, setMarketQuestion] = useState('');
-          const [eventUrl, setEventUrl]             = useState('');
+          const [eventUrl, setEventUrl]             = useState(null);
           const [selectedDate, setSelectedDate]     = useState(null);
           const [selectedTime, setSelectedTime]     = useState(null);
           const [outcomes, setOutcomes]             = useState([{}, {}]);
           const isMount                             = useIsMount();
 
           const validateInput = () => {
+              let valid = true;
+              let error = [];
+
               switch (step) {
                   case 0:
-                      if (eventUrlIsValid()) {
-                          setError(null);
-                      } else {
-                          setError('Please enter a valid event url!');
-                          return false;
+                      if (!eventUrlIsValid()) {
+                          error = 'Please select a valid event url!';
+                          valid = false;
                       }
 
                       break;
                   case 1:
-                      if (marketQuestionIsValid()) {
-                          setError(null);
-                      } else {
-                          setError('Please enter a market question!');
-                          return false;
+                      if (!marketQuestionIsValid()) {
+                          error = 'Please enter a market question!';
+                          valid = false;
                       }
 
                       break;
+                  case 2:
+                      _.each(
+                          outcomes,
+                          function (outcome, index) {
+                              if (!outcome.value) {
+                                  error[index] = 'Please enter a valid outcome!';
+                                  valid        = false;
+                              }
+                          },
+                      );
+
+                      break;
                   case 3:
-                      if (dateIsValid()) {
-                          setError(null);
-                      } else {
-                          setError('Please enter a valid date!');
-                          return false;
+                      if (!dateIsValid()) {
+                          error[0] = 'Please enter a valid date!';
+                          valid    = false;
                       }
 
-                      if (timeIsValid()) {
-                          setError(null);
-                      } else {
-                          setError('Please enter a valid time!');
-                          return false;
+                      if (!timeIsValid()) {
+                          error[1] = 'Please enter a valid time!';
+                          valid    = false;
                       }
 
                       break;
               }
 
-              return true;
+              if (error.length > 0) {
+                  setError(error);
+              } else {
+                  setError(null);
+              }
+
+              return valid;
           };
 
           const marketQuestionIsValid = () => {
@@ -73,6 +88,7 @@ const BetCreation = () => {
           };
 
           const eventUrlIsValid = () => {
+              console.debug(eventUrl);
               return eventUrl && isValidURL(eventUrl);
           };
 
@@ -90,7 +106,7 @@ const BetCreation = () => {
                       validateInput();
                   }
               },
-              [marketQuestion, eventUrl, selectedDate, selectedTime],
+              [eventUrl, marketQuestion, outcomes, selectedDate, selectedTime],
           );
 
           const getEndDateTime = () => {
@@ -112,7 +128,7 @@ const BetCreation = () => {
                   return 'See Summary';
               }
 
-              return 'Publish Bet';
+              return 'Share Bet';
           };
 
           const getHeadline = () => {
@@ -130,6 +146,12 @@ const BetCreation = () => {
               }
 
               return null;
+          };
+
+          const getError = (index) => {
+              if (_.isArray(error)) {
+                  return error[index];
+              }
           };
 
           const onConfirm = () => {
@@ -162,6 +184,11 @@ const BetCreation = () => {
                       size,
                       (index) => {
                           const outcome = outcomes[index];
+                          let theme     = InputBoxTheme.coloredBorderMint;
+
+                          if (index % 2 === 0) {
+                              theme = InputBoxTheme.coloredBorderLightPurple;
+                          }
 
                           return (
                               <div className={styles.outcomeRow}>
@@ -171,7 +198,8 @@ const BetCreation = () => {
                                           index + 1
                                       )}
                                       setValue={setOutcomeValue(index)}
-                                      theme={InputBoxTheme.coloredBorder}
+                                      errorText={getError(index)}
+                                      theme={theme}
                                   />
                               </div>
                           );
@@ -184,7 +212,7 @@ const BetCreation = () => {
               return (
                   <div className={styles.outcomeCreator}>
                       <div className={styles.outcomeRow}>
-                              Event outcomes
+                          Event outcomes
                       </div>
                       {renderOutcomeInputs()}
                   </div>
@@ -201,7 +229,7 @@ const BetCreation = () => {
                           setValue={setSelectedDate}
                           placeholder={'Today'}
                           showDeleteIcon={false}
-                          errorText={error}
+                          errorText={getError(0)}
                       />
                       <InputBox
                           type={'time'}
@@ -210,7 +238,7 @@ const BetCreation = () => {
                           setValue={setSelectedTime}
                           placeholder={'02:30 PM'}
                           showDeleteIcon={false}
-                          errorText={error}
+                          errorText={getError(1)}
                       />
                   </div>
               );
@@ -286,13 +314,12 @@ const BetCreation = () => {
           const renderContent = () => {
               if (step === 0) {
                   return (
-                      <InputBox
-                          type={'text'}
-                          invitationText={'Put URL or choose for existing'}
+                      <Dropdown
                           errorText={error}
-                          placeholder={'https://www.twitch.com/user/12345'}
                           value={eventUrl}
                           setValue={setEventUrl}
+                          placeholder={'https://www.twitch.tv/...'}
+                          options={['https://www.twitch.tv/redbull/videos', 'https://www.twitch.tv/wallfair/videos']}
                       />
                   );
               } else if (step === 1) {
@@ -323,13 +350,15 @@ const BetCreation = () => {
                   buttonContent={getButtonContent()}
                   onButtonClick={onConfirm}
               >
-                  <div
-                      className={classNames(
-                          styles.contentContainer,
-                          step >= 4 ? styles.fullHeightContentContainer : null,
-                      )}
-                  >
-                      {renderContent()}
+                  <div className={styles.contentContentContainer}>
+                      <div
+                          className={classNames(
+                              styles.contentContainer,
+                              step >= 4 ? styles.fullHeightContentContainer : null,
+                          )}
+                      >
+                          {renderContent()}
+                      </div>
                   </div>
               </StepsContainer>
           );
