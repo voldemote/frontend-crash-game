@@ -24,25 +24,25 @@ const BetCreation = () => {
           const [eventUrl, setEventUrl]             = useState(null);
           const [selectedDate, setSelectedDate]     = useState(null);
           const [selectedTime, setSelectedTime]     = useState(null);
-          const [outcomes, setOutcomes]             = useState([{ probability: 50 }, { probability: 50 }]);
+          const [outcomes, setOutcomes]             = useState([{}, {}]);
           const isMount                             = useIsMount();
 
           const validateInput = () => {
               switch (step) {
                   case 0:
-                      if (marketQuestionIsValid()) {
-                          setError(null);
-                      } else {
-                          setError('Please enter a market question!');
-                          return false;
-                      }
-
-                      break;
-                  case 2:
                       if (eventUrlIsValid()) {
                           setError(null);
                       } else {
                           setError('Please enter a valid event url!');
+                          return false;
+                      }
+
+                      break;
+                  case 1:
+                      if (marketQuestionIsValid()) {
+                          setError(null);
+                      } else {
+                          setError('Please enter a market question!');
                           return false;
                       }
 
@@ -118,11 +118,11 @@ const BetCreation = () => {
           const getHeadline = () => {
               switch (step) {
                   case 0:
-                      return 'Create Bet';
-                  case 1:
-                      return 'Define outcomes';
-                  case 2:
                       return 'Choose Event';
+                  case 1:
+                      return 'Create Bet';
+                  case 2:
+                      return 'Define outcomes';
                   case 3:
                       return 'When does the event end?';
                   case 4:
@@ -154,21 +154,6 @@ const BetCreation = () => {
               };
           };
 
-          const setOutcomeProbability = (index) => {
-              return (value) => {
-                  let newOutcomes  = [...outcomes];
-                  const floatValue = parseFloat(value);
-
-                  if (_.isNaN(floatValue) || floatValue < 1 || floatValue > 99) {
-                      return;
-                  }
-
-                  newOutcomes[index].probability = floatValue;
-
-                  setOutcomes(newOutcomes);
-              };
-          };
-
           const renderOutcomeInputs = () => {
               const size = outcomes.length;
 
@@ -180,28 +165,14 @@ const BetCreation = () => {
 
                           return (
                               <div className={styles.outcomeRow}>
-                                  <div>
-                                      <InputBox
-                                          value={outcome.value}
-                                          placeholder={'Outcome #' + (
-                                              index + 1
-                                          )}
-                                          setValue={setOutcomeValue(index)}
-                                          theme={InputBoxTheme.coloredBorder}
-                                      />
-                                  </div>
-                                  <div>
-                                      <InputBox
-                                          type={'number'}
-                                          value={outcome.probability}
-                                          placeholder={''}
-                                          min={1}
-                                          max={99}
-                                          setValue={setOutcomeProbability(index)}
-                                          theme={InputBoxTheme.defaultInput}
-                                          showDeleteIcon={false}
-                                      />
-                                  </div>
+                                  <InputBox
+                                      value={outcome.value}
+                                      placeholder={'Outcome #' + (
+                                          index + 1
+                                      )}
+                                      setValue={setOutcomeValue(index)}
+                                      theme={InputBoxTheme.coloredBorder}
+                                  />
                               </div>
                           );
                       },
@@ -213,12 +184,7 @@ const BetCreation = () => {
               return (
                   <div className={styles.outcomeCreator}>
                       <div className={styles.outcomeRow}>
-                          <div>
                               Event outcomes
-                          </div>
-                          <div>
-                              Probability
-                          </div>
                       </div>
                       {renderOutcomeInputs()}
                   </div>
@@ -289,7 +255,7 @@ const BetCreation = () => {
                           {
                               renderSummaryRow('Probability #' + (
                                   index + 1
-                              ), outcome.probability)
+                              ), 50)
                           }
                       </>
                   ),
@@ -322,19 +288,6 @@ const BetCreation = () => {
                   return (
                       <InputBox
                           type={'text'}
-                          invitationText={'What to bet on?'}
-                          errorText={error}
-                          placeholder={'Who will win the race?'}
-                          value={marketQuestion}
-                          setValue={setMarketQuestion}
-                      />
-                  );
-              } else if (step === 1) {
-                  return renderOutcomeCreator();
-              } else if (step === 2) {
-                  return (
-                      <InputBox
-                          type={'text'}
                           invitationText={'Put URL or choose for existing'}
                           errorText={error}
                           placeholder={'https://www.twitch.com/user/12345'}
@@ -342,6 +295,19 @@ const BetCreation = () => {
                           setValue={setEventUrl}
                       />
                   );
+              } else if (step === 1) {
+                  return (
+                      <InputBox
+                          type={'text'}
+                          invitationText={'What to bet on?'}
+                          errorText={error}
+                          placeholder={'Who will win the race?'}
+                          value={marketQuestion}
+                          setValue={setMarketQuestion}
+                      />
+                  );
+              } else if (step === 2) {
+                  return renderOutcomeCreator();
               } else if (step === 3) {
                   return renderDateAndTime();
               } else if (step === 4) {
