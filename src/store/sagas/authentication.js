@@ -11,6 +11,7 @@ const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
     Routes.welcome,
     Routes.home,
+    Routes.bet,
 ];
 
 const requestSms = function* (action) {

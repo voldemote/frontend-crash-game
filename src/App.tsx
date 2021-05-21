@@ -9,6 +9,7 @@ import Routes                      from './constants/Routes';
 import store                       from './store';
 import TermsAndConditions          from './screens/TermsAndConditions';
 import Welcome                     from './screens/Welcome';
+import Bet                         from './screens/Bet';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
 import { Provider }                from 'react-redux';
@@ -49,6 +50,11 @@ const App = () => {
                         exact
                         path={Routes.home}
                         component={Home}
+                    />
+                    <Route
+                        exact
+                        path={Routes.bet}
+                        component={Bet}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>
