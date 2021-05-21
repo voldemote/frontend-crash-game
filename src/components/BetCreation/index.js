@@ -434,6 +434,7 @@ const BetCreation = ({ hidePopup, closed }) => {
                   cancelButtonContent={getCancelButtonContent()}
                   onCancelButtonClick={onCancel}
                   onButtonClick={onConfirm}
+                  hideDefaultButtonBackground={true}
                   splittedView={step === 4}
                   buttonDesktopMargin={true}
               >

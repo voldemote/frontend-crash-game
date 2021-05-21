@@ -18,6 +18,7 @@ const StepsContainer = (
         onCancelButtonClick,
         splittedView = false,
         buttonDisabled = false,
+        hideDefaultButtonBackground = false,
         children,
         renderFooter,
     },
@@ -70,6 +71,7 @@ const StepsContainer = (
                     <Button
                         className={classNames(
                             styles.continueButton,
+                            hideDefaultButtonBackground ? styles.continueButtonHiddenBackground : null,
                         )}
                         onClick={onButtonClick}
                         disabled={buttonDisabled}
