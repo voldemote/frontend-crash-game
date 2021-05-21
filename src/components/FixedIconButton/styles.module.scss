@@ -7,8 +7,8 @@
     align-items:      center;
     justify-content:  center;
     z-index:          $zIndexFixedIconButton;
-    bottom:           55px;
-    right:            55px;
+    bottom:           30px;
+    right:            30px;
     width:            60px;
     height:           60px;
     background-color: $colorWhite;
@@ -16,4 +16,10 @@
     cursor:           pointer;
     box-shadow:       0 2px 4px 0 $colorPrimary05;
     border:           solid 2px $colorPrimary10;
+
+    @media(min-width: $screen-sm)
+    {
+        bottom: 55px;
+        right:  55px;
+    }
 }
