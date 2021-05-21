@@ -53,10 +53,18 @@ const saveAdditionalInfo = (name, email) => {
     });
 };
 
+const listEvents = () => {
+    return Api.get(
+        ApiUrls.API_EVENT_LIST,
+    ).catch(() => {
+    });
+};
+
 export {
     Api,
     setToken,
     requestSms,
     verifySms,
     saveAdditionalInfo,
+    listEvents,
 };

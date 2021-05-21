@@ -4,12 +4,16 @@ import { takeLatest } from 'redux-saga/effects';
 
 // Types
 import { AuthenticationTypes } from '../actions/authentication';
+import { EventTypes }      from '../actions/event';
 
 // Actions
 
 // Sagas
 import AuthenticationSagas from './authentication';
 import AlertSagas          from './alert';
+import EventSagas          from './event';
+import { EventActions }    from '../actions/event';
+import { put }             from 'redux-saga/effects';
 
 const root = function* () {
     yield all([
@@ -26,7 +30,9 @@ const root = function* () {
             AuthenticationTypes.REQUEST_SMS_FAILED,
             AuthenticationTypes.VERIFY_SMS_FAILED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
+            EventTypes.FETCH_ALL_FAILED,
         ],                                                                      AlertSagas.handleFail),
+        takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
@@ -38,6 +44,7 @@ const rehydrationDone = function* () {
 };
 
 const preLoading = function* () {
+    yield put(EventActions.fetchAll());
 };
 
 export default {
