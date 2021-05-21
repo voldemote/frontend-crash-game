@@ -10,10 +10,13 @@ const StepsContainer = (
         size,
         step,
         buttonContent,
+        headlineClassName,
+        cancelButtonContent,
         headline,
         showButton = true,
         onButtonClick,
-        buttonDesktopMargin,
+        onCancelButtonClick,
+        splittedView = false,
         buttonDisabled = false,
         children,
         renderFooter,
@@ -34,7 +37,10 @@ const StepsContainer = (
         if (headline && headline.length) {
             return (
                 <p
-                    className={styles.stepsHeadline}
+                    className={classNames(
+                        styles.stepsHeadline,
+                        headlineClassName,
+                    )}
                     dangerouslySetInnerHTML={{
                         __html: headline,
                     }}
@@ -48,17 +54,29 @@ const StepsContainer = (
     const renderButton = () => {
         if (showButton && buttonContent) {
             return (
-                <Button
-                    theme={ButtonTheme.authenticationScreenButton}
-                    className={classNames(
-                        styles.stepsButton,
-                        buttonDesktopMargin ? styles.desktopMargin : null,
-                    )}
-                    onClick={onButtonClick}
-                    disabled={buttonDisabled}
-                >
-                    {buttonContent}
-                </Button>
+                <div className={styles.stepsButtonContainer}>
+                    {
+                        cancelButtonContent && (
+                            <Button
+                                className={classNames(
+                                    styles.cancelButton,
+                                )}
+                                onClick={onCancelButtonClick}
+                            >
+                                {cancelButtonContent}
+                            </Button>
+                        )
+                    }
+                    <Button
+                        className={classNames(
+                            styles.continueButton,
+                        )}
+                        onClick={onButtonClick}
+                        disabled={buttonDisabled}
+                    >
+                        {buttonContent}
+                    </Button>
+                </div>
             );
         }
 
@@ -67,12 +85,19 @@ const StepsContainer = (
 
     return (
         <div className={styles.stepsContainer}>
-            <div className={styles.stepsContentContainer}>
-                {renderStepBar()}
-                {renderHeadline()}
-                {children}
-                {renderButton()}
-                {renderFooter && renderFooter()}
+            {renderStepBar()}
+            <div className={classNames(
+                styles.stepsContentContainer,
+                splittedView ? styles.splittedView : null,
+            )}>
+                <div>
+                    {renderHeadline()}
+                </div>
+                <div>
+                    {children}
+                    {renderButton()}
+                    {renderFooter && renderFooter()}
+                </div>
             </div>
         </div>
     );

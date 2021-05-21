@@ -68,6 +68,10 @@ const InputBox = ({
                         format={'MM/DD/yyyy'}
                         value={value}
                         onChange={setValue}
+                        keyboardIcon={<Icon
+                            iconType={IconType.calendar}
+                            iconTheme={IconTheme.primary}
+                        />}
                     />
                 </MuiPickersUtilsProvider>
             );
@@ -77,6 +81,10 @@ const InputBox = ({
                     <KeyboardTimePicker
                         value={value}
                         onChange={setValue}
+                        keyboardIcon={<Icon
+                            iconType={IconType.time}
+                            iconTheme={IconTheme.primary}
+                        />}
                     />
                 </MuiPickersUtilsProvider>
             );

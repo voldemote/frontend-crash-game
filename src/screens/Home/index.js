@@ -6,8 +6,25 @@ import ExampleData       from '../../helper/ExampleData';
 import Header            from '../../components/Header/index';
 import Navbar            from '../../components/Navbar/index';
 import styles            from './styles.module.scss';
+import FixedIconButton   from '../../components/FixedIconButton';
+import IconType          from '../../components/Icon/IconType';
+import { connect }       from 'react-redux';
+import { PopupActions }  from '../../store/actions/popup';
+import PopupTheme        from '../../components/Popup/PopupTheme';
 
-const Home = () => {
+const Home = ({ showPopup }) => {
+    const eventCreationButtonClicked = () => {
+        showPopup({ popupType: PopupTheme.betCreation });
+    };
+
+    const renderEventCreationButton = () => {
+        return (
+            <FixedIconButton
+                onClick={eventCreationButtonClicked}
+                iconType={IconType.bet}
+            />
+        );
+    };
 
     return (
         <div className={styles.homeContainer}>
@@ -98,8 +115,20 @@ const Home = () => {
                     eventEnd={new Date(ExampleData.currentDate.getTime() + 12 * 60000)}
                 />
             </CarouselContainer>
+            {renderEventCreationButton()}
         </div>
     );
 };
 
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showPopup: (popupType) => {
+            dispatch(PopupActions.show(popupType));
+        },
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps,
+)(Home);

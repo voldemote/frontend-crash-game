@@ -326,12 +326,12 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
     );
 };
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => {
     return {
         authState: state.authentication.authState,
         loading:   state.authentication.loading,
     };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
