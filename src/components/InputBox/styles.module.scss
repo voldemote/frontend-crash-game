@@ -50,6 +50,12 @@
 
 :global
 {
+    .MuiPopover-root,
+    .MuiDialog-root
+    {
+        z-index: $zIndexMuiRoot !important;
+    }
+
     .MuiTextField-root
     {
         width: 100%;
