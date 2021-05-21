@@ -28,9 +28,9 @@ const Navbar = ({ user }) => {
                 >
                     Home
                 </a>
-                <a href="/">Discover</a>
-                <a href="/">My Bets</a>
-                <a href="/">My Wallet</a>
+                <a>Discover</a>
+                <a>My Bets</a>
+                <a>My Wallet</a>
             </div>
             <div className={style.navbarItems}>
                 <button
