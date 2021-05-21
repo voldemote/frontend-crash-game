@@ -17,14 +17,19 @@
     &.fullHeightContentContainer
     {
         height:           100%;
-        padding:          40px 25px 120px;
+        margin-top:       0;
+        padding-top:      30px;
         background-color: $colorGrayLight3;
+
+        @media (min-width: $screen-sm) {
+            padding-top:      130px;
+        }
     }
 
     .contentContentContainer
     {
-        height:     100%;
-        overflow-x: scroll;
+        height: 100%;
+        width:  100%;
     }
 
     .outcomeCreator
@@ -46,9 +51,34 @@
     {
         width: 100%;
 
-        > div
+        .dateContainer
         {
             margin-bottom: 30px;
+        }
+
+        .timeContainer
+        {
+            display:         flex;
+            flex-direction:  column;
+            justify-content: space-between;
+
+            @media(min-width: $screen-sm)
+            {
+                flex-direction: row;
+
+                > div
+                {
+                    &:first-child
+                    {
+                        margin-right: 10px;
+                    }
+
+                    &:last-child
+                    {
+                        margin-left: 10px;
+                    }
+                }
+            }
         }
     }
 
@@ -104,4 +134,24 @@
             margin-top:       40px;
         }
     }
+}
+
+.publishBetButton
+{
+    display:         flex;
+    flex-direction:  row;
+    align-items:     center;
+    justify-content: center;
+    width:           auto;
+    white-space:     nowrap;
+
+    :first-child
+    {
+        margin-right: 10px;
+    }
+}
+
+.stepsHeadline
+{
+    text-align: center;
 }

@@ -17,16 +17,43 @@ import React                 from 'react';
 import moment                from 'moment';
 import Link                  from '../../components/Link';
 import Dropdown              from '../../components/Dropdown';
+import { PopupActions }      from '../../store/actions/popup';
+import { connect }           from 'react-redux';
+import Icon                  from '../Icon';
+import IconType              from '../Icon/IconType';
 
-const BetCreation = () => {
-          const [step, setStep]                     = useState(0);
-          const [error, setError]                   = useState(null);
-          const [marketQuestion, setMarketQuestion] = useState('');
-          const [eventUrl, setEventUrl]             = useState(null);
-          const [selectedDate, setSelectedDate]     = useState(null);
-          const [selectedTime, setSelectedTime]     = useState(null);
-          const [outcomes, setOutcomes]             = useState([{}, {}]);
-          const isMount                             = useIsMount();
+const initialState = {
+    step:            0,
+    error:           null,
+    marketQuestion:  '',
+    eventUrl:        null,
+    selectedDate:    null,
+    selectedTime:    null,
+    selectedEndTime: null,
+    outcomes:        [{}, {}],
+};
+
+const BetCreation = ({ hidePopup, closed }) => {
+          const [step, setStep]                       = useState(initialState.step);
+          const [error, setError]                     = useState(initialState.error);
+          const [marketQuestion, setMarketQuestion]   = useState(initialState.marketQuestion);
+          const [eventUrl, setEventUrl]               = useState(initialState.eventUrl);
+          const [selectedDate, setSelectedDate]       = useState(initialState.selectedDate);
+          const [selectedTime, setSelectedTime]       = useState(initialState.selectedTime);
+          const [selectedEndTime, setSelectedEndTime] = useState(initialState.selectedEndTime);
+          const [outcomes, setOutcomes]               = useState(initialState.outcomes);
+          const isMount                               = useIsMount();
+
+          const resetStates = () => {
+              setMarketQuestion(initialState.marketQuestion);
+              setEventUrl(initialState.eventUrl);
+              setSelectedDate(initialState.selectedDate);
+              setSelectedTime(initialState.selectedTime);
+              setSelectedEndTime(initialState.selectedEndTime);
+              setOutcomes(initialState.outcomes);
+              setStep(initialState.step);
+              setError(initialState.error);
+          };
 
           const validateInput = () => {
               let valid = true;
@@ -70,6 +97,11 @@ const BetCreation = () => {
                           valid    = false;
                       }
 
+                      if (!endTimeIsValid()) {
+                          error[2] = 'Please enter a valid time!';
+                          valid    = false;
+                      }
+
                       break;
               }
 
@@ -87,7 +119,6 @@ const BetCreation = () => {
           };
 
           const eventUrlIsValid = () => {
-              console.debug(eventUrl);
               return eventUrl && isValidURL(eventUrl);
           };
 
@@ -99,21 +130,35 @@ const BetCreation = () => {
               return selectedTime && selectedTime.isValid();
           };
 
+          const endTimeIsValid = () => {
+              return selectedEndTime && selectedEndTime.isValid();
+          };
+
           useEffect(
               () => {
-                  if (!isMount) {
+                  if (!isMount && !closed) {
                       validateInput();
                   }
               },
               [eventUrl, marketQuestion, outcomes, selectedDate, selectedTime],
           );
 
+          useEffect(
+              () => {
+                  if (!isMount && closed) {
+                      resetStates();
+                  }
+              },
+              [closed],
+          );
+
           const getEndDateTime = () => {
+              const time     = selectedTime;
               const dateTime = moment(selectedDate);
 
-              dateTime.hours(selectedTime.hours());
-              dateTime.minutes(selectedTime.minutes());
-              dateTime.seconds(selectedTime.seconds());
+              dateTime.hours(time.hours());
+              dateTime.minutes(time.minutes());
+              dateTime.seconds(time.seconds());
 
               return dateTime;
           };
@@ -124,10 +169,27 @@ const BetCreation = () => {
               } else if (step === 2) {
                   return 'Last Step';
               } else if (step === 3) {
-                  return 'See Summary';
+                  return (
+                      <div className={styles.publishBetButton}>
+                          <Icon
+                              iconType={IconType.bet}
+                          />
+                          Publish Bet!
+                      </div>
+                  );
               }
 
-              return 'Share Bet';
+              return null;
+          };
+
+          const getCancelButtonContent = () => {
+              if (step === 0) {
+                  return 'Cancel';
+              } else if (step <= 3) {
+                  return 'Go back';
+              }
+
+              return null;
           };
 
           const getHeadline = () => {
@@ -162,6 +224,14 @@ const BetCreation = () => {
                   } else {
                       // TODO publish bet
                   }
+              }
+          };
+
+          const onCancel = () => {
+              if (step === 0) {
+                  hidePopup();
+              } else if (step <= 3) {
+                  setStep(step - 1);
               }
           };
 
@@ -221,24 +291,37 @@ const BetCreation = () => {
           const renderDateAndTime = () => {
               return (
                   <div className={styles.dateAndTimeContainer}>
-                      <InputBox
-                          type={'date'}
-                          invitationText={'Choose Date'}
-                          value={selectedDate}
-                          setValue={setSelectedDate}
-                          placeholder={'Today'}
-                          showDeleteIcon={false}
-                          errorText={getError(0)}
-                      />
-                      <InputBox
-                          type={'time'}
-                          invitationText={'Choose Time'}
-                          value={selectedTime}
-                          setValue={setSelectedTime}
-                          placeholder={'02:30 PM'}
-                          showDeleteIcon={false}
-                          errorText={getError(1)}
-                      />
+                      <div className={styles.dateContainer}>
+                          <InputBox
+                              type={'date'}
+                              invitationText={'Choose Date'}
+                              value={selectedDate}
+                              setValue={setSelectedDate}
+                              placeholder={'Today'}
+                              showDeleteIcon={false}
+                              errorText={getError(0)}
+                          />
+                      </div>
+                      <div className={styles.timeContainer}>
+                          <InputBox
+                              type={'time'}
+                              invitationText={'Start of the stream'}
+                              value={selectedTime}
+                              setValue={setSelectedTime}
+                              placeholder={'02:30 PM'}
+                              showDeleteIcon={false}
+                              errorText={getError(1)}
+                          />
+                          <InputBox
+                              type={'time'}
+                              invitationText={'End of the stream'}
+                              value={selectedEndTime}
+                              setValue={setSelectedEndTime}
+                              placeholder={'02:30 PM'}
+                              showDeleteIcon={false}
+                              errorText={getError(2)}
+                          />
+                      </div>
                   </div>
               );
           };
@@ -345,16 +428,23 @@ const BetCreation = () => {
               <StepsContainer
                   step={step}
                   size={4}
+                  headlineClassName={styles.stepsHeadline}
                   headline={getHeadline()}
                   buttonContent={getButtonContent()}
+                  cancelButtonContent={getCancelButtonContent()}
+                  onCancelButtonClick={onCancel}
                   onButtonClick={onConfirm}
+                  splittedView={step === 4}
+                  buttonDesktopMargin={true}
               >
-                  <div className={styles.contentContentContainer}>
+                  <div
+                      className={classNames(
+                          styles.contentContainer,
+                          step >= 4 ? styles.fullHeightContentContainer : null,
+                      )}
+                  >
                       <div
-                          className={classNames(
-                              styles.contentContainer,
-                              step >= 4 ? styles.fullHeightContentContainer : null,
-                          )}
+                          className={classNames(styles.contentContentContainer)}
                       >
                           {renderContent()}
                       </div>
@@ -364,4 +454,15 @@ const BetCreation = () => {
       }
 ;
 
-export default BetCreation;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        hidePopup: () => {
+            dispatch(PopupActions.hide());
+        },
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps,
+)(BetCreation);

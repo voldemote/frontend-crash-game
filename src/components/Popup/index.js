@@ -23,7 +23,7 @@ const Popup = ({ type, visible, hidePopup }) => {
         switch (type) {
             case PopupTheme.betCreation:
                 return (
-                    <BetCreation />
+                    <BetCreation closed={!visible} />
                 );
         }
 
