@@ -1,124 +1,74 @@
 @import '../../styles/all';
 
-.authenticationContainer
+.authenticationDescription
 {
-    width:  100%;
-    height: 100%;
+    width:          100%;
+    margin-top:     25px;
+    font-family:    $fontRegular;
+    font-size:      16px;
+    line-height:    24px;
+    letter-spacing: 0;
+    color:          $colorPrimary;
+    padding:        $padding;
+}
 
-    .authenticationContentContainer
+.authenticationInputBoxContainer
+{
+    width:           100%;
+    position:        relative;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    margin-top:      60px;
+    padding:         $padding;
+}
+
+.authenticationResendCodeLabel
+{
+    width:          100%;
+    margin-top:     35px;
+    text-align:     center;
+    font-family:    $fontRegular;
+    font-size:      16px;
+    line-height:    25px;
+    letter-spacing: 0;
+    opacity:        0.246;
+    color:          $colorPrimary;
+    padding:        $padding;
+}
+
+.authenticationResendCodeAction
+{
+    width:          100%;
+    margin-top:     1px;
+    text-align:     center;
+    font-family:    $fontRegular;
+    font-size:      16px;
+    line-height:    24px;
+    letter-spacing: 0;
+    color:          $colorPrimary;
+    padding:        $padding;
+
+    &:hover
     {
-        height:          100%;
-        width:           100%;
-        display:         flex;
-        flex-direction:  column;
+        cursor:  pointer;
+        opacity: 0.5;
+    }
+}
 
-        $paddingPercent: 7%;
-        $paddingHTotal:  2 * $paddingPercent;
-        $padding:        0 $paddingPercent;
+.authenticationTermsAgreement
+{
+    width:          (100% - $paddingHTotal);
+    margin:         2rem $paddingPercent;
+    font-size:      13px;
+    font-family:    $fontRegular;
+    line-height:    19.6px;
+    letter-spacing: 0;
+    color:          rgba(2, 6, 30, 0.36);
+    display:        none;
 
-        .authenticationStepBarContainer
-        {
-            width:           100%;
-            display:         flex;
-            justify-content: center;
-            margin:          36px 0 110px;
-            padding:         $padding;
-        }
-
-        .authenticationHeadline
-        {
-            width:          100%;
-            font-family:    $fontBold;
-            font-size:      36px;
-            line-height:    39.6px;
-            letter-spacing: 0;
-            color:          $colorPrimary;
-            padding:        $padding;
-        }
-
-        .authenticationDescription
-        {
-            width:          100%;
-            margin-top:     25px;
-            font-family:    $fontRegular;
-            font-size:      16px;
-            line-height:    24px;
-            letter-spacing: 0;
-            color:          $colorPrimary;
-            padding:        $padding;
-        }
-
-        .authenticationInputBoxContainer
-        {
-            width:           100%;
-            position:        relative;
-            display:         flex;
-            align-items:     center;
-            justify-content: center;
-            margin-top:      60px;
-            padding:         $padding;
-        }
-
-        .authenticationResendCodeLabel
-        {
-            width:          100%;
-            margin-top:     35px;
-            text-align:     center;
-            font-family:    $fontRegular;
-            font-size:      16px;
-            line-height:    25px;
-            letter-spacing: 0;
-            opacity:        0.246;
-            color:          $colorPrimary;
-            padding:        $padding;
-        }
-
-        .authenticationResendCodeAction
-        {
-            width:          100%;
-            margin-top:     1px;
-            text-align:     center;
-            font-family:    $fontRegular;
-            font-size:      16px;
-            line-height:    24px;
-            letter-spacing: 0;
-            color:          $colorPrimary;
-            padding:        $padding;
-
-            &:hover
-            {
-                cursor:  pointer;
-                opacity: 0.5;
-            }
-        }
-
-        .authenticationButton
-        {
-            margin-top: auto;
-
-            @media only screen and (min-width: $screen-sm)
-            {
-                width:      (100% - $paddingHTotal);
-                margin:     $padding;
-                margin-top: auto;
-            }
-        }
-
-        .authenticationTermsAgreement
-        {
-            width:          (100% - $paddingHTotal);
-            margin:         2rem $paddingPercent;
-            font-size:      13px;
-            font-family:    $fontRegular;
-            line-height:    19.6px;
-            letter-spacing: 0;
-            color:          rgba(2, 6, 30, 0.36);
-            display:        none;
-
-            @media (min-width: $screen-sm)
-            {
-                display: block;
-            }
-        }
+    @media (min-width: $screen-sm)
+    {
+        display: block;
     }
 }

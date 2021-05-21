@@ -1,0 +1,107 @@
+@import '../../styles/all';
+
+.contentContainer
+{
+    position:        relative;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    margin-top:      35px;
+    padding:         $padding;
+
+    @media(min-width: $screen-sm)
+    {
+        margin-top: 60px;
+    }
+
+    &.fullHeightContentContainer
+    {
+        height:           100%;
+        padding:          40px 25px 120px;
+        background-color: $colorGrayLight3;
+    }
+
+    .contentContentContainer
+    {
+        height:     100%;
+        overflow-x: scroll;
+    }
+
+    .outcomeCreator
+    {
+        width:          100%;
+        display:        flex;
+        flex-direction: column;
+
+        .outcomeRow
+        {
+            width:          100%;
+            display:        flex;
+            flex-direction: row;
+            margin-bottom:  15px;
+        }
+    }
+
+    .dateAndTimeContainer
+    {
+        width: 100%;
+
+        > div
+        {
+            margin-bottom: 30px;
+        }
+    }
+
+    .summaryTicketContainer
+    {
+        width: 100%;
+
+        .summaryTicketHeadline
+        {
+            display:    block;
+            margin-top: 25px;
+            color:      $colorPrimary;
+            font-size:  20px;
+        }
+
+        .summaryTicketRow
+        {
+            display:        flex;
+            flex-direction: row;
+            width:          100%;
+            align-items:    center;
+            margin-bottom:  15px;
+            font-size:      14px;
+
+            > *
+            {
+                text-overflow: ellipsis;
+                overflow:      hidden;
+                white-space:   nowrap;
+
+                &:first-child
+                {
+                    width: 35%;
+                }
+
+                &:nth-child(2)
+                {
+                    text-align: right;
+                    width:      65%;
+                }
+            }
+        }
+
+        .summaryTimeLeftContainer
+        {
+            display:          flex;
+            flex-direction:   row;
+            justify-content:  space-between;
+            background-color: $colorPrimary;
+            color:            $colorWhite;
+            padding:          10px 15px;
+            border-radius:    6px;
+            margin-top:       40px;
+        }
+    }
+}

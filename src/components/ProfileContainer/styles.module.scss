@@ -1,0 +1,39 @@
+@import "../../styles/all";
+
+.profileContainer
+{
+    flex-direction: row;
+    flex-flow:      wrap;
+    display:        flex;
+    align-items:    center;
+
+    @media (min-width: $screen-md)
+    {
+        flex-flow: nowrap;
+    }
+
+    .profilePicture
+    {
+        height:              25px;
+        width:               25px;
+        border-radius:       50%;
+        margin-right:        0.5rem;
+        background-color:    $colorGrayLight;
+        background-size:     cover;
+        background-position: center center;
+
+        @media (min-width: $screen-md)
+        {
+            height: 30px;
+            width:  30px;
+        }
+    }
+
+    .profileName
+    {
+        display:     block;
+        font-family: $fontLight;
+        color:       $colorGrayLight2;
+        font-size:   12px;
+    }
+}

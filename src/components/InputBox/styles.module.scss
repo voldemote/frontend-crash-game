@@ -13,14 +13,29 @@
 
     .inputBox
     {
-        width:            100%;
-        height:           60px;
-        position:         relative;
-        display:          flex;
-        align-items:      center;
-        padding:          15px 20px;
-        border-radius:    8px;
-        background-color: $colorGrayLight;
+        width:         100%;
+        height:        60px;
+        position:      relative;
+        display:       flex;
+        align-items:   center;
+        padding:       15px 20px;
+        border-radius: 8px;
+        border:        3px solid transparent;
+
+        &.defaultInputBox
+        {
+            background-color: $colorGrayLight;
+        }
+
+        &.coloredBorderMint
+        {
+            border-color: $colorMint;
+        }
+
+        &.coloredBorderLightPurple
+        {
+            border-color: $colorLightPurple;
+        }
 
         .inputDeleteIconContainer
         {
@@ -29,27 +44,52 @@
             width:    25px;
             height:   25px;
             right:    17px;
-            top:      17px;
+        }
+    }
+}
+
+:global
+{
+    .MuiTextField-root
+    {
+        width: 100%;
+    }
+
+    .MuiInput-underline
+    {
+        &:after,
+        &:before
+        {
+            display: none !important;
         }
     }
 
-    .errorTextContainer
+    .MuiInputBase-input
     {
-        display:          flex;
-        align-items:      center;
-        min-height:       40px;
-        padding:          12px 12px 12px 21px;
-        border-radius:    8px;
-        background-color: rgba(255, 88, 88, 0.1);
-        color:            $colorRedDark;
+        font-family: $fontRegular !important;
+    }
 
-        .errorTextIcon
+    .MuiPickersToolbar-toolbar,
+    .MuiPickersClockPointer-pointer,
+    .MuiPickersClockPointer-noPoint,
+    .MuiPickersDay-daySelected,
+    .MuiPickersClock-pin
+    {
+        background-color: $colorPrimary !important;
+
+        &.MuiPickersClockPointer-noPoint,
         {
-            height:       18px;
-            width:        18px;
-            margin-right: 16px;
-
-            @include svgSelectorColor($colorRedLight)
+            border-color: $colorPrimary !important;
         }
+    }
+
+    .MuiPickersClockPointer-thumb
+    {
+        border-color: $colorPrimary !important;
+    }
+
+    .MuiButton-textPrimary
+    {
+        color: $colorPrimary !important;
     }
 }
