@@ -19,6 +19,7 @@
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-horizontal-scrolling-menu": "^0.7.10",
     "react-phone-input-2": "^2.13.8",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",

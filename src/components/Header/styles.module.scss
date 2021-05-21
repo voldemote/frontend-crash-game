@@ -1,0 +1,188 @@
+@import '../../styles/all';
+
+.header
+{
+    position:            relative;
+    min-height:          600px;
+    margin-bottom:       4rem;
+    overflow:            hidden;
+    background-position: center;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+
+    .headerOverlay
+    {
+        position:   absolute;
+        width:      100%;
+        height:     100%;
+        background: linear-gradient(180deg, rgba(0, 0, 0, .6), $colorPrimaryDark);
+    }
+
+    .headerWrapper
+    {
+        display:         flex;
+        justify-content: space-between;
+        flex-direction:  row;
+        align-items:     flex-end;
+        position:        absolute;
+        bottom:          0;
+        width:           100%;
+        padding:         3rem 30px;
+
+        .switchButtons
+        {
+            display:         flex;
+            justify-content: center;
+            align-items:     center;
+            flex-direction:  column;
+
+            .goToPreviousSlide,
+            .goToNextSlide
+            {
+                background-color: transparent;
+                border-radius:    50%;
+                margin-bottom:    0.5rem;
+                height:           60px;
+                width:            60px;
+                display:          flex;
+                justify-content:  center;
+                align-items:      center;
+                transition:       border-color .3s ease-in-out;
+                border:           2px solid $colorWhite10;
+                cursor:           pointer;
+
+                span
+                {
+                    &:before
+                    {
+                        border-color: $colorWhite;
+                        border-style: solid;
+                        border-width: 2px 2px 0 0;
+                        content:      '';
+                        display:      inline-block;
+                        height:       15px;
+                        position:     relative;
+                        top:          0;
+                        width:        15px;
+                    }
+                }
+
+                &:hover,
+                &:active
+                {
+                    border-color: $colorWhite;
+                }
+
+                &.goToPreviousSlide
+                {
+                    span
+                    {
+                        &:before
+                        {
+                            left:      4px;
+                            transform: rotate(-135deg);
+                        }
+                    }
+                }
+
+                &.goToNextSlide
+                {
+                    span
+                    {
+                        &:before
+                        {
+                            left:      -4px;
+                            transform: rotate(45deg);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        @media (min-width: $screen-sm)
+        {
+            padding: 3rem;
+        }
+    }
+
+    .headerContentContainer
+    {
+        display:        flex;
+        flex-direction: column;
+        color:          $colorWhite;
+
+        .badgeContainer
+        {
+            margin-bottom: 30px;
+        }
+
+        .tags
+        {
+            color:     #b0b0b0;
+            font-size: 12px;
+        }
+
+        .title
+        {
+            margin-bottom:  25px;
+            font-size:      30px;
+            font-weight:    bold;
+            font-stretch:   normal;
+            font-style:     normal;
+            line-height:    1.07;
+            letter-spacing: 1px;
+
+            @media (min-width: $screen-sm)
+            {
+                font-size: 40px;
+            }
+        }
+
+        .goToEvent
+        {
+            margin-top:       2rem;
+            display:          inline-flex;
+            justify-content:  space-around;
+            align-items:      center;
+            text-decoration:  none;
+            padding:          1rem 2rem;
+            background-color: rgba(8, 6, 17, 0.42);
+            font-family:      $fontBold;
+
+            span
+            {
+                display:      none;
+                margin-right: 1rem;
+
+                @media (min-width: $screen-sm)
+                {
+                    display: block;
+                }
+            }
+
+            .arrowRight
+            {
+                display:     block;
+                position:    relative;
+                width:       10px;
+                height:      10px;
+                border-top:  2px solid #ffffff;
+                border-left: 2px solid #ffffff;
+                transform:   rotate(90deg);
+
+                &:after
+                {
+                    content:          "";
+                    position:         absolute;
+                    width:            2px;
+                    height:           15px;
+                    background-color: #ffffff;
+                    transform:        rotate(-45deg) translate(4.5px, 1px);
+                    left:             0;
+                    top:              0;
+                }
+            }
+        }
+    }
+}

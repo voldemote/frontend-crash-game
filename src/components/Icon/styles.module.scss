@@ -10,6 +10,13 @@
     align-items:     center;
     position:        relative;
 
+    &.iconCircled
+    {
+        border:        solid 1.2px $colorPrimary;
+        border-radius: 100%;
+        padding:       5px;
+    }
+
     &.iconPrimary
     {
         @include svgColorStroke($colorPrimary)

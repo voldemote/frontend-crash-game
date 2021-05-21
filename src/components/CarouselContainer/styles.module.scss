@@ -1,0 +1,116 @@
+@import '../../styles/all';
+
+.carouselContainer
+{
+    margin-top: 140px;
+
+    .titleContainer
+    {
+        display:         flex;
+        flex-direction:  row;
+        align-items:     center;
+        justify-content: space-between;
+        padding:         0 3rem;
+        margin-bottom:   30px;
+
+        .title
+        {
+            color:       $colorWhite;
+            font-family: $fontBold;
+            font-size:   24px;
+        }
+
+    }
+
+    .carousel
+    {
+        padding-left: 30px;
+
+        @media (min-width: $screen-sm)
+        {
+            padding-left: 3rem;
+        }
+    }
+}
+
+.scrollButtons
+{
+    display:         none;
+    justify-content: center;
+    align-items:     center;
+
+    @media (min-width: $screen-md)
+    {
+        display: flex;
+    }
+
+    .arrowNext,
+    .arrowPrev
+    {
+        background-color: transparent;
+        border:           none;
+        height:           60px;
+        width:            60px;
+        display:          flex;
+        justify-content:  center;
+        align-items:      center;
+
+        span
+        {
+            cursor: pointer;
+
+            &:before
+            {
+                border-style:   solid;
+                border-width:   2px 2px 0 0;
+                content:        '';
+                display:        inline-block;
+                height:         15px;
+                position:       relative;
+                vertical-align: middle;
+                width:          15px;
+                transition:     border-color .2s ease-in;
+                border-color:   $colorWhite30;
+            }
+
+            &:hover:before
+            {
+                border-color: $colorWhite50;
+            }
+
+        }
+
+        &.active
+        {
+            span
+            {
+                &:before
+                {
+                    border-color: #ffffff;
+                }
+
+                &:hover:before
+                {
+                    border-color: $colorWhite70;
+                }
+            }
+        }
+
+        &.arrowNext
+        {
+
+            span:before
+            {
+                transform: rotate(45deg);
+            }
+        }
+
+        &.arrowPrev
+        {
+            span:before
+            {
+                transform: rotate(-135deg);
+            }
+        }
+    }
+}

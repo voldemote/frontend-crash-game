@@ -2,22 +2,19 @@
 
 .authenticationContainer
 {
-    width:          100%;
-    height:         100%;
-    display:        flex;
-    flex-direction: column;
-    align-items:    center;
-    max-width:      800px;
-    margin:         0 auto;
+    width:  100%;
+    height: 100%;
 
     .authenticationContentContainer
     {
-        height:         100%;
-        width:          100%;
-        display:        flex;
-        flex-direction: column;
+        height:          100%;
+        width:           100%;
+        display:         flex;
+        flex-direction:  column;
 
-        $padding:       0 7%;
+        $paddingPercent: 7%;
+        $paddingHTotal:  2 * $paddingPercent;
+        $padding:        0 $paddingPercent;
 
         .authenticationStepBarContainer
         {
@@ -98,6 +95,30 @@
         .authenticationButton
         {
             margin-top: auto;
+
+            @media only screen and (min-width: $screen-sm)
+            {
+                width:      (100% - $paddingHTotal);
+                margin:     $padding;
+                margin-top: auto;
+            }
+        }
+
+        .authenticationTermsAgreement
+        {
+            width:          (100% - $paddingHTotal);
+            margin:         2rem $paddingPercent;
+            font-size:      13px;
+            font-family:    $fontRegular;
+            line-height:    19.6px;
+            letter-spacing: 0;
+            color:          rgba(2, 6, 30, 0.36);
+            display:        none;
+
+            @media (min-width: $screen-sm)
+            {
+                display: block;
+            }
         }
     }
 }

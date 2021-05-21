@@ -1,6 +1,7 @@
 export default {
-    welcome:            '/',
-    authentication:     '/auth',
-    termsAndConditions: '/terms-and-conditions',
+    home:               '/home',
+    logout:             '/logout',
     privacyPolicy:      '/privacy-policy',
+    termsAndConditions: '/terms-and-conditions',
+    welcome:            '/',
 };

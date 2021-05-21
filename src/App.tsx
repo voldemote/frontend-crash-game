@@ -1,6 +1,8 @@
 import './styles.module.scss';
+import * as serviceWorker          from './serviceWorker';
 import AlertBox                    from './components/AlertBox';
-import Authentication              from './screens/Authentication';
+import Home                        from './screens/Home';
+import Logout                      from './screens/Logout';
 import PrivacyPolicy               from './screens/PrivacyPolicy';
 import Routes                      from './constants/Routes';
 import store                       from './store';
@@ -14,11 +16,18 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 const configuredStore = store();
 
 const App = () => {
+    serviceWorker.register();
+
     return (
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
                 <AlertBox />
                 <Switch>
+                    <Route
+                        exact
+                        path={Routes.logout}
+                        component={Logout}
+                    />
                     <Route
                         exact
                         path={Routes.welcome}
@@ -36,8 +45,8 @@ const App = () => {
                     />
                     <Route
                         exact
-                        path={Routes.authentication}
-                        component={Authentication}
+                        path={Routes.home}
+                        component={Home}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>

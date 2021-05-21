@@ -1,0 +1,23 @@
+@import "../../styles/all";
+
+.hotBetBadge
+{
+    display:          inline-block;
+    border-radius:    4px;
+    background-color: $colorRed;
+    font-family:      $fontLight;
+    padding:          0.25rem 0.8rem;
+    font-size:        12px;
+    width:            auto;
+    white-space:      nowrap;
+
+    &.hotBetBadge04
+    {
+        background-color: rgba(255, 88, 88, 0.3);
+    }
+
+    &.hotBetBadge01
+    {
+        background-color: rgba(255, 88, 88, 0.1);
+    }
+}

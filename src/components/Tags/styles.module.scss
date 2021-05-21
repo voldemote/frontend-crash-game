@@ -1,0 +1,16 @@
+@import "../../styles/all";
+
+.tags
+{
+    display:         flex;
+    justify-content: flex-start;
+    align-items:     center;
+
+    span
+    {
+        display:      inline-block;
+        color:        $colorGrayLight2;
+        font-size:    12px;
+        margin-right: 0.5rem;
+    }
+}

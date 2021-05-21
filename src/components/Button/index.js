@@ -4,7 +4,7 @@ import React           from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
 
-const Button = ({ children, className, theme, onClick }) => {
+const Button = ({ children, className, theme, onClick, disabled }) => {
     return (
         <span
             className={classNames(
@@ -18,8 +18,9 @@ const Button = ({ children, className, theme, onClick }) => {
                     },
                 ),
             )}
-            onClick={onClick}
+            onClick={disabled ? null : onClick}
         >
+            {disabled && <span className={style.buttonDisabledOverlay}></span>}
             {children}
         </span>
     );
