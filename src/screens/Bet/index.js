@@ -30,15 +30,18 @@ const Bet = ({ bet }) => {
                     <div>
                         <iframe width="100%" height="500" style={{ borderRadius: "10px" }} src="https://www.youtube.com/embed/6imi43ehYzQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div className={styles.liveChat}>
-                        <div className={styles.chat}>
-                            <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
-                        </div>
-                        <form className={styles.messageInput}>
-                            <input id="message" type="text" name="message" placeholder="Comment..." />
-                            <button type="submit" onClick={() => console.log("sent")}>Send</button>
-                        </form>
+                    <div className={styles.chat}>
+                        <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
+                        <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem"} date={"just now"} />
+                        <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
+                        <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
+                        <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
+                        <div className={styles.overlay}></div>
                     </div>
+                    <form className={styles.messageInput}>
+                        <input id="message" type="text" name="message" placeholder="Comment..." />
+                        <button type="submit" onClick={() => console.log("sent")}>Send</button>
+                    </form>
                 </div>
                 <div className={styles.columnRight}>
                     <div className={styles.placeBet}>
