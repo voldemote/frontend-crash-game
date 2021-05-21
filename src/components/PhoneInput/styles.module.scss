@@ -1,0 +1,12 @@
+@import '../../styles/all';
+
+.flagDropdownButton
+{
+    border:           none !important;
+    background-color: transparent !important;
+
+    > *
+    {
+        background-color: transparent !important;
+    }
+}

@@ -1,6 +1,7 @@
 import 'react-phone-input-2/lib/style.css';
 import React           from 'react';
 import ReactPhoneInput from 'react-phone-input-2';
+import styles          from './styles.module.scss';
 
 const PhoneInput = ({ value, inputProps, onChange, enableClickOutside, enableSearch }) => {
     const getContainerStyle = () => {
@@ -44,6 +45,8 @@ const PhoneInput = ({ value, inputProps, onChange, enableClickOutside, enableSea
             inputStyle={getInputStyle()}
             dropdownStyle={getDropdownStyle()}
             searchStyle={getSearchStyle()}
+            placeholder={'+49'}
+            buttonClass={styles.flagDropdownButton}
             value={value}
             inputProps={inputProps}
             onChange={onChange}
