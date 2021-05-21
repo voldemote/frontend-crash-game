@@ -10,7 +10,7 @@ const StepBar = ({ size, step }) => {
             <div className={style.stepBarItemComplete}>
                 <Icon
                     className={style.stepCompleteItem}
-                    iconType={IconType.check}
+                    iconType={IconType.checked}
                 />
             </div>
         );

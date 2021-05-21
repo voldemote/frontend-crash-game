@@ -22,7 +22,7 @@ const AlertBox = ({ alerts, removeAlert }) => {
                 return (
                     <Icon
                         className={styles.alertIcon}
-                        iconType={IconType.error}
+                        iconType={IconType.attention}
                     />
                 );
 
@@ -54,7 +54,7 @@ const AlertBox = ({ alerts, removeAlert }) => {
                 </span>
                 <Icon
                     className={styles.closeIcon}
-                    iconType={IconType.x}
+                    iconType={IconType.deleteInput}
                     onClick={onAlertXClick(alert, index)}
                 />
             </div>

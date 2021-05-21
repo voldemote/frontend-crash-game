@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 34</title>
+    <g id="⚙️-00-Settings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="wallfair-mobile-settings-menu-01" transform="translate(-62.000000, -673.000000)">
+            <g id="Group-24" transform="translate(63.000000, 674.000000)">
+                <circle id="Oval" fill="#FFFFFF" cx="19.3684211" cy="3.63157895" r="3.63157895"></circle>
+                <g id="Notification.4" stroke="#000000" stroke-linecap="round" stroke-width="1.8">
+                    <path d="M21.7894737,12.1052632 L21.7894737,18.1578947 C21.7894737,20.8320684 19.6215421,23 16.9473684,23 L4.84210526,23 C2.16788316,23 0,20.8320684 0,18.1578947 L0,6.05263158 C0,3.37840947 2.16788316,1.21052632 4.84210526,1.21052632 L10.8947368,1.21052632 M19.3684211,7.26315789 C17.3627,7.26315789 15.7368421,5.63723947 15.7368421,3.63157895 C15.7368421,1.62591842 17.3627,0 19.3684211,0 C21.3741421,0 23,1.62591842 23,3.63157895 C23,5.63723947 21.3741421,7.26315789 19.3684211,7.26315789 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

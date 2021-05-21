@@ -17,7 +17,7 @@ const HeaderWithHeadline = ({ headline }) => {
             <Icon
                 className={styles.backIcon}
                 iconTheme={IconTheme.primary}
-                iconType={IconType.left}
+                iconType={IconType.arrowLeft}
                 onClick={backIconClick}
             />
             <h2>

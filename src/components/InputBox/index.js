@@ -77,7 +77,7 @@ const InputBox = ({
                 >
                     <Icon
                         iconTheme={IconTheme.primaryLightTransparent}
-                        iconType={IconType.x}
+                        iconType={IconType.deleteInput}
                     />
                 </div>
             </div>
