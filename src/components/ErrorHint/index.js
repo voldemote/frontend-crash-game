@@ -9,7 +9,7 @@ const ErrorHint = ({ errorText }) => {
             <div className={styles.errorTextContainer}>
                 <Icon
                     className={styles.errorTextIcon}
-                    iconType={IconType.error}
+                    iconType={IconType.attention}
                 />
                 <span>
                     {errorText}
