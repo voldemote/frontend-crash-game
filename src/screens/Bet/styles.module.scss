@@ -32,11 +32,13 @@
         height: 100%;
         margin-left: -3rem;
         margin-right: -3rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
 
         .columnLeft {
             width: 70%;
             padding-left: 3rem;
-            padding-right: 3rem;
+            padding-right: 1rem;
             display: flex;
             justify-content: space-between;
             flex-direction: column;
