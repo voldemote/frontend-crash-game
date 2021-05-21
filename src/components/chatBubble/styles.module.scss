@@ -1,0 +1,19 @@
+@import '../../styles/all';
+
+.chatBubble {
+    padding: 0.5rem 1rem;
+    background-color: #120e27;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid $colorWhite;
+        margin-right: 0.5rem;
+    }
+}
