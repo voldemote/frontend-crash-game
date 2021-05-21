@@ -1,0 +1,17 @@
+@import '../../styles/all';
+
+.fixedIconButtonContainer
+{
+    position:         fixed;
+    display:          flex;
+    align-items:      center;
+    justify-content:  center;
+    z-index:          $zIndexFixedIconButton;
+    bottom:           55px;
+    right:            55px;
+    width:            60px;
+    height:           60px;
+    background-color: $colorWhite;
+    border-radius:    100%;
+    cursor:           pointer;
+}

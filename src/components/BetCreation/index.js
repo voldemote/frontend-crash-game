@@ -9,14 +9,13 @@ import StepsContainer        from '../../components/StepsContainer';
 import styles                from './styles.module.scss';
 import { isValidURL }        from '../../helper/Url';
 import { useEffect }         from 'react';
-import { useIsMount }        from '../../components/hoc/useIsMount';
+import { useIsMount }        from '../hoc/useIsMount';
 import { useState }          from 'react';
 import Divider               from '../../components/Divider';
 import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import React                 from 'react';
 import moment                from 'moment';
 import Link                  from '../../components/Link';
-import ReactDropdown         from 'react-dropdown';
 import Dropdown              from '../../components/Dropdown';
 
 const BetCreation = () => {

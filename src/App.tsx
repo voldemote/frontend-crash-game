@@ -1,15 +1,15 @@
 import './styles.module.scss';
-import BetCreation         from './screens/BetCreation';
-import * as serviceWorker  from './serviceWorker';
-import AlertBox            from './components/AlertBox';
-import Home                from './screens/Home';
-import Logout              from './screens/Logout';
-import PrivacyPolicy       from './screens/PrivacyPolicy';
-import Routes              from './constants/Routes';
-import store               from './store';
-import TermsAndConditions  from './screens/TermsAndConditions';
-import Welcome             from './screens/Welcome';
-import { ConnectedRouter } from 'connected-react-router';
+import * as serviceWorker          from './serviceWorker';
+import AlertBox                    from './components/AlertBox';
+import Home                        from './screens/Home';
+import Logout                      from './screens/Logout';
+import Popup                       from './components/Popup';
+import PrivacyPolicy               from './screens/PrivacyPolicy';
+import Routes                      from './constants/Routes';
+import store                       from './store';
+import TermsAndConditions          from './screens/TermsAndConditions';
+import Welcome                     from './screens/Welcome';
+import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
 import { Provider }                from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -23,6 +23,7 @@ const App = () => {
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
                 <AlertBox />
+                <Popup />
                 <Switch>
                     <Route
                         exact
@@ -48,11 +49,6 @@ const App = () => {
                         exact
                         path={Routes.home}
                         component={Home}
-                    />
-                    <Route
-                        exact
-                        path={Routes.betCreation}
-                        component={BetCreation}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>
