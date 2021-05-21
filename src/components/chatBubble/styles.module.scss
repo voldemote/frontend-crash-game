@@ -8,30 +8,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 0.5rem;
-    font-size: 12px;
 
     img {
-        width: 30px !important;
+        width: 30px;
         height: 30px;
         border-radius: 50%;
-        border: 2px solid $colorWhite !important;
+        border: 2px solid $colorWhite;
         margin-right: 0.5rem;
-    }
-
-    span {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        :first-child {
-            font-size: 12px;
-            font-family: $fontBold;
-        }
-
-        :last-child {
-            font-size: 12px;
-            color: $colorGray;
-        }
     }
 }

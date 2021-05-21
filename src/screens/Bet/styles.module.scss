@@ -7,69 +7,25 @@
     padding: 3rem;
     font-family: $fontLight;
 
-    @media (max-width: $screen-md) {
-        padding-top: 2rem;
-    }
-
-    .twitchStream {
-        border-radius: 10px;
-        min-height: 450px;
-
-        @media (max-width: $screen-md) {
-            min-height: unset;
-        }
-    }
-
     .header {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-
-        @media (max-width: $screen-md) {
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        img {
-            @media (max-width: $screen-md) {
-                display: none;
-            }
-        }
+        margin-bottom: 2rem;
 
         .headlineContainer {
             display: flex;
             justify-content: center;
             align-items: center;
 
-            @media (max-width: $screen-md) {
-                align-items: flex-start;
-            }
-
             .headline {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-                & > * {
-                    @media (max-width: $screen-md) {
-                        margin-bottom: 1rem;
-                    }
-                }
-
-                @media (max-width: $screen-md) {
-                    flex-direction: column;
-                    text-align: center;
-                }
     
                 h1 {
                     margin-right: 1rem;
                     font-family: $fontBold;
-
-                    @media (max-width: $screen-md) {
-                        margin-right: 0;
-                        font-size: 20px;
-                    }
                 }
             }
     
@@ -99,10 +55,6 @@
                     transition:     border-color .2s ease-in;
                     border-color:   $colorWhite;
                     transform: rotate(-135deg);
-
-                    @media (max-width: $screen-md) {
-                        transform: rotate(-135deg) translateX(-10px);
-                    }
                 }
             }
         }
@@ -111,13 +63,10 @@
     .row {
         display: flex;
         justify-content: center;
+        align-items: flex-start;
         flex-direction: row;
-        align-items: stretch;
-        height: 100%;
         margin-left: -3rem;
         margin-right: -3rem;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
 
         .columnLeft {
             width: 70%;
@@ -128,335 +77,234 @@
             flex-direction: column;
             height: 100%;
 
-            @media (max-width: $screen-md) {
-                width: 100%;
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
+            .liveChat {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                height: 100%;
 
-            .timeLeft {
-                margin-top:       1rem;
-                width:            100%;
-                display:          flex;
-                justify-content:  flex-end;
-                align-items:      center;
-                color:            $colorWhite;
-                font-family:      $fontLight;
-                font-size:        12px;
+                .chat{
+                    height: 100%;
+                    display: flex;
+                    align-items: flex-end;
+                }
+
+                .messageInput {
+                    background-color: $colorWhite;
+                    color: $colorPrimaryDark;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1rem 1rem 1rem 3rem;
+                    border-radius: 10px;
+    
+                    input {
+                        border: none;
+                        width: 100%;
+                        display: inline-block;
+                        font-size: 16px;
+                    }
+    
+                    button {
+                        display: inline-block;
+                        opacity: 0.5;
+                        background-color: transparent;
+                        border: none;
+                        font-size: 16px;
+                        cursor: pointer;
+                    }
+                }
             }
         }
 
         .columnRight {
             width: 30%;
-            padding-left: 0rem;
+            padding-left: 3rem;
             padding-right: 3rem;
 
-            @media (max-width: $screen-md) {
-                display: none;
-            }
-        }
-    }
+            .placeBet {
+                background-color: $colorWhite;
+                border-radius: 10px;
+                height: 100%;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                align-items: center;
+                overflow: hidden;
+                padding: 2rem;
 
-    .placeBet {
-        background-color: $colorWhite;
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        align-items: center;
-        overflow: hidden;
-        padding: 2rem;
-
-        .badge {
-            color: $colorPrimaryDark;
-        }
-
-        .title {
-            color: $colorPrimaryDark;
-            font-family: $fontBold;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        small {
-            margin: 1rem;
-            color: $colorGray;
-            font-size: 12px;
-        }
-
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            margin: 2rem 0;
-            width: 100%;
-        }
-
-        .label {
-            color: $colorPrimaryDark;
-            font-size: 12px;
-            text-align: left;
-            width: 100%;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .input {
-            border-radius:    6px;
-            display:          inline-flex;
-            justify-content:  center;
-            align-items:      center;
-            padding:          1rem 1rem;
-            border:           1px solid #f1f2f6;
-            background-color: #f1f2f6;
-
-            @media (min-width: $screen-lg)
-            {
-                padding:          1rem 4rem;
-            }
-    
-            input {
-                background-color: transparent;
-                border:           none;
-                font-family:      $fontBold;
-                font-size:        16px;
-                outline: none !important;
-                width: 100%;
-            }
-    
-            span {
-                color:       $colorGrayLight2;
-                font-family: $fontBold;
-                font-size:   16px;
-            }
-        }
-
-        .betButton {
-            text-align:         center;
-            font-family:        $fontBold;
-            text-transform:     uppercase;
-            background-color:   $colorYellow;
-            border:             none;
-            padding:            1rem;
-            width:              100%;
-            margin-top:         1rem;
-            font-size: 16px;
-        }
-
-        .buttonContainer
-        {
-            width: 100%;
-            margin-top: 2rem;
-    
-            .quoteButtons {
-                display:         flex;
-                align-items:     center;
-                justify-content: center;
-                position:        relative;
-                color: $colorPrimaryDark;
-
-                @media (max-width: $screen-lg)
-                {
-                    flex-wrap: wrap;
+                .badge {
+                    color: $colorPrimaryDark;
                 }
-    
-                [type=radio] { 
-                    position: absolute;
-                    display: none;
-                    opacity: 0;
-                    width: 0;
-                    height: 0;
+
+                .title {
+                    color: $colorPrimaryDark;
+                    font-family: $fontBold;
+                    font-size: 24px;
+                    text-align: center;
                 }
-    
-                div {
+
+                small {
+                    margin: 1rem;
+                    color: $colorGray;
+                    font-size: 12px;
+                }
+
+                .wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 2rem 0;
+                }
+
+                .label {
+                    color: $colorPrimaryDark;
+                    font-size: 12px;
+                    text-align: left;
                     width: 100%;
-
-                    @media (max-width: $screen-lg)
-                    {
-                        margin: 0.5rem 0;
-                    }
+                    margin-bottom: 0.5rem;
+                    display: block;
                 }
-    
-                div:first-child {
-                    margin-right: 0;
 
-                    @media (min-width: $screen-lg)
-                    {
-                        margin-right: 0.5rem;
-                    }
-                }
-    
-                div:last-child {
-                    margin-left: 0;
-
-                    @media (min-width: $screen-lg)
-                    {
-                        margin-left: 0.5rem;
-                    }
-                }
-    
-                div:first-child label
-                {
+                .input {
+                    border-radius:    6px;
                     display:          inline-flex;
                     justify-content:  center;
                     align-items:      center;
-                    flex-direction:   column;
-                    padding:          1rem 1.5rem;
-                    border-radius:    10px;
-                    border:           solid 2.5px #acffce;
-                    background-color: $colorWhite;
-                    font-family:      $fontLight;
-                    cursor:           pointer;
-                    font-size:        18px;
-                    width:            100%;
-                    line-height:      1.5;
-        
-                    @media (min-width: $screen-md)
-                    {
-                        padding:    0.5rem 1.5rem;
+                    padding:          1rem 4rem;
+                    border:           1px solid #f1f2f6;
+                    background-color: #f1f2f6;
+            
+                    input {
+                        background-color: transparent;
+                        border:           none;
+                        font-family:      $fontBold;
+                        font-size:        16px;
+                        outline: none !important;
                     }
-        
-                    span
-                    {
-                        font-family:   $fontBold;
-                        color:         $colorPrimaryDark;
-                        margin-bottom: 0.25rem;
-                        font-size:     14px;
-                        display:       block;
-                        text-align: center;
+            
+                    span {
+                        color:       $colorGrayLight2;
+                        font-family: $fontBold;
+                        font-size:   16px;
                     }
                 }
-        
-                div:last-child label
+
+                .betButton {
+                    text-align:         center;
+                    font-family:        $fontBold;
+                    text-transform:     uppercase;
+                    background-color:   $colorYellow;
+                    border:             none;
+                    padding:            1rem;
+                    width:              100%;
+                    margin-top:         1rem;
+                    font-size: 16px;
+                }
+
+                .buttonContainer
                 {
-                    display:          inline-flex;
-                    justify-content:  center;
-                    align-items:      center;
-                    flex-direction:   column;
-                    padding:          1rem 1.5rem;
-                    border-radius:    10px;
-                    border:           solid 2.5px #acc4ff;
-                    background-color: $colorWhite;
-                    font-family:      $fontLight;
-                    cursor:           pointer;
-                    font-size:        18px;
-                    width:            100%;
-                    line-height:      1.5;
-        
-                    @media (min-width: $screen-md)
-                    {
-                        padding:    0.5rem 1.5rem;
+                    width: 100%;
+                    margin-top: 2rem;
+            
+                    .quoteButtons {
+                        display:         flex;
+                        align-items:     center;
+                        justify-content: center;
+                        position:        relative;
+                        color: $colorPrimaryDark;
+            
+                        [type=radio] { 
+                            position: absolute;
+                            display: none;
+                            opacity: 0;
+                            width: 0;
+                            height: 0;
+                        }
+            
+                        div {
+                            width: 100%;
+                        }
+            
+                        div:first-child {
+                            margin-right: 0.5rem;
+                        }
+            
+                        div:last-child {
+                            margin-left: 0.5rem;
+                        }
+            
+                        div:first-child label
+                        {
+                            display:          inline-flex;
+                            justify-content:  center;
+                            align-items:      center;
+                            flex-direction:   column;
+                            padding:          1rem 1.5rem;
+                            border-radius:    10px;
+                            border:           solid 2.5px #acffce;
+                            background-color: $colorWhite;
+                            font-family:      $fontLight;
+                            cursor:           pointer;
+                            font-size:        18px;
+                            width:            100%;
+                            line-height:      1.5;
+                
+                            @media (min-width: $screen-md)
+                            {
+                                padding:    0.5rem 1.5rem;
+                            }
+                
+                            span
+                            {
+                                font-family:   $fontBold;
+                                color:         $colorPrimaryDark;
+                                margin-bottom: 0.25rem;
+                                font-size:     14px;
+                                display:       block;
+                            }
+                        }
+                
+                        div:last-child label
+                        {
+                            display:          inline-flex;
+                            justify-content:  center;
+                            align-items:      center;
+                            flex-direction:   column;
+                            padding:          1rem 1.5rem;
+                            border-radius:    10px;
+                            border:           solid 2.5px #acc4ff;
+                            background-color: $colorWhite;
+                            font-family:      $fontLight;
+                            cursor:           pointer;
+                            font-size:        18px;
+                            width:            100%;
+                            line-height:      1.5;
+                
+                            @media (min-width: $screen-md)
+                            {
+                                padding:    0.5rem 1.5rem;
+                            }
+                
+                            span
+                            {
+                                color:         $colorPrimaryDark;
+                                font-family:   $fontBold;
+                                margin-bottom: 0.25rem;
+                                font-size:     14px;
+                                display:       block;
+                            }
+                        }
+            
+                        div:first-child input[type=radio]:checked ~ label {
+                            background-color: #acffce;
+                        }
+            
+                        div:last-child input[type=radio]:checked ~ label {
+                            background-color: #acc4ff;
+                        }
                     }
-        
-                    span
-                    {
-                        color:         $colorPrimaryDark;
-                        font-family:   $fontBold;
-                        margin-bottom: 0.25rem;
-                        font-size:     14px;
-                        display:       block;
-                        text-align: center;
-                    }
-                }
-    
-                div:first-child input[type=radio]:checked ~ label {
-                    background-color: #acffce;
-                }
-    
-                div:last-child input[type=radio]:checked ~ label {
-                    background-color: #acc4ff;
                 }
             }
-        }
-    }
-
-    .relatedEvents {
-        margin-top: 2rem;
-
-        .headline {
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-
-            h2 {
-                font-family: $fontBold;
-                font-size: 20px;
-                margin-right: 1rem;
-            }
-        }
-    }
-
-    .desktopChat {
-        @media (max-width: $screen-md) {
-            display: none;
-        }
-    }
-
-    .mobileCarousel {
-        margin-top: 2rem;
-
-        @media (min-width: $screen-md) {
-            display: none;
-        }
-    }
-
-    .mobileMenu {
-        padding: 0 1rem;
-        position: fixed;
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        bottom: 0;
-        left: 0;
-        margin-bottom: 2rem;
-        align-items: center;
-
-        @media (min-width: $screen-md) {
-            display: none;
-        }
-
-        .indicators {
-            padding: 0.5rem 1rem;
-            opacity: 0.9;
-            border-radius: 30px;
-            background-color: #120e27;
-            max-height: 40px;
-
-            span {
-                width: 10px;
-                height: 10px;
-                display: inline-block;
-                margin: 0 0.5rem;
-                background-color: $colorWhite30;
-                border-radius: 50%;
-                cursor: pointer;
-
-                &.active {
-                    background-color: $colorWhite;
-                }
-            }
-        }
-
-        .chatMobileButton {
-            width: 55px;
-            height: 55px;
-            padding: 0.5rem;
-            box-shadow: 0 2px 4px 0 rgba(14, 9, 39, 0.04);
-            border: solid 4.1px rgba(14, 9, 39, 0.09);
-            background-color: $colorWhite;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        .betMobileButton {
-            width: 55px;
-            height: 55px;
-            padding: 0.5rem;
-            box-shadow: 0 2px 4px 0 rgba(14, 9, 39, 0.04);
-            border: solid 4.1px rgba(14, 9, 39, 0.09);
-            background-color: $colorWhite;
-            cursor: pointer;
-            border-radius: 50%;
         }
     }
 }
