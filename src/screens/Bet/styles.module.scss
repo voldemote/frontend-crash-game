@@ -73,7 +73,7 @@
         .columnLeft {
             width: 70%;
             padding-left: 3rem;
-            padding-right: 1rem;
+            padding-right: 3rem;
             display: flex;
             justify-content: space-between;
             flex-direction: column;
@@ -133,7 +133,7 @@
 
         .columnRight {
             width: 30%;
-            padding-left: 1rem;
+            padding-left: 0rem;
             padding-right: 3rem;
 
             @media (max-width: $screen-md) {
