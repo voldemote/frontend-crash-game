@@ -399,4 +399,64 @@
             display: none;
         }
     }
+
+    .mobileMenu {
+        padding: 0 1rem;
+        position: fixed;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        bottom: 0;
+        left: 0;
+        margin-bottom: 2rem;
+        align-items: center;
+
+        @media (min-width: $screen-md) {
+            display: none;
+        }
+
+        .indicators {
+            padding: 0.5rem 1rem;
+            opacity: 0.9;
+            border-radius: 30px;
+            background-color: #120e27;
+            max-height: 40px;
+
+            span {
+                width: 10px;
+                height: 10px;
+                display: inline-block;
+                margin: 0 0.5rem;
+                background-color: $colorWhite30;
+                border-radius: 50%;
+                cursor: pointer;
+
+                &.active {
+                    background-color: $colorWhite;
+                }
+            }
+        }
+
+        .chatMobileButton {
+            width: 55px;
+            height: 55px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 4px 0 rgba(14, 9, 39, 0.04);
+            border: solid 4.1px rgba(14, 9, 39, 0.09);
+            background-color: $colorWhite;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .betMobileButton {
+            width: 55px;
+            height: 55px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 4px 0 rgba(14, 9, 39, 0.04);
+            border: solid 4.1px rgba(14, 9, 39, 0.09);
+            background-color: $colorWhite;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+    }
 }
