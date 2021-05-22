@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const fetchAllSucceeded = (action, state) => {
-    console.debug(action);
     return update(state, {
         events: {
             $set: action.events,

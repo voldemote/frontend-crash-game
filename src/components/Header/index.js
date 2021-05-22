@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import styles            from './styles.module.scss';
 import Link              from '../../components/Link';
 import useSlider         from '../../components/hoc/useSlider';
+import Tags              from '../Tags';
 
 const Header = ({ slides }) => {
 

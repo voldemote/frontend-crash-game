@@ -1,11 +1,12 @@
 import React  from 'react';
 import styles from './styles.module.scss';
+import _      from 'lodash';
 
 const Tags = ({ tags }) => {
     return (
         <div className={styles.tags}>
             {
-                tags.map(
+                _.map(tags,
                     (tag, index) => <span key={index}>#{tag}</span>,
                 )
             }
