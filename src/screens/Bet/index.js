@@ -8,6 +8,7 @@ import HotBetBadge from 'components/HotBetBadge';
 import ViewerBadge from 'components/ViewerBadge';
 import ChatBubble from 'components/chatBubble';
 import RelatedEventCard from 'components/RelatedEventCard';
+import TimeLeftCounter  from 'components/TimeLeftCounter';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -32,6 +33,10 @@ const Bet = ({ bet }) => {
                 <div className={styles.columnLeft}>
                     <div>
                         <iframe width="100%" height="450" style={{ borderRadius: "10px" }} src="https://www.youtube.com/embed/6imi43ehYzQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div className={styles.timeLeft}>
+                        <span>Event ends in:</span>
+                        <TimeLeftCounter endDate={new Date(new Date().getTime() + 12 * 60000)} />
                     </div>
                     <div className={styles.chat}>
                         <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
