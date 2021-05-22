@@ -1,26 +1,25 @@
 import _                     from 'lodash';
 import classNames            from 'classnames';
+import Divider               from '../../components/Divider';
+import Dropdown              from '../../components/Dropdown';
 import ExampleData           from '../../helper/ExampleData';
+import Icon                  from '../Icon';
+import IconType              from '../Icon/IconType';
 import InputBox              from '../../components/InputBox';
 import InputBoxTheme         from '../../components/InputBox/InputBoxTheme';
+import Link                  from '../../components/Link';
+import moment                from 'moment';
 import ProfileContainer      from '../../components/ProfileContainer';
+import React                 from 'react';
 import RippedTicketContainer from '../../components/RippedTicketContainer';
 import StepsContainer        from '../../components/StepsContainer';
 import styles                from './styles.module.scss';
-import { isValidURL }        from '../../helper/Url';
+import TimeLeftCounter       from '../../components/TimeLeftCounter';
+import { connect }           from 'react-redux';
+import { PopupActions }      from '../../store/actions/popup';
 import { useEffect }         from 'react';
 import { useIsMount }        from '../hoc/useIsMount';
 import { useState }          from 'react';
-import Divider               from '../../components/Divider';
-import TimeLeftCounter       from '../../components/TimeLeftCounter';
-import React                 from 'react';
-import moment                from 'moment';
-import Link                  from '../../components/Link';
-import Dropdown              from '../../components/Dropdown';
-import { PopupActions }      from '../../store/actions/popup';
-import { connect }           from 'react-redux';
-import Icon                  from '../Icon';
-import IconType              from '../Icon/IconType';
 
 const initialState = {
     step:            0,
@@ -119,7 +118,7 @@ const BetCreation = ({ hidePopup, closed }) => {
           };
 
           const eventUrlIsValid = () => {
-              return eventUrl && isValidURL(eventUrl);
+              return eventUrl !== null;
           };
 
           const dateIsValid = () => {
@@ -401,7 +400,7 @@ const BetCreation = ({ hidePopup, closed }) => {
                           value={eventUrl}
                           setValue={setEventUrl}
                           placeholder={'https://www.twitch.tv/...'}
-                          options={['https://www.twitch.tv/redbull/videos', 'https://www.twitch.tv/wallfair/videos']}
+                          options={[{ value: '1', label: 'https://www.twitch.tv/redbull/videos' }, { value: '2', label: 'https://www.twitch.tv/wallfair/videos' }]}
                       />
                   );
               } else if (step === 1) {

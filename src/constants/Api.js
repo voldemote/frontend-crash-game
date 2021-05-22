@@ -36,4 +36,5 @@ export const API_AUTHENTICATION_REQUEST_SMS_URL   = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL = 'api/user/saveAdditionalInformation';
 export const API_AUTHENTICATION_VERIFY_SMS_URL    = 'api/user/verifyLogin';
 export const API_EVENT_CREATE                     = 'api/event/create';
+export const API_BET_CREATE                       = 'api/event/bet/create';
 export const API_EVENT_LIST                       = 'api/event/list';

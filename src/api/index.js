@@ -60,6 +60,20 @@ const listEvents = () => {
     });
 };
 
+const createBet = (eventId, marketQuestion, betOne, betTwo, endDate) => {
+    return Api.post(
+        ApiUrls.API_BET_CREATE,
+        {
+            eventId,
+            marketQuestion,
+            betOne,
+            betTwo,
+            endDate,
+        },
+    ).catch(() => {
+    });
+};
+
 export {
     Api,
     setToken,
@@ -67,4 +81,5 @@ export {
     verifySms,
     saveAdditionalInfo,
     listEvents,
+    createBet,
 };

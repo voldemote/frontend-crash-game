@@ -51,19 +51,24 @@
             height: 20px;
             margin: 15px;
 
+            *
+            {
+                stroke: $colorPrimary;
+            }
+
             &.alertIcon
             {
                 margin-right: 0;
+
+                *
+                {
+                    stroke: none;
+                }
             }
 
             &.closeIcon
             {
                 cursor: pointer;
-            }
-
-            *
-            {
-                stroke: $colorPrimary;
             }
         }
 

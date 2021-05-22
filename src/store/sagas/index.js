@@ -1,19 +1,21 @@
 import { all }        from 'redux-saga/effects';
 import { REHYDRATE }  from 'redux-persist';
 import { takeLatest } from 'redux-saga/effects';
+import { put }        from 'redux-saga/effects';
 
 // Types
 import { AuthenticationTypes } from '../actions/authentication';
-import { EventTypes }      from '../actions/event';
+import { EventTypes }          from '../actions/event';
+import { BetTypes }            from '../actions/bet';
 
 // Actions
+import { EventActions } from '../actions/event';
 
 // Sagas
 import AuthenticationSagas from './authentication';
 import AlertSagas          from './alert';
 import EventSagas          from './event';
-import { EventActions }    from '../actions/event';
-import { put }             from 'redux-saga/effects';
+import BetSagas            from './bet';
 
 const root = function* () {
     yield all([
@@ -33,6 +35,7 @@ const root = function* () {
             EventTypes.FETCH_ALL_FAILED,
         ],                                                                      AlertSagas.handleFail),
         takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
+        takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
