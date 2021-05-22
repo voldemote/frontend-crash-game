@@ -1,3 +1,4 @@
+import _                   from 'lodash';
 import AlertType           from '../../components/AlertBox/AlertType';
 import SelectionHelper     from '../../helper/SelectionHelper';
 import update              from 'immutability-helper';
@@ -16,11 +17,19 @@ const removeAll = (action, state) => {
 };
 
 const remove = (action, state) => {
+    const targetIndex = _.findIndex(
+        state.alerts,
+        [
+            'id',
+            action.id,
+        ],
+    );
+
     return update(state, {
         alerts: {
             $splice: [
                 [
-                    action.index,
+                    targetIndex,
                     1,
                 ],
             ],

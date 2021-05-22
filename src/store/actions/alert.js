@@ -14,7 +14,7 @@ const removeAlerts = makeActionCreator(
 const removeAlert = makeActionCreator(
     AlertTypes.REMOVE,
     {
-        index: null,
+        id: null,
     },
 );
 
