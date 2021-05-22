@@ -20,6 +20,7 @@ import { PopupActions }      from '../../store/actions/popup';
 import { useEffect }         from 'react';
 import { useIsMount }        from '../hoc/useIsMount';
 import { useState }          from 'react';
+import { BetActions }        from '../../store/actions/bet';
 
 const initialState = {
     step:            0,
@@ -32,7 +33,7 @@ const initialState = {
     outcomes:        [{}, {}],
 };
 
-const BetCreation = ({ hidePopup, closed }) => {
+const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const [step, setStep]                       = useState(initialState.step);
           const [error, setError]                     = useState(initialState.error);
           const [marketQuestion, setMarketQuestion]   = useState(initialState.marketQuestion);
@@ -151,8 +152,19 @@ const BetCreation = ({ hidePopup, closed }) => {
               [closed],
           );
 
-          const getEndDateTime = () => {
-              const time     = selectedTime;
+          const getEventUrlOptions = () => {
+              return _.map(
+                  events,
+                  (event) => {
+                      return {
+                          label: event.name + ' - ' + event.streamUrl,
+                          value: event._id,
+                      };
+                  },
+              );
+          };
+
+          const getDateWithTime = (time) => {
               const dateTime = moment(selectedDate);
 
               dateTime.hours(time.hours());
@@ -160,6 +172,18 @@ const BetCreation = ({ hidePopup, closed }) => {
               dateTime.seconds(time.seconds());
 
               return dateTime;
+          };
+
+          const getEndDateTime = () => {
+              const time = selectedEndTime;
+
+              return getDateWithTime(time);
+          };
+
+          const getStartDateTime = () => {
+              const time = selectedTime;
+
+              return getDateWithTime(time);
           };
 
           const getButtonContent = () => {
@@ -219,9 +243,11 @@ const BetCreation = ({ hidePopup, closed }) => {
 
               if (validInput) {
                   if (step <= 3) {
+                      if (step === 3) {
+                          createBet(eventUrl, marketQuestion, outcomes, getStartDateTime(), getEndDateTime());
+                      }
+
                       setStep(step + 1);
-                  } else {
-                      // TODO publish bet
                   }
               }
           };
@@ -400,7 +426,7 @@ const BetCreation = ({ hidePopup, closed }) => {
                           value={eventUrl}
                           setValue={setEventUrl}
                           placeholder={'https://www.twitch.tv/...'}
-                          options={[{ value: '1', label: 'https://www.twitch.tv/redbull/videos' }, { value: '2', label: 'https://www.twitch.tv/wallfair/videos' }]}
+                          options={getEventUrlOptions()}
                       />
                   );
               } else if (step === 1) {
@@ -454,15 +480,24 @@ const BetCreation = ({ hidePopup, closed }) => {
       }
 ;
 
+const mapStateToProps = (state) => {
+    return {
+        events: state.event.events,
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         hidePopup: () => {
             dispatch(PopupActions.hide());
         },
+        createBet: (eventId, marketQuestion, outcomes, startDate, endDate) => {
+            dispatch(BetActions.create({ eventId, marketQuestion, outcomes, startDate, endDate }));
+        },
     };
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(BetCreation);

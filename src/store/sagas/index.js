@@ -33,7 +33,11 @@ const root = function* () {
             AuthenticationTypes.VERIFY_SMS_FAILED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
             EventTypes.FETCH_ALL_FAILED,
+            BetTypes.CREATE_FAILED,
         ],                                                                      AlertSagas.handleFail),
+        takeLatest([
+            BetTypes.CREATE_SUCCEEDED,
+        ],                                                                      AlertSagas.handleSuccess),
         takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),

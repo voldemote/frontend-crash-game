@@ -60,7 +60,7 @@ const listEvents = () => {
     });
 };
 
-const createBet = (eventId, marketQuestion, betOne, betTwo, endDate) => {
+const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate) => {
     return Api.post(
         ApiUrls.API_BET_CREATE,
         {
@@ -68,6 +68,7 @@ const createBet = (eventId, marketQuestion, betOne, betTwo, endDate) => {
             marketQuestion,
             betOne,
             betTwo,
+            startDate,
             endDate,
         },
     ).catch(() => {
