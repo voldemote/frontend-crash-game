@@ -104,6 +104,17 @@
                 }
             }
 
+            .timeLeft {
+                margin-top:       1rem;
+                width:            100%;
+                display:          flex;
+                justify-content:  flex-end;
+                align-items:      center;
+                color:            $colorWhite;
+                font-family:      $fontLight;
+                font-size:        12px;
+            }
+
             .messageInput {
                 background-color: $colorWhite;
                 color: $colorPrimaryDark;
