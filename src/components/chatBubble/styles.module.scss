@@ -1,7 +1,7 @@
 @import '../../styles/all';
 
 .chatBubble {
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 1rem;
     background-color: #120e27;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.2);
@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 0.5rem;
-    font-size: 14px;
+    font-size: 12px;
 
     img {
         width: 30px;
