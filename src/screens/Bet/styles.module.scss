@@ -2,7 +2,7 @@
 
 .bet {
     background-color: $colorPrimaryDark;
-    height: 100vh;
+    min-height: 100vh;
     color: $colorWhite;
     padding: 3rem;
     font-family: $fontLight;
@@ -143,7 +143,6 @@
             .placeBet {
                 background-color: $colorWhite;
                 border-radius: 10px;
-                height: 100%;
                 display: flex;
                 justify-content: space-between;
                 flex-direction: column;
@@ -172,6 +171,7 @@
                     display: flex;
                     flex-direction: column;
                     margin: 2rem 0;
+                    width: 100%;
                 }
 
                 .label {
@@ -188,9 +188,14 @@
                     display:          inline-flex;
                     justify-content:  center;
                     align-items:      center;
-                    padding:          1rem 4rem;
+                    padding:          1rem 1rem;
                     border:           1px solid #f1f2f6;
                     background-color: #f1f2f6;
+
+                    @media (min-width: $screen-lg)
+                    {
+                        padding:          1rem 4rem;
+                    }
             
                     input {
                         background-color: transparent;
@@ -198,6 +203,7 @@
                         font-family:      $fontBold;
                         font-size:        16px;
                         outline: none !important;
+                        width: 100%;
                     }
             
                     span {
@@ -230,6 +236,11 @@
                         justify-content: center;
                         position:        relative;
                         color: $colorPrimaryDark;
+
+                        @media (max-width: $screen-lg)
+                        {
+                            flex-wrap: wrap;
+                        }
             
                         [type=radio] { 
                             position: absolute;
@@ -241,14 +252,29 @@
             
                         div {
                             width: 100%;
+
+                            @media (max-width: $screen-lg)
+                            {
+                                margin: 0.5rem 0;
+                            }
                         }
             
                         div:first-child {
-                            margin-right: 0.5rem;
+                            margin-right: 0;
+
+                            @media (min-width: $screen-lg)
+                            {
+                                margin-right: 0.5rem;
+                            }
                         }
             
                         div:last-child {
-                            margin-left: 0.5rem;
+                            margin-left: 0;
+
+                            @media (min-width: $screen-lg)
+                            {
+                                margin-left: 0.5rem;
+                            }
                         }
             
                         div:first-child label
@@ -279,6 +305,7 @@
                                 margin-bottom: 0.25rem;
                                 font-size:     14px;
                                 display:       block;
+                                text-align: center;
                             }
                         }
                 
@@ -310,6 +337,7 @@
                                 margin-bottom: 0.25rem;
                                 font-size:     14px;
                                 display:       block;
+                                text-align: center;
                             }
                         }
             
@@ -320,6 +348,23 @@
                         div:last-child input[type=radio]:checked ~ label {
                             background-color: #acc4ff;
                         }
+                    }
+                }
+            }
+
+            .relatedEvents {
+                margin-top: 2rem;
+
+                .headline {
+                    margin-bottom: 1rem;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    h2 {
+                        font-family: $fontBold;
+                        font-size: 20px;
+                        margin-right: 1rem;
                     }
                 }
             }
