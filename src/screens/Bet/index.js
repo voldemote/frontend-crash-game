@@ -1,4 +1,5 @@
 import darkModeLogo        from '../../data/images/logo-darkmode.svg';
+import { useEffect, useState }   from 'react';
 import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
@@ -14,6 +15,13 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 const Bet = ({ bet }) => {
 
     const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const updateCurrentSlide = (index) => {
+        if (currentSlide !== index) {
+            setCurrentSlide(index)
+        }
+    };
 
     return (
         <div className={styles.bet}>
@@ -44,7 +52,18 @@ const Bet = ({ bet }) => {
                     </div>
 
                     <div className={styles.mobileCarousel}>
-                        <Carousel emulateTouch={true} infiniteLoop={false} showArrows={false} autoPlay={false} showStatus={false} showIndicators={false} showThumbs={false} dynamicHeight={false}>
+                        <Carousel 
+                            emulateTouch={true} 
+                            infiniteLoop={false} 
+                            showArrows={false} 
+                            autoPlay={false} 
+                            showStatus={false} 
+                            showIndicators={false} 
+                            showThumbs={false} 
+                            dynamicHeight={false}
+                            selectedItem={currentSlide}
+                            onChange={(index) => { updateCurrentSlide(index) }}
+                        >
                             <div>
                                 <Chat />
                             </div>
@@ -139,6 +158,15 @@ const Bet = ({ bet }) => {
                         </Carousel>
                     </div>
                 </div>
+            </div>
+            <div className={styles.mobileMenu}>
+                <div className={styles.chatMobileButton}></div>
+                <div className={styles.indicators}>
+                    <span className={ currentSlide === 0 ? styles.active : '' } onClick={() => { setCurrentSlide(0) }}></span>
+                    <span className={ currentSlide === 1 ? styles.active : '' } onClick={() => { setCurrentSlide(1) }}></span>
+                    <span className={ currentSlide === 2 ? styles.active : '' } onClick={() => { setCurrentSlide(2) }}></span>
+                </div>
+                <div className={styles.betMobileButton}></div>
             </div>
         </div>
     );
