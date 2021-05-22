@@ -1,15 +1,15 @@
-import classNames          from 'classnames';
 import darkModeLogo        from '../../data/images/logo-darkmode.svg';
 import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
-import { useState }        from 'react';
 import ExampleProfilePicture from '../../data/images/doge.jpg';
 import LiveBadge from 'components/LiveBadge';
 import HotBetBadge from 'components/HotBetBadge';
 import ViewerBadge from 'components/ViewerBadge';
 import ChatBubble from 'components/chatBubble';
 import RelatedEventCard from 'components/RelatedEventCard';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const Bet = ({ bet }) => {
 
@@ -19,7 +19,7 @@ const Bet = ({ bet }) => {
         <div className={styles.bet}>
             <div className={styles.header}>
                 <div className={styles.headlineContainer}>
-                    <div className={styles.arrowBack}></div>
+                    <Link to={Routes.home} className={styles.arrowBack}></Link>
                     <div className={styles.headline}>
                         <h1>RedBull Rampage 2021</h1>
                         <LiveBadge />
@@ -79,10 +79,20 @@ const Bet = ({ bet }) => {
                             <h2>🚀 Related Events</h2>
                             <LiveBadge />
                         </div>
-                        <div>
-                            <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
-                            <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
-                        </div>
+                        <Carousel emulateTouch={true} infiniteLoop={true} showArrows={false} showStatus={false}>
+                            <div>
+                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                            </div>
+                            <div>
+                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                            </div>
+                            <div>
+                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                            </div>
+                        </Carousel>
                     </div>
                 </div>
             </div>
