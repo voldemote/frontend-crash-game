@@ -9,8 +9,11 @@ import LiveBadge from 'components/LiveBadge';
 import HotBetBadge from 'components/HotBetBadge';
 import ViewerBadge from 'components/ViewerBadge';
 import ChatBubble from 'components/chatBubble';
+import RelatedEventCard from 'components/RelatedEventCard';
 
 const Bet = ({ bet }) => {
+
+    const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
 
     return (
         <div className={styles.bet}>
@@ -71,8 +74,15 @@ const Bet = ({ bet }) => {
                         </div>
                         <button  className={styles.betButton} type="submit">Bet!</button>
                     </div>
-                    <div className={styles.bettingTicker}>
-
+                    <div className={styles.relatedEvents}>
+                        <div className={styles.headline}>
+                            <h2>🚀 Related Events</h2>
+                            <LiveBadge />
+                        </div>
+                        <div>
+                            <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                            <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                        </div>
                     </div>
                 </div>
             </div>

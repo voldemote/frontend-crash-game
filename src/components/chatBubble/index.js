@@ -1,9 +1,4 @@
-import classNames          from 'classnames';
-import darkModeLogo        from '../../data/images/logo-darkmode.svg';
-import Link                from '../../components/Link';
-import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
-import { useState }        from 'react';
 
 const ChatBubble = ({ name, image, message, date }) => {
 
