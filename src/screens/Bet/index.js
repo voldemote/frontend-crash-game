@@ -32,7 +32,8 @@ const Bet = ({ bet }) => {
             <div className={styles.row}>
                 <div className={styles.columnLeft}>
                     <div>
-                        <iframe width="100%" height="450" style={{ borderRadius: "10px" }} src="https://www.youtube.com/embed/6imi43ehYzQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://player.twitch.tv/?channel=pietsmiet&parent=www.example.com" 
+                        style={{ borderRadius: "10px", maxHeight: "450px" }} frameborder="0" allowfullscreen="true" scrolling="no" height="450" width="100%"></iframe>
                     </div>
                     <div className={styles.timeLeft}>
                         <span>Event ends in:</span>
