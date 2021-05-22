@@ -12,10 +12,10 @@
     font-size: 12px;
 
     img {
-        width: 30px;
+        width: 30px !important;
         height: 30px;
         border-radius: 50%;
-        border: 2px solid $colorWhite;
+        border: 2px solid $colorWhite !important;
         margin-right: 0.5rem;
     }
 
