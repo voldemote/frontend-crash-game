@@ -20,6 +20,9 @@ const getFailMessage = (action) => {
 
         case BetTypes.CREATE_FAILED:
             return 'An error occurred creating the bet. Please try again!';
+
+        case BetTypes.PLACE_FAILED:
+            return 'An error occurred placing on the bet. Please try again!';
     }
 
     return null;
@@ -29,6 +32,9 @@ const getSuccessMessage = (action) => {
     switch (action.type) {
         case BetTypes.CREATE_SUCCEEDED:
             return 'The bet was successfully created!';
+
+        case BetTypes.PLACE_SUCCEEDED:
+            return 'The bet was placed successfully!';
     }
 
     return null;

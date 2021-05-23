@@ -39,9 +39,9 @@
     .choiceName,
     .choiceWinAmount
     {
-        font-size:   20px;
-        text-align:  center;
-        white-space: nowrap;
+        font-size:     20px;
+        text-align:    center;
+        overflow-wrap: anywhere;
 
         &.choiceWinAmount
         {

@@ -5,41 +5,85 @@ import { select }       from 'redux-saga/effects';
 import AuthState        from '../../constants/AuthState';
 import { BetActions }   from '../actions/bet';
 import { EventActions } from '../actions/event';
+import { PopupActions } from '../actions/popup';
 
 const create = function* (action) {
-    const authState = yield select(state => state.authentication.authState);
+    const eventId        = action.eventId;
+    const marketQuestion = action.marketQuestion;
+    const betOne         = action.outcomes[0].value;
+    const betTwo         = action.outcomes[1].value;
+    const startDate      = action.startDate;
+    const endDate        = action.endDate;
+    const liquidity      = action.liquidityAmount;
 
-    if (authState === AuthState.LOGGED_IN) {
-        const eventId        = action.eventId;
-        const marketQuestion = action.marketQuestion;
-        const betOne         = action.outcomes[0].value;
-        const betTwo         = action.outcomes[1].value;
-        const startDate      = action.startDate;
-        const endDate        = action.endDate;
+    const response = yield call(
+        Api.createBet,
+        eventId,
+        marketQuestion,
+        betOne,
+        betTwo,
+        startDate,
+        endDate,
+        liquidity
+    );
 
-        const response = yield call(
-            Api.createBet,
-            eventId,
-            marketQuestion,
-            betOne,
-            betTwo,
-            startDate,
-            endDate,
-        );
+    if (response) {
+        const bet = response.data;
 
-        if (response) {
-            const bet = response.data;
+        yield put(BetActions.createSucceeded({
+            bet,
+        }));
+        yield put(EventActions.fetchAll());
+    } else {
+        yield put(BetActions.createFailed());
+    }
+};
 
-            yield put(BetActions.createSucceeded({
-                bet,
-            }));
-            yield put(EventActions.fetchAll());
-        } else {
-            yield put(BetActions.createFailed());
-        }
+const place = function* (action) {
+    const betId        = action.betId;
+    const amount       = action.amount;
+    const isOutcomeOne = action.isOutcomeOne;
+
+    const response = yield call(
+        Api.placeBet,
+        betId,
+        amount,
+        isOutcomeOne,
+    );
+
+    if (response) {
+        yield put(BetActions.placeSucceeded());
+        yield put(PopupActions.hide());
+        yield put(EventActions.fetchAll());
+    } else {
+        yield put(BetActions.placeFailed());
+    }
+};
+
+const setCommitment = function* (action) {
+    const betId      = yield select(state => state.bet.selectedBetId);
+    const commitment = yield select(state => state.bet.selectedCommitment);
+    const response   = yield call(
+        Api.getOutcomes,
+        betId,
+        commitment,
+    );
+
+    if (response) {
+        const result   = response.data;
+        const outcomes = [
+            result.outcomeOne,
+            result.outcomeTwo,
+        ];
+
+        yield put(BetActions.setOutcomes({
+            outcomes,
+        }));
     }
 };
 
 export default {
     create,
+    place,
+    setCommitment,
 };

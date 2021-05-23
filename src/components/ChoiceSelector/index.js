@@ -17,12 +17,12 @@ const ChoiceSelector = ({ name, winAmount, selected, className, theme, onClick }
                         [ChoiceSelectorTheme.colorLightPurple]: styles.choiceColorLightPurple,
                     },
                 ),
-                className
+                className,
             )}
             onClick={onClick}
         >
             <span className={styles.choiceName}>{name}</span>
-            <span className={styles.choiceWinAmount}>{winAmount.toLocaleString()} EVNT</span>
+            <span className={styles.choiceWinAmount}>{winAmount ? winAmount.toLocaleString() : '-'} EVNT</span>
         </div>
     );
 };

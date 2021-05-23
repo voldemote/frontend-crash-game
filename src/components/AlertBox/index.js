@@ -47,7 +47,10 @@ const AlertBox = ({ alerts, removeAlert }) => {
 
     const renderAlert = (alert, index) => {
         return (
-            <div className={styles.alertContainer}>
+            <div
+                className={styles.alertContainer}
+                key={index}
+            >
                 {renderAlertIcon(alert)}
                 <span className={styles.alertMessage}>
                     {alert.message}

@@ -130,7 +130,9 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
     );
 
     const resendRequestSms = () => {
-        requestSms();
+        const phone = country + phoneNumber;
+
+        requestSms({ phone });
     };
 
     const onConfirm = () => {
@@ -139,9 +141,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
         switch (step) {
             case 0:
                 if (phoneNumberIsValid()) {
-                    const phone = country + phoneNumber;
-
-                    requestSms({ phone });
+                    resendRequestSms();
                 }
 
                 break;

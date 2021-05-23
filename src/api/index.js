@@ -1,6 +1,7 @@
 import * as ApiUrls from '../constants/Api';
 import axios        from 'axios';
 import ContentTypes from '../constants/ContentTypes';
+import _            from 'lodash';
 
 const createInstance = (host, apiPath) => {
     return axios.create({
@@ -60,7 +61,7 @@ const listEvents = () => {
     });
 };
 
-const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate) => {
+const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate, liquidityAmount) => {
     return Api.post(
         ApiUrls.API_BET_CREATE,
         {
@@ -70,6 +71,28 @@ const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate) 
             betTwo,
             startDate,
             endDate,
+            liquidityAmount,
+        },
+    ).catch(() => {
+    });
+};
+
+const getOutcomes = (betId, amount) => {
+    return Api.post(
+        _.replace(ApiUrls.API_BET_OUTCOMES, ':id', betId),
+        {
+            amount,
+        },
+    ).catch(() => {
+    });
+};
+
+const placeBet = (betId, amount, isOutcomeOne) => {
+    return Api.post(
+        _.replace(ApiUrls.API_BET_PLACE, ':id', betId),
+        {
+            amount,
+            isOutcomeOne,
         },
     ).catch(() => {
     });
@@ -83,4 +106,6 @@ export {
     saveAdditionalInfo,
     listEvents,
     createBet,
+    getOutcomes,
+    placeBet,
 };

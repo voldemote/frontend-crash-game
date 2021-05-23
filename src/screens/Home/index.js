@@ -13,8 +13,9 @@ import { connect }       from 'react-redux';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
 import Popup             from '../../components/Popup';
+import { BetActions }    from '../../store/actions/bet';
 
-const Home = ({ events, showPopup }) => {
+const Home = ({ events, showPopup, setSelectedBet }) => {
     const mapEventSlides = () => {
         return _.map(
             events,
@@ -99,13 +100,8 @@ const Home = ({ events, showPopup }) => {
                                 hot={bet.hot}
                                 eventEnd={eventEnd}
                                 onClick={() => {
-                                    showPopup(
-                                        PopupTheme.betView,
-                                        {
-                                            eventId: event._id,
-                                            betId:   bet._id,
-                                        },
-                                    );
+                                    setSelectedBet(event._id, bet._id);
+                                    showPopup(PopupTheme.betView);
                                 }}
                             />
                         );
@@ -116,8 +112,7 @@ const Home = ({ events, showPopup }) => {
     };
 
     const eventCreationButtonClicked = () => {
-        // TODO uncomment showPopup({ popupType: PopupTheme.betCreation });
-        showPopup({ popupType: PopupTheme.betView });
+        showPopup(PopupTheme.betCreation);
     };
 
     const renderEventCreationButton = () => {
@@ -155,7 +150,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showPopup: (popupType, options) => {
+        setSelectedBet: (eventId, betId) => {
+            dispatch(BetActions.selectBet({ eventId, betId }));
+        },
+        showPopup:      (popupType, options = null) => {
             dispatch(PopupActions.show({ popupType, options }));
         },
     };

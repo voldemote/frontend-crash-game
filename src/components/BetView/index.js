@@ -27,39 +27,21 @@ import ChoiceSelector        from '../ChoiceSelector';
 import ChoiceSelectorTheme   from '../ChoiceSelector/ChoiceSelectorTheme';
 import TokenNumberInput      from '../TokenNumberInput';
 import TokenValueSelector    from '../TokenValueSelector';
+import { BetActions }        from '../../store/actions/bet';
+import { placeBet }          from '../../api';
 
-const initialState = {
-    choice:     null,
-    commitment: 1,
-};
-
-const BetView = ({ hidePopup, closed, event, bet, createBet }) => {
-          const [error, setError]           = useState(initialState.error);
-          const [choice, setChoice]         = useState(initialState.choice);
-          const [commitment, setCommitment] = useState(initialState.commitment);
-          const isMount                     = useIsMount();
-
-          const resetStates = () => {
-              setChoice(initialState.choice);
-              setCommitment(initialState.commitment);
-          };
+const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, createBet, setChoice, setCommitment, placeBet }) => {
+          const isMount = useIsMount();
 
           const validateInput = () => {
               let valid = true;
-              let error = [];
 
-              if (!choice) {
+              if (choice === null) {
                   valid = false;
               }
 
               if (!commitment) {
                   valid = false;
-              }
-
-              if (error.length > 0) {
-                  setError(error);
-              } else {
-                  setError(null);
               }
 
               return valid;
@@ -74,21 +56,12 @@ const BetView = ({ hidePopup, closed, event, bet, createBet }) => {
               [choice, commitment],
           );
 
-          useEffect(
-              () => {
-                  if (!isMount && closed) {
-                      resetStates();
-                  }
-              },
-              [closed],
-          );
-
           const onConfirm = () => {
               const validInput = validateInput();
 
+              console.debug(validInput, choice, commitment);
               if (validInput) {
-
-                  hidePopup();
+                  placeBet(bet._id, commitment, choice === 0);
               }
           };
 
@@ -101,6 +74,31 @@ const BetView = ({ hidePopup, closed, event, bet, createBet }) => {
           const onTokenSelect = (number) => {
               setCommitment(number);
           };
+
+          const getOutcome = (index) => {
+              if (outcomes) {
+                  return outcomes[index];
+              }
+
+              return null;
+          };
+
+          const renderChoiceSelector = (index, name, choiceSelectorTheme) => {
+              return (
+                  <ChoiceSelector
+                      theme={choiceSelectorTheme}
+                      className={styles.choice}
+                      name={name}
+                      winAmount={getOutcome(index)}
+                      selected={choice === index}
+                      onClick={onChoiceSelect(index)}
+                  />
+              );
+          };
+
+          if (!event || !bet) {
+              return null;
+          }
 
           return (
               <div className={styles.placeBetContainer}>
@@ -129,22 +127,8 @@ const BetView = ({ hidePopup, closed, event, bet, createBet }) => {
                               Your choice & possible bet:
                           </label>
                           <div className={styles.choiceContainer}>
-                              <ChoiceSelector
-                                  theme={ChoiceSelectorTheme.colorMint}
-                                  className={styles.choice}
-                                  name={bet.betOne}
-                                  winAmount={6000}
-                                  selected={choice === 0}
-                                  onClick={onChoiceSelect(0)}
-                              />
-                              <ChoiceSelector
-                                  theme={ChoiceSelectorTheme.colorLightPurple}
-                                  className={styles.choice}
-                                  name={bet.betTwo}
-                                  winAmount={8000}
-                                  selected={choice === 1}
-                                  onClick={onChoiceSelect(1)}
-                              />
+                              {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
+                              {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
                           </div>
                       </div>
                   </div>
@@ -158,7 +142,7 @@ const BetView = ({ hidePopup, closed, event, bet, createBet }) => {
                   </Button>
                   <div className={styles.timeLeftCounterContainer}>
                       <span>Event ends in:</span>
-                      <TimeLeftCounter endDate={new Date(new Date().getTime() + 12 * 60000)} />
+                      <TimeLeftCounter endDate={event.date} />
                   </div>
               </div>
           );
@@ -166,15 +150,42 @@ const BetView = ({ hidePopup, closed, event, bet, createBet }) => {
 ;
 
 const mapStateToProps = (state) => {
+    const event = _.find(
+        state.event.events,
+        {
+            _id: state.bet.selectedEventId,
+        },
+    );
+    const bet   = _.find(
+        event ? event.bets : [],
+        {
+            _id: state.bet.selectedBetId,
+        },
+    );
+
     return {
-        events: state.event.events,
+        event:      event,
+        bet:        bet,
+        choice:     state.bet.selectedChoice,
+        commitment: state.bet.selectedCommitment,
+        outcomes:   state.bet.outcomes,
+        events:     state.event.events,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        hidePopup: () => {
+        hidePopup:     () => {
             dispatch(PopupActions.hide());
+        },
+        setChoice:     (choice) => {
+            dispatch(BetActions.selectChoice({ choice }));
+        },
+        setCommitment: (commitment) => {
+            dispatch(BetActions.setCommitment({ commitment }));
+        },
+        placeBet:      (betId, amount, isOutcomeOne) => {
+            dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
         },
     };
 };

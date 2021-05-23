@@ -34,12 +34,15 @@ const root = function* () {
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
             EventTypes.FETCH_ALL_FAILED,
             BetTypes.CREATE_FAILED,
+            BetTypes.PLACE_FAILED,
         ],                                                                      AlertSagas.handleFail),
         takeLatest([
             BetTypes.CREATE_SUCCEEDED,
         ],                                                                      AlertSagas.handleSuccess),
         takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
+        takeLatest([BetTypes.PLACE],                                     BetSagas.place),
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
+        takeLatest([BetTypes.SET_COMMITMENT],                            BetSagas.setCommitment),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
