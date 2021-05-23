@@ -66,7 +66,7 @@ const setCommitment = function* (action) {
     const commitment = yield select(state => state.bet.selectedCommitment);
 
     if (
-        !_.isEmpty(commitment) &&
+        !_.isNull(commitment) &&
         commitment >= 0.001 &&
         commitment <= 20000000
     ) {
