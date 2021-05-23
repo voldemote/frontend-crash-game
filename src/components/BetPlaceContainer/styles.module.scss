@@ -10,6 +10,14 @@
     align-items: center;
     overflow: hidden;
     padding: 2rem;
+    height: 100%;
+
+    .headline {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 
     .badge {
         color: $colorPrimaryDark;

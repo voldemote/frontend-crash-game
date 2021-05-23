@@ -1,22 +1,23 @@
-import darkModeLogo        from '../../data/images/logo-darkmode.svg';
-import { useState }   from 'react';
-import Link                from '../../components/Link';
-import Routes              from '../../constants/Routes';
-import styles              from './styles.module.scss';
-import LiveBadge from 'components/LiveBadge';
-import HotBetBadge from 'components/HotBetBadge';
-import ViewerBadge from 'components/ViewerBadge';
-import Chat from 'components/Chat';
-import RelatedEventCard from 'components/RelatedEventCard';
-import TimeLeftCounter  from 'components/TimeLeftCounter';
-import { Carousel } from 'react-responsive-carousel';
+import darkModeLogo      from '../../data/images/logo-darkmode.svg';
+import { useState }      from 'react';
+import Link              from '../../components/Link';
+import Routes            from '../../constants/Routes';
+import { Carousel }      from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import styles            from './styles.module.scss';
+import LiveBadge         from 'components/LiveBadge';
+import ViewerBadge       from 'components/ViewerBadge';
+import Chat              from 'components/Chat';
+import RelatedEventCard  from 'components/RelatedEventCard';
+import TimeLeftCounter   from 'components/TimeLeftCounter';
 import FixedIconButton   from '../../components/FixedIconButton';
 import IconType          from '../../components/Icon/IconType';
 import { connect }       from 'react-redux';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
 import BetPlaceContainer from 'components/BetPlaceContainer';
+import Icon              from '../../components/Icon';
+import IconTheme         from '../../components/Icon/IconTheme';
 
 const Bet = ({ bet, showPopup }) => {
 
@@ -80,13 +81,13 @@ const Bet = ({ bet, showPopup }) => {
                             selectedItem={currentSlide}
                             onChange={(index) => { updateCurrentSlide(index) }}
                         >
-                            <div>
+                            <div className={styles.carouselSlide}>
                                 <Chat />
                             </div>
-                            <div>
+                            <div className={styles.carouselSlide}>
                                 <BetPlaceContainer />
                             </div>
-                            <div>
+                            <div className={styles.carouselSlide}>
                                 <div className={styles.headline} style={{ flexDirection: "row", display: "flex", marginBottom: "1rem", alignItems: "center" }}>
                                     <h2 style={{ fontSize: "16px", marginRight: "0.5rem" }}>🚀 Related Events</h2>
                                     <LiveBadge />
@@ -100,7 +101,7 @@ const Bet = ({ bet, showPopup }) => {
                     </div>
                 </div>
                 <div className={styles.columnRight}>
-                    <div style={{ width: "100%", display: "flex", alignItems: "flex-end", flexDirection: "column" }}>
+                    <div style={{ width: "100%", display: "flex", alignItems: "flex-end", flexDirection: "column", height: "100%" }}>
                         <div className={styles.logo}>
                             <img src={darkModeLogo} alt="Wallfair" />
                         </div>
@@ -112,15 +113,15 @@ const Bet = ({ bet, showPopup }) => {
                             <LiveBadge />
                         </div>
                         <Carousel emulateTouch={true} infiniteLoop={true} showArrows={false} showStatus={false}>
-                            <div>
+                            <div className={styles.carouselSlide}>
                                 <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
                                 <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
                             </div>
-                            <div>
+                            <div className={styles.carouselSlide}>
                                 <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
                                 <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
                             </div>
-                            <div>
+                            <div className={styles.carouselSlide}>
                                 <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
                                 <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
                             </div>
@@ -136,6 +137,9 @@ const Bet = ({ bet, showPopup }) => {
                 </div>
             </div>
             {renderEventCreationButton()}
+            <button className={styles.fixedChatButton} onClick={true}>
+                <Icon iconType={IconType.chat} iconTheme={IconTheme.primary} />
+            </button>
         </div>
     );
 };
