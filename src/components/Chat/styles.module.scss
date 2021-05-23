@@ -19,6 +19,11 @@
     position: relative;
     max-height: 25vh;
 
+    &::-webkit-scrollbar {
+        width: 0;  /* Remove scrollbar space */
+        background: transparent;  /* Optional: just make scrollbar invisible */
+    }
+
     @media (max-width: $screen-md) {
         max-height: 35vh;
     }
