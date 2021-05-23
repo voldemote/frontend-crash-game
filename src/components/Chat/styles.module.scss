@@ -3,6 +3,10 @@
 .chatContainer {
     padding-top: 1rem;
     height: 100%;
+
+    @media (max-width: $screen-md) {
+        padding-top: 0;
+    }
 }
 
 .chat {
