@@ -4,7 +4,7 @@ import HotBetBadge      from '../HotBetBadge';
 import TimeLeftCounter  from '../TimeLeftCounter';
 import HotBetBadgeTheme from '../HotBetBadge/HotBetBadgeTheme';
 
-const BetCard = ({ user, image, marketQuestion, hot, eventEnd }) => {
+const BetCard = ({ user, image, marketQuestion, hot, onClick, eventEnd }) => {
     const getBetCardStyle = () => {
         return {
             backgroundImage: 'url("' + image + '")',
@@ -29,7 +29,10 @@ const BetCard = ({ user, image, marketQuestion, hot, eventEnd }) => {
     };
 
     return (
-        <div className={styles.betCardContainer}>
+        <div
+            className={styles.betCardContainer}
+            onClick={onClick}
+        >
             <div
                 className={styles.betCard}
             >

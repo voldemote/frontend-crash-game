@@ -1,0 +1,33 @@
+@import '../../styles/all';
+
+.tokenValueSelector
+{
+    width:                 100%;
+    display:               grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    column-gap:            5px;
+    row-gap:               5px;
+
+    .tokenValueSelectorBox
+    {
+        display:         flex;
+        align-items:     center;
+        justify-content: space-between;
+        padding:         7px 12px 8px 14px;
+        border-radius:   5px;
+        border:          solid 1.2px $colorPrimary05;
+        cursor:          pointer;
+
+        .value
+        {
+            font-size: 20px;
+        }
+
+        .label
+        {
+            font-size:   11.9px;
+            opacity:     0.25;
+            margin-left: 10px;
+        }
+    }
+}

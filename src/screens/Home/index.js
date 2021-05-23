@@ -12,6 +12,7 @@ import IconType          from '../../components/Icon/IconType';
 import { connect }       from 'react-redux';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
+import Popup             from '../../components/Popup';
 
 const Home = ({ events, showPopup }) => {
     const mapEventSlides = () => {
@@ -97,6 +98,15 @@ const Home = ({ events, showPopup }) => {
                                 marketQuestion={bet.marketQuestion}
                                 hot={bet.hot}
                                 eventEnd={eventEnd}
+                                onClick={() => {
+                                    showPopup(
+                                        PopupTheme.betView,
+                                        {
+                                            eventId: event._id,
+                                            betId:   bet._id,
+                                        },
+                                    );
+                                }}
                             />
                         );
                     },
@@ -106,7 +116,8 @@ const Home = ({ events, showPopup }) => {
     };
 
     const eventCreationButtonClicked = () => {
-        showPopup({ popupType: PopupTheme.betCreation });
+        // TODO uncomment showPopup({ popupType: PopupTheme.betCreation });
+        showPopup({ popupType: PopupTheme.betView });
     };
 
     const renderEventCreationButton = () => {
@@ -144,8 +155,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showPopup: (popupType) => {
-            dispatch(PopupActions.show(popupType));
+        showPopup: (popupType, options) => {
+            dispatch(PopupActions.show({ popupType, options }));
         },
     };
 };

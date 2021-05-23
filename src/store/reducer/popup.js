@@ -5,6 +5,7 @@ import { PopupTypes }      from '../actions/popup';
 const initialState = {
     visible:   false,
     popupType: null,
+    options:   null,
 };
 
 const hide = (action, state) => {
@@ -16,7 +17,8 @@ const hide = (action, state) => {
 };
 
 const show = (action, state) => {
-    const type = action.popupType;
+    const type    = action.popupType;
+    const options = action.options;
 
     return update(state, {
         visible:   {
@@ -24,6 +26,9 @@ const show = (action, state) => {
         },
         popupType: {
             $set: type,
+        },
+        options:   {
+            $set: options,
         },
     });
 };

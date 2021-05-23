@@ -1,0 +1,44 @@
+@import '../../styles/all';
+
+.tokenNumberInputContainer
+{
+    display:          flex;
+    width:            100%;
+    border-radius:    6px;
+    align-items:      center;
+    padding:          1rem 1rem;
+    border:           1px solid $colorGrayLight;
+    background-color: $colorGrayLight;
+
+    @media (min-width: $screen-lg)
+    {
+        padding: 1rem 4rem;
+    }
+
+    .input
+    {
+        width:            50%;
+        font-family:      $fontBold;
+        font-size:        16px;
+        text-align:       right;
+        background-color: transparent;
+        border:           none;
+        outline:          none !important;
+        margin-right:     11px;
+
+        &::-webkit-inner-spin-button
+        {
+            -webkit-appearance: none;
+            margin:             0;
+        }
+
+        -moz-appearance:  textfield;
+    }
+
+    .eventTokenLabel
+    {
+        color:       $colorGrayLight2;
+        font-family: $fontBold;
+        font-size:   16px;
+    }
+}

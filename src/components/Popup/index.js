@@ -9,8 +9,10 @@ import { PopupActions } from '../../store/actions/popup';
 import { useEffect }    from 'react';
 import PopupTheme       from './PopupTheme';
 import BetCreation      from '../BetCreation';
+import BetView          from '../BetView';
+import _                from 'lodash';
 
-const Popup = ({ type, visible, hidePopup }) => {
+const Popup = ({ type, visible, options, events, hidePopup }) => {
     useEffect(() => {
         document.body.style.overflow = visible ? 'hidden' : null;
 
@@ -25,9 +27,36 @@ const Popup = ({ type, visible, hidePopup }) => {
                 return (
                     <BetCreation closed={!visible} />
                 );
+            case PopupTheme.betView:
+                return (
+                    <BetView closed={!visible} {...getBetViewOptions()} />
+                );
         }
 
         return null;
+    };
+
+    const getBetViewOptions = () => {
+        let bet   = {};
+        let event = {};
+
+        if (options) {
+            const eventId = options.eventId;
+            const betId   = options.betId;
+
+            if (eventId) {
+                event = _.find(events, { _id: eventId });
+
+                if (event && betId) {
+                    bet = _.find(event.bets, { _id: betId });
+                }
+            }
+        }
+
+        return {
+            bet:   bet,
+            event: event,
+        };
     };
 
     return (
@@ -57,7 +86,9 @@ const Popup = ({ type, visible, hidePopup }) => {
 const mapStateToProps = (state) => {
     return {
         type:    state.popup.popupType,
+        options: state.popup.options,
         visible: state.popup.visible,
+        events:  state.event.events,
     };
 };
 
