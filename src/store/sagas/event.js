@@ -4,6 +4,8 @@ import * as Api         from '../../api';
 import { EventActions } from '../actions/event';
 import { select }       from 'redux-saga/effects';
 import AuthState        from '../../constants/AuthState';
+import _                from 'lodash';
+import { UserActions }  from '../actions/user';
 
 const fetchAll = function* (action) {
     const authState = yield select(state => state.authentication.authState);
@@ -23,6 +25,39 @@ const fetchAll = function* (action) {
     }
 };
 
+const fetchAllSucceeded = function* (action) {
+    const users  = yield select(state => state.user.users);
+    const events = action.events;
+
+    if (!_.isEmpty(events)) {
+        for (const event of events) {
+            const bets = event.bets;
+
+            if (!_.isEmpty(bets)) {
+                for (const bet of events) {
+                    const userId = bet.creator;
+
+                    if (userId) {
+                        const userFetched = _.some(
+                            users,
+                            {
+                                userId: userId,
+                            },
+                        );
+
+                        if (!userFetched) {
+                            yield put(UserActions.fetch({ userId }));
+                        } else {
+                            console.debug('already fetched');
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
+
 export default {
     fetchAll,
+    fetchAllSucceeded,
 };

@@ -44,6 +44,7 @@ const root = function* () {
             BetTypes.PLACE_SUCCEEDED,
         ],                                                                      AlertSagas.handleSuccess),
         takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
+        takeLatest([EventTypes.FETCH_ALL_SUCCEEDED],                     EventSagas.fetchAllSucceeded),
         takeLatest([BetTypes.PLACE],                                     BetSagas.place),
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([BetTypes.SET_COMMITMENT],                            BetSagas.setCommitment),

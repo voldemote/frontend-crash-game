@@ -1,13 +1,13 @@
-import React            from 'react';
-import style            from './styles.module.scss';
-import TimeLeftCounter  from '../TimeLeftCounter';
-import HotBetBadge      from '../HotBetBadge';
-import classNames       from 'classnames';
-import Link             from '../Link';
-import Icon             from '../Icon';
-import IconType         from '../Icon/IconType';
-import ProfileContainer from '../ProfileContainer';
-import Divider          from '../Divider';
+import React              from 'react';
+import style              from './styles.module.scss';
+import TimeLeftCounter    from '../TimeLeftCounter';
+import HotBetBadge        from '../HotBetBadge';
+import classNames         from 'classnames';
+import ProfileContainer   from '../ProfileContainer';
+import Divider            from '../Divider';
+import { connect }        from 'react-redux';
+import { getDefaultUser } from '../../helper/Profile';
+import _                  from 'lodash';
 
 const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     const renderFooter = () => {
@@ -122,4 +122,25 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
     );
 };
 
-export default EventBetPill;
+const mapStateToProps = (state, ownProps) => {
+    const { userId } = ownProps;
+    let user         = getDefaultUser();
+
+    if (userId) {
+        user = _.find(
+            state.user.users,
+            {
+                userId: userId,
+            },
+        );
+    }
+
+    return {
+        user: user,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(EventBetPill);

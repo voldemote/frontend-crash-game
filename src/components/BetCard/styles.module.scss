@@ -56,29 +56,19 @@
 
             .profileInfo
             {
-                display:        flex;
-                flex-direction: row;
-                align-items:    center;
-                color:          $colorGray;
+                font-size:      16px !important;
 
-                .profilePicture
-                {
-                    height:              30px;
-                    width:               30px;
-                    border-radius:       50%;
-                    background-color:    $colorGrayLight;
-                    margin:              0 0.5rem;
-                    background-size:     cover;
-                    background-position: center center;
+                > * {
+                    font-size:      16px !important;
                 }
             }
 
             .betCardMarketQuestion
             {
-                display: flex;
+                display:     flex;
                 align-items: center;
-                font-size: 20px;
-                height: 100%;
+                font-size:   20px;
+                height:      100%;
                 white-space: normal;
             }
         }

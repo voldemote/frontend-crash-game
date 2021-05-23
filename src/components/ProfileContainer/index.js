@@ -1,11 +1,14 @@
-import React      from 'react';
-import styles     from './styles.module.scss';
-import classNames from 'classnames';
+import React                    from 'react';
+import styles                   from './styles.module.scss';
+import classNames               from 'classnames';
+import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 const ProfileContainer = ({ className, user }) => {
     const getProfileStyle = () => {
+        const profilePicture = getProfilePictureUrl(user.profilePicture);
+
         return {
-            backgroundImage: 'url("' + user.profilePicture + '")',
+            backgroundImage: 'url("' + profilePicture + '")',
         };
     };
 

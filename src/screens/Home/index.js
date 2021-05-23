@@ -46,7 +46,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                         return (
                             <EventBetPill
                                 key={key}
-                                user={ExampleData.user}
+                                userId={bet.creator}
                                 marketQuestion={bet.marketQuestion}
                                 hotBet={bet.hot}
                                 eventEnd={eventEnd}
@@ -95,7 +95,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                             <BetCard
                                 key={key}
                                 image={event.previewImageUrl}
-                                user={ExampleData.user}
+                                userId={bet.creator}
                                 marketQuestion={bet.marketQuestion}
                                 hot={bet.hot}
                                 eventEnd={eventEnd}

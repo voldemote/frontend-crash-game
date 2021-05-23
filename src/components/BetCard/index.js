@@ -1,19 +1,17 @@
-import React            from 'react';
-import styles           from './styles.module.scss';
-import HotBetBadge      from '../HotBetBadge';
-import TimeLeftCounter  from '../TimeLeftCounter';
-import HotBetBadgeTheme from '../HotBetBadge/HotBetBadgeTheme';
+import React              from 'react';
+import styles             from './styles.module.scss';
+import HotBetBadge        from '../HotBetBadge';
+import TimeLeftCounter    from '../TimeLeftCounter';
+import HotBetBadgeTheme   from '../HotBetBadge/HotBetBadgeTheme';
+import { getDefaultUser } from '../../helper/Profile';
+import { connect }        from 'react-redux';
+import _                  from 'lodash';
+import ProfileContainer   from '../ProfileContainer';
 
 const BetCard = ({ user, image, marketQuestion, hot, onClick, eventEnd }) => {
     const getBetCardStyle = () => {
         return {
             backgroundImage: 'url("' + image + '")',
-        };
-    };
-
-    const getProfileStyle = () => {
-        return {
-            backgroundImage: 'url("' + user.profilePicture + '")',
         };
     };
 
@@ -46,16 +44,10 @@ const BetCard = ({ user, image, marketQuestion, hot, onClick, eventEnd }) => {
                 >
                 </div>
                 <div className={styles.betCardContentContainer}>
-                    <div className={styles.profileInfo}>
-                        <div
-                            className={styles.profilePicture}
-                            style={getProfileStyle()}
-                        >
-                        </div>
-                        <span>
-                            {user.name}
-                        </span>
-                    </div>
+                    <ProfileContainer
+                        className={styles.profileInfo}
+                        user={user}
+                    />
                     <div className={styles.betCardMarketQuestion}>
                         {marketQuestion}
                     </div>
@@ -69,4 +61,25 @@ const BetCard = ({ user, image, marketQuestion, hot, onClick, eventEnd }) => {
     );
 };
 
-export default BetCard;
+const mapStateToProps = (state, ownProps) => {
+    const { userId } = ownProps;
+    let user         = getDefaultUser();
+
+    if (userId) {
+        user = _.find(
+            state.user.users,
+            {
+                userId: userId,
+            },
+        );
+    }
+
+    return {
+        user: user,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(BetCard);
