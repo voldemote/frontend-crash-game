@@ -40,12 +40,12 @@ const Bet = ({ bet }) => {
             </div>
             <div className={styles.row}>
                 <div className={styles.columnLeft}>
-                    <div>
+                    <div style={{ justifyContent: "stretch", display: "flex", height: "100%", flexDirection: "column" }}>
                         <iframe src="https://player.twitch.tv/?channel=pietsmiet&parent=www.example.com" className={styles.twitchStream} frameborder="0" allowfullscreen="true" scrolling="no" width="100%"></iframe>
-                    </div>
-                    <div className={styles.timeLeft}>
-                        <span>Event ends in:</span>
-                        <TimeLeftCounter endDate={new Date(new Date().getTime() + 12 * 60000)} />
+                        <div className={styles.timeLeft}>
+                            <span>Event ends in:</span>
+                            <TimeLeftCounter endDate={new Date(new Date().getTime() + 12 * 60000)} />
+                        </div>
                     </div>
                     <div className={styles.desktopChat}>
                         <Chat />

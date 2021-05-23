@@ -2,9 +2,10 @@
 
 .bet {
     background-color: $colorPrimaryDark;
-    min-height: 100vh;
+    min-height: 100%;
+    height: 100%;
     color: $colorWhite;
-    padding: 3rem;
+    padding: 2rem 3rem;
     font-family: $fontLight;
 
     @media (max-width: $screen-md) {
@@ -13,7 +14,9 @@
 
     .twitchStream {
         border-radius: 10px;
-        min-height: 450px;
+        height: 100%;
+        display: flex;
+        min-height: 100%;
 
         @media (max-width: $screen-md) {
             min-height: unset;
@@ -147,6 +150,9 @@
         }
 
         .columnRight {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 30%;
             padding-left: 0rem;
             padding-right: 3rem;
