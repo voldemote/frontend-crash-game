@@ -61,6 +61,13 @@ const listEvents = () => {
     });
 };
 
+const getUser = (userId) => {
+    return Api.get(
+        _.replace(ApiUrls.API_USER, ':id', userId),
+    ).catch(() => {
+    });
+};
+
 const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate, liquidityAmount) => {
     return Api.post(
         ApiUrls.API_BET_CREATE,
@@ -105,6 +112,7 @@ export {
     verifySms,
     saveAdditionalInfo,
     listEvents,
+    getUser,
     createBet,
     getOutcomes,
     placeBet,

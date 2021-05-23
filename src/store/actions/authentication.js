@@ -12,6 +12,7 @@ export const AuthenticationTypes = {
     VERIFY_SMS:                     'Authentication/VERIFY_SMS',
     VERIFY_SMS_FAILED:              'Authentication/VERIFY_SMS_FAILED',
     VERIFY_SMS_SUCCEEDED:           'Authentication/VERIFY_SMS_SUCCEEDED',
+    UPDATE_DATA:                    'Authentication/UPDATE_DATA',
 };
 
 const logout = makeActionCreator(
@@ -83,6 +84,14 @@ const verifySmsSucceeded = makeActionCreator(
     },
 );
 
+const updateData = makeActionCreator(
+    AuthenticationTypes.UPDATE_DATA,
+    {
+        balance:        null,
+        profilePicture: null,
+    },
+);
+
 export const AuthenticationActions = {
     logout,
     requestSms,
@@ -95,4 +104,5 @@ export const AuthenticationActions = {
     verifySms,
     verifySmsFailed,
     verifySmsSucceeded,
+    updateData
 };

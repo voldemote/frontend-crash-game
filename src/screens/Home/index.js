@@ -15,7 +15,7 @@ import PopupTheme        from '../../components/Popup/PopupTheme';
 import Popup             from '../../components/Popup';
 import { BetActions }    from '../../store/actions/bet';
 
-const Home = ({ events, showPopup, setSelectedBet }) => {
+const Home = ({ events, showPopup, user, setSelectedBet }) => {
     const mapEventSlides = () => {
         return _.map(
             events,
@@ -126,7 +126,7 @@ const Home = ({ events, showPopup, setSelectedBet }) => {
 
     return (
         <div className={styles.homeContainer}>
-            <Navbar user={ExampleData.user} />
+            <Navbar user={user} />
             <Header slides={mapEventSlides()} />
             <div className={styles.betPillContainer}>
                 {renderBetPills()}
@@ -145,6 +145,7 @@ const Home = ({ events, showPopup, setSelectedBet }) => {
 const mapStateToProps = (state) => {
     return {
         events: state.event.events,
+        user:   state.authentication,
     };
 };
 

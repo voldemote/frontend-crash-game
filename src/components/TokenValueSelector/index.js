@@ -4,11 +4,12 @@ import _          from 'lodash';
 import classNames from 'classnames';
 
 const TokenValueSelector = ({ className, values, onSelect }) => {
-    const renderValue = (value) => {
+    const renderValue = (value, index) => {
         return (
             <div
                 className={styles.tokenValueSelectorBox}
                 onClick={() => onSelect(value)}
+                key={index}
             >
                 <span className={styles.value}>
                     {value}

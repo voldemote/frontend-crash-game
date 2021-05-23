@@ -3,13 +3,15 @@ import { AuthenticationTypes } from '../actions/authentication';
 import AuthState               from '../../constants/AuthState';
 
 const initialState = {
-    loading:   false,
-    userId:    null,
-    name:      '',
-    phone:     '',
-    email:     '',
-    token:     null,
-    authState: AuthState.LOGGED_OUT,
+    loading:        false,
+    userId:         null,
+    name:           '',
+    phone:          '',
+    email:          '',
+    token:          null,
+    balance:        0,
+    profilePicture: null,
+    authState:      AuthState.LOGGED_OUT,
 };
 
 const requestSmsSucceeded = (action, state) => {
@@ -94,6 +96,17 @@ const saveAdditionalInfoSucceeded = (action, state) => {
     });
 };
 
+const updateData = (action, state) => {
+    return update(state, {
+        balance:        {
+            $set: action.balance,
+        },
+        profilePicture: {
+            $set: action.profilePicture,
+        },
+    });
+};
+
 const logout = (action, state) => {
     return update(state, {
         $set: initialState,
@@ -130,6 +143,7 @@ export default function (state = initialState, action) {
         case AuthenticationTypes.REQUEST_SMS_FAILED:
         case AuthenticationTypes.VERIFY_SMS_FAILED:
         case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:   return resetLoading(action, state);
+        case AuthenticationTypes.UPDATE_DATA:                   return updateData(action, state);
         default:                                                return state;
         // @formatter:on
     }
