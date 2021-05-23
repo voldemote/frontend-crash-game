@@ -2,6 +2,7 @@ import update         from 'immutability-helper';
 import { EventTypes } from '../actions/event';
 import { BetTypes }   from '../actions/bet';
 import { PopupTypes } from '../actions/popup';
+import _              from 'lodash';
 
 const initialState = {
     selectedEventId:    null,
@@ -40,9 +41,12 @@ const setCommitment = (action, state) => {
     const commitment = action.commitment;
 
     if (
-        !commitment ||
+        _.isEmpty(commitment) ||
         (
-            commitment >= 0 &&
+            (
+                commitment >= 0.001 ||
+                commitment == 0
+            ) &&
             commitment <= 20000000
         )
     ) {

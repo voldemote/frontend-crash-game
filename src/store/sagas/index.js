@@ -38,6 +38,7 @@ const root = function* () {
         ],                                                                      AlertSagas.handleFail),
         takeLatest([
             BetTypes.CREATE_SUCCEEDED,
+            BetTypes.PLACE_SUCCEEDED,
         ],                                                                      AlertSagas.handleSuccess),
         takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
         takeLatest([BetTypes.PLACE],                                     BetSagas.place),

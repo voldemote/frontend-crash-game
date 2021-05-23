@@ -6,6 +6,7 @@ import AuthState        from '../../constants/AuthState';
 import { BetActions }   from '../actions/bet';
 import { EventActions } from '../actions/event';
 import { PopupActions } from '../actions/popup';
+import _                from 'lodash';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -24,7 +25,7 @@ const create = function* (action) {
         betTwo,
         startDate,
         endDate,
-        liquidity
+        liquidity,
     );
 
     if (response) {
@@ -63,22 +64,29 @@ const place = function* (action) {
 const setCommitment = function* (action) {
     const betId      = yield select(state => state.bet.selectedBetId);
     const commitment = yield select(state => state.bet.selectedCommitment);
-    const response   = yield call(
-        Api.getOutcomes,
-        betId,
-        commitment,
-    );
 
-    if (response) {
-        const result   = response.data;
-        const outcomes = [
-            result.outcomeOne,
-            result.outcomeTwo,
-        ];
+    if (
+        !_.isEmpty(commitment) &&
+        commitment >= 0.001 &&
+        commitment <= 20000000
+    ) {
+        const response = yield call(
+            Api.getOutcomes,
+            betId,
+            commitment,
+        );
 
-        yield put(BetActions.setOutcomes({
-            outcomes,
-        }));
+        if (response) {
+            const result   = response.data;
+            const outcomes = [
+                result.outcomeOne,
+                result.outcomeTwo,
+            ];
+
+            yield put(BetActions.setOutcomes({
+                outcomes,
+            }));
+        }
     }
 };
 
