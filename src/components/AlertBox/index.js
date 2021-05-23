@@ -39,15 +39,18 @@ const AlertBox = ({ alerts, removeAlert }) => {
         return null;
     };
 
-    const onAlertXClick = (alert, index) => {
+    const onAlertXClick = (alert, id) => {
         return () => {
-            removeAlert({ index });
+            removeAlert({ id });
         };
     };
 
     const renderAlert = (alert, index) => {
         return (
-            <div className={styles.alertContainer}>
+            <div
+                className={styles.alertContainer}
+                key={index}
+            >
                 {renderAlertIcon(alert)}
                 <span className={styles.alertMessage}>
                     {alert.message}
@@ -55,7 +58,7 @@ const AlertBox = ({ alerts, removeAlert }) => {
                 <Icon
                     className={styles.closeIcon}
                     iconType={IconType.deleteInput}
-                    onClick={onAlertXClick(alert, index)}
+                    onClick={onAlertXClick(alert, alert.id)}
                 />
             </div>
         );
@@ -88,8 +91,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        removeAlert: (index) => {
-            dispatch(AlertActions.removeAlert(index));
+        removeAlert: (id) => {
+            dispatch(AlertActions.removeAlert(id));
         },
     };
 };

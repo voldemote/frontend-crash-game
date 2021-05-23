@@ -4,6 +4,8 @@ import Routes                    from '../../constants/Routes';
 import { AuthenticationActions } from '../actions/authentication';
 import { push }                  from 'connected-react-router';
 import { put, call, select }     from 'redux-saga/effects';
+import { EventActions }          from '../actions/event';
+import { UserActions }           from '../actions/user';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
@@ -94,8 +96,11 @@ const setAdditionalInformation = function* (action) {
 
 const authenticationSucceeded = function* (action) {
     const authState = yield select(state => state.authentication.authState);
+    const userId    = yield select(state => state.authentication.userId);
 
     if (authState === AuthState.LOGGED_IN) {
+        yield put(UserActions.fetch({ userId }));
+        yield put(EventActions.fetchAll());
         yield put(push(afterLoginRoute));
     }
 };

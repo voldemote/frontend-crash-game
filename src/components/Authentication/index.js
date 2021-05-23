@@ -17,7 +17,6 @@ const titleList = [
     { id: 1, text: `Code <br /> Verification` },
     { id: 2, text: `What is your <br /> First Name?` },
     { id: 3, text: `What about your <br /> E-Mail address?` },
-    { id: 4, text: `Logged in` },
 ];
 
 // Array of Descriptions for the different signup steps
@@ -131,7 +130,9 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
     );
 
     const resendRequestSms = () => {
-        requestSms();
+        const phone = country + phoneNumber;
+
+        requestSms({ phone });
     };
 
     const onConfirm = () => {
@@ -140,9 +141,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
         switch (step) {
             case 0:
                 if (phoneNumberIsValid()) {
-                    const phone = country + phoneNumber;
-
-                    requestSms({ phone });
+                    resendRequestSms();
                 }
 
                 break;
@@ -289,9 +288,13 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
     };
 
     const getButtonContent = () => {
-        const buttonContent = confirmBtnList.find(
+        let buttonContent = confirmBtnList.find(
             (item) => item.id === step,
-        ).text;
+        );
+
+        if (buttonContent) {
+            buttonContent = buttonContent.text;
+        }
 
         return buttonContent;
     };

@@ -1,26 +1,26 @@
 import _                     from 'lodash';
 import classNames            from 'classnames';
+import Divider               from '../../components/Divider';
+import Dropdown              from '../../components/Dropdown';
 import ExampleData           from '../../helper/ExampleData';
+import Icon                  from '../Icon';
+import IconType              from '../Icon/IconType';
 import InputBox              from '../../components/InputBox';
 import InputBoxTheme         from '../../components/InputBox/InputBoxTheme';
+import Link                  from '../../components/Link';
+import moment                from 'moment';
 import ProfileContainer      from '../../components/ProfileContainer';
+import React                 from 'react';
 import RippedTicketContainer from '../../components/RippedTicketContainer';
 import StepsContainer        from '../../components/StepsContainer';
 import styles                from './styles.module.scss';
-import { isValidURL }        from '../../helper/Url';
+import TimeLeftCounter       from '../../components/TimeLeftCounter';
+import { connect }           from 'react-redux';
+import { PopupActions }      from '../../store/actions/popup';
 import { useEffect }         from 'react';
 import { useIsMount }        from '../hoc/useIsMount';
 import { useState }          from 'react';
-import Divider               from '../../components/Divider';
-import TimeLeftCounter       from '../../components/TimeLeftCounter';
-import React                 from 'react';
-import moment                from 'moment';
-import Link                  from '../../components/Link';
-import Dropdown              from '../../components/Dropdown';
-import { PopupActions }      from '../../store/actions/popup';
-import { connect }           from 'react-redux';
-import Icon                  from '../Icon';
-import IconType              from '../Icon/IconType';
+import { BetActions }        from '../../store/actions/bet';
 
 const initialState = {
     step:            0,
@@ -33,7 +33,7 @@ const initialState = {
     outcomes:        [{}, {}],
 };
 
-const BetCreation = ({ hidePopup, closed }) => {
+const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const [step, setStep]                       = useState(initialState.step);
           const [error, setError]                     = useState(initialState.error);
           const [marketQuestion, setMarketQuestion]   = useState(initialState.marketQuestion);
@@ -119,7 +119,7 @@ const BetCreation = ({ hidePopup, closed }) => {
           };
 
           const eventUrlIsValid = () => {
-              return eventUrl && isValidURL(eventUrl);
+              return eventUrl !== null;
           };
 
           const dateIsValid = () => {
@@ -152,8 +152,19 @@ const BetCreation = ({ hidePopup, closed }) => {
               [closed],
           );
 
-          const getEndDateTime = () => {
-              const time     = selectedTime;
+          const getEventUrlOptions = () => {
+              return _.map(
+                  events,
+                  (event) => {
+                      return {
+                          label: event.name + ' - ' + event.streamUrl,
+                          value: event._id,
+                      };
+                  },
+              );
+          };
+
+          const getDateWithTime = (time) => {
               const dateTime = moment(selectedDate);
 
               dateTime.hours(time.hours());
@@ -161,6 +172,18 @@ const BetCreation = ({ hidePopup, closed }) => {
               dateTime.seconds(time.seconds());
 
               return dateTime;
+          };
+
+          const getEndDateTime = () => {
+              const time = selectedEndTime;
+
+              return getDateWithTime(time);
+          };
+
+          const getStartDateTime = () => {
+              const time = selectedTime;
+
+              return getDateWithTime(time);
           };
 
           const getButtonContent = () => {
@@ -220,9 +243,11 @@ const BetCreation = ({ hidePopup, closed }) => {
 
               if (validInput) {
                   if (step <= 3) {
+                      if (step === 3) {
+                          createBet(eventUrl, marketQuestion, outcomes, getStartDateTime(), getEndDateTime());
+                      }
+
                       setStep(step + 1);
-                  } else {
-                      // TODO publish bet
                   }
               }
           };
@@ -401,7 +426,7 @@ const BetCreation = ({ hidePopup, closed }) => {
                           value={eventUrl}
                           setValue={setEventUrl}
                           placeholder={'https://www.twitch.tv/...'}
-                          options={['https://www.twitch.tv/redbull/videos', 'https://www.twitch.tv/wallfair/videos']}
+                          options={getEventUrlOptions()}
                       />
                   );
               } else if (step === 1) {
@@ -455,15 +480,24 @@ const BetCreation = ({ hidePopup, closed }) => {
       }
 ;
 
+const mapStateToProps = (state) => {
+    return {
+        events: state.event.events,
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         hidePopup: () => {
             dispatch(PopupActions.hide());
         },
+        createBet: (eventId, marketQuestion, outcomes, startDate, endDate, liquidityAmount = 1) => {
+            dispatch(BetActions.create({ eventId, marketQuestion, outcomes, startDate, endDate, liquidityAmount }));
+        },
     };
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(BetCreation);

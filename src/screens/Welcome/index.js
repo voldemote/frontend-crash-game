@@ -8,10 +8,21 @@ import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
 import useWindowDimensions from '../../components/hoc/useWindowDimensions';
 import { useState }        from 'react';
+import { useEffect }       from 'react';
+import { connect }         from 'react-redux';
+import AuthState           from '../../constants/AuthState';
+import { useHistory }      from 'react-router';
 
-const Welcome = () => {
+const Welcome = ({ authState }) => {
+    const history                                   = useHistory();
     const { width }                                 = useWindowDimensions();
     const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
+
+    useEffect(() => {
+        if (authState === AuthState.LOGGED_IN) {
+            history.push(Routes.home);
+        }
+    }, []);
 
     const shouldShowWelcomeScreen = () => {
         return width >= 768 || showWelcomeScreen;
@@ -77,4 +88,13 @@ const Welcome = () => {
     );
 };
 
-export default Welcome;
+const mapStateToProps = (state) => {
+    return {
+        authState: state.authentication.authState,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(Welcome);

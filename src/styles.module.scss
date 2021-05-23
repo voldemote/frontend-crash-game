@@ -36,11 +36,11 @@
     max-width:  100vw;
 }
 
-
 body, html
 {
-    height:      100%;
-    font-family: $fontRegular;
+    height:              100%;
+    font-family:         $fontRegular;
+    overscroll-behavior: none;
 
     > div
     {

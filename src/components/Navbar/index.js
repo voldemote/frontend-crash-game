@@ -1,13 +1,27 @@
-import React        from 'react';
-import style        from './styles.module.scss';
-import darkModeLogo from '../../data/images/logo-darkmode.svg';
-import classNames   from 'classnames';
+import _                        from 'lodash';
+import classNames               from 'classnames';
+import darkModeLogo             from '../../data/images/logo-darkmode.svg';
+import React                    from 'react';
+import style                    from './styles.module.scss';
+import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 const Navbar = ({ user }) => {
     const getProfileStyle = () => {
+        const profilePicture = getProfilePictureUrl(user.profilePicture);
+
         return {
-            backgroundImage: 'url("' + user.profilePicture + '")',
+            backgroundImage: 'url("' + profilePicture + '")',
         };
+    };
+
+    const getBalance = () => {
+        const userBalance = user.balance;
+
+        if (!_.isNull(userBalance)) {
+            return userBalance;
+        }
+
+        return '-';
     };
 
     return (
@@ -39,7 +53,7 @@ const Navbar = ({ user }) => {
                     <span className={style.actualBalanceText}>
                         Your actual Balance
                     </span>
-                    {user.currentTokens} EVNT
+                    {getBalance()} EVNT
                 </button>
                 <div
                     className={style.profile}

@@ -9,6 +9,7 @@ const show = makeActionCreator(
     PopupTypes.SHOW,
     {
         popupType: null,
+        options:   {},
     },
 );
 

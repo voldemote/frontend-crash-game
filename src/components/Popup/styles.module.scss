@@ -10,6 +10,7 @@
     left:             0;
     width:            100vw;
     height:           100vh;
+    height:           -webkit-fill-available;
     z-index:          $zIndexPopup;
     background-color: $colorPrimary50;
 
@@ -34,16 +35,25 @@
         @media (min-width: $screen-sm)
         {
             width:         80%;
-            height:        80%;
+            height:        90%;
             border-radius: 10px;
             overflow-y:    hidden;
+
+            @media (min-height: 900px)
+            {
+                height: 80%;
+            }
         }
 
         @media (min-width: $screen-lg)
         {
             width:         70%;
-            height:        60%;
             border-radius: 10px;
+
+            @media (min-height: 1200px)
+            {
+                height: 60%;
+            }
         }
 
         .closeButton

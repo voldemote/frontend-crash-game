@@ -20,6 +20,10 @@ const TimeLeftCounter = ({ endDate }) => {
 
     const renderTimeLeft = (name, value, forceRender = true) => {
         if (value > 0 || forceRender) {
+            if (!value) {
+                value = 0;
+            }
+
             return (
                 <>
                     <span className={styles.timePartContainer}>

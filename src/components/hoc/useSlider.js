@@ -6,9 +6,11 @@ const useSlider = (slideImage, slideText, slideTags, images) => {
     useEffect(() => startSlider());
 
     const startSlider = () => {
-        slideImage.current.style.backgroundImage = `url(${images[0].src})`;
-        slideText.current.innerHTML              = images[0].text;
-        slideTags.current.innerHTML              = images[0].tags;
+        if(images.length) {
+            slideImage.current.style.backgroundImage = `url(${images[0].src})`;
+            slideText.current.innerHTML              = images[0].text;
+            slideTags.current.innerHTML              = images[0].tags;
+        }
     };
 
     const handleSlide = (slide) => {
