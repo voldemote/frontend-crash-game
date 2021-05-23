@@ -47,9 +47,8 @@ const fetchAllSucceeded = function* (action) {
 
                         if (!userFetched) {
                             yield put(UserActions.fetch({ userId }));
-                        } else {
-                            console.debug('already fetched');
                         }
+                        // TODO fetch all user at once
                     }
                 }
             }

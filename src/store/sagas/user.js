@@ -6,7 +6,6 @@ import { UserActions }           from '../actions/user';
 import { AuthenticationActions } from '../actions/authentication';
 
 const fetch = function* (action) {
-    console.debug(action);
     let userId = action.userId;
 
     if (!userId) {

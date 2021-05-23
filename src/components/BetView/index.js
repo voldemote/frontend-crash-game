@@ -59,7 +59,6 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
           const onConfirm = () => {
               const validInput = validateInput();
 
-              console.debug(validInput, choice, commitment);
               if (validInput) {
                   placeBet(bet._id, commitment, choice === 0);
               }
