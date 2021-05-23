@@ -1,5 +1,10 @@
 @import '../../styles/all';
 
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+}
+
 .chat {
     height: 100%;
     display: flex;
@@ -8,6 +13,7 @@
     overflow-y: scroll;
     margin: 1rem 0;
     position: relative;
+    max-height: 25vh;
 
     .overlay {
         position: absolute;
