@@ -1,6 +1,9 @@
 import styles              from './styles.module.scss';
 import ExampleProfilePicture from '../../data/images/doge.jpg';
 import ChatBubble from 'components/chatBubble';
+import Icon      from '../Icon';
+import IconTheme from '../Icon/IconTheme';
+import IconType          from '../../components/Icon/IconType';
 
 const Chat = () => {
 
@@ -25,11 +28,15 @@ const Chat = () => {
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
-                <div className={styles.overlay}></div>
             </div>
             <form className={styles.messageInput}>
                 <input id="message" type="text" name="message" placeholder="Comment..." />
-                <button type="submit" onClick={() => console.log("sent")}>Send</button>
+                <button type="submit" onClick={() => console.log("sent")}>
+                    <Icon
+                        iconType={IconType.chat}
+                        iconTheme={IconTheme.primary}
+                    />
+                </button>
             </form>
         </div>
     );
