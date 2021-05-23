@@ -1,5 +1,5 @@
 import darkModeLogo        from '../../data/images/logo-darkmode.svg';
-import { useEffect, useState }   from 'react';
+import { useState }   from 'react';
 import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
@@ -11,8 +11,14 @@ import RelatedEventCard from 'components/RelatedEventCard';
 import TimeLeftCounter  from 'components/TimeLeftCounter';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import FixedIconButton   from '../../components/FixedIconButton';
+import IconType          from '../../components/Icon/IconType';
+import { connect }       from 'react-redux';
+import { PopupActions }  from '../../store/actions/popup';
+import PopupTheme        from '../../components/Popup/PopupTheme';
+import BetPlaceContainer from 'components/BetPlaceContainer';
 
-const Bet = ({ bet }) => {
+const Bet = ({ bet, showPopup }) => {
 
     const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,24 +29,34 @@ const Bet = ({ bet }) => {
         }
     };
 
+    const eventCreationButtonClicked = () => {
+        showPopup({ popupType: PopupTheme.betCreation });
+    };
+
+    const renderEventCreationButton = () => {
+        return (
+            <FixedIconButton
+                onClick={eventCreationButtonClicked}
+                iconType={IconType.bet}
+            />
+        );
+    };
+
     return (
         <div className={styles.bet}>
-            <div className={styles.header}>
-                <div className={styles.headlineContainer}>
-                    <Link to={Routes.home} className={styles.arrowBack}></Link>
-                    <div className={styles.headline}>
-                        <h1>RedBull Rampage 2021</h1>
-                        <div>
-                            <LiveBadge />
-                            <ViewerBadge viewers={1123} />
-                        </div>
-                    </div>
-                </div>
-                <img src={darkModeLogo} alt="Wallfair" />
-            </div>
             <div className={styles.row}>
                 <div className={styles.columnLeft}>
-                    <div style={{ justifyContent: "stretch", display: "flex", height: "100%", flexDirection: "column" }}>
+                    <div className={styles.headlineContainer}>
+                        <Link to={Routes.home} className={styles.arrowBack}></Link>
+                        <div className={styles.headline}>
+                            <h1>RedBull Rampage 2021</h1>
+                            <div>
+                                <LiveBadge />
+                                <ViewerBadge viewers={1123} />
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{ height: "100%", flex: "initial" }}>
                         <iframe src="https://player.twitch.tv/?channel=pietsmiet&parent=www.example.com" className={styles.twitchStream} frameborder="0" allowfullscreen="true" scrolling="no" width="100%"></iframe>
                         <div className={styles.timeLeft}>
                             <span>Event ends in:</span>
@@ -68,37 +84,11 @@ const Bet = ({ bet }) => {
                                 <Chat />
                             </div>
                             <div>
-                                <div className={styles.placeBet}>
-                                    <div className={styles.title}>Who will win Red Bull Rampage?</div>
-                                    <small>by Anna Smith | Category: Sports</small>
-                                    <HotBetBadge className={styles.badge} />
-                                    <div className={styles.wrapper}>
-                                        <label className={styles.label}>Your bet:</label>
-                                        <div className={styles.input}>
-                                            <input id="amount" type="number" name="amount" />
-                                            <span>EVNT</span>
-                                        </div>
-
-                                        <div className={styles.buttonContainer}>
-                                            <label htmlFor={'choice'} className={styles.label}>Your choice &amp; possible bet:</label>
-                                            <div className={styles.quoteButtons}>
-                                                <div>
-                                                    <input type="radio" value="quote1" name="bet" id="bet1" required />
-                                                    <label htmlFor="bet1">Paul <span>6.000 EVNT</span></label>
-                                                </div>
-                                                <div>
-                                                    <input type="radio" value="quote2" name="bet" id="bet2" required />
-                                                    <label htmlFor="bet2">John <span>8.000 EVNT</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button  className={styles.betButton} type="submit">Bet!</button>
-                                </div>
+                                <BetPlaceContainer />
                             </div>
                             <div>
-                                <div className={styles.headline}>
-                                    <h2>🚀 Related Events</h2>
+                                <div className={styles.headline} style={{ flexDirection: "row", display: "flex", marginBottom: "1rem", alignItems: "center" }}>
+                                    <h2 style={{ fontSize: "16px", marginRight: "0.5rem" }}>🚀 Related Events</h2>
                                     <LiveBadge />
                                 </div>
                                 <div>
@@ -110,32 +100,11 @@ const Bet = ({ bet }) => {
                     </div>
                 </div>
                 <div className={styles.columnRight}>
-                    <div className={styles.placeBet}>
-                        <div className={styles.title}>Who will win Red Bull Rampage?</div>
-                        <small>by Anna Smith | Category: Sports</small>
-                        <HotBetBadge className={styles.badge} />
-                        <div className={styles.wrapper}>
-                            <label className={styles.label}>Your bet:</label>
-                            <div className={styles.input}>
-                                <input id="amount" type="number" name="amount" />
-                                <span>EVNT</span>
-                            </div>
-
-                            <div className={styles.buttonContainer}>
-                                <label htmlFor={'choice'} className={styles.label}>Your choice &amp; possible bet:</label>
-                                <div className={styles.quoteButtons}>
-                                    <div>
-                                        <input type="radio" value="quote1" name="bet" id="bet1" required />
-                                        <label htmlFor="bet1">Paul <span>6.000 EVNT</span></label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" value="quote2" name="bet" id="bet2" required />
-                                        <label htmlFor="bet2">John <span>8.000 EVNT</span></label>
-                                    </div>
-                                </div>
-                            </div>
+                    <div style={{ width: "100%", display: "flex", alignItems: "flex-end", flexDirection: "column" }}>
+                        <div className={styles.logo}>
+                            <img src={darkModeLogo} alt="Wallfair" />
                         </div>
-                        <button  className={styles.betButton} type="submit">Bet!</button>
+                        <BetPlaceContainer />
                     </div>
                     <div className={styles.relatedEvents}>
                         <div className={styles.headline}>
@@ -160,16 +129,26 @@ const Bet = ({ bet }) => {
                 </div>
             </div>
             <div className={styles.mobileMenu}>
-                <div className={styles.chatMobileButton}></div>
                 <div className={styles.indicators}>
                     <span className={ currentSlide === 0 ? styles.active : '' } onClick={() => { setCurrentSlide(0) }}></span>
                     <span className={ currentSlide === 1 ? styles.active : '' } onClick={() => { setCurrentSlide(1) }}></span>
                     <span className={ currentSlide === 2 ? styles.active : '' } onClick={() => { setCurrentSlide(2) }}></span>
                 </div>
-                <div className={styles.betMobileButton}></div>
             </div>
+            {renderEventCreationButton()}
         </div>
     );
 };
 
-export default Bet;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showPopup: (popupType) => {
+            dispatch(PopupActions.show(popupType));
+        },
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps,
+)(Bet);
