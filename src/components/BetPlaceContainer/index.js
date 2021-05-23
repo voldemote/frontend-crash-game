@@ -5,9 +5,12 @@ const BetPlaceContainer = () => {
 
     return (
         <div className={styles.placeBet}>
-            <div className={styles.title}>Who will win Red Bull Rampage?</div>
-            <small>by Anna Smith | Category: Sports</small>
-            <HotBetBadge className={styles.badge} />
+            <div className={styles.headline}>
+                <div className={styles.title}>Who will win Red Bull Rampage?</div>
+                <small>by Anna Smith | Category: Sports</small>
+                <HotBetBadge className={styles.badge} />
+            </div>
+
             <div className={styles.wrapper}>
                 <label className={styles.label}>Your bet:</label>
                 <div className={styles.input}>

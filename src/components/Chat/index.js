@@ -1,9 +1,9 @@
-import styles              from './styles.module.scss';
-import ExampleProfilePicture from '../../data/images/doge.jpg';
-import ChatBubble from 'components/chatBubble';
-import Icon      from '../Icon';
-import IconTheme from '../Icon/IconTheme';
-import IconType          from '../../components/Icon/IconType';
+import styles                   from './styles.module.scss';
+import ExampleProfilePicture    from '../../data/images/doge.jpg';
+import ChatBubble               from 'components/chatBubble';
+import Icon                     from '../Icon';
+import IconTheme                from '../Icon/IconTheme';
+import IconType                 from '../../components/Icon/IconType';
 
 const Chat = () => {
 
@@ -14,10 +14,6 @@ const Chat = () => {
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem"} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "} date={"just now"} />
-                <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
-                <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
-                <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
-                <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
                 <ChatBubble name={"test"} image={ExampleProfilePicture} message={"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum "} date={"just now"} />
