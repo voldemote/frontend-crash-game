@@ -26,7 +26,7 @@ const ProfileContainer = ({ className, user }) => {
             >
             </div>
             <span className={styles.profileName}>
-                {user.name}
+                {_.get(user, 'name')}
             </span>
         </div>
     );
