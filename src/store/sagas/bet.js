@@ -1,12 +1,11 @@
-import { put }          from 'redux-saga/effects';
-import { call }         from 'redux-saga/effects';
 import * as Api         from '../../api';
-import { select }       from 'redux-saga/effects';
-import AuthState        from '../../constants/AuthState';
+import _                from 'lodash';
 import { BetActions }   from '../actions/bet';
+import { call }         from 'redux-saga/effects';
 import { EventActions } from '../actions/event';
 import { PopupActions } from '../actions/popup';
-import _                from 'lodash';
+import { put }          from 'redux-saga/effects';
+import { select }       from 'redux-saga/effects';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -62,26 +61,41 @@ const place = function* (action) {
 };
 
 const setCommitment = function* (action) {
-    const betId      = yield select(state => state.bet.selectedBetId);
-    const commitment = yield select(state => state.bet.selectedCommitment);
+    const betId  = yield select(state => state.bet.selectedBetId);
+    const amount = yield select(state => state.bet.selectedCommitment);
+
+    yield put(BetActions.fetchOutcomes({
+        betId,
+        amount,
+    }));
+};
+
+const fetchOutcomes = function* (action) {
+    const betId  = action.betId;
+    const amount = action.amount;
 
     if (
-        !_.isNull(commitment) &&
-        commitment >= 0.001 &&
-        commitment <= 20000000
+        !_.isNull(amount) &&
+        amount >= 0.001 &&
+        amount <= 20000000
     ) {
         const response = yield call(
             Api.getOutcomes,
             betId,
-            commitment,
+            amount,
         );
 
         if (response) {
-            const result   = response.data;
-            const outcomes = [
-                result.outcomeOne,
-                result.outcomeTwo,
-            ];
+            const result     = response.data;
+            const outcomeOne = result.outcomeOne;
+            const outcomeTwo = result.outcomeTwo;
+            const outcomes   = {
+                [betId]: {
+                    outcomeOne,
+                    outcomeTwo,
+                    amount,
+                },
+            };
 
             yield put(BetActions.setOutcomes({
                 outcomes,
@@ -94,4 +108,5 @@ export default {
     create,
     place,
     setCommitment,
+    fetchOutcomes,
 };

@@ -1,19 +1,38 @@
-import React              from 'react';
-import style              from './styles.module.scss';
-import TimeLeftCounter    from '../TimeLeftCounter';
-import HotBetBadge        from '../HotBetBadge';
-import classNames         from 'classnames';
-import ProfileContainer   from '../ProfileContainer';
-import Divider            from '../Divider';
-import { connect }        from 'react-redux';
-import { getDefaultUser } from '../../helper/Profile';
-import _                  from 'lodash';
+import React               from 'react';
+import _                   from 'lodash';
+import classNames          from 'classnames';
+import Divider             from '../Divider';
+import HotBetBadge         from '../HotBetBadge';
+import ProfileContainer    from '../ProfileContainer';
+import styles              from './styles.module.scss';
+import TimeLeftCounter     from '../TimeLeftCounter';
+import { connect }         from 'react-redux';
+import { getDefaultUser }  from '../../helper/Profile';
+import { useState }        from 'react';
+import ChoiceSelector      from '../ChoiceSelector';
+import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
+import Button              from '../Button';
+import TokenNumberInput    from '../TokenNumberInput';
+import { useEffect }       from 'react';
+import { BetActions }      from '../../store/actions/bet';
 
-const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
+const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
+    const [choice, setChoice]     = useState(null);
+    const [betValue, setBetValue] = useState(0);
+
+    useEffect(
+        () => {
+            fetchOutcomes(bet._id, betValue);
+        },
+        [betValue],
+    );
+
     const renderFooter = () => {
+        const eventEnd = new Date(bet.date);
+
         return (
-            <div className={style.pillFooter}>
-                <div className={style.timeLeftCounterContainer}>
+            <div className={styles.pillFooter}>
+                <div className={styles.timeLeftCounterContainer}>
                     <span>Event ends in:</span>
                     <TimeLeftCounter endDate={eventEnd} />
                 </div>
@@ -21,100 +40,88 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
         );
     };
 
-    return (
-        <div className={style.pill}>
-            <div className={style.pillContent}>
+    const onConfirm = () => {
+        placeBet(bet._id, betValue, choice === 0);
+        setChoice(null);
+        setBetValue(0);
+    };
 
-                <div className={style.desc}>
+    const onChoiceSelect = (id) => {
+        return () => {
+            setChoice(id);
+        };
+    };
+
+    const getOutcome = (index) => {
+        if (outcomes) {
+            const outcomeForValue = _.get(outcomes, betValue, {});
+
+            if (index === 0) {
+                return _.get(outcomeForValue, 'outcomeOne');
+            } else {
+                return _.get(outcomeForValue, 'outcomeTwo');
+            }
+        }
+
+        return null;
+    };
+
+    const renderChoiceSelector = (index, name, choiceSelectorTheme) => {
+        return (
+            <ChoiceSelector
+                theme={choiceSelectorTheme}
+                className={styles.choice}
+                name={name}
+                winAmount={getOutcome(index)}
+                selected={choice === index}
+                onClick={onChoiceSelect(index)}
+            />
+        );
+    };
+
+    return (
+        <div className={styles.pill}>
+            <div className={styles.pillContent}>
+
+                <div className={styles.desc}>
                     <ProfileContainer
                         user={user}
                     />
-                    <p>{marketQuestion}</p>
-                    {hotBet && <HotBetBadge />}
+                    <p>{bet.marketQuestion}</p>
+                    {bet.hotBet && <HotBetBadge />}
                 </div>
 
-                <Divider className={style.divider} />
+                <Divider className={styles.divider} />
 
-                <div className={style.justify}>
-
-                    <div className={style.buttonContainer}>
+                <div className={styles.justify}>
+                    <div className={styles.inputWrapper}>
                         <label
-                            htmlFor={'choice'}
-                            className={style.label}
-                            style={{ paddingBottom: '0.5rem', display: 'inline-block' }}
-                        >Your choice:
+                            className={styles.label}
+                        >
+                            Your bet:
                         </label>
-                        <div className={style.quoteButtons}>
-                            <div>
-                                <input
-                                    type="radio"
-                                    value="quote1"
-                                    name="bet"
-                                    id="bet1"
-                                    required
-                                />
-                                <label htmlFor="bet1">Paul <span>Quote 2.0</span></label>
-                            </div>
-                            <div>
-                                <input
-                                    type="radio"
-                                    value="quote2"
-                                    name="bet"
-                                    id="bet2"
-                                    required
-                                />
-                                <label htmlFor="bet2">John <span>Quote 1.2</span></label>
-                            </div>
+                        <TokenNumberInput
+                            value={betValue}
+                            setValue={setBetValue}
+                            className={styles.input}
+                        />
+                    </div>
+
+                    <div className={styles.buttonContainer}>
+                        <div className={styles.quoteButtons}>
+                            {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
+                            {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
                         </div>
                     </div>
 
-                    <div className={style.inputWrapper}>
-                        <label
-                            htmlFor={'amount'}
-                            className={style.label}
-                        >Your bet:
-                        </label>
-                        <div className={style.input}>
-                            <input
-                                id="amount"
-                                type="number"
-                                name="amount"
-                            />
-                            <span>EVNT</span>
-                        </div>
-                    </div>
-
-                    <div className={classNames(style.inputWrapper, style.onWin)}>
-                        <label
-                            htmlFor={'amount'}
-                            className={style.label}
-                        >On win you get:
-                        </label>
-                        <div className={style.input}>
-                            <input
-                                id="amount"
-                                type="number"
-                                name="amount"
-                                value={1000}
-                                readOnly
-                            />
-                            <span>EVNT</span>
-                        </div>
-                    </div>
-
-                    <button
-                        onClick={() => console.log('bet placed')}
-                        className={style.betButton}
+                    <Button
+                        className={classNames(
+                            styles.betButton,
+                        )}
+                        onClick={onConfirm}
                     >
-                        {/* <Icon
-                            width={18}
-                            height={18}
-                            iconType={IconType.featherArrowUpRight}
-                            className={style.goToEventIcon}
-                            circle={true}
-                        /> */}
-                        <span>Bet!</span>
-                    </button>
+                        Bet!
+                    </Button>
                 </div>
             </div>
             {renderFooter()}
@@ -123,8 +130,20 @@ const EventBetPill = ({ user, marketQuestion, hotBet, eventEnd, outcomes }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const { userId } = ownProps;
-    let user         = getDefaultUser();
+    const { userId, bet } = ownProps;
+    let user              = getDefaultUser();
+    let outcomes          = [];
+
+    if (bet) {
+        outcomes = _.get(
+            state.bet.outcomes,
+            bet._id,
+        );
+
+        if (outcomes) {
+            outcomes = _.get(outcomes, 'values', {});
+        }
+    }
 
     if (userId) {
         user = _.find(
@@ -136,11 +155,22 @@ const mapStateToProps = (state, ownProps) => {
     }
 
     return {
-        user: user,
+        user:     user,
+        outcomes: outcomes,
     };
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchOutcomes: (betId, amount) => {
+            dispatch(BetActions.fetchOutcomes({ betId, amount }));
+        },
+        placeBet:      (betId, amount, isOutcomeOne) => {
+            dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
+        },
+    };
+};
 export default connect(
     mapStateToProps,
-    null,
+    mapDispatchToProps,
 )(EventBetPill);

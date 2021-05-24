@@ -41,15 +41,12 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                     bets,
                     (bet, betIndex) => {
                         const key      = eventIndex + '.' + betIndex;
-                        const eventEnd = new Date(bet.date);
 
                         return (
                             <EventBetPill
                                 key={key}
                                 userId={bet.creator}
-                                marketQuestion={bet.marketQuestion}
-                                hotBet={bet.hot}
-                                eventEnd={eventEnd}
+                                bet={bet}
                             />
                         );
                     },
