@@ -37,7 +37,10 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
                   if (!isMount && !closed) {
                       validateInput();
                   } else if (isMount) {
-                      _.each(getDefaultTokenSelection(), tokenAmount => fetchOutcomes(bet._id, tokenAmount));
+                      _.each(
+                          getDefaultTokenSelection(),
+                          tokenAmount => fetchOutcomes(_.get(bet, '_id'), tokenAmount),
+                      );
                   }
               },
               [choice, commitment],

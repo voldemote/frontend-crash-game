@@ -3,7 +3,6 @@ import BetCard           from '../../components/BetCard';
 import CarouselContainer from '../../components/CarouselContainer';
 import EventBetPill      from '../../components/EventBetPill/index';
 import EventCard         from '../../components/EventCard/index';
-import ExampleData       from '../../helper/ExampleData';
 import Header            from '../../components/Header/index';
 import Navbar            from '../../components/Navbar/index';
 import styles            from './styles.module.scss';
@@ -12,7 +11,6 @@ import IconType          from '../../components/Icon/IconType';
 import { connect }       from 'react-redux';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
-import Popup             from '../../components/Popup';
 import { BetActions }    from '../../store/actions/bet';
 
 const Home = ({ events, showPopup, user, setSelectedBet }) => {
@@ -40,7 +38,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                 return _.map(
                     bets,
                     (bet, betIndex) => {
-                        const key      = eventIndex + '.' + betIndex;
+                        const key = eventIndex + '.' + betIndex;
 
                         return (
                             <EventBetPill

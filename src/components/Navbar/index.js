@@ -7,7 +7,7 @@ import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 const Navbar = ({ user }) => {
     const getProfileStyle = () => {
-        const profilePicture = getProfilePictureUrl(user.profilePicture);
+        const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
 
         return {
             backgroundImage: 'url("' + profilePicture + '")',
