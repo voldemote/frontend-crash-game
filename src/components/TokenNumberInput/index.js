@@ -1,10 +1,16 @@
-import React  from 'react';
-import styles from './styles.module.scss';
-import Input  from '../Input';
+import React      from 'react';
+import styles     from './styles.module.scss';
+import Input      from '../Input';
+import classNames from 'classnames';
 
-const TokenNumberInput = ({ value, setValue, ...props }) => {
+const TokenNumberInput = ({ value, setValue, className, ...props }) => {
     return (
-        <div className={styles.tokenNumberInputContainer}>
+        <div
+            className={classNames(
+                styles.tokenNumberInputContainer,
+                className,
+            )}
+        >
             <Input
                 className={styles.input}
                 type={'number'}
@@ -12,7 +18,9 @@ const TokenNumberInput = ({ value, setValue, ...props }) => {
                 onChange={(event) => setValue(event.target.value)}
                 {...props}
             />
-            <span className={styles.eventTokenLabel}>EVNT</span>
+            <span className={styles.eventTokenLabel}>
+                EVNT
+            </span>
         </div>
     );
 };

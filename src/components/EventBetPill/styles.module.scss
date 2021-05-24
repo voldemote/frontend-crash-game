@@ -60,7 +60,7 @@
         @media (min-width: $screen-md)
         {
             flex-direction:  row;
-            align-items:     stretch;
+            align-items:     center;
             justify-content: flex-end;
         }
     }
@@ -76,7 +76,11 @@
     .desc
     {
         width: 100%;
-        max-width: 500px;
+
+        @media (min-width: $screen-md)
+        {
+            width: 50%;
+        }
 
         p
         {
@@ -87,19 +91,19 @@
         }
     }
 
-    .inputWrapper 
+    .inputWrapper
     {
-        display: flex;
-        align-items: center;
-        flex-wrap: nowrap;
-        margin-top: 1rem;
+        display:         flex;
+        align-items:     center;
+        flex-wrap:       nowrap;
+        margin-top:      1rem;
         justify-content: space-between;
-        width: 100%;
+        width:           100%;
 
         @media (min-width: $screen-md)
         {
-            flex-direction: column;
-            align-items: flex-start;
+            flex-direction:   column;
+            align-items:      flex-start;
             border-radius:    6px;
             border:           solid 1px #f1f2f6;
             background-color: #f1f2f6;
@@ -107,64 +111,57 @@
             margin:           0 1rem 0 0;
             max-width:        200px;
 
-            &.onWin {
-                border:           solid 1px #f1f2f6;
-                background-color: $colorWhite;
-            }
-
-            .input {
+            .input
+            {
                 border: unset !important;
             }
         }
 
-        label 
+        label
         {
-            font-size:   10px;
-            font-family: $fontLight;
-            color:       $colorPrimaryDark;
-            white-space: nowrap;
+            font-size:    10px;
+            font-family:  $fontLight;
+            color:        $colorPrimaryDark;
+            white-space:  nowrap;
             margin-right: 1rem;
 
             @media (min-width: $screen-md)
             {
-                padding-bottom: 0.5rem; 
-                display: inline-block;
+                padding-bottom: 0.5rem;
+                display:        inline-block;
             }
         }
 
-        .input {
-            border:           1px solid #f1f2f6;
-            background-color: #f1f2f6;
-        }
-
-        &.onWin {
-            .input {
-                border:           1px solid #f1f2f6;
-                background-color: $colorWhite;
-            }
-        }
-
-        .input 
+        .input
         {
             border-radius:    6px;
             display:          inline-flex;
             justify-content:  center;
             align-items:      center;
             padding:          1rem 1rem;
+            width:            auto;
+            border:           1px solid $colorGrayLight;
+            background-color: $colorGrayLight;
 
             @media (min-width: $screen-md)
             {
                 padding: 0;
             }
-    
+
             input
             {
                 background-color: transparent;
                 border:           none;
                 font-family:      $fontBold;
                 width:            100%;
+                font-size:        16px;
+
+                @media (min-width: $screen-md)
+                {
+                    text-align: left;
+                }
             }
-    
+
             span
             {
                 color:       $colorGrayLight2;
@@ -173,7 +170,7 @@
 
                 @media (min-width: $screen-md)
                 {
-                    font-size:   1rem;
+                    font-size: 1rem;
                 }
             }
         }
@@ -181,137 +178,73 @@
 
     .buttonContainer
     {
-        width: 100%;
+        width:  100%;
+        height: 100%;
 
         @media (min-width: $screen-md)
         {
-            margin:     0 1rem;
-            max-width:  300px;
+            margin:    0 1rem;
+            max-width: 300px;
         }
 
-        .quoteButtons {
+        .quoteButtons
+        {
             display:         flex;
             align-items:     center;
             justify-content: center;
-            position:        relative;
+            height:          100%;
+            margin-top:      20px;
 
-            [type=radio] { 
-                position: absolute;
-                display: none;
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-            div {
-                width: 100%;
-            }
-
-            div:first-child {
-                margin-right: 0.5rem;
-            }
-
-            div:last-child {
-                margin-left: 0.5rem;
-            }
-
-            div:first-child label
+            @media (min-width: $screen-md)
             {
-                display:          inline-flex;
-                justify-content:  center;
-                align-items:      center;
-                flex-direction:   column;
-                padding:          1rem 1.5rem;
-                border-radius:    10px;
-                border:           solid 2.5px #acffce;
-                background-color: $colorWhite;
-                font-family:      $fontBold;
-                cursor:           pointer;
-                font-size:        18px;
-                width:            100%;
-                line-height:      1.5;
-    
-                @media (min-width: $screen-md)
-                {
-                    padding:    0.5rem 1.5rem;
-                }
-    
-                span
-                {
-                    font-family:   $fontLight;
-                    color:         $colorGrayLight2;
-                    margin-bottom: 0.25rem;
-                    font-size:     12px;
-                    display:       block;
-                }
+                margin-top: 0;
             }
-    
-            div:last-child label
+
+            .choice
             {
-                display:          inline-flex;
-                justify-content:  center;
-                align-items:      center;
-                flex-direction:   column;
-                padding:          1rem 1.5rem;
-                border-radius:    10px;
-                border:           solid 2.5px #acc4ff;
-                background-color: $colorWhite;
-                font-family:      $fontBold;
-                cursor:           pointer;
-                font-size:        18px;
-                width:            100%;
-                line-height:      1.5;
-    
-                @media (min-width: $screen-md)
-                {
-                    padding:    0.5rem 1.5rem;
-                }
-    
-                span
-                {
-                    color:         $colorGrayLight2;
-                    font-family:   $fontLight;
-                    margin-bottom: 0.25rem;
-                    font-size:     12px;
-                    display:       block;
-                }
-            }
+                width:           100%;
+                padding:         10px;
+                height:          95px;
+                justify-content: center;
 
-            div:first-child input[type=radio]:checked ~ label {
-                background-color: #acffce;
-            }
+                @media(min-width: $screen-md)
+                {
+                    padding:         15px;
+                    justify-content: unset;
+                    height:          unset;
+                }
 
-            div:last-child input[type=radio]:checked ~ label {
-                background-color: #acc4ff;
+                &:first-child
+                {
+                    margin-right: 0.5rem;
+                }
+
+                &:last-child
+                {
+                    margin-left: 0.5rem;
+                }
+
+                > span
+                {
+                    font-size: 16px;
+                }
             }
         }
     }
 
     .betButton
     {
-        display:            flex;
-        flex-direction:     column;
-        justify-content:    center;
-        align-items:        center;
-        text-align:         center;
-        font-family:        $fontBold;
-        text-transform:     uppercase;
-        background-color:   $colorYellow;
-        border:             none;
-        padding:            1rem;
-        width:              100%;
-        margin-top:         1rem;
-        border-radius:      6px;
+        font-size:        16px;
+        margin-top:       auto;
+        background-color: transparent;
 
-        @media (min-width: $screen-md)
+        @media (min-width: $screen-sm)
         {
-            margin: 0;
-            max-width: 100px;
-        }
-
-        .goToEventIcon
-        {
-            margin-bottom: 5px;
+            margin-bottom: auto;
+            margin-top:    auto;
+            font-size:     18px;
+            margin-left:   20px;
+            margin-right:  5px;
         }
     }
 }

@@ -11,6 +11,7 @@ export const BetTypes = {
     SELECT_CHOICE:    'Bet/SELECT_CHOICE',
     SET_COMMITMENT:   'Bet/SET_COMMITMENT',
     SET_OUTCOMES:     'Bet/SET_OUTCOMES',
+    FETCH_OUTCOMES:   'Bet/FETCH_OUTCOMES',
 };
 
 const create = makeActionCreator(
@@ -19,7 +20,6 @@ const create = makeActionCreator(
         eventId:         null,
         marketQuestion:  null,
         outcomes:        null,
-        startDate:       null,
         endDate:         null,
         liquidityAmount: 1,
     },
@@ -82,6 +82,14 @@ const setOutcomes = makeActionCreator(
     },
 );
 
+const fetchOutcomes = makeActionCreator(
+    BetTypes.FETCH_OUTCOMES,
+    {
+        betId:  null,
+        amount: null,
+    },
+);
+
 export const BetActions = {
     create,
     createSucceeded,
@@ -93,4 +101,5 @@ export const BetActions = {
     selectChoice,
     setCommitment,
     setOutcomes,
+    fetchOutcomes,
 };

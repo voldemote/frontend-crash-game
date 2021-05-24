@@ -48,6 +48,7 @@ const root = function* () {
         takeLatest([BetTypes.PLACE],                                     BetSagas.place),
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([BetTypes.SET_COMMITMENT],                            BetSagas.setCommitment),
+        takeLatest([BetTypes.FETCH_OUTCOMES],                            BetSagas.fetchOutcomes),
         takeLatest([UserTypes.FETCH],                                    UserSagas.fetch),
         takeLatest([UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),

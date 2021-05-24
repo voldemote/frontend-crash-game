@@ -3,6 +3,7 @@ import { EventTypes } from '../actions/event';
 import { BetTypes }   from '../actions/bet';
 import { PopupTypes } from '../actions/popup';
 import _              from 'lodash';
+import { REHYDRATE }  from 'redux-persist';
 
 const initialState = {
     selectedEventId:    null,
@@ -61,9 +62,58 @@ const setCommitment = (action, state) => {
 };
 
 const setOutcomes = (action, state) => {
+    let newState      = state;
+    const newOutcomes = action.outcomes;
+    const time        = new Date().getTime();
+
+    _.each(
+        newOutcomes,
+        (outcome, index) => {
+            const exists = _.get(newState, 'outcomes[' + index + '].values');
+
+            if (exists) {
+                newState = update(newState, {
+                    outcomes: {
+                        [index]: {
+                            values: {
+                                [outcome.amount]: {
+                                    $set: {
+                                        time,
+                                        ...outcome,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+            } else {
+                newState = update(newState, {
+                    outcomes: {
+                        $set: {
+                            [index]: {
+                                values: {
+                                    [outcome.amount]: {
+                                        time,
+                                        ...outcome,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+            }
+
+            // TODO remove old
+        },
+    );
+
+    return newState;
+};
+
+const resetOutcomes = (action, state) => {
     return update(state, {
         outcomes: {
-            $set: action.outcomes,
+            $set: [],
         },
     });
 };
@@ -76,6 +126,7 @@ export default function (state = initialState, action) {
         case BetTypes.SELECT_CHOICE:  return selectChoice(action, state);
         case BetTypes.SET_COMMITMENT: return setCommitment(action, state);
         case BetTypes.SET_OUTCOMES:   return setOutcomes(action, state);
+        case REHYDRATE:               return resetOutcomes(action, state);
         default:                      return state;
         // @formatter:on
     }
