@@ -464,7 +464,7 @@ const mapDispatchToProps = (dispatch) => {
         hidePopup: () => {
             dispatch(PopupActions.hide());
         },
-        createBet: (eventId, marketQuestion, outcomes, startDate, endDate, liquidityAmount = 1) => {
+        createBet: (eventId, marketQuestion, outcomes, startDate, endDate, liquidityAmount = 1000) => {
             dispatch(BetActions.create({ eventId, marketQuestion, outcomes, endDate, liquidityAmount }));
         },
     };
