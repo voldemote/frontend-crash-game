@@ -28,7 +28,6 @@ const initialState = {
     marketQuestion:  '',
     eventUrl:        null,
     selectedDate:    null,
-    selectedTime:    null,
     selectedEndTime: null,
     outcomes:        [{}, {}],
 };
@@ -39,7 +38,6 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const [marketQuestion, setMarketQuestion]   = useState(initialState.marketQuestion);
           const [eventUrl, setEventUrl]               = useState(initialState.eventUrl);
           const [selectedDate, setSelectedDate]       = useState(initialState.selectedDate);
-          const [selectedTime, setSelectedTime]       = useState(initialState.selectedTime);
           const [selectedEndTime, setSelectedEndTime] = useState(initialState.selectedEndTime);
           const [outcomes, setOutcomes]               = useState(initialState.outcomes);
           const isMount                               = useIsMount();
@@ -48,7 +46,6 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               setMarketQuestion(initialState.marketQuestion);
               setEventUrl(initialState.eventUrl);
               setSelectedDate(initialState.selectedDate);
-              setSelectedTime(initialState.selectedTime);
               setSelectedEndTime(initialState.selectedEndTime);
               setOutcomes(initialState.outcomes);
               setStep(initialState.step);
@@ -92,13 +89,8 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                           valid    = false;
                       }
 
-                      if (!timeIsValid()) {
-                          error[1] = 'Please enter a valid time!';
-                          valid    = false;
-                      }
-
                       if (!endTimeIsValid()) {
-                          error[2] = 'Please enter a valid time!';
+                          error[1] = 'Please enter a valid time!';
                           valid    = false;
                       }
 
@@ -126,10 +118,6 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               return selectedDate && selectedDate.isValid();
           };
 
-          const timeIsValid = () => {
-              return selectedTime && selectedTime.isValid();
-          };
-
           const endTimeIsValid = () => {
               return selectedEndTime && selectedEndTime.isValid();
           };
@@ -140,7 +128,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       validateInput();
                   }
               },
-              [eventUrl, marketQuestion, outcomes, selectedDate, selectedTime],
+              [eventUrl, marketQuestion, outcomes, selectedDate],
           );
 
           useEffect(
@@ -176,12 +164,6 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 
           const getEndDateTime = () => {
               const time = selectedEndTime;
-
-              return getDateWithTime(time);
-          };
-
-          const getStartDateTime = () => {
-              const time = selectedTime;
 
               return getDateWithTime(time);
           };
@@ -244,7 +226,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               if (validInput) {
                   if (step <= 3) {
                       if (step === 3) {
-                          createBet(eventUrl, marketQuestion, outcomes, getStartDateTime(), getEndDateTime());
+                          createBet(eventUrl, marketQuestion, outcomes, getEndDateTime());
                       }
 
                       setStep(step + 1);
@@ -330,21 +312,12 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       <div className={styles.timeContainer}>
                           <InputBox
                               type={'time'}
-                              invitationText={'Start of the stream'}
-                              value={selectedTime}
-                              setValue={setSelectedTime}
-                              placeholder={'02:30 PM'}
-                              showDeleteIcon={false}
-                              errorText={getError(1)}
-                          />
-                          <InputBox
-                              type={'time'}
                               invitationText={'End of the stream'}
                               value={selectedEndTime}
                               setValue={setSelectedEndTime}
                               placeholder={'02:30 PM'}
                               showDeleteIcon={false}
-                              errorText={getError(2)}
+                              errorText={getError(1)}
                           />
                       </div>
                   </div>
@@ -492,7 +465,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(PopupActions.hide());
         },
         createBet: (eventId, marketQuestion, outcomes, startDate, endDate, liquidityAmount = 1) => {
-            dispatch(BetActions.create({ eventId, marketQuestion, outcomes, startDate, endDate, liquidityAmount }));
+            dispatch(BetActions.create({ eventId, marketQuestion, outcomes, endDate, liquidityAmount }));
         },
     };
 };

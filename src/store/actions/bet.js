@@ -20,7 +20,6 @@ const create = makeActionCreator(
         eventId:         null,
         marketQuestion:  null,
         outcomes:        null,
-        startDate:       null,
         endDate:         null,
         liquidityAmount: 1,
     },

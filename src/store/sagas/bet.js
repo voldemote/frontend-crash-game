@@ -12,7 +12,6 @@ const create = function* (action) {
     const marketQuestion = action.marketQuestion;
     const betOne         = action.outcomes[0].value;
     const betTwo         = action.outcomes[1].value;
-    const startDate      = action.startDate;
     const endDate        = action.endDate;
     const liquidity      = action.liquidityAmount;
 
@@ -22,7 +21,6 @@ const create = function* (action) {
         marketQuestion,
         betOne,
         betTwo,
-        startDate,
         endDate,
         liquidity,
     );

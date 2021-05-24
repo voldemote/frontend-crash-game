@@ -58,27 +58,6 @@
 
         .timeContainer
         {
-            display:         flex;
-            flex-direction:  column;
-            justify-content: space-between;
-
-            @media(min-width: $screen-sm)
-            {
-                flex-direction: row;
-
-                > div
-                {
-                    &:first-child
-                    {
-                        margin-right: 10px;
-                    }
-
-                    &:last-child
-                    {
-                        margin-left: 10px;
-                    }
-                }
-            }
         }
     }
 

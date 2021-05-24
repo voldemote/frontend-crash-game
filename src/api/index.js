@@ -68,7 +68,7 @@ const getUser = (userId) => {
     });
 };
 
-const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate, liquidityAmount) => {
+const createBet = (eventId, marketQuestion, betOne, betTwo, endDate, liquidityAmount) => {
     return Api.post(
         ApiUrls.API_BET_CREATE,
         {
@@ -76,7 +76,6 @@ const createBet = (eventId, marketQuestion, betOne, betTwo, startDate, endDate, 
             marketQuestion,
             betOne,
             betTwo,
-            startDate,
             endDate,
             liquidityAmount,
         },
