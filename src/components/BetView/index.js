@@ -15,7 +15,7 @@ import TokenNumberInput    from '../TokenNumberInput';
 import TokenValueSelector  from '../TokenValueSelector';
 import { BetActions }      from '../../store/actions/bet';
 
-const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, createBet, setChoice, setCommitment, placeBet }) => {
+const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, createBet, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
           const isMount = useIsMount();
 
           const validateInput = () => {
@@ -36,10 +36,16 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
               () => {
                   if (!isMount && !closed) {
                       validateInput();
+                  } else if (isMount) {
+                      _.each(getDefaultTokenSelection(), tokenAmount => fetchOutcomes(bet._id, tokenAmount));
                   }
               },
               [choice, commitment],
           );
+
+          const getDefaultTokenSelection = () => {
+              return [25, 50, 100, 150, 200, 300];
+          };
 
           const onConfirm = () => {
               const validInput = validateInput();
@@ -61,7 +67,13 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
 
           const getOutcome = (index) => {
               if (outcomes) {
-                  return outcomes[index];
+                  const outcomeForValue = _.get(outcomes, commitment, {});
+
+                  if (index === 0) {
+                      return _.get(outcomeForValue, 'outcomeOne');
+                  } else {
+                      return _.get(outcomeForValue, 'outcomeTwo');
+                  }
               }
 
               return null;
@@ -101,7 +113,7 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
                       />
                       <TokenValueSelector
                           className={styles.tokenValueSelector}
-                          values={[25, 50, 100, 150, 200, 300]}
+                          values={getDefaultTokenSelection()}
                           onSelect={onTokenSelect}
                       />
                       <div className={styles.buttonContainer}>
@@ -134,25 +146,37 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
 ;
 
 const mapStateToProps = (state) => {
-    const event = _.find(
+    const event  = _.find(
         state.event.events,
         {
             _id: state.bet.selectedEventId,
         },
     );
-    const bet   = _.find(
+    const bet    = _.find(
         event ? event.bets : [],
         {
             _id: state.bet.selectedBetId,
         },
     );
+    let outcomes = [];
+
+    if (bet) {
+        outcomes = _.get(
+            state.bet.outcomes,
+            bet._id,
+        );
+
+        if (outcomes) {
+            outcomes = _.get(outcomes, 'values', {});
+        }
+    }
 
     return {
         event:      event,
         bet:        bet,
         choice:     state.bet.selectedChoice,
         commitment: state.bet.selectedCommitment,
-        outcomes:   state.bet.outcomes,
+        outcomes:   outcomes,
         events:     state.event.events,
     };
 };
@@ -167,6 +191,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setCommitment: (commitment) => {
             dispatch(BetActions.setCommitment({ commitment }));
+        },
+        fetchOutcomes: (betId, amount) => {
+            dispatch(BetActions.fetchOutcomes({ betId, amount }));
         },
         placeBet:      (betId, amount, isOutcomeOne) => {
             dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
