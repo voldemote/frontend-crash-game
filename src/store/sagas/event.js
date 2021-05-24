@@ -34,7 +34,7 @@ const fetchAllSucceeded = function* (action) {
             const bets = event.bets;
 
             if (!_.isEmpty(bets)) {
-                for (const bet of events) {
+                for (const bet of bets) {
                     const userId = bet.creator;
 
                     if (userId) {
