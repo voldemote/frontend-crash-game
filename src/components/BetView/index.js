@@ -1,22 +1,105 @@
 import _                   from 'lodash';
-import classNames          from 'classnames';
-import React               from 'react';
-import styles              from './styles.module.scss';
-import TimeLeftCounter     from '../../components/TimeLeftCounter';
-import { connect }         from 'react-redux';
-import { PopupActions }    from '../../store/actions/popup';
-import { useEffect }       from 'react';
-import { useIsMount }      from '../hoc/useIsMount';
-import HotBetBadge         from '../HotBetBadge';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
 import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
+import classNames          from 'classnames';
+import HotBetBadge         from '../HotBetBadge';
+import React               from 'react';
+import styles              from './styles.module.scss';
+import TimeLeftCounter     from '../../components/TimeLeftCounter';
 import TokenNumberInput    from '../TokenNumberInput';
 import TokenValueSelector  from '../TokenValueSelector';
 import { BetActions }      from '../../store/actions/bet';
+import { connect }         from 'react-redux';
+import { useEffect }       from 'react';
+import { useIsMount }      from '../hoc/useIsMount';
+import { useParams }       from 'react-router-dom';
 
-const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, createBet, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
-          const isMount = useIsMount();
+const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
+          const params   = useParams();
+          const bet      = (
+              () => {
+                  let currentBetId = params.betId;
+
+                  if (!currentBetId) {
+                      currentBetId = selectedBetId;
+                  }
+
+                  let eventId = params.eventId;
+                  let event   = null;
+
+                  if (eventId) {
+                      event = _.find(
+                          events,
+                          {
+                              _id: eventId,
+                          },
+                      );
+                  } else {
+                      event = _.head(
+                          _.filter(
+                              events,
+                              {
+                                  bets: [
+                                      {
+                                          _id: currentBetId,
+                                      },
+                                  ],
+                              },
+                          ),
+                      );
+                  }
+
+                  const bets = _.get(event, 'bets', []);
+                  let bet    = _.find(
+                      bets,
+                      {
+                          _id: currentBetId,
+                      },
+                  );
+
+                  if (!bet) {
+                      bet = _.head(bets);
+                  }
+
+                  return bet;
+              }
+          )();
+          const event    = (
+              () => {
+                  let eventId = _.get(bet, 'event');
+
+                  if (!eventId) {
+                      eventId = params.eventId;
+                  }
+
+                  return _.find(
+                      events,
+                      {
+                          _id: eventId,
+                      },
+                  );
+              }
+          )();
+          const outcomes = (
+              () => {
+                  let outcomes = [];
+
+                  if (bet) {
+                      outcomes = _.get(
+                          rawOutcomes,
+                          bet._id,
+                      );
+
+                      if (outcomes) {
+                          outcomes = _.get(outcomes, 'values', {});
+                      }
+                  }
+
+                  return outcomes;
+              }
+          )();
+          const isMount  = useIsMount();
 
           const validateInput = () => {
               let valid = true;
@@ -36,14 +119,22 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
               () => {
                   if (!isMount && !closed) {
                       validateInput();
-                  } else if (isMount) {
-                      _.each(
-                          getDefaultTokenSelection(),
-                          tokenAmount => fetchOutcomes(_.get(bet, '_id'), tokenAmount),
-                      );
                   }
               },
               [choice, commitment],
+          );
+          useEffect(
+              () => {
+                  const betId = _.get(bet, '_id');
+
+                  if (!_.isEmpty(betId)) {
+                      _.each(
+                          getDefaultTokenSelection(),
+                          tokenAmount => fetchOutcomes(betId, tokenAmount),
+                      );
+                  }
+              },
+              [bet],
           );
 
           const getDefaultTokenSelection = () => {
@@ -65,7 +156,7 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
           };
 
           const onTokenSelect = (number) => {
-              setCommitment(number);
+              setCommitment(number, _.get(bet, '_id'));
           };
 
           const getOutcome = (index) => {
@@ -139,61 +230,36 @@ const BetView = ({ hidePopup, closed, event, bet, choice, outcomes, commitment, 
                   >
                       Bet!
                   </Button>
-                  <div className={styles.timeLeftCounterContainer}>
-                      <span>Event ends in:</span>
-                      <TimeLeftCounter endDate={event.date} />
-                  </div>
+                  {
+                      showEventEnd && (
+                          <div className={styles.timeLeftCounterContainer}>
+                              <span>Event ends in:</span>
+                              <TimeLeftCounter endDate={event.date} />
+                          </div>
+                      )
+                  }
               </div>
           );
       }
 ;
 
 const mapStateToProps = (state) => {
-    const event  = _.find(
-        state.event.events,
-        {
-            _id: state.bet.selectedEventId,
-        },
-    );
-    const bet    = _.find(
-        event ? event.bets : [],
-        {
-            _id: state.bet.selectedBetId,
-        },
-    );
-    let outcomes = [];
-
-    if (bet) {
-        outcomes = _.get(
-            state.bet.outcomes,
-            bet._id,
-        );
-
-        if (outcomes) {
-            outcomes = _.get(outcomes, 'values', {});
-        }
-    }
-
     return {
-        event:      event,
-        bet:        bet,
-        choice:     state.bet.selectedChoice,
-        commitment: state.bet.selectedCommitment,
-        outcomes:   outcomes,
-        events:     state.event.events,
+        events:        state.event.events,
+        selectedBetId: state.bet.selectedBetId,
+        rawOutcomes:   state.bet.outcomes,
+        choice:        state.bet.selectedChoice,
+        commitment:    state.bet.selectedCommitment,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        hidePopup:     () => {
-            dispatch(PopupActions.hide());
-        },
         setChoice:     (choice) => {
             dispatch(BetActions.selectChoice({ choice }));
         },
-        setCommitment: (commitment) => {
-            dispatch(BetActions.setCommitment({ commitment }));
+        setCommitment: (commitment, betId) => {
+            dispatch(BetActions.setCommitment({ commitment, betId }));
         },
         fetchOutcomes: (betId, amount) => {
             dispatch(BetActions.fetchOutcomes({ betId, amount }));

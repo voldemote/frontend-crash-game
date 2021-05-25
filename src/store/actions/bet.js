@@ -72,6 +72,7 @@ const setCommitment = makeActionCreator(
     BetTypes.SET_COMMITMENT,
     {
         commitment: null,
+        betId:      null,
     },
 );
 

@@ -1,27 +1,27 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import _                 from 'lodash';
-import BetPlaceContainer from 'components/BetPlaceContainer';
-import Chat              from 'components/Chat';
-import darkModeLogo      from '../../data/images/logo-darkmode.svg';
-import FixedIconButton   from '../../components/FixedIconButton';
-import Icon              from '../../components/Icon';
-import IconTheme         from '../../components/Icon/IconTheme';
-import IconType          from '../../components/Icon/IconType';
-import Link              from '../../components/Link';
-import LiveBadge         from 'components/LiveBadge';
-import PopupTheme        from '../../components/Popup/PopupTheme';
-import RelatedEventCard  from 'components/RelatedEventCard';
-import Routes            from '../../constants/Routes';
-import styles            from './styles.module.scss';
-import TimeLeftCounter   from 'components/TimeLeftCounter';
-import ViewerBadge       from 'components/ViewerBadge';
-import { Carousel }      from 'react-responsive-carousel';
-import { connect }       from 'react-redux';
-import { PopupActions }  from '../../store/actions/popup';
-import { useParams }     from 'react-router-dom';
-import { useSelector }   from 'react-redux';
-import { useState }      from 'react';
-import TwitchEmbedVideo  from '../../components/TwitchEmbedVideo';
+import _                from 'lodash';
+import Chat             from 'components/Chat';
+import darkModeLogo     from '../../data/images/logo-darkmode.svg';
+import FixedIconButton  from '../../components/FixedIconButton';
+import Icon             from '../../components/Icon';
+import IconTheme        from '../../components/Icon/IconTheme';
+import IconType         from '../../components/Icon/IconType';
+import Link             from '../../components/Link';
+import LiveBadge        from 'components/LiveBadge';
+import PopupTheme       from '../../components/Popup/PopupTheme';
+import RelatedEventCard from 'components/RelatedEventCard';
+import Routes           from '../../constants/Routes';
+import styles           from './styles.module.scss';
+import TimeLeftCounter  from 'components/TimeLeftCounter';
+import ViewerBadge      from 'components/ViewerBadge';
+import { Carousel }     from 'react-responsive-carousel';
+import { connect }      from 'react-redux';
+import { PopupActions } from '../../store/actions/popup';
+import { useParams }    from 'react-router-dom';
+import { useSelector }  from 'react-redux';
+import { useState }     from 'react';
+import TwitchEmbedVideo from '../../components/TwitchEmbedVideo';
+import BetView          from '../../components/BetView';
 
 const Bet = ({ showPopup }) => {
     const { eventId, betId }              = useParams();
@@ -71,7 +71,8 @@ const Bet = ({ showPopup }) => {
                         <Link
                             to={Routes.home}
                             className={styles.arrowBack}
-                        ></Link>
+                        >
+                        </Link>
                         <div className={styles.headline}>
                             <h1>RedBull Rampage 2021</h1>
                             <div>
@@ -82,17 +83,13 @@ const Bet = ({ showPopup }) => {
                     </div>
                     <div style={{ height: '100%', flex: 'initial' }}>
                         <TwitchEmbedVideo
-                            width={'100%'}
-                            targetClass={styles.twitchStream}
                             video={'https://www.twitch.tv/litkillah'}
                             channel={'litkillah'}
-                            allowFullscreen={true}
-                            autoplay={true}
-                            theme={'dark'}
-                            muted={false}
                         />
                         <div className={styles.timeLeft}>
-                            <span>Event ends in:</span>
+                            <span>
+                                Event ends in:
+                            </span>
                             <TimeLeftCounter endDate={new Date(new Date().getTime() + 12 * 60000)} />
                         </div>
                     </div>
@@ -119,14 +116,14 @@ const Bet = ({ showPopup }) => {
                                 <Chat />
                             </div>
                             <div className={styles.carouselSlide}>
-                                <BetPlaceContainer />
+                                <BetView closed={false} />
                             </div>
                             <div className={styles.carouselSlide}>
                                 <div
                                     className={styles.headline}
                                     style={{ flexDirection: 'row', display: 'flex', marginBottom: '1rem', alignItems: 'center' }}
                                 >
-                                    <h2 style={{ fontSize: '16px', marginRight: '0.5rem' }}>🚀 Related Events</h2>
+                                    <h2 style={{ fontSize: '16px', marginRight: '0.5rem' }}>🚀 Related Bets</h2>
                                     <LiveBadge />
                                 </div>
                                 <div>
@@ -153,11 +150,11 @@ const Bet = ({ showPopup }) => {
                                 alt="Wallfair"
                             />
                         </div>
-                        <BetPlaceContainer />
+                        <BetView closed={false} />
                     </div>
                     <div className={styles.relatedEvents}>
                         <div className={styles.headline}>
-                            <h2>🚀 Related Events</h2>
+                            <h2>🚀 Related Bets</h2>
                             <LiveBadge />
                         </div>
                         <Carousel
@@ -231,7 +228,6 @@ const Bet = ({ showPopup }) => {
             {renderEventCreationButton()}
             <button
                 className={styles.fixedChatButton}
-                onClick={true}
             >
                 <Icon
                     iconType={IconType.chat}

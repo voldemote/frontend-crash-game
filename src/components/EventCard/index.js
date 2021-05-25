@@ -4,7 +4,7 @@ import LiveBadge   from '../LiveBadge';
 import ViewerBadge from '../ViewerBadge';
 import Tags        from '../Tags';
 
-const EventCard = ({ title, organizer, image, live, viewers, tags }) => {
+const EventCard = ({ onClick, title, organizer, image, live, viewers, tags }) => {
     const getEventCardStyle = () => {
         return {
             backgroundImage: 'url("' + image + '")',
@@ -13,6 +13,7 @@ const EventCard = ({ title, organizer, image, live, viewers, tags }) => {
     return (
         <div
             className={styles.eventCard}
+            onClick={onClick}
         >
             <div
                 className={styles.eventCardBackgroundBlur}

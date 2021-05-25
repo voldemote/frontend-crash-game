@@ -3,7 +3,7 @@ import classNames            from 'classnames';
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video';
 import styles                from './styles.module.scss';
 
-const TwitchEmbedVideo = ({ className, video, channel, muted, allowFullscreen, autoPlay  }) => {
+const TwitchEmbedVideo = ({ className, video, channel, muted = false, allowFullscreen = true, autoPlay = true }) => {
     return (
         <ReactTwitchEmbedVideo
             targetClass={classNames(

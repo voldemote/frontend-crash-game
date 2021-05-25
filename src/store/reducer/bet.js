@@ -40,6 +40,7 @@ const selectChoice = (action, state) => {
 
 const setCommitment = (action, state) => {
     const commitment = action.commitment;
+    const betId = action.betId;
 
     if (
         _.isEmpty(commitment) ||
@@ -53,6 +54,9 @@ const setCommitment = (action, state) => {
     ) {
         return update(state, {
             selectedCommitment: {
+                $set: action.commitment,
+            },
+            selectedEventId: {
                 $set: action.commitment,
             },
         });

@@ -59,8 +59,12 @@ const place = function* (action) {
 };
 
 const setCommitment = function* (action) {
-    const betId  = yield select(state => state.bet.selectedBetId);
+    let betId    = action.betId;
     const amount = yield select(state => state.bet.selectedCommitment);
+
+    if (!betId) {
+        betId = yield select(state => state.bet.selectedBetId);
+    }
 
     yield put(BetActions.fetchOutcomes({
         betId,
