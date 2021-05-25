@@ -30,6 +30,7 @@
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-twitch-embed-video": "^3.0.0",
     "react-verification-code-input": "^1.2.9",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",

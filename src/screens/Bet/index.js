@@ -1,32 +1,52 @@
-import darkModeLogo      from '../../data/images/logo-darkmode.svg';
-import { useState }      from 'react';
-import Link              from '../../components/Link';
-import Routes            from '../../constants/Routes';
-import { Carousel }      from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import styles            from './styles.module.scss';
-import LiveBadge         from 'components/LiveBadge';
-import ViewerBadge       from 'components/ViewerBadge';
-import Chat              from 'components/Chat';
-import RelatedEventCard  from 'components/RelatedEventCard';
-import TimeLeftCounter   from 'components/TimeLeftCounter';
-import FixedIconButton   from '../../components/FixedIconButton';
-import IconType          from '../../components/Icon/IconType';
-import { connect }       from 'react-redux';
-import { PopupActions }  from '../../store/actions/popup';
-import PopupTheme        from '../../components/Popup/PopupTheme';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import _                 from 'lodash';
 import BetPlaceContainer from 'components/BetPlaceContainer';
+import Chat              from 'components/Chat';
+import darkModeLogo      from '../../data/images/logo-darkmode.svg';
+import FixedIconButton   from '../../components/FixedIconButton';
 import Icon              from '../../components/Icon';
 import IconTheme         from '../../components/Icon/IconTheme';
+import IconType          from '../../components/Icon/IconType';
+import Link              from '../../components/Link';
+import LiveBadge         from 'components/LiveBadge';
+import PopupTheme        from '../../components/Popup/PopupTheme';
+import RelatedEventCard  from 'components/RelatedEventCard';
+import Routes            from '../../constants/Routes';
+import styles            from './styles.module.scss';
+import TimeLeftCounter   from 'components/TimeLeftCounter';
+import ViewerBadge       from 'components/ViewerBadge';
+import { Carousel }      from 'react-responsive-carousel';
+import { connect }       from 'react-redux';
+import { PopupActions }  from '../../store/actions/popup';
+import { useParams }     from 'react-router-dom';
+import { useSelector }   from 'react-redux';
+import { useState }      from 'react';
+import TwitchEmbedVideo  from '../../components/TwitchEmbedVideo';
 
-const Bet = ({ bet, showPopup }) => {
-
-    const exampleEventImage = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
+const Bet = ({ showPopup }) => {
+    const { eventId, betId }              = useParams();
+    const exampleEventImage               = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
     const [currentSlide, setCurrentSlide] = useState(0);
+    const event                           = useSelector(
+        (state) => _.find(
+            state.event.events,
+            {
+                _id: eventId,
+            },
+        ),
+    );
+    const bet                             = useSelector(
+        () => _.find(
+            event ? event.bets : [],
+            {
+                _id: betId,
+            },
+        ),
+    );
 
     const updateCurrentSlide = (index) => {
         if (currentSlide !== index) {
-            setCurrentSlide(index)
+            setCurrentSlide(index);
         }
     };
 
@@ -48,7 +68,10 @@ const Bet = ({ bet, showPopup }) => {
             <div className={styles.row}>
                 <div className={styles.columnLeft}>
                     <div className={styles.headlineContainer}>
-                        <Link to={Routes.home} className={styles.arrowBack}></Link>
+                        <Link
+                            to={Routes.home}
+                            className={styles.arrowBack}
+                        ></Link>
                         <div className={styles.headline}>
                             <h1>RedBull Rampage 2021</h1>
                             <div>
@@ -57,8 +80,17 @@ const Bet = ({ bet, showPopup }) => {
                             </div>
                         </div>
                     </div>
-                    <div style={{ height: "100%", flex: "initial" }}>
-                        <iframe src="https://player.twitch.tv/?channel=pietsmiet&parent=www.example.com" className={styles.twitchStream} frameborder="0" allowfullscreen="true" scrolling="no" width="100%"></iframe>
+                    <div style={{ height: '100%', flex: 'initial' }}>
+                        <TwitchEmbedVideo
+                            width={'100%'}
+                            targetClass={styles.twitchStream}
+                            video={'https://www.twitch.tv/litkillah'}
+                            channel={'litkillah'}
+                            allowFullscreen={true}
+                            autoplay={true}
+                            theme={'dark'}
+                            muted={false}
+                        />
                         <div className={styles.timeLeft}>
                             <span>Event ends in:</span>
                             <TimeLeftCounter endDate={new Date(new Date().getTime() + 12 * 60000)} />
@@ -69,17 +101,19 @@ const Bet = ({ bet, showPopup }) => {
                     </div>
 
                     <div className={styles.mobileCarousel}>
-                        <Carousel 
-                            emulateTouch={true} 
-                            infiniteLoop={false} 
-                            showArrows={false} 
-                            autoPlay={false} 
-                            showStatus={false} 
-                            showIndicators={false} 
-                            showThumbs={false} 
+                        <Carousel
+                            emulateTouch={true}
+                            infiniteLoop={false}
+                            showArrows={false}
+                            autoPlay={false}
+                            showStatus={false}
+                            showIndicators={false}
+                            showThumbs={false}
                             dynamicHeight={false}
                             selectedItem={currentSlide}
-                            onChange={(index) => { updateCurrentSlide(index) }}
+                            onChange={(index) => {
+                                updateCurrentSlide(index);
+                            }}
                         >
                             <div className={styles.carouselSlide}>
                                 <Chat />
@@ -88,22 +122,36 @@ const Bet = ({ bet, showPopup }) => {
                                 <BetPlaceContainer />
                             </div>
                             <div className={styles.carouselSlide}>
-                                <div className={styles.headline} style={{ flexDirection: "row", display: "flex", marginBottom: "1rem", alignItems: "center" }}>
-                                    <h2 style={{ fontSize: "16px", marginRight: "0.5rem" }}>🚀 Related Events</h2>
+                                <div
+                                    className={styles.headline}
+                                    style={{ flexDirection: 'row', display: 'flex', marginBottom: '1rem', alignItems: 'center' }}
+                                >
+                                    <h2 style={{ fontSize: '16px', marginRight: '0.5rem' }}>🚀 Related Events</h2>
                                     <LiveBadge />
                                 </div>
                                 <div>
-                                    <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
-                                    <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                    <RelatedEventCard
+                                        title={'Who will win first round?'}
+                                        organizer={'eSports Alliance JIB PUBG'}
+                                        image={exampleEventImage}
+                                    />
+                                    <RelatedEventCard
+                                        title={'Who will win first round?'}
+                                        organizer={'eSports Alliance JIB PUBG'}
+                                        image={exampleEventImage}
+                                    />
                                 </div>
                             </div>
                         </Carousel>
                     </div>
                 </div>
                 <div className={styles.columnRight}>
-                    <div style={{ width: "100%", display: "flex", alignItems: "flex-end", flexDirection: "column", height: "100%" }}>
+                    <div style={{ width: '100%', display: 'flex', alignItems: 'flex-end', flexDirection: 'column', height: '100%' }}>
                         <div className={styles.logo}>
-                            <img src={darkModeLogo} alt="Wallfair" />
+                            <img
+                                src={darkModeLogo}
+                                alt="Wallfair"
+                            />
                         </div>
                         <BetPlaceContainer />
                     </div>
@@ -112,18 +160,47 @@ const Bet = ({ bet, showPopup }) => {
                             <h2>🚀 Related Events</h2>
                             <LiveBadge />
                         </div>
-                        <Carousel emulateTouch={true} infiniteLoop={true} showArrows={false} showStatus={false}>
+                        <Carousel
+                            emulateTouch={true}
+                            infiniteLoop={true}
+                            showArrows={false}
+                            showStatus={false}
+                        >
                             <div className={styles.carouselSlide}>
-                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
-                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                <RelatedEventCard
+                                    title={'Who will win first round?'}
+                                    organizer={'eSports Alliance JIB PUBG'}
+                                    image={exampleEventImage}
+                                />
+                                <RelatedEventCard
+                                    title={'Who will win first round?'}
+                                    organizer={'eSports Alliance JIB PUBG'}
+                                    image={exampleEventImage}
+                                />
                             </div>
                             <div className={styles.carouselSlide}>
-                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
-                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                <RelatedEventCard
+                                    title={'Who will win first round?'}
+                                    organizer={'eSports Alliance JIB PUBG'}
+                                    image={exampleEventImage}
+                                />
+                                <RelatedEventCard
+                                    title={'Who will win first round?'}
+                                    organizer={'eSports Alliance JIB PUBG'}
+                                    image={exampleEventImage}
+                                />
                             </div>
                             <div className={styles.carouselSlide}>
-                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
-                                <RelatedEventCard title={'Who will win first round?'} organizer={'eSports Alliance JIB PUBG'} image={exampleEventImage} />
+                                <RelatedEventCard
+                                    title={'Who will win first round?'}
+                                    organizer={'eSports Alliance JIB PUBG'}
+                                    image={exampleEventImage}
+                                />
+                                <RelatedEventCard
+                                    title={'Who will win first round?'}
+                                    organizer={'eSports Alliance JIB PUBG'}
+                                    image={exampleEventImage}
+                                />
                             </div>
                         </Carousel>
                     </div>
@@ -131,14 +208,35 @@ const Bet = ({ bet, showPopup }) => {
             </div>
             <div className={styles.mobileMenu}>
                 <div className={styles.indicators}>
-                    <span className={ currentSlide === 0 ? styles.active : '' } onClick={() => { setCurrentSlide(0) }}></span>
-                    <span className={ currentSlide === 1 ? styles.active : '' } onClick={() => { setCurrentSlide(1) }}></span>
-                    <span className={ currentSlide === 2 ? styles.active : '' } onClick={() => { setCurrentSlide(2) }}></span>
+                    <span
+                        className={currentSlide === 0 ? styles.active : ''}
+                        onClick={() => {
+                            setCurrentSlide(0);
+                        }}
+                    ></span>
+                    <span
+                        className={currentSlide === 1 ? styles.active : ''}
+                        onClick={() => {
+                            setCurrentSlide(1);
+                        }}
+                    ></span>
+                    <span
+                        className={currentSlide === 2 ? styles.active : ''}
+                        onClick={() => {
+                            setCurrentSlide(2);
+                        }}
+                    ></span>
                 </div>
             </div>
             {renderEventCreationButton()}
-            <button className={styles.fixedChatButton} onClick={true}>
-                <Icon iconType={IconType.chat} iconTheme={IconTheme.primary} />
+            <button
+                className={styles.fixedChatButton}
+                onClick={true}
+            >
+                <Icon
+                    iconType={IconType.chat}
+                    iconTheme={IconTheme.primary}
+                />
             </button>
         </div>
     );
