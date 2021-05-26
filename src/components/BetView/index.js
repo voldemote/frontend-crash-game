@@ -149,7 +149,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
               const validInput = validateInput();
 
               if (validInput) {
-                  placeBet(bet._id, commitment, choice === 0);
+                  placeBet(betId, commitment, choice === 0);
               }
           };
 
@@ -160,7 +160,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
           };
 
           const onTokenSelect = (number) => {
-              setCommitment(number, _.get(bet, '_id'));
+              setCommitment(number, betId);
           };
 
           const getOutcome = (index) => {
