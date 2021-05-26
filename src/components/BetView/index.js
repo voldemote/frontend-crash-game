@@ -7,6 +7,7 @@ import HotBetBadge         from '../HotBetBadge';
 import React               from 'react';
 import styles              from './styles.module.scss';
 import TimeLeftCounter     from '../../components/TimeLeftCounter';
+import HighlightType       from '../../components/Highlight/HighlightType';
 import TokenNumberInput    from '../TokenNumberInput';
 import TokenValueSelector  from '../TokenValueSelector';
 import { BetActions }      from '../../store/actions/bet';
@@ -231,6 +232,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                           styles.betButton,
                       )}
                       onClick={onConfirm}
+                      highlightType={HighlightType.highlightHomeCtaBet}
                   >
                       Bet!
                   </Button>

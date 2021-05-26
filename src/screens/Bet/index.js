@@ -179,8 +179,8 @@ const Bet = ({ showPopup }) => {
                           </div>
                           <div style={{ height: '100%', flex: 'initial' }}>
                               <TwitchEmbedVideo
-                                  video={'https://www.twitch.tv/noway4u_sir'}
-                                  channel={'noway4u_sir'}
+                                  video={'https://www.twitch.tv/esl_csgo'}
+                                  channel={'esl_csgo'}
                               />
                               <div className={styles.timeLeft}>
                                   <span>

@@ -21,6 +21,7 @@ import { useEffect }         from 'react';
 import { useIsMount }        from '../hoc/useIsMount';
 import { useState }          from 'react';
 import { BetActions }        from '../../store/actions/bet';
+import HighlightType         from '../Highlight/HighlightType';
 
 const initialState = {
     step:            0,
@@ -429,6 +430,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                   headlineClassName={styles.stepsHeadline}
                   headline={getHeadline()}
                   buttonContent={getButtonContent()}
+                  highlightType={HighlightType.highlightHomeCtaBet}
                   cancelButtonContent={getCancelButtonContent()}
                   onCancelButtonClick={onCancel}
                   onButtonClick={onConfirm}

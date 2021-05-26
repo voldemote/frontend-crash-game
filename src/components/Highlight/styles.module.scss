@@ -1,0 +1,17 @@
+@import '../../styles/all';
+
+.highlight
+{
+    background-size: contain;
+    width:           100%;
+    height:          auto;
+    display:         flex;
+    justify-content: center;
+    align-items:     center;
+    position:        absolute;
+
+    > svg
+    {
+        position: absolute;
+    }
+}
