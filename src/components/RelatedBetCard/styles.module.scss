@@ -1,8 +1,8 @@
 @import '../../styles/all';
 
-.relatedEventCard
+.relatedBetCard
 {
-    width: 100%;
+    width:           100%;
     border-radius:   10px;
     font-family:     $fontLight;
     color:           $colorWhite;
@@ -41,15 +41,15 @@
     .title
     {
         font-family: $fontBold;
-        display: flex;
+        display:     flex;
     }
 
     .organizer
     {
-        display: flex;
-        font-size: 12px;
+        display:       flex;
+        font-size:     12px;
         margin-bottom: 0.5rem;
-        color: #b0b0b0;
-        opacity: 0.6;
+        color:         #b0b0b0;
+        opacity:       0.6;
     }
 }

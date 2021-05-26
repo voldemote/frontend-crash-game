@@ -70,7 +70,7 @@ const setOutcomes = (action, state) => {
     const newOutcomes = action.outcomes;
     const time        = new Date().getTime();
 
-    _.each(
+    _.forEach(
         newOutcomes,
         (outcome, index) => {
             const exists = _.get(newState, 'outcomes[' + index + '].values');

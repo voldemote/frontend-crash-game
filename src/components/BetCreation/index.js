@@ -72,7 +72,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 
                       break;
                   case 2:
-                      _.each(
+                      _.forEach(
                           outcomes,
                           function (outcome, index) {
                               if (!outcome.value) {

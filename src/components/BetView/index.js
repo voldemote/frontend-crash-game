@@ -14,6 +14,7 @@ import { connect }         from 'react-redux';
 import { useEffect }       from 'react';
 import { useIsMount }      from '../hoc/useIsMount';
 import { useParams }       from 'react-router-dom';
+import SleepHelper         from '../../helper/Sleep';
 
 const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
           const params   = useParams();
@@ -65,6 +66,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   return bet;
               }
           )();
+          const betId    = _.get(bet, '_id');
           const event    = (
               () => {
                   let eventId = _.get(bet, 'event');
@@ -115,6 +117,19 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
               return valid;
           };
 
+          function getDefaultTokenSelection () {
+              return [25, 50, 100, 150, 200, 300];
+          }
+
+          async function fetchDefaultTokenSelection () {
+              if (!_.isEmpty(betId)) {
+                  for (const tokenAmount of getDefaultTokenSelection()) {
+                      fetchOutcomes(betId, tokenAmount);
+                      await SleepHelper.sleep(100);
+                  }
+              }
+          }
+
           useEffect(
               () => {
                   if (!isMount && !closed) {
@@ -125,21 +140,10 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
           );
           useEffect(
               () => {
-                  const betId = _.get(bet, '_id');
-
-                  if (!_.isEmpty(betId)) {
-                      _.each(
-                          getDefaultTokenSelection(),
-                          tokenAmount => fetchOutcomes(betId, tokenAmount),
-                      );
-                  }
+                  fetchDefaultTokenSelection();
               },
-              [bet],
+              [betId],
           );
-
-          const getDefaultTokenSelection = () => {
-              return [25, 50, 100, 150, 200, 300];
-          };
 
           const onConfirm = () => {
               const validInput = validateInput();

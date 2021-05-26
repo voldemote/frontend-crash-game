@@ -174,7 +174,7 @@
         }
     }
 
-    .relatedEvents
+    .relatedBets
     {
         margin-top: 2rem;
 
@@ -191,6 +191,11 @@
                 font-size:    20px;
                 margin-right: 1rem;
             }
+        }
+
+        .relatedBetsCarousel
+        {
+            height: 100%;
         }
     }
 
@@ -260,6 +265,7 @@
 
     .carouselSlide
     {
+        height: 100%;
         margin: 0 0.25rem;
     }
 
