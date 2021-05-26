@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Shape</title>
-    <g id="🌎-00-Mobile-Menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="wallfair-home-mobile-menu-01" transform="translate(-342.000000, -255.000000)" stroke="#FFFFFF" stroke-width="1.2">
-            <g id="Group-7" transform="translate(188.000000, 184.000000)">
-                <path d="M156.53846,71.9 L164.59998,71.9 M164.59998,71.9 L164.59998,79.96152 M164.59998,71.9 L154.99998,81.5" id="Shape"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M2.538.9H10.6m0 0v8.062M10.6.9L1 10.5" stroke="#FFF" stroke-width="1.2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>
