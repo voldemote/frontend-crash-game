@@ -1,60 +1,69 @@
 @import '../../styles/all';
 
-.chatContainer {
+.chatContainer
+{
     padding-top: 1rem;
-    height: 100%;
+    height:      100%;
 
-    @media (max-width: $screen-md) {
+    @media (max-width: $screen-md)
+    {
         padding-top: 0;
     }
 }
 
-.chat {
-    height: 100%;
-    display: flex;
+.chat
+{
+    height:         100%;
+    display:        flex;
     flex-direction: column;
-    align-items: flex-start;
-    overflow-y: scroll;
-    margin: 1rem 0;
-    position: relative;
-    max-height: 25vh;
+    align-items:    flex-start;
+    overflow-y:     scroll;
+    margin:         1rem 0;
+    position:       relative;
+    max-height:     25vh;
 
-    &::-webkit-scrollbar {
-        width: 0;  /* Remove scrollbar space */
-        background: transparent;  /* Optional: just make scrollbar invisible */
+    &::-webkit-scrollbar
+    {
+        width:      0; /* Remove scrollbar space */
+        background: transparent; /* Optional: just make scrollbar invisible */
     }
 
-    @media (max-width: $screen-md) {
+    @media (max-width: $screen-md)
+    {
         max-height: 35vh;
     }
 }
 
-.messageInput {
+.messageInput
+{
     background-color: $colorWhite;
-    color: $colorPrimaryDark;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 1rem 1rem 3rem;
-    border-radius: 10px;
+    color:            $colorPrimaryDark;
+    display:          flex;
+    justify-content:  center;
+    align-items:      center;
+    padding:          1rem 1rem 1rem 3rem;
+    border-radius:    10px;
 
-    @media (max-width: $screen-md) {
+    @media (max-width: $screen-md)
+    {
         display: none;
     }
 
-    input {
-        border: none;
-        width: 100%;
-        display: inline-block;
+    input
+    {
+        border:    none;
+        width:     100%;
+        display:   inline-block;
         font-size: 16px;
     }
 
-    button {
-        display: inline-block;
-        opacity: 0.5;
+    button
+    {
+        display:          inline-block;
+        opacity:          0.5;
         background-color: transparent;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
+        border:           none;
+        font-size:        16px;
+        cursor:           pointer;
     }
 }

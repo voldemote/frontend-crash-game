@@ -1,5 +1,21 @@
 export default class Api {
     static getBackendUrl () {
+        if (this.isLocal()) {
+            return LOCAL_BACKEND_URL;
+        }
+
+        return PRODUCTION_BACKEND_URL;
+    };
+
+    static getBackendSocketUrl () {
+        if (this.isLocal()) {
+            return LOCAL_BACKEND_SOCKET_URL;
+        }
+
+        return PRODUCTION_BACKEND_SOCKET_URL;
+    };
+
+    static isLocal () {
         const url                       = window.location.href;
         const localBackendUrlIndicators = [
             '.test',
@@ -9,29 +25,20 @@ export default class Api {
 
         for (const localBackendUrlIndicator of localBackendUrlIndicators) {
             if (url.indexOf(localBackendUrlIndicator) > -1) {
-                return LOCAL_BACKEND_URL;
+                return true;
             }
         }
 
-        return PRODUCTION_BACKEND_URL;
-    };
-
-    static getAbsoluteUri (path) {
-        let backendUrl = BACKEND_URL;
-
-        if (path.startsWith('/') && backendUrl.endsWith('/')) {
-            backendUrl = backendUrl.slice(0, -1);
-        }
-
-        const absoluteUri = backendUrl + path;
-
-        return absoluteUri;
+        return false;
     }
 }
 
 export const PRODUCTION_BACKEND_URL               = 'https://wallfair.herokuapp.com';
+export const PRODUCTION_BACKEND_SOCKET_URL        = 'https://wallfair.herokuapp.com:8999';
 export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
+export const LOCAL_BACKEND_SOCKET_URL             = 'ws://localhost:8999';
 export const BACKEND_URL                          = Api.getBackendUrl();
+export const BACKEND_SOCKET_URL                   = Api.getBackendSocketUrl();
 export const API_AUTHENTICATION_REQUEST_SMS_URL   = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL = 'api/user/saveAdditionalInformation';
 export const API_AUTHENTICATION_VERIFY_SMS_URL    = 'api/user/verifyLogin';
