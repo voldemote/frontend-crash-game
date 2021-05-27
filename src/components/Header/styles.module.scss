@@ -194,3 +194,15 @@
         }
     }
 }
+
+.betPillContainer
+{
+    padding: 0 30px;
+    padding-top: 3rem;
+
+    @media (min-width: $screen-sm)
+    {
+        padding: 0 3rem;
+        padding-top: 3rem;
+    }
+}

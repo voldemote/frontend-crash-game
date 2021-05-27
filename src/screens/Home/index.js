@@ -1,7 +1,6 @@
 import _                 from 'lodash';
 import BetCard           from '../../components/BetCard';
 import CarouselContainer from '../../components/CarouselContainer';
-import EventBetPill      from '../../components/EventBetPill/index';
 import EventCard         from '../../components/EventCard/index';
 import Header            from '../../components/Header/index';
 import Navbar            from '../../components/Navbar/index';
@@ -25,9 +24,10 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                 const mappedTags = _.map(event.tags, (tag) => '#' + tag.name);
 
                 return {
-                    src:  event.previewImageUrl,
-                    text: event.name,
-                    tags: mappedTags,
+                    eventId: event._id,
+                    src:     event.previewImageUrl,
+                    text:    event.name,
+                    tags:    mappedTags,
                 };
             },
         );
@@ -141,9 +141,6 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
         <div className={styles.homeContainer}>
             <Navbar user={user} />
             <Header slides={mapEventSlides()} />
-            <div className={styles.betPillContainer}>
-                {renderBetPills()}
-            </div>
             <CarouselContainer title={'🔥 Most popular Live Events'}>
                 {renderLiveEvents()}
             </CarouselContainer>
