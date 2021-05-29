@@ -21,6 +21,7 @@ import BetView          from '../../components/BetView';
 import RelatedBetCard   from '../../components/RelatedBetCard';
 import { useHistory }   from 'react-router-dom';
 import Chat             from '../../components/Chat';
+import classNames       from 'classnames';
 
 const Bet = ({ showPopup }) => {
           const history                         = useHistory();
@@ -57,7 +58,7 @@ const Bet = ({ showPopup }) => {
               return (
                   <FixedIconButton
                       className={styles.fixedChatButton}
-                      onClick={_.noop}
+                      onClick={() => setCurrentSlide(0)}
                       iconType={IconType.chat}
                       left={true}
                   />
@@ -118,7 +119,7 @@ const Bet = ({ showPopup }) => {
                   );
               }
 
-              return null;
+              return <div />;
           };
 
           const renderRelatedBetSliders = () => {
@@ -136,7 +137,12 @@ const Bet = ({ showPopup }) => {
               const secondIndex = index * 2;
 
               return (
-                  <div className={styles.carouselSlide}>
+                  <div
+                      className={classNames(
+                          styles.carouselSlide,
+                          styles.relatedBetSlide,
+                      )}
+                  >
                       {renderRelatedBetCard(
                           _.get(
                               bets,
@@ -217,6 +223,7 @@ const Bet = ({ showPopup }) => {
                                   infiniteLoop={false}
                                   showArrows={false}
                                   autoPlay={false}
+                                  interval={null}
                                   showStatus={false}
                                   showIndicators={false}
                                   showThumbs={false}
@@ -260,9 +267,10 @@ const Bet = ({ showPopup }) => {
                               </div>
                               <Carousel
                                   className={styles.relatedBetsCarousel}
-                                  dynamicHeight={true}
+                                  dynamicHeight={false}
                                   emulateTouch={true}
                                   infiniteLoop={true}
+                                  autoPlay={false}
                                   showArrows={false}
                                   showStatus={false}
                               >
