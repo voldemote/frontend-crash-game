@@ -8,7 +8,7 @@ import { useState }             from 'react';
 const ChatMessage = ({ user, message, date }) => {
     const profilePicture              = getProfilePictureUrl(_.get(user, 'profilePicture'));
     const userName                    = _.get(user, 'name', 'Unknown');
-    const [dateString, setDateString] = useState(null);
+    const [dateString, setDateString] = useState('');
 
     useEffect(
         () => {

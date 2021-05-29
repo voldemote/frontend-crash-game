@@ -56,6 +56,10 @@ const Chat = ({ token, event, fetchUser }) => {
             };
 
             websocket.current = createdSocket;
+
+            return () => {
+                createdSocket.close();
+            };
         },
         [token],
     );
