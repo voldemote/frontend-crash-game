@@ -171,6 +171,20 @@ const Bet = ({ showPopup }) => {
               );
           };
 
+          const getStreamChannel = () => {
+              let streamChannel = _.get(event, 'streamChannel');
+
+              if (!streamChannel) {
+                  streamChannel = event.streamUrl.split('/').pop();
+              }
+
+              return streamChannel;
+          };
+
+          if (!event) {
+              return null;
+          }
+
           return (
               <div className={styles.bet}>
                   <div className={styles.headlineContainer}>
@@ -203,8 +217,8 @@ const Bet = ({ showPopup }) => {
                       <div className={styles.columnLeft}>
                           <div className={styles.streamContainer}>
                               <TwitchEmbedVideo
-                                  video={'https://www.twitch.tv/esl_csgo'}
-                                  channel={'esl_csgo'}
+                                  video={event.streamUrl}
+                                  channel={getStreamChannel()}
                               />
                               <div className={styles.timeLeft}>
                                   <span>
