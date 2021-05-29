@@ -1,24 +1,21 @@
-import styles                           from './styles.module.scss';
-import ExampleProfilePicture            from '../../data/images/doge.jpg';
+import _                                from 'lodash';
+import ApiConstants                     from '../../constants/Api';
+import ChatMessage                      from '../ChatMessage';
 import Icon                             from '../Icon';
 import IconTheme                        from '../Icon/IconTheme';
 import IconType                         from '../../components/Icon/IconType';
-import ChatMessage                      from '../ChatMessage';
-import ApiConstants                     from '../../constants/Api';
-import { useEffect }                    from 'react';
-import { useIsMount }                   from '../hoc/useIsMount';
-import { useState }                     from 'react';
+import styles                           from './styles.module.scss';
 import { connect }                      from 'react-redux';
-import _                                from 'lodash';
+import { useEffect }                    from 'react';
+import { UserActions }                  from '../../store/actions/user';
 import { useRef }                       from 'react';
+import { useState }                     from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const Chat = ({ token, event }) => {
+const Chat = ({ token, event, fetchUser }) => {
     const websocket                       = useRef(null);
-    const [state, setState]               = useState();
     const [message, setMessage]           = useState('');
     const [chatMessages, setChatMessages] = useState([]);
-    const isMount                         = useIsMount();
 
     const createSocket = () => {
         const socket = new W3CWebSocket(
@@ -46,9 +43,13 @@ const Chat = ({ token, event }) => {
                 const data = JSON.parse(messageEvent.data);
 
                 if (data.event === 'chat') {
+                    const userId  = data.userId;
                     const message = {
                         message: data.message,
+                        date:    data.date,
+                        userId,
                     };
+                    fetchUser(userId);
 
                     addNewMessage(message);
                 }
@@ -97,10 +98,9 @@ const Chat = ({ token, event }) => {
                 return (
                     <ChatMessage
                         key={index}
-                        name={'Unknown'}
-                        image={ExampleProfilePicture}
+                        userId={chatMessage.userId}
                         message={chatMessage.message}
-                        date={'just now'}
+                        date={chatMessage.date}
                     />
                 );
             },
@@ -139,7 +139,15 @@ const mapStateToProps = (state) => {
     };
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchUser: (userId) => {
+            dispatch(UserActions.fetch({ userId }));
+        },
+    };
+};
+
 export default connect(
     mapStateToProps,
-    null,
+    mapDispatchToProps,
 )(Chat);
