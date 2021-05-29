@@ -63,11 +63,6 @@
         padding:          1rem 1rem 1rem 3rem;
         border-radius:    10px;
 
-        @media (max-width: $screen-md)
-        {
-            display: none;
-        }
-
         input
         {
             border:    none;

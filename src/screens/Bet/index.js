@@ -237,7 +237,7 @@ const Bet = ({ showPopup }) => {
                                   infiniteLoop={false}
                                   showArrows={false}
                                   autoPlay={false}
-                                  interval={null}
+                                  interval={999999999}
                                   showStatus={false}
                                   showIndicators={false}
                                   showThumbs={false}
