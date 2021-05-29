@@ -184,8 +184,8 @@ const Bet = ({ showPopup }) => {
                               </div>
                           </div>
                       </div>
-                      <div>
-                          <div className={styles.logo}>
+                      <div className={styles.logo}>
+                          <div>
                               <img
                                   src={darkModeLogo}
                                   alt="Wallfair"
@@ -227,7 +227,9 @@ const Bet = ({ showPopup }) => {
                                   }}
                               >
                                   <div className={styles.carouselSlide}>
-
+                                      <Chat
+                                          event={event}
+                                      />
                                   </div>
                                   <div className={styles.carouselSlide}>
                                       <BetView closed={false} />

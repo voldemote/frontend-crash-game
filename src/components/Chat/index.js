@@ -52,8 +52,8 @@ const Chat = ({ className, token, event, fetchUser }) => {
                         date:    data.date,
                         userId,
                     };
-                    fetchUser(userId);
 
+                    fetchUser(userId);
                     addNewMessage(message);
                 }
             };
