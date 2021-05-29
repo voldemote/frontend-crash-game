@@ -16,10 +16,21 @@
     cursor:           pointer;
     box-shadow:       0 2px 4px 0 $colorPrimary05;
     border:           solid 2px $colorPrimary10;
+    overflow:         hidden;
 
     @media(min-width: $screen-sm)
     {
         bottom: 55px;
         right:  55px;
+    }
+
+    &.alignedLeft
+    {
+        left: 30px;
+
+        @media(min-width: $screen-sm)
+        {
+            left: 55px;
+        }
     }
 }

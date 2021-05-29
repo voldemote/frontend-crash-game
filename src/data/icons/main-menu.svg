@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="21px" height="15px" viewBox="0 0 21 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Shape</title>
-    <g id="🚀-02-Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="wallfair-home-mobile-01-A" transform="translate(-347.000000, -2079.000000)" stroke="#000000" stroke-width="1.8">
-            <g id="Group-6" transform="translate(327.000000, 2056.000000)">
-                <g id="Text-Left.17" transform="translate(21.000000, 24.000000)">
-                    <path d="M11.875,6.5 L0,6.5 M16.625,12.4090909 L0,12.4090909 M19,0.590909091 L0,0.590909091" id="Shape"></path>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg width="21" height="15" xmlns="http://www.w3.org/2000/svg"><path d="M12.875 7.5H1m16.625 5.91H1M20 1.59H1" stroke="#000" stroke-width="1.8" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>

@@ -13,6 +13,7 @@ const StepsContainer = (
         headlineClassName,
         cancelButtonContent,
         headline,
+        highlightType,
         showButton = true,
         onButtonClick,
         onCancelButtonClick,
@@ -73,6 +74,7 @@ const StepsContainer = (
                             styles.continueButton,
                             hideDefaultButtonBackground ? styles.continueButtonHiddenBackground : null,
                         )}
+                        highlightType={highlightType}
                         onClick={onButtonClick}
                         disabled={buttonDisabled}
                     >

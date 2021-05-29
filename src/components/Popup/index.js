@@ -29,34 +29,11 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                 );
             case PopupTheme.betView:
                 return (
-                    <BetView closed={!visible} {...getBetViewOptions()} />
+                    <BetView closed={!visible} />
                 );
         }
 
         return null;
-    };
-
-    const getBetViewOptions = () => {
-        let bet   = {};
-        let event = {};
-
-        if (options) {
-            const eventId = options.eventId;
-            const betId   = options.betId;
-
-            if (eventId) {
-                event = _.find(events, { _id: eventId });
-
-                if (event && betId) {
-                    bet = _.find(event.bets, { _id: betId });
-                }
-            }
-        }
-
-        return {
-            bet:   bet,
-            event: event,
-        };
     };
 
     return (

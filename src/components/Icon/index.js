@@ -39,7 +39,7 @@ import { ReactComponent as IconTime }            from '../../data/icons/time.svg
 import { ReactComponent as IconWallet }          from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 }         from '../../data/icons/wallet-2.svg';
 
-const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width, height, onClick }) => {
+const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width, height, onClick, children }) => {
     const renderIcon = () => {
         return SelectionHelper.get(
             iconType,
@@ -108,6 +108,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
             onClick={onClick}
         >
             {renderIcon()}
+            {children}
         </span>
     );
 };

@@ -19,16 +19,25 @@
 
     &.iconPrimary
     {
-        @include svgColorStroke($colorPrimary)
+        > svg
+        {
+            @include svgColorStroke($colorPrimary)
+        }
     }
 
     &.iconPrimaryLightTransparent
     {
-        @include svgColorStroke($colorPrimaryLight20)
+        > svg
+        {
+            @include svgColorStroke($colorPrimaryLight20)
+        }
     }
 
     &.iconWhite
     {
-        @include svgColorStroke($colorWhite)
+        > svg
+        {
+            @include svgColorStroke($colorWhite)
+        }
     }
 }

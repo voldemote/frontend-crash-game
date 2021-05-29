@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="17px" viewBox="0 0 16 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Group 22 Copy</title>
-    <g id="💰-06-Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-22-Copy" transform="translate(1.000000, 1.000000)">
-            <rect id="Rectangle" fill="#FFFFFF" x="0" y="5" width="14" height="10" rx="2"></rect>
-            <g id="Gallery.8" stroke="#000000" stroke-linecap="round" stroke-width="1.2">
-                <path d="M1.55555556,2.83783784 L12.4444444,2.83783784 M3.11111111,0.405405405 L10.8888889,0.405405405 M1.55555556,15 L12.4444444,15 C13.3035778,15 14,14.274 14,13.3783784 L14,6.89189189 C14,5.99629459 13.3035778,5.27027027 12.4444444,5.27027027 L1.55555556,5.27027027 C0.696445556,5.27027027 0,5.99629459 0,6.89189189 L0,13.3783784 C0,14.274 0.696445556,15 1.55555556,15 Z" id="Shape"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg width="16" height="17" xmlns="http://www.w3.org/2000/svg"><g transform="translate(1 1)" fill="none" fill-rule="evenodd"><rect fill="#FFF" y="5" width="14" height="10" rx="2"/><path d="M1.556 2.838h10.888M3.111.405h7.778M1.556 15h10.888c.86 0 1.556-.726 1.556-1.622V6.892c0-.896-.696-1.622-1.556-1.622H1.556C.696 5.27 0 5.996 0 6.892v6.486C0 14.274.696 15 1.556 15z" stroke="#000" stroke-linecap="round" stroke-width="1.2"/></g></svg>

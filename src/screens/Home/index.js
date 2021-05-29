@@ -12,8 +12,12 @@ import { connect }       from 'react-redux';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
 import { BetActions }    from '../../store/actions/bet';
+import Routes            from '../../constants/Routes';
+import { useHistory }    from 'react-router';
 
 const Home = ({ events, showPopup, user, setSelectedBet }) => {
+    const history = useHistory();
+
     const mapEventSlides = () => {
         return _.map(
             events,
@@ -53,10 +57,23 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
         );
     };
 
+    const onEventClick = (eventId, betId = '') => {
+        return () => {
+            history.push(Routes.getRouteWithParameters(
+                Routes.bet,
+                {
+                    eventId,
+                    betId,
+                },
+            ));
+        };
+    };
+
     const renderLiveEvents = () => {
         return _.map(
             events,
             (event, index) => {
+                const eventId    = _.get(event, '_id');
                 const mappedTags = _.map(event.tags, (tag) => tag.name);
 
                 return (
@@ -68,6 +85,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                         live={true}
                         tags={mappedTags}
                         image={event.previewImageUrl}
+                        onClick={onEventClick(eventId)}
                     />
                 );
             },

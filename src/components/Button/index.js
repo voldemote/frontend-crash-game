@@ -3,8 +3,9 @@ import classNames      from 'classnames';
 import React           from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
+import Highlight       from '../Highlight';
 
-const Button = ({ children, className, theme, onClick, disabled, fixed }) => {
+const Button = ({ children, highlightType, className, theme, onClick, disabled, fixed }) => {
     return (
         <span
             className={classNames(
@@ -23,6 +24,7 @@ const Button = ({ children, className, theme, onClick, disabled, fixed }) => {
         >
             {disabled && <span className={style.buttonDisabledOverlay}></span>}
             {children}
+            {highlightType && <Highlight highlightType={highlightType} />}
         </span>
     );
 };

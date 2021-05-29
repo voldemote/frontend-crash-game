@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="17px" height="16px" viewBox="0 0 17 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Shape Copy</title>
-    <g id="💰-06-Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M1,14 L1,10 C2.5621,10 3.5,10 5,10 M16,2 L16,6 L12,6 M2.00004,10.6031 C3.03299,13.18 5.55397,15 8.5,15 C11.6711,15 14.3496,12.8915 15.2102,10 M1.7899,6 C2.65045,3.10851 5.329,1 8.49998,1 C11.57408,1 14.18538,2.9816 15.12618,5.73712" id="Shape-Copy" stroke="#120E27" stroke-width="1.5"></path>
-    </g>
-</svg>
+<svg width="17" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M1 14v-4h4m11-8v4h-4M2 10.603A7.002 7.002 0 0015.21 10M1.79 6a7.003 7.003 0 0113.336-.263" stroke="#120E27" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>

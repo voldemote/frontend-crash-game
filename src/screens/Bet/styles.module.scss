@@ -1,98 +1,114 @@
 @import '../../styles/all';
 
-.bet {
+.bet
+{
+    display:          flex;
+    flex-direction:   column;
     background-color: $colorPrimaryDark;
-    min-height: 100%;
-    height: 100%;
-    color: $colorWhite;
-    padding: 2rem 3rem;
-    font-family: $fontLight;
+    min-height:       100%;
+    color:            $colorWhite;
+    padding:          2rem 3rem;
+    font-family:      $fontLight;
 
-    @media (max-width: $screen-md) {
+    @media (max-width: $screen-md)
+    {
         padding-top: 2rem;
-        height: unset;
     }
 
-    .twitchStream {
-        height: 100%;
-        display: flex;
-        min-height: 100%;
-        padding-bottom: 1rem;
+    .upperLeftOval,
+    .centeredBottomOval
+    {
+        display:    none;
+        position:   absolute;
+        opacity:    0.2;
+        object-fit: contain;
 
-        @media (max-width: $screen-md) {
-            min-height: unset;
+        &.upperLeftOval
+        {
+            top:              -20%;
+            left:             -14%;
+            width:            40%;
+            height:           40%;
+            background-image: radial-gradient(circle at 52% 50%, #2df8d5, rgba(45, 248, 213, 0) 58%);
+        }
+
+        &.centeredBottomOval
+        {
+            bottom:           0;
+            left:             10%;
+            width:            80%;
+            height:           35%;
+            background-image: radial-gradient(circle at 52% 110%, #2df8d5, rgba(45, 248, 213, 0) 60%);
+        }
+
+        @media (min-width: $screen-sm)
+        {
+            display: block;
         }
     }
 
-    .row {
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        align-items: stretch;
-        height: 100%;
-        margin-left: -3rem;
-        margin-right: -3rem;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+    .headlineContainer
+    {
+        display:         flex;
+        flex-direction:  row;
+        justify-content: space-between;
+        z-index:         1;
 
-        .columnLeft {
-            width: 70%;
-            padding-left: 3rem;
-            padding-right: 1rem;
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            height: 100%;
-
-            @media (max-width: $screen-md) {
-                width: 100%;
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            .headlineContainer {
-                display: flex;
+        > div
+        {
+            &:first-child
+            {
+                display:         flex;
                 justify-content: flex-start;
-                align-items: center;
-                margin-bottom: 2rem;
-                flex: initial;
-    
-                @media (max-width: $screen-md) {
+                align-items:     center;
+                margin-bottom:   2rem;
+                flex:            initial;
+
+                @media (max-width: $screen-md)
+                {
                     justify-content: center;
                 }
-    
-                .headline {
-                    display: flex;
+
+                .headline
+                {
+                    display:         flex;
                     justify-content: center;
-                    align-items: center;
-    
-                    & > * {
-                        @media (max-width: $screen-md) {
+                    align-items:     center;
+
+                    & > *
+                    {
+                        @media (max-width: $screen-md)
+                        {
                             margin-bottom: 1rem;
                         }
                     }
-    
-                    @media (max-width: $screen-md) {
+
+                    @media (max-width: $screen-md)
+                    {
                         flex-direction: column;
-                        text-align: center;
+                        text-align:     center;
                     }
-        
-                    h1 {
+
+                    h1
+                    {
                         margin-right: 1rem;
-                        font-family: $fontBold;
-    
-                        @media (max-width: $screen-md) {
+                        font-family:  $fontBold;
+
+                        @media (max-width: $screen-md)
+                        {
                             margin-right: 0;
-                            font-size: 20px;
+                            font-size:    20px;
                         }
                     }
                 }
-        
-                small {
+
+                small
+                {
                     color: $colorGray;
                 }
-    
-                .arrowBack {
+
+                .arrowBack
+                {
                     background-color: transparent;
                     border:           none;
                     display:          flex;
@@ -100,7 +116,7 @@
                     align-items:      center;
                     cursor:           pointer;
                     margin-right:     1rem;
-    
+
                     &:before
                     {
                         border-style:   solid;
@@ -113,143 +129,231 @@
                         width:          10px;
                         transition:     border-color .2s ease-in;
                         border-color:   $colorWhite;
-                        transform: rotate(-135deg);
-    
-                        @media (max-width: $screen-md) {
+                        transform:      rotate(-135deg);
+
+                        @media (max-width: $screen-md)
+                        {
                             transform: rotate(-135deg) translateX(-10px);
                         }
                     }
                 }
             }
+        }
 
-            .timeLeft {
-                width:            100%;
-                display:          flex;
-                justify-content:  flex-end;
-                align-items:      center;
-                color:            $colorWhite;
-                font-family:      $fontLight;
-                font-size:        12px;
+        .logo
+        {
+            display: none;
+
+            @media(min-width: $screen-md)
+            {
+                display: block;
+            }
+        }
+    }
+
+    .row
+    {
+        display:        flex;
+        flex-direction: row;
+        flex:           1;
+        margin-left:    -3rem;
+        margin-right:   -3rem;
+        z-index:        1;
+
+        .columnLeft
+        {
+            width:           70%;
+            padding-left:    3rem;
+            padding-right:   1rem;
+            display:         flex;
+            justify-content: space-between;
+            flex-direction:  column;
+
+            @media (max-width: $screen-md)
+            {
+                width:         100%;
+                padding-left:  1rem;
+                padding-right: 1rem;
+            }
+
+            .streamContainer
+            {
+                display:        flex;
+                flex-direction: column;
+                flex:           1;
+
+                .twitchStream
+                {
+                    display:        flex;
+                    flex:           1;
+                    padding-bottom: 1rem;
+
+                    @media (max-width: $screen-md)
+                    {
+                        min-height: unset;
+                    }
+                }
+
+                .timeLeft
+                {
+                    width:           100%;
+                    display:         flex;
+                    justify-content: flex-end;
+                    align-items:     center;
+                    color:           $colorWhite;
+                    font-family:     $fontLight;
+                    font-size:       12px;
+                }
             }
         }
 
-        .columnRight {
-            display: flex;
-            flex-direction: column;
+        .columnRight
+        {
+            display:         flex;
+            flex-direction:  column;
             justify-content: space-between;
-            width: 30%;
-            padding-left: 0rem;
-            padding-right: 3rem;
+            width:           30%;
+            padding-left:    0;
+            padding-right:   3rem;
 
-            @media (max-width: $screen-md) {
+            @media (max-width: $screen-md)
+            {
                 display: none;
             }
 
-            .logo {
-                margin-bottom: 2rem;
+            > div:first-child
+            {
+                flex: 1;
             }
         }
     }
 
-    .relatedEvents {
-        margin-top: 2rem;
+    .relatedBets
+    {
+        display:        flex;
+        flex-direction: column;
+        margin-top:     2rem;
 
-        .headline {
-            margin-bottom: 1rem;
-            display: flex;
+        .headline
+        {
+            margin-bottom:   1rem;
+            display:         flex;
             justify-content: flex-start;
-            align-items: center;
+            align-items:     center;
 
-            h2 {
-                font-family: $fontBold;
-                font-size: 20px;
+            h2
+            {
+                font-family:  $fontBold;
+                font-size:    20px;
                 margin-right: 1rem;
             }
         }
+
+        .relatedBetsCarousel
+        {
+            flex: 1;
+
+            > div:first-child
+            {
+                height: 100%;
+
+                > div
+                {
+                    height: 100%;
+
+                    > ul
+                    {
+                        height: 100%;
+                    }
+                }
+            }
+
+            .relatedBetSlide
+            {
+                height:          100%;
+                display:         flex;
+                flex-direction:  column;
+                justify-content: space-evenly;
+
+                > div
+                {
+                    flex:          1 0;
+                    padding:       1.5rem 1.5rem;
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
     }
 
-    .desktopChat {
-        flex: 1;
-        position: relative;
-
-        @media (max-width: $screen-md) {
+    .desktopChat
+    {
+        @media (max-width: $screen-md)
+        {
             display: none;
         }
     }
 
-    .mobileCarousel {
+    .mobileCarousel
+    {
         margin-top: 2rem;
 
-        @media (min-width: $screen-md) {
+        @media (min-width: $screen-md)
+        {
             display: none;
         }
     }
 
-    .mobileMenu {
-        padding: 0 1rem;
-        position: fixed;
-        display: flex;
-        width: 100%;
+    .mobileMenu
+    {
+        padding:         0 1rem;
+        position:        fixed;
+        display:         flex;
+        width:           100%;
         justify-content: center;
-        bottom: 0;
-        left: 0;
-        margin-bottom: 2rem;
-        align-items: center;
+        bottom:          0;
+        left:            0;
+        margin-bottom:   2rem;
+        align-items:     center;
 
-        @media (min-width: $screen-md) {
+        @media (min-width: $screen-md)
+        {
             display: none;
         }
 
-        .indicators {
-            padding: 0.5rem 1rem;
-            opacity: 0.9;
-            border-radius: 30px;
-            background-color: #120e27;
-            max-height: 40px;
+        .indicators
+        {
+            padding:          0.5rem 1rem;
+            opacity:          0.9;
+            border-radius:    30px;
+            background-color: $colorPrimaryDark;
+            max-height:       40px;
 
-            span {
-                width: 10px;
-                height: 10px;
-                display: inline-block;
-                margin: 0 0.5rem;
+            span
+            {
+                width:            10px;
+                height:           10px;
+                display:          inline-block;
+                margin:           0 0.5rem;
                 background-color: $colorWhite30;
-                border-radius: 50%;
-                cursor: pointer;
+                border-radius:    50%;
+                cursor:           pointer;
 
-                &.active {
+                &.active
+                {
                     background-color: $colorWhite;
                 }
             }
         }
     }
 
-    .carouselSlide {
-        margin: 0 0.25rem;
+    .carouselSlide
+    {
+        margin:         0 0.25rem;
+        padding-bottom: 50px;
     }
 
     .fixedChatButton
     {
-        position:         fixed;
-        display:          flex;
-        align-items:      center;
-        justify-content:  center;
-        z-index:          $zIndexFixedIconButton;
-        bottom:           30px;
-        left:            30px;
-        width:            60px;
-        height:           60px;
-        background-color: $colorWhite;
-        border-radius:    100%;
-        cursor:           pointer;
-        box-shadow:       0 2px 4px 0 $colorPrimary05;
-        border:           solid 2px $colorPrimary10;
-
-        @media(min-width: $screen-sm)
-        {
-            bottom: 55px;
-            left:  55px;
-        }
-
         @media(min-width: $screen-md)
         {
             display: none;

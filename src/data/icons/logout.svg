@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="21px" height="24px" viewBox="0 0 21 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Shape Copy 2</title>
-    <g id="🌎-00-Mobile-Menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="wallfair-home-mobile-menu-01" transform="translate(-205.000000, -829.000000)" stroke="#FFFFFF" stroke-width="1.62">
-            <g id="Group-10" transform="translate(206.000000, 827.000000)">
-                <path d="M13.7222222,19.5 L19,14 M19,14 L13.7222222,8.5 M19,14 L6.33333333,14 M10.5555556,25 C7.75601111,25 5.07120556,23.84104 3.09164833,21.77821 C1.11210167,19.71527 0,16.91742 0,14 C0,11.082624 1.11210167,8.28473 3.09164833,6.221823 C5.07120556,4.158927 7.75601111,3 10.5555556,3" id="Shape-Copy-2"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg width="21" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M14.722 17.5L20 12m0 0l-5.278-5.5M20 12H7.333m4.223 11c-2.8 0-5.485-1.159-7.464-3.222C2.112 17.715 1 14.918 1 12c0-2.917 1.112-5.715 3.092-7.778C6.072 2.159 8.756 1 11.556 1" stroke="#FFF" stroke-width="1.62" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>

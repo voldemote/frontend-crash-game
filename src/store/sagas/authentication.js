@@ -10,6 +10,7 @@ import { UserActions }           from '../actions/user';
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
     Routes.welcome,
+    Routes.bet,
     '/service-worker.js'
 ];
 

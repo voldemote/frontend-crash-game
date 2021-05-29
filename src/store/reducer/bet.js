@@ -40,6 +40,7 @@ const selectChoice = (action, state) => {
 
 const setCommitment = (action, state) => {
     const commitment = action.commitment;
+    const betId = action.betId;
 
     if (
         _.isEmpty(commitment) ||
@@ -55,6 +56,9 @@ const setCommitment = (action, state) => {
             selectedCommitment: {
                 $set: action.commitment,
             },
+            selectedEventId: {
+                $set: action.commitment,
+            },
         });
     }
 
@@ -66,7 +70,7 @@ const setOutcomes = (action, state) => {
     const newOutcomes = action.outcomes;
     const time        = new Date().getTime();
 
-    _.each(
+    _.forEach(
         newOutcomes,
         (outcome, index) => {
             const exists = _.get(newState, 'outcomes[' + index + '].values');

@@ -15,6 +15,7 @@ import Button              from '../Button';
 import TokenNumberInput    from '../TokenNumberInput';
 import { useEffect }       from 'react';
 import { BetActions }      from '../../store/actions/bet';
+import HighlightType       from '../Highlight/HighlightType';
 
 const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
     const [choice, setChoice]     = useState(null);
@@ -118,9 +119,12 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
                         className={classNames(
                             styles.betButton,
                         )}
+                        highlightType={HighlightType.highlightSettingsMyBets}
                         onClick={onConfirm}
                     >
-                        Bet!
+                        <span className={styles.buttonContent}>
+                            Bet!
+                        </span>
                     </Button>
                 </div>
             </div>

@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="4px" height="16px" viewBox="0 0 4 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Shape Copy 2</title>
-    <g id="🚀-02-Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M4,2 C4,3.10457 3.1046,4 2,4 C0.8954,4 0,3.10457 0,2 C0,0.89543 0.8954,0 2,0 C3.1046,0 4,0.89543 4,2 Z M4,8 C4,9.1046 3.1046,10 2,10 C0.8954,10 0,9.1046 0,8 C0,6.8954 0.8954,6 2,6 C3.1046,6 4,6.8954 4,8 Z M2,16 C3.1046,16 4,15.1046 4,14 C4,12.8954 3.1046,12 2,12 C0.8954,12 0,12.8954 0,14 C0,15.1046 0.8954,16 2,16 Z" id="Shape-Copy-2" fill="#0E0927"></path>
-    </g>
-</svg>
+<svg width="4" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M4 2a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zm-2 8a2 2 0 100-4 2 2 0 000 4z" fill="#0E0927" fill-rule="evenodd"/></svg>

@@ -28,6 +28,7 @@ const InputBox = ({
                       max,
                       theme = InputBoxTheme.defaultInput,
                       className,
+                      containerClassName,
                       showDeleteIcon = true,
                   }) => {
     const renderInvitationText = () => {
@@ -123,7 +124,12 @@ const InputBox = ({
     };
 
     return (
-        <div className={styles.inputBoxContainer}>
+        <div
+            className={classNames(
+                styles.inputBoxContainer,
+                containerClassName,
+            )}
+        >
             {renderInvitationText()}
             <div
                 className={classNames(
