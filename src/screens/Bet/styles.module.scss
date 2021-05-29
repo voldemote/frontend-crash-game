@@ -2,9 +2,10 @@
 
 .bet
 {
+    display:          flex;
+    flex-direction:   column;
     background-color: $colorPrimaryDark;
     min-height:       100%;
-    height:           100%;
     color:            $colorWhite;
     padding:          2rem 3rem;
     font-family:      $fontLight;
@@ -12,53 +13,17 @@
     @media (max-width: $screen-md)
     {
         padding-top: 2rem;
-        height:      unset;
     }
 
-    .twitchStream
-    {
-        width:          100%;
-        height:         100%;
-        display:        flex;
-        min-height:     100%;
-        padding-bottom: 1rem;
-
-        @media (max-width: $screen-md)
-        {
-            min-height: unset;
-        }
-    }
-
-    .row
+    .headlineContainer
     {
         display:         flex;
-        justify-content: center;
         flex-direction:  row;
-        align-items:     stretch;
-        height:          100%;
-        margin-left:     -3rem;
-        margin-right:    -3rem;
-        padding-top:     2rem;
-        padding-bottom:  2rem;
+        justify-content: space-between;
 
-        .columnLeft
+        > div
         {
-            width:           70%;
-            padding-left:    3rem;
-            padding-right:   1rem;
-            display:         flex;
-            justify-content: space-between;
-            flex-direction:  column;
-            height:          100%;
-
-            @media (max-width: $screen-md)
-            {
-                width:         100%;
-                padding-left:  1rem;
-                padding-right: 1rem;
-            }
-
-            .headlineContainer
+            &:first-child
             {
                 display:         flex;
                 justify-content: flex-start;
@@ -140,16 +105,61 @@
                     }
                 }
             }
+        }
+    }
 
-            .timeLeft
+    .row
+    {
+        display:        flex;
+        flex-direction: row;
+        flex:           1;
+        margin-left:    -3rem;
+        margin-right:   -3rem;
+
+        .columnLeft
+        {
+            width:           70%;
+            padding-left:    3rem;
+            padding-right:   1rem;
+            display:         flex;
+            justify-content: space-between;
+            flex-direction:  column;
+
+            @media (max-width: $screen-md)
             {
-                width:           100%;
-                display:         flex;
-                justify-content: flex-end;
-                align-items:     center;
-                color:           $colorWhite;
-                font-family:     $fontLight;
-                font-size:       12px;
+                width:         100%;
+                padding-left:  1rem;
+                padding-right: 1rem;
+            }
+
+            .streamContainer
+            {
+                display:        flex;
+                flex-direction: column;
+                flex:           1;
+
+                .twitchStream
+                {
+                    display:        flex;
+                    flex:           1;
+                    padding-bottom: 1rem;
+
+                    @media (max-width: $screen-md)
+                    {
+                        min-height: unset;
+                    }
+                }
+
+                .timeLeft
+                {
+                    width:           100%;
+                    display:         flex;
+                    justify-content: flex-end;
+                    align-items:     center;
+                    color:           $colorWhite;
+                    font-family:     $fontLight;
+                    font-size:       12px;
+                }
             }
         }
 
@@ -159,23 +169,19 @@
             flex-direction:  column;
             justify-content: space-between;
             width:           30%;
-            padding-left:    0rem;
+            padding-left:    0;
             padding-right:   3rem;
 
             @media (max-width: $screen-md)
             {
                 display: none;
             }
-
-            .logo
-            {
-                margin-bottom: 2rem;
-            }
         }
     }
 
     .relatedBets
     {
+        flex:       1;
         margin-top: 2rem;
 
         .headline
@@ -192,18 +198,10 @@
                 margin-right: 1rem;
             }
         }
-
-        .relatedBetsCarousel
-        {
-            height: 100%;
-        }
     }
 
     .desktopChat
     {
-        flex:     1;
-        position: relative;
-
         @media (max-width: $screen-md)
         {
             display: none;
@@ -242,7 +240,7 @@
             padding:          0.5rem 1rem;
             opacity:          0.9;
             border-radius:    30px;
-            background-color: #120e27;
+            background-color: $colorPrimaryDark;
             max-height:       40px;
 
             span
@@ -271,27 +269,6 @@
 
     .fixedChatButton
     {
-        position:         fixed;
-        display:          flex;
-        align-items:      center;
-        justify-content:  center;
-        z-index:          $zIndexFixedIconButton;
-        bottom:           30px;
-        left:             30px;
-        width:            60px;
-        height:           60px;
-        background-color: $colorWhite;
-        border-radius:    100%;
-        cursor:           pointer;
-        box-shadow:       0 2px 4px 0 $colorPrimary05;
-        border:           solid 2px $colorPrimary10;
-
-        @media(min-width: $screen-sm)
-        {
-            bottom: 55px;
-            left:   55px;
-        }
-
         @media(min-width: $screen-md)
         {
             display: none;

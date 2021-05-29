@@ -1,10 +1,7 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _                from 'lodash';
-import Chat             from 'components/Chat';
 import darkModeLogo     from '../../data/images/logo-darkmode.svg';
 import FixedIconButton  from '../../components/FixedIconButton';
-import Icon             from '../../components/Icon';
-import IconTheme        from '../../components/Icon/IconTheme';
 import IconType         from '../../components/Icon/IconType';
 import Link             from '../../components/Link';
 import LiveBadge        from 'components/LiveBadge';
@@ -23,11 +20,11 @@ import TwitchEmbedVideo from '../../components/TwitchEmbedVideo';
 import BetView          from '../../components/BetView';
 import RelatedBetCard   from '../../components/RelatedBetCard';
 import { useHistory }   from 'react-router-dom';
+import Chat             from '../../components/Chat';
 
 const Bet = ({ showPopup }) => {
           const history                         = useHistory();
           const { eventId, betId }              = useParams();
-          const exampleEventImage               = 'https://media-cdn.tripadvisor.com/media/photo-s/0e/85/8d/53/red-bull-flugtag-event.jpg';
           const [currentSlide, setCurrentSlide] = useState(0);
           const event                           = useSelector(
               (state) => _.find(
@@ -54,6 +51,17 @@ const Bet = ({ showPopup }) => {
 
           const eventCreationButtonClicked = () => {
               showPopup({ popupType: PopupTheme.betCreation });
+          };
+
+          const renderChatButton = () => {
+              return (
+                  <FixedIconButton
+                      className={styles.fixedChatButton}
+                      onClick={_.noop}
+                      iconType={IconType.chat}
+                      left={true}
+                  />
+              );
           };
 
           const renderEventCreationButton = () => {
@@ -159,25 +167,35 @@ const Bet = ({ showPopup }) => {
 
           return (
               <div className={styles.bet}>
-                  <div className={styles.row}>
-                      <div className={styles.columnLeft}>
-                          <div className={styles.headlineContainer}>
-                              <Link
-                                  to={Routes.home}
-                                  className={styles.arrowBack}
-                              >
-                              </Link>
-                              <div className={styles.headline}>
-                                  <h1>
-                                      {_.get(event, 'name')}
-                                  </h1>
-                                  <div>
-                                      <LiveBadge />
-                                      <ViewerBadge viewers={1123} />
-                                  </div>
+                  <div className={styles.headlineContainer}>
+                      <div>
+                          <Link
+                              to={Routes.home}
+                              className={styles.arrowBack}
+                          >
+                          </Link>
+                          <div className={styles.headline}>
+                              <h1>
+                                  {_.get(event, 'name')}
+                              </h1>
+                              <div>
+                                  <LiveBadge />
+                                  <ViewerBadge viewers={1123} />
                               </div>
                           </div>
-                          <div style={{ height: '100%', flex: 'initial' }}>
+                      </div>
+                      <div>
+                          <div className={styles.logo}>
+                              <img
+                                  src={darkModeLogo}
+                                  alt="Wallfair"
+                              />
+                          </div>
+                      </div>
+                  </div>
+                  <div className={styles.row}>
+                      <div className={styles.columnLeft}>
+                          <div className={styles.streamContainer}>
                               <TwitchEmbedVideo
                                   video={'https://www.twitch.tv/esl_csgo'}
                                   channel={'esl_csgo'}
@@ -189,10 +207,10 @@ const Bet = ({ showPopup }) => {
                                   <TimeLeftCounter endDate={_.get(event, 'date')} />
                               </div>
                           </div>
-                          <div className={styles.desktopChat}>
-                              <Chat event={event} />
-                          </div>
-
+                          <Chat
+                              className={styles.desktopChat}
+                              event={event}
+                          />
                           <div className={styles.mobileCarousel}>
                               <Carousel
                                   emulateTouch={true}
@@ -230,13 +248,7 @@ const Bet = ({ showPopup }) => {
                           </div>
                       </div>
                       <div className={styles.columnRight}>
-                          <div style={{ width: '100%', display: 'flex', alignItems: 'flex-end', flexDirection: 'column', height: '100%' }}>
-                              <div className={styles.logo}>
-                                  <img
-                                      src={darkModeLogo}
-                                      alt="Wallfair"
-                                  />
-                              </div>
+                          <div>
                               <BetView closed={false} />
                           </div>
                           <div className={styles.relatedBets}>
@@ -265,14 +277,7 @@ const Bet = ({ showPopup }) => {
                       </div>
                   </div>
                   {renderEventCreationButton()}
-                  <button
-                      className={styles.fixedChatButton}
-                  >
-                      <Icon
-                          iconType={IconType.chat}
-                          iconTheme={IconTheme.primary}
-                      />
-                  </button>
+                  {renderChatButton()}
               </div>
           );
       }

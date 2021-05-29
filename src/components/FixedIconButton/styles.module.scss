@@ -23,4 +23,14 @@
         bottom: 55px;
         right:  55px;
     }
+
+    &.alignedLeft
+    {
+        left: 30px;
+
+        @media(min-width: $screen-sm)
+        {
+            left: 55px;
+        }
+    }
 }

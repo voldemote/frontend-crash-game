@@ -11,9 +11,12 @@ import { UserActions }                  from '../../store/actions/user';
 import { useRef }                       from 'react';
 import { useState }                     from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import Input                            from '../Input';
+import classNames                       from 'classnames';
 
-const Chat = ({ token, event, fetchUser }) => {
+const Chat = ({ className, token, event, fetchUser }) => {
     const websocket                       = useRef(null);
+    const messageListRef                  = useRef();
     const [message, setMessage]           = useState('');
     const [chatMessages, setChatMessages] = useState([]);
 
@@ -93,6 +96,7 @@ const Chat = ({ token, event, fetchUser }) => {
 
     const addNewMessage = (message) => {
         setChatMessages(chatMessages => [...chatMessages, message]);
+        messageListScrollToBottom();
     };
 
     const renderMessages = () => {
@@ -111,20 +115,36 @@ const Chat = ({ token, event, fetchUser }) => {
         );
     };
 
+    const messageListScrollToBottom = () => {
+        if (messageListRef) {
+            messageListRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
-        <div className={styles.chatContainer}>
-            <div className={styles.chat}>
+        <div
+            className={classNames(
+                styles.chatContainer,
+                className,
+            )}
+        >
+            <div className={styles.messageContainer}>
                 {renderMessages()}
+                <span ref={messageListRef}>
+                </span>
+            </div>
+            <div className={styles.messageContainerRunOut}>
             </div>
             <div className={styles.messageInput}>
-                <input
+                <Input
                     type={'text'}
                     placeholder={'Comment...'}
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
+                    onSubmit={onMessageSend}
                 />
                 <button
-                    type="submit"
+                    type={'submit'}
                     onClick={onMessageSend}
                 >
                     <Icon
