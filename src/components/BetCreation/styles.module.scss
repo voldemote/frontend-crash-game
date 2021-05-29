@@ -21,8 +21,9 @@
         padding-top:      30px;
         background-color: $colorGrayLight3;
 
-        @media (min-width: $screen-sm) {
-            padding-top:      130px;
+        @media (min-width: $screen-sm)
+        {
+            padding-top: 130px;
         }
     }
 
@@ -58,6 +59,14 @@
 
         .timeContainer
         {
+        }
+    }
+
+    .marketQuestionAndDescription
+    {
+        .marketQuestion
+        {
+            margin-bottom: 30px;
         }
     }
 

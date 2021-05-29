@@ -27,6 +27,7 @@ const initialState = {
     step:            0,
     error:           null,
     marketQuestion:  '',
+    description:     '',
     eventUrl:        null,
     selectedDate:    null,
     selectedEndTime: null,
@@ -37,6 +38,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const [step, setStep]                       = useState(initialState.step);
           const [error, setError]                     = useState(initialState.error);
           const [marketQuestion, setMarketQuestion]   = useState(initialState.marketQuestion);
+          const [description, setDescription]         = useState(initialState.description);
           const [eventUrl, setEventUrl]               = useState(initialState.eventUrl);
           const [selectedDate, setSelectedDate]       = useState(initialState.selectedDate);
           const [selectedEndTime, setSelectedEndTime] = useState(initialState.selectedEndTime);
@@ -45,6 +47,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 
           const resetStates = () => {
               setMarketQuestion(initialState.marketQuestion);
+              setDescription(initialState.description);
               setEventUrl(initialState.eventUrl);
               setSelectedDate(initialState.selectedDate);
               setSelectedEndTime(initialState.selectedEndTime);
@@ -67,8 +70,13 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       break;
                   case 1:
                       if (!marketQuestionIsValid()) {
-                          error = 'Please enter a market question!';
-                          valid = false;
+                          error[0] = 'Please enter a market question!';
+                          valid    = false;
+                      }
+
+                      if (!descriptionIsValid()) {
+                          error[1] = 'Please enter a description!';
+                          valid    = false;
                       }
 
                       break;
@@ -109,6 +117,10 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 
           const marketQuestionIsValid = () => {
               return marketQuestion && marketQuestion.length;
+          };
+
+          const descriptionIsValid = () => {
+              return true;
           };
 
           const eventUrlIsValid = () => {
@@ -251,6 +263,30 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 
                   setOutcomes(newOutcomes);
               };
+          };
+
+          const renderMarketQuestionAndDescription = () => {
+              return (
+                  <div className={styles.marketQuestionAndDescription}>
+                      <InputBox
+                          containerClassName={styles.marketQuestion}
+                          type={'text'}
+                          invitationText={'What to bet on?'}
+                          errorText={getError(0)}
+                          placeholder={'Who will win the race?'}
+                          value={marketQuestion}
+                          setValue={setMarketQuestion}
+                      />
+                      <InputBox
+                          type={'text'}
+                          invitationText={'Enter a short description'}
+                          errorText={getError(1)}
+                          placeholder={'A race between...'}
+                          value={description}
+                          setValue={setDescription}
+                      />
+                  </div>
+              );
           };
 
           const renderOutcomeInputs = () => {
@@ -404,16 +440,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       />
                   );
               } else if (step === 1) {
-                  return (
-                      <InputBox
-                          type={'text'}
-                          invitationText={'What to bet on?'}
-                          errorText={error}
-                          placeholder={'Who will win the race?'}
-                          value={marketQuestion}
-                          setValue={setMarketQuestion}
-                      />
-                  );
+                  return renderMarketQuestionAndDescription();
               } else if (step === 2) {
                   return renderOutcomeCreator();
               } else if (step === 3) {
