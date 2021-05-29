@@ -187,6 +187,10 @@ const Bet = ({ showPopup }) => {
 
           return (
               <div className={styles.bet}>
+                  <div className={styles.upperLeftOval}>
+                  </div>
+                  <div className={styles.centeredBottomOval}>
+                  </div>
                   <div className={styles.headlineContainer}>
                       <div>
                           <Link
