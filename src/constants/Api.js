@@ -34,7 +34,7 @@ export default class Api {
 }
 
 export const PRODUCTION_BACKEND_URL               = 'https://wallfair.herokuapp.com';
-export const PRODUCTION_BACKEND_SOCKET_URL        = 'ws://wallfair.herokuapp.com:8999';
+export const PRODUCTION_BACKEND_SOCKET_URL        = 'wss://wallfair.herokuapp.com:8999';
 export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
 export const LOCAL_BACKEND_SOCKET_URL             = 'ws://localhost:8999';
 export const BACKEND_URL                          = Api.getBackendUrl();
