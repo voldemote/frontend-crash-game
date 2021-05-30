@@ -3,7 +3,6 @@ import LiveBadge        from '../LiveBadge';
 import { useState }     from 'react';
 import styles           from './styles.module.scss';
 import Link             from '../../components/Link';
-import ReactPlayer      from 'react-player';
 import { Carousel }     from 'react-responsive-carousel';
 import { connect }      from 'react-redux';
 import EventBetPill     from '../../components/EventBetPill/index';
@@ -14,7 +13,7 @@ const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const updateCurrentSlide = (index) => {
-        if (currentSlide !== index) {
+        if (currentSlide !== index && _.size(events) > index) {
             setCurrentSlide(index);
         }
     };
@@ -70,7 +69,10 @@ const Header = ({ events }) => {
                     {
                         events.map(
                             (event, eventIndex) => (
-                                <div key={eventIndex} className={styles.eventContainer}>
+                                <div
+                                    key={eventIndex}
+                                    className={styles.eventContainer}
+                                >
                                     <div className={styles.headerOverlay}>
                                     </div>
                                     <TwitchEmbedVideo
