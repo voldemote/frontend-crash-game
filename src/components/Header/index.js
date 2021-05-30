@@ -76,6 +76,7 @@ const Header = ({ events }) => {
                                     <TwitchEmbedVideo
                                         className={styles.twitchStream}
                                         video={event.streamUrl}
+                                        muted={true}
                                     />
                                     <div className={styles.headerWrapper}>
                                         <div className={styles.headerContentContainer}>

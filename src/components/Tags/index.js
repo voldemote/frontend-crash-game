@@ -10,7 +10,7 @@ const Tags = ({ tags }) => {
                     tags,
                     (tag, index) => (
                         <span key={index}>
-                            #{tag.name}
+                            #{_.get(tag, 'name', tag)}
                         </span>
                     ),
                 )
