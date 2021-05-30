@@ -255,7 +255,7 @@ const mapStateToProps = (state) => {
         selectedBetId: state.bet.selectedBetId,
         rawOutcomes:   state.bet.outcomes,
         choice:        state.bet.selectedChoice,
-        commitment:    _.get(state.bet.selectedCommitment, 0),
+        commitment:    _.get(state, 'bet.selectedCommitment', 0),
     };
 };
 
