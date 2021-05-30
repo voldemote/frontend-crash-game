@@ -1,15 +1,16 @@
-import _            from 'lodash';
-import LiveBadge    from '../LiveBadge';
-import { useState } from 'react';
-import styles       from './styles.module.scss';
-import Link         from '../../components/Link';
-import ReactPlayer  from 'react-player';
-import { Carousel } from 'react-responsive-carousel';
-import { connect }  from 'react-redux';
-import EventBetPill from '../../components/EventBetPill/index';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import _                from 'lodash';
+import LiveBadge        from '../LiveBadge';
+import { useState }     from 'react';
+import styles           from './styles.module.scss';
+import Link             from '../../components/Link';
+import ReactPlayer      from 'react-player';
+import { Carousel }     from 'react-responsive-carousel';
+import { connect }      from 'react-redux';
+import EventBetPill     from '../../components/EventBetPill/index';
+import TwitchEmbedVideo from '../TwitchEmbedVideo';
+import Tags             from '../Tags';
 
-const Header = ({ events, slides }) => {
+const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const updateCurrentSlide = (index) => {
@@ -18,30 +19,33 @@ const Header = ({ events, slides }) => {
         }
     };
 
+    const getCurrentEvent = () => {
+        return events[currentSlide];
+    };
+
     const renderBetPills = () => {
-        return _.map(
-            events,
-            (event, eventIndex) => {
-                if (slides[currentSlide].eventId === event._id) {
-                    const bets = event.bets;
+        const event = getCurrentEvent();
 
-                    return _.map(
-                        bets,
-                        (bet, betIndex) => {
-                            const key = eventIndex + '.' + betIndex;
+        if (event) {
+            const bets = event.bets;
 
-                            return (
-                                <EventBetPill
-                                    key={key}
-                                    userId={bet.creator}
-                                    bet={bet}
-                                />
-                            );
-                        },
+            return _.map(
+                bets,
+                (bet, betIndex) => {
+                    const key = event._id + '.' + betIndex;
+
+                    return (
+                        <EventBetPill
+                            key={key}
+                            userId={bet.creator}
+                            bet={bet}
+                        />
                     );
-                }
-            },
-        );
+                },
+            );
+        }
+
+        return null;
     };
 
     return (
@@ -49,6 +53,7 @@ const Header = ({ events, slides }) => {
             <div className={styles.header}>
 
                 <Carousel
+                    className={styles.headerCarousel}
                     emulateTouch={true}
                     infiniteLoop={false}
                     showArrows={false}
@@ -56,47 +61,47 @@ const Header = ({ events, slides }) => {
                     showStatus={false}
                     showIndicators={false}
                     showThumbs={false}
-                    dynamicHeight={true}
+                    dynamicHeight={false}
                     selectedItem={currentSlide}
                     onChange={(index) => {
                         updateCurrentSlide(index);
                     }}
                 >
-                    {slides.map((slide, slideIndex) => (
-                        <div key={slideIndex}>
-                            <div className={styles.headerOverlay}></div>
-                            <ReactPlayer
-                                key={slideIndex}
-                                width="100%"
-                                height="600px"
-                                url={slide.src}
-                                playing={currentSlide === slideIndex ? true : false}
-                            />
-                            <div className={styles.headerWrapper}>
-                                <div className={styles.headerContentContainer}>
-                                    <div className={styles.badgeContainer}>
-                                        <LiveBadge />
+                    {
+                        events.map(
+                            (event, eventIndex) => (
+                                <div key={eventIndex} className={styles.eventContainer}>
+                                    <div className={styles.headerOverlay}>
                                     </div>
-                                    <span className={styles.title}>{slide.text}</span>
-                                    <div className={styles.tags}>
-                                        {slide.tags.map((tag, tagIndex) => (
-                                            <span key={tagIndex}>{tag}&nbsp;</span>
-                                        ))}
-                                    </div>
-                                    <div>
-                                        <Link
-                                            to={true}
-                                            className={styles.goToEvent}
-                                        >
-                                            <span>Go to event</span>
-                                            <div className={styles.arrowRight}>
+                                    <TwitchEmbedVideo
+                                        className={styles.twitchStream}
+                                        video={event.streamUrl}
+                                    />
+                                    <div className={styles.headerWrapper}>
+                                        <div className={styles.headerContentContainer}>
+                                            <div className={styles.badgeContainer}>
+                                                <LiveBadge />
                                             </div>
-                                        </Link>
+                                            <span className={styles.title}>
+                                                {event.text}
+                                            </span>
+                                            <Tags
+                                                tags={event.tags}
+                                            />
+                                            <div>
+                                                <Link
+                                                    to={true}
+                                                    className={styles.goToEvent}
+                                                >
+                                                    <span>Go to event</span>
+                                                    <div className={styles.arrowRight}>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    ))}
+                            ))}
                 </Carousel>
 
                 <div className={styles.switchButtons}>

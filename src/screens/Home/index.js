@@ -141,7 +141,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
     return (
         <div className={styles.homeContainer}>
             <Navbar user={user} />
-            <Header slides={mapEventSlides()} />
+            <Header events={events} />
             <CarouselContainer title={'🔥 Most popular Live Events'}>
                 {renderLiveEvents()}
             </CarouselContainer>
