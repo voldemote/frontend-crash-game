@@ -1,18 +1,18 @@
 import _                 from 'lodash';
 import BetCard           from '../../components/BetCard';
 import CarouselContainer from '../../components/CarouselContainer';
-import EventBetPill      from '../../components/EventBetPill/index';
+import EventBetPill      from '../../components/EventBetPill';
 import EventCard         from '../../components/EventCard/index';
-import Header            from '../../components/Header/index';
-import Navbar            from '../../components/Navbar/index';
-import styles            from './styles.module.scss';
 import FixedIconButton   from '../../components/FixedIconButton';
+import Header            from '../../components/Header/index';
 import IconType          from '../../components/Icon/IconType';
+import Navbar            from '../../components/Navbar/index';
+import PopupTheme        from '../../components/Popup/PopupTheme';
+import Routes            from '../../constants/Routes';
+import styles            from './styles.module.scss';
+import { BetActions }    from '../../store/actions/bet';
 import { connect }       from 'react-redux';
 import { PopupActions }  from '../../store/actions/popup';
-import PopupTheme        from '../../components/Popup/PopupTheme';
-import { BetActions }    from '../../store/actions/bet';
-import Routes            from '../../constants/Routes';
 import { useHistory }    from 'react-router';
 
 const Home = ({ events, showPopup, user, setSelectedBet }) => {
@@ -25,9 +25,10 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                 const mappedTags = _.map(event.tags, (tag) => '#' + tag.name);
 
                 return {
-                    src:  event.previewImageUrl,
-                    text: event.name,
-                    tags: mappedTags,
+                    eventId: event._id,
+                    src:     event.streamUrl,
+                    text:    event.name,
+                    tags:    mappedTags,
                 };
             },
         );
@@ -140,10 +141,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
     return (
         <div className={styles.homeContainer}>
             <Navbar user={user} />
-            <Header slides={mapEventSlides()} />
-            <div className={styles.betPillContainer}>
-                {renderBetPills()}
-            </div>
+            <Header events={events} />
             <CarouselContainer title={'🔥 Most popular Live Events'}>
                 {renderLiveEvents()}
             </CarouselContainer>

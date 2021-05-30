@@ -1,64 +1,146 @@
-import LiveBadge         from '../LiveBadge';
-import React, { useRef } from 'react';
-import styles            from './styles.module.scss';
-import Link              from '../../components/Link';
-import useSlider         from '../../components/hoc/useSlider';
-import Tags              from '../Tags';
+import _                from 'lodash';
+import LiveBadge        from '../LiveBadge';
+import { useState }     from 'react';
+import styles           from './styles.module.scss';
+import Link             from '../../components/Link';
+import ReactPlayer      from 'react-player';
+import { Carousel }     from 'react-responsive-carousel';
+import { connect }      from 'react-redux';
+import EventBetPill     from '../../components/EventBetPill/index';
+import TwitchEmbedVideo from '../TwitchEmbedVideo';
+import Tags             from '../Tags';
 
-const Header = ({ slides }) => {
+const Header = ({ events }) => {
+    const [currentSlide, setCurrentSlide] = useState(0);
 
-    const slideImage                           = useRef(null);
-    const slideText                            = useRef(null);
-    const slideTags                            = useRef(null);
-    const { goToPreviousSlide, goToNextSlide } = useSlider(slideImage, slideText, slideTags, slides);
+    const updateCurrentSlide = (index) => {
+        if (currentSlide !== index) {
+            setCurrentSlide(index);
+        }
+    };
+
+    const getCurrentEvent = () => {
+        return events[currentSlide];
+    };
+
+    const renderBetPills = () => {
+        const event = getCurrentEvent();
+
+        if (event) {
+            const bets = event.bets;
+
+            return _.map(
+                bets,
+                (bet, betIndex) => {
+                    const key = event._id + '.' + betIndex;
+
+                    return (
+                        <EventBetPill
+                            key={key}
+                            userId={bet.creator}
+                            bet={bet}
+                        />
+                    );
+                },
+            );
+        }
+
+        return null;
+    };
 
     return (
-        <div
-            className={styles.header}
-            ref={slideImage}
-        >
-            <div className={styles.headerOverlay}></div>
-            <div className={styles.headerWrapper}>
-                <div className={styles.headerContentContainer}>
-                    <div className={styles.badgeContainer}>
-                        <LiveBadge />
-                    </div>
-                    <span
-                        ref={slideText}
-                        className={styles.title}
-                    ></span>
-                    <div
-                        ref={slideTags}
-                        className={styles.tags}
-                    ></div>
-                    <div>
-                        <Link
-                            to={true}
-                            className={styles.goToEvent}
-                        >
-                            <span>Go to event</span>
-                            <div className={styles.arrowRight}></div>
-                        </Link>
-                    </div>
-                </div>
+        <div>
+            <div className={styles.header}>
+
+                <Carousel
+                    className={styles.headerCarousel}
+                    emulateTouch={true}
+                    infiniteLoop={false}
+                    showArrows={false}
+                    autoPlay={false}
+                    showStatus={false}
+                    showIndicators={false}
+                    showThumbs={false}
+                    dynamicHeight={false}
+                    selectedItem={currentSlide}
+                    onChange={(index) => {
+                        updateCurrentSlide(index);
+                    }}
+                >
+                    {
+                        events.map(
+                            (event, eventIndex) => (
+                                <div key={eventIndex} className={styles.eventContainer}>
+                                    <div className={styles.headerOverlay}>
+                                    </div>
+                                    <TwitchEmbedVideo
+                                        className={styles.twitchStream}
+                                        video={event.streamUrl}
+                                        muted={true}
+                                    />
+                                    <div className={styles.headerWrapper}>
+                                        <div className={styles.headerContentContainer}>
+                                            <div className={styles.badgeContainer}>
+                                                <LiveBadge />
+                                            </div>
+                                            <span className={styles.title}>
+                                                {event.text}
+                                            </span>
+                                            <Tags
+                                                tags={event.tags}
+                                            />
+                                            <div>
+                                                <Link
+                                                    to={true}
+                                                    className={styles.goToEvent}
+                                                >
+                                                    <span>Go to event</span>
+                                                    <div className={styles.arrowRight}>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                </Carousel>
+
                 <div className={styles.switchButtons}>
                     <button
-                        onClick={goToPreviousSlide}
+                        onClick={() => {
+                            updateCurrentSlide(currentSlide - 1);
+                        }}
                         className={styles.goToPreviousSlide}
                     >
-                        <span></span>
+                        <span>
+                        </span>
                     </button>
                     <button
-                        onClick={goToNextSlide}
+                        onClick={() => {
+                            updateCurrentSlide(currentSlide + 1);
+                        }}
                         className={styles.goToNextSlide}
                     >
-                        <span></span>
+                        <span>
+                        </span>
                     </button>
                 </div>
+
             </div>
 
+            <div className={styles.betPillContainer}>
+                {renderBetPills()}
+            </div>
         </div>
     );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        events: state.event.events,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+)(Header);

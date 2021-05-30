@@ -171,16 +171,6 @@ const Bet = ({ showPopup }) => {
               );
           };
 
-          const getStreamChannel = () => {
-              let streamChannel = _.get(event, 'streamChannel');
-
-              if (!streamChannel) {
-                  streamChannel = event.streamUrl.split('/').pop();
-              }
-
-              return streamChannel;
-          };
-
           if (!event) {
               return null;
           }
@@ -222,7 +212,7 @@ const Bet = ({ showPopup }) => {
                           <div className={styles.streamContainer}>
                               <TwitchEmbedVideo
                                   video={event.streamUrl}
-                                  channel={getStreamChannel()}
+                                  muted={true}
                               />
                               <div className={styles.timeLeft}>
                                   <span>
