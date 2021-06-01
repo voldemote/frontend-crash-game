@@ -1,5 +1,6 @@
 import './styles.module.scss';
 import AlertBox                    from './components/AlertBox';
+import Bet                         from './screens/Bet';
 import Home                        from './screens/Home';
 import Logout                      from './screens/Logout';
 import Popup                       from './components/Popup';
@@ -7,8 +8,8 @@ import PrivacyPolicy               from './screens/PrivacyPolicy';
 import Routes                      from './constants/Routes';
 import store                       from './store';
 import TermsAndConditions          from './screens/TermsAndConditions';
+import Wallet                      from './screens/Wallet';
 import Welcome                     from './screens/Welcome';
-import Bet                         from './screens/Bet';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
 import { Provider }                from 'react-redux';
@@ -52,6 +53,11 @@ const App = () => {
                         exact
                         path={Routes.bet}
                         component={Bet}
+                    />
+                    <Route
+                        exact
+                        path={Routes.wallet}
+                        component={Wallet}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>
