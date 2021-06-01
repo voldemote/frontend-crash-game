@@ -115,10 +115,13 @@
             justify-content:  space-between;
             align-items:      center;
             cursor:           pointer;
+            overflow:         hidden;
+            position:         relative;
 
             .activitiesText
             {
-                margin: 0 auto 0 15px;
+                margin:  0 auto 0 15px;
+                z-index: 1;
             }
 
             strong

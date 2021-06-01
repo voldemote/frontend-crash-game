@@ -1,12 +1,15 @@
-import Link         from '../../components/Link';
-import Routes       from '../../constants/Routes';
-import styles       from './styles.module.scss';
-import WalletCard   from '../../components/WalletCard';
-import { connect }  from 'react-redux';
-import { useState } from 'react';
-import Icon         from '../../components/Icon';
-import IconType     from '../../components/Icon/IconType';
-import IconTheme    from '../../components/Icon/IconTheme';
+import Link          from '../../components/Link';
+import Routes        from '../../constants/Routes';
+import styles        from './styles.module.scss';
+import WalletCard    from '../../components/WalletCard';
+import { connect }   from 'react-redux';
+import { useState }  from 'react';
+import Icon          from '../../components/Icon';
+import IconType      from '../../components/Icon/IconType';
+import IconTheme     from '../../components/Icon/IconTheme';
+import Highlight     from '../../components/Highlight';
+import React         from 'react';
+import HighlightType from '../../components/Highlight/HighlightType';
 
 const Wallet = ({ balance }) => {
     const [action, setAction] = useState('deposit');
@@ -41,6 +44,10 @@ const Wallet = ({ balance }) => {
                     <small>available</small>
                 </div>
                 <button className={styles.activitiesButton}>
+                    <Highlight
+                        width={'auto'}
+                        highlightType={HighlightType.highlightSettingsMyWallet}
+                    />
                     <Icon
                         width={'auto'}
                         iconTheme={IconTheme.primary}
