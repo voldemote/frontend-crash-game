@@ -34,7 +34,7 @@ export default class Api {
 }
 
 export const PRODUCTION_BACKEND_URL               = 'https://backend-odxda.ondigitalocean.app';
-export const PRODUCTION_BACKEND_SOCKET_URL        = 'wss://frontend-ce4ef.ondigitalocean.app/socket.io';
+export const PRODUCTION_BACKEND_SOCKET_URL        = 'wss://chat-hf7mo.ondigitalocean.app';
 export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
 export const LOCAL_BACKEND_SOCKET_URL             = 'ws://localhost:8999';
 export const BACKEND_URL                          = Api.getBackendUrl();
