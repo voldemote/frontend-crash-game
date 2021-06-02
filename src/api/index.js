@@ -22,11 +22,12 @@ const setToken = (token) => {
     Api.defaults.headers.common['Authorization'] = authentication;
 };
 
-const requestSms = (phone) => {
+const requestSms = (phone, ref) => {
     return Api.post(
         ApiUrls.API_AUTHENTICATION_REQUEST_SMS_URL,
         {
             phone,
+            ref,
         },
     ).catch(() => {
     });

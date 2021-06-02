@@ -4,6 +4,7 @@ import AuthState               from '../../constants/AuthState';
 
 const initialState = {
     loading:        false,
+    referral:       null,
     userId:         null,
     name:           '',
     phone:          '',
@@ -129,6 +130,14 @@ const setLoading = (action, state) => {
     });
 };
 
+const setReferral = (action, state) => {
+    return update(state, {
+        referral: {
+            $set: action.referral,
+        },
+    });
+};
+
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
@@ -144,6 +153,7 @@ export default function (state = initialState, action) {
         case AuthenticationTypes.VERIFY_SMS_FAILED:
         case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:   return resetLoading(action, state);
         case AuthenticationTypes.UPDATE_DATA:                   return updateData(action, state);
+        case AuthenticationTypes.SET_REFERRAL:                  return setReferral(action, state);
         default:                                                return state;
         // @formatter:on
     }

@@ -11,11 +11,12 @@ const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
     Routes.welcome,
     Routes.bet,
-    '/service-worker.js'
+    '/service-worker.js',
 ];
 
 const requestSms = function* (action) {
     const statePhone = yield select(state => state.authentication.phone);
+    const referral   = yield select(state => state.authentication.referral);
     let phone        = action.phone;
 
     if (!phone) {
@@ -30,6 +31,7 @@ const requestSms = function* (action) {
         const response = yield call(
             Api.requestSms,
             phone,
+            referral
         );
 
         if (response) {
@@ -113,11 +115,18 @@ const logout = function* () {
 };
 
 const restoreToken = function* () {
-    const browserPathname = window.location.pathname;
-    const pathname        = yield select(state => state.router.location.pathname);
-    const authentication  = yield select(state => state.authentication);
-    const token           = authentication.token;
-    const authState       = authentication.authState;
+    const locationPathname = window.location.pathname;
+    const locationSearch   = window.location.search;
+    const pathname         = yield select(state => state.router.location.pathname);
+    const authentication   = yield select(state => state.authentication);
+    const token            = authentication.token;
+    const authState        = authentication.authState;
+    const queryParams      = new URLSearchParams(locationSearch);
+    const referral         = queryParams.get('ref');
+
+    if (referral) {
+        yield put(AuthenticationActions.setReferral({ referral }));
+    }
 
     if (token) {
         Api.setToken(token);
@@ -126,12 +135,13 @@ const restoreToken = function* () {
     if (token && authState === AuthState.LOGGED_IN) {
         if (
             pathname === Routes.welcome ||
-            browserPathname === Routes.welcome) {
+            locationPathname === Routes.welcome
+        ) {
             yield put(push(afterLoginRoute));
         }
     } else if (
         routesToRedirectWithoutSession.indexOf(pathname) === -1 ||
-        routesToRedirectWithoutSession.indexOf(browserPathname) === -1
+        routesToRedirectWithoutSession.indexOf(locationPathname) === -1
     ) {
         yield put(push(Routes.welcome));
     }

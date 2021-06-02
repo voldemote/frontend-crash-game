@@ -13,6 +13,7 @@ export const AuthenticationTypes = {
     VERIFY_SMS_FAILED:              'Authentication/VERIFY_SMS_FAILED',
     VERIFY_SMS_SUCCEEDED:           'Authentication/VERIFY_SMS_SUCCEEDED',
     UPDATE_DATA:                    'Authentication/UPDATE_DATA',
+    SET_REFERRAL:                   'Authentication/SET_REFERRAL',
 };
 
 const logout = makeActionCreator(
@@ -92,6 +93,13 @@ const updateData = makeActionCreator(
     },
 );
 
+const setReferral = makeActionCreator(
+    AuthenticationTypes.SET_REFERRAL,
+    {
+        referral: null,
+    },
+);
+
 export const AuthenticationActions = {
     logout,
     requestSms,
@@ -104,5 +112,6 @@ export const AuthenticationActions = {
     verifySms,
     verifySmsFailed,
     verifySmsSucceeded,
-    updateData
+    updateData,
+    setReferral,
 };
