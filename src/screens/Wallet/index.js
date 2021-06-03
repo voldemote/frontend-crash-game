@@ -1,18 +1,25 @@
-import Link          from '../../components/Link';
-import Routes        from '../../constants/Routes';
-import styles        from './styles.module.scss';
-import WalletCard    from '../../components/WalletCard';
-import { connect }   from 'react-redux';
-import { useState }  from 'react';
-import Icon          from '../../components/Icon';
-import IconType      from '../../components/Icon/IconType';
-import IconTheme     from '../../components/Icon/IconTheme';
-import Highlight     from '../../components/Highlight';
-import React         from 'react';
-import HighlightType from '../../components/Highlight/HighlightType';
+import Link            from '../../components/Link';
+import Routes          from '../../constants/Routes';
+import styles          from './styles.module.scss';
+import WalletCard      from '../../components/WalletCard';
+import { connect }     from 'react-redux';
+import { useState }    from 'react';
+import Icon            from '../../components/Icon';
+import IconType        from '../../components/Icon/IconType';
+import IconTheme       from '../../components/Icon/IconTheme';
+import Highlight       from '../../components/Highlight';
+import React           from 'react';
+import HighlightType   from '../../components/Highlight/HighlightType';
+import PaymentProvider from '../../constants/PaymentProvider';
+import PaymentAction   from '../../constants/PaymentAction';
+import classNames      from 'classnames';
 
 const Wallet = ({ balance }) => {
-    const [action, setAction] = useState('deposit');
+    const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
+
+    const onPaymentActionSwitch = (paymentAction) => {
+        return () => setPaymentAction(paymentAction);
+    };
 
     return (
         <div className={styles.wallet}>
@@ -59,17 +66,16 @@ const Wallet = ({ balance }) => {
                     <i></i>
                 </button>
             </div>
-            <div className={styles.switchViewsContainer}>
-                <label className={styles.switchViews}>
-                    <input
-                        type="radio"
-                        value="deposit"
-                        onChange={() => {
-                            setAction('deposit');
-                        }}
-                        defaultChecked={action === 'deposit'}
-                        name="action"
-                    />
+            <div
+                className={styles.switchViewsContainer}
+            >
+                <div
+                    className={classNames(
+                        styles.switchViews,
+                        paymentAction === PaymentAction.deposit ? styles.checked : null,
+                    )}
+                    onClick={onPaymentActionSwitch(PaymentAction.deposit)}
+                >
                     <div className={styles.text}>
                         <Icon
                             width={'auto'}
@@ -82,45 +88,42 @@ const Wallet = ({ balance }) => {
                     </div>
                     <span className={styles.line}>
                     </span>
-                </label>
-                <label className={styles.switchViews}>
-                    <input
-                        type="radio"
-                        value="withdrawal"
-                        onChange={() => {
-                            setAction('withdrawal');
-                        }}
-                        defaultChecked={action === 'withdrawal'}
-                        name="action"
-                    />
-                    <span className={styles.text}>
+                </div>
+                <div
+                    className={classNames(
+                        styles.switchViews,
+                        paymentAction === PaymentAction.withdrawal ? styles.checked : null,
+                    )}
+                    onClick={onPaymentActionSwitch(PaymentAction.withdrawal)}
+                >
+                    <div className={styles.text}>
                         <Icon
                             width={'auto'}
                             iconTheme={IconTheme.primary}
                             iconType={IconType.withdrawal}
                         />
                         Withdrawal
-                    </span>
+                    </div>
                     <span className={styles.line}>
                     </span>
-                </label>
+                </div>
             </div>
             <div className={styles.cardContainer}>
                 <WalletCard
-                    provider={'token'}
-                    action={action}
+                    provider={PaymentProvider.evntToken}
+                    action={paymentAction}
                 />
                 <WalletCard
-                    provider={'crypto'}
-                    action={action}
+                    provider={PaymentProvider.crypto}
+                    action={paymentAction}
                 />
                 <WalletCard
-                    provider={'paypal'}
-                    action={action}
+                    provider={PaymentProvider.paypal}
+                    action={paymentAction}
                 />
                 <WalletCard
-                    provider={'card'}
-                    action={action}
+                    provider={PaymentProvider.debitCreditCard}
+                    action={paymentAction}
                 />
             </div>
         </div>

@@ -181,6 +181,20 @@
             -ms-user-select:     none;
             user-select:         none;
 
+            &.checked
+            {
+                .line
+                {
+                    opacity: 1;
+                }
+
+                .text
+                {
+                    font-family: $fontBold;
+                    opacity:     1;
+                }
+            }
+
             .text
             {
                 display:         flex;
@@ -192,27 +206,6 @@
                 > :first-child
                 {
                     margin-right: 10px;
-                }
-            }
-
-            input
-            {
-                position: absolute;
-                opacity:  0;
-                cursor:   pointer;
-
-                &:checked
-                {
-                    ~ .line
-                    {
-                        opacity: 1;
-                    }
-
-                    ~ .text
-                    {
-                        font-family: $fontBold;
-                        opacity:     1;
-                    }
                 }
             }
 
