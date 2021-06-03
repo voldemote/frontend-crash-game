@@ -71,11 +71,10 @@
 
     .walletContainer
     {
-        padding-bottom:   2rem;
         padding:          0 20px;
         background-color: $colorWhite;
 
-        .accountBallance
+        .accountBalance
         {
             display:        flex;
             flex-direction: column;
@@ -101,7 +100,7 @@
             }
         }
 
-        .activitiesButton
+        .shortcutButton
         {
             background-color: $colorWhite;
             border:           solid 1px #eaeaef;
@@ -118,7 +117,7 @@
             overflow:         hidden;
             position:         relative;
 
-            .activitiesText
+            .shortcutText
             {
                 margin:  0 auto 0 15px;
                 z-index: 1;

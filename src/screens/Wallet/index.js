@@ -14,9 +14,11 @@ import WalletCard        from '../../components/WalletCard';
 import WalletPaymentCard from '../../components/WalletPaymentCard';
 import { connect }       from 'react-redux';
 import { useState }      from 'react';
+import _                 from 'lodash';
 
-const Wallet = ({ balance }) => {
+const Wallet = ({ balance, referralList, referralCount }) => {
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
+    const activityCount                     = 0;
 
     const onPaymentActionSwitch = (paymentAction) => {
         return () => setPaymentAction(paymentAction);
@@ -35,6 +37,62 @@ const Wallet = ({ balance }) => {
                 </>
             );
         }
+    };
+
+    const renderShortcutListItem = (text, onClick, iconType = IconType.activities) => {
+        return (
+            <div
+                className={styles.shortcutButton}
+                onClick={onClick}
+            >
+                <Highlight
+                    width={'auto'}
+                    highlightType={HighlightType.highlightSettingsMyWallet}
+                />
+                <Icon
+                    width={'auto'}
+                    iconTheme={IconTheme.primary}
+                    iconType={iconType}
+                />
+                <span className={styles.shortcutText}>
+                    {text}
+                </span>
+                <i>
+                </i>
+            </div>
+        );
+    };
+
+    const onActivityListClick = () => {
+        //TODO
+    };
+
+    const onReferralListClick = () => {
+
+    };
+
+    const renderShortcutList = () => {
+        return (
+            <>
+                {
+                    renderShortcutListItem(
+                        <>
+                            See all <strong>{activityCount} activities</strong>
+                        </>,
+                        onActivityListClick,
+                    )
+                }
+                {
+                    renderShortcutListItem(
+                        <>
+                            See all <strong>{referralCount} referrals</strong>
+                        </>,
+                        onReferralListClick,
+                        IconType.chat,
+                    )
+                }
+            </>
+        );
     };
 
     return (
@@ -57,7 +115,7 @@ const Wallet = ({ balance }) => {
                 </h1>
             </div>
             <div className={styles.walletContainer}>
-                <div className={styles.accountBallance}>
+                <div className={styles.accountBalance}>
                     <div>
                         {balance}
                         <sup>
@@ -66,21 +124,7 @@ const Wallet = ({ balance }) => {
                     </div>
                     <small>available</small>
                 </div>
-                <button className={styles.activitiesButton}>
-                    <Highlight
-                        width={'auto'}
-                        highlightType={HighlightType.highlightSettingsMyWallet}
-                    />
-                    <Icon
-                        width={'auto'}
-                        iconTheme={IconTheme.primary}
-                        iconType={IconType.activities}
-                    />
-                    <span className={styles.activitiesText}>
-                        See all <strong>53 activities</strong>
-                    </span>
-                    <i></i>
-                </button>
+                {renderShortcutList()}
             </div>
             <div
                 className={styles.switchViewsContainer}
@@ -148,8 +192,13 @@ const Wallet = ({ balance }) => {
 };
 
 const mapStateToProps = (state) => {
+    const referralList  = state.authentication.referralList;
+    const referralCount = _.size(referralList);
+
     return {
         balance: state.authentication.balance,
+        referralList,
+        referralCount,
     };
 };
 
