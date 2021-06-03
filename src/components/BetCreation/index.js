@@ -23,6 +23,7 @@ import { useState }          from 'react';
 import { BetActions }        from '../../store/actions/bet';
 import HighlightType         from '../Highlight/HighlightType';
 import Routes                from '../../constants/Routes';
+import CheckBox              from '../CheckBox';
 
 const initialState = {
     step:                       0,
@@ -111,7 +112,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                   case 4:
                       if (!termsAndConditionsAccepted) {
                           error = 'Please accept our terms and conditions!';
-                          // TODO valid = false;
+                          valid = false;
                       }
 
                       break;
@@ -375,12 +376,22 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           };
 
           const renderTermsAndConditions = () => {
+              const checkboxText = (
+                  <>I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link> and confirm that I have the rights to embed the stream.</>
+              );
+
               return (
                   <div className={styles.termsAndConditionsContainer}>
                       <span>
                           In order to publish the bet, you need to have the rights to embed this stream.
                           <br />
-                          I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link> and confirm that I have the rights to embed the stream.
+                          <br />
+                          <CheckBox
+                              checked={termsAndConditionsAccepted}
+                              setChecked={setTermsAndConditionsAccepted}
+                              text={checkboxText}
+                              errorText={error}
+                          />
                       </span>
                   </div>
               );

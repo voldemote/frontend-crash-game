@@ -1,0 +1,20 @@
+@import '../../styles/all';
+
+.checkboxContainer
+{
+    cursor:        pointer;
+    position:      relative;
+    margin-right:  5px;
+    padding-left:  25px;
+    margin-bottom: 11px;
+    user-select:   none;
+
+    .checkbox
+    {
+        position: absolute;
+        left:     0;
+        top:      0;
+        width:    1.4em;
+        height:   1.4em;
+    }
+}
