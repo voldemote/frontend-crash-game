@@ -10,6 +10,7 @@ import { select }       from 'redux-saga/effects';
 const create = function* (action) {
     const eventId        = action.eventId;
     const marketQuestion = action.marketQuestion;
+    const description    = action.description;
     const betOne         = action.outcomes[0].value;
     const betTwo         = action.outcomes[1].value;
     const endDate        = action.endDate;
@@ -19,6 +20,7 @@ const create = function* (action) {
         Api.createBet,
         eventId,
         marketQuestion,
+        description,
         betOne,
         betTwo,
         endDate,

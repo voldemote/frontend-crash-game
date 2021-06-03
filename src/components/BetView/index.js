@@ -203,6 +203,9 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   <div className={styles.betMarketQuestion}>
                       {bet.marketQuestion}
                   </div>
+                  <div className={styles.description}>
+                      {bet.description}
+                  </div>
                   <HotBetBadge />
                   <div className={styles.placeBetContentContainer}>
                       <label className={styles.label}>Your bet:</label>
