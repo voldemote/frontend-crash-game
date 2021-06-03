@@ -22,28 +22,31 @@ import { useIsMount }        from '../hoc/useIsMount';
 import { useState }          from 'react';
 import { BetActions }        from '../../store/actions/bet';
 import HighlightType         from '../Highlight/HighlightType';
+import Routes                from '../../constants/Routes';
 
 const initialState = {
-    step:            0,
-    error:           null,
-    marketQuestion:  '',
-    description:     '',
-    eventUrl:        null,
-    selectedDate:    null,
-    selectedEndTime: null,
-    outcomes:        [{}, {}],
+    step:                       0,
+    error:                      null,
+    marketQuestion:             '',
+    description:                '',
+    eventUrl:                   null,
+    selectedDate:               null,
+    selectedEndTime:            null,
+    termsAndConditionsAccepted: false,
+    outcomes:                   [{}, {}],
 };
 
 const BetCreation = ({ hidePopup, closed, events, createBet }) => {
-          const [step, setStep]                       = useState(initialState.step);
-          const [error, setError]                     = useState(initialState.error);
-          const [marketQuestion, setMarketQuestion]   = useState(initialState.marketQuestion);
-          const [description, setDescription]         = useState(initialState.description);
-          const [eventUrl, setEventUrl]               = useState(initialState.eventUrl);
-          const [selectedDate, setSelectedDate]       = useState(initialState.selectedDate);
-          const [selectedEndTime, setSelectedEndTime] = useState(initialState.selectedEndTime);
-          const [outcomes, setOutcomes]               = useState(initialState.outcomes);
-          const isMount                               = useIsMount();
+          const [step, setStep]                                             = useState(initialState.step);
+          const [error, setError]                                           = useState(initialState.error);
+          const [marketQuestion, setMarketQuestion]                         = useState(initialState.marketQuestion);
+          const [description, setDescription]                               = useState(initialState.description);
+          const [eventUrl, setEventUrl]                                     = useState(initialState.eventUrl);
+          const [selectedDate, setSelectedDate]                             = useState(initialState.selectedDate);
+          const [selectedEndTime, setSelectedEndTime]                       = useState(initialState.selectedEndTime);
+          const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState(initialState.termsAndConditionsAccepted);
+          const [outcomes, setOutcomes]                                     = useState(initialState.outcomes);
+          const isMount                                                     = useIsMount();
 
           const resetStates = () => {
               setMarketQuestion(initialState.marketQuestion);
@@ -101,6 +104,14 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       if (!endTimeIsValid()) {
                           error[1] = 'Please enter a valid time!';
                           valid    = false;
+                      }
+
+                      break;
+
+                  case 4:
+                      if (!termsAndConditionsAccepted) {
+                          error = 'Please accept our terms and conditions!';
+                          // TODO valid = false;
                       }
 
                       break;
@@ -182,11 +193,11 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           };
 
           const getButtonContent = () => {
-              if (step <= 1) {
+              if (step <= 2) {
                   return 'Next Step';
-              } else if (step === 2) {
-                  return 'Last Step';
               } else if (step === 3) {
+                  return 'Last Step';
+              } else if (step === 4) {
                   return (
                       <div className={styles.publishBetButton}>
                           <Icon
@@ -203,7 +214,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const getCancelButtonContent = () => {
               if (step === 0) {
                   return 'Cancel';
-              } else if (step <= 3) {
+              } else if (step <= 4) {
                   return 'Go back';
               }
 
@@ -221,6 +232,8 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                   case 3:
                       return 'When does the event end?';
                   case 4:
+                      return 'Accept Terms and Conditions';
+                  case 5:
                       return 'Awesome, that looks great!';
               }
 
@@ -237,8 +250,8 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               const validInput = validateInput();
 
               if (validInput) {
-                  if (step <= 3) {
-                      if (step === 3) {
+                  if (step <= 4) {
+                      if (step === 4) {
                           createBet(eventUrl, marketQuestion, outcomes, getEndDateTime());
                       }
 
@@ -250,7 +263,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const onCancel = () => {
               if (step === 0) {
                   hidePopup();
-              } else if (step <= 3) {
+              } else if (step <= 4) {
                   setStep(step - 1);
               }
           };
@@ -361,6 +374,18 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               );
           };
 
+          const renderTermsAndConditions = () => {
+              return (
+                  <div className={styles.termsAndConditionsContainer}>
+                      <span>
+                          In order to publish the bet, you need to have the rights to embed this stream.
+                          <br />
+                          I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link> and confirm that I have the rights to embed the stream.
+                      </span>
+                  </div>
+              );
+          };
+
           const renderSummaryRow = (key, value, isLink = false) => {
               return (
                   <div className={styles.summaryTicketRow}>
@@ -390,7 +415,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           const renderSummaryOutcomes = () => {
               return outcomes.map(
                   (outcome, index) => (
-                      <>
+                      <div key={'outcome-' + index}>
                           <Divider />
                           {
                               renderSummaryRow('Outcome #' + (
@@ -402,7 +427,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                                   index + 1
                               ), 50)
                           }
-                      </>
+                      </div>
                   ),
               );
           };
@@ -446,6 +471,8 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               } else if (step === 3) {
                   return renderDateAndTime();
               } else if (step === 4) {
+                  return renderTermsAndConditions();
+              } else if (step === 5) {
                   return renderSummary();
               }
           };
@@ -453,7 +480,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           return (
               <StepsContainer
                   step={step}
-                  size={4}
+                  size={5}
                   headlineClassName={styles.stepsHeadline}
                   headline={getHeadline()}
                   buttonContent={getButtonContent()}
@@ -462,13 +489,13 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                   onCancelButtonClick={onCancel}
                   onButtonClick={onConfirm}
                   hideDefaultButtonBackground={true}
-                  splittedView={step === 4}
+                  splittedView={step === 5}
                   buttonDesktopMargin={true}
               >
                   <div
                       className={classNames(
                           styles.contentContainer,
-                          step >= 4 ? styles.fullHeightContentContainer : null,
+                          step >= 5 ? styles.fullHeightContentContainer : null,
                       )}
                   >
                       <div
