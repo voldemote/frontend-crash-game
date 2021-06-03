@@ -15,8 +15,10 @@ import WalletPaymentCard from '../../components/WalletPaymentCard';
 import { connect }       from 'react-redux';
 import { useState }      from 'react';
 import _                 from 'lodash';
+import { PopupActions }  from '../../store/actions/popup';
+import PopupTheme        from '../../components/Popup/PopupTheme';
 
-const Wallet = ({ balance, referralList, referralCount }) => {
+const Wallet = ({ balance, referralCount, showPopup }) => {
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
     const activityCount                     = 0;
 
@@ -33,6 +35,7 @@ const Wallet = ({ balance, referralList, referralCount }) => {
                         subtitle={'EVNT tokens for inviting people'}
                         text={'Invite your friends using your referral link and get 50 EVNT token for each user who joined over your link.'}
                         buttonText={'Share with your friends'}
+                        onClick={onReferralListClick}
                     />
                 </>
             );
@@ -68,7 +71,7 @@ const Wallet = ({ balance, referralList, referralCount }) => {
     };
 
     const onReferralListClick = () => {
-
+        showPopup(PopupTheme.referralList);
     };
 
     const renderShortcutList = () => {
@@ -192,18 +195,20 @@ const Wallet = ({ balance, referralList, referralCount }) => {
 };
 
 const mapStateToProps = (state) => {
-    const referralList  = state.authentication.referralList;
-    const referralCount = _.size(referralList);
+    const referralCount = _.size(state.authentication.referralList);
 
     return {
         balance: state.authentication.balance,
-        referralList,
         referralCount,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        showPopup: (popupType) => {
+            dispatch(PopupActions.show({ popupType }));
+        },
+    };
 };
 
 export default connect(

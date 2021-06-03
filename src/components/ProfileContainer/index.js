@@ -3,16 +3,9 @@ import styles                   from './styles.module.scss';
 import classNames               from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import _                        from 'lodash';
+import ProfilePicture           from '../ProfilePicture';
 
 const ProfileContainer = ({ className, user }) => {
-    const getProfileStyle = () => {
-        const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
-
-        return {
-            backgroundImage: 'url("' + profilePicture + '")',
-        };
-    };
-
     return (
         <div
             className={classNames(
@@ -20,11 +13,7 @@ const ProfileContainer = ({ className, user }) => {
                 className,
             )}
         >
-            <div
-                className={styles.profilePicture}
-                style={getProfileStyle()}
-            >
-            </div>
+            <ProfilePicture user={user} />
             <span className={styles.profileName}>
                 {_.get(user, 'name')}
             </span>

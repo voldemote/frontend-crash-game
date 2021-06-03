@@ -119,12 +119,27 @@ const fetchReferrals = function* () {
     }
 };
 
+const fetchReferralsSucceeded = function* (action) {
+    const referralList = action.referralList;
+
+    for (const referral of referralList) {
+        const userId = _.get(referral, 'id');
+
+        if (userId) {
+            yield put(UserActions.fetch({
+                userId,
+                forceFetch: false,
+            }));
+        }
+    }
+};
+
 const authenticationSucceeded = function* (action) {
     const authState = yield select(state => state.authentication.authState);
     const userId    = yield select(state => state.authentication.userId);
 
     if (authState === AuthState.LOGGED_IN) {
-        yield put(UserActions.fetch({ userId }));
+        yield put(UserActions.fetch({ userId, forceFetch: true }));
         yield put(EventActions.fetchAll());
         yield put(AuthenticationActions.fetchReferrals());
         yield put(push(afterLoginRoute));
@@ -146,8 +161,8 @@ const restoreToken = function* () {
     const authState        = authentication.authState;
 
     if (authState !== AuthState.LOGGED_IN) {
-        const queryParams      = new URLSearchParams(locationSearch);
-        const referral         = queryParams.get('ref');
+        const queryParams = new URLSearchParams(locationSearch);
+        const referral    = queryParams.get('ref');
 
         if (referral) {
             yield put(AuthenticationActions.setReferral({ referral }));
@@ -176,6 +191,7 @@ const restoreToken = function* () {
 export default {
     authenticationSucceeded,
     fetchReferrals,
+    fetchReferralsSucceeded,
     logout,
     requestSms,
     restoreToken,

@@ -1,4 +1,5 @@
 export default {
-    betCreation: 'betCreation',
-    betView:     'betView',
+    betCreation:  'betCreation',
+    betView:      'betView',
+    referralList: 'referralList',
 };

@@ -11,6 +11,7 @@ import PopupTheme       from './PopupTheme';
 import BetCreation      from '../BetCreation';
 import BetView          from '../BetView';
 import _                from 'lodash';
+import ReferralList     from '../ReferralList';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
     useEffect(() => {
@@ -27,9 +28,15 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                 return (
                     <BetCreation closed={!visible} />
                 );
+
             case PopupTheme.betView:
                 return (
                     <BetView closed={!visible} />
+                );
+
+            case PopupTheme.referralList:
+                return (
+                    <ReferralList closed={!visible} />
                 );
         }
 

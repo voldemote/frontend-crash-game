@@ -10,8 +10,8 @@ const fetchSucceeded = (action, state) => {
 
     return update(state, {
         users: {
-            $set: {
-                [user.userId]: user,
+            [user.userId]: {
+                $set: user,
             },
         },
     });

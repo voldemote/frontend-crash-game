@@ -9,7 +9,8 @@ export const UserTypes = {
 const fetch = makeActionCreator(
     UserTypes.FETCH,
     {
-        userId: null,
+        userId:     null,
+        forceFetch: false,
     },
 );
 

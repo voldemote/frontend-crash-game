@@ -13,6 +13,8 @@ import { KeyboardDatePicker }      from '@material-ui/pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { KeyboardTimePicker }      from '@material-ui/pickers';
 import ErrorHint                   from '../ErrorHint';
+import _                           from 'lodash';
+import { useRef }                  from 'react';
 
 const InputBox = ({
                       type = 'text',
@@ -23,7 +25,7 @@ const InputBox = ({
                       setCountry,
                       hasCountry,
                       value,
-                      setValue,
+                      setValue = _.noop,
                       min,
                       max,
                       theme = InputBoxTheme.defaultInput,
@@ -31,6 +33,8 @@ const InputBox = ({
                       containerClassName,
                       showDeleteIcon = true,
                   }) => {
+    const inputRef = useRef(null);
+
     const renderInvitationText = () => {
         if (invitationText) {
             return (
@@ -93,17 +97,43 @@ const InputBox = ({
 
         return (
             <Input
+                className={styles.input}
                 placeholder={placeholder}
                 type={type}
                 value={value}
                 min={min}
                 max={max}
                 onChange={(event) => setValue(event.target.value)}
+                reference={inputRef}
             />
         );
     };
 
-    const renderDeleteIcon = () => {
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(value);
+
+        const currentInputRef = inputRef.current;
+
+        if (currentInputRef) {
+            currentInputRef.select();
+        }
+    };
+
+    const renderIcon = () => {
+        if (theme === InputBoxTheme.copyToClipboardInput) {
+            return (
+                <div
+                    className={styles.inputDeleteIconContainer}
+                    onClick={copyToClipboard}
+                >
+                    <Icon
+                        iconTheme={IconTheme.primaryLightTransparent}
+                        iconType={IconType.chat}
+                    />
+                </div>
+            );
+        }
+
         if (showDeleteIcon) {
             return (
                 <div
@@ -139,15 +169,17 @@ const InputBox = ({
                         theme,
                         {
                             [InputBoxTheme.defaultInput]:             styles.defaultInputBox,
+                            [InputBoxTheme.copyToClipboardInput]:     styles.defaultInputBox,
                             [InputBoxTheme.coloredBorderMint]:        styles.coloredBorderMint,
                             [InputBoxTheme.coloredBorderLightPurple]: styles.coloredBorderLightPurple,
                         },
                     ),
                 )}
+                onClick={theme === InputBoxTheme.copyToClipboardInput ? copyToClipboard : null}
             >
                 {renderPhoneInput()}
                 {renderInput()}
-                {renderDeleteIcon()}
+                {renderIcon()}
             </div>
             <ErrorHint errorText={errorText} />
         </div>

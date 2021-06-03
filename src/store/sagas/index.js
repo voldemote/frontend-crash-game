@@ -29,6 +29,7 @@ const root = function* () {
         takeLatest([AuthenticationTypes.REQUEST_SMS],                    AuthenticationSagas.requestSms),
         takeLatest([AuthenticationTypes.SET_EMAIL],                      AuthenticationSagas.setAdditionalInformation),
         takeLatest([AuthenticationTypes.FETCH_REFERRALS],                AuthenticationSagas.fetchReferrals),
+        takeLatest([AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED],      AuthenticationSagas.fetchReferralsSucceeded),
         takeLatest([
             AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED,
@@ -65,7 +66,6 @@ const rehydrationDone = function* () {
 };
 
 const preLoading = function* () {
-    yield put(UserActions.fetch({ userId: null }));
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
 };

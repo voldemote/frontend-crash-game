@@ -1,32 +1,43 @@
-import { put }                   from 'redux-saga/effects';
-import { call }                  from 'redux-saga/effects';
 import * as Api                  from '../../api';
+import _                         from 'lodash';
+import { AuthenticationActions } from '../actions/authentication';
+import { call }                  from 'redux-saga/effects';
+import { put }                   from 'redux-saga/effects';
 import { select }                from 'redux-saga/effects';
 import { UserActions }           from '../actions/user';
-import { AuthenticationActions } from '../actions/authentication';
 
 const fetch = function* (action) {
-    let userId = action.userId;
+    const forceFetch = action.forceFetch;
+    let fetchUser    = true;
+    let userId       = action.userId;
 
     if (!userId) {
         userId = yield select(state => state.authentication.userId);
     }
 
-    const response = yield call(
-        Api.getUser,
-        userId,
-    );
+    if (!forceFetch) {
+        const existingUsers = yield select(state => state.user.userId);
+        const userExists    = _.has(existingUsers);
+        fetchUser           = !userExists;
+    }
 
-    if (response) {
-        const user = response.data;
-
-        yield put(UserActions.fetchSucceeded({
-            user,
-        }));
-    } else {
-        yield put(UserActions.fetchFailed({
+    if (fetchUser) {
+        const response = yield call(
+            Api.getUser,
             userId,
-        }));
+        );
+
+        if (response) {
+            const user = response.data;
+
+            yield put(UserActions.fetchSucceeded({
+                user,
+            }));
+        } else {
+            yield put(UserActions.fetchFailed({
+                userId,
+            }));
+        }
     }
 };
 

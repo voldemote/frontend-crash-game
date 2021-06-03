@@ -26,26 +26,32 @@ const fetchAll = function* (action) {
 };
 
 const fetchAllSucceeded = function* (action) {
-    const users  = yield select(state => state.user.users);
     const events = action.events;
 
     if (!_.isEmpty(events)) {
+        const currentlyFetchingUsers = [];
+
         for (const event of events) {
             const bets = event.bets;
 
             if (!_.isEmpty(bets)) {
                 for (const bet of bets) {
+                    const users  = yield select(state => state.user.users);
                     const userId = bet.creator;
 
                     if (userId) {
-                        const userFetched = _.some(
-                            users,
-                            {
-                                userId: userId,
-                            },
+                        const userFetched = (
+                            _.some(
+                                users,
+                                {
+                                    userId: userId,
+                                },
+                            ) ||
+                            currentlyFetchingUsers[userId] !== undefined
                         );
 
                         if (!userFetched) {
+                            currentlyFetchingUsers[userId] = true;
                             yield put(UserActions.fetch({ userId }));
                         }
                         // TODO fetch all user at once
