@@ -38,12 +38,12 @@ const Navbar = ({ user }) => {
                     src={darkModeLogo}
                     alt="Wallfair"
                 />
-                <a
-                    href="/"
+                <Link
+                    to={Routes.home}
                     className={style.active}
                 >
                     Home
-                </a>
+                </Link>
                 <a>Discover</a>
                 <a>My Bets</a>
                 <a>My Wallet</a>

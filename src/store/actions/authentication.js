@@ -1,6 +1,9 @@
 import { makeActionCreator } from '../../helper/Store';
 
 export const AuthenticationTypes = {
+    FETCH_REFERRALS:                'Authentication/FETCH_REFERRALS',
+    FETCH_REFERRALS_FAILED:         'Authentication/FETCH_REFERRALS_FAILED',
+    FETCH_REFERRALS_SUCCEEDED:      'Authentication/FETCH_REFERRALS_SUCCEEDED',
     LOGOUT:                         'Authentication/LOGOUT',
     REQUEST_SMS:                    'Authentication/REQUEST_SMS',
     REQUEST_SMS_FAILED:             'Authentication/REQUEST_SMS_FAILED',
@@ -9,14 +12,28 @@ export const AuthenticationTypes = {
     SAVE_ADDITIONAL_INFO_SUCCEEDED: 'Authentication/SAVE_ADDITIONAL_INFO_SUCCEEDED',
     SET_EMAIL:                      'Authentication/SET_EMAIL',
     SET_NAME:                       'Authentication/SET_NAME',
+    SET_REFERRAL:                   'Authentication/SET_REFERRAL',
+    UPDATE_DATA:                    'Authentication/UPDATE_DATA',
     VERIFY_SMS:                     'Authentication/VERIFY_SMS',
     VERIFY_SMS_FAILED:              'Authentication/VERIFY_SMS_FAILED',
     VERIFY_SMS_SUCCEEDED:           'Authentication/VERIFY_SMS_SUCCEEDED',
-    UPDATE_DATA:                    'Authentication/UPDATE_DATA',
-    SET_REFERRAL:                   'Authentication/SET_REFERRAL',
 };
 
-const logout = makeActionCreator(
+const fetchReferrals = makeActionCreator(
+    AuthenticationTypes.FETCH_REFERRALS,
+);
+
+const fetchReferralsFailed = makeActionCreator(
+    AuthenticationTypes.FETCH_REFERRALS_FAILED,
+);
+
+const fetchReferralsSucceeded = makeActionCreator(
+    AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED,
+    {
+        referralList: null,
+    },
+);
+const logout                  = makeActionCreator(
     AuthenticationTypes.LOGOUT,
 );
 
@@ -64,6 +81,21 @@ const setName = makeActionCreator(
     },
 );
 
+const setReferral = makeActionCreator(
+    AuthenticationTypes.SET_REFERRAL,
+    {
+        referral: null,
+    },
+);
+
+const updateData = makeActionCreator(
+    AuthenticationTypes.UPDATE_DATA,
+    {
+        balance:        null,
+        profilePicture: null,
+    },
+);
+
 const verifySms = makeActionCreator(
     AuthenticationTypes.VERIFY_SMS,
     {
@@ -85,22 +117,10 @@ const verifySmsSucceeded = makeActionCreator(
     },
 );
 
-const updateData = makeActionCreator(
-    AuthenticationTypes.UPDATE_DATA,
-    {
-        balance:        null,
-        profilePicture: null,
-    },
-);
-
-const setReferral = makeActionCreator(
-    AuthenticationTypes.SET_REFERRAL,
-    {
-        referral: null,
-    },
-);
-
 export const AuthenticationActions = {
+    fetchReferrals,
+    fetchReferralsFailed,
+    fetchReferralsSucceeded,
     logout,
     requestSms,
     requestSmsFailed,
@@ -109,9 +129,9 @@ export const AuthenticationActions = {
     saveAdditionalInfoSucceeded,
     setEmail,
     setName,
+    setReferral,
+    updateData,
     verifySms,
     verifySmsFailed,
     verifySmsSucceeded,
-    updateData,
-    setReferral,
 };
