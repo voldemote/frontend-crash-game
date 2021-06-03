@@ -1,24 +1,40 @@
-import Link            from '../../components/Link';
-import Routes          from '../../constants/Routes';
-import styles          from './styles.module.scss';
-import WalletCard      from '../../components/WalletCard';
-import { connect }     from 'react-redux';
-import { useState }    from 'react';
-import Icon            from '../../components/Icon';
-import IconType        from '../../components/Icon/IconType';
-import IconTheme       from '../../components/Icon/IconTheme';
-import Highlight       from '../../components/Highlight';
-import React           from 'react';
-import HighlightType   from '../../components/Highlight/HighlightType';
-import PaymentProvider from '../../constants/PaymentProvider';
-import PaymentAction   from '../../constants/PaymentAction';
-import classNames      from 'classnames';
+import classNames        from 'classnames';
+import Highlight         from '../../components/Highlight';
+import HighlightType     from '../../components/Highlight/HighlightType';
+import Icon              from '../../components/Icon';
+import IconTheme         from '../../components/Icon/IconTheme';
+import IconType          from '../../components/Icon/IconType';
+import Link              from '../../components/Link';
+import PaymentAction     from '../../constants/PaymentAction';
+import PaymentProvider   from '../../constants/PaymentProvider';
+import React             from 'react';
+import Routes            from '../../constants/Routes';
+import styles            from './styles.module.scss';
+import WalletCard        from '../../components/WalletCard';
+import WalletPaymentCard from '../../components/WalletPaymentCard';
+import { connect }       from 'react-redux';
+import { useState }      from 'react';
 
 const Wallet = ({ balance }) => {
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
 
     const onPaymentActionSwitch = (paymentAction) => {
         return () => setPaymentAction(paymentAction);
+    };
+
+    const renderConditionalWalletCards = () => {
+        if (paymentAction === PaymentAction.deposit) {
+            return (
+                <>
+                    <WalletCard
+                        title={'Invite your friends'}
+                        subtitle={'EVNT tokens for inviting people'}
+                        text={'Invite your friends using your referral link and get 50 EVNT token for each user who joined over your link.'}
+                        buttonText={'Share with your friends'}
+                    />
+                </>
+            );
+        }
     };
 
     return (
@@ -109,19 +125,20 @@ const Wallet = ({ balance }) => {
                 </div>
             </div>
             <div className={styles.cardContainer}>
-                <WalletCard
+                {renderConditionalWalletCards()}
+                <WalletPaymentCard
                     provider={PaymentProvider.evntToken}
                     action={paymentAction}
                 />
-                <WalletCard
+                <WalletPaymentCard
                     provider={PaymentProvider.crypto}
                     action={paymentAction}
                 />
-                <WalletCard
+                <WalletPaymentCard
                     provider={PaymentProvider.paypal}
                     action={paymentAction}
                 />
-                <WalletCard
+                <WalletPaymentCard
                     provider={PaymentProvider.debitCreditCard}
                     action={paymentAction}
                 />
