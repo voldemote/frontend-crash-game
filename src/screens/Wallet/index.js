@@ -17,6 +17,7 @@ import { useState }      from 'react';
 import _                 from 'lodash';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
+import ScreenWithHeader  from '../../components/ScreenWithHeaderContainer';
 
 const Wallet = ({ balance, referralCount, showPopup }) => {
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
@@ -99,24 +100,7 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
     };
 
     return (
-        <div className={styles.wallet}>
-            <div className={styles.header}>
-                <Link
-                    to={Routes.home}
-                    className={styles.arrowBack}
-                >
-                    <span>
-                    </span>
-                </Link>
-                <h1 className={styles.headline}>
-                    <Icon
-                        width={'auto'}
-                        iconTheme={IconTheme.primary}
-                        iconType={IconType.wallet2}
-                    />
-                    My Wallet
-                </h1>
-            </div>
+        <ScreenWithHeader title={'My Wallet'}>
             <div className={styles.walletContainer}>
                 <div className={styles.accountBalance}>
                     <div>
@@ -190,7 +174,7 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
                     action={paymentAction}
                 />
             </div>
-        </div>
+        </ScreenWithHeader>
     );
 };
 

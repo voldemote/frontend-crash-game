@@ -1,0 +1,68 @@
+@import '../../styles/all';
+
+.screenWithHeaderContainer
+{
+    background-color: #f7f7f7;
+    height:           100%;
+    color:            $colorPrimary;
+
+    .header
+    {
+        background-color: $colorWhite;
+        position:         relative;
+        display:          flex;
+        align-items:      center;
+        padding:          3rem 20px;
+
+        .arrowBack
+        {
+            background-color: transparent;
+            border:           none;
+            height:           10px;
+            width:            10px;
+            display:          flex;
+            justify-content:  center;
+            align-items:      center;
+            transform:        rotate(-135deg);
+            left:             0;
+            bottom:           0;
+            position:         relative;
+
+            span
+            {
+                cursor: pointer;
+
+                &:before
+                {
+                    border-style:   solid;
+                    border-width:   2px 2px 0 0;
+                    content:        '';
+                    display:        inline-block;
+                    height:         10px;
+                    position:       relative;
+                    vertical-align: middle;
+                    width:          10px;
+                    transition:     border-color .2s ease-in;
+                    border-color:   $colorPrimary;
+                }
+            }
+        }
+
+        .headline
+        {
+            display:          flex;
+            flex-direction:   row;
+            font-size:        24px;
+            font-family:      $fontBold;
+            text-align:       center;
+            background-color: $colorWhite;
+            width:            100%;
+            justify-content:  center;
+
+            > :first-child
+            {
+                margin-right: 15px;
+            }
+        }
+    }
+}
