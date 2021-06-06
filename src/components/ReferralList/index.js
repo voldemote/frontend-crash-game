@@ -94,22 +94,6 @@ const ReferralList = ({ closed, userId, referralsWithUser }) => {
                   </div>
                   <div className={styles.referralList}>
                       {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
-                      {renderReferralListContent()}
                   </div>
               </div>
           );
