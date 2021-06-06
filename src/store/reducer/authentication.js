@@ -12,6 +12,7 @@ const initialState = {
     token:          null,
     balance:        0,
     profilePicture: null,
+    referralList:   [],
     authState:      AuthState.LOGGED_OUT,
 };
 
@@ -138,6 +139,14 @@ const setReferral = (action, state) => {
     });
 };
 
+const fetchReferralsSucceeded = (action, state) => {
+    return update(state, {
+        referralList: {
+            $set: action.referralList,
+        },
+    });
+};
+
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
@@ -154,6 +163,7 @@ export default function (state = initialState, action) {
         case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:   return resetLoading(action, state);
         case AuthenticationTypes.UPDATE_DATA:                   return updateData(action, state);
         case AuthenticationTypes.SET_REFERRAL:                  return setReferral(action, state);
+        case AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED:     return fetchReferralsSucceeded(action, state);
         default:                                                return state;
         // @formatter:on
     }

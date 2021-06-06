@@ -38,6 +38,7 @@ import { ReactComponent as IconThreeDotMenu }    from '../../data/icons/three-do
 import { ReactComponent as IconTime }            from '../../data/icons/time.svg';
 import { ReactComponent as IconWallet }          from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 }         from '../../data/icons/wallet-2.svg';
+import { ReactComponent as IconWithdrawal }      from '../../data/icons/withdrawal.svg';
 
 const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width, height, onClick, children }) => {
     const renderIcon = () => {
@@ -78,6 +79,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.wallet2]:         <IconWallet2 />,
                 [IconType.info]:            <IconInfo />,
                 [IconType.success]:         <IconSuccess />,
+                [IconType.withdrawal]:      <IconWithdrawal />,
             },
         );
     };

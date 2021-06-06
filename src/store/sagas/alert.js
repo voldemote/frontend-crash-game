@@ -15,6 +15,9 @@ const getFailMessage = (action) => {
         case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:
             return 'An error occurred saving details. Please try again!';
 
+        case AuthenticationTypes.FETCH_REFERRALS_FAILED:
+            return 'An error occurred fetching referral list. Please try again!';
+
         case EventTypes.FETCH_ALL_FAILED:
             return 'An error occurred fetching all events.';
 

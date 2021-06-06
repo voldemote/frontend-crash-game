@@ -13,12 +13,13 @@ import { UserTypes }           from '../actions/user';
 import { EventActions } from '../actions/event';
 
 // Sagas
-import AuthenticationSagas from './authentication';
-import AlertSagas          from './alert';
-import EventSagas          from './event';
-import BetSagas            from './bet';
-import UserSagas           from './user';
-import { UserActions }     from '../actions/user';
+import AuthenticationSagas       from './authentication';
+import AlertSagas                from './alert';
+import EventSagas                from './event';
+import BetSagas                  from './bet';
+import UserSagas                 from './user';
+import { UserActions }           from '../actions/user';
+import { AuthenticationActions } from '../actions/authentication';
 
 const root = function* () {
     yield all([
@@ -27,6 +28,8 @@ const root = function* () {
         takeLatest([AuthenticationTypes.VERIFY_SMS],                     AuthenticationSagas.verifySms),
         takeLatest([AuthenticationTypes.REQUEST_SMS],                    AuthenticationSagas.requestSms),
         takeLatest([AuthenticationTypes.SET_EMAIL],                      AuthenticationSagas.setAdditionalInformation),
+        takeLatest([AuthenticationTypes.FETCH_REFERRALS],                AuthenticationSagas.fetchReferrals),
+        takeLatest([AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED],      AuthenticationSagas.fetchReferralsSucceeded),
         takeLatest([
             AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED,
@@ -35,6 +38,7 @@ const root = function* () {
             AuthenticationTypes.REQUEST_SMS_FAILED,
             AuthenticationTypes.VERIFY_SMS_FAILED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
+            AuthenticationTypes.FETCH_REFERRALS_FAILED,
             EventTypes.FETCH_ALL_FAILED,
             BetTypes.CREATE_FAILED,
             BetTypes.PLACE_FAILED,
@@ -62,8 +66,8 @@ const rehydrationDone = function* () {
 };
 
 const preLoading = function* () {
-    yield put(UserActions.fetch({ userId: null }));
     yield put(EventActions.fetchAll());
+    yield put(AuthenticationActions.fetchReferrals());
 };
 
 export default {

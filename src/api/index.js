@@ -1,7 +1,8 @@
-import * as ApiUrls from '../constants/Api';
-import axios        from 'axios';
-import ContentTypes from '../constants/ContentTypes';
-import _            from 'lodash';
+import * as ApiUrls               from '../constants/Api';
+import axios                      from 'axios';
+import ContentTypes               from '../constants/ContentTypes';
+import _                          from 'lodash';
+import { API_USER_REFERRAL_LIST } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
     return axios.create({
@@ -50,6 +51,18 @@ const saveAdditionalInfo = (name, email) => {
         {
             name,
             email,
+        },
+    ).catch(() => {
+    });
+};
+
+const fetchReferrals = (userId) => {
+    return Api.get(
+        ApiUrls.API_USER_REFERRAL_LIST,
+        {
+            user: {
+                id: userId,
+            },
         },
     ).catch(() => {
     });
@@ -112,6 +125,7 @@ export {
     requestSms,
     verifySms,
     saveAdditionalInfo,
+    fetchReferrals,
     listEvents,
     getUser,
     createBet,

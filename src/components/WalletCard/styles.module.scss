@@ -1,0 +1,50 @@
+@import '../../styles/all';
+
+.walletCard {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(158, 158, 158, 0.16);
+    background-color: #ffffff;
+    margin-bottom: 1rem;
+    color: $colorPrimary;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+
+        strong {
+            font-size: 20px;
+            font-family: $fontBold;
+            margin-top: 1rem;
+        }
+
+        small {
+            opacity: 0.4;
+            font-size: 14px;
+            margin-top: 0.5rem;
+        }
+
+        p {
+            font-size: 14px;
+            margin-top: 1rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 0.6rem 1rem;
+            background-color: #120e27;
+            border: 1px solid #120e27;
+            color: $colorWhite;
+            font-family: $fontBold;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.2;
+        }
+    }
+}

@@ -48,3 +48,4 @@ export const API_BET_PLACE                        = 'api/event/bet/:id/place';
 export const API_EVENT_CREATE                     = 'api/event/create';
 export const API_EVENT_LIST                       = 'api/event/list';
 export const API_USER                             = 'api/user/:id';
+export const API_USER_REFERRAL_LIST               = 'api/user/refList';

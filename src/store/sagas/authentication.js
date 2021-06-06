@@ -6,6 +6,7 @@ import { push }                  from 'connected-react-router';
 import { put, call, select }     from 'redux-saga/effects';
 import { EventActions }          from '../actions/event';
 import { UserActions }           from '../actions/user';
+import _                         from 'lodash';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
@@ -31,7 +32,7 @@ const requestSms = function* (action) {
         const response = yield call(
             Api.requestSms,
             phone,
-            referral
+            referral,
         );
 
         if (response) {
@@ -97,13 +98,50 @@ const setAdditionalInformation = function* (action) {
     }
 };
 
+const fetchReferrals = function* () {
+    const userId = yield select(state => state.authentication.userId);
+
+    if (userId) {
+        const response = yield call(
+            Api.fetchReferrals,
+            userId,
+        );
+
+        if (response) {
+            const referralList = _.get(response.data, 'refList', []);
+
+            yield put(AuthenticationActions.fetchReferralsSucceeded({
+                referralList,
+            }));
+        } else {
+            yield put(AuthenticationActions.fetchReferralsFailed());
+        }
+    }
+};
+
+const fetchReferralsSucceeded = function* (action) {
+    const referralList = action.referralList;
+
+    for (const referral of referralList) {
+        const userId = _.get(referral, 'id');
+
+        if (userId) {
+            yield put(UserActions.fetch({
+                userId,
+                forceFetch: false,
+            }));
+        }
+    }
+};
+
 const authenticationSucceeded = function* (action) {
     const authState = yield select(state => state.authentication.authState);
     const userId    = yield select(state => state.authentication.userId);
 
     if (authState === AuthState.LOGGED_IN) {
-        yield put(UserActions.fetch({ userId }));
+        yield put(UserActions.fetch({ userId, forceFetch: true }));
         yield put(EventActions.fetchAll());
+        yield put(AuthenticationActions.fetchReferrals());
         yield put(push(afterLoginRoute));
     }
 };
@@ -121,11 +159,14 @@ const restoreToken = function* () {
     const authentication   = yield select(state => state.authentication);
     const token            = authentication.token;
     const authState        = authentication.authState;
-    const queryParams      = new URLSearchParams(locationSearch);
-    const referral         = queryParams.get('ref');
 
-    if (referral) {
-        yield put(AuthenticationActions.setReferral({ referral }));
+    if (authState !== AuthState.LOGGED_IN) {
+        const queryParams = new URLSearchParams(locationSearch);
+        const referral    = queryParams.get('ref');
+
+        if (referral) {
+            yield put(AuthenticationActions.setReferral({ referral }));
+        }
     }
 
     if (token) {
@@ -148,10 +189,12 @@ const restoreToken = function* () {
 };
 
 export default {
-    requestSms,
-    verifySms,
-    setAdditionalInformation,
     authenticationSucceeded,
+    fetchReferrals,
+    fetchReferralsSucceeded,
     logout,
+    requestSms,
     restoreToken,
+    setAdditionalInformation,
+    verifySms,
 };
