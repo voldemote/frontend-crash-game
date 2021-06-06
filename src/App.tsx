@@ -6,6 +6,7 @@ import Logout                      from './screens/Logout';
 import Popup                       from './components/Popup';
 import PrivacyPolicy               from './screens/PrivacyPolicy';
 import Routes                      from './constants/Routes';
+import WalletDeposit               from './screens/WalletDeposit';
 import store                       from './store';
 import TermsAndConditions          from './screens/TermsAndConditions';
 import Wallet                      from './screens/Wallet';
@@ -55,7 +56,10 @@ const App = () => {
                         component={Bet}
                     />
                     <Route
-                        exact
+                        path={Routes.walletDeposit}
+                        component={WalletDeposit}
+                    />
+                    <Route
                         path={Routes.wallet}
                         component={Wallet}
                     />

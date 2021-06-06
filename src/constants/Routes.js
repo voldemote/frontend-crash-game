@@ -16,6 +16,8 @@ export default {
     getRouteWithParameters,
     home:               '/home',
     wallet:             '/wallet',
+    walletDeposit:      '/wallet/deposit/:paymentProvider',
+    walletWithdrawal:   '/wallet/withdraw/:paymentProvider',
     logout:             '/logout',
     bet:                '/bet/:eventId?/:betId?',
     privacyPolicy:      '/privacy-policy',

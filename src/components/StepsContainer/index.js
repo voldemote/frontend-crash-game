@@ -70,10 +70,8 @@ const StepsContainer = (
                         )
                     }
                     <Button
-                        className={classNames(
-                            styles.continueButton,
-                            hideDefaultButtonBackground ? styles.continueButtonHiddenBackground : null,
-                        )}
+                        className={styles.continueButton}
+                        withoutBackground={hideDefaultButtonBackground}
                         highlightType={highlightType}
                         onClick={onButtonClick}
                         disabled={buttonDisabled}
@@ -90,10 +88,12 @@ const StepsContainer = (
     return (
         <div className={styles.stepsContainer}>
             {renderStepBar()}
-            <div className={classNames(
-                styles.stepsContentContainer,
-                splittedView ? styles.splittedView : null,
-            )}>
+            <div
+                className={classNames(
+                    styles.stepsContentContainer,
+                    splittedView ? styles.splittedView : null,
+                )}
+            >
                 <div>
                     {renderHeadline()}
                 </div>

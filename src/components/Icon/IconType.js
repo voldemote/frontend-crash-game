@@ -3,6 +3,7 @@ export default {
     addBet:          'addBet',
     addYellow:       'addYellow',
     arrow:           'arrow',
+    arrowUp:         'arrowUp',
     arrowDown:       'arrowDown',
     arrowLeft:       'arrowLeft',
     arrowRight:      'arrowRight',

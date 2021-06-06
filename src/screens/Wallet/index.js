@@ -18,8 +18,10 @@ import _                 from 'lodash';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
 import ScreenWithHeader  from '../../components/ScreenWithHeaderContainer';
+import { useHistory }    from 'react-router';
 
 const Wallet = ({ balance, referralCount, showPopup }) => {
+    const history                           = useHistory();
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
     const activityCount                     = 0;
 
@@ -75,6 +77,23 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
         showPopup(PopupTheme.referralList);
     };
 
+    const onPaymentCardClickCallback = (paymentProvider) => {
+        return () => {
+            let route = Routes.walletDeposit;
+
+            if (paymentAction === PaymentAction.withdrawal) {
+                route = Routes.walletWithdrawal;
+            }
+
+            history.push(Routes.getRouteWithParameters(
+                route,
+                {
+                    paymentProvider,
+                },
+            ));
+        };
+    };
+
     const renderShortcutList = () => {
         return (
             <>
@@ -99,8 +118,21 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
         );
     };
 
+    const renderWalletPaymentCard = (paymentProvider) => {
+        return (
+            <WalletPaymentCard
+                provider={paymentProvider}
+                action={paymentAction}
+                onClick={onPaymentCardClickCallback(paymentProvider)}
+            />
+        );
+    };
+
     return (
-        <ScreenWithHeader title={'My Wallet'}>
+        <ScreenWithHeader
+            title={'My Wallet'}
+            returnRoute={Routes.home}
+        >
             <div className={styles.walletContainer}>
                 <div className={styles.accountBalance}>
                     <div>
@@ -157,22 +189,10 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
             </div>
             <div className={styles.cardContainer}>
                 {renderConditionalWalletCards()}
-                <WalletPaymentCard
-                    provider={PaymentProvider.evntToken}
-                    action={paymentAction}
-                />
-                <WalletPaymentCard
-                    provider={PaymentProvider.crypto}
-                    action={paymentAction}
-                />
-                <WalletPaymentCard
-                    provider={PaymentProvider.paypal}
-                    action={paymentAction}
-                />
-                <WalletPaymentCard
-                    provider={PaymentProvider.debitCreditCard}
-                    action={paymentAction}
-                />
+                {renderWalletPaymentCard(PaymentProvider.evntToken)}
+                {renderWalletPaymentCard(PaymentProvider.crypto)}
+                {renderWalletPaymentCard(PaymentProvider.paypal)}
+                {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
             </div>
         </ScreenWithHeader>
     );

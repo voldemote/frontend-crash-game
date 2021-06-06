@@ -1,0 +1,16 @@
+@import '../../styles/all';
+
+.paymentScreenContainer
+{
+    display:          flex;
+    flex-direction:   column;
+    background-color: $colorWhite;
+    color:            $colorPrimary;
+    flex:             1;
+
+    .confirmButton
+    {
+        margin-top:    auto;
+        margin-bottom: 20px;
+    }
+}
