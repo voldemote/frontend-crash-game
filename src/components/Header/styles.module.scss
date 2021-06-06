@@ -114,8 +114,17 @@
 
         iframe
         {
-            width:  100% !important;
+            position: absolute;
+            z-index: -1;
+            max-width: unset !important;
+            width:  calc(100% * 4) !important;
+            height: calc(100% * 2) !important;
             margin: 0 !important;
+
+            @media (min-width: 2100px) {
+                width:  calc(100% * 6) !important;
+                height: calc(100% * 3) !important;
+            }
         }
     }
 
@@ -130,6 +139,11 @@
     .twitchStream
     {
         height: 100%;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .headerWrapper
