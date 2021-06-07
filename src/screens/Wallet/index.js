@@ -19,6 +19,7 @@ import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
 import ScreenWithHeader  from '../../components/ScreenWithHeaderContainer';
 import { useHistory }    from 'react-router';
+import AccountBalance    from '../../components/AccountBalanceView';
 
 const Wallet = ({ balance, referralCount, showPopup }) => {
     const history                           = useHistory();
@@ -134,15 +135,9 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
             returnRoute={Routes.home}
         >
             <div className={styles.walletContainer}>
-                <div className={styles.accountBalance}>
-                    <div>
-                        {balance}
-                        <sup>
-                            EVNT
-                        </sup>
-                    </div>
-                    <small>available</small>
-                </div>
+                <AccountBalance
+                    balance={balance}
+                />
                 {renderShortcutList()}
             </div>
             <div

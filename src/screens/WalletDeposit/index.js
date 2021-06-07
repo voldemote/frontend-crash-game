@@ -11,7 +11,7 @@ import { getPaymentProviderTitle } from '../../helper/PaymentProviderTitle';
 import { useParams }               from 'react-router-dom';
 import { useState }                from 'react';
 
-const WalletDeposit = ({ balance }) => {
+const WalletDeposit = ({}) => {
     const { paymentProvider }             = useParams();
     const [depositValue, setDepositValue] = useState(0);
 
@@ -72,7 +72,7 @@ const WalletDeposit = ({ balance }) => {
                     paymentProvider={paymentProvider}
                     value={depositValue}
                     setValue={setDepositValue}
-                    maxValue={balance}
+                    maxValue={1000000}
                 />
             </div>
             <div className={styles.paymentCompositionContainer}>
@@ -87,9 +87,7 @@ const WalletDeposit = ({ balance }) => {
 };
 
 const mapStateToProps = (state) => {
-    return {
-        balance: state.authentication.balance,
-    };
+    return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

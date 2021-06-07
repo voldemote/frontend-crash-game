@@ -9,6 +9,7 @@ import Routes                      from './constants/Routes';
 import WalletDeposit               from './screens/WalletDeposit';
 import store                       from './store';
 import TermsAndConditions          from './screens/TermsAndConditions';
+import PaymentConfirmation         from './screens/PaymentConfirmation';
 import Wallet                      from './screens/Wallet';
 import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
@@ -56,8 +57,14 @@ const App = () => {
                         component={Bet}
                     />
                     <Route
+                        exact
                         path={Routes.walletDeposit}
                         component={WalletDeposit}
+                    />
+                    <Route
+                        exact
+                        path={Routes.walletConfirmation}
+                        component={PaymentConfirmation}
                     />
                     <Route
                         path={Routes.wallet}

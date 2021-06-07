@@ -8,6 +8,12 @@
     color:            $colorPrimary;
     flex:             1;
 
+    &.paymentScreenSuccessContainer
+    {
+        padding:          40px 1rem 0;
+        background-color: $colorGrayLight3;
+    }
+
     .confirmButton
     {
         margin-top:    auto;

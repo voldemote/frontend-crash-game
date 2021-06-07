@@ -25,8 +25,8 @@ const ScreenWithHeader = ({ title, subtitle, returnRoute, iconType = IconType.wa
                     </Link>
                     <h1 className={styles.headline}>
                         <Icon
-                            width={'auto'}
-                            iconTheme={IconTheme.primary}
+                            width={25}
+                            iconTheme={IconTheme.primaryLightTransparent}
                             iconType={iconType}
                         />
                         {title}

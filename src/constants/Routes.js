@@ -18,6 +18,7 @@ export default {
     wallet:             '/wallet',
     walletDeposit:      '/wallet/deposit/:paymentProvider',
     walletWithdrawal:   '/wallet/withdraw/:paymentProvider',
+    walletConfirmation: '/wallet/:paymentAction/:paymentProvider/success',
     logout:             '/logout',
     bet:                '/bet/:eventId?/:betId?',
     privacyPolicy:      '/privacy-policy',
