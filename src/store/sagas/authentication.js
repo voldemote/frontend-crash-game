@@ -16,22 +16,19 @@ const routesToRedirectWithoutSession = [
 ];
 
 const requestSms = function* (action) {
-    const statePhone = yield select(state => state.authentication.phone);
-    const referral   = yield select(state => state.authentication.referral);
-    let phone        = action.phone;
+    const country   = yield select(state => state.authentication.country);
+    const phone     = yield select(state => state.authentication.phone);
+    const referral  = yield select(state => state.authentication.referral);
+    let phoneNumber = country + phone;
 
-    if (!phone) {
-        phone = statePhone;
-    }
-
-    if (phone) {
-        if (!phone.startsWith('+')) {
-            phone = '+' + phone;
+    if (phoneNumber) {
+        if (!phoneNumber.startsWith('+')) {
+            phoneNumber = '+' + phoneNumber;
         }
 
         const response = yield call(
             Api.requestSms,
-            phone,
+            phoneNumber,
             referral,
         );
 
@@ -40,6 +37,8 @@ const requestSms = function* (action) {
 
             yield put(AuthenticationActions.requestSmsSucceeded({
                 ...data,
+                phone,
+                country,
             }));
             return;
         }
@@ -51,13 +50,19 @@ const requestSms = function* (action) {
 };
 
 const verifySms = function* (action) {
-    const phone    = yield select(state => state.authentication.phone);
+    const country   = yield select(state => state.authentication.country);
+    const phone     = yield select(state => state.authentication.phone);
     const smsToken = action.smsToken;
+    let phoneNumber = country + phone;
 
-    if (phone) {
+    if (phoneNumber) {
+        if (!phoneNumber.startsWith('+')) {
+            phoneNumber = '+' + phoneNumber;
+        }
+
         const response = yield call(
             Api.verifySms,
-            phone,
+            phoneNumber,
             smsToken,
         );
 
@@ -161,6 +166,10 @@ const restoreToken = function* () {
     const authState        = authentication.authState;
 
     if (authState !== AuthState.LOGGED_IN) {
+        if (authState !== AuthState.LOGGED_OUT) {
+            yield put(AuthenticationActions.resetAuthState());
+        }
+
         const queryParams = new URLSearchParams(locationSearch);
         const referral    = queryParams.get('ref');
 

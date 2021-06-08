@@ -12,11 +12,14 @@ export const AuthenticationTypes = {
     SAVE_ADDITIONAL_INFO_SUCCEEDED: 'Authentication/SAVE_ADDITIONAL_INFO_SUCCEEDED',
     SET_EMAIL:                      'Authentication/SET_EMAIL',
     SET_NAME:                       'Authentication/SET_NAME',
+    SET_PHONE:                      'Authentication/SET_PHONE',
+    SET_COUNTRY_CODE:               'Authentication/SET_COUNTRY_CODE',
     SET_REFERRAL:                   'Authentication/SET_REFERRAL',
     UPDATE_DATA:                    'Authentication/UPDATE_DATA',
     VERIFY_SMS:                     'Authentication/VERIFY_SMS',
     VERIFY_SMS_FAILED:              'Authentication/VERIFY_SMS_FAILED',
     VERIFY_SMS_SUCCEEDED:           'Authentication/VERIFY_SMS_SUCCEEDED',
+    RESET_AUTH_STATE:               'Authentication/RESET_AUTH_STATE',
 };
 
 const fetchReferrals = makeActionCreator(
@@ -39,9 +42,6 @@ const logout                  = makeActionCreator(
 
 const requestSms = makeActionCreator(
     AuthenticationTypes.REQUEST_SMS,
-    {
-        phone: null,
-    },
 );
 
 const requestSmsFailed = makeActionCreator(
@@ -71,6 +71,20 @@ const setEmail = makeActionCreator(
     AuthenticationTypes.SET_EMAIL,
     {
         email: null,
+    },
+);
+
+const setPhone = makeActionCreator(
+    AuthenticationTypes.SET_PHONE,
+    {
+        phone: null,
+    },
+);
+
+const setCountry = makeActionCreator(
+    AuthenticationTypes.SET_COUNTRY_CODE,
+    {
+        country: null,
     },
 );
 
@@ -107,6 +121,10 @@ const verifySmsFailed = makeActionCreator(
     AuthenticationTypes.VERIFY_SMS_FAILED,
 );
 
+const resetAuthState = makeActionCreator(
+    AuthenticationTypes.RESET_AUTH_STATE,
+);
+
 const verifySmsSucceeded = makeActionCreator(
     AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
     {
@@ -129,9 +147,12 @@ export const AuthenticationActions = {
     saveAdditionalInfoSucceeded,
     setEmail,
     setName,
+    setPhone,
+    setCountry,
     setReferral,
     updateData,
     verifySms,
     verifySmsFailed,
     verifySmsSucceeded,
+    resetAuthState,
 };

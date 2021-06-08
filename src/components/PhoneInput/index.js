@@ -3,7 +3,7 @@ import React           from 'react';
 import ReactPhoneInput from 'react-phone-input-2';
 import styles          from './styles.module.scss';
 
-const PhoneInput = ({ value, inputProps, onChange, enableClickOutside, enableSearch }) => {
+const PhoneInput = ({ value, inputProps, onChange, onConfirm, enableClickOutside, enableSearch }) => {
     const getContainerStyle = () => {
         return {
             display:    'flex',
@@ -52,6 +52,7 @@ const PhoneInput = ({ value, inputProps, onChange, enableClickOutside, enableSea
             onChange={onChange}
             enableClickOutside={enableClickOutside}
             enableSearch={enableSearch}
+            onEnterKeyPress={onConfirm}
         />
     );
 };

@@ -40,38 +40,20 @@ const confirmBtnList = [
 
 const codeFieldLength = 6;
 
-const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, loading }) => {
-    const getStepByAuthState = () => {
-        switch (authState) {
-            case AuthState.LOGGED_OUT:
-                return 0;
-            case AuthState.SMS_SENT:
-                return 1;
-            case AuthState.SET_NAME:
-                return 2;
-            case AuthState.SET_EMAIL:
-                return 3;
-            case AuthState.LOGGED_IN:
-                return 4;
-        }
-    };
-
-    const step = getStepByAuthState();
-
+const Authentication = ({ authState, step, requestSms, verifySms, setName, setEmail, phoneNumber, setPhoneNumber, country, setCountry, loading }) => {
     const isMount = useIsMount();
 
-    const [country, setCountry]         = useState('49');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [code, setCode]               = useState([]);
-    const [firstName, setFirstName]     = useState('');
-    const [email, setInputEmail]        = useState('');
-    const [error, setError]             = useState(null);
+    const [code, setCode]           = useState([]);
+    const [firstName, setFirstName] = useState('');
+    const [email, setInputEmail]    = useState('');
+    const [error, setError]         = useState(null);
 
     const phoneNumberIsValid = () => {
         return country && phoneNumber && phoneNumber.length > 3;
     };
 
     const codeIsValid = () => {
+        console.debug(code, code.length);
         return code.length === codeFieldLength;
     };
 
@@ -124,15 +106,17 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
         () => {
             if (!isMount) {
                 validateInput();
+
+                if (step === 1 && codeIsValid()) {
+                    onConfirm();
+                }
             }
         },
-        [country, phoneNumber, code, firstName],
+        [step, country, phoneNumber, code, firstName],
     );
 
     const resendRequestSms = () => {
-        const phone = country + phoneNumber;
-
-        requestSms({ phone });
+        requestSms();
     };
 
     const onConfirm = () => {
@@ -242,6 +226,7 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
                         value={phoneNumber}
                         country={country}
                         setCountry={setCountry}
+                        onConfirm={onConfirm}
                     />
                 )}
                 {step === 1 && (
@@ -249,7 +234,6 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
                         fields={codeFieldLength}
                         required={true}
                         autoFocus={true}
-                        onComplete={onConfirm}
                         onChange={setCode}
                     />
                 )}
@@ -330,25 +314,60 @@ const Authentication = ({ authState, requestSms, verifySms, setName, setEmail, l
 };
 
 const mapStateToProps = (state) => {
+    const authState = state.authentication.authState;
+    let step        = 0;
+
+    switch (authState) {
+        case AuthState.LOGGED_OUT:
+            step = 0;
+            break;
+
+        case AuthState.SMS_SENT:
+            step = 1;
+            break;
+
+        case AuthState.SET_NAME:
+            step = 2;
+            break;
+
+        case AuthState.SET_EMAIL:
+            step = 3;
+            break;
+
+        case AuthState.LOGGED_IN:
+            step = 4;
+            break;
+
+    }
+
     return {
-        authState: state.authentication.authState,
-        loading:   state.authentication.loading,
+        step,
+        authState,
+        loading:     state.authentication.loading,
+        phoneNumber: state.authentication.phone,
+        country:     state.authentication.country,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestSms: (phone) => {
-            dispatch(AuthenticationActions.requestSms(phone));
+        requestSms:     () => {
+            dispatch(AuthenticationActions.requestSms());
         },
-        verifySms:  (smsToken) => {
+        verifySms:      (smsToken) => {
             dispatch(AuthenticationActions.verifySms(smsToken));
         },
-        setName:    (name) => {
+        setName:        (name) => {
             dispatch(AuthenticationActions.setName(name));
         },
-        setEmail:   (email) => {
+        setEmail:       (email) => {
             dispatch(AuthenticationActions.setEmail(email));
+        },
+        setPhoneNumber: (phone) => {
+            dispatch(AuthenticationActions.setPhone({ phone }));
+        },
+        setCountry:     (country) => {
+            dispatch(AuthenticationActions.setCountry({ country }));
         },
     };
 };

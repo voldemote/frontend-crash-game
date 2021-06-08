@@ -31,6 +31,7 @@ const InputBox = ({
                       theme = InputBoxTheme.defaultInput,
                       className,
                       containerClassName,
+                      onConfirm,
                       showDeleteIcon = true,
                   }) => {
     const inputRef = useRef(null);
@@ -54,6 +55,7 @@ const InputBox = ({
                     value={country}
                     inputProps={{ name: 'phoneNumber' }}
                     onChange={(country) => setCountry(country)}
+                    onConfirm={onConfirm}
                     enableClickOutside={true}
                     enableSearch={true}
                 />
@@ -104,6 +106,7 @@ const InputBox = ({
                 min={min}
                 max={max}
                 onChange={(event) => setValue(event.target.value)}
+                onSubmit={onConfirm}
                 reference={inputRef}
             />
         );
@@ -169,7 +172,7 @@ const InputBox = ({
                         theme,
                         {
                             [InputBoxTheme.defaultInput]:             styles.defaultInputBox,
-                            [InputBoxTheme.copyToClipboardInput]:     styles.defaultInputBox,
+                            [InputBoxTheme.copyToClipboardInput]:     styles.copyToClipboardInputBox,
                             [InputBoxTheme.coloredBorderMint]:        styles.coloredBorderMint,
                             [InputBoxTheme.coloredBorderLightPurple]: styles.coloredBorderLightPurple,
                         },

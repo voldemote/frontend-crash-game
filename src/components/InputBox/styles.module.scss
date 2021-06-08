@@ -27,6 +27,16 @@
             background-color: $colorGrayLight;
         }
 
+        &.copyToClipboardInputBox
+        {
+            background-color: $colorGrayLight;
+
+            .input
+            {
+                caret-color: transparent;
+            }
+        }
+
         &.coloredBorderMint
         {
             border-color: $colorMint;
@@ -35,11 +45,6 @@
         &.coloredBorderLightPurple
         {
             border-color: $colorLightPurple;
-        }
-
-        .input
-        {
-            caret-color: transparent;
         }
 
         .inputDeleteIconContainer
