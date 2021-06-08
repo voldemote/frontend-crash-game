@@ -1,18 +1,18 @@
-import _                                from 'lodash';
-import ApiConstants                     from '../../constants/Api';
-import ChatMessage                      from '../ChatMessage';
-import Icon                             from '../Icon';
-import IconTheme                        from '../Icon/IconTheme';
-import IconType                         from '../../components/Icon/IconType';
-import styles                           from './styles.module.scss';
-import { connect }                      from 'react-redux';
-import { useEffect }                    from 'react';
-import { UserActions }                  from '../../store/actions/user';
-import { useRef }                       from 'react';
-import { useState }                     from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import Input                            from '../Input';
-import classNames                       from 'classnames';
+import _               from 'lodash';
+import ApiConstants    from '../../constants/Api';
+import ChatMessage     from '../ChatMessage';
+import Icon            from '../Icon';
+import IconTheme       from '../Icon/IconTheme';
+import IconType        from '../../components/Icon/IconType';
+import styles          from './styles.module.scss';
+import { connect }     from 'react-redux';
+import { useEffect }   from 'react';
+import { UserActions } from '../../store/actions/user';
+import { useRef }      from 'react';
+import { useState }    from 'react';
+import Input           from '../Input';
+import classNames      from 'classnames';
+import { io }          from 'socket.io-client';
 
 const Chat = ({ className, token, event, fetchUser }) => {
     const websocket                       = useRef(null);
@@ -21,8 +21,12 @@ const Chat = ({ className, token, event, fetchUser }) => {
     const [chatMessages, setChatMessages] = useState([]);
 
     const createSocket = () => {
-        const socket = new W3CWebSocket(
-            ApiConstants.getBackendSocketUrl() + '/' + token,
+        const socket = io(
+            ApiConstants.getBackendUrl(),
+            {
+                query:        `token=${token}`,
+                extraHeaders: { Authorization: `Bearer ${token}` },
+            },
         );
 
         return socket;
@@ -36,33 +40,27 @@ const Chat = ({ className, token, event, fetchUser }) => {
         () => {
             const createdSocket = createSocket();
 
-            createdSocket.onopen = () => {
+            createdSocket.on('connect', () => {
                 console.debug('opened socket');
 
                 sendJoinRoom();
-            };
+            });
 
-            createdSocket.onmessage = (messageEvent) => {
-                const data = JSON.parse(messageEvent.data);
+            createdSocket.on('chatMessage', data => {
+                const userId  = data.userId;
+                const message = {
+                    message: data.message,
+                    date:    data.date,
+                    userId,
+                };
 
-                if (data.event === 'chat') {
-                    const userId  = data.userId;
-                    const message = {
-                        message: data.message,
-                        date:    data.date,
-                        userId,
-                    };
-
-                    fetchUser(userId);
-                    addNewMessage(message);
-                }
-            };
+                fetchUser(userId);
+                addNewMessage(message);
+            });
 
             websocket.current = createdSocket;
 
-            return () => {
-                createdSocket.close();
-            };
+            return () => createdSocket.disconnect();
         },
         [token],
     );
@@ -79,9 +77,7 @@ const Chat = ({ className, token, event, fetchUser }) => {
     };
 
     const sendObject = (object) => {
-        getCurrentSocket().send(JSON.stringify(
-            object,
-        ));
+        getCurrentSocket().emit('message', object);
     };
 
     const onMessageSend = () => {

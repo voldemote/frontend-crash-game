@@ -34,9 +34,9 @@ export default class Api {
 }
 
 export const PRODUCTION_BACKEND_URL               = 'https://backend-odxda.ondigitalocean.app';
-export const PRODUCTION_BACKEND_SOCKET_URL        = 'wss://chat-hf7mo.ondigitalocean.app';
+export const PRODUCTION_BACKEND_SOCKET_URL        = PRODUCTION_BACKEND_URL;
 export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
-export const LOCAL_BACKEND_SOCKET_URL             = 'ws://localhost:8999';
+export const LOCAL_BACKEND_SOCKET_URL             = LOCAL_BACKEND_URL;
 export const BACKEND_URL                          = Api.getBackendUrl();
 export const BACKEND_SOCKET_URL                   = Api.getBackendSocketUrl();
 export const API_AUTHENTICATION_REQUEST_SMS_URL   = 'api/user/login';
