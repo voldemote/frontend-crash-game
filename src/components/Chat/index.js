@@ -58,6 +58,12 @@ const Chat = ({ className, token, event, fetchUser }) => {
                 addNewMessage(message);
             });
 
+            createdSocket.on('betPlaced', data => {
+                console.debug('betPlaced', data);
+
+                addNewBetPlace(data);
+            });
+
             websocket.current = createdSocket;
 
             return () => createdSocket.disconnect();
@@ -65,33 +71,47 @@ const Chat = ({ className, token, event, fetchUser }) => {
         [token],
     );
 
-    const getEventObject = (type) => {
+    const getEventObject = () => {
         return {
-            event:   type,
             eventId: _.get(event, '_id'),
         };
     };
 
     const sendJoinRoom = () => {
-        sendObject(getEventObject('joinRoom'));
+        sendObject('joinRoom', getEventObject());
     };
 
-    const sendObject = (object) => {
-        getCurrentSocket().emit('message', object);
+    const sendObject = (eventName, data) => {
+        getCurrentSocket().emit(eventName, data);
     };
 
     const onMessageSend = () => {
         const messageData = {
             message: message,
-            ...getEventObject('chat'),
+            ...getEventObject(),
         };
 
-        sendObject(messageData);
+        sendObject('chatMessage', messageData);
         setMessage('');
     };
 
     const addNewMessage = (message) => {
-        setChatMessages(chatMessages => [...chatMessages, message]);
+        const chatMessage = {
+            type: 'message',
+            ...message,
+        };
+
+        setChatMessages(chatMessages => [...chatMessages, chatMessage]);
+        messageListScrollToBottom();
+    };
+
+    const addNewBetPlace = (betPlaceData) => {
+        const chatMessage = {
+            type: 'placeBet',
+            ...betPlaceData,
+        };
+
+        setChatMessages(chatMessages => [...chatMessages, chatMessage]);
         messageListScrollToBottom();
     };
 
@@ -99,14 +119,32 @@ const Chat = ({ className, token, event, fetchUser }) => {
         return _.map(
             chatMessages,
             (chatMessage, index) => {
-                return (
-                    <ChatMessage
-                        key={index}
-                        userId={chatMessage.userId}
-                        message={chatMessage.message}
-                        date={chatMessage.date}
-                    />
-                );
+                const type   = chatMessage.type;
+                const userId = _.get(chatMessage, 'userId');
+                const date   = _.get(chatMessage, 'date');
+
+                console.debug(chatMessage);
+
+                switch (type) {
+                    case 'message':
+                        return (
+                            <ChatMessage
+                                key={index}
+                                userId={userId}
+                                message={chatMessage.message}
+                                date={date}
+                            />
+                        );
+
+                    case 'placeBet':
+                        return (
+                            <div>
+                                {userId}
+                                {chatMessage.investmentAmount}
+                                {chatMessage.outcome}
+                            </div>
+                        );
+                }
             },
         );
     };
