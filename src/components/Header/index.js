@@ -8,6 +8,7 @@ import { connect }      from 'react-redux';
 import EventBetPill     from '../../components/EventBetPill/index';
 import TwitchEmbedVideo from '../TwitchEmbedVideo';
 import Tags             from '../Tags';
+import Routes           from '../../constants/Routes';
 
 const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -93,7 +94,13 @@ const Header = ({ events }) => {
                                             />
                                             <div>
                                                 <Link
-                                                    to={true}
+                                                    to={Routes.getRouteWithParameters(
+                                                        Routes.bet,
+                                                        {
+                                                            eventId: event._id,
+                                                            betId:   '',
+                                                        },
+                                                    )}
                                                     className={styles.goToEvent}
                                                 >
                                                     <span>Go to event</span>
