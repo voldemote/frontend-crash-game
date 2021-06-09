@@ -1,18 +1,20 @@
-import _               from 'lodash';
-import ApiConstants    from '../../constants/Api';
-import ChatMessage     from '../ChatMessage';
-import Icon            from '../Icon';
-import IconTheme       from '../Icon/IconTheme';
-import IconType        from '../../components/Icon/IconType';
-import styles          from './styles.module.scss';
-import { connect }     from 'react-redux';
-import { useEffect }   from 'react';
-import { UserActions } from '../../store/actions/user';
-import { useRef }      from 'react';
-import { useState }    from 'react';
-import Input           from '../Input';
-import classNames      from 'classnames';
-import { io }          from 'socket.io-client';
+import _                  from 'lodash';
+import ApiConstants       from '../../constants/Api';
+import ChatMessage        from '../ChatMessage';
+import Icon               from '../Icon';
+import IconTheme          from '../Icon/IconTheme';
+import IconType           from '../../components/Icon/IconType';
+import styles             from './styles.module.scss';
+import { connect }        from 'react-redux';
+import { useEffect }      from 'react';
+import { UserActions }    from '../../store/actions/user';
+import { useRef }         from 'react';
+import { useState }       from 'react';
+import Input              from '../Input';
+import classNames         from 'classnames';
+import { io }             from 'socket.io-client';
+import ChatMessageWrapper from '../ChatMessageWrapper';
+import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
 
 const Chat = ({ className, token, event, fetchUser }) => {
     const websocket                       = useRef(null);
@@ -59,8 +61,6 @@ const Chat = ({ className, token, event, fetchUser }) => {
             });
 
             createdSocket.on('betPlaced', data => {
-                console.debug('betPlaced', data);
-
                 addNewBetPlace(data);
             });
 
@@ -97,7 +97,7 @@ const Chat = ({ className, token, event, fetchUser }) => {
 
     const addNewMessage = (message) => {
         const chatMessage = {
-            type: 'message',
+            type: ChatMessageType.chatMessage,
             ...message,
         };
 
@@ -107,9 +107,14 @@ const Chat = ({ className, token, event, fetchUser }) => {
 
     const addNewBetPlace = (betPlaceData) => {
         const chatMessage = {
-            type: 'placeBet',
+            type: ChatMessageType.placeBet,
             ...betPlaceData,
         };
+        const userId      = _.get(betPlaceData, 'userId');
+
+        if (userId) {
+            fetchUser(userId);
+        }
 
         setChatMessages(chatMessages => [...chatMessages, chatMessage]);
         messageListScrollToBottom();
@@ -119,32 +124,14 @@ const Chat = ({ className, token, event, fetchUser }) => {
         return _.map(
             chatMessages,
             (chatMessage, index) => {
-                const type   = chatMessage.type;
                 const userId = _.get(chatMessage, 'userId');
                 const date   = _.get(chatMessage, 'date');
 
-                console.debug(chatMessage);
-
-                switch (type) {
-                    case 'message':
-                        return (
-                            <ChatMessage
-                                key={index}
-                                userId={userId}
-                                message={chatMessage.message}
-                                date={date}
-                            />
-                        );
-
-                    case 'placeBet':
-                        return (
-                            <div>
-                                {userId}
-                                {chatMessage.investmentAmount}
-                                {chatMessage.outcome}
-                            </div>
-                        );
-                }
+                return <ChatMessageWrapper
+                    message={chatMessage}
+                    userId={userId}
+                    date={date}
+                />;
             },
         );
     };

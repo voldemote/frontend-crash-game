@@ -53,7 +53,6 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
     };
 
     const codeIsValid = () => {
-        console.debug(code, code.length);
         return code.length === codeFieldLength;
     };
 
