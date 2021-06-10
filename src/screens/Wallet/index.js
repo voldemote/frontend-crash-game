@@ -101,7 +101,7 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
                 {
                     renderShortcutListItem(
                         <>
-                            See all <strong>{activityCount} activities</strong>
+                            Check history ({activityCount})
                         </>,
                         onActivityListClick,
                     )

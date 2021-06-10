@@ -10,13 +10,18 @@ import { connect }                 from 'react-redux';
 import { getPaymentProviderTitle } from '../../helper/PaymentProviderTitle';
 import { useParams }               from 'react-router-dom';
 import { useState }                from 'react';
+import { AlertActions }            from '../../store/actions/alert';
 
-const WalletDeposit = ({}) => {
+const WalletDeposit = ({ showError }) => {
     const { paymentProvider }             = useParams();
     const [depositValue, setDepositValue] = useState(0);
 
     const getFees = () => {
         return 0;
+    };
+
+    const onConfirmButtonClick = () => {
+        showError('You already got your free EVNT tokens!');
     };
 
     const renderPaymentLine = (description, value, showSign = false, highlightValueGreen = false) => {
@@ -66,7 +71,10 @@ const WalletDeposit = ({}) => {
     };
 
     return (
-        <PaymentScreenContainer paymentAction={PaymentAction.deposit}>
+        <PaymentScreenContainer
+            paymentAction={PaymentAction.deposit}
+            onConfirmButtonClick={onConfirmButtonClick}
+        >
             <div className={styles.paymentNumberContainer}>
                 <PaymentNumberInput
                     paymentProvider={paymentProvider}
@@ -91,7 +99,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        showError: (message) => {
+            dispatch(AlertActions.showError({ message }));
+        },
+    };
 };
 
 export default connect(

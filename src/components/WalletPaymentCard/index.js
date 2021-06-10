@@ -62,6 +62,10 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
                       return 'Crypto Payment';
 
                   case PaymentProvider.evntToken:
+                      if (action === PaymentAction.deposit) {
+                          return 'Free EVNT Token';
+                      }
+
                       return 'EVNT Token';
               }
 

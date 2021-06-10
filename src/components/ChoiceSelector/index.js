@@ -21,8 +21,12 @@ const ChoiceSelector = ({ name, winAmount, selected, className, theme, onClick }
             )}
             onClick={onClick}
         >
-            <span className={styles.choiceName}>{name}</span>
-            <span className={styles.choiceWinAmount}>{winAmount ? winAmount.toLocaleString() : '-'} EVNT</span>
+            <span className={styles.choiceName}>
+                {name}
+            </span>
+            <span className={styles.choiceWinAmount}>
+                {winAmount ? winAmount.toLocaleString() : '-'} EVNT
+            </span>
         </div>
     );
 };

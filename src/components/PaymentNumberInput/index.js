@@ -20,15 +20,13 @@ const PaymentNumberInput = ({ paymentProvider, value, setValue, maxValue, classN
         }
 
         if (
-            maxValue &&
-            numberValue > maxValue
+            !maxValue ||
+            numberValue < maxValue
         ) {
-            numberValue = maxValue;
+            numberValue = _.round(numberValue, 2);
+
+            setValue(numberValue);
         }
-
-        numberValue = _.round(numberValue, 2);
-
-        setValue(numberValue);
     };
 
     const increaseValue = () => {
