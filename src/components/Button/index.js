@@ -5,13 +5,14 @@ import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
 import Highlight       from '../Highlight';
 
-const Button = ({ children, highlightType, className, theme, onClick, disabled, fixed }) => {
+const Button = ({ children, highlightType, className, theme, onClick, withoutBackground = false, disabled, fixed }) => {
     return (
         <span
             className={classNames(
                 style.button,
                 className,
                 fixed ? style.buttonFixed : null,
+                withoutBackground ? style.withoutBackground : null,
                 SelectionHelper.get(
                     theme,
                     {
@@ -24,7 +25,7 @@ const Button = ({ children, highlightType, className, theme, onClick, disabled, 
         >
             {disabled && <span className={style.buttonDisabledOverlay}></span>}
             {children}
-            {highlightType && <Highlight highlightType={highlightType} />}
+            {highlightType && <Highlight className={style.highlight} highlightType={highlightType} />}
         </span>
     );
 };

@@ -211,7 +211,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                       <label className={styles.label}>Your bet:</label>
                       <TokenNumberInput
                           value={commitment}
-                          setValue={setCommitment}
+                          setValue={onTokenSelect}
                       />
                       <TokenValueSelector
                           className={styles.tokenValueSelector}

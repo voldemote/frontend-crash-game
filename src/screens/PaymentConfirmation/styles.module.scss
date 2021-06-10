@@ -1,0 +1,19 @@
+@import '../../styles/all';
+
+$marginHorizontal: 1rem;
+
+.cancelContainer
+{
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    margin-top:     40px;
+    font-size:      16px;
+
+    .timeLeftText
+    {
+        font-family: $fontBold;
+        margin-top:  5px;
+        color:       $colorRed;
+    }
+}

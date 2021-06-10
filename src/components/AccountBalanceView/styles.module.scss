@@ -1,0 +1,50 @@
+@import '../../styles/all';
+
+.accountBalance
+{
+    display:          flex;
+    flex-direction:   column;
+    flex-wrap:        wrap;
+    border:           1px dashed #eaeaef;
+    border-radius:    4px;
+    background-color: $colorWhite;
+    padding:          0.8rem 1.5rem;
+    font-size:        40px;
+
+    sup
+    {
+        font-size:   16px;
+        font-family: $fontLight;
+        margin-left: 0.5rem;
+    }
+
+    .infoContainer
+    {
+        display:         flex;
+        flex-direction:  row;
+        justify-content: space-between;
+
+        small
+        {
+            font-size:   16px;
+            color:       $colorPrimary;
+            font-family: $fontLight;
+            opacity:     0.4;
+        }
+
+        .actionText
+        {
+            font-size: 16px;
+
+            &.actionTextColorGreen
+            {
+                color: $colorGreen;
+            }
+
+            &.actionTextColorRed
+            {
+                color: $colorRed;
+            }
+        }
+    }
+}

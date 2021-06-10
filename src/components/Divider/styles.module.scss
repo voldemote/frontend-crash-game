@@ -6,4 +6,9 @@
     border:     none;
     border-top: 2px dashed $colorGrayLight4;
     margin:     20px 0;
+
+    &.noMargin
+    {
+        margin: 0;
+    }
 }

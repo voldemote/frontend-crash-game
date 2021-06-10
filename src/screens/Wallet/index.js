@@ -17,8 +17,12 @@ import { useState }      from 'react';
 import _                 from 'lodash';
 import { PopupActions }  from '../../store/actions/popup';
 import PopupTheme        from '../../components/Popup/PopupTheme';
+import ScreenWithHeader  from '../../components/ScreenWithHeaderContainer';
+import { useHistory }    from 'react-router';
+import AccountBalance    from '../../components/AccountBalanceView';
 
 const Wallet = ({ balance, referralCount, showPopup }) => {
+    const history                           = useHistory();
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
     const activityCount                     = 0;
 
@@ -74,13 +78,30 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
         showPopup(PopupTheme.referralList);
     };
 
+    const onPaymentCardClickCallback = (paymentProvider) => {
+        return () => {
+            let route = Routes.walletDeposit;
+
+            if (paymentAction === PaymentAction.withdrawal) {
+                route = Routes.walletWithdrawal;
+            }
+
+            history.push(Routes.getRouteWithParameters(
+                route,
+                {
+                    paymentProvider,
+                },
+            ));
+        };
+    };
+
     const renderShortcutList = () => {
         return (
             <>
                 {
                     renderShortcutListItem(
                         <>
-                            See all <strong>{activityCount} activities</strong>
+                            Check history ({activityCount})
                         </>,
                         onActivityListClick,
                     )
@@ -98,35 +119,25 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
         );
     };
 
+    const renderWalletPaymentCard = (paymentProvider) => {
+        return (
+            <WalletPaymentCard
+                provider={paymentProvider}
+                action={paymentAction}
+                onClick={onPaymentCardClickCallback(paymentProvider)}
+            />
+        );
+    };
+
     return (
-        <div className={styles.wallet}>
-            <div className={styles.header}>
-                <Link
-                    to={Routes.home}
-                    className={styles.arrowBack}
-                >
-                    <span>
-                    </span>
-                </Link>
-                <h1 className={styles.headline}>
-                    <Icon
-                        width={'auto'}
-                        iconTheme={IconTheme.primary}
-                        iconType={IconType.wallet2}
-                    />
-                    My Wallet
-                </h1>
-            </div>
+        <ScreenWithHeader
+            title={'My Wallet'}
+            returnRoute={Routes.home}
+        >
             <div className={styles.walletContainer}>
-                <div className={styles.accountBalance}>
-                    <div>
-                        {balance}
-                        <sup>
-                            EVNT
-                        </sup>
-                    </div>
-                    <small>available</small>
-                </div>
+                <AccountBalance
+                    balance={balance}
+                />
                 {renderShortcutList()}
             </div>
             <div
@@ -173,24 +184,12 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
             </div>
             <div className={styles.cardContainer}>
                 {renderConditionalWalletCards()}
-                <WalletPaymentCard
-                    provider={PaymentProvider.evntToken}
-                    action={paymentAction}
-                />
-                <WalletPaymentCard
-                    provider={PaymentProvider.crypto}
-                    action={paymentAction}
-                />
-                <WalletPaymentCard
-                    provider={PaymentProvider.paypal}
-                    action={paymentAction}
-                />
-                <WalletPaymentCard
-                    provider={PaymentProvider.debitCreditCard}
-                    action={paymentAction}
-                />
+                {renderWalletPaymentCard(PaymentProvider.evntToken)}
+                {renderWalletPaymentCard(PaymentProvider.crypto)}
+                {renderWalletPaymentCard(PaymentProvider.paypal)}
+                {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
             </div>
-        </div>
+        </ScreenWithHeader>
     );
 };
 
