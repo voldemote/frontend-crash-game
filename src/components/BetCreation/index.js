@@ -1,29 +1,27 @@
-import _                     from 'lodash';
-import classNames            from 'classnames';
-import Divider               from '../../components/Divider';
-import Dropdown              from '../../components/Dropdown';
-import ExampleData           from '../../helper/ExampleData';
-import Icon                  from '../Icon';
-import IconType              from '../Icon/IconType';
-import InputBox              from '../../components/InputBox';
-import InputBoxTheme         from '../../components/InputBox/InputBoxTheme';
-import Link                  from '../../components/Link';
-import moment                from 'moment';
-import ProfileContainer      from '../../components/ProfileContainer';
-import React                 from 'react';
-import RippedTicketContainer from '../../components/RippedTicketContainer';
-import StepsContainer        from '../../components/StepsContainer';
-import styles                from './styles.module.scss';
-import TimeLeftCounter       from '../../components/TimeLeftCounter';
-import { connect }           from 'react-redux';
-import { PopupActions }      from '../../store/actions/popup';
-import { useEffect }         from 'react';
-import { useIsMount }        from '../hoc/useIsMount';
-import { useState }          from 'react';
-import { BetActions }        from '../../store/actions/bet';
-import HighlightType         from '../Highlight/HighlightType';
-import Routes                from '../../constants/Routes';
-import CheckBox              from '../CheckBox';
+import _                   from 'lodash';
+import classNames          from 'classnames';
+import Divider             from '../../components/Divider';
+import Dropdown            from '../../components/Dropdown';
+import Icon                from '../Icon';
+import IconType            from '../Icon/IconType';
+import InputBox            from '../../components/InputBox';
+import InputBoxTheme       from '../../components/InputBox/InputBoxTheme';
+import Link                from '../../components/Link';
+import moment              from 'moment';
+import React               from 'react';
+import StepsContainer      from '../../components/StepsContainer';
+import styles              from './styles.module.scss';
+import { connect }         from 'react-redux';
+import { PopupActions }    from '../../store/actions/popup';
+import { useEffect }       from 'react';
+import { useIsMount }      from '../hoc/useIsMount';
+import { useState }        from 'react';
+import { BetActions }      from '../../store/actions/bet';
+import HighlightType       from '../Highlight/HighlightType';
+import Routes              from '../../constants/Routes';
+import CheckBox            from '../CheckBox';
+import BetSummaryContainer from '../BetSummaryContainer';
+import BetSummaryHelper    from '../../helper/BetSummary';
 
 const initialState = {
     step:                       0,
@@ -397,70 +395,52 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               );
           };
 
-          const renderSummaryRow = (key, value, isLink = false) => {
-              return (
-                  <div className={styles.summaryTicketRow}>
-                      <span>
-                          {key}
-                      </span>
-                      {
-                          isLink ?
-                              (
-                                  <Link
-                                      to={value}
-                                      target={'_blank'}
-                                  >
-                                      {value}
-                                  </Link>
-                              ) :
-                              (
-                                  <span>
-                                      {value}
-                                  </span>
-                              )
-                      }
-                  </div>
-              );
-          };
-
-          const renderSummaryOutcomes = () => {
-              return outcomes.map(
-                  (outcome, index) => (
-                      <div key={'outcome-' + index}>
-                          <Divider />
-                          {
-                              renderSummaryRow('Outcome #' + (
+          const getSummaryOutcomeRows = () => {
+              return _.concat(
+                  _.map(
+                      outcomes,
+                      (outcome, index) => [
+                          BetSummaryHelper.getDivider(),
+                          BetSummaryHelper.getKeyValue(
+                              'Outcome #' + (
                                   index + 1
-                              ), outcome.value)
-                          }
-                          {
-                              renderSummaryRow('Probability #' + (
+                              ),
+                              outcome.value,
+                          ),
+                          BetSummaryHelper.getKeyValue(
+                              'Probability #' + (
                                   index + 1
-                              ), 50)
-                          }
-                      </div>
+                              ),
+                              50,
+                          ),
+                      ],
                   ),
               );
           };
 
           const renderSummary = () => {
+              const summaryRows = _.concat(
+                  getSummaryOutcomeRows(),
+                  [
+                      BetSummaryHelper.getDivider(),
+                      BetSummaryHelper.getKeyValue(
+                          'Event Link:',
+                          eventUrl,
+                          true,
+                      ),
+                      BetSummaryHelper.getKeyValue(
+                          'Event Title:',
+                          'TBD',
+                      ),
+                  ],
+              );
+
               return (
-                  <RippedTicketContainer className={styles.summaryTicketContainer}>
-                      <ProfileContainer user={ExampleData.user} />
-                      <span className={styles.summaryTicketHeadline}>
-                          {marketQuestion}
-                      </span>
-                      {renderSummaryOutcomes()}
-                      <Divider />
-                      {renderSummaryRow('Event Link:', eventUrl, true)}
-                      {renderSummaryRow('Event Title:', 'TBD')}
-                      <div className={styles.summaryTimeLeftContainer}>
-                          <span>
-                              Event ends in:
-                          </span>
-                          <TimeLeftCounter endDate={getEndDateTime()} />
-                      </div>
-                  </RippedTicketContainer>
+                  <BetSummaryContainer
+                      marketQuestion={marketQuestion}
+                      endDate={getEndDateTime()}
+                      summaryRows={summaryRows}
+                  />
               );
           };
 
@@ -521,21 +501,23 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 ;
 
 const mapStateToProps = (state) => {
-    return {
-        events: state.event.events,
-    };
-};
+          return {
+              events: state.event.events,
+          };
+      }
+;
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        hidePopup: () => {
-            dispatch(PopupActions.hide());
-        },
-        createBet: (eventId, marketQuestion, description, outcomes, startDate, endDate, liquidityAmount = 1000) => {
-            dispatch(BetActions.create({ eventId, marketQuestion, description, outcomes, endDate, liquidityAmount }));
-        },
-    };
-};
+          return {
+              hidePopup: () => {
+                  dispatch(PopupActions.hide());
+              },
+              createBet: (eventId, marketQuestion, description, outcomes, startDate, endDate, liquidityAmount = 1000) => {
+                  dispatch(BetActions.create({ eventId, marketQuestion, description, outcomes, endDate, liquidityAmount }));
+              },
+          };
+      }
+;
 
 export default connect(
     mapStateToProps,

@@ -24,6 +24,11 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
     const renderPopup = () => {
         switch (type) {
+            case PopupTheme.betApprove:
+                return (
+                    <BetCreation closed={!visible} />
+                );
+
             case PopupTheme.betCreation:
                 return (
                     <BetCreation closed={!visible} />

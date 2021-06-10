@@ -48,6 +48,11 @@ const place = makeActionCreator(
 
 const placeSucceeded = makeActionCreator(
     BetTypes.PLACE_SUCCEEDED,
+    {
+        betId:   null,
+        amount:  null,
+        outcome: null,
+    },
 );
 
 const placeFailed = makeActionCreator(

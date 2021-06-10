@@ -52,7 +52,11 @@ const place = function* (action) {
     );
 
     if (response) {
-        yield put(BetActions.placeSucceeded());
+        yield put(BetActions.placeSucceeded({
+            betId,
+            amount,
+            isOutcomeOne,
+        }));
         yield put(PopupActions.hide());
         yield put(EventActions.fetchAll());
     } else {

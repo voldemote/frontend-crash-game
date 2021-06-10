@@ -1,9 +1,9 @@
-import React                    from 'react';
-import styles                   from './styles.module.scss';
-import classNames               from 'classnames';
-import { getProfilePictureUrl } from '../../helper/ProfilePicture';
-import _                        from 'lodash';
-import ProfilePicture           from '../ProfilePicture';
+import _              from 'lodash';
+import classNames     from 'classnames';
+import ProfilePicture from '../ProfilePicture';
+import React          from 'react';
+import styles         from './styles.module.scss';
+import { connect }    from 'react-redux';
 
 const ProfileContainer = ({ className, user }) => {
     return (
@@ -21,4 +21,19 @@ const ProfileContainer = ({ className, user }) => {
     );
 };
 
-export default ProfileContainer;
+const mapStateToProps = (state, ownProps) => {
+    let { user } = ownProps;
+
+    if (!user) {
+        user = state.authentication;
+    }
+
+    return {
+        user,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(ProfileContainer);
