@@ -15,7 +15,15 @@ const initialState = {
 
 const reset = (action, state) => {
     return update(state, {
-        $set: initialState,
+        selectedEventId: {
+            $set: initialState.selectedEventId,
+        },
+        selectedBetId: {
+            $set: initialState.selectedBetId,
+        },
+        selectedChoice: {
+            $set: initialState.selectedChoice,
+        },
     });
 };
 

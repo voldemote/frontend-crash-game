@@ -6,6 +6,8 @@ import { EventActions } from '../actions/event';
 import { PopupActions } from '../actions/popup';
 import { put }          from 'redux-saga/effects';
 import { select }       from 'redux-saga/effects';
+import { PopupTypes }   from '../actions/popup';
+import PopupTheme       from '../../components/Popup/PopupTheme';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -59,6 +61,12 @@ const place = function* (action) {
         }));
         yield put(PopupActions.hide());
         yield put(EventActions.fetchAll());
+        yield put(PopupActions.show({
+            popupType: PopupTheme.betApprove,
+            options:   {
+                betId,
+            },
+        }));
     } else {
         yield put(BetActions.placeFailed());
     }

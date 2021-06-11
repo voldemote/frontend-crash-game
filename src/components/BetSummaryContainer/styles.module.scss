@@ -21,6 +21,11 @@
         margin-bottom:  15px;
         font-size:      14px;
 
+        .bold
+        {
+            font-family: $fontBold;
+        }
+
         > *
         {
             text-overflow: ellipsis;

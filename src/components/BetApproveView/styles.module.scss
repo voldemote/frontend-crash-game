@@ -5,7 +5,6 @@
     display:          flex;
     flex-direction:   column;
     align-items:      center;
-    overflow:         hidden;
     height:           100%;
     width:            100%;
     padding-top:      60px;
@@ -13,102 +12,35 @@
     color:            $colorPrimaryDark;
     border-radius:    10px;
 
-    .eventName
-    {
-        color:         $colorGray;
-        margin-bottom: 15px;
-        font-size:     14px;
-    }
-
-    .betMarketQuestion
-    {
-        color:         $colorPrimaryDark;
-        font-family:   $fontBold;
-        font-size:     24px;
-        text-align:    center;
-        margin-bottom: 10px;
-    }
-
-    .description
-    {
-        color:         $colorPrimary50;
-        text-align:    center;
-        font-size:     15px;
-        margin-bottom: 20px;
-
-    }
-
-    .approveBetContentContainer
+    .approveBetHeadline
     {
         display:        flex;
         flex-direction: column;
-        margin:         2rem 0;
-        width:          100%;
-        padding:        $padding;
+        align-items:    center;
+        font-size:      25px;
+        text-align:     center;
+        font-family:    $fontBold;
 
-        .label
+        .headlineIcon
         {
-            color:         $colorPrimaryDark;
-            font-size:     12px;
-            text-align:    left;
-            width:         100%;
-            margin-bottom: 15px;
-            display:       block;
-        }
-
-        .tokenValueSelector
-        {
-            margin-top: 20px;
-        }
-
-        .buttonContainer
-        {
-            width:      100%;
-            margin-top: 45px;
-
-            .choiceContainer
-            {
-                display:         flex;
-                flex-direction:  row;
-                justify-content: space-between;
-
-                .choice
-                {
-                    width:       100%;
-                    margin-left: 8px;
-
-                    &:first-child
-                    {
-                        margin-right: 8px;
-                    }
-                }
-            }
+            margin-bottom: 10px;
         }
     }
+}
 
-    .betButton
+.betSummaryContainer
+{
+    display:          flex;
+    flex-direction:   column;
+    align-items:      center;
+    margin-top:       30px;
+    padding:          40px 25px;
+    width:            100%;
+    height:           100%;
+    background-color: $colorGrayLight3;
+
+    @media (min-width: $screen-sm)
     {
-        font-size:        16px;
-        margin-top:       auto;
-        background-color: transparent;
-
-        @media (min-width: $screen-sm)
-        {
-            margin-bottom: 20px;
-            font-size:     23px;
-        }
-    }
-
-    .timeLeftCounterContainer
-    {
-        display:          flex;
-        justify-content:  space-between;
-        align-items:      center;
-        flex-direction:   row;
-        background-color: $colorPrimary;
-        width:            100%;
-        padding:          15px 30px;
-        color:            $colorWhite;
-        font-size:        12px;
+        padding: 40px 40px;
     }
 }

@@ -7,11 +7,13 @@ class BetSummaryHelper {
         };
     }
 
-    static getKeyValue (key, value, isLink = false) {
+    static getKeyValue (key, value, keyBold = false, valueBold = false, isLink = false) {
         return {
             type: SummaryRowType.keyValue,
             key,
+            keyBold,
             value,
+            valueBold,
             isLink,
         };
     }

@@ -12,6 +12,7 @@ import BetCreation      from '../BetCreation';
 import BetView          from '../BetView';
 import _                from 'lodash';
 import ReferralList     from '../ReferralList';
+import BetApproveView   from '../BetApproveView';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
     useEffect(() => {
@@ -26,7 +27,10 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
         switch (type) {
             case PopupTheme.betApprove:
                 return (
-                    <BetCreation closed={!visible} />
+                    <BetApproveView
+                        closed={!visible}
+                        betId={_.get(options, 'betId')}
+                    />
                 );
 
             case PopupTheme.betCreation:
