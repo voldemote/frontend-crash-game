@@ -22,6 +22,7 @@ import Routes              from '../../constants/Routes';
 import CheckBox            from '../CheckBox';
 import BetSummaryContainer from '../BetSummaryContainer';
 import BetSummaryHelper    from '../../helper/BetSummary';
+import IconTheme           from '../Icon/IconTheme';
 
 const initialState = {
     step:                       0,
@@ -201,6 +202,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       <div className={styles.publishBetButton}>
                           <Icon
                               iconType={IconType.bet}
+                              iconTheme={IconTheme.primary}
                           />
                           Publish Bet!
                       </div>
@@ -396,10 +398,12 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
           };
 
           const getSummaryOutcomeRows = () => {
-              return _.concat(
-                  _.map(
-                      outcomes,
-                      (outcome, index) => [
+              const summaryOutcomeRows = [];
+
+              _.each(
+                  outcomes,
+                  (outcome, index) => {
+                      summaryOutcomeRows.push(
                           BetSummaryHelper.getDivider(),
                           BetSummaryHelper.getKeyValue(
                               'Outcome #' + (
@@ -413,9 +417,11 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                               ),
                               50,
                           ),
-                      ],
-                  ),
+                      );
+                  },
               );
+
+              return summaryOutcomeRows;
           };
 
           const renderSummary = () => {
@@ -426,7 +432,9 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                       BetSummaryHelper.getKeyValue(
                           'Event Link:',
                           eventUrl,
-                          true,
+                          false,
+                          false,
+                          true
                       ),
                       BetSummaryHelper.getKeyValue(
                           'Event Title:',
