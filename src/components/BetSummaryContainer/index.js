@@ -9,7 +9,7 @@ import SummaryRowType        from './SummaryRowType';
 import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import classNames            from 'classnames';
 
-const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows }) => {
+const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) => {
     const renderSummaryRow = (summaryRow, index) => {
         const type = _.get(summaryRow, 'type', SummaryRowType.keyValue);
 
@@ -69,7 +69,10 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows }) => {
     };
 
     return (
-        <RippedTicketContainer className={styles.summaryTicketContainer}>
+        <RippedTicketContainer
+            className={styles.summaryTicketContainer}
+            onClick={onClick}
+        >
             <ProfileContainer />
             <span className={styles.summaryTicketHeadline}>
                 {marketQuestion}

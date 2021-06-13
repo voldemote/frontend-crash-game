@@ -109,6 +109,17 @@ const getOutcomes = (betId, amount) => {
     });
 };
 
+const pullOutBet = (betId, amount, isOutcomeOne) => {
+    return Api.post(
+        _.replace(ApiUrls.API_BET_PULL_OUT, ':id', betId),
+        {
+            amount,
+            isOutcomeOne,
+        },
+    ).catch(() => {
+    });
+};
+
 const getOpenBets = () => {
     return Api.get(
         ApiUrls.API_USER_OPEN_BETS,
@@ -129,15 +140,16 @@ const placeBet = (betId, amount, isOutcomeOne) => {
 
 export {
     Api,
-    setToken,
-    requestSms,
-    verifySms,
-    saveAdditionalInfo,
-    fetchReferrals,
-    listEvents,
-    getUser,
     createBet,
-    getOutcomes,
-    placeBet,
+    fetchReferrals,
     getOpenBets,
+    getOutcomes,
+    getUser,
+    listEvents,
+    placeBet,
+    pullOutBet,
+    requestSms,
+    saveAdditionalInfo,
+    setToken,
+    verifySms,
 };

@@ -26,6 +26,9 @@ const getFailMessage = (action) => {
 
         case BetTypes.PLACE_FAILED:
             return 'An error occurred placing on the bet. Please try again!';
+
+        case BetTypes.PULL_OUT_BET_FAILED:
+            return 'An error occurred selling bet';
     }
 
     return null;
@@ -38,6 +41,9 @@ const getSuccessMessage = (action) => {
 
         case BetTypes.PLACE_SUCCEEDED:
             return 'The bet was placed successfully!';
+
+        case BetTypes.PULL_OUT_BET_SUCCEEDED:
+            return 'The bet was sold successfully!';
     }
 
     return null;

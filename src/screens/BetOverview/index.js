@@ -10,9 +10,9 @@ import SwitchableContainer from '../../components/SwitchableContainer';
 import SwitchableHelper    from '../../helper/SwitchableHelper';
 import { connect }         from 'react-redux';
 import { useState }        from 'react';
-import ExampleData         from '../../helper/ExampleData';
+import { BetActions }      from '../../store/actions/bet';
 
-const BetOverview = ({ openBets, rawOutcomes }) => {
+const BetOverview = ({ openBets, pullOutBet }) => {
     const [betView, setBetView] = useState(0);
 
     const renderSwitchableView = () => {
@@ -57,6 +57,16 @@ const BetOverview = ({ openBets, rawOutcomes }) => {
         ];
     };
 
+    const onBetSummaryClick = (openBet) => {
+        return () => {
+            const betId   = _.get(openBet, 'betId');
+            const amount  = _.get(openBet, 'investmentAmount');
+            const outcome = _.get(openBet, 'outcome');
+
+            pullOutBet(betId, amount, outcome);
+        };
+    };
+
     const renderBetSummary = (openBet, index) => {
         const bet            = _.get(openBet, 'bet');
         const outcomes       = _.get(openBet, 'outcomes');
@@ -73,6 +83,7 @@ const BetOverview = ({ openBets, rawOutcomes }) => {
                     marketQuestion={marketQuestion}
                     endDate={endDateTime}
                     summaryRows={summaryRows}
+                    onClick={onBetSummaryClick(openBet)}
                 />
             </div>
         );
@@ -99,7 +110,7 @@ const BetOverview = ({ openBets, rawOutcomes }) => {
 
     return (
         <ScreenWithHeader
-            title={'Open Bets'}
+            title={'My Bets'}
             returnRoute={Routes.home}
         >
             {renderSwitchableView()}
@@ -165,7 +176,15 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        pullOutBet: (betId, amount, outcome) => {
+            dispatch(BetActions.pullOutBet({
+                betId,
+                amount,
+                outcome,
+            }));
+        },
+    };
 };
 
 export default connect(

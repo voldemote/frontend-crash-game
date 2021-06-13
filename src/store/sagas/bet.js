@@ -6,7 +6,6 @@ import { BetActions }             from '../actions/bet';
 import { all, call, put, select } from 'redux-saga/effects';
 import { EventActions }           from '../actions/event';
 import { PopupActions }           from '../actions/popup';
-import { PopupTypes }             from '../actions/popup';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -160,11 +159,33 @@ const fetchOpenBetsSucceeded = function* (action) {
     );
 };
 
+const pullOut = function* (action) {
+    const betId        = action.betId;
+    const amount       = action.amount;
+    const outcome      = action.outcome;
+    const isOutcomeOne = outcome === 0;
+
+    const response = yield call(
+        Api.pullOutBet,
+        betId,
+        amount,
+        isOutcomeOne,
+    );
+
+    if (response) {
+        yield put(BetActions.pullOutBetSucceeded());
+        yield put(BetActions.fetchOpenBets());
+    } else {
+        yield put(BetActions.pullOutBetFailed());
+    }
+};
+
 export default {
     create,
-    place,
-    setCommitment,
-    fetchOutcomes,
     fetchOpenBets,
     fetchOpenBetsSucceeded,
+    fetchOutcomes,
+    place,
+    pullOut,
+    setCommitment,
 };
