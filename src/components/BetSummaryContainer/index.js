@@ -10,7 +10,7 @@ import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import classNames            from 'classnames';
 
 const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows }) => {
-    const renderSummaryRow = (summaryRow) => {
+    const renderSummaryRow = (summaryRow, index) => {
         const type = _.get(summaryRow, 'type', SummaryRowType.keyValue);
 
         switch (type) {
@@ -21,16 +21,19 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows }) => {
                 const valueBold = _.get(summaryRow, 'valueBold');
                 const isLink    = _.get(summaryRow, 'isLink');
 
-                return renderSingleSummaryRow(key, value, keyBold, valueBold, isLink);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, isLink);
 
             case SummaryRowType.divider:
-                return <Divider />;
+                return <Divider key={index} />;
         }
     };
 
-    const renderSingleSummaryRow = (key, value, keyBold = false, valueBold = false, isLink = false) => {
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, isLink = false) => {
         return (
-            <div className={styles.summaryTicketRow}>
+            <div
+                className={styles.summaryTicketRow}
+                key={index}
+            >
                 <span
                     className={classNames(
                         keyBold ? styles.bold : null,

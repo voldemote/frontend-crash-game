@@ -101,8 +101,8 @@ const setOutcomes = (action, state) => {
             } else {
                 newState = update(newState, {
                     outcomes: {
-                        $set: {
-                            [index]: {
+                        [index]: {
+                            $set: {
                                 values: {
                                     [outcome.amount]: {
                                         time,

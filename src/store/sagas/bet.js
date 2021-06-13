@@ -1,14 +1,12 @@
-import * as Api         from '../../api';
-import _                from 'lodash';
-import { BetActions }   from '../actions/bet';
-import { call }         from 'redux-saga/effects';
-import { EventActions } from '../actions/event';
-import { PopupActions } from '../actions/popup';
-import { put }          from 'redux-saga/effects';
-import { select }       from 'redux-saga/effects';
-import { PopupTypes }   from '../actions/popup';
-import PopupTheme       from '../../components/Popup/PopupTheme';
-import AuthState        from '../../constants/AuthState';
+import * as Api                   from '../../api';
+import _                          from 'lodash';
+import AuthState                  from '../../constants/AuthState';
+import PopupTheme                 from '../../components/Popup/PopupTheme';
+import { BetActions }             from '../actions/bet';
+import { all, call, put, select } from 'redux-saga/effects';
+import { EventActions }           from '../actions/event';
+import { PopupActions }           from '../actions/popup';
+import { PopupTypes }             from '../actions/popup';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -144,10 +142,29 @@ const fetchOpenBets = function* () {
     }
 };
 
+const fetchOpenBetsSucceeded = function* (action) {
+    const openBets = _.get(action, 'openBets', []);
+
+    yield all(
+        openBets.map(
+            (openBet) => {
+                const betId  = openBet.betId;
+                const amount = openBet.investmentAmount;
+
+                return put(BetActions.fetchOutcomes({
+                    betId,
+                    amount,
+                }));
+            },
+        ),
+    );
+};
+
 export default {
     create,
     place,
     setCommitment,
     fetchOutcomes,
     fetchOpenBets,
+    fetchOpenBetsSucceeded,
 };

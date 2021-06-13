@@ -14,14 +14,15 @@ const getRouteWithParameters = function (route, parameterValues) {
 
 export default {
     getRouteWithParameters,
-    home:               '/home',
-    wallet:             '/wallet',
-    walletDeposit:      '/wallet/deposit/:paymentProvider',
-    walletWithdrawal:   '/wallet/withdraw/:paymentProvider',
-    walletConfirmation: '/wallet/:paymentAction/:paymentProvider/success',
-    logout:             '/logout',
     bet:                '/bet/:eventId?/:betId?',
+    betOverview:       '/my-bets',
+    home:               '/home',
+    logout:             '/logout',
     privacyPolicy:      '/privacy-policy',
     termsAndConditions: '/terms-and-conditions',
+    wallet:             '/wallet',
+    walletConfirmation: '/wallet/:paymentAction/:paymentProvider/success',
+    walletDeposit:      '/wallet/deposit/:paymentProvider',
+    walletWithdrawal:   '/wallet/withdraw/:paymentProvider',
     welcome:            '/',
 };

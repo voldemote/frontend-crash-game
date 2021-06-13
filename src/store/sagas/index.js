@@ -1,7 +1,6 @@
-import { all }        from 'redux-saga/effects';
-import { REHYDRATE }  from 'redux-persist';
-import { takeLatest } from 'redux-saga/effects';
-import { put }        from 'redux-saga/effects';
+import { all }                        from 'redux-saga/effects';
+import { REHYDRATE }                  from 'redux-persist';
+import { takeLatest, takeEvery, put } from 'redux-saga/effects';
 
 // Types
 import { AuthenticationTypes } from '../actions/authentication';
@@ -53,10 +52,11 @@ const root = function* () {
         takeLatest([BetTypes.PLACE],                                     BetSagas.place),
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([BetTypes.SET_COMMITMENT],                            BetSagas.setCommitment),
-        takeLatest([BetTypes.FETCH_OUTCOMES],                            BetSagas.fetchOutcomes),
+        takeEvery( [BetTypes.FETCH_OUTCOMES],                            BetSagas.fetchOutcomes),
         takeLatest([BetTypes.FETCH_OPEN_BETS],                           BetSagas.fetchOpenBets),
-        takeLatest([UserTypes.FETCH],                                    UserSagas.fetch),
-        takeLatest([UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
+        takeLatest([BetTypes.FETCH_OPEN_BETS_SUCCEEDED],                 BetSagas.fetchOpenBetsSucceeded),
+        takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
+        takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on

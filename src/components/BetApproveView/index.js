@@ -10,16 +10,6 @@ import styles              from './styles.module.scss';
 import { connect }         from 'react-redux';
 
 const BetApproveView = ({ closed, betId, bet, openBet, outcomes }) => {
-    const getEndDateTime = () => {
-        const time = _.get(bet, 'date');
-
-        if (time) {
-            return moment(time);
-        }
-
-        return null;
-    };
-
     const getSummaryRows = () => {
         const amount        = _.get(openBet, 'amount');
         const outcomeIndex  = _.get(openBet, 'outcome');
@@ -37,12 +27,16 @@ const BetApproveView = ({ closed, betId, bet, openBet, outcomes }) => {
 
     const renderBetSummary = () => {
         const marketQuestion = _.get(bet, 'marketQuestion');
+        const endDateTime    = moment(
+            _.get(bet, 'date', new Date()),
+        );
+        const summaryRows    = getSummaryRows();
 
         return (
             <BetSummaryContainer
                 marketQuestion={marketQuestion}
-                endDate={getEndDateTime()}
-                summaryRows={getSummaryRows()}
+                endDate={endDateTime}
+                summaryRows={summaryRows}
             />
         );
     };

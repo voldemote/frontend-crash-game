@@ -1,33 +1,37 @@
-import classNames        from 'classnames';
-import Highlight         from '../../components/Highlight';
-import HighlightType     from '../../components/Highlight/HighlightType';
-import Icon              from '../../components/Icon';
-import IconTheme         from '../../components/Icon/IconTheme';
-import IconType          from '../../components/Icon/IconType';
-import Link              from '../../components/Link';
-import PaymentAction     from '../../constants/PaymentAction';
-import PaymentProvider   from '../../constants/PaymentProvider';
-import React             from 'react';
-import Routes            from '../../constants/Routes';
-import styles            from './styles.module.scss';
-import WalletCard        from '../../components/WalletCard';
-import WalletPaymentCard from '../../components/WalletPaymentCard';
-import { connect }       from 'react-redux';
-import { useState }      from 'react';
-import _                 from 'lodash';
-import { PopupActions }  from '../../store/actions/popup';
-import PopupTheme        from '../../components/Popup/PopupTheme';
-import ScreenWithHeader  from '../../components/ScreenWithHeaderContainer';
-import { useHistory }    from 'react-router';
-import AccountBalance    from '../../components/AccountBalanceView';
+import _                       from 'lodash';
+import AccountBalance          from '../../components/AccountBalanceView';
+import Highlight               from '../../components/Highlight';
+import HighlightType           from '../../components/Highlight/HighlightType';
+import Icon                    from '../../components/Icon';
+import IconTheme               from '../../components/Icon/IconTheme';
+import IconType                from '../../components/Icon/IconType';
+import PaymentAction           from '../../constants/PaymentAction';
+import PaymentProvider         from '../../constants/PaymentProvider';
+import PopupTheme              from '../../components/Popup/PopupTheme';
+import React                   from 'react';
+import Routes                  from '../../constants/Routes';
+import ScreenWithHeader        from '../../components/ScreenWithHeaderContainer';
+import styles                  from './styles.module.scss';
+import SwitchableContainer from '../../components/SwitchableContainer';
+import SwitchableHelper    from '../../helper/SwitchableHelper';
+import WalletCard          from '../../components/WalletCard';
+import WalletPaymentCard       from '../../components/WalletPaymentCard';
+import { connect }             from 'react-redux';
+import { PopupActions }        from '../../store/actions/popup';
+import { useHistory }          from 'react-router';
+import { useState }            from 'react';
 
 const Wallet = ({ balance, referralCount, showPopup }) => {
     const history                           = useHistory();
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
     const activityCount                     = 0;
 
-    const onPaymentActionSwitch = (paymentAction) => {
-        return () => setPaymentAction(paymentAction);
+    const onPaymentActionSwitch = (newIndex) => {
+        if (newIndex === 0) {
+            setPaymentAction(PaymentAction.deposit);
+        } else {
+            setPaymentAction(PaymentAction.withdrawal);
+        }
     };
 
     const renderConditionalWalletCards = () => {
@@ -119,6 +123,28 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
         );
     };
 
+    const renderSwitchableView = () => {
+        const switchableViews = [
+            SwitchableHelper.getSwitchableView(
+                'Deposit',
+                IconType.deposit,
+            ),
+            SwitchableHelper.getSwitchableView(
+                'Withdrawal',
+                IconType.withdrawal,
+            ),
+        ];
+        const selectedIndex   = paymentAction === PaymentAction.deposit ? 0 : 1;
+
+        return (
+            <SwitchableContainer
+                switchableViews={switchableViews}
+                currentIndex={selectedIndex}
+                setCurrentIndex={onPaymentActionSwitch}
+            />
+        );
+    };
+
     const renderWalletPaymentCard = (paymentProvider) => {
         return (
             <WalletPaymentCard
@@ -140,48 +166,7 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
                 />
                 {renderShortcutList()}
             </div>
-            <div
-                className={styles.switchViewsContainer}
-            >
-                <div
-                    className={classNames(
-                        styles.switchViews,
-                        paymentAction === PaymentAction.deposit ? styles.checked : null,
-                    )}
-                    onClick={onPaymentActionSwitch(PaymentAction.deposit)}
-                >
-                    <div className={styles.text}>
-                        <Icon
-                            width={'auto'}
-                            iconTheme={IconTheme.primary}
-                            iconType={IconType.deposit}
-                        />
-                        <span>
-                            Deposit
-                        </span>
-                    </div>
-                    <span className={styles.line}>
-                    </span>
-                </div>
-                <div
-                    className={classNames(
-                        styles.switchViews,
-                        paymentAction === PaymentAction.withdrawal ? styles.checked : null,
-                    )}
-                    onClick={onPaymentActionSwitch(PaymentAction.withdrawal)}
-                >
-                    <div className={styles.text}>
-                        <Icon
-                            width={'auto'}
-                            iconTheme={IconTheme.primary}
-                            iconType={IconType.withdrawal}
-                        />
-                        Withdrawal
-                    </div>
-                    <span className={styles.line}>
-                    </span>
-                </div>
-            </div>
+            {renderSwitchableView()}
             <div className={styles.cardContainer}>
                 {renderConditionalWalletCards()}
                 {renderWalletPaymentCard(PaymentProvider.evntToken)}

@@ -11,6 +11,7 @@ import store                       from './store';
 import TermsAndConditions          from './screens/TermsAndConditions';
 import PaymentConfirmation         from './screens/PaymentConfirmation';
 import Wallet                      from './screens/Wallet';
+import BetOverview                from './screens/BetOverview';
 import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
@@ -69,6 +70,10 @@ const App = () => {
                     <Route
                         path={Routes.wallet}
                         component={Wallet}
+                    />
+                    <Route
+                        path={Routes.betOverview}
+                        component={BetOverview}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>
