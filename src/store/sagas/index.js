@@ -20,6 +20,7 @@ import BetSagas                  from './bet';
 import UserSagas                 from './user';
 import { UserActions }           from '../actions/user';
 import { AuthenticationActions } from '../actions/authentication';
+import { BetActions }            from '../actions/bet';
 
 const root = function* () {
     yield all([
@@ -53,6 +54,7 @@ const root = function* () {
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([BetTypes.SET_COMMITMENT],                            BetSagas.setCommitment),
         takeLatest([BetTypes.FETCH_OUTCOMES],                            BetSagas.fetchOutcomes),
+        takeLatest([BetTypes.FETCH_OPEN_BETS],                           BetSagas.fetchOpenBets),
         takeLatest([UserTypes.FETCH],                                    UserSagas.fetch),
         takeLatest([UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
@@ -68,6 +70,7 @@ const rehydrationDone = function* () {
 const preLoading = function* () {
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
+    yield put(BetActions.fetchOpenBets());
 };
 
 export default {

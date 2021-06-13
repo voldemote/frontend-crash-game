@@ -46,7 +46,9 @@ const Navbar = ({ user }) => {
                 </Link>
                 <a>Discover</a>
                 <a>My Bets</a>
-                <a>My Wallet</a>
+                <Link to={Routes.wallet}>
+                    My Wallet
+                </Link>
             </div>
             <div className={style.navbarItems}>
                 <Link

@@ -1,17 +1,20 @@
 import { makeActionCreator } from '../../helper/Store';
 
 export const BetTypes = {
-    CREATE:           'Bet/CREATE',
-    CREATE_FAILED:    'Bet/CREATE_FAILED',
-    CREATE_SUCCEEDED: 'Bet/CREATE_SUCCEEDED',
-    PLACE:            'Bet/PLACE',
-    PLACE_FAILED:     'Bet/PLACE_FAILED',
-    PLACE_SUCCEEDED:  'Bet/PLACE_SUCCEEDED',
-    SELECT_BET:       'Bet/SELECT_BET',
-    SELECT_CHOICE:    'Bet/SELECT_CHOICE',
-    SET_COMMITMENT:   'Bet/SET_COMMITMENT',
-    SET_OUTCOMES:     'Bet/SET_OUTCOMES',
-    FETCH_OUTCOMES:   'Bet/FETCH_OUTCOMES',
+    CREATE:                    'Bet/CREATE',
+    CREATE_FAILED:             'Bet/CREATE_FAILED',
+    CREATE_SUCCEEDED:          'Bet/CREATE_SUCCEEDED',
+    PLACE:                     'Bet/PLACE',
+    PLACE_FAILED:              'Bet/PLACE_FAILED',
+    PLACE_SUCCEEDED:           'Bet/PLACE_SUCCEEDED',
+    SELECT_BET:                'Bet/SELECT_BET',
+    SELECT_CHOICE:             'Bet/SELECT_CHOICE',
+    SET_COMMITMENT:            'Bet/SET_COMMITMENT',
+    SET_OUTCOMES:              'Bet/SET_OUTCOMES',
+    FETCH_OUTCOMES:            'Bet/FETCH_OUTCOMES',
+    FETCH_OPEN_BETS:           'Bet/FETCH_OPEN_BETS',
+    FETCH_OPEN_BETS_SUCCEEDED: 'Bet/FETCH_OPEN_BETS_SUCCEEDED',
+    FETCH_OPEN_BETS_FAILED:    'Bet/FETCH_OPEN_BETS_FAILED',
 };
 
 const create = makeActionCreator(
@@ -97,6 +100,21 @@ const fetchOutcomes = makeActionCreator(
     },
 );
 
+const fetchOpenBets = makeActionCreator(
+    BetTypes.FETCH_OPEN_BETS,
+);
+
+const fetchOpenBetsSucceeded = makeActionCreator(
+    BetTypes.FETCH_OPEN_BETS_SUCCEEDED,
+    {
+        openBets: null,
+    },
+);
+
+const fetchOpenBetsFailed = makeActionCreator(
+    BetTypes.FETCH_OPEN_BETS_FAILED,
+);
+
 export const BetActions = {
     create,
     createSucceeded,
@@ -109,4 +127,7 @@ export const BetActions = {
     setCommitment,
     setOutcomes,
     fetchOutcomes,
+    fetchOpenBets,
+    fetchOpenBetsSucceeded,
+    fetchOpenBetsFailed,
 };

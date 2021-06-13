@@ -18,10 +18,10 @@ const reset = (action, state) => {
         selectedEventId: {
             $set: initialState.selectedEventId,
         },
-        selectedBetId: {
+        selectedBetId:   {
             $set: initialState.selectedBetId,
         },
-        selectedChoice: {
+        selectedChoice:  {
             $set: initialState.selectedChoice,
         },
     });
@@ -140,7 +140,19 @@ const placeSucceeded = (action, state) => {
     });
 
 };
-const resetOutcomes  = (action, state) => {
+
+const fetchOpenBetsSucceeded = (action, state) => {
+    const openBets = _.get(action, 'openBets', []);
+
+    return update(state, {
+        openBets: {
+            $set: openBets,
+        },
+    });
+
+};
+
+const resetOutcomes = (action, state) => {
     return update(state, {
         outcomes: {
             $set: [],
@@ -151,14 +163,15 @@ const resetOutcomes  = (action, state) => {
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
-        case PopupTypes.HIDE:          return reset(action, state);
-        case BetTypes.SELECT_BET:      return selectBet(action, state);
-        case BetTypes.SELECT_CHOICE:   return selectChoice(action, state);
-        case BetTypes.SET_COMMITMENT:  return setCommitment(action, state);
-        case BetTypes.SET_OUTCOMES:    return setOutcomes(action, state);
-        case BetTypes.PLACE_SUCCEEDED: return placeSucceeded(action, state);
-        case REHYDRATE:                return resetOutcomes(action, state);
-        default:                       return state;
+        case PopupTypes.HIDE:                    return reset(action, state);
+        case BetTypes.SELECT_BET:                return selectBet(action, state);
+        case BetTypes.SELECT_CHOICE:             return selectChoice(action, state);
+        case BetTypes.SET_COMMITMENT:            return setCommitment(action, state);
+        case BetTypes.SET_OUTCOMES:              return setOutcomes(action, state);
+        case BetTypes.PLACE_SUCCEEDED:           return placeSucceeded(action, state);
+        case BetTypes.FETCH_OPEN_BETS_SUCCEEDED: return fetchOpenBetsSucceeded(action, state);
+        case REHYDRATE:                          return resetOutcomes(action, state);
+        default:                                 return state;
         // @formatter:on
     }
 }

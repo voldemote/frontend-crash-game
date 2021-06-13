@@ -99,7 +99,7 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
                         <label
                             className={styles.label}
                         >
-                            Your bet:
+                            You trade:
                         </label>
                         <TokenNumberInput
                             value={betValue}

@@ -8,6 +8,7 @@ import { put }          from 'redux-saga/effects';
 import { select }       from 'redux-saga/effects';
 import { PopupTypes }   from '../actions/popup';
 import PopupTheme       from '../../components/Popup/PopupTheme';
+import AuthState        from '../../constants/AuthState';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -120,9 +121,33 @@ const fetchOutcomes = function* (action) {
     }
 };
 
+const fetchOpenBets = function* () {
+    const authState = yield select(state => state.authentication.authState);
+
+    if (
+        authState === AuthState.LOGGED_IN
+    ) {
+        const response = yield call(
+            Api.getOpenBets,
+        );
+
+        if (response) {
+            const result   = response.data;
+            const openBets = _.get(result, 'openBets', []);
+
+            yield put(BetActions.fetchOpenBetsSucceeded({
+                openBets,
+            }));
+        } else {
+            yield put(BetActions.fetchOpenBetsFailed());
+        }
+    }
+};
+
 export default {
     create,
     place,
     setCommitment,
     fetchOutcomes,
+    fetchOpenBets,
 };
