@@ -61,6 +61,7 @@ const root = function* () {
         takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
         takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
+        takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
     ]);

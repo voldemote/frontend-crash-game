@@ -1,12 +1,12 @@
-import * as Api                  from '../../api';
-import AuthState                 from '../../constants/AuthState';
-import Routes                    from '../../constants/Routes';
-import { AuthenticationActions } from '../actions/authentication';
-import { push }                  from 'connected-react-router';
-import { put, call, select }     from 'redux-saga/effects';
-import { EventActions }          from '../actions/event';
-import { UserActions }           from '../actions/user';
-import _                         from 'lodash';
+import * as Api                     from '../../api';
+import _                            from 'lodash';
+import AuthState                    from '../../constants/AuthState';
+import Routes                       from '../../constants/Routes';
+import { AuthenticationActions }    from '../actions/authentication';
+import { EventActions }             from '../actions/event';
+import { push }                     from 'connected-react-router';
+import { put, call, select, delay } from 'redux-saga/effects';
+import { UserActions }              from '../actions/user';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
@@ -52,7 +52,7 @@ const requestSms = function* (action) {
 const verifySms = function* (action) {
     const country   = yield select(state => state.authentication.country);
     const phone     = yield select(state => state.authentication.phone);
-    const smsToken = action.smsToken;
+    const smsToken  = action.smsToken;
     let phoneNumber = country + phone;
 
     if (phoneNumber) {
@@ -197,6 +197,19 @@ const restoreToken = function* () {
     }
 };
 
+const refreshImportantData = function* () {
+    const authState = yield select(state => state.authentication.authState);
+
+    if (authState === AuthState.LOGGED_IN) {
+        yield put(UserActions.fetch({ forceFetch: true }));
+        yield put(EventActions.fetchAll());
+        yield put(AuthenticationActions.fetchReferrals());
+
+        yield delay(30 * 1000);
+        yield call(refreshImportantData);
+    }
+};
+
 export default {
     authenticationSucceeded,
     fetchReferrals,
@@ -205,5 +218,6 @@ export default {
     requestSms,
     restoreToken,
     setAdditionalInformation,
+    refreshImportantData,
     verifySms,
 };
