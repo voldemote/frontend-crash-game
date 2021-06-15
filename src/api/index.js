@@ -3,6 +3,7 @@ import axios                      from 'axios';
 import ContentTypes               from '../constants/ContentTypes';
 import _                          from 'lodash';
 import { API_USER_REFERRAL_LIST } from '../constants/Api';
+import { API_USER_OPEN_BETS }     from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
     return axios.create({
@@ -108,6 +109,24 @@ const getOutcomes = (betId, amount) => {
     });
 };
 
+const pullOutBet = (betId, amount, isOutcomeOne) => {
+    return Api.post(
+        _.replace(ApiUrls.API_BET_PULL_OUT, ':id', betId),
+        {
+            amount,
+            isOutcomeOne,
+        },
+    ).catch(() => {
+    });
+};
+
+const getOpenBets = () => {
+    return Api.get(
+        ApiUrls.API_USER_OPEN_BETS,
+    ).catch(() => {
+    });
+};
+
 const placeBet = (betId, amount, isOutcomeOne) => {
     return Api.post(
         _.replace(ApiUrls.API_BET_PLACE, ':id', betId),
@@ -121,14 +140,16 @@ const placeBet = (betId, amount, isOutcomeOne) => {
 
 export {
     Api,
-    setToken,
-    requestSms,
-    verifySms,
-    saveAdditionalInfo,
-    fetchReferrals,
-    listEvents,
-    getUser,
     createBet,
+    fetchReferrals,
+    getOpenBets,
     getOutcomes,
+    getUser,
+    listEvents,
     placeBet,
+    pullOutBet,
+    requestSms,
+    saveAdditionalInfo,
+    setToken,
+    verifySms,
 };

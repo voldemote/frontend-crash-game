@@ -1,11 +1,11 @@
-import * as Api         from '../../api';
-import _                from 'lodash';
-import { BetActions }   from '../actions/bet';
-import { call }         from 'redux-saga/effects';
-import { EventActions } from '../actions/event';
-import { PopupActions } from '../actions/popup';
-import { put }          from 'redux-saga/effects';
-import { select }       from 'redux-saga/effects';
+import * as Api                   from '../../api';
+import _                          from 'lodash';
+import AuthState                  from '../../constants/AuthState';
+import PopupTheme                 from '../../components/Popup/PopupTheme';
+import { BetActions }             from '../actions/bet';
+import { all, call, put, select } from 'redux-saga/effects';
+import { EventActions }           from '../actions/event';
+import { PopupActions }           from '../actions/popup';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -52,9 +52,19 @@ const place = function* (action) {
     );
 
     if (response) {
-        yield put(BetActions.placeSucceeded());
+        yield put(BetActions.placeSucceeded({
+            betId,
+            amount,
+            isOutcomeOne,
+        }));
         yield put(PopupActions.hide());
         yield put(EventActions.fetchAll());
+        yield put(PopupActions.show({
+            popupType: PopupTheme.betApprove,
+            options:   {
+                betId,
+            },
+        }));
     } else {
         yield put(BetActions.placeFailed());
     }
@@ -108,9 +118,74 @@ const fetchOutcomes = function* (action) {
     }
 };
 
+const fetchOpenBets = function* () {
+    const authState = yield select(state => state.authentication.authState);
+
+    if (
+        authState === AuthState.LOGGED_IN
+    ) {
+        const response = yield call(
+            Api.getOpenBets,
+        );
+
+        if (response) {
+            const result   = response.data;
+            const openBets = _.get(result, 'openBets', []);
+
+            yield put(BetActions.fetchOpenBetsSucceeded({
+                openBets,
+            }));
+        } else {
+            yield put(BetActions.fetchOpenBetsFailed());
+        }
+    }
+};
+
+const fetchOpenBetsSucceeded = function* (action) {
+    const openBets = _.get(action, 'openBets', []);
+
+    yield all(
+        openBets.map(
+            (openBet) => {
+                const betId  = openBet.betId;
+                const amount = openBet.investmentAmount;
+
+                return put(BetActions.fetchOutcomes({
+                    betId,
+                    amount,
+                }));
+            },
+        ),
+    );
+};
+
+const pullOut = function* (action) {
+    const betId        = action.betId;
+    const amount       = action.amount;
+    const outcome      = action.outcome;
+    const isOutcomeOne = outcome === 0;
+
+    const response = yield call(
+        Api.pullOutBet,
+        betId,
+        amount,
+        isOutcomeOne,
+    );
+
+    if (response) {
+        yield put(BetActions.pullOutBetSucceeded());
+        yield put(BetActions.fetchOpenBets());
+    } else {
+        yield put(BetActions.pullOutBetFailed());
+    }
+};
+
 export default {
     create,
-    place,
-    setCommitment,
+    fetchOpenBets,
+    fetchOpenBetsSucceeded,
     fetchOutcomes,
+    place,
+    pullOut,
+    setCommitment,
 };

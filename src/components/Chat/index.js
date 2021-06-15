@@ -1,6 +1,5 @@
 import _                  from 'lodash';
 import ApiConstants       from '../../constants/Api';
-import ChatMessage        from '../ChatMessage';
 import Icon               from '../Icon';
 import IconTheme          from '../Icon/IconTheme';
 import IconType           from '../../components/Icon/IconType';
@@ -24,7 +23,7 @@ const Chat = ({ className, token, event, fetchUser }) => {
 
     const createSocket = () => {
         const socket = io(
-            ApiConstants.getBackendUrl(),
+            ApiConstants.getBackendSocketUrl(),
             {
                 query:        `token=${token}`,
                 extraHeaders: { Authorization: `Bearer ${token}` },

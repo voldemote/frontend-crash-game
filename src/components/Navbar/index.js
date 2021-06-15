@@ -45,8 +45,12 @@ const Navbar = ({ user }) => {
                     Home
                 </Link>
                 <a>Discover</a>
-                <a>My Bets</a>
-                <a>My Wallet</a>
+                <Link to={Routes.betOverview}>
+                    My Bets
+                </Link>
+                <Link to={Routes.wallet}>
+                    My Wallet
+                </Link>
             </div>
             <div className={style.navbarItems}>
                 <Link
@@ -54,7 +58,7 @@ const Navbar = ({ user }) => {
                     className={style.balanceOverview}
                 >
                     <span className={style.actualBalanceText}>
-                        Your actual Balance
+                        Your current Balance
                     </span>
                     {getBalance()} EVNT
                 </Link>

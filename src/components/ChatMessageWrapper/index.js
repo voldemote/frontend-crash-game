@@ -68,11 +68,9 @@ const ChatMessageWrapper = ({ user, message, date }) => {
 
 const mapStateToProps = (state, ownProps) => {
     const { userId } = ownProps;
-    const user       = _.find(
+    const user       = _.get(
         state.user.users,
-        {
-            userId: userId,
-        },
+        userId,
     );
 
     return {

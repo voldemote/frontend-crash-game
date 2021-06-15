@@ -1,8 +1,7 @@
+import _              from 'lodash';
 import update         from 'immutability-helper';
-import { EventTypes } from '../actions/event';
 import { BetTypes }   from '../actions/bet';
 import { PopupTypes } from '../actions/popup';
-import _              from 'lodash';
 import { REHYDRATE }  from 'redux-persist';
 
 const initialState = {
@@ -11,11 +10,20 @@ const initialState = {
     selectedChoice:     null,
     selectedCommitment: null,
     outcomes:           [],
+    openBets:           [],
 };
 
 const reset = (action, state) => {
     return update(state, {
-        $set: initialState,
+        selectedEventId: {
+            $set: initialState.selectedEventId,
+        },
+        selectedBetId:   {
+            $set: initialState.selectedBetId,
+        },
+        selectedChoice:  {
+            $set: initialState.selectedChoice,
+        },
     });
 };
 
@@ -40,7 +48,7 @@ const selectChoice = (action, state) => {
 
 const setCommitment = (action, state) => {
     const commitment = action.commitment;
-    const betId = action.betId;
+    const betId      = action.betId;
 
     if (
         _.isEmpty(commitment) ||
@@ -56,7 +64,7 @@ const setCommitment = (action, state) => {
             selectedCommitment: {
                 $set: action.commitment,
             },
-            selectedEventId: {
+            selectedEventId:    {
                 $set: action.commitment,
             },
         });
@@ -93,8 +101,8 @@ const setOutcomes = (action, state) => {
             } else {
                 newState = update(newState, {
                     outcomes: {
-                        $set: {
-                            [index]: {
+                        [index]: {
+                            $set: {
                                 values: {
                                     [outcome.amount]: {
                                         time,
@@ -114,6 +122,36 @@ const setOutcomes = (action, state) => {
     return newState;
 };
 
+const placeSucceeded = (action, state) => {
+    const betId   = _.get(action, 'betId');
+    const amount  = _.get(action, 'amount');
+    const outcome = _.get(action, 'isOutcomeOne', false) ? 0 : 1;
+
+    return update(state, {
+        openBets: {
+            $set: {
+                [betId]: {
+                    betId,
+                    amount,
+                    outcome,
+                },
+            },
+        },
+    });
+
+};
+
+const fetchOpenBetsSucceeded = (action, state) => {
+    const openBets = _.get(action, 'openBets', []);
+
+    return update(state, {
+        openBets: {
+            $set: openBets,
+        },
+    });
+
+};
+
 const resetOutcomes = (action, state) => {
     return update(state, {
         outcomes: {
@@ -125,13 +163,15 @@ const resetOutcomes = (action, state) => {
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
-        case PopupTypes.HIDE:         return reset(action, state);
-        case BetTypes.SELECT_BET:     return selectBet(action, state);
-        case BetTypes.SELECT_CHOICE:  return selectChoice(action, state);
-        case BetTypes.SET_COMMITMENT: return setCommitment(action, state);
-        case BetTypes.SET_OUTCOMES:   return setOutcomes(action, state);
-        case REHYDRATE:               return resetOutcomes(action, state);
-        default:                      return state;
+        case PopupTypes.HIDE:                    return reset(action, state);
+        case BetTypes.SELECT_BET:                return selectBet(action, state);
+        case BetTypes.SELECT_CHOICE:             return selectChoice(action, state);
+        case BetTypes.SET_COMMITMENT:            return setCommitment(action, state);
+        case BetTypes.SET_OUTCOMES:              return setOutcomes(action, state);
+        case BetTypes.PLACE_SUCCEEDED:           return placeSucceeded(action, state);
+        case BetTypes.FETCH_OPEN_BETS_SUCCEEDED: return fetchOpenBetsSucceeded(action, state);
+        case REHYDRATE:                          return resetOutcomes(action, state);
+        default:                                 return state;
         // @formatter:on
     }
 }

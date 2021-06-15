@@ -99,7 +99,7 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
                         <label
                             className={styles.label}
                         >
-                            Your bet:
+                            You trade:
                         </label>
                         <TokenNumberInput
                             value={betValue}
@@ -150,11 +150,9 @@ const mapStateToProps = (state, ownProps) => {
     }
 
     if (userId) {
-        user = _.find(
+        user = _.get(
             state.user.users,
-            {
-                userId: userId,
-            },
+            userId,
         );
     }
 

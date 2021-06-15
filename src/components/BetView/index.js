@@ -208,7 +208,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   </div>
                   <HotBetBadge />
                   <div className={styles.placeBetContentContainer}>
-                      <label className={styles.label}>Your bet:</label>
+                      <label className={styles.label}>You trade:</label>
                       <TokenNumberInput
                           value={commitment}
                           setValue={onTokenSelect}
@@ -222,7 +222,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                           <label
                               className={styles.label}
                           >
-                              Your choice & possible bet:
+                              Potential Winnings:
                           </label>
                           <div className={styles.choiceContainer}>
                               {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}

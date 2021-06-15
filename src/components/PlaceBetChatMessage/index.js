@@ -1,14 +1,11 @@
-import _                        from 'lodash';
-import styles                   from './styles.module.scss';
-import { getProfilePictureUrl } from '../../helper/ProfilePicture';
-import Routes                   from '../../constants/Routes';
-import { useHistory }           from 'react-router';
-import ProfilePicture           from '../ProfilePicture';
+import _              from 'lodash';
+import styles         from './styles.module.scss';
+import Routes         from '../../constants/Routes';
+import { useHistory } from 'react-router';
+import ProfilePicture from '../ProfilePicture';
 
 const BetPlaceChatMessage = ({ user, tokenAmount, betId, eventId, outcome, dateString }) => {
-    const history        = useHistory();
-    const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
-    const userName       = _.get(user, 'name', 'Unknown');
+    const history = useHistory();
 
     if (!user) {
         return null;

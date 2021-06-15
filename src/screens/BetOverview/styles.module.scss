@@ -1,0 +1,19 @@
+@import '../../styles/all';
+
+.contentContainer
+{
+    padding: 40px 20px;
+
+    .openBetsContainer
+    {
+        .betSummaryContainerWrapper
+        {
+            margin-bottom: 30px;
+
+            &:last-child
+            {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

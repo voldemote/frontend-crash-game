@@ -58,13 +58,13 @@ const Welcome = ({ authState }) => {
                         Simple betting <br /> for{' '}
                         <span className={styles.welcomeTitleHighlight}> everyone</span>
                         <br />
-                        and everything.
+                        on anything.
                     </h1>
                     <Button
                         theme={ButtonTheme.welcomeScreenButton}
                         onClick={onLetsTradeClick}
                     >
-                        Let's trade!
+                        Get Started!
                     </Button>
                     <p className={styles.welcomeSmallPrint}>
                         By continuing I accept the <Link to={Routes.termsAndConditions}>
