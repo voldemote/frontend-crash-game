@@ -150,11 +150,9 @@ const mapStateToProps = (state, ownProps) => {
     }
 
     if (userId) {
-        user = _.find(
+        user = _.get(
             state.user.users,
-            {
-                userId: userId,
-            },
+            userId,
         );
     }
 

@@ -11,7 +11,10 @@ const RelatedBetCard = ({ onClick, title, user, image }) => {
     };
 
     return (
-        <div className={styles.relatedBetCard} onClick={onClick}>
+        <div
+            className={styles.relatedBetCard}
+            onClick={onClick}
+        >
             <div
                 className={styles.eventCardBackgroundBlur}
                 style={getEventCardStyle()}
@@ -36,11 +39,9 @@ const mapStateToProps = (state, ownProps) => {
     let user         = getDefaultUser();
 
     if (userId) {
-        user = _.find(
+        user = _.get(
             state.user.users,
-            {
-                userId: userId,
-            },
+            userId,
         );
     }
 

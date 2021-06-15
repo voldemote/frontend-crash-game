@@ -82,9 +82,6 @@ const App = () => {
     );
 };
 
-// Calculating height for mobile screens
-let vh = window.innerHeight * 0.01;
-
 // Recalculating after resizing screen
 window.addEventListener('resize', () => {
     let vh = window.innerHeight * 0.01;

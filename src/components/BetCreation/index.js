@@ -253,7 +253,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
               if (validInput) {
                   if (step <= 4) {
                       if (step === 4) {
-                          createBet(eventUrl, marketQuestion, outcomes, getEndDateTime());
+                          createBet(eventUrl, marketQuestion, description, outcomes, getEndDateTime());
                       }
 
                       setStep(step + 1);
@@ -434,7 +434,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                           eventUrl,
                           false,
                           false,
-                          true
+                          true,
                       ),
                       BetSummaryHelper.getKeyValue(
                           'Event Title:',

@@ -125,7 +125,7 @@ const setOutcomes = (action, state) => {
 const placeSucceeded = (action, state) => {
     const betId   = _.get(action, 'betId');
     const amount  = _.get(action, 'amount');
-    const outcome = _.get(action, 'isOutcomeOne', false) ? 1 : 0;
+    const outcome = _.get(action, 'isOutcomeOne', false) ? 0 : 1;
 
     return update(state, {
         openBets: {

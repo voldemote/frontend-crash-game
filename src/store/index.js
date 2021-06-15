@@ -23,7 +23,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer(history));
 
 export default (initialState) => {
-    const isDevelopment    = true; // TODO change in production
+    const isDevelopment    = false;
     const allMiddlewares   = [
         (
             isDevelopment ?
