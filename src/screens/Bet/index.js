@@ -51,7 +51,12 @@ const Bet = ({ showPopup }) => {
           };
 
           const eventCreationButtonClicked = () => {
-              showPopup({ popupType: PopupTheme.betCreation });
+              showPopup({
+                  popupType: PopupTheme.betCreation,
+                  options:   {
+                      eventId,
+                  },
+              });
           };
 
           const renderChatButton = () => {

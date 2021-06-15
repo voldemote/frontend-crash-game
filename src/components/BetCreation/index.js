@@ -24,19 +24,18 @@ import BetSummaryContainer from '../BetSummaryContainer';
 import BetSummaryHelper    from '../../helper/BetSummary';
 import IconTheme           from '../Icon/IconTheme';
 
-const initialState = {
-    step:                       0,
-    error:                      null,
-    marketQuestion:             '',
-    description:                '',
-    eventUrl:                   null,
-    selectedDate:               null,
-    selectedEndTime:            null,
-    termsAndConditionsAccepted: false,
-    outcomes:                   [{}, {}],
-};
-
-const BetCreation = ({ hidePopup, closed, events, createBet }) => {
+const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
+          const initialState                                                = {
+              step:                       eventId ? 1 : 0,
+              error:                      null,
+              marketQuestion:             '',
+              description:                '',
+              eventUrl:                   eventId ? eventId : null,
+              selectedDate:               null,
+              selectedEndTime:            null,
+              termsAndConditionsAccepted: false,
+              outcomes:                   [{}, {}],
+          };
           const [step, setStep]                                             = useState(initialState.step);
           const [error, setError]                                           = useState(initialState.error);
           const [marketQuestion, setMarketQuestion]                         = useState(initialState.marketQuestion);
@@ -231,7 +230,7 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
                   case 2:
                       return 'Define outcomes';
                   case 3:
-                      return 'When does the event end?';
+                      return 'When does the bet end?';
                   case 4:
                       return 'Accept Terms and Conditions';
                   case 5:
@@ -377,13 +376,13 @@ const BetCreation = ({ hidePopup, closed, events, createBet }) => {
 
           const renderTermsAndConditions = () => {
               const checkboxText = (
-                  <>I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link> and confirm that I have the rights to embed the stream.</>
+                  <>I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link>.</>
               );
 
               return (
                   <div className={styles.termsAndConditionsContainer}>
                       <span>
-                          In order to publish the bet, you need to have the rights to embed this stream.
+                          In order to publish the bet, you need to accept our <Link to={Routes.termsAndConditions}>terms and conditions</Link>.
                           <br />
                           <br />
                           <CheckBox

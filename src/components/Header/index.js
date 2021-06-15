@@ -14,7 +14,17 @@ const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const updateCurrentSlide = (index) => {
-        if (currentSlide !== index && _.size(events) > index) {
+        const eventsSize = _.size(events);
+
+        if (currentSlide !== index) {
+            if (index >= eventsSize) {
+                index = 0;
+            }
+
+            if (index < 0) {
+                index = eventsSize - 1;
+            }
+
             setCurrentSlide(index);
         }
     };
@@ -77,6 +87,7 @@ const Header = ({ events }) => {
                                     <div className={styles.headerOverlay}>
                                     </div>
                                     <TwitchEmbedVideo
+                                        targetId={event._id}
                                         className={styles.twitchStream}
                                         video={event.streamUrl}
                                         muted={true}
@@ -87,7 +98,7 @@ const Header = ({ events }) => {
                                                 <LiveBadge />
                                             </div>
                                             <span className={styles.title}>
-                                                {event.text}
+                                                {event.name}
                                             </span>
                                             <Tags
                                                 tags={event.tags}

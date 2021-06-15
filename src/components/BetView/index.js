@@ -237,7 +237,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                       onClick={onConfirm}
                       highlightType={HighlightType.highlightHomeCtaBet}
                   >
-                      Bet!
+                      Trade!
                   </Button>
                   {
                       showEventEnd && (

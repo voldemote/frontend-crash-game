@@ -34,8 +34,13 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                 );
 
             case PopupTheme.betCreation:
+                const eventId = _.get(options, 'eventId');
+
                 return (
-                    <BetCreation closed={!visible} />
+                    <BetCreation
+                        closed={!visible}
+                        eventId={eventId}
+                    />
                 );
 
             case PopupTheme.betView:

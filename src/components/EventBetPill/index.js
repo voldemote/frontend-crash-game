@@ -123,7 +123,7 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
                         onClick={onConfirm}
                     >
                         <span className={styles.buttonContent}>
-                            Bet!
+                            Trade!
                         </span>
                     </Button>
                 </div>
