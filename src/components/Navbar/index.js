@@ -58,7 +58,7 @@ const Navbar = ({ user }) => {
                     className={style.balanceOverview}
                 >
                     <span className={style.actualBalanceText}>
-                        Your actual Balance
+                        Your current Balance
                     </span>
                     {getBalance()} EVNT
                 </Link>

@@ -23,7 +23,7 @@ const titleList = [
 const descriptionList = [
     {
         id:   0,
-        text: `We’ll send you a SMS with a 6-digit-code <br /> to verify your number.`,
+        text: `We’ll send you an SMS with a 6-digit-code <br /> to verify your number.`,
     },
     { id: 1, text: 'Enter your Code here' },
     { id: 2, text: null },

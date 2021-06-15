@@ -63,7 +63,7 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
 
                   case PaymentProvider.evntToken:
                       if (action === PaymentAction.deposit) {
-                          return 'Free EVNT Token';
+                          return 'Free EVNT Tokens';
                       }
 
                       return 'EVNT Token';

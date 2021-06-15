@@ -222,7 +222,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                           <label
                               className={styles.label}
                           >
-                              Your choice & possible bet:
+                              Potential Winnings:
                           </label>
                           <div className={styles.choiceContainer}>
                               {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
