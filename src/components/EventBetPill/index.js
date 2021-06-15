@@ -16,14 +16,27 @@ import TokenNumberInput    from '../TokenNumberInput';
 import { useEffect }       from 'react';
 import { BetActions }      from '../../store/actions/bet';
 import HighlightType       from '../Highlight/HighlightType';
+import { useIsMount }      from '../hoc/useIsMount';
 
 const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
     const [choice, setChoice]     = useState(null);
     const [betValue, setBetValue] = useState(0);
+    const defaultBetValue         = 10;
+    const isMount                 = useIsMount();
+
+    console.debug(bet._id, outcomes);
 
     useEffect(
         () => {
-            fetchOutcomes(bet._id, betValue);
+            let betValueToFetch = betValue;
+
+            if (isMount) {
+                betValueToFetch = defaultBetValue;
+
+                setBetValue(betValueToFetch);
+            }
+
+            fetchOutcomes(bet._id, betValueToFetch);
         },
         [betValue],
     );
@@ -44,7 +57,7 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
     const onConfirm = () => {
         placeBet(bet._id, betValue, choice === 0);
         setChoice(null);
-        setBetValue(0);
+        setBetValue(defaultBetValue);
     };
 
     const onChoiceSelect = (id) => {

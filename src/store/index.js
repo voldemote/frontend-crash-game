@@ -11,6 +11,7 @@ import { createStore }          from 'redux';
 import { persistReducer }       from 'redux-persist';
 import { persistStore }         from 'redux-persist';
 import { routerMiddleware }     from 'connected-react-router';
+import Environment              from '../helper/Environment';
 
 export const history        = createBrowserHistory();
 export const sagaMiddleware = createSagaMiddleware();
@@ -23,7 +24,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer(history));
 
 export default (initialState) => {
-    const isDevelopment    = false;
+    const isDevelopment    = Environment.isDevelopment();
     const allMiddlewares   = [
         (
             isDevelopment ?

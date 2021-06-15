@@ -5,6 +5,16 @@ import SelectionHelper     from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 
 const ChoiceSelector = ({ name, winAmount, selected, className, theme, onClick }) => {
+    const renderWinAmount = () => {
+        const winAmountString = winAmount ? winAmount.toLocaleString() : '-';
+
+        return (
+            <span className={styles.choiceWinAmount}>
+                {winAmountString} EVNT
+            </span>
+        );
+    };
+
     return (
         <div
             className={classNames(
@@ -24,9 +34,7 @@ const ChoiceSelector = ({ name, winAmount, selected, className, theme, onClick }
             <span className={styles.choiceName}>
                 {name}
             </span>
-            <span className={styles.choiceWinAmount}>
-                {winAmount ? winAmount.toLocaleString() : '-'} EVNT
-            </span>
+            {renderWinAmount()}
         </div>
     );
 };
