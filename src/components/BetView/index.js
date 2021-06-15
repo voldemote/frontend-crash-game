@@ -16,10 +16,12 @@ import { useEffect }       from 'react';
 import { useIsMount }      from '../hoc/useIsMount';
 import { useParams }       from 'react-router-dom';
 import SleepHelper         from '../../helper/Sleep';
+import { useHasMounted }   from '../hoc/useHasMounted';
 
 const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
-          const params   = useParams();
-          const bet      = (
+          const params          = useParams();
+          const defaultBetValue = 10;
+          const bet             = (
               () => {
                   let currentBetId = params.betId;
 
@@ -67,8 +69,8 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   return bet;
               }
           )();
-          const betId    = _.get(bet, '_id');
-          const event    = (
+          const betId           = _.get(bet, '_id', selectedBetId);
+          const event           = (
               () => {
                   let eventId = _.get(bet, 'event');
 
@@ -84,7 +86,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   );
               }
           )();
-          const outcomes = (
+          const outcomes        = (
               () => {
                   let outcomes = [];
 
@@ -102,7 +104,8 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   return outcomes;
               }
           )();
-          const isMount  = useIsMount();
+          const hasMounted      = useHasMounted();
+          const isMount         = useIsMount();
 
           const validateInput = () => {
               let valid = true;
@@ -119,7 +122,14 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
           };
 
           function getDefaultTokenSelection () {
-              return [25, 50, 100, 150, 200, 300];
+              return [defaultBetValue, 25, 50, 100, 150, 200, 300];
+          }
+
+          async function loadAfterMount () {
+              await SleepHelper.sleep(100);
+
+              fetchDefaultTokenSelection();
+              onTokenSelect(10);
           }
 
           async function fetchDefaultTokenSelection () {
@@ -133,17 +143,20 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
 
           useEffect(
               () => {
+                  if (hasMounted) {
+                      loadAfterMount();
+                  }
+              },
+              [hasMounted],
+          );
+
+          useEffect(
+              () => {
                   if (!isMount && !closed) {
                       validateInput();
                   }
               },
               [choice, commitment],
-          );
-          useEffect(
-              () => {
-                  fetchDefaultTokenSelection();
-              },
-              [betId],
           );
 
           const onConfirm = () => {
@@ -161,6 +174,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
           };
 
           const onTokenSelect = (number) => {
+              console.debug(number, betId);
               setCommitment(number, betId);
           };
 

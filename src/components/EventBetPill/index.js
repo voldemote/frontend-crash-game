@@ -17,28 +17,36 @@ import { useEffect }       from 'react';
 import { BetActions }      from '../../store/actions/bet';
 import HighlightType       from '../Highlight/HighlightType';
 import { useIsMount }      from '../hoc/useIsMount';
+import { useHasMounted }   from '../hoc/useHasMounted';
+import SleepHelper         from '../../helper/Sleep';
 
 const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
     const [choice, setChoice]     = useState(null);
     const [betValue, setBetValue] = useState(0);
     const defaultBetValue         = 10;
-    const isMount                 = useIsMount();
-
-    console.debug(bet._id, outcomes);
+    const hasMounted              = useHasMounted();
 
     useEffect(
         () => {
-            let betValueToFetch = betValue;
-
-            if (isMount) {
-                betValueToFetch = defaultBetValue;
-
-                setBetValue(betValueToFetch);
-            }
-
-            fetchOutcomes(bet._id, betValueToFetch);
+            fetchOutcomes(bet._id, betValue);
         },
         [betValue],
+    );
+
+    async function loadAfterMount () {
+        await SleepHelper.sleep(100);
+
+        setBetValue(defaultBetValue);
+        fetchOutcomes(bet._id, defaultBetValue);
+    }
+
+    useEffect(
+        () => {
+            if (hasMounted) {
+                loadAfterMount();
+            }
+        },
+        [hasMounted],
     );
 
     const renderFooter = () => {
