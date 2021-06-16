@@ -20,7 +20,7 @@ import { useHasMounted }   from '../hoc/useHasMounted';
 
 const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
           const params          = useParams();
-          const defaultBetValue = 10;
+          const defaultBetValue = 100;
           const bet             = (
               () => {
                   let currentBetId = params.betId;

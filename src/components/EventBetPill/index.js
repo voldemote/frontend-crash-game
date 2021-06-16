@@ -23,7 +23,7 @@ import SleepHelper         from '../../helper/Sleep';
 const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
     const [choice, setChoice]     = useState(null);
     const [betValue, setBetValue] = useState(0);
-    const defaultBetValue         = 10;
+    const defaultBetValue         = 100;
     const hasMounted              = useHasMounted();
 
     useEffect(
