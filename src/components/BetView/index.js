@@ -129,7 +129,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
               await SleepHelper.sleep(100);
 
               fetchDefaultTokenSelection();
-              onTokenSelect(10);
+              onTokenSelect(defaultBetValue);
           }
 
           async function fetchDefaultTokenSelection () {
