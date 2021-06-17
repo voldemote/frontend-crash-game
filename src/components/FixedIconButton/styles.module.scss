@@ -18,6 +18,20 @@
     border:           solid 2px $colorPrimary10;
     overflow:         hidden;
 
+    .fixedIconButtonText
+    {
+        $outlineColor:          $colorYellowLight;
+
+        position:               fixed;
+        right:                  125px;
+        font-size:              20px;
+        font-family:            $fontBold;
+        color:                  $colorWhite;
+        -webkit-text-stroke:    1px $colorPrimary;
+        text-shadow:            $outlineColor 0 0 10px;
+        -webkit-font-smoothing: antialiased;
+    }
+
     @media(min-width: $screen-sm)
     {
         bottom: 55px;

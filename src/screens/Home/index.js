@@ -1,19 +1,20 @@
-import _                 from 'lodash';
-import BetCard           from '../../components/BetCard';
-import CarouselContainer from '../../components/CarouselContainer';
-import EventBetPill      from '../../components/EventBetPill';
-import EventCard         from '../../components/EventCard/index';
-import FixedIconButton   from '../../components/FixedIconButton';
-import Header            from '../../components/Header/index';
-import IconType          from '../../components/Icon/IconType';
-import Navbar            from '../../components/Navbar/index';
-import PopupTheme        from '../../components/Popup/PopupTheme';
-import Routes            from '../../constants/Routes';
-import styles            from './styles.module.scss';
-import { BetActions }    from '../../store/actions/bet';
-import { connect }       from 'react-redux';
-import { PopupActions }  from '../../store/actions/popup';
-import { useHistory }    from 'react-router';
+import _                            from 'lodash';
+import BetCard                      from '../../components/BetCard';
+import CarouselContainer            from '../../components/CarouselContainer';
+import EventBetPill                 from '../../components/EventBetPill';
+import EventCard                    from '../../components/EventCard/index';
+import FixedIconButton              from '../../components/FixedIconButton';
+import Header                       from '../../components/Header/index';
+import IconType                     from '../../components/Icon/IconType';
+import Navbar                       from '../../components/Navbar/index';
+import PopupTheme                   from '../../components/Popup/PopupTheme';
+import Routes                       from '../../constants/Routes';
+import styles                       from './styles.module.scss';
+import { BetActions }               from '../../store/actions/bet';
+import { connect }                  from 'react-redux';
+import { PopupActions }             from '../../store/actions/popup';
+import { useHistory }               from 'react-router';
+import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 
 const Home = ({ events, showPopup, user, setSelectedBet }) => {
     const history = useHistory();
@@ -126,16 +127,9 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
         );
     };
 
-    const eventCreationButtonClicked = () => {
-        showPopup(PopupTheme.betCreation);
-    };
-
     const renderEventCreationButton = () => {
         return (
-            <FixedIconButton
-                onClick={eventCreationButtonClicked}
-                iconType={IconType.bet}
-            />
+            <FixedEventCreationIconButton />
         );
     };
 

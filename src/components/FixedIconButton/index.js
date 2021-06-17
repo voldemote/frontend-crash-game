@@ -1,12 +1,24 @@
-import classNames      from 'classnames';
-import Highlight       from '../Highlight';
-import HighlightType   from '../Highlight/HighlightType';
-import Icon            from '../Icon';
-import IconTheme       from '../Icon/IconTheme';
-import React           from 'react';
-import styles          from './styles.module.scss';
+import classNames    from 'classnames';
+import Highlight     from '../Highlight';
+import HighlightType from '../Highlight/HighlightType';
+import Icon          from '../Icon';
+import IconTheme     from '../Icon/IconTheme';
+import React         from 'react';
+import styles        from './styles.module.scss';
 
-const FixedIconButton = ({ className, iconType, onClick, left = false }) => {
+const FixedIconButton = ({ className, text, iconType, onClick, left = false }) => {
+    const renderText = () => {
+        if (text) {
+            return (
+                <span className={styles.fixedIconButtonText}>
+                    {text}
+                </span>
+            );
+        }
+
+        return null;
+    };
+
     return (
         <div
             className={classNames(
@@ -16,6 +28,7 @@ const FixedIconButton = ({ className, iconType, onClick, left = false }) => {
             )}
             onClick={onClick}
         >
+            {renderText()}
             <Highlight
                 highlightType={HighlightType.highlightSettingsSupport}
             />

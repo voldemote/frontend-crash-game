@@ -1,27 +1,28 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import _                from 'lodash';
-import darkModeLogo     from '../../data/images/logo-darkmode.svg';
-import FixedIconButton  from '../../components/FixedIconButton';
-import IconType         from '../../components/Icon/IconType';
-import Link             from '../../components/Link';
-import LiveBadge        from 'components/LiveBadge';
-import PopupTheme       from '../../components/Popup/PopupTheme';
-import Routes           from '../../constants/Routes';
-import styles           from './styles.module.scss';
-import TimeLeftCounter  from 'components/TimeLeftCounter';
-import ViewerBadge      from 'components/ViewerBadge';
-import { Carousel }     from 'react-responsive-carousel';
-import { connect }      from 'react-redux';
-import { PopupActions } from '../../store/actions/popup';
-import { useParams }    from 'react-router-dom';
-import { useSelector }  from 'react-redux';
-import { useState }     from 'react';
-import TwitchEmbedVideo from '../../components/TwitchEmbedVideo';
-import BetView          from '../../components/BetView';
-import RelatedBetCard   from '../../components/RelatedBetCard';
-import { useHistory }   from 'react-router-dom';
-import Chat             from '../../components/Chat';
-import classNames       from 'classnames';
+import _                            from 'lodash';
+import darkModeLogo                 from '../../data/images/logo-darkmode.svg';
+import FixedIconButton              from '../../components/FixedIconButton';
+import IconType                     from '../../components/Icon/IconType';
+import Link                         from '../../components/Link';
+import LiveBadge                    from 'components/LiveBadge';
+import PopupTheme                   from '../../components/Popup/PopupTheme';
+import Routes                       from '../../constants/Routes';
+import styles                       from './styles.module.scss';
+import TimeLeftCounter              from 'components/TimeLeftCounter';
+import ViewerBadge                  from 'components/ViewerBadge';
+import { Carousel }                 from 'react-responsive-carousel';
+import { connect }                  from 'react-redux';
+import { PopupActions }             from '../../store/actions/popup';
+import { useParams }                from 'react-router-dom';
+import { useSelector }              from 'react-redux';
+import { useState }                 from 'react';
+import TwitchEmbedVideo             from '../../components/TwitchEmbedVideo';
+import BetView                      from '../../components/BetView';
+import RelatedBetCard               from '../../components/RelatedBetCard';
+import { useHistory }               from 'react-router-dom';
+import Chat                         from '../../components/Chat';
+import classNames                   from 'classnames';
+import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 
 const Bet = ({ showPopup }) => {
           const history                         = useHistory();
@@ -50,15 +51,6 @@ const Bet = ({ showPopup }) => {
               }
           };
 
-          const eventCreationButtonClicked = () => {
-              showPopup({
-                  popupType: PopupTheme.betCreation,
-                  options:   {
-                      eventId,
-                  },
-              });
-          };
-
           const renderChatButton = () => {
               return (
                   <FixedIconButton
@@ -72,9 +64,8 @@ const Bet = ({ showPopup }) => {
 
           const renderEventCreationButton = () => {
               return (
-                  <FixedIconButton
-                      onClick={eventCreationButtonClicked}
-                      iconType={IconType.bet}
+                  <FixedEventCreationIconButton
+                      eventId={eventId}
                   />
               );
           };
