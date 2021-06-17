@@ -17,11 +17,15 @@ import { useIsMount }      from '../hoc/useIsMount';
 import { useParams }       from 'react-router-dom';
 import SleepHelper         from '../../helper/Sleep';
 import { useHasMounted }   from '../hoc/useHasMounted';
+import SwitchableContainer from '../SwitchableContainer';
+import SwitchableHelper    from '../../helper/SwitchableHelper';
+import { useState }        from 'react';
+import HighlightTheme      from '../Highlight/HighlightTheme';
 
-const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
-          const params          = useParams();
-          const defaultBetValue = 100;
-          const bet             = (
+const BetView = ({ closed, showEventEnd, events, selectedBetId, openBets, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
+          const params                                  = useParams();
+          const defaultBetValue                         = 100;
+          const bet                                     = (
               () => {
                   let currentBetId = params.betId;
 
@@ -69,8 +73,8 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   return bet;
               }
           )();
-          const betId           = _.get(bet, '_id', selectedBetId);
-          const event           = (
+          const betId                                   = _.get(bet, '_id', selectedBetId);
+          const event                                   = (
               () => {
                   let eventId = _.get(bet, 'event');
 
@@ -86,7 +90,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   );
               }
           )();
-          const outcomes        = (
+          const outcomes                                = (
               () => {
                   let outcomes = [];
 
@@ -104,8 +108,15 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                   return outcomes;
               }
           )();
-          const hasMounted      = useHasMounted();
-          const isMount         = useIsMount();
+          const hasOpenBet                              = _.find(
+              openBets,
+              {
+                  betId: betId,
+              },
+          );
+          const [currentTradeView, setCurrentTradeView] = useState(0);
+          const hasMounted                              = useHasMounted();
+          const isMount                                 = useIsMount();
 
           const validateInput = () => {
               let valid = true;
@@ -122,7 +133,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
           };
 
           function getDefaultTokenSelection () {
-              return [defaultBetValue, 25, 50, 100, 150, 200, 300];
+              return [25, 50, 100, 150, 200, 300];
           }
 
           async function loadAfterMount () {
@@ -134,7 +145,12 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
 
           async function fetchDefaultTokenSelection () {
               if (!_.isEmpty(betId)) {
-                  for (const tokenAmount of getDefaultTokenSelection()) {
+                  const tokensToFetch = [
+                      defaultBetValue,
+                      ...getDefaultTokenSelection(),
+                  ];
+
+                  for (const tokenAmount of tokensToFetch) {
                       fetchOutcomes(betId, tokenAmount);
                       await SleepHelper.sleep(100);
                   }
@@ -174,7 +190,6 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
           };
 
           const onTokenSelect = (number) => {
-              console.debug(number, betId);
               setCommitment(number, betId);
           };
 
@@ -192,6 +207,29 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
               return null;
           };
 
+          const renderSwitchableView = () => {
+              if (hasOpenBet) {
+                  const switchableViews = [
+                      SwitchableHelper.getSwitchableView(
+                          'Buy',
+                      ),
+                      SwitchableHelper.getSwitchableView(
+                          'Sell',
+                      ),
+                  ];
+
+                  return (
+                      <SwitchableContainer
+                          switchableViews={switchableViews}
+                          currentIndex={currentTradeView}
+                          setCurrentIndex={setCurrentTradeView}
+                      />
+                  );
+              }
+
+              return null;
+          };
+
           const renderChoiceSelector = (index, name, choiceSelectorTheme) => {
               return (
                   <ChoiceSelector
@@ -202,6 +240,23 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                       selected={choice === index}
                       onClick={onChoiceSelect(index)}
                   />
+              );
+          };
+
+          const renderTradeButton = () => {
+              const isSell = currentTradeView === 1;
+
+              return (
+                  <Button
+                      className={classNames(
+                          styles.betButton,
+                      )}
+                      onClick={onConfirm}
+                      highlightType={HighlightType.highlightHomeCtaBet}
+                      highlightTheme={isSell ? HighlightTheme.fillRed : null}
+                  >
+                      Trade!
+                  </Button>
               );
           };
 
@@ -221,8 +276,11 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                       {bet.description}
                   </div>
                   <HotBetBadge />
+                  {renderSwitchableView()}
                   <div className={styles.placeBetContentContainer}>
-                      <label className={styles.label}>You trade:</label>
+                      <label className={styles.label}>
+                          You trade:
+                      </label>
                       <TokenNumberInput
                           value={commitment}
                           setValue={onTokenSelect}
@@ -244,15 +302,7 @@ const BetView = ({ closed, showEventEnd, events, selectedBetId, rawOutcomes, cho
                           </div>
                       </div>
                   </div>
-                  <Button
-                      className={classNames(
-                          styles.betButton,
-                      )}
-                      onClick={onConfirm}
-                      highlightType={HighlightType.highlightHomeCtaBet}
-                  >
-                      Trade!
-                  </Button>
+                  {renderTradeButton()}
                   {
                       showEventEnd && (
                           <div className={styles.timeLeftCounterContainer}>
@@ -271,6 +321,7 @@ const mapStateToProps = (state) => {
         events:        state.event.events,
         selectedBetId: state.bet.selectedBetId,
         rawOutcomes:   state.bet.outcomes,
+        openBets:      state.bet.openBets,
         choice:        state.bet.selectedChoice,
         commitment:    _.get(state, 'bet.selectedCommitment', 0),
     };
@@ -289,6 +340,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         placeBet:      (betId, amount, isOutcomeOne) => {
             dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
+        },
+        pullOutBet:    (betId, outcome, amount) => {
+            dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
         },
     };
 };

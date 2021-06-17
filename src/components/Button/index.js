@@ -5,7 +5,31 @@ import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
 import Highlight       from '../Highlight';
 
-const Button = ({ children, highlightType, className, theme, onClick, withoutBackground = false, disabled, fixed }) => {
+const Button = ({ children, highlightType, highlightTheme, className, theme, onClick, withoutBackground = false, disabled, fixed }) => {
+    const renderButtonDisabledOverlay = () => {
+        if (disabled) {
+            return (
+                <span className={style.buttonDisabledOverlay}>
+                </span>
+            );
+        }
+
+        return null;
+    };
+
+    const renderHighlight = () => {
+        if (highlightType) {
+            return (
+                <Highlight
+                    className={style.highlight}
+                    highlightType={highlightType}
+                    highlightTheme={highlightTheme}
+                />
+            );
+        }
+
+        return null;
+    };
     return (
         <span
             className={classNames(
@@ -23,9 +47,9 @@ const Button = ({ children, highlightType, className, theme, onClick, withoutBac
             )}
             onClick={disabled ? null : onClick}
         >
-            {disabled && <span className={style.buttonDisabledOverlay}></span>}
+            {renderButtonDisabledOverlay()}
             {children}
-            {highlightType && <Highlight className={style.highlight} highlightType={highlightType} />}
+            {renderHighlight()}
         </span>
     );
 };

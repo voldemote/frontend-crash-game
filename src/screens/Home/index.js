@@ -50,6 +50,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                                 key={key}
                                 userId={bet.creator}
                                 bet={bet}
+                                eventId={event._id}
                             />
                         );
                     },

@@ -12,8 +12,9 @@ import { ReactComponent as HighlightSettingsMyBets }                 from '../..
 import { ReactComponent as HighlightSettingsMyProfile }              from '../../data/backgrounds/highlight-settings-my-profile.svg';
 import { ReactComponent as HighlightSettingsMyWallet }               from '../../data/backgrounds/highlight-settings-my-wallet.svg';
 import { ReactComponent as HighlightSettingsSupport }                from '../../data/backgrounds/highlight-settings-support.svg';
+import HighlightTheme                                                from './HighlightTheme';
 
-const Highlight = ({ className, highlightType, width, height, onClick }) => {
+const Highlight = ({ className, highlightType, highlightTheme, width, height, onClick }) => {
     const renderHighlight = () => {
         return SelectionHelper.get(
             highlightType,
@@ -44,6 +45,12 @@ const Highlight = ({ className, highlightType, width, height, onClick }) => {
             className={classNames(
                 styles.highlight,
                 className,
+                SelectionHelper.get(
+                    highlightTheme,
+                    {
+                        [HighlightTheme.fillRed]: styles.highlightFillRed,
+                    },
+                ),
             )}
             onClick={onClick}
         >

@@ -14,4 +14,15 @@
     {
         position: absolute;
     }
+
+    &.highlightFillRed
+    {
+        > svg
+        {
+            g
+            {
+                fill: $colorRedLight;
+            }
+        }
+    }
 }

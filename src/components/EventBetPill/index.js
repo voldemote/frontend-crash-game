@@ -19,16 +19,21 @@ import HighlightType       from '../Highlight/HighlightType';
 import { useIsMount }      from '../hoc/useIsMount';
 import { useHasMounted }   from '../hoc/useHasMounted';
 import SleepHelper         from '../../helper/Sleep';
+import Routes              from '../../constants/Routes';
+import { useHistory }      from 'react-router';
+import ClickEvent          from '../../helper/ClickEvent';
 
-const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
+const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {
     const [choice, setChoice]     = useState(null);
     const [betValue, setBetValue] = useState(0);
+    const betId                   = _.get(bet, '_id');
     const defaultBetValue         = 100;
+    const history                 = useHistory();
     const hasMounted              = useHasMounted();
 
     useEffect(
         () => {
-            fetchOutcomes(bet._id, betValue);
+            fetchOutcomes(betId, betValue);
         },
         [betValue],
     );
@@ -37,7 +42,7 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
         await SleepHelper.sleep(100);
 
         setBetValue(defaultBetValue);
-        fetchOutcomes(bet._id, defaultBetValue);
+        fetchOutcomes(betId, defaultBetValue);
     }
 
     useEffect(
@@ -62,14 +67,28 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
         );
     };
 
-    const onConfirm = () => {
-        placeBet(bet._id, betValue, choice === 0);
+    const onConfirm = (event) => {
+        event.stopPropagation();
+
+        placeBet(betId, betValue, choice === 0);
         setChoice(null);
         setBetValue(defaultBetValue);
     };
 
+    const onClick = () => {
+        history.push(Routes.getRouteWithParameters(
+            Routes.bet,
+            {
+                eventId,
+                betId,
+            },
+        ));
+    };
+
     const onChoiceSelect = (id) => {
-        return () => {
+        return (event) => {
+            event.stopPropagation();
+
             setChoice(id);
         };
     };
@@ -102,7 +121,10 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
     };
 
     return (
-        <div className={styles.pill}>
+        <div
+            className={styles.pill}
+            onClick={onClick}
+        >
             <div className={styles.pillContent}>
 
                 <div className={styles.desc}>
@@ -115,7 +137,10 @@ const EventBetPill = ({ user, bet, fetchOutcomes, outcomes, placeBet }) => {
 
                 <Divider className={styles.divider} />
 
-                <div className={styles.justify}>
+                <div
+                    className={styles.justify}
+                    onClick={ClickEvent.stopPropagation}
+                >
                     <div className={styles.inputWrapper}>
                         <label
                             className={styles.label}

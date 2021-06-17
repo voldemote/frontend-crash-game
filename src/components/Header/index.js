@@ -42,13 +42,15 @@ const Header = ({ events }) => {
             return _.map(
                 bets,
                 (bet, betIndex) => {
-                    const key = event._id + '.' + betIndex;
+                    const eventId = _.get(event, '_id');
+                    const key     = eventId + '.' + betIndex;
 
                     return (
                         <EventBetPill
                             key={key}
                             userId={bet.creator}
                             bet={bet}
+                            eventId={eventId}
                         />
                     );
                 },
