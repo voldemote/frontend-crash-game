@@ -18,10 +18,10 @@ const BetOverview = ({ openBets, pullOutBet }) => {
     const renderSwitchableView = () => {
         const switchableViews = [
             SwitchableHelper.getSwitchableView(
-                'Open bets',
+                'Open trades',
             ),
             SwitchableHelper.getSwitchableView(
-                'Bet history',
+                'Trade history',
             ),
         ];
 
@@ -110,7 +110,7 @@ const BetOverview = ({ openBets, pullOutBet }) => {
 
     return (
         <ScreenWithHeader
-            title={'My Bets'}
+            title={'My Trades'}
             returnRoute={Routes.home}
         >
             {renderSwitchableView()}

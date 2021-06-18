@@ -19,7 +19,7 @@ const HotBetBadge = ({ className, theme = HotBetBadgeTheme.opacity01 }) => {
                 className,
             )}
         >
-            🔥 Hot Bet
+            🔥 Hot Trade
         </div>
     );
 };

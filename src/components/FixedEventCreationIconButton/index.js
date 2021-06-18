@@ -21,7 +21,7 @@ const FixedEventCreationIconButton = ({ showPopup, eventId }) => {
 
     return (
         <FixedIconButton
-            text={'Create Event'}
+            text={'Create Trade'}
             onClick={eventCreationButtonClicked}
             iconType={IconType.bet}
         />

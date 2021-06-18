@@ -226,11 +226,11 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   case 0:
                       return 'Choose Event';
                   case 1:
-                      return 'Create Bet';
+                      return 'Create Trade';
                   case 2:
                       return 'Define outcomes';
                   case 3:
-                      return 'When does the bet end?';
+                      return 'When does the trade end?';
                   case 4:
                       return 'Accept Terms and Conditions';
                   case 5:
@@ -284,7 +284,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       <InputBox
                           containerClassName={styles.marketQuestion}
                           type={'text'}
-                          invitationText={'What to bet on?'}
+                          invitationText={'What to trade on?'}
                           errorText={getError(0)}
                           placeholder={'Who will win the race?'}
                           value={marketQuestion}
@@ -362,7 +362,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       <div className={styles.timeContainer}>
                           <InputBox
                               type={'time'}
-                              invitationText={'End of the stream'}
+                              invitationText={'End of the trade'}
                               value={selectedEndTime}
                               setValue={setSelectedEndTime}
                               placeholder={'02:30 PM'}

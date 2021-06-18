@@ -140,7 +140,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
             <CarouselContainer title={'🔥 Most popular Live Events'}>
                 {renderLiveEvents()}
             </CarouselContainer>
-            <CarouselContainer title={'🚀 Most popular Bets'}>
+            <CarouselContainer title={'🚀 Most popular Trades'}>
                 {renderMostPopularBets()}
             </CarouselContainer>
             {renderEventCreationButton()}
