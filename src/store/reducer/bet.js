@@ -122,25 +122,6 @@ const setOutcomes = (action, state) => {
     return newState;
 };
 
-const placeSucceeded = (action, state) => {
-    const betId   = _.get(action, 'betId');
-    const amount  = _.get(action, 'amount');
-    const outcome = _.get(action, 'isOutcomeOne', false) ? 0 : 1;
-
-    return update(state, {
-        openBets: {
-            $set: {
-                [betId]: {
-                    betId,
-                    amount,
-                    outcome,
-                },
-            },
-        },
-    });
-
-};
-
 const fetchOpenBetsSucceeded = (action, state) => {
     const openBets = _.get(action, 'openBets', []);
 
@@ -168,7 +149,6 @@ export default function (state = initialState, action) {
         case BetTypes.SELECT_CHOICE:             return selectChoice(action, state);
         case BetTypes.SET_COMMITMENT:            return setCommitment(action, state);
         case BetTypes.SET_OUTCOMES:              return setOutcomes(action, state);
-        case BetTypes.PLACE_SUCCEEDED:           return placeSucceeded(action, state);
         case BetTypes.FETCH_OPEN_BETS_SUCCEEDED: return fetchOpenBetsSucceeded(action, state);
         case REHYDRATE:                          return resetOutcomes(action, state);
         default:                                 return state;

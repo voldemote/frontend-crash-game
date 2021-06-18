@@ -9,16 +9,14 @@ import React               from 'react';
 import styles              from './styles.module.scss';
 import { connect }         from 'react-redux';
 
-const BetApproveView = ({ closed, betId, bet, openBet, outcomes }) => {
+const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, outcomes }) => {
     const getSummaryRows = () => {
-        const amount        = _.get(openBet, 'amount');
-        const outcomeIndex  = _.get(openBet, 'outcome');
-        const outcomeValue  = _.get(bet, outcomeIndex === 0 ? 'betOne' : 'betTwo');
-        const outcomeReturn = _.get(outcomes, outcomeIndex === 0 ? 'outcomeOne' : 'outcomeTwo');
+        const outcomeValue  = _.get(bet, outcome === 0 ? 'betOne' : 'betTwo');
+        const outcomeReturn = _.get(outcomes, outcome === 0 ? 'outcomeOne' : 'outcomeTwo');
 
         return [
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('Your Invest', amount + ' EVNT'),
+            BetSummaryHelper.getKeyValue('Your Invest', investmentAmount + ' EVNT'),
             BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Possible Win', outcomeReturn + ' EVNT', false, true),
@@ -62,9 +60,8 @@ const BetApproveView = ({ closed, betId, bet, openBet, outcomes }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const { betId }      = ownProps;
-    const openBet        = _.get(state.bet, 'openBets[' + betId + ']', null);
-    const findBetInEvent = (event, betId) => {
+    const { betId, investmentAmount } = ownProps;
+    const findBetInEvent               = (event, betId) => {
         if (event) {
             return _.find(
                 event.bets,
@@ -74,27 +71,26 @@ const mapStateToProps = (state, ownProps) => {
             );
         }
     };
-    const event          = _.head(
+    const event                        = _.head(
         _.filter(
             state.event.events,
             (event) => !_.isEmpty(findBetInEvent(event, betId)),
         ),
     );
-    const bet            = findBetInEvent(event, betId);
-    let outcomes         = _.get(
+    const bet                          = findBetInEvent(event, betId);
+    let outcomes                       = _.get(
         state.bet.outcomes,
         betId,
     );
 
     if (outcomes) {
-        const amount = _.get(openBet, 'amount');
+        const amount = investmentAmount;
         outcomes     = _.get(outcomes, 'values', {});
         outcomes     = _.get(outcomes, amount);
     }
 
     return {
         event,
-        openBet,
         bet,
         outcomes,
     };

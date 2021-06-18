@@ -30,6 +30,9 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                     <BetApproveView
                         closed={!visible}
                         betId={_.get(options, 'betId')}
+                        investmentAmount={_.get(options, 'investmentAmount')}
+                        outcome={_.get(options, 'outcome')}
+
                     />
                 );
 

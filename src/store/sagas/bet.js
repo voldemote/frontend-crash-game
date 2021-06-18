@@ -40,21 +40,21 @@ const create = function* (action) {
 };
 
 const place = function* (action) {
-    const betId        = action.betId;
-    const amount       = action.amount;
-    const isOutcomeOne = action.isOutcomeOne;
+    const betId            = action.betId;
+    const investmentAmount = action.amount;
+    const isOutcomeOne     = action.isOutcomeOne;
 
     const response = yield call(
         Api.placeBet,
         betId,
-        amount,
+        investmentAmount,
         isOutcomeOne,
     );
 
     if (response) {
         yield put(BetActions.placeSucceeded({
             betId,
-            amount,
+            investmentAmount,
             isOutcomeOne,
         }));
         yield put(PopupActions.hide());
@@ -63,8 +63,11 @@ const place = function* (action) {
             popupType: PopupTheme.betApprove,
             options:   {
                 betId,
+                investmentAmount,
+                outcome: isOutcomeOne ? 0 : 1,
             },
         }));
+        yield put(BetActions.fetchOpenBets());
     } else {
         yield put(BetActions.placeFailed());
     }
