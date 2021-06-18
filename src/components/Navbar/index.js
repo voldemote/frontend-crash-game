@@ -44,7 +44,6 @@ const Navbar = ({ user }) => {
                 >
                     Home
                 </Link>
-                <a>Discover</a>
                 <Link to={Routes.betOverview}>
                     My Bets
                 </Link>
