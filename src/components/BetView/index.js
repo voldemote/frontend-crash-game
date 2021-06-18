@@ -22,7 +22,7 @@ import { useIsMount }      from '../hoc/useIsMount';
 import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
 
-const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, openBets, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, fetchOutcomes }) => {
+const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, openBets, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                  = useParams();
     const defaultBetValue                         = 100;
     const bet                                     = (
@@ -181,7 +181,13 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
         const validInput = validateInput();
 
         if (validInput) {
-            placeBet(betId, commitment, choice === 0);
+            const isOutcomeOne = choice === 0;
+
+            if (currentTradeView === 0) {
+                placeBet(betId, commitment, isOutcomeOne);
+            } else {
+                pullOutBet(betId, choice, commitment);
+            }
         }
     };
 
