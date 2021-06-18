@@ -43,7 +43,7 @@ const BetOverview = ({ openBets, pullOutBet }) => {
     };
 
     const getSummaryRows = (bet, openBet, outcomes) => {
-        const amount        = _.get(openBet, 'investmentAmount');
+        const amount        = _.get(openBet, 'amount');
         const outcomeIndex  = _.get(openBet, 'outcome');
         const outcomeValue  = _.get(bet, outcomeIndex === 0 ? 'betOne' : 'betTwo');
         const outcomeReturn = _.get(outcomes, outcomeIndex === 0 ? 'outcomeOne' : 'outcomeTwo', 0);
@@ -60,10 +60,10 @@ const BetOverview = ({ openBets, pullOutBet }) => {
     const onBetSummaryClick = (openBet) => {
         return () => {
             const betId   = _.get(openBet, 'betId');
-            const amount  = _.get(openBet, 'investmentAmount');
+            const amount  = _.get(openBet, 'amount');
             const outcome = _.get(openBet, 'outcome');
 
-            pullOutBet(betId, amount, outcome);
+            //pullOutBet(betId, amount, outcome);
         };
     };
 
@@ -154,10 +154,10 @@ const mapStateToProps = (state) => {
 
             if (outcomes) {
                 const outcomeValues    = _.get(outcomes, 'values', {});
-                const investmentAmount = _.get(openBet, 'investmentAmount');
+                const amount = _.get(openBet, 'amount');
                 outcomes               = _.get(
                     outcomeValues,
-                    investmentAmount,
+                    amount,
                     {},
                 );
             }
