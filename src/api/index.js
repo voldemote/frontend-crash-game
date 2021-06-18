@@ -46,11 +46,12 @@ const verifySms = (phone, smsToken) => {
     });
 };
 
-const saveAdditionalInfo = (name, email) => {
+const saveAdditionalInfo = (name, username, email) => {
     return Api.post(
         ApiUrls.API_AUTHENTICATION_SAVE_ADD_INFO_URL,
         {
             name,
+            username,
             email,
         },
     ).catch(() => {

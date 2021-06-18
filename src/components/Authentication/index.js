@@ -10,6 +10,7 @@ import { connect }               from 'react-redux';
 import { requestSms }            from '../../store/actions/authentication';
 import { useEffect, useState }   from 'react';
 import { useIsMount }            from '../hoc/useIsMount';
+import _                         from 'lodash';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -45,6 +46,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
 
     const [code, setCode]           = useState([]);
     const [firstName, setFirstName] = useState('');
+    const [username, setUsername]   = useState('');
     const [email, setInputEmail]    = useState('');
     const [error, setError]         = useState(null);
 
@@ -62,6 +64,10 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
 
     const nameIsValid = () => {
         return firstName && firstName.length >= 3;
+    };
+
+    const usernameIsValid = () => {
+        return username && username.length >= 3;
     };
 
     const validateInput = () => {
@@ -83,11 +89,17 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
 
                 break;
             case 2:
-                if (nameIsValid()) {
-                    setError(null);
-                } else {
-                    setError('Please enter your name!');
+                let error = [];
+
+                if (!usernameIsValid()) {
+                    error[0] = 'Please enter a valid username!';
                 }
+
+                if (!nameIsValid()) {
+                    error[1] = 'Please enter your name!';
+                }
+
+                setError(error);
 
                 break;
             case 3:
@@ -111,7 +123,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 }
             }
         },
-        [step, country, phoneNumber, code, firstName],
+        [country, phoneNumber, code, firstName, username],
     );
 
     const resendRequestSms = () => {
@@ -138,10 +150,8 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
 
                 break;
             case 2:
-                if (nameIsValid()) {
-                    const name = firstName;
-
-                    setName({ name });
+                if (nameIsValid() && usernameIsValid()) {
+                    setName(firstName, username);
                 }
 
                 break;
@@ -237,13 +247,23 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                     />
                 )}
                 {step === 2 && (
-                    <InputBox
-                        invitationText={'Call me'}
-                        errorText={error}
-                        placeholder="John"
-                        value={firstName}
-                        setValue={setFirstName}
-                    />
+                    <>
+                        <InputBox
+                            containerClassName={styles.usernameInputBox}
+                            invitationText={'Username'}
+                            errorText={_.get(error, 0)}
+                            placeholder="john2021"
+                            value={username}
+                            setValue={setUsername}
+                        />
+                        <InputBox
+                            invitationText={'Call me'}
+                            errorText={_.get(error, 1)}
+                            placeholder="John"
+                            value={firstName}
+                            setValue={setFirstName}
+                        />
+                    </>
                 )}
                 {step === 3 && (
                     <InputBox
@@ -356,8 +376,8 @@ const mapDispatchToProps = (dispatch) => {
         verifySms:      (smsToken) => {
             dispatch(AuthenticationActions.verifySms(smsToken));
         },
-        setName:        (name) => {
-            dispatch(AuthenticationActions.setName(name));
+        setName:        (name, username) => {
+            dispatch(AuthenticationActions.setName({ name, username }));
         },
         setEmail:       (email) => {
             dispatch(AuthenticationActions.setEmail(email));

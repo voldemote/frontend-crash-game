@@ -91,7 +91,8 @@ const setCountry = makeActionCreator(
 const setName = makeActionCreator(
     AuthenticationTypes.SET_NAME,
     {
-        name: null,
+        name:     null,
+        username: null,
     },
 );
 

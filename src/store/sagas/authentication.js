@@ -83,12 +83,14 @@ const verifySms = function* (action) {
 };
 
 const setAdditionalInformation = function* (action) {
-    const email = yield select(state => state.authentication.email);
-    const name  = yield select(state => state.authentication.name);
+    const email    = yield select(state => state.authentication.email);
+    const name     = yield select(state => state.authentication.name);
+    const username = yield select(state => state.authentication.username);
 
     const response = yield call(
         Api.saveAdditionalInfo,
         name,
+        username,
         email,
     );
 

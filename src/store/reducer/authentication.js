@@ -7,6 +7,7 @@ const initialState = {
     referral:       null,
     userId:         null,
     name:           '',
+    username:       '',
     phone:          '',
     country:        '49',
     email:          '',
@@ -70,6 +71,9 @@ const setName = (action, state) => {
     return update(state, {
         name:      {
             $set: action.name,
+        },
+        username:  {
+            $set: action.username,
         },
         authState: {
             $set: AuthState.SET_EMAIL,
