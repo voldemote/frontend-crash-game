@@ -108,7 +108,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
             return outcomes;
         }
     )();
-    const hasOpenBet                                    = _.find(
+    const hasOpenBet                                    = _.filter(
         openBets,
         {
             betId: betId,
@@ -122,21 +122,22 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     const validateInput = () => {
         const betEndDate = bet.date;
         const current    = moment(new Date());
+        const isSell     = currentTradeView === 1;
         let valid        = true;
 
         if (current.isAfter(betEndDate)) {
-            valid = false;
+            // TODO valid = false;
         }
 
         if (choice === null) {
             valid = false;
         }
 
-        if (!commitment) {
+        if (!commitment && !isSell) {
             valid = false;
         }
 
-        if (commitment > balance) {
+        if (commitment > balance && !isSell) {
             valid = false;
 
             setCommitmentErrorText('Not enough balance.');
@@ -205,7 +206,16 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
                 validateInput();
             }
         },
-        [choice, commitment],
+        [choice, commitment, currentTradeView],
+    );
+
+    useEffect(
+        () => {
+            if (currentTradeView === 1) {
+                setChoice(null);
+            }
+        },
+        [currentTradeView],
     );
 
     const onConfirm = () => {
@@ -222,9 +232,17 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
         }
     };
 
-    const onChoiceSelect = (id) => {
+    const onChoiceSelect = (id, enabled) => {
         return () => {
-            setChoice(id);
+            if (enabled) {
+                const isSell = currentTradeView === 1;
+
+                if (isSell) {
+                    pullOutBet(betId, id, getOpenBetsValue(id));
+                } else {
+                    setChoice(id);
+                }
+            }
         };
     };
 
@@ -232,9 +250,35 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
         setCommitment(number, betId);
     };
 
+    const getOpenBetsValue = (index) => {
+        if (hasOpenBet) {
+            const openBet = _.find(
+                hasOpenBet,
+                {
+                    outcome: index,
+                },
+            );
+
+            if (openBet) {
+                return _.get(openBet, 'investmentAmount');
+            }
+        }
+
+        return 0;
+    };
+
     const getOutcome = (index) => {
         if (outcomes) {
-            const outcomeForValue = _.get(outcomes, commitment, {});
+            const isSell          = currentTradeView === 1;
+            const outcomeForValue = _.get(
+                outcomes,
+                (
+                    isSell ?
+                        getOpenBetsValue(index) :
+                        commitment
+                ),
+                {},
+            );
 
             if (index === 0) {
                 return _.get(outcomeForValue, 'outcomeOne');
@@ -244,6 +288,12 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
         }
 
         return null;
+    };
+
+    const isChoiceSelectorEnabled = (index) => {
+        const isSell = currentTradeView === 1;
+
+        return !isSell || getOpenBetsValue(index) > 0;
     };
 
     const renderSwitchableView = () => {
@@ -270,6 +320,8 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const renderChoiceSelector = (index, name, choiceSelectorTheme) => {
+        const enabled = isChoiceSelectorEnabled(index);
+
         return (
             <ChoiceSelector
                 theme={choiceSelectorTheme}
@@ -277,7 +329,8 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
                 name={name}
                 winAmount={getOutcome(index)}
                 selected={choice === index}
-                onClick={onChoiceSelect(index)}
+                onClick={onChoiceSelect(index, enabled)}
+                disabled={!enabled}
             />
         );
     };
@@ -313,28 +366,31 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const renderTradeButton = () => {
-        const isSell              = currentTradeView === 1;
-        const tradeButtonDisabled = !validInput;
-        let tradeButtonTheme      = isSell ? HighlightTheme.fillRed : null;
+        const isSell = currentTradeView === 1;
 
-        if (tradeButtonDisabled) {
-            tradeButtonTheme = HighlightTheme.fillGray;
+        if (!isSell) {
+            const tradeButtonDisabled = !validInput;
+            let tradeButtonTheme      = null;
+
+            if (tradeButtonDisabled) {
+                tradeButtonTheme = HighlightTheme.fillGray;
+            }
+
+            return (
+                <Button
+                    className={classNames(
+                        styles.betButton,
+                    )}
+                    onClick={!tradeButtonDisabled ? onConfirm : _.noop}
+                    highlightType={HighlightType.highlightHomeCtaBet}
+                    highlightTheme={tradeButtonTheme}
+                    disabled={tradeButtonDisabled}
+                    disabledWithOverlay={false}
+                >
+                    Trade!
+                </Button>
+            );
         }
-
-        return (
-            <Button
-                className={classNames(
-                    styles.betButton,
-                )}
-                onClick={!tradeButtonDisabled ? onConfirm : _.noop}
-                highlightType={HighlightType.highlightHomeCtaBet}
-                highlightTheme={tradeButtonTheme}
-                disabled={tradeButtonDisabled}
-                disabledWithOverlay={false}
-            >
-                Trade!
-            </Button>
-        );
     };
 
     if (!event || !bet) {

@@ -6,6 +6,8 @@ import { BetActions }             from '../actions/bet';
 import { all, call, put, select } from 'redux-saga/effects';
 import { EventActions }           from '../actions/event';
 import { PopupActions }           from '../actions/popup';
+import Authentication             from '../../components/Authentication';
+import { AuthenticationActions }  from '../actions/authentication';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -178,6 +180,7 @@ const pullOut = function* (action) {
     if (response) {
         yield put(BetActions.pullOutBetSucceeded());
         yield put(BetActions.fetchOpenBets());
+        yield put(AuthenticationActions.updateData());
     } else {
         yield put(BetActions.pullOutBetFailed());
     }

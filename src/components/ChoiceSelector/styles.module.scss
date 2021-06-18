@@ -21,7 +21,7 @@
         border-color: $colorMint;
 
         &.choiceButtonSelected,
-        &:hover
+        &:hover:not(&.choiceButtonDisabled)
         {
             background-color: $colorMint;
         }
@@ -33,10 +33,17 @@
         border-color: $colorLightPurple;
 
         &.choiceButtonSelected,
-        &:hover
+        &:hover:not(&.choiceButtonDisabled)
         {
             background-color: $colorLightPurple;
         }
+    }
+
+    &.choiceButtonDisabled
+    {
+        border-color:     $colorGrayLight;
+        background-color: $colorGrayLight;
+        cursor:           default;
     }
 
     .choiceName,

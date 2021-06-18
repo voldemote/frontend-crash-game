@@ -4,7 +4,7 @@ import classNames          from 'classnames';
 import SelectionHelper     from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 
-const ChoiceSelector = ({ name, winAmount, selected, className, theme, onClick }) => {
+const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled = false, onClick }) => {
     const renderWinAmount = () => {
         const winAmountString = winAmount ? winAmount.toLocaleString() : '-';
 
@@ -20,6 +20,7 @@ const ChoiceSelector = ({ name, winAmount, selected, className, theme, onClick }
             className={classNames(
                 styles.choiceButton,
                 selected ? styles.choiceButtonSelected : null,
+                disabled ? styles.choiceButtonDisabled : null,
                 SelectionHelper.get(
                     theme,
                     {
