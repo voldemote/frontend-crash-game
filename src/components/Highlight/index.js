@@ -49,6 +49,7 @@ const Highlight = ({ className, highlightType, highlightTheme, width, height, on
                     highlightTheme,
                     {
                         [HighlightTheme.fillRed]: styles.highlightFillRed,
+                        [HighlightTheme.fillGray]: styles.highlightFillGray,
                     },
                 ),
             )}

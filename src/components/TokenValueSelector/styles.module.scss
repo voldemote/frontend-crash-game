@@ -17,6 +17,24 @@
         border-radius:   5px;
         border:          solid 1.2px $colorPrimary05;
         cursor:          pointer;
+        transition:      background-color .2s ease-in-out;
+
+        &.tokenValueSelectorBoxSelected,
+        &:hover
+        {
+            background-color: $colorGrayLight;
+
+            &.tokenValueSelectorBoxSelected
+            {
+                cursor: default;
+            }
+        }
+
+        &.tokenValueSelectorBoxDisabled
+        {
+            background-color: $colorGray;
+            cursor:           default;
+        }
 
         .value
         {

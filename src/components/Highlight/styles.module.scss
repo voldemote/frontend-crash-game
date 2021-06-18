@@ -25,4 +25,15 @@
             }
         }
     }
+
+    &.highlightFillGray
+    {
+        > svg
+        {
+            g
+            {
+                fill: $colorGrayLight;
+            }
+        }
+    }
 }

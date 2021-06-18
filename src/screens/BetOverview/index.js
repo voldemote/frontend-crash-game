@@ -214,7 +214,7 @@ const mapStateToProps = (state) => {
             let outcomes = _.get(
                 rawOutcomes,
                 openBet.betId,
-                {},
+                    {},
             );
 
             if (outcomes) {

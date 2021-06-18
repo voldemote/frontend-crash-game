@@ -18,14 +18,14 @@ import { BetActions }      from '../../store/actions/bet';
 import { connect }         from 'react-redux';
 import { useEffect }       from 'react';
 import { useHasMounted }   from '../hoc/useHasMounted';
-import { useIsMount }      from '../hoc/useIsMount';
 import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
+import moment              from 'moment';
 
-const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, openBets, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
-    const params                                  = useParams();
-    const defaultBetValue                         = 100;
-    const bet                                     = (
+const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+    const params                                        = useParams();
+    const defaultBetValue                               = _.max([balance, 10]);
+    const bet                                           = (
         () => {
             let currentBetId = params.betId;
 
@@ -73,8 +73,8 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
             return bet;
         }
     )();
-    const betId                                   = _.get(bet, '_id', selectedBetId);
-    const event                                   = (
+    const betId                                         = _.get(bet, '_id', selectedBetId);
+    const event                                         = (
         () => {
             let eventId = _.get(bet, 'event');
 
@@ -90,7 +90,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
             );
         }
     )();
-    const outcomes                                = (
+    const outcomes                                      = (
         () => {
             let outcomes = [];
 
@@ -108,18 +108,25 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
             return outcomes;
         }
     )();
-    const hasOpenBet                              = _.find(
+    const hasOpenBet                                    = _.find(
         openBets,
         {
             betId: betId,
         },
     );
-    const [currentTradeView, setCurrentTradeView] = useState(initialSellTab ? 1 : 0);
-    const hasMounted                              = useHasMounted();
-    const isMount                                 = useIsMount();
+    const [currentTradeView, setCurrentTradeView]       = useState(initialSellTab ? 1 : 0);
+    const [validInput, setValidInput]                   = useState(false);
+    const [commitmentErrorText, setCommitmentErrorText] = useState('');
+    const hasMounted                                    = useHasMounted();
 
     const validateInput = () => {
-        let valid = true;
+        const betEndDate = bet.date;
+        const current    = moment(new Date());
+        let valid        = true;
+
+        if (current.isAfter(betEndDate)) {
+            valid = false;
+        }
 
         if (choice === null) {
             valid = false;
@@ -129,11 +136,35 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
             valid = false;
         }
 
+        if (commitment > balance) {
+            valid = false;
+
+            setCommitmentErrorText('Not enough balance.');
+        } else {
+            setCommitmentErrorText('');
+        }
+
+        setValidInput(valid);
+
         return valid;
     };
 
     function getDefaultTokenSelection () {
         return [25, 50, 100, 150, 200, 300];
+    }
+
+    function getDefaultTokenSelectionValues () {
+        const tokenSelectionValues = _.map(
+            getDefaultTokenSelection(),
+            (value) => {
+                return {
+                    enabled: value <= balance,
+                    value,
+                };
+            },
+        );
+
+        return tokenSelectionValues;
     }
 
     async function loadAfterMount () {
@@ -170,7 +201,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
 
     useEffect(
         () => {
-            if (!isMount && !closed) {
+            if (!closed) {
                 validateInput();
             }
         },
@@ -251,17 +282,55 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
         );
     };
 
-    const renderTradeButton = () => {
+    const renderTokenSelection = () => {
         const isSell = currentTradeView === 1;
+
+        if (isSell) {
+            return (
+                <>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <label className={styles.label}>
+                    You trade:
+                </label>
+                <TokenNumberInput
+                    value={commitment}
+                    setValue={onTokenSelect}
+                    errorText={commitmentErrorText}
+                />
+                <TokenValueSelector
+                    className={styles.tokenValueSelector}
+                    values={getDefaultTokenSelectionValues()}
+                    onSelect={onTokenSelect}
+                    activeValue={commitment}
+                />
+            </>
+        );
+    };
+
+    const renderTradeButton = () => {
+        const isSell              = currentTradeView === 1;
+        const tradeButtonDisabled = !validInput;
+        let tradeButtonTheme      = isSell ? HighlightTheme.fillRed : null;
+
+        if (tradeButtonDisabled) {
+            tradeButtonTheme = HighlightTheme.fillGray;
+        }
 
         return (
             <Button
                 className={classNames(
                     styles.betButton,
                 )}
-                onClick={onConfirm}
+                onClick={!tradeButtonDisabled ? onConfirm : _.noop}
                 highlightType={HighlightType.highlightHomeCtaBet}
-                highlightTheme={isSell ? HighlightTheme.fillRed : null}
+                highlightTheme={tradeButtonTheme}
+                disabled={tradeButtonDisabled}
+                disabledWithOverlay={false}
             >
                 Trade!
             </Button>
@@ -286,18 +355,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
             <HotBetBadge />
             {renderSwitchableView()}
             <div className={styles.placeBetContentContainer}>
-                <label className={styles.label}>
-                    You trade:
-                </label>
-                <TokenNumberInput
-                    value={commitment}
-                    setValue={onTokenSelect}
-                />
-                <TokenValueSelector
-                    className={styles.tokenValueSelector}
-                    values={getDefaultTokenSelection()}
-                    onSelect={onTokenSelect}
-                />
+                {renderTokenSelection()}
                 <div className={styles.buttonContainer}>
                     <label
                         className={styles.label}
@@ -326,12 +384,13 @@ const BetView = ({ closed, initialSellTab, showEventEnd, events, selectedBetId, 
 
 const mapStateToProps = (state) => {
     return {
-        events:        state.event.events,
-        selectedBetId: state.bet.selectedBetId,
-        rawOutcomes:   state.bet.outcomes,
-        openBets:      state.bet.openBets,
+        balance:       state.authentication.balance,
         choice:        state.bet.selectedChoice,
         commitment:    _.get(state, 'bet.selectedCommitment', 0),
+        events:        state.event.events,
+        openBets:      state.bet.openBets,
+        rawOutcomes:   state.bet.outcomes,
+        selectedBetId: state.bet.selectedBetId,
     };
 };
 

@@ -9,6 +9,7 @@
     border:         solid 3.6px;
     padding:        30px 0;
     cursor:         pointer;
+    transition:     background-color .2s ease-in;
 
     @media (min-width: $screen-sm)
     {
@@ -19,7 +20,8 @@
     {
         border-color: $colorMint;
 
-        &.choiceButtonSelected
+        &.choiceButtonSelected,
+        &:hover
         {
             background-color: $colorMint;
         }
@@ -30,7 +32,8 @@
     {
         border-color: $colorLightPurple;
 
-        &.choiceButtonSelected
+        &.choiceButtonSelected,
+        &:hover
         {
             background-color: $colorLightPurple;
         }

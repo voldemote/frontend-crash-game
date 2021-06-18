@@ -31,6 +31,11 @@
         background-color: transparent;
     }
 
+    &.disabled
+    {
+        cursor: default;
+    }
+
     &.authenticationScreenButton
     {
         padding:       0 2rem;

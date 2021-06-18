@@ -5,9 +5,9 @@ import SelectionHelper from '../../helper/SelectionHelper';
 import style           from './styles.module.scss';
 import Highlight       from '../Highlight';
 
-const Button = ({ children, highlightType, highlightTheme, className, theme, onClick, withoutBackground = false, disabled, fixed }) => {
+const Button = ({ children, highlightType, highlightTheme, className, theme, onClick, withoutBackground = false, disabled, disabledWithOverlay = true, fixed }) => {
     const renderButtonDisabledOverlay = () => {
-        if (disabled) {
+        if (disabled && disabledWithOverlay) {
             return (
                 <span className={style.buttonDisabledOverlay}>
                 </span>
@@ -37,6 +37,7 @@ const Button = ({ children, highlightType, highlightTheme, className, theme, onC
                 className,
                 fixed ? style.buttonFixed : null,
                 withoutBackground ? style.withoutBackground : null,
+                disabled ? style.disabled : null,
                 SelectionHelper.get(
                     theme,
                     {
