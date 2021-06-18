@@ -8,6 +8,7 @@ import styles                from './styles.module.scss';
 import SummaryRowType        from './SummaryRowType';
 import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import classNames            from 'classnames';
+import SelectionHelper       from '../../helper/SelectionHelper';
 
 const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) => {
     const renderSummaryRow = (summaryRow, index) => {
@@ -15,20 +16,21 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) 
 
         switch (type) {
             case SummaryRowType.keyValue:
-                const key       = _.get(summaryRow, 'key');
-                const keyBold   = _.get(summaryRow, 'keyBold');
-                const value     = _.get(summaryRow, 'value');
-                const valueBold = _.get(summaryRow, 'valueBold');
-                const isLink    = _.get(summaryRow, 'isLink');
+                const key        = _.get(summaryRow, 'key');
+                const keyBold    = _.get(summaryRow, 'keyBold');
+                const value      = _.get(summaryRow, 'value');
+                const valueBold  = _.get(summaryRow, 'valueBold');
+                const valueColor = _.get(summaryRow, 'valueColor');
+                const isLink     = _.get(summaryRow, 'isLink');
 
-                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, isLink);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueColor, isLink);
 
             case SummaryRowType.divider:
                 return <Divider key={index} />;
         }
     };
 
-    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, isLink = false) => {
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueColor = null, isLink = false) => {
         return (
             <div
                 className={styles.summaryTicketRow}
@@ -58,6 +60,13 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) 
                             <span
                                 className={classNames(
                                     valueBold ? styles.bold : null,
+                                    SelectionHelper.get(
+                                        valueColor,
+                                        {
+                                            ['red']:   styles.textColorRed,
+                                            ['green']: styles.textColorGreen,
+                                        },
+                                    ),
                                 )}
                             >
                                 {value}
@@ -66,6 +75,21 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) 
                 }
             </div>
         );
+    };
+
+    const renderEventEndDate = () => {
+        if (endDate) {
+            return (
+                <div className={styles.summaryTimeLeftContainer}>
+                    <span>
+                        Event ends in:
+                    </span>
+                    <TimeLeftCounter endDate={endDate} />
+                </div>
+            );
+        }
+
+        return null;
     };
 
     return (
@@ -80,12 +104,7 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) 
             {
                 _.map(summaryRows, renderSummaryRow)
             }
-            <div className={styles.summaryTimeLeftContainer}>
-                <span>
-                    Event ends in:
-                </span>
-                <TimeLeftCounter endDate={endDate} />
-            </div>
+            {renderEventEndDate()}
         </RippedTicketContainer>
     );
 };

@@ -26,6 +26,16 @@
             font-family: $fontBold;
         }
 
+        .textColorRed
+        {
+            color: $colorRed;
+        }
+
+        .textColorGreen
+        {
+            color: $colorGreen;
+        }
+
         > *
         {
             text-overflow: ellipsis;

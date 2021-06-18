@@ -42,7 +42,7 @@ const BetOverview = ({ openBets, pullOutBet }) => {
         return renderBetHistory();
     };
 
-    const getSummaryRows = (bet, openBet, outcomes) => {
+    const getOpenBetSummaryRows = (bet, openBet, outcomes) => {
         const amount        = _.get(openBet, 'amount');
         const outcomeIndex  = _.get(openBet, 'outcome');
         const outcomeValue  = _.get(bet, outcomeIndex === 0 ? 'betOne' : 'betTwo');
@@ -67,7 +67,7 @@ const BetOverview = ({ openBets, pullOutBet }) => {
         };
     };
 
-    const renderBetSummary = (openBet, index) => {
+    const renderOpenBetSummary = (openBet, index) => {
         const bet            = _.get(openBet, 'bet');
         const outcomes       = _.get(openBet, 'outcomes');
         const marketQuestion = _.get(bet, 'marketQuestion');
@@ -75,7 +75,7 @@ const BetOverview = ({ openBets, pullOutBet }) => {
             _.get(bet, 'date', new Date()),
         );
 
-        const summaryRows = getSummaryRows(bet, openBet, outcomes);
+        const summaryRows = getOpenBetSummaryRows(bet, openBet, outcomes);
 
         return (
             <div className={styles.betSummaryContainerWrapper}>
@@ -89,10 +89,44 @@ const BetOverview = ({ openBets, pullOutBet }) => {
         );
     };
 
+    const getBetHistorySummaryRows = (bet, betHistory) => {
+        const amount        = _.get(betHistory, 'amount');
+        const outcomeIndex  = _.get(betHistory, 'outcome');
+        const outcomeValue  = _.get(bet, outcomeIndex === 0 ? 'betOne' : 'betTwo');
+        const outcomeReturn = _.get(betHistory, 'outcomeReturn');
+        const sold          = _.get(betHistory, 'type') === 'sell';
+
+        return [
+            BetSummaryHelper.getDivider(),
+            BetSummaryHelper.getKeyValue('Your Invest', amount + ' EVNT'),
+            BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
+            BetSummaryHelper.getDivider(),
+            BetSummaryHelper.getKeyValue('Outcome', outcomeReturn + ' EVNT', false, true),
+            BetSummaryHelper.getKeyValue('Type', sold ? 'Sell' : 'Buy', false, true, sold ? 'red' : 'green'),
+        ];
+    };
+
+    const renderBetHistorySummary = (betHistory, index) => {
+        const bet            = _.get(betHistory, 'bet');
+        const marketQuestion = _.get(bet, 'marketQuestion');
+
+        const summaryRows = getBetHistorySummaryRows(bet, betHistory);
+
+        return (
+            <div className={styles.betSummaryContainerWrapper}>
+                <BetSummaryContainer
+                    marketQuestion={marketQuestion}
+                    endDate={null}
+                    summaryRows={summaryRows}
+                />
+            </div>
+        );
+    };
+
     const renderAllBetSummaries = () => {
         return _.map(
             openBets,
-            renderBetSummary,
+            renderOpenBetSummary,
         );
     };
 
@@ -104,8 +138,31 @@ const BetOverview = ({ openBets, pullOutBet }) => {
         );
     };
 
-    const renderBetHistory = () => {
+    const renderAllBetHistories = () => {
+        return _.map(
+            [
+                {
+                    bet:           {
+                        marketQuestion: 'Test Example',
+                        betOne:         'One',
+                        betTwo:         'Two',
+                    },
+                    amount:        25,
+                    outcome:       0,
+                    outcomeReturn: 30,
+                    type:          'sell',
+                },
+            ],
+            renderBetHistorySummary,
+        );
+    };
 
+    const renderBetHistory = () => {
+        return (
+            <div className={styles.betHistoryContainer}>
+                {renderAllBetHistories()}
+            </div>
+        );
     };
 
     return (
@@ -153,9 +210,9 @@ const mapStateToProps = (state) => {
             );
 
             if (outcomes) {
-                const outcomeValues    = _.get(outcomes, 'values', {});
-                const amount = _.get(openBet, 'amount');
-                outcomes               = _.get(
+                const outcomeValues = _.get(outcomes, 'values', {});
+                const amount        = _.get(openBet, 'amount');
+                outcomes            = _.get(
                     outcomeValues,
                     amount,
                     {},

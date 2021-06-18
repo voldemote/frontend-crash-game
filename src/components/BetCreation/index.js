@@ -433,6 +433,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                           eventUrl,
                           false,
                           false,
+                           null,
                           true,
                       ),
                       BetSummaryHelper.getKeyValue(
