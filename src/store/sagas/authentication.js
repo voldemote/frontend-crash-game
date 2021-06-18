@@ -7,6 +7,7 @@ import { EventActions }             from '../actions/event';
 import { push }                     from 'connected-react-router';
 import { put, call, select, delay } from 'redux-saga/effects';
 import { UserActions }              from '../actions/user';
+import { BetActions }               from '../actions/bet';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
@@ -206,6 +207,7 @@ const refreshImportantData = function* () {
         yield put(UserActions.fetch({ forceFetch: true }));
         yield put(EventActions.fetchAll());
         yield put(AuthenticationActions.fetchReferrals());
+        yield put(BetActions.fetchOpenBets());
 
         yield delay(30 * 1000);
         yield call(refreshImportantData);

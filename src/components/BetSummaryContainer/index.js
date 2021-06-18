@@ -10,7 +10,7 @@ import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import classNames            from 'classnames';
 import SelectionHelper       from '../../helper/SelectionHelper';
 
-const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) => {
+const BetSummaryContainer = ({ className, marketQuestion, endDate, summaryRows, onClick }) => {
     const renderSummaryRow = (summaryRow, index) => {
         const type = _.get(summaryRow, 'type', SummaryRowType.keyValue);
 
@@ -33,7 +33,10 @@ const BetSummaryContainer = ({ marketQuestion, endDate, summaryRows, onClick }) 
     const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueColor = null, isLink = false) => {
         return (
             <div
-                className={styles.summaryTicketRow}
+                className={classNames(
+                    styles.summaryTicketRow,
+                    className,
+                )}
                 key={index}
             >
                 <span

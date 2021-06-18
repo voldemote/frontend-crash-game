@@ -11,8 +11,10 @@ import SwitchableHelper    from '../../helper/SwitchableHelper';
 import { connect }         from 'react-redux';
 import { useState }        from 'react';
 import { BetActions }      from '../../store/actions/bet';
+import PopupTheme          from '../../components/Popup/PopupTheme';
+import { PopupActions }    from '../../store/actions/popup';
 
-const BetOverview = ({ openBets, pullOutBet }) => {
+const BetOverview = ({ openBets, pullOutBet, setSelectedBet, showPopup }) => {
     const [betView, setBetView] = useState(0);
 
     const renderSwitchableView = () => {
@@ -59,9 +61,15 @@ const BetOverview = ({ openBets, pullOutBet }) => {
 
     const onBetSummaryClick = (openBet) => {
         return () => {
-            const betId   = _.get(openBet, 'betId');
-            const amount  = _.get(openBet, 'amount');
-            const outcome = _.get(openBet, 'outcome');
+            const betId = _.get(openBet, 'betId');
+
+            setSelectedBet(null, betId);
+            showPopup(
+                PopupTheme.betView,
+                {
+                    initialSellTab: true,
+                },
+            );
 
             //pullOutBet(betId, amount, outcome);
         };
@@ -234,12 +242,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        pullOutBet: (betId, amount, outcome) => {
+        pullOutBet:     (betId, amount, outcome) => {
             dispatch(BetActions.pullOutBet({
                 betId,
                 amount,
                 outcome,
             }));
+        },
+        setSelectedBet: (eventId, betId) => {
+            dispatch(BetActions.selectBet({ eventId, betId }));
+        },
+        showPopup:      (popupType, options = null) => {
+            dispatch(PopupActions.show({ popupType, options }));
         },
     };
 };
