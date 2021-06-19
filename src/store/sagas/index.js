@@ -55,6 +55,7 @@ const root = function* () {
         takeLatest([BetTypes.CREATE],                                    BetSagas.create),
         takeLatest([BetTypes.SET_COMMITMENT],                            BetSagas.setCommitment),
         takeEvery( [BetTypes.FETCH_OUTCOMES],                            BetSagas.fetchOutcomes),
+        takeEvery( [BetTypes.FETCH_SELL_OUTCOMES],                       BetSagas.fetchSellOutcomes),
         takeLatest([BetTypes.FETCH_OPEN_BETS],                           BetSagas.fetchOpenBets),
         takeLatest([BetTypes.FETCH_OPEN_BETS_SUCCEEDED],                 BetSagas.fetchOpenBetsSucceeded),
         takeEvery( [BetTypes.PULL_OUT_BET],                              BetSagas.pullOut),

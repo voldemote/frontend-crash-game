@@ -110,6 +110,16 @@ const getOutcomes = (betId, amount) => {
     });
 };
 
+const getSellOutcomes = (betId, amount) => {
+    return Api.post(
+        _.replace(ApiUrls.API_BET_SELL_OUTCOMES, ':id', betId),
+        {
+            amount,
+        },
+    ).catch(() => {
+    });
+};
+
 const pullOutBet = (betId, amount, isOutcomeOne) => {
     return Api.post(
         _.replace(ApiUrls.API_BET_PULL_OUT, ':id', betId),
@@ -145,6 +155,7 @@ export {
     fetchReferrals,
     getOpenBets,
     getOutcomes,
+    getSellOutcomes,
     getUser,
     listEvents,
     placeBet,

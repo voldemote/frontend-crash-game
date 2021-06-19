@@ -3,10 +3,12 @@ import styles              from './styles.module.scss';
 import classNames          from 'classnames';
 import SelectionHelper     from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
+import _                   from 'lodash';
 
 const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled = false, onClick }) => {
     const renderWinAmount = () => {
-        const winAmountString = winAmount ? winAmount.toLocaleString() : '-';
+        const roundedWinAmount = _.round(winAmount, 2);
+        const winAmountString  = roundedWinAmount ? roundedWinAmount.toLocaleString() : '-';
 
         return (
             <span className={styles.choiceWinAmount}>

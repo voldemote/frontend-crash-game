@@ -10,6 +10,7 @@ const initialState = {
     selectedChoice:     null,
     selectedCommitment: null,
     outcomes:           [],
+    sellOutcomes:       [],
     openBets:           [],
 };
 
@@ -74,18 +75,28 @@ const setCommitment = (action, state) => {
 };
 
 const setOutcomes = (action, state) => {
+    return updateOutcomes('outcomes', action, state);
+};
+
+const setSellOutcomes = (action, state) => {
+    return updateOutcomes('sellOutcomes', action, state);
+};
+
+const updateOutcomes = (outcomeType, action, state) => {
     let newState      = state;
     const newOutcomes = action.outcomes;
     const time        = new Date().getTime();
 
+    console.log(action);
+
     _.forEach(
         newOutcomes,
         (outcome, index) => {
-            const exists = _.get(newState, 'outcomes[' + index + '].values');
+            const exists = _.get(newState, outcomeType + '[' + index + '].values');
 
             if (exists) {
                 newState = update(newState, {
-                    outcomes: {
+                    [outcomeType]: {
                         [index]: {
                             values: {
                                 [outcome.amount]: {
@@ -100,7 +111,7 @@ const setOutcomes = (action, state) => {
                 });
             } else {
                 newState = update(newState, {
-                    outcomes: {
+                    [outcomeType]: {
                         [index]: {
                             $set: {
                                 values: {
@@ -149,6 +160,7 @@ export default function (state = initialState, action) {
         case BetTypes.SELECT_CHOICE:             return selectChoice(action, state);
         case BetTypes.SET_COMMITMENT:            return setCommitment(action, state);
         case BetTypes.SET_OUTCOMES:              return setOutcomes(action, state);
+        case BetTypes.SET_SELL_OUTCOMES:         return setSellOutcomes(action, state);
         case BetTypes.FETCH_OPEN_BETS_SUCCEEDED: return fetchOpenBetsSucceeded(action, state);
         case REHYDRATE:                          return resetOutcomes(action, state);
         default:                                 return state;

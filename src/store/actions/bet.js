@@ -8,6 +8,7 @@ export const BetTypes = {
     FETCH_OPEN_BETS_FAILED:    'Bet/FETCH_OPEN_BETS_FAILED',
     FETCH_OPEN_BETS_SUCCEEDED: 'Bet/FETCH_OPEN_BETS_SUCCEEDED',
     FETCH_OUTCOMES:            'Bet/FETCH_OUTCOMES',
+    FETCH_SELL_OUTCOMES:       'Bet/FETCH_SELL_OUTCOMES',
     PLACE:                     'Bet/PLACE',
     PLACE_FAILED:              'Bet/PLACE_FAILED',
     PLACE_SUCCEEDED:           'Bet/PLACE_SUCCEEDED',
@@ -18,6 +19,7 @@ export const BetTypes = {
     SELECT_CHOICE:             'Bet/SELECT_CHOICE',
     SET_COMMITMENT:            'Bet/SET_COMMITMENT',
     SET_OUTCOMES:              'Bet/SET_OUTCOMES',
+    SET_SELL_OUTCOMES:         'Bet/SET_SELL_OUTCOMES',
 };
 
 const create = makeActionCreator(
@@ -95,6 +97,21 @@ const setOutcomes = makeActionCreator(
     },
 );
 
+const setSellOutcomes = makeActionCreator(
+    BetTypes.SET_SELL_OUTCOMES,
+    {
+        sellOutcomes: [],
+    },
+);
+
+const fetchSellOutcomes = makeActionCreator(
+    BetTypes.FETCH_SELL_OUTCOMES,
+    {
+        betId:  null,
+        amount: null,
+    },
+);
+
 const fetchOutcomes = makeActionCreator(
     BetTypes.FETCH_OUTCOMES,
     {
@@ -143,6 +160,7 @@ export const BetActions = {
     fetchOpenBetsFailed,
     fetchOpenBetsSucceeded,
     fetchOutcomes,
+    fetchSellOutcomes,
     place,
     placeFailed,
     placeSucceeded,
@@ -153,4 +171,5 @@ export const BetActions = {
     selectChoice,
     setCommitment,
     setOutcomes,
+    setSellOutcomes,
 };

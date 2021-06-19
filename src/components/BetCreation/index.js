@@ -430,10 +430,15 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       BetSummaryHelper.getDivider(),
                       BetSummaryHelper.getKeyValue(
                           'Event Link:',
-                          eventUrl,
+                          Routes.getRouteWithParameters(
+                              Routes.bet,
+                              {
+                                  eventId: eventUrl,
+                              },
+                          ),
                           false,
                           false,
-                           null,
+                          null,
                           true,
                       ),
                       BetSummaryHelper.getKeyValue(

@@ -95,8 +95,7 @@ const fetchOutcomes = function* (action) {
 
     if (
         !_.isNull(amount) &&
-        amount >= 0.001 &&
-        amount <= 20000000
+        amount >= 0.001
     ) {
         const response = yield call(
             Api.getOutcomes,
@@ -117,6 +116,39 @@ const fetchOutcomes = function* (action) {
             };
 
             yield put(BetActions.setOutcomes({
+                outcomes,
+            }));
+        }
+    }
+};
+
+const fetchSellOutcomes = function* (action) {
+    const betId  = action.betId;
+    const amount = action.amount;
+
+    if (
+        !_.isNull(amount) &&
+        amount >= 0.001
+    ) {
+        const response = yield call(
+            Api.getSellOutcomes,
+            betId,
+            amount,
+        );
+
+        if (response) {
+            const result     = response.data;
+            const outcomeOne = result.outcomeOne;
+            const outcomeTwo = result.outcomeTwo;
+            const outcomes   = {
+                [betId]: {
+                    outcomeOne,
+                    outcomeTwo,
+                    amount,
+                },
+            };
+
+            yield put(BetActions.setSellOutcomes({
                 outcomes,
             }));
         }
@@ -155,10 +187,16 @@ const fetchOpenBetsSucceeded = function* (action) {
                 const betId  = openBet.betId;
                 const amount = openBet.investmentAmount;
 
-                return put(BetActions.fetchOutcomes({
-                    betId,
-                    amount,
-                }));
+                return all([
+                    put(BetActions.fetchSellOutcomes({
+                        betId,
+                        amount,
+                    })),
+                    put(BetActions.fetchOutcomes({
+                        betId,
+                        amount,
+                    })),
+                ]);
             },
         ),
     );
@@ -191,6 +229,7 @@ export default {
     fetchOpenBets,
     fetchOpenBetsSucceeded,
     fetchOutcomes,
+    fetchSellOutcomes,
     place,
     pullOut,
     setCommitment,

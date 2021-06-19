@@ -22,7 +22,7 @@ import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
 import moment              from 'moment';
 
-const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
     const defaultBetValue                               = _.max([balance, 10]);
     const bet                                           = (
@@ -97,6 +97,24 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
             if (bet) {
                 outcomes = _.get(
                     rawOutcomes,
+                    bet._id,
+                );
+
+                if (outcomes) {
+                    outcomes = _.get(outcomes, 'values', {});
+                }
+            }
+
+            return outcomes;
+        }
+    )();
+    const sellOutcomes                                  = (
+        () => {
+            let outcomes = [];
+
+            if (bet) {
+                outcomes = _.get(
+                    rawSellOutcomes,
                     bet._id,
                 );
 
@@ -251,43 +269,37 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const getOpenBetsValue = (index) => {
-        if (hasOpenBet) {
-            const openBet = _.find(
-                hasOpenBet,
-                {
-                    outcome: index,
-                },
-            );
+        const openBet = _.find(
+            hasOpenBet,
+            {
+                outcome: index,
+            },
+        );
 
-            if (openBet) {
-                return _.get(openBet, 'investmentAmount');
-            }
+        if (openBet) {
+            return _.get(openBet, 'investmentAmount');
         }
 
         return 0;
     };
 
     const getOutcome = (index) => {
-        if (outcomes) {
-            const isSell          = currentTradeView === 1;
-            const outcomeForValue = _.get(
-                outcomes,
-                (
-                    isSell ?
-                        getOpenBetsValue(index) :
-                        commitment
-                ),
-                {},
-            );
+        const isSell          = currentTradeView === 1;
+        const outcomeForValue = _.get(
+            isSell ? sellOutcomes : outcomes,
+            (
+                isSell ?
+                    getOpenBetsValue(index) :
+                    commitment
+            ),
+            {},
+        );
 
-            if (index === 0) {
-                return _.get(outcomeForValue, 'outcomeOne');
-            } else {
-                return _.get(outcomeForValue, 'outcomeTwo');
-            }
+        if (index === 0) {
+            return _.get(outcomeForValue, 'outcomeOne');
+        } else {
+            return _.get(outcomeForValue, 'outcomeTwo');
         }
-
-        return null;
     };
 
     const isChoiceSelectorEnabled = (index) => {
@@ -297,7 +309,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const renderSwitchableView = () => {
-        if (hasOpenBet) {
+        if (_.size(hasOpenBet)) {
             const switchableViews = [
                 SwitchableHelper.getSwitchableView(
                     'Buy',
@@ -440,13 +452,14 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
 
 const mapStateToProps = (state) => {
     return {
-        balance:       state.authentication.balance,
-        choice:        state.bet.selectedChoice,
-        commitment:    _.get(state, 'bet.selectedCommitment', 0),
-        events:        state.event.events,
-        openBets:      state.bet.openBets,
-        rawOutcomes:   state.bet.outcomes,
-        selectedBetId: state.bet.selectedBetId,
+        balance:         state.authentication.balance,
+        choice:          state.bet.selectedChoice,
+        commitment:      _.get(state, 'bet.selectedCommitment', 0),
+        events:          state.event.events,
+        openBets:        state.bet.openBets,
+        rawOutcomes:     state.bet.outcomes,
+        rawSellOutcomes: state.bet.sellOutcomes,
+        selectedBetId:   state.bet.selectedBetId,
     };
 };
 
