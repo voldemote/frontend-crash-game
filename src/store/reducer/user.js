@@ -1,16 +1,18 @@
+import _             from 'lodash';
 import update        from 'immutability-helper';
 import { UserTypes } from '../actions/user';
 
 const initialState = {
-    users: [],
+    users: {},
 };
 
 const fetchSucceeded = (action, state) => {
-    const user = action.user;
+    const user   = action.user;
+    const userId = _.get(user, 'userId');
 
     return update(state, {
         users: {
-            [user.userId]: {
+            [userId]: {
                 $set: user,
             },
         },

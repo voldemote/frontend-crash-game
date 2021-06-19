@@ -3,7 +3,7 @@ class Environment {
         const href = window.location.href;
 
         return (
-            href.indexOf('staging') > -1 ||
+            // href.indexOf('staging') > -1 ||
             href.indexOf('localhost') > -1
         );
     };

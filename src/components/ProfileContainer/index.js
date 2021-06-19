@@ -24,10 +24,6 @@ const ProfileContainer = ({ className, user }) => {
 const mapStateToProps = (state, ownProps) => {
     let { user } = ownProps;
 
-    if (!user) {
-        user = state.authentication;
-    }
-
     return {
         user,
     };
