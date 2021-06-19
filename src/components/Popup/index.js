@@ -49,12 +49,12 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             case PopupTheme.betView:
                 const initialSellTab = _.get(options, 'initialSellTab', false);
 
-                console.debug(initialSellTab);
-
                 return (
                     <BetView
                         closed={!visible}
                         initialSellTab={initialSellTab}
+                        forceSellView={true}
+                        disableSwitcher={true}
                     />
                 );
 

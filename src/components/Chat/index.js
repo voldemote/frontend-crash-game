@@ -63,6 +63,10 @@ const Chat = ({ className, token, event, fetchUser }) => {
                 addNewBetPlace(data);
             });
 
+            createdSocket.on('betPulledOut', data => {
+                addNewBetPullOut(data);
+            });
+
             websocket.current = createdSocket;
 
             return () => createdSocket.disconnect();
@@ -100,8 +104,7 @@ const Chat = ({ className, token, event, fetchUser }) => {
             ...message,
         };
 
-        setChatMessages(chatMessages => [...chatMessages, chatMessage]);
-        messageListScrollToBottom();
+        addChatMessage(chatMessage);
     };
 
     const addNewBetPlace = (betPlaceData) => {
@@ -115,6 +118,24 @@ const Chat = ({ className, token, event, fetchUser }) => {
             fetchUser(userId);
         }
 
+        addChatMessage(chatMessage);
+    };
+
+    const addNewBetPullOut = (betPulloutData) => {
+        const chatMessage = {
+            type: ChatMessageType.pulloutBet,
+            ...betPulloutData,
+        };
+        const userId      = _.get(betPulloutData, 'userId');
+
+        if (userId) {
+            fetchUser(userId);
+        }
+
+        addChatMessage(chatMessage);
+    };
+
+    const addChatMessage = (chatMessage) => {
         setChatMessages(chatMessages => [...chatMessages, chatMessage]);
         messageListScrollToBottom();
     };

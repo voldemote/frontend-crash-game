@@ -7,6 +7,7 @@ import HighlightType    from '../Highlight/HighlightType';
 import Button           from '../Button';
 import IconType         from '../Icon/IconType';
 import classNames       from 'classnames';
+import HighlightTheme   from '../Highlight/HighlightTheme';
 
 const PaymentScreenContainer = ({ paymentAction, success = false, onConfirmButtonClick, children }) => {
     const getSubtitle = () => {
@@ -74,6 +75,9 @@ const PaymentScreenContainer = ({ paymentAction, success = false, onConfirmButto
                     className={styles.confirmButton}
                     highlightType={HighlightType.highlightHomeCtaBet}
                     withoutBackground={true}
+                    disabled={true}
+                    highlightTheme={HighlightTheme.fillRed}
+                    disabledWithOverlay={false}
                     onClick={onConfirmButtonClick}
                 >
                     <span>

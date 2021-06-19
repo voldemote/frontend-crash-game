@@ -22,7 +22,7 @@ import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
 import moment              from 'moment';
 
-const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
     const defaultBetValue                               = _.max([balance, 10]);
     const bet                                           = (
@@ -132,7 +132,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
             betId: betId,
         },
     );
-    const [currentTradeView, setCurrentTradeView]       = useState(initialSellTab ? 1 : 0);
+    const [currentTradeView, setCurrentTradeView]       = useState(forceSellView ? 1 : 0);
     const [validInput, setValidInput]                   = useState(false);
     const [commitmentErrorText, setCommitmentErrorText] = useState('');
     const hasMounted                                    = useHasMounted();
@@ -140,7 +140,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     const validateInput = () => {
         const betEndDate = bet.date;
         const current    = moment(new Date());
-        const isSell     = currentTradeView === 1;
+        const isSell     = hasSellView();
         let valid        = true;
 
         if (current.isAfter(betEndDate)) {
@@ -210,7 +210,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     useEffect(
         () => {
             if (hasMounted) {
-                setCurrentTradeView(initialSellTab ? 1 : 0);
+                setCurrentTradeView(forceSellView ? 1 : 0);
 
                 loadAfterMount();
             }
@@ -236,13 +236,22 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
         [currentTradeView],
     );
 
+    const hasSellView = () => {
+        return (
+                currentTradeView === 1 ||
+                forceSellView
+            ) &&
+            _.size(hasOpenBet);
+    };
+
     const onConfirm = () => {
         const validInput = validateInput();
 
         if (validInput) {
             const isOutcomeOne = choice === 0;
+            const isSell       = hasSellView();
 
-            if (currentTradeView === 0) {
+            if (!isSell) {
                 placeBet(betId, commitment, isOutcomeOne);
             } else {
                 pullOutBet(betId, choice, commitment);
@@ -253,7 +262,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     const onChoiceSelect = (id, enabled) => {
         return () => {
             if (enabled) {
-                const isSell = currentTradeView === 1;
+                const isSell = hasSellView();
 
                 if (isSell) {
                     pullOutBet(betId, id, getOpenBetsValue(id));
@@ -284,7 +293,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const getOutcome = (index) => {
-        const isSell          = currentTradeView === 1;
+        const isSell          = hasSellView();
         const outcomeForValue = _.get(
             isSell ? sellOutcomes : outcomes,
             (
@@ -303,13 +312,13 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const isChoiceSelectorEnabled = (index) => {
-        const isSell = currentTradeView === 1;
+        const isSell = hasSellView();
 
         return !isSell || getOpenBetsValue(index) > 0;
     };
 
     const renderSwitchableView = () => {
-        if (_.size(hasOpenBet)) {
+        if (_.size(hasOpenBet) && !disableSwitcher) {
             const switchableViews = [
                 SwitchableHelper.getSwitchableView(
                     'Buy',
@@ -348,7 +357,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const renderTokenSelection = () => {
-        const isSell = currentTradeView === 1;
+        const isSell = hasSellView();
 
         if (isSell) {
             return (
@@ -378,7 +387,7 @@ const BetView = ({ closed, initialSellTab, showEventEnd, balance, events, select
     };
 
     const renderTradeButton = () => {
-        const isSell = currentTradeView === 1;
+        const isSell = hasSellView();
 
         if (!isSell) {
             const tradeButtonDisabled = !validInput;
