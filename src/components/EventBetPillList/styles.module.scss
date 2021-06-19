@@ -1,0 +1,23 @@
+@import '../../styles/all';
+
+.showAllPillsText
+{
+    display:     flex;
+    align-items: center;
+    font-size:   12px;
+    color:       $colorGrayLight2;
+    cursor:      pointer;
+
+    .showAllDropDownIcon
+    {
+        $fillColor:   $colorGrayLight2;
+        $strokeColor: transparent;
+
+        display:      inline;
+        width:        auto;
+        margin-left:  10px;
+
+        @include svgColorFillImportant($fillColor);
+        @include svgColorStrokeImportant($strokeColor);
+    }
+}

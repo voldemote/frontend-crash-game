@@ -87,8 +87,6 @@ const updateOutcomes = (outcomeType, action, state) => {
     const newOutcomes = action.outcomes;
     const time        = new Date().getTime();
 
-    console.log(action);
-
     _.forEach(
         newOutcomes,
         (outcome, index) => {

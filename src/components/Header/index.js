@@ -9,9 +9,13 @@ import EventBetPill     from '../../components/EventBetPill/index';
 import TwitchEmbedVideo from '../TwitchEmbedVideo';
 import Tags             from '../Tags';
 import Routes           from '../../constants/Routes';
+import Button           from '../Button';
+import { useEffect }    from 'react';
+import EventBetPillList from '../EventBetPillList';
 
 const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [showAllPills, setShowAllPills] = useState({});
 
     const updateCurrentSlide = (index) => {
         const eventsSize = _.size(events);
@@ -31,33 +35,6 @@ const Header = ({ events }) => {
 
     const getCurrentEvent = () => {
         return events[currentSlide];
-    };
-
-    const renderBetPills = () => {
-        const event = getCurrentEvent();
-
-        if (event) {
-            const bets = event.bets;
-
-            return _.map(
-                bets,
-                (bet, betIndex) => {
-                    const eventId = _.get(event, '_id');
-                    const key     = eventId + '.' + betIndex;
-
-                    return (
-                        <EventBetPill
-                            key={key}
-                            userId={bet.creator}
-                            bet={bet}
-                            eventId={eventId}
-                        />
-                    );
-                },
-            );
-        }
-
-        return null;
     };
 
     return (
@@ -151,7 +128,10 @@ const Header = ({ events }) => {
             </div>
 
             <div className={styles.betPillContainer}>
-                {renderBetPills()}
+                <EventBetPillList
+                    event={getCurrentEvent()}
+                    bets={_.get(getCurrentEvent(), 'bets', [])}
+                />
             </div>
         </div>
     );

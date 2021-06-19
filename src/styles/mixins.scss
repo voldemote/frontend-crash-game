@@ -20,10 +20,26 @@
     }
 }
 
+@mixin svgColorFillImportant($color)
+{
+    *
+    {
+        fill: $color !important;
+    }
+}
+
 @mixin svgColorStroke($color)
 {
     *
     {
         stroke: $color;
+    }
+}
+
+@mixin svgColorStrokeImportant($color)
+{
+    *
+    {
+        stroke: $color !important;
     }
 }
