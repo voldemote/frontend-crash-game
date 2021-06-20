@@ -30,6 +30,10 @@ import IconTheme           from '../Icon/IconTheme';
 const EventBetPillList = ({ event, bets }) => {
     const betPillPreviewCount             = 3;
     const [showAllPills, setShowAllPills] = useState(false);
+    const betsWithoutResolved = _.filter(
+        bets,
+        (bet) => !_.get(bet, 'finalOutcome', false),
+    );
 
     const onShowAllClick = () => {
         setShowAllPills(true);
@@ -37,10 +41,10 @@ const EventBetPillList = ({ event, bets }) => {
 
     const renderBetPills = () => {
         const eventId    = _.get(event, '_id');
-        let betsToRender = bets;
+        let betsToRender = betsWithoutResolved;
 
         if (!showAllPills) {
-            betsToRender = _.slice(bets, 0, betPillPreviewCount);
+            betsToRender = _.slice(betsToRender, 0, betPillPreviewCount);
         }
 
         return _.map(
@@ -59,7 +63,7 @@ const EventBetPillList = ({ event, bets }) => {
     };
 
     const renderShowAllBetsText = () => {
-        const size = _.size(bets);
+        const size = _.size(betsWithoutResolved);
 
         if (!showAllPills && size > betPillPreviewCount) {
             const countDifference = size - 3;

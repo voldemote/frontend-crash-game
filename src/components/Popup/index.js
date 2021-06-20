@@ -53,8 +53,8 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                     <BetView
                         closed={!visible}
                         initialSellTab={initialSellTab}
-                        forceSellView={true}
-                        disableSwitcher={true}
+                        forceSellView={initialSellTab}
+                        disableSwitcher={initialSellTab}
                     />
                 );
 

@@ -5,16 +5,20 @@ import SelectionHelper     from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _                   from 'lodash';
 
-const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled = false, onClick }) => {
+const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled = false, hideAmount = false, onClick }) => {
     const renderWinAmount = () => {
-        const roundedWinAmount = _.round(winAmount, 2);
-        const winAmountString  = roundedWinAmount ? roundedWinAmount.toLocaleString() : '-';
+        if (!hideAmount) {
+            const roundedWinAmount = _.round(winAmount, 2);
+            const winAmountString  = roundedWinAmount ? roundedWinAmount.toLocaleString() : '-';
 
-        return (
-            <span className={styles.choiceWinAmount}>
-                {winAmountString} EVNT
-            </span>
-        );
+            return (
+                <span className={styles.choiceWinAmount}>
+                    {winAmountString} EVNT
+                </span>
+            );
+        }
+
+        return null;
     };
 
     return (

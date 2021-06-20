@@ -65,23 +65,23 @@
         {
             width:      100%;
             margin-top: 45px;
+        }
+    }
 
-            .choiceContainer
+    .choiceContainer
+    {
+        display:         flex;
+        flex-direction:  row;
+        justify-content: space-between;
+
+        .choice
+        {
+            width:       100%;
+            margin-left: 8px;
+
+            &:first-child
             {
-                display:         flex;
-                flex-direction:  row;
-                justify-content: space-between;
-
-                .choice
-                {
-                    width:       100%;
-                    margin-left: 8px;
-
-                    &:first-child
-                    {
-                        margin-right: 8px;
-                    }
-                }
+                margin-right: 8px;
             }
         }
     }

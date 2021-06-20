@@ -15,7 +15,6 @@ import EventBetPillList from '../EventBetPillList';
 
 const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [showAllPills, setShowAllPills] = useState({});
 
     const updateCurrentSlide = (index) => {
         const eventsSize = _.size(events);

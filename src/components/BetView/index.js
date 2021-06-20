@@ -22,7 +22,7 @@ import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
 import moment              from 'moment';
 
-const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
     const defaultBetValue                               = _.max([balance, 10]);
     const bet                                           = (
@@ -244,6 +244,12 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
             _.size(hasOpenBet);
     };
 
+    const getFinalOutcome = () => {
+        const finalOutcome = _.get(bet, 'finalOutcome', false);
+
+        return finalOutcome;
+    };
+
     const onConfirm = () => {
         const validInput = validateInput();
 
@@ -340,7 +346,7 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
         return null;
     };
 
-    const renderChoiceSelector = (index, name, choiceSelectorTheme) => {
+    const renderChoiceSelector = (index, name, choiceSelectorTheme, resolved = false, forceSelect = false) => {
         const enabled = isChoiceSelectorEnabled(index);
 
         return (
@@ -349,8 +355,9 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
                 className={styles.choice}
                 name={name}
                 winAmount={getOutcome(index)}
-                selected={choice === index}
-                onClick={onChoiceSelect(index, enabled)}
+                selected={choice === index || forceSelect}
+                onClick={!resolved ? onChoiceSelect(index, enabled) : _.noop}
+                hideAmount={resolved}
                 disabled={!enabled}
             />
         );
@@ -360,10 +367,7 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
         const isSell = hasSellView();
 
         if (isSell) {
-            return (
-                <>
-                </>
-            );
+            return null;
         }
 
         return (
@@ -387,9 +391,10 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
     };
 
     const renderTradeButton = () => {
-        const isSell = hasSellView();
+        const isSell       = hasSellView();
+        const finalOutcome = getFinalOutcome();
 
-        if (!isSell) {
+        if (!isSell && !finalOutcome) {
             const tradeButtonDisabled = !validInput;
             let tradeButtonTheme      = null;
 
@@ -414,6 +419,41 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
         }
     };
 
+    const renderPlaceBetContentContainer = () => {
+        const finalOutcome = getFinalOutcome();
+
+        if (!finalOutcome) {
+            return (
+                <div className={styles.placeBetContentContainer}>
+                    {renderTokenSelection()}
+                    <div className={styles.buttonContainer}>
+                        <label
+                            className={styles.label}
+                        >
+                            Potential Winnings:
+                        </label>
+                        <div className={styles.choiceContainer}>
+                            {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
+                            {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <div className={styles.placeBetContentContainer}>
+                This Bet was already resolved.
+                <div className={styles.buttonContainer}>
+                    <div className={styles.choiceContainer}>
+                        {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint, true, finalOutcome === 'betOne')}
+                        {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple, true, finalOutcome === 'betTwo')}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     if (!event || !bet) {
         return null;
     }
@@ -431,20 +471,7 @@ const BetView = ({ closed, initialSellTab, forceSellView = false, disableSwitche
             </div>
             <HotBetBadge />
             {renderSwitchableView()}
-            <div className={styles.placeBetContentContainer}>
-                {renderTokenSelection()}
-                <div className={styles.buttonContainer}>
-                    <label
-                        className={styles.label}
-                    >
-                        Potential Winnings:
-                    </label>
-                    <div className={styles.choiceContainer}>
-                        {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
-                        {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
-                    </div>
-                </div>
-            </div>
+            {renderPlaceBetContentContainer()}
             {renderTradeButton()}
             {
                 showEventEnd && (
