@@ -424,20 +424,23 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
 
         if (!finalOutcome) {
             return (
-                <div className={styles.placeBetContentContainer}>
-                    {renderTokenSelection()}
-                    <div className={styles.buttonContainer}>
-                        <label
-                            className={styles.label}
-                        >
-                            Potential Winnings:
-                        </label>
-                        <div className={styles.choiceContainer}>
-                            {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
-                            {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
+                <>
+                    {renderSwitchableView()}
+                    <div className={styles.placeBetContentContainer}>
+                        {renderTokenSelection()}
+                        <div className={styles.buttonContainer}>
+                            <label
+                                className={styles.label}
+                            >
+                                Potential Winnings:
+                            </label>
+                            <div className={styles.choiceContainer}>
+                                {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
+                                {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             );
         }
 
@@ -470,7 +473,6 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                 {bet.description}
             </div>
             <HotBetBadge />
-            {renderSwitchableView()}
             {renderPlaceBetContentContainer()}
             {renderTradeButton()}
             {
