@@ -1,25 +1,21 @@
+import AlertSagas                     from './alert';
+import AuthenticationSagas            from './authentication';
+import BetSagas                       from './bet';
+import EventSagas                     from './event';
+import TransactionSagas               from './transaction';
+import UserSagas                      from './user';
 import { all }                        from 'redux-saga/effects';
+import { AuthenticationActions }      from '../actions/authentication';
+import { AuthenticationTypes }        from '../actions/authentication';
+import { BetActions }                 from '../actions/bet';
+import { BetTypes }                   from '../actions/bet';
+import { EventActions }               from '../actions/event';
+import { EventTypes }                 from '../actions/event';
 import { REHYDRATE }                  from 'redux-persist';
 import { takeLatest, takeEvery, put } from 'redux-saga/effects';
-
-// Types
-import { AuthenticationTypes } from '../actions/authentication';
-import { EventTypes }          from '../actions/event';
-import { BetTypes }            from '../actions/bet';
-import { UserTypes }           from '../actions/user';
-
-// Actions
-import { EventActions } from '../actions/event';
-
-// Sagas
-import AuthenticationSagas       from './authentication';
-import AlertSagas                from './alert';
-import EventSagas                from './event';
-import BetSagas                  from './bet';
-import UserSagas                 from './user';
-import { UserActions }           from '../actions/user';
-import { AuthenticationActions } from '../actions/authentication';
-import { BetActions }            from '../actions/bet';
+import { TransactionActions }         from '../actions/transaction';
+import { TransactionTypes }           from '../actions/transaction';
+import { UserTypes }                  from '../actions/user';
 
 const root = function* () {
     yield all([
@@ -59,6 +55,7 @@ const root = function* () {
         takeLatest([BetTypes.FETCH_OPEN_BETS],                           BetSagas.fetchOpenBets),
         takeLatest([BetTypes.FETCH_OPEN_BETS_SUCCEEDED],                 BetSagas.fetchOpenBetsSucceeded),
         takeEvery( [BetTypes.PULL_OUT_BET],                              BetSagas.pullOut),
+        takeLatest([TransactionTypes.FETCH_ALL],                         TransactionSagas.fetchTransactions),
         takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
         takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
@@ -76,6 +73,7 @@ const preLoading = function* () {
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(BetActions.fetchOpenBets());
+    yield put(TransactionActions.fetchAll());
 };
 
 export default {

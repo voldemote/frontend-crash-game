@@ -138,6 +138,13 @@ const getOpenBets = () => {
     });
 };
 
+const getTransactions = () => {
+    return Api.get(
+        ApiUrls.API_USER_HISTORY,
+    ).catch(() => {
+    });
+};
+
 const placeBet = (betId, amount, isOutcomeOne) => {
     return Api.post(
         _.replace(ApiUrls.API_BET_PLACE, ':id', betId),
@@ -156,6 +163,7 @@ export {
     getOpenBets,
     getOutcomes,
     getSellOutcomes,
+    getTransactions,
     getUser,
     listEvents,
     placeBet,

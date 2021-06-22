@@ -14,7 +14,7 @@ import { BetActions }      from '../../store/actions/bet';
 import PopupTheme          from '../../components/Popup/PopupTheme';
 import { PopupActions }    from '../../store/actions/popup';
 
-const BetOverview = ({ openBets, pullOutBet, setSelectedBet, showPopup }) => {
+const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     const [betView, setBetView] = useState(0);
 
     const renderSwitchableView = () => {
@@ -70,8 +70,6 @@ const BetOverview = ({ openBets, pullOutBet, setSelectedBet, showPopup }) => {
                     initialSellTab: true,
                 },
             );
-
-            //pullOutBet(betId, amount, outcome);
         };
     };
 
@@ -98,15 +96,17 @@ const BetOverview = ({ openBets, pullOutBet, setSelectedBet, showPopup }) => {
     };
 
     const getBetHistorySummaryRows = (bet, betHistory) => {
-        const amount        = _.get(betHistory, 'investmentAmount');
+        const amount        = _.get(betHistory, 'investmentamount');
+        const feeAmount     = _.get(betHistory, 'feeamount');
         const outcomeIndex  = _.get(betHistory, 'outcome');
-        const outcomeValue  = _.get(bet, outcomeIndex === 0 ? 'betOne' : 'betTwo');
-        const outcomeReturn = _.get(betHistory, 'outcomeReturn');
-        const sold          = _.get(betHistory, 'type') === 'sell';
+        const outcomeValue  = _.get(bet, outcomeIndex === 'yes' ? 'betOne' : 'betTwo');
+        const outcomeReturn = _.get(betHistory, 'outcometokensbought');
+        const sold          = _.get(betHistory, 'direction') === 'SELL';
 
         return [
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Your Invest', amount + ' EVNT'),
+            BetSummaryHelper.getKeyValue('Fee', feeAmount + ' EVNT'),
             BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Outcome', outcomeReturn + ' EVNT', false, true),
@@ -148,19 +148,7 @@ const BetOverview = ({ openBets, pullOutBet, setSelectedBet, showPopup }) => {
 
     const renderAllBetHistories = () => {
         return _.map(
-            [
-                {
-                    bet:           {
-                        marketQuestion: 'Test Example',
-                        betOne:         'One',
-                        betTwo:         'Two',
-                    },
-                    amount:        25,
-                    outcome:       0,
-                    outcomeReturn: 30,
-                    type:          'sell',
-                },
-            ],
+            transactions,
             renderBetHistorySummary,
         );
     };
@@ -187,8 +175,8 @@ const BetOverview = ({ openBets, pullOutBet, setSelectedBet, showPopup }) => {
 };
 
 const mapStateToProps = (state) => {
-    const rawOutcomes = state.bet.outcomes;
-    const findBet     = (betId) => {
+    const rawOutcomes  = state.bet.outcomes;
+    const findBet      = (betId) => {
         const event = _.find(
             state.event.events,
             (event) => {
@@ -208,13 +196,13 @@ const mapStateToProps = (state) => {
             },
         );
     };
-    const openBets    = _.map(
+    const openBets     = _.map(
         state.bet.openBets,
         (openBet, index) => {
             let outcomes = _.get(
                 rawOutcomes,
                 openBet.betId,
-                    {},
+                {},
             );
 
             if (outcomes) {
@@ -234,21 +222,27 @@ const mapStateToProps = (state) => {
             };
         },
     );
+    const transactions = _.map(
+        state.transaction.transactions,
+        (transaction) => {
+            const betId = _.get(transaction, 'bet');
+            const bet   = findBet(betId);
+
+            return {
+                ...transaction,
+                bet,
+            };
+        },
+    );
 
     return {
         openBets,
+        transactions,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        pullOutBet:     (betId, amount, outcome) => {
-            dispatch(BetActions.pullOutBet({
-                betId,
-                amount,
-                outcome,
-            }));
-        },
         setSelectedBet: (eventId, betId) => {
             dispatch(BetActions.selectBet({ eventId, betId }));
         },
