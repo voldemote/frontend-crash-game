@@ -185,17 +185,16 @@ const fetchOpenBetsSucceeded = function* (action) {
     yield all(
         openBets.map(
             (openBet) => {
-                const betId  = openBet.betId;
-                const amount = openBet.investmentAmount;
+                const betId = openBet.betId;
 
                 return all([
                     put(BetActions.fetchSellOutcomes({
                         betId,
-                        amount,
+                        amount: openBet.outcomeAmount,
                     })),
                     put(BetActions.fetchOutcomes({
                         betId,
-                        amount,
+                        amount: openBet.investmentAmount,
                     })),
                 ]);
             },

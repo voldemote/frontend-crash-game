@@ -292,7 +292,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         );
 
         if (openBet) {
-            return _.get(openBet, 'investmentAmount');
+            return _.get(openBet, 'outcomeAmount');
         }
 
         return 0;
