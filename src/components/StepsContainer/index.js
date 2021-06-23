@@ -1,9 +1,12 @@
-import React       from 'react';
-import styles      from './styles.module.scss';
-import Button      from '../Button';
-import ButtonTheme from '../Button/ButtonTheme';
-import StepBar     from '../StepBar';
-import classNames  from 'classnames';
+import React          from 'react';
+import styles         from './styles.module.scss';
+import Button         from '../Button';
+import ButtonTheme    from '../Button/ButtonTheme';
+import StepBar        from '../StepBar';
+import classNames     from 'classnames';
+import Highlight      from '../Highlight';
+import HighlightType  from '../Highlight/HighlightType';
+import HighlightTheme from '../Highlight/HighlightTheme';
 
 const StepsContainer = (
     {
@@ -38,15 +41,22 @@ const StepsContainer = (
     const renderHeadline = () => {
         if (headline && headline.length) {
             return (
-                <p
-                    className={classNames(
-                        styles.stepsHeadline,
-                        headlineClassName,
-                    )}
-                    dangerouslySetInnerHTML={{
-                        __html: headline,
-                    }}
-                />
+                <div className={styles.headlineContainer}>
+                    <p
+                        className={classNames(
+                            styles.stepsHeadline,
+                            splittedView ? styles.stepsHeadlineSplitView : null,
+                            headlineClassName,
+                        )}
+                    >
+                        {headline}
+                    </p>
+                    {
+                        splittedView && <Highlight
+                            highlightType={HighlightType.highlightHomeCtaBet}
+                        />
+                    }
+                </div>
             );
         }
 
@@ -91,7 +101,7 @@ const StepsContainer = (
             <div
                 className={classNames(
                     styles.stepsContentContainer,
-                    splittedView ? styles.splittedView : null,
+                    splittedView ? styles.splitView : null,
                 )}
             >
                 <div>

@@ -34,7 +34,7 @@
         $paddingHTotal:  2 * $paddingPercent;
         $padding:        0 $paddingPercent;
 
-        &.splittedView
+        &.splitView
         {
             @media (min-width: $screen-md)
             {
@@ -45,6 +45,13 @@
                 {
                     width:  50%;
                     height: 100%;
+
+                    &:first-child
+                    {
+                        margin-top:       0 !important;
+                        padding-top:      115px;
+                        background-color: $colorPrimary;
+                    }
 
                     &:last-child
                     {
@@ -75,6 +82,11 @@
             }
         }
 
+        .headlineContainer
+        {
+            position: relative;
+        }
+
         .stepsHeadline
         {
             width:          100%;
@@ -84,6 +96,11 @@
             letter-spacing: 0;
             color:          $colorPrimary;
             padding:        $padding;
+
+            &.stepsHeadlineSplitView
+            {
+                color: $colorWhite;
+            }
         }
 
         .stepsButtonContainer
