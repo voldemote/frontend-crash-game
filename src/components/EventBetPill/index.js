@@ -11,17 +11,18 @@ import { getDefaultUser }  from '../../helper/Profile';
 import { useState }        from 'react';
 import ChoiceSelector      from '../ChoiceSelector';
 import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
-import Button              from '../Button';
-import TokenNumberInput    from '../TokenNumberInput';
-import { useEffect }       from 'react';
-import { BetActions }      from '../../store/actions/bet';
-import HighlightType       from '../Highlight/HighlightType';
-import { useIsMount }      from '../hoc/useIsMount';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import SleepHelper         from '../../helper/Sleep';
-import Routes              from '../../constants/Routes';
-import { useHistory }      from 'react-router';
-import ClickEvent          from '../../helper/ClickEvent';
+import Button            from '../Button';
+import TokenNumberInput  from '../TokenNumberInput';
+import { useEffect }     from 'react';
+import { BetActions }    from '../../store/actions/bet';
+import HighlightType     from '../Highlight/HighlightType';
+import { useIsMount }    from '../hoc/useIsMount';
+import { useHasMounted } from '../hoc/useHasMounted';
+import SleepHelper       from '../../helper/Sleep';
+import Routes            from '../../constants/Routes';
+import { useHistory }    from 'react-router';
+import ClickEvent        from '../../helper/ClickEvent';
+import HighlightTheme    from '../Highlight/HighlightTheme';
 
 const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {
     const [choice, setChoice]     = useState(null);
@@ -166,6 +167,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
                             styles.betButton,
                         )}
                         highlightType={HighlightType.highlightSettingsMyBets}
+                        highlightTheme={choice !== null ? null : HighlightTheme.fillGray}
                         onClick={onConfirm}
                     >
                         <span className={styles.buttonContent}>

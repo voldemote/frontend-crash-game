@@ -30,7 +30,7 @@ import IconTheme           from '../Icon/IconTheme';
 const EventBetPillList = ({ event, bets }) => {
     const betPillPreviewCount             = 3;
     const [showAllPills, setShowAllPills] = useState(false);
-    const betsWithoutResolved = _.filter(
+    const betsWithoutResolved             = _.filter(
         bets,
         (bet) => !_.get(bet, 'finalOutcome', false),
     );
@@ -52,7 +52,7 @@ const EventBetPillList = ({ event, bets }) => {
             (bet, betIndex) => {
                 return (
                     <EventBetPill
-                        key={betIndex}
+                        key={eventId + '-' + betIndex}
                         userId={bet.creator}
                         bet={bet}
                         eventId={eventId}
