@@ -22,13 +22,13 @@ const getFailMessage = (action) => {
             return 'An error occurred fetching all events.';
 
         case BetTypes.CREATE_FAILED:
-            return 'An error occurred creating the bet. Please try again!';
+            return 'An error occurred creating the trade. Please try again!';
 
         case BetTypes.PLACE_FAILED:
-            return 'An error occurred placing on the bet. Please try again!';
+            return 'An error occurred placing on the position. Please try again!';
 
         case BetTypes.PULL_OUT_BET_FAILED:
-            return 'An error occurred selling bet';
+            return 'An error occurred selling position';
     }
 
     return null;
@@ -37,13 +37,13 @@ const getFailMessage = (action) => {
 const getSuccessMessage = (action) => {
     switch (action.type) {
         case BetTypes.CREATE_SUCCEEDED:
-            return 'The bet was successfully created!';
+            return 'The trade was successfully created!';
 
         case BetTypes.PLACE_SUCCEEDED:
-            return 'The bet was placed successfully!';
+            return 'The position was placed successfully!';
 
         case BetTypes.PULL_OUT_BET_SUCCEEDED:
-            return 'The bet was sold successfully!';
+            return 'The position was sold successfully!';
     }
 
     return null;

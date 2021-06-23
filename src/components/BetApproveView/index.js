@@ -17,7 +17,7 @@ const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, outcome
         return [
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Your Invest', investmentAmount + ' EVNT'),
-            BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
+            BetSummaryHelper.getKeyValue('Your Trade', outcomeValue),
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Possible Win', outcomeReturn + ' EVNT', false, true),
         ];
