@@ -107,13 +107,13 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
 
                       break;
 
-                  case 4:
-                      if (!termsAndConditionsAccepted) {
-                          error = 'Please accept our terms and conditions!';
-                          valid = false;
-                      }
+                  // case 4:
+                  //    if (!termsAndConditionsAccepted) {
+                  //        error = 'Please accept our terms and conditions!';
+                  //        valid = false;
+                  //    }
 
-                      break;
+                  //    break;
               }
 
               if (error.length > 0) {
@@ -192,11 +192,11 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           };
 
           const getButtonContent = () => {
-              if (step <= 2) {
+              if (step <= 1) {
                   return 'Next Step';
-              } else if (step === 3) {
+              } else if (step === 2) {
                   return 'Last Step';
-              } else if (step === 4) {
+              } else if (step === 3) {
                   return (
                       <div className={styles.publishBetButton}>
                           <Icon
@@ -214,7 +214,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           const getCancelButtonContent = () => {
               if (step === 0) {
                   return 'Cancel';
-              } else if (step <= 4) {
+              } else if (step <= 3) {
                   return 'Go back';
               }
 
@@ -231,9 +231,9 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       return 'Define outcomes';
                   case 3:
                       return 'When does the trade end?';
+                  // case 4:
+                  //    return 'Accept Terms and Conditions';
                   case 4:
-                      return 'Accept Terms and Conditions';
-                  case 5:
                       return 'Awesome, that looks great!';
               }
 
@@ -250,8 +250,8 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
               const validInput = validateInput();
 
               if (validInput) {
-                  if (step <= 4) {
-                      if (step === 4) {
+                  if (step <= 3) {
+                      if (step === 3) {
                           createBet(eventUrl, marketQuestion, description, outcomes, getEndDateTime());
                       }
 
@@ -263,7 +263,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           const onCancel = () => {
               if (step === 0) {
                   hidePopup();
-              } else if (step <= 4) {
+              } else if (step <= 3) {
                   setStep(step - 1);
               }
           };
@@ -424,6 +424,14 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           };
 
           const renderSummary = () => {
+              const event = _.find(
+                  events,
+                  {
+                      _id: eventUrl,
+                  }
+              );
+              console.debug(event);
+              const eventTitle = _.get(event, 'name', null);
               const summaryRows = _.concat(
                   getSummaryOutcomeRows(),
                   [
@@ -443,7 +451,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       ),
                       BetSummaryHelper.getKeyValue(
                           'Event Title:',
-                          'TBD',
+                          eventTitle,
                       ),
                   ],
               );
@@ -474,9 +482,9 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   return renderOutcomeCreator();
               } else if (step === 3) {
                   return renderDateAndTime();
+              // } else if (step === 4) {
+              //     return renderTermsAndConditions();
               } else if (step === 4) {
-                  return renderTermsAndConditions();
-              } else if (step === 5) {
                   return renderSummary();
               }
           };
@@ -484,7 +492,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           return (
               <StepsContainer
                   step={step}
-                  size={5}
+                  size={4}
                   headlineClassName={styles.stepsHeadline}
                   headline={getHeadline()}
                   buttonContent={getButtonContent()}
@@ -493,13 +501,13 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   onCancelButtonClick={onCancel}
                   onButtonClick={onConfirm}
                   hideDefaultButtonBackground={true}
-                  splittedView={step === 5}
+                  splittedView={step === 4}
                   buttonDesktopMargin={true}
               >
                   <div
                       className={classNames(
                           styles.contentContainer,
-                          step >= 5 ? styles.fullHeightContentContainer : null,
+                          step >= 4 ? styles.fullHeightContentContainer : null,
                       )}
                   >
                       <div
