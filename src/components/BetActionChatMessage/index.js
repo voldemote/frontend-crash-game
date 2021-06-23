@@ -30,7 +30,7 @@ const BetActionChatMessage = ({ chatMessageType, user, tokenAmount, betId, event
                 return <>{userName} has bet <strong>{tokenAmount} EVNT</strong> on <strong>{outcome}</strong>.</>;
 
             case ChatMessageType.pulloutBet:
-                return <>{userName} has sold <strong>{tokenAmount} EVNT</strong> of <strong>{outcome}</strong>.</>;
+                return <>{userName} sold <strong>{outcome}</strong> for <strong>{tokenAmount} EVNT</strong>.</>;
         }
 
         return null;

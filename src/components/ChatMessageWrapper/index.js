@@ -23,6 +23,7 @@ const ChatMessageWrapper = ({ user, message, date }) => {
 
             return () => clearTimeout(timerId);
         },
+        [],
     );
 
     const updateDateText = () => {
