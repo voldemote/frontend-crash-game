@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 
-const WalletCard = ({ logo, title, subtitle, text, buttonText, buttonDisabled, onClick }) => {
+const WalletCard = ({ logo, title, subtitle, text, buttonText, buttonDisabled, onClick, children }) => {
     return (
         <div className={styles.walletCard}>
             <div className={styles.content}>
@@ -16,6 +16,7 @@ const WalletCard = ({ logo, title, subtitle, text, buttonText, buttonDisabled, o
                 <p>
                     {text}
                 </p>
+                {children}
                 <button
                     onClick={onClick}
                     disabled={buttonDisabled}

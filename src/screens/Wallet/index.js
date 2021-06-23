@@ -1,25 +1,26 @@
-import _                       from 'lodash';
-import AccountBalance          from '../../components/AccountBalanceView';
-import Highlight               from '../../components/Highlight';
-import HighlightType           from '../../components/Highlight/HighlightType';
-import Icon                    from '../../components/Icon';
-import IconTheme               from '../../components/Icon/IconTheme';
-import IconType                from '../../components/Icon/IconType';
-import PaymentAction           from '../../constants/PaymentAction';
-import PaymentProvider         from '../../constants/PaymentProvider';
-import PopupTheme              from '../../components/Popup/PopupTheme';
-import React                   from 'react';
-import Routes                  from '../../constants/Routes';
-import ScreenWithHeader        from '../../components/ScreenWithHeaderContainer';
-import styles                  from './styles.module.scss';
-import SwitchableContainer from '../../components/SwitchableContainer';
-import SwitchableHelper    from '../../helper/SwitchableHelper';
-import WalletCard          from '../../components/WalletCard';
-import WalletPaymentCard       from '../../components/WalletPaymentCard';
-import { connect }             from 'react-redux';
-import { PopupActions }        from '../../store/actions/popup';
-import { useHistory }          from 'react-router';
-import { useState }            from 'react';
+import _                        from 'lodash';
+import AccountBalance           from '../../components/AccountBalanceView';
+import Highlight                from '../../components/Highlight';
+import HighlightType            from '../../components/Highlight/HighlightType';
+import Icon                     from '../../components/Icon';
+import IconTheme                from '../../components/Icon/IconTheme';
+import IconType                 from '../../components/Icon/IconType';
+import PaymentAction            from '../../constants/PaymentAction';
+import PaymentProvider          from '../../constants/PaymentProvider';
+import PopupTheme               from '../../components/Popup/PopupTheme';
+import React                    from 'react';
+import Routes                   from '../../constants/Routes';
+import ScreenWithHeader         from '../../components/ScreenWithHeaderContainer';
+import styles                   from './styles.module.scss';
+import SwitchableContainer      from '../../components/SwitchableContainer';
+import SwitchableHelper         from '../../helper/SwitchableHelper';
+import WalletCard               from '../../components/WalletCard';
+import WalletPaymentCard        from '../../components/WalletPaymentCard';
+import { connect }              from 'react-redux';
+import { PopupActions }         from '../../store/actions/popup';
+import { useHistory }           from 'react-router';
+import { useState }             from 'react';
+import ReferralLinkCopyInputBox from '../../components/ReferralLinkCopyInputBox';
 
 const Wallet = ({ balance, referralCount, showPopup }) => {
     const history                           = useHistory();
@@ -36,15 +37,21 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
 
     const renderConditionalWalletCards = () => {
         if (paymentAction === PaymentAction.deposit) {
+            const referralText = <>
+                Invite your friends using your referral link and <strong>get 50 EVNT token</strong> for each user who joined over your link.
+            </>;
+
             return (
                 <>
                     <WalletCard
-                        title={'Invite your friends'}
-                        subtitle={'EVNT tokens for inviting people'}
-                        text={'Invite your friends using your referral link and get 50 EVNT token for each user who joined over your link.'}
+                        title={'+50 EVNT Tokens: Invite your friends'}
+                        subtitle={'50 EVNT tokens for inviting people'}
+                        text={referralText}
                         buttonText={'Share with your friends'}
                         onClick={onReferralListClick}
-                    />
+                    >
+                        <ReferralLinkCopyInputBox className={styles.referralLinkList} />
+                    </WalletCard>
                 </>
             );
         }

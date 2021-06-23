@@ -11,6 +11,7 @@ import { connect }              from 'react-redux';
 import { useIsMount }           from '../hoc/useIsMount';
 import InputBoxTheme            from '../InputBox/InputBoxTheme';
 import { generateReferralLink } from '../../helper/ReferralLink';
+import ReferralLinkCopyInputBox from '../ReferralLinkCopyInputBox';
 
 const ReferralList = ({ closed, userId, referralsWithUser }) => {
           const isMount = useIsMount();
@@ -84,12 +85,7 @@ const ReferralList = ({ closed, userId, referralsWithUser }) => {
                           <span className={styles.referralLinkTitle}>
                               Your referral link:
                           </span>
-                          <InputBox
-                              type={'text'}
-                              setValue={_.noop}
-                              value={generateReferralLink(userId)}
-                              theme={InputBoxTheme.copyToClipboardInput}
-                          />
+                          <ReferralLinkCopyInputBox userId={userId} />
                       </div>
                   </div>
                   <div className={styles.referralList}>
