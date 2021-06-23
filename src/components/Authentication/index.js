@@ -16,7 +16,7 @@ import _                         from 'lodash';
 const titleList = [
     { id: 0, text: `Verify your <br /> phone number` },
     { id: 1, text: `Code <br /> Verification` },
-    { id: 2, text: `What is your <br /> First Name?` },
+    { id: 2, text: `How should we <br /> call you?` },
     { id: 3, text: `What about your <br /> E-Mail address?` },
 ];
 
