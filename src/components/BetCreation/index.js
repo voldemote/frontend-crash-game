@@ -34,6 +34,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
               selectedDate:               null,
               selectedEndTime:            null,
               termsAndConditionsAccepted: false,
+              endOfStreamAsEndDate:       false,
               outcomes:                   [{}, {}],
           };
           const [step, setStep]                                             = useState(initialState.step);
@@ -44,6 +45,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           const [selectedDate, setSelectedDate]                             = useState(initialState.selectedDate);
           const [selectedEndTime, setSelectedEndTime]                       = useState(initialState.selectedEndTime);
           const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState(initialState.termsAndConditionsAccepted);
+          const [endOfStreamAsEndDate, setEndOfStreamAsEndDate]             = useState(initialState.endOfStreamAsEndDate);
           const [outcomes, setOutcomes]                                     = useState(initialState.outcomes);
           const isMount                                                     = useIsMount();
 
@@ -95,14 +97,17 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
 
                       break;
                   case 3:
-                      if (!dateIsValid()) {
-                          error[0] = 'Please enter a valid date!';
-                          valid    = false;
-                      }
+                      if (!endOfStreamAsEndDate) {
+                          if (!dateIsValid()) {
+                              error[0] = 'Please enter a valid date!';
+                              error[2] = 'Or select end of stream as date';
+                              valid    = false;
+                          }
 
-                      if (!endTimeIsValid()) {
-                          error[1] = 'Please enter a valid time!';
-                          valid    = false;
+                          if (!endTimeIsValid()) {
+                              error[1] = 'Please enter a valid time!';
+                              valid    = false;
+                          }
                       }
 
                       break;
@@ -175,6 +180,17 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
               );
           };
 
+          const getEvent = () => {
+              const event = _.find(
+                  events,
+                  {
+                      _id: eventUrl,
+                  },
+              );
+
+              return event;
+          };
+
           const getDateWithTime = (time) => {
               const dateTime = moment(selectedDate);
 
@@ -186,9 +202,15 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           };
 
           const getEndDateTime = () => {
-              const time = selectedEndTime;
+              let dateWithTime;
 
-              return getDateWithTime(time);
+              if (endOfStreamAsEndDate) {
+                  dateWithTime = moment(_.get(getEvent(), 'date'));
+              } else {
+                  dateWithTime = getDateWithTime(selectedEndTime);
+              }
+
+              return dateWithTime;
           };
 
           const getButtonContent = () => {
@@ -370,6 +392,14 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                               errorText={getError(1)}
                           />
                       </div>
+                      <div className={styles.setEndOfStreamContainer}>
+                          <CheckBox
+                              checked={endOfStreamAsEndDate}
+                              setChecked={setEndOfStreamAsEndDate}
+                              text={'Set end of stream as default'}
+                              errorText={getError(2)}
+                          />
+                      </div>
                   </div>
               );
           };
@@ -424,14 +454,9 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           };
 
           const renderSummary = () => {
-              const event = _.find(
-                  events,
-                  {
-                      _id: eventUrl,
-                  }
-              );
+              const event = getEvent();
               console.debug(event);
-              const eventTitle = _.get(event, 'name', null);
+              const eventTitle  = _.get(event, 'name', null);
               const summaryRows = _.concat(
                   getSummaryOutcomeRows(),
                   [
@@ -482,8 +507,8 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   return renderOutcomeCreator();
               } else if (step === 3) {
                   return renderDateAndTime();
-              // } else if (step === 4) {
-              //     return renderTermsAndConditions();
+                  // } else if (step === 4) {
+                  //     return renderTermsAndConditions();
               } else if (step === 4) {
                   return renderSummary();
               }

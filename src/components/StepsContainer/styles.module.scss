@@ -85,6 +85,11 @@
         .headlineContainer
         {
             position: relative;
+
+            > span
+            {
+                top: 43px;
+            }
         }
 
         .stepsHeadline

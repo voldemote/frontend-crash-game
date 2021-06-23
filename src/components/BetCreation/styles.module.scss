@@ -23,7 +23,7 @@
 
         @media (min-width: $screen-sm)
         {
-            padding-top: 130px;
+            padding-top: 100px;
         }
     }
 
@@ -54,11 +54,15 @@
 
         .dateContainer
         {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .timeContainer
         {
+            margin-bottom: 25px;
+        }
+
+        .setEndOfStreamContainer {
         }
     }
 
