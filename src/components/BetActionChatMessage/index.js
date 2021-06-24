@@ -6,11 +6,9 @@ import ProfilePicture  from '../ProfilePicture';
 import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
 
 const BetActionChatMessage = ({ chatMessageType, user, message, dateString }) => {
-    const history     = useHistory();
-    const tokenAmount = _.get(message, 'amount');
-    const betId       = _.get(message, 'betId');
-    const eventId     = _.get(message, 'eventId');
-    const outcome     = _.get(message, 'outcome');
+    const history = useHistory();
+    const betId   = _.get(message, 'betId');
+    const eventId = _.get(message, 'eventId');
 
     if (!user) {
         return null;
@@ -27,7 +25,9 @@ const BetActionChatMessage = ({ chatMessageType, user, message, dateString }) =>
     };
 
     const getMessage = () => {
-        const userName = _.get(user, 'name');
+        const userName    = _.get(user, 'name');
+        const tokenAmount = _.get(message, 'amount');
+        const outcome     = _.get(message, 'outcome');
 
         switch (chatMessageType) {
             case ChatMessageType.createBet:
