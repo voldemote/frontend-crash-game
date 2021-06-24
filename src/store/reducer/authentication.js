@@ -127,6 +127,9 @@ const updateData = (action, state) => {
         profilePicture: {
             $set: action.profilePicture,
         },
+        username: {
+            $set: action.username,
+        },
     });
 };
 

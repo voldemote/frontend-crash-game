@@ -1,0 +1,36 @@
+@import '../../styles/all';
+
+.welcomeContainer
+{
+    display:          flex;
+    flex-direction:   column;
+    justify-content:  space-between;
+    align-items:      center;
+    height:           100%;
+    width:            100%;
+    padding:          45px 0;
+    background-color: $colorWhite;
+    color:            $colorPrimaryDark;
+    font-family:      $fontBold;
+
+    .welcomeHeadline
+    {
+        font-size: 16px;
+    }
+
+    .welcomeTextContainer
+    {
+        display:        flex;
+        flex-direction: column;
+
+        .welcomeTextHeadline
+        {
+            font-size: 66px;
+        }
+
+        .welcomeTextText
+        {
+            font-size: 24px;
+        }
+    }
+}

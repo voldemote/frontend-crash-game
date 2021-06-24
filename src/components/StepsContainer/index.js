@@ -44,8 +44,10 @@ const StepsContainer = (
                             splittedView ? styles.stepsHeadlineSplitView : null,
                             headlineClassName,
                         )}
+                        dangerouslySetInnerHTML={{
+                            __html: headline,
+                        }}
                     >
-                        {headline}
                     </p>
                 </div>
             );

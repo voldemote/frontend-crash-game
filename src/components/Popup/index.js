@@ -13,6 +13,7 @@ import BetView          from '../BetView';
 import _                from 'lodash';
 import ReferralList     from '../ReferralList';
 import BetApproveView   from '../BetApproveView';
+import WelcomeView      from '../WelcomeView';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
     useEffect(() => {
@@ -25,6 +26,13 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
     const renderPopup = () => {
         switch (type) {
+            case PopupTheme.welcome:
+                return (
+                    <WelcomeView
+                        closed={!visible}
+                    />
+                );
+
             case PopupTheme.betApprove:
                 return (
                     <BetApproveView
@@ -32,7 +40,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                         betId={_.get(options, 'betId')}
                         investmentAmount={_.get(options, 'investmentAmount')}
                         outcome={_.get(options, 'outcome')}
-
                     />
                 );
 

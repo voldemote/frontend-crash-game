@@ -9,6 +9,8 @@ import { put, call, select, delay } from 'redux-saga/effects';
 import { UserActions }              from '../actions/user';
 import { BetActions }               from '../actions/bet';
 import { TransactionActions }       from '../actions/transaction';
+import { PopupActions }             from '../actions/popup';
+import PopupTheme                   from '../../components/Popup/PopupTheme';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
@@ -143,6 +145,12 @@ const fetchReferralsSucceeded = function* (action) {
     }
 };
 
+const registrationSucceeded = function* (action) {
+    yield put(PopupActions.show({
+        popupType: PopupTheme.welcome,
+    }));
+};
+
 const authenticationSucceeded = function* (action) {
     const authState = yield select(state => state.authentication.authState);
     const userId    = yield select(state => state.authentication.userId);
@@ -221,9 +229,10 @@ export default {
     fetchReferrals,
     fetchReferralsSucceeded,
     logout,
+    refreshImportantData,
+    registrationSucceeded,
     requestSms,
     restoreToken,
     setAdditionalInformation,
-    refreshImportantData,
     verifySms,
 };

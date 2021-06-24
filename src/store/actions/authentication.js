@@ -108,6 +108,7 @@ const updateData = makeActionCreator(
     {
         balance:        null,
         profilePicture: null,
+        username:       null,
     },
 );
 

@@ -49,10 +49,12 @@ const fetchSucceeded = function* (action) {
     if (userId === selfUserId) {
         const profilePicture = user.profilePicture;
         const balance        = user.balance;
+        const username       = user.username;
 
         yield put(AuthenticationActions.updateData({
             profilePicture,
             balance,
+            username,
         }));
     }
 };

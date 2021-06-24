@@ -29,16 +29,15 @@ const FixedEventCreationIconButton = ({ showPopup, eventId }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-          return {
-              showPopup: (popupType, options) => {
-                  dispatch(PopupActions.show({
-                      popupType,
-                      options,
-                  }));
-              },
-          };
-      }
-;
+    return {
+        showPopup: (popupType, options) => {
+            dispatch(PopupActions.show({
+                popupType,
+                options,
+            }));
+        },
+    };
+};
 
 export default connect(
     null,

@@ -26,6 +26,7 @@ const root = function* () {
         takeLatest([AuthenticationTypes.SET_EMAIL],                      AuthenticationSagas.setAdditionalInformation),
         takeLatest([AuthenticationTypes.FETCH_REFERRALS],                AuthenticationSagas.fetchReferrals),
         takeLatest([AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED],      AuthenticationSagas.fetchReferralsSucceeded),
+        takeLatest([AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED], AuthenticationSagas.registrationSucceeded),
         takeLatest([
             AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED,

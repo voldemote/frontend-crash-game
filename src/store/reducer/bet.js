@@ -160,7 +160,7 @@ export default function (state = initialState, action) {
         case BetTypes.SET_OUTCOMES:              return setOutcomes(action, state);
         case BetTypes.SET_SELL_OUTCOMES:         return setSellOutcomes(action, state);
         case BetTypes.FETCH_OPEN_BETS_SUCCEEDED: return fetchOpenBetsSucceeded(action, state);
-        case REHYDRATE:                          return resetOutcomes(action, state);
+        // case REHYDRATE:                          return resetOutcomes(action, state);
         default:                                 return state;
         // @formatter:on
     }
