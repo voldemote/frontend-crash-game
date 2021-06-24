@@ -1,12 +1,8 @@
-import React          from 'react';
-import styles         from './styles.module.scss';
-import Button         from '../Button';
-import ButtonTheme    from '../Button/ButtonTheme';
-import StepBar        from '../StepBar';
-import classNames     from 'classnames';
-import Highlight      from '../Highlight';
-import HighlightType  from '../Highlight/HighlightType';
-import HighlightTheme from '../Highlight/HighlightTheme';
+import React      from 'react';
+import styles     from './styles.module.scss';
+import Button     from '../Button';
+import StepBar    from '../StepBar';
+import classNames from 'classnames';
 
 const StepsContainer = (
     {
@@ -51,11 +47,6 @@ const StepsContainer = (
                     >
                         {headline}
                     </p>
-                    {
-                        splittedView && <Highlight
-                            highlightType={HighlightType.highlightHomeCtaBet}
-                        />
-                    }
                 </div>
             );
         }
