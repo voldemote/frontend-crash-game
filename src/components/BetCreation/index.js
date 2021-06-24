@@ -1,28 +1,29 @@
 import _                   from 'lodash';
+import BetSummaryContainer from '../BetSummaryContainer';
+import BetSummaryHelper    from '../../helper/BetSummary';
+import Button              from '../Button';
+import CheckBox            from '../CheckBox';
 import classNames          from 'classnames';
-import Divider             from '../../components/Divider';
 import Dropdown            from '../../components/Dropdown';
+import ErrorHint           from '../ErrorHint';
+import HighlightType       from '../Highlight/HighlightType';
 import Icon                from '../Icon';
+import IconTheme           from '../Icon/IconTheme';
 import IconType            from '../Icon/IconType';
 import InputBox            from '../../components/InputBox';
 import InputBoxTheme       from '../../components/InputBox/InputBoxTheme';
 import Link                from '../../components/Link';
 import moment              from 'moment';
 import React               from 'react';
+import Routes              from '../../constants/Routes';
 import StepsContainer      from '../../components/StepsContainer';
 import styles              from './styles.module.scss';
+import { BetActions }      from '../../store/actions/bet';
 import { connect }         from 'react-redux';
 import { PopupActions }    from '../../store/actions/popup';
 import { useEffect }       from 'react';
 import { useIsMount }      from '../hoc/useIsMount';
 import { useState }        from 'react';
-import { BetActions }      from '../../store/actions/bet';
-import HighlightType       from '../Highlight/HighlightType';
-import Routes              from '../../constants/Routes';
-import CheckBox            from '../CheckBox';
-import BetSummaryContainer from '../BetSummaryContainer';
-import BetSummaryHelper    from '../../helper/BetSummary';
-import IconTheme           from '../Icon/IconTheme';
 
 const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           const initialState                                                = {
@@ -89,8 +90,8 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                           outcomes,
                           function (outcome, index) {
                               if (!outcome.value) {
-                                  error[index] = 'Please enter a valid outcome!';
-                                  valid        = false;
+                                  error = 'Please enter valid outcomes!';
+                                  valid = false;
                               }
                           },
                       );
@@ -346,7 +347,6 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                                           index + 1
                                       )}
                                       setValue={setOutcomeValue(index)}
-                                      errorText={getError(index)}
                                       theme={theme}
                                   />
                               </div>
@@ -356,6 +356,13 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
               );
           };
 
+          const addOutcomeButtonClicked = () => {
+              setOutcomes([
+                  ...outcomes,
+                  {},
+              ]);
+          };
+
           const renderOutcomeCreator = () => {
               return (
                   <div className={styles.outcomeCreator}>
@@ -363,6 +370,18 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                           Event outcomes
                       </div>
                       {renderOutcomeInputs()}
+                      <ErrorHint
+                          className={styles.outcomeErrorHint}
+                          errorText={error}
+                      />
+                      <div className={styles.outcomeRow}>
+                          <Button
+                              className={styles.addOutcomeButton}
+                              onClick={addOutcomeButtonClicked}
+                          >
+                              + Outcome
+                          </Button>
+                      </div>
                   </div>
               );
           };
@@ -440,12 +459,6 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                               ),
                               outcome.value,
                           ),
-                          BetSummaryHelper.getKeyValue(
-                              'Probability #' + (
-                                  index + 1
-                              ),
-                              50,
-                          ),
                       );
                   },
               );
@@ -454,8 +467,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           };
 
           const renderSummary = () => {
-              const event = getEvent();
-              console.debug(event);
+              const event       = getEvent();
               const eventTitle  = _.get(event, 'name', null);
               const summaryRows = _.concat(
                   getSummaryOutcomeRows(),
