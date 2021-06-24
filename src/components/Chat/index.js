@@ -59,6 +59,10 @@ const Chat = ({ className, token, event, fetchUser }) => {
                 addNewMessage(message);
             });
 
+            createdSocket.on('betCreated', data => {
+                addBetCreated(data);
+            });
+
             createdSocket.on('betPlaced', data => {
                 addNewBetPlace(data);
             });
@@ -103,6 +107,20 @@ const Chat = ({ className, token, event, fetchUser }) => {
             type: ChatMessageType.chatMessage,
             ...message,
         };
+
+        addChatMessage(chatMessage);
+    };
+
+    const addBetCreated = (betCreateData) => {
+        const chatMessage = {
+            type: ChatMessageType.createBet,
+            ...betCreateData,
+        };
+        const userId      = _.get(betCreateData, 'userId');
+
+        if (userId) {
+            fetchUser(userId);
+        }
 
         addChatMessage(chatMessage);
     };

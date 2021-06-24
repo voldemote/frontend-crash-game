@@ -5,8 +5,12 @@ import { useHistory }  from 'react-router';
 import ProfilePicture  from '../ProfilePicture';
 import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
 
-const BetActionChatMessage = ({ chatMessageType, user, tokenAmount, betId, eventId, outcome, dateString }) => {
-    const history = useHistory();
+const BetActionChatMessage = ({ chatMessageType, user, message, dateString }) => {
+    const history     = useHistory();
+    const tokenAmount = _.get(message, 'amount');
+    const betId       = _.get(message, 'betId');
+    const eventId     = _.get(message, 'eventId');
+    const outcome     = _.get(message, 'outcome');
 
     if (!user) {
         return null;
@@ -26,8 +30,11 @@ const BetActionChatMessage = ({ chatMessageType, user, tokenAmount, betId, event
         const userName = _.get(user, 'name');
 
         switch (chatMessageType) {
+            case ChatMessageType.createBet:
+                return <>{userName} created trade <strong>{tokenAmount} EVNT</strong> on <strong>{outcome}</strong>.</>;
+
             case ChatMessageType.placeBet:
-                return <>{userName} has bet <strong>{tokenAmount} EVNT</strong> on <strong>{outcome}</strong>.</>;
+                return <>{userName} bought <strong>{tokenAmount} EVNT</strong> of <strong>{outcome}</strong>.</>;
 
             case ChatMessageType.pulloutBet:
                 return <>{userName} sold <strong>{outcome}</strong> for <strong>{tokenAmount} EVNT</strong>.</>;

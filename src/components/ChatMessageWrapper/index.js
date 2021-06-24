@@ -1,13 +1,12 @@
-import _                        from 'lodash';
-import styles                   from './styles.module.scss';
-import { connect }              from 'react-redux';
-import { getProfilePictureUrl } from '../../helper/ProfilePicture';
-import { useEffect }            from 'react';
-import { useState }             from 'react';
-import DateText                 from '../../helper/DateText';
-import ChatMessageType          from './ChatMessageType';
-import ChatMessage              from '../ChatMessage';
-import BetActionChatMessage     from '../BetActionChatMessage';
+import _                    from 'lodash';
+import styles               from './styles.module.scss';
+import { connect }          from 'react-redux';
+import { useEffect }        from 'react';
+import { useState }         from 'react';
+import DateText             from '../../helper/DateText';
+import ChatMessageType      from './ChatMessageType';
+import ChatMessage          from '../ChatMessage';
+import BetActionChatMessage from '../BetActionChatMessage';
 
 const ChatMessageWrapper = ({ user, message, date }) => {
     const [dateString, setDateString] = useState('');
@@ -39,10 +38,6 @@ const ChatMessageWrapper = ({ user, message, date }) => {
     const renderMessageContent = () => {
         const type        = _.get(message, 'type', ChatMessageType.chatMessage);
         const messageText = _.get(message, 'message');
-        const tokenAmount = _.get(message, 'amount');
-        const betId       = _.get(message, 'betId');
-        const eventId     = _.get(message, 'eventId');
-        const outcome     = _.get(message, 'outcome');
 
         switch (type) {
             case ChatMessageType.chatMessage:
@@ -52,24 +47,12 @@ const ChatMessageWrapper = ({ user, message, date }) => {
                     dateString={dateString}
                 />;
 
+            case ChatMessageType.createBet:
             case ChatMessageType.placeBet:
-                return <BetActionChatMessage
-                    chatMessageType={type}
-                    betId={betId}
-                    eventId={eventId}
-                    tokenAmount={tokenAmount}
-                    outcome={outcome}
-                    user={user}
-                    dateString={dateString}
-                />;
-
             case ChatMessageType.pulloutBet:
                 return <BetActionChatMessage
                     chatMessageType={type}
-                    betId={betId}
-                    eventId={eventId}
-                    tokenAmount={tokenAmount}
-                    outcome={outcome}
+                    message={message}
                     user={user}
                     dateString={dateString}
                 />;
