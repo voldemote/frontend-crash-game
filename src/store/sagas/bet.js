@@ -13,8 +13,7 @@ const create = function* (action) {
     const eventId        = action.eventId;
     const marketQuestion = action.marketQuestion;
     const description    = action.description;
-    const betOne         = action.outcomes[0].value;
-    const betTwo         = action.outcomes[1].value;
+    const outcomes       = action.outcomes;
     const endDate        = action.endDate;
     const liquidity      = action.liquidityAmount;
 
@@ -23,8 +22,7 @@ const create = function* (action) {
         eventId,
         marketQuestion,
         description,
-        betOne,
-        betTwo,
+        outcomes,
         endDate,
         liquidity,
     );
@@ -44,20 +42,20 @@ const create = function* (action) {
 const place = function* (action) {
     const betId            = action.betId;
     const investmentAmount = action.amount;
-    const isOutcomeOne     = action.isOutcomeOne;
+    const outcome          = action.outcome;
 
     const response = yield call(
         Api.placeBet,
         betId,
         investmentAmount,
-        isOutcomeOne,
+        outcome,
     );
 
     if (response) {
         yield put(BetActions.placeSucceeded({
             betId,
             investmentAmount,
-            isOutcomeOne,
+            outcome,
         }));
         yield put(PopupActions.hide());
         yield put(EventActions.fetchAll());
@@ -66,7 +64,7 @@ const place = function* (action) {
             options:   {
                 betId,
                 investmentAmount,
-                outcome: isOutcomeOne ? 0 : 1,
+                outcome,
             },
         }));
         yield put(BetActions.fetchOpenBets());
@@ -138,13 +136,10 @@ const fetchSellOutcomes = function* (action) {
         );
 
         if (response) {
-            const result     = response.data;
-            const outcomeOne = result.outcomeOne;
-            const outcomeTwo = result.outcomeTwo;
-            const outcomes   = {
+            const result   = response.data;
+            const outcomes = {
                 [betId]: {
-                    outcomeOne,
-                    outcomeTwo,
+                    outcomes: result.outcomes,
                     amount,
                 },
             };
@@ -203,16 +198,15 @@ const fetchOpenBetsSucceeded = function* (action) {
 };
 
 const pullOut = function* (action) {
-    const betId        = action.betId;
-    const amount       = action.amount;
-    const outcome      = action.outcome;
-    const isOutcomeOne = outcome === 0;
+    const betId   = action.betId;
+    const amount  = action.amount;
+    const outcome = action.outcome;
 
     const response = yield call(
         Api.pullOutBet,
         betId,
         amount,
-        isOutcomeOne,
+        outcome,
     );
 
     if (response) {

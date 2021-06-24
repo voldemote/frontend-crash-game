@@ -6,6 +6,7 @@ import classNames          from 'classnames';
 import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../../components/Highlight/HighlightType';
 import HotBetBadge         from '../HotBetBadge';
+import moment              from 'moment';
 import React               from 'react';
 import SleepHelper         from '../../helper/Sleep';
 import styles              from './styles.module.scss';
@@ -20,7 +21,6 @@ import { useEffect }       from 'react';
 import { useHasMounted }   from '../hoc/useHasMounted';
 import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
-import moment              from 'moment';
 
 const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
@@ -254,11 +254,10 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         const validInput = validateInput();
 
         if (validInput) {
-            const isOutcomeOne = choice === 0;
-            const isSell       = hasSellView();
+            const isSell = hasSellView();
 
             if (!isSell) {
-                placeBet(betId, commitment, isOutcomeOne);
+                placeBet(betId, commitment, choice);
             } else {
                 pullOutBet(betId, choice, commitment);
             }
@@ -512,8 +511,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchOutcomes: (betId, amount) => {
             dispatch(BetActions.fetchOutcomes({ betId, amount }));
         },
-        placeBet:      (betId, amount, isOutcomeOne) => {
-            dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
+        placeBet:      (betId, amount, outcome) => {
+            dispatch(BetActions.place({ betId, amount, outcome }));
         },
         pullOutBet:    (betId, outcome, amount) => {
             dispatch(BetActions.pullOutBet({ betId, outcome, amount }));

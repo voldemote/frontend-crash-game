@@ -1,9 +1,7 @@
-import * as ApiUrls               from '../constants/Api';
-import axios                      from 'axios';
-import ContentTypes               from '../constants/ContentTypes';
-import _                          from 'lodash';
-import { API_USER_REFERRAL_LIST } from '../constants/Api';
-import { API_USER_OPEN_BETS }     from '../constants/Api';
+import * as ApiUrls from '../constants/Api';
+import _            from 'lodash';
+import axios        from 'axios';
+import ContentTypes from '../constants/ContentTypes';
 
 const createInstance = (host, apiPath) => {
     return axios.create({
@@ -84,15 +82,14 @@ const getUser = (userId) => {
     });
 };
 
-const createBet = (eventId, marketQuestion, description, betOne, betTwo, endDate, liquidityAmount) => {
+const createBet = (eventId, marketQuestion, description, outcomes, endDate, liquidityAmount) => {
     return Api.post(
         ApiUrls.API_BET_CREATE,
         {
             eventId,
             marketQuestion,
             description,
-            betOne,
-            betTwo,
+            outcomes,
             endDate,
             liquidityAmount,
         },
@@ -120,12 +117,12 @@ const getSellOutcomes = (betId, amount) => {
     });
 };
 
-const pullOutBet = (betId, amount, isOutcomeOne) => {
+const pullOutBet = (betId, amount, outcome) => {
     return Api.post(
         _.replace(ApiUrls.API_BET_PULL_OUT, ':id', betId),
         {
             amount,
-            isOutcomeOne,
+            outcome,
         },
     ).catch(() => {
     });
@@ -145,12 +142,12 @@ const getTransactions = () => {
     });
 };
 
-const placeBet = (betId, amount, isOutcomeOne) => {
+const placeBet = (betId, amount, outcome) => {
     return Api.post(
         _.replace(ApiUrls.API_BET_PLACE, ':id', betId),
         {
             amount,
-            isOutcomeOne,
+            outcome,
         },
     ).catch(() => {
     });

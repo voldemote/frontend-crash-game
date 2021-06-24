@@ -48,9 +48,9 @@ const createFailed = makeActionCreator(
 const place = makeActionCreator(
     BetTypes.PLACE,
     {
-        betId:        null,
-        amount:       null,
-        isOutcomeOne: null,
+        betId:   null,
+        amount:  null,
+        outcome: null,
     },
 );
 

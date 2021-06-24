@@ -97,11 +97,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
         if (outcomes) {
             const outcomeForValue = _.get(outcomes, betValue, {});
 
-            if (index === 0) {
-                return _.get(outcomeForValue, 'outcomeOne');
-            } else {
-                return _.get(outcomeForValue, 'outcomeTwo');
-            }
+            return _.get(outcomeForValue, index);
         }
 
         return null;
@@ -214,8 +210,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchOutcomes: (betId, amount) => {
             dispatch(BetActions.fetchOutcomes({ betId, amount }));
         },
-        placeBet:      (betId, amount, isOutcomeOne) => {
-            dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
+        placeBet:      (betId, amount, outcome) => {
+            dispatch(BetActions.place({ betId, amount, outcome }));
         },
     };
 };
