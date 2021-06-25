@@ -103,14 +103,11 @@ const fetchOutcomes = function* (action) {
         );
 
         if (response) {
-            const result     = response.data;
-            const outcomeOne = result.outcomeOne;
-            const outcomeTwo = result.outcomeTwo;
-            const outcomes   = {
+            const result = response.data;
+            const outcomes = {
                 [betId]: {
-                    outcomeOne,
-                    outcomeTwo,
                     amount,
+                    ...result,
                 },
             };
 

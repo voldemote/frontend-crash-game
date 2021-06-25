@@ -186,14 +186,14 @@
         @media (min-width: $screen-md)
         {
             margin:    0 1rem;
-            max-width: 300px;
+            max-width: 500px;
         }
 
         .quoteButtons
         {
             display:         flex;
             align-items:     center;
-            justify-content: center;
+            justify-content: space-between;
             height:          100%;
             margin-top:      20px;
 
@@ -208,22 +208,23 @@
                 padding:         10px;
                 height:          95px;
                 justify-content: center;
+                margin-right:    0.5rem;
+
+                &:last-child
+                {
+                    margin-right: 0;
+                }
 
                 @media(min-width: $screen-md)
                 {
                     padding:         15px;
                     justify-content: unset;
                     height:          unset;
-                }
 
-                &:first-child
-                {
-                    margin-right: 0.5rem;
-                }
-
-                &:last-child
-                {
-                    margin-left: 0.5rem;
+                    &:last-child
+                    {
+                        margin-right: 0.5rem;
+                    }
                 }
 
                 > span

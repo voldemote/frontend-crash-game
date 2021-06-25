@@ -309,11 +309,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             {},
         );
 
-        if (index === 0) {
-            return _.get(outcomeForValue, 'outcomeOne');
-        } else {
-            return _.get(outcomeForValue, 'outcomeTwo');
-        }
+        return _.get(outcomeForValue, [index, 'outcome']);
     };
 
     const isChoiceSelectorEnabled = (index) => {
@@ -418,6 +414,24 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         }
     };
 
+    const renderChoiceSelectors = (resolved = false, finalOutcome) => {
+        return (
+            _.map(
+                bet.outcomes,
+                (outcome, arrayIndex) => {
+                    const index = outcome.index;
+                    let theme   = ChoiceSelectorTheme.colorMint;
+
+                    if (arrayIndex % 2 === 0) {
+                        theme = ChoiceSelectorTheme.colorLightPurple;
+                    }
+
+                    return renderChoiceSelector(index, outcome.name, theme, resolved, false);
+                },
+            )
+        );
+    };
+
     const renderPlaceBetContentContainer = () => {
         const finalOutcome = getFinalOutcome();
 
@@ -434,8 +448,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                                 Potential Winnings:
                             </label>
                             <div className={styles.choiceContainer}>
-                                {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
-                                {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
+                                {renderChoiceSelectors()}
                             </div>
                         </div>
                     </div>
@@ -448,8 +461,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                 This Bet was already resolved.
                 <div className={styles.buttonContainer}>
                     <div className={styles.choiceContainer}>
-                        {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint, true, finalOutcome === 'betOne')}
-                        {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple, true, finalOutcome === 'betTwo')}
+                        {renderChoiceSelectors(true, finalOutcome)}
                     </div>
                 </div>
             </div>

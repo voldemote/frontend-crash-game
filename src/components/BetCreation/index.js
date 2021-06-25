@@ -27,11 +27,11 @@ import { useState }        from 'react';
 
 const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           const initialState                                                = {
-              step:                       eventId ? 1 : 0,
+              step:                       0,
               error:                      null,
               marketQuestion:             '',
               description:                '',
-              eventUrl:                   eventId ? eventId : null,
+              eventUrl:                   null,
               selectedDate:               null,
               selectedEndTime:            null,
               termsAndConditionsAccepted: false,
@@ -167,6 +167,18 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   }
               },
               [closed],
+          );
+
+          useEffect(
+              () => {
+                  if (eventId && step === 0) {
+                      setStep(1);
+                      setEventUrl(eventUrl);
+                  } else if (!eventId && step === 1) {
+                      setStep(0);
+                  }
+              },
+              [eventId],
           );
 
           const getEventUrlOptions = () => {

@@ -71,18 +71,15 @@
     .choiceContainer
     {
         display:         flex;
+        flex-wrap:       wrap;
         flex-direction:  row;
         justify-content: space-between;
 
         .choice
         {
-            width:       100%;
-            margin-left: 8px;
-
-            &:first-child
-            {
-                margin-right: 8px;
-            }
+            width:  100%;
+            flex:   1 0 calc(50% - 16px);
+            margin: 8px;
         }
     }
 

@@ -22,6 +22,8 @@ import { useEffect }       from 'react';
 import { useHasMounted }   from '../hoc/useHasMounted';
 import { useHistory }      from 'react-router';
 import { useState }        from 'react';
+import InputBoxTheme       from '../InputBox/InputBoxTheme';
+import InputBox            from '../InputBox';
 
 const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {
     const defaultBetValue         = 100;
@@ -97,7 +99,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
         if (outcomes) {
             const outcomeForValue = _.get(outcomes, betValue, {});
 
-            return _.get(outcomeForValue, index);
+            return _.get(outcomeForValue, [index, 'outcome']);
         }
 
         return null;
@@ -113,6 +115,24 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
                 selected={choice === index}
                 onClick={onChoiceSelect(index)}
             />
+        );
+    };
+
+    const renderChoiceSelectors = () => {
+        return (
+            _.map(
+                bet.outcomes,
+                (outcome) => {
+                    const index = outcome.index;
+                    let theme   = ChoiceSelectorTheme.colorMint;
+
+                    if (index % 2 === 0) {
+                        theme = ChoiceSelectorTheme.colorLightPurple;
+                    }
+
+                    return renderChoiceSelector(index, outcome.name, theme);
+                },
+            )
         );
     };
 
@@ -152,8 +172,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
 
                     <div className={styles.buttonContainer}>
                         <div className={styles.quoteButtons}>
-                            {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
-                            {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
+                            {renderChoiceSelectors()}
                         </div>
                     </div>
 
