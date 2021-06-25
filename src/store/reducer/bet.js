@@ -9,8 +9,8 @@ const initialState = {
     selectedBetId:      null,
     selectedChoice:     null,
     selectedCommitment: null,
-    outcomes:           [],
-    sellOutcomes:       [],
+    outcomes:           {},
+    sellOutcomes:       {},
     openBets:           [],
 };
 
