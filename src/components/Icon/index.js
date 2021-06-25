@@ -4,8 +4,6 @@ import IconType                                  from './IconType';
 import React                                     from 'react';
 import SelectionHelper                           from '../../helper/SelectionHelper';
 import styles                                    from './styles.module.scss';
-import { ReactComponent as IconInfo }            from '../../data/icons/info.svg';
-import { ReactComponent as IconSuccess }         from '../../data/icons/success.svg';
 import { ReactComponent as IconActivities }      from '../../data/icons/activities.svg';
 import { ReactComponent as IconAddBet }          from '../../data/icons/add-bet.svg';
 import { ReactComponent as IconAddYellow }       from '../../data/icons/add-yellow.svg';
@@ -21,8 +19,11 @@ import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.sv
 import { ReactComponent as IconCalendar }        from '../../data/icons/calendar.svg';
 import { ReactComponent as IconChat }            from '../../data/icons/chat.svg';
 import { ReactComponent as IconChecked }         from '../../data/icons/checked.svg';
+import { ReactComponent as IconConfettiLeft }    from '../../data/icons/confetti-left.svg';
+import { ReactComponent as IconConfettiRight }   from '../../data/icons/confetti-right.svg';
 import { ReactComponent as IconDeleteInput }     from '../../data/icons/delete-input.svg';
 import { ReactComponent as IconDeposit }         from '../../data/icons/deposit.svg';
+import { ReactComponent as IconInfo }            from '../../data/icons/info.svg';
 import { ReactComponent as IconLogout }          from '../../data/icons/logout.svg';
 import { ReactComponent as IconMailAddress }     from '../../data/icons/mail-address.svg';
 import { ReactComponent as IconMainMenu }        from '../../data/icons/main-menu.svg';
@@ -32,6 +33,7 @@ import { ReactComponent as IconPhoneNumber }     from '../../data/icons/phone-nu
 import { ReactComponent as IconRefresh }         from '../../data/icons/refresh.svg';
 import { ReactComponent as IconSearch }          from '../../data/icons/search.svg';
 import { ReactComponent as IconSettings }        from '../../data/icons/settings.svg';
+import { ReactComponent as IconSuccess }         from '../../data/icons/success.svg';
 import { ReactComponent as IconSupport }         from '../../data/icons/support.svg';
 import { ReactComponent as IconSwitcher }        from '../../data/icons/switcher.svg';
 import { ReactComponent as IconThreeDotMenu }    from '../../data/icons/three-dot-menu.svg';
@@ -61,6 +63,8 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.calendar]:        <IconCalendar />,
                 [IconType.chat]:            <IconChat />,
                 [IconType.checked]:         <IconChecked />,
+                [IconType.confettiLeft]:    <IconConfettiLeft />,
+                [IconType.confettiRight]:   <IconConfettiRight />,
                 [IconType.deleteInput]:     <IconDeleteInput />,
                 [IconType.deposit]:         <IconDeposit />,
                 [IconType.logout]:          <IconLogout />,

@@ -29,6 +29,8 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
             <div className={styles.welcomeTextContainer}>
                 <span className={styles.welcomeTextHeadline}>
                     1.000 EVNT
+                    <span className={styles.welcomeTextHeadlineUnderline}>
+                    </span>
                 </span>
                 <span className={styles.welcomeTextText}>
                     Free for full Wallfair experience!
@@ -51,6 +53,12 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
 
     return (
         <div className={styles.welcomeContainer}>
+            <span className={styles.welcomeConfettiLeft}>
+                <Icon iconType={IconType.confettiLeft} />
+            </span>
+            <span className={styles.welcomeConfettiRight}>
+                <Icon iconType={IconType.confettiRight} />
+            </span>
             {renderHeadline()}
             {renderWelcomeText()}
             {renderStartTradingButton()}
