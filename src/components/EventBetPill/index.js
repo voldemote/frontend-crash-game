@@ -72,7 +72,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
     const onConfirm = (event) => {
         event.stopPropagation();
 
-        placeBet(betId, betValue, choice === 0);
+        placeBet(betId, betValue, choice);
         setChoice(null);
         setBetValue(defaultBetValue);
     };
