@@ -192,6 +192,7 @@
         .quoteButtons
         {
             display:         flex;
+            flex-wrap:       wrap;
             align-items:     center;
             justify-content: space-between;
             height:          100%;
@@ -199,6 +200,7 @@
 
             @media (min-width: $screen-md)
             {
+                flex-wrap:  nowrap;
                 margin-top: 0;
             }
 
@@ -208,18 +210,15 @@
                 padding:         10px;
                 height:          95px;
                 justify-content: center;
-                margin-right:    0.5rem;
-
-                &:last-child
-                {
-                    margin-right: 0;
-                }
+                margin:          0.5rem;
+                flex:            1 0 calc(50% - 1rem);
 
                 @media(min-width: $screen-md)
                 {
                     padding:         15px;
                     justify-content: unset;
                     height:          unset;
+                    flex:            unset;
 
                     &:last-child
                     {
