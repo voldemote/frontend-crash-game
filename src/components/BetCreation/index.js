@@ -223,7 +223,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   dateWithTime = getDateWithTime(selectedEndTime);
               }
 
-              return dateWithTime;
+              return moment(dateWithTime).toDate();
           };
 
           const getButtonContent = () => {
@@ -287,7 +287,9 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
               if (validInput) {
                   if (step <= 3) {
                       if (step === 3) {
-                          createBet(eventUrl, marketQuestion, description, outcomes, getEndDateTime());
+                          const endTime = getEndDateTime();
+
+                          createBet(eventUrl, marketQuestion, description, outcomes, endTime);
                       }
 
                       setStep(step + 1);
@@ -582,7 +584,7 @@ const mapDispatchToProps = (dispatch) => {
               hidePopup: () => {
                   dispatch(PopupActions.hide());
               },
-              createBet: (eventId, marketQuestion, description, outcomes, startDate, endDate, liquidityAmount = 1000) => {
+              createBet: (eventId, marketQuestion, description, outcomes, endDate, liquidityAmount = 1000) => {
                   dispatch(BetActions.create({ eventId, marketQuestion, description, outcomes, endDate, liquidityAmount }));
               },
           };
