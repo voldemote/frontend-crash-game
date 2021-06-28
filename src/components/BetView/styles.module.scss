@@ -83,6 +83,12 @@
         }
     }
 
+    .emptyChoiceSelector {
+        width:  100%;
+        flex:   1 0 calc(50% - 16px);
+        margin: 8px;
+    }
+
     .betButton
     {
         font-size:        16px;

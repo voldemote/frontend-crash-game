@@ -415,20 +415,27 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
     };
 
     const renderChoiceSelectors = (resolved = false, finalOutcome) => {
+        const outcomes = bet.outcomes;
+
         return (
-            _.map(
-                bet.outcomes,
-                (outcome, arrayIndex) => {
-                    const index = outcome.index;
-                    let theme   = ChoiceSelectorTheme.colorMint;
+            <>
+                {
+                    _.map(
+                        outcomes,
+                        (outcome, arrayIndex) => {
+                            const index = outcome.index;
+                            let theme   = ChoiceSelectorTheme.colorMint;
 
-                    if (arrayIndex % 2 === 0) {
-                        theme = ChoiceSelectorTheme.colorLightPurple;
-                    }
+                            if (arrayIndex % 2 === 0) {
+                                theme = ChoiceSelectorTheme.colorLightPurple;
+                            }
 
-                    return renderChoiceSelector(index, outcome.name, theme, resolved, false);
-                },
-            )
+                            return renderChoiceSelector(index, outcome.name, theme, resolved, false);
+                        },
+                    )
+                }
+                {_.size(outcomes) % 2 !== 0 && <div className={styles.emptyChoiceSelector}></div>}
+            </>
         );
     };
 
