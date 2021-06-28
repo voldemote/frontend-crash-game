@@ -1,14 +1,13 @@
-import _               from 'lodash';
-import styles          from './styles.module.scss';
-import Routes          from '../../constants/Routes';
-import { useHistory }  from 'react-router';
-import ProfilePicture  from '../ProfilePicture';
-import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
+import _                  from 'lodash';
+import styles             from './styles.module.scss';
+import Routes             from '../../constants/Routes';
+import { useHistory }     from 'react-router';
+import ProfilePicture     from '../ProfilePicture';
+import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
+import { connect }        from 'react-redux';
 
-const BetActionChatMessage = ({ chatMessageType, user, message, dateString }) => {
+const BetActionChatMessage = ({ chatMessageType, eventId, betId, event, bet, user, message, dateString }) => {
     const history = useHistory();
-    const betId   = _.get(message, 'betId');
-    const eventId = _.get(message, 'eventId');
 
     if (!user) {
         return null;
@@ -25,19 +24,21 @@ const BetActionChatMessage = ({ chatMessageType, user, message, dateString }) =>
     };
 
     const getMessage = () => {
-        const userName    = _.get(user, 'name');
-        const tokenAmount = _.get(message, 'amount');
-        const outcome     = _.get(message, 'outcome');
+        const userName     = _.get(user, 'name');
+        const tokenAmount  = _.get(message, 'amount');
+        const outcome      = _.get(message, 'outcome');
+        const betOutcome   = _.get(bet, ['outcomes', outcome]);
+        const outcomeValue = _.get(betOutcome, 'name');
 
         switch (chatMessageType) {
             case ChatMessageType.createBet:
-                return <>{userName} created trade <strong>{tokenAmount} EVNT</strong> on <strong>{outcome}</strong>.</>;
+                return <>{userName} created trade <strong>{tokenAmount} EVNT</strong> on <strong>{outcomeValue}</strong>.</>;
 
             case ChatMessageType.placeBet:
-                return <>{userName} bought <strong>{tokenAmount} EVNT</strong> of <strong>{outcome}</strong>.</>;
+                return <>{userName} bought <strong>{tokenAmount} EVNT</strong> of <strong>{outcomeValue}</strong>.</>;
 
             case ChatMessageType.pulloutBet:
-                return <>{userName} sold <strong>{outcome}</strong> for <strong>{tokenAmount} EVNT</strong>.</>;
+                return <>{userName} sold <strong>{outcomeValue}</strong> for <strong>{tokenAmount} EVNT</strong>.</>;
         }
 
         return null;
@@ -67,4 +68,32 @@ const BetActionChatMessage = ({ chatMessageType, user, message, dateString }) =>
     );
 };
 
-export default BetActionChatMessage;
+const mapStateToProps = (state, ownProps) => {
+    const { message } = ownProps;
+    const betId       = _.get(message, 'betId');
+    const eventId     = _.get(message, 'eventId');
+    const event       = _.find(
+        state.event.events,
+        {
+            _id: eventId,
+        },
+    );
+    const bet         = _.find(
+        _.get(event, 'bets', []),
+        {
+            _id: betId,
+        },
+    );
+
+    return {
+        bet,
+        betId,
+        event,
+        eventId,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(BetActionChatMessage);
