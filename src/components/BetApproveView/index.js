@@ -11,8 +11,9 @@ import { connect }         from 'react-redux';
 
 const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, outcomes }) => {
     const getSummaryRows = () => {
-        const outcomeValue  = _.get(bet, outcome === 0 ? 'betOne' : 'betTwo');
-        const outcomeReturn = _.get(outcomes, outcome === 0 ? 'outcomeOne' : 'outcomeTwo');
+        const betOutcome    = _.get(bet, ['outcomes', outcome]);
+        const outcomeValue  = _.get(betOutcome, 'name');
+        const outcomeReturn = _.get(outcomes, [outcome, 'outcome']);
 
         return [
             BetSummaryHelper.getDivider(),
@@ -61,7 +62,7 @@ const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, outcome
 
 const mapStateToProps = (state, ownProps) => {
     const { betId, investmentAmount } = ownProps;
-    const findBetInEvent               = (event, betId) => {
+    const findBetInEvent              = (event, betId) => {
         if (event) {
             return _.find(
                 event.bets,
@@ -71,14 +72,14 @@ const mapStateToProps = (state, ownProps) => {
             );
         }
     };
-    const event                        = _.head(
+    const event                       = _.head(
         _.filter(
             state.event.events,
             (event) => !_.isEmpty(findBetInEvent(event, betId)),
         ),
     );
-    const bet                          = findBetInEvent(event, betId);
-    let outcomes                       = _.get(
+    const bet                         = findBetInEvent(event, betId);
+    let outcomes                      = _.get(
         state.bet.outcomes,
         betId,
     );

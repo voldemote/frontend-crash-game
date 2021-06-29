@@ -6,6 +6,7 @@ import classNames          from 'classnames';
 import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../../components/Highlight/HighlightType';
 import HotBetBadge         from '../HotBetBadge';
+import moment              from 'moment';
 import React               from 'react';
 import SleepHelper         from '../../helper/Sleep';
 import styles              from './styles.module.scss';
@@ -20,7 +21,6 @@ import { useEffect }       from 'react';
 import { useHasMounted }   from '../hoc/useHasMounted';
 import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
-import moment              from 'moment';
 
 const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
@@ -254,11 +254,10 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         const validInput = validateInput();
 
         if (validInput) {
-            const isOutcomeOne = choice === 0;
-            const isSell       = hasSellView();
+            const isSell = hasSellView();
 
             if (!isSell) {
-                placeBet(betId, commitment, isOutcomeOne);
+                placeBet(betId, commitment, choice);
             } else {
                 pullOutBet(betId, choice, commitment);
             }
@@ -310,11 +309,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             {},
         );
 
-        if (index === 0) {
-            return _.get(outcomeForValue, 'outcomeOne');
-        } else {
-            return _.get(outcomeForValue, 'outcomeTwo');
-        }
+        return _.get(outcomeForValue, [index, 'outcome']);
     };
 
     const isChoiceSelectorEnabled = (index) => {
@@ -419,6 +414,31 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         }
     };
 
+    const renderChoiceSelectors = (resolved = false, finalOutcome) => {
+        const outcomes = bet.outcomes;
+
+        return (
+            <>
+                {
+                    _.map(
+                        outcomes,
+                        (outcome, arrayIndex) => {
+                            const index = outcome.index;
+                            let theme   = ChoiceSelectorTheme.colorMint;
+
+                            if (arrayIndex % 2 === 0) {
+                                theme = ChoiceSelectorTheme.colorLightPurple;
+                            }
+
+                            return renderChoiceSelector(index, outcome.name, theme, resolved, false);
+                        },
+                    )
+                }
+                {_.size(outcomes) % 2 !== 0 && <div className={styles.emptyChoiceSelector}></div>}
+            </>
+        );
+    };
+
     const renderPlaceBetContentContainer = () => {
         const finalOutcome = getFinalOutcome();
 
@@ -435,8 +455,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                                 Potential Winnings:
                             </label>
                             <div className={styles.choiceContainer}>
-                                {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint)}
-                                {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple)}
+                                {renderChoiceSelectors()}
                             </div>
                         </div>
                     </div>
@@ -449,8 +468,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                 This Bet was already resolved.
                 <div className={styles.buttonContainer}>
                     <div className={styles.choiceContainer}>
-                        {renderChoiceSelector(0, bet.betOne, ChoiceSelectorTheme.colorMint, true, finalOutcome === 'betOne')}
-                        {renderChoiceSelector(1, bet.betTwo, ChoiceSelectorTheme.colorLightPurple, true, finalOutcome === 'betTwo')}
+                        {renderChoiceSelectors(true, finalOutcome)}
                     </div>
                 </div>
             </div>
@@ -512,8 +530,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchOutcomes: (betId, amount) => {
             dispatch(BetActions.fetchOutcomes({ betId, amount }));
         },
-        placeBet:      (betId, amount, isOutcomeOne) => {
-            dispatch(BetActions.place({ betId, amount, isOutcomeOne }));
+        placeBet:      (betId, amount, outcome) => {
+            dispatch(BetActions.place({ betId, amount, outcome }));
         },
         pullOutBet:    (betId, outcome, amount) => {
             dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
