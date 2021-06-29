@@ -59,6 +59,7 @@ const place = function* (action) {
         }));
         yield put(PopupActions.hide());
         yield put(EventActions.fetchAll());
+        console.debug('opening', betId, investmentAmount, outcome);
         yield put(PopupActions.show({
             popupType: PopupTheme.betApprove,
             options:   {
