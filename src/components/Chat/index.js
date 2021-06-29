@@ -93,13 +93,15 @@ const Chat = ({ className, token, event, fetchUser }) => {
     };
 
     const onMessageSend = () => {
-        const messageData = {
-            message: message,
-            ...getEventObject(),
-        };
+        if (message) {
+            const messageData = {
+                message: message,
+                ...getEventObject(),
+            };
 
-        sendObject('chatMessage', messageData);
-        setMessage('');
+            sendObject('chatMessage', messageData);
+            setMessage('');
+        }
     };
 
     const addNewMessage = (message) => {

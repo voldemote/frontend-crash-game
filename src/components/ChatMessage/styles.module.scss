@@ -35,8 +35,10 @@
         :last-child
         {
             font-size:   12px;
+            text-align:  right;
             color:       $colorGray;
-            margin-left: 50px;
+            width:       60px;
+            margin-left: 10px;
         }
     }
 }

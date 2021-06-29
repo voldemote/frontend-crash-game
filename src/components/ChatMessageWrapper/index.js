@@ -15,14 +15,14 @@ const ChatMessageWrapper = ({ user, message, date }) => {
         () => {
             updateDateText();
 
-            const timerId = setTimeout(
+            const timerId = window.setInterval(
                 updateDateText,
                 5 * 1000,
             );
 
-            return () => clearTimeout(timerId);
+            return () => clearInterval(timerId);
         },
-        [],
+        [date],
     );
 
     const updateDateText = () => {
