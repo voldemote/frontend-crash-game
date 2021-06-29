@@ -14,8 +14,6 @@ const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, openBet
         const outcomeValue  = _.get(bet, ['outcomes', outcome, 'name']);
         const outcomeReturn = _.get(openBet, 'outcomeAmount', '-');
 
-        console.debug(openBet);
-
         return [
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Your Invest', investmentAmount + ' EVNT'),

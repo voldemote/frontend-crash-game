@@ -42,8 +42,6 @@ const Chat = ({ className, token, event, fetchUser }) => {
             const createdSocket = createSocket();
 
             createdSocket.on('connect', () => {
-                console.debug('opened socket');
-
                 sendJoinRoom();
             });
 
