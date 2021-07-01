@@ -9,10 +9,10 @@ import React               from 'react';
 import styles              from './styles.module.scss';
 import { connect }         from 'react-redux';
 
-const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, outcomes }) => {
+const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, openBet, outcomes }) => {
     const getSummaryRows = () => {
-        const outcomeValue  = _.get(bet, outcome === 0 ? 'betOne' : 'betTwo');
-        const outcomeReturn = _.get(outcomes, outcome === 0 ? 'outcomeOne' : 'outcomeTwo');
+        const outcomeValue  = _.get(bet, ['outcomes', outcome, 'name']);
+        const outcomeReturn = _.get(openBet, 'outcomeAmount', '-');
 
         return [
             BetSummaryHelper.getDivider(),
@@ -60,8 +60,8 @@ const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, outcome
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const { betId, investmentAmount } = ownProps;
-    const findBetInEvent               = (event, betId) => {
+    const { betId, investmentAmount, outcome } = ownProps;
+    const findBetInEvent                       = (event, betId) => {
         if (event) {
             return _.find(
                 event.bets,
@@ -71,14 +71,21 @@ const mapStateToProps = (state, ownProps) => {
             );
         }
     };
-    const event                        = _.head(
+    const event                                = _.head(
         _.filter(
             state.event.events,
             (event) => !_.isEmpty(findBetInEvent(event, betId)),
         ),
     );
-    const bet                          = findBetInEvent(event, betId);
-    let outcomes                       = _.get(
+    const bet                                  = findBetInEvent(event, betId);
+    const openBet                              = _.find(
+        state.bet.openBets,
+        {
+            betId,
+            outcome,
+        },
+    );
+    let outcomes                               = _.get(
         state.bet.outcomes,
         betId,
     );
@@ -92,6 +99,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         event,
         bet,
+        openBet,
         outcomes,
     };
 };

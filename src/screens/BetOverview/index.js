@@ -44,16 +44,16 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
         return renderBetHistory();
     };
 
-    const getOpenBetSummaryRows = (bet, openBet, outcomes) => {
+    const getOpenBetSummaryRows = (bet, openBet) => {
         const amount        = _.get(openBet, 'investmentAmount');
         const outcomeIndex  = _.get(openBet, 'outcome');
-        const outcomeValue  = _.get(bet, outcomeIndex === 0 ? 'betOne' : 'betTwo');
-        const outcomeReturn = _.get(outcomes, outcomeIndex === 0 ? 'outcomeOne' : 'outcomeTwo', 0);
+        const outcomeValue  = _.get(bet, ['outcomes', outcomeIndex, 'name']);
+        const outcomeReturn = _.get(openBet, 'outcomeAmount');
 
         return [
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Your Invest', amount + ' EVNT'),
-            BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
+            BetSummaryHelper.getKeyValue('Your Trade', outcomeValue),
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Possible Win', outcomeReturn + ' EVNT', false, true),
         ];
@@ -75,13 +75,12 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
 
     const renderOpenBetSummary = (openBet, index) => {
         const bet            = _.get(openBet, 'bet');
-        const outcomes       = _.get(openBet, 'outcomes');
         const marketQuestion = _.get(bet, 'marketQuestion');
         const endDateTime    = moment(
             _.get(bet, 'date', new Date()),
         );
 
-        const summaryRows = getOpenBetSummaryRows(bet, openBet, outcomes);
+        const summaryRows = getOpenBetSummaryRows(bet, openBet);
 
         return (
             <div className={styles.betSummaryContainerWrapper}>
@@ -99,7 +98,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
         const amount        = _.get(betHistory, 'investmentamount');
         const feeAmount     = _.get(betHistory, 'feeamount');
         const outcomeIndex  = _.get(betHistory, 'outcome');
-        const outcomeValue  = _.get(bet, outcomeIndex === 'yes' ? 'betOne' : 'betTwo');
+        const outcomeValue  = _.get(bet, ['outcomes', outcomeIndex, 'name']);
         const outcomeReturn = _.get(betHistory, 'outcometokensbought');
         const sold          = _.get(betHistory, 'direction') === 'SELL';
 

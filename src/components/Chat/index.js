@@ -42,8 +42,6 @@ const Chat = ({ className, token, event, fetchUser }) => {
             const createdSocket = createSocket();
 
             createdSocket.on('connect', () => {
-                console.debug('opened socket');
-
                 sendJoinRoom();
             });
 
@@ -93,13 +91,15 @@ const Chat = ({ className, token, event, fetchUser }) => {
     };
 
     const onMessageSend = () => {
-        const messageData = {
-            message: message,
-            ...getEventObject(),
-        };
+        if (message) {
+            const messageData = {
+                message: message,
+                ...getEventObject(),
+            };
 
-        sendObject('chatMessage', messageData);
-        setMessage('');
+            sendObject('chatMessage', messageData);
+            setMessage('');
+        }
     };
 
     const addNewMessage = (message) => {
