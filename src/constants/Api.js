@@ -12,6 +12,10 @@ export default class Api {
             return LOCAL_BACKEND_SOCKET_URL;
         }
 
+        if(this.isStaging()) {
+            return STAGING_BACKEND_URL;
+        }
+
         return PRODUCTION_BACKEND_SOCKET_URL;
     };
 
