@@ -123,14 +123,14 @@ const Bet = ({ showPopup }) => {
 
               return _.map(
                   _.range(0, size),
-                  (sliderPage) => renderRelatedBetSlider(sliderPage + 1),
+                  (sliderPage) => renderRelatedBetSlider(sliderPage),
               );
           };
 
-          const renderRelatedBetSlider = (index) => {
+          const renderRelatedBetSlider = (pageIndex) => {
               const bets        = getRelatedBets();
-              const firstIndex  = index * 1;
-              const secondIndex = index * 2;
+              const firstIndex  = pageIndex * 2;
+              const secondIndex = firstIndex + 1;
 
               return (
                   <div
