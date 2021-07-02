@@ -1,64 +1,17 @@
 import _                            from 'lodash';
 import BetCard                      from '../../components/BetCard';
 import CarouselContainer            from '../../components/CarouselContainer';
-import EventBetPill                 from '../../components/EventBetPill';
 import EventCard                    from '../../components/EventCard/index';
-import FixedIconButton              from '../../components/FixedIconButton';
+import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import Header                       from '../../components/Header/index';
-import IconType                     from '../../components/Icon/IconType';
 import Navbar                       from '../../components/Navbar/index';
-import PopupTheme                   from '../../components/Popup/PopupTheme';
 import Routes                       from '../../constants/Routes';
 import styles                       from './styles.module.scss';
-import { BetActions }               from '../../store/actions/bet';
 import { connect }                  from 'react-redux';
-import { PopupActions }             from '../../store/actions/popup';
 import { useHistory }               from 'react-router';
-import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 
-const Home = ({ events, showPopup, user, setSelectedBet }) => {
+const Home = ({ events, user }) => {
     const history = useHistory();
-
-    const mapEventSlides = () => {
-        return _.map(
-            events,
-            (event) => {
-                const mappedTags = _.map(event.tags, (tag) => '#' + tag.name);
-
-                return {
-                    eventId: event._id,
-                    src:     event.streamUrl,
-                    text:    event.name,
-                    tags:    mappedTags,
-                };
-            },
-        );
-    };
-
-    const renderBetPills = () => {
-        return _.map(
-            events,
-            (event, eventIndex) => {
-                const bets = event.bets;
-
-                return _.map(
-                    bets,
-                    (bet, betIndex) => {
-                        const key = eventIndex + '.' + betIndex;
-
-                        return (
-                            <EventBetPill
-                                key={key}
-                                userId={bet.creator}
-                                bet={bet}
-                                eventId={event._id}
-                            />
-                        );
-                    },
-                );
-            },
-        );
-    };
 
     const onEventClick = (eventId, betId = '') => {
         return () => {
@@ -115,10 +68,7 @@ const Home = ({ events, showPopup, user, setSelectedBet }) => {
                                 marketQuestion={bet.marketQuestion}
                                 hot={bet.hot}
                                 eventEnd={eventEnd}
-                                onClick={() => {
-                                    setSelectedBet(event._id, bet._id);
-                                    showPopup(PopupTheme.betView);
-                                }}
+                                onClick={onEventClick(event._id, bet._id)}
                             />
                         );
                     },
@@ -155,18 +105,7 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setSelectedBet: (eventId, betId) => {
-            dispatch(BetActions.selectBet({ eventId, betId }));
-        },
-        showPopup:      (popupType, options = null) => {
-            dispatch(PopupActions.show({ popupType, options }));
-        },
-    };
-};
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    null,
 )(Home);

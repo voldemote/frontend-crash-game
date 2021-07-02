@@ -12,6 +12,10 @@ export default class Api {
             return LOCAL_BACKEND_SOCKET_URL;
         }
 
+        if(this.isStaging()) {
+            return STAGING_BACKEND_URL;
+        }
+
         return PRODUCTION_BACKEND_SOCKET_URL;
     };
 
@@ -31,9 +35,25 @@ export default class Api {
 
         return false;
     }
+
+    static isStaging() {
+        const url                       = window.location.href;
+        const localBackendUrlIndicators = [
+            'staging-frontend-k2t68.ondigitalocean.app',
+        ];
+
+        for (const localBackendUrlIndicator of localBackendUrlIndicators) {
+            if (url.indexOf(localBackendUrlIndicator) > -1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 export const PRODUCTION_BACKEND_URL               = 'https://backend-odxda.ondigitalocean.app';
+export const STAGING_BACKEND_URL                  = 'https://staging-zeaec.ondigitalocean.app/';
 export const PRODUCTION_BACKEND_SOCKET_URL        = PRODUCTION_BACKEND_URL;
 export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
 export const LOCAL_BACKEND_SOCKET_URL             = LOCAL_BACKEND_URL;
