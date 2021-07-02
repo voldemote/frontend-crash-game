@@ -21,6 +21,7 @@ import { useEffect }       from 'react';
 import { useHasMounted }   from '../hoc/useHasMounted';
 import { useParams }       from 'react-router-dom';
 import { useState }        from 'react';
+import ChoiceSelectorList  from '../ChoiceSelectorList';
 
 const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
@@ -341,7 +342,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         return null;
     };
 
-    const renderChoiceSelector = (index, name, choiceSelectorTheme, resolved = false, forceSelect = false) => {
+    const renderChoiceSelector = (index, name, choiceSelectorTheme, styles, resolved = false, forceSelect = false) => {
         const enabled = isChoiceSelectorEnabled(index);
 
         return (
@@ -414,28 +415,16 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         }
     };
 
-    const renderChoiceSelectors = (resolved = false, finalOutcome) => {
+    const renderChoiceSelectors = (resolved = false, forceSelect) => {
         const outcomes = bet.outcomes;
 
         return (
-            <>
-                {
-                    _.map(
-                        outcomes,
-                        (outcome, arrayIndex) => {
-                            const index = outcome.index;
-                            let theme   = ChoiceSelectorTheme.colorMint;
-
-                            if (arrayIndex % 2 === 0) {
-                                theme = ChoiceSelectorTheme.colorLightPurple;
-                            }
-
-                            return renderChoiceSelector(index, outcome.name, theme, resolved, false);
-                        },
-                    )
-                }
-                {_.size(outcomes) % 2 !== 0 && <div className={styles.emptyChoiceSelector}></div>}
-            </>
+            <ChoiceSelectorList
+                outcomes={outcomes}
+                resolved={resolved}
+                forceSelect={forceSelect}
+                renderChoiceSelector={renderChoiceSelector}
+            />
         );
     };
 
