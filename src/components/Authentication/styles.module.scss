@@ -78,3 +78,19 @@
         display: block;
     }
 }
+
+.authenticationLegalAuthorizationAgreementCheckBox
+{
+    margin-top: 35px;
+
+    .authenticationLegalAuthorizationAgreementText
+    {
+        font-size: 14px;
+
+        a
+        {
+            color:           $colorBlue;
+            text-decoration: none;
+        }
+    }
+}
