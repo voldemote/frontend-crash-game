@@ -149,7 +149,7 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
           };
 
           const isButtonDisabled = () => {
-              return provider !== PaymentProvider.evntToken;
+              return true;
           };
 
           return (
