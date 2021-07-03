@@ -1,35 +1,18 @@
-import Carousel          from 'react-horizontal-scrolling-menu';
-import React, { useRef } from 'react';
-import styles            from './styles.module.scss';
-import classNames        from 'classnames';
-import { useState }      from 'react';
+import 'swiper/swiper.min.css';
+import React, { useRef }       from 'react';
+import classNames              from 'classnames';
+import styles                  from './styles.module.scss';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState }            from 'react';
 
 const CarouselContainer = ({ title, children }) => {
     const carouselRef                             = useRef();
     const [prevArrowVisible, setPrevArrowVisible] = useState(false);
     const [nextArrowVisible, setNextArrowVisible] = useState(true);
 
-    const onUpdate = () => {
-        const state              = carouselRef.current.state;
-        const translate          = state.translate;
-        const startDragTranslate = state.startDragTranslate;
-
-        if (translate >= 0) {
-            setPrevArrowVisible(false);
-        } else {
-            setPrevArrowVisible(true);
-        }
-
-        if (startDragTranslate >= 0) {
-            setNextArrowVisible(false);
-        } else {
-            setNextArrowVisible(true);
-        }
-    };
-
     const getMappedChildren = () => {
         return React.Children.map(children, (child, index) => (
-            <div key={index}>{child}</div>
+            <SwiperSlide key={index}>{child}</SwiperSlide>
         ));
     };
 
@@ -42,37 +25,35 @@ const CarouselContainer = ({ title, children }) => {
 
                 <div className={styles.scrollButtons}>
                     <button
-                        onClick={() => {
-                            carouselRef.current.handleArrowClick();
-                        }}
                         className={classNames(
                             styles.arrowPrev,
                             prevArrowVisible ? styles.active : null,
                         )}
                     >
-                        <span></span>
+                        <span>
+                        </span>
                     </button>
                     <button
-                        onClick={() => {
-                            carouselRef.current.handleArrowClickRight();
-                        }}
                         className={classNames(
                             styles.arrowNext,
                             nextArrowVisible ? styles.active : null,
                         )}
                     >
-                        <span></span>
+                        <span>
+                        </span>
                     </button>
                 </div>
             </div>
             <div className={styles.carousel}>
-                <Carousel
+                <Swiper
                     ref={carouselRef}
-                    data={getMappedChildren()}
-                    alignCenter={false}
-                    hideArrows={true}
-                    onUpdate={onUpdate}
-                />
+                    slidesPerView={'auto'}
+                    pagination={{
+                        'clickable': false,
+                    }}
+                >
+                    {getMappedChildren()}
+                </Swiper>
             </div>
         </div>
     );

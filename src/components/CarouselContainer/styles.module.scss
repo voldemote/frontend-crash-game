@@ -41,7 +41,7 @@
 
     @media (min-width: $screen-md)
     {
-        display: flex;
+        // display: flex;
     }
 
     .arrowNext,
@@ -112,5 +112,13 @@
                 transform: rotate(-135deg);
             }
         }
+    }
+}
+
+:global
+{
+    .swiper-slide
+    {
+        width: unset;
     }
 }
