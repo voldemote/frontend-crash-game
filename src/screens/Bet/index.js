@@ -1,6 +1,6 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _                            from 'lodash';
-import darkModeLogo                 from '../../data/images/logo-darkmode.svg';
+import darkModeLogo                 from '../../data/images/logo-demo.svg';
 import FixedIconButton              from '../../components/FixedIconButton';
 import IconType                     from '../../components/Icon/IconType';
 import Link                         from '../../components/Link';
