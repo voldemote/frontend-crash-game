@@ -1,21 +1,21 @@
 import { makeActionCreator } from '../../helper/Store';
 
 export const AlertTypes = {
-    REMOVE_ALL:   'Alert/REMOVE_ALL',
     REMOVE:       'Alert/REMOVE',
+    REMOVE_ALL:   'Alert/REMOVE_ALL',
     SHOW_ERROR:   'Alert/SHOW_ERROR',
     SHOW_SUCCESS: 'Alert/SHOW_SUCCESS',
 };
-
-const removeAlerts = makeActionCreator(
-    AlertTypes.REMOVE_ALL,
-);
 
 const removeAlert = makeActionCreator(
     AlertTypes.REMOVE,
     {
         id: null,
     },
+);
+
+const removeAlerts = makeActionCreator(
+    AlertTypes.REMOVE_ALL,
 );
 
 const showError = makeActionCreator(
@@ -33,8 +33,8 @@ const showSuccess = makeActionCreator(
 );
 
 export const AlertActions = {
-    removeAlerts,
     removeAlert,
+    removeAlerts,
     showError,
     showSuccess,
 };
