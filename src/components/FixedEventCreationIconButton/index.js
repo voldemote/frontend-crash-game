@@ -1,11 +1,15 @@
 import React            from 'react';
-import IconType         from '../Icon/IconType';
 import FixedIconButton  from '../FixedIconButton';
+import IconType         from '../Icon/IconType';
 import PopupTheme       from '../Popup/PopupTheme';
-import { PopupActions } from '../../store/actions/popup';
 import { connect }      from 'react-redux';
+import { PopupActions } from '../../store/actions/popup';
 
-const FixedEventCreationIconButton = ({ showPopup, eventId }) => {
+const FixedEventCreationIconButton = ({ showPopup, eventId, isAdmin }) => {
+    if (!isAdmin) {
+        return null;
+    }
+
     const eventCreationButtonClicked = () => {
         const options = {};
 
@@ -28,6 +32,12 @@ const FixedEventCreationIconButton = ({ showPopup, eventId }) => {
     );
 };
 
+const mapStateToProps = (state) => {
+    return {
+        isAdmin: state.authentication.admin,
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         showPopup: (popupType, options) => {
@@ -40,7 +50,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(FixedEventCreationIconButton);
 
