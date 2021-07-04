@@ -11,98 +11,44 @@ import Routes                   from '../../constants/Routes';
 import { useState }             from 'react';
 import LeaderboardItem          from '../LeaderboardItem';
 import { connect }              from 'react-redux';
-import { LeaderboardActions }   from 'store/actions/leaderboard';
+// import { LeaderboardActions }   from 'store/actions/leaderboard';
+// Just as long as I don't get Redux 
+import axios                    from 'axios';
+import { useEffect }            from 'react';
 
 
-const users = [
-    {
-        userId: "1",
-        name:"user1",
-        balance:2000,
-        index: 1
-    },
-    {
-        userId: "2",
-        name:"user2",
-        balance:1999,
-        index: 2
-    },
-    {
-        userId: "3",
-        name:"user3",
-        balance:1998,
-        index: 3
-    },
-    {
-        userId: "4",
-        name:"user4",
-        balance:1997,
-        index: 4
-    },
-    {
-        userId: "5",
-        name:"user5",
-        balance:1996,
-        index: 5
-    },
-    {
-        userId: "6",
-        name:"user6",
-        balance:1995,
-        index: 6
-    },
-    {
-        userId: "7",
-        name:"user7",
-        balance:1994,
-        index: 7
-    },
-    {
-        userId: "8",
-        name:"user8",
-        balance:1993,
-        index: 8
-    },
-    {
-        userId: "9",
-        name:"user9",
-        balance:1992,
-        index: 9
-    },
-    {
-        userId: "10",
-        name:"user10",
-        balance:1991,
-        index: 10
-    },
-    {
-        userId: "11",
-        name:"user11",
-        balance:1990,
-        index: 11
-    },
-    {
-        userId: "12",
-        name:"user12",
-        balance:1989,
-        index: 12
-    },
-    {
-        userId: "13",
-        name:"user13",
-        balance:1988,
-        index: 13
-    },
-    {
-        userId: "14",
-        name:"user14",
-        balance:1987,
-        index: 14
-    },
-]
-
-const Navbar = ({ user, leaderboard }) => {
+const Navbar = ({ user }) => {
     const [showLeaderboard, setShowLeaderboard] = useState(false);
+    const [leaderboard, setLeaderboard] = useState([])
+    const [rank, setRank] = useState(0);
+
+    // Just as long as I don't get Redux 
+    const token = user.token;
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/user/getUsers')
+        .then((response) => {
+            setLeaderboard(response.data.users)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+        axios.get(`http://localhost:8000/api/user/${user.userId}`,
+        {
+            headers: {
+              Authorization: 'Bearer ' + token 
+            }
+        })
+        .then((response) => {
+            setRank(response.data.rank)
+            console.log(response.data)
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }, [token, rank, user.userId]);
+    // End of temporary solution
 
     const onChangeLeaderboard = () => {
         setShowLeaderboard(!showLeaderboard)
@@ -125,8 +71,6 @@ const Navbar = ({ user, leaderboard }) => {
 
         return '-';
     };
-
-    console.log(leaderboard);
 
     return (
         <div className={style.navbar}>
@@ -156,7 +100,7 @@ const Navbar = ({ user, leaderboard }) => {
             <div className={style.navbarItems}>
                 <div className={style.ranking} onClick={onChangeLeaderboard}>
                     <img src={medalGold} alt="medal" className={style.medal} />
-                    <p className={style.rankingText}>Rank # 1</p>
+                    <p className={style.rankingText}>Rank # {rank}</p>
                 </div>
                 <Link
                     to={Routes.wallet}
@@ -190,7 +134,7 @@ const Navbar = ({ user, leaderboard }) => {
                         </div>
                         <div className={style.leaderboardRanking}>
                         {
-                            users.map((user) => {
+                            leaderboard && leaderboard.map((user) => {
                                 return (
                                     <LeaderboardItem user={user} />
                                 )
@@ -204,17 +148,19 @@ const Navbar = ({ user, leaderboard }) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        leaderboard: state 
-    };
-};
+// const mapStateToProps = (state) => {
+//     return {
+//         leaderboard: state 
+//     };
+// };
 
-const mapDispatchToProps = (dispatch) => {
-    return {};
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {};
+// };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Navbar);
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps,
+// )(Navbar);
+
+export default Navbar;
