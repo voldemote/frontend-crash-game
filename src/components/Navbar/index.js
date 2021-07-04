@@ -10,6 +10,9 @@ import Link                     from '../Link';
 import Routes                   from '../../constants/Routes';
 import { useState }             from 'react';
 import LeaderboardItem          from '../LeaderboardItem';
+import { connect }              from 'react-redux';
+import { LeaderboardActions }   from 'store/actions/leaderboard';
+
 
 const users = [
     {
@@ -98,7 +101,7 @@ const users = [
     },
 ]
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, leaderboard }) => {
     const [showLeaderboard, setShowLeaderboard] = useState(false);
 
     const onChangeLeaderboard = () => {
@@ -123,15 +126,7 @@ const Navbar = ({ user }) => {
         return '-';
     };
 
-    const getRank = () => {
-        const userRank = user.rank;
-
-        if(!_.isNull(userRank)) {
-            return userRank
-        }
-
-        return "-";
-    };
+    console.log(leaderboard);
 
     return (
         <div className={style.navbar}>
@@ -161,7 +156,7 @@ const Navbar = ({ user }) => {
             <div className={style.navbarItems}>
                 <div className={style.ranking} onClick={onChangeLeaderboard}>
                     <img src={medalGold} alt="medal" className={style.medal} />
-                    <p className={style.rankingText}>Rank # 1 {getRank()}</p>
+                    <p className={style.rankingText}>Rank # 1</p>
                 </div>
                 <Link
                     to={Routes.wallet}
@@ -209,4 +204,17 @@ const Navbar = ({ user }) => {
     );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+    return {
+        leaderboard: state 
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Navbar);

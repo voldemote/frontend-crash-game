@@ -82,9 +82,9 @@ const getUser = (userId) => {
     });
 };
 
-const getUsers = () => {
+const getLeaderboard = () => {
     return Api.get(
-        ApiUrls.API_USERS,
+        ApiUrls.API_LEADERBOARD,
     ).catch(() => {
 
     })
@@ -170,7 +170,7 @@ export {
     getSellOutcomes,
     getTransactions,
     getUser,
-    getUsers,
+    getLeaderboard,
     listEvents,
     placeBet,
     pullOutBet,
