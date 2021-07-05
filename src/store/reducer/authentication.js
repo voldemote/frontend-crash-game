@@ -15,6 +15,7 @@ const initialState = {
     balance:        0,
     profilePicture: null,
     referralList:   [],
+    admin:          false,
     authState:      AuthState.LOGGED_OUT,
 };
 
@@ -127,8 +128,11 @@ const updateData = (action, state) => {
         profilePicture: {
             $set: action.profilePicture,
         },
-        username: {
+        username:       {
             $set: action.username,
+        },
+        admin:          {
+            $set: action.admin,
         },
     });
 };
