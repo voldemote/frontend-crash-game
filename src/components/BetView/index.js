@@ -13,15 +13,18 @@ import styles              from './styles.module.scss';
 import SwitchableContainer from '../SwitchableContainer';
 import SwitchableHelper    from '../../helper/SwitchableHelper';
 import TimeLeftCounter     from '../../components/TimeLeftCounter';
-import TokenNumberInput    from '../TokenNumberInput';
-import TokenValueSelector  from '../TokenValueSelector';
-import { BetActions }      from '../../store/actions/bet';
-import { connect }         from 'react-redux';
-import { useEffect }       from 'react';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import { useParams }       from 'react-router-dom';
-import { useState }        from 'react';
-import ChoiceSelectorList  from '../ChoiceSelectorList';
+import TokenNumberInput   from '../TokenNumberInput';
+import TokenValueSelector from '../TokenValueSelector';
+import { BetActions }     from '../../store/actions/bet';
+import { connect }        from 'react-redux';
+import { useEffect }      from 'react';
+import { useHasMounted }  from '../hoc/useHasMounted';
+import { useParams }      from 'react-router-dom';
+import { useState }       from 'react';
+import ChoiceSelectorList from '../ChoiceSelectorList';
+import Icon               from '../Icon';
+import IconType           from '../Icon/IconType';
+import IconTheme          from '../Icon/IconTheme';
 
 const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
@@ -464,12 +467,26 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         );
     };
 
+    const renderCurrentBalance = () => {
+        return (
+            <div className={styles.currentBalanceContainer}>
+                <Icon
+                    className={styles.currentBalanceIcon}
+                    iconTheme={IconTheme.primaryLightTransparent}
+                    iconType={IconType.wallet2}
+                />
+                {balance}
+            </div>
+        );
+    };
+
     if (!event || !bet) {
         return null;
     }
 
     return (
         <div className={styles.placeBetContainer}>
+            {renderCurrentBalance()}
             <span className={styles.eventName}>
                 {event.name}
             </span>
