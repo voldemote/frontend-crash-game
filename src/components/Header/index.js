@@ -5,12 +5,8 @@ import styles           from './styles.module.scss';
 import Link             from '../../components/Link';
 import { Carousel }     from 'react-responsive-carousel';
 import { connect }      from 'react-redux';
-import EventBetPill     from '../../components/EventBetPill/index';
 import TwitchEmbedVideo from '../TwitchEmbedVideo';
-import Tags             from '../Tags';
 import Routes           from '../../constants/Routes';
-import Button           from '../Button';
-import { useEffect }    from 'react';
 import EventBetPillList from '../EventBetPillList';
 
 const Header = ({ events }) => {
@@ -78,9 +74,6 @@ const Header = ({ events }) => {
                                             <span className={styles.title}>
                                                 {event.name}
                                             </span>
-                                            <Tags
-                                                tags={event.tags}
-                                            />
                                             <div>
                                                 <Link
                                                     to={Routes.getRouteWithParameters(

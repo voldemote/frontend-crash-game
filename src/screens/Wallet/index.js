@@ -22,10 +22,9 @@ import { useHistory }           from 'react-router';
 import { useState }             from 'react';
 import ReferralLinkCopyInputBox from '../../components/ReferralLinkCopyInputBox';
 
-const Wallet = ({ balance, referralCount, showPopup }) => {
+const Wallet = ({ balance, referralCount, showPopup, transactionCount }) => {
     const history                           = useHistory();
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
-    const activityCount                     = 0;
 
     const onPaymentActionSwitch = (newIndex) => {
         if (newIndex === 0) {
@@ -81,8 +80,8 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
         );
     };
 
-    const onActivityListClick = () => {
-        //TODO
+    const onHistoryListClick = () => {
+        history.push(Routes.betOverview + '?view=1');
     };
 
     const onReferralListClick = () => {
@@ -112,9 +111,9 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
                 {
                     renderShortcutListItem(
                         <>
-                            Transaction history ({activityCount})
+                            Transaction history ({transactionCount})
                         </>,
-                        onActivityListClick,
+                        onHistoryListClick,
                     )
                 }
                 {
@@ -186,11 +185,13 @@ const Wallet = ({ balance, referralCount, showPopup }) => {
 };
 
 const mapStateToProps = (state) => {
-    const referralCount = _.size(state.authentication.referralList);
+    const referralCount    = _.size(state.authentication.referralList);
+    const transactionCount = _.size(state.transaction.transactions);
 
     return {
         balance: state.authentication.balance,
         referralCount,
+        transactionCount,
     };
 };
 

@@ -2,7 +2,7 @@ import Authentication      from '../../components/Authentication';
 import Button              from '../../components/Button';
 import ButtonTheme         from '../../components/Button/ButtonTheme';
 import classNames          from 'classnames';
-import darkModeLogo        from '../../data/images/logo-darkmode.svg';
+import darkModeLogo        from '../../data/images/logo-demo.svg';
 import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
