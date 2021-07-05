@@ -80,7 +80,7 @@
 
         @media (min-width: $screen-md)
         {
-            width: 50%;
+            width: 35%;
         }
 
         p
@@ -186,50 +186,28 @@
         @media (min-width: $screen-md)
         {
             margin:    0 1rem;
-            max-width: 500px;
+            max-width: 400px;
         }
 
-        .quoteButtons
+        .choiceContainer
         {
             display:         flex;
             flex-wrap:       wrap;
             align-items:     center;
             justify-content: space-between;
             height:          100%;
+            width:           100%;
             margin-top:      20px;
 
             @media (min-width: $screen-md)
             {
-                flex-wrap:  nowrap;
                 margin-top: 0;
             }
 
-            .choice
+            > *
             {
-                width:           100%;
-                padding:         10px;
-                height:          95px;
-                justify-content: center;
-                margin:          0.5rem;
-                flex:            1 0 calc(50% - 1rem);
-
-                @media(min-width: $screen-md)
-                {
-                    padding:         15px;
-                    justify-content: unset;
-                    height:          unset;
-                    flex:            unset;
-
-                    &:last-child
-                    {
-                        margin-right: 0.5rem;
-                    }
-                }
-
-                > span
-                {
-                    font-size: 16px;
-                }
+                max-height: 90px;
+                padding:    12px 12px;
             }
         }
     }

@@ -24,6 +24,7 @@ import { useHistory }      from 'react-router';
 import { useState }        from 'react';
 import InputBoxTheme       from '../InputBox/InputBoxTheme';
 import InputBox            from '../InputBox';
+import ChoiceSelectorList  from '../ChoiceSelectorList';
 
 const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {
     const defaultBetValue         = 100;
@@ -105,7 +106,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
         return null;
     };
 
-    const renderChoiceSelector = (index, name, choiceSelectorTheme) => {
+    const renderChoiceSelector = (index, name, choiceSelectorTheme, styles) => {
         return (
             <ChoiceSelector
                 theme={choiceSelectorTheme}
@@ -115,24 +116,6 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
                 selected={choice === index}
                 onClick={onChoiceSelect(index)}
             />
-        );
-    };
-
-    const renderChoiceSelectors = () => {
-        return (
-            _.map(
-                bet.outcomes,
-                (outcome) => {
-                    const index = outcome.index;
-                    let theme   = ChoiceSelectorTheme.colorMint;
-
-                    if (index % 2 === 0) {
-                        theme = ChoiceSelectorTheme.colorLightPurple;
-                    }
-
-                    return renderChoiceSelector(index, outcome.name, theme);
-                },
-            )
         );
     };
 
@@ -171,9 +154,11 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
                     </div>
 
                     <div className={styles.buttonContainer}>
-                        <div className={styles.quoteButtons}>
-                            {renderChoiceSelectors()}
-                        </div>
+                        <ChoiceSelectorList
+                            className={styles.choiceContainer}
+                            outcomes={bet.outcomes}
+                            renderChoiceSelector={renderChoiceSelector}
+                        />
                     </div>
 
                     <Button
