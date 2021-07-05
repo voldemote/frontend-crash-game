@@ -44,6 +44,7 @@ export default class Api {
         const url                       = window.location.href;
         const localBackendUrlIndicators = [
             'staging-frontend-k2t68.ondigitalocean.app',
+            'staging.wallfair.io',
         ];
 
         for (const localBackendUrlIndicator of localBackendUrlIndicators) {
