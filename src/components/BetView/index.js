@@ -7,7 +7,7 @@ import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../../components/Highlight/HighlightType';
 import HotBetBadge         from '../HotBetBadge';
 import moment              from 'moment';
-import React               from 'react';
+import React, { useCallback }               from 'react';
 import SleepHelper         from '../../helper/Sleep';
 import styles              from './styles.module.scss';
 import SwitchableContainer from '../SwitchableContainer';
@@ -190,23 +190,9 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
     async function loadAfterMount () {
         await SleepHelper.sleep(100);
 
-        fetchDefaultTokenSelection();
-        onTokenSelect(defaultBetValue);
+        setCommitment(defaultBetValue, betId);
     }
 
-    async function fetchDefaultTokenSelection () {
-        if (!_.isEmpty(betId)) {
-            const tokensToFetch = [
-                defaultBetValue,
-                ...getDefaultTokenSelection(),
-            ];
-
-            for (const tokenAmount of tokensToFetch) {
-                fetchOutcomes(betId, tokenAmount);
-                await SleepHelper.sleep(100);
-            }
-        }
-    }
 
     useEffect(
         () => {
@@ -278,9 +264,18 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             }
         };
     };
-
-    const onTokenSelect = (number) => {
+    const [tokenNumber, setTokenNumber] = useState(commitment);
+    useEffect(() => setTokenNumber(commitment), [commitment]);
+    const throttledSetCommitment = useCallback(_.throttle(number => {
         setCommitment(number, betId);
+    }, 500, {leading: false}), [])
+    const onTokenSelect = (number) => {
+        setTokenNumber(number);
+        setCommitment(number, betId);
+    };
+    const onTokenNumberChange = (number) => {
+        setTokenNumber(number);
+        throttledSetCommitment(number);
     };
 
     const getOpenBetsValue = (index) => {
@@ -372,15 +367,15 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                     You trade:
                 </label>
                 <TokenNumberInput
-                    value={commitment}
-                    setValue={onTokenSelect}
+                    value={tokenNumber}
+                    setValue={onTokenNumberChange}
                     errorText={commitmentErrorText}
                 />
                 <TokenValueSelector
                     className={styles.tokenValueSelector}
                     values={getDefaultTokenSelectionValues()}
                     onSelect={onTokenSelect}
-                    activeValue={commitment}
+                    activeValue={tokenNumber}
                 />
             </>
         );
