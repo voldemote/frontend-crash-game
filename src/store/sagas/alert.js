@@ -3,6 +3,8 @@ import { put }                 from 'redux-saga/effects';
 import { AlertActions }        from '../actions/alert';
 import { EventTypes }          from '../actions/event';
 import { BetTypes }            from '../actions/bet';
+import { delay }               from 'redux-saga/effects';
+import { select }              from 'redux-saga/effects';
 
 const getFailMessage = (action) => {
     switch (action.type) {
@@ -65,7 +67,18 @@ const handleSuccess = function* (action) {
     }));
 };
 
+const handleShown = function* (action) {
+    const nextId = yield select(state => state.alert.nextAlertId);
+    const id     = nextId - 1;
+
+    yield delay(8 * 1000);
+    yield put(AlertActions.removeAlert({
+        id,
+    }));
+};
+
 export default {
     handleFail,
     handleSuccess,
+    handleShown,
 };

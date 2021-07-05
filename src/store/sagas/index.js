@@ -16,6 +16,7 @@ import { takeLatest, takeEvery, put } from 'redux-saga/effects';
 import { TransactionActions }         from '../actions/transaction';
 import { TransactionTypes }           from '../actions/transaction';
 import { UserTypes }                  from '../actions/user';
+import { AlertTypes }                 from '../actions/alert';
 
 const root = function* () {
     yield all([
@@ -31,7 +32,7 @@ const root = function* () {
             AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED,
         ],                                                                      AuthenticationSagas.authenticationSucceeded),
-        takeLatest([
+        takeEvery([
             AuthenticationTypes.REQUEST_SMS_FAILED,
             AuthenticationTypes.VERIFY_SMS_FAILED,
             AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
@@ -41,11 +42,15 @@ const root = function* () {
             BetTypes.PLACE_FAILED,
             BetTypes.PULL_OUT_BET_FAILED,
         ],                                                                      AlertSagas.handleFail),
-        takeLatest([
+        takeEvery([
             BetTypes.CREATE_SUCCEEDED,
             BetTypes.PLACE_SUCCEEDED,
             BetTypes.PULL_OUT_BET_SUCCEEDED,
         ],                                                                      AlertSagas.handleSuccess),
+        takeEvery( [
+            AlertTypes.SHOW_SUCCESS,
+            AlertTypes.SHOW_ERROR,
+        ],                                                                      AlertSagas.handleShown),
         takeLatest([EventTypes.FETCH_ALL],                               EventSagas.fetchAll),
         takeLatest([EventTypes.FETCH_ALL_SUCCEEDED],                     EventSagas.fetchAllSucceeded),
         takeLatest([BetTypes.PLACE],                                     BetSagas.place),
