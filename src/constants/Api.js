@@ -16,7 +16,7 @@ export default class Api {
             return LOCAL_BACKEND_SOCKET_URL;
         }
 
-        if(this.isStaging()) {
+        if (this.isStaging()) {
             return STAGING_BACKEND_URL;
         }
 
@@ -29,6 +29,7 @@ export default class Api {
             '.test',
             'localhost',
             '127.0.0.1',
+            '.ngrok.io',
         ];
 
         for (const localBackendUrlIndicator of localBackendUrlIndicators) {
@@ -40,7 +41,7 @@ export default class Api {
         return false;
     }
 
-    static isStaging() {
+    static isStaging () {
         const url                       = window.location.href;
         const localBackendUrlIndicators = [
             'staging-frontend-k2t68.ondigitalocean.app',
@@ -60,7 +61,7 @@ export default class Api {
 export const PRODUCTION_BACKEND_URL               = 'https://backend-odxda.ondigitalocean.app';
 export const STAGING_BACKEND_URL                  = 'https://staging-zeaec.ondigitalocean.app';
 export const PRODUCTION_BACKEND_SOCKET_URL        = PRODUCTION_BACKEND_URL;
-export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
+export const LOCAL_BACKEND_URL                    = 'https://91488ae13fb8.ngrok.io';
 export const LOCAL_BACKEND_SOCKET_URL             = LOCAL_BACKEND_URL;
 export const BACKEND_URL                          = Api.getBackendUrl();
 export const BACKEND_SOCKET_URL                   = Api.getBackendSocketUrl();

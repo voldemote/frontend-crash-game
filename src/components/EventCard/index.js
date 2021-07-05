@@ -12,33 +12,35 @@ const EventCard = ({ onClick, title, organizer, image, live, viewers, tags }) =>
     };
     return (
         <div
-            className={styles.eventCard}
+            className={styles.eventCardContainer}
             onClick={onClick}
         >
-            <div
-                className={styles.eventCardBackgroundBlur}
-                style={getEventCardStyle()}
-            >
-            </div>
-            <div
-                className={styles.eventCardBackground}
-            >
-            </div>
-            <div>
-                {live && (
-                    <>
-                        <LiveBadge />
-                        <ViewerBadge viewers={viewers} />
-                    </>
-                )}
-            </div>
-            <div>
-                <span className={styles.title}>
-                    {title}
-                    <br />
-                    {organizer}
-                </span>
-                <Tags tags={tags} />
+            <div className={styles.eventCard}>
+                <div
+                    className={styles.eventCardBackgroundBlur}
+                    style={getEventCardStyle()}
+                >
+                </div>
+                <div
+                    className={styles.eventCardBackground}
+                >
+                </div>
+                <div>
+                    {live && (
+                        <>
+                            <LiveBadge />
+                            <ViewerBadge viewers={viewers} />
+                        </>
+                    )}
+                </div>
+                <div>
+                    <span className={styles.title}>
+                        {title}
+                        <br />
+                        {organizer}
+                    </span>
+                    <Tags tags={tags} />
+                </div>
             </div>
         </div>
     );
