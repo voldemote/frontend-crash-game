@@ -1,6 +1,5 @@
 import _                        from 'lodash';
 import classNames               from 'classnames';
-import darkModeLogo             from '../../data/images/logo-darkmode.svg';
 import medalGold                from "../../data/icons/medal-gold.png";
 import cross                    from "../../data/icons/cross.svg";
 import Logo                     from '../../data/images/logo-demo.svg';
