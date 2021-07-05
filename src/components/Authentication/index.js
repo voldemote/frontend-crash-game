@@ -259,19 +259,19 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 {step === 2 && (
                     <>
                         <InputBox
-                            containerClassName={styles.usernameInputBox}
-                            invitationText={'Username'}
-                            errorText={_.get(error, 0)}
-                            placeholder="john2021"
-                            value={username}
-                            setValue={setUsername}
-                        />
-                        <InputBox
-                            invitationText={'Call me'}
+                            invitationText={'My name is...'}
                             errorText={_.get(error, 1)}
                             placeholder="John"
                             value={firstName}
                             setValue={setFirstName}
+                        />
+                        <InputBox
+                            containerClassName={styles.usernameInputBox}
+                            invitationText={'But you can call me...'}
+                            errorText={_.get(error, 0)}
+                            placeholder="john2021"
+                            value={username}
+                            setValue={setUsername}
                         />
                     </>
                 )}
