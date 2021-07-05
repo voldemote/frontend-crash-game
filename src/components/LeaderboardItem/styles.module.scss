@@ -1,0 +1,300 @@
+@import "../../styles/all";
+
+.placeSeperate {
+  width: 90%;
+  height: 2px;
+  margin: -1px 5% -1px 5%;
+  background-color: #434466;
+  z-index: 5;
+}
+
+.tableFirst {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 0 50px 0 50px;
+  background-color: #343353;
+
+  @media (max-width: $screen-md) {
+    padding: 0 20px 0 20px;
+  }
+
+  .firstRank {
+    position: relative;
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 52px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #b6b3b3;
+    opacity: 1;
+
+    @media (max-width: $screen-md) {
+      margin-right: 30px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    img {
+      width: 20px;
+      height: 26px;
+      margin: 0;
+
+      @media (max-width: $screen-md) {
+        width: 15px;
+        height: 20px;
+      }
+    }
+  }
+
+  .firstName {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  .firstBalance {
+    position: absolute;
+    right: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: end;
+    letter-spacing: 0.625px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      right: 20px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
+
+.tableSecond {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 0 50px 0 50px;
+  background-color: #24203d;
+
+  @media (max-width: $screen-md) {
+    padding: 0 20px 0 20px;
+  }
+
+  .secondRank {
+    position: relative;
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 52px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #b6b3b3;
+    opacity: 1;
+
+    @media (max-width: $screen-md) {
+      margin-right: 30px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    img {
+      width: 20px;
+      height: 26px;
+      margin: 0;
+
+      @media (max-width: $screen-md) {
+        width: 15px;
+        height: 20px;
+      }
+    }
+  }
+
+  .secondName {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  .secondBalance {
+    position: absolute;
+    right: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: end;
+    letter-spacing: 0.625px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      right: 20px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
+
+.tableThird {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 0 50px 0 50px;
+  background-color: #1a1534;
+
+  @media (max-width: $screen-md) {
+    padding: 0 20px 0 20px;
+  }
+
+  .thirdRank {
+    position: relative;
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 52px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #b6b3b3;
+    opacity: 1;
+
+    @media (max-width: $screen-md) {
+      margin-right: 30px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    img {
+      width: 20px;
+      height: 26px;
+      margin: 0;
+
+      @media (max-width: $screen-md) {
+        width: 15px;
+        height: 20px;
+      }
+    }
+  }
+
+  .thirdName {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  .thirdBalance {
+    position: absolute;
+    right: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: end;
+    letter-spacing: 0.625px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      right: 20px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
+
+.tableEntryHolder {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 0 50px 0 50px;
+
+  @media (max-width: $screen-md) {
+    padding: 0 20px 0 20px;
+  }
+
+  .entryRank {
+    position: relative;
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 52px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #b6b3b3;
+    opacity: 1;
+
+    @media (max-width: $screen-md) {
+      margin-right: 30px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    img {
+      width: 20px;
+      height: 26px;
+      margin: 0;
+
+      @media (max-width: $screen-md) {
+        width: 15px;
+        height: 20px;
+      }
+    }
+  }
+
+  .entryName {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  .entryBalance {
+    position: absolute;
+    right: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: end;
+    letter-spacing: 0.625px;
+    color: #ffffff;
+
+    @media (max-width: $screen-md) {
+      right: 20px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}

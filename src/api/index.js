@@ -82,6 +82,14 @@ const getUser = (userId) => {
     });
 };
 
+const getLeaderboard = () => {
+    return Api.get(
+        ApiUrls.API_LEADERBOARD,
+    ).catch(() => {
+
+    })
+}
+
 const createBet = (eventId, marketQuestion, description, outcomes, endDate, liquidityAmount) => {
     return Api.post(
         ApiUrls.API_BET_CREATE,
@@ -162,6 +170,7 @@ export {
     getSellOutcomes,
     getTransactions,
     getUser,
+    getLeaderboard,
     listEvents,
     placeBet,
     pullOutBet,
