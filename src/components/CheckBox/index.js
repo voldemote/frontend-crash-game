@@ -1,8 +1,9 @@
-import React     from 'react';
-import styles    from './styles.module.scss';
-import ErrorHint from '../ErrorHint';
+import React      from 'react';
+import styles     from './styles.module.scss';
+import ErrorHint  from '../ErrorHint';
+import classNames from 'classnames';
 
-const CheckBox = ({ checked, setChecked, text, errorText }) => {
+const CheckBox = ({ className, checked, setChecked, text, errorText }) => {
     const onClick = () => {
         setChecked(!checked);
     };
@@ -10,7 +11,10 @@ const CheckBox = ({ checked, setChecked, text, errorText }) => {
     return (
         <>
             <div
-                className={styles.checkboxContainer}
+                className={classNames(
+                    styles.checkboxContainer,
+                    className,
+                )}
                 onClick={onClick}
             >
                 <input

@@ -11,6 +11,8 @@ import { requestSms }            from '../../store/actions/authentication';
 import { useEffect, useState }   from 'react';
 import { useIsMount }            from '../hoc/useIsMount';
 import _                         from 'lodash';
+import CheckBox                  from '../CheckBox';
+import React                     from 'react';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -44,11 +46,12 @@ const codeFieldLength = 6;
 const Authentication = ({ authState, step, requestSms, verifySms, setName, setEmail, phoneNumber, setPhoneNumber, country, setCountry, loading }) => {
     const isMount = useIsMount();
 
-    const [code, setCode]           = useState([]);
-    const [firstName, setFirstName] = useState('');
-    const [username, setUsername]   = useState('');
-    const [email, setInputEmail]    = useState('');
-    const [error, setError]         = useState(null);
+    const [code, setCode]                                         = useState([]);
+    const [firstName, setFirstName]                               = useState('');
+    const [username, setUsername]                                 = useState('');
+    const [email, setInputEmail]                                  = useState('');
+    const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] = useState(false);
+    const [error, setError]                                       = useState(null);
 
     const phoneNumberIsValid = () => {
         return country && phoneNumber && phoneNumber.length > 3;
@@ -71,25 +74,27 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
     };
 
     const validateInput = () => {
+        // TODO: Suggestion: having either a string or an array for the type of error is not very stable code, we should fix that
+        // also using a validation library like ZOD and a form library like react-final-form would make this a bit more consistent and reliable across forms
+        let error = null;
+
         switch (step) {
             case 0:
-                if (phoneNumberIsValid()) {
-                    setError(null);
-                } else {
-                    setError('Please enter a valid phone number!');
+                if (!phoneNumberIsValid()) {
+                    error = 'Please enter a valid phone number!';
                 }
 
                 break;
+
             case 1:
-                if (codeIsValid()) {
-                    setError(null);
-                } else {
-                    setError('Please enter a valid code!');
+                if (!codeIsValid()) {
+                    error = 'Please enter a valid code!';
                 }
 
                 break;
+
             case 2:
-                let error = [];
+                error = [];
 
                 if (!usernameIsValid()) {
                     error[0] = 'Please enter a valid username!';
@@ -99,18 +104,23 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                     error[1] = 'Please enter your name!';
                 }
 
-                setError(error);
-
                 break;
+
             case 3:
-                if (emailIsValid()) {
-                    setError(null);
-                } else {
-                    setError('Please enter a valid email!');
+                error = [];
+
+                if (!emailIsValid()) {
+                    error[0] = 'Please enter a valid email!';
+                }
+
+                if (!legalAuthorizationAgreed) {
+                    error[1] = 'Please agree that you\'re legally authorized!';
                 }
 
                 break;
         }
+
+        setError(error);
     };
 
     useEffect(
@@ -123,7 +133,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 }
             }
         },
-        [country, phoneNumber, code, firstName, username],
+        [country, phoneNumber, code, firstName, username, email, legalAuthorizationAgreed],
     );
 
     const resendRequestSms = () => {
@@ -156,7 +166,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
 
                 break;
             case 3:
-                if (emailIsValid()) {
+                if (emailIsValid() && legalAuthorizationAgreed) {
                     setEmail({ email });
                 }
 
@@ -266,14 +276,36 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                     </>
                 )}
                 {step === 3 && (
-                    <InputBox
-                        errorText={error}
-                        placeholder="john.doe@gmail.com"
-                        value={email}
-                        setValue={setInputEmail}
-                    />
+                    <>
+                        <InputBox
+                            errorText={_.get(error, 0)}
+                            placeholder="john.doe@gmail.com"
+                            value={email}
+                            setValue={setInputEmail}
+                        />
+                        {renderLegalAuthorizationAgreementCheckBox()}
+                    </>
                 )}
             </div>
+        );
+    };
+
+    const renderLegalAuthorizationAgreementCheckBox = () => {
+        const legalAuthorizationAgreementText = (
+            <p className={styles.authenticationLegalAuthorizationAgreementText}>
+                Herewith I confirm to be legally authorized to access and distribute all content displayed in connection with the events I am planning to post and advertise on <Link to={'https://wallfair.io'}>wallfair.io</Link> and indemnify <Link to={'https://wallfair.io'}>wallfair.io</Link> with
+                regard to all claims that may arise in connection hereto.
+            </p>
+        );
+
+        return (
+            <CheckBox
+                className={styles.authenticationLegalAuthorizationAgreementCheckBox}
+                checked={legalAuthorizationAgreed}
+                setChecked={setLegalAuthorizationAgreed}
+                text={legalAuthorizationAgreementText}
+                errorText={_.get(error, 1)}
+            />
         );
     };
 
