@@ -1,6 +1,6 @@
 import _                        from 'lodash';
 import classNames               from 'classnames';
-import darkModeLogo             from '../../data/images/logo-darkmode.svg';
+import Logo                     from '../../data/images/logo-demo.svg';
 import React                    from 'react';
 import style                    from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
@@ -35,7 +35,8 @@ const Navbar = ({ user }) => {
                 )}
             >
                 <img
-                    src={darkModeLogo}
+                    src={Logo}
+                    width={200}
                     alt="Wallfair"
                 />
                 <Link

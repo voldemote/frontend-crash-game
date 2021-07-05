@@ -15,7 +15,7 @@ import { io }             from 'socket.io-client';
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
 
-const Chat = ({ className, token, event, fetchUser }) => {
+const Chat = ({ className, token, userId, event, fetchUser }) => {
     const websocket                       = useRef(null);
     const messageListRef                  = useRef();
     const [message, setMessage]           = useState('');
@@ -37,25 +37,36 @@ const Chat = ({ className, token, event, fetchUser }) => {
         return websocket.current;
     };
 
+    const setCurrentSocket = (socket) => {
+        websocket.current = socket;
+    };
+
+    const getMessageIdObject = () => {
+        return {
+            eventId: _.get(event, '_id'),
+            userId,
+        };
+    };
+
     useEffect(
         () => {
             const createdSocket = createSocket();
+            setCurrentSocket(createdSocket);
+            setChatMessages([])
 
             createdSocket.on('connect', () => {
                 sendJoinRoom();
             });
 
-            createdSocket.on('chatMessage', data => {
+            const handleMessage = str => data => {
                 const userId  = data.userId;
-                const message = {
-                    message: data.message,
-                    date:    data.date,
-                    userId,
-                };
-
+                const message = _.pick(data,['message', 'date', 'eventId', 'userId']);
                 fetchUser(userId);
                 addNewMessage(message);
-            });
+            };
+
+            createdSocket.on('chatMessageEvent' + getMessageIdObject().eventId, handleMessage('event'));
+            createdSocket.on('chatMessageUser' + getMessageIdObject().userId, handleMessage('user'));
 
             createdSocket.on('betCreated', data => {
                 addBetCreated(data);
@@ -68,22 +79,16 @@ const Chat = ({ className, token, event, fetchUser }) => {
             createdSocket.on('betPulledOut', data => {
                 addNewBetPullOut(data);
             });
-
-            websocket.current = createdSocket;
-
-            return () => createdSocket.disconnect();
-        },
-        [token],
+            return () => {
+                getCurrentSocket()?.disconnect()
+                setCurrentSocket()
+                setChatMessages([])
+            }
+        }, []
     );
 
-    const getEventObject = () => {
-        return {
-            eventId: _.get(event, '_id'),
-        };
-    };
-
     const sendJoinRoom = () => {
-        sendObject('joinRoom', getEventObject());
+        sendObject('joinRoom', getMessageIdObject());
     };
 
     const sendObject = (eventName, data) => {
@@ -93,8 +98,10 @@ const Chat = ({ className, token, event, fetchUser }) => {
     const onMessageSend = () => {
         if (message) {
             const messageData = {
+                type: ChatMessageType.chatMessage,
                 message: message,
-                ...getEventObject(),
+                date: new Date(),
+                ...getMessageIdObject(),
             };
 
             sendObject('chatMessage', messageData);
@@ -153,8 +160,17 @@ const Chat = ({ className, token, event, fetchUser }) => {
         addChatMessage(chatMessage);
     };
 
+    const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
+        const aDate = new Date(a.date);
+        const bDate = new Date(b.date);
+        return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
+    });
+
     const addChatMessage = (chatMessage) => {
-        setChatMessages(chatMessages => [...chatMessages, chatMessage]);
+        setChatMessages(chatMessages => {
+            const result = sortChatMessages([...chatMessages, chatMessage])
+            return _.uniqWith(result, _.isEqual)
+        });
         messageListScrollToBottom();
     };
 
@@ -166,6 +182,7 @@ const Chat = ({ className, token, event, fetchUser }) => {
                 const date   = _.get(chatMessage, 'date');
 
                 return <ChatMessageWrapper
+                    key={index}
                     message={chatMessage}
                     userId={userId}
                     date={date}
@@ -219,6 +236,7 @@ const Chat = ({ className, token, event, fetchUser }) => {
 const mapStateToProps = (state) => {
     return {
         token: state.authentication.token,
+        userId: state.authentication.userId,
     };
 };
 

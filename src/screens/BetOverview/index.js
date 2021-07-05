@@ -15,7 +15,9 @@ import PopupTheme          from '../../components/Popup/PopupTheme';
 import { PopupActions }    from '../../store/actions/popup';
 
 const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
-    const [betView, setBetView] = useState(0);
+    const queryParams           = new URLSearchParams(window.location.search);
+    const view                  = queryParams.get('view');
+    const [betView, setBetView] = useState(view ? _.toNumber(view) : 0);
 
     const renderSwitchableView = () => {
         const switchableViews = [

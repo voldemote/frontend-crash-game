@@ -2,10 +2,10 @@
 
 .header
 {
-    position:      relative;
-    min-height:    600px;
-    max-height:    600px;
-    overflow:      hidden;
+    position:   relative;
+    min-height: 600px;
+    max-height: 600px;
+    overflow:   hidden;
 
     .headerCarousel
     {
@@ -113,14 +113,15 @@
 
         iframe
         {
-            position: absolute;
-            z-index: -1;
+            position:  absolute;
+            z-index:   -1;
             max-width: unset !important;
-            width:  calc(100% * 4) !important;
-            height: calc(100% * 2) !important;
-            margin: 0 !important;
+            width:     calc(100% * 4) !important;
+            height:    calc(100% * 2) !important;
+            margin:    0 !important;
 
-            @media (min-width: 2100px) {
+            @media (min-width: 2100px)
+            {
                 width:  calc(100% * 6) !important;
                 height: calc(100% * 3) !important;
             }
@@ -137,12 +138,12 @@
 
     .twitchStream
     {
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-        display: flex;
+        height:          100%;
+        overflow:        hidden;
+        position:        relative;
+        display:         flex;
         justify-content: center;
-        align-items: center;
+        align-items:     center;
     }
 
     .headerWrapper
@@ -209,13 +210,8 @@
 
             span
             {
-                display:      none;
+                display:      block;
                 margin-right: 1rem;
-
-                @media (min-width: $screen-sm)
-                {
-                    display: block;
-                }
             }
 
             .arrowRight
