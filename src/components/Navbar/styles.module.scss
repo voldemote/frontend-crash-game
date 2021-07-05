@@ -144,100 +144,100 @@
             opacity:     1;
             font-family: $fontBold;
         }
+    }
 
-        .leaderboard
+    .leaderboard
+    {
+        position:   fixed;
+        top:        0;
+        right:      0;
+        width:      40%;
+        height:     100vh;
+        background: rgba(14, 9, 39, 0.86);
+        overflow-y: scroll;
+
+        @media (max-width: $screen-md)
         {
-            position:   fixed;
-            top:        0;
-            right:      0;
-            width:      40%;
-            height:     100vh;
-            background: rgba(14, 9, 39, 0.86);
-            overflow-y: scroll;
+            width: 100vw;
+        }
 
-            @media (max-width: $screen-md)
+        .closeLeaderboard
+        {
+            position: absolute;
+            top:      30px;
+            right:    30px;
+            width:    20px;
+            height:   20px;
+            cursor:   pointer;
+        }
+
+        .leaderboardHeading
+        {
+            margin:         80px 0 90px 50px;
+            font-size:      30px;
+            line-height:    39px;
+            letter-spacing: 0.75px;
+            color:          #ffffff;
+        }
+
+        .leaderboardTable
+        {
+            display:        flex;
+            flex-direction: column;
+            width:          100%;
+
+            .tableHeadings
             {
-                width: 100vw;
-            }
+                display:       flex;
+                width:         100%;
+                padding:       0 50px 0 50px;
+                margin-bottom: 16px;
 
-            .closeLeaderboard
-            {
-                position: absolute;
-                top:      30px;
-                right:    30px;
-                width:    20px;
-                height:   20px;
-                cursor:   pointer;
-            }
-
-            .leaderboardHeading
-            {
-                margin:         80px 0 90px 50px;
-                font-size:      30px;
-                line-height:    39px;
-                letter-spacing: 0.75px;
-                color:          #ffffff;
-            }
-
-            .leaderboardTable
-            {
-                display:        flex;
-                flex-direction: column;
-                width:          100%;
-
-                .tableHeadings
+                @media (max-width: $screen-md)
                 {
-                    display:       flex;
-                    width:         100%;
-                    padding:       0 50px 0 50px;
-                    margin-bottom: 16px;
+                    padding: 0 20px 0 20px;
+                }
+
+                .rankingHeading
+                {
+                    width:          60px;
+                    margin-right:   52px;
+                    font-weight:    normal;
+                    font-size:      11px;
+                    line-height:    14px;
+                    letter-spacing: 1.64375px;
+                    color:          #ffffff;
+                    mix-blend-mode: normal;
+                    opacity:        0.45;
 
                     @media (max-width: $screen-md)
                     {
-                        padding: 0 20px 0 20px;
+                        margin-right: 30px;
                     }
+                }
 
-                    .rankingHeading
-                    {
-                        width:          60px;
-                        margin-right:   52px;
-                        font-weight:    normal;
-                        font-size:      11px;
-                        line-height:    14px;
-                        letter-spacing: 1.64375px;
-                        color:          #ffffff;
-                        mix-blend-mode: normal;
-                        opacity:        0.45;
+                .userHeading
+                {
+                    font-weight:    normal;
+                    font-size:      11px;
+                    line-height:    14px;
+                    letter-spacing: 1.64375px;
+                    color:          #ffffff;
+                    mix-blend-mode: normal;
+                    opacity:        0.45;
+                }
 
-                        @media (max-width: $screen-md)
-                        {
-                            margin-right: 30px;
-                        }
-                    }
-
-                    .userHeading
-                    {
-                        font-weight:    normal;
-                        font-size:      11px;
-                        line-height:    14px;
-                        letter-spacing: 1.64375px;
-                        color:          #ffffff;
-                        mix-blend-mode: normal;
-                        opacity:        0.45;
-                    }
-
-                    .tokenHeading
-                    {
-                        width:          100%;
-                        text-align:     end;
-                        font-weight:    normal;
-                        font-size:      11px;
-                        line-height:    14px;
-                        letter-spacing: 1.64375px;
-                        color:          #ffffff;
-                        mix-blend-mode: normal;
-                        opacity:        0.45;
-                    }
+                .tokenHeading
+                {
+                    width:          100%;
+                    text-align:     end;
+                    font-weight:    normal;
+                    font-size:      11px;
+                    line-height:    14px;
+                    letter-spacing: 1.64375px;
+                    color:          #ffffff;
+                    mix-blend-mode: normal;
+                    opacity:        0.45;
                 }
             }
         }
