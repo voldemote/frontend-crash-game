@@ -74,6 +74,8 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
     };
 
     const validateInput = () => {
+        // TODO: Suggestion: having either a string or an array for the type of error is not very stable code, we should fix that
+        // also using a validation library like ZOD and a form library like react-final-form would make this a bit more consistent and reliable across forms
         let error = null;
 
         switch (step) {
