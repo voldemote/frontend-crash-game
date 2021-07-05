@@ -89,11 +89,21 @@
         font-family: $fontLight;
         color: $colorGrayLight2 !important;
 
-        @media (min-width: $screen-sm) {
-          display: none;
+            @media (min-width: $screen-sm)
+            {
+                display: block;
+            }
         }
-      }
-    }
+
+        .mainMenu
+        {
+            width: auto;
+
+            @media (min-width: $screen-sm)
+            {
+                display: none;
+            }
+        }
 
     .profile {
       height: 50px;

@@ -8,21 +8,26 @@ import style                    from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import Link                     from '../Link';
 import Routes                   from '../../constants/Routes';
+import Icon                     from '../Icon';
+import IconType                 from '../Icon/IconType';
 import { useState }             from 'react';
+import MobileMenu               from '../MobileMainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
 import { connect }              from 'react-redux';
 // import { LeaderboardActions }   from 'store/actions/leaderboard';
-// Just as long as I don't get Redux 
+// Just as long as I don't get Redux
 import axios                    from 'axios';
 import { useEffect }            from 'react';
 
 
 const Navbar = ({ user }) => {
+    const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
+
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [leaderboard, setLeaderboard] = useState([])
     const [rank, setRank] = useState(0);
 
-    // Just as long as I don't get Redux 
+    // Just as long as I don't get Redux
     const token = user.token;
 
     useEffect(() => {
@@ -37,7 +42,7 @@ const Navbar = ({ user }) => {
         axios.get(`https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
         {
             headers: {
-              Authorization: 'Bearer ' + token 
+              Authorization: 'Bearer ' + token
             }
         })
         .then((response) => {
@@ -70,6 +75,14 @@ const Navbar = ({ user }) => {
         }
 
         return '-';
+    };
+
+    const openMobileMenu = () => {
+        setMobileMenuOpened(true);
+    };
+
+    const closeMobileMenu = () => {
+        setMobileMenuOpened(false);
     };
 
     return (
@@ -112,6 +125,11 @@ const Navbar = ({ user }) => {
                     </span>
                     {getBalance()} EVNT
                 </Link>
+                <Icon
+                    className={style.mainMenu}
+                    iconType={IconType.mainMenu}
+                    onClick={openMobileMenu}
+                />
                 <div
                     className={style.profile}
                     style={getProfileStyle()}
@@ -119,7 +137,7 @@ const Navbar = ({ user }) => {
                 </div>
             </div>
             {
-            showLeaderboard &&  
+            showLeaderboard &&
                 <div className={style.leaderboard}>
                     <img src={cross} alt="close" className={style.closeLeaderboard} onClick={onChangeLeaderboard}/>
                     <p className={style.leaderboardHeading}>
@@ -130,8 +148,8 @@ const Navbar = ({ user }) => {
                     <div className={style.leaderboardTable}>
                         <div className={style.tableHeadings}>
                             <p className={style.rankingHeading}>RANKING</p>
-                            <p className={style.userHeading}>USER</p>        
-                            <p className={style.tokenHeading}>TOKENBALANCE</p>                
+                            <p className={style.userHeading}>USER</p>
+                            <p className={style.tokenHeading}>TOKENBALANCE</p>
                         </div>
                         <div className={style.leaderboardRanking}>
                         {
@@ -145,13 +163,17 @@ const Navbar = ({ user }) => {
                     </div>
                 </div>
             }
+            <MobileMenu
+                opened={mobileMenuOpened}
+                closeMobileMenu={closeMobileMenu}
+            />
         </div>
     );
 };
 
 // const mapStateToProps = (state) => {
 //     return {
-//         leaderboard: state 
+//         leaderboard: state
 //     };
 // };
 

@@ -8,7 +8,7 @@ export default {
     arrowRight:      'arrowRight',
     arrowSmallDown:  'arrowSmallDown',
     arrowSmallRight: 'arrowSmallRight',
-    arrowsTopRight:  'arrowTopRight',
+    arrowTopRight:   'arrowTopRight',
     arrowTopDown:    'arrowTopDown',
     arrowUp:         'arrowUp',
     attention:       'attention',
