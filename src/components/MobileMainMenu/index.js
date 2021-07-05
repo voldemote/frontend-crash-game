@@ -48,7 +48,7 @@ const MobileMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
             <div className={styles.upperCloseMenuContainer}>
                 <div className={styles.upperCloseMenuButton}>
                     <Icon
-                        iconType={IconType.logout}
+                        iconType={IconType.collapseSidebar}
                         onClick={closeMobileMenu}
                     />
                 </div>
