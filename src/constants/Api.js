@@ -61,7 +61,7 @@ export default class Api {
 export const PRODUCTION_BACKEND_URL               = 'https://backend-odxda.ondigitalocean.app';
 export const STAGING_BACKEND_URL                  = 'https://staging-zeaec.ondigitalocean.app';
 export const PRODUCTION_BACKEND_SOCKET_URL        = PRODUCTION_BACKEND_URL;
-export const LOCAL_BACKEND_URL                    = 'https://91488ae13fb8.ngrok.io';
+export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';
 export const LOCAL_BACKEND_SOCKET_URL             = LOCAL_BACKEND_URL;
 export const BACKEND_URL                          = Api.getBackendUrl();
 export const BACKEND_SOCKET_URL                   = Api.getBackendSocketUrl();
