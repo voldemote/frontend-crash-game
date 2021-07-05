@@ -26,7 +26,7 @@ const Navbar = ({ user }) => {
     const token = user.token;
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user/getUsers')
+        axios.get('https://staging-zeaec.ondigitalocean.app/api/user/getUsers')
         .then((response) => {
             setLeaderboard(response.data.users)
         })
@@ -34,7 +34,7 @@ const Navbar = ({ user }) => {
             console.log(error)
         })
 
-        axios.get(`http://localhost:8000/api/user/${user.userId}`,
+        axios.get(`https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
         {
             headers: {
               Authorization: 'Bearer ' + token 
