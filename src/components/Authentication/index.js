@@ -164,7 +164,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
 
                 break;
             case 3:
-                if (emailIsValid()) {
+                if (emailIsValid() && legalAuthorizationAgreed) {
                     setEmail({ email });
                 }
 
