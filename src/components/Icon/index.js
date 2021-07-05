@@ -13,6 +13,7 @@ import { ReactComponent as IconArrowLeft }       from '../../data/icons/arrow-le
 import { ReactComponent as IconArrowRight }      from '../../data/icons/arrow-right.svg';
 import { ReactComponent as IconArrowSmallDown }  from '../../data/icons/arrow-small-down.svg';
 import { ReactComponent as IconArrowSmallRight } from '../../data/icons/arrow-small-right.svg';
+import { ReactComponent as IconArrowTopRight }   from '../../data/icons/arrow-top-right.svg';
 import { ReactComponent as IconAttention }       from '../../data/icons/attention.svg';
 import { ReactComponent as IconBet }             from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.svg';
@@ -57,6 +58,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.arrowRight]:      <IconArrowRight />,
                 [IconType.arrowSmallDown]:  <IconArrowSmallDown />,
                 [IconType.arrowSmallRight]: <IconArrowSmallRight />,
+                [IconType.arrowTopRight]:   <IconArrowTopRight />,
                 [IconType.attention]:       <IconAttention />,
                 [IconType.bet]:             <IconBet />,
                 [IconType.bet2]:            <IconBet2 />,
