@@ -112,6 +112,11 @@ const Navbar = ({ user }) => {
                 </Link>
             </div>
             <div className={style.navbarItems}>
+                <Icon
+                    className={style.mainMenu}
+                    iconType={IconType.mainMenu}
+                    onClick={openMobileMenu}
+                />
                 <div className={style.ranking} onClick={onChangeLeaderboard}>
                     <img src={medalGold} alt="medal" className={style.medal} />
                     <p className={style.rankingText}>Rank # {rank}</p>
@@ -125,11 +130,6 @@ const Navbar = ({ user }) => {
                     </span>
                     {getBalance()} EVNT
                 </Link>
-                <Icon
-                    className={style.mainMenu}
-                    iconType={IconType.mainMenu}
-                    onClick={openMobileMenu}
-                />
                 <div
                     className={style.profile}
                     style={getProfileStyle()}
