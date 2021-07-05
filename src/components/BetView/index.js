@@ -1,3 +1,5 @@
+// @TODO: this component is WAY TOO BIG IMO, hard to read for new devs and the state logic is very complex,
+// would be good to refactor this and break it down in smaller components
 import _                   from 'lodash';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
@@ -260,21 +262,20 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             if (!isSell) {
                 placeBet(betId, commitment, choice);
             } else {
+                // @TODO: when does that happen, imo onConfirm will not be called from "sell" state?
                 pullOutBet(betId, choice, commitment);
             }
         }
     };
+    const sellBet = () => {
+        pullOutBet(betId, choice, getOpenBetsValue(choice));
+        setChoice(null);
+    }
 
     const onChoiceSelect = (id, enabled) => {
         return () => {
             if (enabled) {
-                const isSell = hasSellView();
-
-                if (isSell) {
-                    pullOutBet(betId, id, getOpenBetsValue(id));
-                } else {
-                    setChoice(id);
-                }
+                setChoice(id);
             }
         };
     };
@@ -320,6 +321,9 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
     };
 
     const renderSwitchableView = () => {
+        // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
+        // like e.g. react-aria tablist
+        // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
         if (_.size(hasOpenBet) && !disableSwitcher) {
             const switchableViews = [
                 SwitchableHelper.getSwitchableView(
@@ -410,6 +414,23 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                     disabledWithOverlay={false}
                 >
                     Trade!
+                </Button>
+            );
+        }
+        if (isSell && !finalOutcome) {
+            let tradeButtonTheme      = null;
+
+            return (
+                <Button
+                    className={classNames(
+                        styles.betButton,
+                    )}
+                    onClick={sellBet}
+                    highlightType={HighlightType.highlightHomeCtaBet}
+                    highlightTheme={tradeButtonTheme}
+                    disabledWithOverlay={false}
+                >
+                    Sell!
                 </Button>
             );
         }
