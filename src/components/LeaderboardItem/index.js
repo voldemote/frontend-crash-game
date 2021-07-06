@@ -31,7 +31,7 @@ const LeaderboardItem = ({user}) => {
                     <div className={style.tableThird}>
                         <p className={style.thirdRank}>#{user.index} <img src={medalBronze} alt="medal" /></p>
                         <p className={style.thirdName}>{user.name}</p>
-                        <p className={style.thirdBalance}>{user.balance}</p>
+                        <p className={style.thirdBalance}>{totalBalance}</p>
                     </div>
                 </>
             ) : (
@@ -40,7 +40,7 @@ const LeaderboardItem = ({user}) => {
                     <div className={style.tableEntryHolder}>
                         <p className={style.entryRank}>#{user.index}</p>
                         <p className={style.entryName}>{user.name}</p>
-                        <p className={style.entryBalance}>{user.balance}</p>
+                        <p className={style.entryBalance}>{totalBalance}</p>
                     </div>
                 </>
             )}
