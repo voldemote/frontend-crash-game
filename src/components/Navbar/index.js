@@ -11,7 +11,7 @@ import Routes                   from '../../constants/Routes';
 import Icon                     from '../Icon';
 import IconType                 from '../Icon/IconType';
 import { useState }             from 'react';
-import MobileMenu               from '../MobileMainMenu';
+import MainMenu                 from '../MainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
 import { connect }              from 'react-redux';
 // import { LeaderboardActions }   from 'store/actions/leaderboard';
@@ -20,7 +20,7 @@ import axios                    from 'axios';
 import { useEffect }            from 'react';
 
 const Navbar = ({ user }) => {
-    const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
+    const [menuOpened, setMenuOpened]           = useState(false);
 
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [leaderboard, setLeaderboard]         = useState([]);
@@ -30,7 +30,7 @@ const Navbar = ({ user }) => {
     const token = user.token;
 
     useEffect(() => {
-        axios.get('https://staging-zeaec.ondigitalocean.app/api/user/getUsers')
+        axios.get('http://localhost:8000/api/user/getUsers')
             .then((response) => {
                 setLeaderboard(response.data.users);
             })
@@ -39,7 +39,7 @@ const Navbar = ({ user }) => {
             });
 
         axios.get(
-            `https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
+            `http://localhost:8000/api/user/${user.userId}`,
             {
                 headers: {
                     Authorization: 'Bearer ' + token,
@@ -48,7 +48,6 @@ const Navbar = ({ user }) => {
         )
             .then((response) => {
                 setRank(response.data.rank);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -79,11 +78,15 @@ const Navbar = ({ user }) => {
     };
 
     const openMobileMenu = () => {
-        setMobileMenuOpened(true);
+        setMenuOpened(true);
     };
 
     const closeMobileMenu = () => {
-        setMobileMenuOpened(false);
+        setMenuOpened(false);
+    };
+
+    const showDesktopMenuHandler = () => {
+        setMenuOpened(!menuOpened);
     };
 
     return (
@@ -141,6 +144,12 @@ const Navbar = ({ user }) => {
                 <div
                     className={style.profile}
                     style={getProfileStyle()}
+                    onClick={showDesktopMenuHandler}
+                >
+                </div>
+                <div
+                    className={style.profileMobile}
+                    style={getProfileStyle()}
                 >
                 </div>
             </div>
@@ -168,7 +177,7 @@ const Navbar = ({ user }) => {
                             {
                                 leaderboard && leaderboard.map((user) => {
                                     return (
-                                        <LeaderboardItem user={user} />
+                                        <LeaderboardItem user={user} key={user.userId} />
                                     );
                                 })
                             }
@@ -176,8 +185,8 @@ const Navbar = ({ user }) => {
                     </div>
                 </div>
             }
-            <MobileMenu
-                opened={mobileMenuOpened}
+            <MainMenu
+                opened={menuOpened}
                 closeMobileMenu={closeMobileMenu}
             />
         </div>
