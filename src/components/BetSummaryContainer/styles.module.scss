@@ -2,7 +2,27 @@
 
 .summaryTicketContainer
 {
-    width: 100%;
+    width:    100%;
+    position: relative;
+
+    &.summaryTicketContainerWithContainerImage
+    {
+        padding-top: 150px;
+    }
+
+    .headerImageContainer
+    {
+        position:                absolute;
+        background-size:         cover;
+        background-position:     center;
+        background-repeat:       no-repeat;
+        top:                     0;
+        left:                    0;
+        width:                   100%;
+        height:                  150px;
+        border-top-right-radius: 6px;
+        border-top-left-radius:  6px;
+    }
 
     .summaryTicketHeadline
     {
@@ -18,6 +38,7 @@
         flex-direction: row;
         width:          100%;
         align-items:    center;
+        position:       relative;
         margin-bottom:  15px;
         font-size:      14px;
 
@@ -36,11 +57,20 @@
             color: $colorGreen;
         }
 
+        .highlight
+        {
+            position: absolute;
+            z-index:  -1;
+            top:      0;
+            bottom:   0;
+        }
+
         > *
         {
             text-overflow: ellipsis;
             overflow:      hidden;
             white-space:   nowrap;
+            z-index:       1;
 
             &:first-child
             {

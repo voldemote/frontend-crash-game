@@ -63,7 +63,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
         return (
             <div className={styles.pillFooter}>
                 <div className={styles.timeLeftCounterContainer}>
-                    <span>Event ends in:</span>
+                    <span>End of Event:</span>
                     <TimeLeftCounter endDate={eventEnd} />
                 </div>
             </div>

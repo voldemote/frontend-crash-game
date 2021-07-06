@@ -9,28 +9,31 @@ import SummaryRowType        from './SummaryRowType';
 import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import classNames            from 'classnames';
 import SelectionHelper       from '../../helper/SelectionHelper';
+import Highlight             from '../Highlight';
+import HighlightTheme        from '../Highlight/HighlightTheme';
 
-const BetSummaryContainer = ({ className, marketQuestion, endDate, summaryRows, onClick }) => {
+const BetSummaryContainer = ({ className, containerClassName, containerImage, marketQuestion, endDate, summaryRows, onClick }) => {
     const renderSummaryRow = (summaryRow, index) => {
         const type = _.get(summaryRow, 'type', SummaryRowType.keyValue);
 
         switch (type) {
             case SummaryRowType.keyValue:
-                const key        = _.get(summaryRow, 'key');
-                const keyBold    = _.get(summaryRow, 'keyBold');
-                const value      = _.get(summaryRow, 'value');
-                const valueBold  = _.get(summaryRow, 'valueBold');
-                const valueColor = _.get(summaryRow, 'valueColor');
-                const isLink     = _.get(summaryRow, 'isLink');
+                const key            = _.get(summaryRow, 'key');
+                const keyBold        = _.get(summaryRow, 'keyBold');
+                const value          = _.get(summaryRow, 'value');
+                const valueBold      = _.get(summaryRow, 'valueBold');
+                const valueColor     = _.get(summaryRow, 'valueColor');
+                const valueHighlight = _.get(summaryRow, 'valueHighlight');
+                const isLink         = _.get(summaryRow, 'isLink');
 
-                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueColor, isLink);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueColor, valueHighlight, isLink);
 
             case SummaryRowType.divider:
                 return <Divider key={index} />;
         }
     };
 
-    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueColor = null, isLink = false) => {
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueColor = null, valueHighlight = null, isLink = false) => {
         return (
             <div
                 className={classNames(
@@ -73,6 +76,10 @@ const BetSummaryContainer = ({ className, marketQuestion, endDate, summaryRows, 
                                 )}
                             >
                                 {value}
+                                {valueHighlight && <Highlight
+                                    className={styles.highlight}
+                                    highlightType={valueHighlight}
+                                />}
                             </span>
                         )
                 }
@@ -85,7 +92,7 @@ const BetSummaryContainer = ({ className, marketQuestion, endDate, summaryRows, 
             return (
                 <div className={styles.summaryTimeLeftContainer}>
                     <span>
-                        Event ends in:
+                        End of Event:
                     </span>
                     <TimeLeftCounter endDate={endDate} />
                 </div>
@@ -95,12 +102,38 @@ const BetSummaryContainer = ({ className, marketQuestion, endDate, summaryRows, 
         return null;
     };
 
+    const getHeaderImageStyle = () => {
+        return {
+            backgroundImage: 'url("' + containerImage + '")',
+        };
+    };
+
+    const renderHeader = () => {
+        if (containerImage) {
+            return (
+                <div
+                    className={styles.headerImageContainer}
+                    style={getHeaderImageStyle()}
+                >
+                </div>
+            );
+        }
+
+        return (
+            <ProfileContainer />
+        );
+    };
+
     return (
         <RippedTicketContainer
-            className={styles.summaryTicketContainer}
+            className={classNames(
+                styles.summaryTicketContainer,
+                containerImage ? styles.summaryTicketContainerWithContainerImage : null,
+                containerClassName,
+            )}
             onClick={onClick}
         >
-            <ProfileContainer />
+            {renderHeader()}
             <span className={styles.summaryTicketHeadline}>
                 {marketQuestion}
             </span>

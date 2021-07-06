@@ -1,5 +1,10 @@
 @import '../../styles/all';
 
+.switchableViewContainer
+{
+    color: $colorWhite;
+}
+
 .contentContainer
 {
     padding: 40px 20px;
@@ -15,6 +20,11 @@
             &:last-child
             {
                 margin-bottom: 0;
+            }
+
+            .betSummaryContainer
+            {
+                width: 420px;
             }
         }
     }

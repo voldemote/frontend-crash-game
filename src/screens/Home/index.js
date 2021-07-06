@@ -9,6 +9,7 @@ import Routes                       from '../../constants/Routes';
 import styles                       from './styles.module.scss';
 import { connect }                  from 'react-redux';
 import { useHistory }               from 'react-router';
+import BaseContainerWithNavbar      from '../../components/BaseContainerWithNavbar';
 
 const Home = ({ events, user }) => {
     const history = useHistory();
@@ -84,8 +85,7 @@ const Home = ({ events, user }) => {
     };
 
     return (
-        <div className={styles.homeContainer}>
-            <Navbar user={user} />
+        <BaseContainerWithNavbar>
             <Header events={events} />
             <CarouselContainer title={'🔥 Most popular Live Events'}>
                 {renderLiveEvents()}
@@ -94,7 +94,7 @@ const Home = ({ events, user }) => {
                 {renderMostPopularBets()}
             </CarouselContainer>
             {renderEventCreationButton()}
-        </div>
+        </BaseContainerWithNavbar>
     );
 };
 

@@ -213,7 +213,7 @@ const Bet = ({ showPopup }) => {
                               />
                               <div className={styles.timeLeft}>
                                   <span>
-                                      Event ends in:
+                                      End of Event:
                                   </span>
                                   <TimeLeftCounter endDate={new Date(_.get(event, 'date'))} />
                               </div>

@@ -528,7 +528,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             {
                 showEventEnd && (
                     <div className={styles.timeLeftCounterContainer}>
-                        <span>Event ends in:</span>
+                        <span>End of Event:</span>
                         <TimeLeftCounter endDate={event.date} />
                     </div>
                 )

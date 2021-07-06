@@ -2,17 +2,30 @@
 
 .switchableViewsContainer
 {
-    display:          flex;
-    justify-content:  center;
-    align-items:      center;
-    width:            100%;
-    padding-top:      3rem;
-    background-color: $colorWhite;
+    display:     flex;
+    align-items: center;
+    width:       100%;
+    padding-top: 3rem;
+
+    &.withWhiteBackground
+    {
+        background-color: $colorWhite;
+    }
+
+    &.fullWidthSwitches
+    {
+        justify-content: center;
+
+        .switchableViews
+        {
+            width:        100%;
+            margin-right: 0 !important;
+        }
+    }
 
     .switchableViews
     {
         display:             block;
-        width:               100%;
         text-align:          center;
         position:            relative;
         padding-bottom:      0.8rem;
@@ -22,6 +35,7 @@
         -moz-user-select:    none;
         -ms-user-select:     none;
         user-select:         none;
+        margin-right:        30px;
 
         &.selected
         {
@@ -45,10 +59,6 @@
             opacity:         0.2;
             transition:      opacity 0.2s ease-in-out;
 
-            > :first-child
-            {
-                margin-right: 10px;
-            }
         }
 
         .line
@@ -58,7 +68,7 @@
             left:             0;
             height:           3px;
             width:            100%;
-            background-color: #e2ff54;
+            background-color: $colorYellow;
             opacity:          0;
             transition:       opacity 0.2s ease-in-out;
         }
