@@ -18,9 +18,11 @@ import LeaderboardItem          from '../LeaderboardItem';
 // Just as long as I don't get Redux
 import axios                    from 'axios';
 import { useEffect }            from 'react';
+import { matchPath }            from 'react-router';
+import { connect }              from 'react-redux';
 
-const Navbar = ({ user }) => {
-    const [menuOpened, setMenuOpened]           = useState(false);
+const Navbar = ({ user, location }) => {
+    const [menuOpened, setMenuOpened] = useState(false);
 
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [leaderboard, setLeaderboard]         = useState([]);
@@ -89,6 +91,24 @@ const Navbar = ({ user }) => {
         setMenuOpened(!menuOpened);
     };
 
+    const isRouteActive = (route) => {
+        return !!matchPath(
+            location.pathname,
+            route,
+        );
+    };
+
+    const renderNavbarLink = (route, text) => {
+        return (
+            <Link
+                to={route}
+                className={isRouteActive(route) ? style.active : null}
+            >
+                {text}
+            </Link>
+        );
+    };
+
     return (
         <div className={style.navbar}>
             <div
@@ -100,20 +120,11 @@ const Navbar = ({ user }) => {
                 <img
                     src={Logo}
                     width={200}
-                    alt="Wallfair"
+                    alt={'Wallfair'}
                 />
-                <Link
-                    to={Routes.home}
-                    className={style.active}
-                >
-                    Home
-                </Link>
-                <Link to={Routes.betOverview}>
-                    My Trades
-                </Link>
-                <Link to={Routes.wallet}>
-                    My Wallet
-                </Link>
+                {renderNavbarLink(Routes.home, 'Home')}
+                {renderNavbarLink(Routes.betOverview, 'My Trades')}
+                {renderNavbarLink(Routes.wallet, 'My Wallet')}
             </div>
             <div className={style.navbarItems}>
                 <Icon
@@ -177,7 +188,10 @@ const Navbar = ({ user }) => {
                             {
                                 leaderboard && leaderboard.map((user) => {
                                     return (
-                                        <LeaderboardItem user={user} key={user.userId} />
+                                        <LeaderboardItem
+                                            user={user}
+                                            key={user.userId}
+                                        />
                                     );
                                 })
                             }
@@ -193,19 +207,17 @@ const Navbar = ({ user }) => {
     );
 };
 
-// const mapStateToProps = (state) => {
-//     return {
-//         leaderboard: state
-//     };
-// };
+const mapStateToProps = (state) => {
+    return {
+        location: state.router.location,
+    };
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {};
-// };
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
 
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps,
-// )(Navbar);
-
-export default Navbar;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Navbar);

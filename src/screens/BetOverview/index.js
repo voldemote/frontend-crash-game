@@ -1,18 +1,19 @@
-import _                       from 'lodash';
-import BetSummaryContainer     from '../../components/BetSummaryContainer';
-import BetSummaryHelper        from '../../helper/BetSummary';
-import moment                  from 'moment';
-import React                   from 'react';
-import styles                  from './styles.module.scss';
-import SwitchableContainer     from '../../components/SwitchableContainer';
-import SwitchableHelper        from '../../helper/SwitchableHelper';
-import { connect }             from 'react-redux';
-import { useState }            from 'react';
-import { BetActions }          from '../../store/actions/bet';
-import PopupTheme              from '../../components/Popup/PopupTheme';
-import { PopupActions }        from '../../store/actions/popup';
-import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import HighlightType           from '../../components/Highlight/HighlightType';
+import _                          from 'lodash';
+import BetSummaryContainer        from '../../components/BetSummaryContainer';
+import BetSummaryHelper           from '../../helper/BetSummary';
+import moment                     from 'moment';
+import React                      from 'react';
+import styles                     from './styles.module.scss';
+import SwitchableContainer        from '../../components/SwitchableContainer';
+import SwitchableHelper           from '../../helper/SwitchableHelper';
+import { connect }                from 'react-redux';
+import { useState }               from 'react';
+import { BetActions }             from '../../store/actions/bet';
+import PopupTheme                 from '../../components/Popup/PopupTheme';
+import { PopupActions }           from '../../store/actions/popup';
+import BaseContainerWithNavbar    from '../../components/BaseContainerWithNavbar';
+import HighlightType              from '../../components/Highlight/HighlightType';
+import LiveEventCarouselContainer from '../../components/LiveEventCarouselContainer';
 
 const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     const queryParams           = new URLSearchParams(window.location.search);
@@ -49,7 +50,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
         return renderBetHistory();
     };
 
-    const getOpenBetSummaryRows = ( bet, openBet) => {
+    const getOpenBetSummaryRows = (bet, openBet) => {
         const amount        = _.get(openBet, 'investmentAmount');
         const outcomeIndex  = _.get(openBet, 'outcome');
         const outcomeValue  = _.get(bet, ['outcomes', outcomeIndex, 'name']);
@@ -79,14 +80,13 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     };
 
     const renderOpenBetSummary = (openBet, index) => {
-        const imageUrl          = _.get(openBet, 'event.previewImageUrl');
+        const imageUrl       = _.get(openBet, 'event.previewImageUrl');
         const bet            = _.get(openBet, 'bet');
         const marketQuestion = _.get(bet, 'marketQuestion');
         const endDateTime    = moment(
             _.get(bet, 'date', new Date()),
         );
-
-        const summaryRows = getOpenBetSummaryRows(bet, openBet);
+        const summaryRows    = getOpenBetSummaryRows(bet, openBet);
 
         return (
             <div className={styles.betSummaryContainerWrapper}>
@@ -177,6 +177,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
             <div className={styles.contentContainer}>
                 {renderContent()}
             </div>
+            <LiveEventCarouselContainer withoutPadding={true} />
         </BaseContainerWithNavbar>
     );
 };

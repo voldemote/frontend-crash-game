@@ -42,6 +42,11 @@
         margin-bottom:  15px;
         font-size:      14px;
 
+        .key
+        {
+            opacity: 0.4;
+        }
+
         .bold
         {
             font-family: $fontBold;

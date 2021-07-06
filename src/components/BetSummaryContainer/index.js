@@ -44,6 +44,7 @@ const BetSummaryContainer = ({ className, containerClassName, containerImage, ma
             >
                 <span
                     className={classNames(
+                        styles.key,
                         keyBold ? styles.bold : null,
                     )}
                 >
