@@ -17,6 +17,7 @@ export default {
     calendar:        'calendar',
     chat:            'chat',
     checked:         'checked',
+    collapseSidebar: 'collapseSidebar',
     confettiLeft:    'confettiLeft',
     confettiRight:   'confettiRight',
     deleteInput:     'deleteInput',

@@ -23,7 +23,8 @@ $largeMobileHeight: 700px;
 
     @media (min-width: $screen-sm)
     {
-        display: none !important;
+        width:            30vw;
+        background-color: $colorPrimary90;
     }
 
     .upperCloseMenuContainer

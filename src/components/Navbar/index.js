@@ -1,7 +1,7 @@
 import _                        from 'lodash';
 import classNames               from 'classnames';
-import medalGold                from "../../data/icons/medal-gold.png";
-import cross                    from "../../data/icons/cross.svg";
+import medalGold                from '../../data/icons/medal-gold.png';
+import cross                    from '../../data/icons/cross.svg';
 import Logo                     from '../../data/images/logo-demo.svg';
 import React                    from 'react';
 import style                    from './styles.module.scss';
@@ -19,45 +19,46 @@ import { connect }              from 'react-redux';
 import axios                    from 'axios';
 import { useEffect }            from 'react';
 
-
 const Navbar = ({ user }) => {
     const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
 
     const [showLeaderboard, setShowLeaderboard] = useState(false);
-    const [leaderboard, setLeaderboard] = useState([])
-    const [rank, setRank] = useState(0);
+    const [leaderboard, setLeaderboard]         = useState([]);
+    const [rank, setRank]                       = useState(0);
 
     // Just as long as I don't get Redux
     const token = user.token;
 
     useEffect(() => {
         axios.get('https://staging-zeaec.ondigitalocean.app/api/user/getUsers')
-        .then((response) => {
-            setLeaderboard(response.data.users)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((response) => {
+                setLeaderboard(response.data.users);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
-        axios.get(`https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
-        {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }
-        })
-        .then((response) => {
-            setRank(response.data.rank)
-            console.log(response.data)
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        axios.get(
+            `https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                },
+            },
+        )
+            .then((response) => {
+                setRank(response.data.rank);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [token, rank, user.userId]);
     // End of temporary solution
 
     const onChangeLeaderboard = () => {
-        setShowLeaderboard(!showLeaderboard)
-    }
+        setShowLeaderboard(!showLeaderboard);
+    };
 
     const getProfileStyle = () => {
         const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
@@ -117,8 +118,15 @@ const Navbar = ({ user }) => {
                     iconType={IconType.mainMenu}
                     onClick={openMobileMenu}
                 />
-                <div className={style.ranking} onClick={onChangeLeaderboard}>
-                    <img src={medalGold} alt="medal" className={style.medal} />
+                <div
+                    className={style.ranking}
+                    onClick={onChangeLeaderboard}
+                >
+                    <img
+                        src={medalGold}
+                        alt="medal"
+                        className={style.medal}
+                    />
                     <p className={style.rankingText}>Rank # {rank}</p>
                 </div>
                 <Link
@@ -137,12 +145,17 @@ const Navbar = ({ user }) => {
                 </div>
             </div>
             {
-            showLeaderboard &&
+                showLeaderboard &&
                 <div className={style.leaderboard}>
-                    <img src={cross} alt="close" className={style.closeLeaderboard} onClick={onChangeLeaderboard}/>
+                    <img
+                        src={cross}
+                        alt="close"
+                        className={style.closeLeaderboard}
+                        onClick={onChangeLeaderboard}
+                    />
                     <p className={style.leaderboardHeading}>
                         Community
-                        <br/>
+                        <br />
                         Leaderboard
                     </p>
                     <div className={style.leaderboardTable}>
@@ -152,13 +165,13 @@ const Navbar = ({ user }) => {
                             <p className={style.tokenHeading}>TOKENBALANCE</p>
                         </div>
                         <div className={style.leaderboardRanking}>
-                        {
-                            leaderboard && leaderboard.map((user) => {
-                                return (
-                                    <LeaderboardItem user={user} />
-                                )
-                            })
-                        }
+                            {
+                                leaderboard && leaderboard.map((user) => {
+                                    return (
+                                        <LeaderboardItem user={user} />
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>
