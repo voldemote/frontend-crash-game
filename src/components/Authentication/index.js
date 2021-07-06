@@ -7,7 +7,7 @@ import StepsContainer            from '../StepsContainer';
 import styles                    from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect }               from 'react-redux';
-import { requestSms }            from '../../store/actions/authentication';
+
 import { useEffect, useState }   from 'react';
 import { useIsMount }            from '../hoc/useIsMount';
 import _                         from 'lodash';

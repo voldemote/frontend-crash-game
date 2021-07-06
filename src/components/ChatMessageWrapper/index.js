@@ -1,5 +1,4 @@
 import _                    from 'lodash';
-import styles               from './styles.module.scss';
 import { connect }          from 'react-redux';
 import { useEffect }        from 'react';
 import { useState }         from 'react';

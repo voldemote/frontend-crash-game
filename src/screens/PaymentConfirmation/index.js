@@ -10,7 +10,7 @@ import { useState }           from 'react';
 import { useEffect }          from 'react';
 
 const PaymentConfirmation = ({ balance, cancelActionTill }) => {
-    const { paymentProvider, paymentAction }        = useParams();
+    const { paymentAction }        = useParams();
     const history                                   = useHistory();
     const [timeLeftInSeconds, setTimeLeftInSeconds] = useState(calcTimeLeftInSeconds(cancelActionTill));
 

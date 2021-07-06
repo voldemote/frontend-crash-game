@@ -6,6 +6,7 @@ class SelectionHelper {
             if (
                 typeCompare ?
                     mappingValue === currentValue :
+                    // eslint-disable-next-line eqeqeq
                     mappingValue == currentValue
             ) {
                 return mapping[currentValue];

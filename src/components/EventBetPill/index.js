@@ -1,7 +1,6 @@
 import _                   from 'lodash';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
-import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
 import classNames          from 'classnames';
 import ClickEvent          from '../../helper/ClickEvent';
 import Divider             from '../Divider';
@@ -22,8 +21,6 @@ import { useEffect }       from 'react';
 import { useHasMounted }   from '../hoc/useHasMounted';
 import { useHistory }      from 'react-router';
 import { useState }        from 'react';
-import InputBoxTheme       from '../InputBox/InputBoxTheme';
-import InputBox            from '../InputBox';
 import ChoiceSelectorList  from '../ChoiceSelectorList';
 
 const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {

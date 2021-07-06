@@ -5,7 +5,6 @@ import FixedIconButton              from '../../components/FixedIconButton';
 import IconType                     from '../../components/Icon/IconType';
 import Link                         from '../../components/Link';
 import LiveBadge                    from 'components/LiveBadge';
-import PopupTheme                   from '../../components/Popup/PopupTheme';
 import Routes                       from '../../constants/Routes';
 import styles                       from './styles.module.scss';
 import TimeLeftCounter              from 'components/TimeLeftCounter';
@@ -26,7 +25,7 @@ import FixedEventCreationIconButton from '../../components/FixedEventCreationIco
 
 const Bet = ({ showPopup }) => {
           const history                         = useHistory();
-          const { eventId, betId }              = useParams();
+          const { eventId }              = useParams();
           const [currentSlide, setCurrentSlide] = useState(0);
 
           const event                           = useSelector(
@@ -37,14 +36,15 @@ const Bet = ({ showPopup }) => {
                   },
               ),
           );
-          const bet                             = useSelector(
-              () => _.find(
-                  event ? event.bets : [],
-                  {
-                      _id: betId,
-                  },
-              ),
-          );
+          // @TODO: this is unused atm, can we safely remove that?
+        //   const bet                             = useSelector(
+        //       () => _.find(
+        //           event ? event.bets : [],
+        //           {
+        //               _id: betId,
+        //           },
+        //       ),
+        //   );
 
           const updateCurrentSlide = (index) => {
               if (currentSlide !== index) {

@@ -66,8 +66,8 @@ const BetSummaryContainer = ({ className, marketQuestion, endDate, summaryRows, 
                                     SelectionHelper.get(
                                         valueColor,
                                         {
-                                            ['red']:   styles.textColorRed,
-                                            ['green']: styles.textColorGreen,
+                                            'red':   styles.textColorRed,
+                                            'green': styles.textColorGreen,
                                         },
                                     ),
                                 )}

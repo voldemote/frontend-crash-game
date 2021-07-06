@@ -2,7 +2,7 @@ import _              from 'lodash';
 import update         from 'immutability-helper';
 import { BetTypes }   from '../actions/bet';
 import { PopupTypes } from '../actions/popup';
-import { REHYDRATE }  from 'redux-persist';
+
 
 const initialState = {
     selectedEventId:    null,
@@ -49,14 +49,13 @@ const selectChoice = (action, state) => {
 
 const setCommitment = (action, state) => {
     const commitment = action.commitment;
-    const betId      = action.betId;
 
     if (
         _.isEmpty(commitment) ||
         (
             (
                 commitment >= 0.001 ||
-                commitment == 0
+                commitment === 0
             ) &&
             commitment <= 20000000
         )
@@ -142,13 +141,14 @@ const fetchOpenBetsSucceeded = (action, state) => {
 
 };
 
-const resetOutcomes = (action, state) => {
-    return update(state, {
-        outcomes: {
-            $set: [],
-        },
-    });
-};
+// @TODO: this is not used atm, do we need it or can we remove that code?
+// const resetOutcomes = (action, state) => {
+//     return update(state, {
+//         outcomes: {
+//             $set: [],
+//         },
+//     });
+// };
 
 export default function (state = initialState, action) {
     switch (action.type) {

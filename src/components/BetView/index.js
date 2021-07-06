@@ -3,7 +3,7 @@
 import _                   from 'lodash';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
-import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
+
 import classNames          from 'classnames';
 import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../../components/Highlight/HighlightType';
