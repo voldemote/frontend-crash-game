@@ -1,31 +1,14 @@
 import React               from 'react';
 import _                   from 'lodash';
-import classNames          from 'classnames';
-import Divider             from '../Divider';
-import HotBetBadge         from '../HotBetBadge';
-import ProfileContainer    from '../ProfileContainer';
+
 import styles              from './styles.module.scss';
-import TimeLeftCounter     from '../TimeLeftCounter';
-import { connect }         from 'react-redux';
-import { getDefaultUser }  from '../../helper/Profile';
+
 import { useState }        from 'react';
-import ChoiceSelector      from '../ChoiceSelector';
-import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
-import Button              from '../Button';
-import TokenNumberInput    from '../TokenNumberInput';
-import { useEffect }       from 'react';
-import { BetActions }      from '../../store/actions/bet';
-import HighlightType       from '../Highlight/HighlightType';
-import { useIsMount }      from '../hoc/useIsMount';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import SleepHelper         from '../../helper/Sleep';
-import Routes              from '../../constants/Routes';
-import { useHistory }      from 'react-router';
-import ClickEvent          from '../../helper/ClickEvent';
+
 import EventBetPill        from '../EventBetPill';
 import Icon                from '../Icon';
 import IconType            from '../Icon/IconType';
-import IconTheme           from '../Icon/IconTheme';
+
 
 const EventBetPillList = ({ event, bets }) => {
     const betPillPreviewCount             = 3;

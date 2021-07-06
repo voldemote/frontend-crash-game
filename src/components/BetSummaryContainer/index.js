@@ -70,8 +70,8 @@ const BetSummaryContainer = ({ className, containerClassName, containerImage, ma
                                     SelectionHelper.get(
                                         valueColor,
                                         {
-                                            ['red']:   styles.textColorRed,
-                                            ['green']: styles.textColorGreen,
+                                            'red':   styles.textColorRed,
+                                            'green': styles.textColorGreen,
                                         },
                                     ),
                                 )}

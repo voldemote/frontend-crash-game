@@ -15,7 +15,8 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect }) => {
         const isEnabled = _.get(valueObject, 'enabled', true);
         let isSelected  = false;
 
-        if (activeValue == value) {
+        // @TODO: was there a reason to not use strict equal?
+        if (activeValue === value) {
             isSelected = true;
         }
 

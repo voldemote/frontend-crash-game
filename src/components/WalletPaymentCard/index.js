@@ -4,7 +4,7 @@ import MastercardLogo  from '../../data/images/mastercard.png';
 import PaymentAction   from '../../constants/PaymentAction';
 import PaymentProvider from '../../constants/PaymentProvider';
 import PayPalLogo      from '../../data/images/paypal.svg';
-import styles          from './styles.module.scss';
+
 import VisaLogo        from '../../data/images/visa.svg';
 import WalletCard      from '../WalletCard';
 
