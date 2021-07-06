@@ -28,6 +28,7 @@ const Bet = ({ showPopup }) => {
           const history                         = useHistory();
           const { eventId, betId }              = useParams();
           const [currentSlide, setCurrentSlide] = useState(0);
+
           const event                           = useSelector(
               (state) => _.find(
                   state.event.events,
@@ -214,7 +215,7 @@ const Bet = ({ showPopup }) => {
                                   <span>
                                       Event ends in:
                                   </span>
-                                  <TimeLeftCounter endDate={_.get(event, 'date')} />
+                                  <TimeLeftCounter endDate={new Date(_.get(event, 'date'))} />
                               </div>
                           </div>
                           <Chat
