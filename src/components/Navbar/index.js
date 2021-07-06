@@ -12,6 +12,7 @@ import Icon                     from '../Icon';
 import IconType                 from '../Icon/IconType';
 import { useState }             from 'react';
 import MobileMenu               from '../MobileMainMenu';
+import DesktopMenu              from '../DesktopMainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
 import { connect }              from 'react-redux';
 // import { LeaderboardActions }   from 'store/actions/leaderboard';
@@ -21,6 +22,7 @@ import { useEffect }            from 'react';
 
 const Navbar = ({ user }) => {
     const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
+    const [desktopMenuOpened, setDesktopMenuOpened] = useState(false);
 
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [leaderboard, setLeaderboard]         = useState([]);
@@ -30,7 +32,7 @@ const Navbar = ({ user }) => {
     const token = user.token;
 
     useEffect(() => {
-        axios.get('https://staging-zeaec.ondigitalocean.app/api/user/getUsers')
+        axios.get('http://localhost:8000/api/user/getUsers')
             .then((response) => {
                 setLeaderboard(response.data.users);
             })
@@ -39,7 +41,7 @@ const Navbar = ({ user }) => {
             });
 
         axios.get(
-            `https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
+            `http://localhost:8000/api/user/${user.userId}`,
             {
                 headers: {
                     Authorization: 'Bearer ' + token,
@@ -84,6 +86,10 @@ const Navbar = ({ user }) => {
 
     const closeMobileMenu = () => {
         setMobileMenuOpened(false);
+    };
+
+    const showDesktopMenuHandler = () => {
+        setDesktopMenuOpened(!desktopMenuOpened);
     };
 
     return (
@@ -141,6 +147,12 @@ const Navbar = ({ user }) => {
                 <div
                     className={style.profile}
                     style={getProfileStyle()}
+                    onClick={showDesktopMenuHandler}
+                >
+                </div>
+                <div
+                    className={style.profileMobile}
+                    style={getProfileStyle()}
                 >
                 </div>
             </div>
@@ -179,6 +191,9 @@ const Navbar = ({ user }) => {
             <MobileMenu
                 opened={mobileMenuOpened}
                 closeMobileMenu={closeMobileMenu}
+            />
+            <DesktopMenu
+                opened={desktopMenuOpened}
             />
         </div>
     );
