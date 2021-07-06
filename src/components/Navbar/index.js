@@ -13,7 +13,7 @@ import IconType                 from '../Icon/IconType';
 import { useState }             from 'react';
 import MainMenu                 from '../MainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
-import { connect }              from 'react-redux';
+// import { connect }              from 'react-redux';
 // import { LeaderboardActions }   from 'store/actions/leaderboard';
 // Just as long as I don't get Redux
 import axios                    from 'axios';
@@ -30,7 +30,7 @@ const Navbar = ({ user }) => {
     const token = user.token;
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user/getUsers')
+        axios.get('https://staging-zeaec.ondigitalocean.app/api/user/getUsers')
             .then((response) => {
                 setLeaderboard(response.data.users);
             })
@@ -39,7 +39,7 @@ const Navbar = ({ user }) => {
             });
 
         axios.get(
-            `http://localhost:8000/api/user/${user.userId}`,
+            `https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
             {
                 headers: {
                     Authorization: 'Bearer ' + token,
