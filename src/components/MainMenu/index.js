@@ -9,7 +9,7 @@ import styles         from './styles.module.scss';
 import { connect }    from 'react-redux';
 import { useHistory } from 'react-router';
 
-const MobileMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
+const MainMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
     const history = useHistory();
 
     const onClickGoToRoute = (destinationRoute) => {
@@ -68,7 +68,7 @@ const MobileMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
 
     const renderMenuFooter = () => {
         return (
-            <div className={styles.mobileMenuFooter}>
+            <div className={styles.menuFooter}>
                 {renderMenuButton(IconType.settings, 'Settings')}
                 {renderLogoutButton()}
             </div>
@@ -106,8 +106,8 @@ const MobileMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
     return (
         <div
             className={classNames(
-                styles.mobileMenu,
-                opened ? styles.mobileMenuOpened : null,
+                styles.menu,
+                opened ? styles.menuOpened : null,
             )}
         >
             {renderCloseButton()}
@@ -130,4 +130,4 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     null,
-)(MobileMenu);
+)(MainMenu);

@@ -11,8 +11,7 @@ import Routes                   from '../../constants/Routes';
 import Icon                     from '../Icon';
 import IconType                 from '../Icon/IconType';
 import { useState }             from 'react';
-import MobileMenu               from '../MobileMainMenu';
-import DesktopMenu              from '../DesktopMainMenu';
+import MainMenu                 from '../MainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
 import { connect }              from 'react-redux';
 // import { LeaderboardActions }   from 'store/actions/leaderboard';
@@ -21,8 +20,7 @@ import axios                    from 'axios';
 import { useEffect }            from 'react';
 
 const Navbar = ({ user }) => {
-    const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
-    const [desktopMenuOpened, setDesktopMenuOpened] = useState(false);
+    const [menuOpened, setMenuOpened]           = useState(false);
 
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [leaderboard, setLeaderboard]         = useState([]);
@@ -50,7 +48,6 @@ const Navbar = ({ user }) => {
         )
             .then((response) => {
                 setRank(response.data.rank);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -81,15 +78,15 @@ const Navbar = ({ user }) => {
     };
 
     const openMobileMenu = () => {
-        setMobileMenuOpened(true);
+        setMenuOpened(true);
     };
 
     const closeMobileMenu = () => {
-        setMobileMenuOpened(false);
+        setMenuOpened(false);
     };
 
     const showDesktopMenuHandler = () => {
-        setDesktopMenuOpened(!desktopMenuOpened);
+        setMenuOpened(!menuOpened);
     };
 
     return (
@@ -180,7 +177,7 @@ const Navbar = ({ user }) => {
                             {
                                 leaderboard && leaderboard.map((user) => {
                                     return (
-                                        <LeaderboardItem user={user} />
+                                        <LeaderboardItem user={user} key={user.userId} />
                                     );
                                 })
                             }
@@ -188,12 +185,9 @@ const Navbar = ({ user }) => {
                     </div>
                 </div>
             }
-            <MobileMenu
-                opened={mobileMenuOpened}
+            <MainMenu
+                opened={menuOpened}
                 closeMobileMenu={closeMobileMenu}
-            />
-            <DesktopMenu
-                opened={desktopMenuOpened}
             />
         </div>
     );
