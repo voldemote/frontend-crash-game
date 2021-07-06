@@ -12,10 +12,36 @@
     .openBetsContainer,
     .betHistoryContainer
     {
+        display:        flex;
+        flex-direction: row;
+        flex-wrap:      wrap;
+
         .betSummaryContainerWrapper
         {
-            margin-bottom: 30px;
+            margin-right:  10px;
+            margin-left:   10px;
+            margin-bottom: 20px;
             cursor:        pointer;
+            max-width:     calc(100% - 20px);
+            flex:          1 0 calc(100% - 20px);
+
+            @media (min-width: $screen-md)
+            {
+                max-width: calc(50% - 20px);
+                flex:      1 0 calc(50% - 20px);
+            }
+
+            @media (min-width: $screen-lg)
+            {
+                max-width: calc(33% - 20px);
+                flex:      1 0 calc(33% - 20px);
+            }
+
+            @media (min-width: $screen-xl)
+            {
+                max-width: calc(25% - 20px);
+                flex:      1 0 calc(25% - 20px);
+            }
 
             &:last-child
             {
@@ -24,7 +50,6 @@
 
             .betSummaryContainer
             {
-                width: 420px;
             }
         }
     }
