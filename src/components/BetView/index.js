@@ -28,7 +28,7 @@ import Icon               from '../Icon';
 import IconType           from '../Icon/IconType';
 import IconTheme          from '../Icon/IconTheme';
 
-const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
     const defaultBetValue                               = _.max([balance, 10]);
     const bet                                           = (
@@ -495,7 +495,10 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
 
     const renderCurrentBalance = () => {
         return (
-            <div className={styles.currentBalanceContainer}>
+            <div className={classNames(
+                styles.currentBalanceContainer,
+                isPopup ? styles.popupCurrentBalanceContainer : null,
+            )}>
                 <Icon
                     className={styles.currentBalanceIcon}
                     iconTheme={IconTheme.primaryLightTransparent}
