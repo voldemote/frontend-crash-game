@@ -58,15 +58,12 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
                 sendJoinRoom();
             });
 
-            const handleMessage = str => data => {
+            createdSocket.on('chatMessage', data => {
                 const userId  = data.userId;
                 const message = _.pick(data,['message', 'date', 'eventId', 'userId']);
                 fetchUser(userId);
                 addNewMessage(message);
-            };
-
-            createdSocket.on('chatMessageEvent' + getMessageIdObject().eventId, handleMessage('event'));
-            createdSocket.on('chatMessageUser' + getMessageIdObject().userId, handleMessage('user'));
+            });
 
             createdSocket.on('betCreated', data => {
                 addBetCreated(data);
@@ -80,6 +77,7 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
                 addNewBetPullOut(data);
             });
             return () => {
+                sendLeaveRoom();
                 getCurrentSocket()?.disconnect()
                 setCurrentSocket()
                 setChatMessages([])
@@ -89,6 +87,10 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
 
     const sendJoinRoom = () => {
         sendObject('joinRoom', getMessageIdObject());
+    };
+
+    const sendLeaveRoom = () => {
+        sendObject('leaveRoom', getMessageIdObject());
     };
 
     const sendObject = (eventName, data) => {
