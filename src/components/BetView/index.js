@@ -413,12 +413,17 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                     disabled={tradeButtonDisabled}
                     disabledWithOverlay={false}
                 >
-                    Trade!
+                    Trade
                 </Button>
             );
         }
         if (isSell && !finalOutcome) {
-            let tradeButtonTheme      = null;
+            const tradeButtonDisabled = !validInput;
+            let tradeButtonTheme      = HighlightTheme.fillRed;
+
+            if (tradeButtonDisabled) {
+                tradeButtonTheme = HighlightTheme.fillGray;
+            }
 
             return (
                 <Button
@@ -430,7 +435,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                     highlightTheme={tradeButtonTheme}
                     disabledWithOverlay={false}
                 >
-                    Sell!
+                    Cashout
                 </Button>
             );
         }
