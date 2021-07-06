@@ -30,6 +30,10 @@ const requestSms = function* (action) {
             phoneNumber = '+' + phoneNumber;
         }
 
+        if (phone.startsWith('0')) {
+            phoneNumber = '+' + country + phone.substring(1);
+        }
+
         const response = yield call(
             Api.requestSms,
             phoneNumber,
@@ -62,6 +66,10 @@ const verifySms = function* (action) {
     if (phoneNumber) {
         if (!phoneNumber.startsWith('+')) {
             phoneNumber = '+' + phoneNumber;
+        }
+
+        if (phone.startsWith('0')) {
+            phoneNumber = '+' + country + phone.substring(1);
         }
 
         const response = yield call(
