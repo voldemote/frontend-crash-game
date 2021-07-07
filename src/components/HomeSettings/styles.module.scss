@@ -1,0 +1,145 @@
+@import '../../styles/all';
+
+$largeMobileHeight: 700px;
+
+.settings
+{
+    display:          flex;
+    flex-direction:   column;
+    position:         fixed;
+    padding:          150px 35px 40px 25px;
+    width:            80vw;
+    height:           100vh;
+    top:              0;
+    overflow-y:       scroll;
+    background-color: $colorPrimary;
+    transition:       right .5s ease-in-out;
+    z-index:          3;
+
+    @media (min-width: $screen-sm)
+    {
+        width:            40vw;
+        background-color: $colorPrimary90;
+    }
+
+    @media (min-width: $screen-lg) 
+    {
+        width: 30vw;
+    }
+
+    .headlineContainer
+    {
+        display:       flex;
+        margin-bottom: 35px;
+
+        .headlineText
+        {
+            font-style:     normal;
+            font-weight:    normal;
+            font-size:      30px;
+            line-height:    39px;
+            letter-spacing: 0.75px;
+            color:        #FFFFFF;
+        }
+
+        .headlineIcon
+        {
+            color:      #FFFFFF;
+            margin-right: 20px;
+            cursor:       pointer;
+            transition:   transform 0.5s;
+
+            &:hover 
+            {
+                transform: scale(1.25);
+            }
+        }
+    }
+
+    .settingContainer
+    {
+        width:          100%;
+        display:        flex;
+        flex-direction: column;
+        align-items:    flex-start;
+
+        .singleSettingHolder 
+        {
+            position:      relative;
+            width:         90%;
+            display:       flex;
+            align-items:   center;
+            height:        60px;
+            margin:        5px 0 5px 0;
+            background:  #FFFFFF;
+            box-shadow:    0px 2px 4px rgba(158, 158, 158, 0.16);
+            border-radius: 8px;
+            cursor:       pointer;
+            transition:   transform 0.5s;
+
+            &:hover 
+            {
+                transform: scale(1.025);
+            }
+
+            @media (max-width: $screen-sm)
+            {
+                width:     100%;
+            }
+
+            .settingBackground
+            {
+                position: absolute;
+            }
+
+            .settingIcon
+            {
+                position: absolute;
+                left:     23px;
+
+                @media (max-width: $screen-sm)
+                {
+                    left:     15px;
+                }
+            }
+
+            .settingTitle 
+            {
+                position:    absolute;
+                left:        70px;
+                font-style:  normal;
+                font-weight: 500;
+                font-size:   16px;
+                line-height: 22px;
+                color:     #120E27;
+                @media (max-width: $screen-sm)
+                {   
+                    width:        60%;
+                    left:         50px;
+                }
+            }
+
+            .goIntoSettingIcon
+            {
+                position:    absolute;
+                right: 20px;
+            }
+
+            .profilePicture 
+            {   
+                position:      absolute;
+                left:             23px;   
+                width:            32px;
+                border-radius:    50%;
+                border:           1px solid #FFFFFF;
+                background-color: #ffffff;
+                z-index:          2;
+
+                @media (max-width: $screen-sm)
+                {
+                    left:     15px;
+                }
+            }
+        }
+    }
+}
