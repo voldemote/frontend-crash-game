@@ -110,6 +110,7 @@ const updateData = makeActionCreator(
         profilePicture: null,
         username:       null,
         admin:          false,
+        totalWin:       null,
     },
 );
 

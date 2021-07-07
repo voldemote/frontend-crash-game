@@ -13,6 +13,7 @@ const initialState = {
     email:          '',
     token:          null,
     balance:        0,
+    totalWin:       0,
     profilePicture: null,
     referralList:   [],
     admin:          false,
@@ -133,6 +134,9 @@ const updateData = (action, state) => {
         },
         admin:          {
             $set: action.admin,
+        },
+        totalWin:       {
+            $set: action.totalWin,
         },
     });
 };

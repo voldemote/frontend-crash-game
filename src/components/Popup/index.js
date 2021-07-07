@@ -58,6 +58,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
                 return (
                     <BetView
+                        isPopup={true}
                         closed={!visible}
                         initialSellTab={initialSellTab}
                         forceSellView={initialSellTab}
