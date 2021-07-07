@@ -354,6 +354,7 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
 
         return (
             <ChoiceSelector
+                key={index}
                 theme={choiceSelectorTheme}
                 className={styles.choice}
                 name={name}
