@@ -149,12 +149,6 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
         return (
             <div className={styles.openBetsContainer}>
                 {renderAllBetSummaries()}
-                {renderAllBetSummaries()}
-                {renderAllBetSummaries()}
-                {renderAllBetSummaries()}
-                {renderAllBetSummaries()}
-                {renderAllBetSummaries()}
-                {renderAllBetSummaries()}
             </div>
         );
     };
