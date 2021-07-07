@@ -109,6 +109,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
     const renderChoiceSelector = (index, name, choiceSelectorTheme, styles) => {
         return (
             <ChoiceSelector
+                key={index}
                 theme={choiceSelectorTheme}
                 className={styles.choice}
                 name={name}
