@@ -319,6 +319,10 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     const isChoiceSelectorEnabled = (index) => {
+        if(bet.status !== 'active') {
+            return false;
+        }
+
         const isSell = hasSellView();
 
         return !isSell || getOpenBetsValue(index) > 0;
@@ -395,12 +399,12 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         );
     };
 
-    const renderTradeButton = () => {
+    const renderTradeButton = (enabled) => {
         const isSell       = hasSellView();
         const finalOutcome = getFinalOutcome();
 
         if (!isSell && !finalOutcome) {
-            const tradeButtonDisabled = !validInput;
+            const tradeButtonDisabled = !(validInput && enabled);
             let tradeButtonTheme      = null;
 
             if (tradeButtonDisabled) {
@@ -459,7 +463,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         );
     };
 
-    const renderPlaceBetContentContainer = () => {
+    const renderPlaceBetContentContainer = (enabled) => {
         const finalOutcome = getFinalOutcome();
 
         if (!finalOutcome) {
@@ -475,7 +479,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
                                 Potential Winnings:
                             </label>
                             <div className={styles.choiceContainer}>
-                                {renderChoiceSelectors()}
+                                {renderChoiceSelectors(enabled)}
                             </div>
                         </div>
                     </div>
@@ -545,8 +549,11 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         return null;
     }
 
+    const interactionEnabled = bet.status === 'active';
+    const endDate = ['canceled', 'resolved', 'closed'].includes(bet.status) ? new Date() : event.date;
+
     return (
-        <div className={styles.placeBetContainer}>
+        <div className={styles.placeBetContainer + ' ' + styles[bet.status + 'Status']}>
             {renderLoadingAnimation()}
             {renderCurrentBalance()}
             <span className={styles.eventName}>
@@ -558,14 +565,17 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             <div className={styles.description}>
                 {bet.description}
             </div>
+            <div className={styles.betStatusBadge}>
+                {'•'} {bet.status}
+            </div>
             <HotBetBadge />
             {renderPlaceBetContentContainer()}
-            {renderTradeButton()}
+            {renderTradeButton(interactionEnabled)}
             {
                 showEventEnd && (
                     <div className={styles.timeLeftCounterContainer}>
                         <span>End of Event:</span>
-                        <TimeLeftCounter endDate={event.date} />
+                        <TimeLeftCounter endDate={endDate} />
                     </div>
                 )
             }
