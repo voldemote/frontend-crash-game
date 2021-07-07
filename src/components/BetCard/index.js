@@ -19,7 +19,7 @@ const BetCard = ({ user, image, marketQuestion, hot, onClick, eventEnd }) => {
         return (
             <div className={styles.betCardFooter}>
                 <span>
-                    Event ends in:
+                    End of Event:
                 </span>
                 <TimeLeftCounter endDate={eventEnd} />
             </div>

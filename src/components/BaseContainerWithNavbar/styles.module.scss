@@ -1,0 +1,32 @@
+@import '../../styles/all';
+
+.baseContainer
+{
+    min-height:       100%;
+    background-color: $colorPrimaryDark;
+    padding-bottom:   8rem;
+
+    &.baseContainerWithPaddingTop
+    {
+        padding-top: 100px;
+
+        @media (min-width: $screen-sm)
+        {
+            padding-top: 120px;
+        }
+    }
+
+    &.baseContainerWithContentPadding
+    {
+        $contentPadding: 30px;
+        padding-left:    $contentPadding;
+        padding-right:   $contentPadding;
+
+        @media (min-width: $screen-sm)
+        {
+            $contentPadding: 100px;
+            padding-left:    $contentPadding;
+            padding-right:   $contentPadding;
+        }
+    }
+}

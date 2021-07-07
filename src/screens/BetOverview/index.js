@@ -1,18 +1,19 @@
-import _                   from 'lodash';
-import BetSummaryContainer from '../../components/BetSummaryContainer';
-import BetSummaryHelper    from '../../helper/BetSummary';
-import moment              from 'moment';
-import React               from 'react';
-import Routes              from '../../constants/Routes';
-import ScreenWithHeader    from '../../components/ScreenWithHeaderContainer';
-import styles              from './styles.module.scss';
-import SwitchableContainer from '../../components/SwitchableContainer';
-import SwitchableHelper    from '../../helper/SwitchableHelper';
-import { connect }         from 'react-redux';
-import { useState }        from 'react';
-import { BetActions }      from '../../store/actions/bet';
-import PopupTheme          from '../../components/Popup/PopupTheme';
-import { PopupActions }    from '../../store/actions/popup';
+import _                          from 'lodash';
+import BetSummaryContainer        from '../../components/BetSummaryContainer';
+import BetSummaryHelper           from '../../helper/BetSummary';
+import moment                     from 'moment';
+import React                      from 'react';
+import styles                     from './styles.module.scss';
+import SwitchableContainer        from '../../components/SwitchableContainer';
+import SwitchableHelper           from '../../helper/SwitchableHelper';
+import { connect }                from 'react-redux';
+import { useState }               from 'react';
+import { BetActions }             from '../../store/actions/bet';
+import PopupTheme                 from '../../components/Popup/PopupTheme';
+import { PopupActions }           from '../../store/actions/popup';
+import BaseContainerWithNavbar    from '../../components/BaseContainerWithNavbar';
+import HighlightType              from '../../components/Highlight/HighlightType';
+import LiveEventCarouselContainer from '../../components/LiveEventCarouselContainer';
 
 const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     const queryParams           = new URLSearchParams(window.location.search);
@@ -31,6 +32,9 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
 
         return (
             <SwitchableContainer
+                className={styles.switchableViewContainer}
+                whiteBackground={false}
+                fullWidth={false}
                 switchableViews={switchableViews}
                 currentIndex={betView}
                 setCurrentIndex={setBetView}
@@ -54,10 +58,10 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
 
         return [
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('Your Invest', amount + ' EVNT'),
-            BetSummaryHelper.getKeyValue('Your Trade', outcomeValue),
+            BetSummaryHelper.getKeyValue('Start Price', amount + ' EVNT'),
+            BetSummaryHelper.getKeyValue('Your Prediction', outcomeValue),
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('Possible Win', outcomeReturn + ' EVNT', false, true),
+            BetSummaryHelper.getKeyValue('EVNT Cashout', outcomeReturn + ' EVNT', false, true, null, false, HighlightType.highlightSettingsMyBets),
         ];
     };
 
@@ -76,17 +80,19 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     };
 
     const renderOpenBetSummary = (openBet, index) => {
+        const imageUrl       = _.get(openBet, 'event.previewImageUrl');
         const bet            = _.get(openBet, 'bet');
         const marketQuestion = _.get(bet, 'marketQuestion');
         const endDateTime    = moment(
             _.get(bet, 'date', new Date()),
         );
-
-        const summaryRows = getOpenBetSummaryRows(bet, openBet);
+        const summaryRows    = getOpenBetSummaryRows(bet, openBet);
 
         return (
             <div className={styles.betSummaryContainerWrapper}>
                 <BetSummaryContainer
+                    containerClassName={styles.betSummaryContainer}
+                    containerImage={imageUrl}
                     marketQuestion={marketQuestion}
                     endDate={endDateTime}
                     summaryRows={summaryRows}
@@ -163,21 +169,22 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     };
 
     return (
-        <ScreenWithHeader
-            title={'My Trades'}
-            returnRoute={Routes.home}
+        <BaseContainerWithNavbar
+            withPaddingTop={true}
+            contentPadding={true}
         >
             {renderSwitchableView()}
             <div className={styles.contentContainer}>
                 {renderContent()}
             </div>
-        </ScreenWithHeader>
+            <LiveEventCarouselContainer withoutPadding={true} />
+        </BaseContainerWithNavbar>
     );
 };
 
 const mapStateToProps = (state) => {
     const rawOutcomes  = state.bet.outcomes;
-    const findBet      = (betId) => {
+    const findEvent    = (betId) => {
         const event = _.find(
             state.event.events,
             (event) => {
@@ -190,6 +197,11 @@ const mapStateToProps = (state) => {
             },
         );
 
+        return event;
+    };
+    const findBet      = (betId) => {
+        const event = findEvent(betId);
+
         return _.find(
             event.bets,
             {
@@ -200,9 +212,11 @@ const mapStateToProps = (state) => {
     const openBets     = _.map(
         state.bet.openBets,
         (openBet, index) => {
+            const betId  = openBet.betId;
+            const event  = findEvent(betId);
             let outcomes = _.get(
                 rawOutcomes,
-                openBet.betId,
+                betId,
                 {},
             );
 
@@ -220,6 +234,7 @@ const mapStateToProps = (state) => {
                 ...openBet,
                 outcomes,
                 bet: findBet(openBet.betId),
+                event,
             };
         },
     );
@@ -227,11 +242,13 @@ const mapStateToProps = (state) => {
         state.transaction.transactions,
         (transaction) => {
             const betId = _.get(transaction, 'bet');
+            const event = findEvent(betId);
             const bet   = findBet(betId);
 
             return {
                 ...transaction,
                 bet,
+                event,
             };
         },
     );

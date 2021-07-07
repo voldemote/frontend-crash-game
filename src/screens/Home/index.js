@@ -9,6 +9,8 @@ import Routes                       from '../../constants/Routes';
 import styles                       from './styles.module.scss';
 import { connect }                  from 'react-redux';
 import { useHistory }               from 'react-router';
+import BaseContainerWithNavbar      from '../../components/BaseContainerWithNavbar';
+import LiveEventCarouselContainer   from '../../components/LiveEventCarouselContainer';
 
 const Home = ({ events, user }) => {
     const history = useHistory();
@@ -23,29 +25,6 @@ const Home = ({ events, user }) => {
                 },
             ));
         };
-    };
-
-    const renderLiveEvents = () => {
-        return _.map(
-            events,
-            (event, index) => {
-                const eventId    = _.get(event, '_id');
-                const mappedTags = _.map(event.tags, (tag) => tag.name);
-
-                return (
-                    <EventCard
-                        key={index}
-                        title={event.name}
-                        organizer={''}
-                        viewers={12345}
-                        live={true}
-                        tags={mappedTags}
-                        image={event.previewImageUrl}
-                        onClick={onEventClick(eventId)}
-                    />
-                );
-            },
-        );
     };
 
     const renderMostPopularBets = () => {
@@ -84,17 +63,14 @@ const Home = ({ events, user }) => {
     };
 
     return (
-        <div className={styles.homeContainer}>
-            <Navbar user={user} />
+        <BaseContainerWithNavbar>
             <Header events={events} />
-            <CarouselContainer title={'🔥 Most popular Live Events'}>
-                {renderLiveEvents()}
-            </CarouselContainer>
+            <LiveEventCarouselContainer/>
             <CarouselContainer title={'🚀 Most popular Trades'}>
                 {renderMostPopularBets()}
             </CarouselContainer>
             {renderEventCreationButton()}
-        </div>
+        </BaseContainerWithNavbar>
     );
 };
 

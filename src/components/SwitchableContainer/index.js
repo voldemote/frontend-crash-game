@@ -5,7 +5,7 @@ import IconTheme  from '../Icon/IconTheme';
 import React      from 'react';
 import styles     from './styles.module.scss';
 
-const SwitchableContainer = ({ switchableViews, currentIndex, setCurrentIndex }) => {
+const SwitchableContainer = ({ className, fullWidth = true, whiteBackground = true, switchableViews, currentIndex, setCurrentIndex }) => {
     const renderAll = () => {
         return _.map(switchableViews, renderSwitchableView);
     };
@@ -51,7 +51,12 @@ const SwitchableContainer = ({ switchableViews, currentIndex, setCurrentIndex })
 
     return (
         <div
-            className={styles.switchableViewsContainer}
+            className={classNames(
+                styles.switchableViewsContainer,
+                fullWidth ? styles.fullWidthSwitches : null,
+                whiteBackground ? styles.withWhiteBackground : null,
+                className,
+            )}
         >
             {renderAll()}
         </div>
