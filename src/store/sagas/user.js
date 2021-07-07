@@ -51,12 +51,14 @@ const fetchSucceeded = function* (action) {
         const balance        = user.balance;
         const username       = user.username;
         const admin          = user.admin;
+        const totalWin       = user.totalWin;
 
         yield put(AuthenticationActions.updateData({
             profilePicture,
             balance,
             username,
             admin,
+            totalWin,
         }));
     }
 };
