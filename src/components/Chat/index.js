@@ -82,6 +82,8 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
                 setCurrentSocket()
                 setChatMessages([])
             }
+        // we want that to run only once
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []
     );
 
