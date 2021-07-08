@@ -1,6 +1,6 @@
 import _                    from 'lodash';
 import { connect }          from 'react-redux';
-import { useEffect }        from 'react';
+import { useCallback, useEffect }        from 'react';
 import { useState }         from 'react';
 import DateText             from '../../helper/DateText';
 import ChatMessageType      from './ChatMessageType';
@@ -9,6 +9,12 @@ import BetActionChatMessage from '../BetActionChatMessage';
 
 const ChatMessageWrapper = ({ user, message, date }) => {
     const [dateString, setDateString] = useState('');
+
+    const updateDateText = useCallback(() => {
+        const dateText = DateText.getSecondsDateText(date);
+
+        setDateString(dateText);
+    }, [date]);
 
     useEffect(
         () => {
@@ -21,14 +27,9 @@ const ChatMessageWrapper = ({ user, message, date }) => {
 
             return () => clearInterval(timerId);
         },
-        [date],
+        [date, updateDateText],
     );
 
-    const updateDateText = () => {
-        const dateText = DateText.getSecondsDateText(date);
-
-        setDateString(dateText);
-    };
 
     if (!user) {
         return null;

@@ -133,6 +133,9 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 }
             }
         },
+        // @TODO: this possibly needs refactoring,
+        // the functions that do not depend on state or props should move out of the component.
+        // for the other functions useCallback() would make sense to prevent unnecessary rerenders
         [country, code],
     );
 

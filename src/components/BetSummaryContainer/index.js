@@ -10,7 +10,7 @@ import TimeLeftCounter       from '../../components/TimeLeftCounter';
 import classNames            from 'classnames';
 import SelectionHelper       from '../../helper/SelectionHelper';
 import Highlight             from '../Highlight';
-import HighlightTheme        from '../Highlight/HighlightTheme';
+
 
 const BetSummaryContainer = ({ className, containerClassName, containerImage, marketQuestion, endDate, summaryRows, onClick }) => {
     const renderSummaryRow = (summaryRow, index) => {

@@ -157,6 +157,9 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       validateInput();
                   }
               },
+                // @TODO: this possibly needs refactoring and or adding remaining deps,
+                // the functions that do not depend on state or props should move out of the component.
+                // for the other functions useCallback() would make sense to prevent unnecessary rerenders (e.g. validateInput)
               [eventUrl, marketQuestion, outcomes, selectedDate],
           );
 
