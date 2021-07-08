@@ -3,7 +3,6 @@
 import _                   from 'lodash';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
-import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
 import classNames          from 'classnames';
 import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../../components/Highlight/HighlightType';
@@ -270,16 +269,16 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
     };
     const [tokenNumber, setTokenNumber] = useState(commitment);
     useEffect(() => setTokenNumber(commitment), [commitment]);
-    const throttledSetCommitment = useCallback(_.throttle(number => {
+    const debouncedSetCommitment = useCallback(_.debounce(number => {
         setCommitment(number, betId);
-    }, 500, {leading: false}), [])
+    }, 200), [])
     const onTokenSelect = (number) => {
         setTokenNumber(number);
         setCommitment(number, betId);
     };
     const onTokenNumberChange = (number) => {
         setTokenNumber(number);
-        throttledSetCommitment(number);
+        debouncedSetCommitment(number);
     };
 
     const getOpenBetsValue = (index) => {
