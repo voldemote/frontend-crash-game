@@ -9,6 +9,7 @@ const initialState = {
     selectedBetId:      null,
     selectedChoice:     null,
     selectedCommitment: null,
+    actionIsInProgress: false,
     outcomes:           {},
     sellOutcomes:       {},
     openBets:           [],
@@ -43,6 +44,24 @@ const selectChoice = (action, state) => {
     return update(state, {
         selectedChoice: {
             $set: action.choice,
+        },
+    });
+};
+
+const setActionIsInProgress = (action, state) => {
+    let isInProgress = false;
+
+    switch (action.type) {
+        case BetTypes.PLACE:
+        case BetTypes.PULL_OUT_BET:
+            isInProgress = true;
+
+            break;
+    }
+
+    return update(state, {
+        actionIsInProgress: {
+            $set: isInProgress,
         },
     });
 };
@@ -160,6 +179,12 @@ export default function (state = initialState, action) {
         case BetTypes.SET_OUTCOMES:              return setOutcomes(action, state);
         case BetTypes.SET_SELL_OUTCOMES:         return setSellOutcomes(action, state);
         case BetTypes.FETCH_OPEN_BETS_SUCCEEDED: return fetchOpenBetsSucceeded(action, state);
+        case BetTypes.PLACE:
+        case BetTypes.PULL_OUT_BET:
+        case BetTypes.PLACE_SUCCEEDED:
+        case BetTypes.PLACE_FAILED:
+        case BetTypes.PULL_OUT_BET_SUCCEEDED:
+        case BetTypes.PULL_OUT_BET_FAILED:       return setActionIsInProgress(action, state);
         // case REHYDRATE:                          return resetOutcomes(action, state);
         default:                                 return state;
         // @formatter:on

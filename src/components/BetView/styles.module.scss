@@ -14,6 +14,39 @@
     color:            $colorPrimaryDark;
     border-radius:    10px;
 
+    .loadingAnimationContainer
+    {
+        position: absolute;
+        top:      0;
+        left:     0;
+        width:    100%;
+        height:   100%;
+        z-index:  2;
+
+        .loadingAnimation,
+        .loadingAnimationBackground
+        {
+            position: absolute;
+            top:      0;
+            left:     0;
+            width:    100%;
+            height:   100%;
+
+            &.loadingAnimation
+            {
+                background-size:     contain;
+                background-position: center center;
+                background-repeat:   no-repeat;
+            }
+
+            &.loadingAnimationBackground
+            {
+                opacity:          1;           // TODO reset to 0.7 as soon as the animation has transparent background
+                background-color: $colorWhite;
+            }
+        }
+    }
+
     .currentBalanceContainer
     {
         display:     flex;
