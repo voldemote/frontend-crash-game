@@ -221,6 +221,9 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
                 loadAfterMount();
             }
         },
+        // @TODO: this possibly needs refactoring and or adding remaining deps,
+        // the functions that do not depend on state or props should move out of the component.
+        // for the other functions useCallback() would make sense to prevent unnecessary rerenders
         [hasMounted, closed],
     );
 
@@ -230,6 +233,7 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
                 validateInput();
             }
         },
+        // @TODO: this possibly needs refactoring and or adding remaining deps
         [choice, commitment, currentTradeView],
     );
 
@@ -239,6 +243,7 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
                 setChoice(null);
             }
         },
+        // @TODO: this possibly needs refactoring and or adding remaining deps
         [currentTradeView],
     );
 
