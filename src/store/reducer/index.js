@@ -4,6 +4,7 @@ import eventReducer          from '../reducer/event';
 import popupReducer          from '../reducer/popup';
 import transactionReducer    from '../reducer/transaction';
 import userReducer           from '../reducer/user';
+import chatReducer           from '../reducer/chat';
 import authenticationReducer from '../reducer/authentication';
 import { combineReducers }   from 'redux';
 import { connectRouter }     from 'connected-react-router';
@@ -16,5 +17,6 @@ export default (history) => combineReducers({
     popup:          popupReducer,
     transaction:    transactionReducer,
     user:           userReducer,
+    chat:           chatReducer,
     router:         connectRouter(history),
 })
