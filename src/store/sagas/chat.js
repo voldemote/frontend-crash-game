@@ -5,7 +5,7 @@ import { ChatActions }           from '../actions/chat';
 import AuthState        from '../../constants/AuthState';
 const fetch = function* (action) {
     const {eventId}  = action;
-    const response = yield call(Api.getChatMessagesByEventId, eventId);
+    const {response, error} = yield call(Api.getChatMessagesByEventId, eventId);
 
     if (response) {
         const messages = response.data;
@@ -15,7 +15,7 @@ const fetch = function* (action) {
         }));
     } else {
         yield put(ChatActions.fetchFailed({
-            eventId
+            eventId, error
         }));
     }
 };
@@ -40,7 +40,7 @@ const fetchInitial = function* (action) {
             }
         }
         if(eventId) {
-            const response = yield call(Api.getChatMessagesByEventId, eventId);
+            const {response, error} = yield call(Api.getChatMessagesByEventId, eventId);
 
             if (response) {
                 const messages = response.data;
@@ -50,7 +50,7 @@ const fetchInitial = function* (action) {
                 }));
             } else {
                 yield put(ChatActions.fetchInitialFailed({
-                    eventId
+                    eventId, error
                 }));
             }
         }

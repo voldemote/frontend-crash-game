@@ -30,6 +30,7 @@ const fetchFailed = makeActionCreator(
     ChatTypes.FETCH_FAILED,
     {
         eventId: null,
+        error: null,
     },
 );
 
@@ -50,6 +51,7 @@ const fetchInitialFailed = makeActionCreator(
     ChatTypes.FETCH_INITIAL_FAILED,
     {
         eventId: null,
+        error: null,
     },
     );
 
