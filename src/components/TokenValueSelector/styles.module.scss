@@ -36,6 +36,18 @@
             cursor:           default;
         }
 
+        &.tokenValueSelectorBoxHighlighted
+        {
+            border-color: $colorPurple;
+            border-width: 2px;
+
+            .value
+            {
+                font-family: $fontBold;
+                font-size:   16px;
+            }
+        }
+
         .value
         {
             font-size: 20px;

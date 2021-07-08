@@ -1,17 +1,18 @@
 @import '../../styles/all';
 
-.placeBetContainer {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    padding-top: 60px;
+.placeBetContainer
+{
+    display:          flex;
+    position:         relative;
+    flex-direction:   column;
+    align-items:      center;
+    overflow:         hidden;
+    height:           100%;
+    width:            100%;
+    padding-top:      60px;
     background-color: $colorWhite;
-    color: $colorPrimaryDark;
-    border-radius: 10px;
+    color:            $colorPrimaryDark;
+    border-radius:    10px;
 
     .loadingAnimationContainer
     {
@@ -51,157 +52,180 @@
         display:     flex;
         position:    absolute;
         align-items: center;
-        top: 20px;
-        right: 20px;
-        font-size: 16px;
+        top:         20px;
+        right:       20px;
+        font-size:   16px;
 
-        &.popupCurrentBalanceContainer {
-            top: 35px;
+        &.popupCurrentBalanceContainer
+        {
+            top:   35px;
             right: 70px;
         }
 
-        .currentBalanceIcon {
+        .currentBalanceIcon
+        {
             margin-right: 11px;
         }
     }
 
-    .eventName {
-        color: $colorGray;
+    .eventName
+    {
+        color:         $colorGray;
         margin-bottom: 15px;
-        font-size: 14px;
+        font-size:     14px;
     }
 
-    .betMarketQuestion {
-        color: $colorPrimaryDark;
-        font-family: $fontBold;
-        font-size: 24px;
-        text-align: center;
+    .betMarketQuestion
+    {
+        color:         $colorPrimaryDark;
+        font-family:   $fontBold;
+        font-size:     24px;
+        text-align:    center;
         margin-bottom: 10px;
     }
 
-    .description {
-        color: $colorPrimary50;
-        text-align: center;
-        font-size: 15px;
+    .description
+    {
+        color:         $colorPrimary50;
+        text-align:    center;
+        font-size:     15px;
         margin-bottom: 20px;
     }
 
-    .betStatusBadge {
-        display:          inline-block;
-        border-radius:    4px;
-        font-family:      $fontLight;
-        padding:          0.25rem 0.8rem;
-        font-size:        12px;
-        width:            auto;
-        white-space:      nowrap;
-        margin-bottom:    8px;
+    .switchableContainer
+    {
+        width:   100%;
+        padding: 0 30px;
     }
 
-    .placeBetContentContainer {
-        display: flex;
+    .placeBetContentContainer
+    {
+        display:        flex;
         flex-direction: column;
-        margin: 2rem 0;
-        width: 100%;
-        padding: $padding;
+        margin:         2rem 0;
+        width:          100%;
+        padding:        $padding;
 
-        .label {
-            color: $colorPrimaryDark;
-            font-size: 12px;
-            text-align: left;
-            width: 100%;
+        .label
+        {
+            color:         $colorPrimaryDark;
+            font-size:     12px;
+            text-align:    left;
+            width:         100%;
             margin-bottom: 15px;
-            display: block;
+            display:       block;
         }
 
-        .tokenValueSelector {
+        .tokenValueSelector
+        {
             margin-top: 20px;
         }
 
-        .buttonContainer {
-            width: 100%;
+        .buttonContainer
+        {
+            width:      100%;
             margin-top: 45px;
         }
     }
 
-    .choiceContainer {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
+    .choiceContainer
+    {
+        display:         flex;
+        flex-wrap:       wrap;
+        flex-direction:  row;
         justify-content: space-between;
 
-        .choice {
-            width: 100%;
-            flex: 1 0 calc(50% - 16px);
+        .choice
+        {
+            width:  100%;
+            flex:   1 0 calc(50% - 16px);
             margin: 8px;
         }
     }
 
-    .emptyChoiceSelector {
-        width: 100%;
-        flex: 1 0 calc(50% - 16px);
+    .emptyChoiceSelector
+    {
+        width:  100%;
+        flex:   1 0 calc(50% - 16px);
         margin: 8px;
     }
 
-    .betButton {
-        font-size: 16px;
-        margin-top: auto;
+    .betButton
+    {
+        font-size:        16px;
+        margin-top:       auto;
         background-color: transparent;
 
-        @media (min-width: $screen-sm) {
+        @media (min-width: $screen-sm)
+        {
             margin-bottom: 20px;
-            font-size: 23px;
+            font-size:     23px;
         }
     }
 
-    .timeLeftCounterContainer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-direction: row;
+    .timeLeftCounterContainer
+    {
+        display:          flex;
+        justify-content:  space-between;
+        align-items:      center;
+        flex-direction:   row;
         background-color: $colorPrimary;
-        width: 100%;
-        padding: 15px 30px;
-        color: $colorWhite;
-        font-size: 12px;
+        width:            100%;
+        padding:          15px 30px;
+        color:            $colorWhite;
+        font-size:        12px;
     }
 
-
-    &.activeStatus {
-        .betStatusBadge {
-            color: #ff5858;
+    &.activeStatus
+    {
+        .betStatusBadge
+        {
+            color:            #ff5858;
             background-color: #ffd1d1;
         }
     }
 
-    &.closedStatus {
+    &.closedStatus
+    {
         .placeBetContentContainer,
-        .betButton {
+        .betButton
+        {
             opacity: 0.3;
         }
-        .betStatusBadge {
-            color: #6751ec;
+
+        .betStatusBadge
+        {
+            color:            #6751ec;
             background-color: #b8acff;
         }
     }
 
-    &.canceledStatus {
+    &.canceledStatus
+    {
         .placeBetContentContainer,
-        .betButton {
+        .betButton
+        {
             opacity: 0.3;
         }
-        .betStatusBadge {
-            color: #0f002d;
+
+        .betStatusBadge
+        {
+            color:            #0f002d;
             background-color: rgba(15, 0, 45, 0.31);
         }
     }
 
-    &.resolvedStatus {
+    &.resolvedStatus
+    {
         .placeBetContentContainer,
-        .betButton {
+        .betButton
+        {
             opacity: 0.3;
         }
-        .betStatusBadge {
-            color: #2dcb70;
+
+        .betStatusBadge
+        {
+            color:            #2dcb70;
             background-color: rgba(45, 203, 112, 0.27);
         }
     }

@@ -37,6 +37,15 @@
         user-select:         none;
         margin-right:        30px;
 
+        &.underlineInactive
+        {
+            .line
+            {
+                opacity:          0.1;
+                background-color: black;
+            }
+        }
+
         &.selected
         {
             .line

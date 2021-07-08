@@ -3,6 +3,7 @@ import { useState }          from 'react';
 import { calculateTimeLeft } from '../../helper/Time';
 import { useEffect }         from 'react';
 import styles                from './styles.module.scss';
+import _                     from 'lodash';
 
 const TimeLeftCounter = ({ endDate }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));
@@ -41,10 +42,10 @@ const TimeLeftCounter = ({ endDate }) => {
 
     return (
         <div>
-            {renderTimeLeft('d', timeLeft.days, false)}
-            {renderTimeLeft('hrs', timeLeft.hours)}
-            {renderTimeLeft('min', timeLeft.minutes)}
-            {renderTimeLeft('sec', timeLeft.seconds)}
+            {renderTimeLeft('d', _.get(timeLeft, 'days'), false)}
+            {renderTimeLeft('hrs', _.get(timeLeft, 'hours'))}
+            {renderTimeLeft('min', _.get(timeLeft,'minutes'))}
+            {renderTimeLeft('sec', _.get(timeLeft, 'seconds'))}
         </div>
     );
 };

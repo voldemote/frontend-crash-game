@@ -27,6 +27,7 @@ import Icon                from '../Icon';
 import LoadingAnimation    from '../../data/animations/sending-transaction.gif';
 import IconType            from '../Icon/IconType';
 import IconTheme           from '../Icon/IconTheme';
+import TradeStateBadge     from '../TradeStateBadge';
 
 const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                          = useParams();
@@ -176,7 +177,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     function getDefaultTokenSelection () {
-        return [25, 50, 100, 150, 200, 300];
+        return [25, 50, 100, 150, 200];
     }
 
     function getDefaultTokenSelectionValues () {
@@ -319,7 +320,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     const isChoiceSelectorEnabled = (index) => {
-        if(bet.status !== 'active') {
+        if (bet.status !== 'active') {
             return false;
         }
 
@@ -343,11 +344,13 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             ];
 
             return (
-                <SwitchableContainer
-                    switchableViews={switchableViews}
-                    currentIndex={currentTradeView}
-                    setCurrentIndex={setCurrentTradeView}
-                />
+                <div className={styles.switchableContainer}>
+                    <SwitchableContainer
+                        switchableViews={switchableViews}
+                        currentIndex={currentTradeView}
+                        setCurrentIndex={setCurrentTradeView}
+                    />
+                </div>
             );
         }
 
@@ -404,7 +407,9 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         const finalOutcome = getFinalOutcome();
 
         if (!isSell && !finalOutcome) {
-            const tradeButtonDisabled = !(validInput && enabled);
+            const tradeButtonDisabled = !(
+                validInput && enabled
+            );
             let tradeButtonTheme      = null;
 
             if (tradeButtonDisabled) {
@@ -550,10 +555,15 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     }
 
     const interactionEnabled = bet.status === 'active';
-    const endDate = ['canceled', 'resolved', 'closed'].includes(bet.status) ? new Date() : event.date;
+    const endDate            = ['canceled', 'resolved', 'closed'].includes(bet.status) ? null : event.date;
 
     return (
-        <div className={styles.placeBetContainer + ' ' + styles[bet.status + 'Status']}>
+        <div
+            className={classNames(
+                styles.placeBetContainer,
+                styles[bet.status + 'Status'],
+            )}
+        >
             {renderLoadingAnimation()}
             {renderCurrentBalance()}
             <span className={styles.eventName}>
@@ -565,10 +575,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             <div className={styles.description}>
                 {bet.description}
             </div>
-            <div className={styles.betStatusBadge}>
-                {'•'} {bet.status}
-            </div>
-            <HotBetBadge />
+            <TradeStateBadge state={bet.status} />
             {renderPlaceBetContentContainer()}
             {renderTradeButton(interactionEnabled)}
             {

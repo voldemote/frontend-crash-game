@@ -1,4 +1,8 @@
 export const calculateTimeLeft = (date) => {
+    if (!date) {
+        return null;
+    }
+
     const difference = date - new Date();
     let timeLeft     = {};
 
