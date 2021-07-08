@@ -7,6 +7,7 @@ import styles             from './styles.module.scss';
 import { connect }        from 'react-redux';
 import { useEffect }      from 'react';
 import { UserActions }    from '../../store/actions/user';
+import { ChatActions }    from '../../store/actions/chat';
 import { useRef }         from 'react';
 import { useState }       from 'react';
 import Input              from '../Input';
@@ -14,13 +15,18 @@ import classNames         from 'classnames';
 import { io }             from 'socket.io-client';
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
-
-const Chat = ({ className, token, userId, event, fetchUser }) => {
+const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
+    const aDate = new Date(a.date);
+    const bDate = new Date(b.date);
+    return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
+});
+const Chat = ({ className, token, userId, event, fetchUser, messages, fetchChatMessages, addChatMessage }) => {
+    // @TODO: move those websocket things to redux-saga in an eventChannel
     const websocket                       = useRef(null);
     const messageListRef                  = useRef();
     const [message, setMessage]           = useState('');
-    const [chatMessages, setChatMessages] = useState([]);
-
+    const chatMessages = sortChatMessages(messages);
+    const eventId =  _.get(event, '_id');
     const createSocket = () => {
         const socket = io(
             ApiConstants.getBackendSocketUrl(),
@@ -43,21 +49,25 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
 
     const getMessageIdObject = () => {
         return {
-            eventId: _.get(event, '_id'),
+            eventId,
             userId,
         };
     };
+    useEffect(() => {
+        if(eventId) {
+            fetchChatMessages(eventId);
+        }
+    }, [eventId, fetchChatMessages]);
 
     useEffect(
         () => {
             const createdSocket = createSocket();
             setCurrentSocket(createdSocket);
-            setChatMessages([])
+            messageListScrollToBottom();
 
             createdSocket.on('connect', () => {
                 sendJoinRoom();
             });
-
             createdSocket.on('chatMessage', data => {
                 const userId  = data.userId;
                 const message = _.pick(data,['message', 'date', 'eventId', 'userId']);
@@ -77,14 +87,20 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
                 addNewBetPullOut(data);
             });
             return () => {
+                createdSocket.off('chatMessage');
+                console.log('unmount')
                 sendLeaveRoom();
                 getCurrentSocket()?.disconnect()
                 setCurrentSocket()
-                setChatMessages([])
             }
         // we want that to run only once
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []
+    );
+    useEffect(
+        () => {
+            messageListScrollToBottom();
+        }, [messages]
     );
 
     const sendJoinRoom = () => {
@@ -164,20 +180,6 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
         addChatMessage(chatMessage);
     };
 
-    const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
-        const aDate = new Date(a.date);
-        const bDate = new Date(b.date);
-        return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
-    });
-
-    const addChatMessage = (chatMessage) => {
-        setChatMessages(chatMessages => {
-            const result = sortChatMessages([...chatMessages, chatMessage])
-            return _.uniqWith(result, _.isEqual)
-        });
-        messageListScrollToBottom();
-    };
-
     const renderMessages = () => {
         return _.map(
             chatMessages,
@@ -200,7 +202,6 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
             messageListRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
-
     return (
         <div
             className={classNames(
@@ -237,17 +238,26 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
         token: state.authentication.token,
         userId: state.authentication.userId,
+        messages: state.chat.messagesByEvent[_.get(ownProps.event, '_id')] || []
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const eventId = _.get(ownProps.event, '_id');
     return {
         fetchUser: (userId) => {
             dispatch(UserActions.fetch({ userId }));
+        },
+        fetchChatMessages: (eventId) => {
+            dispatch(ChatActions.fetch({ eventId }));
+        },
+        addChatMessage: (message) => {
+            console.log('adding message')
+            dispatch(ChatActions.addMessage({ eventId, message }));
         },
     };
 };

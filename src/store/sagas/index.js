@@ -4,6 +4,7 @@ import BetSagas                       from './bet';
 import EventSagas                     from './event';
 import TransactionSagas               from './transaction';
 import UserSagas                      from './user';
+import ChatSagas                      from './chat';
 import { all }                        from 'redux-saga/effects';
 import { AuthenticationActions }      from '../actions/authentication';
 import { AuthenticationTypes }        from '../actions/authentication';
@@ -17,6 +18,7 @@ import { TransactionActions }         from '../actions/transaction';
 import { TransactionTypes }           from '../actions/transaction';
 import { UserTypes }                  from '../actions/user';
 import { AlertTypes }                 from '../actions/alert';
+import { ChatTypes }                 from '../actions/chat';
 
 const root = function* () {
     yield all([
@@ -64,6 +66,9 @@ const root = function* () {
         takeLatest([TransactionTypes.FETCH_ALL],                         TransactionSagas.fetchTransactions),
         takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
         takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
+        takeLatest( [ChatTypes.FETCH],                                   ChatSagas.fetch),
+        takeEvery( [ChatTypes.FETCH_INITIAL],                                   ChatSagas.fetchInitial),
+        takeEvery( [ChatTypes.FETCH_INITIAL_SUCCEEDED],                         ChatSagas.fetchInitialSucceeded),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
         takeLatest([REHYDRATE],                                          rehydrationDone),
@@ -80,6 +85,7 @@ const preLoading = function* () {
     yield put(AuthenticationActions.fetchReferrals());
     yield put(BetActions.fetchOpenBets());
     yield put(TransactionActions.fetchAll());
+
 };
 
 export default {
