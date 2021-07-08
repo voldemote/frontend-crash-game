@@ -281,9 +281,9 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
     const [tokenNumber, setTokenNumber] = useState(commitment);
     useEffect(() => setTokenNumber(commitment), [commitment]);
-    const debouncedSetCommitment = useCallback(_.debounce(number => {
+    const debouncedSetCommitment = useCallback(() => _.debounce(number => {
         setCommitment(number, betId);
-    }, 200), [])
+    }, 200), [betId, setCommitment]);
     const onTokenSelect = (number) => {
         setTokenNumber(number);
         setCommitment(number, betId);
