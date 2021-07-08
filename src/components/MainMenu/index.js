@@ -1,4 +1,5 @@
 import React          from 'react';
+import {useState}     from 'react';
 import _              from 'lodash';
 import classNames     from 'classnames';
 import Icon           from '../Icon';
@@ -8,9 +9,20 @@ import Routes         from '../../constants/Routes';
 import styles         from './styles.module.scss';
 import { connect }    from 'react-redux';
 import { useHistory } from 'react-router';
+import HomeSettings   from '../HomeSettings';
 
-const MainMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
+const MainMenu = ({ opened, closeMobileMenu, openBetCount, totalWin, balance }) => {
+    const [openSettings, setOpenSettings] = useState(false);
+
     const history = useHistory();
+
+    const showSettingsHandler = () => {
+        setOpenSettings(true)
+    }
+
+    const notShowSettingsHandler = () => {
+        setOpenSettings(false)
+    }
 
     const onClickGoToRoute = (destinationRoute) => {
         return () => {
@@ -61,14 +73,14 @@ const MainMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
             <>
                 {renderInfoDetailContainer(balance, 'Your actual balance', Routes.wallet, true)}
                 {renderInfoDetailContainer(openBetCount, 'Open Bets', Routes.betOverview)}
-                {renderInfoDetailContainer(0, 'Money won', null, true)}
+                {renderInfoDetailContainer(totalWin, 'Money won', Routes.betOverview, true)}
             </>
         );
     };
 
     const renderMenuFooter = () => {
         return (
-            <div className={styles.menuFooter}>
+            <div className={styles.menuFooter} onClick={showSettingsHandler} >
                 {renderMenuButton(IconType.settings, 'Settings')}
                 {renderLogoutButton()}
             </div>
@@ -113,6 +125,7 @@ const MainMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
             {renderCloseButton()}
             {renderInfos()}
             {renderMenuFooter()}
+            {openSettings && <HomeSettings notShowSettingsHandler={notShowSettingsHandler} />}
         </div>
     );
 };
@@ -120,10 +133,12 @@ const MainMenu = ({ opened, closeMobileMenu, openBetCount, balance }) => {
 const mapStateToProps = (state) => {
     const openBetCount = _.size(state.bet.openBets);
     const balance      = state.authentication.balance;
+    const totalWin     = state.authentication.totalWin;
 
     return {
         openBetCount,
         balance,
+        totalWin,
     };
 };
 

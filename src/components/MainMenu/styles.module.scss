@@ -14,6 +14,7 @@ $largeMobileHeight: 700px;
     background-color: $colorPrimary;
     right:            -100%;
     transition:       right .5s ease-in-out;
+    z-index:          2;
 
     &.menuOpened
     {

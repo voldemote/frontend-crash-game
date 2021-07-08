@@ -23,6 +23,12 @@
         right:       20px;
         font-size:   16px;
 
+        &.popupCurrentBalanceContainer
+        {
+            top:   35px;
+            right: 70px;
+        }
+
         .currentBalanceIcon
         {
             margin-right: 11px;
