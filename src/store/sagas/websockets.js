@@ -14,15 +14,18 @@ function createSocketChannel(socket) {
     return eventChannel(emit => {
 
         const connectHandler = () => {
-            debugger;
+
             const message = {
                 type: 'connect'
             }
             emit(message)
         }
         const chatMessageHandler = (event) => {
-            debugger;
-            const message = _.pick(event,['message', 'date', 'eventId', 'userId']);
+            const message = {
+                type: ChatMessageType.chatMessage,
+                ..._.pick(event,['message', 'date', 'eventId', 'userId']),
+            };
+
             emit(message)
         }
         const addBetCreatedHandler = (event) => {
@@ -78,7 +81,6 @@ export function* init() {
     if(token) {
         try {
             const socket = yield call(createSocket, token);
-            debugger;
             yield put(WebsocketsActions.initSucceeded());
             const socketChannel = yield call(createSocketChannel, socket)
 
@@ -95,7 +97,6 @@ export function* init() {
                         case ChatMessageType.createBet:
                         case ChatMessageType.placeBet:
                         case ChatMessageType.chatMessage:
-                            debugger;
                             yield put(ChatActions.addMessage({eventId: payload.eventId, message: payload}));
                             break;
                     }
