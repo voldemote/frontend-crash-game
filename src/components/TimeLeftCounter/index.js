@@ -4,6 +4,8 @@ import { calculateTimeLeft } from '../../helper/Time';
 import { useEffect }         from 'react';
 import styles                from './styles.module.scss';
 import _                     from 'lodash';
+import { connect }           from 'react-redux';
+import moment                from 'moment';
 
 const TimeLeftCounter = ({ endDate }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));
@@ -44,10 +46,23 @@ const TimeLeftCounter = ({ endDate }) => {
         <div>
             {renderTimeLeft('d', _.get(timeLeft, 'days'), false)}
             {renderTimeLeft('hrs', _.get(timeLeft, 'hours'))}
-            {renderTimeLeft('min', _.get(timeLeft,'minutes'))}
+            {renderTimeLeft('min', _.get(timeLeft, 'minutes'))}
             {renderTimeLeft('sec', _.get(timeLeft, 'seconds'))}
         </div>
     );
 };
 
-export default TimeLeftCounter;
+const mapStateToProps = (state, ownProps) => {
+    let endDate = _.get(ownProps, 'endDate', new Date());
+    endDate     = moment(endDate).toDate();
+
+    return {
+        endDate,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(TimeLeftCounter);
+

@@ -586,7 +586,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     }
 
     const interactionEnabled = bet.status === 'active';
-    const endDate            = ['canceled', 'resolved', 'closed'].includes(bet.status) ? null : event.date;
+    const endDate            = ['canceled', 'resolved', 'closed'].includes(bet.status) ? null : _.get(bet, 'date');
 
     return (
         <div
