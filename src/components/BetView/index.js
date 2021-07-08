@@ -349,6 +349,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
                         switchableViews={switchableViews}
                         currentIndex={currentTradeView}
                         setCurrentIndex={setCurrentTradeView}
+                        underlineInactive={true}
                     />
                 </div>
             );
