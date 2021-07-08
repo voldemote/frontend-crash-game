@@ -3,7 +3,6 @@
 import _                   from 'lodash';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
-import ChoiceSelectorTheme from '../ChoiceSelector/ChoiceSelectorTheme';
 import classNames          from 'classnames';
 import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../../components/Highlight/HighlightType';
@@ -15,23 +14,24 @@ import styles              from './styles.module.scss';
 import SwitchableContainer from '../SwitchableContainer';
 import SwitchableHelper    from '../../helper/SwitchableHelper';
 import TimeLeftCounter     from '../../components/TimeLeftCounter';
-import TokenNumberInput   from '../TokenNumberInput';
-import TokenValueSelector from '../TokenValueSelector';
-import { BetActions }     from '../../store/actions/bet';
-import { connect }        from 'react-redux';
-import { useEffect }      from 'react';
-import { useHasMounted }  from '../hoc/useHasMounted';
-import { useParams }      from 'react-router-dom';
-import { useState }       from 'react';
-import ChoiceSelectorList from '../ChoiceSelectorList';
-import Icon               from '../Icon';
-import IconType           from '../Icon/IconType';
-import IconTheme          from '../Icon/IconTheme';
+import TokenNumberInput    from '../TokenNumberInput';
+import TokenValueSelector  from '../TokenValueSelector';
+import { BetActions }      from '../../store/actions/bet';
+import { connect }         from 'react-redux';
+import { useEffect }       from 'react';
+import { useHasMounted }   from '../hoc/useHasMounted';
+import { useParams }       from 'react-router-dom';
+import { useState }        from 'react';
+import ChoiceSelectorList  from '../ChoiceSelectorList';
+import Icon                from '../Icon';
+import LoadingAnimation    from '../../data/animations/sending-transaction.gif';
+import IconType            from '../Icon/IconType';
+import IconTheme           from '../Icon/IconTheme';
 
-const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
-    const params                                        = useParams();
-    const defaultBetValue                               = _.max([balance, 10]);
-    const bet                                           = (
+const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+    const params                                          = useParams();
+    const defaultBetValue                                 = _.max([balance, 10]);
+    const bet                                             = (
         () => {
             let currentBetId = params.betId;
 
@@ -79,8 +79,8 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
             return bet;
         }
     )();
-    const betId                                         = _.get(bet, '_id', selectedBetId);
-    const event                                         = (
+    const betId                                           = _.get(bet, '_id', selectedBetId);
+    const event                                           = (
         () => {
             let eventId = _.get(bet, 'event');
 
@@ -96,7 +96,7 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
             );
         }
     )();
-    const outcomes                                      = (
+    const outcomes                                        = (
         () => {
             let outcomes = [];
 
@@ -114,7 +114,7 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
             return outcomes;
         }
     )();
-    const sellOutcomes                                  = (
+    const sellOutcomes                                    = (
         () => {
             let outcomes = [];
 
@@ -132,16 +132,17 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
             return outcomes;
         }
     )();
-    const hasOpenBet                                    = _.filter(
+    const hasOpenBet                                      = _.filter(
         openBets,
         {
             betId: betId,
         },
     );
-    const [currentTradeView, setCurrentTradeView]       = useState(forceSellView ? 1 : 0);
-    const [validInput, setValidInput]                   = useState(false);
-    const [commitmentErrorText, setCommitmentErrorText] = useState('');
-    const hasMounted                                    = useHasMounted();
+    const [currentTradeView, setCurrentTradeView]         = useState(forceSellView ? 1 : 0);
+    const [validInput, setValidInput]                     = useState(false);
+    const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
+    const [commitmentErrorText, setCommitmentErrorText]   = useState('');
+    const hasMounted                                      = useHasMounted();
 
     const validateInput = () => {
         const betEndDate = bet.date;
@@ -242,6 +243,24 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
         [currentTradeView],
     );
 
+    useEffect(
+        () => {
+            if (actionIsInProgress) {
+                setShowLoadingAnimation(true);
+            } else {
+                const timerId = setTimeout(
+                    () => {
+                        setShowLoadingAnimation(false);
+                    },
+                    _.random(1, 3) * 1000,
+                );
+
+                return () => clearTimeout(timerId);
+            }
+        },
+        [actionIsInProgress],
+    );
+
     const hasSellView = () => {
         return (
                 currentTradeView === 1 ||
@@ -270,10 +289,10 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
             }
         }
     };
-    const sellBet = () => {
+    const sellBet   = () => {
         pullOutBet(betId, choice, getOpenBetsValue(choice));
         setChoice(null);
-    }
+    };
 
     const onChoiceSelect = (id, enabled) => {
         return () => {
@@ -494,12 +513,42 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
         );
     };
 
+    const getLoadingAnimationStyle = () => {
+        return {
+            backgroundImage: 'url("' + LoadingAnimation + '")',
+        };
+    };
+
+    const renderLoadingAnimation = () => {
+        if (showLoadingAnimation) {
+            return (
+                <div
+                    className={classNames(
+                        styles.loadingAnimationContainer,
+                    )}
+                >
+                    <div className={styles.loadingAnimationBackground}>
+                    </div>
+                    <div
+                        className={styles.loadingAnimation}
+                        style={getLoadingAnimationStyle()}
+                    >
+                    </div>
+                </div>
+            );
+        }
+
+        return null;
+    };
+
     const renderCurrentBalance = () => {
         return (
-            <div className={classNames(
-                styles.currentBalanceContainer,
-                isPopup ? styles.popupCurrentBalanceContainer : null,
-            )}>
+            <div
+                className={classNames(
+                    styles.currentBalanceContainer,
+                    isPopup ? styles.popupCurrentBalanceContainer : null,
+                )}
+            >
                 <Icon
                     className={styles.currentBalanceIcon}
                     iconTheme={IconTheme.primaryLightTransparent}
@@ -516,6 +565,7 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
 
     return (
         <div className={styles.placeBetContainer}>
+            {renderLoadingAnimation()}
             {renderCurrentBalance()}
             <span className={styles.eventName}>
                 {event.name}
@@ -544,14 +594,15 @@ const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disab
 
 const mapStateToProps = (state) => {
     return {
-        balance:         state.authentication.balance,
-        choice:          state.bet.selectedChoice,
-        commitment:      _.get(state, 'bet.selectedCommitment', 0),
-        events:          state.event.events,
-        openBets:        state.bet.openBets,
-        rawOutcomes:     state.bet.outcomes,
-        rawSellOutcomes: state.bet.sellOutcomes,
-        selectedBetId:   state.bet.selectedBetId,
+        actionIsInProgress: state.bet.actionIsInProgress,
+        balance:            state.authentication.balance,
+        choice:             state.bet.selectedChoice,
+        commitment:         _.get(state, 'bet.selectedCommitment', 0),
+        events:             state.event.events,
+        openBets:           state.bet.openBets,
+        rawOutcomes:        state.bet.outcomes,
+        rawSellOutcomes:    state.bet.sellOutcomes,
+        selectedBetId:      state.bet.selectedBetId,
     };
 };
 
