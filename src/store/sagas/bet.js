@@ -8,6 +8,7 @@ import { EventActions }           from '../actions/event';
 import { PopupActions }           from '../actions/popup';
 import { AuthenticationActions }  from '../actions/authentication';
 import { TransactionActions }     from '../actions/transaction';
+import { delay }                  from 'redux-saga/effects';
 
 const create = function* (action) {
     const eventId        = action.eventId;
@@ -50,6 +51,8 @@ const place = function* (action) {
         investmentAmount,
         outcome,
     );
+
+    yield delay(_.random(10, 30) * 100);
 
     if (response) {
         yield put(BetActions.placeSucceeded({
@@ -205,6 +208,8 @@ const pullOut = function* (action) {
         amount,
         outcome,
     );
+
+    yield delay(_.random(10, 30) * 100);
 
     if (response) {
         yield put(BetActions.pullOutBetSucceeded());

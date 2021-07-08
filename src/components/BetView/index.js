@@ -244,20 +244,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     );
 
     useEffect(
-        () => {
-            if (actionIsInProgress) {
-                setShowLoadingAnimation(true);
-            } else {
-                const timerId = setTimeout(
-                    () => {
-                        setShowLoadingAnimation(false);
-                    },
-                    _.random(1, 3) * 1000,
-                );
-
-                return () => clearTimeout(timerId);
-            }
-        },
+        () => setShowLoadingAnimation(actionIsInProgress),
         [actionIsInProgress],
     );
 

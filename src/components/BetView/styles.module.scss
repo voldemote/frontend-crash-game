@@ -41,7 +41,7 @@
 
             &.loadingAnimationBackground
             {
-                opacity:          0.7;
+                opacity:          1;           // TODO reset to 0.7 as soon as the animation has transparent background
                 background-color: $colorWhite;
             }
         }
