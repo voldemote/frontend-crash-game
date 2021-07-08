@@ -7,7 +7,6 @@
     flex-direction:   column;
     align-items:      center;
     overflow:         hidden;
-    height:           100%;
     width:            100%;
     padding-top:      60px;
     background-color: $colorWhite;
@@ -124,7 +123,12 @@
         .buttonContainer
         {
             width:      100%;
-            margin-top: 45px;
+            margin-top: 35px;
+
+            &.sellButtonContainer
+            {
+                margin-top: 0;
+            }
         }
     }
 
@@ -150,16 +154,38 @@
         margin: 8px;
     }
 
-    .betButton
+    .betButtonContainer
     {
-        font-size:        16px;
-        margin-top:       auto;
-        background-color: transparent;
+        width:         100%;
+        font-size:     16px;
+        margin-bottom: auto;
 
         @media (min-width: $screen-sm)
         {
             margin-bottom: 20px;
             font-size:     23px;
+        }
+
+        .betButton
+        {
+            background-color: transparent;
+
+            &.sellButton
+            {
+                margin-left:   25%;
+                margin-bottom: 20px;
+                font-size:     16px;
+
+                @media (min-width: $screen-sm)
+                {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        .summaryRowContainer
+        {
+            padding: 0 30px 20px;
         }
     }
 
