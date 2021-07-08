@@ -1,33 +1,33 @@
 // @TODO: this component is WAY TOO BIG IMO, hard to read for new devs and the state logic is very complex,
 // would be good to refactor this and break it down in smaller components
-import _                   from 'lodash';
-import Button              from '../Button';
-import ChoiceSelector      from '../ChoiceSelector';
-import classNames          from 'classnames';
-import HighlightTheme      from '../Highlight/HighlightTheme';
-import HighlightType       from '../../components/Highlight/HighlightType';
-import HotBetBadge         from '../HotBetBadge';
-import moment              from 'moment';
-import React, { useCallback }               from 'react';
-import SleepHelper         from '../../helper/Sleep';
-import styles              from './styles.module.scss';
-import SwitchableContainer from '../SwitchableContainer';
-import SwitchableHelper    from '../../helper/SwitchableHelper';
-import TimeLeftCounter     from '../../components/TimeLeftCounter';
-import TokenNumberInput    from '../TokenNumberInput';
-import TokenValueSelector  from '../TokenValueSelector';
-import { BetActions }      from '../../store/actions/bet';
-import { connect }         from 'react-redux';
-import { useEffect }       from 'react';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import { useParams }       from 'react-router-dom';
-import { useState }        from 'react';
-import ChoiceSelectorList  from '../ChoiceSelectorList';
-import Icon                from '../Icon';
-import LoadingAnimation    from '../../data/animations/sending-transaction.gif';
-import IconType            from '../Icon/IconType';
-import IconTheme           from '../Icon/IconTheme';
-import TradeStateBadge     from '../TradeStateBadge';
+import _                      from 'lodash';
+import Button                 from '../Button';
+import ChoiceSelector         from '../ChoiceSelector';
+import classNames             from 'classnames';
+import HighlightTheme         from '../Highlight/HighlightTheme';
+import HighlightType          from '../../components/Highlight/HighlightType';
+import HotBetBadge            from '../HotBetBadge';
+import moment                 from 'moment';
+import React, { useCallback } from 'react';
+import SleepHelper            from '../../helper/Sleep';
+import styles                 from './styles.module.scss';
+import SwitchableContainer    from '../SwitchableContainer';
+import SwitchableHelper       from '../../helper/SwitchableHelper';
+import TimeLeftCounter        from '../../components/TimeLeftCounter';
+import TokenNumberInput       from '../TokenNumberInput';
+import TokenValueSelector     from '../TokenValueSelector';
+import { BetActions }         from '../../store/actions/bet';
+import { connect }            from 'react-redux';
+import { useEffect }          from 'react';
+import { useHasMounted }      from '../hoc/useHasMounted';
+import { useParams }          from 'react-router-dom';
+import { useState }           from 'react';
+import ChoiceSelectorList     from '../ChoiceSelectorList';
+import Icon                   from '../Icon';
+import LoadingAnimation       from '../../data/animations/sending-transaction.gif';
+import IconType               from '../Icon/IconType';
+import IconTheme              from '../Icon/IconTheme';
+import TradeStateBadge        from '../TradeStateBadge';
 
 const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                          = useParams();
@@ -200,7 +200,6 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         setCommitment(defaultBetValue, betId);
     }
 
-
     useEffect(
         () => {
             if (hasMounted) {
@@ -268,7 +267,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         setChoice(null);
     };
 
-    const onChoiceSelect = (id, enabled) => {
+    const onChoiceSelect                = (id, enabled) => {
         return () => {
             if (enabled) {
                 setChoice(id);
@@ -279,12 +278,12 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     useEffect(() => setTokenNumber(commitment), [commitment]);
     const debouncedSetCommitment = useCallback(_.debounce(number => {
         setCommitment(number, betId);
-    }, 200), [])
-    const onTokenSelect = (number) => {
+    }, 200), []);
+    const onTokenSelect          = (number) => {
         setTokenNumber(number);
         setCommitment(number, betId);
     };
-    const onTokenNumberChange = (number) => {
+    const onTokenNumberChange    = (number) => {
         setTokenNumber(number);
         debouncedSetCommitment(number);
     };

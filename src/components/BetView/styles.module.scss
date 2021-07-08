@@ -41,7 +41,7 @@
 
             &.loadingAnimationBackground
             {
-                opacity:          1;           // TODO reset to 0.7 as soon as the animation has transparent background
+                opacity:          1; // TODO reset to 0.7 as soon as the animation has transparent background
                 background-color: $colorWhite;
             }
         }
@@ -169,7 +169,7 @@
         justify-content:  space-between;
         align-items:      center;
         flex-direction:   row;
-        background-color: $colorPrimary;
+        background-color: $colorPrimary66;
         width:            100%;
         padding:          15px 30px;
         color:            $colorWhite;
