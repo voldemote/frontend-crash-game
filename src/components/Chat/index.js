@@ -5,7 +5,6 @@ import IconType           from '../../components/Icon/IconType';
 import styles             from './styles.module.scss';
 import { connect }        from 'react-redux';
 import { useEffect }      from 'react';
-import { UserActions }    from '../../store/actions/user';
 import { ChatActions }    from '../../store/actions/chat';
 import { WebsocketsActions }    from '../../store/actions/websockets';
 import { useRef }         from 'react';
@@ -131,7 +130,8 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+
     return {
         fetchChatMessages: (eventId) => {
             dispatch(ChatActions.fetch({ eventId }));
@@ -145,6 +145,7 @@ const mapDispatchToProps = (dispatch) => {
         leaveRoom: (userId, eventId) => {
             dispatch(WebsocketsActions.leaveRoom({ userId, eventId }));
         },
+
     };
 };
 
