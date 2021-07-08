@@ -11,6 +11,7 @@ import { BetActions }               from '../actions/bet';
 import { TransactionActions }       from '../actions/transaction';
 import { PopupActions }             from '../actions/popup';
 import { ChatActions }             from '../actions/chat';
+import { WebsocketsActions }             from '../actions/websockets';
 import PopupTheme                   from '../../components/Popup/PopupTheme';
 
 const afterLoginRoute                = Routes.home;
@@ -169,13 +170,14 @@ const authenticationSucceeded = function* (action) {
         yield put(EventActions.fetchAll());
         yield put(ChatActions.fetchInitial());
         yield put(AuthenticationActions.fetchReferrals());
+        yield put(WebsocketsActions.init());
         yield put(push(afterLoginRoute));
     }
 };
 
 const logout = function* () {
     Api.setToken(null);
-
+    yield put(WebsocketsActions.close());
     yield put(push(Routes.welcome));
 };
 

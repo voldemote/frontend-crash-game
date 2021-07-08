@@ -58,13 +58,8 @@ const fetchInitial = function* (action) {
     }
 
 };
-const fetchInitialSucceeded = function* (action) {
-    const messages = yield select(state => state.chat.messagesByEvent[action.eventId]);
-    console.log("messages", messages)
-};
 
 export default {
     fetch,
     fetchInitial,
-    fetchInitialSucceeded,
 };

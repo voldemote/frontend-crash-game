@@ -6,6 +6,7 @@ import transactionReducer    from '../reducer/transaction';
 import userReducer           from '../reducer/user';
 import chatReducer           from '../reducer/chat';
 import authenticationReducer from '../reducer/authentication';
+import websocketsReducer from './websockets';
 import { combineReducers }   from 'redux';
 import { connectRouter }     from 'connected-react-router';
 
@@ -18,5 +19,6 @@ export default (history) => combineReducers({
     transaction:    transactionReducer,
     user:           userReducer,
     chat:           chatReducer,
+    websockets:     websocketsReducer,
     router:         connectRouter(history),
 })
