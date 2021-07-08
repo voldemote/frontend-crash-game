@@ -5,7 +5,7 @@ import styles                  from './styles.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState }            from 'react';
 
-const CarouselContainer = ({ title, children }) => {
+const CarouselContainer = ({ title, children, withoutPadding = false }) => {
     const carouselRef                             = useRef();
     const [prevArrowVisible, setPrevArrowVisible] = useState(false);
     const [nextArrowVisible, setNextArrowVisible] = useState(true);
@@ -17,7 +17,10 @@ const CarouselContainer = ({ title, children }) => {
     };
 
     return (
-        <div className={styles.carouselContainer}>
+        <div className={classNames(
+            styles.carouselContainer,
+            withoutPadding ? styles.carouselContainerWithoutPadding : null,
+        )}>
             <div className={styles.titleContainer}>
                 <span className={styles.title}>
                     {title}

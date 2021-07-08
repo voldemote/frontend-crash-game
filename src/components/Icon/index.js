@@ -20,6 +20,7 @@ import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.sv
 import { ReactComponent as IconCalendar }        from '../../data/icons/calendar.svg';
 import { ReactComponent as IconChat }            from '../../data/icons/chat.svg';
 import { ReactComponent as IconChecked }         from '../../data/icons/checked.svg';
+import { ReactComponent as IconCollapseSidebar } from '../../data/icons/collapse-sidebar.svg';
 import { ReactComponent as IconConfettiLeft }    from '../../data/icons/confetti-left.svg';
 import { ReactComponent as IconConfettiRight }   from '../../data/icons/confetti-right.svg';
 import { ReactComponent as IconDeleteInput }     from '../../data/icons/delete-input.svg';
@@ -65,6 +66,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.calendar]:        <IconCalendar />,
                 [IconType.chat]:            <IconChat />,
                 [IconType.checked]:         <IconChecked />,
+                [IconType.collapseSidebar]: <IconCollapseSidebar />,
                 [IconType.confettiLeft]:    <IconConfettiLeft />,
                 [IconType.confettiRight]:   <IconConfettiRight />,
                 [IconType.deleteInput]:     <IconDeleteInput />,

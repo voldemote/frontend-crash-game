@@ -54,7 +54,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
     const [error, setError]                                       = useState(null);
 
     const phoneNumberIsValid = () => {
-        return country && phoneNumber && phoneNumber.length > 3;
+        return country && phoneNumber && phoneNumber.length > 6;
     };
 
     const codeIsValid = () => {
@@ -62,7 +62,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
     };
 
     const emailIsValid = () => {
-        return email && email.length >= 4;
+        return email && email.length >= 6;
     };
 
     const nameIsValid = () => {
@@ -133,7 +133,7 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 }
             }
         },
-        [country, phoneNumber, code, firstName, username, email, legalAuthorizationAgreed],
+        [country, code],
     );
 
     const resendRequestSms = () => {
@@ -259,19 +259,19 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 {step === 2 && (
                     <>
                         <InputBox
-                            containerClassName={styles.usernameInputBox}
-                            invitationText={'Username'}
-                            errorText={_.get(error, 0)}
-                            placeholder="john2021"
-                            value={username}
-                            setValue={setUsername}
-                        />
-                        <InputBox
-                            invitationText={'Call me'}
+                            invitationText={'My name is...'}
                             errorText={_.get(error, 1)}
                             placeholder="John"
                             value={firstName}
                             setValue={setFirstName}
+                        />
+                        <InputBox
+                            containerClassName={styles.usernameInputBox}
+                            invitationText={'But you can call me...'}
+                            errorText={_.get(error, 0)}
+                            placeholder="john2021"
+                            value={username}
+                            setValue={setUsername}
                         />
                     </>
                 )}

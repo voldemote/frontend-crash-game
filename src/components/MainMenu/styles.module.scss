@@ -2,7 +2,7 @@
 
 $largeMobileHeight: 700px;
 
-.mobileMenu
+.menu
 {
     display:          flex;
     flex-direction:   column;
@@ -14,8 +14,9 @@ $largeMobileHeight: 700px;
     background-color: $colorPrimary;
     right:            -100%;
     transition:       right .5s ease-in-out;
+    z-index:          2;
 
-    &.mobileMenuOpened
+    &.menuOpened
     {
         display: flex;
         right:   0;
@@ -23,7 +24,14 @@ $largeMobileHeight: 700px;
 
     @media (min-width: $screen-sm)
     {
-        display: none !important;
+        width:            40vw;
+        padding-top:      150px;
+        background-color: $colorPrimary90;
+    }
+
+    @media (min-width: $screen-lg) 
+    {
+        width: 30vw;
     }
 
     .upperCloseMenuContainer
@@ -49,6 +57,11 @@ $largeMobileHeight: 700px;
             align-items:      center;
             border:           2px solid $colorWhite10;
         }
+
+        @media (min-width: $screen-sm) 
+        {
+            display: none;
+        }
     }
 
     .infoDetailContainer
@@ -56,6 +69,13 @@ $largeMobileHeight: 700px;
         display:        flex;
         flex-direction: column;
         margin:         0 0 25px 40px;
+        cursor:          pointer;
+        transition: transform 0.5s;
+
+        &:hover 
+        {
+            transform: scale(1.025);
+        }
 
         @media (min-height: $largeMobileHeight)
         {
@@ -88,7 +108,7 @@ $largeMobileHeight: 700px;
         }
     }
 
-    .mobileMenuFooter
+    .menuFooter
     {
         margin-top: auto;
 
@@ -104,6 +124,13 @@ $largeMobileHeight: 700px;
             margin-bottom:    20px;
             background-color: $colorWhite;
             color:            $colorPrimary;
+            cursor:          pointer;
+            transition: transform 0.5s;
+
+            &:hover 
+            {
+                transform: scale(1.025);
+            }
 
             .menuButtonIcon
             {
@@ -119,6 +146,13 @@ $largeMobileHeight: 700px;
             justify-content: center;
             align-items:     center;
             color:           $colorWhite;
+            cursor:          pointer;
+            transition: transform 0.5s;
+
+            &:hover 
+            {
+                transform: scale(1.05);
+            }
 
             .logoutButtonIcon
             {

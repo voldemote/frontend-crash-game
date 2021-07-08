@@ -28,6 +28,7 @@ const Bet = ({ showPopup }) => {
           const history                         = useHistory();
           const { eventId, betId }              = useParams();
           const [currentSlide, setCurrentSlide] = useState(0);
+
           const event                           = useSelector(
               (state) => _.find(
                   state.event.events,
@@ -81,8 +82,8 @@ const Bet = ({ showPopup }) => {
           const renderRelatedBetList = () => {
               return _.map(
                   getRelatedBets(),
-                  (bet) => {
-                      return renderRelatedBetCard(bet);
+                  (bet, index) => {
+                      return renderRelatedBetCard(bet, index);
                   },
               );
           };
@@ -101,12 +102,13 @@ const Bet = ({ showPopup }) => {
               };
           };
 
-          const renderRelatedBetCard = (bet) => {
+          const renderRelatedBetCard = (bet, index) => {
               if (bet) {
                   const betId = _.get(bet, '_id');
 
                   return (
                       <RelatedBetCard
+                          key={index}
                           title={bet.marketQuestion}
                           userId={bet.creator}
                           image={event.previewImageUrl}
@@ -123,17 +125,18 @@ const Bet = ({ showPopup }) => {
 
               return _.map(
                   _.range(0, size),
-                  (sliderPage) => renderRelatedBetSlider(sliderPage),
+                  (sliderPage, index) => renderRelatedBetSlider(sliderPage, index),
               );
           };
 
-          const renderRelatedBetSlider = (pageIndex) => {
+          const renderRelatedBetSlider = (pageIndex, index) => {
               const bets        = getRelatedBets();
               const firstIndex  = pageIndex * 2;
               const secondIndex = firstIndex + 1;
 
               return (
                   <div
+                      key={index}
                       className={classNames(
                           styles.carouselSlide,
                           styles.relatedBetSlide,
@@ -212,9 +215,9 @@ const Bet = ({ showPopup }) => {
                               />
                               <div className={styles.timeLeft}>
                                   <span>
-                                      Event ends in:
+                                      End of Event:
                                   </span>
-                                  <TimeLeftCounter endDate={_.get(event, 'date')} />
+                                  <TimeLeftCounter endDate={new Date(_.get(event, 'date'))} />
                               </div>
                           </div>
                           <Chat

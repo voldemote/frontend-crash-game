@@ -1,7 +1,7 @@
 import _                        from 'lodash';
 import classNames               from 'classnames';
-import medalGold                from "../../data/icons/medal-gold.png";
-import cross                    from "../../data/icons/cross.svg";
+import medalGold                from '../../data/icons/medal-gold.png';
+import cross                    from '../../data/icons/cross.svg';
 import Logo                     from '../../data/images/logo-demo.svg';
 import React                    from 'react';
 import style                    from './styles.module.scss';
@@ -11,53 +11,55 @@ import Routes                   from '../../constants/Routes';
 import Icon                     from '../Icon';
 import IconType                 from '../Icon/IconType';
 import { useState }             from 'react';
-import MobileMenu               from '../MobileMainMenu';
+import MainMenu                 from '../MainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
-import { connect }              from 'react-redux';
+// import { connect }              from 'react-redux';
 // import { LeaderboardActions }   from 'store/actions/leaderboard';
 // Just as long as I don't get Redux
 import axios                    from 'axios';
 import { useEffect }            from 'react';
+import { matchPath }            from 'react-router';
+import { connect }              from 'react-redux';
 
-
-const Navbar = ({ user }) => {
-    const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
+const Navbar = ({ user, location }) => {
+    const [menuOpened, setMenuOpened] = useState(false);
 
     const [showLeaderboard, setShowLeaderboard] = useState(false);
-    const [leaderboard, setLeaderboard] = useState([])
-    const [rank, setRank] = useState(0);
+    const [leaderboard, setLeaderboard]         = useState([]);
+    const [rank, setRank]                       = useState(0);
 
     // Just as long as I don't get Redux
     const token = user.token;
 
     useEffect(() => {
         axios.get('https://staging-zeaec.ondigitalocean.app/api/user/getUsers')
-        .then((response) => {
-            setLeaderboard(response.data.users)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((response) => {
+                setLeaderboard(response.data.users);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
-        axios.get(`https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
-        {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }
-        })
-        .then((response) => {
-            setRank(response.data.rank)
-            console.log(response.data)
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        axios.get(
+            `https://staging-zeaec.ondigitalocean.app/api/user/${user.userId}`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                },
+            },
+        )
+            .then((response) => {
+                setRank(response.data.rank);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [token, rank, user.userId]);
     // End of temporary solution
 
     const onChangeLeaderboard = () => {
-        setShowLeaderboard(!showLeaderboard)
-    }
+        setShowLeaderboard(!showLeaderboard);
+    };
 
     const getProfileStyle = () => {
         const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
@@ -78,11 +80,33 @@ const Navbar = ({ user }) => {
     };
 
     const openMobileMenu = () => {
-        setMobileMenuOpened(true);
+        setMenuOpened(true);
     };
 
     const closeMobileMenu = () => {
-        setMobileMenuOpened(false);
+        setMenuOpened(false);
+    };
+
+    const showDesktopMenuHandler = () => {
+        setMenuOpened(!menuOpened);
+    };
+
+    const isRouteActive = (route) => {
+        return !!matchPath(
+            location.pathname,
+            route,
+        );
+    };
+
+    const renderNavbarLink = (route, text) => {
+        return (
+            <Link
+                to={route}
+                className={isRouteActive(route) ? style.active : null}
+            >
+                {text}
+            </Link>
+        );
     };
 
     return (
@@ -96,20 +120,11 @@ const Navbar = ({ user }) => {
                 <img
                     src={Logo}
                     width={200}
-                    alt="Wallfair"
+                    alt={'Wallfair'}
                 />
-                <Link
-                    to={Routes.home}
-                    className={style.active}
-                >
-                    Home
-                </Link>
-                <Link to={Routes.betOverview}>
-                    My Trades
-                </Link>
-                <Link to={Routes.wallet}>
-                    My Wallet
-                </Link>
+                {renderNavbarLink(Routes.home, 'Home')}
+                {renderNavbarLink(Routes.betOverview, 'My Trades')}
+                {renderNavbarLink(Routes.wallet, 'My Wallet')}
             </div>
             <div className={style.navbarItems}>
                 <Icon
@@ -117,8 +132,15 @@ const Navbar = ({ user }) => {
                     iconType={IconType.mainMenu}
                     onClick={openMobileMenu}
                 />
-                <div className={style.ranking} onClick={onChangeLeaderboard}>
-                    <img src={medalGold} alt="medal" className={style.medal} />
+                <div
+                    className={style.ranking}
+                    onClick={onChangeLeaderboard}
+                >
+                    <img
+                        src={medalGold}
+                        alt="medal"
+                        className={style.medal}
+                    />
                     <p className={style.rankingText}>Rank # {rank}</p>
                 </div>
                 <Link
@@ -133,16 +155,27 @@ const Navbar = ({ user }) => {
                 <div
                     className={style.profile}
                     style={getProfileStyle()}
+                    onClick={showDesktopMenuHandler}
+                >
+                </div>
+                <div
+                    className={style.profileMobile}
+                    style={getProfileStyle()}
                 >
                 </div>
             </div>
             {
-            showLeaderboard &&
+                showLeaderboard &&
                 <div className={style.leaderboard}>
-                    <img src={cross} alt="close" className={style.closeLeaderboard} onClick={onChangeLeaderboard}/>
+                    <img
+                        src={cross}
+                        alt="close"
+                        className={style.closeLeaderboard}
+                        onClick={onChangeLeaderboard}
+                    />
                     <p className={style.leaderboardHeading}>
                         Community
-                        <br/>
+                        <br />
                         Leaderboard
                     </p>
                     <div className={style.leaderboardTable}>
@@ -152,38 +185,39 @@ const Navbar = ({ user }) => {
                             <p className={style.tokenHeading}>TOKENBALANCE</p>
                         </div>
                         <div className={style.leaderboardRanking}>
-                        {
-                            leaderboard && leaderboard.map((user) => {
-                                return (
-                                    <LeaderboardItem user={user} />
-                                )
-                            })
-                        }
+                            {
+                                leaderboard && leaderboard.map((user) => {
+                                    return (
+                                        <LeaderboardItem
+                                            user={user}
+                                            key={user.userId}
+                                        />
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>
             }
-            <MobileMenu
-                opened={mobileMenuOpened}
+            <MainMenu
+                opened={menuOpened}
                 closeMobileMenu={closeMobileMenu}
             />
         </div>
     );
 };
 
-// const mapStateToProps = (state) => {
-//     return {
-//         leaderboard: state
-//     };
-// };
+const mapStateToProps = (state) => {
+    return {
+        location: state.router.location,
+    };
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {};
-// };
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
 
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps,
-// )(Navbar);
-
-export default Navbar;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Navbar);

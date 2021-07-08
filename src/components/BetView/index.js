@@ -1,3 +1,5 @@
+// @TODO: this component is WAY TOO BIG IMO, hard to read for new devs and the state logic is very complex,
+// would be good to refactor this and break it down in smaller components
 import _                   from 'lodash';
 import Button              from '../Button';
 import ChoiceSelector      from '../ChoiceSelector';
@@ -13,17 +15,20 @@ import styles              from './styles.module.scss';
 import SwitchableContainer from '../SwitchableContainer';
 import SwitchableHelper    from '../../helper/SwitchableHelper';
 import TimeLeftCounter     from '../../components/TimeLeftCounter';
-import TokenNumberInput    from '../TokenNumberInput';
-import TokenValueSelector  from '../TokenValueSelector';
-import { BetActions }      from '../../store/actions/bet';
-import { connect }         from 'react-redux';
-import { useEffect }       from 'react';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import { useParams }       from 'react-router-dom';
-import { useState }        from 'react';
-import ChoiceSelectorList  from '../ChoiceSelectorList';
+import TokenNumberInput   from '../TokenNumberInput';
+import TokenValueSelector from '../TokenValueSelector';
+import { BetActions }     from '../../store/actions/bet';
+import { connect }        from 'react-redux';
+import { useEffect }      from 'react';
+import { useHasMounted }  from '../hoc/useHasMounted';
+import { useParams }      from 'react-router-dom';
+import { useState }       from 'react';
+import ChoiceSelectorList from '../ChoiceSelectorList';
+import Icon               from '../Icon';
+import IconType           from '../Icon/IconType';
+import IconTheme          from '../Icon/IconTheme';
 
-const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+const BetView = ({ closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                        = useParams();
     const defaultBetValue                               = _.max([balance, 10]);
     const bet                                           = (
@@ -246,21 +251,20 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             if (!isSell) {
                 placeBet(betId, commitment, choice);
             } else {
+                // @TODO: when does that happen, imo onConfirm will not be called from "sell" state?
                 pullOutBet(betId, choice, commitment);
             }
         }
     };
+    const sellBet = () => {
+        pullOutBet(betId, choice, getOpenBetsValue(choice));
+        setChoice(null);
+    }
 
     const onChoiceSelect = (id, enabled) => {
         return () => {
             if (enabled) {
-                const isSell = hasSellView();
-
-                if (isSell) {
-                    pullOutBet(betId, id, getOpenBetsValue(id));
-                } else {
-                    setChoice(id);
-                }
+                setChoice(id);
             }
         };
     };
@@ -315,6 +319,9 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
     };
 
     const renderSwitchableView = () => {
+        // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
+        // like e.g. react-aria tablist
+        // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
         if (_.size(hasOpenBet) && !disableSwitcher) {
             const switchableViews = [
                 SwitchableHelper.getSwitchableView(
@@ -342,6 +349,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
 
         return (
             <ChoiceSelector
+                key={index}
                 theme={choiceSelectorTheme}
                 className={styles.choice}
                 name={name}
@@ -404,7 +412,29 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
                     disabled={tradeButtonDisabled}
                     disabledWithOverlay={false}
                 >
-                    Trade!
+                    Trade
+                </Button>
+            );
+        }
+        if (isSell && !finalOutcome) {
+            const tradeButtonDisabled = !validInput;
+            let tradeButtonTheme      = HighlightTheme.fillRed;
+
+            if (tradeButtonDisabled) {
+                tradeButtonTheme = HighlightTheme.fillGray;
+            }
+
+            return (
+                <Button
+                    className={classNames(
+                        styles.betButton,
+                    )}
+                    onClick={sellBet}
+                    highlightType={HighlightType.highlightHomeCtaBet}
+                    highlightTheme={tradeButtonTheme}
+                    disabledWithOverlay={false}
+                >
+                    Cashout
                 </Button>
             );
         }
@@ -459,12 +489,29 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
         );
     };
 
+    const renderCurrentBalance = () => {
+        return (
+            <div className={classNames(
+                styles.currentBalanceContainer,
+                isPopup ? styles.popupCurrentBalanceContainer : null,
+            )}>
+                <Icon
+                    className={styles.currentBalanceIcon}
+                    iconTheme={IconTheme.primaryLightTransparent}
+                    iconType={IconType.wallet2}
+                />
+                {balance}
+            </div>
+        );
+    };
+
     if (!event || !bet) {
         return null;
     }
 
     return (
         <div className={styles.placeBetContainer}>
+            {renderCurrentBalance()}
             <span className={styles.eventName}>
                 {event.name}
             </span>
@@ -480,7 +527,7 @@ const BetView = ({ closed, initialSellTab, forceSellView, disableSwitcher = fals
             {
                 showEventEnd && (
                     <div className={styles.timeLeftCounterContainer}>
-                        <span>Event ends in:</span>
+                        <span>End of Event:</span>
                         <TimeLeftCounter endDate={event.date} />
                     </div>
                 )

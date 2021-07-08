@@ -14,8 +14,8 @@ const getRouteWithParameters = function (route, parameterValues) {
 
 export default {
     getRouteWithParameters,
-    bet:                '/bet/:eventId?/:betId?',
-    betOverview:       '/my-bets',
+    bet:                '/trade/:eventId?/:betId?',
+    betOverview:        '/my-trades',
     home:               '/home',
     logout:             '/logout',
     privacyPolicy:      '/privacy-policy',

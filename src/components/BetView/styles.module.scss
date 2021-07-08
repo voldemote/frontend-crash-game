@@ -3,6 +3,7 @@
 .placeBetContainer
 {
     display:          flex;
+    position:         relative;
     flex-direction:   column;
     align-items:      center;
     overflow:         hidden;
@@ -12,6 +13,27 @@
     background-color: $colorWhite;
     color:            $colorPrimaryDark;
     border-radius:    10px;
+
+    .currentBalanceContainer
+    {
+        display:     flex;
+        position:    absolute;
+        align-items: center;
+        top:         20px;
+        right:       20px;
+        font-size:   16px;
+
+        &.popupCurrentBalanceContainer
+        {
+            top:   35px;
+            right: 70px;
+        }
+
+        .currentBalanceIcon
+        {
+            margin-right: 11px;
+        }
+    }
 
     .eventName
     {
@@ -83,7 +105,8 @@
         }
     }
 
-    .emptyChoiceSelector {
+    .emptyChoiceSelector
+    {
         width:  100%;
         flex:   1 0 calc(50% - 16px);
         margin: 8px;
