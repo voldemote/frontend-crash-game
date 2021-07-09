@@ -1,32 +1,35 @@
 // @TODO: this component is WAY TOO BIG IMO, hard to read for new devs and the state logic is very complex,
 // would be good to refactor this and break it down in smaller components
-import _                   from 'lodash';
-import Button              from '../Button';
-import ChoiceSelector      from '../ChoiceSelector';
-import classNames          from 'classnames';
-import HighlightTheme      from '../Highlight/HighlightTheme';
-import HighlightType       from '../../components/Highlight/HighlightType';
-import HotBetBadge         from '../HotBetBadge';
-import moment              from 'moment';
-import React, { useCallback }               from 'react';
-import SleepHelper         from '../../helper/Sleep';
-import styles              from './styles.module.scss';
-import SwitchableContainer from '../SwitchableContainer';
-import SwitchableHelper    from '../../helper/SwitchableHelper';
-import TimeLeftCounter     from '../../components/TimeLeftCounter';
-import TokenNumberInput    from '../TokenNumberInput';
-import TokenValueSelector  from '../TokenValueSelector';
-import { BetActions }      from '../../store/actions/bet';
-import { connect }         from 'react-redux';
-import { useEffect }       from 'react';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import { useParams }       from 'react-router-dom';
-import { useState }        from 'react';
-import ChoiceSelectorList  from '../ChoiceSelectorList';
-import Icon                from '../Icon';
-import LoadingAnimation    from '../../data/animations/sending-transaction.gif';
-import IconType            from '../Icon/IconType';
-import IconTheme           from '../Icon/IconTheme';
+import _                      from 'lodash';
+import Button                 from '../Button';
+import ChoiceSelector         from '../ChoiceSelector';
+import classNames             from 'classnames';
+import HighlightTheme         from '../Highlight/HighlightTheme';
+import HighlightType          from '../../components/Highlight/HighlightType';
+import HotBetBadge            from '../HotBetBadge';
+import moment                 from 'moment';
+import React, { useCallback } from 'react';
+import SleepHelper            from '../../helper/Sleep';
+import styles                 from './styles.module.scss';
+import SwitchableContainer    from '../SwitchableContainer';
+import SwitchableHelper       from '../../helper/SwitchableHelper';
+import TimeLeftCounter        from '../../components/TimeLeftCounter';
+import TokenNumberInput       from '../TokenNumberInput';
+import TokenValueSelector     from '../TokenValueSelector';
+import { BetActions }         from '../../store/actions/bet';
+import { connect }            from 'react-redux';
+import { useEffect }          from 'react';
+import { useHasMounted }      from '../hoc/useHasMounted';
+import { useParams }          from 'react-router-dom';
+import { useState }           from 'react';
+import ChoiceSelectorList     from '../ChoiceSelectorList';
+import Icon                   from '../Icon';
+import LoadingAnimation       from '../../data/animations/sending-transaction.gif';
+import IconType               from '../Icon/IconType';
+import IconTheme              from '../Icon/IconTheme';
+import TradeStateBadge        from '../TradeStateBadge';
+import SummaryRowContainer    from '../SummaryRowContainer';
+import BetSummaryHelper       from '../../helper/BetSummary';
 
 const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                          = useParams();
@@ -142,6 +145,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     const [validInput, setValidInput]                     = useState(false);
     const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
     const [commitmentErrorText, setCommitmentErrorText]   = useState('');
+    const [tokenNumber, setTokenNumber]                   = useState(commitment);
     const hasMounted                                      = useHasMounted();
 
     const validateInput = () => {
@@ -176,7 +180,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     function getDefaultTokenSelection () {
-        return [25, 50, 100, 150, 200, 300];
+        return [25, 50, 100, 150, 200];
     }
 
     function getDefaultTokenSelectionValues () {
@@ -198,7 +202,6 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
 
         setCommitment(defaultBetValue, betId);
     }
-
 
     useEffect(
         () => {
@@ -222,15 +225,12 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
 
     useEffect(
         () => {
-            if (currentTradeView === 1) {
+            setShowLoadingAnimation(actionIsInProgress);
+
+            if (!actionIsInProgress) {
                 setChoice(null);
             }
         },
-        [currentTradeView],
-    );
-
-    useEffect(
-        () => setShowLoadingAnimation(actionIsInProgress),
         [actionIsInProgress],
     );
 
@@ -248,23 +248,15 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         return finalOutcome;
     };
 
-    const onConfirm = () => {
+    const onTradeButtonConfirm = () => {
         const validInput = validateInput();
 
         if (validInput) {
-            const isSell = hasSellView();
-
-            if (!isSell) {
-                placeBet(betId, commitment, choice);
-            } else {
-                // @TODO: when does that happen, imo onConfirm will not be called from "sell" state?
-                pullOutBet(betId, choice, commitment);
-            }
+            placeBet(betId, commitment, choice);
         }
     };
-    const sellBet   = () => {
+    const sellBet              = () => {
         pullOutBet(betId, choice, getOpenBetsValue(choice));
-        setChoice(null);
     };
 
     const onChoiceSelect = (id, enabled) => {
@@ -274,12 +266,21 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             }
         };
     };
-    const [tokenNumber, setTokenNumber] = useState(commitment);
-    useEffect(() => setTokenNumber(commitment), [commitment]);
-    const debouncedSetCommitment = useCallback(_.debounce(number => {
-        setCommitment(number, betId);
-    }, 200), [])
-    const onTokenSelect = (number) => {
+
+    useEffect(
+        () => setTokenNumber(commitment),
+        [commitment],
+    );
+
+    const debouncedSetCommitment = useCallback(
+        _.debounce(
+            number => setCommitment(number, betId),
+            200,
+        ),
+        [],
+    );
+
+    const onTokenSelect       = (number) => {
         setTokenNumber(number);
         setCommitment(number, betId);
     };
@@ -288,13 +289,17 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         debouncedSetCommitment(number);
     };
 
-    const getOpenBetsValue = (index) => {
-        const openBet = _.find(
+    const getOpenBet = (index) => {
+        return _.find(
             hasOpenBet,
             {
                 outcome: index,
             },
         );
+    };
+
+    const getOpenBetsValue = (index) => {
+        const openBet = getOpenBet(index);
 
         if (openBet) {
             return _.get(openBet, 'outcomeAmount');
@@ -319,9 +324,18 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     const isChoiceSelectorEnabled = (index) => {
+        if (bet.status !== 'active') {
+            return false;
+        }
+
         const isSell = hasSellView();
 
         return !isSell || getOpenBetsValue(index) > 0;
+    };
+
+    const switchableChange = (index) => {
+        setChoice(null);
+        setCurrentTradeView(index);
     };
 
     const renderSwitchableView = () => {
@@ -339,11 +353,14 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             ];
 
             return (
-                <SwitchableContainer
-                    switchableViews={switchableViews}
-                    currentIndex={currentTradeView}
-                    setCurrentIndex={setCurrentTradeView}
-                />
+                <div className={styles.switchableContainer}>
+                    <SwitchableContainer
+                        switchableViews={switchableViews}
+                        currentIndex={currentTradeView}
+                        setCurrentIndex={switchableChange}
+                        underlineInactive={true}
+                    />
+                </div>
             );
         }
 
@@ -395,12 +412,32 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         );
     };
 
-    const renderTradeButton = () => {
+    const renderSellInformation = () => {
+        const openBet = getOpenBet(choice);
+
+        if (openBet) {
+            const investmentAmount = _.get(openBet, 'investmentAmount');
+            const summaryRows      = [
+                BetSummaryHelper.getKeyValue('Your Investment', investmentAmount + ' EVNT'),
+                BetSummaryHelper.getDivider(),
+            ];
+
+            return (
+                <div className={styles.summaryRowContainer}>
+                    <SummaryRowContainer summaryRows={summaryRows} />
+                </div>
+            );
+        }
+    };
+
+    const renderTradeButton = (enabled) => {
         const isSell       = hasSellView();
         const finalOutcome = getFinalOutcome();
 
         if (!isSell && !finalOutcome) {
-            const tradeButtonDisabled = !validInput;
+            const tradeButtonDisabled = !(
+                validInput && enabled
+            );
             let tradeButtonTheme      = null;
 
             if (tradeButtonDisabled) {
@@ -412,7 +449,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
                     className={classNames(
                         styles.betButton,
                     )}
-                    onClick={!tradeButtonDisabled ? onConfirm : _.noop}
+                    onClick={!tradeButtonDisabled ? onTradeButtonConfirm : _.noop}
                     highlightType={HighlightType.highlightHomeCtaBet}
                     highlightTheme={tradeButtonTheme}
                     disabled={tradeButtonDisabled}
@@ -422,26 +459,24 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
                 </Button>
             );
         }
-        if (isSell && !finalOutcome) {
-            const tradeButtonDisabled = !validInput;
-            let tradeButtonTheme      = HighlightTheme.fillRed;
-
-            if (tradeButtonDisabled) {
-                tradeButtonTheme = HighlightTheme.fillGray;
-            }
+        if (isSell && !finalOutcome && validInput) {
+            const outcome = _.floor(getOutcome(choice), 2).toFixed(2);
 
             return (
-                <Button
-                    className={classNames(
-                        styles.betButton,
-                    )}
-                    onClick={sellBet}
-                    highlightType={HighlightType.highlightHomeCtaBet}
-                    highlightTheme={tradeButtonTheme}
-                    disabledWithOverlay={false}
-                >
-                    Cashout
-                </Button>
+                <>
+                    {renderSellInformation()}
+                    <Button
+                        className={classNames(
+                            styles.betButton,
+                            styles.sellButton,
+                        )}
+                        highlightType={HighlightType.highlightHomeCtaBet}
+                        onClick={sellBet}
+                        disabledWithOverlay={false}
+                    >
+                        Cashout {outcome} EVNT
+                    </Button>
+                </>
             );
         }
     };
@@ -459,7 +494,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         );
     };
 
-    const renderPlaceBetContentContainer = () => {
+    const renderPlaceBetContentContainer = (enabled) => {
         const finalOutcome = getFinalOutcome();
 
         if (!finalOutcome) {
@@ -468,14 +503,19 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
                     {renderSwitchableView()}
                     <div className={styles.placeBetContentContainer}>
                         {renderTokenSelection()}
-                        <div className={styles.buttonContainer}>
+                        <div
+                            className={classNames(
+                                styles.buttonContainer,
+                                hasSellView() ? styles.sellButtonContainer : null,
+                            )}
+                        >
                             <label
                                 className={styles.label}
                             >
                                 Potential Winnings:
                             </label>
                             <div className={styles.choiceContainer}>
-                                {renderChoiceSelectors()}
+                                {renderChoiceSelectors(enabled)}
                             </div>
                         </div>
                     </div>
@@ -545,8 +585,16 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         return null;
     }
 
+    const interactionEnabled = bet.status === 'active';
+    const endDate            = ['canceled', 'resolved', 'closed'].includes(bet.status) ? null : _.get(bet, 'date');
+
     return (
-        <div className={styles.placeBetContainer}>
+        <div
+            className={classNames(
+                styles.placeBetContainer,
+                styles[bet.status + 'Status'],
+            )}
+        >
             {renderLoadingAnimation()}
             {renderCurrentBalance()}
             <span className={styles.eventName}>
@@ -558,14 +606,16 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             <div className={styles.description}>
                 {bet.description}
             </div>
-            <HotBetBadge />
+            <TradeStateBadge state={bet.status} />
             {renderPlaceBetContentContainer()}
-            {renderTradeButton()}
+            <div className={styles.betButtonContainer}>
+                {renderTradeButton(interactionEnabled)}
+            </div>
             {
                 showEventEnd && (
                     <div className={styles.timeLeftCounterContainer}>
                         <span>End of Event:</span>
-                        <TimeLeftCounter endDate={event.date} />
+                        <TimeLeftCounter endDate={endDate} />
                     </div>
                 )
             }

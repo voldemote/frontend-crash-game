@@ -1,4 +1,4 @@
-import SummaryRowType from '../components/BetSummaryContainer/SummaryRowType';
+import SummaryRowType from '../components/SummaryRowContainer/SummaryRowType';
 
 class BetSummaryHelper {
     static getDivider () {

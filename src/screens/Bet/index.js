@@ -29,7 +29,7 @@ const Bet = ({ showPopup }) => {
           const { eventId, betId }              = useParams();
           const [currentSlide, setCurrentSlide] = useState(0);
 
-          const event                           = useSelector(
+          const event = useSelector(
               (state) => _.find(
                   state.event.events,
                   {
@@ -37,7 +37,7 @@ const Bet = ({ showPopup }) => {
                   },
               ),
           );
-          const bet                             = useSelector(
+          const bet   = useSelector(
               () => _.find(
                   event ? event.bets : [],
                   {
@@ -241,7 +241,10 @@ const Bet = ({ showPopup }) => {
                                   }}
                               >
                                   <div className={styles.carouselSlide}>
-                                      <BetView closed={false} />
+                                      <BetView
+                                          closed={false}
+                                          showEventEnd={true}
+                                      />
                                   </div>
                                   <div className={styles.carouselSlide}>
                                       <Chat
@@ -265,7 +268,10 @@ const Bet = ({ showPopup }) => {
                       </div>
                       <div className={styles.columnRight}>
                           <div>
-                              <BetView closed={false} />
+                              <BetView
+                                  closed={false}
+                                  showEventEnd={true}
+                              />
                           </div>
                           <div className={styles.relatedBets}>
                               <div className={styles.headline}>

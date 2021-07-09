@@ -5,7 +5,7 @@
     display:     flex;
     align-items: center;
     width:       100%;
-    padding-top: 3rem;
+    padding-top: 2rem;
 
     &.withWhiteBackground
     {
@@ -36,6 +36,28 @@
         -ms-user-select:     none;
         user-select:         none;
         margin-right:        30px;
+
+        &.underlineInactive
+        {
+            &:not(.selected)
+            {
+                .line
+                {
+                    opacity:          0.1;
+                    height:           1px;
+                    background-color: $colorBlack;
+                }
+            }
+
+            &.selected
+            {
+                .line
+                {
+                    height:           2px;
+                    background-color: $colorBlack;
+                }
+            }
+        }
 
         &.selected
         {
