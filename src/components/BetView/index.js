@@ -149,7 +149,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     const hasMounted                                      = useHasMounted();
 
     const validateInput = () => {
-        const betEndDate = bet.date;
+        const betEndDate = _.get(bet, 'date');
         const current    = moment(new Date());
         const isSell     = hasSellView();
         let valid        = true;

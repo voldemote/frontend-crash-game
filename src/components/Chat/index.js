@@ -1,49 +1,42 @@
-import _                  from 'lodash';
-import Icon               from '../Icon';
-import IconTheme          from '../Icon/IconTheme';
-import IconType           from '../../components/Icon/IconType';
-import styles             from './styles.module.scss';
-import { connect }        from 'react-redux';
-import { useEffect }      from 'react';
-import { ChatActions }    from '../../store/actions/chat';
-import { WebsocketsActions }    from '../../store/actions/websockets';
-import { useRef }         from 'react';
-import { useState }       from 'react';
-import Input              from '../Input';
-import classNames         from 'classnames';
+import _                     from 'lodash';
+import Icon                  from '../Icon';
+import IconTheme             from '../Icon/IconTheme';
+import IconType              from '../../components/Icon/IconType';
+import styles                from './styles.module.scss';
+import { connect }           from 'react-redux';
+import { useEffect }         from 'react';
+import { ChatActions }       from '../../store/actions/chat';
+import { WebsocketsActions } from '../../store/actions/websockets';
+import { useRef }            from 'react';
+import { useState }          from 'react';
+import Input                 from '../Input';
+import classNames            from 'classnames';
 
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
 
-const Chat = ({ className, userId, event, messages, connected, fetchChatMessages, sendChatMessage }) => {
-    const messageListRef                  = useRef();
-    const [message, setMessage]           = useState('');
-
-    const eventId =  _.get(event, '_id');
-
-    useEffect(() => {
-        if(eventId) {
-            fetchChatMessages(eventId);
-        }
-    }, [eventId, fetchChatMessages]);
+const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
+    const messageListRef        = useRef();
+    const [message, setMessage] = useState('');
+    const eventId               = _.get(event, '_id');
 
     useEffect(
         () => {
             messageListScrollToBottom();
-        }, [messages]
+        }, [messages],
     );
 
     const onMessageSend = () => {
         if (message) {
             const messageData = {
-                type: ChatMessageType.chatMessage,
+                type:    ChatMessageType.chatMessage,
                 message: message,
-                date: new Date(),
+                date:    new Date(),
                 eventId,
                 userId,
             };
             setMessage('');
-            sendChatMessage( messageData);
+            sendChatMessage(messageData);
         }
     };
 
@@ -107,22 +100,17 @@ const Chat = ({ className, userId, event, messages, connected, fetchChatMessages
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        userId: state.authentication.userId,
-        messages: state.chat.messagesByEvent[_.get(ownProps.event, '_id')] || [],
-        connected: state.websockets.connected
+        userId:    state.authentication.userId,
+        messages:  _.get(state, ['chat', 'messagesByEvent', _.get(ownProps.event, '_id')], []),
+        connected: state.websockets.connected,
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-
+const mapDispatchToProps = (dispatch) => {
     return {
-        fetchChatMessages: (eventId) => {
-            dispatch(ChatActions.fetch({ eventId }));
-        },
         sendChatMessage: (messageObject) => {
             dispatch(WebsocketsActions.sendChatMessage({ messageObject }));
         },
-
     };
 };
 
