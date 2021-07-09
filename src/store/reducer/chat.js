@@ -9,20 +9,43 @@ const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
     return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
 });
 
+const addMessages = (allMessages, eventId, messages) => {
+
+    messages = _.uniqWith(
+        (allMessages[eventId] || []).concat(messages)
+            .map((m) => _.omit(m, ['_id', '__v']))
+            .map((m) => {
+                m.date = new Date(m.date);
+                m.date.setMilliseconds(0);
+                return m;
+            }),
+        _.isEqual
+    );
+
+    return {
+        ...allMessages,
+        [eventId] : sortChatMessages(messages)
+    };
+
+};
+
+
+
 // TODO: use that immutability-helper, but learn its API first
 const fetchSucceeded = (action, state) => {
     const {messages , eventId}  = action;
-    let combinedMessages = [...(typeof state.messagesByEvent[eventId] !== 'undefined' ? state.messagesByEvent[eventId]: []), ...messages];
-    combinedMessages = _.uniqWith(combinedMessages, _.isEqual);
-    combinedMessages = sortChatMessages(combinedMessages);
-    return {...state, messagesByEvent: {...state.messagesByEvent, [eventId]: combinedMessages}}
-
+    return {
+        ...state,
+        messagesByEvent: addMessages(state.messagesByEvent, eventId, messages)
+    };
 };
+
 const addMessage = (action, state) => {
     const {message , eventId}  = action;
-    let messages = [...(typeof state.messagesByEvent[eventId] !== 'undefined' ? state.messagesByEvent[eventId]: []), message];
-    messages = _.uniqWith(messages, _.isEqual);
-    return {...state, messagesByEvent: {...state.messagesByEvent, [eventId]: messages}}
+    return {
+        ...state,
+        messagesByEvent: addMessages(state.messagesByEvent, eventId, [message])
+    };
 };
 
 export default function (state = initialState, action) {

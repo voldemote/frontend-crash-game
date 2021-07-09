@@ -42,9 +42,8 @@ const Chat = ({ className, userId, event, messages, connected, fetchChatMessages
                 eventId,
                 userId,
             };
-
-            sendChatMessage( messageData);
             setMessage('');
+            sendChatMessage( messageData);
         }
     };
 
