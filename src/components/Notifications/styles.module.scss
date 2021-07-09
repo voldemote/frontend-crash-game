@@ -1,0 +1,70 @@
+@import "../../styles/all";
+
+.notifications {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    padding: 150px 0 40px 0;
+    width: 80vw;
+    height: 100vh;
+    right: 0;
+    top: 0;
+    background-color: $colorPrimary;
+    z-index: 2;
+    overflow-y: scroll;
+
+    @media (min-width: $screen-sm) {
+        width: 40vw;
+        background-color: $colorPrimary90;
+    }
+
+    @media (min-width: $screen-lg) {
+        width: 40vw;
+    }
+
+    .notificationsHeader {
+        width: 90%;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 5% 50px 5%;
+
+        .closeNotifications {
+            width: 20px;
+            cursor: pointer;
+
+            @media (max-width: $screen-xs) {
+                right: 0;
+            }
+        }
+
+        .notificationHeadline {
+            font-size: 30px;
+            line-height: 39px;
+            letter-spacing: 0.75px;
+            color: #ffffff;
+        }
+    }
+
+    .markRead {
+        position: absolute;
+        right: 0;
+        top: 200px;
+        margin: 0 5% 25px 0;
+        text-align: right;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.5px;
+        text-decoration-line: underline;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    .notificationsHolder {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+}

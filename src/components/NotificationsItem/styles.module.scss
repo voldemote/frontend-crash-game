@@ -1,0 +1,80 @@
+@import "../../styles/all";
+
+.notificationCardRead {
+    display: flex;
+    flex-direction: column;
+    padding: 41px 21px 18px 21px;
+
+    .notificationDotRead {
+        display: none;
+    }
+
+    .notificationDotUnread {
+        display: none;
+    }
+
+    .notificationMessage {
+        width: 90%;
+        margin-left: 36px;
+        font-size: 16px;
+        line-height: 20px;
+        color: #ffffff;
+    }
+}
+
+.notificationCardUnread {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 41px 21px 18px 21px;
+    background-color: #27223f;
+
+    .notificationCardContent {
+        display: flex;
+        align-items: center;
+
+        .notificationDotRead {
+            display: none;
+        }
+
+        .notificationDotUnread {
+            width: 12px !important;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5858;
+            margin-right: 21px;
+        }
+
+        .notificationMessage {
+            width: 90%;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 20px;
+            color: #ffffff;
+        }
+    }
+
+    .markSingleRead {
+        position: absolute;
+        right: 30px;
+        bottom: 18px;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: right;
+        letter-spacing: 0.5px;
+        text-decoration-line: underline;
+        color: #ffffff;
+        mix-blend-mode: normal;
+        opacity: 0.3;
+        cursor: pointer;
+    }
+}
+
+.notificationSeperator {
+    width: 95%;
+    height: 1px;
+    margin: 0 2.5%;
+    background-color: #333152;
+}
