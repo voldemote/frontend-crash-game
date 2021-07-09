@@ -4,7 +4,9 @@ import BetSagas                       from './bet';
 import EventSagas                     from './event';
 import TransactionSagas               from './transaction';
 import UserSagas                      from './user';
-import { all }                        from 'redux-saga/effects';
+import ChatSagas                      from './chat';
+import WebsocketsSagas                      from './websockets';
+import {all, select} from 'redux-saga/effects';
 import { AuthenticationActions }      from '../actions/authentication';
 import { AuthenticationTypes }        from '../actions/authentication';
 import { BetActions }                 from '../actions/bet';
@@ -17,6 +19,8 @@ import { TransactionActions }         from '../actions/transaction';
 import { TransactionTypes }           from '../actions/transaction';
 import { UserTypes }                  from '../actions/user';
 import { AlertTypes }                 from '../actions/alert';
+import { ChatTypes, ChatActions }                 from '../actions/chat';
+import { WebsocketsTypes, WebsocketsActions }                 from '../actions/websockets';
 
 const root = function* () {
     yield all([
@@ -64,6 +68,13 @@ const root = function* () {
         takeLatest([TransactionTypes.FETCH_ALL],                         TransactionSagas.fetchTransactions),
         takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
         takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
+        takeEvery( [ChatTypes.FETCH],                                    ChatSagas.fetch),
+        takeLatest( [ChatTypes.FETCH_INITIAL],                           ChatSagas.fetchInitial),
+        takeLatest( [WebsocketsTypes.INIT],                              WebsocketsSagas.init),
+        takeEvery( ['@@router/LOCATION_CHANGE'],                        WebsocketsSagas.joinOrLeaveRoomOnRouteChange),
+        takeEvery( [WebsocketsTypes.JOIN_ROOM],                          WebsocketsSagas.joinRoom),
+        takeEvery( [WebsocketsTypes.LEAVE_ROOM],                         WebsocketsSagas.leaveRoom),
+        takeEvery( [WebsocketsTypes.SEND_CHAT_MESSAGE],                  WebsocketsSagas.sendChatMessage),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
         takeLatest([REHYDRATE],                                          rehydrationDone),
@@ -80,6 +91,18 @@ const preLoading = function* () {
     yield put(AuthenticationActions.fetchReferrals());
     yield put(BetActions.fetchOpenBets());
     yield put(TransactionActions.fetchAll());
+    yield put(ChatActions.fetchInitial());
+    yield put(WebsocketsActions.init());
+
+    const userId = yield select(state => state.authentication.userId);
+    if(userId) {
+        yield put(WebsocketsActions.joinRoom({
+            userId,
+            eventId: 'undefinedRoom',
+        }));
+    }
+
+
 };
 
 export default {

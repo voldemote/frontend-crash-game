@@ -1,99 +1,37 @@
 import _                  from 'lodash';
-import ApiConstants       from '../../constants/Api';
 import Icon               from '../Icon';
 import IconTheme          from '../Icon/IconTheme';
 import IconType           from '../../components/Icon/IconType';
 import styles             from './styles.module.scss';
 import { connect }        from 'react-redux';
 import { useEffect }      from 'react';
-import { UserActions }    from '../../store/actions/user';
+import { ChatActions }    from '../../store/actions/chat';
+import { WebsocketsActions }    from '../../store/actions/websockets';
 import { useRef }         from 'react';
 import { useState }       from 'react';
 import Input              from '../Input';
 import classNames         from 'classnames';
-import { io }             from 'socket.io-client';
+
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
 
-const Chat = ({ className, token, userId, event, fetchUser }) => {
-    const websocket                       = useRef(null);
+const Chat = ({ className, userId, event, messages, connected, fetchChatMessages, sendChatMessage }) => {
     const messageListRef                  = useRef();
     const [message, setMessage]           = useState('');
-    const [chatMessages, setChatMessages] = useState([]);
 
-    const createSocket = () => {
-        const socket = io(
-            ApiConstants.getBackendSocketUrl(),
-            {
-                query:        `token=${token}`,
-                extraHeaders: { Authorization: `Bearer ${token}` },
-            },
-        );
+    const eventId =  _.get(event, '_id');
 
-        return socket;
-    };
-
-    const getCurrentSocket = () => {
-        return websocket.current;
-    };
-
-    const setCurrentSocket = (socket) => {
-        websocket.current = socket;
-    };
-
-    const getMessageIdObject = () => {
-        return {
-            eventId: _.get(event, '_id'),
-            userId,
-        };
-    };
+    useEffect(() => {
+        if(eventId) {
+            fetchChatMessages(eventId);
+        }
+    }, [eventId, fetchChatMessages]);
 
     useEffect(
         () => {
-            const createdSocket = createSocket();
-            setCurrentSocket(createdSocket);
-            setChatMessages([])
-
-            createdSocket.on('connect', () => {
-                sendJoinRoom();
-            });
-
-            const handleMessage = str => data => {
-                const userId  = data.userId;
-                const message = _.pick(data,['message', 'date', 'eventId', 'userId']);
-                fetchUser(userId);
-                addNewMessage(message);
-            };
-
-            createdSocket.on('chatMessageEvent' + getMessageIdObject().eventId, handleMessage('event'));
-            createdSocket.on('chatMessageUser' + getMessageIdObject().userId, handleMessage('user'));
-
-            createdSocket.on('betCreated', data => {
-                addBetCreated(data);
-            });
-
-            createdSocket.on('betPlaced', data => {
-                addNewBetPlace(data);
-            });
-
-            createdSocket.on('betPulledOut', data => {
-                addNewBetPullOut(data);
-            });
-            return () => {
-                getCurrentSocket()?.disconnect()
-                setCurrentSocket()
-                setChatMessages([])
-            }
-        }, []
+            messageListScrollToBottom();
+        }, [messages]
     );
-
-    const sendJoinRoom = () => {
-        sendObject('joinRoom', getMessageIdObject());
-    };
-
-    const sendObject = (eventName, data) => {
-        getCurrentSocket().emit(eventName, data);
-    };
 
     const onMessageSend = () => {
         if (message) {
@@ -101,82 +39,17 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
                 type: ChatMessageType.chatMessage,
                 message: message,
                 date: new Date(),
-                ...getMessageIdObject(),
+                eventId,
+                userId,
             };
-
-            sendObject('chatMessage', messageData);
             setMessage('');
+            sendChatMessage( messageData);
         }
-    };
-
-    const addNewMessage = (message) => {
-        const chatMessage = {
-            type: ChatMessageType.chatMessage,
-            ...message,
-        };
-
-        addChatMessage(chatMessage);
-    };
-
-    const addBetCreated = (betCreateData) => {
-        const chatMessage = {
-            type: ChatMessageType.createBet,
-            ...betCreateData,
-        };
-        const userId      = _.get(betCreateData, 'userId');
-
-        if (userId) {
-            fetchUser(userId);
-        }
-
-        addChatMessage(chatMessage);
-    };
-
-    const addNewBetPlace = (betPlaceData) => {
-        const chatMessage = {
-            type: ChatMessageType.placeBet,
-            ...betPlaceData,
-        };
-        const userId      = _.get(betPlaceData, 'userId');
-
-        if (userId) {
-            fetchUser(userId);
-        }
-
-        addChatMessage(chatMessage);
-    };
-
-    const addNewBetPullOut = (betPulloutData) => {
-        const chatMessage = {
-            type: ChatMessageType.pulloutBet,
-            ...betPulloutData,
-        };
-        const userId      = _.get(betPulloutData, 'userId');
-
-        if (userId) {
-            fetchUser(userId);
-        }
-
-        addChatMessage(chatMessage);
-    };
-
-    const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
-        const aDate = new Date(a.date);
-        const bDate = new Date(b.date);
-        return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
-    });
-
-    const addChatMessage = (chatMessage) => {
-        setChatMessages(chatMessages => {
-            const result = sortChatMessages([...chatMessages, chatMessage])
-            return _.uniqWith(result, _.isEqual)
-        });
-        messageListScrollToBottom();
     };
 
     const renderMessages = () => {
         return _.map(
-            chatMessages,
+            messages,
             (chatMessage, index) => {
                 const userId = _.get(chatMessage, 'userId');
                 const date   = _.get(chatMessage, 'date');
@@ -196,7 +69,6 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
             messageListRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
-
     return (
         <div
             className={classNames(
@@ -233,18 +105,24 @@ const Chat = ({ className, token, userId, event, fetchUser }) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        token: state.authentication.token,
         userId: state.authentication.userId,
+        messages: state.chat.messagesByEvent[_.get(ownProps.event, '_id')] || [],
+        connected: state.websockets.connected
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+
     return {
-        fetchUser: (userId) => {
-            dispatch(UserActions.fetch({ userId }));
+        fetchChatMessages: (eventId) => {
+            dispatch(ChatActions.fetch({ eventId }));
         },
+        sendChatMessage: (messageObject) => {
+            dispatch(WebsocketsActions.sendChatMessage({ messageObject }));
+        },
+
     };
 };
 

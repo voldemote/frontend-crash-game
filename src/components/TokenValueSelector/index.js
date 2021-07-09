@@ -18,7 +18,7 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect, balance 
         const isHighlighted = _.get(valueObject, 'highlighted', false);
         let isSelected      = false;
 
-        if (activeValue == value) {
+        if (activeValue === value) {
             isSelected = true;
         }
 

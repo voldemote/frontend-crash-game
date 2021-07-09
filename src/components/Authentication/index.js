@@ -7,7 +7,7 @@ import StepsContainer            from '../StepsContainer';
 import styles                    from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect }               from 'react-redux';
-import { requestSms }            from '../../store/actions/authentication';
+
 import { useEffect, useState }   from 'react';
 import { useIsMount }            from '../hoc/useIsMount';
 import _                         from 'lodash';
@@ -133,6 +133,9 @@ const Authentication = ({ authState, step, requestSms, verifySms, setName, setEm
                 }
             }
         },
+        // @TODO: this possibly needs refactoring,
+        // the functions that do not depend on state or props should move out of the component.
+        // for the other functions useCallback() would make sense to prevent unnecessary rerenders
         [country, code],
     );
 

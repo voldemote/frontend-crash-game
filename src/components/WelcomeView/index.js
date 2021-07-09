@@ -1,15 +1,12 @@
 import _                   from 'lodash';
-import BetSummaryContainer from '../BetSummaryContainer';
-import BetSummaryHelper    from '../../helper/BetSummary';
+
 import Icon                from '../Icon';
-import IconTheme           from '../Icon/IconTheme';
+
 import IconType            from '../Icon/IconType';
-import moment              from 'moment';
 import React               from 'react';
 import styles              from './styles.module.scss';
 import { connect }         from 'react-redux';
 import Button              from '../Button';
-import HighlightTheme      from '../Highlight/HighlightTheme';
 import HighlightType       from '../Highlight/HighlightType';
 import { PopupActions }    from '../../store/actions/popup';
 
