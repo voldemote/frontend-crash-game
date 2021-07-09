@@ -161,10 +161,17 @@ const placeBet = (betId, amount, outcome) => {
     });
 };
 
+const getChatMessagesByEventId = (eventId) => {
+    return Api.get(
+        _.replace(ApiUrls.API_EVENT_CHAT_MESSAGES, ':id', eventId),
+    ).then(response => ({ response }))
+    .catch(error => ({ error }));
+};
 export {
     Api,
     createBet,
     fetchReferrals,
+    getChatMessagesByEventId,
     getOpenBets,
     getOutcomes,
     getSellOutcomes,

@@ -75,6 +75,7 @@ export const API_BET_PULL_OUT                     = 'api/event/bet/:id/pullout';
 export const API_BET_SELL_OUTCOMES                = 'api/event/bet/:id/outcomes/sell';
 export const API_EVENT_CREATE                     = 'api/event/create';
 export const API_EVENT_LIST                       = 'api/event/list';
+export const API_EVENT_CHAT_MESSAGES              = 'api/event/chat-messages/:id';
 export const API_USER                             = 'api/user/:id';
 export const API_LEADERBOARD                      = 'api/user/getUsers';
 export const API_USER_HISTORY                     = 'api/user/history';

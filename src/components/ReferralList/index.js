@@ -2,19 +2,16 @@ import _                        from 'lodash';
 import Icon                     from '../Icon';
 import IconTheme                from '../Icon/IconTheme';
 import IconType                 from '../Icon/IconType';
-import InputBox                 from '../InputBox';
 import moment                   from 'moment';
 import ProfilePicture           from '../ProfilePicture';
 import React                    from 'react';
 import styles                   from './styles.module.scss';
 import { connect }              from 'react-redux';
-import { useIsMount }           from '../hoc/useIsMount';
-import InputBoxTheme            from '../InputBox/InputBoxTheme';
-import { generateReferralLink } from '../../helper/ReferralLink';
+
+
 import ReferralLinkCopyInputBox from '../ReferralLinkCopyInputBox';
 
 const ReferralList = ({ closed, userId, referralsWithUser }) => {
-          const isMount = useIsMount();
 
           const renderReferralItem = (referralWithUser) => {
               const user     = _.get(referralWithUser, 'user');

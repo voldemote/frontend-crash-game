@@ -1,22 +1,27 @@
-import AlertSagas                     from './alert';
-import AuthenticationSagas            from './authentication';
-import BetSagas                       from './bet';
-import EventSagas                     from './event';
-import TransactionSagas               from './transaction';
-import UserSagas                      from './user';
-import { all }                        from 'redux-saga/effects';
-import { AuthenticationActions }      from '../actions/authentication';
-import { AuthenticationTypes }        from '../actions/authentication';
-import { BetActions }                 from '../actions/bet';
-import { BetTypes }                   from '../actions/bet';
-import { EventActions }               from '../actions/event';
-import { EventTypes }                 from '../actions/event';
-import { REHYDRATE }                  from 'redux-persist';
-import { takeLatest, takeEvery, put } from 'redux-saga/effects';
-import { TransactionActions }         from '../actions/transaction';
-import { TransactionTypes }           from '../actions/transaction';
-import { UserTypes }                  from '../actions/user';
-import { AlertTypes }                 from '../actions/alert';
+import AlertSagas                             from './alert';
+import AuthenticationSagas                    from './authentication';
+import BetSagas                               from './bet';
+import EventSagas                             from './event';
+import TransactionSagas                       from './transaction';
+import UserSagas                              from './user';
+import ChatSagas                              from './chat';
+import WebsocketsSagas                        from './websockets';
+import { all }                                from 'redux-saga/effects';
+import { AuthenticationActions }              from '../actions/authentication';
+import { AuthenticationTypes }                from '../actions/authentication';
+import { BetActions }                         from '../actions/bet';
+import { BetTypes }                           from '../actions/bet';
+import { EventActions }                       from '../actions/event';
+import { EventTypes }                         from '../actions/event';
+import { REHYDRATE }                          from 'redux-persist';
+import { takeLatest, takeEvery, put }         from 'redux-saga/effects';
+import { TransactionActions }                 from '../actions/transaction';
+import { TransactionTypes }                   from '../actions/transaction';
+import { UserTypes }                          from '../actions/user';
+import { AlertTypes }                         from '../actions/alert';
+import { ChatTypes, ChatActions }             from '../actions/chat';
+import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
+import { LOCATION_CHANGE }                    from 'connected-react-router';
 
 const root = function* () {
     yield all([
@@ -64,6 +69,14 @@ const root = function* () {
         takeLatest([TransactionTypes.FETCH_ALL],                         TransactionSagas.fetchTransactions),
         takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
         takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
+        takeEvery( [ChatTypes.FETCH],                                    ChatSagas.fetch),
+        takeLatest( [ChatTypes.FETCH_INITIAL],                           ChatSagas.fetchInitial),
+        takeLatest( [WebsocketsTypes.INIT],                              WebsocketsSagas.init),
+        takeLatest( [WebsocketsTypes.CONNECTED],                         WebsocketsSagas.connected),
+        takeEvery( [WebsocketsTypes.JOIN_ROOM],                          WebsocketsSagas.joinRoom),
+        takeEvery( [WebsocketsTypes.LEAVE_ROOM],                         WebsocketsSagas.leaveRoom),
+        takeEvery( [WebsocketsTypes.SEND_CHAT_MESSAGE],                  WebsocketsSagas.sendChatMessage),
+        takeEvery( [LOCATION_CHANGE],                                    WebsocketsSagas.joinOrLeaveRoomOnRouteChange),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
         takeLatest([REHYDRATE],                                          rehydrationDone),
@@ -80,6 +93,8 @@ const preLoading = function* () {
     yield put(AuthenticationActions.fetchReferrals());
     yield put(BetActions.fetchOpenBets());
     yield put(TransactionActions.fetchAll());
+    yield put(ChatActions.fetchInitial());
+    yield put(WebsocketsActions.init());
 };
 
 export default {

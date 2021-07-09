@@ -7,8 +7,9 @@ import { useState }            from 'react';
 
 const CarouselContainer = ({ title, children, withoutPadding = false }) => {
     const carouselRef                             = useRef();
-    const [prevArrowVisible, setPrevArrowVisible] = useState(false);
-    const [nextArrowVisible, setNextArrowVisible] = useState(true);
+    // @TODO: Any reason we use state here, even though the values are not mutated?
+    const [prevArrowVisible] = useState(false);
+    const [nextArrowVisible] = useState(true);
 
     const getMappedChildren = () => {
         return React.Children.map(children, (child, index) => (

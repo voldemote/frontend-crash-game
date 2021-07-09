@@ -12,7 +12,6 @@ import IconTheme           from '../Icon/IconTheme';
 import IconType            from '../Icon/IconType';
 import InputBox            from '../../components/InputBox';
 import InputBoxTheme       from '../../components/InputBox/InputBoxTheme';
-import Link                from '../../components/Link';
 import moment              from 'moment';
 import React               from 'react';
 import Routes              from '../../constants/Routes';
@@ -45,7 +44,8 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
           const [eventUrl, setEventUrl]                                     = useState(initialState.eventUrl);
           const [selectedDate, setSelectedDate]                             = useState(initialState.selectedDate);
           const [selectedEndTime, setSelectedEndTime]                       = useState(initialState.selectedEndTime);
-          const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState(initialState.termsAndConditionsAccepted);
+          // @TODO: this is unused atm, can we safely remove that?
+          // const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState(initialState.termsAndConditionsAccepted);
           const [endOfStreamAsEndDate, setEndOfStreamAsEndDate]             = useState(initialState.endOfStreamAsEndDate);
           const [outcomes, setOutcomes]                                     = useState(initialState.outcomes);
           const isMount                                                     = useIsMount();
@@ -157,6 +157,9 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                       validateInput();
                   }
               },
+                // @TODO: this possibly needs refactoring and or adding remaining deps,
+                // the functions that do not depend on state or props should move out of the component.
+                // for the other functions useCallback() would make sense to prevent unnecessary rerenders (e.g. validateInput)
               [eventUrl, marketQuestion, outcomes, selectedDate],
           );
 
@@ -436,28 +439,28 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   </div>
               );
           };
+          // @TODO: this will come back soon enough
+        //   const renderTermsAndConditions = () => {
+        //       const checkboxText = (
+        //           <>I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link>.</>
+        //       );
 
-          const renderTermsAndConditions = () => {
-              const checkboxText = (
-                  <>I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link>.</>
-              );
-
-              return (
-                  <div className={styles.termsAndConditionsContainer}>
-                      <span>
-                          In order to publish the bet, you need to accept our <Link to={Routes.termsAndConditions}>terms and conditions</Link>.
-                          <br />
-                          <br />
-                          <CheckBox
-                              checked={termsAndConditionsAccepted}
-                              setChecked={setTermsAndConditionsAccepted}
-                              text={checkboxText}
-                              errorText={error}
-                          />
-                      </span>
-                  </div>
-              );
-          };
+        //       return (
+        //           <div className={styles.termsAndConditionsContainer}>
+        //               <span>
+        //                   In order to publish the bet, you need to accept our <Link to={Routes.termsAndConditions}>terms and conditions</Link>.
+        //                   <br />
+        //                   <br />
+        //                   <CheckBox
+        //                       checked={termsAndConditionsAccepted}
+        //                       setChecked={setTermsAndConditionsAccepted}
+        //                       text={checkboxText}
+        //                       errorText={error}
+        //                   />
+        //               </span>
+        //           </div>
+        //       );
+        //   };
 
           const getSummaryOutcomeRows = () => {
               const summaryOutcomeRows = [];
