@@ -1,0 +1,29 @@
+@import "../../styles/all";
+
+.tradeStateBadge
+{
+    border-radius:    4px;
+    font-family:      $fontLight;
+    font-size:        12px;
+    font-weight:      bold;
+    width:            auto;
+    white-space:      nowrap;
+    margin-bottom:    8px;
+    background-color: $colorRedLighter30;
+    padding:          10px 15px;
+    display:          inline-flex;
+    justify-content:  center;
+    align-items:      center;
+    height:           30px;
+    user-select:      none;
+    color:            $colorRed;
+
+    span
+    {
+        width:            7px;
+        height:           7px;
+        background-color: $colorRed;
+        border-radius:    50%;
+        margin-right:     10px;
+    }
+}

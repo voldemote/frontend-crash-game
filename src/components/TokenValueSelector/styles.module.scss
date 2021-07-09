@@ -4,9 +4,19 @@
 {
     width:                 100%;
     display:               grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(calc(33% - 5px), 1fr));
     column-gap:            5px;
     row-gap:               5px;
+
+    @media (min-width: $screen-md)
+    {
+        grid-template-columns: repeat(auto-fill, minmax(calc(50% - 5px), 1fr));
+    }
+
+    @media (min-width: $screen-lg)
+    {
+        grid-template-columns: repeat(auto-fill, minmax(calc(33% - 5px), 1fr));
+    }
 
     .tokenValueSelectorBox
     {
@@ -34,6 +44,18 @@
         {
             background-color: $colorGray;
             cursor:           default;
+        }
+
+        &.tokenValueSelectorBoxHighlighted
+        {
+            border-color: $colorPurple;
+            border-width: 2px;
+
+            .value
+            {
+                font-family: $fontBold;
+                font-size:   16px;
+            }
         }
 
         .value

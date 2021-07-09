@@ -1,9 +1,10 @@
-import React      from 'react';
-import styles     from './styles.module.scss';
-import _          from 'lodash';
-import classNames from 'classnames';
+import React       from 'react';
+import styles      from './styles.module.scss';
+import _           from 'lodash';
+import classNames  from 'classnames';
+import { connect } from 'react-redux';
 
-const TokenValueSelector = ({ className, values, activeValue, onSelect }) => {
+const TokenValueSelector = ({ className, values, activeValue, onSelect, balance }) => {
     const onTokenValueClick = (value, enabled) => {
         if (enabled) {
             return () => onSelect(value);
@@ -11,9 +12,11 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect }) => {
     };
 
     const renderValue = (valueObject, index) => {
-        const value     = _.get(valueObject, 'value', valueObject);
-        const isEnabled = _.get(valueObject, 'enabled', true);
-        let isSelected  = false;
+        const value         = _.get(valueObject, 'value', valueObject);
+        const valueName     = _.get(valueObject, 'valueName', value);
+        const isEnabled     = _.get(valueObject, 'enabled', true);
+        const isHighlighted = _.get(valueObject, 'highlighted', false);
+        let isSelected      = false;
 
         // @TODO: was there a reason to not use strict equal?
         if (activeValue === value) {
@@ -26,18 +29,30 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect }) => {
                     styles.tokenValueSelectorBox,
                     isSelected ? styles.tokenValueSelectorBoxSelected : null,
                     !isEnabled ? styles.tokenValueSelectorBoxDisabled : null,
+                    isHighlighted ? styles.tokenValueSelectorBoxHighlighted : null,
                 )}
                 onClick={onTokenValueClick(value, isEnabled)}
                 key={index}
             >
                 <span className={styles.value}>
-                    {value}
+                    {valueName}
                 </span>
                 <span className={styles.label}>
                     EVNT
                 </span>
             </div>
         );
+    };
+
+    const renderMaxValue = () => {
+        const valueObject = {
+            value:       balance,
+            valueName:   'MAX',
+            enabled:     true,
+            highlighted: true,
+        };
+
+        return renderValue(valueObject, null);
     };
 
     return (
@@ -50,8 +65,18 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect }) => {
             {
                 _.map(values, renderValue)
             }
+            {renderMaxValue()}
         </div>
     );
 };
 
-export default TokenValueSelector;
+const mapStateToProps = (state) => {
+    return {
+        balance: state.authentication.balance,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null,
+)(TokenValueSelector);

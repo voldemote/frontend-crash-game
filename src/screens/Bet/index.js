@@ -28,7 +28,7 @@ const Bet = ({ showPopup }) => {
           const { eventId }              = useParams();
           const [currentSlide, setCurrentSlide] = useState(0);
 
-          const event                           = useSelector(
+          const event = useSelector(
               (state) => _.find(
                   state.event.events,
                   {
@@ -36,15 +36,14 @@ const Bet = ({ showPopup }) => {
                   },
               ),
           );
-          // @TODO: this is unused atm, can we safely remove that?
-        //   const bet                             = useSelector(
-        //       () => _.find(
-        //           event ? event.bets : [],
-        //           {
-        //               _id: betId,
-        //           },
-        //       ),
-        //   );
+          const bet   = useSelector(
+              () => _.find(
+                  event ? event.bets : [],
+                  {
+                      _id: betId,
+                  },
+              ),
+          );
 
           const updateCurrentSlide = (index) => {
               if (currentSlide !== index) {
@@ -241,7 +240,10 @@ const Bet = ({ showPopup }) => {
                                   }}
                               >
                                   <div className={styles.carouselSlide}>
-                                      <BetView closed={false} />
+                                      <BetView
+                                          closed={false}
+                                          showEventEnd={true}
+                                      />
                                   </div>
                                   <div className={styles.carouselSlide}>
                                       <Chat
@@ -265,7 +267,10 @@ const Bet = ({ showPopup }) => {
                       </div>
                       <div className={styles.columnRight}>
                           <div>
-                              <BetView closed={false} />
+                              <BetView
+                                  closed={false}
+                                  showEventEnd={true}
+                              />
                           </div>
                           <div className={styles.relatedBets}>
                               <div className={styles.headline}>
