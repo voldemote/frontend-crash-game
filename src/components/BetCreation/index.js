@@ -439,7 +439,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
                   </div>
               );
           };
-          // @TODO: this is unused atm, can we safely remove that?
+          // @TODO: this will come back soon enough
         //   const renderTermsAndConditions = () => {
         //       const checkboxText = (
         //           <>I accept the <Link to={Routes.termsAndConditions}>terms and conditions</Link>.</>
