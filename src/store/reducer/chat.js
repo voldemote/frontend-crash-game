@@ -20,8 +20,9 @@ const fetchSucceeded = (action, state) => {
 };
 const addMessage = (action, state) => {
     const {message , eventId}  = action;
-    return {...state, messagesByEvent: {...state.messagesByEvent, [eventId]: [...(typeof state.messagesByEvent[eventId] !== 'undefined' ? state.messagesByEvent[eventId]: []), message]}}
-
+    let messages = [...(typeof state.messagesByEvent[eventId] !== 'undefined' ? state.messagesByEvent[eventId]: []), message];
+    messages = _.uniqWith(messages, _.isEqual);
+    return {...state, messagesByEvent: {...state.messagesByEvent, [eventId]: messages}}
 };
 
 export default function (state = initialState, action) {
