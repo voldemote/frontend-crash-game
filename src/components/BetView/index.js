@@ -30,6 +30,7 @@ import IconTheme              from '../Icon/IconTheme';
 import TradeStateBadge        from '../TradeStateBadge';
 import SummaryRowContainer    from '../SummaryRowContainer';
 import BetSummaryHelper       from '../../helper/BetSummary';
+import BetState               from './BetState';
 
 const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
     const params                                          = useParams();
@@ -585,12 +586,49 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         );
     };
 
+    const renderStateConditionalContent = () => {
+        const state              = _.get(bet, 'status');
+        const interactionEnabled = state === BetState.active;
+
+        if (
+            state === BetState.active ||
+            state === BetState.cancelled ||
+            state === BetState.closed
+        ) {
+            return (
+                <>
+                    {renderPlaceBetContentContainer()}
+                    <div className={styles.betButtonContainer}>
+                        {renderTradeButton(interactionEnabled)}
+                    </div>
+                </>
+            );
+        } else if (state === BetState.resolved) {
+            const overallTrades = 0;
+            const tokensTraded  = 0;
+            const tokensWon     = 0;
+            const summaryRows   = [
+                BetSummaryHelper.getDivider(),
+                BetSummaryHelper.getKeyValue('Overall trades', overallTrades),
+                BetSummaryHelper.getKeyValue('EVNT tokens traded', tokensTraded + ' EVNT'),
+                BetSummaryHelper.getKeyValue('EVNT tokens won', tokensWon + ' EVNT'),
+            ];
+
+            return (
+                <div className={styles.summaryRowContainer}>
+                    <SummaryRowContainer
+                        summaryRows={summaryRows}
+                    />
+                </div>
+            );
+        }
+    };
+
     if (!event || !bet) {
         return null;
     }
 
-    const interactionEnabled = bet.status === 'active';
-    const endDate            = ['canceled', 'resolved', 'closed'].includes(bet.status) ? null : _.get(bet, 'date');
+    const endDate = _.get(bet, 'date');
 
     return (
         <div
@@ -611,10 +649,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
                 {bet.description}
             </div>
             <TradeStateBadge state={bet.status} />
-            {renderPlaceBetContentContainer()}
-            <div className={styles.betButtonContainer}>
-                {renderTradeButton(interactionEnabled)}
-            </div>
+            {renderStateConditionalContent()}
             {
                 showEventEnd && (
                     <div className={styles.timeLeftCounterContainer}>

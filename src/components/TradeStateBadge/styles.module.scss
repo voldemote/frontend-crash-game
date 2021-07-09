@@ -26,4 +26,26 @@
         border-radius:    50%;
         margin-right:     10px;
     }
+
+    &.resolved
+    {
+        color:            $colorGreen;
+        background-color: $colorGreen30;
+
+        span
+        {
+            background-color: $colorGreen;
+        }
+    }
+
+    &.closed
+    {
+        color:            $colorPurpleDark;
+        background-color: $colorPurpleLight;
+
+        span
+        {
+            background-color: $colorPurpleDark;
+        }
+    }
 }
