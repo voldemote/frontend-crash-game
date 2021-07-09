@@ -14,16 +14,11 @@ import classNames         from 'classnames';
 
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
-const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
-    const aDate = new Date(a.date);
-    const bDate = new Date(b.date);
-    return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
-});
+
 const Chat = ({ className, userId, event, messages, connected, fetchChatMessages, sendChatMessage, joinRoom, leaveRoom }) => {
     const messageListRef                  = useRef();
     const [message, setMessage]           = useState('');
-    // @TODO: move that into the reducer?
-    const chatMessages = sortChatMessages(messages);
+
     const eventId =  _.get(event, '_id');
 
     useEffect(() => {
@@ -66,7 +61,7 @@ const Chat = ({ className, userId, event, messages, connected, fetchChatMessages
 
     const renderMessages = () => {
         return _.map(
-            chatMessages,
+            messages,
             (chatMessage, index) => {
                 const userId = _.get(chatMessage, 'userId');
                 const date   = _.get(chatMessage, 'date');

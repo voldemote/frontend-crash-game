@@ -3,12 +3,18 @@ import _                  from 'lodash';
 const initialState = {
     messagesByEvent: {},
 };
+const sortChatMessages = (chatMessages) => chatMessages.sort((a={},b={}) => {
+    const aDate = new Date(a.date);
+    const bDate = new Date(b.date);
+    return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
+});
 
 // TODO: use that immutability-helper, but learn its API first
 const fetchSucceeded = (action, state) => {
     const {messages , eventId}  = action;
     let combinedMessages = [...(typeof state.messagesByEvent[eventId] !== 'undefined' ? state.messagesByEvent[eventId]: []), ...messages];
     combinedMessages = _.uniqWith(combinedMessages, _.isEqual);
+    combinedMessages = sortChatMessages(combinedMessages);
     return {...state, messagesByEvent: {...state.messagesByEvent, [eventId]: combinedMessages}}
 
 };
