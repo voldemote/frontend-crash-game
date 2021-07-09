@@ -36,14 +36,6 @@ const Bet = ({ showPopup }) => {
                   },
               ),
           );
-          const bet   = useSelector(
-              () => _.find(
-                  event ? event.bets : [],
-                  {
-                      _id: betId,
-                  },
-              ),
-          );
 
           const updateCurrentSlide = (index) => {
               if (currentSlide !== index) {
