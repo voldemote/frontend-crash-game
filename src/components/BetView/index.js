@@ -31,8 +31,33 @@ import TradeStateBadge        from '../TradeStateBadge';
 import SummaryRowContainer    from '../SummaryRowContainer';
 import BetSummaryHelper       from '../../helper/BetSummary';
 import BetState               from './BetState';
+import BetShareContainer      from '../BetShareContainer';
+import ShareType              from '../BetCard/ShareType';
+import Link                   from '../Link';
+import Routes                 from '../../constants/Routes';
 
-const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, forceSellView, disableSwitcher = false, showEventEnd, balance, events, selectedBetId, openBets, rawOutcomes, rawSellOutcomes, choice, commitment, setChoice, setCommitment, placeBet, pullOutBet, fetchOutcomes }) => {
+const BetView = ({
+                     actionIsInProgress,
+                     closed,
+                     isPopup = false,
+                     initialSellTab,
+                     forceSellView,
+                     disableSwitcher = false,
+                     showEventEnd,
+                     balance,
+                     events,
+                     selectedBetId,
+                     openBets,
+                     rawOutcomes,
+                     rawSellOutcomes,
+                     choice,
+                     commitment,
+                     setChoice,
+                     setCommitment,
+                     placeBet,
+                     pullOutBet,
+                     fetchOutcomes,
+                 }) => {
     const params                                          = useParams();
     const defaultBetValue                                 = _.max([balance, 10]);
     const bet                                             = (
@@ -83,6 +108,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
             return bet;
         }
     )();
+    const state                                           = _.get(bet, 'status');
     const betId                                           = _.get(bet, '_id', selectedBetId);
     const event                                           = (
         () => {
@@ -329,7 +355,7 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     const isChoiceSelectorEnabled = (index) => {
-        if (bet.status !== 'active') {
+        if (state !== BetState.active) {
             return false;
         }
 
@@ -500,43 +526,28 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     const renderPlaceBetContentContainer = (enabled) => {
-        const finalOutcome = getFinalOutcome();
-
-        if (!finalOutcome) {
-            return (
-                <>
-                    {renderSwitchableView()}
-                    <div className={styles.placeBetContentContainer}>
-                        {renderTokenSelection()}
-                        <div
-                            className={classNames(
-                                styles.buttonContainer,
-                                hasSellView() ? styles.sellButtonContainer : null,
-                            )}
+        return (
+            <>
+                {renderSwitchableView()}
+                <div className={styles.placeBetContentContainer}>
+                    {renderTokenSelection()}
+                    <div
+                        className={classNames(
+                            styles.buttonContainer,
+                            hasSellView() ? styles.sellButtonContainer : null,
+                        )}
+                    >
+                        <label
+                            className={styles.label}
                         >
-                            <label
-                                className={styles.label}
-                            >
-                                Potential Winnings:
-                            </label>
-                            <div className={styles.choiceContainer}>
-                                {renderChoiceSelectors(enabled)}
-                            </div>
+                            Potential Winnings:
+                        </label>
+                        <div className={styles.choiceContainer}>
+                            {renderChoiceSelectors(enabled)}
                         </div>
                     </div>
-                </>
-            );
-        }
-
-        return (
-            <div className={styles.placeBetContentContainer}>
-                This Bet was already resolved.
-                <div className={styles.buttonContainer}>
-                    <div className={styles.choiceContainer}>
-                        {renderChoiceSelectors(true, finalOutcome)}
-                    </div>
                 </div>
-            </div>
+            </>
         );
     };
 
@@ -587,7 +598,6 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     };
 
     const renderStateConditionalContent = () => {
-        const state              = _.get(bet, 'status');
         const interactionEnabled = state === BetState.active;
 
         if (
@@ -606,20 +616,59 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
         } else if (state === BetState.resolved) {
             const overallTrades = 0;
             const tokensTraded  = 0;
-            const tokensWon     = 0;
+            const tokensWon     = 1;
+            const hasWon        = tokensWon > 0;
+            const finalOutcome  = _.get(bet, ['outcomes', _.get(bet, 'finalOutcome')]);
             const summaryRows   = [
                 BetSummaryHelper.getDivider(),
                 BetSummaryHelper.getKeyValue('Overall trades', overallTrades),
                 BetSummaryHelper.getKeyValue('EVNT tokens traded', tokensTraded + ' EVNT'),
-                BetSummaryHelper.getKeyValue('EVNT tokens won', tokensWon + ' EVNT'),
+                BetSummaryHelper.getKeyValue('Outcome', finalOutcome),
+                BetSummaryHelper.getDivider(),
+                BetSummaryHelper.getKeyValue('EVNT tokens won', tokensWon + ' EVNT', false, false, true, null, false, hasWon ? HighlightType.highlightMenuAddEventOrBet : null),
             ];
 
             return (
-                <div className={styles.summaryRowContainer}>
-                    <SummaryRowContainer
-                        summaryRows={summaryRows}
+                <>
+                    <div className={styles.summaryRowContainer}>
+                        <SummaryRowContainer
+                            summaryRows={summaryRows}
+                        />
+                        <Link
+                            className={styles.walletLink}
+                            to={Routes.wallet}
+                        >
+                            Go to my Wallet
+                            <Icon
+                                className={styles.walletLinkIcon}
+                                iconType={IconType.arrowTopRight}
+                                iconTheme={IconTheme.primary}
+                            />
+                        </Link>
+                        {
+                            hasWon && (
+                                <>
+                                    <span className={styles.confettiLeft}>
+                                        <Icon
+                                            iconType={IconType.confettiLeft}
+                                            iconTheme={null}
+                                        />
+                                    </span>
+                                    <span className={styles.confettiRight}>
+                                        <Icon
+                                            iconType={IconType.confettiRight}
+                                            iconTheme={null}
+                                        />
+                                    </span>
+                                </>
+                            )
+                        }
+                    </div>
+                    <BetShareContainer
+                        shareIconTypes={[ShareType.twitter, ShareType.whatsapp, ShareType.facebook]}
+                        url={window.location.href}
                     />
-                </div>
+                </>
             );
         }
     };
@@ -633,69 +682,73 @@ const BetView = ({ actionIsInProgress, closed, isPopup = false, initialSellTab, 
     return (
         <div
             className={classNames(
-                styles.placeBetContainer,
-                styles[bet.status + 'Status'],
+                styles.placeBetParentContainer,
+                styles[state + 'Status'],
             )}
         >
-            {renderLoadingAnimation()}
-            {renderCurrentBalance()}
-            <span className={styles.eventName}>
-                {event.name}
-            </span>
-            <div className={styles.betMarketQuestion}>
-                {bet.marketQuestion}
+            <div className={styles.placeBetContainer}>
+                {renderLoadingAnimation()}
+                {renderCurrentBalance()}
+                <span className={styles.eventName}>
+                    {event.name}
+                </span>
+                <div className={styles.betMarketQuestion}>
+                    {bet.marketQuestion}
+                </div>
+                <div className={styles.description}>
+                    {bet.description}
+                </div>
+                <TradeStateBadge state={state} />
+                {renderStateConditionalContent()}
+                {
+                    showEventEnd && (
+                        <div className={styles.timeLeftCounterContainer}>
+                            <span>End of Event:</span>
+                            <TimeLeftCounter endDate={endDate} />
+                        </div>
+                    )
+                }
             </div>
-            <div className={styles.description}>
-                {bet.description}
-            </div>
-            <TradeStateBadge state={bet.status} />
-            {renderStateConditionalContent()}
-            {
-                showEventEnd && (
-                    <div className={styles.timeLeftCounterContainer}>
-                        <span>End of Event:</span>
-                        <TimeLeftCounter endDate={endDate} />
-                    </div>
-                )
-            }
         </div>
     );
 
 };
 
 const mapStateToProps = (state) => {
-    return {
-        actionIsInProgress: state.bet.actionIsInProgress,
-        balance:            state.authentication.balance,
-        choice:             state.bet.selectedChoice,
-        commitment:         _.get(state, 'bet.selectedCommitment', 0),
-        events:             state.event.events,
-        openBets:           state.bet.openBets,
-        rawOutcomes:        state.bet.outcomes,
-        rawSellOutcomes:    state.bet.sellOutcomes,
-        selectedBetId:      state.bet.selectedBetId,
-    };
-};
+          return {
+              actionIsInProgress: state.bet.actionIsInProgress,
+              balance:            state.authentication.balance,
+              choice:             state.bet.selectedChoice,
+              commitment:         _.get(state, 'bet.selectedCommitment', 0),
+              events:             state.event.events,
+              openBets:           state.bet.openBets,
+              rawOutcomes:        state.bet.outcomes,
+              rawSellOutcomes:    state.bet.sellOutcomes,
+              selectedBetId:      state.bet.selectedBetId,
+          };
+      }
+;
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        setChoice:     (choice) => {
-            dispatch(BetActions.selectChoice({ choice }));
-        },
-        setCommitment: (commitment, betId) => {
-            dispatch(BetActions.setCommitment({ commitment, betId }));
-        },
-        fetchOutcomes: (betId, amount) => {
-            dispatch(BetActions.fetchOutcomes({ betId, amount }));
-        },
-        placeBet:      (betId, amount, outcome) => {
-            dispatch(BetActions.place({ betId, amount, outcome }));
-        },
-        pullOutBet:    (betId, outcome, amount) => {
-            dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
-        },
-    };
-};
+          return {
+              setChoice:     (choice) => {
+                  dispatch(BetActions.selectChoice({ choice }));
+              },
+              setCommitment: (commitment, betId) => {
+                  dispatch(BetActions.setCommitment({ commitment, betId }));
+              },
+              fetchOutcomes: (betId, amount) => {
+                  dispatch(BetActions.fetchOutcomes({ betId, amount }));
+              },
+              placeBet:      (betId, amount, outcome) => {
+                  dispatch(BetActions.place({ betId, amount, outcome }));
+              },
+              pullOutBet:    (betId, outcome, amount) => {
+                  dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
+              },
+          };
+      }
+;
 
 export default connect(
     mapStateToProps,

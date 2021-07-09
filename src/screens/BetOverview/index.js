@@ -61,7 +61,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
             BetSummaryHelper.getKeyValue('Start Price', amount + ' EVNT'),
             BetSummaryHelper.getKeyValue('Your Prediction', outcomeValue),
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('EVNT Cashout', outcomeReturn + ' EVNT', false, true, null, false, HighlightType.highlightSettingsMyBets),
+            BetSummaryHelper.getKeyValue('EVNT Cashout', outcomeReturn + ' EVNT', false, true, false, null, false, HighlightType.highlightSettingsMyBets),
         ];
     };
 
@@ -117,7 +117,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
             BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
             BetSummaryHelper.getDivider(),
             BetSummaryHelper.getKeyValue('Outcome', outcomeReturn + ' EVNT', false, true),
-            BetSummaryHelper.getKeyValue('Type', sold ? 'Sell' : 'Buy', false, true, sold ? 'red' : 'green'),
+            BetSummaryHelper.getKeyValue('Type', sold ? 'Sell' : 'Buy', false, true, false, sold ? 'red' : 'green'),
         ];
     };
 
