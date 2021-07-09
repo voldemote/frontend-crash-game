@@ -23,7 +23,7 @@ function createSocketChannel(socket) {
         const chatMessageHandler = (event) => {
             const message = {
                 type: ChatMessageType.chatMessage,
-                ..._.pick(event,['message', 'date', 'eventId', 'userId']),
+                ...event,
             };
 
             emit(message)
