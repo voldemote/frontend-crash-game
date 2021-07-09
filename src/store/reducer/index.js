@@ -5,6 +5,7 @@ import popupReducer          from '../reducer/popup';
 import transactionReducer    from '../reducer/transaction';
 import userReducer           from '../reducer/user';
 import chatReducer           from '../reducer/chat';
+import notificationReducer           from '../reducer/notification';
 import authenticationReducer from '../reducer/authentication';
 import websocketsReducer from './websockets';
 import { combineReducers }   from 'redux';
@@ -19,6 +20,7 @@ export default (history) => combineReducers({
     transaction:    transactionReducer,
     user:           userReducer,
     chat:           chatReducer,
+    notification:   notificationReducer,
     websockets:     websocketsReducer,
     router:         connectRouter(history),
 })

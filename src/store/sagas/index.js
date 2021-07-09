@@ -6,7 +6,7 @@ import TransactionSagas               from './transaction';
 import UserSagas                      from './user';
 import ChatSagas                      from './chat';
 import WebsocketsSagas                      from './websockets';
-import { all }                        from 'redux-saga/effects';
+import {all, select} from 'redux-saga/effects';
 import { AuthenticationActions }      from '../actions/authentication';
 import { AuthenticationTypes }        from '../actions/authentication';
 import { BetActions }                 from '../actions/bet';
@@ -93,6 +93,15 @@ const preLoading = function* () {
     yield put(TransactionActions.fetchAll());
     yield put(ChatActions.fetchInitial());
     yield put(WebsocketsActions.init());
+
+    const userId = yield select(state => state.authentication.userId);
+    if(userId) {
+        yield put(WebsocketsActions.joinRoom({
+            userId,
+            eventId: 'undefinedRoom',
+        }));
+    }
+
 
 };
 

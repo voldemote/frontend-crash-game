@@ -5,6 +5,7 @@ import { eventChannel, END } from 'redux-saga'
 import _                  from 'lodash';
 import ChatMessageType    from '../../components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions }             from '../actions/chat';
+import { NotificationActions }             from '../actions/notification';
 import { WebsocketsActions }             from '../actions/websockets';
 
 import {createSocket, websocket} from '../../api/websockets'
@@ -52,6 +53,13 @@ function createSocketChannel(socket) {
             emit(message)
         };
 
+        const notificationHandler = (notification) => {
+            emit({
+                type: 'notification',
+                ...notification
+            })
+        }
+
         const errorHandler = (errorEvent) => {
             // create an Error object and put it into the channel
             emit(new Error(errorEvent.reason))
@@ -63,6 +71,7 @@ function createSocketChannel(socket) {
         socket.on('betCreated', addBetCreatedHandler)
         socket.on('betPlaced', addNewBetPlaceHandler)
         socket.on('betPulledOut', addNewBetPullOutHandler)
+        socket.on('notification', notificationHandler)
         socket.on('error', errorHandler)
 
         const unsubscribe = () => {
@@ -70,10 +79,17 @@ function createSocketChannel(socket) {
             socket.off('betCreated', addBetCreatedHandler)
             socket.off('betPlaced', addNewBetPlaceHandler)
             socket.off('betPulledOut', addNewBetPullOutHandler)
+            socket.off('notification', notificationHandler)
         }
 
         return unsubscribe
     })
+}
+
+const notificationTypes = {
+    EVENT_START: 'Notification/EVENT_START',
+    EVENT_RESOLVE: 'Notification/EVENT_RESOLVE',
+    EVENT_CANCEL: 'Notification/EVENT_CANCEL',
 }
 
 export function* init() {
@@ -100,6 +116,12 @@ export function* init() {
                         case ChatMessageType.chatMessage:
                             yield put(ChatActions.addMessage({eventId: payload.eventId, message: payload}));
                             break;
+                        case 'notification':
+                        case notificationTypes.EVENT_CANCEL:
+                        case notificationTypes.EVENT_RESOLVE:
+                        case notificationTypes.EVENT_START:
+                            yield put(NotificationActions.addNotification({eventId: payload.eventId, notification: payload}));
+                            break;
                     }
 
                 } catch(err) {
@@ -119,6 +141,7 @@ export function* init() {
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
     const connected = yield select(state => state.websockets.connected);
+
     if(!connected) {
         yield call(init);
         // @TODO: we need to call/fork from init to join-or-leave
@@ -151,6 +174,10 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
                     eventId: room,
                 }));
             }
+            yield put(WebsocketsActions.joinRoom({
+                userId,
+                eventId: 'undefinedEventId',
+            }));
         }
     }
 
