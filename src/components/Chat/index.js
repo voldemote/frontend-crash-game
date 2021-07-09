@@ -15,7 +15,7 @@ import classNames         from 'classnames';
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
 
-const Chat = ({ className, userId, event, messages, connected, fetchChatMessages, sendChatMessage, joinRoom, leaveRoom }) => {
+const Chat = ({ className, userId, event, messages, connected, fetchChatMessages, sendChatMessage }) => {
     const messageListRef                  = useRef();
     const [message, setMessage]           = useState('');
 
@@ -27,17 +27,6 @@ const Chat = ({ className, userId, event, messages, connected, fetchChatMessages
         }
     }, [eventId, fetchChatMessages]);
 
-    useEffect(
-        () => {
-            if(connected) {
-                joinRoom(userId, eventId)
-            }
-
-            return () => {
-                leaveRoom(userId, eventId);
-            }
-        }, [connected, eventId, joinRoom, leaveRoom, userId]
-    );
     useEffect(
         () => {
             messageListScrollToBottom();
@@ -133,12 +122,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         sendChatMessage: (messageObject) => {
             dispatch(WebsocketsActions.sendChatMessage({ messageObject }));
-        },
-        joinRoom: (userId, eventId) => {
-            dispatch(WebsocketsActions.joinRoom({ userId, eventId }));
-        },
-        leaveRoom: (userId, eventId) => {
-            dispatch(WebsocketsActions.leaveRoom({ userId, eventId }));
         },
 
     };

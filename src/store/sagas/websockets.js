@@ -88,6 +88,7 @@ export function* init() {
                 try {
                     // An error from socketChannel will cause the saga jump to the catch block
                     const payload = yield take(socketChannel);
+                    // @TODO: remove when finished debugging
                     console.log(payload)
                     switch(payload.type) {
                         case 'connect':
@@ -116,6 +117,44 @@ export function* init() {
 }
 
 
+export function* joinOrLeaveRoomOnRouteChange(action) {
+    const connected = yield select(state => state.websockets.connected);
+    if(!connected) {
+        yield call(init);
+        // @TODO: we need to call/fork from init to join-or-leave
+    } else {
+        const userId = yield select(state => state.authentication.userId);
+        const room = yield select(state => state.websockets.room);
+        let eventId = null;
+        const pathname = action.payload.location.pathname;
+        const pathSlugs = pathname.slice(1).split('/');
+        // event page
+        if (pathSlugs[0] === 'trade') {
+            eventId = pathSlugs[1];
+            if (eventId !== room) {
+                if(room) {
+                    yield put(WebsocketsActions.leaveRoom({
+                        userId,
+                        eventId: room,
+                    }));
+                }
+                yield put(WebsocketsActions.joinRoom({
+                    userId,
+                    eventId,
+                }));
+            }
+
+        } else {
+            if(room) {
+                yield put(WebsocketsActions.leaveRoom({
+                    userId,
+                    eventId: room,
+                }));
+            }
+        }
+    }
+
+}
 export function* joinRoom(action) {
     const init = yield select(state => state.websockets.init);
     const connected = yield select(state => state.websockets.connected);
@@ -142,4 +181,5 @@ export default {
     joinRoom,
     leaveRoom,
     sendChatMessage,
+    joinOrLeaveRoomOnRouteChange,
 };

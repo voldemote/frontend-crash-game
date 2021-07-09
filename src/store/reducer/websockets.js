@@ -2,7 +2,8 @@ import { WebsocketsTypes } from "../actions/websockets";
 
 const initialState = {
     init: false,
-    connected: false
+    connected: false,
+    room: null
 };
 
 const initSucceeded = (action, state) => {
@@ -14,6 +15,12 @@ const close = (action, state) => {
 const connected = (action, state) => {
     return { ...state, connected: true };
 };
+const joinRoom = (action, state) => {
+    return { ...state, room: action.eventId };
+};
+const leaveRoom = (action, state) => {
+    return { ...state, room: null };
+};
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -24,6 +31,10 @@ export default function (state = initialState, action) {
             return close(action, state);
         case WebsocketsTypes.CONNECTED:
             return connected(action, state);
+        case WebsocketsTypes.JOIN_ROOM:
+            return joinRoom(action, state);
+        case WebsocketsTypes.LEAVE_ROOM:
+            return leaveRoom(action, state);
         default:
             return state;
         // @formatter:on

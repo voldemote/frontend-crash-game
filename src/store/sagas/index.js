@@ -71,6 +71,7 @@ const root = function* () {
         takeEvery( [ChatTypes.FETCH],                                    ChatSagas.fetch),
         takeLatest( [ChatTypes.FETCH_INITIAL],                           ChatSagas.fetchInitial),
         takeLatest( [WebsocketsTypes.INIT],                              WebsocketsSagas.init),
+        takeEvery( ['@@router/LOCATION_CHANGE'],                        WebsocketsSagas.joinOrLeaveRoomOnRouteChange),
         takeEvery( [WebsocketsTypes.JOIN_ROOM],                          WebsocketsSagas.joinRoom),
         takeEvery( [WebsocketsTypes.LEAVE_ROOM],                         WebsocketsSagas.leaveRoom),
         takeEvery( [WebsocketsTypes.SEND_CHAT_MESSAGE],                  WebsocketsSagas.sendChatMessage),
