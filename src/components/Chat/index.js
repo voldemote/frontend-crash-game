@@ -1,19 +1,17 @@
 import _                     from 'lodash';
+import ChatMessageType       from '../ChatMessageWrapper/ChatMessageType';
+import ChatMessageWrapper    from '../ChatMessageWrapper';
+import classNames            from 'classnames';
 import Icon                  from '../Icon';
 import IconTheme             from '../Icon/IconTheme';
 import IconType              from '../../components/Icon/IconType';
+import Input                 from '../Input';
 import styles                from './styles.module.scss';
 import { connect }           from 'react-redux';
 import { useEffect }         from 'react';
-import { ChatActions }       from '../../store/actions/chat';
-import { WebsocketsActions } from '../../store/actions/websockets';
 import { useRef }            from 'react';
 import { useState }          from 'react';
-import Input                 from '../Input';
-import classNames            from 'classnames';
-
-import ChatMessageWrapper from '../ChatMessageWrapper';
-import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
+import { WebsocketsActions } from '../../store/actions/websockets';
 
 const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
     const messageListRef        = useRef();
@@ -35,6 +33,7 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
                 eventId,
                 userId,
             };
+
             setMessage('');
             sendChatMessage(messageData);
         }
@@ -62,6 +61,7 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
             messageListRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
+
     return (
         <div
             className={classNames(

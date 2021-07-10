@@ -69,6 +69,7 @@ const root = function* () {
         takeLatest([TransactionTypes.FETCH_ALL],                         TransactionSagas.fetchTransactions),
         takeEvery( [UserTypes.FETCH],                                    UserSagas.fetch),
         takeEvery( [UserTypes.FETCH_SUCCEEDED],                          UserSagas.fetchSucceeded),
+        takeEvery( [ChatTypes.ADD_MESSAGE],                              ChatSagas.addMessage),
         takeEvery( [ChatTypes.FETCH],                                    ChatSagas.fetch),
         takeLatest( [ChatTypes.FETCH_INITIAL],                           ChatSagas.fetchInitial),
         takeLatest( [WebsocketsTypes.INIT],                              WebsocketsSagas.init),
@@ -79,6 +80,7 @@ const root = function* () {
         takeEvery( [LOCATION_CHANGE],                                    WebsocketsSagas.joinOrLeaveRoomOnRouteChange),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
+        takeLatest([REHYDRATE],                                          ChatSagas.rehydrate),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
     ]);

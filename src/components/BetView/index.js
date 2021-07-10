@@ -715,40 +715,38 @@ const BetView = ({
 };
 
 const mapStateToProps = (state) => {
-          return {
-              actionIsInProgress: state.bet.actionIsInProgress,
-              balance:            state.authentication.balance,
-              choice:             state.bet.selectedChoice,
-              commitment:         _.get(state, 'bet.selectedCommitment', 0),
-              events:             state.event.events,
-              openBets:           state.bet.openBets,
-              rawOutcomes:        state.bet.outcomes,
-              rawSellOutcomes:    state.bet.sellOutcomes,
-              selectedBetId:      state.bet.selectedBetId,
-          };
-      }
-;
+    return {
+        actionIsInProgress: state.bet.actionIsInProgress,
+        balance:            state.authentication.balance,
+        choice:             state.bet.selectedChoice,
+        commitment:         _.get(state, 'bet.selectedCommitment', 0),
+        events:             state.event.events,
+        openBets:           state.bet.openBets,
+        rawOutcomes:        state.bet.outcomes,
+        rawSellOutcomes:    state.bet.sellOutcomes,
+        selectedBetId:      state.bet.selectedBetId,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
-          return {
-              setChoice:     (choice) => {
-                  dispatch(BetActions.selectChoice({ choice }));
-              },
-              setCommitment: (commitment, betId) => {
-                  dispatch(BetActions.setCommitment({ commitment, betId }));
-              },
-              fetchOutcomes: (betId, amount) => {
-                  dispatch(BetActions.fetchOutcomes({ betId, amount }));
-              },
-              placeBet:      (betId, amount, outcome) => {
-                  dispatch(BetActions.place({ betId, amount, outcome }));
-              },
-              pullOutBet:    (betId, outcome, amount) => {
-                  dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
-              },
-          };
-      }
-;
+    return {
+        setChoice:     (choice) => {
+            dispatch(BetActions.selectChoice({ choice }));
+        },
+        setCommitment: (commitment, betId) => {
+            dispatch(BetActions.setCommitment({ commitment, betId }));
+        },
+        fetchOutcomes: (betId, amount) => {
+            dispatch(BetActions.fetchOutcomes({ betId, amount }));
+        },
+        placeBet:      (betId, amount, outcome) => {
+            dispatch(BetActions.place({ betId, amount, outcome }));
+        },
+        pullOutBet:    (betId, outcome, amount) => {
+            dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
+        },
+    };
+};
 
 export default connect(
     mapStateToProps,
