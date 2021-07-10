@@ -1,12 +1,12 @@
-import _                     from 'lodash';
-import Divider               from '../Divider';
-import Link                  from '../Link';
-import React                 from 'react';
-import styles                from './styles.module.scss';
-import SummaryRowType        from './SummaryRowType';
-import classNames            from 'classnames';
-import SelectionHelper       from '../../helper/SelectionHelper';
-import Highlight             from '../Highlight';
+import _               from 'lodash';
+import Divider         from '../Divider';
+import Link            from '../Link';
+import React           from 'react';
+import styles          from './styles.module.scss';
+import SummaryRowType  from './SummaryRowType';
+import classNames      from 'classnames';
+import SelectionHelper from '../../helper/SelectionHelper';
+import Highlight       from '../Highlight';
 
 const SummaryRowContainer = ({ className, summaryRows }) => {
     const renderSummaryRow = (summaryRow, index) => {
@@ -18,18 +18,19 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
                 const keyBold        = _.get(summaryRow, 'keyBold');
                 const value          = _.get(summaryRow, 'value');
                 const valueBold      = _.get(summaryRow, 'valueBold');
+                const valueBig       = _.get(summaryRow, 'valueBig');
                 const valueColor     = _.get(summaryRow, 'valueColor');
                 const valueHighlight = _.get(summaryRow, 'valueHighlight');
                 const isLink         = _.get(summaryRow, 'isLink');
 
-                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueColor, valueHighlight, isLink);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink);
 
             case SummaryRowType.divider:
                 return <Divider key={index} />;
         }
     };
 
-    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueColor = null, valueHighlight = null, isLink = false) => {
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false) => {
         return (
             <div
                 className={classNames(
@@ -63,6 +64,7 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
                             <span
                                 className={classNames(
                                     valueBold ? styles.bold : null,
+                                    valueBig ? styles.big : null,
                                     SelectionHelper.get(
                                         valueColor,
                                         {

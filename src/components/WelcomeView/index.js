@@ -51,10 +51,10 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
     return (
         <div className={styles.welcomeContainer}>
             <span className={styles.welcomeConfettiLeft}>
-                <Icon iconType={IconType.confettiLeft} />
+                <Icon iconType={IconType.confettiLeft} iconTheme={null} />
             </span>
             <span className={styles.welcomeConfettiRight}>
-                <Icon iconType={IconType.confettiRight} />
+                <Icon iconType={IconType.confettiRight} iconTheme={null} />
             </span>
             {renderHeadline()}
             {renderWelcomeText()}
