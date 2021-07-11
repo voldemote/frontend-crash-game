@@ -14,6 +14,8 @@ import _                from 'lodash';
 import ReferralList     from '../ReferralList';
 import BetApproveView   from '../BetApproveView';
 import WelcomeView      from '../WelcomeView';
+import TradeDetailView  from '../TradeDetailView';
+import EventDetailView  from '../EventDetailView';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
     useEffect(() => {
@@ -25,27 +27,24 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
     }, [visible]);
 
     const renderPopup = () => {
-        switch (type) {
-            case PopupTheme.welcome:
-                return (
-                    <WelcomeView
-                        closed={!visible}
-                    />
-                );
+        const eventId          = _.get(options, 'eventId');
+        const betId            = _.get(options, 'betId');
+        const investmentAmount = _.get(options, 'investmentAmount');
+        const outcome          = _.get(options, 'outcome');
+        const initialSellTab   = _.get(options, 'initialSellTab', false);
 
+        switch (type) {
             case PopupTheme.betApprove:
                 return (
                     <BetApproveView
                         closed={!visible}
-                        betId={_.get(options, 'betId')}
-                        investmentAmount={_.get(options, 'investmentAmount')}
-                        outcome={_.get(options, 'outcome')}
+                        betId={betId}
+                        investmentAmount={investmentAmount}
+                        outcome={outcome}
                     />
                 );
 
             case PopupTheme.betCreation:
-                const eventId = _.get(options, 'eventId');
-
                 return (
                     <BetCreation
                         closed={!visible}
@@ -54,8 +53,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                 );
 
             case PopupTheme.betView:
-                const initialSellTab = _.get(options, 'initialSellTab', false);
-
                 return (
                     <BetView
                         isPopup={true}
@@ -66,10 +63,28 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                     />
                 );
 
+            case PopupTheme.eventDetails:
+                return (
+                    <EventDetailView />
+                );
+
             case PopupTheme.referralList:
                 return (
                     <ReferralList closed={!visible} />
                 );
+
+            case PopupTheme.tradeDetails:
+                return (
+                    <TradeDetailView />
+                );
+
+            case PopupTheme.welcome:
+                return (
+                    <WelcomeView
+                        closed={!visible}
+                    />
+                );
+
         }
 
         return null;
