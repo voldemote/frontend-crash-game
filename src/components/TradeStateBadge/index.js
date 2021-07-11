@@ -1,6 +1,7 @@
-import React  from 'react';
-import styles from './styles.module.scss';
-import _      from 'lodash';
+import React      from 'react';
+import styles     from './styles.module.scss';
+import _          from 'lodash';
+import classNames from 'classnames';
 
 const TradeStateBadge = ({ state }) => {
     const getStateText = () => {
@@ -8,7 +9,12 @@ const TradeStateBadge = ({ state }) => {
     };
 
     return (
-        <span className={styles.tradeStateBadge}>
+        <span
+            className={classNames(
+                styles.tradeStateBadge,
+                styles[state],
+            )}
+        >
             <span></span>
             {getStateText()}
         </span>

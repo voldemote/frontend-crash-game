@@ -14,60 +14,15 @@ import { useState } from "react";
 import MainMenu from "../MainMenu";
 import LeaderboardItem from "../LeaderboardItem";
 import Notifications from "../Notifications";
-// import { connect }              from 'react-redux';
-// import { LeaderboardActions }   from 'store/actions/leaderboard';
-// Just as long as I don't get Redux
-import axios from "axios";
 import { useEffect } from "react";
 import { matchPath } from "react-router";
 import { connect } from "react-redux";
 
-const Navbar = ({ user, location, notifications, bets }) => {
+const Navbar = ({ user, location, notifications, bets, leaderboard, rank }) => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
-    const [leaderboard, setLeaderboard] = useState([]);
-    const [rank, setRank] = useState(0);
     const [unreadNotifications, setUnreadNotifications] = useState(0);
-
-    // const [notifications, setNotifications] = useState([
-    //     {
-    //         id: "1",
-    //         message:
-    //             "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
-    //         read: false,
-    //     },
-    //     {
-    //         id: "2",
-    //         message:
-    //             "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
-    //         read: false,
-    //     },
-    //     {
-    //         id: "3",
-    //         message:
-    //             "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
-    //         read: false,
-    //     },
-    //     {
-    //         id: "4",
-    //         message:
-    //             "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
-    //         read: false,
-    //     },
-    //     {
-    //         id: "5",
-    //         message:
-    //             "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
-    //         read: true,
-    //     },
-    //     {
-    //         id: "6",
-    //         message:
-    //             "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
-    //         read: true,
-    //     },
-    // ]);
 
     useEffect(() => {
         setUnreadNotifications(
@@ -75,34 +30,6 @@ const Navbar = ({ user, location, notifications, bets }) => {
                 .length
         );
     }, [notifications]);
-
-    // Just as long as I don't get Redux
-    const token = user.token;
-
-    useEffect(() => {
-        axios
-            .get("http://localhost:8000/api/user/getUsers")
-            .then((response) => {
-                setLeaderboard(response.data.users);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        axios
-            .get(`http://localhost:8000/api/user/${user.userId}`, {
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-            })
-            .then((response) => {
-                setRank(response.data.rank);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [token, rank, user.userId]);
-    // End of temporary solution
 
     const onChangeLeaderboard = () => {
         setShowLeaderboard(!showLeaderboard);
@@ -265,7 +192,9 @@ const mapStateToProps = (state) => {
         notifications: _.flatten(
             _.values(state.notification.notificationsByEvent)
         ),
-        bets: state.bet
+        bets: state.bet,
+        leaderboard: _.get(state.leaderboard.leaderboard, "users", []),
+        rank: _.get(state.authentication, "rank", 0)
     };
 };
 

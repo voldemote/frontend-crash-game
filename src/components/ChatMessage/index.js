@@ -6,10 +6,6 @@ const ChatMessage = ({ user, message, dateString }) => {
     const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
     const userName       = _.get(user, 'name', 'Unknown');
 
-    if (!user) {
-        return null;
-    }
-
     return (
         <div className={styles.chatMessage}>
             <img

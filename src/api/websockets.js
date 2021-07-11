@@ -1,9 +1,10 @@
-import { io }             from 'socket.io-client';
-import ApiConstants       from '../constants/Api';
-export let websocket = null;
+import { io }       from 'socket.io-client';
+import ApiConstants from '../constants/Api';
+
+export let websocket      = null;
 export const createSocket = (token) => {
-    if(!token) {
-        console.error('Not auth token given!')
+    if (!token) {
+        console.error('Not auth token given!');
     }
 
     const socket = io(
@@ -13,16 +14,13 @@ export const createSocket = (token) => {
             extraHeaders: { Authorization: `Bearer ${token}` },
         },
     );
-    websocket = socket;
-    return new Promise((resolve) => {
-        socket.on('connect', () => {
-            resolve(socket);
-        });
-    });
+    websocket    = socket;
+
+    return socket;
 
 };
 
 export default {
     websocket,
     createSocket,
-}
+};

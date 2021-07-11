@@ -1,11 +1,12 @@
-import _                    from 'lodash';
-import { connect }          from 'react-redux';
-import { useCallback, useEffect }        from 'react';
-import { useState }         from 'react';
-import DateText             from '../../helper/DateText';
-import ChatMessageType      from './ChatMessageType';
-import ChatMessage          from '../ChatMessage';
-import BetActionChatMessage from '../BetActionChatMessage';
+import _                          from 'lodash';
+import { connect }                from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { useState }               from 'react';
+import DateText                   from '../../helper/DateText';
+import ChatMessageType            from './ChatMessageType';
+import ChatMessage                from '../ChatMessage';
+import BetActionChatMessage       from '../BetActionChatMessage';
+import State                      from '../../helper/State';
 
 const ChatMessageWrapper = ({ user, message, date }) => {
     const [dateString, setDateString] = useState('');
@@ -29,7 +30,6 @@ const ChatMessageWrapper = ({ user, message, date }) => {
         },
         [date, updateDateText],
     );
-
 
     if (!user) {
         return null;
@@ -64,13 +64,9 @@ const ChatMessageWrapper = ({ user, message, date }) => {
 
 const mapStateToProps = (state, ownProps) => {
     const { userId } = ownProps;
-    const user       = _.get(
-        state.user.users,
-        userId,
-    );
 
     return {
-        user: user,
+        user: State.getUser(userId, state.user.users),
     };
 };
 

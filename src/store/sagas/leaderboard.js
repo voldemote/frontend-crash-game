@@ -6,6 +6,7 @@ import { LeaderboardActions } from "../actions/leaderboard";
 import { select } from "redux-saga/effects";
 import _ from "lodash";
 import { UserActions } from "../actions/user";
+import State from "../../helper/State";
 
 const fetchAll = function* (action) {
     const response = yield call(Api.getLeaderboard);

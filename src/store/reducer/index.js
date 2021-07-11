@@ -8,6 +8,7 @@ import chatReducer           from '../reducer/chat';
 import notificationReducer           from '../reducer/notification';
 import authenticationReducer from '../reducer/authentication';
 import websocketsReducer from './websockets';
+import leaderboardReducer from './leaderboard';
 import { combineReducers }   from 'redux';
 import { connectRouter }     from 'connected-react-router';
 
@@ -22,5 +23,6 @@ export default (history) => combineReducers({
     chat:           chatReducer,
     notification:   notificationReducer,
     websockets:     websocketsReducer,
+    leaderboard:    leaderboardReducer,
     router:         connectRouter(history),
 })
