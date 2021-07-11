@@ -27,16 +27,16 @@ const NotificationsItem = ({
                 }
             >
                 <div className={style.notificationCardContent}>
-                    <div
-                        className={
-                            notification.read === true
-                                ? style.notificationDotRead
-                                : style.notificationDotUnread
-                        }
-                    />
-                    <p className={style.notificationMessage}>
+                    <div className={style.notificationMessage}>
+                        <div
+                            className={
+                                notification.read === true
+                                    ? style.notificationDotRead
+                                    : style.notificationDotUnread
+                            }
+                        />
                         {notification.message}
-                    </p>
+                    </div>
                 </div>
                 <p
                     className={style.markSingleRead}

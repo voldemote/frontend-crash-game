@@ -22,7 +22,7 @@ import { useEffect } from "react";
 import { matchPath } from "react-router";
 import { connect } from "react-redux";
 
-const Navbar = ({ user, location }) => {
+const Navbar = ({ user, location, notifications, bets }) => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
@@ -30,44 +30,44 @@ const Navbar = ({ user, location }) => {
     const [rank, setRank] = useState(0);
     const [unreadNotifications, setUnreadNotifications] = useState(0);
 
-    const [notifications, setNotifications] = useState([
-        {
-            id: "1",
-            message:
-                "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
-            read: false,
-        },
-        {
-            id: "2",
-            message:
-                "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
-            read: false,
-        },
-        {
-            id: "3",
-            message:
-                "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
-            read: false,
-        },
-        {
-            id: "4",
-            message:
-                "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
-            read: false,
-        },
-        {
-            id: "5",
-            message:
-                "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
-            read: true,
-        },
-        {
-            id: "6",
-            message:
-                "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
-            read: true,
-        },
-    ]);
+    // const [notifications, setNotifications] = useState([
+    //     {
+    //         id: "1",
+    //         message:
+    //             "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
+    //         read: false,
+    //     },
+    //     {
+    //         id: "2",
+    //         message:
+    //             "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
+    //         read: false,
+    //     },
+    //     {
+    //         id: "3",
+    //         message:
+    //             "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
+    //         read: false,
+    //     },
+    //     {
+    //         id: "4",
+    //         message:
+    //             "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
+    //         read: false,
+    //     },
+    //     {
+    //         id: "5",
+    //         message:
+    //             "The event CS:Go LIVE Stream has ended. Output: Name of the Winner. Your Trade Amount was 500 EVNT.",
+    //         read: true,
+    //     },
+    //     {
+    //         id: "6",
+    //         message:
+    //             "The event Ultimate Snail Race has ended. Output: Wallfair Snail. You Trade Amount was 500 EVNT. You won 3.000 EVNT. 🥳",
+    //         read: true,
+    //     },
+    // ]);
 
     useEffect(() => {
         setUnreadNotifications(
@@ -262,11 +262,11 @@ const Navbar = ({ user, location }) => {
 const mapStateToProps = (state) => {
     return {
         location: state.router.location,
+        notifications: _.flatten(
+            _.values(state.notification.notificationsByEvent)
+        ),
+        bets: state.bet
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, null)(Navbar);

@@ -40,7 +40,7 @@ const Notifications = ({
                 {notifications.map((notification) => {
                     return (
                         <NotificationsItem
-                            key={notification.id}
+                            key={notification.date}
                             notification={notification}
                             notifications={notifications}
                             unreadNotifications={unreadNotifications}
