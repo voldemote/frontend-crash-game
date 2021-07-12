@@ -27,7 +27,7 @@ import Icon                   from '../Icon';
 import LoadingAnimation       from '../../data/animations/sending-transaction.gif';
 import IconType               from '../Icon/IconType';
 import IconTheme              from '../Icon/IconTheme';
-import TradeStateBadge        from '../TradeStateBadge';
+import StateBadge             from '../StateBadge';
 import SummaryRowContainer    from '../SummaryRowContainer';
 import BetSummaryHelper       from '../../helper/BetSummary';
 import BetState               from './BetState';
@@ -35,6 +35,8 @@ import BetShareContainer      from '../BetShareContainer';
 import ShareType              from '../BetCard/ShareType';
 import Link                   from '../Link';
 import Routes                 from '../../constants/Routes';
+import { PopupActions }       from '../../store/actions/popup';
+import PopupTheme             from '../Popup/PopupTheme';
 
 const BetView = ({
                      actionIsInProgress,
@@ -57,6 +59,7 @@ const BetView = ({
                      placeBet,
                      pullOutBet,
                      fetchOutcomes,
+                     showPopup,
                  }) => {
     const params                                          = useParams();
     const defaultBetValue                                 = _.max([balance, 10]);
@@ -173,6 +176,7 @@ const BetView = ({
     const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
     const [commitmentErrorText, setCommitmentErrorText]   = useState('');
     const [tokenNumber, setTokenNumber]                   = useState(commitment);
+    const [menuOpened, setMenuOpened]                     = useState(false);
     const hasMounted                                      = useHasMounted();
 
     const validateInput = () => {
@@ -579,12 +583,84 @@ const BetView = ({
         return null;
     };
 
+    const renderMenuContainerWithCurrentBalance = () => {
+        return (
+            <div
+                className={classNames(
+                    styles.menuContainer,
+                    isPopup ? styles.popupMenuContainer : null,
+                )}
+            >
+                {renderCurrentBalance()}
+                {renderMenu()}
+            </div>
+        );
+    };
+
+    const renderMenu = () => {
+        const renderMenuInfoIcon = () => {
+            return (
+                <Icon
+                    className={styles.menuInfoIcon}
+                    iconType={IconType.info}
+                    iconTheme={null}
+                    width={16}
+                />
+            );
+        };
+        const openInfoPopup      = (popupType) => {
+            return () => {
+                const options = {
+                    tradeId: betId,
+                    eventId: _.get(event, '_id'),
+                };
+                showPopup(popupType, options);
+            };
+        };
+
+        return (
+            <div className={styles.menu}>
+                <Icon
+                    iconType={IconType.menu}
+                    iconTheme={null}
+                    onClick={() => (
+                        setMenuOpened(!menuOpened)
+                    )}
+                />
+                <div
+                    className={classNames(
+                        styles.menuBox,
+                        menuOpened ? styles.menuBoxOpened : null,
+                    )}
+                >
+                    <div
+                        className={styles.menuItem}
+                        onClick={openInfoPopup(PopupTheme.eventDetails)}
+                    >
+                        {renderMenuInfoIcon()}
+                        <span>
+                            See <strong>Event</strong> Details
+                        </span>
+                    </div>
+                    <div
+                        className={styles.menuItem}
+                        onClick={openInfoPopup(PopupTheme.tradeDetails)}
+                    >
+                        {renderMenuInfoIcon()}
+                        <span>
+                            See <strong>Trade</strong> Details
+                        </span>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     const renderCurrentBalance = () => {
         return (
             <div
                 className={classNames(
                     styles.currentBalanceContainer,
-                    isPopup ? styles.popupCurrentBalanceContainer : null,
                 )}
             >
                 <Icon
@@ -688,7 +764,7 @@ const BetView = ({
         >
             <div className={styles.placeBetContainer}>
                 {renderLoadingAnimation()}
-                {renderCurrentBalance()}
+                {renderMenuContainerWithCurrentBalance()}
                 <span className={styles.eventName}>
                     {event.name}
                 </span>
@@ -698,7 +774,7 @@ const BetView = ({
                 <div className={styles.description}>
                     {bet.description}
                 </div>
-                <TradeStateBadge state={state} />
+                <StateBadge state={state} />
                 {renderStateConditionalContent()}
                 {
                     showEventEnd && (
@@ -744,6 +820,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         pullOutBet:    (betId, outcome, amount) => {
             dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
+        },
+        showPopup:     (popupType, options) => {
+            dispatch(PopupActions.show({
+                popupType,
+                options,
+            }));
         },
     };
 };

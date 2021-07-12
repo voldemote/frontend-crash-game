@@ -65,7 +65,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
             case PopupTheme.eventDetails:
                 return (
-                    <EventDetailView />
+                    <EventDetailView eventId={eventId} />
                 );
 
             case PopupTheme.referralList:
@@ -75,7 +75,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
             case PopupTheme.tradeDetails:
                 return (
-                    <TradeDetailView />
+                    <TradeDetailView tradeId={betId} />
                 );
 
             case PopupTheme.welcome:

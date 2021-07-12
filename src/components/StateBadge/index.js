@@ -1,9 +1,9 @@
 import React      from 'react';
-import styles     from './styles.module.scss';
 import _          from 'lodash';
 import classNames from 'classnames';
+import styles     from './styles.module.scss';
 
-const TradeStateBadge = ({ state }) => {
+const StateBadge = ({ state, withoutBackground = false }) => {
     const getStateText = () => {
         return _.capitalize(state);
     };
@@ -11,14 +11,16 @@ const TradeStateBadge = ({ state }) => {
     return (
         <span
             className={classNames(
-                styles.tradeStateBadge,
+                styles.stateBadge,
                 styles[state],
+                withoutBackground ? styles.withoutBackground : null,
             )}
         >
-            <span></span>
+            <span>
+            </span>
             {getStateText()}
         </span>
     );
 };
 
-export default TradeStateBadge;
+export default StateBadge;

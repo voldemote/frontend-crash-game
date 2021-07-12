@@ -7,7 +7,7 @@ class BetSummaryHelper {
         };
     }
 
-    static getKeyValue (key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, isLink = false, valueHighlight = null) {
+    static getKeyValue (key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, isLink = false, valueHighlight = null, valueChildren = null) {
         return {
             type: SummaryRowType.keyValue,
             key,
@@ -15,6 +15,7 @@ class BetSummaryHelper {
             value,
             valueBold,
             valueBig,
+            valueChildren,
             valueColor,
             valueHighlight,
             isLink,
