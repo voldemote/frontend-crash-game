@@ -14,6 +14,7 @@ import { PopupActions }           from '../../store/actions/popup';
 import BaseContainerWithNavbar    from '../../components/BaseContainerWithNavbar';
 import HighlightType              from '../../components/Highlight/HighlightType';
 import LiveEventCarouselContainer from '../../components/LiveEventCarouselContainer';
+import State                      from '../../helper/State';
 
 const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     const queryParams           = new URLSearchParams(window.location.search);
@@ -184,36 +185,12 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
 
 const mapStateToProps = (state) => {
     const rawOutcomes  = state.bet.outcomes;
-    const findEvent    = (betId) => {
-        const event = _.find(
-            state.event.events,
-            (event) => {
-                return _.find(
-                    event.bets,
-                    {
-                        _id: betId,
-                    },
-                );
-            },
-        );
-
-        return event;
-    };
-    const findBet      = (betId) => {
-        const event = findEvent(betId);
-
-        return _.find(
-            event.bets,
-            {
-                _id: betId,
-            },
-        );
-    };
+    const events       = state.event.events;
     const openBets     = _.map(
         state.bet.openBets,
         (openBet, index) => {
             const betId  = openBet.betId;
-            const event  = findEvent(betId);
+            const event  = State.getEventByTrade(betId, events);
             let outcomes = _.get(
                 rawOutcomes,
                 betId,
@@ -233,7 +210,7 @@ const mapStateToProps = (state) => {
             return {
                 ...openBet,
                 outcomes,
-                bet: findBet(openBet.betId),
+                bet: State.getTrade(openBet.betId),
                 event,
             };
         },
@@ -242,8 +219,8 @@ const mapStateToProps = (state) => {
         state.transaction.transactions,
         (transaction) => {
             const betId = _.get(transaction, 'bet');
-            const event = findEvent(betId);
-            const bet   = findBet(betId);
+            const event = State.getEventByTrade(betId, events);
+            const bet   = State.getTradeByEvent(betId, event);
 
             return {
                 ...transaction,
