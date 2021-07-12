@@ -40,7 +40,19 @@ class State {
     static getTrade (tradeId, events) {
         const event  = State.getEventByTrade(tradeId, events);
         const trades = _.get(event, 'bets', []);
-        const trade = _.find(
+        const trade  = _.find(
+            trades,
+            {
+                _id: tradeId,
+            },
+        );
+
+        return trade;
+    };
+
+    static getTradeByEvent (tradeId, event) {
+        const trades = _.get(event, 'bets', []);
+        const trade  = _.find(
             trades,
             {
                 _id: tradeId,
