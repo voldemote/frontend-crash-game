@@ -37,6 +37,7 @@ export default {
     switcher:        'switcher',
     threeDotMenu:    'threeDotMenu',
     time:            'time',
+    twitch:          'twitch',
     wallet2:         'wallet2',
     wallet:          'wallet',
     withdrawal:      'withdrawal',

@@ -1,6 +1,6 @@
 @import "../../styles/all";
 
-.tradeStateBadge
+.stateBadge
 {
     border-radius:    4px;
     font-family:      $fontLight;
@@ -47,5 +47,10 @@
         {
             background-color: $colorPurpleDark;
         }
+    }
+
+    &.withoutBackground
+    {
+        background-color: transparent !important;
     }
 }

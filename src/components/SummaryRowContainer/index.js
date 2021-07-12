@@ -20,17 +20,28 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
                 const valueBold      = _.get(summaryRow, 'valueBold');
                 const valueBig       = _.get(summaryRow, 'valueBig');
                 const valueColor     = _.get(summaryRow, 'valueColor');
+                const valueChildren  = _.get(summaryRow, 'valueChildren');
                 const valueHighlight = _.get(summaryRow, 'valueHighlight');
                 const isLink         = _.get(summaryRow, 'isLink');
 
-                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink, valueChildren);
 
             case SummaryRowType.divider:
                 return <Divider key={index} />;
+
+            case SummaryRowType.emptyLine:
+                return renderEmptyLine();
         }
     };
 
-    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false) => {
+    const renderEmptyLine = () => {
+        return (
+            <div className={styles.emptyRow}>
+            </div>
+        );
+    };
+
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false, valueChildren = null) => {
         return (
             <div
                 className={classNames(
@@ -39,47 +50,55 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
                 )}
                 key={index}
             >
-                <span
-                    className={classNames(
-                        styles.key,
-                        keyBold ? styles.bold : null,
-                    )}
-                >
-                    {key}
-                </span>
                 {
-                    isLink ?
+                    key && (
+                        <span
+                            className={classNames(
+                                styles.key,
+                                keyBold ? styles.bold : null,
+                            )}
+                        >
+                            {key}
+                        </span>
+                    )
+                }
+                {
+                    valueChildren ?
+                        valueChildren :
                         (
-                            <Link
-                                to={value}
-                                target={'_blank'}
-                                className={classNames(
-                                    valueBold ? styles.bold : null,
-                                )}
-                            >
-                                {value}
-                            </Link>
-                        ) :
-                        (
-                            <span
-                                className={classNames(
-                                    valueBold ? styles.bold : null,
-                                    valueBig ? styles.big : null,
-                                    SelectionHelper.get(
-                                        valueColor,
-                                        {
-                                            ['red']:   styles.textColorRed,
-                                            ['green']: styles.textColorGreen,
-                                        },
-                                    ),
-                                )}
-                            >
-                                {value}
-                                {valueHighlight && <Highlight
-                                    className={styles.highlight}
-                                    highlightType={valueHighlight}
-                                />}
-                            </span>
+                            isLink ?
+                                (
+                                    <Link
+                                        to={value}
+                                        target={'_blank'}
+                                        className={classNames(
+                                            valueBold ? styles.bold : null,
+                                        )}
+                                    >
+                                        {value}
+                                    </Link>
+                                ) :
+                                (
+                                    <span
+                                        className={classNames(
+                                            valueBold ? styles.bold : null,
+                                            valueBig ? styles.big : null,
+                                            SelectionHelper.get(
+                                                valueColor,
+                                                {
+                                                    ['red']:   styles.textColorRed,
+                                                    ['green']: styles.textColorGreen,
+                                                },
+                                            ),
+                                        )}
+                                    >
+                                        {value}
+                                        {valueHighlight && <Highlight
+                                            className={styles.highlight}
+                                            highlightType={valueHighlight}
+                                        />}
+                                    </span>
+                                )
                         )
                 }
             </div>

@@ -1,5 +1,10 @@
 @import '../../styles/all';
 
+.emptyRow
+{
+    height: 20px;
+}
+
 .summaryTicketRow
 {
     display:        flex;
@@ -58,8 +63,10 @@
 
         &:nth-child(2)
         {
-            text-align: right;
-            width:      65%;
+            display:         flex;
+            justify-content: flex-end;
+            text-align:      right;
+            width:           65%;
         }
     }
 }

@@ -1,4 +1,5 @@
 export default {
-    divider:  'divider',
-    keyValue: 'keyValue',
+    divider:   'divider',
+    emptyLine: 'emptyLine',
+    keyValue:  'keyValue',
 };

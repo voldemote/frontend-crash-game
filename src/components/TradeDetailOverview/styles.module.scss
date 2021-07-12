@@ -1,0 +1,44 @@
+@import '../../styles/all';
+
+.tradeDetailOverview
+{
+    min-width:        50%;
+    border-radius:    8px;
+    margin-top:       30px;
+    background-color: $colorWhite;
+    box-shadow:       $colorPrimary10;
+
+    .tradeDetailOverviewContent
+    {
+        padding: 30px 35px 15px;
+
+        .linkContent
+        {
+            display:        flex;
+            flex-direction: row;
+            align-items:    center;
+            margin-top:     40px;
+            margin-bottom:  20px;
+
+            > *
+            {
+                font-size:       12px;
+                margin-right:    20px;
+                text-decoration: underline;
+                cursor:          pointer;
+            }
+        }
+    }
+
+    .tradeDetailFooter
+    {
+        width:            100%;
+        display:          flex;
+        justify-content:  space-between;
+        align-items:      center;
+        background-color: $colorPrimary;
+        padding:          1rem 1.5rem;
+        border-radius:    0 0 6px 6px;
+        color:            $colorWhite;
+    }
+}
