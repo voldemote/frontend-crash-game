@@ -42,6 +42,7 @@ import { ReactComponent as IconSupport }         from '../../data/icons/support.
 import { ReactComponent as IconSwitcher }        from '../../data/icons/switcher.svg';
 import { ReactComponent as IconThreeDotMenu }    from '../../data/icons/three-dot-menu.svg';
 import { ReactComponent as IconTime }            from '../../data/icons/time.svg';
+import { ReactComponent as IconTwitch }            from '../../data/icons/twitch.svg';
 import { ReactComponent as IconWallet }          from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 }         from '../../data/icons/wallet-2.svg';
 import { ReactComponent as IconWithdrawal }      from '../../data/icons/withdrawal.svg';
@@ -88,6 +89,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.switcher]:        <IconSwitcher />,
                 [IconType.threeDotMenu]:    <IconThreeDotMenu />,
                 [IconType.time]:            <IconTime />,
+                [IconType.twitch]:            <IconTwitch />,
                 [IconType.wallet]:          <IconWallet />,
                 [IconType.wallet2]:         <IconWallet2 />,
                 [IconType.info]:            <IconInfo />,
@@ -113,6 +115,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 SelectionHelper.get(
                     iconTheme,
                     {
+                        [IconTheme.black]:                 styles.iconBlack,
                         [IconTheme.primary]:                 styles.iconPrimary,
                         [IconTheme.primaryLightTransparent]: styles.iconPrimaryLightTransparent,
                         [IconTheme.white]:                   styles.iconWhite,
