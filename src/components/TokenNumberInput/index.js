@@ -26,7 +26,7 @@ const TokenNumberInput = ({ value, setValue, maxValue, errorText, className, ...
   return (
     <>
       <div className={classNames(styles.tokenNumberInputContainer, className)}>
-        <Input className={styles.input} type={'number'} value={value} onChange={onChange} {...props} />
+        <Input className={styles.input} type={'number'} value={value} onChange={onChange} step={0.01} {...props} />
         <span className={styles.eventTokenLabel}>EVNT</span>
       </div>
       <ErrorHint className={styles.tokenNumberErrorHint} errorText={errorText} />

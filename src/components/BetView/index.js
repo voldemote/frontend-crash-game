@@ -38,6 +38,8 @@ import Routes                 from '../../constants/Routes';
 import { PopupActions }       from '../../store/actions/popup';
 import PopupTheme             from '../Popup/PopupTheme';
 import ErrorHint              from '../ErrorHint';
+import { formatToFixed }      from '../../helper/FormatNumbers';
+
 
 const BetView = ({
     actionIsInProgress,
@@ -171,7 +173,7 @@ const BetView = ({
             valid = false;
         }
 
-        if (commitment > balance && !isSell) {
+        if (_.toNumber(commitment) > _.toNumber(balance) && !isSell) {
             valid = false;
 
             setCommitmentErrorText("Not enough balance.");
@@ -465,7 +467,7 @@ const BetView = ({
                         onClick={sellBet}
                         disabledWithOverlay={false}
                     >
-                        Cashout {outcome} EVNT
+                        Cashout {formatToFixed(outcome)} EVNT
                     </Button>
                 </>
             );
@@ -619,7 +621,7 @@ const BetView = ({
                     iconTheme={IconTheme.primaryLightTransparent}
                     iconType={IconType.wallet2}
                 />
-                {balance}
+                {formatToFixed(balance)}
             </div>
         );
     };
@@ -751,7 +753,7 @@ const BetView = ({
 const mapStateToProps = (state) => {
     return {
         actionIsInProgress: state.bet.actionIsInProgress,
-        balance: state.authentication.balance,
+        balance: formatToFixed(state.authentication.balance),
         choice: state.bet.selectedChoice,
         commitment: _.get(state, "bet.selectedCommitment", 0),
         events: state.event.events,
