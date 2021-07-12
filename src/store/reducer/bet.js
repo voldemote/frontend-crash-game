@@ -2,7 +2,7 @@ import _              from 'lodash';
 import update         from 'immutability-helper';
 import { BetTypes }   from '../actions/bet';
 import { PopupTypes } from '../actions/popup';
-
+import { formatToFixed } from '../../helper/FormatNumbers';
 
 const initialState = {
     selectedEventId:    null,
@@ -67,7 +67,7 @@ const setActionIsInProgress = (action, state) => {
 };
 
 const setCommitment = (action, state) => {
-    const commitment = action.commitment;
+    const commitment = formatToFixed(action.commitment);
 
     if (
         _.isEmpty(commitment) ||

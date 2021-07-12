@@ -283,6 +283,7 @@ const BetView = ({
         setCommitment(number, betId);
     };
     const onTokenNumberChange = (number) => {
+
         setTokenNumber(number);
         debouncedSetCommitment(number);
     };
