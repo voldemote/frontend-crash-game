@@ -18,7 +18,7 @@ import { matchPath }            from 'react-router';
 import { connect }              from 'react-redux';
 import { NotificationActions }  from 'store/actions/notification';
 import transaction              from 'store/reducer/transaction';
-import { formatTokenValue }     from '../../helper/FormatTokenValue';
+import { formatToFixed }     from '../../helper/FormatNumbers';
 
 const Navbar = ({
                     user,
@@ -60,7 +60,7 @@ const Navbar = ({
         const userBalance = user.balance;
 
         if (!_.isNull(userBalance)) {
-            return formatTokenValue(userBalance);
+            return formatToFixed(userBalance);
         }
 
         return '-';

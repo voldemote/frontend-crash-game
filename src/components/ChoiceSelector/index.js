@@ -4,6 +4,7 @@ import classNames          from 'classnames';
 import SelectionHelper     from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _                   from 'lodash';
+import { formatToFixed }     from '../../helper/FormatNumbers';
 
 const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled = false, hideAmount = false, onClick }) => {
     const renderWinAmount = () => {
@@ -13,7 +14,7 @@ const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled 
 
             return (
                 <span className={styles.choiceWinAmount}>
-                    {winAmountString} EVNT
+                    {formatToFixed(winAmountString)} EVNT
                 </span>
             );
         }
