@@ -28,7 +28,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
     const renderPopup = () => {
         const eventId          = _.get(options, 'eventId');
-        const betId            = _.get(options, 'betId');
+        const betId            = _.get(options, 'betId', _.get(options, 'tradeId'));
         const investmentAmount = _.get(options, 'investmentAmount');
         const outcome          = _.get(options, 'outcome');
         const initialSellTab   = _.get(options, 'initialSellTab', false);

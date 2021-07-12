@@ -614,6 +614,7 @@ const BetView = ({
                     tradeId: betId,
                     eventId: _.get(event, '_id'),
                 };
+                
                 showPopup(popupType, options);
             };
         };
