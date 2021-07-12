@@ -14,22 +14,32 @@ import { useState } from "react";
 import MainMenu from "../MainMenu";
 import LeaderboardItem from "../LeaderboardItem";
 import Notifications from "../Notifications";
-import { useEffect } from "react";
 import { matchPath } from "react-router";
 import { connect } from "react-redux";
+import { NotificationActions } from "store/actions/notification";
+import transaction from "store/reducer/transaction";
 
-const Navbar = ({ user, location, notifications, bets, leaderboard, rank }) => {
+const Navbar = ({
+    user,
+    location,
+    notifications,
+    leaderboard,
+    rank,
+    setUnread,
+    transactions,
+}) => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
-    const [unreadNotifications, setUnreadNotifications] = useState(0);
 
-    useEffect(() => {
-        setUnreadNotifications(
-            notifications.filter((notification) => notification.read === false)
-                .length
-        );
-    }, [notifications]);
+    const sellTransactions = transactions
+        .filter((transaction) => transaction.direction === "SELL")
+        .slice(-3)
+        .reverse();
+
+    const unreadNotifications = notifications.filter(
+        (notification) => !notification.read
+    ).length;
 
     const onChangeLeaderboard = () => {
         setShowLeaderboard(!showLeaderboard);
@@ -177,11 +187,15 @@ const Navbar = ({ user, location, notifications, bets, leaderboard, rank }) => {
                 <Notifications
                     notifications={notifications}
                     unreadNotifications={unreadNotifications}
-                    setUnreadNotifications={setUnreadNotifications}
                     closeNotifications={closeNotifications}
+                    setUnread={setUnread}
                 />
             )}
-            <MainMenu opened={menuOpened} closeMobileMenu={closeMobileMenu} />
+            <MainMenu
+                opened={menuOpened}
+                closeMobileMenu={closeMobileMenu}
+                sellTransactions={sellTransactions}
+            />
         </div>
     );
 };
@@ -192,10 +206,18 @@ const mapStateToProps = (state) => {
         notifications: _.flatten(
             _.values(state.notification.notificationsByEvent)
         ),
-        bets: state.bet,
         leaderboard: _.get(state.leaderboard.leaderboard, "users", []),
-        rank: _.get(state.authentication, "rank", 0)
+        rank: _.get(state.authentication, "rank", 0),
+        transactions: state.transaction.transactions,
     };
 };
 
-export default connect(mapStateToProps, null)(Navbar);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUnread: (notification) => {
+            dispatch(NotificationActions.setUnread({ notification }));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

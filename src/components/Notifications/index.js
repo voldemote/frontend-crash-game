@@ -7,20 +7,13 @@ import NotificationsItem from "../NotificationsItem";
 const Notifications = ({
     notifications,
     unreadNotifications,
-    setUnreadNotifications,
+    setUnread,
     closeNotifications,
 }) => {
     const markAllRead = () => {
-        for (let i = 0; i < notifications.length; i++) {
-            if (notifications[i].read === false) {
-                notifications[i].read = true;
-            }
+        for (const notification of notifications) {
+            setUnread(notification);
         }
-        setUnreadNotifications(
-            notifications.filter(
-                (notificationOne) => notificationOne.read === false
-            ).length
-        );
     };
 
     return (
@@ -34,7 +27,7 @@ const Notifications = ({
                 <p className={style.notificationHeadline}>Notifications</p>
             </div>
             <p className={style.markRead} onClick={markAllRead}>
-                Mark all as unread
+                Mark all as read
             </p>
             <div className={style.notificationsHolder}>
                 {notifications.map((notification) => {
@@ -43,8 +36,7 @@ const Notifications = ({
                             key={notification.date}
                             notification={notification}
                             notifications={notifications}
-                            unreadNotifications={unreadNotifications}
-                            setUnreadNotifications={setUnreadNotifications}
+                            setUnread={setUnread}
                         />
                     );
                 })}

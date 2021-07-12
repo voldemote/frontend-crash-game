@@ -4,20 +4,19 @@ import _ from "lodash";
 import classNames from "classnames";
 import Icon from "../Icon";
 import IconType from "../Icon/IconType";
+import IconTheme from "../Icon/IconTheme";
 import Routes from "../../constants/Routes";
 import styles from "./styles.module.scss";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import HomeSettings from "../HomeSettings";
-import user from "store/reducer/user";
 
 const MainMenu = ({
     opened,
     closeMobileMenu,
-    openBetCount,
     openBets,
-    totalWin,
     balance,
+    sellTransactions,
 }) => {
     const [openSettings, setOpenSettings] = useState(false);
 
@@ -60,7 +59,7 @@ const MainMenu = ({
                 <div className={styles.overallFunds}>
                     <p className={styles.overallFundsHeadline}>OVERALL FUNDS</p>
                     <div className={styles.overallFundsAmount}>
-                        <p className={styles.overallFundsTotal}>8800</p>
+                        <p className={styles.overallFundsTotal}>1000</p>
                         <p className={styles.overallFundsTitle}>EVNT</p>
                     </div>
                 </div>
@@ -113,6 +112,37 @@ const MainMenu = ({
                     <Icon
                         className={styles.goToWalletIcon}
                         iconType={IconType.arrowTopRight}
+                    />
+                </div>
+            </div>
+            <div className={styles.latestTradesContainer}>
+                <div className={styles.latestTradesHeadline}>
+                    <p className={styles.HeadlineLeft}>LATEST TRADES</p>
+                    <p
+                        className={styles.HeadlineRight}
+                        onClick={onClickGoToRoute(Routes.betOverview)}
+                    >
+                        See all
+                    </p>
+                </div>
+            </div>
+            <div className={styles.buttonContainer}>
+                <div
+                    className={styles.settingButton}
+                    onClick={showSettingsHandler}
+                >
+                    <Icon
+                        iconTheme={IconTheme.black}
+                        iconType={IconType.settings}
+                    />
+                </div>
+                <div
+                    className={styles.logoutButton}
+                    onClick={onClickGoToRoute(Routes.logout)}
+                >
+                    <Icon
+                        iconTheme={IconTheme.black}
+                        iconType={IconType.logout}
                     />
                 </div>
             </div>

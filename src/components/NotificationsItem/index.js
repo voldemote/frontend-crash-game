@@ -3,17 +3,10 @@ import style from "./styles.module.scss";
 
 const NotificationsItem = ({
     notification,
-    notifications,
-    unreadNotifications,
-    setUnreadNotifications,
+    setUnread,
 }) => {
     const markNotificationRead = () => {
-        notification.read = true;
-        setUnreadNotifications(
-            notifications.filter(
-                (notificationOne) => notificationOne.read === false
-            ).length
-        );
+        setUnread(notification)
     };
 
     return (
