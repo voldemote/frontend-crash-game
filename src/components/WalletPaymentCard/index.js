@@ -53,13 +53,13 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
           const getTitle = () => {
               switch (provider) {
                   case PaymentProvider.paypal:
-                      return 'PayPal';
+                      return 'Buy EVNT tokens with PayPal';
 
                   case PaymentProvider.debitCreditCard:
-                      return 'Debit or Credit Card';
+                      return 'Buy EVNT tokens with Debit or Credit Card';
 
                   case PaymentProvider.crypto:
-                      return 'Crypto Payment';
+                      return 'Buy EVNT tokens with Cryptocurrencies';
 
                   case PaymentProvider.evntToken:
                       if (action === PaymentAction.deposit) {

@@ -175,7 +175,7 @@ const Wallet = ({ balance, referralCount, showPopup, transactionCount }) => {
             {renderSwitchableView()}
             <div className={styles.cardContainer}>
                 {renderConditionalWalletCards()}
-                {renderWalletPaymentCard(PaymentProvider.evntToken)}
+                {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
                 {renderWalletPaymentCard(PaymentProvider.crypto)}
                 {renderWalletPaymentCard(PaymentProvider.paypal)}
                 {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
