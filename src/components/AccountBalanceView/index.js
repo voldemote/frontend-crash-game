@@ -3,6 +3,7 @@ import styles          from './styles.module.scss';
 import classNames      from 'classnames';
 import ActionTextColor from './ActionTextColor';
 import SelectionHelper from '../../helper/SelectionHelper';
+import { formatTokenValue }     from '../../helper/FormatTokenValue';
 
 const AccountBalance = ({ className, balance, coloredActionText, actionTextColor = ActionTextColor.green }) => {
     const renderColoredActionText = () => {
@@ -32,7 +33,7 @@ const AccountBalance = ({ className, balance, coloredActionText, actionTextColor
             )}
         >
             <div>
-                {balance}
+                {formatTokenValue(balance)}
                 <sup>
                     EVNT
                 </sup>

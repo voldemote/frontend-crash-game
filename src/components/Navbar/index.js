@@ -1,44 +1,45 @@
-import _ from "lodash";
-import classNames from "classnames";
-import medalGold from "../../data/icons/medal-gold.png";
-import cross from "../../data/icons/cross.svg";
-import Logo from "../../data/images/logo-demo.svg";
-import React from "react";
-import style from "./styles.module.scss";
-import { getProfilePictureUrl } from "../../helper/ProfilePicture";
-import Link from "../Link";
-import Routes from "../../constants/Routes";
-import Icon from "../Icon";
-import IconType from "../Icon/IconType";
-import { useState } from "react";
-import MainMenu from "../MainMenu";
-import LeaderboardItem from "../LeaderboardItem";
-import Notifications from "../Notifications";
-import { matchPath } from "react-router";
-import { connect } from "react-redux";
-import { NotificationActions } from "store/actions/notification";
-import transaction from "store/reducer/transaction";
+import _                        from 'lodash';
+import classNames               from 'classnames';
+import medalGold                from '../../data/icons/medal-gold.png';
+import cross                    from '../../data/icons/cross.svg';
+import Logo                     from '../../data/images/logo-demo.svg';
+import React                    from 'react';
+import style                    from './styles.module.scss';
+import { getProfilePictureUrl } from '../../helper/ProfilePicture';
+import Link                     from '../Link';
+import Routes                   from '../../constants/Routes';
+import Icon                     from '../Icon';
+import IconType                 from '../Icon/IconType';
+import { useState }             from 'react';
+import MainMenu                 from '../MainMenu';
+import LeaderboardItem          from '../LeaderboardItem';
+import Notifications            from '../Notifications';
+import { matchPath }            from 'react-router';
+import { connect }              from 'react-redux';
+import { NotificationActions }  from 'store/actions/notification';
+import transaction              from 'store/reducer/transaction';
+import { formatTokenValue }     from '../../helper/FormatTokenValue';
 
 const Navbar = ({
-    user,
-    location,
-    notifications,
-    leaderboard,
-    rank,
-    setUnread,
-    transactions,
-}) => {
-    const [menuOpened, setMenuOpened] = useState(false);
-    const [showLeaderboard, setShowLeaderboard] = useState(false);
+                    user,
+                    location,
+                    notifications,
+                    leaderboard,
+                    rank,
+                    setUnread,
+                    transactions,
+                }) => {
+    const [menuOpened, setMenuOpened]               = useState(false);
+    const [showLeaderboard, setShowLeaderboard]     = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
 
     const sellTransactions = transactions
-        .filter((transaction) => transaction.direction === "SELL")
+        .filter((transaction) => transaction.direction === 'SELL')
         .slice(-3)
         .reverse();
 
     const unreadNotifications = notifications.filter(
-        (notification) => !notification.read
+        (notification) => !notification.read,
     ).length;
 
     const onChangeLeaderboard = () => {
@@ -47,7 +48,7 @@ const Navbar = ({
 
     const getProfileStyle = () => {
         const profilePicture = getProfilePictureUrl(
-            _.get(user, "profilePicture")
+            _.get(user, 'profilePicture'),
         );
 
         return {
@@ -59,10 +60,10 @@ const Navbar = ({
         const userBalance = user.balance;
 
         if (!_.isNull(userBalance)) {
-            return userBalance;
+            return formatTokenValue(userBalance);
         }
 
-        return "-";
+        return '-';
     };
 
     const openMobileMenu = () => {
@@ -103,10 +104,14 @@ const Navbar = ({
     return (
         <div className={style.navbar}>
             <div className={classNames(style.navbarItems, style.hideOnMobile)}>
-                <img src={Logo} width={200} alt={"Wallfair"} />
-                {renderNavbarLink(Routes.home, "Home")}
-                {renderNavbarLink(Routes.betOverview, "My Trades")}
-                {renderNavbarLink(Routes.wallet, "My Wallet")}
+                <img
+                    src={Logo}
+                    width={200}
+                    alt={'Wallfair'}
+                />
+                {renderNavbarLink(Routes.home, 'Home')}
+                {renderNavbarLink(Routes.betOverview, 'My Trades')}
+                {renderNavbarLink(Routes.wallet, 'My Wallet')}
             </div>
             <div className={style.navbarItems}>
                 <Icon
@@ -114,11 +119,21 @@ const Navbar = ({
                     iconType={IconType.mainMenu}
                     onClick={openMobileMenu}
                 />
-                <div className={style.ranking} onClick={onChangeLeaderboard}>
-                    <img src={medalGold} alt="medal" className={style.medal} />
+                <div
+                    className={style.ranking}
+                    onClick={onChangeLeaderboard}
+                >
+                    <img
+                        src={medalGold}
+                        alt="medal"
+                        className={style.medal}
+                    />
                     <p className={style.rankingText}>Rank # {rank}</p>
                 </div>
-                <Link to={Routes.wallet} className={style.balanceOverview}>
+                <Link
+                    to={Routes.wallet}
+                    className={style.balanceOverview}
+                >
                     <span className={style.actualBalanceText}>
                         Your current Balance
                     </span>
@@ -171,14 +186,14 @@ const Navbar = ({
                         </div>
                         <div className={style.leaderboardRanking}>
                             {leaderboard &&
-                                leaderboard.map((user) => {
-                                    return (
-                                        <LeaderboardItem
-                                            user={user}
-                                            key={user.userId}
-                                        />
-                                    );
-                                })}
+                            leaderboard.map((user) => {
+                                return (
+                                    <LeaderboardItem
+                                        user={user}
+                                        key={user.userId}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
@@ -202,11 +217,11 @@ const Navbar = ({
 
 const mapStateToProps = (state) => {
     return {
-        location: state.router.location,
+        location:      state.router.location,
         notifications: state.notification.notifications,
-        leaderboard: _.get(state.leaderboard.leaderboard, "users", []),
-        rank: _.get(state.authentication, "rank", 0),
-        transactions: state.transaction.transactions,
+        leaderboard:   _.get(state.leaderboard.leaderboard, 'users', []),
+        rank:          _.get(state.authentication, 'rank', 0),
+        transactions:  state.transaction.transactions,
     };
 };
 
