@@ -10,6 +10,7 @@ import styles from "./styles.module.scss";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import HomeSettings from "../HomeSettings";
+import { PieChart } from "react-minimal-pie-chart";
 
 const MainMenu = ({
     opened,
@@ -59,9 +60,26 @@ const MainMenu = ({
                 <div className={styles.overallFunds}>
                     <p className={styles.overallFundsHeadline}>OVERALL FUNDS</p>
                     <div className={styles.overallFundsAmount}>
-                        <p className={styles.overallFundsTotal}>1000</p>
+                        <PieChart
+                            data={[
+                                {
+                                    title: "InvestedFunds",
+                                    value: 69,
+                                    color: "#69FFA5",
+                                },
+                                {
+                                    title: "LiquidFunds",
+                                    value: 31,
+                                    color: "#3570FF",
+                                },
+                            ]}
+                            lineWidth={14}
+                            startAngle={270}
+                        />
+                        <p className={styles.overallFundsTotal}>997</p>
                         <p className={styles.overallFundsTitle}>EVNT</p>
                     </div>
+                    ;
                 </div>
                 <div className={styles.fundsSeperator} />
                 <div className={styles.detailedFunds}>
@@ -72,7 +90,7 @@ const MainMenu = ({
                         </div>
                         <div className={styles.investedFundsAmount}>
                             <p className={styles.investedFundsTotal}>
-                                {balance}
+                                0
                             </p>
                             <p className={styles.investedFundsTitle}>EVNT</p>
                         </div>
