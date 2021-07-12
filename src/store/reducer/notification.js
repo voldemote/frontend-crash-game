@@ -1,19 +1,22 @@
 import { NotificationTypes } from "../actions/notification";
 import _ from "lodash";
 const initialState = {
-    notificationsByEvent: {},
+    notifications: [],
 };
+
 const sortNotifications = (notifications) =>
     notifications.sort((a = {}, b = {}) => {
         const aDate = new Date(a.date);
         const bDate = new Date(b.date);
-        return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
+        return aDate < bDate ? 1 : aDate === bDate ? 0 : -1;
     });
 
-const addNotifications = (allNotifications, eventId, notifications) => {
-    notifications = _.uniqWith(
-        (allNotifications[eventId] || [])
-            .concat(notifications)
+const addNotification = (action, state) => {
+    const { notification, eventId } = action;
+
+    const notifications = _.uniqWith(
+        (state.notifications || [])
+            .concat([notification])
             .map((m) => _.omit(m, ["_id", "__v"]))
             .map((m) => {
                 m.date = new Date(m.date);
@@ -24,20 +27,8 @@ const addNotifications = (allNotifications, eventId, notifications) => {
     );
 
     return {
-        ...allNotifications,
-        [eventId]: sortNotifications(notifications),
-    };
-};
-
-const addNotification = (action, state) => {
-    const { notification, eventId } = action;
-    return {
         ...state,
-        notificationsByEvent: addNotifications(
-            state.notificationsByEvent,
-            eventId,
-            [notification]
-        ),
+        notifications: sortNotifications(notifications),
     };
 };
 
@@ -46,16 +37,13 @@ const setUnread = (action, state) => {
     console.log(notification, action);
     return {
         ...state,
-        notificationsByEvent: _.mapValues(
-            state.notificationsByEvent,
-            (notifications, eventId) => {
-                return notifications.map((n) => {
-                    return _.isEqual(notification, n)
-                        ? { ...n, read: true }
-                        : n;
-                });
-            }
-        ),
+        notifications: _.map(
+            state.notifications.map((n) => {
+                return _.isEqual(notification, n)
+                    ? { ...n, read: true }
+                    : n;
+            })
+        )
     };
 };
 

@@ -6,7 +6,6 @@ import NotificationsItem from "../NotificationsItem";
 
 const Notifications = ({
     notifications,
-    unreadNotifications,
     setUnread,
     closeNotifications,
 }) => {

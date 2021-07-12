@@ -203,9 +203,7 @@ const Navbar = ({
 const mapStateToProps = (state) => {
     return {
         location: state.router.location,
-        notifications: _.flatten(
-            _.values(state.notification.notificationsByEvent)
-        ),
+        notifications: state.notification.notifications,
         leaderboard: _.get(state.leaderboard.leaderboard, "users", []),
         rank: _.get(state.authentication, "rank", 0),
         transactions: state.transaction.transactions,
