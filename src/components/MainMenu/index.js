@@ -1,10 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
 import _ from "lodash";
 import classNames from "classnames";
 import Icon from "../Icon";
-import IconTheme from "../Icon/IconTheme";
 import IconType from "../Icon/IconType";
 import Routes from "../../constants/Routes";
 import styles from "./styles.module.scss";
@@ -92,7 +90,9 @@ const MainMenu = ({
                                 {growth} / 0%
                             </div>
                         )}
-                        <div className={styles.originInvestedAmount}>{investedAmount} EVNT invested</div>
+                        <div className={styles.originInvestedAmount}>
+                            {investedAmount} EVNT invested
+                        </div>
                     </div>
                     <div className={styles.liquidFunds}>
                         <div className={styles.liquidFundsHeadline}>
@@ -104,6 +104,16 @@ const MainMenu = ({
                             <p className={styles.liquidFundsTitle}>EVNT</p>
                         </div>
                     </div>
+                </div>
+                <div
+                    className={styles.goToWallet}
+                    onClick={onClickGoToRoute(Routes.wallet)}
+                >
+                    <p className={styles.goToWalletText}>Go to my Wallet</p>
+                    <Icon
+                        className={styles.goToWalletIcon}
+                        iconType={IconType.arrowTopRight}
+                    />
                 </div>
             </div>
             {openSettings && (
