@@ -118,7 +118,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
             BetSummaryHelper.getKeyValue('Fee', feeAmount + ' EVNT'),
             BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('Outcome', outcomeReturn + ' EVNT', false, true),
+            BetSummaryHelper.getKeyValue('Yield', outcomeReturn + ' EVNT', false, true),
             BetSummaryHelper.getKeyValue('Type', sold ? 'Sell' : 'Buy', false, true, false, sold ? 'red' : 'green'),
         ];
     };
