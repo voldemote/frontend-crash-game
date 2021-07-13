@@ -22,9 +22,10 @@ import { useHasMounted }  from '../hoc/useHasMounted';
 import { useHistory }     from 'react-router';
 import { useState }       from 'react';
 import ChoiceSelectorList from '../ChoiceSelectorList';
+import { formatToFixed }  from '../../helper/FormatNumbers'
 
 const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {
-    const defaultBetValue         = 100;
+    const defaultBetValue         = formatToFixed(100);
     const [choice, setChoice]     = useState(null);
     const [betValue, setBetValue] = useState(defaultBetValue);
     const betId                   = _.get(bet, '_id');
