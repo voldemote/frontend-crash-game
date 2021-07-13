@@ -14,17 +14,18 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
 
         switch (type) {
             case SummaryRowType.keyValue:
-                const key            = _.get(summaryRow, 'key');
-                const keyBold        = _.get(summaryRow, 'keyBold');
-                const value          = _.get(summaryRow, 'value');
-                const valueBold      = _.get(summaryRow, 'valueBold');
-                const valueBig       = _.get(summaryRow, 'valueBig');
-                const valueColor     = _.get(summaryRow, 'valueColor');
-                const valueChildren  = _.get(summaryRow, 'valueChildren');
-                const valueHighlight = _.get(summaryRow, 'valueHighlight');
-                const isLink         = _.get(summaryRow, 'isLink');
+                const flexDirectionColumn = _.get(summaryRow, 'flexDirectionColumn');
+                const key                 = _.get(summaryRow, 'key');
+                const keyBold             = _.get(summaryRow, 'keyBold');
+                const value               = _.get(summaryRow, 'value');
+                const valueBold           = _.get(summaryRow, 'valueBold');
+                const valueBig            = _.get(summaryRow, 'valueBig');
+                const valueColor          = _.get(summaryRow, 'valueColor');
+                const valueChildren       = _.get(summaryRow, 'valueChildren');
+                const valueHighlight      = _.get(summaryRow, 'valueHighlight');
+                const isLink              = _.get(summaryRow, 'isLink');
 
-                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink, valueChildren);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink, valueChildren, flexDirectionColumn);
 
             case SummaryRowType.divider:
                 return <Divider key={index} />;
@@ -41,11 +42,12 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
         );
     };
 
-    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false, valueChildren = null) => {
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false, valueChildren = null, flexDirectionColumn = false) => {
         return (
             <div
                 className={classNames(
                     styles.summaryTicketRow,
+                    flexDirectionColumn ? styles.summaryTicketRowColumnDirection : null,
                     className,
                 )}
                 key={index}

@@ -15,6 +15,23 @@
     margin-bottom:  15px;
     font-size:      14px;
 
+    &.summaryTicketRowColumnDirection
+    {
+        flex-direction: column;
+
+        > *
+        {
+            width:           100% !important;
+            text-align:      left !important;
+            justify-content: flex-start !important;
+
+            &:nth-child(2)
+            {
+                margin-top: 20px;
+            }
+        }
+    }
+
     .key
     {
         opacity: 0.4;
