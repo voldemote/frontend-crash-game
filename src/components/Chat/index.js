@@ -12,16 +12,21 @@ import { useEffect }         from 'react';
 import { useRef }            from 'react';
 import { useState }          from 'react';
 import { WebsocketsActions } from '../../store/actions/websockets';
+import { usePrevPropValue }  from '../../hooks/usePrevPropValue'
 
 const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
     const messageListRef        = useRef();
     const [message, setMessage] = useState('');
     const eventId               = _.get(event, '_id');
+    const prevMessages = usePrevPropValue(messages);
 
     useEffect(
         () => {
-            messageListScrollToBottom();
-        }, [messages],
+            if (messages && prevMessages && messages.length && prevMessages.length && messages.length > prevMessages.length) {
+                messageListScrollToBottom();
+            }
+
+        }, [messages, prevMessages],
     );
 
     const onMessageSend = () => {
@@ -58,7 +63,11 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
 
     const messageListScrollToBottom = () => {
         if (messageListRef) {
-            messageListRef.current.scrollIntoView({ behavior: 'smooth' });
+            messageListRef.current.scrollTo({
+                top: messageListRef.current.scrollHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
         }
     };
 
@@ -69,10 +78,8 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
                 className,
             )}
         >
-            <div className={styles.messageContainer}>
+            <div className={styles.messageContainer} ref={messageListRef}>
                 {renderMessages()}
-                <span ref={messageListRef}>
-                </span>
             </div>
             <div className={styles.messageContainerRunOut}>
             </div>
