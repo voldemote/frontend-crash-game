@@ -1,27 +1,27 @@
-import _                   from 'lodash';
-import Button              from '../Button';
-import ChoiceSelector      from '../ChoiceSelector';
-import classNames          from 'classnames';
-import ClickEvent          from '../../helper/ClickEvent';
-import Divider             from '../Divider';
-import HighlightTheme      from '../Highlight/HighlightTheme';
-import HighlightType       from '../Highlight/HighlightType';
-import HotBetBadge         from '../HotBetBadge';
-import ProfileContainer    from '../ProfileContainer';
-import React               from 'react';
-import Routes              from '../../constants/Routes';
-import SleepHelper         from '../../helper/Sleep';
-import styles              from './styles.module.scss';
-import TimeLeftCounter     from '../TimeLeftCounter';
-import TokenNumberInput    from '../TokenNumberInput';
-import { BetActions }      from '../../store/actions/bet';
-import { connect }         from 'react-redux';
-import { getDefaultUser }  from '../../helper/Profile';
-import { useEffect }       from 'react';
-import { useHasMounted }   from '../hoc/useHasMounted';
-import { useHistory }      from 'react-router';
-import { useState }        from 'react';
-import ChoiceSelectorList  from '../ChoiceSelectorList';
+import _                  from 'lodash';
+import Button             from '../Button';
+import ChoiceSelector     from '../ChoiceSelector';
+import classNames         from 'classnames';
+import ClickEvent         from '../../helper/ClickEvent';
+import Divider            from '../Divider';
+import HighlightTheme     from '../Highlight/HighlightTheme';
+import HighlightType      from '../Highlight/HighlightType';
+import HotBetBadge        from '../HotBetBadge';
+import ProfileContainer   from '../ProfileContainer';
+import React              from 'react';
+import Routes             from '../../constants/Routes';
+import SleepHelper        from '../../helper/Sleep';
+import styles             from './styles.module.scss';
+import TimeLeftCounter    from '../TimeLeftCounter';
+import TokenNumberInput   from '../TokenNumberInput';
+import { BetActions }     from '../../store/actions/bet';
+import { connect }        from 'react-redux';
+import { getDefaultUser } from '../../helper/Profile';
+import { useEffect }      from 'react';
+import { useHasMounted }  from '../hoc/useHasMounted';
+import { useHistory }     from 'react-router';
+import { useState }       from 'react';
+import ChoiceSelectorList from '../ChoiceSelectorList';
 
 const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet }) => {
     const defaultBetValue         = 100;
@@ -55,13 +55,15 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
     );
 
     const renderFooter = () => {
-        const eventEnd = new Date(bet.date);
+        const tradeEnd = new Date(bet.date);
 
         return (
             <div className={styles.pillFooter}>
                 <div className={styles.timeLeftCounterContainer}>
-                    <span>End of Event:</span>
-                    <TimeLeftCounter endDate={eventEnd} />
+                    <span>
+                        End of Trade:
+                    </span>
+                    <TimeLeftCounter endDate={tradeEnd} />
                 </div>
             </div>
         );

@@ -60,7 +60,7 @@ const TradeDetailOverview = ({ className, hidePopup, showPopup, event, trade }) 
         return (
             <div className={styles.tradeDetailFooter}>
                 <span>
-                    Trade ends in:
+                    End of Trade:
                 </span>
                 <TimeLeftCounter endDate={eventEnd} />
             </div>

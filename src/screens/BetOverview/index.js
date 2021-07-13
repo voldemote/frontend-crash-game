@@ -93,6 +93,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
             <div className={styles.betSummaryContainerWrapper}>
                 <BetSummaryContainer
                     containerClassName={styles.betSummaryContainer}
+                    className={styles.betSummaryRow}
                     containerImage={imageUrl}
                     marketQuestion={marketQuestion}
                     endDate={endDateTime}
@@ -191,6 +192,7 @@ const mapStateToProps = (state) => {
         (openBet, index) => {
             const betId  = openBet.betId;
             const event  = State.getEventByTrade(betId, events);
+            const bet    = State.getTradeByEvent(_.get(openBet, 'betId'), event);
             let outcomes = _.get(
                 rawOutcomes,
                 betId,
@@ -210,7 +212,7 @@ const mapStateToProps = (state) => {
             return {
                 ...openBet,
                 outcomes,
-                bet: State.getTrade(openBet.betId),
+                bet,
                 event,
             };
         },

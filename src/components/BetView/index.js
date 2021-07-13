@@ -780,7 +780,7 @@ const BetView = ({
                 {
                     showEventEnd && (
                         <div className={styles.timeLeftCounterContainer}>
-                            <span>End of Event:</span>
+                            <span>End of Trade:</span>
                             <TimeLeftCounter endDate={endDate} />
                         </div>
                     )
