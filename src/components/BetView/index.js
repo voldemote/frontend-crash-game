@@ -112,7 +112,7 @@ const BetView = ({
             return bet;
         }
     )();
-    const state                                           = BetState.cancelled;//_.get(bet, 'status');
+    const state                                           = _.get(bet, 'status');
     const betId                                           = _.get(bet, '_id', selectedBetId);
     const event                                           = (
         () => {
