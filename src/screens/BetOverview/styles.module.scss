@@ -50,6 +50,13 @@
 
             .betSummaryContainer
             {
+                .betSummaryRow
+                {
+                    > span > span > svg
+                    {
+                        right: 0;
+                    }
+                }
             }
         }
     }

@@ -7,9 +7,10 @@ class BetSummaryHelper {
         };
     }
 
-    static getKeyValue (key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, isLink = false, valueHighlight = null, valueChildren = null) {
+    static getKeyValue (key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, isLink = false, valueHighlight = null, valueChildren = null, flexDirectionColumn = false) {
         return {
             type: SummaryRowType.keyValue,
+            flexDirectionColumn,
             key,
             keyBold,
             value,

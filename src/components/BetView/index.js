@@ -37,6 +37,7 @@ import Link                   from '../Link';
 import Routes                 from '../../constants/Routes';
 import { PopupActions }       from '../../store/actions/popup';
 import PopupTheme             from '../Popup/PopupTheme';
+import ErrorHint              from '../ErrorHint';
 
 const BetView = ({
                      actionIsInProgress,
@@ -551,6 +552,14 @@ const BetView = ({
                         </div>
                     </div>
                 </div>
+                {
+                    state === BetState.cancelled && <div className={styles.cancelledErrorContainer}>
+                        <ErrorHint
+                            className={styles.cancelledErrorText}
+                            errorText={'All participants will be refunded.'}
+                        />
+                    </div>
+                }
             </>
         );
     };
@@ -614,7 +623,7 @@ const BetView = ({
                     tradeId: betId,
                     eventId: _.get(event, '_id'),
                 };
-                
+
                 showPopup(popupType, options);
             };
         };
@@ -780,7 +789,7 @@ const BetView = ({
                 {
                     showEventEnd && (
                         <div className={styles.timeLeftCounterContainer}>
-                            <span>End of Event:</span>
+                            <span>End of Trade:</span>
                             <TimeLeftCounter endDate={endDate} />
                         </div>
                     )

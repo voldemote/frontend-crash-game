@@ -12,7 +12,7 @@ const BetSummaryContainer = ({ className, containerClassName, containerImage, ma
             return (
                 <div className={styles.summaryTimeLeftContainer}>
                     <span>
-                        End of Event:
+                        End of Trade:
                     </span>
                     <TimeLeftCounter endDate={endDate} />
                 </div>
