@@ -62,8 +62,12 @@
                 display:         flex;
                 justify-content: flex-start;
                 align-items:     center;
-                margin-bottom:   2rem;
                 flex:            initial;
+
+                @media (min-width: $screen-md)
+                {
+                    margin-bottom: 2rem;
+                }
 
                 @media (max-width: $screen-md)
                 {
@@ -286,6 +290,11 @@
         }
     }
 
+    .mobileChat
+    {
+        display: flex;
+    }
+
     .desktopChat
     {
         @media (max-width: $screen-md)
@@ -296,6 +305,7 @@
 
     .mobileCarousel
     {
+        flex:       1;
         margin-top: 2rem;
 
         @media (min-width: $screen-md)
@@ -349,8 +359,7 @@
 
     .carouselSlide
     {
-        margin:         0 0.25rem;
-        padding-bottom: 50px;
+        padding: 0 0.25rem 60px;
     }
 
     .fixedChatButton
