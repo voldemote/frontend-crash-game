@@ -15,6 +15,7 @@ import { ReactComponent as IconArrowSmallDown }  from '../../data/icons/arrow-sm
 import { ReactComponent as IconArrowSmallRight } from '../../data/icons/arrow-small-right.svg';
 import { ReactComponent as IconArrowTopRight }   from '../../data/icons/arrow-top-right.svg';
 import { ReactComponent as IconAttention }       from '../../data/icons/attention.svg';
+import { ReactComponent as IconBell }             from '../../data/icons/bell.svg';
 import { ReactComponent as IconBet }             from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.svg';
 import { ReactComponent as IconCalendar }        from '../../data/icons/calendar.svg';
@@ -23,6 +24,7 @@ import { ReactComponent as IconChecked }         from '../../data/icons/checked.
 import { ReactComponent as IconCollapseSidebar } from '../../data/icons/collapse-sidebar.svg';
 import { ReactComponent as IconConfettiLeft }    from '../../data/icons/confetti-left.svg';
 import { ReactComponent as IconConfettiRight }   from '../../data/icons/confetti-right.svg';
+import { ReactComponent as IconCross }           from '../../data/icons/cross.svg';
 import { ReactComponent as IconDeleteInput }     from '../../data/icons/delete-input.svg';
 import { ReactComponent as IconDeposit }         from '../../data/icons/deposit.svg';
 import { ReactComponent as IconInfo }            from '../../data/icons/info.svg';
@@ -62,6 +64,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.arrowSmallRight]: <IconArrowSmallRight />,
                 [IconType.arrowTopRight]:   <IconArrowTopRight />,
                 [IconType.attention]:       <IconAttention />,
+                [IconType.bell]:            <IconBell />,
                 [IconType.bet]:             <IconBet />,
                 [IconType.bet2]:            <IconBet2 />,
                 [IconType.calendar]:        <IconCalendar />,
@@ -70,6 +73,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.collapseSidebar]: <IconCollapseSidebar />,
                 [IconType.confettiLeft]:    <IconConfettiLeft />,
                 [IconType.confettiRight]:   <IconConfettiRight />,
+                [IconType.cross]:           <IconCross />,
                 [IconType.deleteInput]:     <IconDeleteInput />,
                 [IconType.deposit]:         <IconDeposit />,
                 [IconType.logout]:          <IconLogout />,

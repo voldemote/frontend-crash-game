@@ -1,28 +1,45 @@
-import React          from 'react';
-import {useState}     from 'react';
-import _              from 'lodash';
-import classNames     from 'classnames';
-import Icon           from '../Icon';
-import IconTheme      from '../Icon/IconTheme';
-import IconType       from '../Icon/IconType';
-import Routes         from '../../constants/Routes';
-import styles         from './styles.module.scss';
-import { connect }    from 'react-redux';
-import { useHistory } from 'react-router';
-import HomeSettings   from '../HomeSettings';
+import React from "react";
+import { useState } from "react";
+import _ from "lodash";
+import classNames from "classnames";
+import Icon from "../Icon";
+import IconType from "../Icon/IconType";
+import IconTheme from "../Icon/IconTheme";
+import Routes from "../../constants/Routes";
+import styles from "./styles.module.scss";
+import { connect } from "react-redux";
+import { useHistory } from "react-router";
+import HomeSettings from "../HomeSettings";
+import { PieChart } from "react-minimal-pie-chart";
 
-const MainMenu = ({ opened, closeMobileMenu, openBetCount, totalWin, balance }) => {
+const MainMenu = ({
+    opened,
+    closeMobileMenu,
+    openBets,
+    balance,
+    sellTransactions,
+}) => {
     const [openSettings, setOpenSettings] = useState(false);
+
+    let investedAmount = 0;
+
+    const calculateInvestedAmount = () => {
+        openBets.map((bet) => {
+            return (investedAmount += Number(bet.investmentAmount));
+        });
+    };
+
+    calculateInvestedAmount();
 
     const history = useHistory();
 
     const showSettingsHandler = () => {
-        setOpenSettings(true)
-    }
+        setOpenSettings(true);
+    };
 
     const notShowSettingsHandler = () => {
-        setOpenSettings(false)
-    }
+        setOpenSettings(false);
+    };
 
     const onClickGoToRoute = (destinationRoute) => {
         return () => {
@@ -30,119 +47,142 @@ const MainMenu = ({ opened, closeMobileMenu, openBetCount, totalWin, balance }) 
         };
     };
 
-    const renderInfoDetailContainer = (infoValue, infoText, destinationRoute, withEvntToken) => {
-        return (
-            <div
-                className={styles.infoDetailContainer}
-                onClick={onClickGoToRoute(destinationRoute)}
-            >
-                <div className={styles.info}>
-                    {infoValue}
-                    {withEvntToken && <sup>
-                        EVNT
-                    </sup>}
-                </div>
-                <div className={styles.infoText}>
-                    {infoText}
-                    <Icon
-                        iconType={IconType.arrowTopRight}
-                        className={styles.infoTextIcon}
-                        width={12}
-                        height={12}
-                    />
-                </div>
-            </div>
-        );
-    };
-
-    const renderCloseButton = () => {
-        return (
-            <div className={styles.upperCloseMenuContainer}>
-                <div className={styles.upperCloseMenuButton}>
-                    <Icon
-                        iconType={IconType.collapseSidebar}
-                        onClick={closeMobileMenu}
-                    />
-                </div>
-            </div>
-        );
-    };
-
-    const renderInfos = () => {
-        return (
-            <>
-                {renderInfoDetailContainer(balance, 'Your actual balance', Routes.wallet, true)}
-                {renderInfoDetailContainer(openBetCount, 'Open Bets', Routes.betOverview)}
-                {renderInfoDetailContainer(totalWin, 'Money won', Routes.betOverview, true)}
-            </>
-        );
-    };
-
-    const renderMenuFooter = () => {
-        return (
-            <div className={styles.menuFooter} onClick={showSettingsHandler} >
-                {renderMenuButton(IconType.settings, 'Settings')}
-                {renderLogoutButton()}
-            </div>
-        );
-    };
-
-    const renderMenuButton = (iconType, text) => {
-        return (
-            <div className={styles.menuButton}>
-                <Icon
-                    className={styles.menuButtonIcon}
-                    iconTheme={IconTheme.primary}
-                    iconType={iconType}
-                />
-                {text}
-            </div>
-        );
-    };
-
-    const renderLogoutButton = () => {
-        return (
-            <div
-                className={styles.logoutButton}
-                onClick={onClickGoToRoute(Routes.logout)}
-            >
-                <Icon
-                    className={styles.logoutButtonIcon}
-                    iconType={IconType.logout}
-                />
-                Logout
-            </div>
-        );
-    };
+    const growth = 0;
 
     return (
         <div
             className={classNames(
                 styles.menu,
-                opened ? styles.menuOpened : null,
+                opened ? styles.menuOpened : null
             )}
         >
-            {renderCloseButton()}
-            {renderInfos()}
-            {renderMenuFooter()}
-            {openSettings && <HomeSettings notShowSettingsHandler={notShowSettingsHandler} />}
+            <div className={styles.fundsContainer}>
+                <div className={styles.overallFunds}>
+                    <p className={styles.overallFundsHeadline}>OVERALL FUNDS</p>
+                    <div className={styles.overallFundsAmount}>
+                        <PieChart
+                            data={[
+                                {
+                                    title: "InvestedFunds",
+                                    value: 69,
+                                    color: "#69FFA5",
+                                },
+                                {
+                                    title: "LiquidFunds",
+                                    value: 31,
+                                    color: "#3570FF",
+                                },
+                            ]}
+                            lineWidth={14}
+                            startAngle={270}
+                        />
+                        <p className={styles.overallFundsTotal}>997</p>
+                        <p className={styles.overallFundsTitle}>EVNT</p>
+                    </div>
+                    ;
+                </div>
+                <div className={styles.fundsSeperator} />
+                <div className={styles.detailedFunds}>
+                    <div className={styles.investedFunds}>
+                        <div className={styles.investedFundsHeadline}>
+                            <div className={styles.investedFundsDot} />
+                            Invested Market Value
+                        </div>
+                        <div className={styles.investedFundsAmount}>
+                            <p className={styles.investedFundsTotal}>
+                                0
+                            </p>
+                            <p className={styles.investedFundsTitle}>EVNT</p>
+                        </div>
+                        {growth > 0 ? (
+                            <div className={styles.growthPositive}>
+                                +{growth}
+                            </div>
+                        ) : growth < 0 ? (
+                            <div className={styles.growthNegative}>
+                                {growth}
+                            </div>
+                        ) : (
+                            <div className={styles.growthNeutral}>
+                                {growth} / 0%
+                            </div>
+                        )}
+                        <div className={styles.originInvestedAmount}>
+                            {investedAmount} EVNT invested
+                        </div>
+                    </div>
+                    <div className={styles.liquidFunds}>
+                        <div className={styles.liquidFundsHeadline}>
+                            <div className={styles.liquidFundsDot} />
+                            Liquid EVNTs
+                        </div>
+                        <div className={styles.liquidFundsAmount}>
+                            <p className={styles.liquidFundsTotal}>{balance}</p>
+                            <p className={styles.liquidFundsTitle}>EVNT</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className={styles.goToWallet}
+                    onClick={onClickGoToRoute(Routes.wallet)}
+                >
+                    <p className={styles.goToWalletText}>Go to my Wallet</p>
+                    <Icon
+                        className={styles.goToWalletIcon}
+                        iconType={IconType.arrowTopRight}
+                    />
+                </div>
+            </div>
+            <div className={styles.latestTradesContainer}>
+                <div className={styles.latestTradesHeadline}>
+                    <p className={styles.HeadlineLeft}>LATEST TRADES</p>
+                    <p
+                        className={styles.HeadlineRight}
+                        onClick={onClickGoToRoute(Routes.betOverview)}
+                    >
+                        See all
+                    </p>
+                </div>
+            </div>
+            <div className={styles.buttonContainer}>
+                <div
+                    className={styles.settingButton}
+                    onClick={showSettingsHandler}
+                >
+                    <Icon
+                        iconTheme={IconTheme.black}
+                        iconType={IconType.settings}
+                    />
+                </div>
+                <div
+                    className={styles.logoutButton}
+                    onClick={onClickGoToRoute(Routes.logout)}
+                >
+                    <Icon
+                        iconTheme={IconTheme.black}
+                        iconType={IconType.logout}
+                    />
+                </div>
+            </div>
+            {openSettings && (
+                <HomeSettings notShowSettingsHandler={notShowSettingsHandler} />
+            )}
         </div>
     );
 };
 
 const mapStateToProps = (state) => {
     const openBetCount = _.size(state.bet.openBets);
-    const balance      = state.authentication.balance;
-    const totalWin     = state.authentication.totalWin;
+    const openBets = state.bet.openBets;
+    const balance = state.authentication.balance;
+    const totalWin = state.authentication.totalWin;
 
     return {
         openBetCount,
+        openBets,
         balance,
         totalWin,
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null,
-)(MainMenu);
+export default connect(mapStateToProps, null)(MainMenu);

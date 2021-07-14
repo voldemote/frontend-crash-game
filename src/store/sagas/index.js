@@ -6,7 +6,8 @@ import TransactionSagas                       from './transaction';
 import UserSagas                              from './user';
 import ChatSagas                              from './chat';
 import WebsocketsSagas                        from './websockets';
-import { all }                                from 'redux-saga/effects';
+import LeaderboardSagas                       from "./leaderboard";
+import {all, select}                          from 'redux-saga/effects';
 import { AuthenticationActions }              from '../actions/authentication';
 import { AuthenticationTypes }                from '../actions/authentication';
 import { BetActions }                         from '../actions/bet';
@@ -22,6 +23,7 @@ import { AlertTypes }                         from '../actions/alert';
 import { ChatTypes, ChatActions }             from '../actions/chat';
 import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
 import { LOCATION_CHANGE }                    from 'connected-react-router';
+import { LeaderboardActions, LeaderboardTypes }                   from '../actions/leaderboard';
 
 const root = function* () {
     yield all([
@@ -81,6 +83,7 @@ const root = function* () {
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
         takeLatest([REHYDRATE],                                          ChatSagas.rehydrate),
+        takeLatest([LeaderboardTypes.FETCH_ALL],                         LeaderboardSagas.fetchAll),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
     ]);
@@ -97,6 +100,15 @@ const preLoading = function* () {
     yield put(TransactionActions.fetchAll());
     yield put(ChatActions.fetchInitial());
     yield put(WebsocketsActions.init());
+    yield put(LeaderboardActions.fetchAll());
+
+    const userId = yield select(state => state.authentication.userId);
+    if(userId) {
+        yield put(WebsocketsActions.joinRoom({
+            userId,
+            eventId: 'undefinedRoom',
+        }));
+    };
 };
 
 export default {

@@ -18,6 +18,7 @@ const initialState = {
     referralList:   [],
     admin:          false,
     authState:      AuthState.LOGGED_OUT,
+    rank:           0,
 };
 
 const requestSmsSucceeded = (action, state) => {
@@ -137,6 +138,9 @@ const updateData = (action, state) => {
         },
         totalWin:       {
             $set: action.totalWin,
+        },
+        rank:       {
+            $set: action.rank,
         },
     });
 };

@@ -13,7 +13,7 @@ const fetchAll = makeActionCreator(
 const fetchAllSucceeded = makeActionCreator(
     LeaderboardTypes.FETCH_ALL_SUCCEEDED,
     {
-        Leaderboard: null,
+        leaderboard: null,
     },
 );
 
