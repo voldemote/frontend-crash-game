@@ -201,7 +201,6 @@ const Navbar = ({
 };
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         location: state.router.location,
         notifications: state.notification.notifications,

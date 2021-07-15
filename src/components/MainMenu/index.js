@@ -133,7 +133,7 @@ const MainMenu = ({
                     />
                 </div>
             </div>
-            <div className={styles.latestTradesContainer}>
+            {/* <div className={styles.latestTradesContainer}>
                 <div className={styles.latestTradesHeadline}>
                     <p className={styles.HeadlineLeft}>LATEST TRADES</p>
                     <p
@@ -143,7 +143,7 @@ const MainMenu = ({
                         See all
                     </p>
                 </div>
-            </div>
+            </div> */}
             <div className={styles.buttonContainer}>
                 <div
                     className={styles.settingButton}
