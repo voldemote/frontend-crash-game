@@ -15,10 +15,8 @@
 
     .messageContainer
     {
-        min-height:     0;
         display:        flex;
         flex-direction: column;
-        flex:           1;
         align-items:    flex-start;
         flex-flow:      column nowrap;
         overflow-y:     scroll;
@@ -29,11 +27,6 @@
         {
             width:      0;
             background: transparent;
-        }
-
-        @media (max-width: $screen-md)
-        {
-            max-height: 35vh;
         }
 
         > :first-child

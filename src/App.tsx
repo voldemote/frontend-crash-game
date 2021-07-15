@@ -1,4 +1,5 @@
 import './styles.module.scss';
+import { YMInitializer }           from 'react-yandex-metrika';
 import AlertBox                    from './components/AlertBox';
 import Bet                         from './screens/Bet';
 import Home                        from './screens/Home';
@@ -11,7 +12,7 @@ import store                       from './store';
 import TermsAndConditions          from './screens/TermsAndConditions';
 import PaymentConfirmation         from './screens/PaymentConfirmation';
 import Wallet                      from './screens/Wallet';
-import BetOverview                from './screens/BetOverview';
+import BetOverview                 from './screens/BetOverview';
 import Welcome                     from './screens/Welcome';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
@@ -26,6 +27,15 @@ const App = () => {
             <ConnectedRouter history={history}>
                 <AlertBox />
                 <Popup />
+                <YMInitializer
+                    accounts={[82927219]}
+                    options={{
+                        clickmap:            true,
+                        trackLinks:          true,
+                        accurateTrackBounce: true,
+                        webvisor:            true,
+                    }}
+                />
                 <Switch>
                     <Route
                         exact

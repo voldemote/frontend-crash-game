@@ -22,10 +22,13 @@ import { useHistory }               from 'react-router-dom';
 import Chat                         from '../../components/Chat';
 import classNames                   from 'classnames';
 import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
+import { SwiperSlide, Swiper }      from 'swiper/react';
+import React                        from 'react';
 
 const Bet = ({ showPopup }) => {
           const history                         = useHistory();
-          const { eventId }              = useParams();
+          const [swiper, setSwiper]             = useState(null);
+          const { eventId }                     = useParams();
           const [currentSlide, setCurrentSlide] = useState(0);
 
           const event = useSelector(
@@ -37,9 +40,9 @@ const Bet = ({ showPopup }) => {
               ),
           );
 
-          const updateCurrentSlide = (index) => {
-              if (currentSlide !== index) {
-                  setCurrentSlide(index);
+          const moveToSlide = (index) => {
+              if (swiper) {
+                  swiper.slideTo(index);
               }
           };
 
@@ -47,7 +50,7 @@ const Bet = ({ showPopup }) => {
               return (
                   <FixedIconButton
                       className={styles.fixedChatButton}
-                      onClick={() => setCurrentSlide(0)}
+                      onClick={() => moveToSlide(1)}
                       iconType={IconType.chat}
                       left={true}
                   />
@@ -216,33 +219,28 @@ const Bet = ({ showPopup }) => {
                               event={event}
                           />
                           <div className={styles.mobileCarousel}>
-                              <Carousel
-                                  emulateTouch={true}
-                                  infiniteLoop={false}
-                                  showArrows={false}
-                                  autoPlay={false}
-                                  interval={999999999}
-                                  showStatus={false}
-                                  showIndicators={false}
-                                  showThumbs={false}
-                                  dynamicHeight={true}
-                                  selectedItem={currentSlide}
-                                  onChange={(index) => {
-                                      updateCurrentSlide(index);
+                              <Swiper
+                                  slidesPerView={1}
+                                  pagination={{
+                                      'clickable': false,
                                   }}
+                                  autoHeight={true}
+                                  onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
+                                  onSwiper={setSwiper}
                               >
-                                  <div className={styles.carouselSlide}>
+                                  <SwiperSlide className={styles.carouselSlide}>
                                       <BetView
                                           closed={false}
                                           showEventEnd={true}
                                       />
-                                  </div>
-                                  <div className={styles.carouselSlide}>
+                                  </SwiperSlide>
+                                  <SwiperSlide className={styles.carouselSlide}>
                                       <Chat
                                           event={event}
+                                          className={styles.mobileChat}
                                       />
-                                  </div>
-                                  <div className={styles.carouselSlide}>
+                                  </SwiperSlide>
+                                  <SwiperSlide className={styles.carouselSlide}>
                                       <div
                                           className={styles.headline}
                                           style={{ flexDirection: 'row', display: 'flex', marginBottom: '1rem', alignItems: 'center' }}
@@ -253,8 +251,8 @@ const Bet = ({ showPopup }) => {
                                       <div>
                                           {renderRelatedBetList()}
                                       </div>
-                                  </div>
-                              </Carousel>
+                                  </SwiperSlide>
+                              </Swiper>
                           </div>
                       </div>
                       <div className={styles.columnRight}>

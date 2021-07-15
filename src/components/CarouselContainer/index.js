@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState }            from 'react';
 
 const CarouselContainer = ({ title, children, withoutPadding = false }) => {
-    const carouselRef                             = useRef();
     // @TODO: Any reason we use state here, even though the values are not mutated?
     const [prevArrowVisible] = useState(false);
     const [nextArrowVisible] = useState(true);
@@ -18,10 +17,12 @@ const CarouselContainer = ({ title, children, withoutPadding = false }) => {
     };
 
     return (
-        <div className={classNames(
-            styles.carouselContainer,
-            withoutPadding ? styles.carouselContainerWithoutPadding : null,
-        )}>
+        <div
+            className={classNames(
+                styles.carouselContainer,
+                withoutPadding ? styles.carouselContainerWithoutPadding : null,
+            )}
+        >
             <div className={styles.titleContainer}>
                 <span className={styles.title}>
                     {title}
@@ -50,7 +51,6 @@ const CarouselContainer = ({ title, children, withoutPadding = false }) => {
             </div>
             <div className={styles.carousel}>
                 <Swiper
-                    ref={carouselRef}
                     slidesPerView={'auto'}
                     pagination={{
                         'clickable': false,

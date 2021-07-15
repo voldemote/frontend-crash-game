@@ -1,10 +1,11 @@
-import _                  from 'lodash';
-import styles             from './styles.module.scss';
-import Routes             from '../../constants/Routes';
-import { useHistory }     from 'react-router';
-import ProfilePicture     from '../ProfilePicture';
-import ChatMessageType    from '../ChatMessageWrapper/ChatMessageType';
-import { connect }        from 'react-redux';
+import _               from 'lodash';
+import styles          from './styles.module.scss';
+import Routes          from '../../constants/Routes';
+import { useHistory }  from 'react-router';
+import ProfilePicture  from '../ProfilePicture';
+import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
+import { connect }     from 'react-redux';
+import State           from '../../helper/State';
 
 const BetActionChatMessage = ({ chatMessageType, eventId, betId, event, bet, user, message, dateString }) => {
     const history = useHistory();
@@ -26,6 +27,7 @@ const BetActionChatMessage = ({ chatMessageType, eventId, betId, event, bet, use
     const getMessage = () => {
         const userName     = _.get(user, 'name');
         const tokenAmount  = _.get(message, 'amount');
+        const currentPrice = _.get(message, 'currentPrice');
         const outcome      = _.get(message, 'outcome');
         const betOutcome   = _.get(bet, ['outcomes', outcome]);
         const outcomeValue = _.get(betOutcome, 'name');
@@ -72,18 +74,8 @@ const mapStateToProps = (state, ownProps) => {
     const { message } = ownProps;
     const betId       = _.get(message, 'betId');
     const eventId     = _.get(message, 'eventId');
-    const event       = _.find(
-        state.event.events,
-        {
-            _id: eventId,
-        },
-    );
-    const bet         = _.find(
-        _.get(event, 'bets', []),
-        {
-            _id: betId,
-        },
-    );
+    const event       = State.getEvent(eventId, state.event.events);
+    const bet         = State.getTradeByEvent(betId, event);
 
     return {
         bet,
