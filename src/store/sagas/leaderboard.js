@@ -9,18 +9,24 @@ import { UserActions } from "../actions/user";
 import State from "../../helper/State";
 
 const fetchAll = function* (action) {
-    const response = yield call(Api.getLeaderboard);
+    const userId = yield select(state => state.authentication.userId);
+    const token = yield select(state => state.authentication.token);
 
-    if (response) {
-        const leaderboard = response.data;
+    if (userId && token) {
 
-        yield put(
-            LeaderboardActions.fetchAllSucceeded({
-                leaderboard,
-            })
-        );
-    } else {
-        yield put(LeaderboardActions.fetchAllFailed());
+        const response = yield call(Api.getLeaderboard);
+
+        if (response) {
+            const leaderboard = response.data;
+
+            yield put(
+                LeaderboardActions.fetchAllSucceeded({
+                    leaderboard,
+                })
+            );
+        } else {
+            yield put(LeaderboardActions.fetchAllFailed());
+        }
     }
 };
 
