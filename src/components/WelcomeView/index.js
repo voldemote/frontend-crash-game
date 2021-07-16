@@ -32,6 +32,9 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
                 <span className={styles.welcomeTextText}>
                     Free for full Wallfair experience!
                 </span>
+                <span className={styles.welcomeTextText}>
+                    Refer a friend and get additional 50 EVNT.
+                </span>
             </div>
         );
     };
