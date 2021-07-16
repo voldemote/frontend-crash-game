@@ -12,7 +12,7 @@ const ChatMessageWrapper = ({ user, message, date }) => {
     const [dateString, setDateString] = useState('');
 
     const updateDateText = useCallback(() => {
-        const dateText = DateText.getSecondsDateText(date);
+        const dateText = DateText.getChatTimeText(date);
 
         setDateString(dateText);
     }, [date]);
