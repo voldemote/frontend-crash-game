@@ -509,9 +509,9 @@ const BetView = ({
                     </div>
                 </div>
                 {
-                    state === BetState.cancelled && <div className={styles.cancelledErrorContainer}>
+                    state === BetState.canceled && <div className={styles.canceledErrorContainer}>
                         <ErrorHint
-                            className={styles.cancelledErrorText}
+                            className={styles.canceledErrorText}
                             errorText={'All participants will be refunded.'}
                         />
                     </div>
@@ -632,7 +632,7 @@ const BetView = ({
 
         if (
             state === BetState.active ||
-            state === BetState.cancelled ||
+            state === BetState.canceled ||
             state === BetState.closed
         ) {
             return (
