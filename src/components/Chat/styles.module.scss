@@ -23,6 +23,11 @@
         margin-bottom:  1rem;
         position:       relative;
 
+        @media (min-width: $screen-md)
+        {
+            margin-top: auto;
+        }
+
         &::-webkit-scrollbar
         {
             width:      0;
