@@ -15,6 +15,7 @@ import BaseContainerWithNavbar    from '../../components/BaseContainerWithNavbar
 import HighlightType              from '../../components/Highlight/HighlightType';
 import LiveEventCarouselContainer from '../../components/LiveEventCarouselContainer';
 import State                      from '../../helper/State';
+import { formatToFixed }          from '../../helper/FormatNumbers';
 
 const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     const queryParams           = new URLSearchParams(window.location.search);
@@ -52,10 +53,10 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     };
 
     const getOpenBetSummaryRows = (bet, openBet) => {
-        const amount        = _.get(openBet, 'investmentAmount');
+        const amount        = formatToFixed(_.get(openBet, 'investmentAmount', 0));
         const outcomeIndex  = _.get(openBet, 'outcome');
         const outcomeValue  = _.get(bet, ['outcomes', outcomeIndex, 'name']);
-        const outcomeReturn = _.get(openBet, 'outcomeAmount');
+        const outcomeReturn = formatToFixed(_.get(openBet, 'outcomeAmount', 0));
 
         return [
             BetSummaryHelper.getDivider(),
@@ -105,11 +106,11 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     };
 
     const getBetHistorySummaryRows = (bet, betHistory) => {
-        const amount        = _.get(betHistory, 'investmentamount');
-        const feeAmount     = _.get(betHistory, 'feeamount');
+        const amount        = formatToFixed(_.get(betHistory, 'investmentAmount', 0));
+        const feeAmount     = formatToFixed(_.get(betHistory, 'feeAmount'));
         const outcomeIndex  = _.get(betHistory, 'outcome');
         const outcomeValue  = _.get(bet, ['outcomes', outcomeIndex, 'name']);
-        const outcomeReturn = _.get(betHistory, 'outcometokensbought');
+        const outcomeReturn = formatToFixed(_.get(betHistory, 'outcomeTokensBought'));
         const sold          = _.get(betHistory, 'direction') === 'SELL';
 
         return [
