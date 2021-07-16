@@ -85,9 +85,13 @@ const ReferralList = ({ closed, userId, referralsWithUser }) => {
                           <ReferralLinkCopyInputBox userId={userId} />
                       </div>
                   </div>
-                  <div className={styles.referralList}>
-                      {renderReferralListContent()}
-                  </div>
+                  {
+                      // disabled for MVP
+                      false &&
+                      <div className={styles.referralList}>
+                          {renderReferralListContent()}
+                      </div>
+                  }
               </div>
           );
       }
