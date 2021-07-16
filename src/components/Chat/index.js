@@ -16,11 +16,12 @@ import { usePrevPropValue }  from '../../hooks/usePrevPropValue';
 import { useIsMount }        from '../hoc/useIsMount';
 
 const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
-    const messageListRef        = useRef();
-    const [message, setMessage] = useState('');
-    const eventId               = _.get(event, '_id');
-    const prevMessages          = usePrevPropValue(messages);
-    const isMount               = useIsMount();
+    const messageListRef                        = useRef();
+    const [message, setMessage]                 = useState('');
+    const [lastMessageSent, setLastMessageSent] = useState(0);
+    const eventId                               = _.get(event, '_id');
+    const prevMessages                          = usePrevPropValue(messages);
+    const isMount                               = useIsMount();
 
     useEffect(
         () => {
@@ -38,16 +39,22 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
 
     const onMessageSend = () => {
         if (message) {
-            const messageData = {
-                type:    ChatMessageType.chatMessage,
-                message: message,
-                date:    new Date(),
-                eventId,
-                userId,
-            };
+            const currentTimeStamp = +new Date;
+            const difference       = currentTimeStamp - lastMessageSent;
 
-            setMessage('');
-            sendChatMessage(messageData);
+            if (difference >= 2 * 1000) {
+                const messageData = {
+                    type:    ChatMessageType.chatMessage,
+                    message: message,
+                    date:    new Date(),
+                    eventId,
+                    userId,
+                };
+
+                setMessage('');
+                sendChatMessage(messageData);
+                setLastMessageSent(currentTimeStamp);
+            }
         }
     };
 
@@ -78,6 +85,13 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
         }
     };
 
+    const onMessageInputChange = (event) => {
+        const value   = _.get(event, ['target', 'value'], '');
+        const message = _.truncate(value, { length: 400 });
+
+        setMessage(message);
+    };
+
     return (
         <div
             className={classNames(
@@ -98,7 +112,7 @@ const Chat = ({ className, userId, event, messages, sendChatMessage }) => {
                     type={'text'}
                     placeholder={'Comment...'}
                     value={message}
-                    onChange={(event) => setMessage(event.target.value)}
+                    onChange={onMessageInputChange}
                     onSubmit={onMessageSend}
                 />
                 <button

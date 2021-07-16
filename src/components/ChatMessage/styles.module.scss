@@ -3,13 +3,13 @@
 .chatMessage
 {
     padding:          1rem 1.5rem;
-    background-color: $colorPrimaryDark;
     border-radius:    10px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: $colorWhite20;
     display:          inline-flex;
     margin-top:       0.5rem;
     font-size:        14px;
     text-align:       left;
+    hyphens:          auto;
 
     img
     {
