@@ -15,7 +15,6 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 
 const MainMenu = ({
                       opened,
-                      closeMobileMenu,
                       openBetCount,
                       openBets,
                       balance,
@@ -85,7 +84,7 @@ const MainMenu = ({
                             lineWidth={14}
                             startAngle={270}
                         />
-                        <p className={styles.overallFundsTotal}>{overallFundsTotal}</p>
+                        <p className={styles.overallFundsTotal}>{formatToFixed(overallFundsTotal)}</p>
                         <p className={styles.overallFundsTitle}>EVNT</p>
                     </div>
                     ;
@@ -99,7 +98,7 @@ const MainMenu = ({
                         </div>
                         <div className={styles.investedFundsAmount}>
                             <p className={styles.investedFundsTotal}>
-                                {investedAmount}
+                                {formatToFixed(investedAmount)}
                             </p>
                             <p className={styles.investedFundsTitle}>EVNT</p>
                         </div>
@@ -126,7 +125,7 @@ const MainMenu = ({
                             Liquid EVNTs
                         </div>
                         <div className={styles.liquidFundsAmount}>
-                            <p className={styles.liquidFundsTotal}>{balance}</p>
+                            <p className={styles.liquidFundsTotal}>{formatToFixed(balance)}</p>
                             <p className={styles.liquidFundsTitle}>EVNT</p>
                         </div>
                     </div>
@@ -183,12 +182,12 @@ const MainMenu = ({
 const mapStateToProps = (state) => {
     const openBetCount            = _.size(state.bet.openBets);
     const openBets                = state.bet.openBets;
-    const balance                 = formatToFixed(+state.authentication.balance);
-    const totalWin                = formatToFixed(+state.authentication.totalWin);
-    const investmentAmount        = formatToFixed(_.sum(openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)));
-    const overallFundsTotal       = formatToFixed(balance + investmentAmount);
-    const liquidFundsPercentage   = formatToFixed(100 * balance / overallFundsTotal);
-    const investedFundsPercentage = formatToFixed(100 * investmentAmount / overallFundsTotal);
+    const balance                 = +state.authentication.balance;
+    const totalWin                = +state.authentication.totalWin;
+    const investmentAmount        = _.sum(openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite));
+    const overallFundsTotal       = balance + investmentAmount;
+    const liquidFundsPercentage   = 100 * balance / overallFundsTotal;
+    const investedFundsPercentage = 100 * investmentAmount / overallFundsTotal;
 
     return {
         openBetCount,

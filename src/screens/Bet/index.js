@@ -205,7 +205,6 @@ const Bet = ({ showPopup }) => {
                           <div className={styles.streamContainer}>
                               <TwitchEmbedVideo
                                   video={event.streamUrl}
-                                  muted={true}
                               />
                               <div className={styles.timeLeft}>
                                   <span>
