@@ -1,37 +1,40 @@
-import React from "react";
-import { useState } from "react";
-import _ from "lodash";
-import classNames from "classnames";
-import Icon from "../Icon";
-import IconType from "../Icon/IconType";
-import IconTheme from "../Icon/IconTheme";
-import Routes from "../../constants/Routes";
-import styles from "./styles.module.scss";
-import { connect } from "react-redux";
-import { useHistory } from "react-router";
-import HomeSettings from "../HomeSettings";
-import { PieChart } from "react-minimal-pie-chart";
+import React             from 'react';
+import { useState }      from 'react';
+import _                 from 'lodash';
+import classNames        from 'classnames';
+import Icon              from '../Icon';
+import IconType          from '../Icon/IconType';
+import IconTheme         from '../Icon/IconTheme';
+import Routes            from '../../constants/Routes';
+import styles            from './styles.module.scss';
+import { connect }       from 'react-redux';
+import { useHistory }    from 'react-router';
+import HomeSettings      from '../HomeSettings';
+import { PieChart }      from 'react-minimal-pie-chart';
+import { formatToFixed } from '../../helper/FormatNumbers';
 
 const MainMenu = ({
-    opened,
-    closeMobileMenu,
-    openBetCount,
-    openBets,
-    balance,
-    totalWin,
-    overallFundsTotal,
-    liquidFundsPercentage,
-    investedFundsPercentage,
-    investmentAmount,
-    sellTransactions,
-}) => {
+                      opened,
+                      closeMobileMenu,
+                      openBetCount,
+                      openBets,
+                      balance,
+                      totalWin,
+                      overallFundsTotal,
+                      liquidFundsPercentage,
+                      investedFundsPercentage,
+                      investmentAmount,
+                      sellTransactions,
+                  }) => {
     const [openSettings, setOpenSettings] = useState(false);
 
     let investedAmount = 0;
 
     const calculateInvestedAmount = () => {
         openBets.map((bet) => {
-            return (investedAmount += Number(bet.investmentAmount));
+            return (
+                investedAmount += Number(bet.investmentAmount)
+            );
         });
     };
 
@@ -59,7 +62,7 @@ const MainMenu = ({
         <div
             className={classNames(
                 styles.menu,
-                opened ? styles.menuOpened : null
+                opened ? styles.menuOpened : null,
             )}
         >
             <div className={styles.fundsContainer}>
@@ -69,14 +72,14 @@ const MainMenu = ({
                         <PieChart
                             data={[
                                 {
-                                    title: "InvestedFunds",
+                                    title: 'InvestedFunds',
                                     value: investedFundsPercentage,
-                                    color: "#69FFA5",
+                                    color: '#69ffa5',
                                 },
                                 {
-                                    title: "LiquidFunds",
+                                    title: 'LiquidFunds',
                                     value: liquidFundsPercentage,
-                                    color: "#3570FF",
+                                    color: '#3570ff',
                                 },
                             ]}
                             lineWidth={14}
@@ -178,27 +181,15 @@ const MainMenu = ({
 };
 
 const mapStateToProps = (state) => {
-    const openBetCount = _.size(state.bet.openBets);
-    const openBets = state.bet.openBets;
-    const balance = +state.authentication.balance;
-    const totalWin = +state.authentication.totalWin;
+    const openBetCount            = _.size(state.bet.openBets);
+    const openBets                = state.bet.openBets;
+    const balance                 = formatToFixed(+state.authentication.balance);
+    const totalWin                = formatToFixed(+state.authentication.totalWin);
+    const investmentAmount        = formatToFixed(_.sum(openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)));
+    const overallFundsTotal       = formatToFixed(balance + investmentAmount);
+    const liquidFundsPercentage   = formatToFixed(100 * balance / overallFundsTotal);
+    const investedFundsPercentage = formatToFixed(100 * investmentAmount / overallFundsTotal);
 
-    const investmentAmount = _.sum(openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite))
-
-    const overallFundsTotal = balance+investmentAmount;
-    const liquidFundsPercentage = 100*balance/overallFundsTotal;
-    const investedFundsPercentage = 100*investmentAmount/overallFundsTotal;
-
-    console.log( {
-        openBetCount,
-        openBets,
-        balance,
-        totalWin,
-        overallFundsTotal,
-        liquidFundsPercentage,
-        investedFundsPercentage,
-        investmentAmount
-    });
     return {
         openBetCount,
         openBets,
@@ -207,7 +198,7 @@ const mapStateToProps = (state) => {
         overallFundsTotal,
         liquidFundsPercentage,
         investedFundsPercentage,
-        investmentAmount
+        investmentAmount,
     };
 };
 
