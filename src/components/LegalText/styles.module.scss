@@ -19,32 +19,47 @@
     ol, ul
     {
 
-        display: block;
-        padding-left: 40px;
-        margin-top: 40px;
+        display:       block;
+        padding-left:  40px;
+        margin-top:    40px;
         margin-bottom: 40px;
 
-        li:first-child {
+        li:first-child
+        {
             margin-top: 0;
         }
 
-        li {
-            margin-top: 20px;
+        li
+        {
+            margin-top:      20px;
             list-style-type: lower-alpha;
 
-            strong {
+            strong
+            {
                 margin-bottom: 10px;
-                display: block;
+                display:       block;
             }
         }
     }
 
-    ul li {
+    ul li
+    {
         list-style-type: disc;
     }
 
-    p {
-        display: block;
+    section ol li
+    {
+        list-style-type: decimal;
+
+        ul li
+        {
+            list-style-type: lower-alpha;
+        }
+    }
+
+    p
+    {
+        display:       block;
         margin-bottom: 20px;
     }
 }
