@@ -73,6 +73,7 @@ const place = function* (action) {
         }));
         yield put(BetActions.fetchOpenBets());
         yield put(TransactionActions.fetchAll());
+        yield put(UserActions.fetch());
     } else {
         yield put(BetActions.placeFailed());
     }

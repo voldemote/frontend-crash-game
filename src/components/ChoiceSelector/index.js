@@ -4,12 +4,13 @@ import classNames          from 'classnames';
 import SelectionHelper     from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _                   from 'lodash';
+import { formatToFixed }     from '../../helper/FormatNumbers';
 
 const ChoiceSelector = ({ name, winAmount, selected, className, theme, disabled = false, hideAmount = false, onClick }) => {
     const renderWinAmount = () => {
         if (!hideAmount) {
             const roundedWinAmount = _.round(winAmount, 2);
-            const winAmountString  = roundedWinAmount ? roundedWinAmount.toLocaleString() : '-';
+            const winAmountString  = roundedWinAmount ? formatToFixed(roundedWinAmount) : '-';
 
             return (
                 <span className={styles.choiceWinAmount}>

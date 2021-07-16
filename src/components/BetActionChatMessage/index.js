@@ -6,6 +6,7 @@ import ProfilePicture  from '../ProfilePicture';
 import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
 import { connect }     from 'react-redux';
 import State           from '../../helper/State';
+import { formatToFixed }      from '../../helper/FormatNumbers';
 
 const BetActionChatMessage = ({ chatMessageType, eventId, betId, event, bet, user, message, dateString }) => {
     const history = useHistory();
@@ -26,8 +27,7 @@ const BetActionChatMessage = ({ chatMessageType, eventId, betId, event, bet, use
 
     const getMessage = () => {
         const userName     = _.get(user, 'name');
-        const tokenAmount  = _.get(message, 'amount');
-        const currentPrice = _.get(message, 'currentPrice');
+        const tokenAmount  = formatToFixed(_.get(message, 'amount'));
         const outcome      = _.get(message, 'outcome');
         const betOutcome   = _.get(bet, ['outcomes', outcome]);
         const outcomeValue = _.get(betOutcome, 'name');

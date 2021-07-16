@@ -8,6 +8,7 @@ import moment              from 'moment';
 import React               from 'react';
 import styles              from './styles.module.scss';
 import { connect }         from 'react-redux';
+import { formatToFixed }     from '../../helper/FormatNumbers';
 
 const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, openBet, outcomes }) => {
     const getSummaryRows = () => {
@@ -16,10 +17,10 @@ const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, openBet
 
         return [
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('Your Invest', investmentAmount + ' EVNT'),
+            BetSummaryHelper.getKeyValue('Your Invest', formatToFixed(investmentAmount) + ' EVNT'),
             BetSummaryHelper.getKeyValue('Your Trade', outcomeValue),
             BetSummaryHelper.getDivider(),
-            BetSummaryHelper.getKeyValue('Possible Win', outcomeReturn + ' EVNT', false, true),
+            BetSummaryHelper.getKeyValue('Possible Win', formatToFixed(outcomeReturn) + ' EVNT', false, true),
         ];
     };
 

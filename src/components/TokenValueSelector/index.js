@@ -3,7 +3,7 @@ import styles      from './styles.module.scss';
 import _           from 'lodash';
 import classNames  from 'classnames';
 import { connect } from 'react-redux';
-
+import { formatToFixed }     from '../../helper/FormatNumbers';
 const TokenValueSelector = ({ className, values, activeValue, onSelect, balance }) => {
     const onTokenValueClick = (value, enabled) => {
         if (enabled) {
@@ -17,8 +17,7 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect, balance 
         const isEnabled     = _.get(valueObject, 'enabled', true);
         const isHighlighted = _.get(valueObject, 'highlighted', false);
         let isSelected      = false;
-
-        if (activeValue === value) {
+        if (formatToFixed(activeValue) === formatToFixed(value)) {
             isSelected = true;
         }
 

@@ -38,126 +38,135 @@ import Routes                 from '../../constants/Routes';
 import { PopupActions }       from '../../store/actions/popup';
 import PopupTheme             from '../Popup/PopupTheme';
 import ErrorHint              from '../ErrorHint';
+import { formatToFixed }      from '../../helper/FormatNumbers';
 
 const BetView = ({
-    actionIsInProgress,
-    closed,
-    isPopup = false,
-    initialSellTab,
-    forceSellView,
-    disableSwitcher = false,
-    showEventEnd,
-    balance,
-    events,
-    selectedBetId,
-    openBets,
-    rawOutcomes,
-    rawSellOutcomes,
-    choice,
-    commitment,
-    setChoice,
-    setCommitment,
-    placeBet,
-    pullOutBet,
-    fetchOutcomes,
-    showPopup,
-}) => {
-    const params = useParams();
-    const defaultBetValue = _.max([balance, 10]);
-    const bet = (() => {
-        let currentBetId = params.betId;
+                     actionIsInProgress,
+                     closed,
+                     isPopup = false,
+                     initialSellTab,
+                     forceSellView,
+                     disableSwitcher = false,
+                     showEventEnd,
+                     balance,
+                     events,
+                     selectedBetId,
+                     openBets,
+                     rawOutcomes,
+                     rawSellOutcomes,
+                     choice,
+                     commitment,
+                     setChoice,
+                     setCommitment,
+                     placeBet,
+                     pullOutBet,
+                     fetchOutcomes,
+                     showPopup,
+                 }) => {
+    const params                                          = useParams();
+    const defaultBetValue                                 = _.max([balance, 10]);
+    const bet                                             = (
+        () => {
+            let currentBetId = params.betId;
 
-        if (!currentBetId) {
-            currentBetId = selectedBetId;
+            if (!currentBetId) {
+                currentBetId = selectedBetId;
+            }
+
+            let eventId = params.eventId;
+            let event   = null;
+
+            if (eventId) {
+                event = _.find(events, {
+                    _id: eventId,
+                });
+            } else {
+                event = _.head(
+                    _.filter(events, {
+                        bets: [
+                            {
+                                _id: currentBetId,
+                            },
+                        ],
+                    }),
+                );
+            }
+
+            const bets = _.get(event, 'bets', []);
+            let bet    = _.find(bets, {
+                _id: currentBetId,
+            });
+
+            if (!bet) {
+                bet = _.head(bets);
+            }
+
+            return bet;
         }
+    )();
+    const state                                           = _.get(bet, 'status');
+    const betId                                           = _.get(bet, '_id', selectedBetId);
+    const event                                           = (
+        () => {
+            let eventId = _.get(bet, 'event');
 
-        let eventId = params.eventId;
-        let event = null;
+            if (!eventId) {
+                eventId = params.eventId;
+            }
 
-        if (eventId) {
-            event = _.find(events, {
+            return _.find(events, {
                 _id: eventId,
             });
-        } else {
-            event = _.head(
-                _.filter(events, {
-                    bets: [
-                        {
-                            _id: currentBetId,
-                        },
-                    ],
-                })
-            );
         }
+    )();
+    const outcomes                                        = (
+        () => {
+            let outcomes = [];
 
-        const bets = _.get(event, "bets", []);
-        let bet = _.find(bets, {
-            _id: currentBetId,
-        });
+            if (bet) {
+                outcomes = _.get(rawOutcomes, bet._id);
 
-        if (!bet) {
-            bet = _.head(bets);
-        }
-
-        return bet;
-    })();
-    const state = _.get(bet, "status");
-    const betId = _.get(bet, "_id", selectedBetId);
-    const event = (() => {
-        let eventId = _.get(bet, "event");
-
-        if (!eventId) {
-            eventId = params.eventId;
-        }
-
-        return _.find(events, {
-            _id: eventId,
-        });
-    })();
-    const outcomes = (() => {
-        let outcomes = [];
-
-        if (bet) {
-            outcomes = _.get(rawOutcomes, bet._id);
-
-            if (outcomes) {
-                outcomes = _.get(outcomes, "values", {});
+                if (outcomes) {
+                    outcomes = _.get(outcomes, 'values', {});
+                }
             }
+
+            return outcomes;
         }
+    )();
+    const sellOutcomes                                    = (
+        () => {
+            let outcomes = [];
 
-        return outcomes;
-    })();
-    const sellOutcomes = (() => {
-        let outcomes = [];
+            if (bet) {
+                outcomes = _.get(rawSellOutcomes, bet._id);
 
-        if (bet) {
-            outcomes = _.get(rawSellOutcomes, bet._id);
-
-            if (outcomes) {
-                outcomes = _.get(outcomes, "values", {});
+                if (outcomes) {
+                    outcomes = _.get(outcomes, 'values', {});
+                }
             }
-        }
 
-        return outcomes;
-    })();
-    const hasOpenBet = _.filter(openBets, {
+            return outcomes;
+        }
+    )();
+    const hasOpenBet                                      = _.filter(openBets, {
         betId: betId,
     });
-    const [currentTradeView, setCurrentTradeView] = useState(
-        forceSellView ? 1 : 0
+    const [currentTradeView, setCurrentTradeView]         = useState(
+        forceSellView ? 1 : 0,
     );
-    const [validInput, setValidInput] = useState(false);
+    const [validInput, setValidInput]                     = useState(false);
     const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
-    const [commitmentErrorText, setCommitmentErrorText] = useState("");
-    const [tokenNumber, setTokenNumber] = useState(commitment);
-    const [menuOpened, setMenuOpened] = useState(false);
-    const hasMounted = useHasMounted();
+    const [commitmentErrorText, setCommitmentErrorText]   = useState('');
+    const [tokenNumber, setTokenNumber]                   = useState(commitment);
+    const [menuOpened, setMenuOpened]                     = useState(false);
+    const hasMounted                                      = useHasMounted();
 
     const validateInput = () => {
-        const betEndDate = _.get(bet, "date");
-        const current = moment(new Date());
-        const isSell = hasSellView();
-        let valid = true;
+        const betEndDate = _.get(bet, 'date');
+        const current    = moment(new Date());
+        const isSell     = hasSellView();
+        let valid        = true;
 
         if (current.isAfter(betEndDate)) {
             // TODO valid = false;
@@ -171,12 +180,12 @@ const BetView = ({
             valid = false;
         }
 
-        if (commitment > balance && !isSell) {
+        if (_.toNumber(commitment) > _.toNumber(balance) && !isSell) {
             valid = false;
 
-            setCommitmentErrorText("Not enough balance.");
+            setCommitmentErrorText('Not enough balance.');
         } else {
-            setCommitmentErrorText("");
+            setCommitmentErrorText('');
         }
 
         setValidInput(valid);
@@ -184,11 +193,11 @@ const BetView = ({
         return valid;
     };
 
-    function getDefaultTokenSelection() {
+    function getDefaultTokenSelection () {
         return [25, 50, 100, 150, 200];
     }
 
-    function getDefaultTokenSelectionValues() {
+    function getDefaultTokenSelectionValues () {
         const tokenSelectionValues = _.map(
             getDefaultTokenSelection(),
             (value) => {
@@ -196,13 +205,13 @@ const BetView = ({
                     enabled: value <= balance,
                     value,
                 };
-            }
+            },
         );
 
         return tokenSelectionValues;
     }
 
-    async function loadAfterMount() {
+    async function loadAfterMount () {
         await SleepHelper.sleep(100);
 
         setCommitment(defaultBetValue, betId);
@@ -219,7 +228,7 @@ const BetView = ({
         // @TODO: this possibly needs refactoring and or adding remaining deps,
         // the functions that do not depend on state or props should move out of the component.
         // for the other functions useCallback() would make sense to prevent unnecessary rerenders
-        [hasMounted, closed]
+        [hasMounted, closed],
     );
 
     useEffect(
@@ -229,7 +238,7 @@ const BetView = ({
             }
         },
         // @TODO: this possibly needs refactoring and or adding remaining deps
-        [choice, commitment, currentTradeView]
+        [choice, commitment, currentTradeView],
     );
 
     useEffect(() => {
@@ -241,11 +250,13 @@ const BetView = ({
     }, [actionIsInProgress]);
 
     const hasSellView = () => {
-        return (currentTradeView === 1 || forceSellView) && _.size(hasOpenBet);
+        return (
+            currentTradeView === 1 || forceSellView
+        ) && _.size(hasOpenBet);
     };
 
     const getFinalOutcome = () => {
-        const finalOutcome = _.get(bet, "finalOutcome", false);
+        const finalOutcome = _.get(bet, 'finalOutcome', false);
 
         return finalOutcome;
     };
@@ -257,7 +268,7 @@ const BetView = ({
             placeBet(betId, commitment, choice);
         }
     };
-    const sellBet = () => {
+    const sellBet              = () => {
         pullOutBet(betId, choice, getOpenBetsValue(choice));
     };
 
@@ -273,14 +284,15 @@ const BetView = ({
 
     const debouncedSetCommitment = useCallback(
         _.debounce((number) => setCommitment(number, betId), 200),
-        []
+        [],
     );
 
-    const onTokenSelect = (number) => {
+    const onTokenSelect       = (number) => {
         setTokenNumber(number);
         setCommitment(number, betId);
     };
     const onTokenNumberChange = (number) => {
+
         setTokenNumber(number);
         debouncedSetCommitment(number);
     };
@@ -295,21 +307,21 @@ const BetView = ({
         const openBet = getOpenBet(index);
 
         if (openBet) {
-            return _.get(openBet, "outcomeAmount");
+            return _.get(openBet, 'outcomeAmount');
         }
 
         return 0;
     };
 
     const getOutcome = (index) => {
-        const isSell = hasSellView();
+        const isSell          = hasSellView();
         const outcomeForValue = _.get(
             isSell ? sellOutcomes : outcomes,
             isSell ? getOpenBetsValue(index) : commitment,
-            {}
+            {},
         );
 
-        return _.get(outcomeForValue, [index, "outcome"]);
+        return _.get(outcomeForValue, [index, 'outcome']);
     };
 
     const isChoiceSelectorEnabled = (index) => {
@@ -333,8 +345,8 @@ const BetView = ({
         // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
         if (_.size(hasOpenBet) && !disableSwitcher) {
             const switchableViews = [
-                SwitchableHelper.getSwitchableView("Buy"),
-                SwitchableHelper.getSwitchableView("Sell"),
+                SwitchableHelper.getSwitchableView('Buy'),
+                SwitchableHelper.getSwitchableView('Sell'),
             ];
 
             return (
@@ -357,8 +369,8 @@ const BetView = ({
         name,
         choiceSelectorTheme,
         styles,
-        resolved = false,
-        forceSelect = false
+        resolved    = false,
+        forceSelect = false,
     ) => {
         const enabled = isChoiceSelectorEnabled(index);
 
@@ -406,11 +418,11 @@ const BetView = ({
         const openBet = getOpenBet(choice);
 
         if (openBet) {
-            const investmentAmount = _.get(openBet, "investmentAmount");
-            const summaryRows = [
+            const investmentAmount = _.get(openBet, 'investmentAmount');
+            const summaryRows      = [
                 BetSummaryHelper.getKeyValue(
-                    "Your Investment",
-                    investmentAmount + " EVNT"
+                    'Your Investment',
+                    investmentAmount + ' EVNT',
                 ),
                 BetSummaryHelper.getDivider(),
             ];
@@ -424,12 +436,14 @@ const BetView = ({
     };
 
     const renderTradeButton = (enabled) => {
-        const isSell = hasSellView();
+        const isSell       = hasSellView();
         const finalOutcome = getFinalOutcome();
 
         if (!isSell && !finalOutcome) {
-            const tradeButtonDisabled = !(validInput && enabled);
-            let tradeButtonTheme = null;
+            const tradeButtonDisabled = !(
+                validInput && enabled
+            );
+            let tradeButtonTheme      = null;
 
             if (tradeButtonDisabled) {
                 tradeButtonTheme = HighlightTheme.fillGray;
@@ -459,13 +473,13 @@ const BetView = ({
                     <Button
                         className={classNames(
                             styles.betButton,
-                            styles.sellButton
+                            styles.sellButton,
                         )}
                         highlightType={HighlightType.highlightHomeCtaBet}
                         onClick={sellBet}
                         disabledWithOverlay={false}
                     >
-                        Cashout {outcome} EVNT
+                        Cashout {formatToFixed(outcome)} EVNT
                     </Button>
                 </>
             );
@@ -494,7 +508,7 @@ const BetView = ({
                     <div
                         className={classNames(
                             styles.buttonContainer,
-                            hasSellView() ? styles.sellButtonContainer : null
+                            hasSellView() ? styles.sellButtonContainer : null,
                         )}
                     >
                         <label className={styles.label}>
@@ -506,9 +520,9 @@ const BetView = ({
                     </div>
                 </div>
                 {
-                    state === BetState.cancelled && <div className={styles.cancelledErrorContainer}>
+                    state === BetState.canceled && <div className={styles.canceledErrorContainer}>
                         <ErrorHint
-                            className={styles.cancelledErrorText}
+                            className={styles.canceledErrorText}
                             errorText={'All participants will be refunded.'}
                         />
                     </div>
@@ -544,7 +558,7 @@ const BetView = ({
             <div
                 className={classNames(
                     styles.menuContainer,
-                    isPopup ? styles.popupMenuContainer : null
+                    isPopup ? styles.popupMenuContainer : null,
                 )}
             >
                 {renderCurrentBalance()}
@@ -564,11 +578,11 @@ const BetView = ({
                 />
             );
         };
-        const openInfoPopup = (popupType) => {
+        const openInfoPopup      = (popupType) => {
             return () => {
                 const options = {
                     tradeId: betId,
-                    eventId: _.get(event, "_id"),
+                    eventId: _.get(event, '_id'),
                 };
 
                 showPopup(popupType, options);
@@ -585,7 +599,7 @@ const BetView = ({
                 <div
                     className={classNames(
                         styles.menuBox,
-                        menuOpened ? styles.menuBoxOpened : null
+                        menuOpened ? styles.menuBoxOpened : null,
                     )}
                 >
                     <div
@@ -619,7 +633,7 @@ const BetView = ({
                     iconTheme={IconTheme.primaryLightTransparent}
                     iconType={IconType.wallet2}
                 />
-                {balance}
+                {formatToFixed(balance)}
             </div>
         );
     };
@@ -629,7 +643,7 @@ const BetView = ({
 
         if (
             state === BetState.active ||
-            state === BetState.cancelled ||
+            state === BetState.canceled ||
             state === BetState.closed
         ) {
             return (
@@ -642,31 +656,31 @@ const BetView = ({
             );
         } else if (state === BetState.resolved) {
             const overallTrades = 0;
-            const tokensTraded = 0;
-            const tokensWon = 1;
-            const hasWon = tokensWon > 0;
-            const finalOutcome = _.get(bet, [
-                "outcomes",
-                _.get(bet, "finalOutcome"),
+            const tokensTraded  = 0;
+            const tokensWon     = 1;
+            const hasWon        = tokensWon > 0;
+            const finalOutcome  = _.get(bet, [
+                'outcomes',
+                _.get(bet, 'finalOutcome'),
             ]);
-            const summaryRows = [
+            const summaryRows   = [
                 BetSummaryHelper.getDivider(),
-                BetSummaryHelper.getKeyValue("Overall trades", overallTrades),
+                BetSummaryHelper.getKeyValue('Overall trades', overallTrades),
                 BetSummaryHelper.getKeyValue(
-                    "EVNT tokens traded",
-                    tokensTraded + " EVNT"
+                    'EVNT tokens traded',
+                    tokensTraded + ' EVNT',
                 ),
-                BetSummaryHelper.getKeyValue("Outcome", finalOutcome),
+                BetSummaryHelper.getKeyValue('Outcome', finalOutcome),
                 BetSummaryHelper.getDivider(),
                 BetSummaryHelper.getKeyValue(
-                    "EVNT tokens won",
-                    tokensWon + " EVNT",
+                    'EVNT tokens won',
+                    tokensWon + ' EVNT',
                     false,
                     false,
                     true,
                     null,
                     false,
-                    hasWon ? HighlightType.highlightMenuAddEventOrBet : null
+                    hasWon ? HighlightType.highlightMenuAddEventOrBet : null,
                 ),
             ];
 
@@ -674,7 +688,10 @@ const BetView = ({
                 <>
                     <div className={styles.summaryRowContainer}>
                         <SummaryRowContainer summaryRows={summaryRows} />
-                        <Link className={styles.walletLink} to={Routes.wallet}>
+                        <Link
+                            className={styles.walletLink}
+                            to={Routes.wallet}
+                        >
                             Go to my Wallet
                             <Icon
                                 className={styles.walletLinkIcon}
@@ -716,13 +733,13 @@ const BetView = ({
         return null;
     }
 
-    const endDate = _.get(bet, "date");
+    const endDate = _.get(bet, 'date');
 
     return (
         <div
             className={classNames(
                 styles.placeBetParentContainer,
-                styles[state + "Status"]
+                styles[state + 'Status'],
             )}
         >
             <div className={styles.placeBetContainer}>
@@ -751,20 +768,20 @@ const BetView = ({
 const mapStateToProps = (state) => {
     return {
         actionIsInProgress: state.bet.actionIsInProgress,
-        balance: state.authentication.balance,
-        choice: state.bet.selectedChoice,
-        commitment: _.get(state, "bet.selectedCommitment", 0),
-        events: state.event.events,
-        openBets: state.bet.openBets,
-        rawOutcomes: state.bet.outcomes,
-        rawSellOutcomes: state.bet.sellOutcomes,
-        selectedBetId: state.bet.selectedBetId,
+        balance:            formatToFixed(state.authentication.balance),
+        choice:             state.bet.selectedChoice,
+        commitment:         _.get(state, 'bet.selectedCommitment', 0),
+        events:             state.event.events,
+        openBets:           state.bet.openBets,
+        rawOutcomes:        state.bet.outcomes,
+        rawSellOutcomes:    state.bet.sellOutcomes,
+        selectedBetId:      state.bet.selectedBetId,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setChoice: (choice) => {
+        setChoice:     (choice) => {
             dispatch(BetActions.selectChoice({ choice }));
         },
         setCommitment: (commitment, betId) => {
@@ -773,18 +790,18 @@ const mapDispatchToProps = (dispatch) => {
         fetchOutcomes: (betId, amount) => {
             dispatch(BetActions.fetchOutcomes({ betId, amount }));
         },
-        placeBet: (betId, amount, outcome) => {
+        placeBet:      (betId, amount, outcome) => {
             dispatch(BetActions.place({ betId, amount, outcome }));
         },
-        pullOutBet: (betId, outcome, amount) => {
+        pullOutBet:    (betId, outcome, amount) => {
             dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
         },
-        showPopup: (popupType, options) => {
+        showPopup:     (popupType, options) => {
             dispatch(
                 PopupActions.show({
                     popupType,
                     options,
-                })
+                }),
             );
         },
     };
