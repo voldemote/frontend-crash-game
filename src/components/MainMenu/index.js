@@ -100,7 +100,7 @@ const MainMenu = ({
                             </p>
                             <p className={styles.investedFundsTitle}>EVNT</p>
                         </div>
-                        {growth > 0 ? (
+                        {/*growth > 0 ? (
                             <div className={styles.growthPositive}>
                                 +{growth}
                             </div>
@@ -112,10 +112,10 @@ const MainMenu = ({
                             <div className={styles.growthNeutral}>
                                 {growth} / 0%
                             </div>
-                        )}
-                        <div className={styles.originInvestedAmount}>
+                        )*/}
+                        {/*<div className={styles.originInvestedAmount}>
                             {investedAmount} EVNT invested
-                        </div>
+                        </div>*/}
                     </div>
                     <div className={styles.liquidFunds}>
                         <div className={styles.liquidFundsHeadline}>
