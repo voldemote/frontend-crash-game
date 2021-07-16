@@ -96,6 +96,27 @@ const verifySms = function* (action) {
     }
 };
 
+const verifyEmail = function* (action) {
+    const userId = action.userId;
+    const code = action.code;
+
+    if (userId && code) {
+        const response = yield call(
+            Api.verifyEmail,
+            userId,
+            code
+        );
+
+        if (response) {
+            yield put(AuthenticationActions.verifyEmailSucceeded());
+        } else {
+            yield put(AuthenticationActions.verifyEmailFailed());
+        }
+    } else {
+        yield put(AuthenticationActions.verifyEmailFailed());
+    }
+};
+
 const setAdditionalInformation = function* (action) {
     const email    = yield select(state => state.authentication.email);
     const name     = yield select(state => state.authentication.name);
@@ -246,4 +267,5 @@ export default {
     restoreToken,
     setAdditionalInformation,
     verifySms,
+    verifyEmail,
 };

@@ -14,6 +14,7 @@ import PaymentConfirmation         from './screens/PaymentConfirmation';
 import Wallet                      from './screens/Wallet';
 import BetOverview                 from './screens/BetOverview';
 import Welcome                     from './screens/Welcome';
+import EmailVerification           from './screens/EmailVerification';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
 import { Provider }                from 'react-redux';
@@ -84,6 +85,10 @@ const App = () => {
                     <Route
                         path={Routes.betOverview}
                         component={BetOverview}
+                    />
+                    <Route
+                        path={Routes.verify}
+                        component={EmailVerification}
                     />
                     <Redirect to={Routes.welcome} />
                 </Switch>
