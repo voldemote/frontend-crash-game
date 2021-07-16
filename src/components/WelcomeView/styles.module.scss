@@ -55,7 +55,8 @@
             }
         }
 
-        .welcomeTextText
+        .welcomeTextText,
+        .welcomeTextTextBelow
         {
             font-size: 20px;
 
@@ -63,6 +64,10 @@
             {
                 font-size: 24px;
             }
+        }
+
+        .welcomeTextTextBelow {
+            margin-top: 50px;
         }
     }
 
