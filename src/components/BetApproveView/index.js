@@ -27,7 +27,7 @@ const BetApproveView = ({ closed, betId, investmentAmount, outcome, bet, openBet
     const renderBetSummary = () => {
         const marketQuestion = _.get(bet, 'marketQuestion');
         const endDateTime    = moment(
-            _.get(bet, 'date', new Date()),
+            _.get(bet, 'endDate', new Date()),
         );
         const summaryRows    = getSummaryRows();
 

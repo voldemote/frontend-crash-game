@@ -85,7 +85,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
         const bet            = _.get(openBet, 'bet');
         const marketQuestion = _.get(bet, 'marketQuestion');
         const endDateTime    = moment(
-            _.get(bet, 'date', new Date()),
+            _.get(bet, 'endDate', new Date()),
         );
         const summaryRows    = getOpenBetSummaryRows(bet, openBet);
 

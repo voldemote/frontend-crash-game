@@ -221,7 +221,7 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
         let dateWithTime;
 
         if (endOfStreamAsEndDate) {
-            dateWithTime = moment(_.get(getEvent(), 'date'));
+            dateWithTime = moment(_.get(getEvent(), 'endDate'));
         } else {
             dateWithTime = getDateWithTime(selectedEndTime);
         }

@@ -1,16 +1,14 @@
 import _                            from 'lodash';
+import BaseContainerWithNavbar      from '../../components/BaseContainerWithNavbar';
 import BetCard                      from '../../components/BetCard';
 import CarouselContainer            from '../../components/CarouselContainer';
-import EventCard                    from '../../components/EventCard/index';
 import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import Header                       from '../../components/Header/index';
-import Navbar                       from '../../components/Navbar/index';
+import LiveEventCarouselContainer   from '../../components/LiveEventCarouselContainer';
 import Routes                       from '../../constants/Routes';
 import styles                       from './styles.module.scss';
 import { connect }                  from 'react-redux';
 import { useHistory }               from 'react-router';
-import BaseContainerWithNavbar      from '../../components/BaseContainerWithNavbar';
-import LiveEventCarouselContainer   from '../../components/LiveEventCarouselContainer';
 
 const Home = ({ events, user }) => {
     const history = useHistory();
@@ -37,7 +35,7 @@ const Home = ({ events, user }) => {
                     bets,
                     (bet, betIndex) => {
                         const key      = eventIndex + '.' + betIndex;
-                        const eventEnd = new Date(bet.date);
+                        const eventEnd = new Date(_.get(bet, 'endDate'));
 
                         return (
                             <BetCard
@@ -65,7 +63,7 @@ const Home = ({ events, user }) => {
     return (
         <BaseContainerWithNavbar>
             <Header events={events} />
-            <LiveEventCarouselContainer/>
+            <LiveEventCarouselContainer />
             <CarouselContainer title={'🚀 Most popular Trades'}>
                 {renderMostPopularBets()}
             </CarouselContainer>

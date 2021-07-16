@@ -163,7 +163,7 @@ const BetView = ({
     const hasMounted                                      = useHasMounted();
 
     const validateInput = () => {
-        const betEndDate = _.get(bet, 'date');
+        const betEndDate = _.get(bet, 'endDate');
         const current    = moment(new Date());
         const isSell     = hasSellView();
         let valid        = true;
@@ -733,7 +733,7 @@ const BetView = ({
         return null;
     }
 
-    const endDate = _.get(bet, 'date');
+    const endDate = _.get(bet, 'endDate');
 
     return (
         <div

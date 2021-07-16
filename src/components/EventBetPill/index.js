@@ -56,7 +56,7 @@ const EventBetPill = ({ user, eventId, bet, fetchOutcomes, outcomes, placeBet })
     );
 
     const renderFooter = () => {
-        const tradeEnd = new Date(bet.date);
+        const tradeEnd = new Date(_.get(bet, 'endDate'));
 
         return (
             <div className={styles.pillFooter}>

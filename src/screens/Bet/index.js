@@ -210,7 +210,7 @@ const Bet = ({ showPopup }) => {
                                   <span>
                                       End of Event:
                                   </span>
-                                  <TimeLeftCounter endDate={new Date(_.get(event, 'date'))} />
+                                  <TimeLeftCounter endDate={new Date(_.get(event, 'endDate'))} />
                               </div>
                           </div>
                           <Chat
