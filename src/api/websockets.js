@@ -10,8 +10,8 @@ export const createSocket = (token) => {
     const socket = io(
         ApiConstants.getBackendSocketUrl(),
         {
-            query:        `token=${token}`,
-            extraHeaders: { Authorization: `Bearer ${token}` },
+            query:      `token=${token}`,
+            transports: ['websocket'],
         },
     );
     websocket    = socket;
