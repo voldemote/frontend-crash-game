@@ -15,8 +15,14 @@ import { PieChart } from "react-minimal-pie-chart";
 const MainMenu = ({
     opened,
     closeMobileMenu,
+    openBetCount,
     openBets,
     balance,
+    totalWin,
+    overallFundsTotal,
+    liquidFundsPercentage,
+    investedFundsPercentage,
+    investmentAmount,
     sellTransactions,
 }) => {
     const [openSettings, setOpenSettings] = useState(false);
@@ -64,19 +70,19 @@ const MainMenu = ({
                             data={[
                                 {
                                     title: "InvestedFunds",
-                                    value: 69,
+                                    value: investedFundsPercentage,
                                     color: "#69FFA5",
                                 },
                                 {
                                     title: "LiquidFunds",
-                                    value: 31,
+                                    value: liquidFundsPercentage,
                                     color: "#3570FF",
                                 },
                             ]}
                             lineWidth={14}
                             startAngle={270}
                         />
-                        <p className={styles.overallFundsTotal}>997</p>
+                        <p className={styles.overallFundsTotal}>{overallFundsTotal}</p>
                         <p className={styles.overallFundsTitle}>EVNT</p>
                     </div>
                     ;
@@ -90,11 +96,11 @@ const MainMenu = ({
                         </div>
                         <div className={styles.investedFundsAmount}>
                             <p className={styles.investedFundsTotal}>
-                                0
+                                {investedAmount}
                             </p>
                             <p className={styles.investedFundsTitle}>EVNT</p>
                         </div>
-                        {growth > 0 ? (
+                        {/*growth > 0 ? (
                             <div className={styles.growthPositive}>
                                 +{growth}
                             </div>
@@ -106,10 +112,10 @@ const MainMenu = ({
                             <div className={styles.growthNeutral}>
                                 {growth} / 0%
                             </div>
-                        )}
-                        <div className={styles.originInvestedAmount}>
+                        )*/}
+                        {/*<div className={styles.originInvestedAmount}>
                             {investedAmount} EVNT invested
-                        </div>
+                        </div>*/}
                     </div>
                     <div className={styles.liquidFunds}>
                         <div className={styles.liquidFundsHeadline}>
@@ -174,14 +180,34 @@ const MainMenu = ({
 const mapStateToProps = (state) => {
     const openBetCount = _.size(state.bet.openBets);
     const openBets = state.bet.openBets;
-    const balance = state.authentication.balance;
-    const totalWin = state.authentication.totalWin;
+    const balance = +state.authentication.balance;
+    const totalWin = +state.authentication.totalWin;
 
+    const investmentAmount = _.sum(openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite))
+
+    const overallFundsTotal = balance+investmentAmount;
+    const liquidFundsPercentage = 100*balance/overallFundsTotal;
+    const investedFundsPercentage = 100*investmentAmount/overallFundsTotal;
+
+    console.log( {
+        openBetCount,
+        openBets,
+        balance,
+        totalWin,
+        overallFundsTotal,
+        liquidFundsPercentage,
+        investedFundsPercentage,
+        investmentAmount
+    });
     return {
         openBetCount,
         openBets,
         balance,
         totalWin,
+        overallFundsTotal,
+        liquidFundsPercentage,
+        investedFundsPercentage,
+        investmentAmount
     };
 };
 
