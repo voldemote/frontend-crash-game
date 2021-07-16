@@ -24,8 +24,10 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
                 const valueChildren       = _.get(summaryRow, 'valueChildren');
                 const valueHighlight      = _.get(summaryRow, 'valueHighlight');
                 const isLink              = _.get(summaryRow, 'isLink');
+                const title               = _.get(summaryRow, 'title');
+                const target              = _.get(summaryRow, 'target');
 
-                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink, valueChildren, flexDirectionColumn);
+                return renderSingleSummaryRow(index, key, value, keyBold, valueBold, valueBig, valueColor, valueHighlight, isLink, valueChildren, flexDirectionColumn, title, target);
 
             case SummaryRowType.divider:
                 return <Divider key={index} />;
@@ -42,7 +44,7 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
         );
     };
 
-    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false, valueChildren = null, flexDirectionColumn = false) => {
+    const renderSingleSummaryRow = (index, key, value, keyBold = false, valueBold = false, valueBig = false, valueColor = null, valueHighlight = null, isLink = false, valueChildren = null, flexDirectionColumn = false, title, target) => {
         return (
             <div
                 className={classNames(
@@ -72,12 +74,12 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
                                 (
                                     <Link
                                         to={value}
-                                        target={'_blank'}
+                                        target={target || '_blank'}
                                         className={classNames(
                                             valueBold ? styles.bold : null,
                                         )}
                                     >
-                                        {value}
+                                        {title || value}
                                     </Link>
                                 ) :
                                 (

@@ -486,22 +486,36 @@ const BetCreation = ({ hidePopup, closed, events, eventId, createBet }) => {
     const renderSummary = () => {
         const event       = getEvent();
         const eventTitle  = _.get(event, 'name', null);
+
+        const bet = event.bets.find((bet) =>
+            bet.marketQuestion === marketQuestion &&
+            bet.description === description &&
+            _.isEqual(bet.outcomes.map(_.property('name')), outcomes.map(_.property('value')))
+        )
+
         const summaryRows = _.concat(
             getSummaryOutcomeRows(),
             [
                 BetSummaryHelper.getDivider(),
                 BetSummaryHelper.getKeyValue(
-                    'Event Link:',
+                    'Bet Link:',
                     Routes.getRouteWithParameters(
                         Routes.bet,
                         {
                             eventId: eventUrl,
+                            betId: bet && bet._id,
                         },
                     ),
                     false,
                     false,
                     null,
                     true,
+                    true,
+                    undefined,
+                    undefined,
+                    undefined,
+                    'Bet Details',
+                    '_self'
                 ),
                 BetSummaryHelper.getKeyValue(
                     'Event Title:',
@@ -585,8 +599,8 @@ const mapDispatchToProps = (dispatch) => {
         hidePopup: () => {
             dispatch(PopupActions.hide());
         },
-        createBet: (eventId, marketQuestion, description, outcomes, endDate, liquidityAmount = 1000) => {
-            dispatch(BetActions.create({ eventId, marketQuestion, description, outcomes, endDate, liquidityAmount }));
+        createBet: (eventId, marketQuestion, description, outcomes, endDate, liquidityAmount = 1000, callback) => {
+            dispatch(BetActions.create({ eventId, marketQuestion, description, outcomes, endDate, liquidityAmount, callback }));
         },
     };
 };
