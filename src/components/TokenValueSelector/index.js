@@ -1,9 +1,10 @@
-import React       from 'react';
-import styles      from './styles.module.scss';
-import _           from 'lodash';
-import classNames  from 'classnames';
-import { connect } from 'react-redux';
-import { formatToFixed }     from '../../helper/FormatNumbers';
+import React             from 'react';
+import styles            from './styles.module.scss';
+import _                 from 'lodash';
+import classNames        from 'classnames';
+import { connect }       from 'react-redux';
+import { formatToFixed } from '../../helper/FormatNumbers';
+
 const TokenValueSelector = ({ className, values, activeValue, onSelect, balance }) => {
     const onTokenValueClick = (value, enabled) => {
         if (enabled) {
@@ -17,6 +18,7 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect, balance 
         const isEnabled     = _.get(valueObject, 'enabled', true);
         const isHighlighted = _.get(valueObject, 'highlighted', false);
         let isSelected      = false;
+
         if (formatToFixed(activeValue) === formatToFixed(value)) {
             isSelected = true;
         }
@@ -44,7 +46,7 @@ const TokenValueSelector = ({ className, values, activeValue, onSelect, balance 
 
     const renderMaxValue = () => {
         const valueObject = {
-            value:       balance,
+            value:       formatToFixed(balance),
             valueName:   'MAX',
             enabled:     true,
             highlighted: true,
