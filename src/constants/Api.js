@@ -58,7 +58,7 @@ export default class Api {
     }
 }
 
-export const PRODUCTION_BACKEND_URL               = 'https://backend-odxda.ondigitalocean.app';
+export const PRODUCTION_BACKEND_URL               = 'https://prod-k9lh9.ondigitalocean.app';
 export const STAGING_BACKEND_URL                  = 'https://staging-zeaec.ondigitalocean.app';
 export const PRODUCTION_BACKEND_SOCKET_URL        = PRODUCTION_BACKEND_URL;
 export const LOCAL_BACKEND_URL                    = 'http://localhost:8000';

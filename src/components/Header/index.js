@@ -8,6 +8,7 @@ import { connect }      from 'react-redux';
 import TwitchEmbedVideo from '../TwitchEmbedVideo';
 import Routes           from '../../constants/Routes';
 import EventBetPillList from '../EventBetPillList';
+import BetState         from '../BetView/BetState';
 
 const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -30,6 +31,13 @@ const Header = ({ events }) => {
 
     const getCurrentEvent = () => {
         return events[currentSlide];
+    };
+
+    const mapBetsToShow = () => {
+        return _.filter(
+            _.get(getCurrentEvent(), 'bets', []),
+            (trade) => _.get(trade, 'status') === BetState.active,
+        );
     };
 
     return (
@@ -122,7 +130,7 @@ const Header = ({ events }) => {
             <div className={styles.betPillContainer}>
                 <EventBetPillList
                     event={getCurrentEvent()}
-                    bets={_.get(getCurrentEvent(), 'bets', [])}
+                    bets={mapBetsToShow()}
                 />
             </div>
         </div>

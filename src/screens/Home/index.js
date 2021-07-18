@@ -9,6 +9,7 @@ import Routes                       from '../../constants/Routes';
 import styles                       from './styles.module.scss';
 import { connect }                  from 'react-redux';
 import { useHistory }               from 'react-router';
+import BetState                     from '../../components/BetView/BetState';
 
 const Home = ({ events, user }) => {
     const history = useHistory();
@@ -34,20 +35,23 @@ const Home = ({ events, user }) => {
                 return _.map(
                     bets,
                     (bet, betIndex) => {
-                        const key      = eventIndex + '.' + betIndex;
-                        const eventEnd = new Date(_.get(bet, 'endDate'));
+                        const key        = eventIndex + '.' + betIndex;
+                        const eventEnd   = new Date(_.get(bet, 'endDate'));
+                        const tradeState = _.get(bet, 'status');
 
-                        return (
-                            <BetCard
-                                key={key}
-                                image={event.previewImageUrl}
-                                userId={bet.creator}
-                                marketQuestion={bet.marketQuestion}
-                                hot={bet.hot}
-                                eventEnd={eventEnd}
-                                onClick={onEventClick(event._id, bet._id)}
-                            />
-                        );
+                        if (tradeState === BetState.active) {
+                            return (
+                                <BetCard
+                                    key={key}
+                                    image={event.previewImageUrl}
+                                    userId={bet.creator}
+                                    marketQuestion={bet.marketQuestion}
+                                    hot={bet.hot}
+                                    eventEnd={eventEnd}
+                                    onClick={onEventClick(event._id, bet._id)}
+                                />
+                            );
+                        }
                     },
                 );
             },
