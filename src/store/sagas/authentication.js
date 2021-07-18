@@ -142,8 +142,11 @@ const setAdditionalInformation = function* (action) {
 
 const fetchReferrals = function* () {
     const userId = yield select(state => state.authentication.userId);
+    const token = yield select(state => state.authentication.token);
 
-    if (userId) {
+    if (userId && token) {
+        Api.setToken(token)
+
         const response = yield call(
             Api.fetchReferrals,
             userId,

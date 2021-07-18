@@ -30,7 +30,8 @@ const requestSms = (phone, ref) => {
             phone,
             ref,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: requestSms', error);
     });
 };
 
@@ -41,7 +42,8 @@ const verifySms = (phone, smsToken) => {
             phone,
             smsToken,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: verifySms', error);
     });
 };
 
@@ -71,7 +73,8 @@ const saveAdditionalInfo = (name, username, email) => {
             username,
             email,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: saveAdditionalInfo', error);
     });
 };
 
@@ -83,30 +86,33 @@ const fetchReferrals = (userId) => {
                 id: userId,
             },
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: fetchReferrals', error);
     });
 };
 
 const listEvents = () => {
     return Api.get(
         ApiUrls.API_EVENT_LIST,
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: listEvents', error);
     });
 };
 
 const getUser = (userId) => {
     return Api.get(
         _.replace(ApiUrls.API_USER, ':id', userId),
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: getUser', error);
     });
 };
 
 const getLeaderboard = () => {
     return Api.get(
         ApiUrls.API_LEADERBOARD,
-    ).catch(() => {
-
-    })
+    ).catch((error) => {
+        console.log('[API Error] called: getLeaderboard', error);
+    });
 }
 
 const createBet = (eventId, marketQuestion, description, outcomes, endDate, liquidityAmount) => {
@@ -120,7 +126,8 @@ const createBet = (eventId, marketQuestion, description, outcomes, endDate, liqu
             endDate,
             liquidityAmount,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: createBet', error);
     });
 };
 
@@ -130,7 +137,8 @@ const getOutcomes = (betId, amount) => {
         {
             amount,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: getOutcomes', error);
     });
 };
 
@@ -140,7 +148,8 @@ const getSellOutcomes = (betId, amount) => {
         {
             amount,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: getSellOutcomes', error);
     });
 };
 
@@ -151,21 +160,24 @@ const pullOutBet = (betId, amount, outcome) => {
             amount,
             outcome,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: pullOutBet', error);
     });
 };
 
 const getOpenBets = () => {
     return Api.get(
         ApiUrls.API_USER_OPEN_BETS,
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: getOpenBets', error);
     });
 };
 
 const getTransactions = () => {
     return Api.get(
         ApiUrls.API_USER_HISTORY,
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: getTransactions', error);
     });
 };
 
@@ -176,15 +188,18 @@ const placeBet = (betId, amount, outcome) => {
             amount,
             outcome,
         },
-    ).catch(() => {
+    ).catch((error) => {
+        console.log('[API Error] called: placeBet', error);
     });
 };
 
 const getChatMessagesByEventId = (eventId) => {
     return Api.get(
         _.replace(ApiUrls.API_EVENT_CHAT_MESSAGES, ':id', eventId),
-    ).then(response => ({ response }))
-    .catch(error => ({ error }));
+    ).then(response => ({ response })
+    ).catch((error) => {
+        console.log('[API Error] called: getChatMessagesByEventId', error);
+    });
 };
 export {
     Api,
