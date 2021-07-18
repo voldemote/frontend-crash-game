@@ -9,6 +9,7 @@ import TwitchEmbedVideo from '../TwitchEmbedVideo';
 import Routes           from '../../constants/Routes';
 import EventBetPillList from '../EventBetPillList';
 import BetState         from '../BetView/BetState';
+import moment           from 'moment';
 
 const Header = ({ events }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -61,47 +62,65 @@ const Header = ({ events }) => {
                 >
                     {
                         events.map(
-                            (event, eventIndex) => (
-                                <div
-                                    key={eventIndex}
-                                    className={styles.eventContainer}
-                                >
-                                    <div className={styles.headerOverlay}>
-                                    </div>
-                                    <TwitchEmbedVideo
-                                        targetId={event._id}
-                                        className={styles.twitchStream}
-                                        video={event.streamUrl}
-                                        muted={true}
-                                    />
-                                    <div className={styles.headerWrapper}>
-                                        <div className={styles.headerContentContainer}>
-                                            <div className={styles.badgeContainer}>
-                                                <LiveBadge />
-                                            </div>
-                                            <span className={styles.title}>
-                                                {event.name}
-                                            </span>
-                                            <div>
-                                                <Link
-                                                    to={Routes.getRouteWithParameters(
-                                                        Routes.bet,
-                                                        {
-                                                            eventId: event._id,
-                                                            betId:   '',
-                                                        },
-                                                    )}
-                                                    className={styles.goToEvent}
-                                                >
-                                                    <span>Go to event</span>
-                                                    <div className={styles.arrowRight}>
-                                                    </div>
-                                                </Link>
+                            (event, eventIndex) => {
+                                const startDate   = moment(_.get(event, 'date'));
+                                const endDate     = moment(_.get(event, 'endDate'));
+                                const currentDate = moment();
+                                const isLive      = currentDate.isBefore(endDate);//currentDate.isBetween(startDate, endDate);
+                                const currentTrade = _.head(
+                                    _.filter(
+                                        _.get(event, 'bets'),
+                                        {
+                                            status: BetState.active,
+                                        }
+                                    )
+                                );
+                                const currentTradeId = _.get(currentTrade, '_id');
+
+                                return (
+                                    <div
+                                        key={eventIndex}
+                                        className={styles.eventContainer}
+                                    >
+                                        <div className={styles.headerOverlay}>
+                                        </div>
+                                        <TwitchEmbedVideo
+                                            targetId={event._id}
+                                            className={styles.twitchStream}
+                                            video={event.streamUrl}
+                                            muted={true}
+                                        />
+                                        <div className={styles.headerWrapper}>
+                                            <div className={styles.headerContentContainer}>
+                                                <div className={styles.badgeContainer}>
+                                                    {
+                                                        isLive && <LiveBadge />
+                                                    }
+                                                </div>
+                                                <span className={styles.title}>
+                                                    {event.name}
+                                                </span>
+                                                <div>
+                                                    <Link
+                                                        to={Routes.getRouteWithParameters(
+                                                            Routes.bet,
+                                                            {
+                                                                eventId: event._id,
+                                                                betId:   currentTradeId,
+                                                            },
+                                                        )}
+                                                        className={styles.goToEvent}
+                                                    >
+                                                        <span>Go to event</span>
+                                                        <div className={styles.arrowRight}>
+                                                        </div>
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                 </Carousel>
 
                 <div className={styles.switchButtons}>

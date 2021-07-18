@@ -5,6 +5,7 @@ import EventCard         from '../EventCard';
 import Routes            from '../../constants/Routes';
 import { connect }       from 'react-redux';
 import { useHistory }    from 'react-router';
+import moment            from 'moment';
 
 const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
     const history = useHistory();
@@ -25,8 +26,12 @@ const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
         return _.map(
             events,
             (event, index) => {
-                const eventId    = _.get(event, '_id');
-                const mappedTags = _.map(event.tags, (tag) => tag.name);
+                const eventId     = _.get(event, '_id');
+                const mappedTags  = _.map(event.tags, (tag) => tag.name);
+                const startDate   = moment(_.get(event, 'date'));
+                const endDate     = moment(_.get(event, 'endDate'));
+                const currentDate = moment();
+                const isLive      = currentDate.isBefore(endDate);//currentDate.isBetween(startDate, endDate);
 
                 return (
                     <EventCard
@@ -34,7 +39,7 @@ const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
                         title={event.name}
                         organizer={''}
                         viewers={12345}
-                        live={true}
+                        live={isLive}
                         tags={mappedTags}
                         image={event.previewImageUrl}
                         onClick={onEventClick(eventId)}
