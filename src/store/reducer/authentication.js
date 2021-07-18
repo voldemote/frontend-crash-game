@@ -11,6 +11,7 @@ const initialState = {
     phone:          '',
     country:        '49',
     email:          '',
+    emailVerificationState: null,
     token:          null,
     balance:        0,
     totalWin:       0,
@@ -66,6 +67,22 @@ const requestSmsVerified = (action, state) => {
         },
         authState: {
             $set: authState,
+        },
+    });
+};
+
+const requestEmailVerified = (action, state) => {
+    return update(state, {
+        emailVerificationState:   {
+            $set: true,
+        },
+    });
+};
+
+const requestEmailFailed = (action, state) => {
+    return update(state, {
+        emailVerificationState:   {
+            $set: false,
         },
     });
 };
@@ -210,6 +227,8 @@ export default function (state = initialState, action) {
         case AuthenticationTypes.SET_COUNTRY_CODE:               return setCountryCode(action, state);
         case AuthenticationTypes.REQUEST_SMS_SUCCEEDED:          return requestSmsSucceeded(action, state);
         case AuthenticationTypes.VERIFY_SMS_SUCCEEDED:           return requestSmsVerified(action, state);
+        case AuthenticationTypes.VERIFY_EMAIL_SUCCEEDED:         return requestEmailVerified(action, state);
+        case AuthenticationTypes.VERIFY_EMAIL_FAILED:            return requestEmailFailed(action, state);
         case AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED: return saveAdditionalInfoSucceeded(action, state);
         case AuthenticationTypes.REQUEST_SMS:
         case AuthenticationTypes.VERIFY_SMS:                     return setLoading(action, state);

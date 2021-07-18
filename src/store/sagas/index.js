@@ -32,6 +32,7 @@ const root = function* () {
         takeLatest([AuthenticationTypes.VERIFY_SMS],                     AuthenticationSagas.verifySms),
         takeLatest([AuthenticationTypes.REQUEST_SMS],                    AuthenticationSagas.requestSms),
         takeLatest([AuthenticationTypes.SET_EMAIL],                      AuthenticationSagas.setAdditionalInformation),
+        takeLatest([AuthenticationTypes.VERIFY_EMAIL],                   AuthenticationSagas.verifyEmail),
         takeLatest([AuthenticationTypes.FETCH_REFERRALS],                AuthenticationSagas.fetchReferrals),
         takeLatest([AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED],      AuthenticationSagas.fetchReferralsSucceeded),
         takeLatest([AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED], AuthenticationSagas.registrationSucceeded),

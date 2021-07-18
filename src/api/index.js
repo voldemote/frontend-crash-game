@@ -2,6 +2,7 @@ import * as ApiUrls from '../constants/Api';
 import _            from 'lodash';
 import axios        from 'axios';
 import ContentTypes from '../constants/ContentTypes';
+import {API_AUTHENTICATION_VERIFY_EMAIL} from "../constants/Api";
 
 const createInstance = (host, apiPath) => {
     return axios.create({
@@ -41,6 +42,24 @@ const verifySms = (phone, smsToken) => {
             smsToken,
         },
     ).catch(() => {
+    });
+};
+
+const verifyEmail = (userId, code) => {
+    return Api.get(
+        ApiUrls.API_AUTHENTICATION_VERIFY_EMAIL
+            .replace(':userId', userId)
+            .replace(':code', code)
+    ).catch((error) => {
+        console.log('[API Error] called verifyEmail:', error);
+    });
+};
+
+const resendEmailVerification = () => {
+    return Api.get(
+        ApiUrls.API_AUTHENTICATION_RESEND_EMAIL_VERIFICATION
+    ).catch((error) => {
+        console.log('[API Error] called verifyEmail:', error);
     });
 };
 
@@ -185,4 +204,6 @@ export {
     saveAdditionalInfo,
     setToken,
     verifySms,
+    verifyEmail,
+    resendEmailVerification,
 };
