@@ -92,12 +92,48 @@ const BetView = ({
                 );
             }
 
-            const bets = _.get(event, 'bets', []);
+            const bets = _.clone(_.get(event, 'bets', []));
             let bet    = _.find(bets, {
                 _id: currentBetId,
             });
 
             if (!bet) {
+                bets.sort((a, b) => {
+                    const aState        = _.get(a, 'status');
+                    const bState        = _.get(b, 'status');
+                    const getStateValue = (state) => {
+                        switch (state) {
+                            case BetState.active:
+                                return 5;
+                            case BetState.closed:
+                                return 4;
+                            case BetState.resolved:
+                                return 3;
+                            case BetState.canceled:
+                                return 2;
+                        }
+
+                        return 1;
+                    };
+
+                    if (aState === bState) {
+                        const aEndDate = moment(_.get(a, 'endDate'));
+                        const bEndDate = moment(_.get(b, 'endDate'));
+
+                        if (aEndDate.isBefore(bEndDate)) {
+                            return 1;
+                        }
+
+                        if (bEndDate.isBefore(aEndDate)) {
+                            return -1;
+                        }
+
+                        return 0;
+                    }
+
+                    return getStateValue(bState) - getStateValue(aState);
+                });
+
                 bet = _.head(bets);
             }
 
@@ -657,12 +693,15 @@ const BetView = ({
         } else if (state === BetState.resolved) {
             const overallTrades = 0;
             const tokensTraded  = 0;
-            const tokensWon     = 1;
+            const tokensWon     = 0;
             const hasWon        = tokensWon > 0;
             const finalOutcome  = _.get(bet, [
                 'outcomes',
                 _.get(bet, 'finalOutcome'),
-            ]);
+                'name'
+            ]
+            );
+            console.debug(bet);
             const summaryRows   = [
                 BetSummaryHelper.getDivider(),
                 BetSummaryHelper.getKeyValue('Overall trades', overallTrades),

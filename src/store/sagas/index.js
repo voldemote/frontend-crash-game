@@ -101,7 +101,6 @@ const preLoading = function* () {
     yield put(TransactionActions.fetchAll());
     yield put(ChatActions.fetchInitial());
     yield put(WebsocketsActions.init());
-    yield put(LeaderboardActions.fetchAll());
 
     const userId = yield select(state => state.authentication.userId);
     if(userId) {

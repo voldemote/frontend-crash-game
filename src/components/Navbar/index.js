@@ -18,7 +18,9 @@ import { matchPath }            from 'react-router';
 import { connect }              from 'react-redux';
 import { NotificationActions }  from 'store/actions/notification';
 import transaction              from 'store/reducer/transaction';
-import { formatToFixed }     from '../../helper/FormatNumbers';
+import { formatToFixed }        from '../../helper/FormatNumbers';
+import { put }                  from 'redux-saga/effects';
+import { LeaderboardActions }   from '../../store/actions/leaderboard';
 
 const Navbar = ({
                     user,
@@ -28,6 +30,7 @@ const Navbar = ({
                     rank,
                     setUnread,
                     transactions,
+                    fetchLeaderboard,
                 }) => {
     const [menuOpened, setMenuOpened]               = useState(false);
     const [showLeaderboard, setShowLeaderboard]     = useState(false);
@@ -43,7 +46,13 @@ const Navbar = ({
     ).length;
 
     const onChangeLeaderboard = () => {
-        setShowLeaderboard(!showLeaderboard);
+        const newShowLeaderboard = !showLeaderboard;
+
+        setShowLeaderboard(newShowLeaderboard);
+
+        if (newShowLeaderboard) {
+            fetchLeaderboard();
+        }
     };
 
     const getProfileStyle = () => {
@@ -227,8 +236,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setUnread: (notification) => {
+        setUnread:        (notification) => {
             dispatch(NotificationActions.setUnread({ notification }));
+        },
+        fetchLeaderboard: () => {
+            dispatch(LeaderboardActions.fetchAll());
         },
     };
 };

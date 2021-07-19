@@ -254,7 +254,7 @@ const refreshImportantData = function* () {
         yield put(BetActions.fetchOpenBets());
         yield put(TransactionActions.fetchAll());
 
-        yield delay(5 * 1000);
+        yield delay(10 * 1000);
         yield call(refreshImportantData);
     }
 };

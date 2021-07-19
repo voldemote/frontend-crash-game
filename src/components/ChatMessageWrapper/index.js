@@ -36,7 +36,7 @@ const ChatMessageWrapper = ({ user, message, date }) => {
     }
 
     const renderMessageContent = () => {
-        const type        = _.get(message, 'type', ChatMessageType.chatMessage);
+        const type        = _.get(message, 'type');
         const messageText = _.get(message, 'message');
 
         switch (type) {
@@ -57,6 +57,8 @@ const ChatMessageWrapper = ({ user, message, date }) => {
                     dateString={dateString}
                 />;
         }
+
+        return null;
     };
 
     return renderMessageContent();

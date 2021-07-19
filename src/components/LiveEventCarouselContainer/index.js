@@ -6,6 +6,7 @@ import Routes            from '../../constants/Routes';
 import { connect }       from 'react-redux';
 import { useHistory }    from 'react-router';
 import moment            from 'moment';
+import BetState          from '../BetView/BetState';
 
 const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
     const history = useHistory();
@@ -31,7 +32,46 @@ const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
                 const startDate   = moment(_.get(event, 'date'));
                 const endDate     = moment(_.get(event, 'endDate'));
                 const currentDate = moment();
-                const isLive      = currentDate.isBefore(endDate);//currentDate.isBetween(startDate, endDate);
+                const isLive      = true;//currentDate.isBetween(startDate, endDate);
+                const trades      = _.clone(_.get(event, 'bets', []));
+
+                trades.sort((a, b) => {
+                    const aState        = _.get(a, 'status');
+                    const bState        = _.get(b, 'status');
+                    const getStateValue = (state) => {
+                        switch (state) {
+                            case BetState.active:
+                                return 5;
+                            case BetState.closed:
+                                return 4;
+                            case BetState.resolved:
+                                return 3;
+                            case BetState.canceled:
+                                return 2;
+                        }
+
+                        return 1;
+                    };
+
+                    if (aState === bState) {
+                        const aEndDate = moment(_.get(a, 'endDate'));
+                        const bEndDate = moment(_.get(b, 'endDate'));
+
+                        if (aEndDate.isBefore(bEndDate)) {
+                            return 1;
+                        }
+
+                        if (bEndDate.isBefore(aEndDate)) {
+                            return -1;
+                        }
+
+                        return 0;
+                    }
+
+                    return getStateValue(bState) - getStateValue(aState);
+                });
+                const currentTrade   = _.head(trades);
+                const currentTradeId = _.get(currentTrade, '_id', '');
 
                 return (
                     <EventCard
@@ -42,7 +82,7 @@ const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
                         live={isLive}
                         tags={mappedTags}
                         image={event.previewImageUrl}
-                        onClick={onEventClick(eventId)}
+                        onClick={onEventClick(eventId, currentTradeId)}
                     />
                 );
             },
