@@ -15,10 +15,6 @@ on:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-    env:
-      staging_stage_id: ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
-      production_stage_id: ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
-      mystage: ${{ github.event.inputs.stage }}_stage_id
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,5 +31,10 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Deploy the new spec file to Digital Ocean (will rebuild the deploy)
-        run: eval "doctl apps update --verbose -c config.yaml ${!mystage}" 
+      - name: Deploy the new spec file to staging
+        if: ${{ github.event.inputs.stage == 'staging' }}
+        run: doctl apps update --verbose -c config.yaml ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
+      - name: Deploy the new spec file to production
+        if: ${{ github.event.inputs.stage == 'production' }}
+        run: doctl apps update --verbose -c config.yaml ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
+      
