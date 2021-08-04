@@ -1,0 +1,17 @@
+domains:
+- domain: staging.wallfair.io
+  type: PRIMARY
+name: staging-frontend
+region: fra
+services:
+- http_port: 80
+  image:
+    registry_type: DOCR
+    repository: frontend
+    tag: $VERSION
+  instance_count: 1
+  instance_size_slug: professional-xs
+  name: staging-frontend
+  routes:
+  - path: /
+  source_dir: /

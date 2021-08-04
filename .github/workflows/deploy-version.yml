@@ -1,0 +1,34 @@
+name: Publish new version of the app (will rebuild environment)
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Stage to deploy: staging or production'
+        required: true
+        default: 'staging'
+      version:
+        description: 'Tag Version of this deploy'
+        required: true
+        default: '1.x.x'
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate inputs
+        run: stage=${{ github.event.inputs.stage }} version=${{ github.event.inputs.stage }} node .github/scripts/validate-release-inputs.js
+      - name: Create spec file
+        run: stage=${{ github.event.inputs.stage }} version=${{ github.event.inputs.stage }} node .github/scripts/generate-spec.js > config.yaml
+      - name: Set up staging deploy id
+        run: staging_stage_id = ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
+      - name: Set up production deploy id
+        run: production_stage_id = ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
+      - name: Set up var to read in next line
+        run: mystage = ${{ github.event.inputs.stage }}_stage_id
+      - name: Install doctl (to be able to login on Digital Ocean)
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Deploy the new spec file to Digital Ocean (will rebuild the deploy)
+        run: eval "doctl apps update --verbose -c config.yaml ${!mystage}" 
