@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Deploy to Digital Ocean Staging
 
 on:
   workflow_dispatch:
@@ -22,6 +22,8 @@ jobs:
         run: npm ci
       - name: Build the react app
         run: npm run build
+        env:
+          CI: false
       - name: Install doctl (to be able to login on Digital Ocean)
         uses: digitalocean/action-doctl@v2
         with:
