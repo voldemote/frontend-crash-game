@@ -1,17 +1,24 @@
-name: Deploy to Digital Ocean Staging
+name: Deploy Frontend to Digital Ocean
 
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Image version'
+      stage:
+        description: 'Stage to deploy: staging or production'
         required: true
+        default: 'staging'
+      version:
+        description: 'Version of this deploy'
+        required: true
+        default: '1.x.x'
 
 
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate inputs
+        run: stage=${{ github.event.inputs.stage }} node .github/scripts/validate-release-inputs.js
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Use Node.js
@@ -31,6 +38,6 @@ jobs:
       - name: Login to Digital Ocean docker registry
         run: doctl registry login
       - name: Build the docker image
-        run: docker build . -t registry.digitalocean.com/wallfair/frontend:${{ github.event.inputs.version }}
+        run: docker build . -t registry.digitalocean.com/wallfair/frontend-${{ github.event.inputs.stage }}:${{ github.event.inputs.version }}
       - name: Publish the docker image to Digital Ocean
-        run: docker push registry.digitalocean.com/wallfair/frontend:${{ github.event.inputs.version }}
+        run: docker push registry.digitalocean.com/wallfair/frontend-${{ github.event.inputs.stage }}:${{ github.event.inputs.version }}
