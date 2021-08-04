@@ -1,4 +1,4 @@
-name: Publish new version of the app (will rebuild environment)
+name: Deploy a previously published version (Will rebuild environment)
 
 on:
   workflow_dispatch:
