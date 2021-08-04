@@ -15,6 +15,10 @@ on:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
+    env:
+      staging_stage_id: ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
+      production_stage_id: ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
+      mystage: ${{ github.event.inputs.stage }}_stage_id
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,12 +31,6 @@ jobs:
         run: stage=${{ github.event.inputs.stage }} version=${{ github.event.inputs.version }} node ./.github/scripts/validate-release-inputs.js
       - name: Create spec file
         run: stage=${{ github.event.inputs.stage }} version=${{ github.event.inputs.version }} node ./.github/scripts/generate-spec.js > config.yaml
-      - name: Set up staging deploy id
-        run: export staging_stage_id = ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
-      - name: Set up production deploy id
-        run: export production_stage_id = ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
-      - name: Set up var to read in next line
-        run: export mystage = ${{ github.event.inputs.stage }}_stage_id
       - name: Install doctl (to be able to login on Digital Ocean)
         uses: digitalocean/action-doctl@v2
         with:
