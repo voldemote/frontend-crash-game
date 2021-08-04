@@ -35,8 +35,8 @@ jobs:
         run: doctl auth init
       - name: Deploy the new spec file to staging
         if: ${{ github.event.inputs.stage == 'staging' }}
-        run: doctl apps update ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }} --verbose -c config.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} 
+        run: doctl apps update ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }} --verbose --spec config.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} 
       - name: Deploy the new spec file to production
         if: ${{ github.event.inputs.stage == 'production' }}
-        run: doctl apps update ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }} --verbose -c config.yaml --acess-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} 
+        run: doctl apps update ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }} --verbose --spec config.yaml --acess-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} 
       
