@@ -28,11 +28,11 @@ jobs:
       - name: Create spec file
         run: stage=${{ github.event.inputs.stage }} version=${{ github.event.inputs.version }} node ./.github/scripts/generate-spec.js > config.yaml
       - name: Set up staging deploy id
-        run: staging_stage_id = ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
+        run: export staging_stage_id = ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
       - name: Set up production deploy id
-        run: production_stage_id = ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
+        run: export production_stage_id = ${{ secrets.DIGITALOCEAN_PRODUCTION_FRONTEND_ID }}
       - name: Set up var to read in next line
-        run: mystage = ${{ github.event.inputs.stage }}_stage_id
+        run: export mystage = ${{ github.event.inputs.stage }}_stage_id
       - name: Install doctl (to be able to login on Digital Ocean)
         uses: digitalocean/action-doctl@v2
         with:
