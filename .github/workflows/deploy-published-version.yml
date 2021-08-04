@@ -16,6 +16,7 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
+      - run: pwd
       - name: Validate inputs
         run: stage=${{ github.event.inputs.stage }} version=${{ github.event.inputs.stage }} node .github/scripts/validate-release-inputs.js
       - name: Create spec file
