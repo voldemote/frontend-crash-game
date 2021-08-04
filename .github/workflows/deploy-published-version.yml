@@ -31,6 +31,8 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Authenticate on Digital Ocean
+        run: doctl auth init
       - name: Deploy the new spec file to staging
         if: ${{ github.event.inputs.stage == 'staging' }}
         run: doctl apps update --verbose -c config.yaml ${{ secrets.DIGITALOCEAN_STAGING_FRONTEND_ID }}
