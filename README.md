@@ -1,4 +1,4 @@
-# Wallfair. Playmoney V1 Client-Side
+# Wallfair Front-End
 
 # Usage
 
