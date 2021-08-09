@@ -1,3 +1,5 @@
+import Icon from "components/Icon";
+import { formatToFixed } from "helper/FormatNumbers";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -72,12 +74,27 @@ const NotificationsItem = ({
                     </div>
                 </div>
                 <p
+                    role="button"
                     className={style.markSingleRead}
                     onClick={markNotificationRead}
                 >
                     Mark as read
                 </p>
             </div>
+            {
+                !!notification.tokensWon &&
+                notification.tokensWon > 0 &&
+                <div className={style.congratulatoryBanner}>
+                    <span className={style.congratulatoryBannerConfettiLeft}></span>
+                    <span className={style.congratulatoryBannerConfettiRight}></span>
+                    <span className={style.congratulatoryBannerTitle}>
+                        Congratulations! You won
+                    </span>
+                    <span className={style.congratulatoryBannerAmount}>
+                        {formatToFixed(notification.tokensWon)} EVNT
+                    </span>
+                </div>
+            }
             <div className={style.notificationSeperator} />
         </>
     );

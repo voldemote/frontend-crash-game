@@ -99,3 +99,54 @@
     margin: 0 2.5%;
     background-color: #333152;
 }
+
+.congratulatoryBanner {
+    padding: 20px 55px;
+    background-color: rgba(172, 196, 255, 0.12);
+    margin: 0 24px 20px auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    position: relative;
+
+    .congratulatoryBannerConfettiLeft,
+    .congratulatoryBannerConfettiRight {
+        background-image: url('/data/icons/confetti-left.svg');
+        background-repeat: no-repeat;
+    }
+
+    .congratulatoryBannerConfettiLeft {
+        position: absolute;
+        bottom: -15px;
+        left: -13px;
+        background-position: bottom left;
+        background-size: auto 160%;
+        width: 70px;
+        height: calc(100% + 15px);
+    }
+
+    .congratulatoryBannerConfettiRight {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-position: right center;
+        width: 30px;
+        background-size: 300%;
+        height: calc(100% + 15px);
+    }
+
+    .congratulatoryBannerTitle {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 12px;
+        line-height: 0.82;
+        letter-spacing: 0.3px;
+        margin-bottom: 5px;
+    }
+
+    .congratulatoryBannerAmount {
+        font-size: 20px;
+        color: $colorWhite;
+        letter-spacing: 0.5px;
+        line-height: 1.33;
+    }
+}
