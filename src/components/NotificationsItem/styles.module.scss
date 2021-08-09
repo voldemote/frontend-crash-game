@@ -108,15 +108,16 @@
     flex-flow: column nowrap;
     align-items: center;
     position: relative;
+    border-radius: 3px;
 
     .congratulatoryBannerConfettiLeft,
     .congratulatoryBannerConfettiRight {
+        position: absolute;
         background-image: url('/data/icons/confetti-left.svg');
         background-repeat: no-repeat;
     }
 
     .congratulatoryBannerConfettiLeft {
-        position: absolute;
         bottom: -15px;
         left: -13px;
         background-position: bottom left;
@@ -126,13 +127,12 @@
     }
 
     .congratulatoryBannerConfettiRight {
-        position: absolute;
         right: 0;
         top: 0;
         background-position: right center;
         width: 30px;
         background-size: 300%;
-        height: calc(100% + 15px);
+        height: 100%;
     }
 
     .congratulatoryBannerTitle {
@@ -149,4 +149,10 @@
         letter-spacing: 0.5px;
         line-height: 1.33;
     }
+}
+
+.relativeTimeDifference {
+    color: rgba(255, 255, 255, 0.3);
+    align-self: flex-end;
+    margin: 0 24px 12px;
 }

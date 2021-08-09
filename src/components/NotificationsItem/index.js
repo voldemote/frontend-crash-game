@@ -51,6 +51,23 @@ const NotificationsItem = ({
         )
     }
 
+    const getTimeDifference = () => {
+        const minuteDiff = (new Date() - new Date(notification.date)) / (1000 * 60);
+        if(minuteDiff < 2) {
+            return 'Just now';
+        } else if (minuteDiff < 60) {
+            return `${Math.round(minuteDiff)} mins ago`;
+        } else if (minuteDiff < (60 * 24)) {
+            const hourDiff = (minuteDiff - (minuteDiff % 60)) / 60;
+            return `${hourDiff} hr${hourDiff < 2 ? '' : 's'} ago`;
+        } else {
+            const dayDiff = (
+                (minuteDiff - (minuteDiff % 60)) / 60
+            ) / 24;
+            return `${Math.round(dayDiff)} day${dayDiff < 2 ? '' : 's'} ago`;
+        }
+    }
+
     return (
         <>
             <div
@@ -95,6 +112,9 @@ const NotificationsItem = ({
                     </span>
                 </div>
             }
+            <div className={style.relativeTimeDifference}>
+                {getTimeDifference()}
+            </div>
             <div className={style.notificationSeperator} />
         </>
     );
