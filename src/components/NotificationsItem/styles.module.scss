@@ -66,7 +66,7 @@
     .markSingleRead {
         position: absolute;
         right: 30px;
-        bottom: 18px;
+        bottom: 12px;
         font-size: 14px;
         line-height: 18px;
         text-align: right;
@@ -76,6 +76,9 @@
         mix-blend-mode: normal;
         opacity: 0.3;
         cursor: pointer;
+    }
+    + .congratulatoryBanner {
+        margin-top: 24px;
     }
 }
 

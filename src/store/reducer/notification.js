@@ -34,7 +34,7 @@ const addNotification = (action, state) => {
 
 const setUnread = (action, state) => {
     const { notification } = action;
-    console.log(notification, action);
+
     return {
         ...state,
         notifications: _.map(
