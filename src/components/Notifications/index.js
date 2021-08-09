@@ -15,6 +15,10 @@ const Notifications = ({
         }
     };
 
+    const unreadNotificationsCount = notifications
+        .filter(({read}) => !read)
+        .length;
+
     return (
         <div className={style.notifications}>
             <div className={style.notificationsHeader}>
@@ -23,7 +27,14 @@ const Notifications = ({
                     iconType={IconType.cross}
                     onClick={closeNotifications}
                 />
-                <p className={style.notificationHeadline}>Notifications</p>
+                <p className={style.notificationHeadline}>
+                    Notifications &nbsp;
+                    {unreadNotificationsCount > 0 &&
+                        <span className={style.notificationUnreadBadge}>
+                            {unreadNotificationsCount}
+                        </span>
+                    }
+                </p>
             </div>
             <p className={style.markRead} onClick={markAllRead}>
                 Mark all as read

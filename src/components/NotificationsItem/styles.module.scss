@@ -6,11 +6,13 @@
     padding: 41px 21px 18px 21px;
 
     .notificationMessage {
-        width: 90%;
-        margin-left: 36px;
+        width: calc(100% - 24px);
+        margin-left: auto;
         font-size: 16px;
         line-height: 20px;
         color: #ffffff;
+        display: flex;
+        flex-flow: nowrap;
 
         .notificationDotRead {
             display: none;
@@ -56,7 +58,7 @@
                 height: 12px;
                 border-radius: 50%;
                 background: #ff5858;
-                margin-right: 21px;
+                margin-right: 12px;
             }
         }
     }
@@ -75,6 +77,20 @@
         opacity: 0.3;
         cursor: pointer;
     }
+}
+
+.notificationMessage {
+    a {
+        font-family: $fontBold;
+    }
+}
+
+.notificationCardThumbnail {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 20px;
 }
 
 .notificationSeperator {
