@@ -168,7 +168,7 @@ const Navbar = ({
 
         const leaderboardBtn = (
             <div
-                className={style.ranking}
+                className={classNames(style.ranking, style.pillButton)}
                 onClick={onChangeLeaderboard}
             >
                 <img
@@ -176,7 +176,7 @@ const Navbar = ({
                     alt="medal"
                     className={style.medal}
                 />
-                <p className={style.rankingText}>Rank # {rank}</p>
+                <p className={style.rankingText}># {rank}</p>
             </div>
         );
 
@@ -199,41 +199,43 @@ const Navbar = ({
             </div>
         );
 
-        const menuBtn = (
-            <Icon
-                className={style.mainMenu}
-                iconType={IconType.mainMenu}
-                onClick={toggleMobileMenu}
-            />
-        );
-
         const walletBtn = (
             <Link
                 to={Routes.wallet}
-                className={style.balanceOverview}
+                className={classNames(style.balanceOverview, style.pillButton)}
             >
-                <span className={style.actualBalanceText}>
-                    Your current Balance
-                </span>
+                <Icon
+                    iconType={'wallet'}
+                />
                 {getBalance()} EVNT
             </Link>
         );
 
+        const profileBtn = (
+            <div
+                role="button"
+                className={classNames(style.profileContainer, menuOpened && style.menuOpened)}
+                onClick={showDesktopMenuHandler}
+            >
+                <div
+                    role="img"
+                    className={style.profile}
+                    style={getProfileStyle()}
+                ></div>
+                <Icon
+                    className={style.downCaret}
+                    iconType={'arrowDown'}
+                    iconTheme={'white'}
+                />
+            </div>
+        )
+
         return (
             <div className={style.navbarItems}>
-                {menuBtn}
                 {leaderboardBtn}
                 {walletBtn}
                 {notificationsBtn}
-                <div
-                    className={style.profile}
-                    style={getProfileStyle()}
-                    onClick={showDesktopMenuHandler}
-                ></div>
-                <div
-                    className={style.profileMobile}
-                    style={getProfileStyle()}
-                ></div>
+                {profileBtn}
             </div>
         )
     };

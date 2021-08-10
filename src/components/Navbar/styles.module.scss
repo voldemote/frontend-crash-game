@@ -14,11 +14,6 @@
     padding:         3rem 24px;
     z-index:         $zIndexNavbar;
 
-    @media (min-width: $screen-sm)
-    {
-        padding: 3rem;
-    }
-
     img
     {
         margin-right: 2rem;
@@ -42,6 +37,10 @@
             {
                 margin-left: 20px;
             }
+        }
+
+        svg {
+            stroke-width: 0;
         }
 
         &.hideOnMobile
@@ -72,65 +71,34 @@
 
         .ranking
         {
-            width:           121px;
-            height:          36px;
-            display:         flex;
-            justify-content: center;
-            align-items:     center;
-            margin-right:    16px;
-            background:      #3c4d77;
-            border-radius:   18px;
-            cursor:          pointer;
             z-index:         5;
-
-            @media (max-width: $screen-xs)
-            {
-                margin: 0;
-            }
-
-            .medal
-            {
-                width:        15px;
-                height:       20px;
-                margin-right: 8px;
-            }
-
-            .rankingText
-            {
-                font-size:   12px;
-                line-height: 12px;
-                color:       #ffffff;
-            }
         }
 
         .balanceOverview
         {
-            display:          none;
-            color:            $colorWhite;
             border:           none;
-            background-color: transparent;
-            padding:          0 1rem 0 0.5rem;
-            font-family:      $fontBold;
-            text-align:       right;
             opacity:          1;
-            font-size:        16px;
             z-index:          5;
+        }
 
-            .actualBalanceText
-            {
-                display:     block;
-                font-family: $fontLight;
-                color:       $colorGrayLight2 !important;
+        .pillButton {
+            color:            $colorWhite;
+            display:          flex;
+            align-items:      center;
+            white-space:      nowrap;
+            padding:          8px 15px;
+            background-color: rgba(172, 196, 255, 0.1);
+            font-size:        12px;
+            border-radius:    18px;
+            font-family:      $fontRegular;
+            cursor:           pointer;
+            margin-right:     16px;
+            height:           35px;
 
-                @media (min-width: $screen-sm)
-                {
-                    display: none;
-                }
-            }
-
-            @media (min-width: $screen-sm)
-            {
-                display: block;
+            img, svg {
+                margin-right: 10px;
+                max-width: 18px;
+                max-height: 21px;
             }
         }
 
@@ -171,50 +139,36 @@
             }
         }
 
-        .mainMenu
-        {
-            width: auto;
-            z-index: 3;
+        .profileContainer {
+            display:     flex;
+            margin-left: 20px;
+            cursor:      pointer;
+            z-index:     5;
 
-            @media (min-width: $screen-sm)
-            {
-                display: none;
+            &.menuOpened {
+                .downCaret {
+                    transform: rotate(90deg);
+                }
             }
-        }
 
-        .profile
-        {
-            height:              50px;
-            width:               50px;
-            border-radius:       50%;
-            background-color:    $colorGrayLight;
-            margin:              0 0.5rem 0 1.5rem;
-            background-size:     cover;
-            background-position: center center;
-            border:              2px solid $colorWhite;
-            cursor:              pointer;
-            z-index:             5;
-
-            @media (max-width: $screen-sm)
-            {
-                display: none;
+            .profile {
+                flex:                auto;
+                margin:              0;
+                height:              35px;
+                width:               35px;
+                border-radius:       50%;
+                background-color:    $colorGrayLight;
+                background-size:     cover;
+                background-position: center center;
             }
-        }
-
-        .profileMobile
-        {
-            height:              50px;
-            width:               50px;
-            border-radius:       50%;
-            background-color:    $colorGrayLight;
-            margin:              0 0.5rem 0 0;
-            background-size:     cover;
-            background-position: center center;
-            border:              2px solid $colorWhite;
-
-            @media (min-width: $screen-sm)
-            {
-                display: none;
+            .downCaret {
+                margin:  0 0 0 10px;
+                width:   auto;
+                transition: transform 0.5s ease-in-out;
+            }
+            svg path {
+                fill:    $colorWhite;
+                stroke:  $colorWhite;
             }
         }
 
