@@ -1,13 +1,72 @@
+import Icon from "components/Icon";
+import { formatToFixed } from "helper/FormatNumbers";
 import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import style from "./styles.module.scss";
 
 const NotificationsItem = ({
     notification,
     setUnread,
+    events,
 }) => {
     const markNotificationRead = () => {
         setUnread(notification)
     };
+    
+    const renderMessage = () => {
+        let content = null;
+        let eventName = '';
+
+        if(!!notification.betQuestion && notification.message.includes(notification.betQuestion)) {
+            const { betId, message, betQuestion } = notification;
+
+            const event = events.find(({bets}) => bets.some(({_id}) => _id === betId)); // find event by betId
+            eventName = event.name;
+            const [beforeLink, afterLink] = message.split(betQuestion);
+            
+            content = (
+                <>
+                    {beforeLink}
+                    <Link
+                        to={`/trade/${event._id}/${betId}`}
+                        onClick={markNotificationRead}
+                    >
+                        {betQuestion}
+                    </Link>
+                    {afterLink}
+                </>
+            );
+        } else {
+            content = notification.message;
+        }
+        const { eventPhotoUrl } = notification;
+        return (
+            <>
+                {eventPhotoUrl ? <img className={style.notificationCardThumbnail} alt={`${eventName} event thumbnail`} src={eventPhotoUrl}/> : null}
+                <p>
+                    {content}
+                </p>
+            </>
+        )
+    }
+
+    const getTimeDifference = () => {
+        const minuteDiff = (new Date() - new Date(notification.date)) / (1000 * 60);
+        if(minuteDiff < 2) {
+            return 'Just now';
+        } else if (minuteDiff < 60) {
+            return `${Math.round(minuteDiff)} mins ago`;
+        } else if (minuteDiff < (60 * 24)) {
+            const hourDiff = (minuteDiff - (minuteDiff % 60)) / 60;
+            return `${hourDiff} hr${hourDiff < 2 ? '' : 's'} ago`;
+        } else {
+            const dayDiff = (
+                (minuteDiff - (minuteDiff % 60)) / 60
+            ) / 24;
+            return `${Math.round(dayDiff)} day${dayDiff < 2 ? '' : 's'} ago`;
+        }
+    }
 
     return (
         <>
@@ -28,19 +87,46 @@ const NotificationsItem = ({
                                     : style.notificationDotUnread
                             }
                         />
-                        {notification.message}
+                        {renderMessage()}
                     </div>
                 </div>
                 <p
+                    role="button"
                     className={style.markSingleRead}
                     onClick={markNotificationRead}
                 >
                     Mark as read
                 </p>
             </div>
+            {
+                !!notification.tokensWon &&
+                notification.tokensWon > 0 &&
+                <div className={style.congratulatoryBanner}>
+                    <span className={style.congratulatoryBannerConfettiLeft}></span>
+                    <span className={style.congratulatoryBannerConfettiRight}></span>
+                    <span className={style.congratulatoryBannerTitle}>
+                        Congratulations! You won
+                    </span>
+                    <span className={style.congratulatoryBannerAmount}>
+                        {formatToFixed(notification.tokensWon)} EVNT
+                    </span>
+                </div>
+            }
+            <div className={style.relativeTimeDifference}>
+                {getTimeDifference()}
+            </div>
             <div className={style.notificationSeperator} />
         </>
     );
 };
 
-export default NotificationsItem;
+const mapStateToProps = (state) => {
+    return {
+        events: state.event.events,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(NotificationsItem);

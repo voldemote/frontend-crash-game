@@ -6,7 +6,7 @@
     flex-direction: column;
     position: fixed;
     padding: 150px 0 40px 0;
-    width: 80vw;
+    width: 100vw;
     height: 100vh;
     right: 0;
     top: 0;
@@ -45,6 +45,18 @@
             line-height: 39px;
             letter-spacing: 0.75px;
             color: #ffffff;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .notificationUnreadBadge {
+            background-color: $colorRedLight;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 18px;
+            font-family: $fontBold;
         }
     }
 
