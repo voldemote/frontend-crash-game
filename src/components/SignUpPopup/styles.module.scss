@@ -48,11 +48,6 @@
             text-align:    center;
             z-index:       1;
 
-            @media(min-width: $screen-sm)
-            {
-                font-size: 36px;
-            }
-
             .welcomeTextHeadlineUnderline
             {
                 position:      absolute;
@@ -84,11 +79,6 @@
         {
             font-size: 30px;
             text-align: center;
-
-            @media(min-width: $screen-sm)
-            {
-                font-size: 36px;
-            }
         }
 
         .welcomeTextTextBelow {
@@ -107,7 +97,7 @@
 
             @media (min-width: $screen-sm)
             {
-                right: 25%;
+                right: 22%;
                 top:   31%;
             }
 
