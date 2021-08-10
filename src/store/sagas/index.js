@@ -83,6 +83,7 @@ const root = function* () {
         takeEvery( [LOCATION_CHANGE],                                    WebsocketsSagas.joinOrLeaveRoomOnRouteChange),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.restoreToken),
         takeLatest([REHYDRATE],                                          AuthenticationSagas.refreshImportantData),
+        takeLatest([REHYDRATE],                                          AuthenticationSagas.firstSignUpPopup),
         takeLatest([REHYDRATE],                                          ChatSagas.rehydrate),
         takeLatest([LeaderboardTypes.FETCH_ALL],                         LeaderboardSagas.fetchAll),
         takeLatest([REHYDRATE],                                          rehydrationDone),

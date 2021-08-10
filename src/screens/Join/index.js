@@ -3,6 +3,9 @@ import Button              from '../../components/Button';
 import ButtonTheme         from '../../components/Button/ButtonTheme';
 import classNames          from 'classnames';
 import darkModeLogo        from '../../data/images/logo-demo.svg';
+import Icon                from '../../components/Icon';
+import IconTheme           from '../../components/Icon/IconTheme';
+import IconType            from '../../components/Icon/IconType';
 import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
@@ -13,7 +16,7 @@ import { connect }         from 'react-redux';
 import AuthState           from '../../constants/AuthState';
 import { useHistory }      from 'react-router';
 
-const Welcome = ({ authState }) => {
+const Join = ({ authState }) => {
     const history                                   = useHistory();
     const { width }                                 = useWindowDimensions();
     const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
@@ -36,8 +39,20 @@ const Welcome = ({ authState }) => {
         setShowWelcomeScreen(false);
     };
 
+    const goBackHome = () => {
+        history.push(Routes.home);
+    };
+
     return (
         <div className={styles.welcomeContainer}>
+            <Icon
+                width={30}
+                height={30}
+                className={styles.closeButton}
+                iconType={IconType.deleteInput}
+                iconTheme={IconTheme.primary}
+                onClick={goBackHome}
+            />
             <div
                 className={classNames(
                     styles.welcomeContentContainer,
@@ -97,4 +112,4 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     null,
-)(Welcome);
+)(Join);

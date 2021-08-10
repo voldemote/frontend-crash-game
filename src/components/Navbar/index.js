@@ -21,6 +21,9 @@ import transaction              from 'store/reducer/transaction';
 import { formatToFixed }        from '../../helper/FormatNumbers';
 import { put }                  from 'redux-saga/effects';
 import { LeaderboardActions }   from '../../store/actions/leaderboard';
+import { LOGGED_OUT }           from 'constants/AuthState';
+import Button                   from '../Button';
+import { useHistory }           from 'react-router';
 
 const Navbar = ({
                     user,
@@ -31,10 +34,12 @@ const Navbar = ({
                     setUnread,
                     transactions,
                     fetchLeaderboard,
+                    authState
                 }) => {
     const [menuOpened, setMenuOpened]               = useState(false);
     const [showLeaderboard, setShowLeaderboard]     = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
+    const history                                   = useHistory();
 
     const sellTransactions = transactions
         .filter((transaction) => transaction.direction === 'SELL')
@@ -110,6 +115,16 @@ const Navbar = ({
         );
     };
 
+    const goToJoinPage = () => {
+        if(!isLoggedIn()) {
+            history.push(Routes.join);
+        }
+    };
+
+    const isLoggedIn = () => {
+        return authState !== LOGGED_OUT;
+    }
+
     return (
         <div className={style.navbar}>
             <div className={classNames(style.navbarItems, style.hideOnMobile)}>
@@ -118,62 +133,78 @@ const Navbar = ({
                     width={200}
                     alt={'Wallfair'}
                 />
-                {renderNavbarLink(Routes.home, 'Home')}
-                {renderNavbarLink(Routes.betOverview, 'My Trades')}
-                {renderNavbarLink(Routes.wallet, 'My Wallet')}
+                {isLoggedIn() &&
+                    <div>
+                        {renderNavbarLink(Routes.home, 'Home')}
+                        {renderNavbarLink(Routes.betOverview, 'My Trades')}
+                        {renderNavbarLink(Routes.wallet, 'My Wallet')}
+                    </div>
+                }
             </div>
-            <div className={style.navbarItems}>
-                <Icon
-                    className={style.mainMenu}
-                    iconType={IconType.mainMenu}
-                    onClick={openMobileMenu}
-                />
-                <div
-                    className={style.ranking}
-                    onClick={onChangeLeaderboard}
-                >
-                    <img
-                        src={medalGold}
-                        alt="medal"
-                        className={style.medal}
-                    />
-                    <p className={style.rankingText}>Rank # {rank}</p>
+            {!isLoggedIn() &&
+                <div className={style.navbarItems}>
+                    <Button
+                        className={style.signUpButton}
+                        withoutBackground={true}
+                        onClick={goToJoinPage}>
+                        JOIN NOW
+                    </Button>
                 </div>
-                <Link
-                    to={Routes.wallet}
-                    className={style.balanceOverview}
-                >
-                    <span className={style.actualBalanceText}>
-                        Your current Balance
-                    </span>
-                    {getBalance()} EVNT
-                </Link>
-                <div
-                    className={style.notificationOverview}
-                    onClick={showNotificationsHandler}
-                >
+            }
+            {isLoggedIn() &&
+                <div className={style.navbarItems}>
                     <Icon
-                        iconType={IconType.bell}
-                        className={style.notificationIcon}
+                        className={style.mainMenu}
+                        iconType={IconType.mainMenu}
+                        onClick={openMobileMenu}
                     />
-                    {unreadNotifications > 0 && (
-                        <div className={style.notificationNew}>
-                            <p className={style.notificationNewText}>
-                                {unreadNotifications}
-                            </p>
-                        </div>
-                    )}
+                    <div
+                        className={style.ranking}
+                        onClick={onChangeLeaderboard}
+                    >
+                        <img
+                            src={medalGold}
+                            alt="medal"
+                            className={style.medal}
+                        />
+                        <p className={style.rankingText}>Rank # {rank}</p>
+                    </div>
+                    <Link
+                        to={Routes.wallet}
+                        className={style.balanceOverview}
+                    >
+                        <span className={style.actualBalanceText}>
+                            Your current Balance
+                        </span>
+                        {getBalance()} EVNT
+                    </Link>
+                    <div
+                        className={style.notificationOverview}
+                        onClick={showNotificationsHandler}
+                    >
+                        <Icon
+                            iconType={IconType.bell}
+                            className={style.notificationIcon}
+                        />
+                        {unreadNotifications > 0 && (
+                            <div className={style.notificationNew}>
+                                <p className={style.notificationNewText}>
+                                    {unreadNotifications}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    <div
+                        className={style.profile}
+                        style={getProfileStyle()}
+                        onClick={showDesktopMenuHandler}
+                    ></div>
+                    <div
+                        className={style.profileMobile}
+                        style={getProfileStyle()}
+                    ></div>
                 </div>
-                <div
-                    className={style.profile}
-                    style={getProfileStyle()}
-                    onClick={showDesktopMenuHandler}
-                ></div>
-                <div
-                    className={style.profileMobile}
-                    style={getProfileStyle()}
-                ></div>
-            </div>
+            }
             {showLeaderboard && (
                 <div className={style.leaderboard}>
                     <img
@@ -226,6 +257,7 @@ const Navbar = ({
 
 const mapStateToProps = (state) => {
     return {
+        authState:     state.authentication.authState,
         location:      state.router.location,
         notifications: state.notification.notifications,
         leaderboard:   _.get(state.leaderboard.leaderboard, 'users', []),
@@ -241,7 +273,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchLeaderboard: () => {
             dispatch(LeaderboardActions.fetchAll());
-        },
+        }
     };
 };
 

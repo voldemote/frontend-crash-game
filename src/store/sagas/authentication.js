@@ -16,7 +16,7 @@ import PopupTheme                   from '../../components/Popup/PopupTheme';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
-    Routes.welcome,
+    Routes.home,
     Routes.bet,
     '/service-worker.js',
 ];
@@ -201,7 +201,7 @@ const authenticationSucceeded = function* (action) {
 const logout = function* () {
     Api.setToken(null);
     yield put(WebsocketsActions.close());
-    yield put(push(Routes.welcome));
+    yield put(push(Routes.home));
 };
 
 const restoreToken = function* () {
@@ -231,16 +231,11 @@ const restoreToken = function* () {
 
     if (token && authState === AuthState.LOGGED_IN) {
         if (
-            pathname === Routes.welcome ||
-            locationPathname === Routes.welcome
+            pathname === Routes.home ||
+            locationPathname === Routes.home
         ) {
             yield put(push(afterLoginRoute));
         }
-    } else if (
-        routesToRedirectWithoutSession.indexOf(pathname) === -1 ||
-        routesToRedirectWithoutSession.indexOf(locationPathname) === -1
-    ) {
-        yield put(push(Routes.welcome));
     }
 };
 
@@ -259,6 +254,22 @@ const refreshImportantData = function* () {
     }
 };
 
+const firstSignUpPopup = function* () {
+    const authState = yield select(state => state.authentication.authState);
+
+    if (authState === AuthState.LOGGED_OUT) {
+        yield delay(60 * 1000);
+        yield put(PopupActions.show({
+            popupType: PopupTheme.signUpNotificationFirst
+        }));
+
+        yield delay(300 * 1000);
+        yield put(PopupActions.show({
+            popupType: PopupTheme.signUpNotificationSecond
+        }));
+    }
+}
+
 export default {
     authenticationSucceeded,
     fetchReferrals,
@@ -271,4 +282,5 @@ export default {
     setAdditionalInformation,
     verifySms,
     verifyEmail,
+    firstSignUpPopup
 };

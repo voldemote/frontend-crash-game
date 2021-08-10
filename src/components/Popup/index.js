@@ -14,6 +14,7 @@ import _                from 'lodash';
 import ReferralList     from '../ReferralList';
 import BetApproveView   from '../BetApproveView';
 import WelcomeView      from '../WelcomeView';
+import SignUpPopup      from '../SignUpPopup';
 import TradeDetailView  from '../TradeDetailView';
 import EventDetailView  from '../EventDetailView';
 
@@ -84,6 +85,20 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                         closed={!visible}
                     />
                 );
+            
+            case PopupTheme.signUpNotificationFirst:
+                return (
+                    <SignUpPopup
+                        closed={!visible}
+                    />
+                );
+            
+            case PopupTheme.signUpNotificationSecond:
+                return (
+                    <SignUpPopup
+                        closed={!visible}
+                    />
+                );
 
         }
 
@@ -97,15 +112,18 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                 visible ? null : styles.hidden,
             )}
         >
-            <div className={styles.popupContainer}>
-                <Icon
-                    width={30}
-                    height={30}
-                    className={styles.closeButton}
-                    iconType={IconType.deleteInput}
-                    iconTheme={IconTheme.primary}
-                    onClick={hidePopup}
-                />
+            <div className={classNames(styles.popupContainer, 
+                type === PopupTheme.signUpNotificationFirst || type === PopupTheme.signUpNotificationSecond ? styles.signUpPopupContainer : null)}>
+                {type !== PopupTheme.signUpNotificationSecond && 
+                    <Icon
+                        width={30}
+                        height={30}
+                        className={styles.closeButton}
+                        iconType={IconType.deleteInput}
+                        iconTheme={IconTheme.primary}
+                        onClick={hidePopup}
+                    />
+                }
                 <div className={styles.popupContentContainer}>
                     {renderPopup()}
                 </div>

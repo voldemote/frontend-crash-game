@@ -19,7 +19,7 @@ export default {
     getRouteWithParameters,
     bet:                '/trade/:eventId?/:betId?',
     betOverview:        '/my-trades',
-    home:               '/home',
+    home:               '/',
     logout:             '/logout',
     privacyPolicy:      '/privacy-policy',
     termsAndConditions: '/terms-and-conditions',
@@ -27,6 +27,6 @@ export default {
     walletConfirmation: '/wallet/:paymentAction/:paymentProvider/success',
     walletDeposit:      '/wallet/deposit/:paymentProvider',
     walletWithdrawal:   '/wallet/withdraw/:paymentProvider',
-    welcome:            '/',
+    join:               '/join',
     verify:             '/verify'
 };

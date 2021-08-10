@@ -21,10 +21,15 @@ import { PopupActions }         from '../../store/actions/popup';
 import { useHistory }           from 'react-router';
 import { useState }             from 'react';
 import ReferralLinkCopyInputBox from '../../components/ReferralLinkCopyInputBox';
+import { LOGGED_OUT } from 'constants/AuthState';
 
-const Wallet = ({ balance, referralCount, showPopup, transactionCount }) => {
+const Wallet = ({ balance, authState, referralCount, showPopup, transactionCount }) => {
     const history                           = useHistory();
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
+
+    if(authState === LOGGED_OUT) {
+        history.push(Routes.home);
+    }
 
     const onPaymentActionSwitch = (newIndex) => {
         if (newIndex === 0) {
@@ -189,7 +194,8 @@ const mapStateToProps = (state) => {
     const transactionCount = _.size(state.transaction.transactions);
 
     return {
-        balance: state.authentication.balance,
+        balance:   state.authentication.balance,
+        authState: state.authentication.authState,
         referralCount,
         transactionCount,
     };

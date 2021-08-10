@@ -32,7 +32,9 @@ const ChatMessageWrapper = ({ user, message, date }) => {
     );
 
     if (!user) {
-        return null;
+        user = {
+            name: message.name // temporary user object until we need more info when user is not logged in
+        }
     }
 
     const renderMessageContent = () => {

@@ -13,7 +13,7 @@ import TermsAndConditions          from './screens/TermsAndConditions';
 import PaymentConfirmation         from './screens/PaymentConfirmation';
 import Wallet                      from './screens/Wallet';
 import BetOverview                 from './screens/BetOverview';
-import Welcome                     from './screens/Welcome';
+import Join                        from './screens/Join';
 import EmailVerification           from './screens/EmailVerification';
 import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
@@ -45,8 +45,8 @@ const App = () => {
                     />
                     <Route
                         exact
-                        path={Routes.welcome}
-                        component={Welcome}
+                        path={Routes.join}
+                        component={Join}
                     />
                     <Route
                         exact
@@ -90,7 +90,7 @@ const App = () => {
                         path={Routes.verify}
                         component={EmailVerification}
                     />
-                    <Redirect to={Routes.welcome} />
+                    <Redirect to={Routes.home} />
                 </Switch>
             </ConnectedRouter>
         </Provider>

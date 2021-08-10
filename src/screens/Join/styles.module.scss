@@ -7,6 +7,18 @@
     display:         flex;
     justify-content: center;
 
+    .closeButton {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+        z-index: 999;
+
+        svg > path {
+            stroke-opacity: 0.5;
+        }
+    }
+
     .welcomeContentContainer
     {
         position:        relative;
