@@ -8,6 +8,13 @@
   z-index: 5;
 }
 
+.tableFirst,
+.tableSecond,
+.tableThird,
+.tableEntryHolder {
+  position: relative;
+}
+
 .tableFirst {
   display: flex;
   align-items: center;

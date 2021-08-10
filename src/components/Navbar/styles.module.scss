@@ -233,7 +233,10 @@
         width:      500px;
         height:     100vh;
         background: rgba(14, 9, 39, 0.86);
-        overflow-y: scroll;
+        backdrop-filter: blur(3px);
+        transition: right 0.5s ease-in-out;
+        display: flex;
+        flex-flow: column nowrap;
 
         @media (max-width: $screen-md)
         {
@@ -242,12 +245,11 @@
 
         .closeLeaderboard
         {
-            position: absolute;
-            top:      100px;
-            right:    24px;
-            width:    20px;
-            height:   20px;
-            cursor:   pointer;
+            @extend .floatingCloseButton;
+
+            @media screen and (min-width: $screen-sm) {
+                display: none;
+            }
         }
 
         .leaderboardHeading
@@ -264,17 +266,22 @@
             display:        flex;
             flex-direction: column;
             width:          100%;
+            flex:           auto;
+            overflow-y:     auto;
 
             .tableHeadings
             {
                 display:       flex;
                 width:         100%;
-                padding:       0 50px 0 50px;
-                margin-bottom: 16px;
+                padding:       16px 24px;
+                background-color: rgba(14, 9, 39, 0.86);
+                position: sticky;
+                top: 0;
+                z-index: 1;
 
                 @media (max-width: $screen-md)
                 {
-                    padding: 0 20px 0 20px;
+                    padding: 16px;
                 }
 
                 .rankingHeading
@@ -321,4 +328,19 @@
             }
         }
     }
+    .notifications {
+        right: 0;
+        transition: right 0.5s ease-in-out;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+    }
+    .hideNotifications,
+    .hideLeaderboard {
+        right: -101%;
+    }
+}
+
+.navbarSticky {
+    position: fixed;
 }
