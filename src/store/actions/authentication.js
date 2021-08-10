@@ -19,9 +19,9 @@ export const AuthenticationTypes = {
     VERIFY_SMS:                     'Authentication/VERIFY_SMS',
     VERIFY_SMS_FAILED:              'Authentication/VERIFY_SMS_FAILED',
     VERIFY_SMS_SUCCEEDED:           'Authentication/VERIFY_SMS_SUCCEEDED',
-    VERIFY_EMAIL:                     'Authentication/VERIFY_EMAIL',
-    VERIFY_EMAIL_FAILED:              'Authentication/VERIFY_EMAIL_FAILED',
-    VERIFY_EMAIL_SUCCEEDED:           'Authentication/VERIFY_EMAIL_SUCCEEDED',
+    VERIFY_EMAIL:                   'Authentication/VERIFY_EMAIL',
+    VERIFY_EMAIL_FAILED:            'Authentication/VERIFY_EMAIL_FAILED',
+    VERIFY_EMAIL_SUCCEEDED:         'Authentication/VERIFY_EMAIL_SUCCEEDED',
     RESET_AUTH_STATE:               'Authentication/RESET_AUTH_STATE',
 };
 

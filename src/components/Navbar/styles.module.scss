@@ -29,6 +29,21 @@
         display:     flex;
         align-items: center;
 
+        .signUpButton {
+            background-color: $colorWhite;
+            width: 11rem;
+            height: 55px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-left: 0;
+            background-image: url('../../data/images/signup-background-one.svg');
+            background-position: center;
+            @media (min-width: $screen-xs-max)
+            {
+                margin-left: 20px;
+            }
+        }
+
         &.hideOnMobile
         {
             @media (max-width: $screen-xs-max)
@@ -42,8 +57,7 @@
             @media (max-width: $screen-xs-max)
             {
                 width:           100%;
-                justify-content: space-between;
-                flex-direction:  row-reverse;
+                justify-content: flex-end;
             }
         }
 

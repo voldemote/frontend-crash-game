@@ -9,19 +9,16 @@ import { UserActions }  from '../actions/user';
 
 const fetchAll = function* (action) {
     const authState = yield select(state => state.authentication.authState);
+    const response = yield call(Api.listEvents);
 
-    if (authState === AuthState.LOGGED_IN) {
-        const response = yield call(Api.listEvents);
+    if (response) {
+        const events = response.data;
 
-        if (response) {
-            const events = response.data;
-
-            yield put(EventActions.fetchAllSucceeded({
-                events,
-            }));
-        } else {
-            yield put(EventActions.fetchAllFailed());
-        }
+        yield put(EventActions.fetchAllSucceeded({
+            events,
+        }));
+    } else {
+        yield put(EventActions.fetchAllFailed());
     }
 };
 

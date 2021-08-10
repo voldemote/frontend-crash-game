@@ -5,7 +5,7 @@ import Routes                       from '../../constants/Routes';
 import { AuthenticationActions }    from '../actions/authentication';
 import { EventActions }             from '../actions/event';
 import { push }                     from 'connected-react-router';
-import { put, call, select, delay } from 'redux-saga/effects';
+import { put, call, select, delay, cancel } from 'redux-saga/effects';
 import { UserActions }              from '../actions/user';
 import { BetActions }               from '../actions/bet';
 import { TransactionActions }       from '../actions/transaction';
@@ -16,7 +16,7 @@ import PopupTheme                   from '../../components/Popup/PopupTheme';
 
 const afterLoginRoute                = Routes.home;
 const routesToRedirectWithoutSession = [
-    Routes.welcome,
+    Routes.home,
     Routes.bet,
     '/service-worker.js',
 ];
@@ -190,6 +190,7 @@ const authenticationSucceeded = function* (action) {
     const userId    = yield select(state => state.authentication.userId);
 
     if (authState === AuthState.LOGGED_IN) {
+        yield cancel(firstSignUpPopup);
         yield put(UserActions.fetch({ userId, forceFetch: true }));
         yield put(EventActions.fetchAll());
         yield put(AuthenticationActions.fetchReferrals());
@@ -201,7 +202,7 @@ const authenticationSucceeded = function* (action) {
 const logout = function* () {
     Api.setToken(null);
     yield put(WebsocketsActions.close());
-    yield put(push(Routes.welcome));
+    yield put(push(Routes.home));
 };
 
 const restoreToken = function* () {
@@ -231,16 +232,11 @@ const restoreToken = function* () {
 
     if (token && authState === AuthState.LOGGED_IN) {
         if (
-            pathname === Routes.welcome ||
-            locationPathname === Routes.welcome
+            pathname === Routes.home ||
+            locationPathname === Routes.home
         ) {
             yield put(push(afterLoginRoute));
         }
-    } else if (
-        routesToRedirectWithoutSession.indexOf(pathname) === -1 ||
-        routesToRedirectWithoutSession.indexOf(locationPathname) === -1
-    ) {
-        yield put(push(Routes.welcome));
     }
 };
 
@@ -248,6 +244,7 @@ const refreshImportantData = function* () {
     const authState = yield select(state => state.authentication.authState);
 
     if (authState === AuthState.LOGGED_IN) {
+        yield cancel(firstSignUpPopup);
         yield put(UserActions.fetch({ forceFetch: true }));
         yield put(EventActions.fetchAll());
         yield put(AuthenticationActions.fetchReferrals());
@@ -258,6 +255,21 @@ const refreshImportantData = function* () {
         yield call(refreshImportantData);
     }
 };
+
+const firstSignUpPopup = function* (options) {
+    const authState = yield select(state => state.authentication.authState);
+
+    if (authState === AuthState.LOGGED_OUT) {
+        yield delay((options.duration ? options.duration : 1) * 60 * 1000);
+        yield put(PopupActions.show({
+            popupType: options.last ? PopupTheme.signUpNotificationSecond : PopupTheme.signUpNotificationFirst
+        }));
+
+        if(!options.last) {
+            yield call(firstSignUpPopup, { last: true, duration: 5 })
+        }
+    }
+}
 
 export default {
     authenticationSucceeded,
@@ -271,4 +283,5 @@ export default {
     setAdditionalInformation,
     verifySms,
     verifyEmail,
+    firstSignUpPopup
 };
