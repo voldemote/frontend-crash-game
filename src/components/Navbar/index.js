@@ -141,6 +141,12 @@ const Navbar = ({
     
     const hasOpenDrawer = menuOpened || showNotifications || showLeaderboard;
 
+    if(hasOpenDrawer) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+
     const goToJoinPage = () => {
         if(!isLoggedIn()) {
             history.push(Routes.join);
