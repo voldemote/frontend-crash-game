@@ -5,7 +5,7 @@ import Routes                       from '../../constants/Routes';
 import { AuthenticationActions }    from '../actions/authentication';
 import { EventActions }             from '../actions/event';
 import { push }                     from 'connected-react-router';
-import { put, call, select, delay, cancel } from 'redux-saga/effects';
+import { put, call, select, delay } from 'redux-saga/effects';
 import { UserActions }              from '../actions/user';
 import { BetActions }               from '../actions/bet';
 import { TransactionActions }       from '../actions/transaction';
@@ -190,7 +190,6 @@ const authenticationSucceeded = function* (action) {
     const userId    = yield select(state => state.authentication.userId);
 
     if (authState === AuthState.LOGGED_IN) {
-        yield cancel(firstSignUpPopup);
         yield put(UserActions.fetch({ userId, forceFetch: true }));
         yield put(EventActions.fetchAll());
         yield put(AuthenticationActions.fetchReferrals());
@@ -244,7 +243,6 @@ const refreshImportantData = function* () {
     const authState = yield select(state => state.authentication.authState);
 
     if (authState === AuthState.LOGGED_IN) {
-        yield cancel(firstSignUpPopup);
         yield put(UserActions.fetch({ forceFetch: true }));
         yield put(EventActions.fetchAll());
         yield put(AuthenticationActions.fetchReferrals());
@@ -257,10 +255,10 @@ const refreshImportantData = function* () {
 };
 
 const firstSignUpPopup = function* (options) {
+    yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
     const authState = yield select(state => state.authentication.authState);
 
-    if (authState === AuthState.LOGGED_OUT) {
-        yield delay((options.duration ? options.duration : 1) * 60 * 1000);
+    if (authState !== AuthState.LOGGED_IN) {
         yield put(PopupActions.show({
             popupType: options.last ? PopupTheme.signUpNotificationSecond : PopupTheme.signUpNotificationFirst
         }));

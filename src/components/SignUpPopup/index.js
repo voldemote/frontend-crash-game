@@ -8,7 +8,7 @@ import styles              from './styles.module.scss';
 import { connect }         from 'react-redux';
 import Button              from '../Button';
 import { PopupActions }    from '../../store/actions/popup';
-import { LOGGED_OUT } from 'constants/AuthState';
+import { LOGGED_IN } from 'constants/AuthState';
 import Routes from 'constants/Routes';
 import { useHistory } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ const SignUpPopup = ({ closed, user, hidePopup, authState }) => {
     };
 
     const goToJoinPage = () => {
-        if(!authState !== LOGGED_OUT) {
+        if(authState !== LOGGED_IN) {
             history.push(Routes.join);
         }
     }

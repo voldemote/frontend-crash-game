@@ -21,13 +21,13 @@ import { PopupActions }         from '../../store/actions/popup';
 import { useHistory }           from 'react-router';
 import { useState }             from 'react';
 import ReferralLinkCopyInputBox from '../../components/ReferralLinkCopyInputBox';
-import { LOGGED_OUT } from 'constants/AuthState';
+import { LOGGED_IN } from 'constants/AuthState';
 
 const Wallet = ({ balance, authState, referralCount, showPopup, transactionCount }) => {
     const history                           = useHistory();
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
 
-    if(authState === LOGGED_OUT) {
+    if(authState !== LOGGED_IN) {
         history.push(Routes.home);
     }
 
