@@ -255,7 +255,7 @@ const refreshImportantData = function* () {
 };
 
 const firstSignUpPopup = function* (options) {
-    yield delay((options && options.duration ? options.duration : 1) * 30 * 1000);
+    yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
     const authState = yield select(state => state.authentication.authState);
 
     if (authState === AuthState.LOGGED_OUT) {
@@ -264,7 +264,7 @@ const firstSignUpPopup = function* (options) {
         }));
 
         if(!options.last) {
-            yield call(firstSignUpPopup, { last: true, duration: 1 })
+            yield call(firstSignUpPopup, { last: true, duration: 5 })
         }
     }
 }
