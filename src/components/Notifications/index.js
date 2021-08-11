@@ -35,10 +35,12 @@ const Notifications = ({
                         </span>
                     }
                 </p>
+                {unreadNotificationsCount > 0 &&
+                    <p className={style.markRead} onClick={markAllRead}>
+                        Mark all as read 
+                    </p>
+                }
             </div>
-            <p className={style.markRead} onClick={markAllRead}>
-                Mark all as read
-            </p>
             <div className={style.notificationsHolder}>
                 {notifications.map((notification) => {
                     return (

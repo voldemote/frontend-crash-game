@@ -57,8 +57,15 @@ const Navbar = ({
 
         if (newShowLeaderboard) {
             fetchLeaderboard();
+
+            closeMenu();
+            closeNotifications();
         }
     };
+
+    const closeLeaderboard = () => {
+        setShowLeaderboard(false);
+    }
 
     const getProfileStyle = () => {
         const profilePicture = getProfilePictureUrl(
@@ -80,16 +87,27 @@ const Navbar = ({
         return '-';
     };
 
-    const openMobileMenu = () => {
-        setMenuOpened(true);
+    const toggleMobileMenu = () => {
+        const isOpen = !menuOpened;
+        if(isOpen) {
+            closeNotifications();
+            closeLeaderboard();
+        }
+        setMenuOpened(isOpen);
     };
 
-    const closeMobileMenu = () => {
+    const closeMenu = () => {
         setMenuOpened(false);
     };
 
     const showNotificationsHandler = () => {
-        setShowNotifications(!showNotifications);
+        const isOpen = !showNotifications;
+        if(isOpen) {
+            closeMenu();
+            closeLeaderboard();
+        }
+        setShowNotifications(isOpen);
+
     };
 
     const closeNotifications = () => {
@@ -97,7 +115,13 @@ const Navbar = ({
     };
 
     const showDesktopMenuHandler = () => {
-        setMenuOpened(!menuOpened);
+        const isOpen = !menuOpened;
+        if(isOpen) {
+            closeMenu();
+            closeLeaderboard();
+            closeNotifications();
+        }
+        setMenuOpened(isOpen);
     };
 
     const isRouteActive = (route) => {
@@ -114,6 +138,14 @@ const Navbar = ({
             </Link>
         );
     };
+    
+    const hasOpenDrawer = menuOpened || showNotifications || showLeaderboard;
+
+    if(hasOpenDrawer) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
 
     const goToJoinPage = () => {
         if(!isLoggedIn()) {
@@ -125,8 +157,155 @@ const Navbar = ({
         return authState !== LOGGED_OUT;
     }
 
+    const renderJoinButton = () => {
+        return (
+            <div className={style.navbarItems}>
+                <Button
+                    className={style.signUpButton}
+                    withoutBackground={true}
+                    onClick={goToJoinPage}>
+                    JOIN NOW
+                </Button>
+            </div>
+        );
+    }
+
+    const renderNavButtons = () => {
+
+        const leaderboardBtn = (
+            <div
+                className={classNames(style.ranking, style.pillButton)}
+                onClick={onChangeLeaderboard}
+            >
+                <img
+                    src={medalGold}
+                    alt="medal"
+                    className={style.medal}
+                />
+                <p className={style.rankingText}># {rank}</p>
+            </div>
+        );
+
+        const notificationsBtn = (
+            <div
+                className={style.notificationOverview}
+                onClick={showNotificationsHandler}
+            >
+                <Icon
+                    iconType={IconType.bell}
+                    className={style.notificationIcon}
+                />
+                {unreadNotifications > 0 && (
+                    <div className={style.notificationNew}>
+                        <p className={style.notificationNewText}>
+                            {unreadNotifications}
+                        </p>
+                    </div>
+                )}
+            </div>
+        );
+
+        const walletBtn = (
+            <Link
+                to={Routes.wallet}
+                className={classNames(style.balanceOverview, style.pillButton)}
+            >
+                <Icon
+                    iconType={'wallet'}
+                />
+                {getBalance()} EVNT
+            </Link>
+        );
+
+        const profileBtn = (
+            <div
+                role="button"
+                className={classNames(style.profileContainer, menuOpened && style.menuOpened)}
+                onClick={showDesktopMenuHandler}
+            >
+                <div
+                    role="img"
+                    className={style.profile}
+                    style={getProfileStyle()}
+                ></div>
+                <Icon
+                    className={style.downCaret}
+                    iconType={'arrowDown'}
+                    iconTheme={'white'}
+                />
+            </div>
+        )
+
+        return (
+            <div className={style.navbarItems}>
+                {leaderboardBtn}
+                {walletBtn}
+                {notificationsBtn}
+                {profileBtn}
+            </div>
+        )
+    };
+
+    const renderLeaderboardDrawer = () => {
+        return (
+            <div className={`${style.leaderboard} ${!showLeaderboard ? style.hideLeaderboard : ''}`}>
+                <Icon
+                    iconType={'cross'}
+                    onClick={onChangeLeaderboard}
+                    className={style.closeLeaderboard}
+                />
+                <p className={style.leaderboardHeading}>
+                    Community
+                    <br />
+                    Leaderboard
+                </p>
+                <div className={style.leaderboardTable}>
+                    <div className={style.tableHeadings}>
+                        <p className={style.rankingHeading}>RANKING</p>
+                        <p className={style.userHeading}>USER</p>
+                        <p className={style.tokenHeading}>TOKENBALANCE</p>
+                    </div>
+                    <div className={style.leaderboardRanking}>
+                        {leaderboard &&
+                        leaderboard.map((user) => {
+                            return (
+                                <LeaderboardItem
+                                    user={user}
+                                    key={user.userId}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const renderNotificationsDrawer = () => {
+        return (
+            <div className={`${style.notifications} ${!showNotifications ? style.hideNotifications : ''}`}>
+                <Notifications
+                    notifications={notifications}
+                    unreadNotifications={unreadNotifications}
+                    closeNotifications={closeNotifications}
+                    setUnread={setUnread}
+                />
+            </div>
+        )
+    };
+
+    const renderMenuDrawer = () => {
+        return (
+            <MainMenu
+                opened={menuOpened}
+                closeMobileMenu={closeMenu}
+                sellTransactions={sellTransactions}
+            />
+        )
+    };
+
     return (
-        <div className={style.navbar}>
+        <div className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}>
             <div className={classNames(style.navbarItems, style.hideOnMobile)}>
                 <img
                     src={Logo}
@@ -141,116 +320,17 @@ const Navbar = ({
                     </div>
                 }
             </div>
-            {!isLoggedIn() &&
-                <div className={style.navbarItems}>
-                    <Button
-                        className={style.signUpButton}
-                        withoutBackground={true}
-                        onClick={goToJoinPage}>
-                        JOIN NOW
-                    </Button>
-                </div>
-            }
-            {isLoggedIn() &&
-                <div className={style.navbarItems}>
-                    <Icon
-                        className={style.mainMenu}
-                        iconType={IconType.mainMenu}
-                        onClick={openMobileMenu}
-                    />
-                    <div
-                        className={style.ranking}
-                        onClick={onChangeLeaderboard}
-                    >
-                        <img
-                            src={medalGold}
-                            alt="medal"
-                            className={style.medal}
-                        />
-                        <p className={style.rankingText}>Rank # {rank}</p>
-                    </div>
-                    <Link
-                        to={Routes.wallet}
-                        className={style.balanceOverview}
-                    >
-                        <span className={style.actualBalanceText}>
-                            Your current Balance
-                        </span>
-                        {getBalance()} EVNT
-                    </Link>
-                    <div
-                        className={style.notificationOverview}
-                        onClick={showNotificationsHandler}
-                    >
-                        <Icon
-                            iconType={IconType.bell}
-                            className={style.notificationIcon}
-                        />
-                        {unreadNotifications > 0 && (
-                            <div className={style.notificationNew}>
-                                <p className={style.notificationNewText}>
-                                    {unreadNotifications}
-                                </p>
-                            </div>
-                        )}
-                    </div>
-                    <div
-                        className={style.profile}
-                        style={getProfileStyle()}
-                        onClick={showDesktopMenuHandler}
-                    ></div>
-                    <div
-                        className={style.profileMobile}
-                        style={getProfileStyle()}
-                    ></div>
-                </div>
-            }
-            {showLeaderboard && (
-                <div className={style.leaderboard}>
-                    <img
-                        src={cross}
-                        alt="close"
-                        className={style.closeLeaderboard}
-                        onClick={onChangeLeaderboard}
-                    />
-                    <p className={style.leaderboardHeading}>
-                        Community
-                        <br />
-                        Leaderboard
-                    </p>
-                    <div className={style.leaderboardTable}>
-                        <div className={style.tableHeadings}>
-                            <p className={style.rankingHeading}>RANKING</p>
-                            <p className={style.userHeading}>USER</p>
-                            <p className={style.tokenHeading}>TOKENBALANCE</p>
-                        </div>
-                        <div className={style.leaderboardRanking}>
-                            {leaderboard &&
-                            leaderboard.map((user) => {
-                                return (
-                                    <LeaderboardItem
-                                        user={user}
-                                        key={user.userId}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
+            {!isLoggedIn() && renderJoinButton()}
+            {isLoggedIn() && (
+                <>
+                    {renderNavButtons()}
+                    {renderLeaderboardDrawer()}
+                    {renderNotificationsDrawer()}
+                    {renderMenuDrawer()}
+                </>
             )}
-            {showNotifications && (
-                <Notifications
-                    notifications={notifications}
-                    unreadNotifications={unreadNotifications}
-                    closeNotifications={closeNotifications}
-                    setUnread={setUnread}
-                />
-            )}
-            <MainMenu
-                opened={menuOpened}
-                closeMobileMenu={closeMobileMenu}
-                sellTransactions={sellTransactions}
-            />
+            
+            
         </div>
     );
 };

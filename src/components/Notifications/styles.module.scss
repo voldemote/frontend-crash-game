@@ -4,79 +4,81 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    padding: 150px 0 40px 0;
+    padding: 90px 0 0 0;
     width: 100vw;
     height: 100vh;
-    right: 0;
-    top: 0;
-    background-color: $colorPrimary;
+    background-color: rgba(14, 9, 39, 0.86);
+    backdrop-filter: blur(3px);
     z-index: 2;
-    overflow-y: scroll;
 
     @media (min-width: $screen-sm) {
-        width: 40vw;
+        width: 500px;
         background-color: $colorPrimary90;
     }
 
-    @media (min-width: $screen-lg) {
-        width: 40vw;
-    }
-
     .notificationsHeader {
-        width: 90%;
         display: flex;
-        flex-direction: row-reverse;
         align-items: center;
-        justify-content: space-between;
-        margin: 0 5% 50px 5%;
+        margin: 0 24px 50px;
 
         .closeNotifications {
-            width: 20px;
-            cursor: pointer;
+            @extend .floatingCloseButton;
 
-            @media (max-width: $screen-xs) {
-                right: 0;
+            @media (min-width: $screen-sm) {
+                display: none;
             }
         }
 
         .notificationHeadline {
-            font-size: 30px;
+            font-size: 20px;
             line-height: 39px;
             letter-spacing: 0.75px;
             color: #ffffff;
             display: flex;
             flex-wrap: nowrap;
             align-items: center;
+
+            @media screen and (min-width: $screen-xs) {
+                font-size: 24px;
+            }
         }
 
         .notificationUnreadBadge {
             background-color: $colorRedLight;
-            padding: 5px 15px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 15px;
+            font-size: 13px;
             line-height: 18px;
             font-family: $fontBold;
+
+
+            @media screen and (min-width: $screen-xs) {
+                font-size: 15px;
+            }
         }
     }
 
     .markRead {
-        position: absolute;
-        right: 0;
-        top: 200px;
-        margin: 0 5% 25px 0;
+        position: relative;
         text-align: right;
-        font-size: 14px;
+        margin-left: auto;
+        font-size: 12px;
         line-height: 18px;
         letter-spacing: 0.5px;
         text-decoration-line: underline;
         color: #ffffff;
         cursor: pointer;
+
+        @media screen and (min-width: $screen-xs) {
+            font-size: 14px;
+        }
     }
 
     .notificationsHolder {
         width: 100%;
         display: flex;
         flex-direction: column;
+        flex: auto;
+        overflow-y: auto;
     }
 }

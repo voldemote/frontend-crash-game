@@ -115,7 +115,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 SelectionHelper.get(
                     iconTheme,
                     {
-                        [IconTheme.black]:                 styles.iconBlack,
+                        [IconTheme.black]:                   styles.iconBlack,
                         [IconTheme.primary]:                 styles.iconPrimary,
                         [IconTheme.primaryLightTransparent]: styles.iconPrimaryLightTransparent,
                         [IconTheme.white]:                   styles.iconWhite,
