@@ -1,0 +1,112 @@
+@import '../../styles/all';
+
+.sliderContainer {
+  position: relative;
+  width: 100%;
+}
+.slide {
+  height: 70%;
+  width: 100%;
+  max-width: 90%;
+  position: absolute;
+  top: calc(50% + 40px);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  transition: 0.5s ease-in-out;
+  transition-property: transform, z-index, opacity;
+  z-index: 0;
+  opacity: 0;
+
+  @media screen and (min-width: $screen-sm) {
+    max-width: 80%;    
+  }
+}
+.slideCurrent {
+  z-index: 3;
+  opacity: 1;
+}
+.slidePrevious {
+  transform: translate(-80%, -50%) scale(0.6);
+  z-index: 2;
+  opacity: 0.7;
+}
+.slideNext {
+  transform: translate(-20%, -50%) scale(0.6);
+  z-index: 2;
+  opacity: 0.7;
+}
+
+
+.nextSlideButton,
+.previousSlideButton {
+  position: absolute;
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: solid 1.4px rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  background-color: rgba(18, 14, 39, 0.41);
+  span {
+    margin-left: -2px;
+  }
+}
+
+.nextSlideButton {
+  right: 8px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.previousSlideButton {
+  left: 8px;
+}
+
+@media screen and (min-width: $screen-xs) {
+  .nextSlideButton {
+    right: 24px
+  }
+  .previousSlideButton {
+    left: 24px;
+  }
+}
+@media screen and (min-width: $screen-sm) {
+  .nextSlideButton,
+  .previousSlideButton {
+    height: 60px;
+    width: 60px;
+  }
+  .nextSlideButton {
+    right: 50px
+  }
+  .previousSlideButton {
+    left: 50px;
+  }
+}
+
+.slideSelector {
+  position: absolute;
+  bottom: 10%;
+  right: 9%;
+  z-index: 4;
+
+  @media screen and (min-width: $screen-sm) {
+    bottom: 11%;
+    right: 11%;
+  }
+
+  .slideButton {
+    height: 20px;
+    width: 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+  .selectedSlideButton {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
