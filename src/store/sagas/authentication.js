@@ -258,7 +258,7 @@ const firstSignUpPopup = function* (options) {
     yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
     const authState = yield select(state => state.authentication.authState);
 
-    if (authState !== AuthState.LOGGED_IN) {
+    if (authState === AuthState.LOGGED_OUT) {
         yield put(PopupActions.show({
             popupType: options.last ? PopupTheme.signUpNotificationSecond : PopupTheme.signUpNotificationFirst
         }));
