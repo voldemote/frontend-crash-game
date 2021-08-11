@@ -68,6 +68,26 @@ const NotificationsItem = ({
         }
     }
 
+    const renderCongratulatoryBanner = () => {
+        const hasWonTokens = !!notification.tokensWon && notification.tokensWon > 0;
+        if(!hasWonTokens) {
+            return null;
+        }
+
+        return (
+            <div className={style.congratulatoryBanner}>
+                <span className={style.congratulatoryBannerConfettiLeft}></span>
+                <span className={style.congratulatoryBannerConfettiRight}></span>
+                <span className={style.congratulatoryBannerTitle}>
+                    Congratulations! You won
+                </span>
+                <span className={style.congratulatoryBannerAmount}>
+                    {formatToFixed(notification.tokensWon)} EVNT
+                </span>
+            </div>
+        )
+    };
+
     return (
         <>
             <div
@@ -98,20 +118,6 @@ const NotificationsItem = ({
                     Mark as read
                 </p>
             </div>
-            {
-                !!notification.tokensWon &&
-                notification.tokensWon > 0 &&
-                <div className={style.congratulatoryBanner}>
-                    <span className={style.congratulatoryBannerConfettiLeft}></span>
-                    <span className={style.congratulatoryBannerConfettiRight}></span>
-                    <span className={style.congratulatoryBannerTitle}>
-                        Congratulations! You won
-                    </span>
-                    <span className={style.congratulatoryBannerAmount}>
-                        {formatToFixed(notification.tokensWon)} EVNT
-                    </span>
-                </div>
-            }
             <div className={style.relativeTimeDifference}>
                 {getTimeDifference()}
             </div>
