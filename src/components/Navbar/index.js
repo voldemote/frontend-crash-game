@@ -21,7 +21,7 @@ import transaction              from 'store/reducer/transaction';
 import { formatToFixed }        from '../../helper/FormatNumbers';
 import { put }                  from 'redux-saga/effects';
 import { LeaderboardActions }   from '../../store/actions/leaderboard';
-import { LOGGED_OUT }           from 'constants/AuthState';
+import { LOGGED_IN }           from 'constants/AuthState';
 import Button                   from '../Button';
 import { useHistory }           from 'react-router';
 
@@ -154,7 +154,7 @@ const Navbar = ({
     };
 
     const isLoggedIn = () => {
-        return authState !== LOGGED_OUT;
+        return authState === LOGGED_IN;
     }
 
     const renderJoinButton = () => {
