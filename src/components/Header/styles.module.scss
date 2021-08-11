@@ -8,112 +8,14 @@
     overflow:   hidden;
     display: flex;
 
-    .headerCarousel
-    {
-        height: 600px;
-
-        > div
-        {
-            height: 100%;
-
-            > div
-            {
-                height: 100% !important;
-
-                > ul
-                {
-                    height: 100%;
-                }
-            }
-        }
-    }
-
-    .switchButtons
-    {
-        position:        absolute;
-        display:         flex;
-        justify-content: center;
-        align-items:     center;
-        flex-direction:  column;
-        bottom:          0;
-        right:           0;
-        margin:          3rem 30px;
-
-        @media (min-width: $screen-sm)
-        {
-            margin: 3rem;
-        }
-
-        .goToPreviousSlide,
-        .goToNextSlide
-        {
-            background-color: transparent;
-            border-radius:    50%;
-            margin-bottom:    0.5rem;
-            height:           60px;
-            width:            60px;
-            display:          flex;
-            justify-content:  center;
-            align-items:      center;
-            transition:       border-color .3s ease-in-out;
-            border:           2px solid $colorWhite10;
-            cursor:           pointer;
-
-            span
-            {
-                &:before
-                {
-                    border-color: $colorWhite;
-                    border-style: solid;
-                    border-width: 2px 2px 0 0;
-                    content:      '';
-                    display:      inline-block;
-                    height:       15px;
-                    position:     relative;
-                    top:          0;
-                    width:        15px;
-                }
-            }
-
-            &:hover,
-            &:active
-            {
-                border-color: $colorWhite;
-            }
-
-            &.goToPreviousSlide
-            {
-                span
-                {
-                    &:before
-                    {
-                        left:      4px;
-                        transform: rotate(-135deg);
-                    }
-                }
-            }
-
-            &.goToNextSlide
-            {
-                span
-                {
-                    &:before
-                    {
-                        left:      -4px;
-                        transform: rotate(45deg);
-                    }
-                }
-            }
-
-        }
-    }
-
+    
     .eventContainer
     {
         height: 100%;
         width: 100%;
         background-position: center center;
         background-size: cover;
+        box-shadow: 4px 5px 10px 5px rgba(18, 14, 39, 0.3);
 
         iframe
         {
@@ -128,6 +30,26 @@
             {
                 width:  calc(100% * 6) !important;
                 height: calc(100% * 3) !important;
+            }
+        }
+
+        .timeLeftCounterContainer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .showTimeLeftCounter {
+            opacity: 1;
+        }
+        .timeLeftCaption {
+            font-size: 10px;
+            color: $colorWhite;
+
+            @media screen and (min-width: $screen-xs) {
+                font-size: 12px;    
             }
         }
     }
@@ -167,6 +89,13 @@
         @media (min-width: $screen-sm)
         {
             padding: 3rem;
+        }
+    }
+
+    .tagList {
+        .tag {
+            color: #b0b0b0;
+            margin-right: 6px;
         }
     }
 
