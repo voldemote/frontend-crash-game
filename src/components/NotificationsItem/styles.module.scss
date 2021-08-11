@@ -1,13 +1,15 @@
 @import "../../styles/all";
 
 .notificationCardRead {
+    position: relative;
     display: flex;
     flex-direction: column;
-    padding: 41px 21px 18px 21px;
+    padding: 41px 24px 18px;
 
     .notificationMessage {
         width: calc(100% - 24px);
         margin-left: auto;
+        margin-bottom: 15px;
         font-size: 16px;
         line-height: 20px;
         color: #ffffff;
@@ -65,7 +67,7 @@
 
     .markSingleRead {
         position: absolute;
-        right: 30px;
+        right: 24px;
         bottom: 12px;
         font-size: 14px;
         line-height: 18px;
@@ -154,6 +156,8 @@
 
 .relativeTimeDifference {
     color: rgba(255, 255, 255, 0.3);
-    align-self: flex-end;
-    margin: 0 24px 12px;
+    position: absolute;
+    left: 140px;
+    bottom: 12px;
+    font-size: 14px;
 }

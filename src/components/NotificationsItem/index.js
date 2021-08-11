@@ -117,9 +117,9 @@ const NotificationsItem = ({
                 >
                     Mark as read
                 </p>
-            </div>
-            <div className={style.relativeTimeDifference}>
-                {getTimeDifference()}
+                <div className={style.relativeTimeDifference}>
+                    {getTimeDifference()}
+                </div>
             </div>
             <div className={style.notificationSeperator} />
         </>
