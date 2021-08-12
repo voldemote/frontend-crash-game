@@ -5,6 +5,7 @@ import { call }                  from 'redux-saga/effects';
 import { put }                   from 'redux-saga/effects';
 import { select }                from 'redux-saga/effects';
 import { UserActions }           from '../actions/user';
+import { LOGGED_IN } from 'constants/AuthState';
 
 const fetch = function* (action) {
     const forceFetch = action.forceFetch;
@@ -22,6 +23,9 @@ const fetch = function* (action) {
     }
 
     if (fetchUser) {
+        const authState = yield select(state => state.authentication.authState);
+        if(authState !== LOGGED_IN) return;
+
         const response = yield call(
             Api.getUser,
             userId,
