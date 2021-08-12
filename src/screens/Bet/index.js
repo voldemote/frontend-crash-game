@@ -322,8 +322,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
         }        
 
         const onBetActionSwitch = (newIndex) => {
-            if(isLoggedIn())
-                setBetAction(newIndex);
+            setBetAction(newIndex);
         };
 
         const isLoggedIn = () => {
@@ -380,6 +379,15 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
             }
 
             const myEventTrades = getMyEventTrades();
+
+            if(!isLoggedIn() || myEventTrades.length < 1) {
+                return (
+                    <div className={styles.relatedBetsNone}>
+                        No trades placed.
+                    </div>
+                )
+            }
+
             return (
                 <div className={styles.relatedBets}>
                     <Carousel
