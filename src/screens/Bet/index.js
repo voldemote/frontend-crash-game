@@ -3,6 +3,7 @@ import _                            from 'lodash';
 import darkModeLogo                 from '../../data/images/logo-demo.svg';
 import FixedIconButton              from '../../components/FixedIconButton';
 import IconType                     from '../../components/Icon/IconType';
+import Icon                         from '../../components/Icon';
 import Link                         from '../../components/Link';
 import LiveBadge                    from 'components/LiveBadge';
 import Routes                       from '../../constants/Routes';
@@ -18,27 +19,41 @@ import { useState }                 from 'react';
 import TwitchEmbedVideo             from '../../components/TwitchEmbedVideo';
 import BetView                      from '../../components/BetView';
 import RelatedBetCard               from '../../components/RelatedBetCard';
+import MyBetCard                    from '../../components/MyBetCard';
 import { useHistory }               from 'react-router-dom';
 import Chat                         from '../../components/Chat';
 import classNames                   from 'classnames';
 import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import { SwiperSlide, Swiper }      from 'swiper/react';
+import EventTradesContainer         from '../../components/EventTradesContainer';
+import EventTradeViewsHelper        from '../../helper/EventTradeViewsHelper';
+import State                        from '../../helper/State';
 import React                        from 'react';
+import { LOGGED_IN } from 'constants/AuthState';
 
-const Bet = ({ showPopup }) => {
-          const history                         = useHistory();
-          const [swiper, setSwiper]             = useState(null);
-          const { eventId }                     = useParams();
-          const [currentSlide, setCurrentSlide] = useState(0);
+const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
+          const history                            = useHistory();
+          const [swiper, setSwiper]                = useState(null);
+          const { eventId, betId }                 = useParams();
+          const [currentSlide, setCurrentSlide]    = useState(0);
+          const [betAction, setBetAction]          = useState(0);
+          const [activeBetId, setActiveBetId]      = useState(betId || null);
+          const [betViewIsOpen, setBetViewIsOpen]  = useState(false);
+
+          const status = {
+            'active': 1,
+            'resolved': 2,
+            'closed': 3
+        };
 
           const event = useSelector(
-              (state) => _.find(
-                  state.event.events,
-                  {
-                      _id: eventId,
-                  },
-              ),
-          );
+            (state) => _.find(
+                state.event.events,
+                {
+                    _id: eventId,
+                },
+            ),
+        );
 
           const moveToSlide = (index) => {
               if (swiper) {
@@ -65,12 +80,68 @@ const Bet = ({ showPopup }) => {
               );
           };
 
-          const getRelatedBets = () => {
-              return _.get(event, 'bets', []);
+          const getMyEventTrades = () => {
+            const currentBets = _.map(
+                openBets,
+                (openBet) => {
+                    const betId  = openBet.betId;
+                    const bet    = State.getTradeByEvent(_.get(openBet, 'betId'), event);
+                    let outcomes = _.get(
+                        rawOutcomes,
+                        betId,
+                        {},
+                    );
+        
+                    if (outcomes) {
+                        const outcomeValues = _.get(outcomes, 'values', {});
+                        const amount        = _.get(openBet, 'investmentAmount');
+                        outcomes            = _.get(
+                            outcomeValues,
+                            amount,
+                            {},
+                        );
+                    }
+        
+                    return {
+                        ...openBet,
+                        outcomes,
+                        bet,
+                        event,
+                    };
+                },
+            );
+
+             
+            return _.map(
+                [...transactions],
+                (transaction) => {
+                    const betId = _.get(transaction, 'bet');
+                    const bet   = State.getTradeByEvent(betId, event);
+                    const openBet = _.find(
+                        currentBets,
+                        {
+                            betId: betId,
+                        },
+                    )
+                    
+                    if(bet) {
+                        return {
+                            ...transaction,
+                            event,
+                            bet,
+                            openBet
+                        };
+                    }
+                },
+            ).filter(Boolean).sort((a, b) => status[a.bet.status] - status[b.bet.status]);
           };
 
-          const getRelatedBetSliderPages = () => {
-              return _.ceil(_.size(getRelatedBets()) / 2);
+          const getRelatedBets = () => {
+              return [..._.get(event, 'bets', [])].sort((a, b) => status[a.status] - status[b.status]);
+          };
+
+          const getRelatedBetSliderPages = (bets, size) => {
+              return _.ceil(_.size(bets) / size);
           };
 
           const renderRelatedBetList = () => {
@@ -93,6 +164,9 @@ const Bet = ({ showPopup }) => {
                           betId,
                       },
                   ));
+
+                  setActiveBetId(betId);
+                  setBetViewIsOpen(true);
               };
           };
 
@@ -103,9 +177,7 @@ const Bet = ({ showPopup }) => {
                   return (
                       <RelatedBetCard
                           key={index}
-                          title={bet.marketQuestion}
-                          userId={bet.creator}
-                          image={event.previewImageUrl}
+                          bet={bet}
                           onClick={onBetClick(betId)}
                       />
                   );
@@ -114,19 +186,79 @@ const Bet = ({ showPopup }) => {
               return <div />;
           };
 
-          const renderRelatedBetSliders = () => {
-              const size = getRelatedBetSliderPages();
+          const renderMyBetCard = (transaction, index) => {
+            if (transaction) {
+                const betId = _.get(transaction.bet, '_id');
+
+                return (
+                    <MyBetCard
+                        key={index}
+                        transaction={transaction}
+                        onClick={onBetClick(betId)}
+                    />
+                );
+            }
+
+            return <div />;
+        };
+
+          const renderRelatedBetSliders = (relatedBets) => {
+              const size = getRelatedBetSliderPages(relatedBets, 3);
 
               return _.map(
                   _.range(0, size),
-                  (sliderPage, index) => renderRelatedBetSlider(sliderPage, index),
+                  (sliderPage, index) => renderRelatedBetSlider(sliderPage, index, relatedBets),
               );
           };
 
-          const renderRelatedBetSlider = (pageIndex, index) => {
-              const bets        = getRelatedBets();
-              const firstIndex  = pageIndex * 2;
-              const secondIndex = firstIndex + 1;
+          const renderMyBetSliders = (myEventTrades) => {
+            const size = getRelatedBetSliderPages(myEventTrades, 2);
+
+            return _.map(
+                _.range(0, size),
+                (sliderPage, index) => renderMyBetSlider(sliderPage, index, myEventTrades),
+            );
+          }
+
+          const renderMyBetSlider = (pageIndex, index, myEventTrades) => {
+            const indexes = [];
+            const listLength = myEventTrades.length > 2 ? 2 : myEventTrades.length;
+
+            for(let i=0; i<listLength; i++) {
+              indexes.push(pageIndex * 2 + i);
+            }
+
+            return (
+                <div
+                    key={index}
+                    className={classNames(
+                        styles.carouselSlide,
+                        styles.relatedBetSlide,
+                    )}
+                >
+                    {renderMyBetCard(
+                        _.get(
+                            myEventTrades,
+                            '[' + indexes[0] + ']',
+                        ),
+                    )}
+                    {renderMyBetCard(
+                        _.get(
+                            myEventTrades,
+                            '[' + indexes[1] + ']',
+                        ),
+                    )}
+                </div>
+            );
+        };
+
+          const renderRelatedBetSlider = (pageIndex, index, relatedBets) => {
+              const indexes = [];
+              const listLength = relatedBets.length > 3 ? 3 : relatedBets.length;
+
+              for(let i=0; i<listLength; i++) {
+                indexes.push(pageIndex * 3 + i);
+              }
 
               return (
                   <div
@@ -138,19 +270,153 @@ const Bet = ({ showPopup }) => {
                   >
                       {renderRelatedBetCard(
                           _.get(
-                              bets,
-                              '[' + firstIndex + ']',
+                              relatedBets,
+                              '[' + indexes[0] + ']',
                           ),
                       )}
                       {renderRelatedBetCard(
                           _.get(
-                              bets,
-                              '[' + secondIndex + ']',
+                              relatedBets,
+                              '[' + indexes[1] + ']',
+                          ),
+                      )}
+                      {renderRelatedBetCard(
+                          _.get(
+                              relatedBets,
+                              '[' + indexes[2] + ']',
                           ),
                       )}
                   </div>
               );
           };
+
+          const renderBetSidebarContent = () => {
+            if(betViewIsOpen) {
+                return (
+                    <div>
+                        <div 
+                            className={styles.betViewClose} 
+                            onClick={onBetClose()}
+                        >
+                            <Icon iconType={'arrowLeft'} iconTheme={'white'} className={styles.arrowBack}/>
+                            <span>Go back to all tracks</span>
+                        </div>
+                        <div className={styles.betViewContent}>
+                            <BetView
+                                closed={false}
+                                showEventEnd={true}
+                            />
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div>
+                    {renderSwitchableView()}
+                    <div className={styles.contentContainer}>
+                        {renderContent()}
+                    </div>
+                </div>
+            );
+        }        
+
+        const onBetActionSwitch = (newIndex) => {
+            if(isLoggedIn())
+                setBetAction(newIndex);
+        };
+
+        const isLoggedIn = () => {
+            return authState === LOGGED_IN;
+        }
+
+        const renderSwitchableView = () => {
+            
+            
+            const eventViews = [
+                EventTradeViewsHelper.getView(
+                    'Event Trades',
+                ),
+                EventTradeViewsHelper.getView(
+                    'My Trades',
+                    isLoggedIn() ? getMyEventTrades().length : 0,
+                    true
+                ),
+            ];
+    
+            return (
+                <EventTradesContainer
+                    className={styles.eventTradesContainer}
+                    fullWidth={false}
+                    eventViews={eventViews}
+                    currentIndex={betAction}
+                    setCurrentIndex={onBetActionSwitch}
+                />
+            );
+        };
+
+        const renderContent = () => {
+            if (betAction === 0) {
+                const relatedBets = getRelatedBets();
+                return (
+                    <div className={styles.relatedBets}>
+                        <Carousel
+                            className={classNames(
+                                styles.relatedBetsCarousel,
+                                relatedBets.length > 3 ? '' : styles.oneCarouselPage,
+                            )}
+                            dynamicHeight={false}
+                            emulateTouch={true}
+                            infiniteLoop={true}
+                            autoPlay={false}
+                            showArrows={false}
+                            showStatus={false}
+                            interval={1e11}
+                        >
+                            {renderRelatedBetSliders(relatedBets)}
+                        </Carousel>
+                    </div>
+                );
+            }
+
+            const myEventTrades = getMyEventTrades();
+            return (
+                <div className={styles.relatedBets}>
+                    <Carousel
+                        className={classNames(
+                            styles.relatedBetsCarousel,
+                            myEventTrades.length > 2 ? '' : styles.oneCarouselPage,
+                        )}
+                        dynamicHeight={false}
+                        emulateTouch={true}
+                        infiniteLoop={true}
+                        autoPlay={false}
+                        showArrows={false}
+                        showStatus={false}
+                        interval={1e11}
+                    >
+                        {renderMyBetSliders(myEventTrades)}
+                    </Carousel>
+                </div>
+            )
+        };
+
+        const onBetClose = () => {
+            return () => {
+                const eventId = _.get(event, '_id', null);
+
+                history.push(Routes.getRouteWithParameters(
+                    Routes.bet,
+                    {
+                        eventId,
+                        betId: '',
+                    },
+                ));
+
+                setActiveBetId(null);
+                setBetViewIsOpen(false);
+            };
+          }
 
           const renderMobileMenuIndicator = (index) => {
               return (
@@ -255,29 +521,7 @@ const Bet = ({ showPopup }) => {
                           </div>
                       </div>
                       <div className={styles.columnRight}>
-                          <div>
-                              <BetView
-                                  closed={false}
-                                  showEventEnd={true}
-                              />
-                          </div>
-                          <div className={styles.relatedBets}>
-                              <div className={styles.headline}>
-                                  <h2>🚀 Related Bets</h2>
-                                  <LiveBadge />
-                              </div>
-                              <Carousel
-                                  className={styles.relatedBetsCarousel}
-                                  dynamicHeight={false}
-                                  emulateTouch={true}
-                                  infiniteLoop={true}
-                                  autoPlay={false}
-                                  showArrows={false}
-                                  showStatus={false}
-                              >
-                                  {renderRelatedBetSliders()}
-                              </Carousel>
-                          </div>
+                          {renderBetSidebarContent()}
                       </div>
                   </div>
                   <div className={styles.mobileMenu}>
@@ -294,6 +538,15 @@ const Bet = ({ showPopup }) => {
       }
 ;
 
+const mapStateToProps = (state) => {
+    return {
+        authState: state.authentication.authState,
+        rawOutcomes: state.bet.outcomes,
+        transactions: state.transaction.transactions,
+        openBets: state.bet.openBets
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
           return {
               showPopup: (popupType) => {
@@ -304,6 +557,6 @@ const mapDispatchToProps = (dispatch) => {
 ;
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(Bet);

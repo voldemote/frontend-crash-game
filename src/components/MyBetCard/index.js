@@ -7,11 +7,12 @@ import { getDefaultUser } from '../../helper/Profile';
 import TimeLeftCounter    from 'components/TimeLeftCounter';
 import Icon               from 'components/Icon';
 import StateBadge         from 'components/StateBadge';
+import { formatToFixed }  from '../../helper/FormatNumbers';
 import { PopupActions }   from '../../store/actions/popup';
 import PopupTheme         from '../Popup/PopupTheme';
 import IconType           from '../Icon/IconType';
 
-const RelatedBetCard = ({ onClick, bet, showPopup }) => {
+const MyBetCard = ({ onClick, transaction, showPopup }) => {
     const [menuOpened, setMenuOpened] = useState(false);
 
     const renderFooter = () => {    
@@ -21,17 +22,42 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
                     <span>
                         Event ends in:
                     </span>
-                    <TimeLeftCounter endDate={bet.endDate} />
+                    <TimeLeftCounter endDate={transaction.bet.endDate} />
                 </div>
             </div>
         );
     };
 
+    const renderMyTradeBlock = () => {
+        const amount        = formatToFixed(_.get(transaction, 'investmentAmount', 0));
+        const outcomeIndex  = _.get(transaction, 'outcome');
+        const outcomeValue  = _.get(transaction.bet, ['outcomes', outcomeIndex, 'name']);
+        const outcomeReturn = formatToFixed(_.get(transaction, transaction.outcomeAmount ? 'outcomeAmount' : 'outcomeTokensBought', 0));
+
+        return (
+            <div className={styles.tradeInfoContainer}>
+                <div className={styles.summaryRow}>
+                    <span className={styles.infoName}>Start Price:</span>
+                    <span className={styles.infoValue}>{amount} EVNT</span>
+                </div>
+                <div className={styles.summaryRow}>
+                    <span className={styles.infoName}>Your Prediction:</span>
+                    <span className={styles.infoValue}>{outcomeValue}</span>
+                </div>
+                <div className={styles.divider}></div>
+
+                <div className={styles.summaryRow}>
+                    <span className={styles.cashoutValue}>Cashout {outcomeReturn} EVNT</span>
+                </div>
+            </div>
+        )
+    }
+
     const openInfoPopup = (popupType) => {
         return () => {
             const options = {
-                tradeId: bet._id,
-                eventId: _.get(bet, 'event'),
+                tradeId: transaction.bet._id,
+                eventId: _.get(transaction.event, '_id'),
             };
 
             showPopup(popupType, options);
@@ -51,12 +77,12 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
 
     return (
         <div
-            className={styles.relatedBetCard}
+            className={styles.myBetCard}
         >
-            <div className={styles.relatedBetCardContainer}>
-                <div className={styles.relatedBetCardHeader}>
+            <div className={styles.myBetCardContainer}>
+                <div className={styles.myBetCardHeader}>
                     <span className={styles.title} onClick={onClick}>
-                        {bet.marketQuestion}
+                        {transaction.bet.marketQuestion}
                     </span>
 
                     <div className={styles.menuMain}>
@@ -91,11 +117,13 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 <div className={styles.stateBadgeContainer}>
-                    <StateBadge state={_.get(bet, 'status')} />
+                    <StateBadge state={_.get(transaction.bet, 'status')} />
                 </div>
             </div>
+            {renderMyTradeBlock()}
             {renderFooter()}
         </div>
     );
@@ -133,4 +161,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(RelatedBetCard);
+)(MyBetCard);

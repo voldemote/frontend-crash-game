@@ -164,7 +164,7 @@ const Navbar = ({
                     className={style.signUpButton}
                     withoutBackground={true}
                     onClick={goToJoinPage}>
-                    JOIN NOW
+                    Join now
                 </Button>
             </div>
         );

@@ -1,6 +1,6 @@
 @import '../../styles/all';
 
-.relatedBetCard
+.myBetCard
 {
     width:           100%;
     border-radius:   10px;
@@ -16,7 +16,52 @@
     margin-bottom:   1.5rem;
     color: #120e27;
 
-    .relatedBetCardContainer 
+    .tradeInfoContainer {
+        padding:          1.5rem 1.5rem;
+        background-color: $colorWhite;
+
+        .summaryRow {
+            font-size: 14px;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+            margin-bottom: 15px;
+            justify-content: flex-end;
+
+            .infoName {
+                opacity: 0.4;
+                width: 35%;
+                text-align: left;
+            }
+
+            .infoValue {
+                width: 65%;
+                text-align: right;
+                justify-content: flex-end;
+                display: flex;
+            }
+
+            .cashoutValue {
+                font-size: 18px;
+                font-weight: bold;
+                text-align: right;
+                background-image: url('../../data/images/signup-background-one.svg');
+                background-position: right;
+                background-repeat: no-repeat;
+                background-size: 100%;
+            }
+        }
+
+        .divider {
+            width: 100%;
+            border: none;
+            border-top: 2px dashed #e7e8ee;
+            margin: 20px 0;
+        }
+    }
+
+    .myBetCardContainer 
     {
         padding:          1.5rem 1.5rem;
         border-radius:    6px 6px 0 0;
@@ -25,8 +70,9 @@
         display:          flex;
         justify-content:  space-between;
         flex-flow:        column wrap;
+        border-bottom: 1px solid #f1f2f6;
 
-        .relatedBetCardHeader 
+        .myBetCardHeader 
         {
             display:         flex;
             justify-content: space-between;

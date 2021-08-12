@@ -47,7 +47,7 @@ const SignUpPopup = ({ closed, user, hidePopup, authState }) => {
                 className={styles.joinNowButton}
                 onClick={goToJoinPage}
             >
-                JOIN NOW
+                Join now
             </Button>
         );
     };
