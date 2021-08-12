@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import Icon from 'components/Icon';
 
@@ -8,25 +8,32 @@ let nextSlideTimer = null;
 
 const CoverFlowCarousel = ({ children, currentSlide = 0, slideDurationSeconds = 10, onSlideChange = (index) => {} }) => {
   const numOfPages = children.length;
+  const ref = useRef(null);
 
-  if(slideDurationSeconds > 0) {
-    nextSlideTimer = window.setTimeout(
-      () => setCurrentSlideIndex(
-        getNextIndex(currentSlideIndex)
-      ),
-      slideDurationSeconds * 1_000
-    );
-  }
-  
-  const [currentSlideIndex, setCurrentIndex] = useState(currentSlide);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(currentSlide);
 
-  const setCurrentSlideIndex = (newIndex) => {
+  useEffect(() => {
+    ref.current = true;
+
+    onSlideChange(currentSlideIndex);
+
     window.clearTimeout(nextSlideTimer);
     nextSlideTimer = null;
 
-    setCurrentIndex(newIndex);
-    onSlideChange(newIndex);
-  }
+    if(slideDurationSeconds > 0 && ref.current) {
+      nextSlideTimer = window.setTimeout(
+        () => {
+          ref.current &&
+          setCurrentSlideIndex(
+            getNextIndex(currentSlideIndex)
+          );
+        },
+        slideDurationSeconds * 1_000
+      );
+    }
+    
+    return () => ref.current = false;
+  }, [currentSlideIndex])
 
   const getPreviousIndex = (index) => index === 0 ? numOfPages - 1 : index -1;
   const getNextIndex = (index) => index === numOfPages - 1 ? 0 : index + 1;

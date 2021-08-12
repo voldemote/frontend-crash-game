@@ -104,8 +104,11 @@ const Header = ({ events }) => {
                                             {event.name}
                                         </span>
                                         <div className={styles.tagList}>
-                                            {event.tags.map(({name}) => (
-                                                <span className={styles.tag}>
+                                            {event.tags.map(({name}, tagIndex) => (
+                                                <span
+                                                    key={tagIndex}
+                                                    className={styles.tag}
+                                                >
                                                     #{name.toLowerCase()}
                                                 </span>
                                             ))}
