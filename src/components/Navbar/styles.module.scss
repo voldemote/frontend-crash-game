@@ -92,13 +92,17 @@
             border-radius:    18px;
             font-family:      $fontRegular;
             cursor:           pointer;
-            margin-right:     16px;
+            margin-right:     10px;
             height:           35px;
 
             img, svg {
                 margin-right: 10px;
                 max-width: 18px;
                 max-height: 21px;
+            }
+
+            @media screen and (min-width: $screen-sm) {
+                margin-right:  16px;
             }
         }
 
@@ -141,7 +145,7 @@
 
         .profileContainer {
             display:     flex;
-            margin-left: 20px;
+            margin-left: 15px;
             cursor:      pointer;
             z-index:     5;
 
@@ -169,6 +173,10 @@
             svg path {
                 fill:    $colorWhite;
                 stroke:  $colorWhite;
+            }
+
+            @media screen and (min-width: $screen-sm) {
+                margin-right:  20px;
             }
         }
 
@@ -208,11 +216,15 @@
 
         .leaderboardHeading
         {
-            margin:         90px 24px 90px 24px;
-            font-size:      30px;
+            margin:         90px 24px 40px 24px;
+            font-size:      20px;
             line-height:    39px;
             letter-spacing: 0.75px;
             color:          #ffffff;
+            
+            @media screen and (min-width: $screen-xs) {
+                font-size:  24px;
+            }
         }
 
         .leaderboardTable
