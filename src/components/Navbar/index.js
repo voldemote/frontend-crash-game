@@ -21,9 +21,10 @@ import transaction              from 'store/reducer/transaction';
 import { formatToFixed }        from '../../helper/FormatNumbers';
 import { put }                  from 'redux-saga/effects';
 import { LeaderboardActions }   from '../../store/actions/leaderboard';
-import { LOGGED_IN }           from 'constants/AuthState';
+import { LOGGED_IN }            from 'constants/AuthState';
 import Button                   from '../Button';
 import { useHistory }           from 'react-router';
+import Wallet                   from '../Wallet';
 
 const Navbar = ({
                     user,
@@ -36,10 +37,15 @@ const Navbar = ({
                     fetchLeaderboard,
                     authState
                 }) => {
-    const [menuOpened, setMenuOpened]               = useState(false);
-    const [showLeaderboard, setShowLeaderboard]     = useState(false);
-    const [showNotifications, setShowNotifications] = useState(false);
-    const history                                   = useHistory();
+    const [openDrawer, setOpenDrawer] = useState('');
+    const history = useHistory();
+    
+    const drawers = {
+        notifications: 'notifications',
+        leaderboard: 'leaderboard',
+        profile: 'profile',
+        wallet: 'wallet',
+    }
 
     const sellTransactions = transactions
         .filter((transaction) => transaction.direction === 'SELL')
@@ -50,21 +56,18 @@ const Navbar = ({
         (notification) => !notification.read,
     ).length;
 
-    const onChangeLeaderboard = () => {
-        const newShowLeaderboard = !showLeaderboard;
-
-        setShowLeaderboard(newShowLeaderboard);
-
-        if (newShowLeaderboard) {
-            fetchLeaderboard();
-
-            closeMenu();
-            closeNotifications();
+    const toggleOpenDrawer = (drawerName) => {
+        if(!drawers.hasOwnProperty(drawerName)) {
+            return;
         }
-    };
+        const isDrawerOpen = openDrawer === drawerName;
+        setOpenDrawer(isDrawerOpen ? '' : drawerName);
+    }
 
-    const closeLeaderboard = () => {
-        setShowLeaderboard(false);
+    const isOpen = (drawerName) => openDrawer === drawerName;
+
+    const closeDrawers = () => {
+        setOpenDrawer('');
     }
 
     const getProfileStyle = () => {
@@ -87,43 +90,6 @@ const Navbar = ({
         return '-';
     };
 
-    const toggleMobileMenu = () => {
-        const isOpen = !menuOpened;
-        if(isOpen) {
-            closeNotifications();
-            closeLeaderboard();
-        }
-        setMenuOpened(isOpen);
-    };
-
-    const closeMenu = () => {
-        setMenuOpened(false);
-    };
-
-    const showNotificationsHandler = () => {
-        const isOpen = !showNotifications;
-        if(isOpen) {
-            closeMenu();
-            closeLeaderboard();
-        }
-        setShowNotifications(isOpen);
-
-    };
-
-    const closeNotifications = () => {
-        setShowNotifications(false);
-    };
-
-    const showDesktopMenuHandler = () => {
-        const isOpen = !menuOpened;
-        if(isOpen) {
-            closeMenu();
-            closeLeaderboard();
-            closeNotifications();
-        }
-        setMenuOpened(isOpen);
-    };
-
     const isRouteActive = (route) => {
         return !!matchPath(location.pathname, route);
     };
@@ -139,12 +105,16 @@ const Navbar = ({
         );
     };
     
-    const hasOpenDrawer = menuOpened || showNotifications || showLeaderboard;
+    const hasOpenDrawer = !isOpen('');
 
     if(hasOpenDrawer) {
         document.body.style.overflow = "hidden";
     } else {
         document.body.style.overflow = "auto";
+    }
+
+    if(isOpen(drawers.wallet)) {
+        fetchLeaderboard();
     }
 
     const goToJoinPage = () => {
@@ -175,7 +145,7 @@ const Navbar = ({
         const leaderboardBtn = (
             <div
                 className={classNames(style.ranking, style.pillButton)}
-                onClick={onChangeLeaderboard}
+                onClick={() => toggleOpenDrawer(drawers.leaderboard)}
             >
                 <img
                     src={medalGold}
@@ -189,7 +159,7 @@ const Navbar = ({
         const notificationsBtn = (
             <div
                 className={style.notificationOverview}
-                onClick={showNotificationsHandler}
+                onClick={() => toggleOpenDrawer(drawers.notifications)}
             >
                 <Icon
                     iconType={IconType.bell}
@@ -206,22 +176,20 @@ const Navbar = ({
         );
 
         const walletBtn = (
-            <Link
-                to={Routes.wallet}
+            <div
                 className={classNames(style.balanceOverview, style.pillButton)}
+                onClick={() => toggleOpenDrawer(drawers.wallet)}
             >
-                <Icon
-                    iconType={'wallet'}
-                />
+                <Icon iconType={'wallet'}/>
                 {getBalance()} EVNT
-            </Link>
+            </div>
         );
 
         const profileBtn = (
             <div
                 role="button"
-                className={classNames(style.profileContainer, menuOpened && style.menuOpened)}
-                onClick={showDesktopMenuHandler}
+                className={classNames(style.profileContainer, isOpen(drawers.profile) && style.menuOpened)}
+                onClick={() => toggleOpenDrawer(drawers.profile)}
             >
                 <div
                     role="img"
@@ -248,10 +216,10 @@ const Navbar = ({
 
     const renderLeaderboardDrawer = () => {
         return (
-            <div className={`${style.leaderboard} ${!showLeaderboard ? style.hideLeaderboard : ''}`}>
+            <div className={classNames(style.leaderboard, style.drawer, !isOpen(drawers.leaderboard) && style.drawerHidden)}>
                 <Icon
                     iconType={'cross'}
-                    onClick={onChangeLeaderboard}
+                    onClick={closeDrawers}
                     className={style.closeLeaderboard}
                 />
                 <p className={style.leaderboardHeading}>
@@ -283,11 +251,14 @@ const Navbar = ({
 
     const renderNotificationsDrawer = () => {
         return (
-            <div className={`${style.notifications} ${!showNotifications ? style.hideNotifications : ''}`}>
+            <div className={classNames(
+                style.drawer,
+                !isOpen(drawers.notifications) && style.drawerHidden
+            )}>
                 <Notifications
                     notifications={notifications}
                     unreadNotifications={unreadNotifications}
-                    closeNotifications={closeNotifications}
+                    closeNotifications={closeDrawers}
                     setUnread={setUnread}
                 />
             </div>
@@ -297,12 +268,21 @@ const Navbar = ({
     const renderMenuDrawer = () => {
         return (
             <MainMenu
-                opened={menuOpened}
-                closeMobileMenu={closeMenu}
+                opened={isOpen(drawers.profile)}
+                closeMobileMenu={closeDrawers}
                 sellTransactions={sellTransactions}
             />
         )
     };
+
+    const renderWalletDrawer = () => {
+        return (
+            <Wallet
+                show={isOpen(drawers.wallet)}
+                close={closeDrawers}
+            />
+        )
+    }
 
     return (
         <div className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}>
@@ -320,6 +300,7 @@ const Navbar = ({
                     </div>
                 }
             </div>
+
             {!isLoggedIn() && renderJoinButton()}
             {isLoggedIn() && (
                 <>
@@ -327,6 +308,7 @@ const Navbar = ({
                     {renderLeaderboardDrawer()}
                     {renderNotificationsDrawer()}
                     {renderMenuDrawer()}
+                    {renderWalletDrawer()}
                 </>
             )}
             

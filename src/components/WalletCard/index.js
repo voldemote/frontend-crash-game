@@ -1,8 +1,9 @@
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const WalletCard = ({ logo, title, subtitle, text, buttonText, buttonDisabled, onClick, children }) => {
     return (
-        <div className={styles.walletCard}>
+        <div className={classNames(styles.walletCard, buttonDisabled && styles.walletCardTransparentized)}>
             <div className={styles.content}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     {logo}
