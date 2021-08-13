@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import _ from "lodash";
 import { formatToFixed } from "helper/FormatNumbers";
 import React from "react";
 import { connect } from "react-redux";
@@ -13,15 +13,38 @@ const NotificationsItem = ({
     const markNotificationRead = () => {
         setUnread(notification)
     };
+
+    const findBetInEvent = (event, betId) => {
+        if (event) {
+            return _.find(
+                event.bets,
+                {
+                    _id: betId,
+                },
+            );
+        }
+    };
+
+    const getEventByBetId = (betId) => _.head(
+        _.filter(
+            events,
+            (event) => !_.isEmpty(findBetInEvent(event, betId)),
+        ),
+    );
     
     const renderMessage = () => {
         let content = null;
         let eventName = '';
 
-        if(!!notification.betQuestion && notification.message.includes(notification.betQuestion)) {
+        if(
+            !!notification.betQuestion &&
+            notification.message.includes(notification.betQuestion) &&
+            !!notification.betId &&
+            !!getEventByBetId(notification.betId)
+        ) {
             const { betId, message, betQuestion } = notification;
+            const event = getEventByBetId(betId);
 
-            const event = events.find(({bets}) => bets.some(({_id}) => _id === betId)); // find event by betId
             eventName = event.name;
             const [beforeLink, afterLink] = message.split(betQuestion);
             
