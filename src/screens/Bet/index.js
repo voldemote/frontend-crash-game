@@ -29,7 +29,8 @@ import EventTradesContainer         from '../../components/EventTradesContainer'
 import EventTradeViewsHelper        from '../../helper/EventTradeViewsHelper';
 import State                        from '../../helper/State';
 import React                        from 'react';
-import { LOGGED_IN } from 'constants/AuthState';
+import { LOGGED_IN }                from 'constants/AuthState';
+import BaseContainerWithNavbar      from 'components/BaseContainerWithNavbar';
 
 const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
           const history                            = useHistory();
@@ -443,7 +444,12 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
           }
 
           return (
-              <div className={styles.bet}>
+
+              <BaseContainerWithNavbar 
+                withPaddingTop={true}
+                withoutPaddingBottom={true}
+              >
+                <div className={styles.bet}>
                   <div className={styles.upperLeftOval}>
                   </div>
                   <div className={styles.centeredBottomOval}>
@@ -541,7 +547,8 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                   </div>
                   {renderEventCreationButton()}
                   {renderChatButton()}
-              </div>
+                </div>
+              </BaseContainerWithNavbar>
           );
       }
 ;

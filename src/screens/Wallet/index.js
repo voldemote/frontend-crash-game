@@ -22,6 +22,7 @@ import { useHistory }           from 'react-router';
 import { useState }             from 'react';
 import ReferralLinkCopyInputBox from '../../components/ReferralLinkCopyInputBox';
 import { LOGGED_IN } from 'constants/AuthState';
+import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 
 const Wallet = ({ balance, authState, referralCount, showPopup, transactionCount }) => {
     const history                           = useHistory();
@@ -167,25 +168,27 @@ const Wallet = ({ balance, authState, referralCount, showPopup, transactionCount
     };
 
     return (
-        <ScreenWithHeader
-            title={'My Wallet'}
-            returnRoute={Routes.home}
-        >
-            <div className={styles.walletContainer}>
-                <AccountBalance
-                    balance={balance}
-                />
-                {renderShortcutList()}
-            </div>
-            {renderSwitchableView()}
-            <div className={styles.cardContainer}>
-                {renderConditionalWalletCards()}
-                {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
-                {renderWalletPaymentCard(PaymentProvider.crypto)}
-                {renderWalletPaymentCard(PaymentProvider.paypal)}
-                {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
-            </div>
-        </ScreenWithHeader>
+        <BaseContainerWithNavbar withPaddingTop={true}>
+            <ScreenWithHeader
+                title={'My Wallet'}
+                returnRoute={Routes.home}
+            >
+                <div className={styles.walletContainer}>
+                    <AccountBalance
+                        balance={balance}
+                    />
+                    {renderShortcutList()}
+                </div>
+                {renderSwitchableView()}
+                <div className={styles.cardContainer}>
+                    {renderConditionalWalletCards()}
+                    {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
+                    {renderWalletPaymentCard(PaymentProvider.crypto)}
+                    {renderWalletPaymentCard(PaymentProvider.paypal)}
+                    {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
+                </div>
+            </ScreenWithHeader>
+        </BaseContainerWithNavbar>
     );
 };
 

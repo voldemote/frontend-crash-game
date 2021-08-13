@@ -15,7 +15,7 @@ import { ReactComponent as IconArrowSmallDown }  from '../../data/icons/arrow-sm
 import { ReactComponent as IconArrowSmallRight } from '../../data/icons/arrow-small-right.svg';
 import { ReactComponent as IconArrowTopRight }   from '../../data/icons/arrow-top-right.svg';
 import { ReactComponent as IconAttention }       from '../../data/icons/attention.svg';
-import { ReactComponent as IconBell }             from '../../data/icons/bell.svg';
+import { ReactComponent as IconBell }            from '../../data/icons/bell.svg';
 import { ReactComponent as IconBet }             from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.svg';
 import { ReactComponent as IconCalendar }        from '../../data/icons/calendar.svg';
@@ -27,7 +27,9 @@ import { ReactComponent as IconConfettiRight }   from '../../data/icons/confetti
 import { ReactComponent as IconCross }           from '../../data/icons/cross.svg';
 import { ReactComponent as IconDeleteInput }     from '../../data/icons/delete-input.svg';
 import { ReactComponent as IconDeposit }         from '../../data/icons/deposit.svg';
+import { ReactComponent as IconHome }            from '../../data/icons/home.svg'
 import { ReactComponent as IconInfo }            from '../../data/icons/info.svg';
+import { ReactComponent as IconLogoSmall }       from '../../data/icons/logo-small.svg';
 import { ReactComponent as IconLogout }          from '../../data/icons/logout.svg';
 import { ReactComponent as IconMailAddress }     from '../../data/icons/mail-address.svg';
 import { ReactComponent as IconMainMenu }        from '../../data/icons/main-menu.svg';
@@ -42,7 +44,7 @@ import { ReactComponent as IconSupport }         from '../../data/icons/support.
 import { ReactComponent as IconSwitcher }        from '../../data/icons/switcher.svg';
 import { ReactComponent as IconThreeDotMenu }    from '../../data/icons/three-dot-menu.svg';
 import { ReactComponent as IconTime }            from '../../data/icons/time.svg';
-import { ReactComponent as IconTwitch }            from '../../data/icons/twitch.svg';
+import { ReactComponent as IconTwitch }          from '../../data/icons/twitch.svg';
 import { ReactComponent as IconWallet }          from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 }         from '../../data/icons/wallet-2.svg';
 import { ReactComponent as IconWithdrawal }      from '../../data/icons/withdrawal.svg';
@@ -76,6 +78,8 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.cross]:           <IconCross />,
                 [IconType.deleteInput]:     <IconDeleteInput />,
                 [IconType.deposit]:         <IconDeposit />,
+                [IconType.home]:            <IconHome />,
+                [IconType.logoSmall]:       <IconLogoSmall />,
                 [IconType.logout]:          <IconLogout />,
                 [IconType.mailAddress]:     <IconMailAddress />,
                 [IconType.mainMenu]:        <IconMainMenu />,
@@ -89,7 +93,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.switcher]:        <IconSwitcher />,
                 [IconType.threeDotMenu]:    <IconThreeDotMenu />,
                 [IconType.time]:            <IconTime />,
-                [IconType.twitch]:            <IconTwitch />,
+                [IconType.twitch]:          <IconTwitch />,
                 [IconType.wallet]:          <IconWallet />,
                 [IconType.wallet2]:         <IconWallet2 />,
                 [IconType.info]:            <IconInfo />,

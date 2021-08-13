@@ -11,7 +11,7 @@
     flex-direction:  row;
     justify-content: space-between;
     align-items:     center;
-    padding:         3rem 24px;
+    padding:         50px 24px;
     z-index:         $zIndexNavbar;
 
     img
@@ -65,13 +65,28 @@
             color:           $colorWhite;
             opacity:         0.5;
             text-decoration: none;
-            padding:         0 0.5rem;
+            margin:          0 15px;
             font-family:     $fontLight;
+            white-space:     nowrap;
+            letter-spacing:  0.4px;
+            font-size:       16px;
+
+            &:hover {
+                opacity:     1;
+            }
         }
 
         .ranking
         {
             z-index:         5;
+
+            &.pillButton 
+            {
+                @media (max-width: $screen-xs)
+                {
+                    display: none;
+                }
+            }
         }
 
         .balanceOverview
@@ -89,7 +104,7 @@
             padding:          8px 15px;
             background-color: rgba(172, 196, 255, 0.1);
             font-size:        12px;
-            border-radius:    18px;
+            border-radius:    22px;
             font-family:      $fontRegular;
             cursor:           pointer;
             margin-right:     10px;
@@ -103,6 +118,12 @@
 
             @media screen and (min-width: $screen-sm) {
                 margin-right:  16px;
+            }
+
+            &Active {
+                background-color: transparent;
+                border:           2px solid rgba(172, 196, 255, 0.42);
+                padding:          8px 13px;
             }
         }
 
@@ -184,6 +205,34 @@
         {
             opacity:     1;
             font-family: $fontBold;
+            position:    relative;
+
+            &:after {
+                content: '';
+                position: absolute;
+                background-color: #e2ff54;
+                bottom: -5px;
+                left: 50%;
+                width: 80%;
+                max-width: 65px;
+                height: 2px;
+                transform: translateX(-50%);
+                transition: opacity 0.2s ease-in-out;
+            }
+        }
+
+        .linkWrapper {
+            display: flex;
+        }
+
+        .homeIcon {
+            width: 20px;
+            height: 20px;
+
+            & > svg {
+                fill: white;
+                max-height: 20px;
+            }
         }
     }
 
@@ -280,6 +329,15 @@
                     opacity:        0.45;
                 }
             }
+        }
+    }
+
+    .logoMobile {
+        width: auto;
+        
+        @media (min-width: $screen-sm)
+        {
+            display: none;
         }
     }
 }
