@@ -7,5 +7,6 @@ export default {
     tradeDetails:             'tradeDetails',
     welcome:                  'welcome',
     signUpNotificationFirst:  'signUpNotificationFirst',
-    signUpNotificationSecond: 'signUpNotificationSecond'
+    signUpNotificationSecond: 'signUpNotificationSecond',
+    tradeView:                'tradeView'
 };

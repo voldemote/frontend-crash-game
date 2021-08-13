@@ -40,6 +40,19 @@
                 bottom: 0;
                 height: 60%;
             }
+
+            &.tradeViewContainer {
+                border-radius: 30px 30px 0 0;
+                position: absolute;
+                bottom: 0;
+                height: 90%;
+
+                .closeButton
+                {
+                    position: sticky;
+                    left: 30px;
+                }
+            }
         }
 
         @media (min-width: $screen-sm)

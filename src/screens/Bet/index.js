@@ -1,6 +1,5 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _                            from 'lodash';
-import darkModeLogo                 from '../../data/images/logo-demo.svg';
 import FixedIconButton              from '../../components/FixedIconButton';
 import IconType                     from '../../components/Icon/IconType';
 import Icon                         from '../../components/Icon';
@@ -31,8 +30,10 @@ import State                        from '../../helper/State';
 import React                        from 'react';
 import { LOGGED_IN }                from 'constants/AuthState';
 import BaseContainerWithNavbar      from 'components/BaseContainerWithNavbar';
+import PopupTheme                   from '../../components/Popup/PopupTheme';
+import { BetActions } from 'store/actions/bet';
 
-const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
+const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSelectedBet }) => {
           const history                            = useHistory();
           const [swiper, setSwiper]                = useState(null);
           const { eventId, betId }                 = useParams();
@@ -145,16 +146,25 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
               return _.ceil(_.size(bets) / size);
           };
 
-          const renderRelatedBetList = () => {
+          const renderRelatedBetList = (popup = false) => {
               return _.map(
                   getRelatedBets(),
                   (bet, index) => {
-                      return renderRelatedBetCard(bet, index);
+                      return renderRelatedBetCard(bet, index, popup);
                   },
               );
           };
 
-          const onBetClick = (betId) => {
+          const renderMyTradesList = (popup = false) => {
+            return _.map(
+                getMyEventTrades(),
+                (transaction, index) => {
+                    return renderMyBetCard(transaction, index, popup);
+                },
+            );
+          }
+
+          const onBetClick = (betId, popup) => {
               return () => {
                   const eventId = _.get(event, '_id', null);
 
@@ -168,10 +178,17 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
 
                   setActiveBetId(betId);
                   setBetViewIsOpen(true);
+                  setSelectedBet(null, betId);
+
+                  if(popup) {
+                    showPopup(
+                        PopupTheme.tradeView, {}
+                    );
+                  }
               };
           };
 
-          const renderRelatedBetCard = (bet, index) => {
+          const renderRelatedBetCard = (bet, index, popup) => {
               if (bet) {
                   const betId = _.get(bet, '_id');
 
@@ -179,7 +196,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                       <RelatedBetCard
                           key={index}
                           bet={bet}
-                          onClick={onBetClick(betId)}
+                          onClick={onBetClick(betId, popup)}
                       />
                   );
               }
@@ -187,7 +204,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
               return <div />;
           };
 
-          const renderMyBetCard = (transaction, index) => {
+          const renderMyBetCard = (transaction, index, popup) => {
             if (transaction) {
                 const betId = _.get(transaction.bet, '_id');
 
@@ -195,7 +212,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                     <MyBetCard
                         key={index}
                         transaction={transaction}
-                        onClick={onBetClick(betId)}
+                        onClick={onBetClick(betId, popup)}
                     />
                 );
             }
@@ -331,8 +348,6 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
         }
 
         const renderSwitchableView = () => {
-            
-            
             const eventViews = [
                 EventTradeViewsHelper.getView(
                     'Event Trades',
@@ -462,21 +477,13 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                           >
                           </Link>
                           <div className={styles.headline}>
-                              <h1>
+                              <h2>
                                   {_.get(event, 'name')}
-                              </h1>
+                              </h2>
                               <div>
                                   <LiveBadge />
                                   <ViewerBadge viewers={1123} />
                               </div>
-                          </div>
-                      </div>
-                      <div className={styles.logo}>
-                          <div>
-                              <img
-                                  src={darkModeLogo}
-                                  alt="Wallfair"
-                              />
                           </div>
                       </div>
                   </div>
@@ -488,7 +495,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                               />
                               <div className={styles.timeLeft}>
                                   <span>
-                                      End of Event:
+                                      Estimated end:
                                   </span>
                                   <TimeLeftCounter endDate={new Date(_.get(event, 'endDate'))} />
                               </div>
@@ -508,10 +515,9 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                                   onSwiper={setSwiper}
                               >
                                   <SwiperSlide className={styles.carouselSlide}>
-                                      <BetView
-                                          closed={false}
-                                          showEventEnd={true}
-                                      />
+                                    <div>
+                                        {renderRelatedBetList(true)}
+                                    </div> 
                                   </SwiperSlide>
                                   <SwiperSlide className={styles.carouselSlide}>
                                       <Chat
@@ -520,15 +526,8 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState }) => {
                                       />
                                   </SwiperSlide>
                                   <SwiperSlide className={styles.carouselSlide}>
-                                      <div
-                                          className={styles.headline}
-                                          style={{ flexDirection: 'row', display: 'flex', marginBottom: '1rem', alignItems: 'center' }}
-                                      >
-                                          <h2 style={{ fontSize: '16px', marginRight: '0.5rem' }}>🚀 Related Bets</h2>
-                                          <LiveBadge />
-                                      </div>
                                       <div>
-                                          {renderRelatedBetList()}
+                                          {renderMyTradesList(true)}
                                       </div>
                                   </SwiperSlide>
                               </Swiper>
@@ -564,9 +563,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
           return {
-              showPopup: (popupType) => {
-                  dispatch(PopupActions.show(popupType));
-              },
+            setSelectedBet: (eventId, betId) => {
+                dispatch(BetActions.selectBet({ eventId, betId }));
+            },
+            showPopup: (popupType, options) => {
+                dispatch(
+                    PopupActions.show({
+                        popupType,
+                        options,
+                    }),
+                );
+            },
           };
       }
 ;

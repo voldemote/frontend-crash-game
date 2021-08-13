@@ -62,6 +62,7 @@ const BetView = ({
                      pullOutBet,
                      fetchOutcomes,
                      showPopup,
+                     isTradeViewPopup
                  }) => {
     const params                                          = useParams();
     const defaultBetValue                                 = _.max([balance, 10]);
@@ -779,12 +780,16 @@ const BetView = ({
             className={classNames(
                 styles.placeBetParentContainer,
                 styles[state + 'Status'],
+                isTradeViewPopup ? styles.isPopup : null
             )}
         >
-            <div className={styles.placeBetContainer}>
+            <div className={classNames(
+                styles.placeBetContainer, 
+                isTradeViewPopup ? styles.isPopup : null
+            )}>
                 {renderLoadingAnimation()}
-                {renderMenuContainerWithCurrentBalance()}
-                <span className={styles.eventName}>{event.name}</span>
+                {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
+                {!isTradeViewPopup && <span className={styles.eventName}>{event.name}</span>}
                 <div className={styles.betMarketQuestion}>
                     {bet.marketQuestion}
                 </div>
@@ -793,8 +798,11 @@ const BetView = ({
                 {renderStateConditionalContent()}
                 {
                     showEventEnd && (
-                        <div className={styles.timeLeftCounterContainer}>
-                            <span>End of Trade:</span>
+                        <div className={classNames(
+                            styles.timeLeftCounterContainer, 
+                            isTradeViewPopup ? styles.fixedTimer : null
+                        )}>
+                            <span>Estimated end:</span>
                             <TimeLeftCounter endDate={endDate} />
                         </div>
                     )
