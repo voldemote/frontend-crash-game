@@ -171,7 +171,6 @@
             padding-left:    3rem;
             padding-right:   1rem;
             display:         flex;
-            justify-content: space-between;
             flex-direction:  column;
 
             @media (max-width: $screen-md)
@@ -186,6 +185,7 @@
                 display:        flex;
                 flex-direction: column;
                 flex:           1;
+                max-height:     60vh;
 
                 .twitchStream
                 {
@@ -218,8 +218,8 @@
             flex-direction:  column;
             justify-content: space-between;
             width:           30%;
-            padding-left:    0;
-            padding-right:   3rem;
+            padding-left:    2em;
+            padding-right:   2em;
 
             @media (max-width: $screen-md)
             {
@@ -229,6 +229,32 @@
             > div:first-child
             {
                 flex: 1;
+            }
+
+            .eventTradesContainer 
+            {
+                margin-bottom: 1rem;
+                padding:       0;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+
+            .betViewClose 
+            {
+                display:     flex;
+                cursor:      pointer;
+                font-size:   15px;
+
+                .arrowBack 
+                {
+                    width:        fit-content;
+                    margin-right: 1rem;
+                }
+            }
+
+            .betViewContent 
+            {
+                padding-top: 2.3rem;
             }
         }
     }
@@ -269,25 +295,36 @@
                     > ul
                     {
                         height: 100%;
+
+                        > li {
+                            padding: 0 2px;
+                        }
                     }
                 }
             }
 
-            .relatedBetSlide
+            &.oneCarouselPage 
             {
-                height:          100%;
-                display:         flex;
-                flex-direction:  column;
-                justify-content: space-evenly;
-
-                > div
+                > div:first-child 
                 {
-                    flex:          1 0;
-                    padding:       1.5rem 1.5rem;
-                    margin-bottom: 0.5rem;
+                    > ul 
+                    {
+                        display: none;
+                    }
                 }
             }
         }
+    }
+
+    .relatedBetsNone 
+    {
+        margin:          2rem 2px;
+        padding:         2rem;
+        border-radius:   10px;
+        background:      $colorWhite;
+        color:           $colorPrimaryDark;
+        display:         flex;
+        justify-content: center;
     }
 
     .mobileChat
@@ -359,7 +396,7 @@
 
     .carouselSlide
     {
-        padding: 0 0.25rem 60px;
+        padding: 0 0 60px;
     }
 
     .fixedChatButton

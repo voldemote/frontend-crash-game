@@ -3,7 +3,7 @@ import style      from './styles.module.scss';
 import _          from 'lodash';
 import classNames from 'classnames';
 
-const Input = ({ className, onSubmit = _.noop, reference, ...props }) => {
+const Input = ({ className, disabled = false, onSubmit = _.noop, reference, ...props }) => {
     const checkOnKeyPress = (event) => {
         if (event.key === 'Enter') {
             onSubmit();
@@ -16,6 +16,7 @@ const Input = ({ className, onSubmit = _.noop, reference, ...props }) => {
                 style.input,
                 className,
             )}
+            disabled={disabled}
             onKeyPress={checkOnKeyPress}
             ref={reference}
             {...props}

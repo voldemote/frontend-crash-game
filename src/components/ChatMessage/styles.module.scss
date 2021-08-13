@@ -4,19 +4,29 @@
 {
     padding:          1rem 1.5rem;
     border-radius:    10px;
-    background-color: $colorWhite20;
+    background-color: $colorWhite10;
     display:          inline-flex;
     margin-top:       0.5rem;
     font-size:        14px;
     text-align:       left;
     hyphens:          auto;
+    opacity:          0.3;
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+
+    &.isVisible {
+        opacity: 0.3;
+
+        & ~ .isVisible {
+            opacity: 1;
+        }
+    }
 
     img
     {
         width:         30px !important;
         height:        30px;
         border-radius: 50%;
-        border:        2px solid $colorWhite !important;
+        border:        1px solid $colorWhite !important;
         margin-right:  0.5rem;
     }
 

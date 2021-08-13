@@ -106,13 +106,15 @@ const Chat = ({ className, userId, userName, event, messages, sendChatMessage })
             >
                 {renderMessages()}
             </div>
-            <div className={styles.messageContainerRunOut}>
-            </div>
-            <div className={styles.messageInput}>
+            <div className={classNames(
+                styles.messageInput,
+                !userId ? styles.disabled : null 
+            )}>
                 <Input
                     type={'text'}
                     placeholder={'Comment...'}
                     value={message}
+                    disabled={!userId}
                     onChange={onMessageInputChange}
                     onSubmit={onMessageSend}
                 />
