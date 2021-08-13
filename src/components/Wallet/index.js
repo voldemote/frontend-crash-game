@@ -9,7 +9,7 @@ import SwitchableHelper from 'helper/SwitchableHelper';
 import IconType from 'components/Icon/IconType';
 import PaymentAction from 'constants/PaymentAction';
 import SwitchableContainer from 'components/SwitchableContainer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import WalletCard from 'components/WalletCard';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import WalletPaymentCard from 'components/WalletPaymentCard';
@@ -19,11 +19,37 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
 import Routes from 'constants/Routes';
 import { useHistory } from 'react-router-dom';
+import State from 'helper/State';
+import TwoColumnTable from 'components/TwoColumnTable';
+import moment from 'moment';
+import transaction from 'store/sagas/transaction';
 
 
-const Wallet = ({ show, balance, referralCount, transactionCount, close, showPopup }) => {
-    const history = useHistory()
+const Wallet = ({ show, balance, referralCount, transactionCount, close, showPopup, transactions, referrals }) => {
+    const history = useHistory();
+
+    const menus = {
+        wallet: 'wallet',
+        transactionHistory: 'transactionHistory',
+        referrals: 'referrals',
+    };
+
+    const closeDrawer = () => {
+        setOpenMenu(menus.wallet);
+        close();
+    }
+
     const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
+
+    const [openMenu, setOpenMenu] = useState(menus.wallet);
+
+    const isOpen = (page) => openMenu === page;
+
+    useEffect(() => {
+        if(!show) {
+            setOpenMenu(menus.wallet);
+        }
+    }, [show]);
 
     const onPaymentActionSwitch = (newIndex) => {
         if (newIndex === 0) {
@@ -55,6 +81,8 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
             ));
         };
     };
+
+    const backButton = () => <Icon className={styles.backButton} iconType={'arrowTopRight'} onClick={() => setOpenMenu(menus.wallet)}/>
 
     const renderSwitchableView = () => {
         const switchableViews = [
@@ -111,52 +139,131 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
         );
     };
 
+    const walletContainerWrapper = (open, heading, contents, isFirstPanel = false) => {
+        return (
+            <div className={classNames(
+                styles.panel,
+                !open && styles.panelHidden,
+                isFirstPanel && styles.firstPanel
+            )}>
+                <h2 className={styles.walletHeading}>
+                    {heading}
+                </h2>
+                <div className={styles.walletContents}>
+                    {contents}
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={classNames(styles.wallet, styles.drawer, !show && styles.drawerHidden)}>
-            <h2 className={styles.walletHeading}>
-                My Wallet
-            </h2>
+            <div className={styles.menuContainer}>
+                {walletContainerWrapper(
+                    isOpen(menus.wallet),
+                    'My Wallet',
+                    (
+                        <>
+                            <div className={styles.walletBalance} role="button">
+                                <span className={styles.balance}>
+                                    {formatToFixed(balance)}
+                                    <sup className={styles.currency}>EVNT</sup>
+                                </span>
+                                <span className={styles.balanceText}>Total balance available in EVNT</span>
+                                <Icon iconType={'refresh'} className={styles.refreshIcon}/>
+                            </div>
 
-            <div className={styles.walletContents}>
-                <div className={styles.walletBalance} role="button">
-                    <span className={styles.balance}>
-                        {formatToFixed(balance)}
-                        <sup className={styles.currency}>EVNT</sup>
-                    </span>
-                    <span className={styles.balanceText}>Total balance available in EVNT</span>
-                    <Icon iconType={'refresh'} className={styles.refreshIcon}/>
-                </div>
+                            <MenuItem
+                                classes={[styles.transactionHistory]}
+                                label={`Transaction History (${transactionCount})`}
+                                icon={(
+                                    <Icon className={styles.optionIcon} iconType={'activities'}/>
+                                )}
+                                onClick={() => setOpenMenu(menus.transactionHistory)}
+                            />
+                            <MenuItem
+                                classes={[styles.referrals]}
+                                label={`Referrals (${referralCount})`}
+                                icon={(
+                                    <Icon className={styles.optionIcon} iconType={'chat'}/>
+                                )}
+                                onClick={() => setOpenMenu(menus.referrals)}
+                            />
 
-                <MenuItem
-                    classes={[styles.transactionHistory]}
-                    label={`Transaction History (${transactionCount})`}
-                    icon={(
-                        <Icon className={styles.optionIcon} iconType={'activities'}/>
-                    )}
-                    onClick={() => console.log('transationsHistory')}
-                />
-                <MenuItem
-                    classes={[styles.referrals]}
-                    label={`Referrals (${referralCount})`}
-                    icon={(
-                        <Icon className={styles.optionIcon} iconType={'chat'}/>
-                    )}
-                    onClick={() => console.log('referrals')}
-                />
+                            {renderSwitchableView()}
+                            {renderConditionalWalletCards()}
+                            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
+                            {renderWalletPaymentCard(PaymentProvider.crypto)}
+                            {renderWalletPaymentCard(PaymentProvider.paypal)}
+                            {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
+                        </>
+                    ),
+                    true
+                )}
 
-                {renderSwitchableView()}
-                {renderConditionalWalletCards()}
-                {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
-                {renderWalletPaymentCard(PaymentProvider.crypto)}
-                {renderWalletPaymentCard(PaymentProvider.paypal)}
-                {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
+                {walletContainerWrapper(
+                    isOpen(menus.transactionHistory),
+                    (
+                        <>
+                            {backButton()}
+                            Transaction History
+                        </>
+                    ),
+                    (
+                        <TwoColumnTable
+                            headings={['Latest transactions', 'EVNT']}
+                            rows={transactions.map(
+                                ({event, bet, direction, trx_timestamp, outcomeTokensBought, investmentAmount}) => {
+                                const tokenAmount = direction === 'PAYOUT' ? outcomeTokensBought : investmentAmount;
+                                return [
+                                    (<>
+                                        <span className={styles.primaryData}>{event.name}</span>
+                                        <span className={styles.secondaryData}>{bet.marketQuestion}</span>
+                                    </>),
+                                    (<>
+                                        <span className={styles[direction.toLowerCase()]}>{tokenAmount}</span>
+                                        <span className={styles.secondaryData}>{moment(trx_timestamp).format('DD.MM.YYYY')}</span>
+                                    </>),
+                                ]
+                            })}
+                            noResultMessage={'No transactions yet.'}
+                        />
+                    ),
+                )}
 
+                {walletContainerWrapper(
+                    isOpen(menus.referrals),
+                    (
+                        <>
+                            {backButton()}
+                            Referrals
+                        </>
+                    ),
+                    (
+                        <>
+                            <ReferralLinkCopyInputBox className={styles.referralLink} />
+                            <TwoColumnTable
+                                headings={['Referrals', 'Joined date']}
+                                rows={referrals.map(
+                                    ({username, name, date}) => {
+                                    return [
+                                        (<>
+                                            <span className={styles.primaryData}>{name}</span>
+                                            <span className={styles.secondaryData}>{username}</span>
+                                        </>),
+                                        (<>
+                                            <span className={styles.secondaryData}>{moment(date).format('DD.MM.YYYY')}</span>
+                                        </>),
+                                    ]
+                                })}
+                                noResultMessage={'No referrals yet.'}
+                            />
+                        </>
+                    ))}
             </div>
-
-
             <Icon
                 iconType={'cross'}
-                onClick={close}
+                onClick={closeDrawer}
                 className={styles.closeButton}
             />
         </div>
@@ -166,14 +273,29 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
 const mapStateToProps = (state) => {
     const referralCount    = _.size(state.authentication.referralList);
     const transactionCount = _.size(state.transaction.transactions);
+    const transactions = _.map(
+        state.transaction.transactions,
+        (transaction) => {
+            const betId = _.get(transaction, 'bet');
+            const event = State.getEventByTrade(betId, state.event.events);
+            const bet   = State.getTradeByEvent(betId, event);
+
+            return {
+                ...transaction,
+                bet,
+                event,
+            };
+        },
+    );
 
     return {
         balance:   state.authentication.balance,
         referralCount,
         transactionCount,
+        transactions: _.orderBy(transactions, ['trx_timestamp'], ['desc']),
+        referrals: state.authentication.referralList,
     };
 };
-
 
 const mapDispatchToProps = (dispatch) => {
     return {

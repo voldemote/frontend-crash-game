@@ -30,3 +30,11 @@
 .drawerHidden {
   right: -101%;
 }
+
+.backButton { // use this with arrowTopRight
+  width: auto;
+  transform: rotate(-135deg) scale(1.2);
+  margin-right: 14px;
+  cursor: pointer;
+  margin-left: 4px;
+}

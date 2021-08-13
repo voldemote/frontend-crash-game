@@ -24,6 +24,7 @@ import { ReactComponent as IconChecked }         from '../../data/icons/checked.
 import { ReactComponent as IconCollapseSidebar } from '../../data/icons/collapse-sidebar.svg';
 import { ReactComponent as IconConfettiLeft }    from '../../data/icons/confetti-left.svg';
 import { ReactComponent as IconConfettiRight }   from '../../data/icons/confetti-right.svg';
+import { ReactComponent as IconCopy }   from '../../data/icons/copy.svg';
 import { ReactComponent as IconCross }           from '../../data/icons/cross.svg';
 import { ReactComponent as IconDeleteInput }     from '../../data/icons/delete-input.svg';
 import { ReactComponent as IconDeposit }         from '../../data/icons/deposit.svg';
@@ -75,6 +76,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.collapseSidebar]: <IconCollapseSidebar />,
                 [IconType.confettiLeft]:    <IconConfettiLeft />,
                 [IconType.confettiRight]:   <IconConfettiRight />,
+                [IconType.copy]:            <IconCopy />,
                 [IconType.cross]:           <IconCross />,
                 [IconType.deleteInput]:     <IconDeleteInput />,
                 [IconType.deposit]:         <IconDeposit />,
