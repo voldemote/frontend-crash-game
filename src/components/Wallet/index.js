@@ -139,118 +139,128 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
         );
     };
 
-    const walletContainerWrapper = (heading, contents) => {
+    const walletContainerWrapper = (open, heading, contents, isFirstPanel = false) => {
         return (
-            <>
+            <div className={classNames(
+                styles.panel,
+                !open && styles.panelHidden,
+                isFirstPanel && styles.firstPanel
+            )}>
                 <h2 className={styles.walletHeading}>
                     {heading}
                 </h2>
                 <div className={styles.walletContents}>
                     {contents}
                 </div>
-            </>
+            </div>
         )
     }
 
     return (
         <div className={classNames(styles.wallet, styles.drawer, !show && styles.drawerHidden)}>
+            <div className={styles.menuContainer}>
+                {walletContainerWrapper(
+                    isOpen(menus.wallet),
+                    'My Wallet',
+                    (
+                        <>
+                            <div className={styles.walletBalance} role="button">
+                                <span className={styles.balance}>
+                                    {formatToFixed(balance)}
+                                    <sup className={styles.currency}>EVNT</sup>
+                                </span>
+                                <span className={styles.balanceText}>Total balance available in EVNT</span>
+                                <Icon iconType={'refresh'} className={styles.refreshIcon}/>
+                            </div>
 
-            {isOpen(menus.wallet) && walletContainerWrapper(
-                'My Wallet',
-                (
-                    <>
-                        <div className={styles.walletBalance} role="button">
-                            <span className={styles.balance}>
-                                {formatToFixed(balance)}
-                                <sup className={styles.currency}>EVNT</sup>
-                            </span>
-                            <span className={styles.balanceText}>Total balance available in EVNT</span>
-                            <Icon iconType={'refresh'} className={styles.refreshIcon}/>
-                        </div>
+                            <MenuItem
+                                classes={[styles.transactionHistory]}
+                                label={`Transaction History (${transactionCount})`}
+                                icon={(
+                                    <Icon className={styles.optionIcon} iconType={'activities'}/>
+                                )}
+                                onClick={() => setOpenMenu(menus.transactionHistory)}
+                            />
+                            <MenuItem
+                                classes={[styles.referrals]}
+                                label={`Referrals (${referralCount})`}
+                                icon={(
+                                    <Icon className={styles.optionIcon} iconType={'chat'}/>
+                                )}
+                                onClick={() => setOpenMenu(menus.referrals)}
+                            />
 
-                        <MenuItem
-                            classes={[styles.transactionHistory]}
-                            label={`Transaction History (${transactionCount})`}
-                            icon={(
-                                <Icon className={styles.optionIcon} iconType={'activities'}/>
-                            )}
-                            onClick={() => setOpenMenu(menus.transactionHistory)}
-                        />
-                        <MenuItem
-                            classes={[styles.referrals]}
-                            label={`Referrals (${referralCount})`}
-                            icon={(
-                                <Icon className={styles.optionIcon} iconType={'chat'}/>
-                            )}
-                            onClick={() => setOpenMenu(menus.referrals)}
-                        />
+                            {renderSwitchableView()}
+                            {renderConditionalWalletCards()}
+                            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
+                            {renderWalletPaymentCard(PaymentProvider.crypto)}
+                            {renderWalletPaymentCard(PaymentProvider.paypal)}
+                            {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
+                        </>
+                    ),
+                    true
+                )}
 
-                        {renderSwitchableView()}
-                        {renderConditionalWalletCards()}
-                        {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
-                        {renderWalletPaymentCard(PaymentProvider.crypto)}
-                        {renderWalletPaymentCard(PaymentProvider.paypal)}
-                        {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
-                    </>
-                )
-            )}
-
-            {isOpen(menus.transactionHistory) && walletContainerWrapper((   
-                    <>
-                        {backButton()}
-                        Transaction History
-                    </>
-                ),
-                (
-                    <TwoColumnTable
-                        headings={['Latest transactions', 'EVNT']}
-                        rows={transactions.map(
-                            ({event, bet, direction, trx_timestamp, outcomeTokensBought, investmentAmount}) => {
-                            const tokenAmount = direction === 'PAYOUT' ? outcomeTokensBought : investmentAmount;
-                            return [
-                                (<>
-                                    <span className={styles.primaryData}>{event.name}</span>
-                                    <span className={styles.secondaryData}>{bet.marketQuestion}</span>
-                                </>),
-                                (<>
-                                    <span className={styles[direction.toLowerCase()]}>{tokenAmount}</span>
-                                    <span className={styles.secondaryData}>{moment(trx_timestamp).format('DD.MM.YYYY')}</span>
-                                </>),
-                            ]
-                        })}
-                        noResultMessage={'No transactions yet.'}
-                    />
-                )
-            )}
-
-            {isOpen(menus.referrals) && walletContainerWrapper((
-                    <>
-                        {backButton()}
-                        Referrals
-                    </>
-                ),
-                (
-                    <>
-                        <ReferralLinkCopyInputBox className={styles.referralLink} />
+                {walletContainerWrapper(
+                    isOpen(menus.transactionHistory),
+                    (
+                        <>
+                            {backButton()}
+                            Transaction History
+                        </>
+                    ),
+                    (
                         <TwoColumnTable
-                            headings={['Referrals', 'Joined date']}
-                            rows={[{username: 'haris.bravo', name: 'Haris Bravo', date: new Date()}].map(
-                                ({username, name, date}) => {
+                            headings={['Latest transactions', 'EVNT']}
+                            rows={transactions.map(
+                                ({event, bet, direction, trx_timestamp, outcomeTokensBought, investmentAmount}) => {
+                                const tokenAmount = direction === 'PAYOUT' ? outcomeTokensBought : investmentAmount;
                                 return [
                                     (<>
-                                        <span className={styles.primaryData}>{name}</span>
-                                        <span className={styles.secondaryData}>{username}</span>
+                                        <span className={styles.primaryData}>{event.name}</span>
+                                        <span className={styles.secondaryData}>{bet.marketQuestion}</span>
                                     </>),
                                     (<>
-                                        <span className={styles.secondaryData}>{moment(date).format('DD.MM.YYYY')}</span>
+                                        <span className={styles[direction.toLowerCase()]}>{tokenAmount}</span>
+                                        <span className={styles.secondaryData}>{moment(trx_timestamp).format('DD.MM.YYYY')}</span>
                                     </>),
                                 ]
                             })}
-                            noResultMessage={'No referrals yet.'}
+                            noResultMessage={'No transactions yet.'}
                         />
-                    </>
-                ))}
+                    ),
+                )}
 
+                {walletContainerWrapper(
+                    isOpen(menus.referrals),
+                    (
+                        <>
+                            {backButton()}
+                            Referrals
+                        </>
+                    ),
+                    (
+                        <>
+                            <ReferralLinkCopyInputBox className={styles.referralLink} />
+                            <TwoColumnTable
+                                headings={['Referrals', 'Joined date']}
+                                rows={referrals.map(
+                                    ({username, name, date}) => {
+                                    return [
+                                        (<>
+                                            <span className={styles.primaryData}>{name}</span>
+                                            <span className={styles.secondaryData}>{username}</span>
+                                        </>),
+                                        (<>
+                                            <span className={styles.secondaryData}>{moment(date).format('DD.MM.YYYY')}</span>
+                                        </>),
+                                    ]
+                                })}
+                                noResultMessage={'No referrals yet.'}
+                            />
+                        </>
+                    ))}
+            </div>
             <Icon
                 iconType={'cross'}
                 onClick={closeDrawer}
