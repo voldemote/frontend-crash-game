@@ -11,6 +11,7 @@
     .walletHeading {
         font-size: 24px;
         margin: 0 0 50px;
+        display: flex;
     }
     .walletContents {
         overflow-y: auto;
@@ -86,6 +87,34 @@
         @extend .floatingCloseButton;
         @media screen and (min-width: $screen-sm) {
             display: none;
+        }
+    }
+
+    .primaryData {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.89;
+        letter-spacing: 0.2px;
+    }
+    .secondaryData {
+        opacity: 0.3;
+        font-size: 12px;
+        line-height: 2.2;
+        letter-spacing: 0.3px;
+    }
+
+    .buy {
+        color: #ff5858;
+        letter-spacing: 0.35px;
+        &::before {
+            content: '- ';
+        }
+    }
+    .payout {
+        color: #acffce;
+        letter-spacing: 0.35px;
+        &::before {
+            content: '+ ';
         }
     }
 }
