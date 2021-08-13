@@ -23,7 +23,6 @@ import { NavLink }              from 'react-router-dom';
 
 const Navbar = ({
                     user,
-                    location,
                     notifications,
                     leaderboard,
                     rank,
@@ -315,7 +314,6 @@ const Navbar = ({
 const mapStateToProps = (state) => {
     return {
         authState:     state.authentication.authState,
-        location:      state.router.location,
         notifications: state.notification.notifications,
         leaderboard:   _.get(state.leaderboard.leaderboard, 'users', []),
         rank:          _.get(state.authentication, 'rank', 0),
