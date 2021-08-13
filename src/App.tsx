@@ -19,6 +19,7 @@ import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
 import { Provider }                from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import Navbar from 'components/Navbar';
 
 const configuredStore = store();
 
@@ -26,6 +27,7 @@ const App = () => {
     return (
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
+                <Navbar />
                 <AlertBox />
                 <Popup />
                 <YMInitializer

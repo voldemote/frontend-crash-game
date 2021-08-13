@@ -1,12 +1,9 @@
 import _                        from 'lodash';
 import classNames               from 'classnames';
 import medalGold                from '../../data/icons/medal-gold.png';
-import cross                    from '../../data/icons/cross.svg';
-import Logo                     from '../../data/images/logo-demo.svg';
-import React                    from 'react';
+import LogoDemo                 from '../../data/images/logo-demo.svg';
 import style                    from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
-import Link                     from '../Link';
 import Routes                   from '../../constants/Routes';
 import Icon                     from '../Icon';
 import IconType                 from '../Icon/IconType';
@@ -14,21 +11,18 @@ import { useState }             from 'react';
 import MainMenu                 from '../MainMenu';
 import LeaderboardItem          from '../LeaderboardItem';
 import Notifications            from '../Notifications';
-import { matchPath }            from 'react-router';
 import { connect }              from 'react-redux';
 import { NotificationActions }  from 'store/actions/notification';
-import transaction              from 'store/reducer/transaction';
 import { formatToFixed }        from '../../helper/FormatNumbers';
-import { put }                  from 'redux-saga/effects';
 import { LeaderboardActions }   from '../../store/actions/leaderboard';
 import { LOGGED_IN }            from 'constants/AuthState';
 import Button                   from '../Button';
 import { useHistory }           from 'react-router';
 import Wallet                   from '../Wallet';
+import { NavLink }              from 'react-router-dom';
 
 const Navbar = ({
                     user,
-                    location,
                     notifications,
                     leaderboard,
                     rank,
@@ -90,18 +84,15 @@ const Navbar = ({
         return '-';
     };
 
-    const isRouteActive = (route) => {
-        return !!matchPath(location.pathname, route);
-    };
-
     const renderNavbarLink = (route, text) => {
         return (
-            <Link
-                to={route}
-                className={isRouteActive(route) ? style.active : null}
+            <NavLink 
+                exact 
+                to={route} 
+                activeClassName={style.active}
             >
                 {text}
-            </Link>
+            </NavLink>
         );
     };
     
@@ -144,7 +135,7 @@ const Navbar = ({
 
         const leaderboardBtn = (
             <div
-                className={classNames(style.ranking, style.pillButton)}
+                className={classNames(style.ranking, style.pillButton, isOpen(drawers.leaderboard) ? style.pillButtonActive : null)}
                 onClick={() => toggleOpenDrawer(drawers.leaderboard)}
             >
                 <img
@@ -177,7 +168,7 @@ const Navbar = ({
 
         const walletBtn = (
             <div
-                className={classNames(style.balanceOverview, style.pillButton)}
+                className={classNames(style.balanceOverview, style.pillButton, isOpen(drawers.wallet) ? style.pillButtonActive : null)}
                 onClick={() => toggleOpenDrawer(drawers.wallet)}
             >
                 <Icon iconType={'wallet'}/>
@@ -286,15 +277,20 @@ const Navbar = ({
 
     return (
         <div className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}>
+            <Icon
+                iconType={IconType.logoSmall}
+                className={style.logoMobile}
+            />
+            
             <div className={classNames(style.navbarItems, style.hideOnMobile)}>
                 <img
-                    src={Logo}
+                    src={LogoDemo}
                     width={200}
                     alt={'Wallfair'}
                 />
                 {isLoggedIn() &&
-                    <div>
-                        {renderNavbarLink(Routes.home, 'Home')}
+                    <div className={style.linkWrapper}>
+                        {renderNavbarLink(Routes.home, <Icon iconType={IconType.home} className={style.homeIcon} />)}
                         {renderNavbarLink(Routes.betOverview, 'My Trades')}
                         {renderNavbarLink(Routes.wallet, 'My Wallet')}
                     </div>
@@ -311,8 +307,6 @@ const Navbar = ({
                     {renderWalletDrawer()}
                 </>
             )}
-            
-            
         </div>
     );
 };
@@ -320,11 +314,11 @@ const Navbar = ({
 const mapStateToProps = (state) => {
     return {
         authState:     state.authentication.authState,
-        location:      state.router.location,
         notifications: state.notification.notifications,
         leaderboard:   _.get(state.leaderboard.leaderboard, 'users', []),
         rank:          _.get(state.authentication, 'rank', 0),
         transactions:  state.transaction.transactions,
+        user:          state.authentication,
     };
 };
 

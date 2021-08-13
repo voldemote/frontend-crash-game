@@ -9,11 +9,6 @@
     &.baseContainerWithPaddingTop
     {
         padding-top: 100px;
-
-        @media (min-width: $screen-sm)
-        {
-            padding-top: 120px;
-        }
     }
 
     &.baseContainerWithContentPadding
@@ -28,5 +23,10 @@
             padding-left:    $contentPadding;
             padding-right:   $contentPadding;
         }
+    }
+
+    &.baseContainerWithPaddingBottomZero
+    {
+        padding-bottom: 0;
     }
 }

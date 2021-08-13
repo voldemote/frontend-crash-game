@@ -1,17 +1,16 @@
 import React       from 'react';
 import styles      from './styles.module.scss';
-import Navbar      from '../Navbar';
 import { connect } from 'react-redux';
 import classNames  from 'classnames';
 
-const BaseContainerWithNavbar = ({ children, withPaddingTop, contentPadding, user }) => {
+const BaseContainerWithNavbar = ({ children, withPaddingTop, contentPadding, withoutPaddingBottom, user }) => {
     return (
         <div className={classNames(
             styles.baseContainer,
             withPaddingTop ? styles.baseContainerWithPaddingTop : null,
             contentPadding ? styles.baseContainerWithContentPadding : null,
+            withoutPaddingBottom ? styles.baseContainerWithPaddingBottomZero : null,
         )}>
-            <Navbar user={user} />
             {children}
         </div>
     );
