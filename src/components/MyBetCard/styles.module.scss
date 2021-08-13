@@ -70,7 +70,8 @@
         display:          flex;
         justify-content:  space-between;
         flex-flow:        column wrap;
-        border-bottom: 1px solid #f1f2f6;
+        border-bottom:    1px solid #f1f2f6;
+        cursor:           pointer;
 
         .myBetCardHeader 
         {
@@ -138,7 +139,6 @@
     {
         font-family: $fontBold;
         display:     flex;
-        cursor:      pointer;
     }
 
     .pillFooter

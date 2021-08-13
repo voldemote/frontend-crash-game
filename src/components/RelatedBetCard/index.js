@@ -27,15 +27,14 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
         );
     };
 
-    const openInfoPopup = (popupType) => {
-        return () => {
-            const options = {
-                tradeId: bet._id,
-                eventId: _.get(bet, 'event'),
-            };
-
-            showPopup(popupType, options);
+    const openInfoPopup = (popupType, e) => {
+        e.stopPropagation();
+        const options = {
+            tradeId: bet._id,
+            eventId: _.get(bet, 'event'),
         };
+
+        showPopup(popupType, options);
     };
 
     const renderMenuInfoIcon = () => {
@@ -49,13 +48,18 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
         );
     };
 
+    const openMenu = (e) => {
+        e.stopPropagation();
+        setMenuOpened(!menuOpened)
+    }
+
     return (
         <div
             className={styles.relatedBetCard}
         >
-            <div className={styles.relatedBetCardContainer}>
+            <div className={styles.relatedBetCardContainer} onClick={onClick}>
                 <div className={styles.relatedBetCardHeader}>
-                    <span className={styles.title} onClick={onClick}>
+                    <span className={styles.title}>
                         {bet.marketQuestion}
                     </span>
 
@@ -63,7 +67,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
                         <Icon
                             iconType={IconType.menu}
                             iconTheme={null}
-                            onClick={() => setMenuOpened(!menuOpened)}
+                            onClick={(e) => openMenu(e)}
                         />
                         <div
                             className={classNames(
@@ -73,7 +77,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
                         >
                             <div
                                 className={styles.menuItem}
-                                onClick={openInfoPopup(PopupTheme.eventDetails)}
+                                onClick={(e) => openInfoPopup(PopupTheme.eventDetails, e)}
                             >
                                 {renderMenuInfoIcon()}
                                 <span>
@@ -82,7 +86,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
                             </div>
                             <div
                                 className={styles.menuItem}
-                                onClick={openInfoPopup(PopupTheme.tradeDetails)}
+                                onClick={(e) => openInfoPopup(PopupTheme.tradeDetails, e)}
                             >
                                 {renderMenuInfoIcon()}
                                 <span>

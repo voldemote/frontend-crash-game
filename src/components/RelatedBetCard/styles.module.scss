@@ -25,6 +25,7 @@
         display:          flex;
         justify-content:  space-between;
         flex-flow:        column wrap;
+        cursor:           pointer;
 
         .relatedBetCardHeader 
         {
@@ -92,7 +93,6 @@
     {
         font-family: $fontBold;
         display:     flex;
-        cursor:      pointer;
     }
 
     .pillFooter
