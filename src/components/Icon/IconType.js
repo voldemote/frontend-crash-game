@@ -21,6 +21,7 @@ export default {
     collapseSidebar: 'collapseSidebar',
     confettiLeft:    'confettiLeft',
     confettiRight:   'confettiRight',
+    copy:            'copy',
     cross:           'cross',
     deleteInput:     'deleteInput',
     deposit:         'deposit',

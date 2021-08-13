@@ -130,8 +130,8 @@ const InputBox = ({
                     onClick={copyToClipboard}
                 >
                     <Icon
-                        iconTheme={IconTheme.primaryLightTransparent}
-                        iconType={IconType.chat}
+                        iconTheme={IconTheme.white}
+                        iconType={IconType.copy}
                     />
                 </div>
             );

@@ -231,7 +231,7 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
                 ),
                 (
                     <>
-                        <ReferralLinkCopyInputBox className={styles.referralLinkList} />
+                        <ReferralLinkCopyInputBox className={styles.referralLink} />
                         <TwoColumnTable
                             headings={['Referrals', 'Joined date']}
                             rows={[{username: 'haris.bravo', name: 'Haris Bravo', date: new Date()}].map(
