@@ -22,7 +22,6 @@ import { useHistory } from 'react-router-dom';
 import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
-import transaction from 'store/sagas/transaction';
 
 
 const Wallet = ({ show, balance, referralCount, transactionCount, close, showPopup, transactions, referrals }) => {
@@ -49,6 +48,7 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
         if(!show) {
             setOpenMenu(menus.wallet);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
 
     const onPaymentActionSwitch = (newIndex) => {
