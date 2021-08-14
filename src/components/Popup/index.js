@@ -16,6 +16,7 @@ import BetApproveView   from '../BetApproveView';
 import WelcomeView      from '../WelcomeView';
 import SignUpPopup      from '../SignUpPopup';
 import TradeDetailView  from '../TradeDetailView';
+import TradeViewPopup   from '../TradeViewPopup';
 import EventDetailView  from '../EventDetailView';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
@@ -87,12 +88,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                 );
             
             case PopupTheme.signUpNotificationFirst:
-                return (
-                    <SignUpPopup
-                        closed={!visible}
-                    />
-                );
-            
             case PopupTheme.signUpNotificationSecond:
                 return (
                     <SignUpPopup
@@ -100,10 +95,44 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
                     />
                 );
 
+            case PopupTheme.tradeView:
+                return (
+                    <TradeViewPopup
+                        closed={false}
+                    />
+                );
+
         }
 
         return null;
     };
+
+    if(type === PopupTheme.tradeView) {
+        return (
+            <div
+                className={classNames(
+                    styles.popupFullScreenContainer,
+                    visible ? null : styles.hidden,
+                )}
+            >
+                <div className={classNames(
+                    styles.popupContainer, 
+                    styles.tradeViewContainer)}>
+                        <Icon
+                            width={30}
+                            height={30}
+                            className={styles.closeButton}
+                            iconType={IconType.arrowLeft}
+                            iconTheme={IconTheme.primary}
+                            onClick={hidePopup}
+                        />
+                    <div className={styles.popupContentContainer}>
+                        {renderPopup()}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div

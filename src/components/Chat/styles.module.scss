@@ -7,11 +7,12 @@
     padding-top:    1rem;
     height:         40vh;
     position:       relative;
-    margin-top:     -13vh;
+    margin-top:     -20vh;
 
     @media (max-width: $screen-md)
     {
         padding-top: 0;
+        margin-top: 0;
     }
 
     .messageContainer
