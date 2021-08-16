@@ -1,13 +1,11 @@
-import styles    from './styles.module.scss';
-import classNames from 'classnames';
+import styles        from './styles.module.scss';
+import classNames    from 'classnames';
 import { matchPath } from 'react-router-dom';
-import { connect }              from 'react-redux';
-import { useEffect, useState } from 'react';
-import { useHasMounted }      from '../hoc/useHasMounted';
+import { connect }   from 'react-redux';
 
-const NavbarFooter = ({children, className = null, location, hideForRoutes = []}) => {
+const NavbarFooter = ({children, className = null, location, skipRoutes = []}) => {
 
-    if (hideForRoutes.some(route => matchPath(location.pathname, route))) {
+    if (skipRoutes.some(route => matchPath(location.pathname, route))) {
         return null;
     }
 

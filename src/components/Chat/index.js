@@ -15,7 +15,7 @@ import { WebsocketsActions } from '../../store/actions/websockets';
 import { usePrevPropValue }  from '../../hooks/usePrevPropValue';
 import { useIsMount }        from '../hoc/useIsMount';
 
-const Chat = ({ className, userId, userName, event, messages, sendChatMessage }) => {
+const Chat = ({ className, userId, userName, event, messages, sendChatMessage, hideInput = false }) => {
     const messageListRef                        = useRef();
     const [message, setMessage]                 = useState('');
     const [lastMessageSent, setLastMessageSent] = useState(0);
@@ -108,6 +108,7 @@ const Chat = ({ className, userId, userName, event, messages, sendChatMessage })
             </div>
             <div className={classNames(
                 styles.messageInput,
+                hideInput ? styles.messageInputHidden : null,
                 !userId ? styles.disabled : null 
             )}>
                 <Input

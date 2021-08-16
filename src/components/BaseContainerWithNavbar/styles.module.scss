@@ -28,10 +28,5 @@
     &.baseContainerWithPaddingBottomZero
     {
         padding-bottom: 0;
-
-        @media (max-width: $screen-sm)
-        {
-            padding-bottom:   8rem;
-        }
     }
 }

@@ -6,7 +6,9 @@
     margin:          0 15px;
     font-family:     $fontRegular;
     font-size:       12px;
-    position: relative;
+    position:        relative;
+    height:          100%;
+    display:         flex;
 
     @media (max-width: $screen-xs)
     {
@@ -15,37 +17,41 @@
 
     &Active {
         &:after {
-            content: '';
-            position: absolute;
-            background: url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
+            content:             '';
+            position:            absolute;
+            background:          url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
+            background-size:     contain;
+            background-repeat:   no-repeat;
             background-position: center;
-            left: -10%;
-            top: -70%;
-            width: 100px;
-            height: 120px;
-            z-index: -1;
+            left:                -10%;
+            top:                 -10%;
+            width:               100px;
+            height:              120px;
+            z-index:             -1;
         }
     }
 
+    &Action {
+        cursor: pointer;
+    }
+
     .navbarLink {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display:         flex;
+        flex-direction:  column;
+        align-items:     center;
         justify-content: center;
-        text-align: center;
-        min-width: 70px;
+        text-align:      center;
+        min-width:       70px;
 
         & span > svg {
             margin-bottom: 5px;
-            width: 40px;
-            height: 30px;
-            fill: white;
+            width:         40px;
+            height:        30px;
+            fill:          $colorWhite;
             
             @media (max-width: $screen-xs)
             {
-                width: 25px;
+                width:  25px;
                 height: 25px;
             }
         }

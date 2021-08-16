@@ -97,11 +97,11 @@ const App = () => {
                     />
                     <Redirect to={Routes.home} />
                 </Switch>
-                <NavbarFooter hideForRoutes={[Routes.bet]}>
+                <NavbarFooter skipRoutes={[Routes.bet]}>
                     {/* {TODO: Update routes} */}
                     <NavbarFooterAction route={Routes.home} iconType={IconType.home} text='Home' />
                     <NavbarFooterAction route={Routes.wallet} iconType={IconType.camera} text='Live Stream' />
-                    <NavbarFooterAction route={Routes.bet} iconType={IconType.bet2} text='Events' />
+                    <NavbarFooterAction route={Routes.privacyPolicy} iconType={IconType.bet2} text='Events' />
                     <NavbarFooterAction route={Routes.termsAndConditions} iconType={IconType.shuttle} text='Rosi Game' />
                 </NavbarFooter>
             </ConnectedRouter>

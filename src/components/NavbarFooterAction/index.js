@@ -4,9 +4,9 @@ import { NavLink }  from 'react-router-dom';
 import style    from './styles.module.scss';
 import classNames from 'classnames';
 
-const NavbarFooterAction = ({route, text, iconType, className = null}) => {
+const NavbarFooterAction = ({route, text, iconType, className = null, onClick = null}) => {
 
-    const renderNavbarLink = (route, text, iconType) => {
+    const renderNavbarLink = () => {
         return (
             <NavLink
                 exact
@@ -22,8 +22,25 @@ const NavbarFooterAction = ({route, text, iconType, className = null}) => {
         );
     }
 
+    const renderNavbarAction = () => {
+        return (
+            <div className={classNames(style.navbarItem, style.navbarItemAction, className)} onClick={onClick}>
+                <div className={style.navbarLink}>
+                    <Icon iconType={iconType} iconTheme={IconTheme.black} />
+                    {text}
+                </div>
+            </div>
+        );
+    }
+
+    const isEventAction = () => {
+        return onClick != null && !route;
+    }
+
     return (
-        renderNavbarLink(route, text, iconType)
+        <>
+            {isEventAction() ? renderNavbarAction() : renderNavbarLink()}
+        </>
     );
 }
 

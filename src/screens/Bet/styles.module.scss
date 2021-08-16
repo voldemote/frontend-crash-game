@@ -10,10 +10,12 @@
     padding:          0.5rem 1.7rem;
     font-family:      $fontLight;
     position:         relative;
+    //z-index:          1;
 
     @media (max-width: $screen-md)
     {
         padding-top: 1rem;
+        padding-bottom: 0;
     }
 
     .upperLeftOval,
@@ -161,7 +163,7 @@
             margin-left:    -1.7rem;
             margin-right:   -1.7rem;
         }
-
+        
         .columnLeft
         {
             width:           70%;
@@ -345,7 +347,7 @@
     .mobileCarousel
     {
         flex:       1;
-        margin-top: 2rem;
+        margin: 1rem -1.7rem 0 -1.7rem;
 
         @media (min-width: $screen-md)
         {
@@ -399,37 +401,73 @@
     .carouselSlide
     {
         padding: 0 0 60px;
+
+        @media(max-width: $screen-md)
+        {
+            padding: 0 1rem 60px;
+        }
     }
 
     .fixedChatButton
     {
+        bottom: 130px;
+        right:  30px;
+        left:   unset;
+
         @media(min-width: $screen-md)
         {
             display: none;
         }
+
+        & span > svg {
+            & > path {
+                fill:   $colorPrimaryLight;
+                stroke: transparent;
+            }
+        }
     }
 
     .betNavbar {
-        z-index: 1000;
-        border-radius: 20px 20px 0 0;
-        padding: 0 25px;
-        height: 80px;
+        z-index:         1000;
+        border-radius:   20px 20px 0 0;
+        padding:         0;
+        height:          80px;
+        justify-content: space-evenly;
+
+        &Hidden {
+            display: none;
+        }
 
         & .navbarItem {
             min-width: 75px;
+            margin:    0;
 
-            &:after {
-                position: absolute;
-                content: '';
-                background-color: $colorGrayLight4;
-                top: -15px;
-                right: 0;
-                width: 1px;
-                height: 80px;
+            &WithBorder {
+                border-right: 1px solid $colorGrayLight4;
+                border-left:  1px solid $colorGrayLight4;
+                padding:      0 10vw;
+
+                &.navbarItemActive {
+                    &:after {
+                        left: 20%;
+                    }
+                }
             }
 
-            &:last-child:after {
-                display: none;
+            &Active {
+                &:after {
+                    content:             '';
+                    position:            absolute;
+                    background:          url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
+                    background-size:     contain;
+                    background-repeat:   no-repeat;
+                    background-position: center;
+                    left:                -10%;
+                    top:                 -25%;
+                    width:               100px;
+                    height:              120px;
+                    z-index:             -1;
+                }
             }
         }
     }
