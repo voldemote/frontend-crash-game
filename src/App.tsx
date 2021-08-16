@@ -97,7 +97,7 @@ const App = () => {
                     />
                     <Redirect to={Routes.home} />
                 </Switch>
-                <NavbarFooter skipRoutes={[Routes.bet]}>
+                <NavbarFooter skipRoutes={[Routes.bet, Routes.join, Routes.verify]}>
                     {/* {TODO: Update routes} */}
                     <NavbarFooterAction route={Routes.home} iconType={IconType.home} text='Home' />
                     <NavbarFooterAction route={Routes.wallet} iconType={IconType.camera} text='Live Stream' />

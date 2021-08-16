@@ -3,7 +3,7 @@ import classNames    from 'classnames';
 import { matchPath } from 'react-router-dom';
 import { connect }   from 'react-redux';
 
-const NavbarFooter = ({children, className = null, location, skipRoutes = []}) => {
+const NavbarFooter = ({children, location, className = null, skipRoutes = []}) => {
 
     if (skipRoutes.some(route => matchPath(location.pathname, route))) {
         return null;

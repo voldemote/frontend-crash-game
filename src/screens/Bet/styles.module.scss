@@ -163,7 +163,7 @@
             margin-left:    -1.7rem;
             margin-right:   -1.7rem;
         }
-        
+
         .columnLeft
         {
             width:           70%;
@@ -367,7 +367,7 @@
         margin-bottom:   2rem;
         align-items:     center;
 
-        @media (min-width: $screen-md)
+        @media (max-width: $screen-sm), (min-width: $screen-md)
         {
             display: none;
         }
@@ -428,7 +428,7 @@
     }
 
     .betNavbar {
-        z-index:         1000;
+        z-index:         $zIndexBetNavbarFooter;
         border-radius:   20px 20px 0 0;
         padding:         0;
         height:          80px;
