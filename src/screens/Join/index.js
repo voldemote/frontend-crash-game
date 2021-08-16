@@ -1,12 +1,9 @@
 import Authentication      from '../../components/Authentication';
-import Button              from '../../components/Button';
-import ButtonTheme         from '../../components/Button/ButtonTheme';
 import classNames          from 'classnames';
 import darkModeLogo        from '../../data/images/logo-demo.svg';
 import Icon                from '../../components/Icon';
 import IconTheme           from '../../components/Icon/IconTheme';
 import IconType            from '../../components/Icon/IconType';
-import Link                from '../../components/Link';
 import Routes              from '../../constants/Routes';
 import styles              from './styles.module.scss';
 import useWindowDimensions from '../../components/hoc/useWindowDimensions';
@@ -19,7 +16,6 @@ import { useHistory }      from 'react-router';
 const Join = ({ authState }) => {
     const history                                   = useHistory();
     const { width }                                 = useWindowDimensions();
-    const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
 
     useEffect(() => {
         if (authState === AuthState.LOGGED_IN) {
@@ -28,15 +24,11 @@ const Join = ({ authState }) => {
     }, []);
 
     const shouldShowWelcomeScreen = () => {
-        return width >= 768 || showWelcomeScreen;
+        return width >= 768;
     };
 
     const shouldShowAuthScreen = () => {
         return width >= 768 || !shouldShowWelcomeScreen();
-    };
-
-    const onLetsTradeClick = () => {
-        setShowWelcomeScreen(false);
     };
 
     const goBackHome = () => {
@@ -75,20 +67,6 @@ const Join = ({ authState }) => {
                         <br />
                         on anything.
                     </h1>
-                    <Button
-                        theme={ButtonTheme.welcomeScreenButton}
-                        onClick={onLetsTradeClick}
-                    >
-                        Get Started!
-                    </Button>
-                    <p className={styles.welcomeSmallPrint}>
-                        By continuing I accept the <Link to={Routes.termsAndConditions}>
-                        Terms and Conditions
-                    </Link> and <Link to={Routes.privacyPolicy}>
-                        Privacy Policy
-                    </Link>.
-                        Also I confirm that I am over 18 years old.
-                    </p>
                 </div>
             </div>
             <div

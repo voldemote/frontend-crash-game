@@ -702,7 +702,7 @@ const BetView = ({
                 'name'
             ]
             );
-            console.debug(bet);
+            // console.debug(bet);
             const summaryRows   = [
                 BetSummaryHelper.getDivider(),
                 BetSummaryHelper.getKeyValue('Overall trades', overallTrades),
