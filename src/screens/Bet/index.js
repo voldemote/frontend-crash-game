@@ -31,7 +31,9 @@ import React                        from 'react';
 import { LOGGED_IN }                from 'constants/AuthState';
 import BaseContainerWithNavbar      from 'components/BaseContainerWithNavbar';
 import PopupTheme                   from '../../components/Popup/PopupTheme';
-import { BetActions } from 'store/actions/bet';
+import { BetActions }               from 'store/actions/bet';
+import NavbarFooter                 from '../../components/NavbarFooter';
+import NavbarFooterAction           from '../../components/NavbarFooterAction';
 
 const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSelectedBet }) => {
           const history                            = useHistory();
@@ -442,114 +444,125 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
             };
           }
 
-          const renderMobileMenuIndicator = (index) => {
-              return (
-                  <span
-                      className={currentSlide === index ? styles.active : ''}
-                      onClick={() => {
-                          setCurrentSlide(index);
-                      }}
-                  >
-                  </span>
-              );
-          };
+        const renderMobileMenuIndicator = (index) => {
+            return (
+                <span
+                    className={currentSlide === index ? styles.active : ''}
+                    onClick={() => {
+                        setCurrentSlide(index);
+                    }}
+                >
+                </span>
+            );
+        };
 
-          if (!event) {
-              return null;
-          }
+        const renderNavbar = () => {
+            return (
+                <NavbarFooter className={styles.betNavbar}>
+                    <NavbarFooterAction route={Routes.home} iconType={IconType.chat2} text='Chat' className={styles.navbarItem} />
+                    <NavbarFooterAction route={Routes.bet} iconType={IconType.bet2} text='Event Trades' className={styles.navbarItem} />
+                    <NavbarFooterAction route={Routes.betOverview} iconType={IconType.bet2} text='My Trades' className={styles.navbarItem} />
+                </NavbarFooter>
+            );
+        };
 
-          return (
+        if (!event) {
+            return null;
+        }
 
-              <BaseContainerWithNavbar 
-                withPaddingTop={true}
-                withoutPaddingBottom={true}
-              >
-                <div className={styles.bet}>
-                  <div className={styles.upperLeftOval}>
-                  </div>
-                  <div className={styles.centeredBottomOval}>
-                  </div>
-                  <div className={styles.headlineContainer}>
-                      <div>
-                          <Link
-                              to={Routes.home}
-                              className={styles.arrowBack}
-                          >
-                          </Link>
-                          <div className={styles.headline}>
-                              <h2>
-                                  {_.get(event, 'name')}
-                              </h2>
-                              <div>
-                                  <LiveBadge />
-                                  <ViewerBadge viewers={1123} />
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div className={styles.row}>
-                      <div className={styles.columnLeft}>
-                          <div className={styles.streamContainer}>
-                              <TwitchEmbedVideo
-                                  video={event.streamUrl}
-                              />
-                              <div className={styles.timeLeft}>
-                                  <span>
-                                      Estimated end:
-                                  </span>
-                                  <TimeLeftCounter endDate={new Date(_.get(event, 'endDate'))} />
-                              </div>
-                          </div>
-                          <Chat
-                              className={styles.desktopChat}
-                              event={event}
-                          />
-                          <div className={styles.mobileCarousel}>
-                              <Swiper
-                                  slidesPerView={1}
-                                  pagination={{
-                                      'clickable': false,
-                                  }}
-                                  autoHeight={true}
-                                  onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
-                                  onSwiper={setSwiper}
-                              >
-                                  <SwiperSlide className={styles.carouselSlide}>
-                                    <div>
-                                        {renderRelatedBetList(true)}
-                                    </div> 
-                                  </SwiperSlide>
-                                  <SwiperSlide className={styles.carouselSlide}>
-                                      <Chat
-                                          event={event}
-                                          className={styles.mobileChat}
-                                      />
-                                  </SwiperSlide>
-                                  <SwiperSlide className={styles.carouselSlide}>
-                                      <div>
-                                          {renderMyTradesList(true)}
-                                      </div>
-                                  </SwiperSlide>
-                              </Swiper>
-                          </div>
-                      </div>
-                      <div className={styles.columnRight}>
-                          {renderBetSidebarContent()}
-                      </div>
-                  </div>
-                  <div className={styles.mobileMenu}>
-                      <div className={styles.indicators}>
-                          {renderMobileMenuIndicator(0)}
-                          {renderMobileMenuIndicator(1)}
-                          {renderMobileMenuIndicator(2)}
-                      </div>
-                  </div>
-                  {renderEventCreationButton()}
-                  {renderChatButton()}
+        return (
+
+            <BaseContainerWithNavbar 
+            withPaddingTop={true}
+            withoutPaddingBottom={true}
+            >
+            <div className={styles.bet}>
+                <div className={styles.upperLeftOval}>
                 </div>
-              </BaseContainerWithNavbar>
-          );
-      }
+                <div className={styles.centeredBottomOval}>
+                </div>
+                <div className={styles.headlineContainer}>
+                    <div>
+                        <Link
+                            to={Routes.home}
+                            className={styles.arrowBack}
+                        >
+                        </Link>
+                        <div className={styles.headline}>
+                            <h2>
+                                {_.get(event, 'name')}
+                            </h2>
+                            <div>
+                                <LiveBadge />
+                                <ViewerBadge viewers={1123} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.row}>
+                    <div className={styles.columnLeft}>
+                        <div className={styles.streamContainer}>
+                            <TwitchEmbedVideo
+                                video={event.streamUrl}
+                            />
+                            <div className={styles.timeLeft}>
+                                <span>
+                                    Estimated end:
+                                </span>
+                                <TimeLeftCounter endDate={new Date(_.get(event, 'endDate'))} />
+                            </div>
+                        </div>
+                        <Chat
+                            className={styles.desktopChat}
+                            event={event}
+                        />
+                        <div className={styles.mobileCarousel}>
+                            <Swiper
+                                slidesPerView={1}
+                                pagination={{
+                                    'clickable': false,
+                                }}
+                                autoHeight={true}
+                                onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
+                                onSwiper={setSwiper}
+                            >
+                                <SwiperSlide className={styles.carouselSlide}>
+                                <div>
+                                    {renderRelatedBetList(true)}
+                                </div> 
+                                </SwiperSlide>
+                                <SwiperSlide className={styles.carouselSlide}>
+                                    <Chat
+                                        event={event}
+                                        className={styles.mobileChat}
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className={styles.carouselSlide}>
+                                    <div>
+                                        {renderMyTradesList(true)}
+                                    </div>
+                                </SwiperSlide>
+                            </Swiper>
+                        </div>
+                    </div>
+                    <div className={styles.columnRight}>
+                        {renderBetSidebarContent()}
+                    </div>
+                </div>
+                <div className={styles.mobileMenu}>
+                    <div className={styles.indicators}>
+                        {renderMobileMenuIndicator(0)}
+                        {renderMobileMenuIndicator(1)}
+                        {renderMobileMenuIndicator(2)}
+                    </div>
+                </div>
+                {renderEventCreationButton()}
+                {renderChatButton()}
+                {renderNavbar()}
+            </div>
+            </BaseContainerWithNavbar>
+        );
+    }
 ;
 
 const mapStateToProps = (state) => {

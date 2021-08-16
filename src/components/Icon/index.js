@@ -19,7 +19,9 @@ import { ReactComponent as IconBell }            from '../../data/icons/bell.svg
 import { ReactComponent as IconBet }             from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.svg';
 import { ReactComponent as IconCalendar }        from '../../data/icons/calendar.svg';
+import { ReactComponent as IconCamera }          from '../../data/icons/camera.svg';
 import { ReactComponent as IconChat }            from '../../data/icons/chat.svg';
+import { ReactComponent as IconChat2 }           from '../../data/icons/chat2.svg';
 import { ReactComponent as IconChecked }         from '../../data/icons/checked.svg';
 import { ReactComponent as IconCollapseSidebar } from '../../data/icons/collapse-sidebar.svg';
 import { ReactComponent as IconConfettiLeft }    from '../../data/icons/confetti-left.svg';
@@ -40,6 +42,7 @@ import { ReactComponent as IconPhoneNumber }     from '../../data/icons/phone-nu
 import { ReactComponent as IconRefresh }         from '../../data/icons/refresh.svg';
 import { ReactComponent as IconSearch }          from '../../data/icons/search.svg';
 import { ReactComponent as IconSettings }        from '../../data/icons/settings.svg';
+import { ReactComponent as IconShuttle }         from '../../data/icons/shuttle.svg';
 import { ReactComponent as IconSuccess }         from '../../data/icons/success.svg';
 import { ReactComponent as IconSupport }         from '../../data/icons/support.svg';
 import { ReactComponent as IconSwitcher }        from '../../data/icons/switcher.svg';
@@ -71,7 +74,9 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.bet]:             <IconBet />,
                 [IconType.bet2]:            <IconBet2 />,
                 [IconType.calendar]:        <IconCalendar />,
+                [IconType.camera]:          <IconCamera style={{ transform: 'rotate(-10deg)' }} />,
                 [IconType.chat]:            <IconChat />,
+                [IconType.chat2]:           <IconChat2 />,
                 [IconType.checked]:         <IconChecked />,
                 [IconType.collapseSidebar]: <IconCollapseSidebar />,
                 [IconType.confettiLeft]:    <IconConfettiLeft />,
@@ -91,6 +96,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.refresh]:         <IconRefresh />,
                 [IconType.search]:          <IconSearch />,
                 [IconType.settings]:        <IconSettings />,
+                [IconType.shuttle]:         <IconShuttle />,
                 [IconType.support]:         <IconSupport />,
                 [IconType.switcher]:        <IconSwitcher />,
                 [IconType.threeDotMenu]:    <IconThreeDotMenu />,

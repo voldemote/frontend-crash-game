@@ -408,4 +408,29 @@
             display: none;
         }
     }
+
+    .betNavbar {
+        z-index: 1000;
+        border-radius: 20px 20px 0 0;
+        padding: 0 25px;
+        height: 80px;
+
+        & .navbarItem {
+            min-width: 75px;
+
+            &:after {
+                position: absolute;
+                content: '';
+                background-color: $colorGrayLight4;
+                top: -15px;
+                right: 0;
+                width: 1px;
+                height: 80px;
+            }
+
+            &:last-child:after {
+                display: none;
+            }
+        }
+    }
 }

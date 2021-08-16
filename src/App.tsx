@@ -20,6 +20,9 @@ import { history }                 from './store';
 import { Provider }                from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Navbar from 'components/Navbar';
+import NavbarFooter from 'components/NavbarFooter';
+import NavbarFooterAction from 'components/NavbarFooterAction';
+import IconType from 'components/Icon/IconType';
 
 const configuredStore = store();
 
@@ -94,6 +97,13 @@ const App = () => {
                     />
                     <Redirect to={Routes.home} />
                 </Switch>
+                <NavbarFooter hideForRoutes={[Routes.bet]}>
+                    {/* {TODO: Update routes} */}
+                    <NavbarFooterAction route={Routes.home} iconType={IconType.home} text='Home' />
+                    <NavbarFooterAction route={Routes.wallet} iconType={IconType.camera} text='Live Stream' />
+                    <NavbarFooterAction route={Routes.bet} iconType={IconType.bet2} text='Events' />
+                    <NavbarFooterAction route={Routes.termsAndConditions} iconType={IconType.shuttle} text='Rosi Game' />
+                </NavbarFooter>
             </ConnectedRouter>
         </Provider>
     );
