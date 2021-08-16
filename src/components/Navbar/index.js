@@ -55,6 +55,9 @@ const Navbar = ({
             return;
         }
         const isDrawerOpen = openDrawer === drawerName;
+        if(!isDrawerOpen && drawerName === drawers.leaderboard) {
+            fetchLeaderboard();
+        }
         setOpenDrawer(isDrawerOpen ? '' : drawerName);
     }
 
@@ -102,10 +105,6 @@ const Navbar = ({
         document.body.style.overflow = "hidden";
     } else {
         document.body.style.overflow = "auto";
-    }
-
-    if(isOpen(drawers.wallet)) {
-        fetchLeaderboard();
     }
 
     const goToJoinPage = () => {

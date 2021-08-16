@@ -14,9 +14,9 @@ const TwoColumnTable = ({ headings: [firstHeading, secondHeading], rows, noResul
         </div>
         <div className={styles.tableBody}>
           {
-            rows.map(([firstCell, secondCell]) => {
+            rows.map(([firstCell, secondCell], key) => {
                 return (
-                    <div className={styles.row}>
+                    <div key={key} className={styles.row}>
                         <div className={styles.cell}>
                             {firstCell}
                         </div>
