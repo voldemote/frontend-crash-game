@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import TwitchEmbedVideo from '../../components/TwitchEmbedVideo';
 import BetView from '../../components/BetView';
 import RelatedBetCard from '../../components/RelatedBetCard';
@@ -68,7 +68,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
 
     const onChatButtonClick = () => {
         setMobileCommentIsOpen(!mobileCommentIsOpen);
-        moveToSlide(1);
+        moveToSlide(0);
     }
 
     const renderChatButton = () => {
@@ -77,7 +77,6 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                 className={styles.fixedChatButton}
                 onClick={() => onChatButtonClick()}
                 iconType={mobileCommentIsOpen ? IconType.cross : IconType.chat}
-                left={true}
                 showHighlight={!mobileCommentIsOpen}
             />
         );
@@ -464,7 +463,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
     };
 
     const setSlide = (index) => {
-        if (index !== 1 && mobileCommentIsOpen) {
+        if (index !== 0 && mobileCommentIsOpen) {
             setMobileCommentIsOpen(false);
         }
 
@@ -481,13 +480,13 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                 <NavbarFooterAction
                     iconType={IconType.chat2}
                     text='Chat'
-                    className={classNames(styles.navbarItem, getActiveNavbarClass(1))}
-                    onClick={() => moveToSlide(1)} />
+                    className={classNames(styles.navbarItem, getActiveNavbarClass(0))}
+                    onClick={() => moveToSlide(0)} />
                 <NavbarFooterAction
                     iconType={IconType.bet2}
                     text='Event Trades'
-                    className={classNames(styles.navbarItem, styles.navbarItemWithBorder, getActiveNavbarClass(0))}
-                    onClick={() => moveToSlide(0)} />
+                    className={classNames(styles.navbarItem, styles.navbarItemWithBorder, getActiveNavbarClass(1))}
+                    onClick={() => moveToSlide(1)} />
                 <NavbarFooterAction
                     iconType={IconType.bet2}
                     text='My Trades'
@@ -547,7 +546,6 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                             className={styles.desktopChat}
                             event={event}
                         />
-                        
                     </div>
                     <div className={styles.columnRight}>
                         {renderBetSidebarContent()}
@@ -564,16 +562,16 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                         onSwiper={setSwiper}
                     >
                         <SwiperSlide className={styles.carouselSlide}>
-                            <div>
-                                {renderRelatedBetList(true)}
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide className={styles.carouselSlide}>
                             <Chat
                                 event={event}
                                 className={styles.mobileChat}
                                 hideInput={!mobileCommentIsOpen}
                             />
+                        </SwiperSlide>
+                        <SwiperSlide className={styles.carouselSlide}>
+                            <div>
+                                {renderRelatedBetList(true)}
+                            </div>
                         </SwiperSlide>
                         <SwiperSlide className={styles.carouselSlide}>
                             <div>

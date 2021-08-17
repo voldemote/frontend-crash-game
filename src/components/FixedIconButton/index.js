@@ -30,8 +30,10 @@ const FixedIconButton = ({ className, text, iconType, onClick, left = false, sho
         >
             {renderText()}
             {
-                showHighlight && <Highlight
+                showHighlight && 
+                <Highlight
                     highlightType={HighlightType.highlightSettingsSupport}
+                    className={styles.fixedIconHighlight}
                 />
             }
             <Icon

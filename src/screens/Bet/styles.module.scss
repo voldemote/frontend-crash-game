@@ -346,7 +346,7 @@
 
     .mobileCarousel
     {
-        flex:       1;
+        flex:   1;
         margin: 1rem -1.7rem 0 -1.7rem;
 
         @media (min-width: $screen-md)
@@ -412,7 +412,6 @@
     {
         bottom: 130px;
         right:  30px;
-        left:   unset;
 
         @media(min-width: $screen-md)
         {
