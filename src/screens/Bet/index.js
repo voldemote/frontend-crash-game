@@ -22,7 +22,6 @@ import MyBetCard from '../../components/MyBetCard';
 import { useHistory } from 'react-router-dom';
 import Chat from '../../components/Chat';
 import classNames from 'classnames';
-import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import EventTradesContainer from '../../components/EventTradesContainer';
 import EventTradeViewsHelper from '../../helper/EventTradeViewsHelper';
@@ -80,14 +79,6 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                 onClick={() => onChatButtonClick()}
                 iconType={mobileCommentIsOpen ? IconType.cross : IconType.chat}
                 showHighlight={!mobileCommentIsOpen}
-            />
-        );
-    };
-
-    const renderEventCreationButton = () => {
-        return (
-            <FixedEventCreationIconButton
-                eventId={eventId}
             />
         );
     };
@@ -589,7 +580,6 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                         {renderMobileMenuIndicator(2)}
                     </div>
                 </div>
-                {renderEventCreationButton()}
                 {renderChatButton()}
                 {renderNavbar()}
             </div>
