@@ -57,13 +57,14 @@ const fetchAllSucceeded = function* (action) {
 };
 
 const fetchFilteredEvents = function* (action) {
-    console.log("action. payload :>> ", action);
     try {
+        // SM: perhaps better solution should be considered, instead of setting token in header for each request
+        // in the handler itself
+        const token = yield select(state => state.authentication.token);
+        Api.setToken(token);
         const { data } = yield call(() =>
             Api.listEventsFiltered(action.payload)
         );
-
-        console.log('data :>> ', data);
 
         yield put(EventActions.fetchFilteredEventsSuccess(data));
     } catch (error) {

@@ -24,7 +24,7 @@ function LiveEvents({ fetchLiveEvents }) {
             category: "all",
             count: "30",
             page: "1",
-            sortBy: "name:asc",
+            sortBy: "name",
             searchQuery: "",
         });
     }, []);
