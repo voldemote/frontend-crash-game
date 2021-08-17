@@ -69,7 +69,9 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
     const onChatButtonClick = () => {
         setMobileCommentIsOpen(!mobileCommentIsOpen);
         moveToSlide(0);
-        bottomScroll.current?.scrollIntoView({ behavior: 'smooth' });
+        if (!mobileCommentIsOpen) {
+            bottomScroll.current?.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     const renderChatButton = () => {
