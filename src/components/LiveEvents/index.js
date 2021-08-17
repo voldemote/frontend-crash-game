@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Routes from "../../constants/Routes";
 import styles from "./styles.module.scss";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import Search from "../Search";
+import EventCard from "../EventCard";
+import { EventActions } from "../../store/actions/event";
 
-function LiveEvents({ testProp }) {
+function LiveEvents({ fetchLiveEvents }) {
     const [searchInput, setSearchInput] = useState("");
 
     const handleSearchSubmit = (val) => {
@@ -15,6 +17,19 @@ function LiveEvents({ testProp }) {
     useEffect(() => {
         console.log("searchInput :>> ", searchInput);
     }, [searchInput]);
+
+    useEffect(() => {
+        fetchLiveEvents({
+            type: "all",
+            category: "all",
+            count: "30",
+            page: "1",
+            sortBy: "name:asc",
+            searchQuery: "",
+        });
+    }, []);
+
+    const events = useSelector((state) => state.events);
 
     return (
         <>
@@ -29,7 +44,18 @@ function LiveEvents({ testProp }) {
                 </div>
                 <div className={styles.sort}>sort</div>
             </section>
-            <section className={styles.main}>event cards here</section>
+            <section className={styles.main}>
+                {events}
+                {/* <EventCard
+                    title={event.name}
+                    organizer={""}
+                    viewers={12345}
+                    live={isLive}
+                    tags={mappedTags}
+                    image={event.previewImageUrl}
+                    onClick={onEventClick(eventId, currentTradeId)}
+                /> */}
+            </section>
         </>
     );
 }
@@ -40,7 +66,10 @@ const mapStateToProps = (state) => {
     };
 };
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        fetchLiveEvents: (params) =>
+            dispatch(EventActions.initiateFetchFilteredEvents(params)),
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LiveEvents);

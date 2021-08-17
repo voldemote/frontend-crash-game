@@ -99,6 +99,20 @@ const listEvents = () => {
     });
 };
 
+const listEventsFiltered = ({type, category, count, page, sortBy, searchQuery}) => {
+    return Api.get(
+        ApiUrls.API_EVENT_LIST_FILTERED
+            .replace(':type', type)
+            .replace(':category', category)
+            .replace(':count', count)
+            .replace(':page', page)
+            .replace(':sortBy', sortBy)
+            .replace(':searchQuery', searchQuery)
+    ).catch((error) => {
+        console.log('[API Error] called: listEventsFIltered', error);
+    });
+};
+
 const getUser = (userId) => {
     return Api.get(
         _.replace(ApiUrls.API_USER, ':id', userId),
@@ -201,6 +215,7 @@ const getChatMessagesByEventId = (eventId) => {
         console.log('[API Error] called: getChatMessagesByEventId', error);
     });
 };
+
 export {
     Api,
     createBet,
@@ -213,6 +228,7 @@ export {
     getUser,
     getLeaderboard,
     listEvents,
+    listEventsFiltered,
     placeBet,
     pullOutBet,
     requestSms,
