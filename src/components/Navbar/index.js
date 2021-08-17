@@ -290,8 +290,9 @@ const Navbar = ({
                 {isLoggedIn() &&
                     <div className={style.linkWrapper}>
                         {renderNavbarLink(Routes.home, <Icon iconType={IconType.home} className={style.homeIcon} />)}
-                        {renderNavbarLink(Routes.betOverview, 'My Trades')}
-                        {renderNavbarLink(Routes.wallet, 'My Wallet')}
+                        {renderNavbarLink(Routes.liveEvents, 'Live Events')}
+                        {renderNavbarLink(Routes.events, 'Events')}
+                        {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
                     </div>
                 }
             </div>
