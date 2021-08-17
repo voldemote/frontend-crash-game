@@ -19,7 +19,13 @@ import { ConnectedRouter }         from 'connected-react-router';
 import { history }                 from './store';
 import { Provider }                from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import Navbar from 'components/Navbar';
+import Navbar                      from 'components/Navbar';
+import NavbarFooter                from 'components/NavbarFooter';
+import NavbarFooterAction          from 'components/NavbarFooterAction';
+import IconType                    from 'components/Icon/IconType';
+import Events                      from './screens/Events';
+import LiveEvents                  from './screens/LiveEvents';
+import RosiGame                    from './screens/RosiGame';
 
 const configuredStore = store();
 
@@ -81,6 +87,21 @@ const App = () => {
                         component={PaymentConfirmation}
                     />
                     <Route
+                        exact
+                        path={Routes.liveEvents}
+                        component={LiveEvents}
+                    />
+                    <Route
+                        exact
+                        path={Routes.events}
+                        component={Events}
+                    />
+                    <Route
+                        exact
+                        path={Routes.rosiGame}
+                        component={RosiGame}
+                    />
+                    <Route
                         path={Routes.wallet}
                         component={Wallet}
                     />
@@ -94,6 +115,12 @@ const App = () => {
                     />
                     <Redirect to={Routes.home} />
                 </Switch>
+                <NavbarFooter skipRoutes={[Routes.bet, Routes.join, Routes.verify]}>
+                    <NavbarFooterAction route={Routes.home} iconType={IconType.home} text='Home' />
+                    <NavbarFooterAction route={Routes.liveEvents} iconType={IconType.camera} text='Live Stream' />
+                    <NavbarFooterAction route={Routes.events} iconType={IconType.bet2} text='Events' />
+                    <NavbarFooterAction route={Routes.rosiGame} iconType={IconType.shuttle} text='Rosi Game' />
+                </NavbarFooter>
             </ConnectedRouter>
         </Provider>
     );

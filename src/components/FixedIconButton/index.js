@@ -6,7 +6,7 @@ import IconTheme     from '../Icon/IconTheme';
 import React         from 'react';
 import styles        from './styles.module.scss';
 
-const FixedIconButton = ({ className, text, iconType, onClick, left = false }) => {
+const FixedIconButton = ({ className, text, iconType, onClick, left = false, showHighlight = true }) => {
     const renderText = () => {
         if (text) {
             return (
@@ -29,9 +29,13 @@ const FixedIconButton = ({ className, text, iconType, onClick, left = false }) =
             onClick={onClick}
         >
             {renderText()}
-            <Highlight
-                highlightType={HighlightType.highlightSettingsSupport}
-            />
+            {
+                showHighlight && 
+                <Highlight
+                    highlightType={HighlightType.highlightSettingsSupport}
+                    className={styles.fixedIconHighlight}
+                />
+            }
             <Icon
                 iconType={iconType}
                 iconTheme={IconTheme.primary}

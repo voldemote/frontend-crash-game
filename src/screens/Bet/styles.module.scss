@@ -10,10 +10,12 @@
     padding:          0.5rem 1.7rem;
     font-family:      $fontLight;
     position:         relative;
+    //z-index:          1;
 
     @media (max-width: $screen-md)
     {
         padding-top: 1rem;
+        padding-bottom: 0;
     }
 
     .upperLeftOval,
@@ -344,8 +346,8 @@
 
     .mobileCarousel
     {
-        flex:       1;
-        margin-top: 2rem;
+        flex:   1;
+        margin: 1rem -1.7rem 0 -1.7rem;
 
         @media (min-width: $screen-md)
         {
@@ -365,7 +367,7 @@
         margin-bottom:   2rem;
         align-items:     center;
 
-        @media (min-width: $screen-md)
+        @media (max-width: $screen-sm), (min-width: $screen-md)
         {
             display: none;
         }
@@ -399,13 +401,73 @@
     .carouselSlide
     {
         padding: 0 0 60px;
+
+        @media(max-width: $screen-md)
+        {
+            padding: 0 1rem 60px;
+        }
     }
 
     .fixedChatButton
     {
+        bottom: 130px;
+        right:  30px;
+
         @media(min-width: $screen-md)
         {
             display: none;
+        }
+
+        & span > svg {
+            & > path {
+                fill:   $colorPrimaryLight;
+                stroke: transparent;
+            }
+        }
+    }
+
+    .betNavbar {
+        z-index:         $zIndexBetNavbarFooter;
+        border-radius:   20px 20px 0 0;
+        padding:         0;
+        height:          80px;
+        justify-content: space-evenly;
+
+        &Hidden {
+            display: none;
+        }
+
+        & .navbarItem {
+            min-width: 75px;
+            margin:    0;
+
+            &WithBorder {
+                border-right: 1px solid $colorGrayLight4;
+                border-left:  1px solid $colorGrayLight4;
+                padding:      0 10vw;
+
+                &.navbarItemActive {
+                    &:after {
+                        left: 20%;
+                    }
+                }
+            }
+
+            &Active {
+                &:after {
+                    content:             '';
+                    position:            absolute;
+                    background:          url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
+                    background-size:     contain;
+                    background-repeat:   no-repeat;
+                    background-position: center;
+                    left:                -10%;
+                    top:                 -25%;
+                    width:               100px;
+                    height:              120px;
+                    z-index:             -1;
+                }
+            }
         }
     }
 }

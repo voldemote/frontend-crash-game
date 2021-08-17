@@ -12,7 +12,7 @@
         right: 20px;
         top: 20px;
         cursor: pointer;
-        z-index: 1000;
+        z-index: $zIndexWelcomAuthContainer + 1;
 
         svg > path {
             stroke-opacity: 0.5;
@@ -108,14 +108,14 @@
 
     .welcomeAuthContainer
     {
-        display:         flex;
-        width:           100%;
-        max-width:       600px;
-        flex-direction:  column;
-        height:          100%;
-        justify-content: space-between;
+        display:          flex;
+        width:            100%;
+        max-width:        600px;
+        flex-direction:   column;
+        height:           100%;
+        justify-content:  space-between;
         background-color: $colorWhite;
-        z-index: 999;
+        z-index:          $zIndexWelcomAuthContainer;
 
         &.hidden
         {

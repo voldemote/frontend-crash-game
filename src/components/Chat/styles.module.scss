@@ -30,6 +30,10 @@
             margin-top: auto;
         }
 
+        @media (max-width: $screen-sm) {
+            margin-bottom: 3rem;
+        }
+
         &::-webkit-scrollbar
         {
             width:      0;
@@ -52,6 +56,24 @@
         padding:          1rem 1rem 1rem 3rem;
         border-radius:    10px;
 
+        @media (max-width: $screen-sm) {
+            position:         fixed;
+            bottom:           0;
+            left:             0;
+            z-index:          1001;
+            width:            100vw;
+            height:           90px;
+            background-color: $colorWhite;
+            padding:          15px 15px 30px;
+            border-radius:    0;
+            color:            $colorPrimary;
+            overflow:         hidden;
+        }
+
+        &Hidden {
+            display: none;
+        }
+
         &.disabled {
             pointer-events: none;
             opacity: 0.8;
@@ -63,6 +85,14 @@
             width:     100%;
             display:   inline-block;
             font-size: 16px;
+
+            @media (max-width: $screen-sm) {
+                background-color: $colorGrayLight5;
+                min-height:       45px;
+                padding-left:     10px;
+                border-radius:    5px;
+                font-size:        12px;
+            }
         }
 
         button
@@ -73,6 +103,38 @@
             border:           none;
             font-size:        16px;
             cursor:           pointer;
+            position:         relative;
+
+            @media (max-width: $screen-sm) {
+                opacity: 1;
+                width:   10%;
+                height:  100%;
+    
+            }
+
+            &:after {
+                content:             '';
+                position:            absolute;
+                background:          url('../../data/backgrounds/highlight-settings-support.svg');
+                background-size:     cover;
+                background-repeat:   no-repeat;
+                background-position: center;
+                left:                -10px;
+                top:                 0;
+                width:               100px;
+                height:              100%;
+                z-index:             -1;
+
+                @media (min-width: $screen-sm) {
+                    display: none;
+                }
+            }
+
+            & span > svg {
+                @media (max-width: $screen-sm) {
+                    stroke: $colorBlack;
+                }
+            }
         }
     }
 }
