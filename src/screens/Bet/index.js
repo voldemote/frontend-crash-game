@@ -44,6 +44,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
     const [activeBetId, setActiveBetId] = useState(betId || null);
     const [betViewIsOpen, setBetViewIsOpen] = useState(false);
     const [mobileCommentIsOpen, setMobileCommentIsOpen] = useState(false);
+    const bottomScroll = useRef(null);
 
     const status = {
         'active': 1,
@@ -69,6 +70,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
     const onChatButtonClick = () => {
         setMobileCommentIsOpen(!mobileCommentIsOpen);
         moveToSlide(0);
+        bottomScroll.current?.scrollIntoView({ behavior: 'smooth' });
     }
 
     const renderChatButton = () => {
@@ -591,6 +593,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
                 {renderChatButton()}
                 {renderNavbar()}
             </div>
+            <div ref={bottomScroll} />
         </BaseContainerWithNavbar>
     );
 }
