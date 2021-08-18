@@ -152,7 +152,7 @@ const Navbar = ({
                     alt="medal"
                     className={style.medal}
                 />
-                <p className={style.rankingText}># {userRank.rank}</p>
+                <p className={style.rankingText}># {user.rank}</p>
             </div>
         );
 
