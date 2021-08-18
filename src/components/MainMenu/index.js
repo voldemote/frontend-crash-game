@@ -12,7 +12,7 @@ import {useHistory} from 'react-router';
 import HomeSettings from '../HomeSettings';
 import {PieChart} from 'react-minimal-pie-chart';
 import {formatToFixed} from '../../helper/FormatNumbers';
-import InputBox from "../InputBox";
+import PhoneInput from "../PhoneInput";
 
 const MainMenu = ({
                       opened,
@@ -25,11 +25,13 @@ const MainMenu = ({
                       investedFundsPercentage,
                       investmentAmount,
                       sellTransactions,
+                      user,
                   }) => {
     const [editVisible, setEditVisible] = useState(false);
 
-    const [name, setName]            = useState('');
-    const [username, setUsername]    = useState('');
+    const [name, setName]               = useState(user.name);
+    const [username, setUsername]       = useState(user.username);
+    const [email, setEmail]             = useState(user.email);
 
     let investedAmount = 0;
 
@@ -55,8 +57,20 @@ const MainMenu = ({
         setEditVisible(!editVisible);
     }
 
-    const handleChange = (e) => {
-        console.log("called " + e.target.value)
+    const handleName = (e) => {
+        setName(e.target.value)
+    }
+
+    const handleUsername = (e) => {
+        setUsername(e.target.value)
+    }
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value)
+    }
+
+    const handleSubmit = () => {
+
     }
 
     const editProfileWrapper = () => {
@@ -70,7 +84,23 @@ const MainMenu = ({
                         <Icon className={styles.backButton} iconType={'arrowTopRight'} onClick={() => setEditVisible(!editVisible)}/>
                         Edit My Profile
                     </h2>
-
+                    <form onSubmit={handleSubmit}>
+                        <div className={styles.profileContent}>
+                            <div className={styles.profileInputGroup}>
+                                <label className={styles.profileInputLabel}>My Name is...</label>
+                                <input className={styles.profileInput} value={name} onChange={handleName} />
+                            </div>
+                            <div className={styles.profileInputGroup}>
+                                <label className={styles.profileInputLabel}>But you can call me...</label>
+                                <input className={styles.profileInput} value={username} onChange={handleUsername} />
+                            </div>
+                            <div className={styles.profileInputGroup}>
+                                <label className={styles.profileInputLabel}>E-Mail</label>
+                                <input className={styles.profileInput} disabled value={email} onChange={handleEmail} />
+                            </div>
+                            <input className={styles.profileSubmit} type={'submit'} value={'Save changes'} />
+                        </div>
+                    </form>
                 </div>
             </div>
         )
@@ -177,6 +207,7 @@ const mapStateToProps = (state) => {
     const overallFundsTotal = balance + investmentAmount;
     const liquidFundsPercentage = 100 * balance / overallFundsTotal;
     const investedFundsPercentage = 100 * investmentAmount / overallFundsTotal;
+    const user = state.authentication;
 
     return {
         openBetCount,
@@ -187,6 +218,7 @@ const mapStateToProps = (state) => {
         liquidFundsPercentage,
         investedFundsPercentage,
         investmentAmount,
+        user
     };
 };
 
