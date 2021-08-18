@@ -17,7 +17,7 @@ const LeaderboardItem = ({user, isCurrentUser = false, showLoadButton = false, o
                     className={style.loadButton}
                     onClick={onLoad}
                 >
-                    Show all
+                    Load more
                 </div>
             </div>
             </>
