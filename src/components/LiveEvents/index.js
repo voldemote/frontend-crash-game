@@ -12,11 +12,15 @@ function LiveEvents({ fetchLiveEvents }) {
 
     const handleSearchSubmit = (val) => {
         console.log("confirm search", val);
+        fetchLiveEvents({
+            type: "all",
+            category: "all",
+            count: "30",
+            page: "1",
+            sortBy: "name",
+            searchQuery: searchInput,
+        });
     };
-
-    useEffect(() => {
-        console.log("searchInput :>> ", searchInput);
-    }, [searchInput]);
 
     useEffect(() => {
         fetchLiveEvents({
@@ -27,10 +31,23 @@ function LiveEvents({ fetchLiveEvents }) {
             sortBy: "name",
             searchQuery: "",
         });
-    }, []);
+    }, [fetchLiveEvents]);
 
-    const events = useSelector((state) => state.events);
+    const events = useSelector((state) => state.event.filteredEvents);
 
+    const history = useHistory();
+
+    const onEventClick = (eventId, streamUrl) => {
+        console.log("event clicked", eventId, streamUrl);
+        return () => {
+            // history.push(
+            //     Routes.getRouteWithParameters(Routes.bet, {
+            //         eventId,
+            //         betId,
+            //     })
+            // );
+        };
+    };
     return (
         <>
             <section className={styles.section}>
@@ -45,16 +62,18 @@ function LiveEvents({ fetchLiveEvents }) {
                 <div className={styles.sort}>sort</div>
             </section>
             <section className={styles.main}>
-                {events}
-                {/* <EventCard
-                    title={event.name}
-                    organizer={""}
-                    viewers={12345}
-                    live={isLive}
-                    tags={mappedTags}
-                    image={event.previewImageUrl}
-                    onClick={onEventClick(eventId, currentTradeId)}
-                /> */}
+                {events.map((item) => (
+                    <EventCard
+                        key={item._id}
+                        title={item.name}
+                        organizer={""}
+                        // viewers={12345}
+                        live={item.isLive}
+                        // tags={mappedTags}
+                        image={item.previewImageUrl}
+                        onClick={() => onEventClick(item._id, item.streamUrl)}
+                    />
+                ))}
             </section>
         </>
     );

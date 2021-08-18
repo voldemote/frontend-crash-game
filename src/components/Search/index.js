@@ -23,7 +23,7 @@ function Search({ value, handleConfirm, handleChange }) {
                 // width={14}
                 // height={14}
             /> */}
-            <IconSearch className={styles.searchIcon} />
+            <IconSearch className={styles.searchIcon} onClick={handleConfirm} />
         </div>
     );
 }
