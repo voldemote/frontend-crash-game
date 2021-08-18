@@ -242,7 +242,7 @@ const Navbar = ({
                     </p>
                     <div className={style.leaderboardHeadingRank}>
                         <div className={style.leaderboardHeadingRankText}>MY RANK</div>
-                        <div className={style.leaderboardHeadingRankValue}>#{userRank.rank}</div>
+                        <div className={style.leaderboardHeadingRankValue}>#{user.rank}</div>
                     </div>
                 </div>
                 <div className={style.leaderboardInfo}>
