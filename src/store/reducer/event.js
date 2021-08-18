@@ -4,6 +4,7 @@ import { EventTypes } from "../actions/event";
 const initialState = {
     events: [],
     filteredEvents: [],
+    defaultParams: {},
 };
 
 const fetchAllSucceeded = (action, state) => {

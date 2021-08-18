@@ -7,9 +7,40 @@ import Search from "../Search";
 import EventCard from "../EventCard";
 import { EventActions } from "../../store/actions/event";
 import CategoryList from "../CategoryList";
+import CoDImage from "../../data/images/Call of Duty_ Warzone-144x192.jpeg";
+import FifaImage from "../../data/images/FIFA 21-144x192.jpeg";
+import LoLImage from "../../data/images/League of Legends-144x192.jpeg";
+import MinecraftImage from "../../data/images/Minecraft-144x192.jpeg";
 
 function LiveEvents({ fetchLiveEvents }) {
     const [searchInput, setSearchInput] = useState("");
+    const [categories, setCategories] = useState([
+        {
+            value: "all",
+            image: "placeholder",
+            isActive: true,
+        },
+        {
+            value: "streamed-esports",
+            image: FifaImage,
+            isActive: false,
+        },
+        {
+            value: "streamed-shooter",
+            image: CoDImage,
+            isActive: false,
+        },
+        {
+            value: "streamed-mmorpg",
+            image: LoLImage,
+            isActive: false,
+        },
+        {
+            value: "streamed-other",
+            image: MinecraftImage,
+            isActive: false,
+        },
+    ]);
 
     const handleSearchSubmit = (val) => {
         fetchLiveEvents({
@@ -21,6 +52,18 @@ function LiveEvents({ fetchLiveEvents }) {
         fetchLiveEvents({
             category: value,
         });
+        const updatedCats = categories.map((cat) => {
+            if (value !== cat.value)
+                return {
+                    ...cat,
+                    isActive: false,
+                };
+            return {
+                ...cat,
+                isActive: true,
+            };
+        });
+        setCategories(updatedCats);
     };
 
     useEffect(() => {
@@ -36,29 +79,6 @@ function LiveEvents({ fetchLiveEvents }) {
     const mappedTags = (id) =>
         events.find((event) => event._id === id)?.tags.map((tag) => tag.name) ||
         [];
-
-    const categories = [
-        {
-            image: "placeholder",
-            value: "all",
-        },
-        {
-            image: "placeholder",
-            value: "streamed-esports",
-        },
-        {
-            image: "placeholder",
-            value: "streamed-shooter",
-        },
-        {
-            image: "placeholder",
-            value: "streamed-mmorpg",
-        },
-        {
-            image: "placeholder",
-            value: "streamed-other",
-        },
-    ];
 
     return (
         <>

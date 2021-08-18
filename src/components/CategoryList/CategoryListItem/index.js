@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Routes from "../../../constants/Routes";
-import styles from "./styles.module.scss";
+import classNames from "classnames";
 import { connect, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+import Routes from "../../../constants/Routes";
+import styles from "./styles.module.scss";
 import Search from "../../Search";
 import EventCard from "../../EventCard";
 import { EventActions } from "../../../store/actions/event";
@@ -12,13 +13,18 @@ function CategoryListItem({ categoryItem, handleSelect }) {
         <>
             <section className={styles.categoryListItem}>
                 <div
-                    className={styles.box}
+                    className={classNames(styles.box, {
+                        [styles.active]: categoryItem.isActive,
+                    })}
                     onClick={() => handleSelect(categoryItem.value)}
                     role="button"
                     tabIndex="0"
                 >
-                    {/* {categoryItem.image} */}
-                    {categoryItem.value}
+                    <img
+                        src={categoryItem.image}
+                        alt={`category ${categoryItem.value}`}
+                        className={styles.image}
+                    />
                 </div>
             </section>
         </>
