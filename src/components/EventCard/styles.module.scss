@@ -1,48 +1,44 @@
-@import '../../styles/all';
+@import "../../styles/all";
 
-.eventCardContainer
-{
+.eventCardContainer {
     padding-right: 20px;
 
-    .eventCard
-    {
-        width:           300px;
-        border-radius:   6px;
-        font-family:     $fontLight;
-        color:           $colorWhite;
-        min-height:      200px;
-        padding:         1rem;
-        display:         flex;
-        position:        relative;
+    .eventCard {
+        width: 300px;
+        border-radius: 6px;
+        font-family: $fontLight;
+        color: $colorWhite;
+        min-height: 200px;
+        padding: 1rem;
+        display: flex;
+        position: relative;
+        z-index: 0;
         justify-content: space-between;
-        flex-direction:  column;
-        user-select:     none;
-        cursor:          pointer;
-        overflow:        hidden;
+        flex-direction: column;
+        user-select: none;
+        cursor: pointer;
+        overflow: hidden;
 
         .eventCardBackground,
-        .eventCardBackgroundBlur
-        {
-            position:            absolute;
-            top:                 0;
-            left:                0;
-            width:               100%;
-            height:              100%;
-            z-index:             -1;
-            background-repeat:   no-repeat;
+        .eventCardBackgroundBlur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-repeat: no-repeat;
             background-position: center;
-            background-size:     cover;
-            background-color:    $colorPrimary66;
+            background-size: cover;
+            background-color: $colorPrimary66;
 
-            &.eventCardBackgroundBlur
-            {
-                filter:         blur(2px);
+            &.eventCardBackgroundBlur {
+                filter: blur(2px);
                 -webkit-filter: blur(2px);
             }
         }
 
-        .title
-        {
+        .title {
             font-family: $fontBold;
         }
     }

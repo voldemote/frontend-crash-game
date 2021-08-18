@@ -6,52 +6,69 @@ import { useHistory, useParams } from "react-router";
 import Search from "../Search";
 import EventCard from "../EventCard";
 import { EventActions } from "../../store/actions/event";
+import CategoryList from "../CategoryList";
 
 function LiveEvents({ fetchLiveEvents }) {
     const [searchInput, setSearchInput] = useState("");
 
     const handleSearchSubmit = (val) => {
-        console.log("confirm search", val);
         fetchLiveEvents({
-            type: "all",
-            category: "all",
-            count: "30",
-            page: "1",
-            sortBy: "name",
             searchQuery: searchInput,
         });
     };
 
-    useEffect(() => {
+    const handleSelectCategory = (value) => {
         fetchLiveEvents({
-            type: "all",
-            category: "all",
-            count: "30",
-            page: "1",
-            sortBy: "name",
-            searchQuery: "",
+            category: value,
         });
+    };
+
+    useEffect(() => {
+        fetchLiveEvents();
     }, [fetchLiveEvents]);
 
     const events = useSelector((state) => state.event.filteredEvents);
 
-    const history = useHistory();
-
     const onEventClick = (eventId, streamUrl) => {
         console.log("event clicked", eventId, streamUrl);
-        return () => {
-            // history.push(
-            //     Routes.getRouteWithParameters(Routes.bet, {
-            //         eventId,
-            //         betId,
-            //     })
-            // );
-        };
     };
+
+    const mappedTags = (id) =>
+        events.find((event) => event._id === id)?.tags.map((tag) => tag.name) ||
+        [];
+
+    const categories = [
+        {
+            image: "placeholder",
+            value: "all",
+        },
+        {
+            image: "placeholder",
+            value: "streamed-esports",
+        },
+        {
+            image: "placeholder",
+            value: "streamed-shooter",
+        },
+        {
+            image: "placeholder",
+            value: "streamed-mmorpg",
+        },
+        {
+            image: "placeholder",
+            value: "streamed-other",
+        },
+    ];
+
     return (
         <>
-            <section className={styles.section}>
-                <div className={styles.mpes}>event shortcuts</div>
+            <section className={styles.header}>
+                <div className={styles.categories}>
+                    <CategoryList
+                        categories={categories}
+                        handleSelect={handleSelectCategory}
+                    />
+                </div>
                 <div className={styles.search}>
                     <Search
                         value={searchInput}
@@ -59,7 +76,7 @@ function LiveEvents({ fetchLiveEvents }) {
                         handleConfirm={handleSearchSubmit}
                     />
                 </div>
-                <div className={styles.sort}>sort</div>
+                {/* <div className={styles.sort}>sort</div> */}
             </section>
             <section className={styles.main}>
                 {events.map((item) => (
@@ -67,9 +84,9 @@ function LiveEvents({ fetchLiveEvents }) {
                         key={item._id}
                         title={item.name}
                         organizer={""}
-                        // viewers={12345}
-                        live={item.isLive}
-                        // tags={mappedTags}
+                        viewers={12345}
+                        live={true}
+                        tags={mappedTags(item._id)}
                         image={item.previewImageUrl}
                         onClick={() => onEventClick(item._id, item.streamUrl)}
                     />
@@ -80,9 +97,7 @@ function LiveEvents({ fetchLiveEvents }) {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        testProp: "sdsd",
-    };
+    return {};
 };
 const mapDispatchToProps = (dispatch) => {
     return {

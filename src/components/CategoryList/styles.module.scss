@@ -1,0 +1,11 @@
+@import "../../styles/all";
+
+.categoryList {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+
+    > :not(:last-child) {
+        margin-right: 10px;
+    }
+}

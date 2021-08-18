@@ -17,12 +17,21 @@ const fetchAllSucceeded = makeActionCreator(EventTypes.FETCH_ALL_SUCCEEDED, {
 
 const fetchAllFailed = makeActionCreator(EventTypes.FETCH_ALL_FAILED);
 
-
 // Live events (filtered)
-const initiateFetchFilteredEvents = (params) => ({
-    type: EventTypes.FETCH_FILTERED,
-    payload: params,
-});
+const initiateFetchFilteredEvents = (params = {}) => {
+    const defaultParams = {
+        type: "all",
+        category: "all",
+        count: "30",
+        page: "1",
+        sortBy: "name",
+        searchQuery: "",
+    };
+    return {
+        type: EventTypes.FETCH_FILTERED,
+        payload: { ...defaultParams, ...params },
+    };
+};
 const fetchFilteredEventsSuccess = (payload) => ({
     type: EventTypes.FETCH_FILTERED_SUCCESS,
     payload,
@@ -37,5 +46,5 @@ export const EventActions = {
     fetchAllFailed,
     initiateFetchFilteredEvents,
     fetchFilteredEventsSuccess,
-    fetchFilteredEventsFail
+    fetchFilteredEventsFail,
 };
