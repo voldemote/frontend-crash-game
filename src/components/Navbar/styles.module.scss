@@ -250,17 +250,87 @@
             }
         }
 
+        .leaderboardHeadingWrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         .leaderboardHeading
         {
-            margin:         90px 24px 40px 24px;
+            padding:        90px 30px 40px 30px;
             font-size:      20px;
-            line-height:    39px;
+            line-height:    1.2;
             letter-spacing: 0.75px;
             color:          #ffffff;
+            width: 100%;
             
             @media screen and (min-width: $screen-xs) {
                 font-size:  24px;
             }
+        }
+
+        .leaderboardHeadingRank {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            color: $colorWhite;
+            padding: 90px 30px 40px 0;
+            min-width: 90px;
+        }
+
+        .leaderboardHeadingRankText {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: 0.45;
+            padding-bottom: 10px;
+        }
+
+        .leaderboardHeadingRankValue {
+            font-size: 24px;
+        }
+
+        .leaderboardInfo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .leaderboardInfoItem {
+            background-color: #24203d;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            padding: 20px;
+            border-radius: 5px;
+            color: $colorWhite;
+
+            &:first-child {
+                margin: 0 5px 0 30px;
+            }
+
+            &:last-child {
+                margin: 0 30px 0 5px;
+            }
+        }
+
+        .leaderboardInfoItemText {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: 0.45;
+        }
+
+        .leaderboardInfoItemNumber {
+            font-size: 24px;
+        }
+
+        .leaderboardInfoItemToken {
+            font-size: 10px;
+            vertical-align: super;
         }
 
         .leaderboardTable
@@ -289,7 +359,7 @@
                 .rankingHeading
                 {
                     width:          60px;
-                    margin-right:   52px;
+                    margin-right:   77px;
                     font-weight:    normal;
                     font-size:      11px;
                     line-height:    14px;

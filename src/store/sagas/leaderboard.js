@@ -11,13 +11,25 @@ import State from "../../helper/State";
 const fetchAll = function* (action) {
     const userId = yield select(state => state.authentication.userId);
     const token = yield select(state => state.authentication.token);
+    const users = yield select((state) => state.user.users);
+    let page = action.page;
+    let perPage = action.perPage;
 
     if (userId && token) {
 
-        const response = yield call(Api.getLeaderboard);
+        const response = yield call(Api.getLeaderboard, page, perPage);
 
         if (response) {
-            const leaderboard = response.data;
+            const user = State.getUser(userId, users);
+            const leaderboard = {
+                currentUser: {
+                    userId: user.userId,
+                    username: user.username,
+                    rank: user.rank,
+                    amountWon: user.amountWon
+                },
+                ...response.data,
+            };
 
             yield put(
                 LeaderboardActions.fetchAllSucceeded({

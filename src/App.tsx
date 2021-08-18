@@ -33,7 +33,7 @@ const App = () => {
     return (
         <Provider store={configuredStore}>
             <ConnectedRouter history={history}>
-                <Navbar />
+                <Navbar skipRoutes={[Routes.join]} />
                 <AlertBox />
                 <Popup />
                 <YMInitializer

@@ -8,6 +8,10 @@ export const LeaderboardTypes = {
 
 const fetchAll = makeActionCreator(
     LeaderboardTypes.FETCH_ALL,
+    {
+        page: 1,
+        perPage: 10,
+    }
 );
 
 const fetchAllSucceeded = makeActionCreator(
