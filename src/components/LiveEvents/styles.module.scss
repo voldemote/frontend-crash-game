@@ -1,5 +1,17 @@
 @import "../../styles/all";
 
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.02;
+    letter-spacing: 0.75px;
+    color: white;
+
+    margin: 32px auto 0;
+    width: 80%;
+}
 .header {
     color: white;
     width: 80%;

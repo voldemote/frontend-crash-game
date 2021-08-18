@@ -82,6 +82,7 @@ function LiveEvents({ fetchLiveEvents }) {
 
     return (
         <>
+            <section className={styles.title}>Live streams</section>
             <section className={styles.header}>
                 <div className={styles.categories}>
                     <CategoryList
@@ -109,6 +110,7 @@ function LiveEvents({ fetchLiveEvents }) {
                         tags={mappedTags(item._id)}
                         image={item.previewImageUrl}
                         onClick={() => onEventClick(item._id, item.streamUrl)}
+                        eventEnd={true}
                     />
                 ))}
             </section>

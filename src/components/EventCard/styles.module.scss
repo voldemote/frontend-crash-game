@@ -43,3 +43,33 @@
         }
     }
 }
+.content {
+    &.timerActive {
+        position: relative;
+        bottom: 30px;
+    }
+}
+
+.timer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.timerTitle {
+    font-size: 0.8rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: white;
+}
