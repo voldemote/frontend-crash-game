@@ -6,35 +6,14 @@ $largeMobileHeight: 700px;
 {
     display:          flex;
     flex-direction:   column;
-    position:         fixed;
-    padding:          150px 35px 40px 25px;
-    width:            80vw;
+    width:            95%;
     height:           100vh;
     top:              0;
-    overflow-y:       scroll;
-    background-color: $colorPrimary;
     transition:       right 0.5s ease-in-out;
-    z-index:          3;
-
-    @media (min-width: $screen-sm)
-    {
-        width:            40vw;
-        background-color: $colorPrimary90;
-    }
-
-    @media (min-width: $screen-lg)
-    {
-        width: 30vw;
-    }
 
     .headlineContainer
     {
         display: flex;
-
-        @media (min-width: $screen-md)
-        {
-            margin-bottom: 35px;
-        }
 
         .headlineText
         {
@@ -43,7 +22,7 @@ $largeMobileHeight: 700px;
             font-size:      30px;
             line-height:    39px;
             letter-spacing: 0.75px;
-            color:          #ffffff;
+            color:          $colorWhite;
         }
 
         .headlineIcon
@@ -70,14 +49,18 @@ $largeMobileHeight: 700px;
         .singleSettingHolder
         {
             position:      relative;
-            width:         90%;
+            width:         100%;
             display:       flex;
             align-items:   center;
             height:        60px;
             margin:        5px 0 5px 0;
-            background:    #ffffff;
+            background-color: rgba(172, 196, 255, 0.1);
             box-shadow:    0px 2px 4px rgba(158, 158, 158, 0.16);
             border-radius: 8px;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
 
             @media (max-width: $screen-sm)
             {
@@ -108,7 +91,7 @@ $largeMobileHeight: 700px;
                 font-weight: 500;
                 font-size:   16px;
                 line-height: 22px;
-                color:       #120e27;
+                color:       #ffffff;
                 @media (max-width: $screen-sm)
                 {
                     width: 60%;
@@ -142,11 +125,11 @@ $largeMobileHeight: 700px;
         .settingActive
         {
             cursor:     pointer;
-            transition: transform 0.5s;
+            transition: background-color 0.25s ease-in-out;
 
             &:hover
             {
-                transform: scale(1.025);
+                background-color: rgba(255, 255, 255, 0.2);
             }
         }
 
