@@ -116,6 +116,7 @@ const updateData = makeActionCreator(
         totalWin:       null,
         rank:           null,
         amountWon:      null,
+        toNextRank:     null,
     },
 );
 

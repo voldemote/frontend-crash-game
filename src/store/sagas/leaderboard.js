@@ -23,10 +23,11 @@ const fetchAll = function* (action) {
             const user = State.getUser(userId, users);
             const leaderboard = {
                 currentUser: {
-                    userId: user.userId,
+                    _id: user.userId,
                     username: user.username,
                     rank: user.rank,
-                    amountWon: user.amountWon
+                    amountWon: user.amountWon,
+                    toNextRank: user.toNextRank,
                 },
                 ...response.data,
             };

@@ -21,6 +21,7 @@ const initialState = {
     authState:      AuthState.LOGGED_OUT,
     rank:           0,
     amountWon:      0,
+    toNextRank:     0,
 };
 
 const requestSmsSucceeded = (action, state) => {
@@ -162,7 +163,10 @@ const updateData = (action, state) => {
         },
         amountWon:      {
             $set: action.amountWon
-        }
+        },
+        toNextRank:      {
+            $set: action.toNextRank
+        },
     });
 };
 

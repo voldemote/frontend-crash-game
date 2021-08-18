@@ -37,7 +37,7 @@ const Navbar = ({
                 }) => {
 
     const [openDrawer, setOpenDrawer] = useState('');
-    const [leaderboardPage, setLeaderboardPage] = useState(1);
+    const [leaderboardPage, setLeaderboardPage] = useState(0);
     const history = useHistory();
     
     if (skipRoutes.some(route => matchPath(location.pathname, route))) {
@@ -222,7 +222,7 @@ const Navbar = ({
 
     const getMissingWinnerAmount = () => {
         const first = leaderboard[0];
-        if (leaderboard.length == 0 || first.userId === userRank.userId) return 0;
+        if (leaderboard.length == 0 || first._id === userRank._id) return 0;
         return formatToFixed(first.amountWon - userRank.amountWon);
     }
 
@@ -253,7 +253,7 @@ const Navbar = ({
                     </div>
                     <div className={style.leaderboardInfoItem}>
                         <div className={style.leaderboardInfoItemText}>MISSING TO NEXT RANK</div>
-                        <div className={style.leaderboardInfoItemNumber}>52 
+                        <div className={style.leaderboardInfoItemNumber}>{user.toNextRank} 
                         <span className={style.leaderboardInfoItemToken}> EVNT</span></div>
                     </div>
                 </div>
@@ -265,13 +265,13 @@ const Navbar = ({
                     </div>
                     <div className={style.leaderboardRanking}>
                         {leaderboard &&
-                        leaderboard.map((user, index) => {
+                        leaderboard.map(user => {
                             return (
                                 <LeaderboardItem
                                     user={user}
+                                    isCurrentUser={user._id === userRank._id}
                                     key={user.userId}
-                                    index={index + 1}
-                                    showLoadButton={leaderboard.length - 2  === index}
+                                    showLoadButton={leaderboard.length - 1  === user.rank}
                                     onLoad={() => onLeaderboardLoad()}
                                 />
                             );
@@ -372,7 +372,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(NotificationActions.setUnread({ notification }));
         },
         fetchLeaderboard: (page) => {
-            dispatch(LeaderboardActions.fetchAll({page, perPage: 10}));
+            dispatch(LeaderboardActions.fetchAll({page, perPage: 20}));
         }
     };
 };

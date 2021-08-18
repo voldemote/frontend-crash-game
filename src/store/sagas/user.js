@@ -58,6 +58,7 @@ const fetchSucceeded = function* (action) {
         const totalWin       = user.totalWin;
         const rank           = user.rank;
         const amountWon      = user.amountWon;
+        const toNextRank     = user.toNextRank;
 
         yield put(AuthenticationActions.updateData({
             profilePicture,
@@ -66,7 +67,8 @@ const fetchSucceeded = function* (action) {
             admin,
             totalWin,
             rank,
-            amountWon
+            amountWon,
+            toNextRank,
         }));
     }
 };
