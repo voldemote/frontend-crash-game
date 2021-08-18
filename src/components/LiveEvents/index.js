@@ -66,10 +66,6 @@ function LiveEvents({ fetchLiveEvents }) {
         setCategories(updatedCats);
     };
 
-    useEffect(() => {
-        fetchLiveEvents();
-    }, [fetchLiveEvents]);
-
     const events = useSelector((state) => state.event.filteredEvents);
 
     const onEventClick = (eventId, streamUrl) => {
@@ -79,6 +75,10 @@ function LiveEvents({ fetchLiveEvents }) {
     const mappedTags = (id) =>
         events.find((event) => event._id === id)?.tags.map((tag) => tag.name) ||
         [];
+
+    useEffect(() => {
+        fetchLiveEvents();
+    }, [fetchLiveEvents]);
 
     return (
         <>
@@ -110,7 +110,7 @@ function LiveEvents({ fetchLiveEvents }) {
                         tags={mappedTags(item._id)}
                         image={item.previewImageUrl}
                         onClick={() => onEventClick(item._id, item.streamUrl)}
-                        eventEnd={true}
+                        eventEnd={item.date}
                     />
                 ))}
             </section>
