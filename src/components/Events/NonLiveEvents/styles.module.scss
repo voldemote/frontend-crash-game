@@ -1,0 +1,51 @@
+@import "../../../styles/all";
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.02;
+    letter-spacing: 0.75px;
+    color: white;
+
+    margin: 32px auto 0;
+    width: 80%;
+}
+.header {
+    color: white;
+    width: 80%;
+    margin: 32px auto 0;
+
+    @media (min-width: $screen-sm) {
+        display: flex;
+        align-items: flex-end;
+    }
+}
+
+.categories {
+}
+
+.search {
+    margin-top: 20px;
+
+    @media (min-width: $screen-sm) {
+        width: 220px;
+        margin-left: auto;
+        padding-left: 10px;
+    }
+}
+
+.main {
+    color: white;
+    width: 80%;
+    margin: 32px auto 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // justify-content: space-between;
+
+    > * {
+        margin-bottom: 10px;
+    }
+}
