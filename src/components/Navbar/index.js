@@ -103,8 +103,8 @@ const Navbar = ({
             <NavLink 
                 exact 
                 to={route} 
-                activeClassName={!isLogo && style.active}
-                className={isLogo && style.logoLink}
+                activeClassName={isLogo ? null : style.active}
+                className={isLogo ? style.logoLink : null}
             >
                 {text}
             </NavLink>
@@ -276,7 +276,7 @@ const Navbar = ({
                                     <LeaderboardItem
                                         user={user}
                                         isCurrentUser={user._id === userRank._id}
-                                        key={user._id}
+                                        key={user.rank}
                                         showLoadButton={leaderboard[leaderboard.length - 1]  === user}
                                         onLoad={() => onLeaderboardLoad()}
                                     />
@@ -290,7 +290,7 @@ const Navbar = ({
                                     <LeaderboardItem
                                         user={user}
                                         isCurrentUser={user._id === userRank._id}
-                                        key={user._id}
+                                        key={user.rank}
                                         showLoadButton={leaderboardWithCurrentUser[leaderboardWithCurrentUser.length - 1] === user}
                                         onLoad={() => onAfterCurrentLeaderboardLoad()}
                                     />
