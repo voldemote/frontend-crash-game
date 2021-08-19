@@ -262,10 +262,6 @@ const firstSignUpPopup = function* (options) {
         yield put(PopupActions.show({
             popupType: options.last ? PopupTheme.signUpNotificationSecond : PopupTheme.signUpNotificationFirst
         }));
-
-        if(!options.last) {
-            yield call(firstSignUpPopup, { last: true, duration: 5 })
-        }
     }
 }
 
