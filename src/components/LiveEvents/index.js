@@ -11,13 +11,14 @@ import CoDImage from "../../data/images/Call of Duty_ Warzone-144x192.jpeg";
 import FifaImage from "../../data/images/FIFA 21-144x192.jpeg";
 import LoLImage from "../../data/images/League of Legends-144x192.jpeg";
 import MinecraftImage from "../../data/images/Minecraft-144x192.jpeg";
+import AllImage from "../../data/images/wallfair-all-category.png";
 
 function LiveEvents({ fetchLiveEvents }) {
     const [searchInput, setSearchInput] = useState("");
     const [categories, setCategories] = useState([
         {
             value: "all",
-            image: "placeholder",
+            image: AllImage,
             isActive: true,
         },
         {
