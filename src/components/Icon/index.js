@@ -15,6 +15,7 @@ import { ReactComponent as IconArrowSmallDown }  from '../../data/icons/arrow-sm
 import { ReactComponent as IconArrowSmallRight } from '../../data/icons/arrow-small-right.svg';
 import { ReactComponent as IconArrowTopRight }   from '../../data/icons/arrow-top-right.svg';
 import { ReactComponent as IconAttention }       from '../../data/icons/attention.svg';
+import { ReactComponent as IconAvatarUpload}     from '../../data/icons/avatar-upload.svg';
 import { ReactComponent as IconBell }            from '../../data/icons/bell.svg';
 import { ReactComponent as IconBet }             from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 }            from '../../data/icons/bet-2.svg';
@@ -70,6 +71,7 @@ const Icon = ({ className, iconType, iconTheme = IconTheme.white, circle, width,
                 [IconType.arrowSmallRight]: <IconArrowSmallRight />,
                 [IconType.arrowTopRight]:   <IconArrowTopRight />,
                 [IconType.attention]:       <IconAttention />,
+                [IconType.avatarUpload]:    <IconAvatarUpload />,
                 [IconType.bell]:            <IconBell />,
                 [IconType.bet]:             <IconBet />,
                 [IconType.bet2]:            <IconBet2 />,

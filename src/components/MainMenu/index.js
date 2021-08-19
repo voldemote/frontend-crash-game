@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {useState} from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
@@ -31,6 +31,12 @@ const MainMenu = ({
     const [name, setName]               = useState(user.name);
     const [username, setUsername]       = useState(user.username);
     const [email, setEmail]             = useState(user.email);
+
+    const profilePictureRefName = useRef(null);
+
+    const clickUploadProfilePicture = () => {
+        profilePictureRefName.current?.click();
+    }
 
     let investedAmount = 0;
 
@@ -72,17 +78,32 @@ const MainMenu = ({
 
     }
 
+    const handleProfilePictureUpload = event => {
+        console.log(event.target.files[0])
+    }
+
     const editProfileWrapper = () => {
         return (
             <div className={classNames(
                 styles.panel,
                 !editVisible && styles.panelHidden
             )}>
-                <div className={styles.profileWrapper}>
-                    <h2 className={styles.profileHeading}>
-                        <Icon className={styles.backButton} iconType={'arrowTopRight'} onClick={() => setEditVisible(!editVisible)}/>
-                        Edit My Profile
-                    </h2>
+                <h2 className={styles.profileHeading}>
+                    <Icon className={styles.backButton} iconType={'arrowTopRight'} onClick={() => setEditVisible(!editVisible)}/>
+                    Edit My Profile
+                </h2>
+                <div className={styles.editProfileContent}>
+                    <div className={styles.profilePictureWrapper}>
+                        <div className={styles.profilePicture}>
+                            <div className={styles.profilePictureUpload} onClick={clickUploadProfilePicture}>
+                                <div className={styles.iconContainer}>
+                                    <Icon className={styles.uploadIcon} iconTheme={IconTheme.white} iconType={IconType.avatarUpload} />
+                                </div>
+                                <input ref={profilePictureRefName} type={'file'} style={{display: 'none'}} onChange={handleProfilePictureUpload} />
+                            </div>
+                            <p className={styles.profilePictureUploadLabel}>Your avatar</p>
+                        </div>
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.profileContent}>
                             <div className={styles.profileInputGroup}>
@@ -153,7 +174,7 @@ const MainMenu = ({
                         <div className={styles.profileBalanceHeading}>
                             <p className={styles.profileBalanceTitle}>total balance</p>
                             <div className={styles.goToMyTrades}>
-                                <p style={{display: 'inline'}}>Go to my Trades &nbsp;</p>
+                                <p className={styles.goToMyTradesText}>Go to my Trades</p>
                                 <Icon
                                     className={styles.goToMyTradesIcon}
                                     iconType={IconType.arrowTopRight}

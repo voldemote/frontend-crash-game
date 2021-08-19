@@ -12,6 +12,7 @@ export default {
     arrowTopDown:    'arrowTopDown',
     arrowUp:         'arrowUp',
     attention:       'attention',
+    avatarUpload:    'avatar-upload',
     bet2:            'bet2',
     bet:             'bet',
     bell:            'bell',

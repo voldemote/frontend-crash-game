@@ -14,7 +14,7 @@ $largeMobileHeight: 700px;
     background-color: rgba(14, 9, 39, 0.86);
     right: -100%;
     transition: right 0.5s ease-in-out;
-    overflow: hidden;
+    overflow-y: hidden;
 
     .mainContent {
         overflow-y: auto;
@@ -56,14 +56,24 @@ $largeMobileHeight: 700px;
             .goToMyTrades {
                 line-height: 20px;
                 font-size: 12px;
+                display: flex;
+                justify-content: space-between;
                 align-items: center;
-                border-bottom: 2px solid white;
                 cursor: pointer;
-                border-bottom: 2px solid $colorWhite;
+                border-bottom: 1px solid $colorWhite;
                 transition: transform 0.5s;
 
+
                 .goToMyTradesIcon {
-                    display: inline;
+                    width: 15px;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .goToMyTradesText {
+                    font-size: 12px;
+                    line-height: 14px;
+                    color: #ffffff;
                 }
                 &:hover {
                     transform: scale(1.1);
@@ -367,54 +377,96 @@ $largeMobileHeight: 700px;
         width: 95%;
     }
 
-    .profileSubmit {
-        width:100%;
-        height: 55px;
-        border-radius: 4px;
-        line-height: 25px;
-        font-size: 16px;
-        margin-top: 50px;
-        border: none;
+    .editProfileContent {
 
-        &:hover {
-            cursor: pointer;
-        }
-    }
-
-    .profileInputGroup {
-
-        color: $colorWhite;
-
-        .profileInputLabel {
-            display: block;
-            height: 12px;
-            opacity: 0.3;
-            line-height: 12px;
-            font-size: 12px;
-            margin: 14px 0;
-        }
-
-        .profileInput {
+        overflow: scroll;
+        .profileSubmit {
+            width:100%;
+            height: 55px;
             border-radius: 4px;
-            width: 100%;
-            height: 60px;
-            background-color: rgba(172, 196, 255, 0.1);
-            margin-bottom: 24px;
-            line-height: 24px;
+            line-height: 25px;
             font-size: 16px;
-            font-family: $fontRegular;
+            margin-top: 50px;
             border: none;
-            color: $colorWhite;
-            text-indent: 20px;
 
-            &:focus {
-                outline: none;
+            &:hover {
+                cursor: pointer;
             }
-
         }
-    }
-    .profileContent {
-        padding: 25px;
+
+        .profilePictureWrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            .profilePicture {
+                display: flex;
+                flex-direction: column;
+
+                .profilePictureUpload {
+                    margin-bottom: 20px;
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    border: 3px dashed rgba(172, 196, 255, 0.1);
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-around;
+
+                    .iconContainer {
+                        width: 35px;
+                        height: 35px;
+                        margin: auto;
+
+                        .uploadIcon {
+                            fill: white;
+                        }
+                    }
+                }
+                .profilePictureUploadLabel {
+                    font-size: 12px;
+                    opacity: 0.4;
+                    text-align: center;
+                    color: $colorWhite;
+                }
+            }
+        }
+        .profileContent {
+            padding: 25px;
+
+            .profileInputGroup {
+
+                color: $colorWhite;
+
+                .profileInputLabel {
+                    display: block;
+                    height: 12px;
+                    opacity: 0.3;
+                    line-height: 12px;
+                    font-size: 12px;
+                    margin: 14px 0;
+                }
+
+                .profileInput {
+                    border-radius: 4px;
+                    width: 100%;
+                    height: 60px;
+                    background-color: rgba(172, 196, 255, 0.1);
+                    margin-bottom: 24px;
+                    line-height: 24px;
+                    font-size: 16px;
+                    font-family: $fontRegular;
+                    border: none;
+                    color: $colorWhite;
+                    text-indent: 20px;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
     }
 }
 
