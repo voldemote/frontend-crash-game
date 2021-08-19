@@ -12,6 +12,7 @@ import {useHistory} from 'react-router';
 import HomeSettings from '../HomeSettings';
 import {PieChart} from 'react-minimal-pie-chart';
 import {formatToFixed} from '../../helper/FormatNumbers';
+import {UserActions} from "../../store/actions/user";
 
 const MainMenu = ({
                       opened,
@@ -25,6 +26,7 @@ const MainMenu = ({
                       investmentAmount,
                       sellTransactions,
                       user,
+                      updateUser,
                   }) => {
     const [editVisible, setEditVisible] = useState(false);
 
@@ -75,7 +77,7 @@ const MainMenu = ({
     }
 
     const handleSubmit = () => {
-
+        updateUser(name, username, email, null)
     }
 
     const handleProfilePictureUpload = event => {
@@ -278,4 +280,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null)(MainMenu);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateUser: (name, username, email, profilePicture) => {
+            dispatch(UserActions.update({name, username, email, profilePicture}))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

@@ -23,6 +23,7 @@ export const AuthenticationTypes = {
     VERIFY_EMAIL_FAILED:            'Authentication/VERIFY_EMAIL_FAILED',
     VERIFY_EMAIL_SUCCEEDED:         'Authentication/VERIFY_EMAIL_SUCCEEDED',
     RESET_AUTH_STATE:               'Authentication/RESET_AUTH_STATE',
+    UPDATE_USER_DATA:                'Authentication/UPDATE_USER_DATA',
 };
 
 const fetchReferrals = makeActionCreator(
@@ -161,6 +162,15 @@ const verifyEmailSucceeded = makeActionCreator(
     AuthenticationTypes.VERIFY_EMAIL_SUCCEEDED,
 );
 
+const updateUserData = makeActionCreator(
+    AuthenticationTypes.UPDATE_USER_DATA, {
+        name: null,
+        username: null,
+        email: null,
+        profilePicture: null,
+    }
+)
+
 export const AuthenticationActions = {
     fetchReferrals,
     fetchReferralsFailed,
@@ -184,4 +194,5 @@ export const AuthenticationActions = {
     verifyEmailSucceeded,
     verifyEmailFailed,
     resetAuthState,
+    updateUserData,
 };

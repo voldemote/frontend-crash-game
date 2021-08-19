@@ -73,7 +73,39 @@ const fetchSucceeded = function* (action) {
     }
 };
 
+const update = function* (action) {
+
+    debugger
+    const userId = action.userId;
+    const user = action.user;
+
+    for (const prop in user) {
+        if (user[prop] === null || user[prop] === undefined) {
+            delete user[prop];
+        }
+    }
+
+    const response = yield call(
+        Api.updateUser,
+        userId,
+        user
+    );
+
+    if (response) {
+
+        yield put(AuthenticationActions.updateUserData({
+            ...user,
+        }));
+    }
+    // else {
+    //     yield put(AuthenticationActions.update({
+    //         user,
+    //     }));
+    // }
+}
+
 export default {
     fetch,
     fetchSucceeded,
+    update,
 };
