@@ -265,6 +265,31 @@ const firstSignUpPopup = function* (options) {
     }
 }
 
+const updateUserData = function* (action) {
+    const userId = yield select(state => state.authentication.userId);
+    const user = action.user;
+
+    for (const prop in user) {
+        if (user[prop] === null || user[prop] === undefined) {
+            delete user[prop];
+        }
+    }
+
+    const response = yield call(
+        Api.updateUser,
+        userId,
+        user,
+    );
+
+    if (response) {
+        const auth = yield select(state => state.authentication);
+        yield put(AuthenticationActions.updateUserData({
+            ...auth,
+            ...user,
+        }));
+    }
+};
+
 export default {
     authenticationSucceeded,
     fetchReferrals,
@@ -277,5 +302,6 @@ export default {
     setAdditionalInformation,
     verifySms,
     verifyEmail,
-    firstSignUpPopup
+    firstSignUpPopup,
+    updateUserData,
 };

@@ -90,7 +90,7 @@ const root = function* () {
         takeLatest([LeaderboardTypes.FETCH_ALL],                         LeaderboardSagas.fetchAll),
         takeLatest([EventTypes.FETCH_TAGS],                              EventSagas.fetchTags),
         takeLatest([REHYDRATE],                                          rehydrationDone),
-        takeEvery([UserTypes.UPDATE],                                    UserSagas.update),
+        takeEvery([AuthenticationTypes.UPDATE_USER_DATA],                AuthenticationSagas.updateUserData),
         // @formatter:on
     ]);
 };

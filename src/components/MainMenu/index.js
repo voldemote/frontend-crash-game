@@ -13,6 +13,7 @@ import HomeSettings from '../HomeSettings';
 import {PieChart} from 'react-minimal-pie-chart';
 import {formatToFixed} from '../../helper/FormatNumbers';
 import {UserActions} from "../../store/actions/user";
+import { AuthenticationActions } from 'store/actions/authentication';
 
 const MainMenu = ({
                       opened,
@@ -77,7 +78,7 @@ const MainMenu = ({
     }
 
     const handleSubmit = () => {
-        updateUser(user.userId, name, username, email, null)
+        updateUser(name, username, email, null)
     }
 
     const handleProfilePictureUpload = event => {
@@ -282,8 +283,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateUser: (userId, name, username, email, profilePicture) => {
-            dispatch(UserActions.update({userId, user: {name, username, email, profilePicture}}))
+        updateUser: (name, username, email, profilePicture) => {
+            dispatch(AuthenticationActions.update({user: {name, username, email, profilePicture}}))
         }
     }
 }

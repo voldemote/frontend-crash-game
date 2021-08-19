@@ -171,9 +171,6 @@ const updateData = (action, state) => {
 };
 
 const updateUserData = (action, state) => {
-
-    debugger
-
     return update(state, {
         name:           {
             $set: action.name,
