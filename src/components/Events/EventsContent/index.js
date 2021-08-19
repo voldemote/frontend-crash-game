@@ -13,7 +13,7 @@ import LoLImage from '../../data/images/League of Legends-144x192.jpeg';
 import MinecraftImage from '../../data/images/Minecraft-144x192.jpeg';
 import AllImage from '../../data/images/wallfair-all-category.png';
 
-function LiveEvents({ fetchLiveEvents }) {
+function EventsContent({ fetchFilteredEvents, resetDefaultParamsValues }) {
     const [searchInput, setSearchInput] = useState('');
     const [categories, setCategories] = useState([
         {
@@ -147,4 +147,4 @@ const mapDispatchToProps = (dispatch, { eventType }) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LiveEvents);
+export default connect(mapStateToProps, mapDispatchToProps)(EventsContent);
