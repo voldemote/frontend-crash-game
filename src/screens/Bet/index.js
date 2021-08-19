@@ -75,6 +75,7 @@ const Bet = ({ showPopup, rawOutcomes, transactions, openBets, authState, setSel
     }
 
     const renderChatButton = () => {
+        if (currentSlide != 0) return null;
         return (
             <FixedIconButton
                 className={styles.fixedChatButton}
