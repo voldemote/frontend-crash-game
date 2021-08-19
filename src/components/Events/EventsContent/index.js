@@ -44,13 +44,13 @@ function LiveEvents({ fetchLiveEvents }) {
     ]);
 
     const handleSearchSubmit = val => {
-        fetchLiveEvents({
+        fetchFilteredEvents({
             searchQuery: searchInput,
         });
     };
 
     const handleSelectCategory = value => {
-        fetchLiveEvents({
+        fetchFilteredEvents({
             category: value,
         });
         const updatedCats = categories.map(cat => {
@@ -73,8 +73,15 @@ function LiveEvents({ fetchLiveEvents }) {
         events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
     useEffect(() => {
-        fetchLiveEvents();
-    }, [fetchLiveEvents]);
+        fetchFilteredEvents();
+    }, [fetchFilteredEvents]);
+
+    useEffect(() => {
+        return () => {
+            console.log('component unMounted');
+            resetDefaultParamsValues();
+        };
+    }, []);
 
     const location = useLocation();
 
@@ -126,10 +133,17 @@ function LiveEvents({ fetchLiveEvents }) {
 const mapStateToProps = state => {
     return {};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, { eventType }) => {
     return {
-        fetchLiveEvents: params =>
-            dispatch(EventActions.initiateFetchFilteredEvents(params)),
+        fetchFilteredEvents: (params = {}) =>
+            dispatch(
+                EventActions.initiateFetchFilteredEvents({
+                    ...params,
+                    type: eventType,
+                })
+            ),
+        resetDefaultParamsValues: () =>
+            dispatch(EventActions.resetDefaultParamsValues()),
     };
 };
 

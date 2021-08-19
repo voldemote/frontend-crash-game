@@ -56,16 +56,24 @@ const fetchAllSucceeded = function* (action) {
     }
 };
 
-const fetchFilteredEvents = function* (action) {
+const fetchFilteredEvents = function* ({ payload }) {
     try {
         // SM: perhaps better solution should be considered, instead of setting token in header for each request
         // in the handler itself
-        const token = yield select(state => state.authentication.token);
+        const token = yield select((state) => state.authentication.token);
         Api.setToken(token);
-        const { data } = yield call(() =>
-            Api.listEventsFiltered(action.payload)
+
+        const defaultParams = yield select(
+            (state) => state.event.defaultParams
         );
 
+        const newDefaultParams = { ...defaultParams, ...payload };
+
+        const { data } = yield call(() =>
+            Api.listEventsFiltered(newDefaultParams)
+        );
+
+        yield put(EventActions.setDefaultParamsValues(newDefaultParams));
         yield put(EventActions.fetchFilteredEventsSuccess(data));
     } catch (error) {
         yield put(EventActions.fetchFilteredEventsFail());
