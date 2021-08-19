@@ -31,5 +31,6 @@ export default {
     walletDeposit:      '/wallet/deposit/:paymentProvider',
     walletWithdrawal:   '/wallet/withdraw/:paymentProvider',
     join:               '/join',
-    verify:             '/verify'
+    verify:             '/verify',
+    liveEvents:         '/live-events',
 };
