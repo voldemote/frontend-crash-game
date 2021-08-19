@@ -5,14 +5,14 @@ import InputBoxTheme            from '../InputBox/InputBoxTheme';
 import { connect }              from 'react-redux';
 import { generateReferralLink } from '../../helper/ReferralLink';
 
-const ReferralLinkCopyInputBox = ({ className, userId }) => {
+const ReferralLinkCopyInputBox = ({ className, userId, inputTheme = InputBoxTheme.copyToClipboardInput }) => {
     return (
         <InputBox
             className={className}
             type={'text'}
             setValue={_.noop}
             value={generateReferralLink(userId)}
-            theme={InputBoxTheme.copyToClipboardInput}
+            theme={inputTheme}
         />
     );
 };

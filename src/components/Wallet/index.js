@@ -22,7 +22,7 @@ import { useHistory } from 'react-router-dom';
 import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
-
+import InputBoxTheme            from '../InputBox/InputBoxTheme';
 
 const Wallet = ({ show, balance, referralCount, transactionCount, close, showPopup, transactions, referrals }) => {
     const history = useHistory();
@@ -241,7 +241,7 @@ const Wallet = ({ show, balance, referralCount, transactionCount, close, showPop
                     ),
                     (
                         <>
-                            <ReferralLinkCopyInputBox className={styles.referralLink} />
+                            <ReferralLinkCopyInputBox className={styles.referralLink} inputTheme={InputBoxTheme.copyToClipboardInputWhite} />
                             <TwoColumnTable
                                 headings={['Referrals', 'Joined date']}
                                 rows={referrals.map(

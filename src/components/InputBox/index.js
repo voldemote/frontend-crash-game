@@ -137,6 +137,20 @@ const InputBox = ({
             );
         }
 
+        if (theme === InputBoxTheme.copyToClipboardInputWhite) {
+            return (
+                <div
+                    className={styles.inputDeleteIconContainer}
+                    onClick={copyToClipboard}
+                >
+                    <Icon
+                        iconTheme={IconTheme.white}
+                        iconType={IconType.copy}
+                    />
+                </div>
+            );
+        }
+
         if (showDeleteIcon) {
             return (
                 <div
@@ -171,10 +185,11 @@ const InputBox = ({
                     SelectionHelper.get(
                         theme,
                         {
-                            [InputBoxTheme.defaultInput]:             styles.defaultInputBox,
-                            [InputBoxTheme.copyToClipboardInput]:     styles.copyToClipboardInputBox,
-                            [InputBoxTheme.coloredBorderMint]:        styles.coloredBorderMint,
-                            [InputBoxTheme.coloredBorderLightPurple]: styles.coloredBorderLightPurple,
+                            [InputBoxTheme.defaultInput]:              styles.defaultInputBox,
+                            [InputBoxTheme.copyToClipboardInput]:      styles.copyToClipboardInputBox,
+                            [InputBoxTheme.copyToClipboardInputWhite]: styles.copyToClipboardInputBoxWhite,
+                            [InputBoxTheme.coloredBorderMint]:         styles.coloredBorderMint,
+                            [InputBoxTheme.coloredBorderLightPurple]:  styles.coloredBorderLightPurple,
                         },
                     ),
                 )}
