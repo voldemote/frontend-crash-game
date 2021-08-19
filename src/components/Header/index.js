@@ -17,15 +17,6 @@ const Header = ({ events }) => {
 
     let [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-    const getCurrentEvent = () => events[currentSlideIndex];
-
-    const mapBetsToShow = () => {
-        return _.filter(
-            _.get(getCurrentEvent(), 'bets', []),
-            (trade) => _.get(trade, 'status') === BetState.active,
-        );
-    };
-
     const sortTrades = (trades) => {
         return trades.sort((a, b) => {
             const aState        = _.get(a, 'status');
@@ -142,14 +133,6 @@ const Header = ({ events }) => {
                         );
                     })}
                 </CoverFlowCarousel>
-
-            </div>
-
-            <div className={styles.betPillContainer}>
-                <EventBetPillList
-                    event={getCurrentEvent()}
-                    bets={mapBetsToShow()}
-                />
             </div>
         </div>
     );
