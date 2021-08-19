@@ -130,7 +130,7 @@ const InputBox = ({
                     onClick={copyToClipboard}
                 >
                     <Icon
-                        iconTheme={IconTheme.white}
+                        iconTheme={IconTheme.black}
                         iconType={IconType.copy}
                     />
                 </div>
