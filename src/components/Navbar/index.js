@@ -228,7 +228,7 @@ const Navbar = ({
     const getMissingWinnerAmount = () => {
         const first = leaderboard[0];
         if (leaderboard.length == 0 || first._id === userRank._id) return 0;
-        return formatToFixed(first.amountWon - userRank.amountWon);
+        return first.amountWon - userRank.amountWon;
     };
 
     const renderLeaderboardDrawer = () => {
@@ -358,13 +358,11 @@ const Navbar = ({
                     />,
                     true
                 )}
-                {isLoggedIn() &&
-                    <div className={style.linkWrapper}>
-                        {renderNavbarLink(Routes.liveEvents, 'Live Events')}
-                        {renderNavbarLink(Routes.events, 'Events')}
-                        {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
-                    </div>
-                }
+                <div className={style.linkWrapper}>
+                    {renderNavbarLink(Routes.liveEvents, 'Live Events')}
+                    {renderNavbarLink(Routes.events, 'Events')}
+                    {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
+                </div>
             </div>
 
             {!isLoggedIn() && renderJoinButton()}
