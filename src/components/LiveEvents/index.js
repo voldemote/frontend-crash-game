@@ -1,59 +1,59 @@
-import React, { useState, useEffect } from "react";
-import Routes from "../../constants/Routes";
-import styles from "./styles.module.scss";
-import { connect, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router";
-import Search from "../Search";
-import EventCard from "../EventCard";
-import { EventActions } from "../../store/actions/event";
-import CategoryList from "../CategoryList";
-import CoDImage from "../../data/images/Call of Duty_ Warzone-144x192.jpeg";
-import FifaImage from "../../data/images/FIFA 21-144x192.jpeg";
-import LoLImage from "../../data/images/League of Legends-144x192.jpeg";
-import MinecraftImage from "../../data/images/Minecraft-144x192.jpeg";
-import AllImage from "../../data/images/wallfair-all-category.png";
+import React, { useState, useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
+import { useHistory, useParams, Link, useLocation } from 'react-router-dom';
+import Routes from '../../constants/Routes';
+import styles from './styles.module.scss';
+import Search from '../Search';
+import EventCard from '../EventCard';
+import { EventActions } from '../../store/actions/event';
+import CategoryList from '../CategoryList';
+import CoDImage from '../../data/images/Call of Duty_ Warzone-144x192.jpeg';
+import FifaImage from '../../data/images/FIFA 21-144x192.jpeg';
+import LoLImage from '../../data/images/League of Legends-144x192.jpeg';
+import MinecraftImage from '../../data/images/Minecraft-144x192.jpeg';
+import AllImage from '../../data/images/wallfair-all-category.png';
 
 function LiveEvents({ fetchLiveEvents }) {
-    const [searchInput, setSearchInput] = useState("");
+    const [searchInput, setSearchInput] = useState('');
     const [categories, setCategories] = useState([
         {
-            value: "all",
+            value: 'all',
             image: AllImage,
             isActive: true,
         },
         {
-            value: "streamed-esports",
+            value: 'streamed-esports',
             image: FifaImage,
             isActive: false,
         },
         {
-            value: "streamed-shooter",
+            value: 'streamed-shooter',
             image: CoDImage,
             isActive: false,
         },
         {
-            value: "streamed-mmorpg",
+            value: 'streamed-mmorpg',
             image: LoLImage,
             isActive: false,
         },
         {
-            value: "streamed-other",
+            value: 'streamed-other',
             image: MinecraftImage,
             isActive: false,
         },
     ]);
 
-    const handleSearchSubmit = (val) => {
+    const handleSearchSubmit = val => {
         fetchLiveEvents({
             searchQuery: searchInput,
         });
     };
 
-    const handleSelectCategory = (value) => {
+    const handleSelectCategory = value => {
         fetchLiveEvents({
             category: value,
         });
-        const updatedCats = categories.map((cat) => {
+        const updatedCats = categories.map(cat => {
             if (value !== cat.value)
                 return {
                     ...cat,
@@ -67,19 +67,16 @@ function LiveEvents({ fetchLiveEvents }) {
         setCategories(updatedCats);
     };
 
-    const events = useSelector((state) => state.event.filteredEvents);
+    const events = useSelector(state => state.event.filteredEvents);
 
-    const onEventClick = (eventId, streamUrl) => {
-        console.log("event clicked", eventId, streamUrl);
-    };
-
-    const mappedTags = (id) =>
-        events.find((event) => event._id === id)?.tags.map((tag) => tag.name) ||
-        [];
+    const mappedTags = id =>
+        events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
     useEffect(() => {
         fetchLiveEvents();
     }, [fetchLiveEvents]);
+
+    const location = useLocation();
 
     return (
         <>
@@ -94,37 +91,44 @@ function LiveEvents({ fetchLiveEvents }) {
                 <div className={styles.search}>
                     <Search
                         value={searchInput}
-                        handleChange={(value) => setSearchInput(value)}
+                        handleChange={value => setSearchInput(value)}
                         handleConfirm={handleSearchSubmit}
                     />
                 </div>
                 {/* <div className={styles.sort}>sort</div> */}
             </section>
             <section className={styles.main}>
-                {events.map((item) => (
-                    <EventCard
+                {events.map(item => (
+                    <Link
+                        to={{
+                            pathname: `/trade/${item._id}`,
+                            state: { fromLocation: location },
+                        }}
                         key={item._id}
-                        title={item.name}
-                        organizer={""}
-                        viewers={12345}
-                        live={true}
-                        tags={mappedTags(item._id)}
-                        image={item.previewImageUrl}
-                        onClick={() => onEventClick(item._id, item.streamUrl)}
-                        eventEnd={item.date}
-                    />
+                    >
+                        <EventCard
+                            key={item._id}
+                            title={item.name}
+                            organizer={''}
+                            viewers={12345}
+                            live={true}
+                            tags={mappedTags(item._id)}
+                            image={item.previewImageUrl}
+                            eventEnd={item.date}
+                        />
+                    </Link>
                 ))}
             </section>
         </>
     );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-        fetchLiveEvents: (params) =>
+        fetchLiveEvents: params =>
             dispatch(EventActions.initiateFetchFilteredEvents(params)),
     };
 };
