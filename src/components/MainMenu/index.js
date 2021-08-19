@@ -12,7 +12,6 @@ import {useHistory} from 'react-router';
 import HomeSettings from '../HomeSettings';
 import {PieChart} from 'react-minimal-pie-chart';
 import {formatToFixed} from '../../helper/FormatNumbers';
-import PhoneInput from "../PhoneInput";
 
 const MainMenu = ({
                       opened,
@@ -118,67 +117,103 @@ const MainMenu = ({
             <div className={classNames(styles.panel, styles.firstPanel, editVisible && styles.panelHidden)}>
                 <h2 className={styles.profileHeading}>My Profile</h2>
                 <div className={styles.mainContent}>
-                    <div className={styles.fundsContainer}>
-                        <div className={styles.overallFunds}>
-                            <p className={styles.overallFundsHeadline}>OVERALL FUNDS</p>
-                            <div className={styles.overallFundsAmount}>
-                                <PieChart
-                                    data={[
-                                        {
-                                            title: 'InvestedFunds',
-                                            value: investedFundsPercentage,
-                                            color: '#69ffa5',
-                                        },
-                                        {
-                                            title: 'LiquidFunds',
-                                            value: liquidFundsPercentage,
-                                            color: '#3570ff',
-                                        },
-                                    ]}
-                                    lineWidth={14}
-                                    startAngle={270}
+                    <div className={styles.profileStats}>
+                        <div className={styles.profileStatItem}>
+                            <p className={styles.statItemHeading}>community<br /> leaderboard</p>
+                            <div className={styles.statItemContent}>
+                                <p className={styles.statItemContent}># 31</p>
+                                <Icon
+                                    className={styles.goToIcon}
+                                    iconType={IconType.arrowTopRight}
                                 />
-                                <p className={styles.overallFundsTotal}>{formatToFixed(overallFundsTotal)}</p>
-                                <p className={styles.overallFundsTitle}>EVNT</p>
-                            </div>
-                            ;
-                        </div>
-                        <div className={styles.fundsSeperator}/>
-                        <div className={styles.detailedFunds}>
-                            <div className={styles.investedFunds}>
-                                <div className={styles.investedFundsHeadline}>
-                                    <div className={styles.investedFundsDot}/>
-                                    Invested Market Value
-                                </div>
-                                <div className={styles.investedFundsAmount}>
-                                    <p className={styles.investedFundsTotal}>
-                                        {formatToFixed(investedAmount)}
-                                    </p>
-                                    <p className={styles.investedFundsTitle}>EVNT</p>
-                                </div>
-                            </div>
-                            <div className={styles.liquidFunds}>
-                                <div className={styles.liquidFundsHeadline}>
-                                    <div className={styles.liquidFundsDot}/>
-                                    Liquid EVNTs
-                                </div>
-                                <div className={styles.liquidFundsAmount}>
-                                    <p className={styles.liquidFundsTotal}>{formatToFixed(balance)}</p>
-                                    <p className={styles.liquidFundsTitle}>EVNT</p>
-                                </div>
                             </div>
                         </div>
-                        <div
-                            className={styles.goToWallet}
-                            onClick={onClickGoToRoute(Routes.wallet)}
-                        >
-                            <p className={styles.goToWalletText}>Go to my Wallet</p>
-                            <Icon
-                                className={styles.goToWalletIcon}
-                                iconType={IconType.arrowTopRight}
-                            />
+                        <div className={styles.profileStatItem}>
+                            <p className={styles.statItemHeading}>my wallet<br /> (in evnt)</p>
+                            <div className={styles.statItemContent}>
+                                <p className={styles.statItemValue}>2.800</p>
+                                <Icon
+                                    className={styles.goToIcon}
+                                    iconType={IconType.arrowTopRight}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.profileStatItem}>
+                            <p className={styles.statItemHeading}>current trades</p>
+                            <div className={styles.statItemContent}>
+                                <p className={styles.statItemContent}>3</p>
+                                <Icon
+                                    className={styles.goToIcon}
+                                    iconType={IconType.arrowTopRight}
+                                />
+                            </div>
                         </div>
                     </div>
+                    <div className={styles.profileBalance}>
+                        <div className={styles.profileBalanceHeading}>
+                            <p className={styles.profileBalanceTitle}>total balance</p>
+                            <div className={styles.goToMyTrades}>
+                                <p style={{display: 'inline'}}>Go to my Trades &nbsp;</p>
+                                <Icon
+                                    className={styles.goToMyTradesIcon}
+                                    iconType={IconType.arrowTopRight}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.profileBalanceContent}>
+                            <div className={styles.profileBalanceItem}>
+                                <div className={styles.overallFunds}>
+                                    <div className={styles.overallFundsAmount}>
+                                        <PieChart
+                                            data={[
+                                                {
+                                                    title: 'InvestedFunds',
+                                                    value: investedFundsPercentage,
+                                                    color: '#69ffa5',
+                                                },
+                                                {
+                                                    title: 'LiquidFunds',
+                                                    value: liquidFundsPercentage,
+                                                    color: '#3570ff',
+                                                },
+                                            ]}
+                                            lineWidth={14}
+                                            startAngle={270}
+                                        />
+                                        <p className={styles.overallFundsTotal}>{formatToFixed(overallFundsTotal)}</p>
+                                        <p className={styles.overallFundsTitle}>EVNT</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.profileBalanceItem}>
+                                <div className={styles.availableEvnts}>
+                                    <div className={styles.availableEvntsHeadline}>
+                                        <div className={styles.availableEvntsDot} />
+                                        Available evnts
+                                    </div>
+                                    <div className={styles.availableEvntsAmount}>
+                                        <p className={styles.availableEvntsTotal}>
+                                            {formatToFixed(investedAmount)}
+                                        </p>
+                                        <p className={styles.availableEvntsTitle}>EVNT</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.profileBalanceItem}>
+                                <div className={styles.liquidFunds}>
+                                    <div className={styles.liquidFundsHeadline}>
+                                        <div className={styles.liquidFundsDot} />
+                                        Open positions
+                                    </div>
+                                    <div className={styles.liquidFundsAmount}>
+                                        <p className={styles.liquidFundsTotal}>{formatToFixed(balance)}</p>
+                                        <p className={styles.liquidFundsTitle}>EVNT</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <HomeSettings onEditClick={() => onClickShowEditProfile()}/>
                     <div className={styles.buttonContainer}>
                         <div
