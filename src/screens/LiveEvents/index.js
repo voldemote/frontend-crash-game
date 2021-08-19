@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss";
-import BaseContainerWithNavbar from "components/BaseContainerWithNavbar";
-import EventsContent from "components/Events/EventsContent";
+import styles from './styles.module.scss';
+import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import EventsContent from 'components/Events/EventsContent';
 
 const LiveEvents = () => {
     return (

@@ -13,7 +13,11 @@ import LoLImage from '../../../data/images/League of Legends-144x192.jpeg';
 import MinecraftImage from '../../../data/images/Minecraft-144x192.jpeg';
 import AllImage from '../../../data/images/wallfair-all-category.png';
 
-function EventsContent({ fetchFilteredEvents, resetDefaultParamsValues }) {
+function EventsContent({
+    fetchFilteredEvents,
+    resetDefaultParamsValues,
+    eventType,
+}) {
     const [searchInput, setSearchInput] = useState('');
     const [categories, setCategories] = useState([
         {
@@ -78,7 +82,6 @@ function EventsContent({ fetchFilteredEvents, resetDefaultParamsValues }) {
 
     useEffect(() => {
         return () => {
-            console.log('component unMounted');
             resetDefaultParamsValues();
         };
     }, []);
@@ -118,7 +121,7 @@ function EventsContent({ fetchFilteredEvents, resetDefaultParamsValues }) {
                             title={item.name}
                             organizer={''}
                             viewers={12345}
-                            live={true}
+                            live={eventType === 'streamed'}
                             tags={mappedTags(item._id)}
                             image={item.previewImageUrl}
                             eventEnd={item.date}
