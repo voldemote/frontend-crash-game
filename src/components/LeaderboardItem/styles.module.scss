@@ -304,4 +304,38 @@
       line-height: 20px;
     }
   }
+
+  .loadButton {
+    width: 135px;
+    margin: 0 auto;
+    background-color: #24203d;
+    border-radius: 5px;
+    padding: 10px 25px 10px 0;
+    height: 30px;
+    text-align: right;
+    color: white;
+    line-height: 1;
+    font-size: 12px;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #343353;
+    }
+
+    &::before {
+      content: '...';
+      position: absolute;
+      bottom: 37%;
+      left: 20px;
+      font-size: 32px;
+      letter-spacing: -2px;
+      height: 100%;
+    }
+  }
+}
+
+.tableCurrentUser {
+  border-left: 4px solid $colorYellow;
+  background-color: #24203d;
 }
