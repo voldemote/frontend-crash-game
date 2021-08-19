@@ -1,6 +1,7 @@
 export default {
-    copyToClipboardInput:     'copyToClipboardInput',
-    defaultInput:             'defaultInput',
-    coloredBorderMint:        'coloredBorderMint',
-    coloredBorderLightPurple: 'coloredBorderLightPurple',
+    copyToClipboardInput:      'copyToClipboardInput',
+    copyToClipboardInputWhite: 'copyToClipboardInputWhite',
+    defaultInput:              'defaultInput',
+    coloredBorderMint:         'coloredBorderMint',
+    coloredBorderLightPurple:  'coloredBorderLightPurple',
 };
