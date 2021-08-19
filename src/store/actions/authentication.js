@@ -23,7 +23,7 @@ export const AuthenticationTypes = {
     VERIFY_EMAIL_FAILED:            'Authentication/VERIFY_EMAIL_FAILED',
     VERIFY_EMAIL_SUCCEEDED:         'Authentication/VERIFY_EMAIL_SUCCEEDED',
     RESET_AUTH_STATE:               'Authentication/RESET_AUTH_STATE',
-    UPDATE_USER_DATA:                'Authentication/UPDATE_USER_DATA',
+    UPDATE_USER_DATA:               'Authentication/UPDATE_USER_DATA',
 };
 
 const fetchReferrals = makeActionCreator(

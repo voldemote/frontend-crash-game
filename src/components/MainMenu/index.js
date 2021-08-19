@@ -77,7 +77,7 @@ const MainMenu = ({
     }
 
     const handleSubmit = () => {
-        updateUser(name, username, email, null)
+        updateUser(user.userId, name, username, email, null)
     }
 
     const handleProfilePictureUpload = event => {
@@ -282,8 +282,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateUser: (name, username, email, profilePicture) => {
-            dispatch(UserActions.update({name, username, email, profilePicture}))
+        updateUser: (userId, name, username, email, profilePicture) => {
+            dispatch(UserActions.update({userId, user: {name, username, email, profilePicture}}))
         }
     }
 }

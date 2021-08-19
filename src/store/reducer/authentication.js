@@ -149,14 +149,8 @@ const updateData = (action, state) => {
         profilePicture: {
             $set: action.profilePicture,
         },
-        name:           {
-            $set: action.name,
-        },
         username:       {
             $set: action.username,
-        },
-        email:          {
-            $set: action.email,
         },
         admin:          {
             $set: action.admin,
@@ -175,6 +169,26 @@ const updateData = (action, state) => {
         },
     });
 };
+
+const updateUserData = (action, state) => {
+
+    debugger
+
+    return update(state, {
+        name:           {
+            $set: action.name,
+        },
+        username:       {
+            $set: action.username,
+        },
+        email:          {
+            $set: action.email,
+        },
+        profilePicture: {
+            $set: action.profilePicture,
+        },
+    })
+}
 
 const logout = (action, state) => {
     return update(state, {
@@ -253,6 +267,7 @@ export default function (state = initialState, action) {
         case AuthenticationTypes.SET_REFERRAL:                  return setReferral(action, state);
         case AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED:     return fetchReferralsSucceeded(action, state);
         case AuthenticationTypes.RESET_AUTH_STATE:              return resetAuthState(action, state);
+        case AuthenticationTypes.UPDATE_USER_DATA:              return updateUserData(action, state);
         default:                                                return state;
         // @formatter:on
     }

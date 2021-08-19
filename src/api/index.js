@@ -113,11 +113,11 @@ const getUser = userId => {
 };
 
 const updateUser = (userId, user) => {
-    return Api.patch(_.replace(ApiUrls.API_USER, ':id', userId), {
-        ...user,
-    }).catch(error => {
-        console.log('[API Error] called: patchUser', error);
-    });
+    return Api.patch(_.replace(ApiUrls.API_USER, ':id', userId), user).catch(
+        error => {
+            console.log('[API Error] called: patchUser', error);
+        }
+    );
 };
 
 const getLeaderboard = (skip, limit) => {

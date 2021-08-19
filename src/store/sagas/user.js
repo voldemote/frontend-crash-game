@@ -75,7 +75,6 @@ const fetchSucceeded = function* (action) {
 
 const update = function* (action) {
 
-    debugger
     const userId = action.userId;
     const user = action.user;
 
@@ -88,12 +87,13 @@ const update = function* (action) {
     const response = yield call(
         Api.updateUser,
         userId,
-        user
+        user,
     );
 
     if (response) {
-
+        const auth = yield select(state => state.authentication);
         yield put(AuthenticationActions.updateUserData({
+            ...auth,
             ...user,
         }));
     }
