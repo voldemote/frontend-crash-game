@@ -60,13 +60,13 @@ const LeaderboardItem = ({user, isCurrentUser = false, showLoadButton = false, o
                 </>
             ) : (
                 <>
-                    {showLoadButton && renderLoadButton()}
                     <div className={style.placeSeperate} />
                     <div className={classNames(style.tableEntryHolder, isCurrentUser && style.tableCurrentUser)}>
                         <p className={style.entryRank}>#{user.rank}</p>
                         <p className={style.entryName}>{getUsername(user.username)}</p>
                         <p className={style.entryBalance}>{amountWon}</p>
                     </div>
+                    {showLoadButton && renderLoadButton()}
                 </>
             )}
         </>

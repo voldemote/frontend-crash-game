@@ -1,4 +1,5 @@
 import update         from 'immutability-helper';
+import { act } from 'react-dom/test-utils';
 import { LeaderboardTypes } from '../actions/leaderboard';
 import user from './user';
 
@@ -12,6 +13,7 @@ const initialState = {
             toNextRank: null
         },
         users: [],
+        usersWithCurrent: [],
         total: 0,
         page: 0,
         perPage: 0
@@ -25,22 +27,30 @@ const findUser = (userList, id) => {
 const fetchAllSucceeded = (action, state) => {
     let users = [];
     const loggedInUser = action.leaderboard.currentUser;
+    let usersWithCurrent = action.leaderboard.usersWithCurrent;
+    let currentUserSkip = loggedInUser.rank - 5;
 
-    if (action.leaderboard.page === 0) {
-        users = action.leaderboard.users;
-    } else if (action.leaderboard.page === state.leaderboard.page) {
-        users = state.leaderboard.users;
-    } else {
-        let stateUsers = state.leaderboard.users;
-
-        if (findUser(action.leaderboard.users, loggedInUser._id)) {
-            stateUsers = stateUsers.filter(u => u._id != loggedInUser._id);
-        }
-
-        users = [...stateUsers, ...action.leaderboard.users];
+    if (usersWithCurrent && usersWithCurrent.length > 0) {
+        usersWithCurrent = usersWithCurrent.map(user => {
+            currentUserSkip += 1;
+            return {
+                ...user,
+                rank: currentUserSkip,
+            };
+        });
     }
 
-    const currentUser = findUser(users, loggedInUser._id);
+    if (action.leaderboard.skip === 0) {
+        users = action.leaderboard.users;
+    } else if (action.leaderboard.skip === state.leaderboard.skip) {
+        users = state.leaderboard.users;
+    } else {
+        if (action.leaderboard.fetchAfterOnly) {
+            users = action.leaderboard.users;
+        } else {
+            users = [...state.leaderboard.users, ...action.leaderboard.users];
+        }
+    }
 
     users = users.map((user, index) => {
         return {
@@ -49,11 +59,17 @@ const fetchAllSucceeded = (action, state) => {
         };
     });
 
-    if (!currentUser) {
-        users.push(loggedInUser);
-    } else if (currentUser.rank > users.length) {
-        users = users.filter(u => u._id != currentUser._id);
-        users.push(currentUser);
+    if (usersWithCurrent.length > 0) {
+        let overlap = findUser(users, usersWithCurrent[0]._id);
+
+        if (overlap) {
+            usersWithCurrent.forEach(u => {
+                if (!users.find(user => user._id === u._id)) {
+                    users.push(u);
+                }
+            });
+            usersWithCurrent = [];
+        }
     }
 
     return {
@@ -61,6 +77,7 @@ const fetchAllSucceeded = (action, state) => {
         leaderboard: {
             ...action.leaderboard,
             users,
+            usersWithCurrent,
         }
     };
 };

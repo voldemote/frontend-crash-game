@@ -107,11 +107,11 @@ const getUser = (userId) => {
     });
 };
 
-const getLeaderboard = (page, perPage) => {
+const getLeaderboard = (skip, limit) => {
     return Api.get(
         ApiUrls.API_LEADERBOARD
-            .replace(':page', page)
-            .replace(':perPage', perPage),
+            .replace(':skip', skip)
+            .replace(':limit', limit),
     ).catch((error) => {
         console.log('[API Error] called: getLeaderboard', error);
     });
