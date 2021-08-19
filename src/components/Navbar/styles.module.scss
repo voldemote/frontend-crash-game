@@ -221,8 +221,22 @@
             }
         }
 
+        .logoLink {
+            opacity: 1;
+            margin: 0;
+
+            & > img {
+                margin: 0;
+            }
+
+            &:after {
+                display: none;
+            }
+        }
+
         .linkWrapper {
             display: flex;
+            margin-left: 2rem;
         }
 
         .homeIcon {
@@ -403,7 +417,9 @@
 
     .logoMobile {
         width: auto;
-        
+    }
+
+    .logoMobileWrapper {        
         @media (min-width: $screen-sm)
         {
             display: none;

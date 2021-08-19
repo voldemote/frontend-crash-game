@@ -98,12 +98,13 @@ const Navbar = ({
         return '-';
     };
 
-    const renderNavbarLink = (route, text) => {
+    const renderNavbarLink = (route, text, isLogo = false) => {
         return (
             <NavLink 
                 exact 
                 to={route} 
-                activeClassName={style.active}
+                activeClassName={!isLogo && style.active}
+                className={isLogo && style.logoLink}
             >
                 {text}
             </NavLink>
@@ -339,20 +340,26 @@ const Navbar = ({
 
     return (
         <div className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}>
-            <Icon
-                iconType={IconType.logoSmall}
-                className={style.logoMobile}
-            />
-            
+            <div className={style.logoMobileWrapper}>
+                {renderNavbarLink(Routes.home,
+                    <Icon
+                        iconType={IconType.logoSmall}
+                        className={style.logoMobile}
+                    />,
+                    true
+                )}
+            </div>
             <div className={classNames(style.navbarItems, style.hideOnMobile)}>
-                <img
-                    src={LogoDemo}
-                    width={200}
-                    alt={'Wallfair'}
-                />
+                {renderNavbarLink(Routes.home,
+                    <img
+                        src={LogoDemo}
+                        width={200}
+                        alt={'Wallfair'}
+                    />,
+                    true
+                )}
                 {isLoggedIn() &&
                     <div className={style.linkWrapper}>
-                        {renderNavbarLink(Routes.home, <Icon iconType={IconType.home} className={style.homeIcon} />)}
                         {renderNavbarLink(Routes.liveEvents, 'Live Events')}
                         {renderNavbarLink(Routes.events, 'Events')}
                         {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
