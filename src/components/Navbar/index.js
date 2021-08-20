@@ -7,38 +7,32 @@ import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import Routes                   from '../../constants/Routes';
 import Icon                     from '../Icon';
 import IconType                 from '../Icon/IconType';
-import { useEffect, useState }             from 'react';
+import { useState }             from 'react';
 import MainMenu                 from '../MainMenu';
-import LeaderboardItem          from '../LeaderboardItem';
+import Leaderboard              from '../Leaderboard';
 import Notifications            from '../Notifications';
 import { connect }              from 'react-redux';
 import { NotificationActions }  from 'store/actions/notification';
 import { formatToFixed }        from '../../helper/FormatNumbers';
-import { LeaderboardActions }   from '../../store/actions/leaderboard';
 import { LOGGED_IN }            from 'constants/AuthState';
 import Button                   from '../Button';
 import { useHistory }           from 'react-router';
 import Wallet                   from '../Wallet';
 import { NavLink }              from 'react-router-dom';
-import State                    from "../../helper/State";
-import { matchPath } from 'react-router-dom';
+import { matchPath }            from 'react-router-dom';
 
 const Navbar = ({
                     user,
                     notifications,
-                    leaderboard,
-                    leaderboardWithCurrentUser,
-                    userRank,
                     setUnread,
                     transactions,
-                    fetchLeaderboard,
                     authState,
                     location,
                     skipRoutes = [],
                 }) => {
 
     const [openDrawer, setOpenDrawer] = useState('');
-    const [skipLeaderboard, setSkipLeaderboard] = useState(20);
+    const [missingWinnerAmount, setMisingWinnerAmount] = useState(null);
     const history = useHistory();
     
     if (skipRoutes.some(route => matchPath(location.pathname, route))) {
@@ -66,9 +60,6 @@ const Navbar = ({
             return;
         }
         const isDrawerOpen = openDrawer === drawerName;
-        if (!isDrawerOpen && drawerName === drawers.leaderboard) {
-            fetchLeaderboard(0, true);
-        }
         setOpenDrawer(isDrawerOpen ? '' : drawerName);
     }
 
@@ -216,20 +207,15 @@ const Navbar = ({
         )
     };
 
-    const onLeaderboardLoad = () => {
-        fetchLeaderboard(skipLeaderboard);
-        setSkipLeaderboard(skipLeaderboard + 20);
-    };
-
-    const onAfterCurrentLeaderboardLoad = () => {
-        fetchLeaderboard(leaderboardWithCurrentUser[leaderboardWithCurrentUser.length - 1].rank, true);
-    };
-
-    const getMissingWinnerAmount = () => {
-        const first = leaderboard[0];
-        if (leaderboard.length == 0 || first._id === userRank._id) return 0;
-        return first.amountWon - userRank.amountWon;
-    };
+    const renderLeaderboardInfo = (text, number) => {
+        return (
+            <div className={style.leaderboardInfoItem}>
+                <div className={style.leaderboardInfoItemText}>{text}</div>
+                <div className={style.leaderboardInfoItemNumber}>{number} 
+                <span className={style.leaderboardInfoItemToken}> EVNT</span></div>
+            </div>
+        );
+    }
 
     const renderLeaderboardDrawer = () => {
         return (
@@ -251,54 +237,10 @@ const Navbar = ({
                     </div>
                 </div>
                 <div className={style.leaderboardInfo}>
-                    <div className={style.leaderboardInfoItem}>
-                        <div className={style.leaderboardInfoItemText}>MISSING TO WINNER</div>
-                        <div className={style.leaderboardInfoItemNumber}>{getMissingWinnerAmount()} 
-                        <span className={style.leaderboardInfoItemToken}> EVNT</span></div>
-                    </div>
-                    <div className={style.leaderboardInfoItem}>
-                        <div className={style.leaderboardInfoItemText}>MISSING TO NEXT RANK</div>
-                        <div className={style.leaderboardInfoItemNumber}>{user.toNextRank} 
-                        <span className={style.leaderboardInfoItemToken}> EVNT</span></div>
-                    </div>
+                    {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
+                    {renderLeaderboardInfo('MISSING TO NEXT RANK', user.toNextRank)}
                 </div>
-                <div className={style.leaderboardTable}>
-                    <div className={style.tableHeadings}>
-                        <p className={style.rankingHeading}>RANKING</p>
-                        <p className={style.userHeading}>USER</p>
-                        <p className={style.tokenHeading}>TOKENS WON</p>
-                    </div>
-                    <div className={style.leaderboardRanking}>
-                        {
-                            leaderboard &&
-                            leaderboard.map(user => {
-                                return (
-                                    <LeaderboardItem
-                                        user={user}
-                                        isCurrentUser={user._id === userRank._id}
-                                        key={user.rank}
-                                        showLoadButton={leaderboard[leaderboard.length - 1]  === user}
-                                        onLoad={() => onLeaderboardLoad()}
-                                    />
-                                );
-                            })
-                        }
-                        {
-                            leaderboardWithCurrentUser &&
-                            leaderboardWithCurrentUser.map(user => {
-                                return (
-                                    <LeaderboardItem
-                                        user={user}
-                                        isCurrentUser={user._id === userRank._id}
-                                        key={user.rank}
-                                        showLoadButton={leaderboardWithCurrentUser[leaderboardWithCurrentUser.length - 1] === user}
-                                        onLoad={() => onAfterCurrentLeaderboardLoad()}
-                                    />
-                                );
-                            })
-                        }
-                    </div>
-                </div>
+                <Leaderboard fetch={openDrawer === drawers.leaderboard} setMissingAmount={setMisingWinnerAmount} />
             </div>
         )
     }
@@ -381,14 +323,11 @@ const Navbar = ({
 
 const mapStateToProps = (state) => {
     return {
-        authState:                  state.authentication.authState,
-        notifications:              state.notification.notifications,
-        leaderboard:                _.get(state.leaderboard.leaderboard, 'users', []),
-        leaderboardWithCurrentUser: _.get(state.leaderboard.leaderboard, 'usersWithCurrent', []),
-        userRank:                   state.leaderboard.leaderboard.currentUser,
-        transactions:               state.transaction.transactions,
-        user:                       state.authentication,
-        location:                   state.router.location,
+        authState:     state.authentication.authState,
+        notifications: state.notification.notifications,
+        transactions:  state.transaction.transactions,
+        user:          state.authentication,
+        location:      state.router.location,
     };
 };
 
@@ -397,9 +336,6 @@ const mapDispatchToProps = (dispatch) => {
         setUnread:        (notification) => {
             dispatch(NotificationActions.setUnread({ notification }));
         },
-        fetchLeaderboard: (skip, fetchAfterCurrent = false) => {
-            dispatch(LeaderboardActions.fetchAll({skip, limit: 20, fetchAfterCurrent}));
-        }
     };
 };
 

@@ -12,6 +12,8 @@ const fetchAll = makeActionCreator(
         skip: 0,
         limit: 10,
         fetchAfterCurrent: false,
+        skipForCurrent: 0,
+        limitForCurrent: 0,
     }
 );
 

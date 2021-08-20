@@ -26,9 +26,8 @@ const findUser = (userList, id) => {
 
 const fetchAllSucceeded = (action, state) => {
     let users = [];
-    const loggedInUser = action.leaderboard.currentUser;
     let usersWithCurrent = action.leaderboard.usersWithCurrent;
-    let currentUserSkip = loggedInUser.rank - 5;
+    let currentUserSkip = action.leaderboard.skipForCurrent;
 
     if (usersWithCurrent && usersWithCurrent.length > 0) {
         usersWithCurrent = usersWithCurrent.map(user => {
@@ -60,7 +59,8 @@ const fetchAllSucceeded = (action, state) => {
     });
 
     if (usersWithCurrent.length > 0) {
-        let overlap = findUser(users, usersWithCurrent[0]._id);
+        let user = findUser(users, usersWithCurrent[0]._id);
+        let overlap = user || users[users.length - 1].rank === usersWithCurrent[0].rank - 1;
 
         if (overlap) {
             usersWithCurrent.forEach(u => {
