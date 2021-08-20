@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams, Link, useLocation } from 'react-router-dom';
 import Routes from '../../../constants/Routes';
 import styles from './styles.module.scss';
 import Search from '../../Search';
 import EventCard from '../../EventCard';
-import { EventActions } from '../../../store/actions/event';
 import CategoryList from '../../CategoryList';
+import { useMappedActions } from './hooks/useMappedActions';
 
-function EventsContent({
-    fetchFilteredEvents,
-    resetDefaultParamsValues,
-    eventType,
-    categories,
-    setCategories,
-}) {
+function EventsContent({ eventType, categories, setCategories }) {
     const [searchInput, setSearchInput] = useState('');
+
+    const { fetchFilteredEvents, resetDefaultParamsValues } =
+        useMappedActions(eventType);
 
     const handleSearchSubmit = val => {
         fetchFilteredEvents({
@@ -49,7 +46,7 @@ function EventsContent({
 
     useEffect(() => {
         fetchFilteredEvents();
-    }, []);
+    }, [fetchFilteredEvents]);
 
     useEffect(() => {
         return () => {
@@ -106,21 +103,4 @@ function EventsContent({
     );
 }
 
-const mapStateToProps = state => {
-    return {};
-};
-const mapDispatchToProps = (dispatch, { eventType }) => {
-    return {
-        fetchFilteredEvents: (params = {}) =>
-            dispatch(
-                EventActions.initiateFetchFilteredEvents({
-                    ...params,
-                    type: eventType,
-                })
-            ),
-        resetDefaultParamsValues: () =>
-            dispatch(EventActions.resetDefaultParamsValues()),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventsContent);
+export default EventsContent;
