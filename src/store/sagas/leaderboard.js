@@ -17,8 +17,8 @@ const fetchAll = function* (action) {
     const limit = action.limit;
     const skip = action.skip;
     const fetchAfterCurrent = action.fetchAfterCurrent;
-    const skipFromCurrent = user.rank - 6;
-    const limitForCurrent = 11;
+    const skipForCurrent = user.rank - action.skipForCurrent;
+    const limitForCurrent = action.limitForCurrent;
 
     if (userId && token) {
 
@@ -34,17 +34,23 @@ const fetchAll = function* (action) {
             },
             skip,
             limit,
-            fetchAfterOnly: false
+            fetchAfterOnly: false,
+            skipForCurrent
         };
 
         if (skip === 0 && fetchAfterCurrent) {
             const response = yield call(Api.getLeaderboard, skip, limit);
-            const responseCurrent = yield call(Api.getLeaderboard, skipFromCurrent, limitForCurrent);
+            let current = [];
+
+            if (!response.data.users.find(u => u._id === user.userId)) {
+                const responseCurrent = yield call(Api.getLeaderboard, skipForCurrent, limitForCurrent);
+                current = responseCurrent.data.users;
+            }
 
             leaderboard = {
                 ...leaderboard,
                 ...response.data,
-                usersWithCurrent: responseCurrent.data.users,
+                usersWithCurrent: current,
             };
         } else if (fetchAfterCurrent) {
             const responseCurrent = yield call(Api.getLeaderboard, skip, limitForCurrent);
