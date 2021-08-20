@@ -64,12 +64,6 @@ const Header = ({ events }) => {
                         const endDate = moment(_.get(event, 'endDate'));
                         const currentDate = moment();
                         const isLive = true; //currentDate.isBetween(startDate, endDate);
-                        const trades = sortTrades(
-                            _.clone(_.get(event, 'bets', []))
-                        );
-
-                        const currentTrade = _.head(trades);
-                        const currentTradeId = _.get(currentTrade, '_id');
 
                         return (
                             <div
@@ -116,7 +110,6 @@ const Header = ({ events }) => {
                                                             {
                                                                 eventId:
                                                                     event._id,
-                                                                betId: currentTradeId,
                                                             }
                                                         ),
                                                     state: {
