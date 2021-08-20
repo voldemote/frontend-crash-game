@@ -23,28 +23,28 @@ const Events = () => {
             type: 'icon',
         },
         {
-            value: 'politics',
+            value: 'celebrities',
             image: CelebritiesImage,
             isActive: false,
             type: 'icon',
         },
         {
-            value: 'crypto',
+            value: 'politics',
             image: PoliticsImage,
             isActive: false,
             type: 'icon',
         },
         {
-            value: 'celebrities',
+            value: 'crypto',
+            image: SportsImage,
+            isActive: false,
+        },
+        {
+            value: 'other',
             image: OtherImage,
             isActive: false,
             type: 'icon',
         },
-        // {
-        //     value: 'other',
-        //     image: MinecraftImage,
-        //     isActive: false,
-        // },
     ]);
     return (
         <BaseContainerWithNavbar withPaddingTop={true}>
