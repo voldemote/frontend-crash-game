@@ -38,6 +38,7 @@ const Events = () => {
             value: 'crypto',
             image: SportsImage,
             isActive: false,
+            type: 'icon',
         },
         {
             value: 'other',
