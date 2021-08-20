@@ -39,6 +39,7 @@ $largeMobileHeight: 700px;
         border-radius: 4px;
         background-color: rgba(172, 196, 255, 0.1);
         margin-bottom: 20px;
+        overflow: hidden;
 
         .profileBalanceHeading {
             display: flex;
@@ -234,6 +235,11 @@ $largeMobileHeight: 700px;
         align-items: center;
         margin-bottom: 20px;
         border-radius: 6px;
+        overflow: hidden;
+
+        @media (max-width: $screen-sm) {
+            flex-direction: column;
+        }
 
         .profileStatItem {
             color: $colorWhite;
@@ -245,6 +251,12 @@ $largeMobileHeight: 700px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
+            @media (max-width: $screen-sm) {
+                width: 100%;
+                margin-bottom: 20px;
+                overflow-y: hidden;
+            }
 
             .statItemHeading {
                 font-size: 8px;

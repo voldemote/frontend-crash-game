@@ -12,7 +12,6 @@ import {useHistory} from 'react-router';
 import HomeSettings from '../HomeSettings';
 import {PieChart} from 'react-minimal-pie-chart';
 import {formatToFixed} from '../../helper/FormatNumbers';
-import {UserActions} from "../../store/actions/user";
 import { AuthenticationActions } from 'store/actions/authentication';
 
 const MainMenu = ({
@@ -77,12 +76,28 @@ const MainMenu = ({
         setEmail(e.target.value)
     }
 
-    const handleSubmit = () => {
-        updateUser(name, username, email, null)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        updateUser(name, username, email, null);
+        setEditVisible(false);
     }
 
-    const handleProfilePictureUpload = event => {
-        console.log(event.target.files[0])
+    const handleProfilePictureUpload = async (e) => {
+        const base64 = await convertToBase64(e.target.files[0]);
+        updateUser(null, null, null, base64);
+    }
+
+    const convertToBase64 = file => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result);
+            });
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        })
     }
 
     const editProfileWrapper = () => {
@@ -102,7 +117,7 @@ const MainMenu = ({
                                 <div className={styles.iconContainer}>
                                     <Icon className={styles.uploadIcon} iconTheme={IconTheme.white} iconType={IconType.avatarUpload} />
                                 </div>
-                                <input ref={profilePictureRefName} type={'file'} style={{display: 'none'}} onChange={handleProfilePictureUpload} />
+                                <input ref={profilePictureRefName} type={'file'} accept={'image/*'} style={{display: 'none'}} onChange={handleProfilePictureUpload} />
                             </div>
                             <p className={styles.profilePictureUploadLabel}>Your avatar</p>
                         </div>
@@ -145,7 +160,7 @@ const MainMenu = ({
                         <div className={styles.profileStatItem}>
                             <p className={styles.statItemHeading}>community<br /> leaderboard</p>
                             <div className={styles.statItemContent}>
-                                <p className={styles.statItemContent}># 31</p>
+                                <p className={styles.statItemContent}>{user.rank}</p>
                                 <Icon
                                     className={styles.goToIcon}
                                     iconType={IconType.arrowTopRight}
@@ -155,7 +170,7 @@ const MainMenu = ({
                         <div className={styles.profileStatItem}>
                             <p className={styles.statItemHeading}>my wallet<br /> (in evnt)</p>
                             <div className={styles.statItemContent}>
-                                <p className={styles.statItemValue}>2.800</p>
+                                <p className={styles.statItemValue}>{formatToFixed(balance)}</p>
                                 <Icon
                                     className={styles.goToIcon}
                                     iconType={IconType.arrowTopRight}
@@ -217,7 +232,7 @@ const MainMenu = ({
                                     </div>
                                     <div className={styles.availableEvntsAmount}>
                                         <p className={styles.availableEvntsTotal}>
-                                            {formatToFixed(investedAmount)}
+                                            {formatToFixed(balance)}
                                         </p>
                                         <p className={styles.availableEvntsTitle}>EVNT</p>
                                     </div>
@@ -284,7 +299,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateUser: (name, username, email, profilePicture) => {
-            dispatch(AuthenticationActions.update({user: {name, username, email, profilePicture}}))
+            dispatch(AuthenticationActions.updateUserData({user: {name, username, email, profilePicture}}))
         }
     }
 }
