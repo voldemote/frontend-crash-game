@@ -1,6 +1,8 @@
-@import "../../../styles/all";
+@import '../../../styles/all';
 
 .categoryListItem {
+    display: flex;
+    align-items: flex-end;
 }
 .box {
     width: 80px;
@@ -18,4 +20,6 @@
 .image {
     width: 80px;
     height: 106px;
+}
+.imageIcon {
 }

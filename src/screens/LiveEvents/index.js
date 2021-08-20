@@ -14,26 +14,31 @@ const LiveEvents = () => {
             value: 'all',
             image: AllImage,
             isActive: true,
+            type: 'image',
         },
         {
             value: 'streamed-esports',
             image: FifaImage,
             isActive: false,
+            type: 'image',
         },
         {
             value: 'streamed-shooter',
             image: CoDImage,
             isActive: false,
+            type: 'image',
         },
         {
             value: 'streamed-mmorpg',
             image: LoLImage,
             isActive: false,
+            type: 'image',
         },
         {
             value: 'streamed-other',
             image: MinecraftImage,
             isActive: false,
+            type: 'image',
         },
     ]);
 
