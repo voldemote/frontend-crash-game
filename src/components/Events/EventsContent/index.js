@@ -11,6 +11,9 @@ import { useMappedActions } from './hooks/useMappedActions';
 function EventsContent({ eventType, categories, setCategories }) {
     const [searchInput, setSearchInput] = useState('');
 
+    const location = useLocation();
+    const { category } = useParams();
+
     const { fetchFilteredEvents, resetDefaultParamsValues } =
         useMappedActions(eventType);
 
@@ -20,24 +23,27 @@ function EventsContent({ eventType, categories, setCategories }) {
         });
     };
 
-    const handleSelectCategory = value => {
-        fetchFilteredEvents({
-            category: value,
-        });
-        const updatedCats = categories.map(cat => {
-            if (value !== cat.value)
+    const handleSelectCategory = useCallback(
+        value => {
+            fetchFilteredEvents({
+                category: value,
+            });
+            const updatedCats = categories.map(cat => {
+                if (value !== cat.value)
+                    return {
+                        ...cat,
+                        isActive: false,
+                    };
                 return {
                     ...cat,
-                    isActive: false,
+                    isActive: true,
                 };
-            return {
-                ...cat,
-                isActive: true,
-            };
-        });
+            });
 
-        setCategories(updatedCats);
-    };
+            setCategories(updatedCats);
+        },
+        [fetchFilteredEvents, setCategories]
+    );
 
     const events = useSelector(state => state.event.filteredEvents);
 
@@ -45,16 +51,14 @@ function EventsContent({ eventType, categories, setCategories }) {
         events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
     useEffect(() => {
-        fetchFilteredEvents();
-    }, [fetchFilteredEvents]);
+        handleSelectCategory(category);
+    }, [category, handleSelectCategory]);
 
     useEffect(() => {
         return () => {
             resetDefaultParamsValues();
         };
     }, []);
-
-    const location = useLocation();
 
     return (
         <>

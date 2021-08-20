@@ -10,10 +10,25 @@
     overflow: hidden;
     border: $border;
     border-radius: $radius;
-    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.active {
-        border-color: $colorMint;
+        border: 2px solid $colorRedDark;
+    }
+}
+
+.boxIcon {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    border: 1px solid transparent;
+
+    &.active {
+        border: 2px solid $colorRedDark;
     }
 }
 

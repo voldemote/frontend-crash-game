@@ -21,7 +21,6 @@ const fetchAllFailed = makeActionCreator(EventTypes.FETCH_ALL_FAILED);
 
 // Live events (filtered)
 const initiateFetchFilteredEvents = (params = {}) => {
-    console.log('params :>> ', params);
     return {
         type: EventTypes.FETCH_FILTERED,
         payload: params,

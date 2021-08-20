@@ -7,53 +7,12 @@ import moment from 'moment';
 import LiveBadge from '../LiveBadge';
 import styles from './styles.module.scss';
 import TwitchEmbedVideo from '../TwitchEmbedVideo';
-import Routes from '../../constants/Routes';
-import EventBetPillList from '../EventBetPillList';
-import BetState from '../BetView/BetState';
 import CoverFlowCarousel from '../CoverFlowCarousel';
 import TimeLeftCounter from '../TimeLeftCounter';
 
 const Header = ({ events }) => {
     let [currentSlideIndex, setCurrentSlideIndex] = useState(0);
     const location = useLocation();
-
-    const sortTrades = trades => {
-        return trades.sort((a, b) => {
-            const aState = _.get(a, 'status');
-            const bState = _.get(b, 'status');
-            const getStateValue = state => {
-                switch (state) {
-                    case BetState.active:
-                        return 5;
-                    case BetState.closed:
-                        return 4;
-                    case BetState.resolved:
-                        return 3;
-                    case BetState.canceled:
-                        return 2;
-                }
-
-                return 1;
-            };
-
-            if (aState === bState) {
-                const aEndDate = moment(_.get(a, 'endDate'));
-                const bEndDate = moment(_.get(b, 'endDate'));
-
-                if (aEndDate.isBefore(bEndDate)) {
-                    return 1;
-                }
-
-                if (bEndDate.isBefore(aEndDate)) {
-                    return -1;
-                }
-
-                return 0;
-            }
-
-            return getStateValue(bState) - getStateValue(aState);
-        });
-    };
 
     return (
         <div>
@@ -104,14 +63,7 @@ const Header = ({ events }) => {
                                         <div>
                                             <Link
                                                 to={{
-                                                    pathname:
-                                                        Routes.getRouteWithParameters(
-                                                            Routes.bet,
-                                                            {
-                                                                eventId:
-                                                                    event._id,
-                                                            }
-                                                        ),
+                                                    pathname: `trade/${event._id}`,
                                                     state: {
                                                         fromLocation: location,
                                                     },
