@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { useHistory, useParams, Link, useLocation } from 'react-router-dom';
 import Routes from '../../../constants/Routes';
@@ -7,45 +7,15 @@ import Search from '../../Search';
 import EventCard from '../../EventCard';
 import { EventActions } from '../../../store/actions/event';
 import CategoryList from '../../CategoryList';
-import CoDImage from '../../../data/images/Call of Duty_ Warzone-144x192.jpeg';
-import FifaImage from '../../../data/images/FIFA 21-144x192.jpeg';
-import LoLImage from '../../../data/images/League of Legends-144x192.jpeg';
-import MinecraftImage from '../../../data/images/Minecraft-144x192.jpeg';
-import AllImage from '../../../data/images/wallfair-all-category.png';
 
 function EventsContent({
     fetchFilteredEvents,
     resetDefaultParamsValues,
     eventType,
+    categories,
+    setCategories,
 }) {
     const [searchInput, setSearchInput] = useState('');
-    const [categories, setCategories] = useState([
-        {
-            value: 'all',
-            image: AllImage,
-            isActive: true,
-        },
-        {
-            value: 'streamed-esports',
-            image: FifaImage,
-            isActive: false,
-        },
-        {
-            value: 'streamed-shooter',
-            image: CoDImage,
-            isActive: false,
-        },
-        {
-            value: 'streamed-mmorpg',
-            image: LoLImage,
-            isActive: false,
-        },
-        {
-            value: 'streamed-other',
-            image: MinecraftImage,
-            isActive: false,
-        },
-    ]);
 
     const handleSearchSubmit = val => {
         fetchFilteredEvents({
@@ -68,6 +38,7 @@ function EventsContent({
                 isActive: true,
             };
         });
+
         setCategories(updatedCats);
     };
 
@@ -78,7 +49,7 @@ function EventsContent({
 
     useEffect(() => {
         fetchFilteredEvents();
-    }, [fetchFilteredEvents]);
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -90,7 +61,9 @@ function EventsContent({
 
     return (
         <>
-            <section className={styles.title}>Live streams</section>
+            <section className={styles.title}>
+                {eventType === 'streamed' ? 'Live streams' : 'Events'}
+            </section>
             <section className={styles.header}>
                 <div className={styles.categories}>
                     <CategoryList
