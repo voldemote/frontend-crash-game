@@ -51,7 +51,7 @@ function EventsContent({ eventType, categories, setCategories }) {
         events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
     useEffect(() => {
-        handleSelectCategory(category);
+        handleSelectCategory(category || 'all');
     }, [category, handleSelectCategory]);
 
     useEffect(() => {
