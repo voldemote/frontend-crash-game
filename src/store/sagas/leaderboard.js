@@ -17,8 +17,8 @@ const fetchAll = function* (action) {
     const limit = action.limit;
     const skip = action.skip;
     const fetchAfterCurrent = action.fetchAfterCurrent;
-    const skipForCurrent = user.rank - action.skipForCurrent;
-    const limitForCurrent = action.limitForCurrent;
+    const skipForCurrent = user?.rank ? user.rank - action.skipForCurrent : 0;
+    const limitForCurrent = user?.rank ? action.limitForCurrent : 5;
 
     if (userId && token) {
 
