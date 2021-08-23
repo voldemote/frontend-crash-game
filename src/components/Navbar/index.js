@@ -331,8 +331,8 @@ const Navbar = ({
                 )}
                 {isLoggedIn() && (
                     <div className={style.linkWrapper}>
-                        {renderNavbarLink(`/live-events/all`, 'Live Events')}
-                        {renderNavbarLink(`/events/all`, 'Events')}
+                        {renderNavbarLink(`/live-events`, 'Live Events')}
+                        {renderNavbarLink(`/events`, 'Events')}
                         {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
                     </div>
                 )}
