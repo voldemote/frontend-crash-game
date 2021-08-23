@@ -88,7 +88,7 @@ const root = function* () {
         takeLatest([REHYDRATE],                                          AuthenticationSagas.firstSignUpPopup),
         takeLatest([REHYDRATE],                                          ChatSagas.rehydrate),
         takeLatest([LeaderboardTypes.FETCH_ALL],                         LeaderboardSagas.fetchAll),
-        takeLatest([EventTypes.FETCH_TAGS],                               EventSagas.fetchTags),
+        takeLatest([EventTypes.FETCH_TAGS],                              EventSagas.fetchTags),
         takeLatest([REHYDRATE],                                          rehydrationDone),
         // @formatter:on
     ]);

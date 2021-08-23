@@ -15,16 +15,16 @@ import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import { useEffect } from 'react';
 import Routes from 'constants/Routes';
+import State from "../../helper/State";
 
-const Home = ({events, tags, openDrawer, fetchTags}) => {
-
+const Home = ({events, tags, openDrawer, user, fetchTags}) => {
     const isMount = useIsMount();
 
     useEffect(() => {
         if (isMount) {
             fetchTags();
         }
-    }, []); 
+    }, []);
 
     const renderEventCreationButton = () => {
         return (
@@ -82,7 +82,9 @@ const Home = ({events, tags, openDrawer, fetchTags}) => {
                             See Leaderboard
                         </div>
                     </div>
-                    <Leaderboard fetch={true} small={true} />
+                    {
+                        user && <Leaderboard fetch={true} small={true} />
+                    }
                 </div>
             </div>
         );
@@ -122,6 +124,7 @@ const mapStateToProps = state => {
     return {
         events: state.event.events,
         tags: state.event.tags,
+        user: State.getUser(state.authentication.userId, state.user.users),
     };
 };
 

@@ -90,7 +90,7 @@ const fetchHomeEventsSuccess = (action, state) => {
 };
 
 const fetchTagsSuccess = (action, state) => {
-    if (!action.tags) return state;
+    if (!action.tags) return {...state};
 
     return {
         ...state,
