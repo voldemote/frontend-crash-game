@@ -4,9 +4,11 @@ import { useHistory, useParams, Link, useLocation } from 'react-router-dom';
 import Routes from '../../../constants/Routes';
 import styles from './styles.module.scss';
 import Search from '../../Search';
+import Select from '../../Select';
 import EventCard from '../../EventCard';
 import CategoryList from '../../CategoryList';
 import { useMappedActions } from './hooks/useMappedActions';
+import { useSortFilter } from './hooks/useSortFilter';
 
 function EventsContent({ eventType, categories, setCategories }) {
     const [searchInput, setSearchInput] = useState('');
@@ -17,6 +19,9 @@ function EventsContent({ eventType, categories, setCategories }) {
     const { fetchFilteredEvents, resetDefaultParamsValues } =
         useMappedActions(eventType);
 
+    const { handleSelectSortItem, selectedSortItem, sortOptions } =
+        useSortFilter();
+
     const handleSearchSubmit = val => {
         fetchFilteredEvents({
             searchQuery: searchInput,
@@ -25,9 +30,6 @@ function EventsContent({ eventType, categories, setCategories }) {
 
     const handleSelectCategory = useCallback(
         value => {
-            fetchFilteredEvents({
-                category: value,
-            });
             const updatedCats = categories.map(cat => {
                 if (value !== cat.value)
                     return {
@@ -42,7 +44,7 @@ function EventsContent({ eventType, categories, setCategories }) {
 
             setCategories(updatedCats);
         },
-        [fetchFilteredEvents, setCategories]
+        [setCategories]
     );
 
     const events = useSelector(state => state.event.filteredEvents);
@@ -52,7 +54,12 @@ function EventsContent({ eventType, categories, setCategories }) {
 
     useEffect(() => {
         handleSelectCategory(category || 'all');
-    }, [category, handleSelectCategory]);
+
+        fetchFilteredEvents({
+            category: category || 'all',
+            sortBy: selectedSortItem,
+        });
+    }, [category, selectedSortItem, fetchFilteredEvents, handleSelectCategory]);
 
     useEffect(() => {
         return () => {
@@ -79,7 +86,14 @@ function EventsContent({ eventType, categories, setCategories }) {
                         handleConfirm={handleSearchSubmit}
                     />
                 </div>
-                {/* <div className={styles.sort}>sort</div> */}
+                <div className={styles.sort}>
+                    <Select
+                        value={selectedSortItem}
+                        placeholder="Sort by"
+                        options={sortOptions}
+                        handleSelect={handleSelectSortItem}
+                    />
+                </div>
             </section>
             <section className={styles.main}>
                 {events.map(item => (

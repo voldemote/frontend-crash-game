@@ -47,6 +47,7 @@ const Events = () => {
             type: 'icon',
         },
     ]);
+
     return (
         <BaseContainerWithNavbar withPaddingTop={true}>
             <EventsContent
