@@ -32,6 +32,11 @@
 .image {
     width: 80px;
     height: 106px;
+    opacity: 0.5;
+
+    &.active {
+        opacity: initial;
+    }
 }
 .imageIcon {
     opacity: 0.5;
