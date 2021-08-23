@@ -16,6 +16,7 @@ import { useIsMount } from 'components/hoc/useIsMount';
 import { useEffect } from 'react';
 import Routes from 'constants/Routes';
 import State from "../../helper/State";
+import { LOGGED_IN } from 'constants/AuthState';
 
 const Home = ({events, tags, openDrawer, user, fetchTags}) => {
     const isMount = useIsMount();
@@ -78,13 +79,14 @@ const Home = ({events, tags, openDrawer, user, fetchTags}) => {
                 <div className={styles.leaderboard}>
                     <div className={styles.headline}>
                         Community Leaderboard
-                        <div className={styles.leaderboardLink} onClick={onSeeLeaderboard}>
-                            See Leaderboard
-                        </div>
+                        {
+                            user.authState == LOGGED_IN &&
+                            <div className={styles.leaderboardLink} onClick={onSeeLeaderboard}>
+                                See Leaderboard
+                            </div>
+                        }
                     </div>
-                    {
-                        user && <Leaderboard fetch={true} small={true} />
-                    }
+                    <Leaderboard fetch={true} small={true} />
                 </div>
             </div>
         );
@@ -124,7 +126,7 @@ const mapStateToProps = state => {
     return {
         events: state.event.events,
         tags: state.event.tags,
-        user: State.getUser(state.authentication.userId, state.user.users),
+        user: state.authentication,
     };
 };
 

@@ -43,7 +43,6 @@ const LiveEventCarouselContainer = ({ events, eventType, fetchEvents }) => {
             setAllLoaded(true);
             setPage(page - 1);    
         }
-        // debugger;
     }, [events, eventType]);
 
     const nextPage = () => {
