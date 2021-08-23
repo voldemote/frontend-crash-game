@@ -1,34 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 import _ from 'lodash';
 import CarouselContainer from '../CarouselContainer';
 import EventCard from '../EventCard';
+import { EventActions } from '../../store/actions/event';
+import { useIsMount } from 'components/hoc/useIsMount';
 
-const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
+const LiveEventCarouselContainer = ({ events, eventType, fetchEvents }) => {
     const location = useLocation();
+    const [page, setPage] = useState(1);
+    const [currentEvents, setCurrentEvents] = useState([]);
+    const [allLoaded, setAllLoaded] = useState(false);
+    const isMount = useIsMount();
+
+    const COUNT = 4;
+    const carouselProps = {
+        ['streamed']: {
+            title: 'Streams',
+            titleLink: 'Discover more Streams',
+            titleLinkTo: '/live-events'
+        },
+        ['non-streamed']: {
+            title: 'Trade on the future',
+            titleLink: 'Discover more Events',
+            titleLinkTo: '/events'
+        },
+    }
+
+    useEffect(() => {
+        if (isMount) {
+            fetchEvents(eventType, page, COUNT);
+            setCurrentEvents(events[eventType]);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (events[eventType].length != 0) {
+            setCurrentEvents(events[eventType]);
+            setAllLoaded(events[eventType].length < COUNT);
+        } else if (page != 1) {
+            setAllLoaded(true);
+            setPage(page - 1);    
+        }
+        // debugger;
+    }, [events, eventType]);
+
+    const nextPage = () => {
+        const next = page + 1;
+        fetchEvents(eventType, next, COUNT);
+        setPage(next);
+    }
+
+    const previousPage = () => {
+        const previous = page - 1;
+        fetchEvents(eventType, previous, COUNT);
+        setPage(previous);
+    }
 
     const renderLiveEvents = () => {
-        return _.map(events, (event, index) => {
+        return _.map(currentEvents, (event) => {
             const eventId = _.get(event, '_id');
             const mappedTags = _.map(event.tags, tag => tag.name);
-            const isLive = true; //currentDate.isBetween(startDate, endDate);
 
             return (
                 <Link
+                    key={eventId}
                     to={{
                         pathname: `/trade/${eventId}`,
                         state: { fromLocation: location },
                     }}
                 >
                     <EventCard
-                        key={index}
+                        key={eventId}
                         title={event.name}
                         organizer={''}
                         viewers={12345}
-                        live={isLive}
+                        live={eventType === 'streamed'}
                         tags={mappedTags}
                         image={event.previewImageUrl}
+                        eventEnd={event.date}
                     />
                 </Link>
             );
@@ -37,8 +88,14 @@ const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
 
     return (
         <CarouselContainer
-            title={'🔥 Most popular Live Events'}
-            withoutPadding={withoutPadding}
+            key={eventType}
+            title={carouselProps[eventType].title}
+            titleLink={carouselProps[eventType].titleLink}
+            titleLinkTo={carouselProps[eventType].titleLinkTo}
+            prevArrowInactive={page === 1}
+            nextArrowInactive={allLoaded}
+            onNext={nextPage}
+            onPrevious={previousPage}
         >
             {renderLiveEvents()}
         </CarouselContainer>
@@ -47,8 +104,20 @@ const LiveEventCarouselContainer = ({ events, withoutPadding = false }) => {
 
 const mapStateToProps = state => {
     return {
-        events: state.event.events,
+        events: _.get(state.event, 'homeEvents', []),
     };
 };
 
-export default connect(mapStateToProps, null)(LiveEventCarouselContainer);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchEvents: (eventType, page, count) => {
+            dispatch(EventActions.fetchHomeEvents({
+                eventType,
+                page,
+                count,
+            }));
+        }
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LiveEventCarouselContainer);

@@ -10,7 +10,7 @@ const Leaderboard = ({
                         usersWithCurrent = [], 
                         user, fetchLeaderboard, 
                         fetch = false, 
-                        setMissingAmount,
+                        setMissingAmount = () => {},
                         small = false,
                     }) => {
 

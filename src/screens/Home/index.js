@@ -1,62 +1,30 @@
+import styles                       from './styles.module.scss';
+import LogoDemo from '../../data/images/logo-demo.svg';
 import _                            from 'lodash';
+import { connect } from 'react-redux';
 import BaseContainerWithNavbar      from '../../components/BaseContainerWithNavbar';
-import BetCard                      from '../../components/BetCard';
-import CarouselContainer            from '../../components/CarouselContainer';
 import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import Header                       from '../../components/Header/index';
 import LiveEventCarouselContainer   from '../../components/LiveEventCarouselContainer';
-import Routes                       from '../../constants/Routes';
-import styles                       from './styles.module.scss';
-import { connect }                  from 'react-redux';
-import { useHistory }               from 'react-router';
-import BetState                     from '../../components/BetView/BetState';
+import Leaderboard   from '../../components/Leaderboard';
+import CategoryList   from '../../components/CategoryList';
+import { EVENT_CATEGORIES } from '../../constants/EventCategories';
+import { Link } from 'react-router-dom';
+import { LeaderboardActions }   from '../../store/actions/leaderboard';
+import { EventActions } from 'store/actions/event';
+import { useIsMount } from 'components/hoc/useIsMount';
+import { useEffect } from 'react';
+import Routes from 'constants/Routes';
 
-const Home = ({ events, user }) => {
-    const history = useHistory();
+const Home = ({events, tags, openDrawer, fetchTags}) => {
 
-    const onEventClick = (eventId, betId = '') => {
-        return () => {
-            history.push(Routes.getRouteWithParameters(
-                Routes.bet,
-                {
-                    eventId,
-                    betId,
-                },
-            ));
-        };
-    };
+    const isMount = useIsMount();
 
-    const renderMostPopularBets = () => {
-        return _.map(
-            events,
-            (event, eventIndex) => {
-                const bets = event.bets;
-
-                return _.map(
-                    bets,
-                    (bet, betIndex) => {
-                        const key        = eventIndex + '.' + betIndex;
-                        const eventEnd   = new Date(_.get(bet, 'endDate'));
-                        const tradeState = _.get(bet, 'status');
-
-                        if (tradeState === BetState.active) {
-                            return (
-                                <BetCard
-                                    key={key}
-                                    image={event.previewImageUrl}
-                                    userId={bet.creator}
-                                    marketQuestion={bet.marketQuestion}
-                                    hot={bet.hot}
-                                    eventEnd={eventEnd}
-                                    onClick={onEventClick(event._id, bet._id)}
-                                />
-                            );
-                        }
-                    },
-                );
-            },
-        );
-    };
+    useEffect(() => {
+        if (isMount) {
+            fetchTags();
+        }
+    }, []); 
 
     const renderEventCreationButton = () => {
         return (
@@ -64,26 +32,108 @@ const Home = ({ events, user }) => {
         );
     };
 
+    const onSeeLeaderboard = () => {
+        window.scrollTo(0, 0)
+        openDrawer();
+    }
+
+    const renderTags = () => {
+        return (
+            <div className={styles.tags}>
+                {
+                    tags && tags.map(tag => {
+                        return (
+                            <div className={styles.tag}>
+                                #{tag}
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        );
+    }
+
+    const renderRosiBanner = () => {
+        return (
+            <Link to={Routes.rosiGame}>
+                <div className={styles.banner}>
+                    <div className={styles.title}>Play the<br/>Rosi Game</div>
+                </div>
+            </Link>
+        );
+    }
+
+    const renderCategoriesAndLeaderboard = () => {
+        return (
+            <div className={styles.bottomWrapper}>
+                <div className={styles.categories}>
+                    <div className={styles.headline}>
+                        Discover Categories
+                    </div>
+                    <CategoryList
+                        categories={EVENT_CATEGORIES}
+                    />
+                    {renderTags()}
+                </div>
+                <div className={styles.leaderboard}>
+                    <div className={styles.headline}>
+                        Community Leaderboard
+                        <div className={styles.leaderboardLink} onClick={onSeeLeaderboard}>
+                            See Leaderboard
+                        </div>
+                    </div>
+                    <Leaderboard fetch={true} small={true} />
+                </div>
+            </div>
+        );
+    }
+
+    const renderFooter = () => {
+        return (
+            <div className={styles.footer}>
+                <img src={LogoDemo} width={150} alt={'Wallfair'} />
+                <div className={styles.links}>
+                    <span>Copyright 2021 Wallfair</span>
+                    <Link to={'/privacy-policy'}>Imprint</Link>
+                    <Link to={'/terms-and-conditions'}>{'Terms & Conditions'}</Link>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <BaseContainerWithNavbar>
             <Header events={events} />
-            <LiveEventCarouselContainer />
-            <CarouselContainer title={'🚀 Most popular Trades'}>
-                {renderMostPopularBets()}
-            </CarouselContainer>
-            {renderEventCreationButton()}
+            <div className={styles.containerWrapper}>
+                <div className={styles.container}>
+                    <LiveEventCarouselContainer eventType='streamed' />
+                    <LiveEventCarouselContainer eventType='non-streamed' />
+                    {renderRosiBanner()}
+                    {renderCategoriesAndLeaderboard()}
+                    {renderFooter()}
+                </div>
+            </div>
+            {/* {renderEventCreationButton()} -> TODO: Check if needed */} 
         </BaseContainerWithNavbar>
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         events: state.event.events,
-        user:   state.authentication,
+        tags: state.event.tags,
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null,
-)(Home);
+const mapDispatchToProps = dispatch => {
+    return {
+        openDrawer: () => {
+            dispatch(LeaderboardActions.handleDrawer({open: true}));
+        },
+        fetchTags: () => {
+            dispatch(EventActions.fetchTags());
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
