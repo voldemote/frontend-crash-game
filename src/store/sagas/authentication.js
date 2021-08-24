@@ -262,26 +262,27 @@ const firstSignUpPopup = function* (options) {
     }
 };
 
-const updateUserData = function* (action) {
-    const userId = yield select(state => state.authentication.userId);
-    const user = action.user;
+const updateUserData = function* ({ payload }) {
+    try {
+        const userId = yield select(state => state.authentication.userId);
 
-    for (const prop in user) {
-        if (user[prop] === null || user[prop] === undefined) {
-            delete user[prop];
-        }
-    }
-
-    const response = yield call(Api.updateUser, userId, user);
-
-    if (response) {
-        const auth = yield select(state => state.authentication);
-        yield put(
-            AuthenticationActions.updateUserDataSucceeded({
-                ...auth,
-                ...user,
-            })
+        const userFiltered = Object.fromEntries(
+            Object.entries(payload.user).filter(([key, value]) => value)
         );
+
+        const response = yield call(Api.updateUser, userId, userFiltered);
+        if (response) {
+            const stateUser = yield select(state => state.authentication);
+
+            yield put(
+                AuthenticationActions.updateUserDataSucceeded({
+                    ...stateUser,
+                    ...userFiltered,
+                })
+            );
+        }
+    } catch (error) {
+        yield put(AuthenticationActions.updateUserDataFailed());
     }
 };
 

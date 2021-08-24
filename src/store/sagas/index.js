@@ -136,7 +136,7 @@ const root = function* () {
         takeLatest([EventTypes.FETCH_TAGS], EventSagas.fetchTags),
         takeLatest([REHYDRATE], rehydrationDone),
         takeLatest(
-            [AuthenticationTypes.UPDATE_USER_DATA],
+            [AuthenticationTypes.INITIATE_UPDATE_USER_DATA],
             AuthenticationSagas.updateUserData
         ),
         // @formatter:on

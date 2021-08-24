@@ -416,7 +416,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updateUser: (name, username, email, profilePicture) => {
             dispatch(
-                AuthenticationActions.updateUserData({
+                AuthenticationActions.initiateUpdateUserData({
                     user: { name, username, email, profilePicture },
                 })
             );

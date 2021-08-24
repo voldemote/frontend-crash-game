@@ -1,35 +1,35 @@
-import update                  from 'immutability-helper';
+import update from 'immutability-helper';
 import { AuthenticationTypes } from '../actions/authentication';
-import AuthState               from '../../constants/AuthState';
+import AuthState from '../../constants/AuthState';
 
 const initialState = {
-    loading:        false,
-    referral:       null,
-    userId:         null,
-    name:           '',
-    username:       '',
-    phone:          '',
-    country:        '49',
-    email:          '',
+    loading: false,
+    referral: null,
+    userId: null,
+    name: '',
+    username: '',
+    phone: '',
+    country: '49',
+    email: '',
     emailVerificationState: null,
-    token:          null,
-    balance:        0,
-    totalWin:       0,
+    token: null,
+    balance: 0,
+    totalWin: 0,
     profilePicture: null,
-    referralList:   [],
-    admin:          false,
-    authState:      AuthState.LOGGED_OUT,
-    rank:           0,
-    amountWon:      0,
-    toNextRank:     0,
+    referralList: [],
+    admin: false,
+    authState: AuthState.LOGGED_OUT,
+    rank: 0,
+    amountWon: 0,
+    toNextRank: 0,
 };
 
 const requestSmsSucceeded = (action, state) => {
     return update(state, {
-        loading:   {
+        loading: {
             $set: false,
         },
-        phone:     {
+        phone: {
             $set: action.phone,
         },
         authState: {
@@ -40,8 +40,8 @@ const requestSmsSucceeded = (action, state) => {
 
 const requestSmsVerified = (action, state) => {
     let authState = AuthState.LOGGED_IN;
-    const name    = action.name;
-    const email   = action.email;
+    const name = action.name;
+    const email = action.email;
 
     if (!email) {
         authState = AuthState.SET_EMAIL;
@@ -52,19 +52,19 @@ const requestSmsVerified = (action, state) => {
     }
 
     return update(state, {
-        loading:   {
+        loading: {
             $set: false,
         },
-        userId:    {
+        userId: {
             $set: action.userId,
         },
-        name:      {
+        name: {
             $set: name,
         },
-        email:     {
+        email: {
             $set: email,
         },
-        token:     {
+        token: {
             $set: action.session,
         },
         authState: {
@@ -75,7 +75,7 @@ const requestSmsVerified = (action, state) => {
 
 const requestEmailVerified = (action, state) => {
     return update(state, {
-        emailVerificationState:   {
+        emailVerificationState: {
             $set: true,
         },
     });
@@ -83,7 +83,7 @@ const requestEmailVerified = (action, state) => {
 
 const requestEmailFailed = (action, state) => {
     return update(state, {
-        emailVerificationState:   {
+        emailVerificationState: {
             $set: false,
         },
     });
@@ -91,10 +91,10 @@ const requestEmailFailed = (action, state) => {
 
 const setName = (action, state) => {
     return update(state, {
-        name:      {
+        name: {
             $set: action.name,
         },
-        username:  {
+        username: {
             $set: action.username,
         },
         authState: {
@@ -108,7 +108,7 @@ const setEmail = (action, state) => {
         loading: {
             $set: true,
         },
-        email:   {
+        email: {
             $set: action.email,
         },
     });
@@ -132,7 +132,7 @@ const setCountryCode = (action, state) => {
 
 const saveAdditionalInfoSucceeded = (action, state) => {
     return update(state, {
-        loading:   {
+        loading: {
             $set: false,
         },
         authState: {
@@ -143,49 +143,54 @@ const saveAdditionalInfoSucceeded = (action, state) => {
 
 const updateData = (action, state) => {
     return update(state, {
-        balance:        {
+        balance: {
             $set: action.balance,
         },
         profilePicture: {
             $set: action.profilePicture,
         },
-        username:       {
+        username: {
             $set: action.username,
         },
-        admin:          {
+        admin: {
             $set: action.admin,
         },
-        totalWin:       {
+        totalWin: {
             $set: action.totalWin,
         },
-        rank:           {
+        rank: {
             $set: action.rank,
         },
-        amountWon:      {
-            $set: action.amountWon
+        amountWon: {
+            $set: action.amountWon,
         },
-        toNextRank:      {
-            $set: action.toNextRank
+        toNextRank: {
+            $set: action.toNextRank,
         },
     });
 };
 
-const updateUserData = (action, state) => {
-    return update(state, {
-        name:           {
-            $set: action.name,
-        },
-        username:       {
-            $set: action.username,
-        },
-        email:          {
-            $set: action.email,
-        },
-        profilePicture: {
-            $set: action.profilePicture,
-        },
-    })
-}
+const updateUserDataSucceeded = ({ payload }, state) => {
+    return {
+        ...state,
+        ...payload,
+        loading: false,
+    };
+};
+
+const updateUserDataFailed = ({ payload }, state) => {
+    return {
+        ...state,
+        loading: false,
+    };
+};
+
+const initiateUpdateUserData = ({ payload }, state) => {
+    return {
+        ...state,
+        loading: true,
+    };
+};
 
 const logout = (action, state) => {
     return update(state, {
@@ -245,27 +250,49 @@ const resetAuthState = (action, state) => {
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
-        case AuthenticationTypes.LOGOUT:                         return logout(action, state);
-        case AuthenticationTypes.SET_EMAIL:                      return setEmail(action, state);
-        case AuthenticationTypes.SET_NAME:                       return setName(action, state);
-        case AuthenticationTypes.SET_PHONE:                      return setPhone(action, state);
-        case AuthenticationTypes.SET_COUNTRY_CODE:               return setCountryCode(action, state);
-        case AuthenticationTypes.REQUEST_SMS_SUCCEEDED:          return requestSmsSucceeded(action, state);
-        case AuthenticationTypes.VERIFY_SMS_SUCCEEDED:           return requestSmsVerified(action, state);
-        case AuthenticationTypes.VERIFY_EMAIL_SUCCEEDED:         return requestEmailVerified(action, state);
-        case AuthenticationTypes.VERIFY_EMAIL_FAILED:            return requestEmailFailed(action, state);
-        case AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED: return saveAdditionalInfoSucceeded(action, state);
+        case AuthenticationTypes.LOGOUT:
+            return logout(action, state);
+        case AuthenticationTypes.SET_EMAIL:
+            return setEmail(action, state);
+        case AuthenticationTypes.SET_NAME:
+            return setName(action, state);
+        case AuthenticationTypes.SET_PHONE:
+            return setPhone(action, state);
+        case AuthenticationTypes.SET_COUNTRY_CODE:
+            return setCountryCode(action, state);
+        case AuthenticationTypes.REQUEST_SMS_SUCCEEDED:
+            return requestSmsSucceeded(action, state);
+        case AuthenticationTypes.VERIFY_SMS_SUCCEEDED:
+            return requestSmsVerified(action, state);
+        case AuthenticationTypes.VERIFY_EMAIL_SUCCEEDED:
+            return requestEmailVerified(action, state);
+        case AuthenticationTypes.VERIFY_EMAIL_FAILED:
+            return requestEmailFailed(action, state);
+        case AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED:
+            return saveAdditionalInfoSucceeded(action, state);
         case AuthenticationTypes.REQUEST_SMS:
-        case AuthenticationTypes.VERIFY_SMS:                     return setLoading(action, state);
+        case AuthenticationTypes.VERIFY_SMS:
+            return setLoading(action, state);
         case AuthenticationTypes.REQUEST_SMS_FAILED:
         case AuthenticationTypes.VERIFY_SMS_FAILED:
-        case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:   return resetLoading(action, state);
-        case AuthenticationTypes.UPDATE_DATA:                   return updateData(action, state);
-        case AuthenticationTypes.SET_REFERRAL:                  return setReferral(action, state);
-        case AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED:     return fetchReferralsSucceeded(action, state);
-        case AuthenticationTypes.RESET_AUTH_STATE:              return resetAuthState(action, state);
-        case AuthenticationTypes.UPDATE_USER_DATA:              return updateUserData(action, state);
-        default:                                                return state;
+        case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:
+            return resetLoading(action, state);
+        case AuthenticationTypes.UPDATE_DATA:
+            return updateData(action, state);
+        case AuthenticationTypes.SET_REFERRAL:
+            return setReferral(action, state);
+        case AuthenticationTypes.FETCH_REFERRALS_SUCCEEDED:
+            return fetchReferralsSucceeded(action, state);
+        case AuthenticationTypes.RESET_AUTH_STATE:
+            return resetAuthState(action, state);
+        case AuthenticationTypes.UPDATE_USER_DATA_SUCCEEDED:
+            return updateUserDataSucceeded(action, state);
+        case AuthenticationTypes.UPDATE_USER_DATA_FAILED:
+            return updateUserDataFailed(action, state);
+        case AuthenticationTypes.INITIATE_UPDATE_USER_DATA:
+            return initiateUpdateUserData(action, state);
+        default:
+            return state;
         // @formatter:on
     }
 }
