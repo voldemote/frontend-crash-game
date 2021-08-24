@@ -29,11 +29,12 @@
 .selectOverflowContainer {
     position: absolute;
     overflow-y: auto;
-    height: 100px;
+    max-height: 300px;
     width: 100%;
     border: $border;
     border-radius: $radius;
     z-index: 500;
+    background-color: $colorDarkSlateGray;
 
     &.open {
         border-top-left-radius: 0;
