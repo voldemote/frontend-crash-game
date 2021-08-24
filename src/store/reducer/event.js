@@ -1,17 +1,35 @@
-import update from "immutability-helper";
-import { EventTypes } from "../actions/event";
+import update from 'immutability-helper';
+import { EventTypes } from '../actions/event';
 
 const initialState = {
     events: [],
     filteredEvents: [],
     defaultParams: {
-        type: "all",
-        category: "all",
-        count: "30",
-        page: "1",
-        sortBy: "name",
-        searchQuery: "",
+        type: 'all',
+        category: 'all',
+        count: '30',
+        page: '1',
+        sortBy: 'name',
+        searchQuery: '',
     },
+    eventSortOptions: [
+        {
+            label: 'Alphabetically (A-Z)',
+            value: 'name',
+        },
+        {
+            label: 'Alphabetically (Z-A)',
+            value: '-name',
+        },
+        {
+            label: 'End date (newest first)',
+            value: 'date',
+        },
+        {
+            label: 'End date (oldest first)',
+            value: '-date',
+        },
+    ],
 };
 
 const fetchAllSucceeded = (action, state) => {
@@ -43,12 +61,12 @@ const resetDefaultParamsValues = (state, { payload }) => {
     return {
         ...state,
         defaultParams: {
-            type: "all",
-            category: "all",
-            count: "30",
-            page: "1",
-            sortBy: "name",
-            searchQuery: "",
+            type: 'all',
+            category: 'all',
+            count: '30',
+            page: '1',
+            sortBy: 'name',
+            searchQuery: '',
         },
     };
 };
