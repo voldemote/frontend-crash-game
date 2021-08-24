@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import _ from 'lodash';
 import CarouselContainer from '../CarouselContainer';
 import EventCard from '../EventCard';
 import { EventActions } from '../../store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 
-const LiveEventCarouselContainer = ({ events, eventType, fetchEvents }) => {
+const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
     const location = useLocation();
     const [page, setPage] = useState(1);
     const [currentEvents, setCurrentEvents] = useState([]);
@@ -119,4 +119,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LiveEventCarouselContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EventsCarouselContainer);
