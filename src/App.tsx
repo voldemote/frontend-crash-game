@@ -1,5 +1,4 @@
 import "./styles.module.scss";
-import { YMInitializer } from "react-yandex-metrika";
 import AlertBox from "./components/AlertBox";
 import Bet from "./screens/Bet";
 import Home from "./screens/Home";
@@ -36,15 +35,6 @@ const App = () => {
                 <Navbar skipRoutes={[Routes.join]} />
                 <AlertBox />
                 <Popup />
-                <YMInitializer
-                    accounts={[82927219]}
-                    options={{
-                        clickmap: true,
-                        trackLinks: true,
-                        accurateTrackBounce: true,
-                        webvisor: true,
-                    }}
-                />
                 <Switch>
                     <Route exact path={Routes.logout} component={Logout} />
                     <Route exact path={Routes.join} component={Join} />
