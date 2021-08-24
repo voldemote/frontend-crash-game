@@ -91,12 +91,12 @@ const App = () => {
                         text="Home"
                     />
                     <NavbarFooterAction
-                        route={Routes.liveEvents}
+                        route={`/live-events`}
                         iconType={IconType.camera}
                         text="Live Stream"
                     />
                     <NavbarFooterAction
-                        route={Routes.events}
+                        route={`/events`}
                         iconType={IconType.bet2}
                         text="Events"
                     />
