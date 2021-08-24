@@ -34,7 +34,6 @@
         "react-share": "^4.4.0",
         "react-twitch-embed-video": "^3.0.0",
         "react-verification-code-input": "^1.2.9",
-        "react-yandex-metrika": "^2.6.0",
         "redux": "^4.1.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-persist": "^6.0.0",
