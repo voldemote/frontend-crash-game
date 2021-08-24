@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams, Link, useLocation } from 'react-router-dom';
-import Routes from '../../../constants/Routes';
+import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import Search from '../../Search';
 import Select from '../../Select';
@@ -9,12 +8,12 @@ import EventCard from '../../EventCard';
 import CategoryList from '../../CategoryList';
 import { useMappedActions } from './hooks/useMappedActions';
 import { useSortFilter } from './hooks/useSortFilter';
+import { useRouteHandling } from './hooks/useRouteHandling';
 
 function EventsContent({ eventType, categories, setCategories }) {
     const [searchInput, setSearchInput] = useState('');
 
-    const location = useLocation();
-    const { category } = useParams();
+    const { location, category } = useRouteHandling(eventType);
 
     const { fetchFilteredEvents, resetDefaultParamsValues } =
         useMappedActions(eventType);
@@ -53,10 +52,10 @@ function EventsContent({ eventType, categories, setCategories }) {
         events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
     useEffect(() => {
-        handleSelectCategory(category || 'all');
+        handleSelectCategory(category);
 
         fetchFilteredEvents({
-            category: category || 'all',
+            category: category,
             sortBy: selectedSortItem,
         });
     }, [category, selectedSortItem, fetchFilteredEvents, handleSelectCategory]);
