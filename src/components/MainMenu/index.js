@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import Icon from '../Icon';
@@ -33,7 +32,7 @@ const MainMenu = ({
     const [name, setName] = useState(user.name);
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
-    const [profilePic, setProfilePic] = useState();
+    const [profilePic, setProfilePic] = useState(user.profilePicture);
 
     const profilePictureRefName = useRef(null);
 
@@ -194,8 +193,6 @@ const MainMenu = ({
             </div>
         );
     };
-
-    const growth = 0;
 
     return (
         <div

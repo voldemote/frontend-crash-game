@@ -1,20 +1,20 @@
-import * as Api                     from '../../api';
-import _                            from 'lodash';
-import AuthState                    from '../../constants/AuthState';
-import Routes                       from '../../constants/Routes';
-import { AuthenticationActions }    from '../actions/authentication';
-import { EventActions }             from '../actions/event';
-import { push }                     from 'connected-react-router';
+import * as Api from '../../api';
+import _ from 'lodash';
+import AuthState from '../../constants/AuthState';
+import Routes from '../../constants/Routes';
+import { AuthenticationActions } from '../actions/authentication';
+import { EventActions } from '../actions/event';
+import { push } from 'connected-react-router';
 import { put, call, select, delay } from 'redux-saga/effects';
-import { UserActions }              from '../actions/user';
-import { BetActions }               from '../actions/bet';
-import { TransactionActions }       from '../actions/transaction';
-import { PopupActions }             from '../actions/popup';
-import { ChatActions }              from '../actions/chat';
-import { WebsocketsActions }        from '../actions/websockets';
-import PopupTheme                   from '../../components/Popup/PopupTheme';
+import { UserActions } from '../actions/user';
+import { BetActions } from '../actions/bet';
+import { TransactionActions } from '../actions/transaction';
+import { PopupActions } from '../actions/popup';
+import { ChatActions } from '../actions/chat';
+import { WebsocketsActions } from '../actions/websockets';
+import PopupTheme from '../../components/Popup/PopupTheme';
 
-const afterLoginRoute                = Routes.home;
+const afterLoginRoute = Routes.home;
 const routesToRedirectWithoutSession = [
     Routes.home,
     Routes.bet,
@@ -22,9 +22,9 @@ const routesToRedirectWithoutSession = [
 ];
 
 const requestSms = function* (action) {
-    const country   = yield select(state => state.authentication.country);
-    const phone     = yield select(state => state.authentication.phone);
-    const referral  = yield select(state => state.authentication.referral);
+    const country = yield select(state => state.authentication.country);
+    const phone = yield select(state => state.authentication.phone);
+    const referral = yield select(state => state.authentication.referral);
     let phoneNumber = country + phone;
 
     if (phoneNumber) {
@@ -36,33 +36,33 @@ const requestSms = function* (action) {
             phoneNumber = '+' + country + phone.substring(1);
         }
 
-        const response = yield call(
-            Api.requestSms,
-            phoneNumber,
-            referral,
-        );
+        const response = yield call(Api.requestSms, phoneNumber, referral);
 
         if (response) {
             const data = response.data;
 
-            yield put(AuthenticationActions.requestSmsSucceeded({
-                ...data,
-                phone,
-                country,
-            }));
+            yield put(
+                AuthenticationActions.requestSmsSucceeded({
+                    ...data,
+                    phone,
+                    country,
+                })
+            );
             return;
         }
     }
 
-    yield put(AuthenticationActions.requestSmsFailed({
-        phone,
-    }));
+    yield put(
+        AuthenticationActions.requestSmsFailed({
+            phone,
+        })
+    );
 };
 
 const verifySms = function* (action) {
-    const country   = yield select(state => state.authentication.country);
-    const phone     = yield select(state => state.authentication.phone);
-    const smsToken  = action.smsToken;
+    const country = yield select(state => state.authentication.country);
+    const phone = yield select(state => state.authentication.phone);
+    const smsToken = action.smsToken;
     let phoneNumber = country + phone;
 
     if (phoneNumber) {
@@ -74,20 +74,18 @@ const verifySms = function* (action) {
             phoneNumber = '+' + country + phone.substring(1);
         }
 
-        const response = yield call(
-            Api.verifySms,
-            phoneNumber,
-            smsToken,
-        );
+        const response = yield call(Api.verifySms, phoneNumber, smsToken);
 
         if (response) {
             const data = response.data;
 
             Api.setToken(data.session);
 
-            yield put(AuthenticationActions.verifySmsSucceeded({
-                ...data,
-            }));
+            yield put(
+                AuthenticationActions.verifySmsSucceeded({
+                    ...data,
+                })
+            );
         } else {
             yield put(AuthenticationActions.verifySmsFailed());
         }
@@ -101,11 +99,7 @@ const verifyEmail = function* (action) {
     const code = action.code;
 
     if (userId && code) {
-        const response = yield call(
-            Api.verifyEmail,
-            userId,
-            code
-        );
+        const response = yield call(Api.verifyEmail, userId, code);
 
         if (response) {
             yield put(AuthenticationActions.verifyEmailSucceeded());
@@ -118,23 +112,20 @@ const verifyEmail = function* (action) {
 };
 
 const setAdditionalInformation = function* (action) {
-    const email    = yield select(state => state.authentication.email);
-    const name     = yield select(state => state.authentication.name);
+    const email = yield select(state => state.authentication.email);
+    const name = yield select(state => state.authentication.name);
     const username = yield select(state => state.authentication.username);
 
-    const response = yield call(
-        Api.saveAdditionalInfo,
-        name,
-        username,
-        email,
-    );
+    const response = yield call(Api.saveAdditionalInfo, name, username, email);
 
     if (response) {
         const data = response.data;
 
-        yield put(AuthenticationActions.saveAdditionalInfoSucceeded({
-            ...data,
-        }));
+        yield put(
+            AuthenticationActions.saveAdditionalInfoSucceeded({
+                ...data,
+            })
+        );
     } else {
         yield put(AuthenticationActions.saveAdditionalInfoFailed());
     }
@@ -145,19 +136,18 @@ const fetchReferrals = function* () {
     const token = yield select(state => state.authentication.token);
 
     if (userId && token) {
-        Api.setToken(token)
+        Api.setToken(token);
 
-        const response = yield call(
-            Api.fetchReferrals,
-            userId,
-        );
+        const response = yield call(Api.fetchReferrals, userId);
 
         if (response) {
             const referralList = _.get(response.data, 'refList', []);
 
-            yield put(AuthenticationActions.fetchReferralsSucceeded({
-                referralList,
-            }));
+            yield put(
+                AuthenticationActions.fetchReferralsSucceeded({
+                    referralList,
+                })
+            );
         } else {
             yield put(AuthenticationActions.fetchReferralsFailed());
         }
@@ -171,23 +161,27 @@ const fetchReferralsSucceeded = function* (action) {
         const userId = _.get(referral, 'id');
 
         if (userId) {
-            yield put(UserActions.fetch({
-                userId,
-                forceFetch: false,
-            }));
+            yield put(
+                UserActions.fetch({
+                    userId,
+                    forceFetch: false,
+                })
+            );
         }
     }
 };
 
 const registrationSucceeded = function* (action) {
-    yield put(PopupActions.show({
-        popupType: PopupTheme.welcome,
-    }));
+    yield put(
+        PopupActions.show({
+            popupType: PopupTheme.welcome,
+        })
+    );
 };
 
 const authenticationSucceeded = function* (action) {
     const authState = yield select(state => state.authentication.authState);
-    const userId    = yield select(state => state.authentication.userId);
+    const userId = yield select(state => state.authentication.userId);
 
     if (authState === AuthState.LOGGED_IN) {
         yield put(UserActions.fetch({ userId, forceFetch: true }));
@@ -206,11 +200,11 @@ const logout = function* () {
 
 const restoreToken = function* () {
     const locationPathname = window.location.pathname;
-    const locationSearch   = window.location.search;
-    const pathname         = yield select(state => state.router.location.pathname);
-    const authentication   = yield select(state => state.authentication);
-    const token            = authentication.token;
-    const authState        = authentication.authState;
+    const locationSearch = window.location.search;
+    const pathname = yield select(state => state.router.location.pathname);
+    const authentication = yield select(state => state.authentication);
+    const token = authentication.token;
+    const authState = authentication.authState;
 
     if (authState !== AuthState.LOGGED_IN) {
         if (authState !== AuthState.LOGGED_OUT) {
@@ -218,7 +212,7 @@ const restoreToken = function* () {
         }
 
         const queryParams = new URLSearchParams(locationSearch);
-        const referral    = queryParams.get('ref');
+        const referral = queryParams.get('ref');
 
         if (referral) {
             yield put(AuthenticationActions.setReferral({ referral }));
@@ -230,10 +224,7 @@ const restoreToken = function* () {
     }
 
     if (token && authState === AuthState.LOGGED_IN) {
-        if (
-            pathname === Routes.home ||
-            locationPathname === Routes.home
-        ) {
+        if (pathname === Routes.home || locationPathname === Routes.home) {
             yield put(push(afterLoginRoute));
         }
     }
@@ -255,15 +246,21 @@ const refreshImportantData = function* () {
 };
 
 const firstSignUpPopup = function* (options) {
-    yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
+    yield delay(
+        (options && options.duration ? options.duration : 1) * 60 * 1000
+    );
     const authState = yield select(state => state.authentication.authState);
 
     if (authState === AuthState.LOGGED_OUT) {
-        yield put(PopupActions.show({
-            popupType: options.last ? PopupTheme.signUpNotificationSecond : PopupTheme.signUpNotificationFirst
-        }));
+        yield put(
+            PopupActions.show({
+                popupType: options.last
+                    ? PopupTheme.signUpNotificationSecond
+                    : PopupTheme.signUpNotificationFirst,
+            })
+        );
     }
-}
+};
 
 const updateUserData = function* (action) {
     const userId = yield select(state => state.authentication.userId);
@@ -275,18 +272,16 @@ const updateUserData = function* (action) {
         }
     }
 
-    const response = yield call(
-        Api.updateUser,
-        userId,
-        user,
-    );
+    const response = yield call(Api.updateUser, userId, user);
 
     if (response) {
         const auth = yield select(state => state.authentication);
-        yield put(AuthenticationActions.updateUserData({
-            ...auth,
-            ...user,
-        }));
+        yield put(
+            AuthenticationActions.updateUserDataSucceeded({
+                ...auth,
+                ...user,
+            })
+        );
     }
 };
 
