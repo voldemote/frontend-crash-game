@@ -12,6 +12,7 @@ import { ReactComponent as HighlightSettingsMyBets }                 from '../..
 import { ReactComponent as HighlightSettingsMyProfile }              from '../../data/backgrounds/highlight-settings-my-profile.svg';
 import { ReactComponent as HighlightSettingsMyWallet }               from '../../data/backgrounds/highlight-settings-my-wallet.svg';
 import { ReactComponent as HighlightSettingsSupport }                from '../../data/backgrounds/highlight-settings-support.svg';
+import { ReactComponent as HighlightPlaceBet }                       from '../../data/backgrounds/highlight-place-bet.svg';
 import HighlightTheme                                                from './HighlightTheme';
 
 const Highlight = ({ className, highlightType, highlightTheme, width, height, onClick }) => {
@@ -28,6 +29,7 @@ const Highlight = ({ className, highlightType, highlightTheme, width, height, on
                 [HighlightType.highlightSettingsMyProfile]:              <HighlightSettingsMyProfile />,
                 [HighlightType.highlightSettingsMyWallet]:               <HighlightSettingsMyWallet />,
                 [HighlightType.highlightSettingsSupport]:                <HighlightSettingsSupport />,
+                [HighlightType.highlightPlaceBet]:                       <HighlightPlaceBet />,
             },
         );
     };

@@ -15,7 +15,7 @@ import { WebsocketsActions } from '../../store/actions/websockets';
 import { usePrevPropValue }  from '../../hooks/usePrevPropValue';
 import { useIsMount }        from '../hoc/useIsMount';
 
-const Chat = ({ className, userId, userName, event, messages, sendChatMessage, hideInput = false }) => {
+const Chat = ({ className, inputClassName, messagesClassName, userId, userName, event, messages, sendChatMessage, hideInput = false }) => {
     const messageListRef                        = useRef();
     const [message, setMessage]                 = useState('');
     const [lastMessageSent, setLastMessageSent] = useState(0);
@@ -101,15 +101,16 @@ const Chat = ({ className, userId, userName, event, messages, sendChatMessage, h
             )}
         >
             <div
-                className={styles.messageContainer}
+                className={classNames(messagesClassName, styles.messageContainer)}
                 ref={messageListRef}
             >
                 {renderMessages()}
             </div>
             <div className={classNames(
                 styles.messageInput,
+                inputClassName,
                 hideInput ? styles.messageInputHidden : null,
-                !userId ? styles.disabled : null 
+                !userId ? styles.disabled : null,
             )}>
                 <Input
                     type={'text'}
@@ -133,11 +134,18 @@ const Chat = ({ className, userId, userName, event, messages, sendChatMessage, h
     );
 };
 
+const messages2 = [
+    { id: 1, type: 'chatMessage', user: { name: 'ivan1989', profilePicture: null }, userId: 1, date: '', message: 'ivan crashed at 3.40x' },
+    { id: 2, type: 'chatMessage', user: { name: 'Dexter', profilePicture: null }, userId: 2, date: '', message: 'Dexter crashed at 7.90x' },
+    { id: 3, type: 'chatMessage', user: { name: 'Nekorandomime', profilePicture: null }, userId: 3, date: '', message: 'Nekorandomime crashed at 7.90x' }
+];
+
 const mapStateToProps = (state, ownProps) => {
     return {
         userId:    state.authentication.userId,
         userName:  state.authentication.name,
-        messages:  _.get(state, ['chat', 'messagesByEvent', _.get(ownProps.event, '_id')], []),
+        messages: messages2,
+        // messages:  _.get(state, ['chat', 'messagesByEvent', _.get(ownProps.event, '_id')], []),
         connected: state.websockets.connected,
     };
 };
