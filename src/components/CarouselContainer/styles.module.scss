@@ -2,10 +2,10 @@
 
 .carouselContainer
 {
-    max-width: 1300px;
     margin: auto;
     margin-bottom: 50px;
     margin-top: 50px;
+    width: 100%;
 
     .titleContainer
     {
@@ -34,7 +34,10 @@
     {
         display: flex;
         align-items: flex-start;
-        overflow-x: scroll;
+
+        @media (max-width: 1300px) {
+            overflow-x: scroll;
+        }
 
         a {
             text-decoration: none;
