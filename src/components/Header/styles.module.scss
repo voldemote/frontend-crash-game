@@ -98,6 +98,9 @@
     }
 
     .tagList {
+        display: flex;
+        flex-flow: wrap;
+        
         .tag {
             color: #b0b0b0;
             margin-right: 6px;
