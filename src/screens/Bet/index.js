@@ -51,6 +51,7 @@ const Bet = ({
     const [activeBetId, setActiveBetId] = useState(betId || null);
     const [betViewIsOpen, setBetViewIsOpen] = useState(false);
     const [mobileCommentIsOpen, setMobileCommentIsOpen] = useState(false);
+    const [singleBet, setSingleBet] = useState(false);
     const bottomScroll = useRef(null);
 
     const currentFromLocation = useBetPreviousLocation();
@@ -155,21 +156,24 @@ const Bet = ({
         });
     };
 
+    const selectBet = (betId) => {
+        const eventId = _.get(event, '_id', null);
+
+        history.push(
+            Routes.getRouteWithParameters(Routes.bet, {
+                eventId,
+                betId,
+            })
+        );
+
+        setActiveBetId(betId);
+        setBetViewIsOpen(true);
+        setSelectedBet(null, betId);
+    }
+
     const onBetClick = (betId, popup) => {
         return () => {
-            const eventId = _.get(event, '_id', null);
-
-            history.push(
-                Routes.getRouteWithParameters(Routes.bet, {
-                    eventId,
-                    betId,
-                })
-            );
-
-            setActiveBetId(betId);
-            setBetViewIsOpen(true);
-            setSelectedBet(null, betId);
-
+            selectBet(betId);
             if (popup) {
                 showPopup(PopupTheme.tradeView, {});
             }
@@ -252,6 +256,12 @@ const Bet = ({
 
         for (let i = 0; i < listLength; i++) {
             indexes.push(pageIndex * 3 + i);
+        }
+
+        if (listLength === 1 && !singleBet) {
+            const betId = _.get(_.get(relatedBets, '[' + indexes[0] + ']'), '_id');
+            selectBet(betId);
+            setSingleBet(true);
         }
 
         return (
@@ -475,7 +485,7 @@ const Bet = ({
                 <div className={styles.headlineContainer}>
                     <div>
                         <Link
-                            to={currentFromLocation.pathname}
+                            to={currentFromLocation?.pathname}
                             className={styles.arrowBack}
                         ></Link>
                         <div className={styles.headline}>

@@ -39,8 +39,8 @@ const Home = ({ tags, openDrawer, user, fetchTags }) => {
         return (
             <div className={styles.tags}>
                 {tags &&
-                    tags.map(tag => {
-                        return <div className={styles.tag}>#{tag}</div>;
+                    tags.map((tag, index) => {
+                        return <div key={index} className={styles.tag}>#{tag}</div>;
                     })}
             </div>
         );
