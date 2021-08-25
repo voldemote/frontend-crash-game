@@ -22,7 +22,6 @@ export const migrations = {
                     page: 0,
                     perPage: 0,
                     openDrawer: false,
-                    obj: {text: ''}
                 }
             },
             event: {
