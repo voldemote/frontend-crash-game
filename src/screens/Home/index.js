@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 import Routes from 'constants/Routes';
 import { LOGGED_IN } from 'constants/AuthState';
 
-const Home = ({ events, tags, openDrawer, user, fetchTags }) => {
+const Home = ({ tags, openDrawer, user, fetchTags }) => {
     const isMount = useIsMount();
 
     useEffect(() => {
@@ -103,7 +103,7 @@ const Home = ({ events, tags, openDrawer, user, fetchTags }) => {
 
     return (
         <BaseContainerWithNavbar>
-            <Header events={events} />
+            <Header />
             <div className={styles.containerWrapper}>
                 <div className={styles.container}>
                     <EventsCarouselContainer eventType="streamed" />
@@ -120,7 +120,6 @@ const Home = ({ events, tags, openDrawer, user, fetchTags }) => {
 
 const mapStateToProps = state => {
     return {
-        events: state.event.events,
         tags: state.event.tags,
         user: state.authentication,
     };
