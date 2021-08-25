@@ -1,0 +1,68 @@
+@import '../../styles/all';
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    height: auto;
+    padding: 30px 20px;
+    background: rgba(172,196,255,0.10);
+    margin-bottom: 30px;
+
+    div {
+        margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: $screen-xs) {
+        background-color: transparent;
+        padding: 0px;
+    }
+}
+
+.label {
+    display: inline-block;
+    opacity: 0.3;
+    font-family: Helvetica;
+    font-size: 14px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: left;
+    line-height: 12px;
+    margin-bottom: 20px;
+}
+
+.inputContainer {
+    position: relative;
+}
+
+.actions {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    font-size: 14px;
+    font-family: Helvetica;
+    color: #02061E;
+
+    span {
+        margin-left: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.signUpButton {
+    background-color: $colorWhite;
+    width: 80%;
+    margin: 20px auto 0px auto;
+    width: 11rem;
+    height: 55px;
+    border-radius: 4px;
+    font-size: 16px;
+    background-image: url('../../data/images/signup-background-one.svg');
+    background-position: center;
+
+    @media screen and (max-width: $screen-xs) {
+        width: 100%;
+    }
+}

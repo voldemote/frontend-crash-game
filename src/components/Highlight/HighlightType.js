@@ -8,4 +8,5 @@ export default {
     highlightSettingsMyProfile:              'highlightSettingsMyProfile',
     highlightSettingsMyWallet:               'highlightSettingsMyWallet',
     highlightSettingsSupport:                'highlightSettingsSupport',
+    highlightPlaceBet:                       'highlightPlaceBet',
 };
