@@ -355,7 +355,7 @@ const Navbar = ({
                 <div className={style.linkWrapper}>
                     {renderNavbarLink(`/live-events`, 'Live Events')}
                     {renderNavbarLink(`/events`, 'Events')}
-                    {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
+                    {renderNavbarLink(Routes.rosiGame, 'Games')}
                 </div>
             </div>
 
