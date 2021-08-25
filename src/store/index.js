@@ -12,6 +12,9 @@ import { persistReducer }       from 'redux-persist';
 import { persistStore }         from 'redux-persist';
 import { routerMiddleware }     from 'connected-react-router';
 import Environment              from '../helper/Environment';
+import createMigrate from 'redux-persist/es/createMigrate';
+import { migrations, MIGRATION_VERSION } from './migration'
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 export const history        = createBrowserHistory();
 export const sagaMiddleware = createSagaMiddleware();
@@ -19,6 +22,9 @@ export const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
     key: 'root',
     storage,
+    version: MIGRATION_VERSION,
+    stateReconciler: autoMergeLevel2,
+    migrate: createMigrate(migrations, { debug: true }),
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer(history));
@@ -49,7 +55,7 @@ export default (initialState) => {
         sagaMiddleware.run(sagas.root);
     });
 
-    persistStore(store);
+    const persistor = persistStore(store);
 
-    return store;
+    return { store, persistor };
 };

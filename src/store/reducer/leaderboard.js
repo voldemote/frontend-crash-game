@@ -89,7 +89,7 @@ const handleDrawer = (action, state) => {
         ...state,
         leaderboard: {
             ...state.leaderboard,
-            openDrawer: action.open
+            openDrawer: action.open,
         }
     }
 }
