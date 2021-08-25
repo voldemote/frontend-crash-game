@@ -15,9 +15,9 @@ const Leaderboard = ({
                         small = false,
                     }) => {
 
-    const LIMIT = small ? 5 : 20;
-    const SKIP_FOR_CURRENT = small ? 1 : 6;
-    const LIMIT_FOR_CURRENT = small ? 5 : 11;
+    const LIMIT = small ? 5 : 10;
+    const SKIP_FOR_CURRENT = small ? 1 : 3;
+    const LIMIT_FOR_CURRENT = small ? 5 : 5;
 
     const [fetched, setFetched] = useState(false);
 

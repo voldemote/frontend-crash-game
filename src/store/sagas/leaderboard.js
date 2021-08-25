@@ -10,7 +10,6 @@ import State from "../../helper/State";
 
 const fetchAll = function* (action) {
     const userId = yield select(state => state.authentication.userId);
-    const token = yield select(state => state.authentication.token);
     const leaderboardState = yield select(state => state.leaderboard);
     const users = yield select(state => state.user.users);
     const user = State.getUser(userId, users);
