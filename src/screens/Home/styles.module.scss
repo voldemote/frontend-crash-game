@@ -6,6 +6,10 @@
     justify-content: center;
     flex-direction: column;
     margin: 0 3rem;
+
+    @media (max-width: $screen-sm) {
+        margin: 0 15px;
+    }
 }
 
 .container {
@@ -63,6 +67,10 @@
     .leaderboard {
         width: 100%;
         padding: 0 10px;
+
+        @media (max-width: $screen-sm) {
+            padding: 0;
+        }
     }
 
     .headline {
