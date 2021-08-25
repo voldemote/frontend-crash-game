@@ -13,6 +13,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions } from 'store/actions/general';
+import { useSelector } from 'react-redux';
 
 const MainMenu = ({
     opened,
@@ -28,13 +29,14 @@ const MainMenu = ({
     user,
     updateUser,
     setOpenDrawer,
+    setEditVisible,
 }) => {
-    const [editVisible, setEditVisible] = useState(false);
-
     const [name, setName] = useState(user.name);
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
     const [profilePic, setProfilePic] = useState(user.profilePicture);
+
+    const editVisible = useSelector(state => state.general.editProfileVisible);
 
     const profilePictureRefName = useRef(null);
 
@@ -425,6 +427,9 @@ const mapDispatchToProps = dispatch => {
         },
         setOpenDrawer: drawerName => {
             dispatch(GeneralActions.setDrawer(drawerName));
+        },
+        setEditVisible: bool => {
+            dispatch(GeneralActions.setEditProfileVisible(bool));
         },
     };
 };

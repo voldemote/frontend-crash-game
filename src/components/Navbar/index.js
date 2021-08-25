@@ -35,6 +35,7 @@ const Navbar = ({
     leaderboardOpen,
     skipRoutes = [],
     setOpenDrawer,
+    setEditProfileVisible,
 }) => {
     const [missingWinnerAmount, setMisingWinnerAmount] = useState(null);
     const history = useHistory();
@@ -73,7 +74,9 @@ const Navbar = ({
         }
         const isDrawerOpen = openDrawer === drawerName;
         setOpenDrawer(isDrawerOpen ? '' : drawerName);
-
+        if (!isDrawerOpen) {
+            setEditProfileVisible(false);
+        }
         if (drawerName === drawers.leaderboard && isDrawerOpen) {
             handleLeaderboardDrawer(false);
         }
@@ -83,6 +86,7 @@ const Navbar = ({
 
     const closeDrawers = () => {
         setOpenDrawer('');
+        setEditProfileVisible(false);
     };
 
     const getProfileStyle = () => {
@@ -390,6 +394,9 @@ const mapDispatchToProps = dispatch => {
         },
         setOpenDrawer: drawerName => {
             dispatch(GeneralActions.setDrawer(drawerName));
+        },
+        setEditProfileVisible: bool => {
+            dispatch(GeneralActions.setEditProfileVisible(bool));
         },
     };
 };
