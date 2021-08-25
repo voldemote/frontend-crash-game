@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import styles from './styles.module.scss';
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
+import styles from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import DefaultProfilePicture from '../../data/images/logo.png';
@@ -11,16 +13,13 @@ import SettingMail from '../../data/images/setting-mail.png';
 import SettingNotification from '../../data/images/setting-notifications.png';
 import SettingSupport from '../../data/images/setting-support.png';
 import Routes from '../../constants/Routes';
-import { useHistory } from 'react-router';
+import { GeneralActions } from '../../store/actions/general';
 
 const HomeSettings = ({ onEditClick }) => {
-    const history = useHistory();
+    const dispatch = useDispatch();
 
-    const onClickGoToRoute = destinationRoute => {
-        return () => {
-            history.push(destinationRoute);
-        };
-    };
+    const setOpenDrawer = drawerName =>
+        dispatch(GeneralActions.setDrawer(drawerName));
 
     return (
         <div className={styles.settings}>
@@ -69,7 +68,7 @@ const HomeSettings = ({ onEditClick }) => {
                         styles.singleSettingHolder,
                         styles.settingActive
                     )}
-                    onClick={onClickGoToRoute(Routes.wallet)}
+                    onClick={() => setOpenDrawer('wallet')}
                 >
                     <img
                         src={SettingWallet}
