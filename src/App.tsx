@@ -7,7 +7,7 @@ import Popup from "./components/Popup";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Routes from "./constants/Routes";
 import WalletDeposit from "./screens/WalletDeposit";
-import store from "./store";
+import configStore from "./store";
 import TermsAndConditions from "./screens/TermsAndConditions";
 import PaymentConfirmation from "./screens/PaymentConfirmation";
 import Wallet from "./screens/Wallet";
@@ -25,78 +25,81 @@ import IconType from "components/Icon/IconType";
 import Events from "./screens/Events";
 import LiveEvents from "./screens/LiveEvents";
 import RosiGame from "./screens/RosiGame";
+import { PersistGate } from "redux-persist/integration/react";
 
-const configuredStore = store();
+const { store, persistor } = configStore();
 
 const App = () => {
     return (
-        <Provider store={configuredStore}>
-            <ConnectedRouter history={history}>
-                <Navbar skipRoutes={[Routes.join]} />
-                <AlertBox />
-                <Popup />
-                <Switch>
-                    <Route exact path={Routes.logout} component={Logout} />
-                    <Route exact path={Routes.join} component={Join} />
-                    <Route
-                        exact
-                        path={Routes.termsAndConditions}
-                        component={TermsAndConditions}
-                    />
-                    <Route
-                        exact
-                        path={Routes.privacyPolicy}
-                        component={PrivacyPolicy}
-                    />
-                    <Route exact path={Routes.home} component={Home} />
-                    <Route exact path={Routes.bet} component={Bet} />
-                    <Route
-                        exact
-                        path={Routes.walletDeposit}
-                        component={WalletDeposit}
-                    />
-                    <Route
-                        exact
-                        path={Routes.walletConfirmation}
-                        component={PaymentConfirmation}
-                    />
-                    <Route
-                        exact
-                        path={Routes.liveEvents}
-                        component={LiveEvents}
-                    />
-                    <Route exact path={Routes.events} component={Events} />
-                    <Route exact path={Routes.rosiGame} component={RosiGame} />
-                    <Route path={Routes.wallet} component={Wallet} />
-                    <Route path={Routes.betOverview} component={BetOverview} />
-                    <Route path={Routes.verify} component={EmailVerification} />
-                    <Redirect to={Routes.home} />
-                </Switch>
-                <NavbarFooter
-                    skipRoutes={[Routes.bet, Routes.join, Routes.verify]}
-                >
-                    <NavbarFooterAction
-                        route={Routes.home}
-                        iconType={IconType.home}
-                        text="Home"
-                    />
-                    <NavbarFooterAction
-                        route={`/live-events`}
-                        iconType={IconType.camera}
-                        text="Live Stream"
-                    />
-                    <NavbarFooterAction
-                        route={`/events`}
-                        iconType={IconType.bet2}
-                        text="Events"
-                    />
-                    <NavbarFooterAction
-                        route={Routes.rosiGame}
-                        iconType={IconType.shuttle}
-                        text="Rosi Game"
-                    />
-                </NavbarFooter>
-            </ConnectedRouter>
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <ConnectedRouter history={history}>
+                    <Navbar skipRoutes={[Routes.join]} />
+                    <AlertBox />
+                    <Popup />
+                    <Switch>
+                        <Route exact path={Routes.logout} component={Logout} />
+                        <Route exact path={Routes.join} component={Join} />
+                        <Route
+                            exact
+                            path={Routes.termsAndConditions}
+                            component={TermsAndConditions}
+                        />
+                        <Route
+                            exact
+                            path={Routes.privacyPolicy}
+                            component={PrivacyPolicy}
+                        />
+                        <Route exact path={Routes.home} component={Home} />
+                        <Route exact path={Routes.bet} component={Bet} />
+                        <Route
+                            exact
+                            path={Routes.walletDeposit}
+                            component={WalletDeposit}
+                        />
+                        <Route
+                            exact
+                            path={Routes.walletConfirmation}
+                            component={PaymentConfirmation}
+                        />
+                        <Route
+                            exact
+                            path={Routes.liveEvents}
+                            component={LiveEvents}
+                        />
+                        <Route exact path={Routes.events} component={Events} />
+                        <Route exact path={Routes.rosiGame} component={RosiGame} />
+                        <Route path={Routes.wallet} component={Wallet} />
+                        <Route path={Routes.betOverview} component={BetOverview} />
+                        <Route path={Routes.verify} component={EmailVerification} />
+                        <Redirect to={Routes.home} />
+                    </Switch>
+                    <NavbarFooter
+                        skipRoutes={[Routes.bet, Routes.join, Routes.verify]}
+                    >
+                        <NavbarFooterAction
+                            route={Routes.home}
+                            iconType={IconType.home}
+                            text="Home"
+                        />
+                        <NavbarFooterAction
+                            route={`/live-events`}
+                            iconType={IconType.camera}
+                            text="Live Stream"
+                        />
+                        <NavbarFooterAction
+                            route={`/events`}
+                            iconType={IconType.bet2}
+                            text="Events"
+                        />
+                        <NavbarFooterAction
+                            route={Routes.rosiGame}
+                            iconType={IconType.shuttle}
+                            text="Rosi Game"
+                        />
+                    </NavbarFooter>
+                </ConnectedRouter>
+            </PersistGate>
         </Provider>
     );
 };
