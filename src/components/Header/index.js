@@ -30,7 +30,7 @@ const Header = ({ events }) => {
                                 className={styles.eventContainer}
                             >
                                 <div className={styles.headerOverlay}></div>
-                                {/* {
+                                {
                                     eventIndex === currentSlideIndex &&
                                         <TwitchEmbedVideo
                                             targetId={event._id}
@@ -38,9 +38,11 @@ const Header = ({ events }) => {
                                             video={event.streamUrl}
                                             muted={true}
                                         />
-                                } */}
+                                }
 
-                                <img src={event.previewImageUrl} className={styles.previewImage} />
+                                {
+                                    eventIndex != currentSlideIndex && <img src={event.previewImageUrl} className={styles.previewImage} />
+                                }
                                 
                                 <div className={styles.headerWrapper}>
                                     <div
