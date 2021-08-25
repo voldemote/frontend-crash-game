@@ -6,6 +6,7 @@ import CarouselContainer from '../CarouselContainer';
 import EventCard from '../EventCard';
 import { EventActions } from '../../store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
+import styles from './styles.module.scss';
 
 const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
     const location = useLocation();
@@ -69,6 +70,7 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
                         pathname: `/trade/${eventId}`,
                         state: { fromLocation: location },
                     }}
+                    className={styles.eventLink}
                 >
                     <EventCard
                         key={eventId}
@@ -79,6 +81,7 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
                         tags={mappedTags}
                         image={event.previewImageUrl}
                         eventEnd={event.date}
+                        eventCardClass={styles.eventCardHome}
                     />
                 </Link>
             );

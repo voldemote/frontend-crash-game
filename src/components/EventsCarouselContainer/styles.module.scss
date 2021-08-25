@@ -22,3 +22,15 @@
         text-align: center;
     }
 }
+
+.eventCardHome {
+    @media (max-width: $screen-xs) {
+        min-width: 300px;
+    }
+}
+
+.eventLink {
+    @media (max-width: $screen-xs) {
+        padding-right: 10px;
+    }
+}
