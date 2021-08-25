@@ -1,9 +1,9 @@
 import { makeActionCreator } from '../../helper/Store';
 
 export const UserTypes = {
-    FETCH:           'User/FETCH',
-    FETCH_SUCCEEDED: 'User/FETCH_SUCCEEDED',
-    FETCH_FAILED:    'User/FETCH_FAILED',
+    FETCH:              'User/FETCH',
+    FETCH_SUCCEEDED:    'User/FETCH_SUCCEEDED',
+    FETCH_FAILED:       'User/FETCH_FAILED',
 };
 
 const fetch = makeActionCreator(

@@ -1,4 +1,4 @@
-@import "../../styles/all";
+@import '../../styles/all';
 
 $largeMobileHeight: 700px;
 
@@ -7,89 +7,273 @@ $largeMobileHeight: 700px;
     flex-direction: column;
     align-items: center;
     position: fixed;
-    padding: 75px 0 40px 0;
-    width: 80vw;
+    padding: 90px 24px 0;
+    width: 500px;
     height: 100vh;
     top: 0;
-    background-color: $colorPrimary;
+    background-color: rgba(14, 9, 39, 0.86);
     right: -100%;
     transition: right 0.5s ease-in-out;
-    z-index: 2;
-    overflow-y: scroll;
+    overflow-y: hidden;
+
+    .mainContent {
+        overflow-y: auto;
+        padding-bottom: 30px;
+        padding-left: 30px;
+    }
 
     &.menuOpened {
         right: 0;
+        padding: 90px 24px 0;
+        background-color: rgba(14, 9, 39, 0.86);
+        backdrop-filter: blur(6px);
     }
 
-    @media (min-width: $screen-sm) {
-        width: 40vw;
-        padding-top: 150px;
-        background-color: $colorPrimary90;
+    .profileBalance {
+        display: flex;
+        flex-direction: column;
+        color: $colorWhite;
+        width: 95%;
+        padding: 20px;
+        height: 250px;
+        border-radius: 4px;
+        background-color: rgba(172, 196, 255, 0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+
+        .profileBalanceHeading {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 45px;
+
+            .profileBalanceTitle {
+                text-transform: uppercase;
+                opacity: 0.4;
+                font-size: 10px;
+                letter-spacing: 1px;
+                font-weight: bold;
+            }
+
+            .goToMyTrades {
+                line-height: 20px;
+                font-size: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                cursor: pointer;
+                border-bottom: 1px solid $colorWhite;
+                transition: transform 0.5s;
+
+                .goToMyTradesIcon {
+                    width: 15px;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .goToMyTradesText {
+                    font-size: 12px;
+                    line-height: 14px;
+                    color: #ffffff;
+                }
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+        .profileBalanceContent {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 100%;
+
+            .profileBalanceItem {
+                width: 32%;
+                height: 100%;
+
+                .overallFunds {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+
+                    .overallFundsAmount {
+                        width: 120px;
+                        height: 120px;
+                        display: flex;
+                        position: relative;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+
+                        @media (max-width: $screen-sm) {
+                            margin-top: 20px;
+                        }
+
+                        .overallFundsTotal {
+                            position: absolute;
+                            font-weight: 500;
+                            font-size: 20px;
+                            color: #ffffff;
+                        }
+
+                        .overallFundsTitle {
+                            position: absolute;
+                            top: 80px;
+                            font-size: 12px;
+                            color: #ffffff;
+
+                            @media (max-width: $screen-sm) {
+                                top: 150px;
+                            }
+                        }
+                    }
+                }
+
+                .availableEvnts {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+
+                    .availableEvntsHeadline {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 12px;
+                        font-weight: bold;
+                        font-size: 10px;
+                        line-height: 22px;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.4);
+                        mix-blend-mode: normal;
+
+                        .availableEvntsDot {
+                            min-width: 6px;
+                            min-height: 6px;
+                            margin-right: 6px;
+                            background-color: #3570ff;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .availableEvntsAmount {
+                        display: flex;
+                        align-items: flex-start;
+                        margin-left: 12px;
+
+                        .availableEvntsTotal {
+                            font-size: 20px;
+                            line-height: 20px;
+                            color: #ffffff;
+                            margin-right: 8px;
+                        }
+
+                        .availableEvntsTitle {
+                            font-size: 10px;
+                            color: #ffffff;
+                        }
+                    }
+                }
+
+                .liquidFunds {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+
+                    .liquidFundsHeadline {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 12px;
+                        font-weight: bold;
+                        font-size: 10px;
+                        line-height: 22px;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.4);
+                        mix-blend-mode: normal;
+
+                        .liquidFundsDot {
+                            min-width: 6px;
+                            min-height: 6px;
+                            margin-right: 6px;
+                            background-color: #efff54;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .liquidFundsAmount {
+                        display: flex;
+                        align-items: flex-start;
+                        margin-left: 12px;
+
+                        .liquidFundsTotal {
+                            font-size: 20px;
+                            line-height: 20px;
+                            color: #ffffff;
+                            margin-right: 8px;
+                        }
+
+                        .liquidFundsTitle {
+                            font-size: 10px;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    @media (min-width: $screen-lg) {
-        width: 30vw;
-    }
-
-    .fundsContainer {
+    .profileStats {
         position: relative;
         width: 95%;
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        flex-direction: row;
         align-items: center;
-        margin-bottom: 50px;
-        padding: 25px;
-        background-color: #221e3d;
+        margin-bottom: 20px;
         border-radius: 6px;
+        overflow: hidden;
 
-        .overallFunds {
+        @media (max-width: $screen-sm) {
+            flex-direction: column;
+        }
+
+        .profileStatItem {
+            color: $colorWhite;
+            width: 31%;
+            height: 100px;
+            border-radius: 4px;
+            background-color: rgba(172, 196, 255, 0.1);
+            padding: 12px;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
 
-            .overallFundsHeadline {
-                position: absolute;
-                top: 25px;
-                left: 25px;
-                font-weight: bold;
-                font-size: 10px;
-                letter-spacing: 1px;
-                text-transform: uppercase;
-                color: rgba(255, 255, 255, 0.4);
-                mix-blend-mode: normal;
+            @media (max-width: $screen-sm) {
+                width: 100%;
+                margin-bottom: 20px;
+                overflow-y: hidden;
             }
 
-            .overallFundsAmount {
-                width: 164px;
-                height: 164px;
+            .statItemHeading {
+                font-size: 8px;
+                opacity: 0.45;
+                text-transform: uppercase;
+                letter-spacing: 1.49px;
+            }
+
+            .statItemContent {
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                margin: 10px 0 30px 0;
-                border-radius: 50%;
+                flex-direction: row;
+                justify-content: space-between;
+                font-size: 20px;
+            }
 
-                @media (max-width: $screen-sm) {
-                    margin-top: 20px;
-                }
-
-                .overallFundsTotal {
-                    position: absolute;
-                    font-weight: 500;
-                    font-size: 36px;
-                    color: #ffffff;
-                }
-
-                .overallFundsTitle {
-                    position: absolute;
-                    top: 140px;
-                    font-size: 14px;
-                    color: #ffffff;
-
-                    @media (max-width: $screen-sm) {
-                        top: 150px;
-                    }
-                }
+            .goToIcon {
+                width: 15px;
+                padding: 0;
+                margin: 0;
             }
         }
 
@@ -100,138 +284,6 @@ $largeMobileHeight: 700px;
 
             @media (max-width: $screen-sm) {
                 flex-direction: column;
-            }
-
-            .investedFunds {
-                width: 50%;
-                display: flex;
-                flex-direction: column;
-
-                @media (max-width: $screen-sm) {
-                    width: 100%;
-                    margin-bottom: 30px;
-                }
-
-                .investedFundsHeadline {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 12px;
-                    font-weight: bold;
-                    font-size: 10px;
-                    line-height: 22px;
-                    letter-spacing: 1px;
-                    text-transform: uppercase;
-                    color: rgba(255, 255, 255, 0.4);
-                    mix-blend-mode: normal;
-
-                    .investedFundsDot {
-                        min-width: 6px;
-                        min-height: 6px;
-                        margin-right: 6px;
-                        background-color: #69ffa5;
-                        border-radius: 50%;
-                    }
-                }
-
-                .investedFundsAmount {
-                    display: flex;
-                    align-items: flex-start;
-                    margin-left: 12px;
-
-                    .investedFundsTotal {
-                        font-size: 24px;
-                        line-height: 24px;
-                        color: #ffffff;
-                        margin-right: 8px;
-                    }
-
-                    .investedFundsTitle {
-                        font-size: 10px;
-                        color: #ffffff;
-                    }
-                }
-
-                .growthPositive {
-                    margin: 14px 0 0 12px;
-                    font-size: 16px;
-                    line-height: 16px;
-                    color: #69ffa5;
-                }
-
-                .growthNegative {
-                    margin: 14px 0 0 12px;
-                    font-size: 16px;
-                    line-height: 16px;
-                    color: #d42f19;
-                }
-
-                .growthNeutral {
-                    margin: 14px 0 0 12px;
-                    font-size: 16px;
-                    line-height: 16px;
-                    color: #ffffff;
-                }
-
-                .originInvestedAmount {
-                    margin: 14px 0 0 12px;
-                    font-size: 12px;
-                    line-height: 16px;
-                    color: #ffffff;
-                    mix-blend-mode: normal;
-                    opacity: 0.5;
-                }
-            }
-
-            .liquidFunds {
-                width: 50%;
-                display: flex;
-                flex-direction: column;
-                margin-left: 25px;
-
-                @media (max-width: $screen-sm) {
-                    width: 100%;
-                    margin-left: 0;
-                    margin-bottom: 15px;
-                }
-
-                .liquidFundsHeadline {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 12px;
-                    font-weight: bold;
-                    font-size: 10px;
-                    line-height: 22px;
-                    letter-spacing: 1px;
-                    text-transform: uppercase;
-                    color: rgba(255, 255, 255, 0.4);
-                    mix-blend-mode: normal;
-
-                    .liquidFundsDot {
-                        min-width: 6px;
-                        min-height: 6px;
-                        margin-right: 6px;
-                        background-color: #3570ff;
-                        border-radius: 50%;
-                    }
-                }
-
-                .liquidFundsAmount {
-                    display: flex;
-                    align-items: flex-start;
-                    margin-left: 12px;
-
-                    .liquidFundsTotal {
-                        font-size: 24px;
-                        line-height: 24px;
-                        color: #ffffff;
-                        margin-right: 8px;
-                    }
-
-                    .liquidFundsTitle {
-                        font-size: 10px;
-                        color: #ffffff;
-                    }
-                }
             }
         }
 
@@ -305,24 +357,6 @@ $largeMobileHeight: 700px;
         width: 95%;
         display: flex;
         justify-content: flex-end;
-        margin-top: 30px;
-
-        .settingButton {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 55px;
-            min-height: 55px;
-            background-color: white;
-            border-radius: 50%;
-            margin-right: 16px;
-            cursor: pointer;
-            transition: transform 0.5s;
-
-            &:hover {
-                transform: scale(1.1);
-            }
-        }
 
         .logoutButton {
             display: flex;
@@ -340,4 +374,129 @@ $largeMobileHeight: 700px;
             }
         }
     }
+
+    .profileHeading {
+        display: flex;
+        margin: 0 0 50px;
+        color: $colorWhite;
+        font-size: 24px;
+        padding-left: 30px;
+        width: 95%;
+    }
+
+    .editProfileContent {
+        overflow: scroll;
+        .profileSubmit {
+            width: 100%;
+            height: 55px;
+            border-radius: 4px;
+            line-height: 25px;
+            font-size: 16px;
+            margin-top: 50px;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .profilePictureWrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            .profilePicture {
+                display: flex;
+                flex-direction: column;
+
+                .profilePictureUpload {
+                    margin-bottom: 20px;
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    border: 3px dashed rgba(172, 196, 255, 0.1);
+                    cursor: pointer;
+                    display: flex;
+
+                    .iconContainer {
+                        width: 35px;
+                        height: 35px;
+                        margin: auto;
+
+                        > .uploadIcon {
+                            fill: white;
+                        }
+                    }
+                    > .profileImage {
+                        object-fit: cover;
+                        object-position: center;
+                        border-radius: 50%;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .profilePictureUploadLabel {
+                    font-size: 12px;
+                    opacity: 0.4;
+                    text-align: center;
+                    color: $colorWhite;
+                }
+            }
+        }
+        .profileContent {
+            padding: 25px;
+
+            .profileInputGroup {
+                color: $colorWhite;
+
+                .profileInputLabel {
+                    display: block;
+                    height: 12px;
+                    opacity: 0.3;
+                    line-height: 12px;
+                    font-size: 12px;
+                    margin: 14px 0;
+                }
+
+                .profileInput {
+                    border-radius: 4px;
+                    width: 100%;
+                    height: 60px;
+                    background-color: rgba(172, 196, 255, 0.1);
+                    margin-bottom: 24px;
+                    line-height: 24px;
+                    font-size: 16px;
+                    font-family: $fontRegular;
+                    border: none;
+                    color: $colorWhite;
+                    text-indent: 20px;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.panel {
+    transition: 0.5s ease-in-out;
+    transition-property: transform, opacity;
+    position: absolute;
+    width: 100%;
+    opacity: 1;
+    height: calc(100vh - 90px);
+    display: flex;
+    flex-flow: column;
+}
+.firstPanel {
+    &.panelHidden {
+        transform: translateX(-110%);
+    }
+}
+.panelHidden {
+    opacity: 0;
+    transform: translateX(110%);
 }
