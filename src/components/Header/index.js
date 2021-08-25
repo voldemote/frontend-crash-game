@@ -35,7 +35,7 @@ const Header = ({ events }) => {
         <div>
             <div className={styles.header}>
                 <CoverFlowCarousel onSlideChange={setCurrentSlideIndex}>
-                    {events.map((event, eventIndex) => {
+                    {events && events.map((event, eventIndex) => {
                         const startDate = moment(_.get(event, 'date'));
                         const endDate = moment(_.get(event, 'endDate'));
                         const currentDate = moment();
