@@ -133,6 +133,11 @@ const verifyEmailSucceeded = makeActionCreator(
     AuthenticationTypes.VERIFY_EMAIL_SUCCEEDED
 );
 
+// update user data actions
+const initiateUpdateUserData = payload => ({
+    type: AuthenticationTypes.INITIATE_UPDATE_USER_DATA,
+    payload,
+});
 const updateUserDataSucceeded = payload => ({
     type: AuthenticationTypes.UPDATE_USER_DATA_SUCCEEDED,
     payload,
@@ -140,11 +145,6 @@ const updateUserDataSucceeded = payload => ({
 
 const updateUserDataFailed = payload => ({
     type: AuthenticationTypes.UPDATE_USER_DATA_FAILED,
-    payload,
-});
-
-const initiateUpdateUserData = payload => ({
-    type: AuthenticationTypes.INITIATE_UPDATE_USER_DATA,
     payload,
 });
 

@@ -20,7 +20,9 @@ import { useHistory } from 'react-router';
 import Wallet from '../Wallet';
 import { NavLink } from 'react-router-dom';
 import { matchPath } from 'react-router-dom';
-import { LeaderboardActions }   from '../../store/actions/leaderboard';
+import { LeaderboardActions } from '../../store/actions/leaderboard';
+import { GeneralActions } from '../../store/actions/general';
+import { useSelector } from 'react-redux';
 
 const Navbar = ({
     user,
@@ -32,10 +34,12 @@ const Navbar = ({
     handleLeaderboardDrawer,
     leaderboardOpen,
     skipRoutes = [],
+    setOpenDrawer,
 }) => {
-    const [openDrawer, setOpenDrawer] = useState('');
     const [missingWinnerAmount, setMisingWinnerAmount] = useState(null);
     const history = useHistory();
+
+    const openDrawer = useSelector(state => state.general.openDrawer);
 
     useEffect(() => {
         if (leaderboardOpen) {
@@ -246,7 +250,8 @@ const Navbar = ({
                 className={classNames(
                     style.leaderboard,
                     style.drawer,
-                    !isOpen(drawers.leaderboard || leaderboardOpen) && style.drawerHidden
+                    !isOpen(drawers.leaderboard || leaderboardOpen) &&
+                        style.drawerHidden
                 )}
             >
                 <Icon
@@ -380,8 +385,11 @@ const mapDispatchToProps = dispatch => {
         setUnread: notification => {
             dispatch(NotificationActions.setUnread({ notification }));
         },
-        handleLeaderboardDrawer: (open) => {
-            dispatch(LeaderboardActions.handleDrawer({open}))
+        handleLeaderboardDrawer: open => {
+            dispatch(LeaderboardActions.handleDrawer({ open }));
+        },
+        setOpenDrawer: drawerName => {
+            dispatch(GeneralActions.setDrawer(drawerName));
         },
     };
 };

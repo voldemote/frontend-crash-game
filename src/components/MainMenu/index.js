@@ -12,6 +12,7 @@ import HomeSettings from '../HomeSettings';
 import { PieChart } from 'react-minimal-pie-chart';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { AuthenticationActions } from 'store/actions/authentication';
+import { GeneralActions } from 'store/actions/general';
 
 const MainMenu = ({
     opened,
@@ -26,6 +27,7 @@ const MainMenu = ({
     sellTransactions,
     user,
     updateUser,
+    setOpenDrawer,
 }) => {
     const [editVisible, setEditVisible] = useState(false);
 
@@ -213,7 +215,7 @@ const MainMenu = ({
                     <div className={styles.profileStats}>
                         <div
                             className={styles.profileStatItem}
-                            onClick={() => {}}
+                            onClick={() => setOpenDrawer('leaderboard')}
                             role="button"
                             tabIndex="0"
                         >
@@ -233,7 +235,7 @@ const MainMenu = ({
                         </div>
                         <div
                             className={styles.profileStatItem}
-                            onClick={() => {}}
+                            onClick={() => setOpenDrawer('wallet')}
                             role="button"
                             tabIndex="0"
                         >
@@ -420,6 +422,9 @@ const mapDispatchToProps = dispatch => {
                     user: { name, username, email, profilePicture },
                 })
             );
+        },
+        setOpenDrawer: drawerName => {
+            dispatch(GeneralActions.setDrawer(drawerName));
         },
     };
 };

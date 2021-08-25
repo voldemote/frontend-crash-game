@@ -1,72 +1,30 @@
-import React, {useState} from "react";
-import styles from "./styles.module.scss";
-import classNames from "classnames";
-import Icon from "../Icon";
-import IconType from "../Icon/IconType";
-import DefaultProfilePicture from "../../data/images/logo.png";
-import SettingBet from "../../data/images/setting-bet.png";
-import SettingWallet from "../../data/images/setting-wallet.png";
-import SettingPhone from "../../data/images/setting-phone.png";
-import SettingMail from "../../data/images/setting-mail.png";
-import SettingNotification from "../../data/images/setting-notifications.png";
-import SettingSupport from "../../data/images/setting-support.png";
-import Routes from "../../constants/Routes";
-import { useHistory } from "react-router";
+import React, { useState } from 'react';
+import styles from './styles.module.scss';
+import classNames from 'classnames';
+import Icon from '../Icon';
+import IconType from '../Icon/IconType';
+import DefaultProfilePicture from '../../data/images/logo.png';
+import SettingBet from '../../data/images/setting-bet.png';
+import SettingWallet from '../../data/images/setting-wallet.png';
+import SettingPhone from '../../data/images/setting-phone.png';
+import SettingMail from '../../data/images/setting-mail.png';
+import SettingNotification from '../../data/images/setting-notifications.png';
+import SettingSupport from '../../data/images/setting-support.png';
+import Routes from '../../constants/Routes';
+import { useHistory } from 'react-router';
 
-const HomeSettings = ({onEditClick}) => {
+const HomeSettings = ({ onEditClick }) => {
     const history = useHistory();
 
-    const onClickGoToRoute = (destinationRoute) => {
+    const onClickGoToRoute = destinationRoute => {
         return () => {
             history.push(destinationRoute);
         };
     };
 
-
-
     return (
         <div className={styles.settings}>
             <div className={styles.settingContainer}>
-                <div
-                    className={classNames(
-                        styles.singleSettingHolder,
-                        styles.settingActive
-                    )}
-                    onClick={onClickGoToRoute(Routes.betOverview)}
-                >
-                    <img
-                        src={SettingBet}
-                        alt="bets"
-                        className={styles.settingIcon}
-                        style={{ width: "30px" }}
-                    />
-                    <p className={styles.settingTitle}>My Trades And History</p>
-                    <Icon
-                        width={15}
-                        iconType={IconType.arrowSmallRight}
-                        className={styles.goIntoSettingIcon}
-                    />
-                </div>
-                <div
-                    className={classNames(
-                        styles.singleSettingHolder,
-                        styles.settingActive
-                    )}
-                    onClick={onClickGoToRoute(Routes.wallet)}
-                >
-                    <img
-                        src={SettingWallet}
-                        alt="wallet"
-                        className={styles.settingIcon}
-                        style={{ width: "20px", marginLeft: "5px" }}
-                    />
-                    <p className={styles.settingTitle}>My Wallet</p>
-                    <Icon
-                        width={15}
-                        iconType={IconType.arrowSmallRight}
-                        className={styles.goIntoSettingIcon}
-                    />
-                </div>
                 <div
                     onClick={onEditClick}
                     className={classNames(
@@ -91,12 +49,52 @@ const HomeSettings = ({onEditClick}) => {
                         styles.singleSettingHolder,
                         styles.settingDeactive
                     )}
+                    // onClick={onClickGoToRoute(Routes.betOverview)}
+                >
+                    <img
+                        src={SettingBet}
+                        alt="bets"
+                        className={styles.settingIcon}
+                        style={{ width: '30px' }}
+                    />
+                    <p className={styles.settingTitle}>My Trades And History</p>
+                    <Icon
+                        width={15}
+                        iconType={IconType.arrowSmallRight}
+                        className={styles.goIntoSettingIcon}
+                    />
+                </div>
+                <div
+                    className={classNames(
+                        styles.singleSettingHolder,
+                        styles.settingActive
+                    )}
+                    onClick={onClickGoToRoute(Routes.wallet)}
+                >
+                    <img
+                        src={SettingWallet}
+                        alt="wallet"
+                        className={styles.settingIcon}
+                        style={{ width: '20px', marginLeft: '5px' }}
+                    />
+                    <p className={styles.settingTitle}>My Wallet</p>
+                    <Icon
+                        width={15}
+                        iconType={IconType.arrowSmallRight}
+                        className={styles.goIntoSettingIcon}
+                    />
+                </div>
+                <div
+                    className={classNames(
+                        styles.singleSettingHolder,
+                        styles.settingDeactive
+                    )}
                 >
                     <img
                         src={SettingPhone}
                         alt="phone"
                         className={styles.settingIcon}
-                        style={{ width: "16px", marginLeft: "7px" }}
+                        style={{ width: '16px', marginLeft: '7px' }}
                     />
                     <p className={styles.settingTitle}>Change Phone Number</p>
                     <Icon
@@ -105,7 +103,7 @@ const HomeSettings = ({onEditClick}) => {
                         className={styles.goIntoSettingIcon}
                     />
                 </div>
-                <div
+                {/* <div
                     className={classNames(
                         styles.singleSettingHolder,
                         styles.settingDeactive
@@ -123,7 +121,7 @@ const HomeSettings = ({onEditClick}) => {
                         iconType={IconType.arrowSmallRight}
                         className={styles.goIntoSettingIcon}
                     />
-                </div>
+                </div> */}
                 <div
                     className={classNames(
                         styles.singleSettingHolder,
@@ -134,7 +132,7 @@ const HomeSettings = ({onEditClick}) => {
                         src={SettingNotification}
                         alt="notifications"
                         className={styles.settingIcon}
-                        style={{ width: "22px", marginLeft: "4px" }}
+                        style={{ width: '22px', marginLeft: '4px' }}
                     />
                     <p className={styles.settingTitle}>SMS Notifications</p>
                     <Icon
@@ -153,7 +151,7 @@ const HomeSettings = ({onEditClick}) => {
                         src={SettingSupport}
                         alt="support"
                         className={styles.settingIcon}
-                        style={{ width: "22px", marginLeft: "4px" }}
+                        style={{ width: '22px', marginLeft: '4px' }}
                     />
                     <p className={styles.settingTitle}>Support</p>
                     <Icon

@@ -170,28 +170,6 @@ const updateData = (action, state) => {
     });
 };
 
-const updateUserDataSucceeded = ({ payload }, state) => {
-    return {
-        ...state,
-        ...payload,
-        loading: false,
-    };
-};
-
-const updateUserDataFailed = ({ payload }, state) => {
-    return {
-        ...state,
-        loading: false,
-    };
-};
-
-const initiateUpdateUserData = ({ payload }, state) => {
-    return {
-        ...state,
-        loading: true,
-    };
-};
-
 const logout = (action, state) => {
     return update(state, {
         $set: initialState,
@@ -247,6 +225,28 @@ const resetAuthState = (action, state) => {
     return state;
 };
 
+// update user data reducers
+const initiateUpdateUserData = ({ payload }, state) => {
+    return {
+        ...state,
+        loading: true,
+    };
+};
+const updateUserDataSucceeded = ({ payload }, state) => {
+    return {
+        ...state,
+        ...payload,
+        loading: false,
+    };
+};
+
+const updateUserDataFailed = ({ payload }, state) => {
+    return {
+        ...state,
+        loading: false,
+    };
+};
+
 export default function (state = initialState, action) {
     switch (action.type) {
         // @formatter:off
@@ -285,12 +285,12 @@ export default function (state = initialState, action) {
             return fetchReferralsSucceeded(action, state);
         case AuthenticationTypes.RESET_AUTH_STATE:
             return resetAuthState(action, state);
+        case AuthenticationTypes.INITIATE_UPDATE_USER_DATA:
+            return initiateUpdateUserData(action, state);
         case AuthenticationTypes.UPDATE_USER_DATA_SUCCEEDED:
             return updateUserDataSucceeded(action, state);
         case AuthenticationTypes.UPDATE_USER_DATA_FAILED:
             return updateUserDataFailed(action, state);
-        case AuthenticationTypes.INITIATE_UPDATE_USER_DATA:
-            return initiateUpdateUserData(action, state);
         default:
             return state;
         // @formatter:on
