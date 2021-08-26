@@ -1,51 +1,46 @@
-import React           from 'react';
-import styles          from './styles.module.scss';
-import classNames      from 'classnames';
+import React from 'react';
+import styles from './styles.module.scss';
+import classNames from 'classnames';
 import ActionTextColor from './ActionTextColor';
 import SelectionHelper from '../../helper/SelectionHelper';
-import { formatToFixed }     from '../../helper/FormatNumbers';
+import { formatToFixed } from '../../helper/FormatNumbers';
 
-const AccountBalance = ({ className, balance, coloredActionText, actionTextColor = ActionTextColor.green }) => {
-    const renderColoredActionText = () => {
-        return coloredActionText && (
-            <span
-                className={classNames(
-                    styles.actionText,
-                    SelectionHelper.get(
-                        actionTextColor,
-                        {
-                            [ActionTextColor.green]: styles.actionTextColorGreen,
-                            [ActionTextColor.red]:   styles.actionTextColorRed,
-                        },
-                    ),
-                )}
-            >
-                {coloredActionText}
-            </span>
-        );
-    };
-
+const AccountBalance = ({
+  className,
+  balance,
+  coloredActionText,
+  actionTextColor = ActionTextColor.green,
+}) => {
+  const renderColoredActionText = () => {
     return (
-        <div
-            className={classNames(
-                styles.accountBalance,
-                className,
-            )}
+      coloredActionText && (
+        <span
+          className={classNames(
+            styles.actionText,
+            SelectionHelper.get(actionTextColor, {
+              [ActionTextColor.green]: styles.actionTextColorGreen,
+              [ActionTextColor.red]: styles.actionTextColorRed,
+            })
+          )}
         >
-            <div>
-                {formatToFixed(balance)}
-                <sup>
-                    EVNT
-                </sup>
-            </div>
-            <div className={styles.infoContainer}>
-                <small>
-                    available
-                </small>
-                {renderColoredActionText()}
-            </div>
-        </div>
+          {coloredActionText}
+        </span>
+      )
     );
+  };
+
+  return (
+    <div className={classNames(styles.accountBalance, className)}>
+      <div>
+        {formatToFixed(balance)}
+        <sup>EVNT</sup>
+      </div>
+      <div className={styles.infoContainer}>
+        <small>available</small>
+        {renderColoredActionText()}
+      </div>
+    </div>
+  );
 };
 
 export default AccountBalance;

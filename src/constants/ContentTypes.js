@@ -1,5 +1,5 @@
 const contentTypes = {
-    applicationJSON: 'application/json',
+  applicationJSON: 'application/json',
 };
 
 module.exports = contentTypes;

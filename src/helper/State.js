@@ -1,66 +1,48 @@
 import _ from 'lodash';
 
 class State {
-    static getUser (userId, users) {
-        const user = _.get(
-            users,
-            userId,
-        );
+  static getUser(userId, users) {
+    const user = _.get(users, userId);
 
-        return user;
-    }
+    return user;
+  }
 
-    static getEvent (eventId, events) {
-        const event = _.find(
-            events,
-            {
-                _id: eventId,
-            },
-        );
+  static getEvent(eventId, events) {
+    const event = _.find(events, {
+      _id: eventId,
+    });
 
-        return event;
-    }
+    return event;
+  }
 
-    static getEventByTrade (tradeId, events) {
-        const event = _.find(
-            events,
-            (event) => (
-                _.find(
-                    _.get(event, 'bets', []),
-                    {
-                        _id: tradeId,
-                    },
-                )
-            ),
-        );
+  static getEventByTrade(tradeId, events) {
+    const event = _.find(events, event =>
+      _.find(_.get(event, 'bets', []), {
+        _id: tradeId,
+      })
+    );
 
-        return event;
-    };
+    return event;
+  }
 
-    static getTrade (tradeId, events) {
-        const event  = State.getEventByTrade(tradeId, events);
-        const trades = _.get(event, 'bets', []);
-        const trade  = _.find(
-            trades,
-            {
-                _id: tradeId,
-            },
-        );
+  static getTrade(tradeId, events) {
+    const event = State.getEventByTrade(tradeId, events);
+    const trades = _.get(event, 'bets', []);
+    const trade = _.find(trades, {
+      _id: tradeId,
+    });
 
-        return trade;
-    };
+    return trade;
+  }
 
-    static getTradeByEvent (tradeId, event) {
-        const trades = _.get(event, 'bets', []);
-        const trade  = _.find(
-            trades,
-            {
-                _id: tradeId,
-            },
-        );
+  static getTradeByEvent(tradeId, event) {
+    const trades = _.get(event, 'bets', []);
+    const trade = _.find(trades, {
+      _id: tradeId,
+    });
 
-        return trade;
-    };
+    return trade;
+  }
 }
 
 export default State;

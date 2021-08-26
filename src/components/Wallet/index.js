@@ -22,290 +22,321 @@ import { useHistory } from 'react-router-dom';
 import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
-import InputBoxTheme            from '../InputBox/InputBoxTheme';
+import InputBoxTheme from '../InputBox/InputBoxTheme';
 
-const Wallet = ({ show, balance, referralCount, transactionCount, close, showPopup, transactions, referrals }) => {
-    const history = useHistory();
+const Wallet = ({
+  show,
+  balance,
+  referralCount,
+  transactionCount,
+  close,
+  showPopup,
+  transactions,
+  referrals,
+}) => {
+  const history = useHistory();
 
-    const menus = {
-        wallet: 'wallet',
-        transactionHistory: 'transactionHistory',
-        referrals: 'referrals',
-    };
+  const menus = {
+    wallet: 'wallet',
+    transactionHistory: 'transactionHistory',
+    referrals: 'referrals',
+  };
 
-    const closeDrawer = () => {
-        setOpenMenu(menus.wallet);
-        close();
+  const closeDrawer = () => {
+    setOpenMenu(menus.wallet);
+    close();
+  };
+
+  const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
+
+  const [openMenu, setOpenMenu] = useState(menus.wallet);
+
+  const isOpen = page => openMenu === page;
+
+  useEffect(() => {
+    if (!show) {
+      setOpenMenu(menus.wallet);
     }
-
-    const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
-
-    const [openMenu, setOpenMenu] = useState(menus.wallet);
-
-    const isOpen = (page) => openMenu === page;
-
-    useEffect(() => {
-        if(!show) {
-            setOpenMenu(menus.wallet);
-        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [show]);
+  }, [show]);
 
-    const onPaymentActionSwitch = (newIndex) => {
-        if (newIndex === 0) {
-            setPaymentAction(PaymentAction.deposit);
-        } else {
-            setPaymentAction(PaymentAction.withdrawal);
-        }
-    };
-
-
-    const onReferralListClick = () => {
-        showPopup(PopupTheme.referralList);
-    };
-
-
-    const onPaymentCardClickCallback = (paymentProvider) => {
-        return () => {
-            let route = Routes.walletDeposit;
-
-            if (paymentAction === PaymentAction.withdrawal) {
-                route = Routes.walletWithdrawal;
-            }
-
-            history.push(Routes.getRouteWithParameters(
-                route,
-                {
-                    paymentProvider,
-                },
-            ));
-        };
-    };
-
-    const backButton = () => <Icon className={styles.backButton} iconType={'arrowTopRight'} onClick={() => setOpenMenu(menus.wallet)}/>
-
-    const renderSwitchableView = () => {
-        const switchableViews = [
-            SwitchableHelper.getSwitchableView(
-                'Deposit',
-                IconType.deposit,
-                IconTheme.white,
-            ),
-            SwitchableHelper.getSwitchableView(
-                'Withdrawal',
-                IconType.withdrawal,
-                IconTheme.white,
-            ),
-        ];
-        const selectedIndex = paymentAction === PaymentAction.deposit ? 0 : 1;
-
-        return (
-            <SwitchableContainer
-                switchableViews={switchableViews}
-                currentIndex={selectedIndex}
-                whiteBackground={false}
-                setCurrentIndex={onPaymentActionSwitch}
-            />
-        );
-    };
-
-    const renderConditionalWalletCards = () => {
-        if (paymentAction === PaymentAction.deposit) {
-            const referralText = <>
-                Invite your friends using your referral link and <strong>get 50 EVNT token</strong> for each user who joined over your link.
-            </>;
-
-            return (
-                <WalletCard
-                    title={'+50 EVNT Tokens: Invite your friends'}
-                    subtitle={'50 EVNT tokens for inviting people'}
-                    text={referralText}
-                    buttonText={'Share with your friends'}
-                    onClick={onReferralListClick}
-                >
-                    <ReferralLinkCopyInputBox className={styles.referralLinkList} />
-                </WalletCard>
-            );
-        }
-    };
-
-    const renderWalletPaymentCard = (paymentProvider) => {
-        return (
-            <WalletPaymentCard
-                provider={paymentProvider}
-                action={paymentAction}
-                onClick={onPaymentCardClickCallback(paymentProvider)}
-            />
-        );
-    };
-
-    const walletContainerWrapper = (open, heading, contents, isFirstPanel = false) => {
-        return (
-            <div className={classNames(
-                styles.panel,
-                !open && styles.panelHidden,
-                isFirstPanel && styles.firstPanel
-            )}>
-                <h2 className={styles.walletHeading}>
-                    {heading}
-                </h2>
-                <div className={styles.walletContents}>
-                    {contents}
-                </div>
-            </div>
-        )
+  const onPaymentActionSwitch = newIndex => {
+    if (newIndex === 0) {
+      setPaymentAction(PaymentAction.deposit);
+    } else {
+      setPaymentAction(PaymentAction.withdrawal);
     }
+  };
+
+  const onReferralListClick = () => {
+    showPopup(PopupTheme.referralList);
+  };
+
+  const onPaymentCardClickCallback = paymentProvider => {
+    return () => {
+      let route = Routes.walletDeposit;
+
+      if (paymentAction === PaymentAction.withdrawal) {
+        route = Routes.walletWithdrawal;
+      }
+
+      history.push(
+        Routes.getRouteWithParameters(route, {
+          paymentProvider,
+        })
+      );
+    };
+  };
+
+  const backButton = () => (
+    <Icon
+      className={styles.backButton}
+      iconType={'arrowTopRight'}
+      onClick={() => setOpenMenu(menus.wallet)}
+    />
+  );
+
+  const renderSwitchableView = () => {
+    const switchableViews = [
+      SwitchableHelper.getSwitchableView(
+        'Deposit',
+        IconType.deposit,
+        IconTheme.white
+      ),
+      SwitchableHelper.getSwitchableView(
+        'Withdrawal',
+        IconType.withdrawal,
+        IconTheme.white
+      ),
+    ];
+    const selectedIndex = paymentAction === PaymentAction.deposit ? 0 : 1;
 
     return (
-        <div className={classNames(styles.wallet, styles.drawer, !show && styles.drawerHidden)}>
-            <div className={styles.menuContainer}>
-                {walletContainerWrapper(
-                    isOpen(menus.wallet),
-                    'My Wallet',
-                    (
-                        <>
-                            <div className={styles.walletBalance} role="button">
-                                <span className={styles.balance}>
-                                    {formatToFixed(balance)}
-                                    <sup className={styles.currency}>EVNT</sup>
-                                </span>
-                                <span className={styles.balanceText}>Total balance available in EVNT</span>
-                                <Icon iconType={'refresh'} className={styles.refreshIcon}/>
-                            </div>
+      <SwitchableContainer
+        switchableViews={switchableViews}
+        currentIndex={selectedIndex}
+        whiteBackground={false}
+        setCurrentIndex={onPaymentActionSwitch}
+      />
+    );
+  };
 
-                            <MenuItem
-                                classes={[styles.transactionHistory]}
-                                label={`Transaction History (${transactionCount})`}
-                                icon={(
-                                    <Icon className={styles.optionIcon} iconType={'activities'}/>
-                                )}
-                                onClick={() => setOpenMenu(menus.transactionHistory)}
-                            />
-                            <MenuItem
-                                classes={[styles.referrals]}
-                                label={`Referrals (${referralCount})`}
-                                icon={(
-                                    <Icon className={styles.optionIcon} iconType={'chat'}/>
-                                )}
-                                onClick={() => setOpenMenu(menus.referrals)}
-                            />
+  const renderConditionalWalletCards = () => {
+    if (paymentAction === PaymentAction.deposit) {
+      const referralText = (
+        <>
+          Invite your friends using your referral link and{' '}
+          <strong>get 50 EVNT token</strong> for each user who joined over your
+          link.
+        </>
+      );
 
-                            {renderSwitchableView()}
-                            {renderConditionalWalletCards()}
-                            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
-                            {renderWalletPaymentCard(PaymentProvider.crypto)}
-                            {renderWalletPaymentCard(PaymentProvider.paypal)}
-                            {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
-                        </>
-                    ),
-                    true
-                )}
+      return (
+        <WalletCard
+          title={'+50 EVNT Tokens: Invite your friends'}
+          subtitle={'50 EVNT tokens for inviting people'}
+          text={referralText}
+          buttonText={'Share with your friends'}
+          onClick={onReferralListClick}
+        >
+          <ReferralLinkCopyInputBox className={styles.referralLinkList} />
+        </WalletCard>
+      );
+    }
+  };
 
-                {walletContainerWrapper(
-                    isOpen(menus.transactionHistory),
-                    (
-                        <>
-                            {backButton()}
-                            Transaction History
-                        </>
-                    ),
-                    (
-                        <TwoColumnTable
-                            headings={['Latest transactions', 'EVNT']}
-                            rows={transactions.map(
-                                ({event, bet, direction, trx_timestamp, outcomeTokensBought, investmentAmount}) => {
-                                const tokenAmount = direction === 'PAYOUT' ? outcomeTokensBought : investmentAmount;
-                                return [
-                                    (<>
-                                        <span className={styles.primaryData}>{event.name}</span>
-                                        <span className={styles.secondaryData}>{bet.marketQuestion}</span>
-                                    </>),
-                                    (<>
-                                        <span className={styles[direction.toLowerCase()]}>{tokenAmount}</span>
-                                        <span className={styles.secondaryData}>{moment(trx_timestamp).format('DD.MM.YYYY')}</span>
-                                    </>),
-                                ]
-                            })}
-                            noResultMessage={'No transactions yet.'}
-                        />
-                    ),
-                )}
+  const renderWalletPaymentCard = paymentProvider => {
+    return (
+      <WalletPaymentCard
+        provider={paymentProvider}
+        action={paymentAction}
+        onClick={onPaymentCardClickCallback(paymentProvider)}
+      />
+    );
+  };
 
-                {walletContainerWrapper(
-                    isOpen(menus.referrals),
-                    (
-                        <>
-                            {backButton()}
-                            Referrals
-                        </>
-                    ),
-                    (
-                        <>
-                            <ReferralLinkCopyInputBox className={styles.referralLink} inputTheme={InputBoxTheme.copyToClipboardInputWhite} />
-                            <TwoColumnTable
-                                headings={['Referrals', 'Joined date']}
-                                rows={referrals.map(
-                                    ({username, name, date}) => {
-                                    return [
-                                        (<>
-                                            <span className={styles.primaryData}>{name}</span>
-                                            <span className={styles.secondaryData}>{username}</span>
-                                        </>),
-                                        (<>
-                                            <span className={styles.secondaryData}>{moment(date).format('DD.MM.YYYY')}</span>
-                                        </>),
-                                    ]
-                                })}
-                                noResultMessage={'No referrals yet.'}
-                            />
-                        </>
-                    ))}
+  const walletContainerWrapper = (
+    open,
+    heading,
+    contents,
+    isFirstPanel = false
+  ) => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !open && styles.panelHidden,
+          isFirstPanel && styles.firstPanel
+        )}
+      >
+        <h2 className={styles.walletHeading}>{heading}</h2>
+        <div className={styles.walletContents}>{contents}</div>
+      </div>
+    );
+  };
+
+  return (
+    <div
+      className={classNames(
+        styles.wallet,
+        styles.drawer,
+        !show && styles.drawerHidden
+      )}
+    >
+      <div className={styles.menuContainer}>
+        {walletContainerWrapper(
+          isOpen(menus.wallet),
+          'My Wallet',
+          <>
+            <div className={styles.walletBalance} role="button">
+              <span className={styles.balance}>
+                {formatToFixed(balance)}
+                <sup className={styles.currency}>EVNT</sup>
+              </span>
+              <span className={styles.balanceText}>
+                Total balance available in EVNT
+              </span>
+              <Icon iconType={'refresh'} className={styles.refreshIcon} />
             </div>
-            <Icon
-                iconType={'cross'}
-                onClick={closeDrawer}
-                className={styles.closeButton}
+
+            <MenuItem
+              classes={[styles.transactionHistory]}
+              label={`Transaction History (${transactionCount})`}
+              icon={
+                <Icon className={styles.optionIcon} iconType={'activities'} />
+              }
+              onClick={() => setOpenMenu(menus.transactionHistory)}
             />
-        </div>
-    );
-};
+            <MenuItem
+              classes={[styles.referrals]}
+              label={`Referrals (${referralCount})`}
+              icon={<Icon className={styles.optionIcon} iconType={'chat'} />}
+              onClick={() => setOpenMenu(menus.referrals)}
+            />
 
-const mapStateToProps = (state) => {
-    const referralCount    = _.size(state.authentication.referralList);
-    const transactionCount = _.size(state.transaction.transactions);
-    const transactions = _.map(
-        state.transaction.transactions,
-        (transaction) => {
-            const betId = _.get(transaction, 'bet');
-            const event = State.getEventByTrade(betId, state.event.events);
-            const bet   = State.getTradeByEvent(betId, event);
+            {renderSwitchableView()}
+            {renderConditionalWalletCards()}
+            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
+            {renderWalletPaymentCard(PaymentProvider.crypto)}
+            {renderWalletPaymentCard(PaymentProvider.paypal)}
+            {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
+          </>,
+          true
+        )}
 
-            return {
-                ...transaction,
-                bet,
+        {walletContainerWrapper(
+          isOpen(menus.transactionHistory),
+          <>
+            {backButton()}
+            Transaction History
+          </>,
+          <TwoColumnTable
+            headings={['Latest transactions', 'EVNT']}
+            rows={transactions.map(
+              ({
                 event,
-            };
-        },
-    );
+                bet,
+                direction,
+                trx_timestamp,
+                outcomeTokensBought,
+                investmentAmount,
+              }) => {
+                const tokenAmount =
+                  direction === 'PAYOUT'
+                    ? outcomeTokensBought
+                    : investmentAmount;
+                return [
+                  <>
+                    <span className={styles.primaryData}>{event.name}</span>
+                    <span className={styles.secondaryData}>
+                      {bet.marketQuestion}
+                    </span>
+                  </>,
+                  <>
+                    <span className={styles[direction.toLowerCase()]}>
+                      {tokenAmount}
+                    </span>
+                    <span className={styles.secondaryData}>
+                      {moment(trx_timestamp).format('DD.MM.YYYY')}
+                    </span>
+                  </>,
+                ];
+              }
+            )}
+            noResultMessage={'No transactions yet.'}
+          />
+        )}
 
-    return {
-        balance:   state.authentication.balance,
-        referralCount,
-        transactionCount,
-        transactions: _.orderBy(transactions, ['trx_timestamp'], ['desc']),
-        referrals: state.authentication.referralList,
-    };
+        {walletContainerWrapper(
+          isOpen(menus.referrals),
+          <>
+            {backButton()}
+            Referrals
+          </>,
+          <>
+            <ReferralLinkCopyInputBox
+              className={styles.referralLink}
+              inputTheme={InputBoxTheme.copyToClipboardInputWhite}
+            />
+            <TwoColumnTable
+              headings={['Referrals', 'Joined date']}
+              rows={referrals.map(({ username, name, date }) => {
+                return [
+                  <>
+                    <span className={styles.primaryData}>{name}</span>
+                    <span className={styles.secondaryData}>{username}</span>
+                  </>,
+                  <>
+                    <span className={styles.secondaryData}>
+                      {moment(date).format('DD.MM.YYYY')}
+                    </span>
+                  </>,
+                ];
+              })}
+              noResultMessage={'No referrals yet.'}
+            />
+          </>
+        )}
+      </div>
+      <Icon
+        iconType={'cross'}
+        onClick={closeDrawer}
+        className={styles.closeButton}
+      />
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = state => {
+  const referralCount = _.size(state.authentication.referralList);
+  const transactionCount = _.size(state.transaction.transactions);
+  const transactions = _.map(state.transaction.transactions, transaction => {
+    const betId = _.get(transaction, 'bet');
+    const event = State.getEventByTrade(betId, state.event.events);
+    const bet = State.getTradeByEvent(betId, event);
+
     return {
-        showPopup: (popupType) => {
-            dispatch(PopupActions.show({ popupType }));
-        },
+      ...transaction,
+      bet,
+      event,
     };
+  });
+
+  return {
+    balance: state.authentication.balance,
+    referralCount,
+    transactionCount,
+    transactions: _.orderBy(transactions, ['trx_timestamp'], ['desc']),
+    referrals: state.authentication.referralList,
+  };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Wallet);
+const mapDispatchToProps = dispatch => {
+  return {
+    showPopup: popupType => {
+      dispatch(PopupActions.show({ popupType }));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

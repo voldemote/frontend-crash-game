@@ -5,8 +5,15 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import ErrorHint from '../ErrorHint';
 
-const TokenNumberInput = ({ value, setValue, maxValue, errorText, className, ...props }) => {
-  const onChange = (event) => {
+const TokenNumberInput = ({
+  value,
+  setValue,
+  maxValue,
+  errorText,
+  className,
+  ...props
+}) => {
+  const onChange = event => {
     const value = _.get(event, 'target.value', 0);
     // @TODO: this needs refactoring imo, a validation function, a base form component that this could based upon or render and may be even refactor the parent forms to a lib like react-final-form or similar
     // remove leading zero(s) and cast to number
@@ -26,10 +33,20 @@ const TokenNumberInput = ({ value, setValue, maxValue, errorText, className, ...
   return (
     <>
       <div className={classNames(styles.tokenNumberInputContainer, className)}>
-        <Input className={styles.input} type={'number'} value={value} onChange={onChange} step={0.1} {...props} />
+        <Input
+          className={styles.input}
+          type={'number'}
+          value={value}
+          onChange={onChange}
+          step={0.1}
+          {...props}
+        />
         <span className={styles.eventTokenLabel}>EVNT</span>
       </div>
-      <ErrorHint className={styles.tokenNumberErrorHint} errorText={errorText} />
+      <ErrorHint
+        className={styles.tokenNumberErrorHint}
+        errorText={errorText}
+      />
     </>
   );
 };

@@ -1,6 +1,6 @@
 export default {
-    active:   'active',
-    canceled: 'canceled',
-    closed:   'closed',
-    resolved: 'resolved',
+  active: 'active',
+  canceled: 'canceled',
+  closed: 'closed',
+  resolved: 'resolved',
 };

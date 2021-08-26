@@ -1,20 +1,20 @@
-import { makeActionCreator } from "../../helper/Store";
+import { makeActionCreator } from '../../helper/Store';
 
 export const NotificationTypes = {
-    ADD_NOTIFICATION: "Notification/ADD_NOTIFICATION",
-    SET_UNREAD: "Notification/SET_UNREAD",
+  ADD_NOTIFICATION: 'Notification/ADD_NOTIFICATION',
+  SET_UNREAD: 'Notification/SET_UNREAD',
 };
 
 const addNotification = makeActionCreator(NotificationTypes.ADD_NOTIFICATION, {
-    eventId: null,
-    notification: null,
+  eventId: null,
+  notification: null,
 });
 
 const setUnread = makeActionCreator(NotificationTypes.SET_UNREAD, {
-    notification: null,
+  notification: null,
 });
 
 export const NotificationActions = {
-    addNotification,
-    setUnread,
+  addNotification,
+  setUnread,
 };

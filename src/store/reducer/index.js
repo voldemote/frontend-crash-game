@@ -14,18 +14,18 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 export default history =>
-    combineReducers({
-        alert: alertReducer,
-        authentication: authenticationReducer,
-        bet: betReducer,
-        event: eventReducer,
-        popup: popupReducer,
-        transaction: transactionReducer,
-        user: userReducer,
-        chat: chatReducer,
-        notification: notificationReducer,
-        websockets: websocketsReducer,
-        leaderboard: leaderboardReducer,
-        router: connectRouter(history),
-        general: generalReducer,
-    });
+  combineReducers({
+    alert: alertReducer,
+    authentication: authenticationReducer,
+    bet: betReducer,
+    event: eventReducer,
+    popup: popupReducer,
+    transaction: transactionReducer,
+    user: userReducer,
+    chat: chatReducer,
+    notification: notificationReducer,
+    websockets: websocketsReducer,
+    leaderboard: leaderboardReducer,
+    router: connectRouter(history),
+    general: generalReducer,
+  });

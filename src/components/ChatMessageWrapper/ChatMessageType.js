@@ -1,6 +1,6 @@
 export default {
-    chatMessage: 'chatMessage',
-    createBet:   'createBet',
-    placeBet:    'placeBet',
-    pulloutBet:  'pulloutBet',
+  chatMessage: 'chatMessage',
+  createBet: 'createBet',
+  placeBet: 'placeBet',
+  pulloutBet: 'pulloutBet',
 };

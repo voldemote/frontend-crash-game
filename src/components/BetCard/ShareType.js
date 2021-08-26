@@ -1,5 +1,5 @@
 export default {
-    twitter:  'twitter',
-    facebook: 'facebook',
-    whatsapp: 'whatsapp',
+  twitter: 'twitter',
+  facebook: 'facebook',
+  whatsapp: 'whatsapp',
 };

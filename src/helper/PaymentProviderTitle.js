@@ -1,19 +1,19 @@
 import PaymentProvider from '../constants/PaymentProvider';
 
-export const getPaymentProviderTitle = (paymentProvider) => {
-    switch (paymentProvider) {
-        case PaymentProvider.evntToken:
-            return 'EVNT';
-            
-        case PaymentProvider.crypto:
-            return 'Crypto';
+export const getPaymentProviderTitle = paymentProvider => {
+  switch (paymentProvider) {
+    case PaymentProvider.evntToken:
+      return 'EVNT';
 
-        case PaymentProvider.debitCreditCard:
-            return 'Debit-/Credit-Card';
+    case PaymentProvider.crypto:
+      return 'Crypto';
 
-        case PaymentProvider.paypal:
-            return 'PayPal';
-    }
+    case PaymentProvider.debitCreditCard:
+      return 'Debit-/Credit-Card';
 
-    return null;
+    case PaymentProvider.paypal:
+      return 'PayPal';
+  }
+
+  return null;
 };

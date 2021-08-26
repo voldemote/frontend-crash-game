@@ -1,4 +1,4 @@
 export default {
-    deposit:    'deposit',
-    withdrawal: 'withdrawal',
+  deposit: 'deposit',
+  withdrawal: 'withdrawal',
 };

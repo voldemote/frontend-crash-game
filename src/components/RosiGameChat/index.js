@@ -8,11 +8,11 @@ import styles from './RosiGameChat.module.scss';
 // ];
 
 const RosiGameChat = () => {
-    return (
-        <div className={styles.container}>
-            <Chat className={styles.chat} />
-        </div>
-    );
-}
+  return (
+    <div className={styles.container}>
+      <Chat className={styles.chat} />
+    </div>
+  );
+};
 
 export default RosiGameChat;

@@ -1,3 +1,3 @@
-export const generateReferralLink = (userId) => {
-    return `${window.location.origin.toString()}/?ref=${userId}`;
+export const generateReferralLink = userId => {
+  return `${window.location.origin.toString()}/?ref=${userId}`;
 };

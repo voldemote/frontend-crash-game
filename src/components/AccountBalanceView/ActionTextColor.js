@@ -1,4 +1,4 @@
 export default {
-    green: 'green',
-    red:   'red',
+  green: 'green',
+  red: 'red',
 };

@@ -1,5 +1,5 @@
 export default {
-    error:   'error',
-    info:    'info',
-    success: 'success',
+  error: 'error',
+  info: 'info',
+  success: 'success',
 };

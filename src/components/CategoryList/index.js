@@ -5,15 +5,15 @@ import styles from './styles.module.scss';
 import CategoryListItem from './CategoryListItem';
 
 function CategoryList({ categories }) {
-    return (
-        <>
-            <section className={styles.categoryList}>
-                {categories.map((item, index) => (
-                    <CategoryListItem key={index} categoryItem={item} />
-                ))}
-            </section>
-        </>
-    );
+  return (
+    <>
+      <section className={styles.categoryList}>
+        {categories.map((item, index) => (
+          <CategoryListItem key={index} categoryItem={item} />
+        ))}
+      </section>
+    </>
+  );
 }
 
 export default CategoryList;
