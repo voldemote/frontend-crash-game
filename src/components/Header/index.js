@@ -14,15 +14,32 @@ const Header = ({ events }) => {
     let [currentSlideIndex, setCurrentSlideIndex] = useState(0);
     const location = useLocation();
 
+    const renderContent = (event, eventIndex, index) => {
+        if (eventIndex != index || event.type != 'streamed') {
+            return (
+                <img src={event.previewImageUrl} className={styles.previewImage} />
+            )
+        } else {
+            return (
+                <TwitchEmbedVideo
+                    targetId={event._id}
+                    className={styles.twitchStream}
+                    video={event.streamUrl}
+                    muted={true}
+                />
+            )
+        }
+    }
+
     return (
         <div>
             <div className={styles.header}>
                 <CoverFlowCarousel onSlideChange={setCurrentSlideIndex}>
-                    {events.map((event, eventIndex) => {
+                    {events && events.map((event, eventIndex) => {
                         const startDate = moment(_.get(event, 'date'));
                         const endDate = moment(_.get(event, 'endDate'));
                         const currentDate = moment();
-                        const isLive = true; //currentDate.isBetween(startDate, endDate);
+                        const isLive = event.type === 'streamed'; //currentDate.isBetween(startDate, endDate);
 
                         return (
                             <div
@@ -30,19 +47,8 @@ const Header = ({ events }) => {
                                 className={styles.eventContainer}
                             >
                                 <div className={styles.headerOverlay}></div>
-                                {
-                                    eventIndex === currentSlideIndex &&
-                                        <TwitchEmbedVideo
-                                            targetId={event._id}
-                                            className={styles.twitchStream}
-                                            video={event.streamUrl}
-                                            muted={true}
-                                        />
-                                }
-
-                                {
-                                    eventIndex != currentSlideIndex && <img src={event.previewImageUrl} className={styles.previewImage} />
-                                }
+                                
+                                {renderContent(event, eventIndex, currentSlideIndex)}
                                 
                                 <div className={styles.headerWrapper}>
                                     <div

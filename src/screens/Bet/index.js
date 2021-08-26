@@ -34,6 +34,7 @@ import { BetActions } from 'store/actions/bet';
 import NavbarFooter from '../../components/NavbarFooter';
 import NavbarFooterAction from '../../components/NavbarFooterAction';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
+import { useIsMount } from 'components/hoc/useIsMount';
 
 const Bet = ({
     showPopup,
@@ -42,18 +43,25 @@ const Bet = ({
     openBets,
     authState,
     setSelectedBet,
+    events,
 }) => {
-    const history = useHistory();
-    const [swiper, setSwiper] = useState(null);
     const { eventId, betId } = useParams();
+    const history = useHistory();
+
+    const [swiper, setSwiper] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [betAction, setBetAction] = useState(0);
     const [activeBetId, setActiveBetId] = useState(betId || null);
     const [betViewIsOpen, setBetViewIsOpen] = useState(false);
     const [mobileCommentIsOpen, setMobileCommentIsOpen] = useState(false);
+    const [singleBet, setSingleBet] = useState(false);
+    const [event, setEvent] = useState(null);
+    const [relatedBets, setRelatedBets] = useState([]);
+
     const bottomScroll = useRef(null);
 
     const currentFromLocation = useBetPreviousLocation();
+    const isMount = useIsMount();
 
     const status = {
         active: 1,
@@ -61,11 +69,23 @@ const Bet = ({
         closed: 3,
     };
 
-    const event = useSelector(state =>
-        _.find(state.event.events, {
+    useEffect(() => {
+        const currentEvent = _.find(events, {
             _id: eventId,
-        })
-    );
+        });
+        const eventBets = [..._.get(currentEvent, 'bets', [])].sort(
+            (a, b) => status[a.status] - status[b.status]
+        );
+
+        setEvent(currentEvent);
+        setRelatedBets(eventBets);
+
+        if (eventBets.length === 1 && !singleBet) {
+            const betId = _.get(_.get(eventBets, '[0]'), '_id');
+            selectBet(betId);
+            setSingleBet(true);
+        }
+    }, []);
 
     const moveToSlide = index => {
         if (swiper) {
@@ -133,18 +153,12 @@ const Bet = ({
             .sort((a, b) => status[a.bet.status] - status[b.bet.status]);
     };
 
-    const getRelatedBets = () => {
-        return [..._.get(event, 'bets', [])].sort(
-            (a, b) => status[a.status] - status[b.status]
-        );
-    };
-
     const getRelatedBetSliderPages = (bets, size) => {
         return _.ceil(_.size(bets) / size);
     };
 
     const renderRelatedBetList = (popup = false) => {
-        return _.map(getRelatedBets(), (bet, index) => {
+        return _.map(relatedBets, (bet, index) => {
             return renderRelatedBetCard(bet, index, popup);
         });
     };
@@ -155,21 +169,24 @@ const Bet = ({
         });
     };
 
+    const selectBet = (betId) => {
+        // const eventId = _.get(event, '_id', null);
+
+        history.push(
+            Routes.getRouteWithParameters(Routes.bet, {
+                eventId,
+                betId,
+            })
+        );
+
+        setActiveBetId(betId);
+        setBetViewIsOpen(true);
+        setSelectedBet(null, betId);
+    }
+
     const onBetClick = (betId, popup) => {
         return () => {
-            const eventId = _.get(event, '_id', null);
-
-            history.push(
-                Routes.getRouteWithParameters(Routes.bet, {
-                    eventId,
-                    betId,
-                })
-            );
-
-            setActiveBetId(betId);
-            setBetViewIsOpen(true);
-            setSelectedBet(null, betId);
-
+            selectBet(betId);
             if (popup) {
                 showPopup(PopupTheme.tradeView, {});
             }
@@ -208,14 +225,6 @@ const Bet = ({
         return <div />;
     };
 
-    const renderRelatedBetSliders = relatedBets => {
-        const size = getRelatedBetSliderPages(relatedBets, 3);
-
-        return _.map(_.range(0, size), (sliderPage, index) =>
-            renderRelatedBetSlider(sliderPage, index, relatedBets)
-        );
-    };
-
     const renderMyBetSliders = myEventTrades => {
         const size = getRelatedBetSliderPages(myEventTrades, 2);
 
@@ -246,7 +255,15 @@ const Bet = ({
         );
     };
 
-    const renderRelatedBetSlider = (pageIndex, index, relatedBets) => {
+    const renderRelatedBetSliders = () => {
+        const size = getRelatedBetSliderPages(relatedBets, 3);
+
+        return _.map(_.range(0, size), (sliderPage, index) =>
+            renderRelatedBetSlider(sliderPage, index)
+        );
+    };
+
+    const renderRelatedBetSlider = (pageIndex, index) => {
         const indexes = [];
         const listLength = relatedBets.length > 3 ? 3 : relatedBets.length;
 
@@ -333,7 +350,6 @@ const Bet = ({
 
     const renderContent = () => {
         if (betAction === 0) {
-            const relatedBets = getRelatedBets();
             return (
                 <div className={styles.relatedBets}>
                     <Carousel
@@ -349,7 +365,7 @@ const Bet = ({
                         showStatus={false}
                         interval={1e11}
                     >
-                        {renderRelatedBetSliders(relatedBets)}
+                        {renderRelatedBetSliders()}
                     </Carousel>
                 </div>
             );
@@ -475,7 +491,7 @@ const Bet = ({
                 <div className={styles.headlineContainer}>
                     <div>
                         <Link
-                            to={currentFromLocation.pathname}
+                            to={currentFromLocation?.pathname}
                             className={styles.arrowBack}
                         ></Link>
                         <div className={styles.headline}>
@@ -549,6 +565,7 @@ const mapStateToProps = state => {
         rawOutcomes: state.bet.outcomes,
         transactions: state.transaction.transactions,
         openBets: state.bet.openBets,
+        events: state.event.events,
     };
 };
 

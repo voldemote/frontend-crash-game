@@ -139,20 +139,6 @@ const Navbar = ({
         return authState === LOGGED_IN;
     };
 
-    const renderJoinButton = () => {
-        return (
-            <div className={style.navbarItems}>
-                <Button
-                    className={style.signUpButton}
-                    withoutBackground={true}
-                    onClick={goToJoinPage}
-                >
-                    Join now
-                </Button>
-            </div>
-        );
-    };
-
     const renderNavButtons = () => {
         const leaderboardBtn = (
             <div
@@ -223,14 +209,35 @@ const Navbar = ({
             </div>
         );
 
-        return (
+        const joinBtn = (
             <div className={style.navbarItems}>
-                {leaderboardBtn}
-                {walletBtn}
-                {notificationsBtn}
-                {profileBtn}
+                <Button
+                    className={style.signUpButton}
+                    withoutBackground={true}
+                    onClick={goToJoinPage}
+                >
+                    Join now
+                </Button>
             </div>
         );
+
+        if (isLoggedIn()) {
+            return (
+                <div className={style.navbarItems}>
+                    {leaderboardBtn}
+                    {walletBtn}
+                    {notificationsBtn}
+                    {profileBtn}
+                </div>
+            );
+        } else {
+            return (
+                <div className={style.navbarItems}>
+                    {leaderboardBtn}
+                    {joinBtn}
+                </div>
+            )
+        }
     };
 
     const renderLeaderboardInfo = (text, number) => {
@@ -355,15 +362,14 @@ const Navbar = ({
                 <div className={style.linkWrapper}>
                     {renderNavbarLink(`/live-events`, 'Live Events')}
                     {renderNavbarLink(`/events`, 'Events')}
-                    {renderNavbarLink(Routes.rosiGame, 'Rosi Game')}
+                    {renderNavbarLink(Routes.rosiGame, 'Games')}
                 </div>
             </div>
 
-            {!isLoggedIn() && renderJoinButton()}
+            {renderNavButtons()}
+            {renderLeaderboardDrawer()}
             {isLoggedIn() && (
                 <>
-                    {renderNavButtons()}
-                    {renderLeaderboardDrawer()}
                     {renderNotificationsDrawer()}
                     {renderMenuDrawer()}
                     {renderWalletDrawer()}

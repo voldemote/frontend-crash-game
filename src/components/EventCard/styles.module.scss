@@ -3,6 +3,10 @@
 .eventCardContainer {
     padding-right: 20px;
 
+    @media (max-width: $screen-xs) {
+        padding: 0;
+    }
+
     .eventCard {
         width: 300px;
         border-radius: 6px;
@@ -18,6 +22,12 @@
         user-select: none;
         cursor: pointer;
         overflow: hidden;
+
+        @media (max-width: $screen-xs) {
+            width: 100%;
+            margin: 0 0 15px;
+            padding: 10px;
+        }
 
         .eventCardBackground,
         .eventCardBackgroundBlur {

@@ -25,9 +25,11 @@ const CoverFlowCarousel = ({
 
         onSlideChange(currentSlideIndex);
 
+        setProgress(0);
         window.clearTimeout(nextSlideTimer);
         window.clearInterval(loader);
         nextSlideTimer = null;
+        loader = null;
         
         if (slideDurationSeconds > 0 && ref.current) {
             nextSlideTimer = window.setTimeout(() => {
@@ -36,22 +38,13 @@ const CoverFlowCarousel = ({
             }, slideDurationSeconds * 1_000);
 
             loader = setInterval(() => {
-              setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 1));
+                ref.current &&
+                    setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 1));
             }, 100);
         }
 
         return () => (ref.current = false);
     }, [currentSlideIndex]);
-
-    // useEffect(() => {
-    //   const timer = setInterval(() => {
-    //     setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-    //   }, slideDurationSeconds * 1_000);
-  
-    //   return () => {
-    //     clearInterval(timer);
-    //   };
-    // }, []);
 
     const getPreviousIndex = index =>
         index === 0 ? numOfPages - 1 : index - 1;
@@ -90,7 +83,7 @@ const CoverFlowCarousel = ({
                 }
             >
                 <Icon iconType={'arrowLeft'} />
-                {/* <ProgressCircle percentage={progress} /> */}
+                <ProgressCircle percentage={progress} />
             </button>
         </div>
     );

@@ -15,6 +15,7 @@ const EventCard = ({
     viewers,
     tags,
     eventEnd,
+    eventCardClass,
 }) => {
     const getEventCardStyle = () => {
         return {
@@ -23,7 +24,7 @@ const EventCard = ({
     };
     return (
         <div className={styles.eventCardContainer} onClick={onClick}>
-            <div className={styles.eventCard}>
+            <div className={classNames(styles.eventCard, eventCardClass)}>
                 <div
                     className={styles.eventCardBackgroundBlur}
                     style={getEventCardStyle()}
