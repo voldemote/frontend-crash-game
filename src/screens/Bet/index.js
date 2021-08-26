@@ -51,6 +51,7 @@ const Bet = ({
   const [swiper, setSwiper] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [betAction, setBetAction] = useState(0);
+  //test format
   const [activeBetId, setActiveBetId] = useState(betId || null);
   const [betViewIsOpen, setBetViewIsOpen] = useState(false);
   const [mobileCommentIsOpen, setMobileCommentIsOpen] = useState(false);
