@@ -1,4 +1,4 @@
 export default {
-    fillRed: 'fillRed',
-    fillGray: 'fillGray',
+  fillRed: 'fillRed',
+  fillGray: 'fillGray',
 };

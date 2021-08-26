@@ -5,51 +5,51 @@ import style from './styles.module.scss';
 import classNames from 'classnames';
 
 const NavbarFooterAction = ({
-    route,
-    text,
-    iconType,
-    className = null,
-    onClick = null,
+  route,
+  text,
+  iconType,
+  className = null,
+  onClick = null,
 }) => {
-    const renderNavbarLink = () => {
-        return (
-            <NavLink
-                exact={route === '/'}
-                to={route}
-                className={classNames(style.navbarItem, className)}
-                activeClassName={style.navbarItemActive}
-            >
-                <div className={style.navbarLink}>
-                    <Icon iconType={iconType} iconTheme={IconTheme.black} />
-                    {text}
-                </div>
-            </NavLink>
-        );
-    };
+  const renderNavbarLink = () => {
+    return (
+      <NavLink
+        exact={route === '/'}
+        to={route}
+        className={classNames(style.navbarItem, className)}
+        activeClassName={style.navbarItemActive}
+      >
+        <div className={style.navbarLink}>
+          <Icon iconType={iconType} iconTheme={IconTheme.black} />
+          {text}
+        </div>
+      </NavLink>
+    );
+  };
 
-    const renderNavbarAction = () => {
-        return (
-            <div
-                className={classNames(
-                    style.navbarItem,
-                    style.navbarItemAction,
-                    className
-                )}
-                onClick={onClick}
-            >
-                <div className={style.navbarLink}>
-                    <Icon iconType={iconType} iconTheme={IconTheme.black} />
-                    {text}
-                </div>
-            </div>
-        );
-    };
+  const renderNavbarAction = () => {
+    return (
+      <div
+        className={classNames(
+          style.navbarItem,
+          style.navbarItemAction,
+          className
+        )}
+        onClick={onClick}
+      >
+        <div className={style.navbarLink}>
+          <Icon iconType={iconType} iconTheme={IconTheme.black} />
+          {text}
+        </div>
+      </div>
+    );
+  };
 
-    const isEventAction = () => {
-        return onClick != null && !route;
-    };
+  const isEventAction = () => {
+    return onClick != null && !route;
+  };
 
-    return <>{isEventAction() ? renderNavbarAction() : renderNavbarLink()}</>;
+  return <>{isEventAction() ? renderNavbarAction() : renderNavbarLink()}</>;
 };
 
 export default NavbarFooterAction;

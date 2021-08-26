@@ -18,122 +18,124 @@ import Routes from 'constants/Routes';
 import { LOGGED_IN } from 'constants/AuthState';
 
 const Home = ({ tags, openDrawer, user, fetchTags }) => {
-    const isMount = useIsMount();
+  const isMount = useIsMount();
 
-    useEffect(() => {
-        if (isMount) {
-            fetchTags();
-        }
-    }, []);
+  useEffect(() => {
+    if (isMount) {
+      fetchTags();
+    }
+  }, []);
 
-    const renderEventCreationButton = () => {
-        return <FixedEventCreationIconButton />;
-    };
+  const renderEventCreationButton = () => {
+    return <FixedEventCreationIconButton />;
+  };
 
-    const onSeeLeaderboard = () => {
-        window.scrollTo(0, 0);
-        openDrawer();
-    };
+  const onSeeLeaderboard = () => {
+    window.scrollTo(0, 0);
+    openDrawer();
+  };
 
-    const renderTags = () => {
-        return (
-            <div className={styles.tags}>
-                {tags &&
-                    tags.map((tag, index) => {
-                        return <div key={index} className={styles.tag}>#{tag}</div>;
-                    })}
-            </div>
-        );
-    };
-
-    const renderRosiBanner = () => {
-        return (
-            <Link to={Routes.rosiGame}>
-                <div className={styles.banner}>
-                    <div className={styles.title}>
-                        Play the
-                        <br />
-                        Rosi Game
-                    </div>
-                </div>
-            </Link>
-        );
-    };
-
-    const renderCategoriesAndLeaderboard = () => {
-        return (
-            <div className={styles.bottomWrapper}>
-                <div className={styles.categories}>
-                    <div className={styles.headline}>Discover Categories</div>
-                    <CategoryList categories={EVENT_CATEGORIES} />
-                    {renderTags()}
-                </div>
-                <div className={styles.leaderboard}>
-                    <div className={styles.headline}>
-                        Community Leaderboard
-                        {user.authState == LOGGED_IN && (
-                            <div
-                                className={styles.leaderboardLink}
-                                onClick={onSeeLeaderboard}
-                            >
-                                See Leaderboard
-                            </div>
-                        )}
-                    </div>
-                    <Leaderboard fetch={true} small={true} />
-                </div>
-            </div>
-        );
-    };
-
-    const renderFooter = () => {
-        return (
-            <div className={styles.footer}>
-                <img src={LogoDemo} width={150} alt={'Wallfair'} />
-                <div className={styles.links}>
-                    <span>Copyright 2021 Wallfair</span>
-                    <Link to={'/privacy-policy'}>Imprint</Link>
-                    <Link to={'/terms-and-conditions'}>
-                        {'Terms & Conditions'}
-                    </Link>
-                </div>
-            </div>
-        );
-    };
-
+  const renderTags = () => {
     return (
-        <BaseContainerWithNavbar>
-            <Header />
-            <div className={styles.containerWrapper}>
-                <div className={styles.container}>
-                    <EventsCarouselContainer eventType="streamed" />
-                    <EventsCarouselContainer eventType="non-streamed" />
-                    {renderRosiBanner()}
-                    {renderCategoriesAndLeaderboard()}
-                    {renderFooter()}
-                </div>
-            </div>
-            {/* {renderEventCreationButton()} -> TODO: Check if needed */}
-        </BaseContainerWithNavbar>
+      <div className={styles.tags}>
+        {tags &&
+          tags.map((tag, index) => {
+            return (
+              <div key={index} className={styles.tag}>
+                #{tag}
+              </div>
+            );
+          })}
+      </div>
     );
+  };
+
+  const renderRosiBanner = () => {
+    return (
+      <Link to={Routes.rosiGame}>
+        <div className={styles.banner}>
+          <div className={styles.title}>
+            Play the
+            <br />
+            Rosi Game
+          </div>
+        </div>
+      </Link>
+    );
+  };
+
+  const renderCategoriesAndLeaderboard = () => {
+    return (
+      <div className={styles.bottomWrapper}>
+        <div className={styles.categories}>
+          <div className={styles.headline}>Discover Categories</div>
+          <CategoryList categories={EVENT_CATEGORIES} />
+          {renderTags()}
+        </div>
+        <div className={styles.leaderboard}>
+          <div className={styles.headline}>
+            Community Leaderboard
+            {user.authState == LOGGED_IN && (
+              <div
+                className={styles.leaderboardLink}
+                onClick={onSeeLeaderboard}
+              >
+                See Leaderboard
+              </div>
+            )}
+          </div>
+          <Leaderboard fetch={true} small={true} />
+        </div>
+      </div>
+    );
+  };
+
+  const renderFooter = () => {
+    return (
+      <div className={styles.footer}>
+        <img src={LogoDemo} width={150} alt={'Wallfair'} />
+        <div className={styles.links}>
+          <span>Copyright 2021 Wallfair</span>
+          <Link to={'/privacy-policy'}>Imprint</Link>
+          <Link to={'/terms-and-conditions'}>{'Terms & Conditions'}</Link>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <BaseContainerWithNavbar>
+      <Header />
+      <div className={styles.containerWrapper}>
+        <div className={styles.container}>
+          <EventsCarouselContainer eventType="streamed" />
+          <EventsCarouselContainer eventType="non-streamed" />
+          {renderRosiBanner()}
+          {renderCategoriesAndLeaderboard()}
+          {renderFooter()}
+        </div>
+      </div>
+      {/* {renderEventCreationButton()} -> TODO: Check if needed */}
+    </BaseContainerWithNavbar>
+  );
 };
 
 const mapStateToProps = state => {
-    return {
-        tags: state.event.tags,
-        user: state.authentication,
-    };
+  return {
+    tags: state.event.tags,
+    user: state.authentication,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        openDrawer: () => {
-            dispatch(LeaderboardActions.handleDrawer({ open: true }));
-        },
-        fetchTags: () => {
-            dispatch(EventActions.fetchTags());
-        },
-    };
+  return {
+    openDrawer: () => {
+      dispatch(LeaderboardActions.handleDrawer({ open: true }));
+    },
+    fetchTags: () => {
+      dispatch(EventActions.fetchTags());
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

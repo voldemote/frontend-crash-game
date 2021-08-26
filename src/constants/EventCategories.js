@@ -10,73 +10,73 @@ import MinecraftImage from '../data/images/Minecraft-144x192.jpeg';
 import AllImage from '../data/images/wallfair-all-category.png';
 
 export const EVENT_CATEGORIES = [
-    {
-        value: 'all',
-        image: AllImageIcon,
-        isActive: true,
-        type: 'icon',
-    },
-    {
-        value: 'sports',
-        image: SportsImageIcon,
-        isActive: false,
-        type: 'icon',
-    },
-    {
-        value: 'celebrities',
-        image: CelebritiesImageIcon,
-        isActive: false,
-        type: 'icon',
-    },
-    {
-        value: 'politics',
-        image: PoliticsImageIcon,
-        isActive: false,
-        type: 'icon',
-    },
-    {
-        value: 'crypto',
-        image: CryptoImageIcon,
-        isActive: false,
-        type: 'icon',
-    },
-    // {
-    //     value: 'other',
-    //     image: OtherImage,
-    //     isActive: false,
-    //     type: 'icon',
-    // },
+  {
+    value: 'all',
+    image: AllImageIcon,
+    isActive: true,
+    type: 'icon',
+  },
+  {
+    value: 'sports',
+    image: SportsImageIcon,
+    isActive: false,
+    type: 'icon',
+  },
+  {
+    value: 'celebrities',
+    image: CelebritiesImageIcon,
+    isActive: false,
+    type: 'icon',
+  },
+  {
+    value: 'politics',
+    image: PoliticsImageIcon,
+    isActive: false,
+    type: 'icon',
+  },
+  {
+    value: 'crypto',
+    image: CryptoImageIcon,
+    isActive: false,
+    type: 'icon',
+  },
+  // {
+  //     value: 'other',
+  //     image: OtherImage,
+  //     isActive: false,
+  //     type: 'icon',
+  // },
 ];
 
 export const LIVE_EVENTS_CATEGORIES = [
-    {
-        value: 'all',
-        image: AllImage,
-        isActive: true,
-        type: 'image',
-    },
-    {
-        value: 'streamed-esports',
-        image: FifaImage,
-        isActive: false,
-        type: 'image',
-    },
-    {
-        value: 'streamed-shooter',
-        image: CoDImage,
-        isActive: false,
-        type: 'image',
-    },
-    {
-        value: 'streamed-mmorpg',
-        image: LoLImage,
-        isActive: false,
-        type: 'image',
-    },
-    {
-        value: 'streamed-other',
-        image: MinecraftImage,
-        isActive: false,
-        type: 'image',
-    },
+  {
+    value: 'all',
+    image: AllImage,
+    isActive: true,
+    type: 'image',
+  },
+  {
+    value: 'streamed-esports',
+    image: FifaImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    value: 'streamed-shooter',
+    image: CoDImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    value: 'streamed-mmorpg',
+    image: LoLImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    value: 'streamed-other',
+    image: MinecraftImage,
+    isActive: false,
+    type: 'image',
+  },
 ];

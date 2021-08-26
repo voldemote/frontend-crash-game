@@ -1,14 +1,14 @@
 export const makeActionCreator = (type, props = {}) => {
-    const action = { type, ...props };
+  const action = { type, ...props };
 
-    return (args) => {
-        if (args) {
-            return {
-                ...action,
-                ...args,
-            };
-        }
+  return args => {
+    if (args) {
+      return {
+        ...action,
+        ...args,
+      };
+    }
 
-        return action;
-    };
+    return action;
+  };
 };

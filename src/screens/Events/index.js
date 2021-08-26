@@ -5,17 +5,17 @@ import EventsContent from 'components/Events/EventsContent';
 import { EVENT_CATEGORIES } from '../../constants/EventCategories';
 
 const Events = () => {
-    const [categories, setCategories] = useState(EVENT_CATEGORIES);
+  const [categories, setCategories] = useState(EVENT_CATEGORIES);
 
-    return (
-        <BaseContainerWithNavbar withPaddingTop={true}>
-            <EventsContent
-                eventType="non-streamed"
-                categories={categories}
-                setCategories={setCategories}
-            />
-        </BaseContainerWithNavbar>
-    );
+  return (
+    <BaseContainerWithNavbar withPaddingTop={true}>
+      <EventsContent
+        eventType="non-streamed"
+        categories={categories}
+        setCategories={setCategories}
+      />
+    </BaseContainerWithNavbar>
+  );
 };
 
 export default Events;
