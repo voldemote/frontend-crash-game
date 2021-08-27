@@ -13,7 +13,7 @@ export default function Chart({ data }) {
     if (chartEl.current) {
       const ctx = chartEl.current.getContext('2d');
 
-      chartInstance = new ChartCtr(ctx, chartOptions('line'));
+      chartInstance = new ChartCtr(ctx, chartOptions('line', data));
     }
   }, []);
 
