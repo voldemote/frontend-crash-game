@@ -3,24 +3,13 @@ import SwitchableContainer from '../../components/SwitchableContainer';
 import SwitchableHelper from '../../helper/SwitchableHelper';
 import { useState } from 'react';
 import _ from 'lodash';
-import BetSummaryContainer from '../../components/BetSummaryContainer';
-import BetSummaryHelper from '../../helper/BetSummary';
 import moment from 'moment';
-import React from 'react';
 import { connect } from 'react-redux';
-import { BetActions } from '../../store/actions/bet';
-import PopupTheme from '../../components/Popup/PopupTheme';
-import { PopupActions } from '../../store/actions/popup';
-import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import HighlightType from '../../components/Highlight/HighlightType';
-import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
-import classNames from 'classnames';
-import StateBadge from '../StateBadge';
 import MyTradesList from '../MyTradesList';
 
-const MyTrades = ({openBets, transactions, setSelectedBet, showPopup}) => {
+const MyTrades = ({openBets, transactions}) => {
     const [switchIndex, setSwitchIndex] = useState(0);
 
     const renderSwitchableView = () => {
@@ -70,6 +59,7 @@ const getTrade = (betId, events) => {
     const bet = State.getTradeByEvent(betId, event);
 
     return {
+        betId,
         imageUrl: event.previewImageUrl,
         marketQuestion: bet.marketQuestion,
         endDate: moment(_.get(bet, 'endDate', new Date())).format('DD.MM.YYYY'),
@@ -114,15 +104,4 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-      setSelectedBet: (eventId, betId) => {
-        dispatch(BetActions.selectBet({ eventId, betId }));
-      },
-      showPopup: (popupType, options = null) => {
-        dispatch(PopupActions.show({ popupType, options }));
-      },
-    };
-  };
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyTrades);
+export default connect(mapStateToProps, null)(MyTrades);

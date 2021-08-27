@@ -1,7 +1,6 @@
 import styles from './styles.module.scss';
 import _ from 'lodash';
 import StateBadge from '../StateBadge';
-import moment from 'moment';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
 

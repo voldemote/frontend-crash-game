@@ -31,7 +31,6 @@ const MainMenu = ({
   updateUser,
   setOpenDrawer,
   setEditVisible,
-  showMyTradesCallback,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -71,7 +70,6 @@ const MainMenu = ({
 
   const onMyTradesClick = () => {
     setMyTradesVisible(!myTradesVisible);
-    // showMyTradesCallback(true);
   }
 
   const handleName = e => {
