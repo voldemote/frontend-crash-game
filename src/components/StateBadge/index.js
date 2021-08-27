@@ -3,7 +3,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const StateBadge = ({ state, withoutBackground = false }) => {
+const StateBadge = ({ state, withoutBackground = false, withoutText = false, className }) => {
   const getStateText = () => {
     return _.capitalize(state);
   };
@@ -13,11 +13,12 @@ const StateBadge = ({ state, withoutBackground = false }) => {
       className={classNames(
         styles.stateBadge,
         styles[state],
-        withoutBackground ? styles.withoutBackground : null
+        withoutBackground ? styles.withoutBackground : null,
+        className
       )}
     >
       <span></span>
-      {getStateText()}
+      {!withoutText && getStateText()}
     </span>
   );
 };

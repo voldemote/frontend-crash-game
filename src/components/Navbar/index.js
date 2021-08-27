@@ -307,7 +307,7 @@ const Navbar = ({
       <MainMenu
         opened={isOpen(drawers.profile)}
         closeMobileMenu={closeDrawers}
-        sellTransactions={sellTransactions}
+        showMyTradesCallback={closeDrawers}
       />
     );
   };
@@ -338,6 +338,7 @@ const Navbar = ({
           {renderNavbarLink(`/live-events`, 'Live Events')}
           {renderNavbarLink(`/events`, 'Events')}
           {renderNavbarLink(Routes.rosiGame, 'Games')}
+          {renderNavbarLink(Routes.betOverview, 'Trades')}
         </div>
       </div>
 

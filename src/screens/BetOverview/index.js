@@ -181,7 +181,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     <BaseContainerWithNavbar withPaddingTop={true} contentPadding={true}>
       {renderSwitchableView()}
       <div className={styles.contentContainer}>{renderContent()}</div>
-      <EventsCarouselContainer />
+      {/* <EventsCarouselContainer /> */}
     </BaseContainerWithNavbar>
   );
 };
