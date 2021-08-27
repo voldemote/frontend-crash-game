@@ -3,10 +3,12 @@
 
 .switchableViewContainer {
     padding: 0 30px;
+    color: $colorWhite;
 }
 
 .myTrades {
     width: 100%;
     color: $colorWhite;
+    overflow-y: auto;
 }
 

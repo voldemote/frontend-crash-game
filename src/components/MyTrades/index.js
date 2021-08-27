@@ -47,10 +47,12 @@ const MyTrades = ({openBets, transactions}) => {
     };
 
     return (
-        <div className={styles.myTrades}>
+        <>
             {renderSwitchableView()}
-            {renderContent()}
-        </div>
+            <div className={styles.myTrades}>
+                {renderContent()}
+            </div>
+        </>
     );
 };
 
