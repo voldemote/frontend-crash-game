@@ -149,7 +149,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
       >
         <img src={medalGold} alt="medal" className={style.medal} />
-        <p className={style.rankingText}># {user.rank}</p>
+        <p className={style.rankingText}>{isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}</p>
       </div>
     );
 
@@ -266,17 +266,23 @@ const Navbar = ({
             <br />
             Leaderboard
           </p>
-          <div className={style.leaderboardHeadingRank}>
-            <div className={style.leaderboardHeadingRankText}>MY RANK</div>
-            <div className={style.leaderboardHeadingRankValue}>
-              #{user.rank}
+          {
+            isLoggedIn() &&
+            <div className={style.leaderboardHeadingRank}>
+              <div className={style.leaderboardHeadingRankText}>MY RANK</div>
+              <div className={style.leaderboardHeadingRankValue}>
+                #{user.rank}
+              </div>
             </div>
+          }
+        </div>
+        {
+          isLoggedIn() &&
+          <div className={style.leaderboardInfo}>
+            {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
+            {renderLeaderboardInfo('MISSING TO NEXT RANK', user.toNextRank)}
           </div>
-        </div>
-        <div className={style.leaderboardInfo}>
-          {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
-          {renderLeaderboardInfo('MISSING TO NEXT RANK', user.toNextRank)}
-        </div>
+        }
         <Leaderboard
           fetch={openDrawer === drawers.leaderboard}
           setMissingAmount={setMisingWinnerAmount}
