@@ -4,6 +4,8 @@ import BetHistory from 'components/BetHistory';
 import Chat from 'components/Chat';
 import styles from './styles.module.scss';
 
+const rosiGameEvent = { _id: 'CASINO_ROSI' };
+
 const RosiGame = () => {
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -12,6 +14,7 @@ const RosiGame = () => {
           <div className={styles.animation}>Bet Animation</div>
           <div className={styles.chatContainer}>
             <Chat
+              event={rosiGameEvent}
               className={styles.chat}
               inputClassName={styles.chatInput}
               messagesClassName={styles.messagesContainer}
