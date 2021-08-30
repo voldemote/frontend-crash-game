@@ -32,6 +32,17 @@
         user-select:         none;
         margin-right:        24px;
 
+        @media (max-width: $screen-md) {
+            width: 100%;
+            margin: 0;
+            border-bottom: 1px solid $colorWhite;
+            border-bottom: 1px solid rgba(255, 255, 255, .3);
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            padding: 10px 5px;
+            font-size: 14px;
+        }
+
         &.underlineInactive
         {
             &:not(.selected)
@@ -91,10 +102,18 @@
                 opacity: 0.48;
                 background-color: #636276;
                 border-radius: 16px;
-                font-size: 11px;
-                line-height: 11px;
-                margin: 3px 0 2px 11px;
+                font-size: 10px;
+                line-height: 14px;
+                margin: 3px 0 2px 5px;
                 transition: opacity 0.2s ease-in-out;
+
+                @media (max-width: $screen-md) {
+                    width: 14px;
+                    height: 14px;
+                    font-size: 8px;
+                    line-height: 10px;
+                    margin: 2px 0 0px 5px;
+                }
             }
         }
 
