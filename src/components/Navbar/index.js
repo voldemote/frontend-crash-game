@@ -23,6 +23,7 @@ import { matchPath } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { GeneralActions } from '../../store/actions/general';
 import { useSelector } from 'react-redux';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const Navbar = ({
   user,
@@ -176,7 +177,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.wallet)}
       >
         <Icon iconType={'wallet'} />
-        {getBalance()} EVNT
+        {getBalance()} {TOKEN_NAME}
       </div>
     );
 
@@ -239,7 +240,7 @@ const Navbar = ({
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
           {number}
-          <span className={style.leaderboardInfoItemToken}> EVNT</span>
+          <span className={style.leaderboardInfoItemToken}> {TOKEN_NAME}</span>
         </div>
       </div>
     );

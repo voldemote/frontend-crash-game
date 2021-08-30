@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import ActionTextColor from './ActionTextColor';
 import SelectionHelper from '../../helper/SelectionHelper';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const AccountBalance = ({
   className,
@@ -33,7 +34,7 @@ const AccountBalance = ({
     <div className={classNames(styles.accountBalance, className)}>
       <div>
         {formatToFixed(balance)}
-        <sup>EVNT</sup>
+        <sup>{TOKEN_NAME}</sup>
       </div>
       <div className={styles.infoContainer}>
         <small>available</small>

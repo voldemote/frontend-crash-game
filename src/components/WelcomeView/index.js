@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Button from '../Button';
 import HighlightType from '../Highlight/HighlightType';
 import { PopupActions } from '../../store/actions/popup';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const WelcomeView = ({ closed, user, hidePopup }) => {
   const renderHeadline = () => {
@@ -21,14 +22,14 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
     return (
       <div className={styles.welcomeTextContainer}>
         <span className={styles.welcomeTextHeadline}>
-          1.000 EVNT
+          1.000 {TOKEN_NAME}
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
         <span className={styles.welcomeTextText}>
           Free for full Wallfair experience!
         </span>
         <span className={styles.welcomeTextText}>
-          Refer a friend and get additional 50 EVNT.
+          Refer a friend and get additional 50 {TOKEN_NAME}.
         </span>
       </div>
     );

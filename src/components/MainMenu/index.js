@@ -15,6 +15,7 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions } from 'store/actions/general';
 import { useSelector } from 'react-redux';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const MainMenu = ({
   opened,
@@ -254,7 +255,7 @@ const MainMenu = ({
             >
               <p className={styles.statItemHeading}>
                 my wallet
-                <br /> (in evnt)
+                <br /> (in {TOKEN_NAME})
               </p>
               <div className={styles.statItemContent}>
                 <p className={styles.statItemValue}>{formatToFixed(balance)}</p>
@@ -309,21 +310,21 @@ const MainMenu = ({
                     <p className={styles.overallFundsTotal}>
                       {formatToFixed(overallFundsTotal)}
                     </p>
-                    <p className={styles.overallFundsTitle}>EVNT</p>
+                    <p className={styles.overallFundsTitle}>{TOKEN_NAME}</p>
                   </div>
                 </div>
               </div>
               <div className={styles.profileBalanceItem}>
-                <div className={styles.availableEvnts}>
-                  <div className={styles.availableEvntsHeadline}>
-                    <div className={styles.availableEvntsDot} />
-                    Available evnts
+                <div className={styles.availableWfairs}>
+                  <div className={styles.availableWfairsHeadline}>
+                    <div className={styles.availableWfairsDot} />
+                    Available wfairs
                   </div>
-                  <div className={styles.availableEvntsAmount}>
-                    <p className={styles.availableEvntsTotal}>
+                  <div className={styles.availableWfairsAmount}>
+                    <p className={styles.availableWfairsTotal}>
                       {formatToFixed(balance)}
                     </p>
-                    <p className={styles.availableEvntsTitle}>EVNT</p>
+                    <p className={styles.availableWfairsTitle}>{TOKEN_NAME}</p>
                   </div>
                 </div>
               </div>
@@ -337,7 +338,7 @@ const MainMenu = ({
                     <p className={styles.liquidFundsTotal}>
                       {formatToFixed(balance)}
                     </p>
-                    <p className={styles.liquidFundsTitle}>EVNT</p>
+                    <p className={styles.liquidFundsTitle}>{TOKEN_NAME}</p>
                   </div>
                 </div>
               </div>

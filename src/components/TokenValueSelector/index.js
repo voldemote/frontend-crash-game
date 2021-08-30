@@ -4,6 +4,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const TokenValueSelector = ({
   className,
@@ -41,7 +42,7 @@ const TokenValueSelector = ({
         key={index}
       >
         <span className={styles.value}>{valueName}</span>
-        <span className={styles.label}>EVNT</span>
+        <span className={styles.label}>{TOKEN_NAME}</span>
       </div>
     );
   };

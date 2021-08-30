@@ -23,6 +23,7 @@ import { useState } from 'react';
 import ReferralLinkCopyInputBox from '../../components/ReferralLinkCopyInputBox';
 import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const Wallet = ({
   balance,
@@ -51,7 +52,7 @@ const Wallet = ({
       const referralText = (
         <>
           Invite your friends using your referral link and{' '}
-          <strong>get 50 EVNT token</strong> for each user who joined over your
+          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined over your
           link.
         </>
       );
@@ -59,8 +60,8 @@ const Wallet = ({
       return (
         <>
           <WalletCard
-            title={'+50 EVNT Tokens: Invite your friends'}
-            subtitle={'50 EVNT tokens for inviting people'}
+            title={`+50 ${TOKEN_NAME} Tokens: Invite your friends`}
+            subtitle={`50 ${TOKEN_NAME} tokens for inviting people`}
             text={referralText}
             buttonText={'Share with your friends'}
             onClick={onReferralListClick}
@@ -172,7 +173,7 @@ const Wallet = ({
         {renderSwitchableView()}
         <div className={styles.cardContainer}>
           {renderConditionalWalletCards()}
-          {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
+          {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.wfairToken)} */}
           {renderWalletPaymentCard(PaymentProvider.crypto)}
           {renderWalletPaymentCard(PaymentProvider.paypal)}
           {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}

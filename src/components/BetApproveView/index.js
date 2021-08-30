@@ -9,6 +9,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const BetApproveView = ({
   closed,
@@ -27,13 +28,13 @@ const BetApproveView = ({
       BetSummaryHelper.getDivider(),
       BetSummaryHelper.getKeyValue(
         'Your Invest',
-        formatToFixed(investmentAmount) + ' EVNT'
+        formatToFixed(investmentAmount) + ' ' + TOKEN_NAME
       ),
       BetSummaryHelper.getKeyValue('Your Trade', outcomeValue),
       BetSummaryHelper.getDivider(),
       BetSummaryHelper.getKeyValue(
         'Possible Win',
-        formatToFixed(outcomeReturn) + ' EVNT',
+        formatToFixed(outcomeReturn) + ' ' + TOKEN_NAME,
         false,
         true
       ),

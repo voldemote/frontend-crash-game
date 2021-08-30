@@ -11,6 +11,7 @@ import { PopupActions } from '../../store/actions/popup';
 import { LOGGED_IN } from 'constants/AuthState';
 import Routes from 'constants/Routes';
 import { useHistory } from 'react-router-dom';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const SignUpPopup = ({ closed, user, hidePopup, authState }) => {
   const history = useHistory();
@@ -21,7 +22,7 @@ const SignUpPopup = ({ closed, user, hidePopup, authState }) => {
         <img className={styles.logoMini} src={LogoMini} />
         <span className={styles.welcomeTextText}>Sign up and get</span>
         <span className={styles.welcomeTextHeadline}>
-          5.000 EVNT for free!
+          5.000 {TOKEN_NAME} for free!
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
       </div>
