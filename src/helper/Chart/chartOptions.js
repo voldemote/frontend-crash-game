@@ -4,8 +4,24 @@ export const chartOptions = (type, data) => {
   const labels = calcLabels('hours');
   console.log('labels :>> ', labels, new Date('2021-08-27T15:00:00Z'));
 
+  const legendPadding = {
+    beforeInit(chart) {
+      // Get reference to the original fit function
+      const originalFit = chart.legend.fit;
+
+      // Override the fit function
+      chart.legend.fit = function fit() {
+        // Call original function and bind scope in order to use `this` correctly inside it
+        originalFit.bind(chart.legend)();
+        // Change the height as suggested in another answers
+        this.height += 30;
+      };
+    },
+  };
+
   return {
     type,
+    plugins: [legendPadding],
     data: {
       labels: [
         new Date('2021-08-27T15:00:00Z'),
@@ -16,24 +32,24 @@ export const chartOptions = (type, data) => {
         {
           fill: {
             target: 'origin',
-            above: 'rgba(255, 0, 0, 0.12)', // Area will be red above the origin
+            above: 'rgba(103, 81, 236, 0.12)', // Area will be red above the origin
             below: 'rgb(0, 0, 255)', // And blue below the origin
           },
           label: 'Yes',
           data: [
             // 20, 25, 10,
-            { x: '2021-08-27T15:00:00Z', y: 20 },
-            { x: '2021-08-27T17:00:00Z', y: 25 },
-            { x: '2021-08-27T20:00:00Z', y: 10 },
+            { x: new Date('2021-08-27T15:00:00Z'), y: 20 },
+            { x: new Date('2021-08-27T17:00:00Z'), y: 25 },
+            { x: new Date('2021-08-27T20:00:00Z'), y: 10 },
           ],
-          backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-          borderColor: ['yellow'],
+          backgroundColor: ['rgba(103, 81, 236, 1)'],
+          borderColor: ['rgba(103, 81, 236, 1)'],
           borderWidth: 2,
         },
         {
           fill: {
             target: 'origin',
-            above: 'rgba(0, 0, 255, 0.12)', // Area will be red above the origin
+            above: 'rgba(241, 255, 84, 0.12)', // Area will be red above the origin
             below: 'rgb(0, 0, 255)', // And blue below the origin
           },
           label: 'No',
@@ -43,16 +59,30 @@ export const chartOptions = (type, data) => {
             { x: new Date('2021-08-27T17:00:00Z'), y: 30 },
             { x: new Date('2021-08-27T20:00:00Z'), y: 54 },
           ],
-          backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-          borderColor: ['rgba(255, 99, 132, 1)'],
+          backgroundColor: ['rgba(241, 255, 84, 1)'],
+          borderColor: ['rgba(241, 255, 84, 1)'],
           borderWidth: 2,
         },
       ],
     },
     options: {
-      hover: {
-        mode: 'nearest',
-        intersect: true,
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          align: 'start',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+          },
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          // position: 'nearest',
+          // axis: 'y',
+        },
       },
       scales: {
         x: {
