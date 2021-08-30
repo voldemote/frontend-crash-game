@@ -115,10 +115,26 @@ const fetchTags = function* (action) {
   }
 };
 
+const fetchHistoryChartData = function* ({ betId, params }) {
+  try {
+    // SM: perhaps better solution should be considered, instead of setting token in header for each request
+    // in the handler itself
+    const token = yield select(state => state.authentication.token);
+    Api.setToken(token);
+
+    const { data } = yield call(Api.getEventHistoryChartData(betId, params));
+
+    yield put(EventActions.fetchFilteredEventsSuccess(data));
+  } catch (error) {
+    yield put(EventActions.fetchFilteredEventsFail());
+  }
+};
+
 export default {
   fetchAll,
   fetchAllSucceeded,
   fetchFilteredEvents,
   fetchHomeEvents,
   fetchTags,
+  fetchHistoryChartData,
 };

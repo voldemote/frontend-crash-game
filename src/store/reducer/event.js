@@ -38,6 +38,7 @@ const initialState = {
       value: '-date',
     },
   ],
+  chartData: [],
 };
 
 const fetchAllSucceeded = (action, state) => {
@@ -98,6 +99,13 @@ const fetchTagsSuccess = (action, state) => {
   };
 };
 
+const fetchHistoryChartSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    chartData: payload,
+  };
+};
+
 export default function (state = initialState, action) {
   switch (action.type) {
     // @formatter:off
@@ -109,6 +117,8 @@ export default function (state = initialState, action) {
       return setDefaultParamsValues(state, action);
     case EventTypes.RESET_DEFAULT_PARAMS_VALUES:
       return resetDefaultParamsValues(state, action);
+    case EventTypes.FETCH_HISTORY_CHART_DATA_SUCCESS:
+      return fetchHistoryChartSuccess(state, action);
     case EventTypes.FETCH_HOME_EVENTS_SUCCESS:
       return fetchHomeEventsSuccess(action, state);
     case EventTypes.FETCH_TAGS_SUCCESS:

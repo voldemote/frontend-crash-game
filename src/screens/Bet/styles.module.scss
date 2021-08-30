@@ -1,473 +1,423 @@
 @import '../../styles/all';
 
-.bet
-{
-    display:          flex;
-    flex-direction:   column;
-    background-color: $colorPrimaryDark;
-    min-height:       100%;
-    color:            $colorWhite;
-    padding:          0.5rem 1.7rem;
-    font-family:      $fontLight;
-    position:         relative;
-    //z-index:          1;
+.bet {
+  display: flex;
+  flex-direction: column;
+  background-color: $colorPrimaryDark;
+  min-height: 100%;
+  color: $colorWhite;
+  padding: 0.5rem 1.7rem;
+  font-family: $fontLight;
+  position: relative;
+  //z-index:          1;
 
-    @media (max-width: $screen-md)
-    {
-        padding-top: 1rem;
-        padding-bottom: 0;
+  @media (max-width: $screen-md) {
+    padding-top: 1rem;
+    padding-bottom: 0;
+  }
+
+  .upperLeftOval,
+  .centeredBottomOval {
+    display: none;
+    position: absolute;
+    opacity: 0.2;
+    object-fit: contain;
+
+    &.upperLeftOval {
+      top: -20%;
+      left: -14%;
+      width: 40%;
+      height: 40%;
+      background-image: radial-gradient(
+        circle at 52% 50%,
+        #2df8d5,
+        rgba(45, 248, 213, 0) 58%
+      );
     }
 
-    .upperLeftOval,
-    .centeredBottomOval
-    {
-        display:    none;
-        position:   absolute;
-        opacity:    0.2;
-        object-fit: contain;
-
-        &.upperLeftOval
-        {
-            top:              -20%;
-            left:             -14%;
-            width:            40%;
-            height:           40%;
-            background-image: radial-gradient(circle at 52% 50%, #2df8d5, rgba(45, 248, 213, 0) 58%);
-        }
-
-        &.centeredBottomOval
-        {
-            bottom:           0;
-            left:             10%;
-            width:            80%;
-            height:           35%;
-            background-image: radial-gradient(circle at 52% 110%, #2df8d5, rgba(45, 248, 213, 0) 60%);
-        }
-
-        @media (min-width: $screen-sm)
-        {
-            display: block;
-        }
+    &.centeredBottomOval {
+      bottom: 0;
+      left: 10%;
+      width: 80%;
+      height: 35%;
+      background-image: radial-gradient(
+        circle at 52% 110%,
+        #2df8d5,
+        rgba(45, 248, 213, 0) 60%
+      );
     }
 
-    .headlineContainer
-    {
-        display:         flex;
-        flex-direction:  row;
-        justify-content: space-between;
-        z-index:         1;
-
-        > div
-        {
-            &:first-child
-            {
-                display:         flex;
-                justify-content: flex-start;
-                align-items:     center;
-                flex:            initial;
-
-                @media (min-width: $screen-md)
-                {
-                    margin-bottom: 2rem;
-                }
-
-                @media (max-width: $screen-md)
-                {
-                    justify-content: center;
-                }
-
-                .headline
-                {
-                    display:         flex;
-                    justify-content: center;
-                    align-items:     center;
-                    margin-right: 1rem;
-
-                    & > *
-                    {
-                        @media (max-width: $screen-md)
-                        {
-                            margin-bottom: 1rem;
-                        }
-                    }
-
-                    @media (max-width: $screen-md)
-                    {
-                        flex-direction: row;
-                        text-align:     center;
-                    }
-
-                    h2
-                    {
-                        margin-right: 1rem;
-
-                        @media (max-width: $screen-md)
-                        {
-                            font-size:    20px;
-                        }
-                    }
-                }
-
-                small
-                {
-                    color: $colorGray;
-                }
-
-                .arrowBack
-                {
-                    background-color: transparent;
-                    border:           none;
-                    display:          flex;
-                    justify-content:  center;
-                    align-items:      center;
-                    cursor:           pointer;
-                    margin-right:     1rem;
-
-                    &:before
-                    {
-                        border-style:   solid;
-                        border-width:   2px 2px 0 0;
-                        content:        '';
-                        display:        inline-block;
-                        height:         10px;
-                        position:       relative;
-                        vertical-align: middle;
-                        width:          10px;
-                        transition:     border-color .2s ease-in;
-                        border-color:   $colorWhite;
-                        transform:      rotate(-135deg);
-
-                        @media (max-width: $screen-md)
-                        {
-                            transform: rotate(-135deg) translateX(-10px);
-                            margin-left: -0.7rem;
-                            margin-top: -1.7rem;
-                        }
-                    }
-                }
-            }
-        }
+    @media (min-width: $screen-sm) {
+      display: block;
     }
+  }
 
-    .row
-    {
-        display:        flex;
-        flex-direction: row;
-        flex:           1;
-        margin-left:    -3rem;
-        margin-right:   -3rem;
-        z-index:        1;
+  .headlineContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 1;
 
-        @media (max-width: $screen-md)
-        {
-            margin-left:    -1.7rem;
-            margin-right:   -1.7rem;
-        }
-
-        .columnLeft
-        {
-            width:           70%;
-            padding-left:    3rem;
-            padding-right:   1rem;
-            display:         flex;
-            flex-direction:  column;
-
-            @media (max-width: $screen-md)
-            {
-                width:         100%;
-                padding-left:  1rem;
-                padding-right: 1rem;
-            }
-
-            .streamContainer
-            {
-                display:        flex;
-                flex-direction: column;
-                flex:           1;
-                min-height:     60vh;
-
-                .twitchStream
-                {
-                    display:        flex;
-                    flex:           1;
-                    padding-bottom: 1rem;
-
-                    @media (max-width: $screen-md)
-                    {
-                        min-height: unset;
-                    }
-                }
-
-                .timeLeft
-                {
-                    width:           100%;
-                    display:         flex;
-                    justify-content: flex-end;
-                    align-items:     center;
-                    color:           $colorWhite;
-                    font-family:     $fontLight;
-                    font-size:       12px;
-                }
-
-                @media (max-width: $screen-md)
-                {
-                    min-height: unset;
-                }
-            }
-        }
-
-        .columnRight
-        {
-            display:         flex;
-            flex-direction:  column;
-            justify-content: space-between;
-            width:           30%;
-            padding-left:    2em;
-            // padding-right:   2em;
-
-            @media (max-width: $screen-md)
-            {
-                display: none;
-            }
-
-            > div:first-child
-            {
-                flex: 1;
-            }
-
-            .eventTradesContainer 
-            {
-                margin-bottom: 1rem;
-                padding:       0;
-                justify-content: flex-start;
-                align-items: flex-start;
-            }
-
-            .betViewClose 
-            {
-                display:     flex;
-                cursor:      pointer;
-                font-size:   15px;
-
-                .arrowBack 
-                {
-                    width:        fit-content;
-                    margin-right: 1rem;
-                }
-            }
-
-            .betViewContent 
-            {
-                padding-top: 2.3rem;
-            }
-        }
-    }
-
-    .relatedBets
-    {
-        display:        flex;
-        flex-direction: column;
-        margin-top:     2rem;
-
-        .headline
-        {
-            margin-bottom:   1rem;
-            display:         flex;
-            justify-content: flex-start;
-            align-items:     center;
-
-            h2
-            {
-                font-family:  $fontBold;
-                font-size:    20px;
-                margin-right: 1rem;
-            }
-        }
-
-        .relatedBetsCarousel
-        {
-            flex: 1;
-
-            > div:first-child
-            {
-                height: 100%;
-
-                > div
-                {
-                    height: 100%;
-
-                    > ul
-                    {
-                        height: 100%;
-
-                        > li {
-                            padding: 0 2px;
-                        }
-                    }
-                }
-            }
-
-            &.oneCarouselPage 
-            {
-                > div:first-child 
-                {
-                    > ul 
-                    {
-                        display: none;
-                    }
-                }
-            }
-        }
-    }
-
-    .relatedBetsNone 
-    {
-        margin:          2rem 2px;
-        padding:         2rem;
-        border-radius:   10px;
-        background:      $colorWhite;
-        color:           $colorPrimaryDark;
-        display:         flex;
-        justify-content: center;
-    }
-
-    .mobileChat
-    {
+    > div {
+      &:first-child {
         display: flex;
-    }
+        justify-content: flex-start;
+        align-items: center;
+        flex: initial;
 
-    .desktopChat
-    {
-        @media (max-width: $screen-md)
-        {
-            display: none;
-        }
-    }
-
-    .mobileCarousel
-    {
-        flex:   1;
-        margin: 1rem -1.7rem 0 -1.7rem;
-
-        @media (min-width: $screen-md)
-        {
-            display: none;
-        }
-    }
-
-    .mobileMenu
-    {
-        padding:         0 1rem;
-        position:        fixed;
-        display:         flex;
-        width:           100%;
-        justify-content: center;
-        bottom:          0;
-        left:            0;
-        margin-bottom:   2rem;
-        align-items:     center;
-
-        @media (max-width: $screen-sm), (min-width: $screen-md)
-        {
-            display: none;
+        @media (min-width: $screen-md) {
+          margin-bottom: 2rem;
         }
 
-        .indicators
-        {
-            padding:          0.5rem 1rem;
-            opacity:          0.9;
-            border-radius:    30px;
-            background-color: $colorPrimaryDark;
-            max-height:       40px;
+        @media (max-width: $screen-md) {
+          justify-content: center;
+        }
 
-            span
-            {
-                width:            10px;
-                height:           10px;
-                display:          inline-block;
-                margin:           0 0.5rem;
-                background-color: $colorWhite30;
-                border-radius:    50%;
-                cursor:           pointer;
+        .headline {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 1rem;
 
-                &.active
-                {
-                    background-color: $colorWhite;
-                }
+          & > * {
+            @media (max-width: $screen-md) {
+              margin-bottom: 1rem;
             }
+          }
+
+          @media (max-width: $screen-md) {
+            flex-direction: row;
+            text-align: center;
+          }
+
+          h2 {
+            margin-right: 1rem;
+
+            @media (max-width: $screen-md) {
+              font-size: 20px;
+            }
+          }
         }
+
+        small {
+          color: $colorGray;
+        }
+
+        .arrowBack {
+          background-color: transparent;
+          border: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          margin-right: 1rem;
+
+          &:before {
+            border-style: solid;
+            border-width: 2px 2px 0 0;
+            content: '';
+            display: inline-block;
+            height: 10px;
+            position: relative;
+            vertical-align: middle;
+            width: 10px;
+            transition: border-color 0.2s ease-in;
+            border-color: $colorWhite;
+            transform: rotate(-135deg);
+
+            @media (max-width: $screen-md) {
+              transform: rotate(-135deg) translateX(-10px);
+              margin-left: -0.7rem;
+              margin-top: -1.7rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-left: -3rem;
+    margin-right: -3rem;
+    margin-top: 20px;
+    z-index: 1;
+
+    @media (max-width: $screen-md) {
+      margin-left: -1.7rem;
+      margin-right: -1.7rem;
     }
 
-    .carouselSlide
-    {
-        padding: 0 0 60px;
+    .columnLeft {
+      width: 70%;
+      padding-left: 3rem;
+      padding-right: 1rem;
+      display: flex;
+      flex-direction: column;
 
-        @media(max-width: $screen-md)
-        {
-            padding: 0 1rem 60px;
+      @media (max-width: $screen-md) {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .streamContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 60vh;
+
+        .twitchStream {
+          display: flex;
+          flex: 1;
+          padding-bottom: 1rem;
+
+          @media (max-width: $screen-md) {
+            min-height: unset;
+          }
         }
+
+        .timeLeft {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          color: $colorWhite;
+          font-family: $fontLight;
+          font-size: 12px;
+        }
+
+        @media (max-width: $screen-md) {
+          min-height: unset;
+        }
+      }
     }
 
-    .fixedChatButton
-    {
-        bottom: 130px;
-        right:  30px;
+    .columnRight {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30%;
+      padding-left: 2em;
+      // padding-right:   2em;
 
-        @media(min-width: $screen-md)
-        {
+      @media (max-width: $screen-md) {
+        display: none;
+      }
+
+      > div:first-child {
+        flex: 1;
+      }
+
+      .eventTradesContainer {
+        margin-bottom: 1rem;
+        padding: 0;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      .betViewClose {
+        display: flex;
+        cursor: pointer;
+        font-size: 15px;
+
+        .arrowBack {
+          width: fit-content;
+          margin-right: 1rem;
+        }
+      }
+
+      .betViewContent {
+        padding-top: 2.3rem;
+      }
+    }
+  }
+
+  .relatedBets {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+
+    .headline {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      h2 {
+        font-family: $fontBold;
+        font-size: 20px;
+        margin-right: 1rem;
+      }
+    }
+
+    .relatedBetsCarousel {
+      flex: 1;
+
+      > div:first-child {
+        height: 100%;
+
+        > div {
+          height: 100%;
+
+          > ul {
+            height: 100%;
+
+            > li {
+              padding: 0 2px;
+            }
+          }
+        }
+      }
+
+      &.oneCarouselPage {
+        > div:first-child {
+          > ul {
             display: none;
+          }
         }
+      }
+    }
+  }
 
-        & span > svg {
-            & > path {
-                fill:   $colorPrimaryLight;
-                stroke: transparent;
-            }
-        }
+  .relatedBetsNone {
+    margin: 2rem 2px;
+    padding: 2rem;
+    border-radius: 10px;
+    background: $colorWhite;
+    color: $colorPrimaryDark;
+    display: flex;
+    justify-content: center;
+  }
+
+  .mobileChat {
+    display: flex;
+  }
+
+  .desktopChat {
+    @media (max-width: $screen-md) {
+      display: none;
+    }
+  }
+
+  .mobileCarousel {
+    flex: 1;
+    margin: 1rem -1.7rem 0 -1.7rem;
+
+    @media (min-width: $screen-md) {
+      display: none;
+    }
+  }
+
+  .mobileMenu {
+    padding: 0 1rem;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 2rem;
+    align-items: center;
+
+    @media (max-width: $screen-sm), (min-width: $screen-md) {
+      display: none;
     }
 
-    .betNavbar {
-        z-index:         $zIndexBetNavbarFooter;
-        border-radius:   20px 20px 0 0;
-        padding:         0;
-        height:          80px;
-        justify-content: space-evenly;
+    .indicators {
+      padding: 0.5rem 1rem;
+      opacity: 0.9;
+      border-radius: 30px;
+      background-color: $colorPrimaryDark;
+      max-height: 40px;
 
-        &Hidden {
-            display: none;
+      span {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        margin: 0 0.5rem;
+        background-color: $colorWhite30;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &.active {
+          background-color: $colorWhite;
         }
-
-        & .navbarItem {
-            min-width: 75px;
-            margin:    0;
-
-            &WithBorder {
-                border-right: 1px solid $colorGrayLight4;
-                border-left:  1px solid $colorGrayLight4;
-                padding:      0 10vw;
-
-                &.navbarItemActive {
-                    &:after {
-                        left: 20%;
-                    }
-                }
-            }
-
-            &Active {
-                &:after {
-                    content:             '';
-                    position:            absolute;
-                    background:          url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
-                    background-size:     contain;
-                    background-repeat:   no-repeat;
-                    background-position: center;
-                    left:                -10%;
-                    top:                 -25%;
-                    width:               100px;
-                    height:              120px;
-                    z-index:             -1;
-                }
-            }
-        }
+      }
     }
+  }
+
+  .carouselSlide {
+    padding: 0 0 60px;
+
+    @media (max-width: $screen-md) {
+      padding: 0 1rem 60px;
+    }
+  }
+
+  .fixedChatButton {
+    bottom: 130px;
+    right: 30px;
+
+    @media (min-width: $screen-md) {
+      display: none;
+    }
+
+    & span > svg {
+      & > path {
+        fill: $colorPrimaryLight;
+        stroke: transparent;
+      }
+    }
+  }
+
+  .betNavbar {
+    z-index: $zIndexBetNavbarFooter;
+    border-radius: 20px 20px 0 0;
+    padding: 0;
+    height: 80px;
+    justify-content: space-evenly;
+
+    &Hidden {
+      display: none;
+    }
+
+    & .navbarItem {
+      min-width: 75px;
+      margin: 0;
+
+      &WithBorder {
+        border-right: 1px solid $colorGrayLight4;
+        border-left: 1px solid $colorGrayLight4;
+        padding: 0 10vw;
+
+        &.navbarItemActive {
+          &:after {
+            left: 20%;
+          }
+        }
+      }
+
+      &Active {
+        &:after {
+          content: '';
+          position: absolute;
+          background: url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          left: -10%;
+          top: -25%;
+          width: 100px;
+          height: 120px;
+          z-index: -1;
+        }
+      }
+    }
+  }
+}
+
+.chart {
 }

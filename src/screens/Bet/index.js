@@ -34,8 +34,8 @@ import { BetActions } from 'store/actions/bet';
 import NavbarFooter from '../../components/NavbarFooter';
 import NavbarFooterAction from '../../components/NavbarFooterAction';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
-import { useIsMount } from 'components/hoc/useIsMount';
 import Chart from '../../components/Chart';
+import { useChartData } from './hooks/useChartData';
 
 const Bet = ({
   showPopup,
@@ -62,7 +62,8 @@ const Bet = ({
   const bottomScroll = useRef(null);
 
   const currentFromLocation = useBetPreviousLocation();
-  const isMount = useIsMount();
+  const { chartData, filterActive, handleChartPeriodFilter } =
+    useChartData(activeBetId);
 
   const status = {
     active: 1,
@@ -484,7 +485,13 @@ const Bet = ({
             </div>
           </div>
         </div>
-        <Chart />
+        <div className={styles.chart}>
+          <Chart
+            data={chartData}
+            filterActive={filterActive}
+            handleChartPeriodFilter={handleChartPeriodFilter}
+          />
+        </div>
         <div className={styles.row}>
           <div className={styles.columnLeft}>
             <div className={styles.streamContainer}>
