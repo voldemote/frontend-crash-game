@@ -8,6 +8,7 @@ import { ReactComponent as UserAvatarIcon } from 'data/icons/user.svg';
 import useBreakpoint from 'hooks/useBreakpoint';
 import { lastCrashes, inGameBets } from './fakeData';
 import styles from './BetHistory.module.scss';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const useTabsStyles = makeStyles({
   indicator: {
@@ -77,7 +78,7 @@ const BetHistory = () => {
         <div className={styles.inGameBets}>
           <div className={styles.totalContainer}>
             <div className={styles.label}>In Total</div>
-            <div className={styles.total}>EVNT&nbsp;2.700,50</div>
+            <div className={styles.total}>{TOKEN_NAME}&nbsp;2.700,50</div>
           </div>
           <div className={styles.bets}>
             {inGameBets.map(bet => (
@@ -86,7 +87,7 @@ const BetHistory = () => {
                   <UserAvatarIcon />
                   {bet.username}
                 </div>
-                <span>EVNT {bet.tokens}</span>
+                <span>{TOKEN_NAME} {bet.tokens}</span>
               </div>
             ))}
           </div>

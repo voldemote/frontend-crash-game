@@ -23,6 +23,7 @@ import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const Wallet = ({
   show,
@@ -126,15 +127,15 @@ const Wallet = ({
       const referralText = (
         <>
           Invite your friends using your referral link and{' '}
-          <strong>get 50 EVNT token</strong> for each user who joined over your
+          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined over your
           link.
         </>
       );
 
       return (
         <WalletCard
-          title={'+50 EVNT Tokens: Invite your friends'}
-          subtitle={'50 EVNT tokens for inviting people'}
+          title={`+50 ${TOKEN_NAME} Tokens: Invite your friends`}
+          subtitle={`50 ${TOKEN_NAME} tokens for inviting people`}
           text={referralText}
           buttonText={'Share with your friends'}
           onClick={onReferralListClick}
@@ -191,10 +192,10 @@ const Wallet = ({
             <div className={styles.walletBalance} role="button">
               <span className={styles.balance}>
                 {formatToFixed(balance)}
-                <sup className={styles.currency}>EVNT</sup>
+                <sup className={styles.currency}>{TOKEN_NAME}</sup>
               </span>
               <span className={styles.balanceText}>
-                Total balance available in EVNT
+                Total balance available in {TOKEN_NAME}
               </span>
               <Icon iconType={'refresh'} className={styles.refreshIcon} />
             </div>
@@ -216,7 +217,7 @@ const Wallet = ({
 
             {renderSwitchableView()}
             {renderConditionalWalletCards()}
-            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.evntToken)} */}
+            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.wfairToken)} */}
             {renderWalletPaymentCard(PaymentProvider.crypto)}
             {renderWalletPaymentCard(PaymentProvider.paypal)}
             {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
@@ -231,7 +232,7 @@ const Wallet = ({
             Transaction History
           </>,
           <TwoColumnTable
-            headings={['Latest transactions', 'EVNT']}
+            headings={['Latest transactions', TOKEN_NAME]}
             rows={transactions.map(
               ({
                 event,

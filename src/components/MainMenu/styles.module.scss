@@ -131,12 +131,12 @@ $largeMobileHeight: 700px;
                     }
                 }
 
-                .availableEvnts {
+                .availableWfairs {
                     width: 100%;
                     display: flex;
                     flex-direction: column;
 
-                    .availableEvntsHeadline {
+                    .availableWfairsHeadline {
                         display: flex;
                         align-items: center;
                         margin-bottom: 12px;
@@ -148,7 +148,7 @@ $largeMobileHeight: 700px;
                         color: rgba(255, 255, 255, 0.4);
                         mix-blend-mode: normal;
 
-                        .availableEvntsDot {
+                        .availableWfairsDot {
                             min-width: 6px;
                             min-height: 6px;
                             margin-right: 6px;
@@ -157,19 +157,19 @@ $largeMobileHeight: 700px;
                         }
                     }
 
-                    .availableEvntsAmount {
+                    .availableWfairsAmount {
                         display: flex;
                         align-items: flex-start;
                         margin-left: 12px;
 
-                        .availableEvntsTotal {
+                        .availableWfairsTotal {
                             font-size: 20px;
                             line-height: 20px;
                             color: #ffffff;
                             margin-right: 8px;
                         }
 
-                        .availableEvntsTitle {
+                        .availableWfairsTitle {
                             font-size: 10px;
                             color: #ffffff;
                         }

@@ -11,6 +11,7 @@ import { getPaymentProviderTitle } from '../../helper/PaymentProviderTitle';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { AlertActions } from '../../store/actions/alert';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const WalletDeposit = ({ showError }) => {
   const { paymentProvider } = useParams();
@@ -21,7 +22,7 @@ const WalletDeposit = ({ showError }) => {
   };
 
   const onConfirmButtonClick = () => {
-    showError('You already got your free EVNT tokens!');
+    showError(`You already got your free ${TOKEN_NAME} tokens!`);
   };
 
   const renderPaymentLine = (

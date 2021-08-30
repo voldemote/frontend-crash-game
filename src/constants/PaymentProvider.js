@@ -1,6 +1,6 @@
 export default {
   paypal: 'paypal',
-  evntToken: 'evnt-token',
+  wfairToken: 'wfair-token',
   crypto: 'crypto',
   debitCreditCard: 'debit-credit-card',
 };

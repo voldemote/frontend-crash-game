@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const PaymentConfirmation = ({ balance, cancelActionTill }) => {
   const { paymentAction } = useParams();
@@ -61,7 +62,7 @@ const PaymentConfirmation = ({ balance, cancelActionTill }) => {
       success={true}
       onConfirmButtonClick={onGoBackToWalletButtonClick}
     >
-      <AccountBalance balance={balance} coloredActionText={'+ EVNT 500.00'} />
+      <AccountBalance balance={balance} coloredActionText={`+ ${TOKEN_NAME} 500.00`} />
       {renderCancelContainer()}
     </PaymentScreenContainer>
   );

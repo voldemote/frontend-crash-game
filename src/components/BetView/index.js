@@ -39,6 +39,7 @@ import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import ErrorHint from '../ErrorHint';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const BetView = ({
   actionIsInProgress,
@@ -445,7 +446,7 @@ const BetView = ({
       const summaryRows = [
         BetSummaryHelper.getKeyValue(
           'Your Investment',
-          investmentAmount + ' EVNT'
+          investmentAmount + ' ' + TOKEN_NAME
         ),
         BetSummaryHelper.getDivider(),
       ];
@@ -495,7 +496,7 @@ const BetView = ({
             onClick={sellBet}
             disabledWithOverlay={false}
           >
-            Cashout {formatToFixed(outcome)} EVNT
+            Cashout {formatToFixed(outcome)} {TOKEN_NAME}
           </Button>
         </>
       );
@@ -683,14 +684,14 @@ const BetView = ({
         BetSummaryHelper.getDivider(),
         BetSummaryHelper.getKeyValue('Overall trades', overallTrades),
         BetSummaryHelper.getKeyValue(
-          'EVNT tokens traded',
-          tokensTraded + ' EVNT'
+          TOKEN_NAME + ' tokens traded',
+          tokensTraded + ' ' + TOKEN_NAME
         ),
         BetSummaryHelper.getKeyValue('Outcome', finalOutcome),
         BetSummaryHelper.getDivider(),
         BetSummaryHelper.getKeyValue(
-          'EVNT tokens won',
-          tokensWon + ' EVNT',
+          TOKEN_NAME + ' tokens won',
+          tokensWon + ' ' + TOKEN_NAME,
           false,
           false,
           true,
