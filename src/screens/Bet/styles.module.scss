@@ -10,7 +10,6 @@
     padding:          0.5rem 1.7rem;
     font-family:      $fontLight;
     position:         relative;
-    //z-index:          1;
 
     @media (max-width: $screen-md)
     {
@@ -162,6 +161,7 @@
         {
             margin-left:    -1.7rem;
             margin-right:   -1.7rem;
+            flex-direction: column;
         }
 
         .columnLeft
@@ -223,11 +223,11 @@
             justify-content: space-between;
             width:           30%;
             padding-left:    2em;
-            // padding-right:   2em;
 
             @media (max-width: $screen-md)
             {
-                display: none;
+                width: 100%;
+                padding: 0;
             }
 
             > div:first-child
@@ -241,6 +241,19 @@
                 padding:       0;
                 justify-content: flex-start;
                 align-items: flex-start;
+
+                @media (max-width: $screen-md)
+                {
+                    margin-top: 1rem;
+                    justify-content: space-between;
+                }
+
+                .chatTab {
+                    @media (min-width: $screen-md)
+                    {
+                        display: none;
+                    }
+                }
             }
 
             .betViewClose 
@@ -248,6 +261,10 @@
                 display:     flex;
                 cursor:      pointer;
                 font-size:   15px;
+                
+                @media (max-width: $screen-md) {
+                    padding-left: 10px;
+                }
 
                 .arrowBack 
                 {
@@ -333,10 +350,14 @@
 
     .mobileChat
     {
-        display: flex;
+        @media (min-width: $screen-md)
+        {
+            display: none;
+        }
     }
 
-    .desktopChat
+    .desktopChat,
+    .desktopCarousel
     {
         @media (max-width: $screen-md)
         {
@@ -347,7 +368,7 @@
     .mobileCarousel
     {
         flex:   1;
-        margin: 1rem -1.7rem 0 -1.7rem;
+        margin: 1rem 0 0;
 
         @media (min-width: $screen-md)
         {
@@ -405,69 +426,6 @@
         @media(max-width: $screen-md)
         {
             padding: 0 1rem 60px;
-        }
-    }
-
-    .fixedChatButton
-    {
-        bottom: 130px;
-        right:  30px;
-
-        @media(min-width: $screen-md)
-        {
-            display: none;
-        }
-
-        & span > svg {
-            & > path {
-                fill:   $colorPrimaryLight;
-                stroke: transparent;
-            }
-        }
-    }
-
-    .betNavbar {
-        z-index:         $zIndexBetNavbarFooter;
-        border-radius:   20px 20px 0 0;
-        padding:         0;
-        height:          80px;
-        justify-content: space-evenly;
-
-        &Hidden {
-            display: none;
-        }
-
-        & .navbarItem {
-            min-width: 75px;
-            margin:    0;
-
-            &WithBorder {
-                border-right: 1px solid $colorGrayLight4;
-                border-left:  1px solid $colorGrayLight4;
-                padding:      0 10vw;
-
-                &.navbarItemActive {
-                    &:after {
-                        left: 20%;
-                    }
-                }
-            }
-
-            &Active {
-                &:after {
-                    content:             '';
-                    position:            absolute;
-                    background:          url('../../data/backgrounds/highlight-settings-change-mail-address.svg');
-                    background-size:     contain;
-                    background-repeat:   no-repeat;
-                    background-position: center;
-                    left:                -10%;
-                    top:                 -25%;
-                    width:               100px;
-                    height:              120px;
-                    z-index:             -1;
-                }
-            }
         }
     }
 }

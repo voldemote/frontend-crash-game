@@ -12,8 +12,7 @@ import ViewerBadge from 'components/ViewerBadge';
 import { Carousel } from 'react-responsive-carousel';
 import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
-import { useParams, useLocation, Router } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 import TwitchEmbedVideo from '../../components/TwitchEmbedVideo';
 import BetView from '../../components/BetView';
@@ -26,7 +25,6 @@ import { SwiperSlide, Swiper } from 'swiper/react';
 import EventTradesContainer from '../../components/EventTradesContainer';
 import EventTradeViewsHelper from '../../helper/EventTradeViewsHelper';
 import State from '../../helper/State';
-import React from 'react';
 import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PopupTheme from '../../components/Popup/PopupTheme';
@@ -34,7 +32,6 @@ import { BetActions } from 'store/actions/bet';
 import NavbarFooter from '../../components/NavbarFooter';
 import NavbarFooterAction from '../../components/NavbarFooterAction';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
-import { useIsMount } from 'components/hoc/useIsMount';
 
 const Bet = ({
   showPopup,
@@ -49,19 +46,15 @@ const Bet = ({
   const history = useHistory();
 
   const [swiper, setSwiper] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [betAction, setBetAction] = useState(0);
-  const [activeBetId, setActiveBetId] = useState(betId || null);
+  const [betAction, setBetAction] = useState(1);
   const [betViewIsOpen, setBetViewIsOpen] = useState(false);
-  const [mobileCommentIsOpen, setMobileCommentIsOpen] = useState(false);
   const [singleBet, setSingleBet] = useState(false);
   const [event, setEvent] = useState(null);
   const [relatedBets, setRelatedBets] = useState([]);
 
-  const bottomScroll = useRef(null);
+  const mobileChatRef = useRef(null);
 
   const currentFromLocation = useBetPreviousLocation();
-  const isMount = useIsMount();
 
   const status = {
     active: 1,
@@ -70,6 +63,10 @@ const Bet = ({
   };
 
   useEffect(() => {
+    if (window.innerWidth < 992 ) {
+      setBetAction(0);
+    }
+    
     const currentEvent = _.find(events, {
       _id: eventId,
     });
@@ -87,30 +84,62 @@ const Bet = ({
     }
   }, []);
 
-  const moveToSlide = index => {
-    if (swiper) {
-      swiper.slideTo(index);
+  useEffect(() => {
+    swiper && swiper.slideTo(betAction);
+  }, [betAction])
+
+  const onBetClose = () => {
+    return () => {
+      const eventId = _.get(event, '_id', null);
+
+      history.push(
+        Routes.getRouteWithParameters(Routes.bet, {
+          eventId,
+          betId: '',
+        })
+      );
+
+      setBetViewIsOpen(false);
+      onBetActionSwitch(1);
+    };
+  };
+
+  const onSwiper = swiper => {
+    setSwiper(swiper);
+    swiper.slideTo(betAction);
+  }
+
+  const onBetActionSwitch = newIndex => {
+    setBetAction(newIndex);
+    if (newIndex === 0) {
+      mobileChatRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const onChatButtonClick = () => {
-    setMobileCommentIsOpen(!mobileCommentIsOpen);
-    moveToSlide(0);
-    if (!mobileCommentIsOpen) {
-      bottomScroll.current?.scrollIntoView({ behavior: 'smooth' });
-    }
+  const isLoggedIn = () => {
+    return authState === LOGGED_IN;
   };
 
-  const renderChatButton = () => {
-    if (currentSlide != 0) return null;
-    return (
-      <FixedIconButton
-        className={styles.fixedChatButton}
-        onClick={() => onChatButtonClick()}
-        iconType={mobileCommentIsOpen ? IconType.cross : IconType.chat}
-        showHighlight={!mobileCommentIsOpen}
-      />
+  const selectBet = betId => {
+    history.push(
+      Routes.getRouteWithParameters(Routes.bet, {
+        eventId,
+        betId,
+      })
     );
+
+    setBetViewIsOpen(true);
+    setSelectedBet(null, betId);
+  };
+
+  const onBetClick = (betId, popup) => {
+    return () => {
+      selectBet(betId);
+      if (popup) {
+        setBetViewIsOpen(false);
+        showPopup(PopupTheme.tradeView, {});
+      }
+    };
   };
 
   const getMyEventTrades = () => {
@@ -153,6 +182,12 @@ const Bet = ({
       .sort((a, b) => status[a.bet.status] - status[b.bet.status]);
   };
 
+  const renderNoTrades = () => {
+    return (
+      <div className={styles.relatedBetsNone}>No trades placed.</div>
+    );
+  }
+
   const getRelatedBetSliderPages = (bets, size) => {
     return _.ceil(_.size(bets) / size);
   };
@@ -164,33 +199,13 @@ const Bet = ({
   };
 
   const renderMyTradesList = (popup = false) => {
-    return _.map(getMyEventTrades(), (transaction, index) => {
+    const myEventTrades = getMyEventTrades();
+    if (!isLoggedIn() || myEventTrades.length < 1) {
+      return renderNoTrades();
+    }
+    return _.map(myEventTrades, (transaction, index) => {
       return renderMyBetCard(transaction, index, popup);
     });
-  };
-
-  const selectBet = betId => {
-    // const eventId = _.get(event, '_id', null);
-
-    history.push(
-      Routes.getRouteWithParameters(Routes.bet, {
-        eventId,
-        betId,
-      })
-    );
-
-    setActiveBetId(betId);
-    setBetViewIsOpen(true);
-    setSelectedBet(null, betId);
-  };
-
-  const onBetClick = (betId, popup) => {
-    return () => {
-      selectBet(betId);
-      if (popup) {
-        showPopup(PopupTheme.tradeView, {});
-      }
-    };
   };
 
   const renderRelatedBetCard = (bet, index, popup) => {
@@ -280,43 +295,13 @@ const Bet = ({
     );
   };
 
-  const renderBetSidebarContent = () => {
-    if (betViewIsOpen) {
-      return (
-        <div>
-          <div className={styles.betViewClose} onClick={onBetClose()}>
-            <Icon
-              iconType={'arrowLeft'}
-              iconTheme={'white'}
-              className={styles.arrowBack}
-            />
-            <span>Go back to all tracks</span>
-          </div>
-          <div className={styles.betViewContent}>
-            <BetView closed={false} showEventEnd={true} />
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        {renderSwitchableView()}
-        <div className={styles.contentContainer}>{renderContent()}</div>
-      </div>
-    );
-  };
-
-  const onBetActionSwitch = newIndex => {
-    setBetAction(newIndex);
-  };
-
-  const isLoggedIn = () => {
-    return authState === LOGGED_IN;
-  };
-
   const renderSwitchableView = () => {
     const eventViews = [
+      EventTradeViewsHelper.getView(
+        'Chat',
+        undefined,
+        false,
+        styles.chatTab),
       EventTradeViewsHelper.getView('Event Trades'),
       EventTradeViewsHelper.getView(
         'My Trades',
@@ -338,6 +323,10 @@ const Bet = ({
 
   const renderContent = () => {
     if (betAction === 0) {
+      return (
+        <Chat className={styles.mobileChat} event={event} />
+      );
+    } else if (betAction === 1) {
       return (
         <div className={styles.relatedBets}>
           <Carousel
@@ -362,7 +351,7 @@ const Bet = ({
     const myEventTrades = getMyEventTrades();
 
     if (!isLoggedIn() || myEventTrades.length < 1) {
-      return <div className={styles.relatedBetsNone}>No trades placed.</div>;
+      return renderNoTrades();
     }
 
     return (
@@ -386,76 +375,60 @@ const Bet = ({
     );
   };
 
-  const onBetClose = () => {
-    return () => {
-      const eventId = _.get(event, '_id', null);
-
-      history.push(
-        Routes.getRouteWithParameters(Routes.bet, {
-          eventId,
-          betId: '',
-        })
-      );
-
-      setActiveBetId(null);
-      setBetViewIsOpen(false);
-    };
-  };
-
-  const renderMobileMenuIndicator = index => {
+  const renderMobileContent = () => {
     return (
-      <span
-        className={currentSlide === index ? styles.active : ''}
-        onClick={() => {
-          setCurrentSlide(index);
+      <Swiper
+        slidesPerView={1}
+        pagination={{
+          clickable: false,
         }}
-      ></span>
+        autoHeight={true}
+        onSlideChange={swiper => onBetActionSwitch(swiper.activeIndex)}
+        onSwiper={onSwiper}
+      >
+        <SwiperSlide className={styles.carouselSlide}>
+          <div ref={mobileChatRef}>
+            <Chat
+              event={event}
+              className={styles.mobileChat}
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className={styles.carouselSlide}>
+          <div>{renderRelatedBetList(true)}</div>
+        </SwiperSlide>
+        <SwiperSlide className={styles.carouselSlide}>
+          <div>{renderMyTradesList(true)}</div>
+        </SwiperSlide>
+      </Swiper>
     );
-  };
+  }
 
-  const setSlide = index => {
-    if (index !== 0 && mobileCommentIsOpen) {
-      setMobileCommentIsOpen(false);
+  const renderBetSidebarContent = () => {
+    if (betViewIsOpen) {
+      return (
+        <div>
+          <div className={styles.betViewClose} onClick={onBetClose()}>
+            <Icon
+              iconType={'arrowLeft'}
+              iconTheme={'white'}
+              className={styles.arrowBack}
+            />
+            <span>Go back to all tracks</span>
+          </div>
+          <div className={styles.betViewContent}>
+            <BetView closed={false} showEventEnd={true} />
+          </div>
+        </div>
+      );
     }
 
-    setCurrentSlide(index);
-  };
-
-  const getActiveNavbarClass = index => {
-    return currentSlide === index ? styles.navbarItemActive : null;
-  };
-
-  const renderNavbar = () => {
     return (
-      <NavbarFooter
-        className={classNames(
-          styles.betNavbar,
-          mobileCommentIsOpen ? styles.betNavbarHidden : null
-        )}
-      >
-        <NavbarFooterAction
-          iconType={IconType.chat2}
-          text="Chat"
-          className={classNames(styles.navbarItem, getActiveNavbarClass(0))}
-          onClick={() => moveToSlide(0)}
-        />
-        <NavbarFooterAction
-          iconType={IconType.bet2}
-          text="Event Trades"
-          className={classNames(
-            styles.navbarItem,
-            styles.navbarItemWithBorder,
-            getActiveNavbarClass(1)
-          )}
-          onClick={() => moveToSlide(1)}
-        />
-        <NavbarFooterAction
-          iconType={IconType.bet2}
-          text="My Trades"
-          className={(styles.navbarItem, getActiveNavbarClass(2))}
-          onClick={() => moveToSlide(2)}
-        />
-      </NavbarFooter>
+      <div>
+        {renderSwitchableView()}
+        <div className={styles.desktopCarousel}>{renderContent()}</div>
+        <div className={styles.mobileCarousel}>{renderMobileContent()}</div>
+      </div>
     );
   };
 
@@ -477,7 +450,7 @@ const Bet = ({
             <div className={styles.headline}>
               <h2>{_.get(event, 'name')}</h2>
               <div>
-                <LiveBadge />
+                {event?.type === 'streamed' && <LiveBadge />}
                 <ViewerBadge viewers={1123} />
               </div>
             </div>
@@ -496,42 +469,7 @@ const Bet = ({
           </div>
           <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
         </div>
-        <div className={styles.mobileCarousel}>
-          <Swiper
-            slidesPerView={1}
-            pagination={{
-              clickable: false,
-            }}
-            autoHeight={true}
-            onSlideChange={swiper => setSlide(swiper.activeIndex)}
-            onSwiper={setSwiper}
-          >
-            <SwiperSlide className={styles.carouselSlide}>
-              <Chat
-                event={event}
-                className={styles.mobileChat}
-                hideInput={!mobileCommentIsOpen}
-              />
-            </SwiperSlide>
-            <SwiperSlide className={styles.carouselSlide}>
-              <div>{renderRelatedBetList(true)}</div>
-            </SwiperSlide>
-            <SwiperSlide className={styles.carouselSlide}>
-              <div>{renderMyTradesList(true)}</div>
-            </SwiperSlide>
-          </Swiper>
-        </div>
-        <div className={styles.mobileMenu}>
-          <div className={styles.indicators}>
-            {renderMobileMenuIndicator(0)}
-            {renderMobileMenuIndicator(1)}
-            {renderMobileMenuIndicator(2)}
-          </div>
-        </div>
-        {renderChatButton()}
-        {renderNavbar()}
       </div>
-      <div ref={bottomScroll} />
     </BaseContainerWithNavbar>
   );
 };
