@@ -307,7 +307,6 @@ const Navbar = ({
       <MainMenu
         opened={isOpen(drawers.profile)}
         closeMobileMenu={closeDrawers}
-        sellTransactions={sellTransactions}
       />
     );
   };

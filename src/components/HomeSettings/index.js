@@ -15,7 +15,7 @@ import SettingSupport from '../../data/images/setting-support.png';
 import Routes from '../../constants/Routes';
 import { GeneralActions } from '../../store/actions/general';
 
-const HomeSettings = ({ onEditClick }) => {
+const HomeSettings = ({ onEditClick, onMyTradesClick }) => {
   const dispatch = useDispatch();
 
   const setOpenDrawer = drawerName =>
@@ -44,11 +44,11 @@ const HomeSettings = ({ onEditClick }) => {
           />
         </div>
         <div
+          onClick={onMyTradesClick}
           className={classNames(
             styles.singleSettingHolder,
-            styles.settingDeactive
+            styles.settingActive
           )}
-          // onClick={onClickGoToRoute(Routes.betOverview)}
         >
           <img
             src={SettingBet}

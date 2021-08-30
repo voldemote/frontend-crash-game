@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import HomeSettings from '../HomeSettings';
+import MyTrades from '../MyTrades';
 import { PieChart } from 'react-minimal-pie-chart';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { AuthenticationActions } from 'store/actions/authentication';
@@ -35,6 +36,7 @@ const MainMenu = ({
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [profilePic, setProfilePic] = useState(user.profilePicture);
+  const [myTradesVisible, setMyTradesVisible] = useState(false);
 
   const editVisible = useSelector(state => state.general.editProfileVisible);
 
@@ -65,6 +67,10 @@ const MainMenu = ({
   const onClickShowEditProfile = () => {
     setEditVisible(!editVisible);
   };
+
+  const onMyTradesClick = () => {
+    setMyTradesVisible(!myTradesVisible);
+  }
 
   const handleName = e => {
     setName(e.target.value);
@@ -101,6 +107,25 @@ const MainMenu = ({
       };
     });
   };
+
+  const renderMyTradesDrawer = () => {
+    return (
+      <div
+        className={classNames(styles.panel, !myTradesVisible && styles.panelHidden)}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => setMyTradesVisible(!myTradesVisible)}
+          />
+          My Trades
+        </h2>
+        
+        <MyTrades />
+      </div>
+    );
+  }
 
   const editProfileWrapper = () => {
     return (
@@ -197,7 +222,7 @@ const MainMenu = ({
         className={classNames(
           styles.panel,
           styles.firstPanel,
-          editVisible && styles.panelHidden
+          (myTradesVisible || editVisible) && styles.panelHidden
         )}
       >
         <h2 className={styles.profileHeading}>My Profile</h2>
@@ -319,7 +344,11 @@ const MainMenu = ({
             </div>
           </div>
 
-          <HomeSettings onEditClick={() => onClickShowEditProfile()} />
+          <HomeSettings 
+            onEditClick={() => onClickShowEditProfile()}
+            onMyTradesClick={() => onMyTradesClick()}
+          />
+
           <div className={styles.buttonContainer}>
             <div
               className={styles.logoutButton}
@@ -331,6 +360,7 @@ const MainMenu = ({
         </div>
       </div>
       {editProfileWrapper()}
+      {renderMyTradesDrawer()}
     </div>
   );
 };
