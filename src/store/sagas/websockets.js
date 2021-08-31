@@ -1,6 +1,6 @@
 import { take, put, call, select } from 'redux-saga/effects';
-import { eventChannel, END } from 'redux-saga';
-import { NotificationTypes } from '../actions/notification';
+import { eventChannel } from 'redux-saga';
+import { RosiGameTypes, RosiGameActions } from '../actions/rosi-game';
 import { NotificationActions } from '../actions/notification';
 import _ from 'lodash';
 import ChatMessageType from '../../components/ChatMessageWrapper/ChatMessageType';
@@ -10,7 +10,6 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
-import ChatMessage from 'components/ChatMessage';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -141,6 +140,9 @@ export function* init() {
               break;
             case ChatMessageType.gameEnd:
               console.log(payload);
+              yield put(
+                RosiGameActions.addLastCrash({ lastCrash: payload.crashFactor })
+              );
               break;
             case ChatMessageType.pulloutBet:
             case ChatMessageType.createBet:

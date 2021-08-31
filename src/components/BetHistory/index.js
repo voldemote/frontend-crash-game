@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,7 +7,8 @@ import TabPanel from 'components/TabPanel';
 import Chat from 'components/Chat';
 import { ReactComponent as UserAvatarIcon } from 'data/icons/user.svg';
 import useBreakpoint from 'hooks/useBreakpoint';
-import { lastCrashes, inGameBets } from './fakeData';
+import { inGameBets } from './fakeData';
+import { selectLastTenCrashes } from '../../store/selectors/rosi-game';
 import styles from './BetHistory.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
 
@@ -38,6 +40,7 @@ const BetHistory = () => {
   const tabsClasses = useTabsStyles();
   const tabClasses = useTabStyles();
   const [selectedTab, setSelectedTab] = useState(0);
+  const lastCrashes = useSelector(selectLastTenCrashes);
 
   const handleTabChange = (_, newValue) => {
     setSelectedTab(newValue);
@@ -67,9 +70,9 @@ const BetHistory = () => {
       <TabPanel value={selectedTab} index={0}>
         <div className={styles.lastCrashes}>
           {lastCrashes.map(crash => (
-            <div key={crash.id} className={styles.lastCrash}>
+            <div key={crash} className={styles.lastCrash}>
               <span>Last Crash @</span>
-              <span>{crash.value}</span>
+              <span>{crash.toFixed(2)}x</span>
             </div>
           ))}
         </div>
