@@ -95,9 +95,9 @@ const App = () => {
                             text="Events"
                         />
                         <NavbarFooterAction
-                            route={Routes.rosiGame}
+                            route={Routes.games}
                             iconType={IconType.shuttle}
-                            text="Rosi Game"
+                            text="Games"
                         />
                     </NavbarFooter>
                 </ConnectedRouter>
