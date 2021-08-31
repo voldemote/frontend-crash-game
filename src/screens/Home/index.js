@@ -15,6 +15,7 @@ import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import { useEffect } from 'react';
 import Routes from 'constants/Routes';
+import ContentFooter from '../../components/ContentFooter';
 
 const Home = ({ tags, openDrawer, fetchTags }) => {
   const isMount = useIsMount();
@@ -87,19 +88,6 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
     );
   };
 
-  const renderFooter = () => {
-    return (
-      <div className={styles.footer}>
-        <img src={LogoDemo} width={150} alt={'Wallfair'} />
-        <div className={styles.links}>
-          <span>Copyright 2021 Wallfair</span>
-          <Link to={'/privacy-policy'}>Imprint</Link>
-          <Link to={'/terms-and-conditions'}>{'Terms & Conditions'}</Link>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <BaseContainerWithNavbar>
       <Header />
@@ -109,7 +97,7 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
           <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
           {renderCategoriesAndLeaderboard()}
-          {renderFooter()}
+          <ContentFooter />
         </div>
       </div>
       {/* {renderEventCreationButton()} -> TODO: Check if needed */}

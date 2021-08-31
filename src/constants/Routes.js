@@ -27,6 +27,7 @@ export default {
   bet: '/trade/:eventId?/:betId?',
   betOverview: '/my-trades',
   events: '/events/:category?',
+  games: '/games',
   home: '/',
   liveEvents: '/live-events/:category?',
   logout: '/logout',
