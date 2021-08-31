@@ -1,6 +1,6 @@
 import { take, put, call, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import { RosiGameTypes, RosiGameActions } from '../actions/rosi-game';
+import { RosiGameActions } from '../actions/rosi-game';
 import { NotificationActions } from '../actions/notification';
 import _ from 'lodash';
 import ChatMessageType from '../../components/ChatMessageWrapper/ChatMessageType';
@@ -137,6 +137,7 @@ export function* init() {
               break;
             case ChatMessageType.gameStart:
               console.log(payload);
+              yield put(RosiGameActions.setHasStarted());
               break;
             case ChatMessageType.gameEnd:
               console.log(payload);

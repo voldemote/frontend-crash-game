@@ -11,6 +11,18 @@ export default class Api {
     return PRODUCTION_BACKEND_URL;
   }
 
+  static getCrashGameBackendUrl() {
+    if (this.isLocal) {
+      return LOCAL_CRASH_GAME_BACKEND_URL;
+    }
+
+    if (this.isStaging()) {
+      return STAGING_CRASH_GAME_BACKEND_URL;
+    }
+
+    return PRODUCTION_CRASH_GAME_BACKEND_URL;
+  }
+
   static getBackendSocketUrl() {
     if (this.isLocal()) {
       return LOCAL_BACKEND_SOCKET_URL;
@@ -65,6 +77,12 @@ export const LOCAL_BACKEND_URL = 'http://localhost:8000/';
 export const LOCAL_BACKEND_SOCKET_URL = LOCAL_BACKEND_URL;
 export const BACKEND_URL = Api.getBackendUrl();
 export const BACKEND_SOCKET_URL = Api.getBackendSocketUrl();
+
+export const LOCAL_CRASH_GAME_BACKEND_URL = 'http://localhost:8001/';
+export const STAGING_CRASH_GAME_BACKEND_URL = LOCAL_CRASH_GAME_BACKEND_URL;
+export const PRODUCTION_CRASH_GAME_BACKEND_URL = LOCAL_CRASH_GAME_BACKEND_URL;
+export const CRASH_GAME_BACKEND_URL = Api.getCrashGameBackendUrl();
+
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL =
   'api/user/saveAdditionalInformation';

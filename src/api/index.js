@@ -2,7 +2,6 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_AUTHENTICATION_VERIFY_EMAIL } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -208,21 +207,6 @@ const getTags = () => {
   });
 };
 
-const createTrade = (amount, crashFactor) => {
-  return Api.post(ApiUrls.API_BET_PLACE, {
-    amount,
-    crashFactor,
-  }).catch(error => {
-    console.log('[API Error] called: createTrade', error);
-  });
-};
-
-const getCurrentGameInfo = () => {
-  return Api.get(ApiUrls.API_CURRENT).catch(error => {
-    console.log('[API Error] called: getCurrentGameInfo', error);
-  });
-}
-
 export {
   Api,
   createBet,
@@ -246,6 +230,4 @@ export {
   verifyEmail,
   resendEmailVerification,
   getTags,
-  createTrade,
-  getCurrentGameInfo
 };
