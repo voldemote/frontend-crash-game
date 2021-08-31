@@ -1,90 +1,107 @@
 @import '../../styles/all';
 
 .container {
-    display: flex;
-    padding: 40px;
+  display: flex;
+  padding: 40px;
 
-    @media screen and (max-width: $screen-xs) {
-        display: block;
-        padding: 20px;
-    }
+  @media screen and (max-width: $screen-xs) {
+    display: block;
+    padding: 20px;
+  }
 }
 
 .content {
-    padding-right: 30px;
-    flex: 1;
+  padding-right: 30px;
+  flex: 1;
 
-    @media screen and (max-width: $screen-xs) {
-        padding-right: 0px;
-    }
+  @media screen and (max-width: $screen-xs) {
+    padding-right: 0px;
+  }
 }
 
 .animation {
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    color: $colorWhite;
-    border-radius: 10px;
-    background-color: rgba(172,196,255,0.1);
-    margin-bottom: 30px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: $colorWhite;
+  border-radius: 10px;
+  background-color: rgba(172,196,255,0.1);
+  margin-bottom: 30px;
 
-    @media screen and (max-width: $screen-xs) {
-        width: 100%;
-        height: 200px;
-    }
+  @media screen and (max-width: $screen-xs) {
+    width: 100%;
+    height: 200px;
+  }
 }
 
 .sidebar {
-    width: 320px;
+  width: 320px;
 
-    @media screen and (max-width: $screen-xs) {
-        width: 100%;
-    }
+  @media screen and (max-width: $screen-xs) {
+    width: 100%;
+  }
 }
 
 .chatContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 200px;
 
-    @media screen and (max-width: $screen-sm) {
-        display: none;
-    }
+  @media screen and (max-width: $screen-sm) {
+    display: none;
+  }
 }
 
 .chat {
-    height: 300px;
-    padding: 20px;
-    height: auto;
+  height: 300px;
+  padding: 20px;
+  height: auto;
 
-    @media screen and (max-width: $screen-sm) {
-        padding: 0px;
-        height: 250px;
+  @media screen and (max-width: $screen-sm) {
+    padding: 0px;
+    height: 250px;
 
-        .messagesContainer {
-            margin-bottom: 1rem;
-        }
-
-        .chatInput {
-            width: 100%;
-            position: static;
-            background-color: transparent;
-            padding: 0px;
-            z-index: 0;
-
-            input {
-                margin-right: 0px;
-            }
-
-            button {
-                width: 50px;
-            }
-
-            button::after {
-                background: transparent;
-            }
-        }
+    .messagesContainer {
+      margin-bottom: 1rem;
     }
+
+    .chatInput {
+      width: 100%;
+      position: static;
+      background-color: transparent;
+      padding: 0px;
+      z-index: 0;
+
+      input {
+        margin-right: 0px;
+      }
+
+      button {
+        width: 50px;
+      }
+
+      button::after {
+        background: transparent;
+      }
+    }
+  }
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 20px;
+
+  svg {
+    margin-right: 10px;
+  }
+
+  h2 {
+    color: $colorWhite;
+    font-family: "PlusJakarta-Regular";
+    font-size: 24px;
+    font-weight: 700;
+  }
 }
