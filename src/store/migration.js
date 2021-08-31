@@ -1,4 +1,4 @@
-export const MIGRATION_VERSION = 0;
+export const MIGRATION_VERSION = 1;
 
 export const migrations = {
   0: state => {
@@ -66,4 +66,15 @@ export const migrations = {
       },
     };
   },
+  1: state => {
+    return {
+      ...state,
+      rosiGame: {
+        hasStarted: false,
+        lastCrashes: [],
+        inGameBets: [],
+        userBet: null,
+      }
+    }
+  }
 };
