@@ -480,7 +480,7 @@ const Bet = ({
             <div className={styles.headline}>
               <h2>{_.get(event, 'name')}</h2>
               <div>
-                <LiveBadge />
+                {event.type === 'streamed' && <LiveBadge />}
                 <ViewerBadge viewers={1123} />
               </div>
             </div>
@@ -493,7 +493,7 @@ const Bet = ({
                 <div className={styles.chart}>
                   {activeBetId ? (
                     <Chart
-                      height={520}
+                      height={400}
                       data={chartData}
                       filterActive={filterActive}
                       handleChartPeriodFilter={handleChartPeriodFilter}
