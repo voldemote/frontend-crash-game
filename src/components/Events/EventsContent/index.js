@@ -9,6 +9,7 @@ import CategoryList from '../../CategoryList';
 import { useMappedActions } from './hooks/useMappedActions';
 import { useSortFilter } from './hooks/useSortFilter';
 import { useRouteHandling } from './hooks/useRouteHandling';
+import ContentFooter from 'components/ContentFooter';
 
 function EventsContent({ eventType, categories, setCategories }) {
   const [searchInput, setSearchInput] = useState('');
@@ -116,6 +117,7 @@ function EventsContent({ eventType, categories, setCategories }) {
           </Link>
         ))}
       </section>
+      <ContentFooter />
     </>
   );
 }
