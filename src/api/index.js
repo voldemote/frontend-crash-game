@@ -208,6 +208,21 @@ const getTags = () => {
   });
 };
 
+const createTrade = (amount, crashFactor) => {
+  return Api.post(ApiUrls.API_BET_PLACE, {
+    amount,
+    crashFactor,
+  }).catch(error => {
+    console.log('[API Error] called: createTrade', error);
+  });
+};
+
+const getCurrentGameInfo = () => {
+  return Api.get(ApiUrls.API_CURRENT).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+}
+
 export {
   Api,
   createBet,
@@ -231,4 +246,6 @@ export {
   verifyEmail,
   resendEmailVerification,
   getTags,
+  createTrade,
+  getCurrentGameInfo
 };

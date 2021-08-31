@@ -10,7 +10,10 @@ const PlaceBet = () => {
   const [cashout, setCashout] = useState('');
 
   const placeABet = () => {
-    console.log('Submitting');
+    console.log('Trade payload: ', {
+      amount,
+      crashFactor: cashout
+    });
   };
 
   return (
