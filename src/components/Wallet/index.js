@@ -16,7 +16,6 @@ import PaymentProvider from 'constants/PaymentProvider';
 import IconTheme from 'components/Icon/IconTheme';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
-import { GeneralActions } from 'store/actions/general';
 import Routes from 'constants/Routes';
 import { useHistory } from 'react-router-dom';
 import State from 'helper/State';
@@ -34,8 +33,6 @@ const Wallet = ({
   showPopup,
   transactions,
   referrals,
-  handleMyTradesVisible,
-  setOpenDrawer,
 }) => {
   const history = useHistory();
 
@@ -98,11 +95,6 @@ const Wallet = ({
       onClick={() => setOpenMenu(menus.wallet)}
     />
   );
-
-  const goToMyTrades = () => {
-    setOpenDrawer('profile');
-    handleMyTradesVisible(true);
-  };
 
   const renderSwitchableView = () => {
     const switchableViews = [
@@ -332,12 +324,6 @@ const mapDispatchToProps = dispatch => {
   return {
     showPopup: popupType => {
       dispatch(PopupActions.show({ popupType }));
-    },
-    handleMyTradesVisible: bool => {
-      dispatch(GeneralActions.setMyTradesVisible(bool));
-    },
-    setOpenDrawer: drawerName => {
-      dispatch(GeneralActions.setDrawer(drawerName));
     },
   };
 };
