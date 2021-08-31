@@ -6,7 +6,7 @@
   border-radius: $radius;
   overflow: hidden;
 
-  img {
+  > img {
     filter: blur(6px);
     width: 100%;
   }
