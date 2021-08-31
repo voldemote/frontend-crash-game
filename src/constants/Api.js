@@ -89,4 +89,4 @@ export const API_USER_HISTORY = 'api/user/history';
 export const API_USER_OPEN_BETS = 'api/user/open-bets';
 export const API_USER_REFERRAL_LIST = 'api/user/refList';
 export const API_TAGS_LIST = 'api/event/tags';
-export const API_CHART_DATA = 'api/event/bet/:betId/history/chart';
+export const API_CHART_DATA = 'api/event/bet/:betId/history';

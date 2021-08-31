@@ -122,11 +122,13 @@ const fetchHistoryChartData = function* ({ betId, params }) {
     const token = yield select(state => state.authentication.token);
     Api.setToken(token);
 
-    const { data } = yield call(Api.getEventHistoryChartData(betId, params));
+    const { data } = yield call(() =>
+      Api.getEventHistoryChartData(betId, params)
+    );
 
-    yield put(EventActions.fetchFilteredEventsSuccess(data));
+    yield put(EventActions.fetchChartDataSuccess(data));
   } catch (error) {
-    yield put(EventActions.fetchFilteredEventsFail());
+    yield put(EventActions.fetchChartDataFail());
   }
 };
 

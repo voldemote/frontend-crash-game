@@ -6,18 +6,28 @@ import ChartCtr from '../../config/chart';
 import { chartOptions } from '../../helper/Chart/chartOptions';
 import Button from '../Button';
 
-export default function Chart({ data, filterActive, handleChartPeriodFilter }) {
+export default function Chart({
+  height,
+  data,
+  filterActive,
+  handleChartPeriodFilter,
+}) {
   const chartEl = useRef(null);
+  const chartRender = useRef(1);
+  const chartInstance = useRef({});
 
   useEffect(() => {
-    let chartInstance;
-
     if (chartEl.current) {
-      const ctx = chartEl.current.getContext('2d');
+      if (chartRender.current > 1) {
+        chartInstance.current.destroy();
+      }
 
-      chartInstance = new ChartCtr(ctx, chartOptions('line', data));
+      const ctx = chartEl.current.getContext('2d');
+      chartInstance.current = new ChartCtr(ctx, chartOptions('line', data));
     }
-  }, []);
+
+    chartRender.current += 1;
+  }, [data]);
 
   return (
     <>
@@ -27,7 +37,7 @@ export default function Chart({ data, filterActive, handleChartPeriodFilter }) {
             className={classNames(styles.filterButton, {
               [styles.active]: filterActive === '24H',
             })}
-            onClick={handleChartPeriodFilter}
+            onClick={() => handleChartPeriodFilter('24H')}
           >
             24H
           </Button>
@@ -35,7 +45,7 @@ export default function Chart({ data, filterActive, handleChartPeriodFilter }) {
             className={classNames(styles.filterButton, {
               [styles.active]: filterActive === '7D',
             })}
-            onClick={handleChartPeriodFilter}
+            onClick={() => handleChartPeriodFilter('7D')}
           >
             7D
           </Button>
@@ -43,12 +53,12 @@ export default function Chart({ data, filterActive, handleChartPeriodFilter }) {
             className={classNames(styles.filterButton, {
               [styles.active]: filterActive === '30D',
             })}
-            onClick={handleChartPeriodFilter}
+            onClick={() => handleChartPeriodFilter('30D')}
           >
             30D
           </Button>
         </div>
-        <canvas ref={chartEl} height="400"></canvas>
+        <canvas ref={chartEl} height={height}></canvas>
       </div>
     </>
   );
