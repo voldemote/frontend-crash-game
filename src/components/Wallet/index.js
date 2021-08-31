@@ -17,6 +17,7 @@ import PaymentProvider from 'constants/PaymentProvider';
 import IconTheme from 'components/Icon/IconTheme';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
+import { GeneralActions } from 'store/actions/general';
 import Routes from 'constants/Routes';
 import { useHistory } from 'react-router-dom';
 import State from 'helper/State';
@@ -24,6 +25,7 @@ import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
 import { TOKEN_NAME } from '../../constants/Token';
+import { PieChart } from 'react-minimal-pie-chart';
 
 const Wallet = ({
   show,
@@ -34,6 +36,12 @@ const Wallet = ({
   showPopup,
   transactions,
   referrals,
+  liquidFundsPercentage,
+  investedFundsPercentage,
+  overallFundsTotal,
+  openPositions,
+  handleMyTradesVisible,
+  setOpenDrawer,
 }) => {
   const history = useHistory();
 
@@ -96,6 +104,11 @@ const Wallet = ({
       onClick={() => setOpenMenu(menus.wallet)}
     />
   );
+
+  const goToMyTrades = () => {
+    setOpenDrawer('profile');
+    handleMyTradesVisible(true);
+  };
 
   const renderSwitchableView = () => {
     const switchableViews = [
@@ -176,6 +189,81 @@ const Wallet = ({
     );
   };
 
+  const renderWalletBalance = () => {
+    return (
+      <div className={styles.walletBalance}>
+        <div className={styles.walletBalanceHeading}>
+          <p className={styles.walletBalanceTitle}>total balance</p>
+          <div className={styles.goToMyTrades} onClick={goToMyTrades}>
+            <p className={styles.goToMyTradesText}>Go to my Trades</p>
+            <Icon
+              className={styles.goToMyTradesIcon}
+              iconType={IconType.arrowTopRight}
+            />
+          </div>
+        </div>
+        <div className={styles.walletBalanceContent}>
+          <div className={styles.walletBalanceItem}>
+            <div className={styles.overallFunds}>
+              <div className={styles.overallFundsAmount}>
+                <PieChart
+                  data={[
+                    {
+                      title: 'InvestedFunds',
+                      value: investedFundsPercentage,
+                      color: '#69ffa5',
+                    },
+                    {
+                      title: 'LiquidFunds',
+                      value: liquidFundsPercentage,
+                      color: '#3570ff',
+                    },
+                  ]}
+                  lineWidth={14}
+                  startAngle={270}
+                />
+                <p className={styles.overallFundsTotal}>
+                  {formatToFixed(overallFundsTotal)}
+                </p>
+                <p className={styles.overallFundsTitle}>{TOKEN_NAME}</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.walletBalanceSum}>
+            <div className={styles.walletBalanceItem}>
+              <div className={styles.availableWfairs}>
+                <div className={styles.availableWfairsHeadline}>
+                  <div className={styles.availableWfairsDot} />
+                  Available wfairs
+                </div>
+                <div className={styles.availableWfairsAmount}>
+                  <p className={styles.availableWfairsTotal}>
+                    {formatToFixed(balance)}
+                  </p>
+                  <p className={styles.availableWfairsTitle}>{TOKEN_NAME}</p>
+                </div>
+              </div>
+            </div>
+            <div className={styles.walletBalanceItem}>
+              <div className={styles.liquidFunds}>
+                <div className={styles.liquidFundsHeadline}>
+                  <div className={styles.liquidFundsDot} />
+                  Open positions
+                </div>
+                <div className={styles.liquidFundsAmount}>
+                  <p className={styles.liquidFundsTotal}>
+                    {formatToFixed(openPositions)}
+                  </p>
+                  <p className={styles.liquidFundsTitle}>{TOKEN_NAME}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       className={classNames(
@@ -189,17 +277,7 @@ const Wallet = ({
           isOpen(menus.wallet),
           'My Wallet',
           <>
-            <div className={styles.walletBalance} role="button">
-              <span className={styles.balance}>
-                {formatToFixed(balance)}
-                <sup className={styles.currency}>{TOKEN_NAME}</sup>
-              </span>
-              <span className={styles.balanceText}>
-                Total balance available in {TOKEN_NAME}
-              </span>
-              <Icon iconType={'refresh'} className={styles.refreshIcon} />
-            </div>
-
+            {renderWalletBalance()}
             <MenuItem
               classes={[styles.transactionHistory]}
               label={`Transaction History (${transactionCount})`}
@@ -323,12 +401,28 @@ const mapStateToProps = state => {
     };
   });
 
+  const openBets = state.bet.openBets;
+  const balance = +state.authentication.balance;
+  const investmentAmount = _.sum(
+    openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)
+  );
+  const openPositions = _.sum(
+    openBets.map(_.property('outcomeAmount')).map(Number).filter(_.isFinite)
+  );;
+  const overallFundsTotal = balance + investmentAmount;
+  const liquidFundsPercentage = (100 * balance) / overallFundsTotal;
+  const investedFundsPercentage = (100 * investmentAmount) / overallFundsTotal;
+
   return {
     balance: state.authentication.balance,
     referralCount,
     transactionCount,
     transactions: _.orderBy(transactions, ['trx_timestamp'], ['desc']),
     referrals: state.authentication.referralList,
+    liquidFundsPercentage,
+    investedFundsPercentage,
+    overallFundsTotal,
+    openPositions,
   };
 };
 
@@ -336,6 +430,12 @@ const mapDispatchToProps = dispatch => {
   return {
     showPopup: popupType => {
       dispatch(PopupActions.show({ popupType }));
+    },
+    handleMyTradesVisible: bool => {
+      dispatch(GeneralActions.setMyTradesVisible(bool));
+    },
+    setOpenDrawer: drawerName => {
+      dispatch(GeneralActions.setDrawer(drawerName));
     },
   };
 };
