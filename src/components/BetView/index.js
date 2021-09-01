@@ -17,7 +17,7 @@ import TimeLeftCounter from '../../components/TimeLeftCounter';
 import TokenNumberInput from '../TokenNumberInput';
 import TokenValueSelector from '../TokenValueSelector';
 import { BetActions } from '../../store/actions/bet';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHasMounted } from '../hoc/useHasMounted';
 import { useParams } from 'react-router-dom';
@@ -193,6 +193,9 @@ const BetView = ({
   const [menuOpened, setMenuOpened] = useState(false);
   const hasMounted = useHasMounted();
 
+  const userLoggedIn = useSelector(
+    state => state.authentication.authState === 'LOGGED_IN'
+  );
   const validateInput = () => {
     const betEndDate = _.get(bet, 'endDate');
     const current = moment(new Date());
@@ -211,10 +214,16 @@ const BetView = ({
       valid = false;
     }
 
-    if (_.toNumber(commitment) > _.toNumber(balance) && !isSell) {
+    if (
+      userLoggedIn &&
+      _.toNumber(commitment) > _.toNumber(balance) &&
+      !isSell
+    ) {
       valid = false;
 
       setCommitmentErrorText('Not enough balance.');
+    } else if (!userLoggedIn) {
+      setCommitmentErrorText('Sign in to start trading.');
     } else {
       setCommitmentErrorText('');
     }
@@ -429,12 +438,6 @@ const BetView = ({
           value={tokenNumber}
           setValue={onTokenNumberChange}
           errorText={commitmentErrorText}
-        />
-        <TokenValueSelector
-          className={styles.tokenValueSelector}
-          values={getDefaultTokenSelectionValues()}
-          onSelect={onTokenSelect}
-          activeValue={tokenNumber}
         />
       </>
     );
