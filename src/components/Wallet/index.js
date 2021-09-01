@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import Icon from '../Icon';
-import { formatToFixed } from 'helper/FormatNumbers';
 import { connect } from 'react-redux';
 import styles from './styles.module.scss';
 import _ from 'lodash';
@@ -10,41 +9,28 @@ import IconType from 'components/Icon/IconType';
 import PaymentAction from 'constants/PaymentAction';
 import SwitchableContainer from 'components/SwitchableContainer';
 import { useEffect, useState } from 'react';
-import WalletCard from 'components/WalletCard';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
-import WalletPaymentCard from 'components/WalletPaymentCard';
-import PaymentProvider from 'constants/PaymentProvider';
 import IconTheme from 'components/Icon/IconTheme';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
-import { GeneralActions } from 'store/actions/general';
-import Routes from 'constants/Routes';
-import { useHistory } from 'react-router-dom';
 import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
 import { TOKEN_NAME } from '../../constants/Token';
-import { PieChart } from 'react-minimal-pie-chart';
+import WalletBalance from '../WalletBalance';
+import PaymentForm from '../PaymentForm';
+import { PAYMENT_TYPE } from 'constants/Payment';
 
 const Wallet = ({
   show,
-  balance,
   referralCount,
   transactionCount,
   close,
   showPopup,
   transactions,
   referrals,
-  liquidFundsPercentage,
-  investedFundsPercentage,
-  overallFundsTotal,
-  openPositions,
-  handleMyTradesVisible,
-  setOpenDrawer,
 }) => {
-  const history = useHistory();
-
   const menus = {
     wallet: 'wallet',
     transactionHistory: 'transactionHistory',
@@ -57,10 +43,13 @@ const Wallet = ({
   };
 
   const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
-
   const [openMenu, setOpenMenu] = useState(menus.wallet);
 
   const isOpen = page => openMenu === page;
+  const paymentType = {
+    [PaymentAction.deposit]: PAYMENT_TYPE.deposit,
+    [PaymentAction.withdrawal]: PAYMENT_TYPE.withdrawal,
+  }
 
   useEffect(() => {
     if (!show) {
@@ -77,26 +66,6 @@ const Wallet = ({
     }
   };
 
-  const onReferralListClick = () => {
-    showPopup(PopupTheme.referralList);
-  };
-
-  const onPaymentCardClickCallback = paymentProvider => {
-    return () => {
-      let route = Routes.walletDeposit;
-
-      if (paymentAction === PaymentAction.withdrawal) {
-        route = Routes.walletWithdrawal;
-      }
-
-      history.push(
-        Routes.getRouteWithParameters(route, {
-          paymentProvider,
-        })
-      );
-    };
-  };
-
   const backButton = () => (
     <Icon
       className={styles.backButton}
@@ -104,11 +73,6 @@ const Wallet = ({
       onClick={() => setOpenMenu(menus.wallet)}
     />
   );
-
-  const goToMyTrades = () => {
-    setOpenDrawer('profile');
-    handleMyTradesVisible(true);
-  };
 
   const renderSwitchableView = () => {
     const switchableViews = [
@@ -131,40 +95,7 @@ const Wallet = ({
         currentIndex={selectedIndex}
         whiteBackground={false}
         setCurrentIndex={onPaymentActionSwitch}
-      />
-    );
-  };
-
-  const renderConditionalWalletCards = () => {
-    if (paymentAction === PaymentAction.deposit) {
-      const referralText = (
-        <>
-          Invite your friends using your referral link and{' '}
-          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined
-          over your link.
-        </>
-      );
-
-      return (
-        <WalletCard
-          title={`+50 ${TOKEN_NAME} Tokens: Invite your friends`}
-          subtitle={`50 ${TOKEN_NAME} tokens for inviting people`}
-          text={referralText}
-          buttonText={'Share with your friends'}
-          onClick={onReferralListClick}
-        >
-          <ReferralLinkCopyInputBox className={styles.referralLinkList} />
-        </WalletCard>
-      );
-    }
-  };
-
-  const renderWalletPaymentCard = paymentProvider => {
-    return (
-      <WalletPaymentCard
-        provider={paymentProvider}
-        action={paymentAction}
-        onClick={onPaymentCardClickCallback(paymentProvider)}
+        className={styles.switchablePayment}
       />
     );
   };
@@ -189,81 +120,6 @@ const Wallet = ({
     );
   };
 
-  const renderWalletBalance = () => {
-    return (
-      <div className={styles.walletBalance}>
-        <div className={styles.walletBalanceHeading}>
-          <p className={styles.walletBalanceTitle}>total balance</p>
-          <div className={styles.goToMyTrades} onClick={goToMyTrades}>
-            <p className={styles.goToMyTradesText}>Go to my Trades</p>
-            <Icon
-              className={styles.goToMyTradesIcon}
-              iconType={IconType.arrowTopRight}
-            />
-          </div>
-        </div>
-        <div className={styles.walletBalanceContent}>
-          <div className={styles.walletBalanceItem}>
-            <div className={styles.overallFunds}>
-              <div className={styles.overallFundsAmount}>
-                <PieChart
-                  data={[
-                    {
-                      title: 'InvestedFunds',
-                      value: investedFundsPercentage,
-                      color: '#69ffa5',
-                    },
-                    {
-                      title: 'LiquidFunds',
-                      value: liquidFundsPercentage,
-                      color: '#3570ff',
-                    },
-                  ]}
-                  lineWidth={14}
-                  startAngle={270}
-                />
-                <p className={styles.overallFundsTotal}>
-                  {formatToFixed(overallFundsTotal)}
-                </p>
-                <p className={styles.overallFundsTitle}>{TOKEN_NAME}</p>
-              </div>
-            </div>
-          </div>
-          <div className={styles.walletBalanceSum}>
-            <div className={styles.walletBalanceItem}>
-              <div className={styles.availableWfairs}>
-                <div className={styles.availableWfairsHeadline}>
-                  <div className={styles.availableWfairsDot} />
-                  Available wfairs
-                </div>
-                <div className={styles.availableWfairsAmount}>
-                  <p className={styles.availableWfairsTotal}>
-                    {formatToFixed(balance)}
-                  </p>
-                  <p className={styles.availableWfairsTitle}>{TOKEN_NAME}</p>
-                </div>
-              </div>
-            </div>
-            <div className={styles.walletBalanceItem}>
-              <div className={styles.liquidFunds}>
-                <div className={styles.liquidFundsHeadline}>
-                  <div className={styles.liquidFundsDot} />
-                  Open positions
-                </div>
-                <div className={styles.liquidFundsAmount}>
-                  <p className={styles.liquidFundsTotal}>
-                    {formatToFixed(openPositions)}
-                  </p>
-                  <p className={styles.liquidFundsTitle}>{TOKEN_NAME}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div
       className={classNames(
@@ -277,7 +133,8 @@ const Wallet = ({
           isOpen(menus.wallet),
           'My Wallet',
           <>
-            {renderWalletBalance()}
+            <WalletBalance />
+
             <MenuItem
               classes={[styles.transactionHistory]}
               label={`Transaction History (${transactionCount})`}
@@ -294,11 +151,7 @@ const Wallet = ({
             />
 
             {renderSwitchableView()}
-            {renderConditionalWalletCards()}
-            {/* Deactivated for now @see: https://wallfair-product.atlassian.net/browse/ML-124 {renderWalletPaymentCard(PaymentProvider.wfairToken)} */}
-            {renderWalletPaymentCard(PaymentProvider.crypto)}
-            {renderWalletPaymentCard(PaymentProvider.paypal)}
-            {renderWalletPaymentCard(PaymentProvider.debitCreditCard)}
+            <PaymentForm paymentType={paymentType[paymentAction]} />
           </>,
           true
         )}
@@ -401,28 +254,11 @@ const mapStateToProps = state => {
     };
   });
 
-  const openBets = state.bet.openBets;
-  const balance = +state.authentication.balance;
-  const investmentAmount = _.sum(
-    openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)
-  );
-  const openPositions = _.sum(
-    openBets.map(_.property('outcomeAmount')).map(Number).filter(_.isFinite)
-  );
-  const overallFundsTotal = balance + investmentAmount;
-  const liquidFundsPercentage = (100 * balance) / overallFundsTotal;
-  const investedFundsPercentage = (100 * investmentAmount) / overallFundsTotal;
-
   return {
-    balance: state.authentication.balance,
     referralCount,
     transactionCount,
     transactions: _.orderBy(transactions, ['trx_timestamp'], ['desc']),
     referrals: state.authentication.referralList,
-    liquidFundsPercentage,
-    investedFundsPercentage,
-    overallFundsTotal,
-    openPositions,
   };
 };
 
@@ -430,12 +266,6 @@ const mapDispatchToProps = dispatch => {
   return {
     showPopup: popupType => {
       dispatch(PopupActions.show({ popupType }));
-    },
-    handleMyTradesVisible: bool => {
-      dispatch(GeneralActions.setMyTradesVisible(bool));
-    },
-    setOpenDrawer: drawerName => {
-      dispatch(GeneralActions.setDrawer(drawerName));
     },
   };
 };

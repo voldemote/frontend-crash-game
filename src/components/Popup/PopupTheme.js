@@ -9,4 +9,6 @@ export default {
   signUpNotificationFirst: 'signUpNotificationFirst',
   signUpNotificationSecond: 'signUpNotificationSecond',
   tradeView: 'tradeView',
+  withdrawalSuccess: 'withdrawalSuccess',
+  deposit: 'deposit',
 };

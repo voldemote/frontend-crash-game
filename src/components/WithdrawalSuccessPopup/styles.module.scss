@@ -1,0 +1,101 @@
+@import '../../styles/all';
+
+.withdrawalSuccess {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 35px;
+
+  .logo {
+    height: 60px;
+  }
+
+  .title {
+    font-family: $fontBold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .subtitle {
+    font-family: $fontRegular;
+    font-size: 14px;
+  }
+
+  .content {
+    margin: 100px 0;
+    text-align: center;
+    color: $colorBlack;
+
+    @media (max-width: $screen-sm) {
+      margin: 50px 0;
+    }
+
+    .message {
+      font-family: $fontBold;
+      font-size: 24px;
+    }
+
+    .info {
+      font-size: 12px;
+      color: $colorPrimary;
+      opacity: .4;
+      padding-top: 10px;
+    }
+  }
+
+  .summary {
+    width: 100%;
+    border-top: 1px dashed $colorGrayLight2;
+    padding: 20px 30px 40px;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      @media (max-width: $screen-sm) {
+        margin-bottom: 10px;
+      }
+
+      .key {
+        opacity: .4;
+      }
+
+      .value {
+        color: $colorPrimary;
+      }
+    }
+  }
+
+  .blockchainLink {
+    position: relative;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    font-family: $fontBold;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      background: url('../../data/backgrounds/highlight-settings-my-bets.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .text {
+      z-index: 1;
+
+      .underline {
+        text-decoration: underline;
+      }
+    }
+  }
+}

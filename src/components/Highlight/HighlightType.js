@@ -10,4 +10,5 @@ export default {
   highlightSettingsMyWallet: 'highlightSettingsMyWallet',
   highlightSettingsSupport: 'highlightSettingsSupport',
   highlightPlaceBet: 'highlightPlaceBet',
+  highlightDeposit: 'highlightDeposit',
 };
