@@ -32,6 +32,9 @@ import { BetActions } from 'store/actions/bet';
 import NavbarFooter from '../../components/NavbarFooter';
 import NavbarFooterAction from '../../components/NavbarFooterAction';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
+import Chart from '../../components/Chart';
+import { useChartData } from './hooks/useChartData';
+import Placeholder from '../../components/Placeholder';
 
 const Bet = ({
   showPopup,
@@ -55,6 +58,8 @@ const Bet = ({
   const mobileChatRef = useRef(null);
 
   const currentFromLocation = useBetPreviousLocation();
+  const { chartData, filterActive, handleChartPeriodFilter } =
+    useChartData(betId);
 
   const status = {
     active: 1,
@@ -448,11 +453,32 @@ const Bet = ({
         <div className={styles.row}>
           <div className={styles.columnLeft}>
             <div className={styles.streamContainer}>
-              <TwitchEmbedVideo video={event.streamUrl} />
-              <div className={styles.timeLeft}>
-                <span>Estimated end:</span>
-                <TimeLeftCounter endDate={new Date(_.get(event, 'endDate'))} />
-              </div>
+              {event.type === 'non-streamed' ? (
+                <div className={styles.chart}>
+                  {betViewIsOpen ? (
+                    <Chart
+                      height={400}
+                      data={chartData}
+                      filterActive={filterActive}
+                      handleChartPeriodFilter={handleChartPeriodFilter}
+                    />
+                  ) : (
+                    <Placeholder style={{ height: '400px' }}>
+                      <img src={event.previewImageUrl} alt="pic" />
+                    </Placeholder>
+                  )}
+                </div>
+              ) : (
+                <TwitchEmbedVideo video={event.streamUrl} />
+              )}
+              {event.type === 'streamed' && (
+                <div className={styles.timeLeft}>
+                  <span>Estimated end:</span>
+                  <TimeLeftCounter
+                    endDate={new Date(_.get(event, 'endDate'))}
+                  />
+                </div>
+              )}
             </div>
             <Chat className={styles.desktopChat} event={event} />
           </div>
