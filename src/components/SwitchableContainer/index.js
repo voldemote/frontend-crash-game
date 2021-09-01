@@ -13,7 +13,7 @@ const SwitchableContainer = ({
   switchableViews,
   currentIndex,
   setCurrentIndex,
-  handleChartDirectionFilter,
+  handleChartDirectionFilter = _.noop,
 }) => {
   const renderAll = () => {
     return _.map(switchableViews, renderSwitchableView);
@@ -48,7 +48,12 @@ const SwitchableContainer = ({
       >
         <div className={styles.text}>
           {iconType && (
-            <Icon width={'auto'} iconTheme={iconTheme} iconType={iconType} className={styles.icon} />
+            <Icon
+              width={'auto'}
+              iconTheme={iconTheme}
+              iconType={iconType}
+              className={styles.icon}
+            />
           )}
           <span>{name}</span>
         </div>
