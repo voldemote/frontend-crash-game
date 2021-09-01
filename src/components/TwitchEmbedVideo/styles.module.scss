@@ -5,9 +5,4 @@
     display:        flex;
     flex:           1;
     padding-bottom: 1rem;
-
-    @media (max-width: $screen-md)
-    {
-        min-height: 250px;
-    }
 }

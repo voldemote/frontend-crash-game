@@ -9,34 +9,25 @@ import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import HomeSettings from '../HomeSettings';
-import { PieChart } from 'react-minimal-pie-chart';
-import { formatToFixed } from '../../helper/FormatNumbers';
+import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions } from 'store/actions/general';
 import { useSelector } from 'react-redux';
 
 const MainMenu = ({
   opened,
-  openBetCount,
   openBets,
-  balance,
-  totalWin,
-  overallFundsTotal,
-  liquidFundsPercentage,
-  investedFundsPercentage,
-  investmentAmount,
-  sellTransactions,
   user,
   updateUser,
-  setOpenDrawer,
   setEditVisible,
+  handleMyTradesVisible,
+  editVisible,
+  myTradesVisible,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [profilePic, setProfilePic] = useState(user.profilePicture);
-
-  const editVisible = useSelector(state => state.general.editProfileVisible);
 
   const profilePictureRefName = useRef(null);
 
@@ -64,6 +55,10 @@ const MainMenu = ({
 
   const onClickShowEditProfile = () => {
     setEditVisible(!editVisible);
+  };
+
+  const onMyTradesClick = () => {
+    handleMyTradesVisible(!myTradesVisible);
   };
 
   const handleName = e => {
@@ -100,6 +95,28 @@ const MainMenu = ({
         reject(error);
       };
     });
+  };
+
+  const renderMyTradesDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !myTradesVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => handleMyTradesVisible(!myTradesVisible)}
+          />
+          My Trades
+        </h2>
+
+        <MyTrades />
+      </div>
+    );
   };
 
   const editProfileWrapper = () => {
@@ -197,129 +214,16 @@ const MainMenu = ({
         className={classNames(
           styles.panel,
           styles.firstPanel,
-          editVisible && styles.panelHidden
+          (myTradesVisible || editVisible) && styles.panelHidden
         )}
       >
         <h2 className={styles.profileHeading}>My Profile</h2>
         <div className={styles.mainContent}>
-          <div className={styles.profileStats}>
-            <div
-              className={styles.profileStatItem}
-              onClick={() => setOpenDrawer('leaderboard')}
-              role="button"
-              tabIndex="0"
-            >
-              <p className={styles.statItemHeading}>
-                community
-                <br /> leaderboard
-              </p>
-              <div className={styles.statItemContent}>
-                <p className={styles.statItemContent}>{user.rank}</p>
-                <Icon
-                  className={styles.goToIcon}
-                  iconType={IconType.arrowTopRight}
-                />
-              </div>
-            </div>
-            <div
-              className={styles.profileStatItem}
-              onClick={() => setOpenDrawer('wallet')}
-              role="button"
-              tabIndex="0"
-            >
-              <p className={styles.statItemHeading}>
-                my wallet
-                <br /> (in evnt)
-              </p>
-              <div className={styles.statItemContent}>
-                <p className={styles.statItemValue}>{formatToFixed(balance)}</p>
-                <Icon
-                  className={styles.goToIcon}
-                  iconType={IconType.arrowTopRight}
-                />
-              </div>
-            </div>
-            <div className={styles.profileStatItem}>
-              <p className={styles.statItemHeading}>current trades</p>
-              <div className={styles.statItemContent}>
-                <p className={styles.statItemContent}>3</p>
-                <Icon
-                  className={styles.goToIcon}
-                  iconType={IconType.arrowTopRight}
-                />
-              </div>
-            </div>
-          </div>
-          <div className={styles.profileBalance}>
-            <div className={styles.profileBalanceHeading}>
-              <p className={styles.profileBalanceTitle}>total balance</p>
-              <div className={styles.goToMyTrades}>
-                <p className={styles.goToMyTradesText}>Go to my Trades</p>
-                <Icon
-                  className={styles.goToMyTradesIcon}
-                  iconType={IconType.arrowTopRight}
-                />
-              </div>
-            </div>
-            <div className={styles.profileBalanceContent}>
-              <div className={styles.profileBalanceItem}>
-                <div className={styles.overallFunds}>
-                  <div className={styles.overallFundsAmount}>
-                    <PieChart
-                      data={[
-                        {
-                          title: 'InvestedFunds',
-                          value: investedFundsPercentage,
-                          color: '#69ffa5',
-                        },
-                        {
-                          title: 'LiquidFunds',
-                          value: liquidFundsPercentage,
-                          color: '#3570ff',
-                        },
-                      ]}
-                      lineWidth={14}
-                      startAngle={270}
-                    />
-                    <p className={styles.overallFundsTotal}>
-                      {formatToFixed(overallFundsTotal)}
-                    </p>
-                    <p className={styles.overallFundsTitle}>EVNT</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.profileBalanceItem}>
-                <div className={styles.availableEvnts}>
-                  <div className={styles.availableEvntsHeadline}>
-                    <div className={styles.availableEvntsDot} />
-                    Available evnts
-                  </div>
-                  <div className={styles.availableEvntsAmount}>
-                    <p className={styles.availableEvntsTotal}>
-                      {formatToFixed(balance)}
-                    </p>
-                    <p className={styles.availableEvntsTitle}>EVNT</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.profileBalanceItem}>
-                <div className={styles.liquidFunds}>
-                  <div className={styles.liquidFundsHeadline}>
-                    <div className={styles.liquidFundsDot} />
-                    Open positions
-                  </div>
-                  <div className={styles.liquidFundsAmount}>
-                    <p className={styles.liquidFundsTotal}>
-                      {formatToFixed(balance)}
-                    </p>
-                    <p className={styles.liquidFundsTitle}>EVNT</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <HomeSettings
+            onEditClick={() => onClickShowEditProfile()}
+            onMyTradesClick={() => onMyTradesClick()}
+          />
 
-          <HomeSettings onEditClick={() => onClickShowEditProfile()} />
           <div className={styles.buttonContainer}>
             <div
               className={styles.logoutButton}
@@ -331,33 +235,17 @@ const MainMenu = ({
         </div>
       </div>
       {editProfileWrapper()}
+      {renderMyTradesDrawer()}
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  const openBetCount = _.size(state.bet.openBets);
-  const openBets = state.bet.openBets;
-  const balance = +state.authentication.balance;
-  const totalWin = +state.authentication.totalWin;
-  const investmentAmount = _.sum(
-    openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)
-  );
-  const overallFundsTotal = balance + investmentAmount;
-  const liquidFundsPercentage = (100 * balance) / overallFundsTotal;
-  const investedFundsPercentage = (100 * investmentAmount) / overallFundsTotal;
-  const user = state.authentication;
-
   return {
-    openBetCount,
-    openBets,
-    balance,
-    totalWin,
-    overallFundsTotal,
-    liquidFundsPercentage,
-    investedFundsPercentage,
-    investmentAmount,
-    user,
+    openBets: state.bet.openBets,
+    user: state.authentication,
+    editVisible: state.general.editProfileVisible,
+    myTradesVisible: state.general.myTradesVisible,
   };
 };
 
@@ -370,11 +258,11 @@ const mapDispatchToProps = dispatch => {
         })
       );
     },
-    setOpenDrawer: drawerName => {
-      dispatch(GeneralActions.setDrawer(drawerName));
-    },
     setEditVisible: bool => {
       dispatch(GeneralActions.setEditProfileVisible(bool));
+    },
+    handleMyTradesVisible: bool => {
+      dispatch(GeneralActions.setMyTradesVisible(bool));
     },
   };
 };

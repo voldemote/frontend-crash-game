@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import InputBox from 'components/InputBox';
 import Button from 'components/Button';
 import styles from './PlaceBet.module.scss';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const PlaceBet = () => {
   const [amount, setAmount] = useState('');
@@ -15,7 +16,7 @@ const PlaceBet = () => {
   return (
     <div className={classNames(styles.container)}>
       <div className={styles.inputContainer}>
-        <label className={styles.label}>Trade Amount in EVNT</label>
+        <label className={styles.label}>Trade Amount in {TOKEN_NAME}</label>
         <InputBox
           type="number"
           value={amount}

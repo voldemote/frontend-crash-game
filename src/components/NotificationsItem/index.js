@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import style from './styles.module.scss';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const NotificationsItem = ({ notification, setUnread, events }) => {
   const markNotificationRead = () => {
@@ -96,7 +97,7 @@ const NotificationsItem = ({ notification, setUnread, events }) => {
           Congratulations! You won
         </span>
         <span className={style.congratulatoryBannerAmount}>
-          {formatToFixed(notification.tokensWon)} EVNT
+          {formatToFixed(notification.tokensWon)} {TOKEN_NAME}
         </span>
       </div>
     );

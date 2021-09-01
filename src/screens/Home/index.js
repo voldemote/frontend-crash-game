@@ -15,9 +15,9 @@ import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import { useEffect } from 'react';
 import Routes from 'constants/Routes';
-import { LOGGED_IN } from 'constants/AuthState';
+import ContentFooter from '../../components/ContentFooter';
 
-const Home = ({ tags, openDrawer, user, fetchTags }) => {
+const Home = ({ tags, openDrawer, fetchTags }) => {
   const isMount = useIsMount();
 
   useEffect(() => {
@@ -75,29 +75,11 @@ const Home = ({ tags, openDrawer, user, fetchTags }) => {
         <div className={styles.leaderboard}>
           <div className={styles.headline}>
             Community Leaderboard
-            {user.authState == LOGGED_IN && (
-              <div
-                className={styles.leaderboardLink}
-                onClick={onSeeLeaderboard}
-              >
-                See Leaderboard
-              </div>
-            )}
+            <div className={styles.leaderboardLink} onClick={onSeeLeaderboard}>
+              See Leaderboard
+            </div>
           </div>
           <Leaderboard fetch={true} small={true} />
-        </div>
-      </div>
-    );
-  };
-
-  const renderFooter = () => {
-    return (
-      <div className={styles.footer}>
-        <img src={LogoDemo} width={150} alt={'Wallfair'} />
-        <div className={styles.links}>
-          <span>Copyright 2021 Wallfair</span>
-          <Link to={'/privacy-policy'}>Imprint</Link>
-          <Link to={'/terms-and-conditions'}>{'Terms & Conditions'}</Link>
         </div>
       </div>
     );
@@ -112,7 +94,7 @@ const Home = ({ tags, openDrawer, user, fetchTags }) => {
           <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
           {renderCategoriesAndLeaderboard()}
-          {renderFooter()}
+          <ContentFooter />
         </div>
       </div>
       {/* {renderEventCreationButton()} -> TODO: Check if needed */}
@@ -123,7 +105,6 @@ const Home = ({ tags, openDrawer, user, fetchTags }) => {
 const mapStateToProps = state => {
   return {
     tags: state.event.tags,
-    user: state.authentication,
   };
 };
 

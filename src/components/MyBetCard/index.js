@@ -11,6 +11,7 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import IconType from '../Icon/IconType';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const MyBetCard = ({ onClick, transaction, showPopup }) => {
   const [menuOpened, setMenuOpened] = useState(false);
@@ -46,7 +47,9 @@ const MyBetCard = ({ onClick, transaction, showPopup }) => {
       <div className={styles.tradeInfoContainer}>
         <div className={styles.summaryRow}>
           <span className={styles.infoName}>Start Price:</span>
-          <span className={styles.infoValue}>{amount} EVNT</span>
+          <span className={styles.infoValue}>
+            {amount} {TOKEN_NAME}
+          </span>
         </div>
         <div className={styles.summaryRow}>
           <span className={styles.infoName}>Your Prediction:</span>
@@ -56,7 +59,7 @@ const MyBetCard = ({ onClick, transaction, showPopup }) => {
 
         <div className={styles.summaryRow}>
           <span className={styles.cashoutValue}>
-            Cashout {outcomeReturn} EVNT
+            Cashout {outcomeReturn} {TOKEN_NAME}
           </span>
         </div>
       </div>

@@ -26,6 +26,7 @@ import Events from './screens/Events';
 import LiveEvents from './screens/LiveEvents';
 import RosiGame from './screens/RosiGame';
 import { PersistGate } from 'redux-persist/integration/react';
+import Games from './screens/Games';
 
 const { store, persistor } = configStore();
 
@@ -68,6 +69,7 @@ const App = () => {
             <Route path={Routes.wallet} component={Wallet} />
             <Route path={Routes.betOverview} component={BetOverview} />
             <Route path={Routes.verify} component={EmailVerification} />
+            <Route path={Routes.games} component={Games} />
             <Redirect to={Routes.home} />
           </Switch>
           <NavbarFooter skipRoutes={[Routes.bet, Routes.join, Routes.verify]}>
@@ -87,9 +89,9 @@ const App = () => {
               text="Events"
             />
             <NavbarFooterAction
-              route={Routes.rosiGame}
+              route={Routes.games}
               iconType={IconType.shuttle}
-              text="Rosi Game"
+              text="Games"
             />
           </NavbarFooter>
         </ConnectedRouter>

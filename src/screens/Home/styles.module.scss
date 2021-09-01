@@ -21,7 +21,7 @@
 }
 
 .banner {
-    background-image: url('../../data/backgrounds/rosi-game-bg.png');
+    background-image: url('../../data/backgrounds/games/rosi-games-banner-lg.png');
     min-height: 232px;
     width: 100%;
     padding: 50px 30px 20px 30px;
@@ -32,6 +32,17 @@
         padding: 20px;
         min-height: unset;
         height: 150px;
+    }
+
+    @media (max-width: $screen-sm) {
+        background-image: url('../../data/backgrounds/games/rosi-games-banner-mobile.png');
+        height: 100vw;
+        background-position: center;
+        padding: 80px;
+    }
+
+    @media (max-width: $screen-xs) {
+        padding: 40px;
     }
 
     .title {
@@ -45,6 +56,7 @@
 
         @media(max-width: $screen-sm) {
             font-size: 16px;
+            margin-top: 100%;
         }
 
         @media(max-width: $screen-xs) {
@@ -90,49 +102,6 @@
             font-family: $fontLight;
             cursor: pointer;
             text-decoration: underline;
-        }
-    }
-}
-
-.footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 11px;
-    color: $colorWhite;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 80px;
-
-    img {
-        margin-bottom: 40px;
-    }
-
-    .links {
-        > * {
-            padding: 0 30px;
-            opacity: 0.45;
-            white-space: nowrap;
-
-            &:first-child {
-                padding-left: 0;
-            }
-
-            &:last-child {
-                padding-right: 0;
-            }
-
-            @media (max-width: $screen-xs) {
-                padding: 0 10px;
-            }
-        }
-
-        a {
-            text-decoration: none;
-
-            &:hover {
-                opacity: 1;
-            }
         }
     }
 }

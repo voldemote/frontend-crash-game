@@ -5,6 +5,7 @@ import SelectionHelper from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _ from 'lodash';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const ChoiceSelector = ({
   name,
@@ -24,7 +25,9 @@ const ChoiceSelector = ({
         : '-';
 
       return (
-        <span className={styles.choiceWinAmount}>{winAmountString} EVNT</span>
+        <span className={styles.choiceWinAmount}>
+          {winAmountString} {TOKEN_NAME}
+        </span>
       );
     }
 

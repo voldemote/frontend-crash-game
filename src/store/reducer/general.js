@@ -19,9 +19,17 @@ const setEditProfileVisible = (state, { payload }) => {
   };
 };
 
+const setMyTradesVisible = (state, action) => {
+  return {
+    ...state,
+    myTradesVisible: action.visible,
+  };
+};
+
 const reducers = {
   [GeneralTypes.SET_GLOBAL_DRAWER]: setDrawer,
   [GeneralTypes.SET_EDIT_PROFILE_VISIBLE]: setEditProfileVisible,
+  [GeneralTypes.SET_MY_TRADES_VISIBLE]: setMyTradesVisible,
 };
 
 export default function (state = initialState, action) {

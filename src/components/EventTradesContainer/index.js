@@ -37,7 +37,8 @@ const EventTradesContainer = ({
         className={classNames(
           styles.eventViews,
           isCurrent ? styles.selected : null,
-          underlineInactive ? styles.underlineInactive : null
+          underlineInactive ? styles.underlineInactive : null,
+          viewOptions.className
         )}
         onClick={onClick(index)}
       >

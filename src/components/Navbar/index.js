@@ -23,6 +23,7 @@ import { matchPath } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { GeneralActions } from '../../store/actions/general';
 import { useSelector } from 'react-redux';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const Navbar = ({
   user,
@@ -148,7 +149,9 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
       >
         <img src={medalGold} alt="medal" className={style.medal} />
-        <p className={style.rankingText}># {user.rank}</p>
+        <p className={style.rankingText}>
+          {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
+        </p>
       </div>
     );
 
@@ -176,7 +179,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.wallet)}
       >
         <Icon iconType={'wallet'} />
-        {getBalance()} EVNT
+        {getBalance()} {TOKEN_NAME}
       </div>
     );
 
@@ -239,7 +242,7 @@ const Navbar = ({
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
           {number}
-          <span className={style.leaderboardInfoItemToken}> EVNT</span>
+          <span className={style.leaderboardInfoItemToken}> {TOKEN_NAME}</span>
         </div>
       </div>
     );
@@ -265,17 +268,21 @@ const Navbar = ({
             <br />
             Leaderboard
           </p>
-          <div className={style.leaderboardHeadingRank}>
-            <div className={style.leaderboardHeadingRankText}>MY RANK</div>
-            <div className={style.leaderboardHeadingRankValue}>
-              #{user.rank}
+          {isLoggedIn() && (
+            <div className={style.leaderboardHeadingRank}>
+              <div className={style.leaderboardHeadingRankText}>MY RANK</div>
+              <div className={style.leaderboardHeadingRankValue}>
+                #{user.rank}
+              </div>
             </div>
+          )}
+        </div>
+        {isLoggedIn() && (
+          <div className={style.leaderboardInfo}>
+            {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
+            {renderLeaderboardInfo('MISSING TO NEXT RANK', user.toNextRank)}
           </div>
-        </div>
-        <div className={style.leaderboardInfo}>
-          {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
-          {renderLeaderboardInfo('MISSING TO NEXT RANK', user.toNextRank)}
-        </div>
+        )}
         <Leaderboard
           fetch={openDrawer === drawers.leaderboard}
           setMissingAmount={setMisingWinnerAmount}
@@ -307,7 +314,6 @@ const Navbar = ({
       <MainMenu
         opened={isOpen(drawers.profile)}
         closeMobileMenu={closeDrawers}
-        sellTransactions={sellTransactions}
       />
     );
   };
@@ -337,7 +343,7 @@ const Navbar = ({
         <div className={style.linkWrapper}>
           {renderNavbarLink(`/live-events`, 'Live Events')}
           {renderNavbarLink(`/events`, 'Events')}
-          {renderNavbarLink(Routes.rosiGame, 'Games')}
+          {renderNavbarLink(`/games`, 'Games')}
         </div>
       </div>
 

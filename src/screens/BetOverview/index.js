@@ -16,6 +16,7 @@ import HighlightType from '../../components/Highlight/HighlightType';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
   const queryParams = new URLSearchParams(window.location.search);
@@ -56,12 +57,12 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
 
     return [
       BetSummaryHelper.getDivider(),
-      BetSummaryHelper.getKeyValue('Start Price', amount + ' EVNT'),
+      BetSummaryHelper.getKeyValue('Start Price', amount + ' ' + TOKEN_NAME),
       BetSummaryHelper.getKeyValue('Your Prediction', outcomeValue),
       BetSummaryHelper.getDivider(),
       BetSummaryHelper.getKeyValue(
-        'EVNT Cashout',
-        outcomeReturn + ' EVNT',
+        `${TOKEN_NAME} Cashout`,
+        outcomeReturn + ' ' + TOKEN_NAME,
         false,
         true,
         false,
@@ -117,13 +118,13 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
 
     return [
       BetSummaryHelper.getDivider(),
-      BetSummaryHelper.getKeyValue('Your Invest', amount + ' EVNT'),
-      BetSummaryHelper.getKeyValue('Fee', feeAmount + ' EVNT'),
+      BetSummaryHelper.getKeyValue('Your Invest', amount + ' ' + TOKEN_NAME),
+      BetSummaryHelper.getKeyValue('Fee', feeAmount + ' ' + TOKEN_NAME),
       BetSummaryHelper.getKeyValue('Your Bet', outcomeValue),
       BetSummaryHelper.getDivider(),
       BetSummaryHelper.getKeyValue(
         'Yield',
-        outcomeReturn + ' EVNT',
+        outcomeReturn + ' ' + TOKEN_NAME,
         false,
         true
       ),
@@ -181,7 +182,7 @@ const BetOverview = ({ openBets, transactions, setSelectedBet, showPopup }) => {
     <BaseContainerWithNavbar withPaddingTop={true} contentPadding={true}>
       {renderSwitchableView()}
       <div className={styles.contentContainer}>{renderContent()}</div>
-      <EventsCarouselContainer />
+      {/* <EventsCarouselContainer /> */}
     </BaseContainerWithNavbar>
   );
 };

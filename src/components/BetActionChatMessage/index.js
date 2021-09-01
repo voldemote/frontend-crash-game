@@ -7,6 +7,7 @@ import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
 import { connect } from 'react-redux';
 import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const BetActionChatMessage = ({
   chatMessageType,
@@ -44,7 +45,8 @@ const BetActionChatMessage = ({
       case ChatMessageType.createBet:
         return (
           <>
-            {userName} created trade <strong>{tokenAmount} EVNT</strong> on{' '}
+            {userName} created trade{' '}
+            <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong> on{' '}
             <strong>{outcomeValue}</strong>.
           </>
         );
@@ -52,8 +54,8 @@ const BetActionChatMessage = ({
       case ChatMessageType.placeBet:
         return (
           <>
-            {userName} bought <strong>{tokenAmount} EVNT</strong> of{' '}
-            <strong>{outcomeValue}</strong>.
+            {userName} bought <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong>{' '}
+            of <strong>{outcomeValue}</strong>.
           </>
         );
 
@@ -61,7 +63,7 @@ const BetActionChatMessage = ({
         return (
           <>
             {userName} sold <strong>{outcomeValue}</strong> for{' '}
-            <strong>{tokenAmount} EVNT</strong>.
+            <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong>.
           </>
         );
     }

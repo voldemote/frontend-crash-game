@@ -1,12 +1,12 @@
 import CryptoLogo from '../../data/images/ethereum.svg';
-import EvntTokenLogo from '../../data/images/logo.png';
+import WfairTokenLogo from '../../data/images/logo.png';
 import MastercardLogo from '../../data/images/mastercard.png';
 import PaymentAction from '../../constants/PaymentAction';
 import PaymentProvider from '../../constants/PaymentProvider';
 import PayPalLogo from '../../data/images/paypal.svg';
-
 import VisaLogo from '../../data/images/visa.svg';
 import WalletCard from '../WalletCard';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const WalletPaymentCard = ({ provider, action, onClick }) => {
   const getLogo = () => {
@@ -45,12 +45,12 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
           />
         );
 
-      case PaymentProvider.evntToken:
+      case PaymentProvider.wfairToken:
         return (
           <img
-            src={EvntTokenLogo}
+            src={WfairTokenLogo}
             style={{ width: '100%', maxWidth: '30px' }}
-            alt={'EVNT Token'}
+            alt={`${TOKEN_NAME} Token`}
           />
         );
     }
@@ -61,20 +61,20 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
   const getTitle = () => {
     switch (provider) {
       case PaymentProvider.paypal:
-        return 'Buy EVNT tokens with PayPal';
+        return `Buy ${TOKEN_NAME} tokens with PayPal`;
 
       case PaymentProvider.debitCreditCard:
-        return 'Buy EVNT tokens with Debit or Credit Card';
+        return `Buy ${TOKEN_NAME} tokens with Debit or Credit Card`;
 
       case PaymentProvider.crypto:
-        return 'Buy EVNT tokens with Cryptocurrencies';
+        return `Buy ${TOKEN_NAME} tokens with Cryptocurrencies`;
 
-      case PaymentProvider.evntToken:
+      case PaymentProvider.wfairToken:
         if (action === PaymentAction.deposit) {
-          return 'Free EVNT Tokens';
+          return `Free ${TOKEN_NAME} Tokens`;
         }
 
-        return 'EVNT Token';
+        return `${TOKEN_NAME} Token`;
     }
 
     return null;
@@ -92,8 +92,8 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
         case PaymentProvider.crypto:
           return 'Pay with other cryptocurrencies';
 
-        case PaymentProvider.evntToken:
-          return 'Pay with EVNT Tokens';
+        case PaymentProvider.wfairToken:
+          return `Pay with ${TOKEN_NAME} Tokens`;
       }
     } else {
       switch (provider) {
@@ -106,8 +106,8 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
         case PaymentProvider.crypto:
           return 'Withdraw to other cryptocurrencies';
 
-        case PaymentProvider.evntToken:
-          return 'Withdraw in EVNT Tokens';
+        case PaymentProvider.wfairToken:
+          return `Withdraw in ${TOKEN_NAME} Tokens`;
       }
     }
 
@@ -126,8 +126,8 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
         case PaymentProvider.crypto:
           return 'Pay with other cryptocurrencies';
 
-        case PaymentProvider.evntToken:
-          return 'Pay with EVNT Tokens';
+        case PaymentProvider.wfairToken:
+          return `Pay with ${TOKEN_NAME} Tokens`;
       }
     } else {
       switch (provider) {
@@ -140,8 +140,8 @@ const WalletPaymentCard = ({ provider, action, onClick }) => {
         case PaymentProvider.crypto:
           return 'Withdraw to other cryptocurrencies';
 
-        case PaymentProvider.evntToken:
-          return 'Withdraw in EVNT Tokens';
+        case PaymentProvider.wfairToken:
+          return `Withdraw in ${TOKEN_NAME} Tokens`;
       }
     }
 
