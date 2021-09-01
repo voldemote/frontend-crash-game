@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-import ApiConstants from '../constants/Api';
+import { BACKEND_SOCKET_URL } from '../constants/Api';
 
 export let websocket = null;
 export const createSocket = token => {
@@ -7,7 +7,7 @@ export const createSocket = token => {
     console.error('Not auth token given!');
   }
 
-  const socket = io(ApiConstants.getBackendSocketUrl(), {
+  const socket = io(BACKEND_SOCKET_URL, {
     query: `token=${token}`,
     transports: ['websocket'],
   });
