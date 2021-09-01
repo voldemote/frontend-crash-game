@@ -11,4 +11,6 @@ export default {
   tradeView: 'tradeView',
   withdrawalSuccess: 'withdrawalSuccess',
   deposit: 'deposit',
+  evaluateEvent: 'evaluateEvent',
+  reportEvent: 'reportEvent',
 };

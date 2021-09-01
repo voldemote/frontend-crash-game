@@ -10,6 +10,9 @@ import StateBadge from 'components/StateBadge';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import IconType from '../Icon/IconType';
+import ButtonSmall from '../ButtonSmall';
+import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
+import BetState from 'components/BetView/BetState';
 
 const RelatedBetCard = ({ onClick, bet, showPopup }) => {
   const [menuOpened, setMenuOpened] = useState(false);
@@ -51,47 +54,85 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
     setMenuOpened(!menuOpened);
   };
 
+  const openEvaluate = () => {
+    showPopup(PopupTheme.evaluateEvent, {
+      small: true,
+      bet: {
+        question: bet.marketQuestion,
+      },
+    });
+  };
+
+  const openReport = () => {
+    showPopup(PopupTheme.reportEvent, { small: true });
+  };
+
   return (
     <div className={styles.relatedBetCard}>
-      <div className={styles.relatedBetCardContainer} onClick={onClick}>
+      <div className={styles.relatedBetCardContainer}>
         <div className={styles.relatedBetCardHeader}>
           <span className={styles.title}>{bet.marketQuestion}</span>
 
           <div className={styles.menuMain}>
-            <Icon
-              iconType={IconType.menu}
-              iconTheme={null}
-              onClick={e => openMenu(e)}
+            <ButtonSmall
+              text="Evaluate"
+              iconType={IconType.thumbUp}
+              iconLeft={true}
+              butonTheme={ButtonSmallTheme.grey}
+              onClick={openEvaluate}
             />
-            <div
-              className={classNames(
-                styles.menuBox,
-                menuOpened ? styles.menuBoxOpened : null
-              )}
-            >
+            <div>
+              <Icon
+                iconType={IconType.menu}
+                iconTheme={null}
+                onClick={e => openMenu(e)}
+                className={styles.menuBoxIcon}
+              />
               <div
-                className={styles.menuItem}
-                onClick={e => openInfoPopup(PopupTheme.eventDetails, e)}
+                className={classNames(
+                  styles.menuBox,
+                  menuOpened ? styles.menuBoxOpened : null
+                )}
               >
-                {renderMenuInfoIcon()}
-                <span>
-                  See <strong>Event</strong> Details
-                </span>
-              </div>
-              <div
-                className={styles.menuItem}
-                onClick={e => openInfoPopup(PopupTheme.tradeDetails, e)}
-              >
-                {renderMenuInfoIcon()}
-                <span>
-                  See <strong>Trade</strong> Details
-                </span>
+                <div
+                  className={styles.menuItem}
+                  onClick={e => openInfoPopup(PopupTheme.eventDetails, e)}
+                >
+                  {renderMenuInfoIcon()}
+                  <span>
+                    See <strong>Event</strong> Details
+                  </span>
+                </div>
+                <div
+                  className={styles.menuItem}
+                  onClick={e => openInfoPopup(PopupTheme.tradeDetails, e)}
+                >
+                  {renderMenuInfoIcon()}
+                  <span>
+                    See <strong>Trade</strong> Details
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.stateBadgeContainer}>
           <StateBadge state={_.get(bet, 'status')} />
+          {bet?.status === BetState.resolved && (
+            <ButtonSmall
+              text="Report"
+              butonTheme={ButtonSmallTheme.red}
+              onClick={openReport}
+            />
+          )}
+          {bet?.status === BetState.active && (
+            <ButtonSmall
+              text="Bet"
+              iconType={IconType.arrowSmallRight}
+              butonTheme={ButtonSmallTheme.dark}
+              onClick={onClick}
+            />
+          )}
         </div>
       </div>
       {renderFooter()}

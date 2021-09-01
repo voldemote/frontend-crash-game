@@ -1,0 +1,68 @@
+@import '../../styles/all';
+
+.evaluateEvent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 35px;
+
+  .logo {
+    height: 60px;
+  }
+
+  .title {
+    font-family: $fontBold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .subtitle {
+    font-family: $fontRegular;
+    font-size: 14px;
+    opacity: .5;
+    padding-top: 5px;
+  }
+
+  .content {
+    padding: 0;
+  }
+
+  .ratingTabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+
+    .ratingItem {
+      min-height: 30px;
+      min-width: 70px;
+      border-radius: 4px;
+      background-color: $colorGrayLight7;
+      font-family: $fontBold;
+      color: $colorPrimaryLight;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 10px;
+      margin-right: 5px;
+      font-size: 11px;
+      cursor: pointer;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      &:hover,
+      &.selected {
+        color: $colorGrayLight7;
+        background-color: $colorPrimaryLight;
+      }
+    }
+  }
+
+  .sendButton {
+    font-size: 14px;
+    margin-top: 40px;
+  }
+}

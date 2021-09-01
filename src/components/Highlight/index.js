@@ -14,6 +14,7 @@ import { ReactComponent as HighlightSettingsMyWallet } from '../../data/backgrou
 import { ReactComponent as HighlightSettingsSupport } from '../../data/backgrounds/highlight-settings-support.svg';
 import { ReactComponent as HighlightPlaceBet } from '../../data/backgrounds/highlight-place-bet.svg';
 import { ReactComponent as HighlightDeposit } from '../../data/backgrounds/highlight-deposit.svg';
+import { ReactComponent as HighlightModalButton } from '../../data/backgrounds/highlight-modal-button.svg';
 import HighlightTheme from './HighlightTheme';
 
 const Highlight = ({
@@ -47,6 +48,7 @@ const Highlight = ({
       [HighlightType.highlightSettingsSupport]: <HighlightSettingsSupport />,
       [HighlightType.highlightPlaceBet]: <HighlightPlaceBet />,
       [HighlightType.highlightDeposit]: <HighlightDeposit />,
+      [HighlightType.highlightModalButton]: <HighlightModalButton />,
     });
   };
 

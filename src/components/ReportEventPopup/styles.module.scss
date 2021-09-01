@@ -1,0 +1,39 @@
+@import '../../styles/all';
+
+.reportEvent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 35px;
+
+  .logo {
+    height: 60px;
+  }
+
+  .title {
+    font-family: $fontBold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .subtitle {
+    font-family: $fontRegular;
+    font-size: 14px;
+    padding-top: 5px;
+  }
+
+  .content {
+    width: 70%;
+    margin-top: 40px;
+
+    @media (max-width: $screen-xs) {
+      width: 100%;
+    }
+  }
+
+  .sendButton {
+    font-size: 14px;
+    margin-top: 40px;
+  }
+}
