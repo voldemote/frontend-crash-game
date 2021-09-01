@@ -17,13 +17,14 @@ import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 
 const PaymentForm = ({ paymentType, showPopup }) => {
-
   const [currency, setCurrency] = useState(CURRENCY_OPTIONS[0]);
   const [amount, setAmount] = useState(0);
-  const [walletAddress, setWalletAddress] = useState(null);
+  const [walletAddress, setWalletAddress] = useState(
+    'dgkjnvkjgkdjfvndkjnvdkfjvndfkj'
+  );
   const [transactionFee, setTransactionFee] = useState(0.25);
 
-  const isWithdrawal = () =>  {
+  const isWithdrawal = () => {
     return paymentType === PAYMENT_TYPE.withdrawal;
   };
 
@@ -46,7 +47,7 @@ const PaymentForm = ({ paymentType, showPopup }) => {
 
   const handleSubmit = () => {
     if (isWithdrawal()) {
-      showPopup(PopupTheme.withdrawalSuccess, { 
+      showPopup(PopupTheme.withdrawalSuccess, {
         small: true,
         withdrawal: {
           amountReceived: amount,
@@ -54,17 +55,16 @@ const PaymentForm = ({ paymentType, showPopup }) => {
           wfairAmount: 3059,
           btcEquivalent: 30495,
           fee: 0.25,
-        }
+        },
       });
     } else {
       showPopup(PopupTheme.deposit, {
         small: true,
         deposit: {
-          address: walletAddress || 'dgkjnvkjgkdjfvndkjnvdkfjvndfkj',
-        }
+          address: walletAddress,
+        },
       });
     }
-    
   };
 
   return (
@@ -74,10 +74,10 @@ const PaymentForm = ({ paymentType, showPopup }) => {
           <div className={styles.number}>1</div>
           <div className={styles.label}>Choose currency</div>
         </div>
-        <Dropdown 
+        <Dropdown
           // errorText={}
           value={currency.label}
-          placeholder='Select currency...'
+          placeholder="Select currency..."
           setValue={onCurrencyChange}
           options={CURRENCY_OPTIONS}
         />
@@ -86,14 +86,15 @@ const PaymentForm = ({ paymentType, showPopup }) => {
       <div className={styles.formGroup}>
         <div className={styles.labelHeading}>
           <div className={styles.number}>2</div>
-          <div className={styles.label}>{settings[paymentType].amountLabel}</div>
+          <div className={styles.label}>
+            {settings[paymentType].amountLabel}
+          </div>
         </div>
-        {
-          !isWithdrawal() &&
+        {!isWithdrawal() && (
           <div className={classNames(styles.inputDescription, styles.top)}>
             How much {TOKEN_NAME} do you want to receive?
           </div>
-        }
+        )}
         <InputBox
           type={'number'}
           // errorText={}
@@ -101,11 +102,17 @@ const PaymentForm = ({ paymentType, showPopup }) => {
           setValue={setAmount}
         />
         <div className={classNames(styles.inputDescription, styles.bottom)}>
-          Transaction Fee: <span className={styles.number}>{transactionFee}</span>
+          Transaction Fee:{' '}
+          <span className={styles.number}>{transactionFee}</span>
         </div>
       </div>
 
-      <div className={classNames(styles.switchable, isWithdrawal() ? styles.reverse : null)}>
+      <div
+        className={classNames(
+          styles.switchable,
+          isWithdrawal() ? styles.reverse : null
+        )}
+      >
         <div className={styles.formGroup}>
           <div className={styles.labelHeading}>
             <div className={styles.number}>{isWithdrawal() ? 4 : 3}</div>
@@ -113,7 +120,9 @@ const PaymentForm = ({ paymentType, showPopup }) => {
           </div>
           <InputBox
             type={'string'}
-            value={`${amount > 0 ? amount - transactionFee : 0} ${currency.label}`}
+            value={`${amount > 0 ? amount - transactionFee : 0} ${
+              currency.label
+            }`}
             theme={InputBoxTheme.dashedBorderTransparent}
           />
         </div>
@@ -125,27 +134,31 @@ const PaymentForm = ({ paymentType, showPopup }) => {
           </div>
           <InputBox
             type={'text'}
-            value={'http://dgkjnvkjgkdjfvndkjnvdkfjvndfkj'}
+            value={walletAddress}
             setValue={setWalletAddress}
-            theme={isWithdrawal() ? InputBoxTheme.defaultInput : InputBoxTheme.dashedBorderTransparent}
+            theme={
+              isWithdrawal()
+                ? InputBoxTheme.defaultInput
+                : InputBoxTheme.dashedBorderTransparent
+            }
           />
         </div>
       </div>
 
       <Button
-          className={styles.submitButton}
-          onClick={handleSubmit}
-          highlightType={HighlightType.highlightDeposit}
-          disabled={false}
-          disabledWithOverlay={false}
-          withoutBackground={true}
-        >
-          <Icon
-            iconType={settings[paymentType].buttonIcon}
-            iconTheme={IconTheme.black}
-            width={24}
-          />
-          {settings[paymentType].buttonText}
+        className={styles.submitButton}
+        onClick={handleSubmit}
+        highlightType={HighlightType.highlightDeposit}
+        disabled={false}
+        disabledWithOverlay={false}
+        withoutBackground={true}
+      >
+        <Icon
+          iconType={settings[paymentType].buttonIcon}
+          iconTheme={IconTheme.black}
+          width={24}
+        />
+        {settings[paymentType].buttonText}
       </Button>
     </div>
   );
