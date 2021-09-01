@@ -1,4 +1,4 @@
-export const MIGRATION_VERSION = 1;
+export const MIGRATION_VERSION = 2;
 
 export const migrations = {
   0: state => {
@@ -74,7 +74,16 @@ export const migrations = {
         lastCrashes: [],
         inGameBets: [],
         userBet: null,
-      }
-    }
-  }
+      },
+    };
+  },
+  2: state => {
+    return {
+      ...state,
+      event: {
+        ...state.event,
+        chartData: [],
+      },
+    };
+  },
 };
