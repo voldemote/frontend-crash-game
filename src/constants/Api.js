@@ -1,87 +1,9 @@
-export default class Api {
-  static getBackendUrl() {
-    if (this.isLocal()) {
-      return LOCAL_BACKEND_URL;
-    }
-
-    if (this.isStaging()) {
-      return STAGING_BACKEND_URL;
-    }
-
-    return PRODUCTION_BACKEND_URL;
-  }
-
-  static getCrashGameBackendUrl() {
-    if (this.isLocal) {
-      return LOCAL_CRASH_GAME_BACKEND_URL;
-    }
-
-    if (this.isStaging()) {
-      return STAGING_CRASH_GAME_BACKEND_URL;
-    }
-
-    return PRODUCTION_CRASH_GAME_BACKEND_URL;
-  }
-
-  static getBackendSocketUrl() {
-    if (this.isLocal()) {
-      return LOCAL_BACKEND_SOCKET_URL;
-    }
-
-    if (this.isStaging()) {
-      return STAGING_BACKEND_URL;
-    }
-
-    return PRODUCTION_BACKEND_SOCKET_URL;
-  }
-
-  static isLocal() {
-    const url = window.location.href;
-    const localBackendUrlIndicators = [
-      '.test',
-      'localhost',
-      '127.0.0.1',
-      '.ngrok.io',
-    ];
-
-    for (const localBackendUrlIndicator of localBackendUrlIndicators) {
-      if (url.indexOf(localBackendUrlIndicator) > -1) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  static isStaging() {
-    const url = window.location.href;
-    const localBackendUrlIndicators = [
-      'staging-frontend-k2t68.ondigitalocean.app',
-      'staging.wallfair.io',
-    ];
-
-    for (const localBackendUrlIndicator of localBackendUrlIndicators) {
-      if (url.indexOf(localBackendUrlIndicator) > -1) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-}
-
-export const PRODUCTION_BACKEND_URL = 'https://prod-k9lh9.ondigitalocean.app';
-export const STAGING_BACKEND_URL = 'https://staging-zeaec.ondigitalocean.app';
-export const PRODUCTION_BACKEND_SOCKET_URL = PRODUCTION_BACKEND_URL;
-export const LOCAL_BACKEND_URL = STAGING_BACKEND_URL;
-export const LOCAL_BACKEND_SOCKET_URL = LOCAL_BACKEND_URL;
-export const BACKEND_URL = Api.getBackendUrl();
-export const BACKEND_SOCKET_URL = Api.getBackendSocketUrl();
-
-export const LOCAL_CRASH_GAME_BACKEND_URL = 'http://localhost:8001/';
-export const STAGING_CRASH_GAME_BACKEND_URL = LOCAL_CRASH_GAME_BACKEND_URL;
-export const PRODUCTION_CRASH_GAME_BACKEND_URL = LOCAL_CRASH_GAME_BACKEND_URL;
-export const CRASH_GAME_BACKEND_URL = Api.getCrashGameBackendUrl();
+export const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL ||
+  'https://staging-zeaec.ondigitalocean.app/';
+export const BACKEND_SOCKET_URL = BACKEND_URL;
+export const CRASH_GAME_BACKEND_URL =
+  process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8001/';
 
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL =
