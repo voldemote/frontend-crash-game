@@ -87,7 +87,9 @@ const BetHistory = () => {
                   <UserAvatarIcon />
                   {bet.username}
                 </div>
-                <span>{TOKEN_NAME} {bet.tokens}</span>
+                <span>
+                  {TOKEN_NAME} {bet.tokens}
+                </span>
               </div>
             ))}
           </div>

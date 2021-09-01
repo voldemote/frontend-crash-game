@@ -140,8 +140,8 @@ const Wallet = ({
       const referralText = (
         <>
           Invite your friends using your referral link and{' '}
-          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined over your
-          link.
+          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined
+          over your link.
         </>
       );
 
@@ -408,7 +408,7 @@ const mapStateToProps = state => {
   );
   const openPositions = _.sum(
     openBets.map(_.property('outcomeAmount')).map(Number).filter(_.isFinite)
-  );;
+  );
   const overallFundsTotal = balance + investmentAmount;
   const liquidFundsPercentage = (100 * balance) / overallFundsTotal;
   const investedFundsPercentage = (100 * investmentAmount) / overallFundsTotal;

@@ -40,4 +40,5 @@ export default {
   walletWithdrawal: '/wallet/withdraw/:paymentProvider',
   join: '/join',
   verify: '/verify',
+  chart: 'event/bet/:betId/history/chart',
 };

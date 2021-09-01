@@ -62,7 +62,10 @@ const PaymentConfirmation = ({ balance, cancelActionTill }) => {
       success={true}
       onConfirmButtonClick={onGoBackToWalletButtonClick}
     >
-      <AccountBalance balance={balance} coloredActionText={`+ ${TOKEN_NAME} 500.00`} />
+      <AccountBalance
+        balance={balance}
+        coloredActionText={`+ ${TOKEN_NAME} 500.00`}
+      />
       {renderCancelContainer()}
     </PaymentScreenContainer>
   );

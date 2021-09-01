@@ -45,7 +45,8 @@ const BetActionChatMessage = ({
       case ChatMessageType.createBet:
         return (
           <>
-            {userName} created trade <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong> on{' '}
+            {userName} created trade{' '}
+            <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong> on{' '}
             <strong>{outcomeValue}</strong>.
           </>
         );
@@ -53,8 +54,8 @@ const BetActionChatMessage = ({
       case ChatMessageType.placeBet:
         return (
           <>
-            {userName} bought <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong> of{' '}
-            <strong>{outcomeValue}</strong>.
+            {userName} bought <strong>{tokenAmount + ' ' + TOKEN_NAME}</strong>{' '}
+            of <strong>{outcomeValue}</strong>.
           </>
         );
 

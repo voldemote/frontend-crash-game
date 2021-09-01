@@ -25,7 +25,9 @@ const ChoiceSelector = ({
         : '-';
 
       return (
-        <span className={styles.choiceWinAmount}>{winAmountString} {TOKEN_NAME}</span>
+        <span className={styles.choiceWinAmount}>
+          {winAmountString} {TOKEN_NAME}
+        </span>
       );
     }
 

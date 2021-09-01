@@ -23,7 +23,7 @@ const setMyTradesVisible = (state, action) => {
   return {
     ...state,
     myTradesVisible: action.visible,
-  }
+  };
 };
 
 const reducers = {
