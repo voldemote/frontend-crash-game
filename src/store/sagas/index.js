@@ -130,6 +130,10 @@ const root = function* () {
       [AuthenticationTypes.INITIATE_UPDATE_USER_DATA],
       AuthenticationSagas.updateUserData
     ),
+    takeLatest(
+      [EventTypes.FETCH_HISTORY_CHART_DATA],
+      EventSagas.fetchHistoryChartData
+    ),
     // @formatter:on
   ]);
 };

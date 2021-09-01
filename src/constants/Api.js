@@ -109,3 +109,4 @@ export const API_USER_REFERRAL_LIST = 'api/user/refList';
 export const API_TAGS_LIST = 'api/event/tags';
 export const API_CURRENT = 'api/current';
 export const API_TRADE_CREATE = 'api/trade';
+export const API_CHART_DATA = 'api/event/bet/:betId/history';

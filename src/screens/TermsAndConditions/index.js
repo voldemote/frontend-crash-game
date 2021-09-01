@@ -71,7 +71,8 @@ const TermsAndConditions = () => {
                   </li>
                   <li>
                     {' '}
-                    The winner will be determined based on the amount of {TOKEN_NAME}
+                    The winner will be determined based on the amount of{' '}
+                    {TOKEN_NAME}
                     tokens collected and accumulated in the online account of
                     the entrant by the time the launch event ends (9 p.m. CEST
                     on July 18, 2021)
@@ -87,7 +88,8 @@ const TermsAndConditions = () => {
                 <ul>
                   <li>
                     {' '}
-                    The promoter is offering the entrant with the most {TOKEN_NAME}
+                    The promoter is offering the entrant with the most{' '}
+                    {TOKEN_NAME}
                     tokens accumulated the chance to win a prize of US$ 10.000
                     to be paid out to the winner’s cryptowallet in USDT.
                     Complete responsibility for the proper storage and spending

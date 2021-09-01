@@ -14,7 +14,7 @@ const setEditProfileVisible = payload => ({
   payload,
 });
 
-const setMyTradesVisible = (visible) => ({
+const setMyTradesVisible = visible => ({
   type: GeneralTypes.SET_MY_TRADES_VISIBLE,
   visible,
 });

@@ -59,7 +59,7 @@ const MainMenu = ({
 
   const onMyTradesClick = () => {
     handleMyTradesVisible(!myTradesVisible);
-  }
+  };
 
   const handleName = e => {
     setName(e.target.value);
@@ -100,7 +100,10 @@ const MainMenu = ({
   const renderMyTradesDrawer = () => {
     return (
       <div
-        className={classNames(styles.panel, !myTradesVisible && styles.panelHidden)}
+        className={classNames(
+          styles.panel,
+          !myTradesVisible && styles.panelHidden
+        )}
       >
         <h2 className={styles.profileHeading}>
           <Icon
@@ -110,11 +113,11 @@ const MainMenu = ({
           />
           My Trades
         </h2>
-        
+
         <MyTrades />
       </div>
     );
-  }
+  };
 
   const editProfileWrapper = () => {
     return (
@@ -216,7 +219,7 @@ const MainMenu = ({
       >
         <h2 className={styles.profileHeading}>My Profile</h2>
         <div className={styles.mainContent}>
-          <HomeSettings 
+          <HomeSettings
             onEditClick={() => onClickShowEditProfile()}
             onMyTradesClick={() => onMyTradesClick()}
           />
@@ -260,7 +263,7 @@ const mapDispatchToProps = dispatch => {
     },
     handleMyTradesVisible: bool => {
       dispatch(GeneralActions.setMyTradesVisible(bool));
-    }
+    },
   };
 };
 

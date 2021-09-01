@@ -207,6 +207,14 @@ const getTags = () => {
   });
 };
 
+const getEventHistoryChartData = (betId, params = {}) => {
+  return Api.get(_.replace(ApiUrls.API_CHART_DATA, ':betId', betId), {
+    params,
+  }).catch(error => {
+    console.log('[API Error] called: getEventHistoryChartData', error);
+  });
+};
+
 export {
   Api,
   createBet,
@@ -230,4 +238,5 @@ export {
   verifyEmail,
   resendEmailVerification,
   getTags,
+  getEventHistoryChartData,
 };

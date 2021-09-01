@@ -47,7 +47,9 @@ const MyBetCard = ({ onClick, transaction, showPopup }) => {
       <div className={styles.tradeInfoContainer}>
         <div className={styles.summaryRow}>
           <span className={styles.infoName}>Start Price:</span>
-          <span className={styles.infoValue}>{amount} {TOKEN_NAME}</span>
+          <span className={styles.infoValue}>
+            {amount} {TOKEN_NAME}
+          </span>
         </div>
         <div className={styles.summaryRow}>
           <span className={styles.infoName}>Your Prediction:</span>

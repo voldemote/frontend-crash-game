@@ -52,8 +52,8 @@ const Wallet = ({
       const referralText = (
         <>
           Invite your friends using your referral link and{' '}
-          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined over your
-          link.
+          <strong>get 50 {TOKEN_NAME} token</strong> for each user who joined
+          over your link.
         </>
       );
 

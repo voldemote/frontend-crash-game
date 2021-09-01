@@ -75,10 +75,7 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
         <div className={styles.leaderboard}>
           <div className={styles.headline}>
             Community Leaderboard
-            <div
-              className={styles.leaderboardLink}
-              onClick={onSeeLeaderboard}
-            >
+            <div className={styles.leaderboardLink} onClick={onSeeLeaderboard}>
               See Leaderboard
             </div>
           </div>

@@ -32,6 +32,9 @@ import { BetActions } from 'store/actions/bet';
 import NavbarFooter from '../../components/NavbarFooter';
 import NavbarFooterAction from '../../components/NavbarFooterAction';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
+import Chart from '../../components/Chart';
+import { useChartData } from './hooks/useChartData';
+import Placeholder from '../../components/Placeholder';
 
 const Bet = ({
   showPopup,
@@ -55,6 +58,12 @@ const Bet = ({
   const mobileChatRef = useRef(null);
 
   const currentFromLocation = useBetPreviousLocation();
+  const {
+    chartData,
+    filterActive,
+    handleChartPeriodFilter,
+    handleChartDirectionFilter,
+  } = useChartData(betId);
 
   const status = {
     active: 1,
@@ -63,10 +72,10 @@ const Bet = ({
   };
 
   useEffect(() => {
-    if (window.innerWidth < 992 ) {
+    if (window.innerWidth < 992) {
       setBetAction(0);
     }
-    
+
     const currentEvent = _.find(events, {
       _id: eventId,
     });
@@ -86,7 +95,7 @@ const Bet = ({
 
   useEffect(() => {
     swiper && swiper.slideTo(betAction);
-  }, [betAction])
+  }, [betAction]);
 
   const onBetClose = () => {
     return () => {
@@ -107,7 +116,7 @@ const Bet = ({
   const onSwiper = swiper => {
     setSwiper(swiper);
     swiper.slideTo(betAction);
-  }
+  };
 
   const onBetActionSwitch = newIndex => {
     setBetAction(newIndex);
@@ -183,10 +192,8 @@ const Bet = ({
   };
 
   const renderNoTrades = () => {
-    return (
-      <div className={styles.relatedBetsNone}>No trades placed.</div>
-    );
-  }
+    return <div className={styles.relatedBetsNone}>No trades placed.</div>;
+  };
 
   const getRelatedBetSliderPages = (bets, size) => {
     return _.ceil(_.size(bets) / size);
@@ -297,11 +304,7 @@ const Bet = ({
 
   const renderSwitchableView = () => {
     const eventViews = [
-      EventTradeViewsHelper.getView(
-        'Chat',
-        undefined,
-        false,
-        styles.chatTab),
+      EventTradeViewsHelper.getView('Chat', undefined, false, styles.chatTab),
       EventTradeViewsHelper.getView('Event Trades'),
       EventTradeViewsHelper.getView(
         'My Trades',
@@ -323,9 +326,7 @@ const Bet = ({
 
   const renderContent = () => {
     if (betAction === 0) {
-      return (
-        <Chat className={styles.mobileChat} event={event} />
-      );
+      return <Chat className={styles.mobileChat} event={event} />;
     } else if (betAction === 1) {
       return (
         <div className={styles.relatedBets}>
@@ -388,10 +389,7 @@ const Bet = ({
       >
         <SwiperSlide className={styles.carouselSlide}>
           <div ref={mobileChatRef}>
-            <Chat
-              event={event}
-              className={styles.mobileChat}
-            />
+            <Chat event={event} className={styles.mobileChat} />
           </div>
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
@@ -402,7 +400,7 @@ const Bet = ({
         </SwiperSlide>
       </Swiper>
     );
-  }
+  };
 
   const renderBetSidebarContent = () => {
     if (betViewIsOpen) {
@@ -417,7 +415,11 @@ const Bet = ({
             <span>Go back to all tracks</span>
           </div>
           <div className={styles.betViewContent}>
-            <BetView closed={false} showEventEnd={true} />
+            <BetView
+              closed={false}
+              showEventEnd={true}
+              handleChartDirectionFilter={handleChartDirectionFilter}
+            />
           </div>
         </div>
       );
@@ -459,11 +461,32 @@ const Bet = ({
         <div className={styles.row}>
           <div className={styles.columnLeft}>
             <div className={styles.streamContainer}>
-              <TwitchEmbedVideo video={event.streamUrl} />
-              <div className={styles.timeLeft}>
-                <span>Estimated end:</span>
-                <TimeLeftCounter endDate={new Date(_.get(event, 'endDate'))} />
-              </div>
+              {event.type === 'non-streamed' ? (
+                <div className={styles.chart}>
+                  {betViewIsOpen ? (
+                    <Chart
+                      height={400}
+                      data={chartData}
+                      filterActive={filterActive}
+                      handleChartPeriodFilter={handleChartPeriodFilter}
+                    />
+                  ) : (
+                    <Placeholder style={{ height: '400px' }}>
+                      <img src={event.previewImageUrl} alt="pic" />
+                    </Placeholder>
+                  )}
+                </div>
+              ) : (
+                <TwitchEmbedVideo video={event.streamUrl} />
+              )}
+              {event.type === 'streamed' && (
+                <div className={styles.timeLeft}>
+                  <span>Estimated end:</span>
+                  <TimeLeftCounter
+                    endDate={new Date(_.get(event, 'endDate'))}
+                  />
+                </div>
+              )}
             </div>
             <Chat className={styles.desktopChat} event={event} />
           </div>
