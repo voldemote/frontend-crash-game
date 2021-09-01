@@ -8,6 +8,10 @@ import FifaImage from '../data/images/FIFA 21-144x192.jpeg';
 import LoLImage from '../data/images/League of Legends-144x192.jpeg';
 import MinecraftImage from '../data/images/Minecraft-144x192.jpeg';
 import AllImage from '../data/images/wallfair-all-category.png';
+import FortniteImage from '../data/images/Fortnite-144x192.jpeg';
+import ApexLegendsImage from '../data/images/Apex Legends-144x192.jpeg';
+import GTAImage from '../data/images/Grand Theft Auto V-144x192.jpeg';
+import CSImage from '../data/images/Counter-Strike_ Global Offensive-144x192.jpeg';
 
 export const EVENT_CATEGORIES = [
   {
@@ -56,26 +60,44 @@ export const LIVE_EVENTS_CATEGORIES = [
     type: 'image',
   },
   {
-    value: 'streamed-esports',
-    image: FifaImage,
-    isActive: false,
-    type: 'image',
-  },
-  {
-    value: 'streamed-shooter',
-    image: CoDImage,
-    isActive: false,
-    type: 'image',
-  },
-  {
-    value: 'streamed-mmorpg',
+    // value: 'streamed-esports',
+    value: 'League of Legends',
     image: LoLImage,
     isActive: false,
     type: 'image',
   },
   {
-    value: 'streamed-other',
+    // value: 'streamed-shooter',
+    value: 'Fortnite',
+    image: FortniteImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    // value: 'streamed-mmorpg',
+    value: 'Counter Strike: Global Offensive',
+    image: CSImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    // value: 'streamed-other',
+    value: 'Grand Theft Auto V',
+    image: GTAImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    // value: 'streamed-other',
+    value: 'Minecraft',
     image: MinecraftImage,
+    isActive: false,
+    type: 'image',
+  },
+  {
+    // value: 'streamed-other',
+    value: 'Apex Legends',
+    image: ApexLegendsImage,
     isActive: false,
     type: 'image',
   },
