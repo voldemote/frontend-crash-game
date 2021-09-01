@@ -1,6 +1,6 @@
 import { take, put, call, select } from 'redux-saga/effects';
-import { eventChannel, END } from 'redux-saga';
-import { NotificationTypes } from '../actions/notification';
+import { eventChannel } from 'redux-saga';
+import { RosiGameActions } from '../actions/rosi-game';
 import { NotificationActions } from '../actions/notification';
 import _ from 'lodash';
 import ChatMessageType from '../../components/ChatMessageWrapper/ChatMessageType';
@@ -67,6 +67,24 @@ function createSocketChannel(socket) {
       emit(new Error(errorEvent.reason));
     };
 
+    const gameStartHandler = event => {
+      const message = {
+        type: ChatMessageType.gameStart,
+        ...event,
+      };
+
+      emit(message);
+    };
+
+    const gameEndHandler = event => {
+      const message = {
+        type: ChatMessageType.gameEnd,
+        ...event,
+      };
+
+      emit(message);
+    };
+
     // setup the subscription
     socket.on('connect', connectHandler);
     socket.on('chatMessage', chatMessageHandler);
@@ -75,6 +93,8 @@ function createSocketChannel(socket) {
     socket.on('betPulledOut', addNewBetPullOutHandler);
     socket.on('notification', notificationHandler);
     socket.on('error', errorHandler);
+    socket.on('CASINO_START', gameStartHandler);
+    socket.on('CASINO_END', gameEndHandler);
 
     const unsubscribe = () => {
       socket.off('chatMessage', chatMessageHandler);
@@ -82,6 +102,8 @@ function createSocketChannel(socket) {
       socket.off('betPlaced', addNewBetPlaceHandler);
       socket.off('betPulledOut', addNewBetPullOutHandler);
       socket.off('notification', notificationHandler);
+      socket.off('CASINO_START', gameStartHandler);
+      socket.off('CASINO_END', gameEndHandler);
     };
 
     return unsubscribe;
@@ -112,6 +134,16 @@ export function* init() {
           switch (type) {
             case 'connect':
               yield put(WebsocketsActions.connected());
+              break;
+            case ChatMessageType.gameStart:
+              console.log(payload);
+              yield put(RosiGameActions.setHasStarted());
+              break;
+            case ChatMessageType.gameEnd:
+              console.log(payload);
+              yield put(
+                RosiGameActions.addLastCrash({ lastCrash: payload.crashFactor })
+              );
               break;
             case ChatMessageType.pulloutBet:
             case ChatMessageType.createBet:
@@ -162,6 +194,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     const pathname = action.payload.location.pathname;
     const pathSlugs = pathname.slice(1).split('/');
     // event page
+
     if (pathSlugs[0] === 'trade') {
       eventId = pathSlugs[1];
       if (eventId !== room) {
@@ -180,6 +213,13 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
           })
         );
       }
+    } else if (pathSlugs[1] === 'rosi-game') {
+      yield put(
+        WebsocketsActions.joinRoom({
+          userId,
+          eventId: 'CASINO_ROSI',
+        })
+      );
     } else {
       if (room) {
         yield put(

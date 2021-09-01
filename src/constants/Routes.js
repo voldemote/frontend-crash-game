@@ -32,7 +32,7 @@ export default {
   liveEvents: '/live-events/:category?',
   logout: '/logout',
   privacyPolicy: '/privacy-policy',
-  rosiGame: '/rosi-game',
+  rosiGame: '/games/rosi-game',
   termsAndConditions: '/terms-and-conditions',
   wallet: '/wallet',
   walletConfirmation: '/wallet/:paymentAction/:paymentProvider/success',

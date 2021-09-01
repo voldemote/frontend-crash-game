@@ -73,6 +73,7 @@ const fetchInitial = function* (action) {
   // we check if we have a en eventId in the URL and thus get the messages for that
   const pathname = window.location.pathname;
   const pathSlugs = pathname.slice(1).split('/');
+
   // event page
   if (pathSlugs[0] === 'trade') {
     eventId = pathSlugs[1];
@@ -83,6 +84,7 @@ const fetchInitial = function* (action) {
       eventId = events[0]._id;
     }
   }
+
   if (eventId) {
     const { response, error } = yield call(
       Api.getChatMessagesByEventId,

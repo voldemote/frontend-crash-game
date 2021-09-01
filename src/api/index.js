@@ -2,7 +2,6 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_AUTHENTICATION_VERIFY_EMAIL } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({

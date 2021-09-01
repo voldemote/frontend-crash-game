@@ -33,6 +33,7 @@ const InputBox = ({
   containerClassName,
   onConfirm,
   showDeleteIcon = true,
+  disabled = false
 }) => {
   const inputRef = useRef(null);
 
@@ -105,6 +106,7 @@ const InputBox = ({
         onChange={event => setValue(event.target.value)}
         onSubmit={onConfirm}
         reference={inputRef}
+        disabled={disabled}
       />
     );
   };

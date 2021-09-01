@@ -1,4 +1,5 @@
 import * as Api from '../../api';
+import * as crashGameApi from '../../api/crash-game';
 import _ from 'lodash';
 import AuthState from '../../constants/AuthState';
 import Routes from '../../constants/Routes';
@@ -80,6 +81,7 @@ const verifySms = function* (action) {
       const data = response.data;
 
       Api.setToken(data.session);
+      crashGameApi.setToken(data.session);
 
       yield put(
         AuthenticationActions.verifySmsSucceeded({
@@ -137,6 +139,7 @@ const fetchReferrals = function* () {
 
   if (userId && token) {
     Api.setToken(token);
+    crashGameApi.setToken(token);
 
     const response = yield call(Api.fetchReferrals, userId);
 
@@ -194,6 +197,7 @@ const authenticationSucceeded = function* (action) {
 
 const logout = function* () {
   Api.setToken(null);
+  crashGameApi.setToken(null);
   yield put(WebsocketsActions.close());
   yield put(push(Routes.home));
 };
@@ -221,6 +225,7 @@ const restoreToken = function* () {
 
   if (token) {
     Api.setToken(token);
+    crashGameApi.setToken(token);
   }
 
   if (token && authState === AuthState.LOGGED_IN) {

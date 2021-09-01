@@ -6,6 +6,8 @@
     height: auto;
     background: rgba(172,196,255,0.10);
     border-radius: 10px;
+    height: 400px;
+    overflow: auto;
 
     @media screen and (max-width: $screen-xs) {
         background-color: transparent;
@@ -15,6 +17,7 @@
 
 .lastCrashes {
     padding: 30px 0px;
+    background: linear-gradient(180deg, rgba(18, 14, 39, 0.0001) 0%, rgba(18, 14, 39, 0.767136) 100%);
 }
 
 .lastCrash {

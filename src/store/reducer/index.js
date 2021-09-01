@@ -10,6 +10,7 @@ import authenticationReducer from '../reducer/authentication';
 import websocketsReducer from './websockets';
 import leaderboardReducer from './leaderboard';
 import generalReducer from './general';
+import rosiGameReducer from './rosi-game';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
@@ -28,4 +29,5 @@ export default history =>
     leaderboard: leaderboardReducer,
     router: connectRouter(history),
     general: generalReducer,
+    rosiGame: rosiGameReducer,
   });
