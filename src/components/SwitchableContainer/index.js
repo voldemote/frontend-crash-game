@@ -48,7 +48,7 @@ const SwitchableContainer = ({
       >
         <div className={styles.text}>
           {iconType && (
-            <Icon width={'auto'} iconTheme={iconTheme} iconType={iconType} />
+            <Icon width={'auto'} iconTheme={iconTheme} iconType={iconType} className={styles.icon} />
           )}
           <span>{name}</span>
         </div>

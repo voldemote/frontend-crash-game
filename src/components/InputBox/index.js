@@ -169,7 +169,6 @@ const InputBox = ({
       <div
         className={classNames(
           styles.inputBox,
-          className,
           SelectionHelper.get(theme, {
             [InputBoxTheme.defaultInput]: styles.defaultInputBox,
             [InputBoxTheme.copyToClipboardInput]:
@@ -179,7 +178,10 @@ const InputBox = ({
             [InputBoxTheme.coloredBorderMint]: styles.coloredBorderMint,
             [InputBoxTheme.coloredBorderLightPurple]:
               styles.coloredBorderLightPurple,
-          })
+            [InputBoxTheme.dashedBorderTransparent]:
+              styles.dashedBorderTransparent,
+          }),
+          className,
         )}
         onClick={
           theme === InputBoxTheme.copyToClipboardInput ? copyToClipboard : null

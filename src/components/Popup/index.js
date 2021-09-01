@@ -18,8 +18,12 @@ import SignUpPopup from '../SignUpPopup';
 import TradeDetailView from '../TradeDetailView';
 import TradeViewPopup from '../TradeViewPopup';
 import EventDetailView from '../EventDetailView';
+import WithdrawalSuccessPopup from '../WithdrawalSuccessPopup';
+import DepositSuccessPopup from '../DepositSuccessPopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
+  const small = _.get(options, 'small', false);
+
   useEffect(() => {
     document.body.style.overflow = visible ? 'hidden' : null;
 
@@ -34,6 +38,8 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
     const investmentAmount = _.get(options, 'investmentAmount');
     const outcome = _.get(options, 'outcome');
     const initialSellTab = _.get(options, 'initialSellTab', false);
+    const withdrawalSuccessOptions = { ...options?.withdrawal };
+    const depositSuccessOptions = { ...options?.deposit };
 
     switch (type) {
       case PopupTheme.betApprove:
@@ -78,6 +84,20 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.tradeView:
         return <TradeViewPopup closed={false} />;
+
+      case PopupTheme.withdrawalSuccess:
+        return <WithdrawalSuccessPopup 
+          amountReceived={withdrawalSuccessOptions.amountReceived}
+          currency={withdrawalSuccessOptions.currency}
+          wfairAmount={withdrawalSuccessOptions.wfairAmount}
+          btcEquivalent={withdrawalSuccessOptions.btcEquivalent}
+          fee={withdrawalSuccessOptions.fee} 
+        />;
+      
+        case PopupTheme.deposit:
+          return <DepositSuccessPopup
+            address={depositSuccessOptions.address} 
+          />;
     }
 
     return null;
@@ -124,7 +144,8 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
           type === PopupTheme.signUpNotificationFirst ||
             type === PopupTheme.signUpNotificationSecond
             ? styles.signUpPopupContainer
-            : null
+            : null,
+          small ? styles.small : null,
         )}
       >
         {type !== PopupTheme.signUpNotificationSecond && (

@@ -1,0 +1,28 @@
+@import '../../styles/all';
+
+.depositSuccess {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+
+  .title {
+    font-family: $fontBold;
+    font-size: 20px;
+  }
+
+  .qrCode {
+    width: 300px;
+    margin: 30px 0;
+  }
+
+  .inputContainer {
+    width: 100%;
+    
+    input {
+      font-family: $fontBold;
+      font-size: 16px;
+    }
+  }
+}

@@ -1,6 +1,5 @@
 @import '../../styles/all';
 
-
 .wallet {
     color: $colorWhite;
     padding: 90px 24px 0;
@@ -98,6 +97,18 @@
     .firstPanel {
         &.panelHidden {
             transform: translateX(-110%);
+        }
+    }
+
+    .switchablePayment {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        padding: 0px 80px;
+        margin-top: 40px;
+
+        @media (max-width: $screen-sm) {
+            padding: 0;
         }
     }
 }

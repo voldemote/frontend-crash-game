@@ -1,0 +1,66 @@
+@import '../../styles/all';
+
+.depositForm {
+  margin-top: 40px;
+
+  .submitButton {
+    background-color: $colorWhite;
+    font-size: 16px;
+    overflow: hidden;
+  }
+
+  .switchable {
+    display: flex;
+    flex-direction: column;
+
+    &.reverse {
+      flex-flow: column-reverse;
+    }
+  }
+
+  .formGroup {
+    margin-bottom: 40px;
+
+    .labelHeading {
+      display: flex;
+      align-items: center;
+      justify-self: flex-start;
+      padding-bottom: 20px;
+
+      .label {
+        font-family: $fontRegular;
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .number {
+        background-color: rgba(172, 196, 255, 0.23);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.8;
+        margin-right: 10px;
+      }
+    }
+
+    .inputDescription {
+      font-family: $fontRegular;
+      font-size: 14px;
+      color: rgba(255,255,255,.3);
+
+      &.top {
+        padding-bottom: 10px;
+      }
+
+      &.bottom {
+        padding-top: 10px;
+      }
+
+      .number {
+        color: rgba(255,255,255,.7);
+      }
+    }
+  }
+}

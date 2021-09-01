@@ -13,6 +13,7 @@ import { ReactComponent as HighlightSettingsMyProfile } from '../../data/backgro
 import { ReactComponent as HighlightSettingsMyWallet } from '../../data/backgrounds/highlight-settings-my-wallet.svg';
 import { ReactComponent as HighlightSettingsSupport } from '../../data/backgrounds/highlight-settings-support.svg';
 import { ReactComponent as HighlightPlaceBet } from '../../data/backgrounds/highlight-place-bet.svg';
+import { ReactComponent as HighlightDeposit } from '../../data/backgrounds/highlight-deposit.svg';
 import HighlightTheme from './HighlightTheme';
 
 const Highlight = ({
@@ -45,6 +46,7 @@ const Highlight = ({
       [HighlightType.highlightSettingsMyWallet]: <HighlightSettingsMyWallet />,
       [HighlightType.highlightSettingsSupport]: <HighlightSettingsSupport />,
       [HighlightType.highlightPlaceBet]: <HighlightPlaceBet />,
+      [HighlightType.highlightDeposit]: <HighlightDeposit />,
     });
   };
 

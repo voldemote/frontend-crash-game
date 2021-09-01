@@ -67,6 +67,16 @@
             border-color: $colorLightPurple;
         }
 
+        &.dashedBorderTransparent {
+            background: transparent;
+            border: 2px dashed rgba(255,255,255,.3);
+
+            input {
+                color: $colorWhite;
+                pointer-events: none;
+            }
+        }
+
         .inputDeleteIconContainer
         {
             cursor:   pointer;
