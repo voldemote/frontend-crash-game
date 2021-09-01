@@ -499,7 +499,7 @@ const Bet = ({
                       handleChartPeriodFilter={handleChartPeriodFilter}
                     />
                   ) : (
-                    <Placeholder>
+                    <Placeholder style={{ height: '400px' }}>
                       <img src={event.previewImageUrl} alt="pic" />
                     </Placeholder>
                   )}
