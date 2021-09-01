@@ -29,6 +29,13 @@ export default function Chart({
     chartRender.current += 1;
   }, [data]);
 
+  useEffect(() => {
+    return () => {
+      handleChartPeriodFilter('24H');
+      chartInstance.current.destroy();
+    };
+  }, []);
+
   return (
     <>
       <div className={styles.chartContainer}>

@@ -58,8 +58,12 @@ const Bet = ({
   const mobileChatRef = useRef(null);
 
   const currentFromLocation = useBetPreviousLocation();
-  const { chartData, filterActive, handleChartPeriodFilter } =
-    useChartData(betId);
+  const {
+    chartData,
+    filterActive,
+    handleChartPeriodFilter,
+    handleChartDirectionFilter,
+  } = useChartData(betId);
 
   const status = {
     active: 1,
@@ -411,7 +415,11 @@ const Bet = ({
             <span>Go back to all tracks</span>
           </div>
           <div className={styles.betViewContent}>
-            <BetView closed={false} showEventEnd={true} />
+            <BetView
+              closed={false}
+              showEventEnd={true}
+              handleChartDirectionFilter={handleChartDirectionFilter}
+            />
           </div>
         </div>
       );

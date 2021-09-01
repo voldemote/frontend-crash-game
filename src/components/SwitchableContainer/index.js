@@ -13,6 +13,7 @@ const SwitchableContainer = ({
   switchableViews,
   currentIndex,
   setCurrentIndex,
+  handleChartDirectionFilter,
 }) => {
   const renderAll = () => {
     return _.map(switchableViews, renderSwitchableView);
@@ -21,6 +22,7 @@ const SwitchableContainer = ({
   const onClick = index => {
     return () => {
       setCurrentIndex(index);
+      handleChartDirectionFilter(index);
     };
   };
 

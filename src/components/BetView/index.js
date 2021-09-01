@@ -64,6 +64,7 @@ const BetView = ({
   fetchOutcomes,
   showPopup,
   isTradeViewPopup,
+  handleChartDirectionFilter,
 }) => {
   const params = useParams();
   const defaultBetValue = _.max([balance, 10]);
@@ -380,6 +381,7 @@ const BetView = ({
             currentIndex={currentTradeView}
             setCurrentIndex={switchableChange}
             underlineInactive={true}
+            handleChartDirectionFilter={handleChartDirectionFilter}
           />
         </div>
       );
