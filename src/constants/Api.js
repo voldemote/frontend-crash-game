@@ -1,10 +1,13 @@
+// Env vars
 export const BACKEND_URL =
   process.env.REACT_APP_BACKEND_URL ||
   'https://staging-zeaec.ondigitalocean.app/';
 export const BACKEND_SOCKET_URL = BACKEND_URL;
 export const CRASH_GAME_BACKEND_URL =
   process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8001/';
+export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 
+// Services
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL =
   'api/user/saveAdditionalInformation';

@@ -31,6 +31,7 @@ import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
 import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
 import Placeholder from '../../components/Placeholder';
+import { useNewsFeed } from './hooks/useNewsFeed';
 
 const Bet = ({
   showPopup,
@@ -60,6 +61,8 @@ const Bet = ({
     handleChartPeriodFilter,
     handleChartDirectionFilter,
   } = useChartData(betId);
+
+  useNewsFeed(event);
 
   const status = {
     active: 1,
