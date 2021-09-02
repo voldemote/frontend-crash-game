@@ -9,6 +9,10 @@
     box-shadow: 6px 6px 10px 2px rgba(10, 10, 50, 0.8);
     cursor: pointer;
     z-index: 1000;
+
+    @supports (-webkit-touch-callout: none) {
+        bottom: 80px;
+    }
 }
 
 .drawer {

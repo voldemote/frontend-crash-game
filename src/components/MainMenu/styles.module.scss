@@ -199,6 +199,10 @@ $largeMobileHeight: 700px;
     height: calc(100vh - 90px);
     display: flex;
     flex-flow: column;
+
+    @supports (-webkit-touch-callout: none) {
+        height: calc(100vh - 150px);
+    }
 }
 .firstPanel {
     &.panelHidden {
