@@ -89,13 +89,13 @@ const SummaryRowContainer = ({ className, summaryRows }) => {
         {valueChildren ? (
           valueChildren
         ) : isLink ? (
-          <Link
-            to={value}
+          <a
+            href={value}
             target={target || '_blank'}
             className={classNames(valueBold ? styles.bold : null)}
           >
             {title || value}
-          </Link>
+          </a>
         ) : (
           <span
             className={classNames(

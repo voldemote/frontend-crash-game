@@ -86,7 +86,11 @@ const EventDetailView = ({ event, isAdmin }) => {
         false,
         false,
         null,
-        true
+        true,
+        null,
+        null,
+        false,
+        new URL(eventFeedSource).hostname
       ),
       BetSummaryHelper.getKeyValue(
         'User Permission to Create Trades',
