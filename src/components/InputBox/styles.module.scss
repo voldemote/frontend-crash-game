@@ -77,6 +77,22 @@
             }
         }
 
+        &.modalInput {
+            background-color: $colorGrayLight7;
+            border-color: $colorGrayLight2;
+            border-width: 1px;
+
+            input {
+                &::placeholder {
+                    color: $colorGrayLight2;
+                }
+            }
+
+            .inputDeleteIconContainer {
+                display: none;
+            }
+        }
+
         .inputDeleteIconContainer
         {
             cursor:   pointer;

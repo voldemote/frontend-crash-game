@@ -20,6 +20,8 @@ import TradeViewPopup from '../TradeViewPopup';
 import EventDetailView from '../EventDetailView';
 import WithdrawalSuccessPopup from '../WithdrawalSuccessPopup';
 import DepositSuccessPopup from '../DepositSuccessPopup';
+import EvaluateEventPopup from '../EvaluateEventPopup';
+import ReportEventPopup from '../ReportEventPopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -40,6 +42,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
     const initialSellTab = _.get(options, 'initialSellTab', false);
     const withdrawalSuccessOptions = { ...options?.withdrawal };
     const depositSuccessOptions = { ...options?.deposit };
+    const evaluateEventOptions = { ...options?.bet };
 
     switch (type) {
       case PopupTheme.betApprove:
@@ -86,18 +89,26 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
         return <TradeViewPopup closed={false} />;
 
       case PopupTheme.withdrawalSuccess:
-        return <WithdrawalSuccessPopup 
-          amountReceived={withdrawalSuccessOptions.amountReceived}
-          currency={withdrawalSuccessOptions.currency}
-          wfairAmount={withdrawalSuccessOptions.wfairAmount}
-          btcEquivalent={withdrawalSuccessOptions.btcEquivalent}
-          fee={withdrawalSuccessOptions.fee} 
-        />;
-      
-        case PopupTheme.deposit:
-          return <DepositSuccessPopup
-            address={depositSuccessOptions.address} 
-          />;
+        return (
+          <WithdrawalSuccessPopup
+            amountReceived={withdrawalSuccessOptions.amountReceived}
+            currency={withdrawalSuccessOptions.currency}
+            wfairAmount={withdrawalSuccessOptions.wfairAmount}
+            btcEquivalent={withdrawalSuccessOptions.btcEquivalent}
+            fee={withdrawalSuccessOptions.fee}
+          />
+        );
+
+      case PopupTheme.deposit:
+        return <DepositSuccessPopup address={depositSuccessOptions.address} />;
+
+      case PopupTheme.evaluateEvent:
+        return (
+          <EvaluateEventPopup betQuestion={evaluateEventOptions.question} />
+        );
+
+      case PopupTheme.reportEvent:
+        return <ReportEventPopup />;
     }
 
     return null;
@@ -145,7 +156,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             type === PopupTheme.signUpNotificationSecond
             ? styles.signUpPopupContainer
             : null,
-          small ? styles.small : null,
+          small ? styles.small : null
         )}
       >
         {type !== PopupTheme.signUpNotificationSecond && (

@@ -33,7 +33,7 @@ const InputBox = ({
   containerClassName,
   onConfirm,
   showDeleteIcon = true,
-  disabled = false
+  disabled = false,
 }) => {
   const inputRef = useRef(null);
 
@@ -180,8 +180,9 @@ const InputBox = ({
               styles.coloredBorderLightPurple,
             [InputBoxTheme.dashedBorderTransparent]:
               styles.dashedBorderTransparent,
+            [InputBoxTheme.modalInput]: styles.modalInput,
           }),
-          className,
+          className
         )}
         onClick={
           theme === InputBoxTheme.copyToClipboardInput ? copyToClipboard : null

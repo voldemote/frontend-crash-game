@@ -5,4 +5,5 @@ export default {
   coloredBorderMint: 'coloredBorderMint',
   coloredBorderLightPurple: 'coloredBorderLightPurple',
   dashedBorderTransparent: 'dashedBorderTransparent',
+  modalInput: 'modalInput',
 };

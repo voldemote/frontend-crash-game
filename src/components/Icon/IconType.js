@@ -45,6 +45,7 @@ export default {
   support: 'support',
   switcher: 'switcher',
   threeDotMenu: 'threeDotMenu',
+  thumbUp: 'thumbUp',
   time: 'time',
   twitch: 'twitch',
   wallet2: 'wallet2',

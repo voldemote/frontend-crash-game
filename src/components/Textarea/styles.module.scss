@@ -1,0 +1,22 @@
+@import '../../styles/all';
+
+.textarea {
+  resize: none;
+  width: 100%;
+  min-height: 140px;
+  border-radius: 6px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: $colorGrayLight7;
+  border-color: $colorGrayLight2;
+  font-family: $fontRegular;
+  font-size: 16px;
+
+  &::placeholder {
+    color: $colorGrayLight2;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}

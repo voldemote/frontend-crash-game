@@ -1,0 +1,45 @@
+@import '../../styles/all';
+
+.buttonSmall {
+  background-color: $colorWhite;
+  color: $colorPrimary;
+  font-family: $fontRegular;
+  font-size: 12px;
+  min-width: 60px;
+  min-height: 20px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &.dark {
+    background-color: $colorPrimaryLight;
+    color: $colorWhite;
+  }
+
+  &.red {
+    background-color: $colorRed;
+    color: $colorWhite;
+  }
+
+  &.grey {
+    background-color: $colorGrayLight6;
+    color: $colorPrimaryLight;
+    border-radius: 99px;
+  }
+
+  .greyIcon {
+    margin-right: 5px;
+
+    & > svg * {
+      stroke: $colorGrayLight6;
+    }
+  }
+}

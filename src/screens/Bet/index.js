@@ -1,7 +1,5 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _ from 'lodash';
-import FixedIconButton from '../../components/FixedIconButton';
-import IconType from '../../components/Icon/IconType';
 import Icon from '../../components/Icon';
 import Link from '../../components/Link';
 import LiveBadge from 'components/LiveBadge';
@@ -29,8 +27,6 @@ import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PopupTheme from '../../components/Popup/PopupTheme';
 import { BetActions } from 'store/actions/bet';
-import NavbarFooter from '../../components/NavbarFooter';
-import NavbarFooterAction from '../../components/NavbarFooterAction';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
 import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
