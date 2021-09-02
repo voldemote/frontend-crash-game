@@ -90,7 +90,9 @@ const Bet = ({
   }, []);
 
   useEffect(() => {
-    swiper && swiper.slideTo(betAction);
+    if (swiper && !swiper.destroyed) {
+      swiper && swiper.slideTo(betAction);
+    }
   }, [betAction]);
 
   const onBetClose = () => {
