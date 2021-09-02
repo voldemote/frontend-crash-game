@@ -54,7 +54,8 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
     setMenuOpened(!menuOpened);
   };
 
-  const openEvaluate = () => {
+  const openEvaluate = event => {
+    event.stopPropagation();
     showPopup(PopupTheme.evaluateEvent, {
       small: true,
       bet: {
@@ -69,7 +70,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
 
   return (
     <div className={styles.relatedBetCard}>
-      <div className={styles.relatedBetCardContainer}>
+      <div className={styles.relatedBetCardContainer} onClick={onClick}>
         <div className={styles.relatedBetCardHeader}>
           <span className={styles.title}>{bet.marketQuestion}</span>
 

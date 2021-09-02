@@ -402,15 +402,17 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          <div className={styles.betViewClose} onClick={onBetClose()}>
-            <Icon
-              iconType={'arrowLeft'}
-              iconTheme={'white'}
-              className={styles.arrowBack}
-            />
-            <span>Go back to all tracks</span>
-          </div>
-          <div className={styles.betViewContent}>
+          {!singleBet && (
+            <div className={styles.betViewClose} onClick={onBetClose()}>
+              <Icon
+                iconType={'arrowLeft'}
+                iconTheme={'white'}
+                className={styles.arrowBack}
+              />
+              <span>Go back to all tracks</span>
+            </div>
+          )}
+          <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
               closed={false}
               showEventEnd={true}
@@ -443,15 +445,17 @@ const Bet = ({
           <div>
             <Link
               to={currentFromLocation?.pathname}
-              className={styles.arrowBack}
-            ></Link>
-            <div className={styles.headline}>
-              <h2>{_.get(event, 'name')}</h2>
-              <div>
-                {event?.type === 'streamed' && <LiveBadge />}
-                <ViewerBadge viewers={1123} />
+              className={styles.linkBack}
+            >
+              <div className={styles.arrowBack}></div>
+              <div className={styles.headline}>
+                <h2>{_.get(event, 'name')}</h2>
+                <div>
+                  {event?.type === 'streamed' && <LiveBadge />}
+                  <ViewerBadge viewers={1123} />
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
         <div className={styles.row}>
