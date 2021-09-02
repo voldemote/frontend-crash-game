@@ -23,7 +23,7 @@ $largeMobileHeight: 700px;
 
     &.menuOpened {
         right: 0;
-        padding: 90px 24px 0;
+        padding: 90px 24px 50px;
         background-color: rgba(14, 9, 39, 0.86);
         backdrop-filter: blur(6px);
         overflow: hidden;
@@ -199,6 +199,10 @@ $largeMobileHeight: 700px;
     height: calc(100vh - 90px);
     display: flex;
     flex-flow: column;
+
+    @supports (-webkit-touch-callout: none) {
+        height: calc(100vh - 150px);
+    }
 }
 .firstPanel {
     &.panelHidden {
