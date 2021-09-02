@@ -402,15 +402,17 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          <div className={styles.betViewClose} onClick={onBetClose()}>
-            <Icon
-              iconType={'arrowLeft'}
-              iconTheme={'white'}
-              className={styles.arrowBack}
-            />
-            <span>Go back to all tracks</span>
-          </div>
-          <div className={styles.betViewContent}>
+          {!singleBet && (
+            <div className={styles.betViewClose} onClick={onBetClose()}>
+              <Icon
+                iconType={'arrowLeft'}
+                iconTheme={'white'}
+                className={styles.arrowBack}
+              />
+              <span>Go back to all tracks</span>
+            </div>
+          )}
+          <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
               closed={false}
               showEventEnd={true}
