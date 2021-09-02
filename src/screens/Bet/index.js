@@ -91,7 +91,7 @@ const Bet = ({
 
   useEffect(() => {
     if (swiper && !swiper.destroyed) {
-      swiper && swiper.slideTo(betAction);
+      swiper.slideTo(betAction);
     }
   }, [betAction]);
 
