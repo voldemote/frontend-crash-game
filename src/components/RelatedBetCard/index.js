@@ -70,7 +70,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
 
   return (
     <div className={styles.relatedBetCard}>
-      <div className={styles.relatedBetCardContainer} onClick={onClick}>
+      <div className={styles.relatedBetCardContainer}>
         <div className={styles.relatedBetCardHeader}>
           <span className={styles.title}>{bet.marketQuestion}</span>
 
@@ -129,7 +129,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
           {bet?.status === BetState.active && (
             <ButtonSmall
               text="Bet"
-              iconType={IconType.arrowSmallRight}
+              iconType={IconType.arrowButtonRight}
               butonTheme={ButtonSmallTheme.dark}
               onClick={onClick}
             />

@@ -8,6 +8,7 @@ import { ReactComponent as IconActivities } from '../../data/icons/activities.sv
 import { ReactComponent as IconAddBet } from '../../data/icons/add-bet.svg';
 import { ReactComponent as IconAddYellow } from '../../data/icons/add-yellow.svg';
 import { ReactComponent as IconArrow } from '../../data/icons/arrow.svg';
+import { ReactComponent as IconArrowButtonRight } from '../../data/icons/arrow-button-right.svg';
 import { ReactComponent as IconArrowDown } from '../../data/icons/arrow-down.svg';
 import { ReactComponent as IconArrowLeft } from '../../data/icons/arrow-left.svg';
 import { ReactComponent as IconArrowRight } from '../../data/icons/arrow-right.svg';
@@ -71,6 +72,7 @@ const Icon = ({
       [IconType.addBet]: <IconAddBet />,
       [IconType.addYellow]: <IconAddYellow />,
       [IconType.arrow]: <IconArrow />,
+      [IconType.arrowButtonRight]: <IconArrowButtonRight />,
       [IconType.arrowUp]: (
         <IconArrowDown style={{ transform: 'rotate(180deg)' }} />
       ),
