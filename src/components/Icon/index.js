@@ -54,6 +54,7 @@ import { ReactComponent as IconTwitch } from '../../data/icons/twitch.svg';
 import { ReactComponent as IconWallet } from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 } from '../../data/icons/wallet-2.svg';
 import { ReactComponent as IconWithdrawal } from '../../data/icons/withdrawal.svg';
+import { ReactComponent as NewsIcon } from '../../data/icons/news-icon.svg';
 
 const Icon = ({
   className,
@@ -120,6 +121,7 @@ const Icon = ({
       [IconType.info]: <IconInfo />,
       [IconType.success]: <IconSuccess />,
       [IconType.withdrawal]: <IconWithdrawal />,
+      [IconType.newsIcon]: <NewsIcon />,
     });
   };
 

@@ -1,140 +1,130 @@
 @import '../../styles/all';
 
-.chatContainer
-{
-    display:        flex;
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  height: 40vh;
+  position: relative;
+  // margin-top:     -20vh;
+
+  @media (max-width: $screen-md) {
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  .messageContainer {
+    display: flex;
     flex-direction: column;
-    padding-top:    1rem;
-    height:         40vh;
-    position:       relative;
-    margin-top:     -20vh;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+    overflow-y: scroll;
+    margin-bottom: 1rem;
+    position: relative;
 
-    @media (max-width: $screen-md)
-    {
-        padding-top: 0;
-        margin-top: 0;
+    @media (min-width: $screen-md) {
+      margin-top: auto;
     }
 
-    .messageContainer
-    {
-        display:        flex;
-        flex-direction: column;
-        align-items:    flex-start;
-        flex-flow:      column nowrap;
-        overflow-y:     scroll;
-        margin-bottom:  1rem;
-        position:       relative;
+    @media (max-width: $screen-sm) {
+      margin-bottom: 3rem;
+    }
 
-        @media (min-width: $screen-md)
-        {
-            margin-top: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+
+    > :first-child {
+      margin-top: auto;
+    }
+  }
+
+  .messageInput {
+    background-color: $colorWhite;
+    color: $colorPrimaryDark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1rem 1rem 3rem;
+    border-radius: 10px;
+
+    @media (max-width: $screen-sm) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 1001;
+      width: 100vw;
+      height: 90px;
+      background-color: $colorWhite;
+      padding: 15px 15px 30px;
+      border-radius: 0;
+      color: $colorPrimary;
+      overflow: hidden;
+    }
+
+    &Hidden {
+      display: none;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    input {
+      border: none;
+      width: 100%;
+      display: inline-block;
+      font-size: 16px;
+
+      @media (max-width: $screen-sm) {
+        background-color: $colorGrayLight5;
+        min-height: 45px;
+        padding-left: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+    }
+
+    button {
+      display: inline-block;
+      opacity: 0.5;
+      background-color: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+
+      @media (max-width: $screen-sm) {
+        opacity: 1;
+        width: 10%;
+        height: 100%;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        background: url('../../data/backgrounds/highlight-settings-support.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        left: -10px;
+        top: 0;
+        width: 100px;
+        height: 100%;
+        z-index: -1;
+
+        @media (min-width: $screen-sm) {
+          display: none;
         }
+      }
 
+      & span > svg {
         @media (max-width: $screen-sm) {
-            margin-bottom: 3rem;
+          stroke: $colorBlack;
         }
-
-        &::-webkit-scrollbar
-        {
-            width:      0;
-            background: transparent;
-        }
-
-        > :first-child
-        {
-            margin-top: auto;
-        }
+      }
     }
-
-    .messageInput
-    {
-        background-color: $colorWhite;
-        color:            $colorPrimaryDark;
-        display:          flex;
-        justify-content:  center;
-        align-items:      center;
-        padding:          1rem 1rem 1rem 3rem;
-        border-radius:    10px;
-
-        @media (max-width: $screen-sm) {
-            position:         fixed;
-            bottom:           0;
-            left:             0;
-            z-index:          1001;
-            width:            100vw;
-            height:           90px;
-            background-color: $colorWhite;
-            padding:          15px 15px 30px;
-            border-radius:    0;
-            color:            $colorPrimary;
-            overflow:         hidden;
-        }
-
-        &Hidden {
-            display: none;
-        }
-
-        &.disabled {
-            pointer-events: none;
-            opacity: 0.8;
-        }
-
-        input
-        {
-            border:    none;
-            width:     100%;
-            display:   inline-block;
-            font-size: 16px;
-
-            @media (max-width: $screen-sm) {
-                background-color: $colorGrayLight5;
-                min-height:       45px;
-                padding-left:     10px;
-                border-radius:    5px;
-                font-size:        12px;
-            }
-        }
-
-        button
-        {
-            display:          inline-block;
-            opacity:          0.5;
-            background-color: transparent;
-            border:           none;
-            font-size:        16px;
-            cursor:           pointer;
-            position:         relative;
-
-            @media (max-width: $screen-sm) {
-                opacity: 1;
-                width:   10%;
-                height:  100%;
-    
-            }
-
-            &:after {
-                content:             '';
-                position:            absolute;
-                background:          url('../../data/backgrounds/highlight-settings-support.svg');
-                background-size:     cover;
-                background-repeat:   no-repeat;
-                background-position: center;
-                left:                -10px;
-                top:                 0;
-                width:               100px;
-                height:              100%;
-                z-index:             -1;
-
-                @media (min-width: $screen-sm) {
-                    display: none;
-                }
-            }
-
-            & span > svg {
-                @media (max-width: $screen-sm) {
-                    stroke: $colorBlack;
-                }
-            }
-        }
-    }
+  }
 }

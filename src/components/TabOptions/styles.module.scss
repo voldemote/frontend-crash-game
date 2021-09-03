@@ -1,0 +1,27 @@
+@import '../../styles/all';
+
+.tabOptionsContainer {
+  display: flex;
+  // height: 100%;
+
+  // > :not(:first-child) {
+  //   margin-left: 20px;
+  // }
+
+  @media (max-width: $screen-md) {
+    display: none;
+  }
+}
+.tab {
+  border-bottom: 1px solid rgba(239, 239, 241, 0.4);
+  > :first-child {
+    text-transform: capitalize;
+    cursor: pointer;
+    padding: 8px 45px;
+  }
+}
+.tabActive {
+  > :first-child {
+    border-bottom: 2px solid #f1ff54;
+  }
+}

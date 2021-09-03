@@ -1,0 +1,52 @@
+@import '../../styles/all';
+
+.newsTicker {
+  margin-top: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+
+.newsItem {
+  background-color: transparent;
+  border-radius: $radius;
+  flex-shrink: 0;
+  width: 300px;
+}
+
+.newsTitle {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.25rem;
+  line-height: 1;
+  text-transform: capitalize;
+  color: #ffffff;
+  height: 63px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  // @include ellipsis;
+}
+.newsDesc {
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: #ffffff;
+  opacity: 0.5;
+  height: 100px;
+  // @include ellipsis;
+}
+.readButton {
+  margin-top: 10px;
+  background-color: white;
+  height: 32px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  text-align: center;
+  text-transform: capitalize;
+  color: #000000;
+}

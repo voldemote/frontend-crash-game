@@ -18,6 +18,8 @@ import RelatedBetCard from '../../components/RelatedBetCard';
 import MyBetCard from '../../components/MyBetCard';
 import { useHistory } from 'react-router-dom';
 import Chat from '../../components/Chat';
+import News from '../../components/News';
+import TabOptions from '../../components/TabOptions';
 import classNames from 'classnames';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import EventTradesContainer from '../../components/EventTradesContainer';
@@ -32,6 +34,7 @@ import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
 import Placeholder from '../../components/Placeholder';
 import { useNewsFeed } from './hooks/useNewsFeed';
+import { useTabOptions } from './hooks/useTabOptions';
 
 const Bet = ({
   showPopup,
@@ -63,6 +66,8 @@ const Bet = ({
   } = useChartData(betId);
 
   useNewsFeed(event);
+
+  const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions();
 
   const status = {
     active: 1,
@@ -463,7 +468,13 @@ const Bet = ({
         </div>
         <div className={styles.row}>
           <div className={styles.columnLeft}>
-            <div className={styles.streamContainer}>
+            <div
+              className={
+                event.type === 'streamed'
+                  ? styles.streamContainer
+                  : styles.nonStreamContainer
+              }
+            >
               {event.type === 'non-streamed' ? (
                 <div className={styles.chart}>
                   {betViewIsOpen ? (
@@ -491,7 +502,21 @@ const Bet = ({
                 </div>
               )}
             </div>
-            <Chat className={styles.desktopChat} event={event} />
+            <TabOptions options={tabOptions} className={styles.tabOptions}>
+              {option => (
+                <div
+                  className={styles.tabStyle}
+                  onClick={() => handleSwitchTab(option)}
+                >
+                  {option.name}
+                </div>
+              )}
+            </TabOptions>
+            {selectedTab === 'chat' ? (
+              <Chat className={styles.desktopChat} event={event} />
+            ) : (
+              <News />
+            )}
           </div>
           <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
         </div>

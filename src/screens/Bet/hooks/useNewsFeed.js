@@ -13,7 +13,7 @@ export function useNewsFeed(event) {
   // api docs: https://newsapi.org/docs/endpoints/everything
   const params = {
     qInTitle: queries,
-    pageSize: 10,
+    pageSize: 8,
     sortBy: 'relevancy',
   };
 

@@ -155,11 +155,15 @@
       padding-right: 1rem;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
 
       @media (max-width: $screen-md) {
         width: 100%;
         padding-left: 1rem;
         padding-right: 1rem;
+      }
+
+      .nonStreamContainer {
       }
 
       .streamContainer {
@@ -377,4 +381,14 @@
 
 .linkBack {
   display: flex;
+}
+
+// .tabStyle {
+//   display: inline-block;
+//   background-color: #322e44;
+//   border-radius: $radius;
+//   padding: 6px 10px;
+// }
+.tabOptions {
+  margin-top: 20px;
 }

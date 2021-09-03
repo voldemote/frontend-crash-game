@@ -39,7 +39,7 @@ const initialState = {
     },
   ],
   chartData: [],
-  newsData: [],
+  newsData: {},
 };
 
 const fetchAllSucceeded = (action, state) => {
