@@ -3,11 +3,11 @@ import _ from 'lodash';
 import StateBadge from '../StateBadge';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
-import Link from 'components/Link';
-import { useHistory } from 'react-router-dom';
-import Routes from 'constants/Routes';
+import { useLocation, Link } from 'react-router-dom';
 
 const MyTradesList = ({ bets, withStatus = false }) => {
+  const location = useLocation();
+
   const renderBets = () => {
     return _.map(bets, (item, index) => {
       const negativeOutcome = item.investmentAmount > item.outcomeValue;
@@ -24,13 +24,7 @@ const MyTradesList = ({ bets, withStatus = false }) => {
           <img src={item.imageUrl} className={styles.eventImg} />
           <div className={styles.betInfo}>
             <div className={styles.titleContainer}>
-              <Link
-                to={Routes.getRouteWithParameters(Routes.bet, {
-                  eventId: item.eventId,
-                  betId: '',
-                })}
-                className={styles.titleLink}
-              >
+              <Link to={`/trade/${item.eventId}`} className={styles.titleLink}>
                 <div className={styles.title}>
                   {item.marketQuestion}
                   {withStatus && (

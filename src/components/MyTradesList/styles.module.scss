@@ -40,14 +40,15 @@
       flex-direction: column;
       flex: 1 1;
 
+      .titleLink {
+        &:hover {
+            text-decoration: underline;
+        }
+      }
+
       .title {
           font-size: 16px;
           color: $colorGrayLight3;
-
-        &:hover {
-            text-decoration: underline;
-            cursor: pointer;
-        }
       }
 
       .subtitle {
