@@ -6,16 +6,14 @@ import ChoiceSelector from '../ChoiceSelector';
 import classNames from 'classnames';
 import HighlightTheme from '../Highlight/HighlightTheme';
 import HighlightType from '../../components/Highlight/HighlightType';
-import HotBetBadge from '../HotBetBadge';
 import moment from 'moment';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import SleepHelper from '../../helper/Sleep';
 import styles from './styles.module.scss';
 import SwitchableContainer from '../SwitchableContainer';
 import SwitchableHelper from '../../helper/SwitchableHelper';
 import TimeLeftCounter from '../../components/TimeLeftCounter';
 import TokenNumberInput from '../TokenNumberInput';
-import TokenValueSelector from '../TokenValueSelector';
 import { BetActions } from '../../store/actions/bet';
 import { connect, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -33,19 +31,17 @@ import BetSummaryHelper from '../../helper/BetSummary';
 import BetState from './BetState';
 import BetShareContainer from '../BetShareContainer';
 import ShareType from '../BetCard/ShareType';
-import Link from '../Link';
-import Routes from '../../constants/Routes';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import ErrorHint from '../ErrorHint';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
+import { GeneralActions } from 'store/actions/general';
 
 const BetView = ({
   actionIsInProgress,
   closed,
   isPopup = false,
-  initialSellTab,
   forceSellView,
   disableSwitcher = false,
   showEventEnd,
@@ -61,10 +57,10 @@ const BetView = ({
   setCommitment,
   placeBet,
   pullOutBet,
-  fetchOutcomes,
   showPopup,
   isTradeViewPopup,
   handleChartDirectionFilter,
+  setOpenDrawer,
 }) => {
   const params = useParams();
   const defaultBetValue = _.max([balance, 10]);
@@ -322,10 +318,6 @@ const BetView = ({
     []
   );
 
-  const onTokenSelect = number => {
-    setTokenNumber(number);
-    setCommitment(number, betId);
-  };
   const onTokenNumberChange = number => {
     setTokenNumber(number);
     debouncedSetCommitment(number);
@@ -710,14 +702,17 @@ const BetView = ({
         <>
           <div className={styles.summaryRowContainer}>
             <SummaryRowContainer summaryRows={summaryRows} />
-            <Link className={styles.walletLink} to={Routes.wallet}>
+            <div
+              className={styles.walletLink}
+              onClick={() => setOpenDrawer('wallet')}
+            >
               Go to my Wallet
               <Icon
                 className={styles.walletLinkIcon}
                 iconType={IconType.arrowTopRight}
                 iconTheme={IconTheme.primary}
               />
-            </Link>
+            </div>
             {hasWon && (
               <>
                 <span className={styles.confettiLeft}>
@@ -809,9 +804,6 @@ const mapDispatchToProps = dispatch => {
     setCommitment: (commitment, betId) => {
       dispatch(BetActions.setCommitment({ commitment, betId }));
     },
-    fetchOutcomes: (betId, amount) => {
-      dispatch(BetActions.fetchOutcomes({ betId, amount }));
-    },
     placeBet: (betId, amount, outcome) => {
       dispatch(BetActions.place({ betId, amount, outcome }));
     },
@@ -825,6 +817,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    setOpenDrawer: drawer => {
+      dispatch(GeneralActions.setDrawer(drawer));
     },
   };
 };
