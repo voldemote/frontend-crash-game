@@ -3,11 +3,9 @@ import _ from 'lodash';
 import StateBadge from '../StateBadge';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MyTradesList = ({ bets, withStatus = false }) => {
-  const location = useLocation();
-
   const renderBets = () => {
     return _.map(bets, (item, index) => {
       const negativeOutcome = item.investmentAmount > item.outcomeValue;
