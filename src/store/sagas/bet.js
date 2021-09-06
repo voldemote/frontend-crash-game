@@ -50,8 +50,6 @@ const place = function* (action) {
 
   const response = yield call(Api.placeBet, betId, investmentAmount, outcome);
 
-  yield delay(_.random(10, 30) * 100);
-
   if (response) {
     yield put(
       BetActions.placeSucceeded({
@@ -198,8 +196,6 @@ const pullOut = function* (action) {
   const outcome = action.outcome;
 
   const response = yield call(Api.pullOutBet, betId, amount, outcome);
-
-  yield delay(_.random(10, 30) * 100);
 
   if (response) {
     yield put(BetActions.pullOutBetSucceeded());
