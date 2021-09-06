@@ -10,33 +10,12 @@
   }
 }
 
-.columns div {
-  width: 33.3%;
-  height: 300px;
-}
-
 .content {
   padding-right: 20px;
   flex: 1;
 
   @media screen and (max-width: $screen-xs) {
     padding-right: 0px;
-  }
-}
-
-.animation {
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  color: $colorWhite;
-  border-radius: 10px;
-  background-color: rgba(172,196,255,0.1);
-  margin-bottom: 20px;
-
-  @media screen and (max-width: $screen-xs) {
-    width: 100%;
-    height: 200px;
   }
 }
 
@@ -49,71 +28,10 @@
 }
 
 .chatContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 200px;
-  background: #201F3B;
+  background: #1F1D38;
+  border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 10px;
-
-  @media screen and (max-width: $screen-sm) {
-    display: none;
-  }
-}
-
-.chat {
-  height: 300px;
-  padding: 20px;
-  height: auto;
-
-  @media screen and (max-width: $screen-sm) {
-    padding: 0px;
-    height: 250px;
-
-    .messagesContainer {
-      margin-bottom: 1rem;
-    }
-
-    .chatInput {
-      width: 100%;
-      position: static;
-      background-color: transparent;
-      padding: 0px;
-      z-index: 0;
-
-      input {
-        margin-right: 0px;
-      }
-
-      button {
-        width: 50px;
-      }
-
-      button::after {
-        background: transparent;
-      }
-    }
-  }
-}
-
-.backLink {
-  display: inline-flex;
-  align-items: center;
-  padding-bottom: 20px;
-
-  svg {
-    margin-right: 10px;
-  }
-
-  h2 {
-    color: $colorWhite;
-    font-family: "PlusJakarta-Regular";
-    font-size: 24px;
-    font-weight: 700;
-  }
-}
-
-.timer {
-  font-size: 64px;
-  font-weight: bold;
+  margin: 0px;
+  height: 100%;
+  padding: 10px;
 }
