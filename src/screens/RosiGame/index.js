@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import * as Api from 'api/crash-game';
 import { useDispatch } from 'react-redux';
 import Link from 'components/Link';
+import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
-import PlaceBet from 'components/PlaceBet';
-import BetHistory from 'components/BetHistory';
+// import PlaceBet from 'components/PlaceBet';
 import LastCrashes from 'components/LastCrashes';
 import GameAnimation from 'components/RosiGameAnimation';
+import InGameBets from 'components/InGameBets';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
@@ -36,19 +37,21 @@ const RosiGame = () => {
           </div>
           <LastCrashes />
           <GameAnimation />
-          <div className={styles.chatContainer}>
-            <Chat
-              event={rosiGameEvent}
-              className={styles.chat}
-              inputClassName={styles.chatInput}
-              messagesClassName={styles.messagesContainer}
-            />
-          </div>
+          <Grid container spacing={2}>
+            <Grid item md={4}>
+              <Chat event={rosiGameEvent} />
+            </Grid>
+            <Grid item md={4}>
+              <InGameBets />
+            </Grid>
+            <Grid item md={4}>
+              Winners
+            </Grid>
+          </Grid>
         </div>
-        <div className={styles.sidebar}>
+        {/* <div className={styles.sidebar}>
           <PlaceBet />
-          <BetHistory />
-        </div>
+        </div> */}
       </div>
     </BaseContainerWithNavbar>
   );
