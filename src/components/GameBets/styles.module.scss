@@ -46,11 +46,6 @@
     letter-spacing: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding: 12px 20px;
-
-    span:last-child {
-      color: $colorWhite;
-      opacity: 0.5;
-    }
   }
 
   .user {
@@ -62,4 +57,14 @@
         margin-right: 10px;
     }
   }
+}
+
+.crashFactor {
+  margin-right: 20px;
+  color: $colorYellow;
+}
+
+.amount {
+  color: $colorWhite;
+  opacity: 0.5;
 }

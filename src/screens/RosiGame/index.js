@@ -7,10 +7,11 @@ import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 // import PlaceBet from 'components/PlaceBet';
 import LastCrashes from 'components/LastCrashes';
 import GameAnimation from 'components/RosiGameAnimation';
-import InGameBets from 'components/InGameBets';
+import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
+import { winners, inGameBets } from './fakeData';
 import { ReactComponent as ArrowIcon } from '../../data/icons/arrow-left.svg';
 import styles from './styles.module.scss';
 
@@ -42,10 +43,19 @@ const RosiGame = () => {
               <Chat event={rosiGameEvent} />
             </Grid>
             <Grid item md={4}>
-              <InGameBets />
+              <GameBets
+                label="In Game Bets"
+                total="2.700,50"
+                bets={inGameBets}
+              />
             </Grid>
             <Grid item md={4}>
-              Winners
+              <GameBets
+                label="Cashed Out"
+                total="2.700,50"
+                bets={winners}
+                showCrashFactor
+              />
             </Grid>
           </Grid>
         </div>
