@@ -32,7 +32,7 @@ const NotificationsItem = ({ notification, setUnread, events }) => {
       !!notification.betId &&
       !!getEventByBetId(notification.betId)
     ) {
-      const { betId, message, betQuestion } = notification;
+      const { betId, message, betQuestion, slug: betSlug } = notification;
       const event = getEventByBetId(betId);
 
       eventName = event.name;
@@ -42,7 +42,7 @@ const NotificationsItem = ({ notification, setUnread, events }) => {
         <>
           {beforeLink}
           <Link
-            to={`/trade/${event._id}/${betId}`}
+            to={`/trade/${event.slug}/${betSlug}`}
             onClick={markNotificationRead}
           >
             {betQuestion}

@@ -64,7 +64,7 @@ const Header = ({ events }) => {
                       <div>
                         <Link
                           to={{
-                            pathname: `trade/${event._id}`,
+                            pathname: `trade/${event.slug}`,
                             state: {
                               fromLocation: location,
                             },
