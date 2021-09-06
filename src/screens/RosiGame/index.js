@@ -30,27 +30,25 @@ const RosiGame = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <BackLink to="/games" text="Rosi Game" />
-          <LastCrashes />
-          <Grid container spacing={2}>
-            <Grid item md={9}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={9}>
+              <LastCrashes />
               <GameAnimation />
             </Grid>
-            <Grid item md={3}>
+            <Grid item xs={12} md={3}>
               <PlaceBet />
             </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item md={4}>
+            <Grid item xs={12} md={4}>
               <Chat event={rosiGameEvent} className={styles.chatContainer} />
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={12} md={4}>
               <GameBets
                 label="In Game Bets"
                 total="2.700,50"
                 bets={inGameBets}
               />
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={12} md={4}>
               <GameBets
                 label="Cashed Out"
                 total="2.700,50"
