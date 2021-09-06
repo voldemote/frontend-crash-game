@@ -229,20 +229,20 @@ const BetView = ({
     return valid;
   };
 
-  function getDefaultTokenSelection() {
-    return [25, 50, 100, 150, 200];
-  }
+  // function getDefaultTokenSelection() {
+  //   return [25, 50, 100, 150, 200];
+  // }
 
-  function getDefaultTokenSelectionValues() {
-    const tokenSelectionValues = _.map(getDefaultTokenSelection(), value => {
-      return {
-        enabled: value <= balance,
-        value,
-      };
-    });
+  // function getDefaultTokenSelectionValues() {
+  //   const tokenSelectionValues = _.map(getDefaultTokenSelection(), value => {
+  //     return {
+  //       enabled: value <= balance,
+  //       value,
+  //     };
+  //   });
 
-    return tokenSelectionValues;
-  }
+  //   return tokenSelectionValues;
+  // }
 
   async function loadAfterMount() {
     await SleepHelper.sleep(100);
