@@ -1,0 +1,183 @@
+@import '../../styles/all';
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  color: $colorWhite;
+
+  @media (min-width: $screen-lg) {
+    max-width: 1240px;
+  }
+
+  @media (max-width: $screen-md) {
+    padding: 15px;
+  }
+}
+
+.column {
+  flex: 1;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 10px;
+  background-color: #2f3150;
+  padding: 20px;
+
+  min-height: 260px;
+
+  p {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+}
+
+.cardReward {
+  margin-bottom: 22px;
+  color: #2dcb70;
+
+  span {
+    font-size: 14px;
+    padding: 2px 4px;
+    background-color: rgba(45, 203, 112, 0.2);
+    border-radius: 4px;
+  }
+}
+
+.cardCenter {
+  justify-content: center;
+}
+
+.cardRewardDescrption {
+  flex: 1;
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin-top: 52px;
+  margin-bottom: 120px;
+
+  @media (max-width: $screen-md) {
+    flex-direction: column;
+  }
+}
+
+.rewardsWrapper {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+
+  flex: 0 624px;
+}
+
+.rewardsInfo {
+  align-self: center;
+  flex: 0 415px;
+
+  h3 {
+    font-size: 66px;
+    margin-bottom: 22px;
+  }
+
+  p {
+    margin-bottom: 14px;
+    opacity: 0.6;
+  }
+}
+
+.cardButton {
+  height: 42px;
+  font-size: 14px;
+  background-color: #ffffff;
+  background-image: url('../../data/images/signup-background-one.svg');
+  background-position: center;
+}
+
+.cardButtonDone {
+  background-color: #201f3b;
+  background-image: none;
+  color: #fff;
+}
+
+.iconRightSide {
+  display: inline-block;
+  width: auto;
+  margin-left: 12px;
+}
+
+.lotteryGameContent {
+  text-align: center;
+
+  p {
+    opacity: 0.6;
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    font-size: 38px;
+    font-weight: 500;
+    margin-bottom: 60px;
+  }
+}
+
+.radioButton {
+  display: inline-block;
+  background-color: #201f3b;
+  border-radius: 10px;
+  padding: 20px;
+
+  input {
+    margin-right: 22px;
+  }
+}
+
+.questionOptions {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 40px;
+}
+
+.questionNumberLabel {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background-color: #201f3b;
+}
+
+.lotteryGameButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.nextQuestionBtn {
+  min-width: 220px;
+}
+
+.skipQuestionBtn {
+  height: 60px;
+  margin-right: 12px;
+  min-width: 120px;
+  border-radius: 10px;
+  border: solid 1px rgba(226, 255, 84, 0.69);
+  background-color: transparent;
+  color: #e2ff54;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  svg * {
+    stroke: #e2ff54 !important;
+  }
+}

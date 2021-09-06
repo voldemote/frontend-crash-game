@@ -55,6 +55,7 @@ const resendEmailVerification = () => {
   return Api.get(ApiUrls.API_AUTHENTICATION_RESEND_EMAIL_VERIFICATION).catch(
     error => {
       console.log('[API Error] called verifyEmail:', error);
+      throw error;
     }
   );
 };

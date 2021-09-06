@@ -16,4 +16,5 @@ export default {
   loginRegister: 'loginRegister',
   verifyEmail: 'verifyEmail',
   pulloutApprove: 'pulloutApprove',
+  lotteryGameAnswered: 'lotteryGameAnswered',
 };

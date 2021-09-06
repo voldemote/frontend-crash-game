@@ -25,6 +25,7 @@ import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
 import PulloutApprovePopup from '../PulloutApprovePopup';
+import LotteryGamePopup from '../LotteryGamePopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -78,7 +79,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
       case PopupTheme.signUpNotificationFirst:
       case PopupTheme.signUpNotificationSecond:
         return <SignUpPopup closed={!visible} />;
-
       case PopupTheme.tradeView:
         return (
           <TradeViewPopup
@@ -98,10 +98,8 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             fee={withdrawalSuccessOptions.fee}
           />
         );
-
       case PopupTheme.deposit:
         return <DepositSuccessPopup address={depositSuccessOptions.address} />;
-
       case PopupTheme.evaluateEvent:
         return (
           <EvaluateEventPopup
@@ -109,7 +107,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             hidePopup={hidePopup}
           />
         );
-
       case PopupTheme.reportEvent:
         return <ReportEventPopup />;
 
@@ -121,6 +118,9 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.pulloutApprove:
         return <PulloutApprovePopup betData={_.get(options, 'betData')} />;
+
+      case PopupTheme.lotteryGameAnswered:
+        return <LotteryGamePopup hidePopup={hidePopup} />;
     }
 
     return null;
