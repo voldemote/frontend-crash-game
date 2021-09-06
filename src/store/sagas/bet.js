@@ -53,9 +53,10 @@ const place = function* (action) {
   if (response) {
     yield put(
       BetActions.placeSucceeded({
-        betId,
-        investmentAmount,
-        outcome,
+        bet: response.data.bet,
+        outcomeAmount: response.data.outcomeAmount,
+        outcomeValue: response.data.outcomeValue,
+        investedAmount: response.data.investedAmount,
       })
     );
     yield put(PopupActions.hide());

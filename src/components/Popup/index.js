@@ -50,7 +50,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
       case PopupTheme.betApprove:
         return (
           <BetApproveView
-            closed={!visible}
             betId={betId}
             investmentAmount={investmentAmount}
             outcome={outcome}

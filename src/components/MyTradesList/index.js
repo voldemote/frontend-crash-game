@@ -8,10 +8,11 @@ import { Link } from 'react-router-dom';
 const MyTradesList = ({ bets, withStatus = false }) => {
   const renderBets = () => {
     return _.map(bets, (item, index) => {
-      const negativeOutcome = item.investmentAmount > item.outcomeValue;
+      const negativeOutcome =
+        _.toNumber(item.investmentAmount) > _.toNumber(item.outcomeAmount);
       const outcomePercentage = negativeOutcome
         ? `-${formatToFixed(
-            (item.outcomeAmount / item.investmentAmount) * 100
+            (100 - item.outcomeAmount / item.investmentAmount) * 100
           )}% `
         : `+${formatToFixed(
             (item.investmentAmount / item.outcomeAmount) * 100
