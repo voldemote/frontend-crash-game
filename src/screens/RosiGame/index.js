@@ -12,6 +12,7 @@ import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import { winners, inGameBets } from './fakeData';
+import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 
 const rosiGameEvent = { _id: ROSI_GAME_EVENT_ID };
@@ -41,14 +42,14 @@ const RosiGame = () => {
             <Grid item xs={12} md={4}>
               <Chat event={rosiGameEvent} className={styles.chatContainer} />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item md={4}>
               <GameBets
                 label="In Game Bets"
                 total="2.700,50"
                 bets={inGameBets}
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item md={4}>
               <GameBets
                 label="Cashed Out"
                 total="2.700,50"
@@ -57,6 +58,7 @@ const RosiGame = () => {
               />
             </Grid>
           </Grid>
+          {/* <MobileBets /> */}
         </div>
       </div>
     </BaseContainerWithNavbar>

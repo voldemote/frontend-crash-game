@@ -8,10 +8,12 @@
   padding: 20px;
   height: 100%;
 
-  // @media screen and (max-width: $screen-xs) {
-  //     background-color: transparent;
-  //     padding: 0px;
-  // }
+  @media screen and (max-width: $screen-xs) {
+    // background-color: transparent;
+    // padding: 0px;
+
+    height: 360px;
+  }
 }
 
 .label {

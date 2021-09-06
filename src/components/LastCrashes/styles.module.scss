@@ -11,6 +11,10 @@
     display: inline-block;
     color: $colorWhite;
     width: 30%;
+
+    @media screen and (max-width: $screen-sm) {
+      width: 50%;
+    }
   }
 
   .crashes {
@@ -18,10 +22,18 @@
     align-items: center;
     overflow-x: auto;
     width: 70%;
+
+    @media screen and (max-width: $screen-sm) {
+      width: 50%;
+    }
   }
 
   .crash {
     color: $colorYellow;
     margin-right: 50px;
+
+    @media screen and (max-width: $screen-sm) {
+      margin-right: 30px;
+    }
   }
 }
