@@ -3,10 +3,9 @@
 .flagDropdownButton
 {
     border:           none !important;
-    background-color: transparent !important;
+    background-color: #f1f2f6 !important;
 
-    > *
-    {
+    div:first-child {
         background-color: transparent !important;
     }
 }

@@ -13,4 +13,6 @@ export default {
   deposit: 'deposit',
   evaluateEvent: 'evaluateEvent',
   reportEvent: 'reportEvent',
+  loginRegister: 'loginRegister',
+  verifyEmail: 'verifyEmail',
 };

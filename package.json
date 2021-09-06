@@ -31,6 +31,7 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.3",
         "react-share": "^4.4.0",
+        "react-tooltip": "^4.2.21",
         "react-twitch-embed-video": "^3.0.0",
         "react-verification-code-input": "^1.2.9",
         "redux": "^4.1.0",

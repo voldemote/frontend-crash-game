@@ -35,6 +35,37 @@ const requestSmsSucceeded = (action, state) => {
     authState: {
       $set: AuthState.SMS_SENT,
     },
+    existing: {
+      $set: action.existing,
+    },
+    error: {
+      $set: null,
+    },
+  });
+};
+
+const requestSmsFailed = (action, state) => {
+  return update(state, {
+    loading: {
+      $set: false,
+    },
+    existing: {
+      $set: null,
+    },
+    error: {
+      $set: action.error?.message,
+    },
+  });
+};
+
+const requestSmsVerifyFailed = (action, state) => {
+  return update(state, {
+    loading: {
+      $set: false,
+    },
+    error: {
+      $set: action?.message,
+    },
   });
 };
 
@@ -70,6 +101,12 @@ const requestSmsVerified = (action, state) => {
     authState: {
       $set: authState,
     },
+    existing: {
+      $set: null,
+    },
+    error: {
+      $set: null,
+    },
   });
 };
 
@@ -96,9 +133,6 @@ const setName = (action, state) => {
     },
     username: {
       $set: action.username,
-    },
-    authState: {
-      $set: AuthState.SET_EMAIL,
     },
   });
 };
@@ -131,12 +165,35 @@ const setCountryCode = (action, state) => {
 };
 
 const saveAdditionalInfoSucceeded = (action, state) => {
+  let authState = AuthState.LOGGED_IN;
+  const email = action.email;
+  const name = action.name;
+
+  if (!email) {
+    authState = AuthState.SET_EMAIL;
+  }
+
+  if (!name) {
+    authState = AuthState.SET_NAME;
+  }
+
   return update(state, {
     loading: {
       $set: false,
     },
     authState: {
-      $set: AuthState.LOGGED_IN,
+      $set: authState,
+    },
+  });
+};
+
+const saveAdditionalInfoFailed = (action, state) => {
+  return update(state, {
+    loading: {
+      $set: false,
+    },
+    error: {
+      $set: action?.message,
     },
   });
 };
@@ -189,6 +246,17 @@ const setLoading = (action, state) => {
     loading: {
       $set: true,
     },
+    error: {
+      $set: null,
+    },
+  });
+};
+
+const cleanErrors = (action, state) => {
+  return update(state, {
+    error: {
+      $set: null,
+    },
   });
 };
 
@@ -216,10 +284,29 @@ const resetAuthState = (action, state) => {
       authState: {
         $set: AuthState.LOGGED_OUT,
       },
+      error: {
+        $set: null,
+      },
     });
   }
 
   return state;
+};
+
+const downgradeAuthState = (action, state) => {
+  let authState =
+    state.authState === AuthState.SET_EMAIL
+      ? AuthState.SET_NAME
+      : AuthState.LOGGED_OUT;
+
+  return update(state, {
+    authState: {
+      $set: authState,
+    },
+    error: {
+      $set: null,
+    },
+  });
 };
 
 // update user data reducers
@@ -259,8 +346,12 @@ export default function (state = initialState, action) {
       return setCountryCode(action, state);
     case AuthenticationTypes.REQUEST_SMS_SUCCEEDED:
       return requestSmsSucceeded(action, state);
+    case AuthenticationTypes.REQUEST_SMS_FAILED:
+      return requestSmsFailed(action, state);
     case AuthenticationTypes.VERIFY_SMS_SUCCEEDED:
       return requestSmsVerified(action, state);
+    case AuthenticationTypes.VERIFY_SMS_FAILED:
+      return requestSmsVerifyFailed(action, state);
     case AuthenticationTypes.VERIFY_EMAIL_SUCCEEDED:
       return requestEmailVerified(action, state);
     case AuthenticationTypes.VERIFY_EMAIL_FAILED:
@@ -270,10 +361,8 @@ export default function (state = initialState, action) {
     case AuthenticationTypes.REQUEST_SMS:
     case AuthenticationTypes.VERIFY_SMS:
       return setLoading(action, state);
-    case AuthenticationTypes.REQUEST_SMS_FAILED:
-    case AuthenticationTypes.VERIFY_SMS_FAILED:
     case AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED:
-      return resetLoading(action, state);
+      return saveAdditionalInfoFailed(action, state);
     case AuthenticationTypes.UPDATE_DATA:
       return updateData(action, state);
     case AuthenticationTypes.SET_REFERRAL:
@@ -282,6 +371,8 @@ export default function (state = initialState, action) {
       return fetchReferralsSucceeded(action, state);
     case AuthenticationTypes.RESET_AUTH_STATE:
       return resetAuthState(action, state);
+    case AuthenticationTypes.DOWNGRADE_AUTH_STATE:
+      return downgradeAuthState(action, state);
     case AuthenticationTypes.INITIATE_UPDATE_USER_DATA:
       return initiateUpdateUserData(action, state);
     case AuthenticationTypes.UPDATE_USER_DATA_SUCCEEDED:
@@ -289,7 +380,7 @@ export default function (state = initialState, action) {
     case AuthenticationTypes.UPDATE_USER_DATA_FAILED:
       return updateUserDataFailed(action, state);
     default:
-      return state;
+      return cleanErrors(action, state);
     // @formatter:on
   }
 }

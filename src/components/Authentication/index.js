@@ -13,6 +13,7 @@ import { useIsMount } from '../hoc/useIsMount';
 import _ from 'lodash';
 import CheckBox from '../CheckBox';
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 
 // Array of Headings for the different signup steps
 const titleList = [
@@ -35,10 +36,10 @@ const descriptionList = [
 
 // Array of Button texts for the different signup steps
 const confirmBtnList = [
-  { id: 0, text: 'Send verification code' },
+  { id: 0, text: 'Send Verification Code' },
   { id: 1, text: 'Verify' },
-  { id: 2, text: 'Go to last step' },
-  { id: 3, text: 'Start trading!' },
+  { id: 2, text: 'Next Step' },
+  { id: 3, text: 'Finish' },
 ];
 
 const codeFieldLength = 6;
@@ -55,6 +56,9 @@ const Authentication = ({
   country,
   setCountry,
   loading,
+  downgradeState,
+  existing,
+  errorState,
 }) => {
   const isMount = useIsMount();
 
@@ -65,6 +69,7 @@ const Authentication = ({
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
+  let fooRef = null;
 
   const phoneNumberIsValid = () => {
     return country && phoneNumber && phoneNumber.length > 6;
@@ -87,70 +92,61 @@ const Authentication = ({
   };
 
   const validateInput = () => {
-    // TODO: Suggestion: having either a string or an array for the type of error is not very stable code, we should fix that
-    // also using a validation library like ZOD and a form library like react-final-form would make this a bit more consistent and reliable across forms
     let error = null;
 
     switch (step) {
       case 0:
         if (!phoneNumberIsValid()) {
-          error = 'Please enter a valid phone number!';
+          error = 'Invalid phone number';
         }
-
         break;
-
       case 1:
         if (!codeIsValid()) {
-          error = 'Please enter a valid code!';
+          error = 'Invalid verification code';
         }
-
         break;
-
       case 2:
-        error = [];
-
         if (!usernameIsValid()) {
-          error[0] = 'Please enter a valid username!';
+          error = 'Not a valid username';
         }
-
         if (!nameIsValid()) {
-          error[1] = 'Please enter your name!';
+          error = 'Not a valid name';
         }
-
         break;
-
       case 3:
-        error = [];
-
         if (!emailIsValid()) {
-          error[0] = 'Please enter a valid email!';
+          error = 'Not a valid email address';
         }
-
         if (!legalAuthorizationAgreed) {
-          error[1] = "Please agree that you're legally authorized!";
+          error = "Confirm that you're legally authorized";
         }
-
         break;
     }
 
     setError(error);
+    if (error) {
+      ReactTooltip.show(fooRef);
+    }
   };
 
-  useEffect(
-    () => {
-      if (!isMount) {
-        validateInput();
+  useEffect(() => {
+    if (!isMount && step === 1 && codeIsValid()) {
+      onConfirm();
+    }
+  }, [country, code]);
 
-        if (step === 1 && codeIsValid()) {
-          onConfirm();
-        }
-      }
-    },
-    // @TODO: this possibly needs refactoring,
-    // the functions that do not depend on state or props should move out of the component.
-    // for the other functions useCallback() would make sense to prevent unnecessary rerenders
-    [country, code]
-  );
+  useEffect(() => {
+    ReactTooltip.rebuild();
+
+    if (errorState) {
+      setError(errorState);
+      ReactTooltip.show(fooRef);
+    }
+
+    return () => {
+      setError(null);
+    };
+  }, [errorState]);
 
   const resendRequestSms = () => {
     requestSms();
@@ -161,45 +157,30 @@ const Authentication = ({
 
     switch (step) {
       case 0:
-        if (phoneNumberIsValid()) {
-          resendRequestSms();
-        }
-
+        resendRequestSms();
         break;
-
       case 1:
         if (codeIsValid()) {
           const smsToken = code;
-
           verifySms({ smsToken });
         }
-
         break;
       case 2:
         if (nameIsValid() && usernameIsValid()) {
           setName(firstName, username);
         }
-
         break;
       case 3:
         if (emailIsValid() && legalAuthorizationAgreed) {
           setEmail({ email });
         }
-
         break;
     }
   };
 
-  const getAuthenticationContentDescriptionStyle = () => {
-    if (step !== 2) {
-      return {
-        marginTop: 25,
-      };
-    }
-
-    return {
-      marginTop: 65,
-    };
+  const goBack = () => {
+    setError(null);
+    downgradeState();
   };
 
   const renderResendCodeContainer = () => {
@@ -233,7 +214,6 @@ const Authentication = ({
       return (
         <p
           className={styles.authenticationDescription}
-          style={getAuthenticationContentDescriptionStyle()}
           dangerouslySetInnerHTML={{
             __html: description,
           }}
@@ -246,13 +226,27 @@ const Authentication = ({
 
   const renderInputBoxes = () => {
     return (
-      <div className={styles.authenticationInputBoxContainer}>
+      <div
+        className={styles.authenticationInputBoxContainer}
+        data-tip
+        ref={ref => (fooRef = ref)}
+        data-event="none"
+        data-event-off="dblclick"
+      >
+        <ReactTooltip
+          getContent={() => error}
+          place="bottom"
+          effect="solid"
+          type="error"
+          offset={{ top: 8 }}
+          backgroundColor={'#ff0000'}
+          className={styles.stepsTooltipError}
+        />
         {step === 0 && (
           <InputBox
             type="number"
             hasCountry={true}
             placeholder="phone number"
-            errorText={error}
             setValue={setPhoneNumber}
             value={phoneNumber}
             country={country}
@@ -272,7 +266,6 @@ const Authentication = ({
           <>
             <InputBox
               invitationText={'My name is...'}
-              errorText={_.get(error, 1)}
               placeholder="John"
               value={firstName}
               setValue={setFirstName}
@@ -280,7 +273,6 @@ const Authentication = ({
             <InputBox
               containerClassName={styles.usernameInputBox}
               invitationText={'But you can call me...'}
-              errorText={_.get(error, 0)}
               placeholder="john2021"
               value={username}
               setValue={setUsername}
@@ -290,7 +282,6 @@ const Authentication = ({
         {step === 3 && (
           <>
             <InputBox
-              errorText={_.get(error, 0)}
               placeholder="john.doe@gmail.com"
               value={email}
               setValue={setInputEmail}
@@ -319,7 +310,6 @@ const Authentication = ({
         checked={legalAuthorizationAgreed}
         setChecked={setLegalAuthorizationAgreed}
         text={legalAuthorizationAgreementText}
-        errorText={_.get(error, 1)}
       />
     );
   };
@@ -328,9 +318,15 @@ const Authentication = ({
     return (
       <p className={styles.authenticationTermsAgreement}>
         By continuing I accept the{' '}
-        <Link to={Routes.termsAndConditions}>Terms and Conditions</Link> and{' '}
-        <Link to={Routes.privacyPolicy}>Privacy Policy</Link>. Also I confirm
-        that I am over 18 years old.
+        <Link to={Routes.termsAndConditions} className={styles.termsLink}>
+          Terms and Conditions
+        </Link>{' '}
+        and{' '}
+        <Link to={Routes.privacyPolicy} className={styles.termsLink}>
+          Privacy Policy
+        </Link>
+        . <br />
+        Also I confirm that I am over 18 years old.
       </p>
     );
   };
@@ -357,7 +353,7 @@ const Authentication = ({
 
   return (
     <StepsContainer
-      size={4}
+      size={existing ? 2 : 4}
       step={step}
       buttonContent={getButtonContent()}
       headline={getHeadline()}
@@ -365,6 +361,8 @@ const Authentication = ({
       onButtonClick={onConfirm}
       buttonDisabled={loading}
       renderFooter={renderTermsAgreement}
+      onGoBackButtonClick={goBack}
+      goBackSteps={[1, 2, 3]}
     >
       {renderDescription()}
       {renderInputBoxes()}
@@ -405,6 +403,8 @@ const mapStateToProps = state => {
     loading: state.authentication.loading,
     phoneNumber: state.authentication.phone,
     country: state.authentication.country,
+    existing: state.authentication.existing,
+    errorState: state.authentication.error,
   };
 };
 
@@ -427,6 +427,9 @@ const mapDispatchToProps = dispatch => {
     },
     setCountry: country => {
       dispatch(AuthenticationActions.setCountry({ country }));
+    },
+    downgradeState: () => {
+      dispatch(AuthenticationActions.downgradeState());
     },
   };
 };

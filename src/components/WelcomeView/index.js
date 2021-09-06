@@ -1,13 +1,10 @@
 import _ from 'lodash';
 
 import Icon from '../Icon';
-
 import IconType from '../Icon/IconType';
-import React from 'react';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import Button from '../Button';
-import HighlightType from '../Highlight/HighlightType';
 import { PopupActions } from '../../store/actions/popup';
 import { TOKEN_NAME } from '../../constants/Token';
 
@@ -15,7 +12,12 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
   const renderHeadline = () => {
     const name = _.get(user, 'name');
 
-    return <span className={styles.welcomeHeadline}>Welcome, {name} ❤️</span>;
+    return (
+      <span className={styles.welcomeHeadline}>
+        Welcome {name}, <br />
+        free for full Wallfair experience!
+      </span>
+    );
   };
 
   const renderWelcomeText = () => {
@@ -26,10 +28,7 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
         <span className={styles.welcomeTextText}>
-          Free for full Wallfair experience!
-        </span>
-        <span className={styles.welcomeTextText}>
-          Refer a friend and get additional 50 {TOKEN_NAME}.
+          Refer a friend and get additional 500 {TOKEN_NAME}.
         </span>
       </div>
     );
@@ -38,11 +37,11 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
   const renderStartTradingButton = () => {
     return (
       <Button
-        highlightType={HighlightType.highlightHomeCtaBet}
         withoutBackground={true}
         onClick={hidePopup}
+        className={styles.startTradingButton}
       >
-        Start Trading
+        Start trading!
       </Button>
     );
   };
