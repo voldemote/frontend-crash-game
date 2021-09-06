@@ -77,9 +77,6 @@ const setCommitment = (action, state) => {
       selectedCommitment: {
         $set: action.commitment,
       },
-      selectedEventId: {
-        $set: action.commitment,
-      },
     });
   }
 

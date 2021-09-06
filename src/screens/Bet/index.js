@@ -72,6 +72,9 @@ const Bet = ({
       setBetAction(0);
     }
 
+    setSingleBet(false);
+    setBetViewIsOpen(false);
+
     const currentEvent = _.find(events, {
       _id: eventId,
     });
@@ -87,7 +90,7 @@ const Bet = ({
       selectBet(betId);
       setSingleBet(true);
     }
-  }, []);
+  }, [eventId]);
 
   useEffect(() => {
     if (swiper && !swiper.destroyed) {

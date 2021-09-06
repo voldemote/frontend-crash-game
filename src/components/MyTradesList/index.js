@@ -3,6 +3,7 @@ import _ from 'lodash';
 import StateBadge from '../StateBadge';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { Link } from 'react-router-dom';
 
 const MyTradesList = ({ bets, withStatus = false }) => {
   const renderBets = () => {
@@ -21,17 +22,19 @@ const MyTradesList = ({ bets, withStatus = false }) => {
           <img src={item.imageUrl} className={styles.eventImg} />
           <div className={styles.betInfo}>
             <div className={styles.titleContainer}>
-              <div className={styles.title}>
-                {item.marketQuestion}
-                {withStatus && (
-                  <StateBadge
-                    state={item.status}
-                    withoutBackground={true}
-                    withoutText={true}
-                    className={styles.status}
-                  />
-                )}
-              </div>
+              <Link to={`/trade/${item.eventId}`} className={styles.titleLink}>
+                <div className={styles.title}>
+                  {item.marketQuestion}
+                  {withStatus && (
+                    <StateBadge
+                      state={item.status}
+                      withoutBackground={true}
+                      withoutText={true}
+                      className={styles.status}
+                    />
+                  )}
+                </div>
+              </Link>
               <div className={styles.subtitle}>
                 {item.endDate} | Your Prediction: {item.outcomeValue}
               </div>
