@@ -5,6 +5,7 @@ import Link from 'components/Link';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
 import BetHistory from 'components/BetHistory';
+import LastCrashes from 'components/LastCrashes';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID, ROSI_GAME_INTERVAL } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
@@ -32,19 +33,22 @@ const RosiGame = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <div>
-            <Link
-              to="/games"
-              className={styles.backLink}
-            >
+            <Link to="/games" className={styles.backLink}>
               <ArrowIcon />
               <h2>Rosi Game</h2>
             </Link>
           </div>
-          <div className={styles.animation}>{
-            gameStarted
-              ? <div className={styles.timer}><Timer />x</div>
-              : <div>Next game starts in <Counter number={ROSI_GAME_INTERVAL} />s</div>
-            }
+          <LastCrashes />
+          <div className={styles.animation}>
+            {gameStarted ? (
+              <div className={styles.timer}>
+                <Timer />x
+              </div>
+            ) : (
+              <div>
+                Next game starts in <Counter number={ROSI_GAME_INTERVAL} />s
+              </div>
+            )}
           </div>
           <div className={styles.chatContainer}>
             <Chat
