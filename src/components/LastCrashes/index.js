@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectLastTenCrashes } from '../../store/selectors/rosi-game';
 import styles from './styles.module.scss';

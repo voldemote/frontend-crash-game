@@ -1,0 +1,17 @@
+@import '../../styles/all';
+
+.animation {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #1F1D38;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  height: 300px;
+  margin-bottom: 20px;
+
+  .timer {
+    font-size: 64px;
+    color: $colorWhite;
+  }
+}
