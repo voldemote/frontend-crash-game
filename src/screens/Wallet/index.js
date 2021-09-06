@@ -95,9 +95,7 @@ const Wallet = ({
     );
   };
 
-  const onHistoryListClick = () => {
-    history.push(Routes.betOverview + '?view=1');
-  };
+  const onHistoryListClick = () => {};
 
   const onReferralListClick = () => {
     showPopup(PopupTheme.referralList);
