@@ -39,8 +39,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
   const renderPopup = () => {
     const eventId = _.get(options, 'eventId');
     const betId = _.get(options, 'betId', _.get(options, 'tradeId'));
-    const investmentAmount = _.get(options, 'investmentAmount');
-    const outcome = _.get(options, 'outcome');
     const initialSellTab = _.get(options, 'initialSellTab', false);
     const withdrawalSuccessOptions = { ...options?.withdrawal };
     const depositSuccessOptions = { ...options?.deposit };
@@ -50,9 +48,10 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
       case PopupTheme.betApprove:
         return (
           <BetApproveView
-            betId={betId}
-            investmentAmount={investmentAmount}
-            outcome={outcome}
+            bet={_.get(options, 'bet')}
+            outcomeAmount={_.get(options, 'outcomeAmount')}
+            outcomeValue={_.get(options, 'outcomeValue')}
+            investedAmount={_.get(options, 'investedAmount')}
           />
         );
 
