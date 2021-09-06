@@ -26,18 +26,18 @@ const requestSms = (phone, ref) => {
   return Api.post(ApiUrls.API_AUTHENTICATION_REQUEST_SMS_URL, {
     phone,
     ref,
-  }).catch(error => {
-    console.log('[API Error] called: requestSms', error);
-  });
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
 };
 
 const verifySms = (phone, smsToken) => {
   return Api.post(ApiUrls.API_AUTHENTICATION_VERIFY_SMS_URL, {
     phone,
     smsToken,
-  }).catch(error => {
-    console.log('[API Error] called: verifySms', error);
-  });
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
 };
 
 const verifyEmail = (userId, code) => {
@@ -64,9 +64,9 @@ const saveAdditionalInfo = (name, username, email) => {
     name,
     username,
     email,
-  }).catch(error => {
-    console.log('[API Error] called: saveAdditionalInfo', error);
-  });
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
 };
 
 const fetchReferrals = userId => {

@@ -18,6 +18,7 @@ const CheckBox = ({ className, checked, setChecked, text, errorText }) => {
           className={styles.checkbox}
           type={'checkbox'}
           checked={checked}
+          onChange={() => onClick()}
         />
         {text}
       </div>

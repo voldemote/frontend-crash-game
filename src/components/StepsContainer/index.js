@@ -3,6 +3,9 @@ import styles from './styles.module.scss';
 import Button from '../Button';
 import StepBar from '../StepBar';
 import classNames from 'classnames';
+import IconType from '../Icon/IconType';
+import IconTheme from '../Icon/IconTheme';
+import Icon from '../Icon';
 
 const StepsContainer = ({
   size,
@@ -20,6 +23,8 @@ const StepsContainer = ({
   hideDefaultButtonBackground = false,
   children,
   renderFooter,
+  onGoBackButtonClick,
+  goBackSteps,
 }) => {
   const renderStepBar = () => {
     return (
@@ -53,13 +58,33 @@ const StepsContainer = ({
   const renderButton = () => {
     if (showButton && buttonContent) {
       return (
-        <div className={styles.stepsButtonContainer}>
+        <div
+          className={classNames(
+            styles.stepsButtonContainer,
+            goBackSteps ? styles.authStepsContainer : null
+          )}
+        >
           {cancelButtonContent && (
             <Button
               className={classNames(styles.cancelButton)}
               onClick={onCancelButtonClick}
             >
               {cancelButtonContent}
+            </Button>
+          )}
+
+          {onGoBackButtonClick && goBackSteps.includes(step) && (
+            <Button
+              className={classNames(
+                styles.continueButton,
+                onGoBackButtonClick ? styles.goBackButton : null
+              )}
+              withoutBackground={hideDefaultButtonBackground}
+              highlightType={highlightType}
+              onClick={onGoBackButtonClick}
+              disabled={buttonDisabled}
+            >
+              <Icon iconType={IconType.arrowLeft} iconTheme={IconTheme.black} />
             </Button>
           )}
           <Button

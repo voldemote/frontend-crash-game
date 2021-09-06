@@ -22,6 +22,8 @@ import WithdrawalSuccessPopup from '../WithdrawalSuccessPopup';
 import DepositSuccessPopup from '../DepositSuccessPopup';
 import EvaluateEventPopup from '../EvaluateEventPopup';
 import ReportEventPopup from '../ReportEventPopup';
+import JoinPopup from '../JoinPopup';
+import VerifyEmailPopup from '../VerifyEmailPopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -109,6 +111,12 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.reportEvent:
         return <ReportEventPopup />;
+
+      case PopupTheme.loginRegister:
+        return <JoinPopup closed={false} />;
+
+      case PopupTheme.verifyEmail:
+        return <VerifyEmailPopup closed={false} />;
     }
 
     return null;
@@ -155,6 +163,11 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
           type === PopupTheme.signUpNotificationFirst ||
             type === PopupTheme.signUpNotificationSecond
             ? styles.signUpPopupContainer
+            : null,
+          type === PopupTheme.loginRegister ? styles.joinPopupContainer : null,
+          type === PopupTheme.welcome ? styles.welcomeContainer : null,
+          type === PopupTheme.verifyEmail
+            ? styles.verifyEmailPopupContainer
             : null,
           small ? styles.small : null
         )}

@@ -12,7 +12,6 @@ import TermsAndConditions from './screens/TermsAndConditions';
 import PaymentConfirmation from './screens/PaymentConfirmation';
 import Wallet from './screens/Wallet';
 import BetOverview from './screens/BetOverview';
-import Join from './screens/Join';
 import EmailVerification from './screens/EmailVerification';
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from './store';
@@ -35,12 +34,11 @@ const App = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
-          <Navbar skipRoutes={[Routes.join]} />
+          <Navbar skipRoutes={[]} />
           <AlertBox />
           <Popup />
           <Switch>
             <Route exact path={Routes.logout} component={Logout} />
-            <Route exact path={Routes.join} component={Join} />
             <Route
               exact
               path={Routes.termsAndConditions}
@@ -72,7 +70,7 @@ const App = () => {
             <Route path={Routes.games} component={Games} />
             <Redirect to={Routes.home} />
           </Switch>
-          <NavbarFooter skipRoutes={[Routes.bet, Routes.join, Routes.verify]}>
+          <NavbarFooter skipRoutes={[Routes.bet, Routes.verify]}>
             <NavbarFooterAction
               route={Routes.home}
               iconType={IconType.home}
