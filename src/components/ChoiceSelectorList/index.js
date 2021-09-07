@@ -27,15 +27,16 @@ const ChoiceSelectorList = ({
   };
 
   const renderChoiceSelectors = () => {
+    const themeArray = [];
+    for (let theme in ChoiceSelectorTheme) {
+      themeArray.push(theme);
+    }
+
     return (
       <>
         {_.map(outcomes, (outcome, arrayIndex) => {
           const index = outcome.index;
-          let theme = ChoiceSelectorTheme.colorMint;
-
-          if (arrayIndex % pageSize === 0) {
-            theme = ChoiceSelectorTheme.colorLightPurple;
-          }
+          const theme = themeArray[arrayIndex % themeArray.length];
 
           return renderChoiceSelector(
             index,
