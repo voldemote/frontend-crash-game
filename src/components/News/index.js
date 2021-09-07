@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Icon from '../Icon';
 
 const News = ({}) => {
-  const news = useSelector(state => state.event.newsData.articles);
+  const news = useSelector(state => state.event.newsData?.articles) || [];
   return (
     <div className={styles.newsTicker}>
       {news.map(item => (
