@@ -25,7 +25,7 @@ const TSlider = withStyles({
     '& *': {
       background: 'transparent',
       color: '#000',
-      fontFamily: 'DM Sans',
+      fontFamily: 'PlusJakarta-Regular',
       fontSize: 16,
       fontStyle: 'normal',
       fontWeight: 700,
@@ -49,7 +49,7 @@ const TSlider = withStyles({
   },
   markLabel: {
     top: -5,
-    fontFamily: 'DM Sans',
+    fontFamily: 'PlusJakarta-Regular',
     fontSize: 11,
     fontStyle: 'normal',
     fontWeight: 400,
