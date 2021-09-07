@@ -429,16 +429,17 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          {!singleBet && openBets.length > 0 && (
-            <div className={styles.betViewClose} onClick={onBetClose()}>
-              <Icon
-                iconType={'arrowLeft'}
-                iconTheme={'white'}
-                className={styles.arrowBack}
-              />
-              <span>Go back to all tracks</span>
-            </div>
-          )}
+          {!singleBet &&
+            (!isLoggedIn() || (isLoggedIn() && openBets.length > 0)) && (
+              <div className={styles.betViewClose} onClick={onBetClose()}>
+                <Icon
+                  iconType={'arrowLeft'}
+                  iconTheme={'white'}
+                  className={styles.arrowBack}
+                />
+                <span>Go back to all tracks</span>
+              </div>
+            )}
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
               betId={betId}
