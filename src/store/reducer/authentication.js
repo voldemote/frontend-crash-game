@@ -22,6 +22,8 @@ const initialState = {
   rank: 0,
   amountWon: 0,
   toNextRank: 0,
+  totalInvestmentAmount: 0,
+  totalOpenTradesAmount: 0,
 };
 
 const requestSmsSucceeded = (action, state) => {
@@ -331,6 +333,17 @@ const updateUserDataFailed = ({ payload }, state) => {
   };
 };
 
+const updateInvestmentData = (action, state) => {
+  return update(state, {
+    totalInvestmentAmount: {
+      $set: action.totalInvestmentAmount,
+    },
+    totalOpenTradesAmount: {
+      $set: action.totalOpenTradesAmount,
+    },
+  });
+};
+
 export default function (state = initialState, action) {
   switch (action.type) {
     // @formatter:off
@@ -379,6 +392,8 @@ export default function (state = initialState, action) {
       return updateUserDataSucceeded(action, state);
     case AuthenticationTypes.UPDATE_USER_DATA_FAILED:
       return updateUserDataFailed(action, state);
+    case AuthenticationTypes.UPDATE_INVESTMENT_DATA:
+      return updateInvestmentData(action, state);
     default:
       return cleanErrors(action, state);
     // @formatter:on

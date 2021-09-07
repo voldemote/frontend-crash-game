@@ -11,8 +11,6 @@ import SwitchableContainer from 'components/SwitchableContainer';
 import { useEffect, useState } from 'react';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import IconTheme from 'components/Icon/IconTheme';
-import PopupTheme from 'components/Popup/PopupTheme';
-import { PopupActions } from 'store/actions/popup';
 import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
@@ -27,7 +25,6 @@ const Wallet = ({
   referralCount,
   transactionCount,
   close,
-  showPopup,
   transactions,
   referrals,
 }) => {
@@ -49,7 +46,7 @@ const Wallet = ({
   const paymentType = {
     [PaymentAction.deposit]: PAYMENT_TYPE.deposit,
     [PaymentAction.withdrawal]: PAYMENT_TYPE.withdrawal,
-  }
+  };
 
   useEffect(() => {
     if (!show) {
@@ -179,9 +176,9 @@ const Wallet = ({
                     : investmentAmount;
                 return [
                   <>
-                    <span className={styles.primaryData}>{event.name}</span>
+                    <span className={styles.primaryData}>{event?.name}</span>
                     <span className={styles.secondaryData}>
-                      {bet.marketQuestion}
+                      {bet?.marketQuestion}
                     </span>
                   </>,
                   <>
@@ -262,12 +259,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    showPopup: popupType => {
-      dispatch(PopupActions.show({ popupType }));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, null)(Wallet);

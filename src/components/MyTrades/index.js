@@ -56,12 +56,12 @@ const getTrade = (betId, events) => {
 
   return {
     betId,
-    eventId: event._id,
-    imageUrl: event.previewImageUrl,
-    marketQuestion: bet.marketQuestion,
+    eventId: event?._id,
+    imageUrl: event?.previewImageUrl,
+    marketQuestion: bet?.marketQuestion,
     endDate: moment(_.get(bet, 'endDate', new Date())).format('DD.MM.YYYY'),
-    status: bet.status,
-    outcomes: bet.outcomes,
+    status: bet?.status,
+    outcomes: bet?.outcomes,
   };
 };
 

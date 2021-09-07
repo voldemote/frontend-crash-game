@@ -168,6 +168,19 @@ const fetchOpenBets = function* () {
 
 const fetchOpenBetsSucceeded = function* (action) {
   const openBets = _.get(action, 'openBets', []);
+  const totalInvestmentAmount = _.sum(
+    openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)
+  );
+  const totalOpenTradesAmount = _.sum(
+    openBets.map(_.property('outcomeAmount')).map(Number).filter(_.isFinite)
+  );
+
+  yield put(
+    AuthenticationActions.updateInvestmentData({
+      totalInvestmentAmount,
+      totalOpenTradesAmount,
+    })
+  );
 
   yield all(
     openBets.map(openBet => {
