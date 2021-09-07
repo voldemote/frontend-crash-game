@@ -160,11 +160,16 @@ export function* init() {
             case ChatMessageType.casinoStart:
               console.log(payload);
               yield put(RosiGameActions.setHasStarted());
+              yield put(RosiGameActions.resetCashedOut());
               break;
             case ChatMessageType.casinoEnd:
               console.log(payload);
-              yield put(RosiGameActions.addLastCrash(payload.crashFactor));
-              yield put(RosiGameActions.resetInGameBets());
+              yield put(
+                RosiGameActions.addLastCrash({
+                  crashFactor: payload.crashFactor,
+                })
+              );
+              // yield put(RosiGameActions.resetInGameBets());
               break;
             case ChatMessageType.casinoTrade:
               console.log(payload);
