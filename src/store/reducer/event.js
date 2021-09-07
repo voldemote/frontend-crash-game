@@ -39,7 +39,9 @@ const initialState = {
     },
   ],
   chartData: [],
-  newsData: {},
+  newsData: {
+    articles: [],
+  },
 };
 
 const fetchAllSucceeded = (action, state) => {
