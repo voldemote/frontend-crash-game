@@ -71,6 +71,8 @@ const getTrade = (betId, events) => {
     endDate: moment(_.get(bet, 'endDate', new Date())).format('DD.MM.YYYY'),
     status: bet?.status,
     outcomes: bet?.outcomes,
+    eventSlug: event?.slug,
+    betSlug: bet?.slug,
   };
 };
 

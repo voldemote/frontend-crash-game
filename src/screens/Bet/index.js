@@ -115,7 +115,7 @@ const Bet = ({
     }
 
     fetchOpenBets();
-  }, [eventSlug]);
+  }, [eventSlug, betSlug]);
 
   useEffect(() => {
     if (swiper && !swiper.destroyed) {
