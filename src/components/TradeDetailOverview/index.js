@@ -20,15 +20,15 @@ const TradeDetailOverview = ({
   const history = useHistory();
 
   const onGoToTradeClick = () => {
-    const eventId = _.get(event, '_id');
-    const tradeId = _.get(trade, '_id');
+    const eventSlug = _.get(event, 'slug');
+    const tradeSlug = _.get(trade, 'slug');
 
     hidePopup();
 
     history.push(
       Routes.getRouteWithParameters(Routes.bet, {
-        eventId,
-        betId: tradeId,
+        eventSlug,
+        betSlug: tradeSlug,
       })
     );
   };

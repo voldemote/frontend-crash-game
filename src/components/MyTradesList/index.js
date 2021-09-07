@@ -22,7 +22,7 @@ const MyTradesList = ({ bets, withStatus = false }) => {
           <img src={item.imageUrl} className={styles.eventImg} />
           <div className={styles.betInfo}>
             <div className={styles.titleContainer}>
-              <Link to={`/trade/${item.eventId}`} className={styles.titleLink}>
+              <Link to={`/trade/${item.slug}`} className={styles.titleLink}>
                 <div className={styles.title}>
                   {item.marketQuestion}
                   {withStatus && (

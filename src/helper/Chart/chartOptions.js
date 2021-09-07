@@ -8,7 +8,7 @@ export const chartOptions = (type, data) => {
     type,
     plugins: [legendPadding],
     data: {
-      labels: calcLabels(data[0].data),
+      labels: data[0] ? calcLabels(data[0].data) : [],
       datasets: calcDatasets(data),
     },
     options: {
