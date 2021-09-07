@@ -117,7 +117,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
         return <ReportEventPopup />;
 
       case PopupTheme.loginRegister:
-        return <JoinPopup closed={false} />;
+        return <JoinPopup />;
 
       case PopupTheme.verifyEmail:
         return <VerifyEmailPopup closed={false} />;
