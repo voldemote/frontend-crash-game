@@ -193,12 +193,14 @@ const LotteryGame = ({
     [questions, activeQuestionNumber]
   );
 
+  const nextQuestion = () => setActiveQuestionNumber(activeQuestionNumber + 1);
+
   const handleContinue = () => {
     showPopup(PopupTheme.lotteryGameAnswered, { small: true });
     setCheckedOption(null);
 
     if (hasNextQuestion) {
-      setActiveQuestionNumber(activeQuestionNumber + 1);
+      nextQuestion();
     } else {
       setCompleted(true);
     }
@@ -257,7 +259,8 @@ const LotteryGame = ({
               styles.skipQuestionBtn
             )}
             withoutBackground={false}
-            onClick={handleContinue}
+            onClick={nextQuestion}
+            disabled={!hasNextQuestion}
           >
             Skip
             <Icon
