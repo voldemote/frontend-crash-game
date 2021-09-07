@@ -76,12 +76,13 @@ const fetchInitial = function* (action) {
 
   // event page
   if (pathSlugs[0] === 'trade') {
-    eventId = pathSlugs[1];
-  } else {
-    // on all other pages get chat history for first event, which could be the most likely for a user to visit
     const events = yield select(state => state.event.events);
-    if (events.length) {
-      eventId = events[0]._id;
+    const eventBySlug = _.find(events, {
+      slug: pathSlugs[1],
+    });
+
+    if (eventBySlug) {
+      eventId = eventBySlug._id;
     }
   }
 
