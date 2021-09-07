@@ -142,7 +142,6 @@ const rehydrationDone = function* () {
 const preLoading = function* () {
   yield put(EventActions.fetchAll());
   yield put(AuthenticationActions.fetchReferrals());
-  yield put(BetActions.fetchOpenBets());
   yield put(TransactionActions.fetchAll());
   yield put(ChatActions.fetchInitial());
   yield put(WebsocketsActions.init());

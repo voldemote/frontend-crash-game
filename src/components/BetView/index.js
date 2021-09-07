@@ -62,44 +62,18 @@ const BetView = ({
   isTradeViewPopup,
   handleChartDirectionFilter,
   setOpenDrawer,
+  fetchSellOutcomes,
 }) => {
   const defaultBetValue = _.max([balance, 10]);
   const event = _.find(events, {
     _id: eventId,
   });
-  const bet = (() => {
-    const bets = _.clone(_.get(event, 'bets', []));
-    return _.find(bets, {
-      _id: betId,
-    });
-  })();
+  const bet = _.find(_.get(event, 'bets', []), {
+    _id: betId,
+  });
   const state = _.get(bet, 'status');
-  const outcomes = (() => {
-    let outcomes = [];
-
-    if (bet) {
-      outcomes = _.get(rawOutcomes, bet._id);
-
-      if (outcomes) {
-        outcomes = _.get(outcomes, 'values', {});
-      }
-    }
-
-    return outcomes;
-  })();
-  const sellOutcomes = (() => {
-    let outcomes = [];
-
-    if (bet) {
-      outcomes = _.get(rawSellOutcomes, bet._id);
-
-      if (outcomes) {
-        outcomes = _.get(outcomes, 'values', {});
-      }
-    }
-
-    return outcomes;
-  })();
+  const outcomes = _.get(rawOutcomes, betId, []);
+  const sellOutcomes = _.get(rawSellOutcomes, betId, []);
 
   const [currentTradeView, setCurrentTradeView] = useState(
     forceSellView ? 1 : 0
@@ -109,6 +83,7 @@ const BetView = ({
   const [commitmentErrorText, setCommitmentErrorText] = useState('');
   const [tokenNumber, setTokenNumber] = useState(commitment);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [openBetsRef, setOpenBetsRef] = useState(openBets);
   const hasMounted = useHasMounted();
 
   const userLoggedIn = useSelector(
@@ -155,6 +130,9 @@ const BetView = ({
     await SleepHelper.sleep(100);
 
     setCommitment(defaultBetValue, betId);
+    openBets.map(openBet => {
+      fetchSellOutcomes(openBet.outcomeAmount, openBet.betId);
+    });
   }
 
   useEffect(
@@ -189,6 +167,15 @@ const BetView = ({
     }
   }, [actionIsInProgress]);
 
+  useEffect(() => {
+    if (JSON.stringify(openBets) != JSON.stringify(openBetsRef)) {
+      openBets.map(openBet => {
+        fetchSellOutcomes(openBet.outcomeAmount, openBet.betId);
+      });
+    }
+    setOpenBetsRef(openBets);
+  }, [openBets]);
+
   const hasSellView = () => {
     return (currentTradeView === 1 || forceSellView) && _.size(openBets);
   };
@@ -206,6 +193,7 @@ const BetView = ({
       placeBet(betId, commitment, choice);
     }
   };
+
   const sellBet = () => {
     pullOutBet(betId, choice, getOpenBetsValue(choice));
   };
@@ -708,6 +696,9 @@ const mapDispatchToProps = dispatch => {
     },
     setCommitment: (commitment, betId) => {
       dispatch(BetActions.setCommitment({ commitment, betId }));
+    },
+    fetchSellOutcomes: (amount, betId) => {
+      dispatch(BetActions.fetchSellOutcomes({ amount, betId }));
     },
     placeBet: (betId, amount, outcome) => {
       dispatch(BetActions.place({ betId, amount, outcome }));

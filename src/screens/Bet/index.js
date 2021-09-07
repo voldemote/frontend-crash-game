@@ -38,8 +38,8 @@ const Bet = ({
   transactions,
   openBets,
   authState,
-  setSelectedBet,
   events,
+  fetchOpenBets,
 }) => {
   const { eventSlug, betSlug } = useParams();
 
@@ -105,6 +105,8 @@ const Bet = ({
       selectBet(betId, betSlug);
       setSingleBet(true);
     }
+
+    fetchOpenBets();
   }, [eventSlug]);
 
   useEffect(() => {
@@ -154,7 +156,6 @@ const Bet = ({
     );
     setBetId(betId);
     setBetViewIsOpen(true);
-    setSelectedBet(null, betId);
   };
 
   const onBetClick = (bet, popup) => {
@@ -167,7 +168,11 @@ const Bet = ({
 
       if (popup) {
         setBetViewIsOpen(false);
-        showPopup(PopupTheme.tradeView, { betId, eventId, openBets });
+        showPopup(PopupTheme.tradeView, {
+          betId,
+          eventId,
+          openBets: _.filter(openBets, { betId }),
+        });
       }
     };
   };
@@ -532,9 +537,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSelectedBet: (eventId, betId) => {
-      dispatch(BetActions.selectBet({ eventId, betId }));
-    },
     showPopup: (popupType, options) => {
       dispatch(
         PopupActions.show({
@@ -542,6 +544,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    fetchOpenBets: () => {
+      dispatch(BetActions.fetchOpenBets());
     },
   };
 };
