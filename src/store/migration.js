@@ -1,4 +1,4 @@
-export const MIGRATION_VERSION = 2;
+export const MIGRATION_VERSION = 3;
 
 export const migrations = {
   0: state => {
@@ -83,6 +83,17 @@ export const migrations = {
       event: {
         ...state.event,
         chartData: [],
+      },
+    };
+  },
+  3: state => {
+    return {
+      ...state,
+      event: {
+        ...state.event,
+        newsData: {
+          articles: [],
+        },
       },
     };
   },
