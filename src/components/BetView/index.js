@@ -28,7 +28,7 @@ import IconTheme from '../Icon/IconTheme';
 import StateBadge from '../StateBadge';
 import SummaryRowContainer from '../SummaryRowContainer';
 import BetSummaryHelper from '../../helper/BetSummary';
-import BetState from './BetState';
+import BetState from '../../constants/BetState';
 import BetShareContainer from '../BetShareContainer';
 import ShareType from '../BetCard/ShareType';
 import { PopupActions } from '../../store/actions/popup';
@@ -39,6 +39,9 @@ import { TOKEN_NAME } from '../../constants/Token';
 import { GeneralActions } from 'store/actions/general';
 
 const BetView = ({
+  betId,
+  eventId,
+  openBets,
   actionIsInProgress,
   closed,
   isPopup = false,
@@ -47,8 +50,6 @@ const BetView = ({
   showEventEnd,
   balance,
   events,
-  selectedBetId,
-  openBets,
   rawOutcomes,
   rawSellOutcomes,
   choice,
@@ -61,124 +62,19 @@ const BetView = ({
   isTradeViewPopup,
   handleChartDirectionFilter,
   setOpenDrawer,
+  fetchSellOutcomes,
 }) => {
-  const params = useParams();
   const defaultBetValue = _.max([balance, 10]);
-  const bet = (() => {
-    let currentBetId = params.betId;
-
-    if (!currentBetId) {
-      currentBetId = selectedBetId;
-    }
-
-    let eventId = params.eventId;
-    let event = null;
-
-    if (eventId) {
-      event = _.find(events, {
-        _id: eventId,
-      });
-    } else {
-      event = _.head(
-        _.filter(events, {
-          bets: [
-            {
-              _id: currentBetId,
-            },
-          ],
-        })
-      );
-    }
-
-    const bets = _.clone(_.get(event, 'bets', []));
-    let bet = _.find(bets, {
-      _id: currentBetId,
-    });
-
-    if (!bet) {
-      bets.sort((a, b) => {
-        const aState = _.get(a, 'status');
-        const bState = _.get(b, 'status');
-        const getStateValue = state => {
-          switch (state) {
-            case BetState.active:
-              return 5;
-            case BetState.closed:
-              return 4;
-            case BetState.resolved:
-              return 3;
-            case BetState.canceled:
-              return 2;
-          }
-
-          return 1;
-        };
-
-        if (aState === bState) {
-          const aEndDate = moment(_.get(a, 'endDate'));
-          const bEndDate = moment(_.get(b, 'endDate'));
-
-          if (aEndDate.isBefore(bEndDate)) {
-            return 1;
-          }
-
-          if (bEndDate.isBefore(aEndDate)) {
-            return -1;
-          }
-
-          return 0;
-        }
-
-        return getStateValue(bState) - getStateValue(aState);
-      });
-
-      bet = _.head(bets);
-    }
-
-    return bet;
-  })();
-  const state = _.get(bet, 'status');
-  const betId = _.get(bet, '_id', selectedBetId);
-  const event = (() => {
-    let eventId = _.get(bet, 'event');
-
-    if (!eventId) {
-      eventId = params.eventId;
-    }
-
-    return _.find(events, {
-      _id: eventId,
-    });
-  })();
-  const outcomes = (() => {
-    let outcomes = [];
-
-    if (bet) {
-      outcomes = _.get(rawOutcomes, bet._id);
-
-      if (outcomes) {
-        outcomes = _.get(outcomes, 'values', {});
-      }
-    }
-
-    return outcomes;
-  })();
-  const sellOutcomes = (() => {
-    let outcomes = [];
-
-    if (bet) {
-      outcomes = _.get(rawSellOutcomes, bet._id);
-
-      if (outcomes) {
-        outcomes = _.get(outcomes, 'values', {});
-      }
-    }
-
-    return outcomes;
-  })();
-  const hasOpenBet = _.filter(openBets, {
-    betId: betId,
+  const event = _.find(events, {
+    _id: eventId,
   });
+  const bet = _.find(_.get(event, 'bets', []), {
+    _id: betId,
+  });
+  const state = _.get(bet, 'status');
+  const outcomes = _.get(rawOutcomes, betId, []);
+  const sellOutcomes = _.get(rawSellOutcomes, betId, []);
+
   const [currentTradeView, setCurrentTradeView] = useState(
     forceSellView ? 1 : 0
   );
@@ -187,6 +83,7 @@ const BetView = ({
   const [commitmentErrorText, setCommitmentErrorText] = useState('');
   const [tokenNumber, setTokenNumber] = useState(commitment);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [openBetsRef, setOpenBetsRef] = useState(openBets);
   const hasMounted = useHasMounted();
 
   const userLoggedIn = useSelector(
@@ -229,25 +126,13 @@ const BetView = ({
     return valid;
   };
 
-  function getDefaultTokenSelection() {
-    return [25, 50, 100, 150, 200];
-  }
-
-  function getDefaultTokenSelectionValues() {
-    const tokenSelectionValues = _.map(getDefaultTokenSelection(), value => {
-      return {
-        enabled: value <= balance,
-        value,
-      };
-    });
-
-    return tokenSelectionValues;
-  }
-
   async function loadAfterMount() {
     await SleepHelper.sleep(100);
 
     setCommitment(defaultBetValue, betId);
+    openBets.map(openBet => {
+      fetchSellOutcomes(openBet.outcomeAmount, openBet.betId);
+    });
   }
 
   useEffect(
@@ -282,8 +167,17 @@ const BetView = ({
     }
   }, [actionIsInProgress]);
 
+  useEffect(() => {
+    if (JSON.stringify(openBets) != JSON.stringify(openBetsRef)) {
+      openBets.map(openBet => {
+        fetchSellOutcomes(openBet.outcomeAmount, openBet.betId);
+      });
+    }
+    setOpenBetsRef(openBets);
+  }, [openBets]);
+
   const hasSellView = () => {
-    return (currentTradeView === 1 || forceSellView) && _.size(hasOpenBet);
+    return (currentTradeView === 1 || forceSellView) && _.size(openBets);
   };
 
   const getFinalOutcome = () => {
@@ -299,6 +193,7 @@ const BetView = ({
       placeBet(betId, commitment, choice);
     }
   };
+
   const sellBet = () => {
     pullOutBet(betId, choice, getOpenBetsValue(choice));
   };
@@ -324,7 +219,7 @@ const BetView = ({
   };
 
   const getOpenBet = index => {
-    return _.find(hasOpenBet, {
+    return _.find(openBets, {
       outcome: index,
     });
   };
@@ -369,7 +264,7 @@ const BetView = ({
     // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
     // like e.g. react-aria tablist
     // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
-    if (_.size(hasOpenBet) && !disableSwitcher) {
+    if (_.size(openBets) && !disableSwitcher) {
       const switchableViews = [
         SwitchableHelper.getSwitchableView('Buy'),
         SwitchableHelper.getSwitchableView('Sell'),
@@ -789,10 +684,8 @@ const mapStateToProps = state => {
     choice: state.bet.selectedChoice,
     commitment: _.get(state, 'bet.selectedCommitment', 0),
     events: state.event.events,
-    openBets: state.bet.openBets,
     rawOutcomes: state.bet.outcomes,
     rawSellOutcomes: state.bet.sellOutcomes,
-    selectedBetId: state.bet.selectedBetId,
   };
 };
 
@@ -803,6 +696,9 @@ const mapDispatchToProps = dispatch => {
     },
     setCommitment: (commitment, betId) => {
       dispatch(BetActions.setCommitment({ commitment, betId }));
+    },
+    fetchSellOutcomes: (amount, betId) => {
+      dispatch(BetActions.fetchSellOutcomes({ amount, betId }));
     },
     placeBet: (betId, amount, outcome) => {
       dispatch(BetActions.place({ betId, amount, outcome }));

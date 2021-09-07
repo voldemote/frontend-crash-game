@@ -28,6 +28,7 @@ export const AuthenticationTypes = {
   INITIATE_UPDATE_USER_DATA: 'Authentication/INITIATE_UPDATE_USER_DATA',
   UPDATE_USER_DATA_SUCCEEDED: 'Authentication/UPDATE_USER_DATA_SUCCEEDED',
   UPDATE_USER_DATA_FAILED: 'Authentication/UPDATE_USER_DATA_FAILED',
+  UPDATE_INVESTMENT_DATA: 'Authentication/UPDATE_INVESTMENT_DATA',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -159,6 +160,14 @@ const updateUserDataFailed = payload => ({
   payload,
 });
 
+const updateInvestmentData = makeActionCreator(
+  AuthenticationTypes.UPDATE_INVESTMENT_DATA,
+  {
+    totalInvestmentAmount: null,
+    totalOpenTradesAmount: null,
+  }
+);
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -186,4 +195,5 @@ export const AuthenticationActions = {
   initiateUpdateUserData,
   updateUserDataSucceeded,
   updateUserDataFailed,
+  updateInvestmentData,
 };

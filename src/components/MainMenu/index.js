@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import Icon from '../Icon';
@@ -12,11 +12,9 @@ import HomeSettings from '../HomeSettings';
 import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions } from 'store/actions/general';
-import { useSelector } from 'react-redux';
 
 const MainMenu = ({
   opened,
-  openBets,
   user,
   updateUser,
   setEditVisible,
@@ -34,16 +32,6 @@ const MainMenu = ({
   const clickUploadProfilePicture = () => {
     profilePictureRefName.current?.click();
   };
-
-  let investedAmount = 0;
-
-  const calculateInvestedAmount = () => {
-    openBets.map(bet => {
-      return (investedAmount += Number(bet.investmentAmount));
-    });
-  };
-
-  calculateInvestedAmount();
 
   const history = useHistory();
 
@@ -242,7 +230,6 @@ const MainMenu = ({
 
 const mapStateToProps = state => {
   return {
-    openBets: state.bet.openBets,
     user: state.authentication,
     editVisible: state.general.editProfileVisible,
     myTradesVisible: state.general.myTradesVisible,

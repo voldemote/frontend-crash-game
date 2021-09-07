@@ -38,8 +38,8 @@ const Bet = ({
   transactions,
   openBets,
   authState,
-  setSelectedBet,
   events,
+  fetchOpenBets,
 }) => {
   const { eventSlug, betSlug } = useParams();
 
@@ -105,6 +105,8 @@ const Bet = ({
       selectBet(betId, betSlug);
       setSingleBet(true);
     }
+
+    fetchOpenBets();
   }, [eventSlug]);
 
   useEffect(() => {
@@ -154,12 +156,12 @@ const Bet = ({
     );
     setBetId(betId);
     setBetViewIsOpen(true);
-    setSelectedBet(null, betId);
   };
 
   const onBetClick = (bet, popup) => {
     return () => {
       const betId = _.get(bet, '_id');
+      const eventId = _.get(event, '_id');
       const betSlug = _.get(bet, 'slug');
 
       selectBet(betId, betSlug);
@@ -167,7 +169,11 @@ const Bet = ({
 
       if (popup) {
         setBetViewIsOpen(false);
-        showPopup(PopupTheme.tradeView, {});
+        showPopup(PopupTheme.tradeView, {
+          betId,
+          eventId,
+          openBets: _.filter(openBets, { betId }),
+        });
       }
     };
   };
@@ -423,7 +429,7 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          {!singleBet && (
+          {!singleBet && openBets.length > 0 && (
             <div className={styles.betViewClose} onClick={onBetClose()}>
               <Icon
                 iconType={'arrowLeft'}
@@ -435,6 +441,9 @@ const Bet = ({
           )}
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
+              betId={betId}
+              eventId={event._id}
+              openBets={_.filter(openBets, { betId })}
               closed={false}
               showEventEnd={true}
               handleChartDirectionFilter={handleChartDirectionFilter}
@@ -529,9 +538,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSelectedBet: (eventId, betId) => {
-      dispatch(BetActions.selectBet({ eventId, betId }));
-    },
     showPopup: (popupType, options) => {
       dispatch(
         PopupActions.show({
@@ -539,6 +545,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    fetchOpenBets: () => {
+      dispatch(BetActions.fetchOpenBets());
     },
   };
 };

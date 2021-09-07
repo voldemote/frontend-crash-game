@@ -10,8 +10,6 @@ import WalletDeposit from './screens/WalletDeposit';
 import configStore from './store';
 import TermsAndConditions from './screens/TermsAndConditions';
 import PaymentConfirmation from './screens/PaymentConfirmation';
-import Wallet from './screens/Wallet';
-import BetOverview from './screens/BetOverview';
 import EmailVerification from './screens/EmailVerification';
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from './store';
@@ -64,8 +62,6 @@ const App = () => {
             <Route exact path={Routes.liveEvents} component={LiveEvents} />
             <Route exact path={Routes.events} component={Events} />
             <Route exact path={Routes.rosiGame} component={RosiGame} />
-            <Route path={Routes.wallet} component={Wallet} />
-            <Route path={Routes.betOverview} component={BetOverview} />
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
             <Redirect to={Routes.home} />

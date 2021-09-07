@@ -64,9 +64,10 @@ const place = function* (action) {
       PopupActions.show({
         popupType: PopupTheme.betApprove,
         options: {
-          betId,
-          investmentAmount,
-          outcome,
+          bet: response.data.bet,
+          outcomeAmount: response.data.outcomeAmount,
+          outcomeValue: response.data.outcomeValue,
+          investedAmount: response.data.investedAmount,
         },
       })
     );
@@ -81,10 +82,6 @@ const place = function* (action) {
 const setCommitment = function* (action) {
   let betId = action.betId;
   const amount = yield select(state => state.bet.selectedCommitment);
-
-  if (!betId) {
-    betId = yield select(state => state.bet.selectedBetId);
-  }
 
   yield put(
     BetActions.fetchOutcomes({
@@ -104,14 +101,14 @@ const fetchOutcomes = function* (action) {
     if (response) {
       const result = response.data;
       const outcomes = {
-        [betId]: {
-          amount,
+        [amount]: {
           ...result,
         },
       };
 
       yield put(
         BetActions.setOutcomes({
+          betId,
           outcomes,
         })
       );
@@ -129,14 +126,14 @@ const fetchSellOutcomes = function* (action) {
     if (response) {
       const result = response.data;
       const outcomes = {
-        [betId]: {
-          amount,
+        [amount]: {
           ...result,
         },
       };
 
       yield put(
         BetActions.setSellOutcomes({
+          betId,
           outcomes,
         })
       );
@@ -167,25 +164,17 @@ const fetchOpenBets = function* () {
 
 const fetchOpenBetsSucceeded = function* (action) {
   const openBets = _.get(action, 'openBets', []);
+  const totalInvestmentAmount = _.sum(
+    openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)
+  );
+  const totalOpenTradesAmount = _.sum(
+    openBets.map(_.property('outcomeAmount')).map(Number).filter(_.isFinite)
+  );
 
-  yield all(
-    openBets.map(openBet => {
-      const betId = openBet.betId;
-
-      return all([
-        put(
-          BetActions.fetchSellOutcomes({
-            betId,
-            amount: openBet.outcomeAmount,
-          })
-        ),
-        put(
-          BetActions.fetchOutcomes({
-            betId,
-            amount: openBet.investmentAmount,
-          })
-        ),
-      ]);
+  yield put(
+    AuthenticationActions.updateInvestmentData({
+      totalInvestmentAmount,
+      totalOpenTradesAmount,
     })
   );
 };

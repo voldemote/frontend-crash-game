@@ -5,8 +5,6 @@ import { PopupTypes } from '../actions/popup';
 import { formatToFixed } from '../../helper/FormatNumbers';
 
 const initialState = {
-  selectedEventId: null,
-  selectedBetId: null,
   selectedChoice: null,
   selectedCommitment: null,
   actionIsInProgress: false,
@@ -17,25 +15,8 @@ const initialState = {
 
 const reset = (action, state) => {
   return update(state, {
-    selectedEventId: {
-      $set: initialState.selectedEventId,
-    },
-    selectedBetId: {
-      $set: initialState.selectedBetId,
-    },
     selectedChoice: {
       $set: initialState.selectedChoice,
-    },
-  });
-};
-
-const selectBet = (action, state) => {
-  return update(state, {
-    selectedEventId: {
-      $set: action.eventId,
-    },
-    selectedBetId: {
-      $set: action.betId,
     },
   });
 };
@@ -92,49 +73,15 @@ const setSellOutcomes = (action, state) => {
 };
 
 const updateOutcomes = (outcomeType, action, state) => {
-  let newState = state;
-  const newOutcomes = action.outcomes;
-  const time = new Date().getTime();
-
-  _.forEach(newOutcomes, (outcome, index) => {
-    const exists = _.get(newState, outcomeType + '[' + index + '].values');
-
-    if (exists) {
-      newState = update(newState, {
-        [outcomeType]: {
-          [index]: {
-            values: {
-              [outcome.amount]: {
-                $set: {
-                  time,
-                  ...outcome,
-                },
-              },
-            },
-          },
-        },
-      });
-    } else {
-      newState = update(newState, {
-        [outcomeType]: {
-          [index]: {
-            $set: {
-              values: {
-                [outcome.amount]: {
-                  time,
-                  ...outcome,
-                },
-              },
-            },
-          },
-        },
-      });
-    }
-
-    // TODO remove old
-  });
-
-  return newState;
+  return {
+    ...state,
+    [outcomeType]: {
+      [action.betId]: {
+        ...state[outcomeType][action.betId],
+        ...action.outcomes,
+      },
+    },
+  };
 };
 
 const fetchOpenBetsSucceeded = (action, state) => {
@@ -161,8 +108,6 @@ export default function (state = initialState, action) {
     // @formatter:off
     case PopupTypes.HIDE:
       return reset(action, state);
-    case BetTypes.SELECT_BET:
-      return selectBet(action, state);
     case BetTypes.SELECT_CHOICE:
       return selectChoice(action, state);
     case BetTypes.SET_COMMITMENT:
