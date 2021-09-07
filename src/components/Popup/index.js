@@ -166,6 +166,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             : null,
           type === PopupTheme.loginRegister ? styles.joinPopupContainer : null,
           type === PopupTheme.welcome ? styles.welcomeContainer : null,
+          type === PopupTheme.betApprove ? styles.betApproveContainer : null,
           type === PopupTheme.verifyEmail
             ? styles.verifyEmailPopupContainer
             : null,
