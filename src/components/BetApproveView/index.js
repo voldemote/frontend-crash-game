@@ -82,7 +82,6 @@ const BetApproveView = ({ closed }) => {
           className={classNames(styles.betButton)}
           highlightType={HighlightType.highlightHomeCtaBet}
           disabledWithOverlay={false}
-          onClick={startAnimation}
         >
           Keep Going
         </Button>
