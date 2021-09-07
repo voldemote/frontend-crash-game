@@ -7,7 +7,6 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import { AlertActions } from 'store/actions/alert';
 import { selectUserBet, selectHasStarted } from 'store/selectors/rosi-game';
 import InputBox from 'components/InputBox';
-import Input from 'components/Input';
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
 import useCurrentUser from 'hooks/useCurrentUser';
