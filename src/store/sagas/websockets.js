@@ -169,7 +169,6 @@ export function* init() {
                   crashFactor: payload.crashFactor,
                 })
               );
-              // yield put(RosiGameActions.resetInGameBets());
               break;
             case ChatMessageType.casinoTrade:
               console.log(payload);

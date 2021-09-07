@@ -12,7 +12,11 @@ import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
-import { selectLastCrashes, selectInGameBets } from 'store/selectors/rosi-game';
+import {
+  selectLastCrashes,
+  selectInGameBets,
+  selectCashedOut,
+} from 'store/selectors/rosi-game';
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 
@@ -22,6 +26,7 @@ const RosiGame = () => {
   const dispatch = useDispatch();
   const lastCrashes = useSelector(selectLastCrashes);
   const inGameBets = useSelector(selectInGameBets);
+  const cashedOut = useSelector(selectCashedOut);
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
@@ -39,7 +44,7 @@ const RosiGame = () => {
           <Grid container spacing={1}>
             <Grid item xs={12} md={9}>
               <LastCrashes lastCrashes={lastCrashes} />
-              <GameAnimation />
+              <GameAnimation inGameBets={inGameBets} />
             </Grid>
             {isMiddleOrLargeDevice && (
               <>
@@ -53,7 +58,7 @@ const RosiGame = () => {
                   <GameBets label="In Game Bets" bets={inGameBets} />
                 </Grid>
                 <Grid item md={4}>
-                  <GameBets label="Cashed Out" bets={[]} />
+                  <GameBets label="Cashed Out" bets={cashedOut} />
                 </Grid>
               </>
             )}

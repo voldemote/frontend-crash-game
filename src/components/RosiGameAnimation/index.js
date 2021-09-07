@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { ROSI_GAME_INTERVAL } from 'constants/RosiGame';
-import { selectHasStarted } from '../../store/selectors/rosi-game';
+import { selectHasStarted } from 'store/selectors/rosi-game';
 import Timer from './Timer';
 import Counter from './Counter';
 import styles from './styles.module.scss';

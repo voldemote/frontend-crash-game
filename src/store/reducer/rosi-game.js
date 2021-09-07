@@ -65,6 +65,13 @@ const addCashedOut = (action, state) => {
   };
 };
 
+const resetCashedOut = (action, state) => {
+  return {
+    ...state,
+    cashedOut: [],
+  };
+};
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case RosiGameTypes.INITIALIZE_STATE:
@@ -81,6 +88,8 @@ export default function (state = initialState, action) {
       return resetInGameBets(action, state);
     case RosiGameTypes.ADD_CASHED_OUT:
       return addCashedOut(action, state);
+    case RosiGameTypes.RESET_CASHED_OUT:
+      return resetCashedOut(action, state);
     default:
       return state;
   }
