@@ -1,11 +1,13 @@
 import React from 'react';
 import { AlertActions } from '../../store/actions/alert';
+import { GeneralActions } from '../../store/actions/general';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 
-const Logout = ({ removeAlerts, logout }) => {
+const Logout = ({ removeAlerts, logout, setOpenDrawer }) => {
   useEffect(() => {
+    setOpenDrawer();
     removeAlerts();
     logout();
   }, []);
@@ -20,6 +22,9 @@ const mapDispatchToProps = dispatch => {
     },
     logout: () => {
       dispatch(AuthenticationActions.logout());
+    },
+    setOpenDrawer: () => {
+      dispatch(GeneralActions.setDrawer(''));
     },
   };
 };
