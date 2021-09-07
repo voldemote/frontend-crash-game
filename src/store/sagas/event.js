@@ -133,11 +133,11 @@ const fetchHistoryChartData = function* ({ betId, params }) {
   }
 };
 
-const fetchNewsData = function* ({ newsType, params }) {
+const fetchNewsData = function* ({ params }) {
   try {
-    const { data } = yield call(() => getNews(newsType, params));
+    const { data } = yield call(() => getNews(params));
 
-    yield put(EventActions.fetchNewsDataSuccess(data));
+    yield put(EventActions.fetchNewsDataSuccess(data.data));
   } catch (error) {
     yield put(EventActions.fetchNewsDataFail());
   }

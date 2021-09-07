@@ -5,16 +5,16 @@ import { useSelector } from 'react-redux';
 import Icon from '../Icon';
 
 const News = ({}) => {
-  const news = useSelector(state => state.event.newsData?.articles) || [];
+  const news = useSelector(state => state.event.newsData) || [];
   return (
     <div className={styles.newsTicker}>
-      {news.map(item => (
-        <div key={item.title} className={styles.newsItem}>
-          <div className={styles.newsTitle}>{item.title}</div>
-          <div className={styles.newsDesc}>{item.description}</div>
-          <a className={styles.newsLink} href={item.url} target="_blank">
+      {news.map(({ title, description, url, source }) => (
+        <div key={title} className={styles.newsItem}>
+          <div className={styles.newsTitle}>{title}</div>
+          <div className={styles.newsDesc}>{description}</div>
+          <a className={styles.newsLink} href={url} target="_blank">
             <Icon iconType={'activities'} iconTheme={'white'} /> Read more on{' '}
-            {item.source.name}
+            {source}
           </a>
         </div>
       ))}
