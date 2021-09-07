@@ -1,35 +1,47 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 import * as Api from 'api/crash-game';
 import Slider from '@material-ui/core/Slider';
-import { RosiGameActions } from '../../store/actions/rosi-game';
-import { AlertActions } from '../../store/actions/alert';
-import { selectUserBet } from '../../store/selectors/rosi-game';
-import classNames from 'classnames';
+import { RosiGameActions } from 'store/actions/rosi-game';
+import { AlertActions } from 'store/actions/alert';
+import { selectUserBet } from 'store/selectors/rosi-game';
+import State from 'helper/State';
+import toNumber from 'lodash/toNumber';
+import { formatToFixed } from 'helper/FormatNumbers';
+import { selectUsers } from 'store/selectors/user';
+import { selectUserId } from 'store/selectors/authentication';
 import InputBox from 'components/InputBox';
-import Button from 'components/Button';
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
-  const [amount, setAmount] = useState(0);
+  const users = useSelector(selectUsers);
+  const userId = useSelector(selectUserId);
+  const user = State.getUser(userId, users);
+  const userBalance = 1000;
+  const sliderMinAmount = user.balance > 50 ? 50 : 0;
+  const sliderMaxAmount = Math.min(500, userBalance);
+  const [amount, setAmount] = useState(sliderMinAmount);
   const [cashout, setCashout] = useState(0);
   const userPlacedABet = useSelector(selectUserBet);
 
   const placeABet = () => {
+    if (userPlacedABet) return;
+
     const payload = { amount, crashFactor: cashout };
 
-    setAmount(0);
-    setCashout(0);
+    console.log(payload);
+
+    // setAmount(sliderMinAmount);
+    // setCashout(0);
 
     // Api.createTrade(payload).then(response => {
     //   dispatch(RosiGameActions.setUserBet(payload));
     // }).catch(error => {
     //   dispatch(AlertActions.showError(error.message));
     // })
-
-    console.log(payload);
   };
 
   return (
@@ -39,11 +51,11 @@ const PlaceBet = () => {
           <label className={styles.label}>Trade Amount in {TOKEN_NAME}</label>
         </div>
         <Slider
-          min={0}
-          max={1000}
+          min={sliderMinAmount}
+          max={sliderMaxAmount}
           marks={[
-            { value: 0, label: '0' },
-            { value: 1000, label: '1000' },
+            { value: sliderMinAmount, label: sliderMinAmount.toString() },
+            { value: sliderMaxAmount, label: sliderMaxAmount.toString() },
           ]}
           valueLabelDisplay="auto"
           value={amount}
@@ -71,9 +83,8 @@ const PlaceBet = () => {
       <span
         role="button"
         tabIndex="0"
-        className={styles.button}
+        className={classNames(styles.button, { [styles.buttonDisabled]: true })}
         onClick={placeABet}
-        // disabled={userPlacedABet}
       >
         Place Bet
       </span>

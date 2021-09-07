@@ -67,18 +67,36 @@ function createSocketChannel(socket) {
       emit(new Error(errorEvent.reason));
     };
 
-    const gameStartHandler = event => {
+    const casinoStartHandler = event => {
       const message = {
-        type: ChatMessageType.gameStart,
+        type: ChatMessageType.casinoStart,
         ...event,
       };
 
       emit(message);
     };
 
-    const gameEndHandler = event => {
+    const casinoEndHandler = event => {
       const message = {
-        type: ChatMessageType.gameEnd,
+        type: ChatMessageType.casinoEnd,
+        ...event,
+      };
+
+      emit(message);
+    };
+
+    const casinoTradeHandler = event => {
+      const message = {
+        type: ChatMessageType.casinoTrade,
+        ...event,
+      };
+
+      emit(message);
+    };
+
+    const casinoRewardHandler = event => {
+      const message = {
+        type: ChatMessageType.casinoReward,
         ...event,
       };
 
@@ -93,8 +111,10 @@ function createSocketChannel(socket) {
     socket.on('betPulledOut', addNewBetPullOutHandler);
     socket.on('notification', notificationHandler);
     socket.on('error', errorHandler);
-    socket.on('CASINO_START', gameStartHandler);
-    socket.on('CASINO_END', gameEndHandler);
+    socket.on('CASINO_START', casinoStartHandler);
+    socket.on('CASINO_END', casinoEndHandler);
+    socket.on('CASINO_TRADE', casinoTradeHandler);
+    socket.on('CASINO_REWARD', casinoRewardHandler);
 
     const unsubscribe = () => {
       socket.off('chatMessage', chatMessageHandler);
@@ -102,8 +122,10 @@ function createSocketChannel(socket) {
       socket.off('betPlaced', addNewBetPlaceHandler);
       socket.off('betPulledOut', addNewBetPullOutHandler);
       socket.off('notification', notificationHandler);
-      socket.off('CASINO_START', gameStartHandler);
-      socket.off('CASINO_END', gameEndHandler);
+      socket.off('CASINO_START', casinoStartHandler);
+      socket.off('CASINO_END', casinoEndHandler);
+      socket.off('CASINO_TRADE', casinoTradeHandler);
+      socket.off('CASINO_REWARD', casinoRewardHandler);
     };
 
     return unsubscribe;
@@ -135,11 +157,11 @@ export function* init() {
             case 'connect':
               yield put(WebsocketsActions.connected());
               break;
-            case ChatMessageType.gameStart:
+            case ChatMessageType.casinoStart:
               console.log(payload);
               yield put(RosiGameActions.setHasStarted());
               break;
-            case ChatMessageType.gameEnd:
+            case ChatMessageType.casinoEnd:
               console.log(payload);
               yield put(
                 RosiGameActions.addLastCrash({ lastCrash: payload.crashFactor })

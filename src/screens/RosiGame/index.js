@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import * as Api from 'api/crash-game';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -20,6 +20,9 @@ const rosiGameEvent = { _id: ROSI_GAME_EVENT_ID };
 
 const RosiGame = () => {
   const dispatch = useDispatch();
+  // const users = useSelector(selectUsers);
+  // const userId = useSelector(selectUserId);
+  // const user = State.getUser(userId, users);
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
