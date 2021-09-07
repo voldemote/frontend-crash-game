@@ -167,7 +167,7 @@ const Bet = ({
 
       if (popup) {
         setBetViewIsOpen(false);
-        showPopup(PopupTheme.tradeView, {});
+        showPopup(PopupTheme.tradeView, { betId, eventId, openBets });
       }
     };
   };
@@ -423,7 +423,7 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          {!singleBet && (
+          {!singleBet && openBets.length > 0 && (
             <div className={styles.betViewClose} onClick={onBetClose()}>
               <Icon
                 iconType={'arrowLeft'}
@@ -435,6 +435,9 @@ const Bet = ({
           )}
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
+              betId={betId}
+              eventId={eventId}
+              openBets={_.filter(openBets, { betId })}
               closed={false}
               showEventEnd={true}
               handleChartDirectionFilter={handleChartDirectionFilter}

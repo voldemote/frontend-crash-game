@@ -86,7 +86,13 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
         return <SignUpPopup closed={!visible} />;
 
       case PopupTheme.tradeView:
-        return <TradeViewPopup closed={false} />;
+        return (
+          <TradeViewPopup
+            eventId={eventId}
+            betId={betId}
+            openBets={_.get(options, 'openBets', [])}
+          />
+        );
 
       case PopupTheme.withdrawalSuccess:
         return (

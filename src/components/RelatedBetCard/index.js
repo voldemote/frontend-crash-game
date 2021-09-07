@@ -12,7 +12,7 @@ import PopupTheme from '../Popup/PopupTheme';
 import IconType from '../Icon/IconType';
 import ButtonSmall from '../ButtonSmall';
 import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
-import BetState from 'components/BetView/BetState';
+import BetState from '../../constants/BetState';
 
 const RelatedBetCard = ({ onClick, bet, showPopup }) => {
   const [menuOpened, setMenuOpened] = useState(false);
