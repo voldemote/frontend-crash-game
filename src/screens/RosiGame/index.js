@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import * as Api from 'api/crash-game';
 import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
 import BackLink from 'components/BackLink';
@@ -19,6 +20,8 @@ const rosiGameEvent = { _id: ROSI_GAME_EVENT_ID };
 
 const RosiGame = () => {
   const dispatch = useDispatch();
+  const isSmallDevice = useMediaQuery('(max-width:768px)');
+  const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
   useEffect(() => {
     Api.getCurrentGameInfo().then(response => {
@@ -36,29 +39,36 @@ const RosiGame = () => {
               <LastCrashes />
               <GameAnimation />
             </Grid>
-            <Grid item xs={12} md={3}>
-              <PlaceBet />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Chat event={rosiGameEvent} className={styles.chatContainer} />
-            </Grid>
-            <Grid item md={4}>
-              <GameBets
-                label="In Game Bets"
-                total="2.700,50"
-                bets={inGameBets}
-              />
-            </Grid>
-            <Grid item md={4}>
-              <GameBets
-                label="Cashed Out"
-                total="2.700,50"
-                bets={winners}
-                showCrashFactor
-              />
-            </Grid>
+            {isMiddleOrLargeDevice && (
+              <>
+                <Grid item xs={12} md={3}>
+                  <PlaceBet />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Chat
+                    event={rosiGameEvent}
+                    className={styles.chatContainer}
+                  />
+                </Grid>
+                <Grid item md={4}>
+                  <GameBets
+                    label="In Game Bets"
+                    total="2.700,50"
+                    bets={inGameBets}
+                  />
+                </Grid>
+                <Grid item md={4}>
+                  <GameBets
+                    label="Cashed Out"
+                    total="2.700,50"
+                    bets={winners}
+                    showCrashFactor
+                  />
+                </Grid>
+              </>
+            )}
           </Grid>
-          {/* <MobileBets /> */}
+          {isSmallDevice && <MobileBets />}
         </div>
       </div>
     </BaseContainerWithNavbar>

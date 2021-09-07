@@ -14,6 +14,9 @@ const useTabsStyles = makeStyles({
   indicator: {
     backgroundColor: '#e2ff54',
   },
+  container: {
+    marginTop: '20px'
+  }
 });
 
 const useTabStyles = makeStyles({
@@ -29,6 +32,9 @@ const useTabStyles = makeStyles({
   selected: {
     color: '#FFFFFF',
   },
+  tabPanel: {
+    marginTop: '20px'
+  }
 });
 
 const MobileBets = () => {
@@ -41,7 +47,7 @@ const MobileBets = () => {
   };
 
   return (
-    <div>
+    <div className={tabsClasses.container}>
       <Tabs
         value={selectedTab}
         onChange={handleTabChange}
@@ -68,20 +74,20 @@ const MobileBets = () => {
           classes={{ root: tabClasses.root }}
         />
       </Tabs>
-      <TabPanel value={selectedTab} index={0}>
+      <TabPanel value={selectedTab} index={0} className={tabClasses.tabPanel}>
         <PlaceBet />
       </TabPanel>
-      <TabPanel value={selectedTab} index={1}>
+      <TabPanel value={selectedTab} index={1} className={tabClasses.tabPanel}>
         <Chat event={{ _id: ROSI_GAME_EVENT_ID }} className={styles.chatContainer} />
       </TabPanel>
-      <TabPanel value={selectedTab} index={2}>
+      <TabPanel value={selectedTab} index={2} className={tabClasses.tabPanel}>
         <GameBets
           label="In Game Bets"
           total="2.700,50"
           bets={inGameBets}
         />
       </TabPanel>
-      <TabPanel value={selectedTab} index={3}>
+      <TabPanel value={selectedTab} index={3} className={tabClasses.tabPanel}>
         <GameBets
           label="Cashed Out"
           total="2.700,50"
