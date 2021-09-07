@@ -5,7 +5,7 @@ let yml = fs
   .readFileSync(path.resolve(__dirname, `spec-${process.env.stage}.yml`))
   .toString();
 
-if (process.env.stage == 'STAGING') {
+if (process.env.stage == 'staging') {
   console.log(
     yml
       .replace('$VERSION', process.env.version)
@@ -16,7 +16,7 @@ if (process.env.stage == 'STAGING') {
         process.env.STAGING_CRASH_GAME_BACKEND_URL
       )
   );
-} else if (process.env.stage == 'PRODUCTIVE') {
+} else if (process.env.stage == 'production') {
   console.log(
     yml
       .replace('$VERSION', process.env.version)
