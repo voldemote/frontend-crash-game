@@ -43,7 +43,16 @@ const Header = ({ events }) => {
               const isLive = event.type === 'streamed'; //currentDate.isBetween(startDate, endDate);
 
               return (
-                <div key={eventIndex} className={styles.eventContainer}>
+                <Link
+                  to={{
+                    pathname: `trade/${event.slug}`,
+                    state: {
+                      fromLocation: location,
+                    },
+                  }}
+                  className={styles.eventContainer}
+                  key={eventIndex}
+                >
                   <div className={styles.headerOverlay}></div>
 
                   {renderContent(event, eventIndex, currentSlideIndex)}
@@ -62,18 +71,10 @@ const Header = ({ events }) => {
                         ))}
                       </div>
                       <div>
-                        <Link
-                          to={{
-                            pathname: `trade/${event.slug}`,
-                            state: {
-                              fromLocation: location,
-                            },
-                          }}
-                          className={styles.goToEvent}
-                        >
+                        <div className={styles.goToEvent}>
                           <span>Go to event</span>
                           <div className={styles.arrowRight}></div>
-                        </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -89,7 +90,7 @@ const Header = ({ events }) => {
                     </span>
                     <TimeLeftCounter endDate={endDate} />
                   </div>
-                </div>
+                </Link>
               );
             })}
         </CoverFlowCarousel>
