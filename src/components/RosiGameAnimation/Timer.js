@@ -24,7 +24,11 @@ const Timer = () => {
     }
   }, [ms]);
 
-  return <span>{seconds}.{ms}</span>
+  return (
+    <span>
+      {seconds}.{ms}
+    </span>
+  );
 };
 
 export default Timer;

@@ -1,112 +1,94 @@
+import React, { useEffect } from 'react';
 import _ from 'lodash';
-import BetSummaryContainer from '../BetSummaryContainer';
-import BetSummaryHelper from '../../helper/BetSummary';
-import Icon from '../Icon';
-import IconTheme from '../Icon/IconTheme';
-import IconType from '../Icon/IconType';
-import moment from 'moment';
-import React from 'react';
+import ReactCanvasConfetti from 'react-canvas-confetti';
 import styles from './styles.module.scss';
-import { connect } from 'react-redux';
-import { formatToFixed } from '../../helper/FormatNumbers';
-import { TOKEN_NAME } from '../../constants/Token';
+import LogoSplash from '../../data/images/wfair-logo-splash.png';
+import Button from 'components/Button';
+import HighlightType from 'components/Highlight/HighlightType';
+import classNames from 'classnames';
 
-const BetApproveView = ({
-  closed,
-  betId,
-  investmentAmount,
-  outcome,
-  bet,
-  openBet,
-  outcomes,
-}) => {
-  const getSummaryRows = () => {
-    const outcomeValue = _.get(bet, ['outcomes', outcome, 'name']);
-    const outcomeReturn = _.get(openBet, 'outcomeAmount', '-');
+const canvasStyles = {
+  position: 'fixed',
+  pointerEvents: 'none',
+  width: '100%',
+  height: '100%',
+  top: 0,
+  left: 0,
+};
 
-    return [
-      BetSummaryHelper.getDivider(),
-      BetSummaryHelper.getKeyValue(
-        'Your Invest',
-        formatToFixed(investmentAmount) + ' ' + TOKEN_NAME
-      ),
-      BetSummaryHelper.getKeyValue('Your Trade', outcomeValue),
-      BetSummaryHelper.getDivider(),
-      BetSummaryHelper.getKeyValue(
-        'Possible Win',
-        formatToFixed(outcomeReturn) + ' ' + TOKEN_NAME,
-        false,
-        true
-      ),
-    ];
+let animationInstance;
+const BetApproveView = ({ closed }) => {
+  const makeShot = (particleRatio, opts) => {
+    animationInstance &&
+      animationInstance({
+        ...opts,
+        origin: { y: 0.6 },
+        particleCount: Math.floor(1000 * particleRatio),
+      });
   };
 
-  const renderBetSummary = () => {
-    const marketQuestion = _.get(bet, 'marketQuestion');
-    const endDateTime = moment(_.get(bet, 'endDate', new Date()));
-    const summaryRows = getSummaryRows();
+  const startAnimation = () => {
+    makeShot(0.35, {
+      spread: 60,
+      startVelocity: 55,
+      decay: 0.9,
+    });
 
-    return (
-      <BetSummaryContainer
-        marketQuestion={marketQuestion}
-        endDate={endDateTime}
-        summaryRows={summaryRows}
-      />
-    );
+    makeShot(0.2, {
+      spread: 90,
+      decay: 0.9,
+    });
+
+    makeShot(0.35, {
+      spread: 120,
+      decay: 0.95,
+      scalar: 0.8,
+    });
+
+    makeShot(0.3, {
+      spread: 150,
+      startVelocity: 25,
+      decay: 0.99,
+      scalar: 1.2,
+    });
+
+    makeShot(0.3, {
+      spread: 120,
+      decay: 1,
+      startVelocity: 45,
+    });
   };
+
+  const getInstance = instance => {
+    animationInstance = instance;
+  };
+
+  useEffect(() => {
+    !closed && startAnimation();
+  }, [closed]);
 
   return (
     <div className={styles.approveBetContainer}>
       <span className={styles.approveBetHeadline}>
-        <Icon
-          width={25}
-          iconTheme={IconTheme.primary}
-          iconType={IconType.success}
-          className={styles.headlineIcon}
-        />
-        Bet placed successfully!
+        <img src={LogoSplash} className={styles.logo} />
+        Congratulations!
       </span>
-      <div className={styles.betSummaryContainer}>
-        <div>{renderBetSummary()}</div>
+      <span className={styles.betPostedHeadline}>
+        Your Bet Has Been <br />
+        Posted
+      </span>
+      <div className={styles.betButtonContainer}>
+        <Button
+          className={classNames(styles.betButton)}
+          highlightType={HighlightType.highlightHomeCtaBet}
+          disabledWithOverlay={false}
+        >
+          Keep Going
+        </Button>
       </div>
+      <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
     </div>
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const { betId, investmentAmount, outcome } = ownProps;
-  const findBetInEvent = (event, betId) => {
-    if (event) {
-      return _.find(event.bets, {
-        _id: betId,
-      });
-    }
-  };
-  const event = _.head(
-    _.filter(
-      state.event.events,
-      event => !_.isEmpty(findBetInEvent(event, betId))
-    )
-  );
-  const bet = findBetInEvent(event, betId);
-  const openBet = _.find(state.bet.openBets, {
-    betId,
-    outcome,
-  });
-  let outcomes = _.get(state.bet.outcomes, betId);
-
-  if (outcomes) {
-    const amount = investmentAmount;
-    outcomes = _.get(outcomes, 'values', {});
-    outcomes = _.get(outcomes, amount);
-  }
-
-  return {
-    event,
-    bet,
-    openBet,
-    outcomes,
-  };
-};
-
-export default connect(mapStateToProps, null)(BetApproveView);
+export default BetApproveView;

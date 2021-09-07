@@ -1,55 +1,66 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Api from 'api/crash-game';
-import { RosiGameActions } from '../../store/actions/rosi-game';
-import { AlertActions } from '../../store/actions/alert';
-import { selectUserBet } from '../../store/selectors/rosi-game';
 import classNames from 'classnames';
+import * as Api from 'api/crash-game';
+import Slider from '@material-ui/core/Slider';
+import { RosiGameActions } from 'store/actions/rosi-game';
+import { AlertActions } from 'store/actions/alert';
+import { selectUserBet } from 'store/selectors/rosi-game';
+import State from 'helper/State';
+import toNumber from 'lodash/toNumber';
+import { formatToFixed } from 'helper/FormatNumbers';
+import { selectUsers } from 'store/selectors/user';
+import { selectUserId } from 'store/selectors/authentication';
 import InputBox from 'components/InputBox';
-import Button from 'components/Button';
-import styles from './PlaceBet.module.scss';
+import styles from './styles.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
-  const [amount, setAmount] = useState('');
-  const [cashout, setCashout] = useState('');
+  const users = useSelector(selectUsers);
+  const userId = useSelector(selectUserId);
+  const user = State.getUser(userId, users);
+  const userBalance = 1000;
+  const sliderMinAmount = user.balance > 50 ? 50 : 0;
+  const sliderMaxAmount = Math.min(500, userBalance);
+  const [amount, setAmount] = useState(sliderMinAmount);
+  const [cashout, setCashout] = useState(0);
   const userPlacedABet = useSelector(selectUserBet);
 
   const placeABet = () => {
+    if (userPlacedABet) return;
+
     const payload = { amount, crashFactor: cashout };
 
-    setAmount('');
-    setCashout('');
+    console.log(payload);
 
-    Api.createTrade(payload).then(response => {
-      dispatch(RosiGameActions.setUserBet(payload));
-    }).catch(error => {
-      dispatch(AlertActions.showError(error.message));
-    })
+    // setAmount(sliderMinAmount);
+    // setCashout(0);
+
+    // Api.createTrade(payload).then(response => {
+    //   dispatch(RosiGameActions.setUserBet(payload));
+    // }).catch(error => {
+    //   dispatch(AlertActions.showError(error.message));
+    // })
   };
 
   return (
     <div className={classNames(styles.container)}>
       <div className={styles.inputContainer}>
-        <label className={styles.label}>Trade Amount in {TOKEN_NAME}</label>
-        <InputBox
-          type="number"
+        <div>
+          <label className={styles.label}>Trade Amount in {TOKEN_NAME}</label>
+        </div>
+        <Slider
+          min={sliderMinAmount}
+          max={sliderMaxAmount}
+          marks={[
+            { value: sliderMinAmount, label: sliderMinAmount.toString() },
+            { value: sliderMaxAmount, label: sliderMaxAmount.toString() },
+          ]}
+          valueLabelDisplay="auto"
           value={amount}
-          setValue={setAmount}
-          placeholder="0"
-          showDeleteIcon={false}
-          disabled={userPlacedABet}
+          onChange={(_, value) => setAmount(value)}
         />
-        <span className={styles.actions}>
-          <span className={styles.action} onClick={() => setAmount(amount / 2)}>
-            1/2
-          </span>
-          <span className={styles.action} onClick={() => setAmount(amount * 2)}>
-            2x
-          </span>
-          <span className={styles.action}>Max</span>
-        </span>
       </div>
       <div className={styles.inputContainer}>
         <label className={styles.label}>Cashout</label>
@@ -60,6 +71,8 @@ const PlaceBet = () => {
           placeholder="25:00"
           showDeleteIcon={false}
           disabled={userPlacedABet}
+          className={styles.input}
+          containerClassName={styles.inputBoxContainer}
         />
         <span className={styles.actions}>
           <span className={styles.action} onClick={() => setCashout(0)}>
@@ -67,9 +80,14 @@ const PlaceBet = () => {
           </span>
         </span>
       </div>
-      <Button className={styles.signUpButton} onClick={placeABet} disabled={userPlacedABet}>
+      <span
+        role="button"
+        tabIndex="0"
+        className={classNames(styles.button, { [styles.buttonDisabled]: true })}
+        onClick={placeABet}
+      >
         Place Bet
-      </Button>
+      </span>
     </div>
   );
 };

@@ -1,0 +1,39 @@
+@import '../../styles/all';
+
+.container {
+  background: #1F1D38;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  padding: 7px 20px;
+
+  .title {
+    display: inline-block;
+    color: $colorWhite;
+    width: 30%;
+
+    @media screen and (max-width: $screen-sm) {
+      width: 50%;
+    }
+  }
+
+  .crashes {
+    display: inline-flex;
+    align-items: center;
+    overflow-x: auto;
+    width: 70%;
+
+    @media screen and (max-width: $screen-sm) {
+      width: 50%;
+    }
+  }
+
+  .crash {
+    color: $colorYellow;
+    margin-right: 50px;
+
+    @media screen and (max-width: $screen-sm) {
+      margin-right: 30px;
+    }
+  }
+}
