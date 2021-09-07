@@ -309,6 +309,7 @@ const Bet = ({
   const renderSwitchableView = () => {
     const eventViews = [
       EventTradeViewsHelper.getView('Chat', undefined, false, styles.chatTab),
+      EventTradeViewsHelper.getView('News', undefined, false, styles.newsTab),
       EventTradeViewsHelper.getView('Event Trades'),
       EventTradeViewsHelper.getView(
         'My Trades',
@@ -394,6 +395,11 @@ const Bet = ({
         <SwiperSlide className={styles.carouselSlide}>
           <div ref={mobileChatRef}>
             <Chat event={event} className={styles.mobileChat} />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className={styles.carouselSlide}>
+          <div>
+            <News />
           </div>
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>

@@ -12,7 +12,19 @@
   background-color: transparent;
   border-radius: $radius;
   flex-shrink: 0;
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
+
+  @media screen and (max-width: $screen-md) {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+    &:last-child{
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
 }
 
 .newsTitle {
@@ -37,6 +49,10 @@
   opacity: 0.5;
   height: 100px;
   // @include ellipsis;
+
+  @media screen and (max-width: $screen-md) {
+    height: auto;
+  }
 }
 .readButton {
   margin-top: 10px;
