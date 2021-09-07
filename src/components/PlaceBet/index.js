@@ -5,43 +5,40 @@ import * as Api from 'api/crash-game';
 import Slider from '@material-ui/core/Slider';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import { AlertActions } from 'store/actions/alert';
-import { selectUserBet } from 'store/selectors/rosi-game';
-import State from 'helper/State';
-import toNumber from 'lodash/toNumber';
-import { formatToFixed } from 'helper/FormatNumbers';
-import { selectUsers } from 'store/selectors/user';
-import { selectUserId } from 'store/selectors/authentication';
+import { selectUserBet, selectHasStarted } from 'store/selectors/rosi-game';
 import InputBox from 'components/InputBox';
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
+import useCurrentUser from 'hooks/useCurrentUser';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
-  const users = useSelector(selectUsers);
-  const userId = useSelector(selectUserId);
-  const user = State.getUser(userId, users);
-  const userBalance = 1000;
+  const user = useCurrentUser();
+  const userBalance = parseInt(user.balance, 10);
   const sliderMinAmount = user.balance > 50 ? 50 : 0;
   const sliderMaxAmount = Math.min(500, userBalance);
-  const [amount, setAmount] = useState(sliderMinAmount);
-  const [cashout, setCashout] = useState(0);
+  const isGameRunning = useSelector(selectHasStarted);
   const userPlacedABet = useSelector(selectUserBet);
+  const userUnableToBet = isGameRunning || userPlacedABet;
+  const [amount, setAmount] = useState(sliderMinAmount);
+  const [crashFactor, setCrashFactor] = useState(0);
 
   const placeABet = () => {
     if (userPlacedABet) return;
 
-    const payload = { amount, crashFactor: cashout };
+    const payload = { amount, crashFactor };
 
     console.log(payload);
 
-    // setAmount(sliderMinAmount);
-    // setCashout(0);
-
-    // Api.createTrade(payload).then(response => {
-    //   dispatch(RosiGameActions.setUserBet(payload));
-    // }).catch(error => {
-    //   dispatch(AlertActions.showError(error.message));
-    // })
+    Api.createTrade(payload)
+      .then(response => {
+        dispatch(RosiGameActions.setUserBet(payload));
+        setAmount(sliderMinAmount);
+        setCrashFactor(0);
+      })
+      .catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
   };
 
   return (
@@ -66,16 +63,16 @@ const PlaceBet = () => {
         <label className={styles.label}>Cashout</label>
         <InputBox
           type="number"
-          value={cashout}
-          setValue={setCashout}
+          value={crashFactor}
+          setValue={setCrashFactor}
           placeholder="25:00"
           showDeleteIcon={false}
-          disabled={userPlacedABet}
+          disabled={userUnableToBet}
           className={styles.input}
           containerClassName={styles.inputBoxContainer}
         />
         <span className={styles.actions}>
-          <span className={styles.action} onClick={() => setCashout(0)}>
+          <span className={styles.action} onClick={() => setCrashFactor(0)}>
             X
           </span>
         </span>
@@ -83,7 +80,9 @@ const PlaceBet = () => {
       <span
         role="button"
         tabIndex="0"
-        className={classNames(styles.button, { [styles.buttonDisabled]: true })}
+        className={classNames(styles.button, {
+          [styles.buttonDisabled]: userUnableToBet,
+        })}
         onClick={placeABet}
       >
         Place Bet

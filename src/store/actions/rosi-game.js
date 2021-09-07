@@ -4,15 +4,12 @@ export const RosiGameTypes = {
   SET_HAS_STARTED: 'RosiGame/SET_HAS_STARTED',
   SET_USER_BET: 'RosiGame/SET_USER_BET',
   ADD_LAST_CRASH: 'RosiGame/ADD_LAST_CRASH',
+  ADD_IN_GAME_BET: 'RosiGame/ADD_IN_GAME_BET',
+  RESET_IN_GAME_BETS: 'RosiGame/RESET_IN_GAME_BETS',
 };
 
 const initializeState = payload => ({
   type: RosiGameTypes.INITIALIZE_STATE,
-  payload,
-});
-
-const fetchCurrenGameInfoSuccess = payload => ({
-  type: RosiGameTypes.FETCH_CURRENT_GAME_INFO_SUCCESS,
   payload,
 });
 
@@ -30,10 +27,20 @@ const addLastCrash = payload => ({
   payload,
 });
 
+const addInGameBet = payload => ({
+  type: RosiGameTypes.ADD_IN_GAME_BET,
+  payload,
+});
+
+const resetInGameBets = payload => ({
+  type: RosiGameTypes.RESET_IN_GAME_BETS,
+});
+
 export const RosiGameActions = {
   initializeState,
-  fetchCurrenGameInfoSuccess,
   setHasStarted,
   setUserBet,
   addLastCrash,
+  addInGameBet,
+  resetInGameBets,
 };

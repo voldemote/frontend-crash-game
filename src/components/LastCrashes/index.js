@@ -1,10 +1,6 @@
-import { useSelector } from 'react-redux';
-import { selectLastTenCrashes } from '../../store/selectors/rosi-game';
 import styles from './styles.module.scss';
 
-const LastCrashes = () => {
-  const lastCrashes = useSelector(selectLastTenCrashes);
-
+const LastCrashes = ({ lastCrashes }) => {
   return (
     <div className={styles.container}>
       <span className={styles.title}>Last Crashes</span>
