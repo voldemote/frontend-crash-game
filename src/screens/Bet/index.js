@@ -161,6 +161,7 @@ const Bet = ({
   const onBetClick = (bet, popup) => {
     return () => {
       const betId = _.get(bet, '_id');
+      const eventId = _.get(event, '_id');
       const betSlug = _.get(bet, 'slug');
 
       selectBet(betId, betSlug);
@@ -441,7 +442,7 @@ const Bet = ({
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
               betId={betId}
-              eventId={eventId}
+              eventId={event._id}
               openBets={_.filter(openBets, { betId })}
               closed={false}
               showEventEnd={true}
