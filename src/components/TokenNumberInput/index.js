@@ -1,4 +1,4 @@
-import React from 'react';
+import TokenSlider from '../TokenSlider';
 import styles from './styles.module.scss';
 import Input from '../Input';
 import classNames from 'classnames';
@@ -47,6 +47,11 @@ const TokenNumberInput = ({
       <ErrorHint
         className={styles.tokenNumberErrorHint}
         errorText={errorText}
+      />
+      <TokenSlider
+        value={Number(value)}
+        setValue={setValue}
+        maxValue={maxValue}
       />
     </>
   );

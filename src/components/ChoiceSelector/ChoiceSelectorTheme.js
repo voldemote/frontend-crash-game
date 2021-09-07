@@ -1,4 +1,6 @@
 export default {
-  colorMint: 'colorMint',
-  colorLightPurple: 'colorLightPurple',
+  colorOrangeLight: 'colorOrangeLight',
+  colorGreen: 'colorGreen',
+  colorPinkLight: 'colorPinkLight',
+  colorFlamingo: 'colorFlamingo',
 };

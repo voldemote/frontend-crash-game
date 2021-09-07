@@ -10,8 +10,8 @@ import moment from 'moment';
 import { useCallback } from 'react';
 import SleepHelper from '../../helper/Sleep';
 import styles from './styles.module.scss';
-import SwitchableContainer from '../SwitchableContainer';
-import SwitchableHelper from '../../helper/SwitchableHelper';
+// import SwitchableContainer from '../SwitchableContainer';
+// import SwitchableHelper from '../../helper/SwitchableHelper';
 import TimeLeftCounter from '../../components/TimeLeftCounter';
 import TokenNumberInput from '../TokenNumberInput';
 import { BetActions } from '../../store/actions/bet';
@@ -25,7 +25,7 @@ import Icon from '../Icon';
 import LoadingAnimation from '../../data/animations/sending-transaction.gif';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
-import StateBadge from '../StateBadge';
+// import StateBadge from '../StateBadge';
 import SummaryRowContainer from '../SummaryRowContainer';
 import BetSummaryHelper from '../../helper/BetSummary';
 import BetState from './BetState';
@@ -46,6 +46,7 @@ const BetView = ({
   disableSwitcher = false,
   showEventEnd,
   balance,
+  wfairValue,
   events,
   selectedBetId,
   openBets,
@@ -187,6 +188,7 @@ const BetView = ({
   const [commitmentErrorText, setCommitmentErrorText] = useState('');
   const [tokenNumber, setTokenNumber] = useState(commitment);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [showAllEvidence, setShowAllEvidence] = useState(false);
   const hasMounted = useHasMounted();
 
   const userLoggedIn = useSelector(
@@ -365,31 +367,31 @@ const BetView = ({
     setCurrentTradeView(index);
   };
 
-  const renderSwitchableView = () => {
-    // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
-    // like e.g. react-aria tablist
-    // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
-    if (_.size(hasOpenBet) && !disableSwitcher) {
-      const switchableViews = [
-        SwitchableHelper.getSwitchableView('Buy'),
-        SwitchableHelper.getSwitchableView('Sell'),
-      ];
+  // const renderSwitchableView = () => {
+  //   // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
+  //   // like e.g. react-aria tablist
+  //   // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
+  //   if (_.size(hasOpenBet) && !disableSwitcher) {
+  //     const switchableViews = [
+  //       SwitchableHelper.getSwitchableView('Buy'),
+  //       SwitchableHelper.getSwitchableView('Sell'),
+  //     ];
 
-      return (
-        <div className={styles.switchableContainer}>
-          <SwitchableContainer
-            switchableViews={switchableViews}
-            currentIndex={currentTradeView}
-            setCurrentIndex={switchableChange}
-            underlineInactive={true}
-            handleChartDirectionFilter={handleChartDirectionFilter}
-          />
-        </div>
-      );
-    }
+  //     return (
+  //       <div className={styles.switchableContainer}>
+  //         <SwitchableContainer
+  //           switchableViews={switchableViews}
+  //           currentIndex={currentTradeView}
+  //           setCurrentIndex={switchableChange}
+  //           underlineInactive={true}
+  //           handleChartDirectionFilter={handleChartDirectionFilter}
+  //         />
+  //       </div>
+  //     );
+  //   }
 
-    return null;
-  };
+  //   return null;
+  // };
 
   const renderChoiceSelector = (
     index,
@@ -408,6 +410,7 @@ const BetView = ({
         className={styles.choice}
         name={name}
         winAmount={getOutcome(index)}
+        wfairValue={wfairValue}
         selected={choice === index || forceSelect}
         onClick={!resolved ? onChoiceSelect(index, enabled) : _.noop}
         hideAmount={resolved}
@@ -430,6 +433,7 @@ const BetView = ({
           value={tokenNumber}
           setValue={onTokenNumberChange}
           errorText={commitmentErrorText}
+          maxValue={2800}
         />
       </>
     );
@@ -456,6 +460,27 @@ const BetView = ({
     }
   };
 
+  const renderTradeDesc = () => {
+    const temp = 'Eget sed ut enim in sit arcu';
+    return (
+      <>
+        <p className={styles.tradeDesc}>
+          {showAllEvidence
+            ? event.evidence
+            : event.evidence
+            ? event.evidence.substring(0, 200)
+            : ''}
+        </p>
+        <button
+          className={styles.seeMore}
+          onClick={() => setShowAllEvidence(!showAllEvidence)}
+        >
+          {showAllEvidence ? 'SHOW LESS' : 'SEE MORE'}
+        </button>
+      </>
+    );
+  };
+
   const renderTradeButton = enabled => {
     const isSell = hasSellView();
     const finalOutcome = getFinalOutcome();
@@ -469,16 +494,19 @@ const BetView = ({
       }
 
       return (
-        <Button
-          className={classNames(styles.betButton)}
-          onClick={!tradeButtonDisabled ? onTradeButtonConfirm : _.noop}
-          highlightType={HighlightType.highlightHomeCtaBet}
-          highlightTheme={tradeButtonTheme}
-          disabled={tradeButtonDisabled}
-          disabledWithOverlay={false}
-        >
-          Trade
-        </Button>
+        <>
+          {renderTradeDesc()}
+          <Button
+            className={classNames(styles.betButton)}
+            onClick={!tradeButtonDisabled ? onTradeButtonConfirm : _.noop}
+            highlightType={HighlightType.highlightHomeCtaBet}
+            highlightTheme={tradeButtonTheme}
+            disabled={tradeButtonDisabled}
+            disabledWithOverlay={false}
+          >
+            Trade!
+          </Button>
+        </>
       );
     }
     if (isSell && !finalOutcome && validInput) {
@@ -516,7 +544,7 @@ const BetView = ({
   const renderPlaceBetContentContainer = enabled => {
     return (
       <>
-        {renderSwitchableView()}
+        {/* {renderSwitchableView()} */}
         <div className={styles.placeBetContentContainer}>
           {renderTokenSelection()}
           <div
@@ -525,7 +553,7 @@ const BetView = ({
               hasSellView() ? styles.sellButtonContainer : null
             )}
           >
-            <label className={styles.label}>Potential Winnings:</label>
+            <label className={styles.label}>Pick outcome</label>
             <div className={styles.choiceContainer}>
               {renderChoiceSelectors(enabled)}
             </div>
@@ -573,7 +601,7 @@ const BetView = ({
           isPopup ? styles.popupMenuContainer : null
         )}
       >
-        {renderCurrentBalance()}
+        {/* {renderCurrentBalance()} */}
         {renderMenu()}
       </div>
     );
@@ -604,6 +632,7 @@ const BetView = ({
     return (
       <div className={styles.menu}>
         <Icon
+          className={styles.menuIcon}
           iconType={IconType.menu}
           iconTheme={null}
           onClick={() => setMenuOpened(!menuOpened)}
@@ -637,18 +666,18 @@ const BetView = ({
     );
   };
 
-  const renderCurrentBalance = () => {
-    return (
-      <div className={classNames(styles.currentBalanceContainer)}>
-        <Icon
-          className={styles.currentBalanceIcon}
-          iconTheme={IconTheme.primaryLightTransparent}
-          iconType={IconType.wallet2}
-        />
-        {formatToFixed(balance)}
-      </div>
-    );
-  };
+  // const renderCurrentBalance = () => {
+  //   return (
+  //     <div className={classNames(styles.currentBalanceContainer)}>
+  //       <Icon
+  //         className={styles.currentBalanceIcon}
+  //         iconTheme={IconTheme.primaryLightTransparent}
+  //         iconType={IconType.wallet2}
+  //       />
+  //       {formatToFixed(balance)}
+  //     </div>
+  //   );
+  // };
 
   const renderStateConditionalContent = () => {
     const interactionEnabled = state === BetState.active;
@@ -744,51 +773,49 @@ const BetView = ({
   const endDate = _.get(bet, 'endDate');
 
   return (
-    <div
-      className={classNames(
-        styles.placeBetParentContainer,
-        styles[state + 'Status'],
-        isTradeViewPopup ? styles.isPopup : null
-      )}
-    >
+    <>
       <div
         className={classNames(
-          styles.placeBetContainer,
+          styles.placeBetParentContainer,
+          styles[state + 'Status'],
           isTradeViewPopup ? styles.isPopup : null
         )}
       >
-        {renderLoadingAnimation()}
-        {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
-        {!isTradeViewPopup && (
-          <span className={styles.eventName}>{event.name}</span>
-        )}
-        <div className={styles.betMarketQuestion}>{bet.marketQuestion}</div>
-        <div className={styles.description}>{bet.description}</div>
-        <StateBadge state={state} />
-        {renderStateConditionalContent()}
-        {showEventEnd && (
-          <div
-            className={classNames(
-              styles.timeLeftCounterContainer,
-              isTradeViewPopup ? styles.fixedTimer : null
-            )}
-          >
-            <span>Estimated end:</span>
-            <TimeLeftCounter endDate={endDate} />
-          </div>
-        )}
+        <div
+          className={classNames(
+            styles.placeBetContainer,
+            isTradeViewPopup ? styles.isPopup : null
+          )}
+        >
+          {renderLoadingAnimation()}
+          {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
+          <div className={styles.betMarketQuestion}>{bet.marketQuestion}</div>
+          {renderStateConditionalContent()}
+        </div>
       </div>
-    </div>
+      {showEventEnd && (
+        <div
+          className={classNames(
+            styles.timeLeftCounterContainer,
+            isTradeViewPopup ? styles.fixedTimer : null
+          )}
+        >
+          <span>Event ends in:</span>
+          <TimeLeftCounter endDate={endDate} />
+        </div>
+      )}
+    </>
   );
 };
 
 const mapStateToProps = state => {
   return {
     actionIsInProgress: state.bet.actionIsInProgress,
-    balance: formatToFixed(state.authentication.balance),
+    balance: formatToFixed(state.authentication.balance, 0),
     choice: state.bet.selectedChoice,
     commitment: _.get(state, 'bet.selectedCommitment', 0),
     events: state.event.events,
+    wfairValue: formatToFixed(state.bet.wfairValue, 2),
     openBets: state.bet.openBets,
     rawOutcomes: state.bet.outcomes,
     rawSellOutcomes: state.bet.sellOutcomes,

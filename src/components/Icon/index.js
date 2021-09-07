@@ -34,6 +34,7 @@ import { ReactComponent as IconDeleteInput } from '../../data/icons/delete-input
 import { ReactComponent as IconDeposit } from '../../data/icons/deposit.svg';
 import { ReactComponent as IconHome } from '../../data/icons/home.svg';
 import { ReactComponent as IconInfo } from '../../data/icons/info.svg';
+import { ReactComponent as IconInfoReverse } from '../../data/icons/info-reverse.svg';
 import { ReactComponent as IconLogoSmall } from '../../data/icons/logo-small.svg';
 import { ReactComponent as IconLogout } from '../../data/icons/logout.svg';
 import { ReactComponent as IconMailAddress } from '../../data/icons/mail-address.svg';
@@ -120,6 +121,7 @@ const Icon = ({
       [IconType.wallet]: <IconWallet />,
       [IconType.wallet2]: <IconWallet2 />,
       [IconType.info]: <IconInfo />,
+      [IconType.infoReverse]: <IconInfoReverse />,
       [IconType.success]: <IconSuccess />,
       [IconType.withdrawal]: <IconWithdrawal />,
     });
