@@ -4,7 +4,11 @@ domains:
 name: production-frontend
 region: fra
 services:
-- http_port: 80
+- envs:
+  - key: REACT_APP_NEWS_API_KEY
+    scope: RUN_TIME
+    value: $REACT_APP_NEWS_API_KEY
+  http_port: 80
   image:
     registry_type: DOCR
     repository: frontend
