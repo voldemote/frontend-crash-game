@@ -42,10 +42,12 @@ const Bet = ({
   transactions,
   openBets,
   authState,
-  setSelectedBet,
   events,
+  fetchOpenBets,
 }) => {
-  const { eventId, betId } = useParams();
+  const { eventSlug, betSlug } = useParams();
+
+  const [betId, setBetId] = useState(null);
   const history = useHistory();
 
   const [swiper, setSwiper] = useState(null);
@@ -80,9 +82,13 @@ const Bet = ({
       setBetAction(0);
     }
 
+    setSingleBet(false);
+    setBetViewIsOpen(false);
+
     const currentEvent = _.find(events, {
-      _id: eventId,
+      slug: eventSlug,
     });
+
     const eventBets = [..._.get(currentEvent, 'bets', [])].sort(
       (a, b) => status[a.status] - status[b.status]
     );
@@ -90,25 +96,41 @@ const Bet = ({
     setEvent(currentEvent);
     setRelatedBets(eventBets);
 
+    const currentBet = _.find(eventBets, {
+      slug: betSlug,
+    });
+    const currentBetId = _.get(currentBet, '_id');
+    setBetId(currentBetId);
+
+    if (betSlug) {
+      selectBet(currentBetId, betSlug);
+    }
+
     if (eventBets.length === 1 && !singleBet) {
-      const betId = _.get(_.get(eventBets, '[0]'), '_id');
-      selectBet(betId);
+      const singleBet = _.get(eventBets, '[0]');
+      const betId = _.get(singleBet, '_id');
+      const betSlug = _.get(singleBet, 'slug');
+      selectBet(betId, betSlug);
       setSingleBet(true);
     }
-  }, []);
+
+    fetchOpenBets();
+  }, [eventSlug]);
 
   useEffect(() => {
-    swiper && swiper.slideTo(betAction);
+    if (swiper && !swiper.destroyed) {
+      swiper.slideTo(betAction);
+    }
   }, [betAction]);
 
   const onBetClose = () => {
     return () => {
-      const eventId = _.get(event, '_id', null);
+      const eventSlug = _.get(event, 'slug', null);
 
       history.push(
         Routes.getRouteWithParameters(Routes.bet, {
-          eventId,
-          betId: '',
+          eventSlug,
+          betSlug: '',
         })
       );
 
@@ -133,24 +155,33 @@ const Bet = ({
     return authState === LOGGED_IN;
   };
 
-  const selectBet = betId => {
+  const selectBet = (betId, betSlug) => {
     history.push(
       Routes.getRouteWithParameters(Routes.bet, {
-        eventId,
-        betId,
+        eventSlug,
+        betSlug,
       })
     );
-
+    setBetId(betId);
     setBetViewIsOpen(true);
-    setSelectedBet(null, betId);
   };
 
-  const onBetClick = (betId, popup) => {
+  const onBetClick = (bet, popup) => {
     return () => {
-      selectBet(betId);
+      const betId = _.get(bet, '_id');
+      const eventId = _.get(event, '_id');
+      const betSlug = _.get(bet, 'slug');
+
+      selectBet(betId, betSlug);
+      setBetId(betId);
+
       if (popup) {
         setBetViewIsOpen(false);
-        showPopup(PopupTheme.tradeView, {});
+        showPopup(PopupTheme.tradeView, {
+          betId,
+          eventId,
+          openBets: _.filter(openBets, { betId }),
+        });
       }
     };
   };
@@ -221,13 +252,11 @@ const Bet = ({
 
   const renderRelatedBetCard = (bet, index, popup) => {
     if (bet) {
-      const betId = _.get(bet, '_id');
-
       return (
         <RelatedBetCard
           key={index}
           bet={bet}
-          onClick={onBetClick(betId, popup)}
+          onClick={onBetClick(bet, popup)}
         />
       );
     }
@@ -237,13 +266,11 @@ const Bet = ({
 
   const renderMyBetCard = (transaction, index, popup) => {
     if (transaction) {
-      const betId = _.get(transaction.bet, '_id');
-
       return (
         <MyBetCard
           key={index}
           transaction={transaction}
-          onClick={onBetClick(betId, popup)}
+          onClick={onBetClick(transaction.bet, popup)}
         />
       );
     }
@@ -416,7 +443,7 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          {!singleBet && (
+          {!singleBet && openBets.length > 0 && (
             <div className={styles.betViewClose} onClick={onBetClose()}>
               <Icon
                 iconType={'arrowLeft'}
@@ -428,6 +455,9 @@ const Bet = ({
           )}
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
+              betId={betId}
+              eventId={event._id}
+              openBets={_.filter(openBets, { betId })}
               closed={false}
               showEventEnd={true}
               handleChartDirectionFilter={handleChartDirectionFilter}
@@ -542,9 +572,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSelectedBet: (eventId, betId) => {
-      dispatch(BetActions.selectBet({ eventId, betId }));
-    },
     showPopup: (popupType, options) => {
       dispatch(
         PopupActions.show({
@@ -552,6 +579,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    fetchOpenBets: () => {
+      dispatch(BetActions.fetchOpenBets());
     },
   };
 };

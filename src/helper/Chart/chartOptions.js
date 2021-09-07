@@ -2,13 +2,11 @@ import { calcLabels, calcDatasets } from './chartHelpers';
 import legendPadding from './plugins/legendHeightPlugin';
 
 export const chartOptions = (type, data) => {
-  console.log('calcDatasets(data) :>> ', calcDatasets(data));
-
   return {
     type,
     plugins: [legendPadding],
     data: {
-      labels: calcLabels(data[0].data),
+      labels: data[0] ? calcLabels(data[0].data) : [],
       datasets: calcDatasets(data),
     },
     options: {

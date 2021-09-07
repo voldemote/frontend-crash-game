@@ -16,11 +16,6 @@ import { WebsocketsActions } from '../actions/websockets';
 import PopupTheme from '../../components/Popup/PopupTheme';
 
 const afterLoginRoute = Routes.home;
-const routesToRedirectWithoutSession = [
-  Routes.home,
-  Routes.bet,
-  '/service-worker.js',
-];
 
 const requestSms = function* (action) {
   const country = yield select(state => state.authentication.country);
@@ -37,7 +32,11 @@ const requestSms = function* (action) {
       phoneNumber = '+' + country + phone.substring(1);
     }
 
-    const response = yield call(Api.requestSms, phoneNumber, referral);
+    const { response, error } = yield call(
+      Api.requestSms,
+      phoneNumber,
+      referral
+    );
 
     if (response) {
       const data = response.data;
@@ -47,6 +46,14 @@ const requestSms = function* (action) {
           ...data,
           phone,
           country,
+        })
+      );
+      return;
+    } else {
+      yield put(
+        AuthenticationActions.requestSmsFailed({
+          phone,
+          error,
         })
       );
       return;
@@ -75,7 +82,11 @@ const verifySms = function* (action) {
       phoneNumber = '+' + country + phone.substring(1);
     }
 
-    const response = yield call(Api.verifySms, phoneNumber, smsToken);
+    const { response, error } = yield call(
+      Api.verifySms,
+      phoneNumber,
+      smsToken
+    );
 
     if (response) {
       const data = response.data;
@@ -89,7 +100,7 @@ const verifySms = function* (action) {
         })
       );
     } else {
-      yield put(AuthenticationActions.verifySmsFailed());
+      yield put(AuthenticationActions.verifySmsFailed(error));
     }
   } else {
     yield put(AuthenticationActions.verifySmsFailed());
@@ -111,14 +122,30 @@ const verifyEmail = function* (action) {
   } else {
     yield put(AuthenticationActions.verifyEmailFailed());
   }
+
+  yield put(
+    PopupActions.show({
+      popupType: PopupTheme.verifyEmail,
+    })
+  );
 };
 
 const setAdditionalInformation = function* (action) {
   const email = yield select(state => state.authentication.email);
-  const name = yield select(state => state.authentication.name);
-  const username = yield select(state => state.authentication.username);
+  let name = yield select(state => state.authentication.name);
+  let username = yield select(state => state.authentication.username);
 
-  const response = yield call(Api.saveAdditionalInfo, name, username, email);
+  if (email) {
+    username = null;
+    name = null;
+  }
+
+  const { response, error } = yield call(
+    Api.saveAdditionalInfo,
+    name,
+    username,
+    email
+  );
 
   if (response) {
     const data = response.data;
@@ -130,6 +157,7 @@ const setAdditionalInformation = function* (action) {
     );
   } else {
     yield put(AuthenticationActions.saveAdditionalInfoFailed());
+    yield put(AuthenticationActions.saveAdditionalInfoFailed(error));
   }
 };
 
@@ -175,11 +203,15 @@ const fetchReferralsSucceeded = function* (action) {
 };
 
 const registrationSucceeded = function* (action) {
-  yield put(
-    PopupActions.show({
-      popupType: PopupTheme.welcome,
-    })
-  );
+  const authState = yield select(state => state.authentication.authState);
+
+  if (action.email && action.name && authState === AuthState.LOGGED_IN) {
+    yield put(
+      PopupActions.show({
+        popupType: PopupTheme.welcome,
+      })
+    );
+  }
 };
 
 const authenticationSucceeded = function* (action) {
@@ -228,7 +260,11 @@ const restoreToken = function* () {
     crashGameApi.setToken(token);
   }
 
-  if (token && authState === AuthState.LOGGED_IN) {
+  if (
+    token &&
+    authState === AuthState.LOGGED_IN &&
+    locationPathname !== Routes.verify
+  ) {
     if (pathname === Routes.home || locationPathname === Routes.home) {
       yield put(push(afterLoginRoute));
     }
@@ -242,7 +278,6 @@ const refreshImportantData = function* () {
     yield put(UserActions.fetch({ forceFetch: true }));
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
-    yield put(BetActions.fetchOpenBets());
     yield put(TransactionActions.fetchAll());
 
     yield delay(10 * 1000);
@@ -253,7 +288,6 @@ const refreshImportantData = function* () {
 const firstSignUpPopup = function* (options) {
   yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
   const authState = yield select(state => state.authentication.authState);
-
   if (authState === AuthState.LOGGED_OUT) {
     yield put(
       PopupActions.show({

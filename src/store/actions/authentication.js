@@ -24,9 +24,11 @@ export const AuthenticationTypes = {
   VERIFY_EMAIL_FAILED: 'Authentication/VERIFY_EMAIL_FAILED',
   VERIFY_EMAIL_SUCCEEDED: 'Authentication/VERIFY_EMAIL_SUCCEEDED',
   RESET_AUTH_STATE: 'Authentication/RESET_AUTH_STATE',
+  DOWNGRADE_AUTH_STATE: 'Authentication/DOWNGRADE_AUTH_STATE',
   INITIATE_UPDATE_USER_DATA: 'Authentication/INITIATE_UPDATE_USER_DATA',
   UPDATE_USER_DATA_SUCCEEDED: 'Authentication/UPDATE_USER_DATA_SUCCEEDED',
   UPDATE_USER_DATA_FAILED: 'Authentication/UPDATE_USER_DATA_FAILED',
+  UPDATE_INVESTMENT_DATA: 'Authentication/UPDATE_INVESTMENT_DATA',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -60,8 +62,15 @@ const requestSmsSucceeded = makeActionCreator(
   }
 );
 
+const downgradeState = makeActionCreator(
+  AuthenticationTypes.DOWNGRADE_AUTH_STATE
+);
+
 const saveAdditionalInfoFailed = makeActionCreator(
-  AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED
+  AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
+  {
+    error: null,
+  }
 );
 
 const saveAdditionalInfoSucceeded = makeActionCreator(
@@ -105,7 +114,10 @@ const verifySms = makeActionCreator(AuthenticationTypes.VERIFY_SMS, {
 });
 
 const verifySmsFailed = makeActionCreator(
-  AuthenticationTypes.VERIFY_SMS_FAILED
+  AuthenticationTypes.VERIFY_SMS_FAILED,
+  {
+    error: null,
+  }
 );
 
 const resetAuthState = makeActionCreator(AuthenticationTypes.RESET_AUTH_STATE);
@@ -148,6 +160,14 @@ const updateUserDataFailed = payload => ({
   payload,
 });
 
+const updateInvestmentData = makeActionCreator(
+  AuthenticationTypes.UPDATE_INVESTMENT_DATA,
+  {
+    totalInvestmentAmount: null,
+    totalOpenTradesAmount: null,
+  }
+);
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -171,7 +191,9 @@ export const AuthenticationActions = {
   verifyEmailSucceeded,
   verifyEmailFailed,
   resetAuthState,
+  downgradeState,
   initiateUpdateUserData,
   updateUserDataSucceeded,
   updateUserDataFailed,
+  updateInvestmentData,
 };

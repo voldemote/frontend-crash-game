@@ -24,8 +24,7 @@ const getRouteWithParameters = function (route, parameterValues) {
 
 export default {
   getRouteWithParameters,
-  bet: '/trade/:eventId?/:betId?',
-  betOverview: '/my-trades',
+  bet: '/trade/:eventSlug?/:betSlug?',
   events: '/events/:category?',
   games: '/games',
   home: '/',
@@ -34,11 +33,9 @@ export default {
   privacyPolicy: '/privacy-policy',
   rosiGame: '/games/rosi-game',
   termsAndConditions: '/terms-and-conditions',
-  wallet: '/wallet',
   walletConfirmation: '/wallet/:paymentAction/:paymentProvider/success',
   walletDeposit: '/wallet/deposit/:paymentProvider',
   walletWithdrawal: '/wallet/withdraw/:paymentProvider',
-  join: '/join',
   verify: '/verify',
   chart: 'event/bet/:betId/history/chart',
 };

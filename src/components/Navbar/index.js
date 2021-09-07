@@ -16,7 +16,6 @@ import { NotificationActions } from 'store/actions/notification';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { LOGGED_IN } from 'constants/AuthState';
 import Button from '../Button';
-import { useHistory } from 'react-router';
 import Wallet from '../Wallet';
 import { NavLink } from 'react-router-dom';
 import { matchPath } from 'react-router-dom';
@@ -24,6 +23,8 @@ import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { GeneralActions } from '../../store/actions/general';
 import { useSelector } from 'react-redux';
 import { TOKEN_NAME } from '../../constants/Token';
+import PopupTheme from '../Popup/PopupTheme';
+import { PopupActions } from '../../store/actions/popup';
 
 const Navbar = ({
   user,
@@ -37,10 +38,9 @@ const Navbar = ({
   skipRoutes = [],
   setOpenDrawer,
   setEditProfileVisible,
+  showPopup,
 }) => {
   const [missingWinnerAmount, setMisingWinnerAmount] = useState(null);
-  const history = useHistory();
-
   const openDrawer = useSelector(state => state.general.openDrawer);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const Navbar = ({
 
   const goToJoinPage = () => {
     if (!isLoggedIn()) {
-      history.push(Routes.join);
+      showPopup(PopupTheme.loginRegister, {});
     }
   };
 
@@ -384,6 +384,14 @@ const mapDispatchToProps = dispatch => {
     },
     setEditProfileVisible: bool => {
       dispatch(GeneralActions.setEditProfileVisible(bool));
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
     },
   };
 };

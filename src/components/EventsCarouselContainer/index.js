@@ -17,12 +17,12 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
 
   const COUNT = 4;
   const carouselProps = {
-    ['streamed']: {
+    streamed: {
       title: 'Streams',
       titleLink: 'Discover more Streams',
       titleLinkTo: '/live-events',
     },
-    ['non-streamed']: {
+    'non-streamed': {
       title: 'Trade on the future',
       titleLink: 'Discover more Events',
       titleLinkTo: '/events',
@@ -61,13 +61,14 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
   const renderLiveEvents = () => {
     return _.map(currentEvents, event => {
       const eventId = _.get(event, '_id');
+      const eventSlug = _.get(event, 'slug');
       const mappedTags = _.map(event.tags, tag => tag.name);
 
       return (
         <Link
           key={eventId}
           to={{
-            pathname: `/trade/${eventId}`,
+            pathname: `/trade/${eventSlug}`,
             state: { fromLocation: location },
           }}
           className={styles.eventLink}

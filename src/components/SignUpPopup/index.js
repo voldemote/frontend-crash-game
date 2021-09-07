@@ -9,13 +9,10 @@ import { connect } from 'react-redux';
 import Button from '../Button';
 import { PopupActions } from '../../store/actions/popup';
 import { LOGGED_IN } from 'constants/AuthState';
-import Routes from 'constants/Routes';
-import { useHistory } from 'react-router-dom';
 import { TOKEN_NAME } from '../../constants/Token';
+import PopupTheme from '../Popup/PopupTheme';
 
-const SignUpPopup = ({ closed, user, hidePopup, authState }) => {
-  const history = useHistory();
-
+const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
   const renderWelcomeText = () => {
     return (
       <div className={styles.welcomeTextContainer}>
@@ -31,7 +28,7 @@ const SignUpPopup = ({ closed, user, hidePopup, authState }) => {
 
   const goToJoinPage = () => {
     if (authState !== LOGGED_IN) {
-      history.push(Routes.join);
+      showPopup(PopupTheme.loginRegister, {});
     }
   };
 
@@ -69,6 +66,14 @@ const mapDispatchToProps = dispatch => {
   return {
     hidePopup: () => {
       dispatch(PopupActions.hide());
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
     },
   };
 };

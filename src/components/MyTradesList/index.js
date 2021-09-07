@@ -3,14 +3,16 @@ import _ from 'lodash';
 import StateBadge from '../StateBadge';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { Link } from 'react-router-dom';
 
 const MyTradesList = ({ bets, withStatus = false }) => {
   const renderBets = () => {
     return _.map(bets, (item, index) => {
-      const negativeOutcome = item.investmentAmount > item.outcomeValue;
+      const negativeOutcome =
+        _.toNumber(item.investmentAmount) > _.toNumber(item.outcomeAmount);
       const outcomePercentage = negativeOutcome
         ? `-${formatToFixed(
-            (item.outcomeAmount / item.investmentAmount) * 100
+            (100 - item.outcomeAmount / item.investmentAmount) * 100
           )}% `
         : `+${formatToFixed(
             (item.investmentAmount / item.outcomeAmount) * 100
@@ -21,17 +23,19 @@ const MyTradesList = ({ bets, withStatus = false }) => {
           <img src={item.imageUrl} className={styles.eventImg} />
           <div className={styles.betInfo}>
             <div className={styles.titleContainer}>
-              <div className={styles.title}>
-                {item.marketQuestion}
-                {withStatus && (
-                  <StateBadge
-                    state={item.status}
-                    withoutBackground={true}
-                    withoutText={true}
-                    className={styles.status}
-                  />
-                )}
-              </div>
+              <Link to={`/trade/${item.slug}`} className={styles.titleLink}>
+                <div className={styles.title}>
+                  {item.marketQuestion}
+                  {withStatus && (
+                    <StateBadge
+                      state={item.status}
+                      withoutBackground={true}
+                      withoutText={true}
+                      className={styles.status}
+                    />
+                  )}
+                </div>
+              </Link>
               <div className={styles.subtitle}>
                 {item.endDate} | Your Prediction: {item.outcomeValue}
               </div>

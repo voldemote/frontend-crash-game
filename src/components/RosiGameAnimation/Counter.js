@@ -11,9 +11,14 @@ const Counter = ({ number }) => {
     }
   }, [seconds]);
 
-  useEffect(() => () => { setSeconds(0) }, []);
+  useEffect(
+    () => () => {
+      setSeconds(0);
+    },
+    []
+  );
 
-  return <span>{seconds < 10 ? `${0}${seconds}` : seconds}</span>
+  return <span>{seconds < 10 ? `${0}${seconds}` : seconds}</span>;
 };
 
 export default Counter;

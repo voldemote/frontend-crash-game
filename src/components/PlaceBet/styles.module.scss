@@ -1,0 +1,87 @@
+@import '../../styles/all';
+
+.container {
+  position: relative;
+  background: #1F1D38;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 10px;
+  padding: 20px;
+  height: 100%;
+
+  @media screen and (max-width: $screen-xs) {
+    height: 360px;
+  }
+}
+
+.label {
+  display: inline-block;
+  color: $colorWhite;
+  opacity: 0.5;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 12px;
+  margin-bottom: 20px;
+}
+
+.inputBoxContainer {
+  .input {
+    height: 46px;
+  }
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.actions {
+  position: absolute;
+  top: 53px;
+  right: 10px;
+  font-size: 14px;
+  font-family: Helvetica;
+  color: #02061E;
+
+  span {
+    margin-left: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.button {
+  position: absolute;
+  bottom: 20px;
+  left: -50%;
+  right: -50%;
+  margin: 0px auto;
+  width: 15em;
+  height: 72px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-image: url('../../data/backgrounds/games/games-highlight.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.buttonDisabled {
+  opacity: 0.5;
+
+  &:hover {
+    cursor:not-allowed;
+  }
+}
+
+.header {
+  margin-bottom: 16px;
+}

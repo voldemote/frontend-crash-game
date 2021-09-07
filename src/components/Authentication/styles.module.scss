@@ -1,96 +1,94 @@
 @import '../../styles/all';
 
-.authenticationDescription
-{
-    width:          100%;
-    margin-top:     25px;
-    font-family:    $fontRegular;
-    font-size:      16px;
-    line-height:    24px;
-    letter-spacing: 0;
-    color:          $colorPrimary;
-    padding:        $padding;
+.authenticationDescription {
+  width: 100%;
+  font-family: $fontRegular;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: $colorPrimary;
+  padding: $padding;
+  text-align: center;
 }
 
-.authenticationInputBoxContainer
-{
-    width:           100%;
-    position:        relative;
-    display:         flex;
-    flex-direction:  column;
-    align-items:     center;
-    justify-content: center;
-    margin-top:      40px;
-    padding:         $padding;
+.authenticationInputBoxContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: $padding;
 
-    .usernameInputBox
-    {
-        margin-bottom: 30px;
+  .usernameInputBox {
+    margin-bottom: 30px;
+  }
+}
+
+.authenticationResendCodeLabel {
+  width: 100%;
+  margin-top: 35px;
+  text-align: center;
+  font-family: $fontRegular;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: 0;
+  opacity: 0.246;
+  color: $colorPrimary;
+  padding: $padding;
+}
+
+.authenticationResendCodeAction {
+  width: 100%;
+  margin-top: 1px;
+  text-align: center;
+  font-family: $fontRegular;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: $colorPrimary;
+  padding: $padding;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+}
+
+.authenticationTermsAgreement {
+  width: (100% - $paddingHTotal);
+  margin: 2rem $paddingPercent;
+  font-size: 13px;
+  font-family: $fontRegular;
+  line-height: 19.6px;
+  letter-spacing: 0;
+  color: rgba(2, 6, 30, 0.36);
+  display: none;
+  text-align: center;
+
+  @media (min-width: $screen-sm) {
+    display: block;
+  }
+
+  .termsLink {
+    text-decoration: underline;
+  }
+}
+
+.authenticationLegalAuthorizationAgreementCheckBox {
+  .authenticationLegalAuthorizationAgreementText {
+    font-size: 14px;
+
+    a {
+      color: $colorBlue;
+      text-decoration: none;
     }
+  }
 }
 
-.authenticationResendCodeLabel
-{
-    width:          100%;
-    margin-top:     35px;
-    text-align:     center;
-    font-family:    $fontRegular;
-    font-size:      16px;
-    line-height:    25px;
-    letter-spacing: 0;
-    opacity:        0.246;
-    color:          $colorPrimary;
-    padding:        $padding;
-}
-
-.authenticationResendCodeAction
-{
-    width:          100%;
-    margin-top:     1px;
-    text-align:     center;
-    font-family:    $fontRegular;
-    font-size:      16px;
-    line-height:    24px;
-    letter-spacing: 0;
-    color:          $colorPrimary;
-    padding:        $padding;
-
-    &:hover
-    {
-        cursor:  pointer;
-        opacity: 0.5;
-    }
-}
-
-.authenticationTermsAgreement
-{
-    width:          (100% - $paddingHTotal);
-    margin:         2rem $paddingPercent;
-    font-size:      13px;
-    font-family:    $fontRegular;
-    line-height:    19.6px;
-    letter-spacing: 0;
-    color:          rgba(2, 6, 30, 0.36);
-    display:        none;
-
-    @media (min-width: $screen-sm)
-    {
-        display: block;
-    }
-}
-
-.authenticationLegalAuthorizationAgreementCheckBox
-{
-    margin-top: 35px;
-
-    .authenticationLegalAuthorizationAgreementText
-    {
-        font-size: 14px;
-
-        a
-        {
-            color:           $colorBlue;
-            text-decoration: none;
-        }
-    }
+.stepsTooltipError {
+  text-transform: uppercase;
+  font-size: 12px;
 }

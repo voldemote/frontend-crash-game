@@ -17,7 +17,6 @@ const WalletBalance = ({
   handleMyTradesVisible,
   setOpenDrawer,
 }) => {
-
   const goToMyTrades = () => {
     setOpenDrawer('profile');
     handleMyTradesVisible(true);
@@ -98,20 +97,16 @@ const WalletBalance = ({
 };
 
 const mapStateToProps = state => {
-  const openBets = state.bet.openBets;
-  const balance = +state.authentication.balance;
-  const investmentAmount = _.sum(
-    openBets.map(_.property('investmentAmount')).map(Number).filter(_.isFinite)
-  );
-  const openPositions = _.sum(
-    openBets.map(_.property('outcomeAmount')).map(Number).filter(_.isFinite)
-  );;
+  const authentication = state.authentication;
+  const balance = +authentication.balance;
+  const investmentAmount = authentication.totalInvestmentAmount;
+  const openPositions = authentication.totalOpenTradesAmount;
   const overallFundsTotal = balance + investmentAmount;
   const liquidFundsPercentage = (100 * balance) / overallFundsTotal;
   const investedFundsPercentage = (100 * investmentAmount) / overallFundsTotal;
 
   return {
-    balance: state.authentication.balance,
+    balance,
     liquidFundsPercentage,
     investedFundsPercentage,
     overallFundsTotal,
@@ -127,7 +122,7 @@ const mapDispatchToProps = dispatch => {
     setOpenDrawer: drawerName => {
       dispatch(GeneralActions.setDrawer(drawerName));
     },
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletBalance);

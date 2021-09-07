@@ -1,156 +1,146 @@
 @import '../../styles/all';
 
-.stepsContainer
-{
-    width:    100%;
-    height:   100%;
-    position: relative;
+.stepsContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
 
-    .stepsStepBarContainer
-    {
-        width:           100%;
-        display:         flex;
-        justify-content: center;
-        position:        absolute;
-        margin:          60px 0 30px;
-        z-index:         1;
-        padding:         $padding;
-        user-select:     none;
+  .stepsStepBarContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    margin: 35px 0 60px;
+    z-index: 1;
+    padding: $padding;
+    user-select: none;
 
-        @media (min-width: $screen-sm)
-        {
-            margin-bottom: 80px;
+    @media (min-width: $screen-sm) {
+      margin-bottom: 80px;
+    }
+  }
+
+  .stepsContentContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    $paddingPercent: 7%;
+    $paddingHTotal: 2 * $paddingPercent;
+    $padding: 0 $paddingPercent;
+
+    &.splitView {
+      @media (min-width: $screen-md) {
+        flex-direction: row;
+        position: relative;
+
+        > div {
+          width: 50%;
+          height: 100%;
+
+          &:first-child {
+            margin-top: 0 !important;
+            padding-top: 115px;
+            background-color: $colorPrimary;
+          }
+
+          &:last-child {
+            margin-top: 0 !important;
+            background-color: $colorPrimary;
+          }
         }
+      }
     }
 
-    .stepsContentContainer
-    {
-        height:          100%;
-        width:           100%;
-        display:         flex;
-        flex-direction:  column;
+    > div {
+      &:first-child {
+        margin-top: 115px;
 
-        $paddingPercent: 7%;
-        $paddingHTotal:  2 * $paddingPercent;
-        $padding:        0 $paddingPercent;
-
-        &.splitView
-        {
-            @media (min-width: $screen-md)
-            {
-                flex-direction: row;
-                position:       relative;
-
-                > div
-                {
-                    width:  50%;
-                    height: 100%;
-
-                    &:first-child
-                    {
-                        margin-top:       0 !important;
-                        padding-top:      115px;
-                        background-color: $colorPrimary;
-                    }
-
-                    &:last-child
-                    {
-                        margin-top:       0 !important;
-                        background-color: $colorPrimary;
-                    }
-                }
-            }
+        @media (min-width: $screen-md) {
+          margin-top: 130px;
         }
+      }
 
-        > div
-        {
-            &:first-child
-            {
-                margin-top: 115px;
-
-                @media(min-width: $screen-md)
-                {
-                    margin-top: 130px;
-                }
-            }
-
-            &:last-child
-            {
-                display:        flex;
-                flex-direction: column;
-                height:         100%;
-                margin-top:     50px;
-            }
-        }
-
-        .headlineContainer
-        {
-            position: relative;
-
-            > span
-            {
-                top: 43px;
-            }
-        }
-
-        .stepsHeadline
-        {
-            width:          100%;
-            font-family:    $fontBold;
-            font-size:      36px;
-            line-height:    39.6px;
-            letter-spacing: 0;
-            color:          $colorPrimary;
-            padding:        $padding;
-
-            &.stepsHeadlineSplitView
-            {
-                color: $colorYellowLight;
-            }
-        }
-
-        .stepsButtonContainer
-        {
-            display:        flex;
-            flex-direction: column;
-            margin-top:     auto;
-            color:          $colorPrimary;
-            margin-bottom:  30px;
-
-            @media (min-width: $screen-sm)
-            {
-                flex-direction: column-reverse;
-            }
-
-            @media only screen and (min-width: $screen-sm)
-            {
-                width:      (100% - $paddingHTotal);
-                margin:     $padding;
-                margin-top: auto;
-            }
-
-            .cancelButton
-            {
-                opacity:          0.3;
-                font-size:        12px;
-                background-color: transparent;
-
-                @media (min-width: $screen-sm)
-                {
-                    font-size: 18px;
-                }
-            }
-
-            .continueButton
-            {
-                font-size: 16px;
-
-                @media (min-width: $screen-sm)
-                {
-                    margin-bottom: 20px;
-                    font-size:     23px;
-                }
-            }
-        }
+      &:last-child {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-top: 15px;
+      }
     }
+
+    .headlineContainer {
+      position: relative;
+
+      > span {
+        top: 43px;
+      }
+    }
+
+    .stepsHeadline {
+      width: 100%;
+      font-family: $fontBold;
+      font-size: 36px;
+      line-height: 39.6px;
+      letter-spacing: 0;
+      color: $colorPrimary;
+      padding: $padding;
+      text-align: center;
+
+      &.stepsHeadlineSplitView {
+        color: $colorYellowLight;
+      }
+    }
+
+    .stepsButtonContainer {
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+      color: $colorPrimary;
+      margin-bottom: 30px;
+      align-items: center;
+      padding: 0 7%;
+
+      @media (min-width: $screen-sm) {
+        flex-direction: column-reverse;
+      }
+
+      @media only screen and (min-width: $screen-sm) {
+        width: (100% - $paddingHTotal);
+        margin: $padding;
+        margin-top: auto;
+      }
+
+      .cancelButton {
+        opacity: 0.3;
+        font-size: 12px;
+        background-color: transparent;
+
+        @media (min-width: $screen-sm) {
+          font-size: 18px;
+        }
+      }
+
+      .continueButton {
+        font-size: 16px;
+        width: 100%;
+
+        @media (min-width: $screen-sm) {
+          margin-bottom: 20px;
+        }
+
+        &.goBackButton {
+          width: 20%;
+          margin-right: 10px;
+          border: 2px solid #c3c4ca;
+          background: none;
+        }
+      }
+
+      &.authStepsContainer {
+        flex-direction: row;
+      }
+    }
+  }
 }

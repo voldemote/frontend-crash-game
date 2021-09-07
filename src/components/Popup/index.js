@@ -22,6 +22,8 @@ import WithdrawalSuccessPopup from '../WithdrawalSuccessPopup';
 import DepositSuccessPopup from '../DepositSuccessPopup';
 import EvaluateEventPopup from '../EvaluateEventPopup';
 import ReportEventPopup from '../ReportEventPopup';
+import JoinPopup from '../JoinPopup';
+import VerifyEmailPopup from '../VerifyEmailPopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -37,8 +39,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
   const renderPopup = () => {
     const eventId = _.get(options, 'eventId');
     const betId = _.get(options, 'betId', _.get(options, 'tradeId'));
-    const investmentAmount = _.get(options, 'investmentAmount');
-    const outcome = _.get(options, 'outcome');
     const initialSellTab = _.get(options, 'initialSellTab', false);
     const withdrawalSuccessOptions = { ...options?.withdrawal };
     const depositSuccessOptions = { ...options?.deposit };
@@ -48,10 +48,10 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
       case PopupTheme.betApprove:
         return (
           <BetApproveView
-            closed={!visible}
-            betId={betId}
-            investmentAmount={investmentAmount}
-            outcome={outcome}
+            bet={_.get(options, 'bet')}
+            outcomeAmount={_.get(options, 'outcomeAmount')}
+            outcomeValue={_.get(options, 'outcomeValue')}
+            investedAmount={_.get(options, 'investedAmount')}
           />
         );
 
@@ -86,7 +86,13 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
         return <SignUpPopup closed={!visible} />;
 
       case PopupTheme.tradeView:
-        return <TradeViewPopup closed={false} />;
+        return (
+          <TradeViewPopup
+            eventId={eventId}
+            betId={betId}
+            openBets={_.get(options, 'openBets', [])}
+          />
+        );
 
       case PopupTheme.withdrawalSuccess:
         return (
@@ -109,6 +115,12 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.reportEvent:
         return <ReportEventPopup />;
+
+      case PopupTheme.loginRegister:
+        return <JoinPopup closed={false} />;
+
+      case PopupTheme.verifyEmail:
+        return <VerifyEmailPopup closed={false} />;
     }
 
     return null;
@@ -155,6 +167,12 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
           type === PopupTheme.signUpNotificationFirst ||
             type === PopupTheme.signUpNotificationSecond
             ? styles.signUpPopupContainer
+            : null,
+          type === PopupTheme.loginRegister ? styles.joinPopupContainer : null,
+          type === PopupTheme.welcome ? styles.welcomeContainer : null,
+          type === PopupTheme.betApprove ? styles.betApproveContainer : null,
+          type === PopupTheme.verifyEmail
+            ? styles.verifyEmailPopupContainer
             : null,
           small ? styles.small : null
         )}

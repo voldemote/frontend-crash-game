@@ -35,7 +35,7 @@ const root = function* () {
       AuthenticationSagas.requestSms
     ),
     takeLatest(
-      [AuthenticationTypes.SET_EMAIL],
+      [AuthenticationTypes.SET_NAME, AuthenticationTypes.SET_EMAIL],
       AuthenticationSagas.setAdditionalInformation
     ),
     takeLatest(
@@ -63,9 +63,6 @@ const root = function* () {
     ),
     takeEvery(
       [
-        AuthenticationTypes.REQUEST_SMS_FAILED,
-        AuthenticationTypes.VERIFY_SMS_FAILED,
-        AuthenticationTypes.SAVE_ADDITIONAL_INFO_FAILED,
         AuthenticationTypes.FETCH_REFERRALS_FAILED,
         EventTypes.FETCH_ALL_FAILED,
         BetTypes.CREATE_FAILED,
@@ -146,7 +143,6 @@ const rehydrationDone = function* () {
 const preLoading = function* () {
   yield put(EventActions.fetchAll());
   yield put(AuthenticationActions.fetchReferrals());
-  yield put(BetActions.fetchOpenBets());
   yield put(TransactionActions.fetchAll());
   yield put(ChatActions.fetchInitial());
   yield put(WebsocketsActions.init());
