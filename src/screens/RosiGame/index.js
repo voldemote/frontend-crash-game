@@ -12,17 +12,16 @@ import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
-import { winners, inGameBets } from './fakeData';
+import { selectLastCrashes, selectInGameBets } from 'store/selectors/rosi-game';
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 
-const rosiGameEvent = { _id: ROSI_GAME_EVENT_ID };
+const gameEvent = { _id: ROSI_GAME_EVENT_ID };
 
 const RosiGame = () => {
   const dispatch = useDispatch();
-  // const users = useSelector(selectUsers);
-  // const userId = useSelector(selectUserId);
-  // const user = State.getUser(userId, users);
+  const lastCrashes = useSelector(selectLastCrashes);
+  const inGameBets = useSelector(selectInGameBets);
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
@@ -39,7 +38,7 @@ const RosiGame = () => {
           <BackLink to="/games" text="Rosi Game" />
           <Grid container spacing={1}>
             <Grid item xs={12} md={9}>
-              <LastCrashes />
+              <LastCrashes lastCrashes={lastCrashes} />
               <GameAnimation />
             </Grid>
             {isMiddleOrLargeDevice && (
@@ -48,25 +47,13 @@ const RosiGame = () => {
                   <PlaceBet />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Chat
-                    event={rosiGameEvent}
-                    className={styles.chatContainer}
-                  />
+                  <Chat event={gameEvent} className={styles.chatContainer} />
                 </Grid>
                 <Grid item md={4}>
-                  <GameBets
-                    label="In Game Bets"
-                    total="2.700,50"
-                    bets={inGameBets}
-                  />
+                  <GameBets label="In Game Bets" bets={inGameBets} />
                 </Grid>
                 <Grid item md={4}>
-                  <GameBets
-                    label="Cashed Out"
-                    total="2.700,50"
-                    bets={winners}
-                    showCrashFactor
-                  />
+                  <GameBets label="Cashed Out" bets={[]} />
                 </Grid>
               </>
             )}
