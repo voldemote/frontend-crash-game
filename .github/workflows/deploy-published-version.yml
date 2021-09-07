@@ -17,6 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REACT_APP_NEWS_API_KEY: ${{ secrets.REACT_APP_NEWS_API_KEY }}
+      STAGING_BACKEND_URL: ${{ secrets.STAGING_BACKEND_URL }}
+      STAGING_CRASH_GAME_BACKEND_URL: ${{ secrets.STAGING_CRASH_GAME_BACKEND_URL }}
+      PRODUCTIVE_BACKEND_URL: ${{ secrets.PRODUCTIVE_BACKEND_URL }}
+      PRODUCTIVE_CRASH_GAME_BACKEND_URL: ${{ secrets.PRODUCTIVE_CRASH_GAME_BACKEND_URL }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

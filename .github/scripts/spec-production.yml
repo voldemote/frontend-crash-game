@@ -8,6 +8,12 @@ services:
   - key: REACT_APP_NEWS_API_KEY
     scope: RUN_TIME
     value: $REACT_APP_NEWS_API_KEY
+  - key: REACT_APP_BACKEND_URL
+    scope: RUN_TIME
+    value: $REACT_APP_BACKEND_URL
+  - key: REACT_APP_CRASH_GAME_BACKEND_URL
+    scope: RUN_TIME
+    value: $REACT_APP_CRASH_GAME_BACKEND_URL
   http_port: 80
   image:
     registry_type: DOCR
