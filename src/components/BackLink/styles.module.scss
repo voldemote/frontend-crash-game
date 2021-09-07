@@ -1,0 +1,18 @@
+@import '../../styles/all';
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 20px;
+
+  svg {
+    margin-right: 10px;
+  }
+
+  h2 {
+    color: $colorWhite;
+    font-family: "PlusJakarta-Regular";
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
