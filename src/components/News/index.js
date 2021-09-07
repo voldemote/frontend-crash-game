@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import classNames from 'classnames';
 import { matchPath } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Button from '../Button';
+import Icon from '../Icon';
 
 const News = ({}) => {
   const news = useSelector(state => state.event.newsData.articles);
@@ -12,7 +12,10 @@ const News = ({}) => {
         <div key={item.title} className={styles.newsItem}>
           <div className={styles.newsTitle}>{item.title}</div>
           <div className={styles.newsDesc}>{item.description}</div>
-          <Button className={styles.readButton}>Read</Button>
+          <a className={styles.newsLink} href={item.url} target="_blank">
+            <Icon iconType={'activities'} iconTheme={'white'} /> Read more on{' '}
+            {item.source.name}
+          </a>
         </div>
       ))}
     </div>
