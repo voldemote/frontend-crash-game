@@ -131,6 +131,7 @@ const root = function* () {
       [EventTypes.FETCH_HISTORY_CHART_DATA],
       EventSagas.fetchHistoryChartData
     ),
+    takeLatest([EventTypes.FETCH_NEWS_DATA], EventSagas.fetchNewsData),
     // @formatter:on
   ]);
 };

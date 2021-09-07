@@ -52,4 +52,5 @@ export default {
   wallet2: 'wallet2',
   wallet: 'wallet',
   withdrawal: 'withdrawal',
+  newsIcon: 'newsIcon',
 };

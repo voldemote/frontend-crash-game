@@ -18,6 +18,9 @@ export const EventTypes = {
   FETCH_HISTORY_CHART_DATA: 'Event/FETCH_HISTORY_CHART_DATA',
   FETCH_HISTORY_CHART_DATA_SUCCESS: 'Event/FETCH_HISTORY_CHART_DATA_SUCCESS',
   FETCH_HISTORY_CHART_FAIL: 'Event/FETCH_HISTORY_CHART_FAIL',
+  FETCH_NEWS_DATA: 'Event/FETCH_NEWS_DATA',
+  FETCH_NEWS_DATA_SUCCESS: 'Event/FETCH_NEWS_DATA_SUCCESS',
+  FETCH_NEWS_DATA_FAIL: 'Event/FETCH_NEWS_DATA_FAIL',
 };
 
 const fetchAll = makeActionCreator(EventTypes.FETCH_ALL);
@@ -99,6 +102,22 @@ const fetchChartDataFail = () => ({
   type: EventTypes.FETCH_HISTORY_CHART_FAIL,
 });
 
+// NEWS DATA
+const initiateFetchNewsData = (newsType, params = {}) => {
+  return {
+    type: EventTypes.FETCH_NEWS_DATA,
+    newsType,
+    params,
+  };
+};
+const fetchNewsDataSuccess = payload => ({
+  type: EventTypes.FETCH_NEWS_DATA_SUCCESS,
+  payload,
+});
+const fetchNewsDataFail = () => ({
+  type: EventTypes.FETCH_NEWS_DATA_FAIL,
+});
+
 export const EventActions = {
   fetchAll,
   fetchAllSucceeded,
@@ -117,4 +136,7 @@ export const EventActions = {
   initiateFetchChartData,
   fetchChartDataSuccess,
   fetchChartDataFail,
+  initiateFetchNewsData,
+  fetchNewsDataSuccess,
+  fetchNewsDataFail,
 };

@@ -1,6 +1,7 @@
 import { put } from 'redux-saga/effects';
 import { call } from 'redux-saga/effects';
 import * as Api from '../../api';
+import { getNews } from '../../api/third-party';
 import { EventActions } from '../actions/event';
 import { select } from 'redux-saga/effects';
 import AuthState from '../../constants/AuthState';
@@ -132,6 +133,16 @@ const fetchHistoryChartData = function* ({ betId, params }) {
   }
 };
 
+const fetchNewsData = function* ({ newsType, params }) {
+  try {
+    const { data } = yield call(() => getNews(newsType, params));
+
+    yield put(EventActions.fetchNewsDataSuccess(data));
+  } catch (error) {
+    yield put(EventActions.fetchNewsDataFail());
+  }
+};
+
 export default {
   fetchAll,
   fetchAllSucceeded,
@@ -139,4 +150,5 @@ export default {
   fetchHomeEvents,
   fetchTags,
   fetchHistoryChartData,
+  fetchNewsData,
 };
