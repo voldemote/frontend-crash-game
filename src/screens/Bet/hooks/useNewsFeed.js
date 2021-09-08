@@ -8,18 +8,19 @@ export function useNewsFeed(event) {
 
   const tags = event?.tags.map(tag => tag.name) || [];
   const uniqueKeywords = Array.from(new Set([event?.category, ...tags]));
-  const queries = uniqueKeywords.join(' OR ');
+  const queries = uniqueKeywords.join('+');
 
   // api docs: https://newsapi.org/docs/endpoints/everything
   const params = {
-    qInTitle: queries,
-    pageSize: 8,
-    sortBy: 'relevancy',
+    keywords: queries,
+    limit: 8,
+    sort: 'popularity',
+    languages: 'en',
   };
 
   useEffect(() => {
     if (event?.type === 'non-streamed')
-      dispatch(EventActions.initiateFetchNewsData('everything', params));
+      dispatch(EventActions.initiateFetchNewsData(params));
   }, [event]);
 
   return {};

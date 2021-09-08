@@ -103,10 +103,9 @@ const fetchChartDataFail = () => ({
 });
 
 // NEWS DATA
-const initiateFetchNewsData = (newsType, params = {}) => {
+const initiateFetchNewsData = (params = {}) => {
   return {
     type: EventTypes.FETCH_NEWS_DATA,
-    newsType,
     params,
   };
 };
