@@ -488,7 +488,7 @@ const Bet = ({
         <div className={styles.headlineContainer}>
           <div>
             <Link
-              to={currentFromLocation?.pathname}
+              to={currentFromLocation?.pathname || '/'}
               className={styles.linkBack}
             >
               <div className={styles.arrowBack}></div>
