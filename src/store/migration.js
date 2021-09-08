@@ -92,9 +92,9 @@ export const migrations = {
       event: {
         ...state.event,
         newsData: {
-          articles: [],
+          data: [],
         },
-      }
+      },
     };
   },
   4: state => {
@@ -104,6 +104,6 @@ export const migrations = {
         ...state.rosiGame,
         cashedOut: [],
       },
-    }
+    };
   },
 };

@@ -16,6 +16,8 @@
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   margin-bottom: 10px;
+  display: flex;
+  flex-flow: column;
 
   @media screen and (max-width: $screen-md) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
@@ -49,7 +51,8 @@
   line-height: 1.3;
   color: #ffffff;
   opacity: 0.5;
-  height: 100px;
+  height: auto;
+  flex: auto;
   // @include ellipsis;
 
   @media screen and (max-width: $screen-md) {
