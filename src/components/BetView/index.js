@@ -66,7 +66,7 @@ const BetView = ({
   fetchSellOutcomes,
 }) => {
   const maxBetAmount = 2800;
-  const defaultBetValue = _.max([balance, maxBetAmount * 0.1]);
+  const defaultBetValue = _.min([balance, maxBetAmount * 0.1]);
   const event = _.find(events, {
     _id: eventId,
   });

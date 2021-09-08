@@ -6,6 +6,8 @@ import LogoSplash from '../../data/images/wfair-logo-splash.png';
 import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
 import classNames from 'classnames';
+import { PopupActions } from 'store/actions/popup';
+import { connect } from 'react-redux';
 
 const canvasStyles = {
   position: 'fixed',
@@ -17,7 +19,7 @@ const canvasStyles = {
 };
 
 let animationInstance;
-const BetApproveView = ({ closed }) => {
+const BetApproveView = ({ closed, hidePopup }) => {
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
       animationInstance({
@@ -82,6 +84,7 @@ const BetApproveView = ({ closed }) => {
           className={classNames(styles.betButton)}
           highlightType={HighlightType.highlightHomeCtaBet}
           disabledWithOverlay={false}
+          onClick={hidePopup}
         >
           Keep Going
         </Button>
@@ -91,4 +94,13 @@ const BetApproveView = ({ closed }) => {
   );
 };
 
-export default BetApproveView;
+const mapDispatchToProps = dispatch => {
+  return {
+    hidePopup: () => {
+      debugger;
+      dispatch(PopupActions.hide());
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(BetApproveView);
