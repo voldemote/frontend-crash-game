@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import _ from 'lodash';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import styles from './styles.module.scss';
@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
 import classNames from 'classnames';
 import { PopupActions } from 'store/actions/popup';
+import PopupTheme from '../Popup/PopupTheme';
 import { connect } from 'react-redux';
 
 const canvasStyles = {
@@ -19,7 +20,7 @@ const canvasStyles = {
 };
 
 let animationInstance;
-const BetApproveView = ({ closed, hidePopup }) => {
+const BetApproveView = ({ visible, hidePopup }) => {
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
       animationInstance({
@@ -66,8 +67,10 @@ const BetApproveView = ({ closed, hidePopup }) => {
   };
 
   useEffect(() => {
-    !closed && startAnimation();
-  }, [closed]);
+    if (visible) {
+      startAnimation();
+    }
+  }, [visible]);
 
   return (
     <div className={styles.approveBetContainer}>
@@ -97,10 +100,16 @@ const BetApproveView = ({ closed, hidePopup }) => {
 const mapDispatchToProps = dispatch => {
   return {
     hidePopup: () => {
-      debugger;
       dispatch(PopupActions.hide());
     },
   };
 };
 
-export default connect(null, mapDispatchToProps)(BetApproveView);
+const mapStateToProps = state => {
+  return {
+    visible:
+      state.popup.popupType === PopupTheme.betApprove && state.popup.visible,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BetApproveView);
