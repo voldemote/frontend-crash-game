@@ -21,6 +21,7 @@ const MainMenu = ({
   handleMyTradesVisible,
   editVisible,
   myTradesVisible,
+  close,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -102,7 +103,7 @@ const MainMenu = ({
           My Trades
         </h2>
 
-        <MyTrades />
+        <MyTrades close={close} />
       </div>
     );
   };

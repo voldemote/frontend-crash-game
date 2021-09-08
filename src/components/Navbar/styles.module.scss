@@ -19,6 +19,10 @@
         margin-right: 2rem;
     }
 
+    .drawerWrapper {
+      display:contents;
+    }
+
     .navbarItems
     {
         display:     flex;
@@ -80,7 +84,7 @@
         {
             z-index:         5;
 
-            &.pillButton 
+            &.pillButton
             {
                 @media (max-width: $screen-xs)
                 {
@@ -154,7 +158,7 @@
                 align-items: center;
                 background: $colorRedLight;
                 border-radius: 8.4px;
-                
+
                 .notificationNewText
                 {
                     font-size: 10px;
@@ -278,7 +282,7 @@
             letter-spacing: 0.75px;
             color:          #ffffff;
             width: 100%;
-            
+
             @media screen and (min-width: $screen-xs) {
                 font-size:  24px;
             }
@@ -358,7 +362,7 @@
         }
     }
 
-    .logoMobileWrapper {        
+    .logoMobileWrapper {
         @media (min-width: $screen-md)
         {
             display: none;

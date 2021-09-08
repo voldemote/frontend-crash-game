@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { TOKEN_NAME } from '../../constants/Token';
 import PopupTheme from '../Popup/PopupTheme';
 import { PopupActions } from '../../store/actions/popup';
+import { useOutsideClick } from 'hooks/useOutsideClick';
 
 const Navbar = ({
   user,
@@ -43,11 +44,19 @@ const Navbar = ({
   const [missingWinnerAmount, setMisingWinnerAmount] = useState(null);
   const openDrawer = useSelector(state => state.general.openDrawer);
 
+  const drawerWrapper = useOutsideClick(() => {
+    closeDrawers();
+  });
+
   useEffect(() => {
     if (leaderboardOpen) {
       setOpenDrawer(drawers.leaderboard);
     }
   }, [leaderboardOpen]);
+
+  useEffect(() => {
+    closeDrawers();
+  }, [location.pathname]);
 
   if (skipRoutes.some(route => matchPath(location.pathname, route))) {
     return null;
@@ -314,6 +323,7 @@ const Navbar = ({
       <MainMenu
         opened={isOpen(drawers.profile)}
         closeMobileMenu={closeDrawers}
+        close={closeDrawers}
       />
     );
   };
@@ -347,15 +357,17 @@ const Navbar = ({
         </div>
       </div>
 
-      {renderNavButtons()}
-      {renderLeaderboardDrawer()}
-      {isLoggedIn() && (
-        <>
-          {renderNotificationsDrawer()}
-          {renderMenuDrawer()}
-          {renderWalletDrawer()}
-        </>
-      )}
+      <div ref={drawerWrapper} className={style.drawerWrapper}>
+        {renderNavButtons()}
+        {renderLeaderboardDrawer()}
+        {isLoggedIn() && (
+          <>
+            {renderNotificationsDrawer()}
+            {renderMenuDrawer()}
+            {renderWalletDrawer()}
+          </>
+        )}
+      </div>
     </div>
   );
 };
