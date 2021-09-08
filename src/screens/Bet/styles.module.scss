@@ -225,7 +225,8 @@
           justify-content: space-between;
         }
 
-        .chatTab {
+        .chatTab,
+        .newsTab {
           @media (min-width: $screen-md) {
             display: none;
           }
@@ -236,6 +237,7 @@
         display: flex;
         cursor: pointer;
         font-size: 15px;
+        margin-bottom: 2.3rem;
 
         @media (max-width: $screen-md) {
           padding: 30px 0 0 10px;
@@ -245,10 +247,6 @@
           width: fit-content;
           margin-right: 1rem;
         }
-      }
-
-      .betViewContent {
-        padding-top: 2.3rem;
       }
     }
   }
