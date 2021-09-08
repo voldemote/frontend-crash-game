@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import Button from 'components/Button';
@@ -9,7 +9,11 @@ import ContentFooter from 'components/ContentFooter';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
-import { resendEmailVerification } from '../../api';
+import {
+  resendEmailVerification,
+  getRewardsQuestions,
+  postRewardAnswer,
+} from '../../api';
 
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from '../../store/actions/popup';
@@ -133,60 +137,30 @@ const RewardCards = ({ user }) => {
   );
 };
 
-const questionsMock = [
-  {
-    question: 'What Kind Of UI You Prefer?',
-    answers: [
-      { name: 'One', value: '1' },
-      { name: 'Two', value: '2' },
-      { name: 'Three', value: '3' },
-    ],
-  },
-  {
-    question: 'What Kind Of UI You Prefer2?',
-    answers: [
-      { name: 'One2', value: '1' },
-      { name: 'Two2', value: '2' },
-      { name: 'Three2', value: '3' },
-    ],
-  },
-  {
-    question: 'What Kind Of UI You Prefer3?',
-    answers: [
-      { name: 'One3', value: '1' },
-      { name: 'Two3', value: '2' },
-      { name: 'Three3', value: '3' },
-    ],
-  },
-  {
-    question: 'What Kind Of UI You Prefer4?',
-    answers: [
-      { name: 'One4', value: '1' },
-      { name: 'Two4', value: '2' },
-      { name: 'Three4', value: '3' },
-    ],
-  },
-  {
-    question: 'What Kind Of UI You Prefer5?',
-    answers: [
-      { name: 'One5', value: '1' },
-      { name: 'Two5', value: '2' },
-      { name: 'Three5', value: '3' },
-    ],
-  },
-];
-
 const LotteryGame = ({
-  questions = questionsMock,
+  initialQuestions = [],
   initialQuestionNumber = 0,
   showPopup,
   isComplete = false,
+  user,
 }) => {
+  const [questions, setQuestions] = useState(initialQuestions);
   const [activeQuestionNumber, setActiveQuestionNumber] = useState(
     initialQuestionNumber
   );
   const [checkedOption, setCheckedOption] = useState();
   const [complete, setCompleted] = useState(isComplete);
+
+  useEffect(() => {
+    getRewardsQuestions().then(res => {
+      setQuestions(res.data);
+    });
+  }, []);
+
+  const activeQuestion = useMemo(
+    () => questions[activeQuestionNumber],
+    [questions, activeQuestionNumber]
+  );
 
   const hasNextQuestion = useMemo(
     () => !!questions[activeQuestionNumber + 1],
@@ -196,19 +170,32 @@ const LotteryGame = ({
   const nextQuestion = () => setActiveQuestionNumber(activeQuestionNumber + 1);
 
   const handleContinue = () => {
-    showPopup(PopupTheme.lotteryGameAnswered, { small: true });
-    setCheckedOption(null);
+    console.log(user);
+    postRewardAnswer(activeQuestion.id, checkedOption, user.userId).then(
+      res => {
+        showPopup(PopupTheme.lotteryGameAnswered, {
+          small: true,
+          rewardId: res.data.id,
+        });
+        setCheckedOption(null);
 
-    if (hasNextQuestion) {
-      nextQuestion();
-    } else {
-      setCompleted(true);
-    }
+        if (hasNextQuestion) {
+          nextQuestion();
+        } else {
+          setCompleted(true);
+        }
+      }
+    );
   };
 
   const setOption = value => {
     setCheckedOption(value);
   };
+
+  if (!questions.length) {
+    // TODO loading layout
+    return null;
+  }
 
   if (complete) {
     return (
@@ -229,9 +216,9 @@ const LotteryGame = ({
       </div>
       <div className={styles.lotteryGameContent}>
         <p>Lottery Game</p>
-        <h3>{questions[activeQuestionNumber].question}</h3>
+        <h3>{activeQuestion.question}</h3>
         <div className={styles.questionOptions}>
-          {questions[activeQuestionNumber].answers.map(({ value, name }) => {
+          {activeQuestion.answers.map(({ value, name }) => {
             return (
               <label
                 key={value}
@@ -313,7 +300,7 @@ const Rewards = ({ user, showPopup }) => {
           <RewardCards user={user} />
         </div>
         <div>
-          <LotteryGame showPopup={showPopup} />
+          <LotteryGame user={user} showPopup={showPopup} />
         </div>
         <ContentFooter />
       </div>

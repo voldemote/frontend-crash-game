@@ -27,7 +27,7 @@ import VerifyEmailPopup from '../VerifyEmailPopup';
 import PulloutApprovePopup from '../PulloutApprovePopup';
 import LotteryGamePopup from '../LotteryGamePopup';
 
-const Popup = ({ type, visible, options, events, hidePopup }) => {
+const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
 
   useEffect(() => {
@@ -120,7 +120,9 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
         return <PulloutApprovePopup betData={_.get(options, 'betData')} />;
 
       case PopupTheme.lotteryGameAnswered:
-        return <LotteryGamePopup hidePopup={hidePopup} />;
+        return (
+          <LotteryGamePopup hidePopup={hidePopup} rewardId={options.rewardId} />
+        );
     }
 
     return null;
