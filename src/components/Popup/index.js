@@ -24,6 +24,7 @@ import EvaluateEventPopup from '../EvaluateEventPopup';
 import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
+import PulloutApprovePopup from '../PulloutApprovePopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -46,14 +47,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
     switch (type) {
       case PopupTheme.betApprove:
-        return (
-          <BetApproveView
-            bet={_.get(options, 'bet')}
-            outcomeAmount={_.get(options, 'outcomeAmount')}
-            outcomeValue={_.get(options, 'outcomeValue')}
-            investedAmount={_.get(options, 'investedAmount')}
-          />
-        );
+        return <BetApproveView />;
 
       case PopupTheme.betCreation:
         return <BetCreation closed={!visible} eventId={eventId} />;
@@ -110,7 +104,10 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.evaluateEvent:
         return (
-          <EvaluateEventPopup betQuestion={evaluateEventOptions.question} />
+          <EvaluateEventPopup
+            betQuestion={evaluateEventOptions.question}
+            hidePopup={hidePopup}
+          />
         );
 
       case PopupTheme.reportEvent:
@@ -121,6 +118,9 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.verifyEmail:
         return <VerifyEmailPopup closed={false} />;
+
+      case PopupTheme.pulloutApprove:
+        return <PulloutApprovePopup betData={_.get(options, 'betData')} />;
     }
 
     return null;

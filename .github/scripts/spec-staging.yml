@@ -16,7 +16,7 @@ services:
     value: $REACT_APP_CRASH_GAME_BACKEND_URL
   - key: REACT_APP_NEWS_API_SSL_MODE
     scope: RUN_TIME
-    value: true
+    value: "true"
   http_port: 80
   image:
     registry_type: DOCR

@@ -65,7 +65,8 @@ const BetView = ({
   setOpenDrawer,
   fetchSellOutcomes,
 }) => {
-  const defaultBetValue = _.max([balance, 10]);
+  const maxBetAmount = 2800;
+  const defaultBetValue = _.min([balance, maxBetAmount * 0.1]);
   const event = _.find(events, {
     _id: eventId,
   });
@@ -329,7 +330,7 @@ const BetView = ({
           value={tokenNumber}
           setValue={onTokenNumberChange}
           errorText={commitmentErrorText}
-          maxValue={2800}
+          maxValue={maxBetAmount}
         />
       </>
     );
@@ -357,22 +358,33 @@ const BetView = ({
   };
 
   const renderTradeDesc = () => {
-    const temp = 'Eget sed ut enim in sit arcu';
+    if (!bet.evidenceDescription) {
+      return null;
+    }
+    const shortLength = 200;
+    const isDescShort = bet.evidenceDescription.length <= shortLength;
     return (
       <>
-        <p className={styles.tradeDesc}>
-          {showAllEvidence
-            ? event.evidence
-            : event.evidence
-            ? event.evidence.substring(0, 200)
+        <p
+          className={classNames(
+            styles.tradeDesc,
+            isDescShort && styles.tradeShortDesc
+          )}
+        >
+          {showAllEvidence || isDescShort
+            ? bet.evidenceDescription
+            : bet.evidenceDescription
+            ? bet.evidenceDescription.substring(0, shortLength) + '...'
             : ''}
         </p>
-        <button
-          className={styles.seeMore}
-          onClick={() => setShowAllEvidence(!showAllEvidence)}
-        >
-          {showAllEvidence ? 'SHOW LESS' : 'SEE MORE'}
-        </button>
+        {!isDescShort && (
+          <button
+            className={styles.seeMore}
+            onClick={() => setShowAllEvidence(!showAllEvidence)}
+          >
+            {showAllEvidence ? 'SHOW LESS' : 'SEE MORE'}
+          </button>
+        )}
       </>
     );
   };

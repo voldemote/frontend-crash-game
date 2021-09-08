@@ -4,6 +4,7 @@
   width: 100%;
   padding: 20px 30px;
   display: flex;
+  flex-flow: wrap;
   align-items: center;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -95,5 +96,21 @@
           text-align: right;
           padding: 5px 0;
       }
+  }
+
+  .betCashoutButton {
+      background: transparent url('../../data/images/cashout-stroke.svg') no-repeat;
+      background-position: center;
+      height: 28px;
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      font-weight: 700;
   }
 }

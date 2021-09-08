@@ -29,6 +29,7 @@ export const API_EVENT_LIST = 'api/event/list';
 export const API_EVENT_LIST_FILTERED =
   'api/event/list/:type/:category/:count/:page/:sortBy/:searchQuery';
 export const API_EVENT_CHAT_MESSAGES = 'api/event/chat-messages/:id';
+export const API_EVENT_EVALUATE_SEND = 'api/event/evaluate';
 export const API_USER = 'api/user/:id';
 export const API_LEADERBOARD = 'api/user/getLeaderboard/:skip/:limit';
 export const API_USER_HISTORY = 'api/user/history';

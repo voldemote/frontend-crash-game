@@ -11,7 +11,12 @@ import MyTradesList from '../MyTradesList';
 import { BetActions } from 'store/actions/bet';
 import { useHasMounted } from 'components/hoc/useHasMounted';
 
-const MyTrades = ({ openBets, transactions, fetchOpenBets }) => {
+const MyTrades = ({
+  openBets,
+  transactions,
+  fetchOpenBets,
+  close: closeDrawer,
+}) => {
   const [switchIndex, setSwitchIndex] = useState(0);
   const hasMounted = useHasMounted();
 
@@ -44,11 +49,18 @@ const MyTrades = ({ openBets, transactions, fetchOpenBets }) => {
   };
 
   const renderOpenBets = () => {
-    return <MyTradesList bets={openBets} withStatus={true} />;
+    return (
+      <MyTradesList
+        bets={openBets}
+        withStatus={true}
+        closeDrawer={closeDrawer}
+        allowCashout={true}
+      />
+    );
   };
 
   const renderBetHistory = () => {
-    return <MyTradesList bets={transactions} />;
+    return <MyTradesList bets={transactions} closeDrawer={closeDrawer} />;
   };
 
   return (

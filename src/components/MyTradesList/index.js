@@ -4,8 +4,18 @@ import StateBadge from '../StateBadge';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { BetActions } from 'store/actions/bet';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
 
-const MyTradesList = ({ bets, withStatus = false }) => {
+const MyTradesList = ({
+  bets,
+  withStatus = false,
+  closeDrawer,
+  allowCashout = false,
+  showPulloutBetPopup,
+}) => {
   const renderBets = () => {
     return _.map(bets, (item, index) => {
       const negativeOutcome =
@@ -26,6 +36,7 @@ const MyTradesList = ({ bets, withStatus = false }) => {
               <Link
                 to={`/trade/${item.eventSlug}/${item.betSlug}`}
                 className={styles.titleLink}
+                onClick={closeDrawer}
               >
                 <div className={styles.title}>
                   {item.marketQuestion}
@@ -58,6 +69,22 @@ const MyTradesList = ({ bets, withStatus = false }) => {
               <div className={styles.invested}>
                 Invested: {item.investmentAmount}
               </div>
+              {allowCashout && (
+                <button
+                  className={styles.betCashoutButton}
+                  onClick={() =>
+                    showPulloutBetPopup(
+                      item.betId,
+                      item.outcomes.find(
+                        ({ name }) => name === item.outcomeValue
+                      ).index,
+                      +formatToFixed(item.investmentAmount)
+                    )
+                  }
+                >
+                  Cashout
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -68,4 +95,24 @@ const MyTradesList = ({ bets, withStatus = false }) => {
   return <>{renderBets()}</>;
 };
 
-export default MyTradesList;
+const mapDispatchToProps = dispatch => {
+  return {
+    showPulloutBetPopup: (betId, outcome, amount) => {
+      dispatch(
+        PopupActions.show({
+          popupType: PopupTheme.pulloutApprove,
+          options: {
+            small: true,
+            betData: {
+              betId,
+              outcome,
+              amount,
+            },
+          },
+        })
+      );
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(MyTradesList);

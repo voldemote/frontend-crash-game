@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import _ from 'lodash';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import styles from './styles.module.scss';
@@ -6,6 +6,9 @@ import LogoSplash from '../../data/images/wfair-logo-splash.png';
 import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
 import classNames from 'classnames';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from '../Popup/PopupTheme';
+import { connect } from 'react-redux';
 
 const canvasStyles = {
   position: 'fixed',
@@ -17,7 +20,7 @@ const canvasStyles = {
 };
 
 let animationInstance;
-const BetApproveView = ({ closed }) => {
+const BetApproveView = ({ visible, hidePopup }) => {
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
       animationInstance({
@@ -64,8 +67,10 @@ const BetApproveView = ({ closed }) => {
   };
 
   useEffect(() => {
-    !closed && startAnimation();
-  }, [closed]);
+    if (visible) {
+      startAnimation();
+    }
+  }, [visible]);
 
   return (
     <div className={styles.approveBetContainer}>
@@ -82,6 +87,7 @@ const BetApproveView = ({ closed }) => {
           className={classNames(styles.betButton)}
           highlightType={HighlightType.highlightHomeCtaBet}
           disabledWithOverlay={false}
+          onClick={hidePopup}
         >
           Keep Going
         </Button>
@@ -91,4 +97,19 @@ const BetApproveView = ({ closed }) => {
   );
 };
 
-export default BetApproveView;
+const mapDispatchToProps = dispatch => {
+  return {
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
+    },
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    visible:
+      state.popup.popupType === PopupTheme.betApprove && state.popup.visible,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BetApproveView);
