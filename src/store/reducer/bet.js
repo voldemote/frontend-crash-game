@@ -11,6 +11,7 @@ const initialState = {
   outcomes: {},
   sellOutcomes: {},
   openBets: [],
+  wfairValue: 0.2,
 };
 
 const reset = (action, state) => {

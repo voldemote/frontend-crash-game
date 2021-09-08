@@ -7,7 +7,7 @@
     flex-direction:   column;
     align-items:      center;
     width:            100%;
-    padding-top:      60px;
+    padding-top:      21px;
     background-color: $colorWhite;
     color:            $colorPrimaryDark;
     border-radius:    10px;
@@ -110,6 +110,11 @@
             margin-left: 20px;
             cursor:      pointer;
 
+            .menuIcon
+            {
+                opacity: 30%;
+            }
+
             .menuBox
             {
                 display:          none;
@@ -165,11 +170,15 @@
 
     .betMarketQuestion
     {
-        color:         $colorPrimaryDark;
-        font-family:   $fontBold;
-        font-size:     24px;
-        text-align:    center;
-        margin-bottom: 10px;
+        color:          $colorPrimaryDark;
+        text-align:     center;
+        font-family:    $fontBold;
+        font-size:      18px;
+        font-style:     normal;
+        font-weight:    500;
+        line-height:    24px;
+        letter-spacing: 0px;
+        padding:        0 16%;
     }
 
     .description
@@ -191,18 +200,23 @@
         display:        flex;
         position:       relative;
         flex-direction: column;
-        margin:         2rem 0;
+        margin:         2rem 0 6px 0;
         width:          100%;
         padding:        $padding;
 
         .label
         {
-            color:         $colorPrimaryDark;
-            font-size:     12px;
-            text-align:    left;
-            width:         100%;
-            margin-bottom: 15px;
-            display:       block;
+            color:          $colorPrimaryDark;
+            font-family:    $fontRegular;
+            font-size:      14px;
+            font-style:     normal;
+            font-weight:    500;
+            line-height:    18px;
+            letter-spacing: 0px;
+            text-align:     left;
+            width:          100%;
+            margin-bottom:  4px;
+            display:        block;
         }
 
         .tokenValueSelector
@@ -212,8 +226,12 @@
 
         .buttonContainer
         {
-            width:      100%;
-            margin-top: 35px;
+            width:          100%;
+            font-family:    $fontBold;
+            font-style:     normal;
+            font-weight:    normal;
+            font-size:      14px;
+            line-height:    18px;
 
             &.sellButtonContainer
             {
@@ -260,6 +278,7 @@
         width:         100%;
         font-size:     16px;
         margin-bottom: auto;
+        display: contents;
 
         @media (min-width: $screen-sm)
         {
@@ -267,9 +286,45 @@
             font-size:     23px;
         }
 
+        .tradeDesc
+        {
+            font-family:    $fontRegular;
+            font-style:     normal;
+            font-weight:    500;
+            font-size:      12px;
+            line-height:    17px;
+            text-transform: capitalize;
+            color:          $colorGrayLight1;
+            text-align:     center;
+            letter-spacing: 0.3px;
+            padding:        0 7%;
+        }
+
+        .seeMore
+        {
+            font-family:    $fontBold;
+            font-style:     normal;
+            font-weight:    bold;
+            font-size:      12px;
+            border:         none;
+            background:     none;
+            text-align:     center;
+            text-transform: capitalize;
+            color:          $colorPurpleDark;
+            cursor:         pointer;
+            margin:         10px 0;
+            letter-spacing: 1px;
+
+            &:hover
+            {
+                color:          $colorPurple;
+            }
+        }
+
         .betButton
         {
-            background-color: transparent;
+            background-color:   transparent;
+            margin-bottom:      12px;
 
             &.sellButton
             {
@@ -329,25 +384,6 @@
         }
     }
 
-    .timeLeftCounterContainer
-    {
-        display:          flex;
-        justify-content:  space-between;
-        align-items:      center;
-        flex-direction:   row;
-        background-color: $colorPrimary66;
-        width:            100%;
-        padding:          15px 30px;
-        color:            $colorWhite;
-        font-size:        12px;
-
-        &.fixedTimer {
-            position: fixed;
-            bottom: 0;
-            background-color: $colorPrimary90;
-        }
-    }
-
     &.closedStatus
     {
         .placeBetContentContainer,
@@ -374,5 +410,29 @@
         {
             opacity: 0.3;
         }
+    }
+}
+
+.timeLeftCounterContainer
+{
+    display:            flex;
+    justify-content:    space-between;
+    align-items:        center;
+    flex-direction:     row;
+    width:              100%;
+    padding:            7px 15px;
+    color:              $colorWhite;
+    font-size:          12px;
+
+    background:         $colorPrimary45;
+    border:             1px solid $colorWhite17;
+    box-sizing:         border-box;
+    border-radius:      10px;
+    margin-top:         5px;
+
+    &.fixedTimer {
+        position: fixed;
+        bottom: 0;
+        background-color: $colorPrimary90;
     }
 }

@@ -31,6 +31,7 @@ export default {
   deposit: 'deposit',
   home: 'home',
   info: 'info',
+  infoReverse: 'infoReverse',
   logoSmall: 'logoSmall',
   logout: 'logout',
   mailAddress: 'mailAddress',

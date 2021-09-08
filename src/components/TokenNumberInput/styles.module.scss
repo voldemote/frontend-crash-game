@@ -4,11 +4,13 @@
 {
     display:          flex;
     width:            100%;
-    border-radius:    6px;
     align-items:      center;
-    padding:          1rem 1rem;
-    border:           1px solid $colorGrayLight;
-    background-color: $colorGrayLight;
+    padding:          10.5px;
+    height:           45px;
+    border-radius:    10px;
+    border:           1.2px solid rgba(14, 9, 39, 0.3);
+    background:       none;
+    justify-content:  center;
 
     @media (min-width: $screen-lg)
     {
@@ -17,14 +19,19 @@
 
     .input
     {
-        width:            50%;
-        font-family:      $fontBold;
-        font-size:        16px;
+        flex:             none;
         text-align:       right;
         background-color: transparent;
         border:           none;
         outline:          none !important;
-        margin-right:     11px;
+        margin-right:     9px;
+        min-width:        10px !important;
+        width:            4ch;
+        font-family:      $fontBold;
+        font-style:       normal;
+        font-weight:      bold;
+        font-size:        24px;
+        line-height:      24px;
 
         &::-webkit-inner-spin-button
         {
@@ -37,9 +44,15 @@
 
     .eventTokenLabel
     {
-        color:       $colorGrayLight2;
-        font-family: $fontBold;
-        font-size:   16px;
+        color:          $colorGrayLight1;
+        font-family:    $fontRegular;
+        font-size:      20px;
+        font-style:     normal;
+        font-weight:    400;
+        line-height:    24px;
+        letter-spacing: 0px;
+        text-align:     left;
+
     }
 }
 
