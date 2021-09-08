@@ -63,12 +63,7 @@ const place = function* (action) {
     yield put(
       PopupActions.show({
         popupType: PopupTheme.betApprove,
-        options: {
-          bet: response.data.bet,
-          outcomeAmount: response.data.outcomeAmount,
-          outcomeValue: response.data.outcomeValue,
-          investedAmount: response.data.investedAmount,
-        },
+        options: {},
       })
     );
     yield put(BetActions.fetchOpenBets());

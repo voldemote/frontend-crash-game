@@ -46,14 +46,7 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
     switch (type) {
       case PopupTheme.betApprove:
-        return (
-          <BetApproveView
-            bet={_.get(options, 'bet')}
-            outcomeAmount={_.get(options, 'outcomeAmount')}
-            outcomeValue={_.get(options, 'outcomeValue')}
-            investedAmount={_.get(options, 'investedAmount')}
-          />
-        );
+        return <BetApproveView />;
 
       case PopupTheme.betCreation:
         return <BetCreation closed={!visible} eventId={eventId} />;
