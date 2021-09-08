@@ -170,7 +170,7 @@ const LotteryGame = ({
   const nextQuestion = () => setActiveQuestionNumber(activeQuestionNumber + 1);
 
   const handleContinue = () => {
-    postRewardAnswer(activeQuestion.id, checkedOption, user.userId).then(
+    postRewardAnswer(activeQuestion._id, checkedOption, user.userId).then(
       res => {
         showPopup(PopupTheme.lotteryGameAnswered, {
           small: true,
@@ -210,27 +210,27 @@ const LotteryGame = ({
     <div className={styles.card}>
       <div>
         <span className={styles.questionNumberLabel}>
-          {activeQuestionNumber + 1}/5
+          {activeQuestionNumber + 1}/{questions.length}
         </span>
       </div>
       <div className={styles.lotteryGameContent}>
         <p>Lottery Game</p>
-        <h3>{activeQuestion.question}</h3>
+        <h3>{activeQuestion.title}</h3>
         <div className={styles.questionOptions}>
-          {activeQuestion.answers.map(({ value, name }) => {
+          {activeQuestion.questions.map(({ index, name }) => {
             return (
               <label
-                key={value}
-                onClick={() => setOption(value)}
+                key={index}
+                onClick={() => setOption(index)}
                 className={styles.radioButton}
-                checked={checkedOption === value}
+                checked={checkedOption === index}
               >
                 <input
                   type="radio"
                   id="1"
                   name={name}
-                  value={value}
-                  checked={checkedOption === value}
+                  value={index}
+                  checked={checkedOption === index}
                 />
                 {name}
               </label>
@@ -238,23 +238,24 @@ const LotteryGame = ({
           })}
         </div>
         <div className={styles.lotteryGameButtons}>
-          <Button
-            className={classNames(
-              styles.cardButton,
-              styles.cardButtonDone,
-              styles.skipQuestionBtn
-            )}
-            withoutBackground={false}
-            onClick={nextQuestion}
-            disabled={!hasNextQuestion}
-          >
-            Skip
-            <Icon
-              className={styles.iconRightSide}
-              iconType={IconType.cross}
-              iconTheme={IconTheme.black}
-            />
-          </Button>
+          {hasNextQuestion && (
+            <Button
+              className={classNames(
+                styles.cardButton,
+                styles.cardButtonDone,
+                styles.skipQuestionBtn
+              )}
+              withoutBackground={false}
+              onClick={nextQuestion}
+            >
+              Skip
+              <Icon
+                className={styles.iconRightSide}
+                iconType={IconType.cross}
+                iconTheme={IconTheme.black}
+              />
+            </Button>
+          )}
           <Button
             className={styles.nextQuestionBtn}
             onClick={handleContinue}
