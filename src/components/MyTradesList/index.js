@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { Link } from 'react-router-dom';
 
-const MyTradesList = ({ bets, withStatus = false }) => {
+const MyTradesList = ({ bets, withStatus = false, closeDrawer }) => {
   const renderBets = () => {
     return _.map(bets, (item, index) => {
       const negativeOutcome =
@@ -26,6 +26,7 @@ const MyTradesList = ({ bets, withStatus = false }) => {
               <Link
                 to={`/trade/${item.eventSlug}/${item.betSlug}`}
                 className={styles.titleLink}
+                onClick={closeDrawer}
               >
                 <div className={styles.title}>
                   {item.marketQuestion}
