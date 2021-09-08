@@ -170,7 +170,6 @@ const LotteryGame = ({
   const nextQuestion = () => setActiveQuestionNumber(activeQuestionNumber + 1);
 
   const handleContinue = () => {
-    console.log(user);
     postRewardAnswer(activeQuestion.id, checkedOption, user.userId).then(
       res => {
         showPopup(PopupTheme.lotteryGameAnswered, {
