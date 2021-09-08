@@ -51,7 +51,7 @@ const Bet = ({
   const history = useHistory();
 
   const [swiper, setSwiper] = useState(null);
-  const [betAction, setBetAction] = useState(1);
+  const [betAction, setBetAction] = useState(2);
   const [betViewIsOpen, setBetViewIsOpen] = useState(false);
   const [singleBet, setSingleBet] = useState(false);
   const [event, setEvent] = useState(null);
@@ -135,7 +135,7 @@ const Bet = ({
       );
 
       setBetViewIsOpen(false);
-      onBetActionSwitch(1);
+      onBetActionSwitch(2);
     };
   };
 
@@ -359,7 +359,7 @@ const Bet = ({
   const renderContent = () => {
     if (betAction === 0) {
       return <Chat className={styles.mobileChat} event={event} />;
-    } else if (betAction === 1) {
+    } else if (betAction === 2) {
       return (
         <div className={styles.relatedBets}>
           <Carousel
@@ -443,17 +443,16 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          {!singleBet &&
-            (!isLoggedIn() || (isLoggedIn() && openBets.length > 0)) && (
-              <div className={styles.betViewClose} onClick={onBetClose()}>
-                <Icon
-                  iconType={'arrowLeft'}
-                  iconTheme={'white'}
-                  className={styles.arrowBack}
-                />
-                <span>Go back to all tracks</span>
-              </div>
-            )}
+          {relatedBets.length > 1 && (
+            <div className={styles.betViewClose} onClick={onBetClose()}>
+              <Icon
+                iconType={'arrowLeft'}
+                iconTheme={'white'}
+                className={styles.arrowBack}
+              />
+              <span>Go back to all tracks</span>
+            </div>
+          )}
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
             <BetView
               betId={betId}
