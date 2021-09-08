@@ -137,7 +137,7 @@ const fetchNewsData = function* ({ params }) {
   try {
     const { data } = yield call(() => getNews(params));
 
-    yield put(EventActions.fetchNewsDataSuccess(data.data));
+    yield put(EventActions.fetchNewsDataSuccess(data));
   } catch (error) {
     yield put(EventActions.fetchNewsDataFail());
   }
