@@ -40,7 +40,7 @@ const initialState = {
   ],
   chartData: [],
   newsData: {
-    articles: [],
+    data: [],
   },
 };
 
