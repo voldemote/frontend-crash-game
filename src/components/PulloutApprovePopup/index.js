@@ -37,23 +37,26 @@ const PulloutApprovePopup = ({
         <strong>
           {formatToFixed(amount)} {TOKEN_NAME}
         </strong>
+        ?
       </p>
 
-      <Button
-        withoutBackground={true}
-        className={styles.approvePulloutButton}
-        onClick={onApprovePulloutClick}
-      >
-        OK
-      </Button>
+      <div className={styles.buttonContainer}>
+        <Button
+          withoutBackground={true}
+          className={styles.cancelPulloutButton}
+          onClick={onCancelPulloutClick}
+        >
+          Cancel
+        </Button>
 
-      <Button
-        withoutBackground={true}
-        className={styles.cancelPulloutButton}
-        onClick={onCancelPulloutClick}
-      >
-        Cancel
-      </Button>
+        <Button
+          withoutBackground={true}
+          className={styles.approvePulloutButton}
+          onClick={onApprovePulloutClick}
+        >
+          OK
+        </Button>
+      </div>
     </div>
   );
 };
