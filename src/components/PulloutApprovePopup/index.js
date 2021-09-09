@@ -10,6 +10,7 @@ import { ReactComponent as FailedIcon } from '../../data/icons/failed-circle.svg
 import { BetActions } from 'store/actions/bet';
 import { TOKEN_NAME } from 'constants/Token';
 import { formatToFixed } from 'helper/FormatNumbers';
+import LikeIcon from '../../data/icons/like-icon.svg';
 
 const PulloutApprovePopup = ({
   hidePopup,
@@ -27,6 +28,8 @@ const PulloutApprovePopup = ({
 
   return (
     <div className={styles.pulloutContainer}>
+      <img src={LikeIcon} alt="thumbs up icon" className={styles.approveIcon} />
+
       <span className={styles.pulloutTitle}>Confirmation</span>
 
       <p className={styles.pulloutText}>
