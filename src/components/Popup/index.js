@@ -24,6 +24,7 @@ import EvaluateEventPopup from '../EvaluateEventPopup';
 import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
+import PulloutApprovePopup from '../PulloutApprovePopup';
 
 const Popup = ({ type, visible, options, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -114,6 +115,9 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.verifyEmail:
         return <VerifyEmailPopup closed={false} />;
+
+      case PopupTheme.pulloutApprove:
+        return <PulloutApprovePopup betData={_.get(options, 'betData')} />;
     }
 
     return null;

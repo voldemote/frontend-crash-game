@@ -1,0 +1,38 @@
+@import '../../styles/all';
+
+.pulloutContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+
+  .pulloutTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .pulloutText {
+    margin-bottom: 40px;
+    strong {
+      font-family: $fontBold;
+    }
+  }
+ 
+  .approvePulloutButton {
+    background-color: $colorWhite;
+    width: 100%;
+    height: 60px;
+    font-size: 20px;
+    background-image: url('../../data/images/signup-background-one.svg');
+    background-size: 40% 100% ;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .cancelPulloutButton {
+    font-size: 12px;
+  }
+}

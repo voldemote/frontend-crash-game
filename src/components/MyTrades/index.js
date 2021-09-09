@@ -54,6 +54,7 @@ const MyTrades = ({
         bets={openBets}
         withStatus={true}
         closeDrawer={closeDrawer}
+        allowCashout={true}
       />
     );
   };

@@ -15,4 +15,5 @@ export default {
   reportEvent: 'reportEvent',
   loginRegister: 'loginRegister',
   verifyEmail: 'verifyEmail',
+  pulloutApprove: 'pulloutApprove',
 };
