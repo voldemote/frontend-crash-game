@@ -215,6 +215,19 @@ const getEventHistoryChartData = (betId, params = {}) => {
   });
 };
 
+const sendEventEvaluate = (betQuestion, rating, comment) => {
+  const payload = {
+    bet_question: betQuestion,
+    rating,
+    comment,
+  };
+  return Api.post('http://localhost:8000/api/event/evaluate', {
+    payload,
+  }).catch(error => {
+    console.log('[API Error] called: sendEventEvaluate', error);
+  });
+};
+
 export {
   Api,
   createBet,
@@ -239,4 +252,5 @@ export {
   resendEmailVerification,
   getTags,
   getEventHistoryChartData,
+  sendEventEvaluate,
 };
