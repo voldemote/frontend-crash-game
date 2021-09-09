@@ -10,7 +10,7 @@ import * as Api from 'api';
 import { useDispatch } from 'react-redux';
 import { AlertActions } from 'store/actions/alert';
 
-const EvaluateEventPopup = ({ betQuestion }) => {
+const EvaluateEventPopup = ({ betQuestion, hidePopup }) => {
   const rating = {
     Excellent: 0,
     Good: 1,
@@ -29,7 +29,7 @@ const EvaluateEventPopup = ({ betQuestion }) => {
   const handleSend = () => {
     Api.sendEventEvaluate(betQuestion, currentRating, comment)
       .then(response => {
-        console.log(response);
+        hidePopup();
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));

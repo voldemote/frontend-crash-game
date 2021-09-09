@@ -221,7 +221,7 @@ const sendEventEvaluate = (betQuestion, rating, comment) => {
     rating,
     comment,
   };
-  return Api.post('http://localhost:8000/api/event/evaluate', {
+  return Api.post(ApiUrls.API_EVENT_EVALUATE_SEND, {
     payload,
   }).catch(error => {
     console.log('[API Error] called: sendEventEvaluate', error);
