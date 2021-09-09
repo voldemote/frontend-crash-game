@@ -6,8 +6,11 @@ import classNames from 'classnames';
 import Textarea from '../Textarea';
 import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
+import * as Api from 'api';
+import { useDispatch } from 'react-redux';
+import { AlertActions } from 'store/actions/alert';
 
-const EvaluateEventPopup = ({ betQuestion }) => {
+const EvaluateEventPopup = ({ betQuestion, hidePopup }) => {
   const rating = {
     Excellent: 0,
     Good: 1,
@@ -15,7 +18,8 @@ const EvaluateEventPopup = ({ betQuestion }) => {
     Unethical: 3,
   };
 
-  const [currentRating, setCurrentRating] = useState(rating.EXCELLENT);
+  const dispatch = useDispatch();
+  const [currentRating, setCurrentRating] = useState(rating.Excellent);
   const [comment, setComment] = useState('');
 
   const handleComment = event => {
@@ -23,7 +27,13 @@ const EvaluateEventPopup = ({ betQuestion }) => {
   };
 
   const handleSend = () => {
-    //TODO: Handle send
+    Api.sendEventEvaluate(betQuestion, currentRating, comment)
+      .then(response => {
+        hidePopup();
+      })
+      .catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
   };
 
   return (

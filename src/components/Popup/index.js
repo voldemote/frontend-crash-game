@@ -103,7 +103,10 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.evaluateEvent:
         return (
-          <EvaluateEventPopup betQuestion={evaluateEventOptions.question} />
+          <EvaluateEventPopup
+            betQuestion={evaluateEventOptions.question}
+            hidePopup={hidePopup}
+          />
         );
 
       case PopupTheme.reportEvent:
