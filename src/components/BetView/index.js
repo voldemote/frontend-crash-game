@@ -330,7 +330,7 @@ const BetView = ({
           value={tokenNumber}
           setValue={onTokenNumberChange}
           errorText={commitmentErrorText}
-          maxValue={maxBetAmount}
+          maxValue={+balance}
         />
       </>
     );

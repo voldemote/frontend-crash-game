@@ -62,8 +62,8 @@ const TSlider = withStyles({
 const TokenSlider = ({ value, setValue, maxValue, ...props }) => {
   const marks = [
     {
-      value: 0,
-      label: 0,
+      value: 1,
+      label: 1,
     },
     {
       value: maxValue,
@@ -75,6 +75,7 @@ const TokenSlider = ({ value, setValue, maxValue, ...props }) => {
     <TSlider
       valueLabelDisplay="auto"
       aria-label="pretto slider"
+      min={1}
       max={maxValue}
       value={value}
       onChange={(event, v) => {
