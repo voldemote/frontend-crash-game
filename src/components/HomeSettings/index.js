@@ -11,7 +11,11 @@ import SettingNotification from '../../data/images/setting-notifications.png';
 import SettingSupport from '../../data/images/setting-support.png';
 import { GeneralActions } from '../../store/actions/general';
 
-const HomeSettings = ({ onEditClick, onMyTradesClick }) => {
+const HomeSettings = ({
+  onEditClick,
+  onMyTradesClick,
+  onEmailNotificationClick,
+}) => {
   const dispatch = useDispatch();
 
   const setOpenDrawer = drawerName =>
@@ -101,8 +105,9 @@ const HomeSettings = ({ onEditClick, onMyTradesClick }) => {
         <div
           className={classNames(
             styles.singleSettingHolder,
-            styles.settingDeactive
+            styles.settingActive
           )}
+          onClick={onEmailNotificationClick}
         >
           <img
             src={SettingNotification}
@@ -110,7 +115,7 @@ const HomeSettings = ({ onEditClick, onMyTradesClick }) => {
             className={styles.settingIcon}
             style={{ width: '22px', marginLeft: '4px' }}
           />
-          <p className={styles.settingTitle}>SMS Notifications</p>
+          <p className={styles.settingTitle}>Email Notifications</p>
           <Icon
             width={15}
             iconType={IconType.arrowSmallRight}
