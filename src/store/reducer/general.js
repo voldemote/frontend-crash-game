@@ -26,10 +26,18 @@ const setMyTradesVisible = (state, action) => {
   };
 };
 
+const setEmailNotificationsVisible = (state, action) => {
+  return {
+    ...state,
+    emailNotificationsVisible: action.visible,
+  };
+};
+
 const reducers = {
   [GeneralTypes.SET_GLOBAL_DRAWER]: setDrawer,
   [GeneralTypes.SET_EDIT_PROFILE_VISIBLE]: setEditProfileVisible,
   [GeneralTypes.SET_MY_TRADES_VISIBLE]: setMyTradesVisible,
+  [GeneralTypes.SET_EMAIL_NOTIFICATIONS_VISIBLE]: setEmailNotificationsVisible,
 };
 
 export default function (state = initialState, action) {

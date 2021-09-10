@@ -67,6 +67,7 @@ const Navbar = ({
     leaderboard: 'leaderboard',
     profile: 'profile',
     wallet: 'wallet',
+    emailNotifications: 'emailNotifications',
   };
 
   const sellTransactions = transactions
@@ -332,6 +333,16 @@ const Navbar = ({
     return <Wallet show={isOpen(drawers.wallet)} close={closeDrawers} />;
   };
 
+  const renderEmailNotificationDrawer = () => {
+    return (
+      <MainMenu
+        opened={isOpen(drawers.profile)}
+        closeMobileMenu={closeDrawers}
+        close={closeDrawers}
+      />
+    );
+  };
+
   return (
     <div
       className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}
@@ -365,6 +376,7 @@ const Navbar = ({
             {renderNotificationsDrawer()}
             {renderMenuDrawer()}
             {renderWalletDrawer()}
+            {renderEmailNotificationDrawer()}
           </>
         )}
       </div>

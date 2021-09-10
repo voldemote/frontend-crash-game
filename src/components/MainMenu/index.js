@@ -11,7 +11,8 @@ import { useHistory } from 'react-router';
 import HomeSettings from '../HomeSettings';
 import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
-import { GeneralActions } from 'store/actions/general';
+import { GeneralActions, GeneralTypes } from 'store/actions/general';
+import EmailNotifications from 'components/EmailNotifications';
 
 const MainMenu = ({
   opened,
@@ -19,8 +20,10 @@ const MainMenu = ({
   updateUser,
   setEditVisible,
   handleMyTradesVisible,
+  handleEmailNotificationsVisible,
   editVisible,
   myTradesVisible,
+  emailNotificationsVisible,
   close,
 }) => {
   const [name, setName] = useState(user.name);
@@ -48,6 +51,10 @@ const MainMenu = ({
 
   const onMyTradesClick = () => {
     handleMyTradesVisible(!myTradesVisible);
+  };
+
+  const onEmailNotificationClick = () => {
+    handleEmailNotificationsVisible(!emailNotificationsVisible);
   };
 
   const handleName = e => {
@@ -104,6 +111,30 @@ const MainMenu = ({
         </h2>
 
         <MyTrades close={close} />
+      </div>
+    );
+  };
+
+  const renderEmailNotificationDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !emailNotificationsVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() =>
+              handleEmailNotificationsVisible(!emailNotificationsVisible)
+            }
+          />
+          Email Notification
+        </h2>
+
+        <EmailNotifications close={close} />
       </div>
     );
   };
@@ -203,7 +234,8 @@ const MainMenu = ({
         className={classNames(
           styles.panel,
           styles.firstPanel,
-          (myTradesVisible || editVisible) && styles.panelHidden
+          (myTradesVisible || editVisible || emailNotificationsVisible) &&
+            styles.panelHidden
         )}
       >
         <h2 className={styles.profileHeading}>My Profile</h2>
@@ -211,6 +243,7 @@ const MainMenu = ({
           <HomeSettings
             onEditClick={() => onClickShowEditProfile()}
             onMyTradesClick={() => onMyTradesClick()}
+            onEmailNotificationClick={() => onEmailNotificationClick()}
           />
 
           <div className={styles.buttonContainer}>
@@ -225,6 +258,7 @@ const MainMenu = ({
       </div>
       {editProfileWrapper()}
       {renderMyTradesDrawer()}
+      {renderEmailNotificationDrawer()}
     </div>
   );
 };
@@ -234,6 +268,7 @@ const mapStateToProps = state => {
     user: state.authentication,
     editVisible: state.general.editProfileVisible,
     myTradesVisible: state.general.myTradesVisible,
+    emailNotificationsVisible: state.general.emailNotificationsVisible,
   };
 };
 
@@ -251,6 +286,9 @@ const mapDispatchToProps = dispatch => {
     },
     handleMyTradesVisible: bool => {
       dispatch(GeneralActions.setMyTradesVisible(bool));
+    },
+    handleEmailNotificationsVisible: bool => {
+      dispatch(GeneralActions.setEmailNotificationsVisible(bool));
     },
   };
 };
