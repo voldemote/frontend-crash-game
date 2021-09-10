@@ -6,6 +6,9 @@ export class CoinAnimation {
     this.app = app;
     this.container = new PIXI.Container();
 
+    this.trajectory = new PIXI.Graphics();
+    this.container.addChild(this.trajectory);
+
     this.elonAndCoin = new PIXI.Container();
     this.elonAndCoin.x = 200;
     this.elonAndCoin.y = 150;
@@ -44,11 +47,27 @@ export class CoinAnimation {
     let speed = 1.5;
     let acceleration = 6;
 
+    let x = -40;
+    let y = this.app.renderer.height - 20;
+
     const update = dt => {
       if (this.elonAndCoin.x < destX || this.elonAndCoin.y > destY) {
         this.elonAndCoin.x += vx * acceleration * speed * dt;
         this.elonAndCoin.y += vy * acceleration * speed * dt;
       }
+
+      let prev_x = x;
+      let prev_y = y;
+      x += vx * acceleration * speed * dt;
+      y += vy * acceleration * speed * dt;
+
+      // console.log(`x: ${x}, y: ${y}, prev_x: ${prev_x}, prev_y: ${prev_y}`);
+
+      this.trajectory.lineStyle(2, 0x7300d8, 1);
+      // graphics.moveTo(0, 0);
+      // graphics.lineTo(200, 200);
+      this.trajectory.moveTo(prev_x, prev_y);
+      this.trajectory.lineTo(x, y);
 
       if (this.elonAndCoin.x > destX - 150 && speed >= 0) {
         speed -= 0.05 * dt;
@@ -65,6 +84,8 @@ export class CoinAnimation {
 
   endAnimation() {
     this.app.ticker.remove(this.elonAndCoindAnimationHandle);
+
+    this.trajectory.clear();
 
     const scale = { x: this.elonAndCoin.scale.x, y: this.elonAndCoin.scale.y };
     const tween = new TWEEN.Tween(scale)

@@ -29,6 +29,7 @@ class RosiAnimationController {
       backgroundColor: 0x12132e,
       resizeTo: canvas.parentElement,
       resolution: window.devicePixelRatio >= 2 ? 2 : 1,
+      antialias: true,
     });
 
     this.app.ticker.add(() => {
