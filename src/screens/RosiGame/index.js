@@ -19,6 +19,7 @@ import {
 } from 'store/selectors/rosi-game';
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
+import { AlertActions } from '../../store/actions/alert';
 
 const gameEvent = { _id: ROSI_GAME_EVENT_ID };
 
@@ -31,9 +32,13 @@ const RosiGame = () => {
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
   useEffect(() => {
-    Api.getCurrentGameInfo().then(response => {
-      dispatch(RosiGameActions.initializeState(response.data));
-    });
+    Api.getCurrentGameInfo()
+      .then(response => {
+        dispatch(RosiGameActions.initializeState(response.data));
+      })
+      .catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
   }, [dispatch]);
 
   return (
