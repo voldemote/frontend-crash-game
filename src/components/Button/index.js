@@ -4,6 +4,7 @@ import React from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style from './styles.module.scss';
 import Highlight from '../Highlight';
+import ReactTooltip from 'react-tooltip';
 
 const Button = ({
   children,
@@ -16,6 +17,8 @@ const Button = ({
   disabled,
   disabledWithOverlay = true,
   fixed,
+  showTooltip,
+  tooltipDesc,
 }) => {
   const renderButtonDisabledOverlay = () => {
     if (disabled && disabledWithOverlay) {
@@ -39,25 +42,36 @@ const Button = ({
     return null;
   };
   return (
-    <span
-      className={classNames(
-        style.button,
-        className,
-        fixed ? style.buttonFixed : null,
-        withoutBackground ? style.withoutBackground : null,
-        disabled ? style.disabled : null,
-        SelectionHelper.get(theme, {
-          [ButtonTheme.authenticationScreenButton]:
-            style.authenticationScreenButton,
-          [ButtonTheme.welcomeScreenButton]: style.welcomeScreenButton,
-        })
-      )}
-      onClick={disabled ? null : onClick}
-    >
-      {renderButtonDisabledOverlay()}
-      {children}
-      {renderHighlight()}
-    </span>
+    <>
+      <a data-for="tool-tip" data-tip={tooltipDesc}>
+        <span
+          className={classNames(
+            style.button,
+            className,
+            fixed ? style.buttonFixed : null,
+            withoutBackground ? style.withoutBackground : null,
+            disabled ? style.disabled : null,
+            SelectionHelper.get(theme, {
+              [ButtonTheme.authenticationScreenButton]:
+                style.authenticationScreenButton,
+              [ButtonTheme.welcomeScreenButton]: style.welcomeScreenButton,
+            })
+          )}
+          onClick={disabled ? null : onClick}
+        >
+          {renderButtonDisabledOverlay()}
+          {children}
+          {renderHighlight()}
+        </span>
+      </a>
+      <ReactTooltip
+        id="tool-tip"
+        className={style.tooltip}
+        place="top"
+        effect="solid"
+        disable={!showTooltip}
+      />
+    </>
   );
 };
 
