@@ -71,7 +71,7 @@ const PlaceBet = () => {
           setValue={setCrashFactor}
           placeholder="25:00"
           showDeleteIcon={false}
-          disabled={userPlacedABet}
+          disabled={userUnableToBet}
           className={styles.input}
           containerClassName={styles.inputBoxContainer}
         />
