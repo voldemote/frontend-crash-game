@@ -20,10 +20,7 @@ const GameBets = ({ label, bets }) => {
       <div className={styles.bets}>
         {bets.map(bet => (
           <div key={nanoid()} className={styles.bet}>
-            <div className={styles.user}>
-              <UserAvatarIcon />
-              {bet.username}
-            </div>
+            <div className={styles.user}>{bet.username}</div>
             <div>
               <span className={styles.crashFactor}>{bet.crashFactor}</span>
               <span className={styles.amount}>
