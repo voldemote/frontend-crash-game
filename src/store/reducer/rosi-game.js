@@ -6,6 +6,7 @@ const initialState = {
   inGameBets: [],
   cashedOut: [],
   userBet: null,
+  gameStartTimestamp: null,
 };
 
 const initializeState = (action, state) => {
@@ -19,6 +20,7 @@ const setHasStarted = (action, state) => {
   return {
     ...state,
     hasStarted: true,
+    gameStartTimestamp: Date.now(),
   };
 };
 

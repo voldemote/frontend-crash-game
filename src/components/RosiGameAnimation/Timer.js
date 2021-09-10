@@ -1,32 +1,52 @@
 import { useEffect, useState } from 'react';
 
-const Timer = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [ms, setMs] = useState(0);
+const Timer = ({ pause, startSeconds, startMs }) => {
+  const [seconds, setSeconds] = useState(startSeconds);
+  const [ms, setMs] = useState(startMs);
 
   useEffect(() => {
+    let timeoutHandle;
+
+    if (pause) {
+      clearTimeout(timeoutHandle);
+      return;
+    }
+
     if (seconds < 60) {
-      setTimeout(() => {
+      timeoutHandle = setTimeout(() => {
+        if (pause) return;
         setSeconds(prevSeconds => prevSeconds + 1);
       }, 1000);
     } else {
       setSeconds(0);
     }
-  }, [seconds]);
+
+    return () => clearTimeout(timeoutHandle);
+  }, [seconds, pause]);
 
   useEffect(() => {
+    let timeoutHandle;
+
+    if (pause) {
+      clearTimeout(timeoutHandle);
+      return;
+    }
+
     if (ms < 100) {
-      setTimeout(() => {
+      timeoutHandle = setTimeout(() => {
+        if (pause) return;
         setMs(prevMs => prevMs + 10);
       }, 100);
     } else {
       setMs(0);
     }
-  }, [ms]);
+
+    return () => clearTimeout(timeoutHandle);
+  }, [ms, pause]);
 
   return (
     <span>
-      {seconds}.{ms}
+      {seconds}.{ms === 0 ? '00' : ms}
     </span>
   );
 };

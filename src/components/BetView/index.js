@@ -330,7 +330,7 @@ const BetView = ({
           value={tokenNumber}
           setValue={onTokenNumberChange}
           errorText={commitmentErrorText}
-          maxValue={maxBetAmount}
+          maxValue={+balance}
         />
       </>
     );
@@ -411,6 +411,8 @@ const BetView = ({
             highlightTheme={tradeButtonTheme}
             disabled={tradeButtonDisabled}
             disabledWithOverlay={false}
+            showTooltip={!choice}
+            tooltipDesc="You Need To Select An Option First"
           >
             Trade!
           </Button>
