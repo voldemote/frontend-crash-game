@@ -20,6 +20,7 @@ import WalletBalance from '../WalletBalance';
 import PaymentForm from '../PaymentForm';
 import { PAYMENT_TYPE } from 'constants/Payment';
 import { TransactionActions } from 'store/actions/transaction';
+import { AuthenticationActions } from 'store/actions/authentication';
 
 const Wallet = ({
   show,
@@ -29,6 +30,7 @@ const Wallet = ({
   transactions,
   referrals,
   fetchTransactions,
+  fetchReferrals,
 }) => {
   const menus = {
     wallet: 'wallet',
@@ -54,6 +56,7 @@ const Wallet = ({
     if (!show) {
       setOpenMenu(menus.wallet);
     }
+    fetchReferrals();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
@@ -124,6 +127,11 @@ const Wallet = ({
     setOpenMenu(menus.transactionHistory);
   };
 
+  const onReferralsClick = () => {
+    fetchReferrals();
+    setOpenMenu(menus.referrals);
+  };
+
   return (
     <div
       className={classNames(
@@ -151,7 +159,7 @@ const Wallet = ({
               classes={[styles.referrals]}
               label={`Referrals (${referralCount})`}
               icon={<Icon className={styles.optionIcon} iconType={'chat'} />}
-              onClick={() => setOpenMenu(menus.referrals)}
+              onClick={() => onReferralsClick()}
             />
 
             {renderSwitchableView()}
@@ -270,6 +278,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTransactions: () => {
       dispatch(TransactionActions.fetchAll());
+    },
+    fetchReferrals: () => {
+      dispatch(AuthenticationActions.fetchReferrals());
     },
   };
 };

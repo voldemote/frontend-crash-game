@@ -277,7 +277,6 @@ const refreshImportantData = function* () {
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ forceFetch: true }));
     yield put(EventActions.fetchAll());
-    yield put(AuthenticationActions.fetchReferrals());
 
     yield delay(10 * 1000);
     yield call(refreshImportantData);
