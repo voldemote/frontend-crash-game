@@ -51,17 +51,22 @@ class RosiAnimationController {
     this.background.startAnimation();
     this.app.stage.addChild(this.background.container);
 
+    this.coinExplosion = new CoinExplosion(this.app);
+    this.app.stage.addChild(this.coinExplosion.container);
+
     this.coinAndTrajectory = new CoinAnimation(this.app);
     this.app.stage.addChild(this.coinAndTrajectory.container);
   }
 
   start() {
-    this.coinAndTrajectory.startAnimation();
-    // this.background.startAnimation();
+    this.coinAndTrajectory.startCoinFlyingAnimation();
   }
 
   end() {
-    this.coinAndTrajectory.endAnimation();
+    const coinPosition = this.coinAndTrajectory.getCoinExplosionPosition();
+    this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
+    this.coinAndTrajectory.endCoinFlyingAnimation();
+    this.coinAndTrajectory.startElonAfterExplosionAnimation();
   }
 }
 
