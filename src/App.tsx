@@ -1,6 +1,7 @@
 import './styles.module.scss';
 import AlertBox from './components/AlertBox';
 import Bet from './screens/Bet';
+import NewBet from './screens/NewBet';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
 import Popup from './components/Popup';
@@ -50,6 +51,7 @@ const App = () => {
             />
             <Route exact path={Routes.home} component={Home} />
             <Route exact path={Routes.bet} component={Bet} />
+            <Route exact path={Routes.newBet} component={NewBet} />
             <Route
               exact
               path={Routes.walletDeposit}

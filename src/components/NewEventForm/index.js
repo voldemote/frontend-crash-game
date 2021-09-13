@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Moment from 'moment';
 import {
   DateTimePicker,
   FormGroup,
@@ -22,7 +23,7 @@ const NewEventForm = () => {
   const [offlinePictureUrl, setOfflinePictureUrl] = useState('');
   const [category, setCategory] = useState(categoriesOptions[0].value);
   const [tags, setTags] = useState([{ id: Date.now(), value: '' }]);
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(new Moment());
 
   const handleSave = () => {
     console.log({
