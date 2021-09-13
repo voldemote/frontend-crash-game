@@ -13,6 +13,7 @@ import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions, GeneralTypes } from 'store/actions/general';
 import EmailNotifications from 'components/EmailNotifications';
+import { BetActions } from 'store/actions/bet';
 
 const MainMenu = ({
   opened,
@@ -25,6 +26,7 @@ const MainMenu = ({
   myTradesVisible,
   emailNotificationsVisible,
   close,
+  fetchOpenBets,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -50,6 +52,7 @@ const MainMenu = ({
   };
 
   const onMyTradesClick = () => {
+    fetchOpenBets();
     handleMyTradesVisible(!myTradesVisible);
   };
 
@@ -110,7 +113,7 @@ const MainMenu = ({
           My Trades
         </h2>
 
-        <MyTrades close={close} />
+        <MyTrades close={close} fetchBets={myTradesVisible} />
       </div>
     );
   };
@@ -289,6 +292,9 @@ const mapDispatchToProps = dispatch => {
     },
     handleEmailNotificationsVisible: bool => {
       dispatch(GeneralActions.setEmailNotificationsVisible(bool));
+    },
+    fetchOpenBets: () => {
+      dispatch(BetActions.fetchOpenBets());
     },
   };
 };

@@ -1,30 +1,16 @@
 import styles from './styles.module.scss';
 import SwitchableContainer from '../../components/SwitchableContainer';
 import SwitchableHelper from '../../helper/SwitchableHelper';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import MyTradesList from '../MyTradesList';
-import { BetActions } from 'store/actions/bet';
-import { useHasMounted } from 'components/hoc/useHasMounted';
 
-const MyTrades = ({
-  openBets,
-  transactions,
-  fetchOpenBets,
-  close: closeDrawer,
-}) => {
+const MyTrades = ({ openBets, transactions, close: closeDrawer }) => {
   const [switchIndex, setSwitchIndex] = useState(0);
-  const hasMounted = useHasMounted();
-
-  useEffect(() => {
-    if (hasMounted) {
-      fetchOpenBets();
-    }
-  }, []);
 
   const renderSwitchableView = () => {
     const switchableViews = [
@@ -134,12 +120,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchOpenBets: () => {
-      dispatch(BetActions.fetchOpenBets());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyTrades);
+export default connect(mapStateToProps, null)(MyTrades);
