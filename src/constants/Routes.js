@@ -29,6 +29,7 @@ export default {
   games: '/games',
   home: '/',
   liveEvents: '/live-events/:category?',
+  newLiveEvent: '/live-events/new',
   logout: '/logout',
   privacyPolicy: '/privacy-policy',
   rosiGame: '/games/rosi-game',

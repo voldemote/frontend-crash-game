@@ -2,7 +2,6 @@ import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import Input from '../Input';
 import PhoneInput from '../PhoneInput';
-import React from 'react';
 import styles from './styles.module.scss';
 import IconTheme from '../Icon/IconTheme';
 import InputBoxTheme from './InputBoxTheme';
