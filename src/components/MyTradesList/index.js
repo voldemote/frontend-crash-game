@@ -3,9 +3,9 @@ import _ from 'lodash';
 import StateBadge from '../StateBadge';
 import classNames from 'classnames';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { calculateGain } from '../../helper/Calculation';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { BetActions } from 'store/actions/bet';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 
@@ -18,15 +18,7 @@ const MyTradesList = ({
 }) => {
   const renderBets = () => {
     return _.map(bets, (item, index) => {
-      const negativeOutcome =
-        _.toNumber(item.investmentAmount) > _.toNumber(item.outcomeAmount);
-      const outcomePercentage = negativeOutcome
-        ? `-${formatToFixed(
-            (100 - item.outcomeAmount / item.investmentAmount) * 100
-          )}% `
-        : `+${formatToFixed(
-            (item.investmentAmount / item.outcomeAmount) * 100
-          )}% `;
+      const gain = calculateGain(item.investmentAmount, item.outcomeAmount);
 
       return (
         <div key={index} className={styles.betItem}>
@@ -59,10 +51,10 @@ const MyTradesList = ({
                 <span
                   className={classNames(
                     styles.percentage,
-                    negativeOutcome ? styles.negative : null
+                    gain.negative ? styles.negative : null
                   )}
                 >
-                  {outcomePercentage}
+                  {gain.value}
                 </span>
                 {item.outcomeAmount}
               </div>
