@@ -8,6 +8,7 @@ export const RosiGameTypes = {
   RESET_IN_GAME_BETS: 'RosiGame/RESET_IN_GAME_BETS',
   ADD_CASHED_OUT: 'RosiGame/ADD_CASHED_OUT',
   RESET_CASHED_OUT: 'RosiGame/RESET_CASHED_OUT',
+  TICK: 'RosiGame/TICK',
 };
 
 const initializeState = payload => ({
@@ -47,6 +48,10 @@ const resetCashedOut = payload => ({
   type: RosiGameTypes.RESET_CASHED_OUT,
 });
 
+const tick = () => ({
+  type: RosiGameTypes.TICK,
+});
+
 export const RosiGameActions = {
   initializeState,
   setHasStarted,
@@ -56,4 +61,5 @@ export const RosiGameActions = {
   resetInGameBets,
   addCashedOut,
   resetCashedOut,
+  tick,
 };
