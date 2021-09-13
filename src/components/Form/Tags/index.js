@@ -1,4 +1,5 @@
 import { ReactComponent as AddTagIcon } from './add-icon.svg';
+import Input from '../Input';
 import styles from './styles.module.scss';
 
 const Tags = ({ tags, onTagChange, addTag }) => {
@@ -6,10 +7,10 @@ const Tags = ({ tags, onTagChange, addTag }) => {
     <div className={styles.tags}>
       {tags.map((tag, index) => (
         <div key={tag.id} className={styles.tag}>
-          <input
+          <Input
             type="text"
             value={tags[index].value}
-            onChange={(e) => onTagChange(e.target.value, tag.id)}
+            onChange={value => onTagChange(value, tag.id)}
             className={styles.tagInput}
           />
         </div>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import { ReactComponent as ChevronDownIcon } from './chevron-down-icon.svg';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useOutsideClick } from 'hooks/useOutsideClick';
 
 function Select({ value, handleSelect, placeholder, options }) {
   const [isOpen, setIsOpen] = useState(false);

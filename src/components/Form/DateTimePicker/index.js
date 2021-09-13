@@ -1,5 +1,9 @@
 import MomentUtils from '@date-io/moment';
-import { DateTimePicker as MuiDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  DateTimePicker as MuiDateTimePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+import styles from './styles.module.scss';
 
 function DateTimePicker({ value, onChange, ...props }) {
   return (
@@ -9,6 +13,9 @@ function DateTimePicker({ value, onChange, ...props }) {
         inputVariant="outlined"
         value={value}
         onChange={onChange}
+        className={styles.datePicker}
+        InputLabelProps={{ shrink: true, className: styles.inputLabel }}
+        InputProps={{ className: styles.inputBase }}
         {...props}
       />
     </MuiPickersUtilsProvider>

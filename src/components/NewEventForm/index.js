@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import Select from './Select';
+import {
+  DateTimePicker,
+  FormGroup,
+  Input,
+  InputLabel,
+  Select,
+  Tags,
+} from '../Form';
 import { LIVE_EVENTS_CATEGORIES } from 'constants/EventCategories';
-import Tags from './Tags';
-import DateTimePicker from './DateTimePicker';
 import styles from './styles.module.scss';
 
 const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
@@ -43,61 +48,42 @@ const NewEventForm = () => {
 
   return (
     <>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>Event Name</div>
-        <input
-          type="text"
-          onChange={e => setEventName(e.target.value)}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>SEO-Optimized URL Piece</div>
-        <input
-          type="text"
-          onChange={e => setSeoPiece(e.target.value)}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>Stream URL</div>
-        <input
-          type="text"
-          onChange={e => setStreamUrl(e.target.value)}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>Offline Picture URL</div>
-        <input
-          type="text"
-          onChange={e => setOfflinePictureUrl(e.target.value)}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>Category</div>
+      <FormGroup>
+        <InputLabel>Event Name</InputLabel>
+        <Input type="text" onChange={setEventName} />
+      </FormGroup>
+      <FormGroup>
+        <InputLabel>SEO-Optimized URL Piece</InputLabel>
+        <Input type="text" onChange={setSeoPiece} />
+      </FormGroup>
+      <FormGroup>
+        <InputLabel>Stream URL</InputLabel>
+        <Input type="text" onChange={setStreamUrl} />
+      </FormGroup>
+      <FormGroup>
+        <InputLabel>Offline Picture URL</InputLabel>
+        <Input type="text" onChange={setOfflinePictureUrl} />
+      </FormGroup>
+      <FormGroup>
+        <InputLabel>Category</InputLabel>
         <Select
           value={category}
           handleSelect={setCategory}
           options={categoriesOptions}
         />
-      </div>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>Tags</div>
+      </FormGroup>
+      <FormGroup>
+        <InputLabel>Tags</InputLabel>
         <Tags tags={tags} onTagChange={handleTagChange} addTag={addNewTag} />
-      </div>
-      <div className={styles.formGroup}>
-        <div className={styles.label}>Date</div>
+      </FormGroup>
+      <FormGroup>
+        <InputLabel>Date</InputLabel>
         <DateTimePicker
           value={date}
           onChange={date => setDate(date)}
           ampm={false}
-          className={styles.datePicker}
-          InputLabelProps={{ shrink: true, className: styles.inputLabel }}
-          InputProps={{ className: styles.inputBase }}
         />
-      </div>
+      </FormGroup>
       <span
         role="button"
         tabIndex="0"
