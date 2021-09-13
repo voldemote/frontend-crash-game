@@ -148,7 +148,7 @@ const LotteryGame = ({
   const [activeQuestionNumber, setActiveQuestionNumber] = useState(
     initialQuestionNumber
   );
-  const [checkedOption, setCheckedOption] = useState();
+  const [checkedOption, setCheckedOption] = useState(null);
   const [complete, setCompleted] = useState(isComplete);
 
   useEffect(() => {
@@ -206,6 +206,8 @@ const LotteryGame = ({
     );
   }
 
+  const isSubmitDisabled = checkedOption === null;
+
   return (
     <div className={styles.card}>
       <div>
@@ -218,16 +220,18 @@ const LotteryGame = ({
         <h3>{activeQuestion.title}</h3>
         <div className={styles.questionOptions}>
           {activeQuestion.questions.map(({ index, name }) => {
+            const elementId = `${activeQuestion._id}_${index}`;
             return (
               <label
                 key={index}
+                for={elementId}
                 onClick={() => setOption(index)}
                 className={styles.radioButton}
                 checked={checkedOption === index}
               >
                 <input
                   type="radio"
-                  id="1"
+                  id={elementId}
                   name={name}
                   value={index}
                   checked={checkedOption === index}
@@ -259,7 +263,7 @@ const LotteryGame = ({
           <Button
             className={styles.nextQuestionBtn}
             onClick={handleContinue}
-            disabled={!checkedOption}
+            disabled={isSubmitDisabled}
           >
             {hasNextQuestion ? 'Next Question' : 'Confirm'}
             <Icon
