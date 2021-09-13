@@ -328,6 +328,7 @@
         {
             background-color:   transparent;
             margin-bottom:      12px;
+            cursor: pointer;
 
             &.sellButton
             {
@@ -438,4 +439,10 @@
         bottom: 0;
         background-color: $colorPrimary90;
     }
+}
+
+.tooltip {
+    font-family: $fontBold;
+    max-width: 180px;
+    background-color: $colorPrimary45 !important;
 }

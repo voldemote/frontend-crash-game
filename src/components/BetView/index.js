@@ -37,6 +37,7 @@ import ErrorHint from '../ErrorHint';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
 import { GeneralActions } from 'store/actions/general';
+import ReactTooltip from 'react-tooltip';
 
 const BetView = ({
   betId,
@@ -397,23 +398,33 @@ const BetView = ({
       const tradeButtonDisabled = !(validInput && enabled);
       let tradeButtonTheme = null;
 
-      if (tradeButtonDisabled) {
-        tradeButtonTheme = HighlightTheme.fillGray;
-      }
-
       return (
         <>
           {renderTradeDesc()}
-          <Button
-            className={classNames(styles.betButton)}
-            onClick={!tradeButtonDisabled ? onTradeButtonConfirm : _.noop}
-            highlightType={HighlightType.highlightHomeCtaBet}
-            highlightTheme={tradeButtonTheme}
-            disabled={tradeButtonDisabled}
-            disabledWithOverlay={false}
+          <span
+            data-for="tool-tip"
+            data-tip={'You Need To Select An Option First'}
           >
-            Trade!
-          </Button>
+            <Button
+              className={classNames(styles.betButton)}
+              onClick={!tradeButtonDisabled ? onTradeButtonConfirm : _.noop}
+              highlightType={HighlightType.highlightHomeCtaBet}
+              highlightTheme={tradeButtonTheme}
+              disabled={tradeButtonDisabled}
+              disabledWithOverlay={false}
+            >
+              Trade!
+            </Button>
+          </span>
+
+          <ReactTooltip
+            id="tool-tip"
+            className={styles.tooltip}
+            place="top"
+            effect="solid"
+            offset={{ bottom: 10 }}
+            disable={!tradeButtonDisabled}
+          />
         </>
       );
     }
