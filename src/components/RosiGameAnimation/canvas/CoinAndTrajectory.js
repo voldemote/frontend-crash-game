@@ -75,13 +75,11 @@ export class CoinAnimation {
       x += vx * acceleration * speed * dt;
       y += vy * acceleration * speed * dt;
 
-      // console.log(`x: ${x}, y: ${y}, prev_x: ${prev_x}, prev_y: ${prev_y}`);
-
       this.trajectory.lineStyle(2, 0x7300d8, 1);
       this.trajectory.moveTo(prev_x, prev_y);
       this.trajectory.lineTo(x, y);
 
-      if (this.elonAndCoin.x > destX - 150 && speed >= 0) {
+      if (this.elonAndCoin.x > destX - 150 && speed > 0) {
         speed -= 0.05 * dt;
       }
 
