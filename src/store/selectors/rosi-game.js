@@ -1,7 +1,7 @@
 export const selectHasStarted = state => state.rosiGame.hasStarted;
-export const selectGameStartTimestamp = state =>
-  state.rosiGame.gameStartTimestamp;
+export const selectTimeStarted = state => state.rosiGame.timeStarted;
 export const selectUserBet = state => state.rosiGame.userBet;
+export const selectLastCrash = state => state.rosiGame.lastCrashes[0];
 export const selectLastCrashes = state =>
   state.rosiGame.lastCrashes.slice(0, 10);
 export const selectInGameBets = ({ rosiGame }) => {

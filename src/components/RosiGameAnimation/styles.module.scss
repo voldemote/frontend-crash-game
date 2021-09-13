@@ -10,16 +10,28 @@
   height: 340px;
   position: relative;
 
+  @media (max-width: $screen-xs-max) {
+    height: 244px;
+  }
+
   .timer {
     position: absolute;
     font-size: 110px;
     font-weight: bold;
     text-shadow: 4px 2px 2px #859acf;
     color: $colorWhite;
+
+    @media (max-width: $screen-xs-max) {
+      top: 16px;
+      left: 20px;
+      font-size: 36px;
+    }
   }
 
   .canvas {
     border-radius: 12px;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -38,6 +50,10 @@
     margin-bottom: 10px;
     color: $colorWhite;
     text-align: center;
+
+    @media (max-width: $screen-xs-max) {
+      font-size: 32px;
+    }
   }
 
   .description {

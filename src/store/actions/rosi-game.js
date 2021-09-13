@@ -18,6 +18,7 @@ const initializeState = payload => ({
 
 const setHasStarted = payload => ({
   type: RosiGameTypes.SET_HAS_STARTED,
+  payload,
 });
 
 const setUserBet = payload => ({
