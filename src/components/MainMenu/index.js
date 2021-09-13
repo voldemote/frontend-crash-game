@@ -14,6 +14,7 @@ import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions, GeneralTypes } from 'store/actions/general';
 import EmailNotifications from 'components/EmailNotifications';
 import { BetActions } from 'store/actions/bet';
+import { TransactionActions } from 'store/actions/transaction';
 
 const MainMenu = ({
   opened,
@@ -27,6 +28,7 @@ const MainMenu = ({
   emailNotificationsVisible,
   close,
   fetchOpenBets,
+  fetchTransactions,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -53,6 +55,7 @@ const MainMenu = ({
 
   const onMyTradesClick = () => {
     fetchOpenBets();
+    fetchTransactions();
     handleMyTradesVisible(!myTradesVisible);
   };
 
@@ -295,6 +298,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchOpenBets: () => {
       dispatch(BetActions.fetchOpenBets());
+    },
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
     },
   };
 };

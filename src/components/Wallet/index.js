@@ -19,6 +19,7 @@ import { TOKEN_NAME } from '../../constants/Token';
 import WalletBalance from '../WalletBalance';
 import PaymentForm from '../PaymentForm';
 import { PAYMENT_TYPE } from 'constants/Payment';
+import { TransactionActions } from 'store/actions/transaction';
 
 const Wallet = ({
   show,
@@ -27,6 +28,7 @@ const Wallet = ({
   close,
   transactions,
   referrals,
+  fetchTransactions,
 }) => {
   const menus = {
     wallet: 'wallet',
@@ -117,6 +119,11 @@ const Wallet = ({
     );
   };
 
+  const onTransactionsClick = () => {
+    fetchTransactions();
+    setOpenMenu(menus.transactionHistory);
+  };
+
   return (
     <div
       className={classNames(
@@ -138,7 +145,7 @@ const Wallet = ({
               icon={
                 <Icon className={styles.optionIcon} iconType={'activities'} />
               }
-              onClick={() => setOpenMenu(menus.transactionHistory)}
+              onClick={() => onTransactionsClick()}
             />
             <MenuItem
               classes={[styles.referrals]}
@@ -259,4 +266,12 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

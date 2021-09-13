@@ -278,7 +278,6 @@ const refreshImportantData = function* () {
     yield put(UserActions.fetch({ forceFetch: true }));
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
-    yield put(TransactionActions.fetchAll());
 
     yield delay(10 * 1000);
     yield call(refreshImportantData);
