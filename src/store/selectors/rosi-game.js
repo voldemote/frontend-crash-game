@@ -20,9 +20,9 @@ export const selectCashedOut = ({ rosiGame }) => {
   if (rosiGame.hasStarted) {
     const currentCrashFactor =
       (Date.now() - rosiGame.gameStartTimestamp) / 1000;
-    return rosiGame.inGameBets.filter(
-      bet => bet.crashFactor <= currentCrashFactor
-    );
+    return rosiGame.inGameBets
+      .filter(bet => bet.crashFactor <= currentCrashFactor)
+      .map(bet => ({ ...bet, amount: bet.amount * bet.crashFactor }));
   } else {
     return rosiGame.cashedOut;
   }
