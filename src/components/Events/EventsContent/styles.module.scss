@@ -1,90 +1,96 @@
 @import '../../../styles/all';
 
 .title {
-    font-size: 30px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.02;
-    letter-spacing: 0.75px;
-    color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.02;
+  letter-spacing: 0.75px;
+  color: white;
 
-    margin: 32px auto 0;
-    width: 80%;
+  margin: 32px auto 0;
+  width: 80%;
 
-    @media (max-width: $screen-sm) {
-        margin: 0;
-        width: 100%;
-        padding: 0 15px 15px;
-    }
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    width: 100%;
+    padding: 0 15px 15px;
+  }
 }
 .header {
-    color: white;
-    width: 80%;
-    margin: 32px auto 0;
+  color: white;
+  width: 80%;
+  margin: 32px auto 0;
 
-    @media (min-width: $screen-lg) {
-        display: flex;
-        align-items: flex-end;
-    }
+  @media (min-width: $screen-lg) {
+    display: flex;
+    align-items: flex-end;
+  }
 
-    @media (max-width: $screen-sm) {
-        margin: 0;
-        width: 100%;
-        padding: 15px;
-    }
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    width: 100%;
+    padding: 15px;
+  }
 }
 
 .categories {
 }
 
 .search {
-    margin-top: 20px;
+  margin-top: 20px;
 
-    @media (min-width: $screen-lg) {
-        width: 220px;
-        margin-left: auto;
-        padding-left: 10px;
-    }
+  @media (min-width: $screen-lg) {
+    width: 220px;
+    margin-left: auto;
+    padding-left: 10px;
+  }
 }
 .sort {
-    margin-top: 20px;
+  margin-top: 20px;
 
-    @media (min-width: $screen-lg) {
-        width: 240px;
-        margin-left: 10px;
-        padding-left: 10px;
-    }
+  @media (min-width: $screen-lg) {
+    width: 240px;
+    margin-left: 10px;
+    padding-left: 10px;
+  }
 }
 
 .main {
-    color: white;
-    width: 80%;
-    margin: 32px auto 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  color: white;
+  width: 80%;
+  margin: 32px auto 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 
-    @media (max-width: $screen-sm) {
-        margin: 0;
-        padding: 0 15px;
-        width: 100%;
-    }
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    padding: 0 15px;
+    width: 100%;
+  }
+
+  @media (max-width: $screen-xs) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  > * {
+    margin-bottom: 10px;
+  }
+
+  > a {
+    text-decoration: none;
 
     @media (max-width: $screen-xs) {
-        flex-direction: column;
-        flex-wrap: nowrap;
+      width: 100%;
     }
+  }
+}
 
-    > * {
-        margin-bottom: 10px;
-    }
-
-    > a {
-        text-decoration: none;
-
-        @media (max-width: $screen-xs) {
-            width: 100%;
-        }
-    }
+.newEventLink {
+  display: block;
+  font-size: 20px;
+  color: $colorWhite;
 }

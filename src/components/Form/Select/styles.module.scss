@@ -1,4 +1,4 @@
-@import '../../styles/all';
+@import '../../../styles/all';
 
 .selectContainer {
   position: relative;
@@ -6,20 +6,14 @@
 }
 
 .selectField {
-  border: $border;
-  border-radius: 4px;
-  background-color: $colorDarkSlateGray;
-  height: 44px;
-  color: white;
+  background-color: transparent;
+  height: 52px;
+  color: rgba(18, 14, 39, 0.5);
   padding: 13px 46px 13px 20px;
   width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(14, 9, 39, 0.1);
   @include ellipsis;
-
-  &.open {
-    border-bottom: none;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
 }
 
 .selectOptions {
@@ -28,18 +22,14 @@
 
 .selectOverflowContainer {
   position: absolute;
+  top: 62px;
   overflow-y: auto;
   max-height: 300px;
   width: 100%;
-  border: $border;
-  border-radius: $radius;
+  border-radius: 12px;
   z-index: 500;
-  background-color: $colorDarkSlateGray;
-
-  &.open {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
+  border: 1px solid rgba(14, 9, 39, 0.1);
+  background-color: $colorWhite;
 }
 
 .selectItem {
@@ -48,7 +38,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: $colorDarkSlateGray;
+  background-color: $colorWhite;
   padding: 13px 20px;
 
   &:not(:first-child) {
@@ -57,6 +47,8 @@
 
   &:hover {
     cursor: pointer;
+    color: #3570ff;
+    background: rgba(53, 112, 255, 0.1);
   }
 }
 
@@ -67,8 +59,8 @@
 .arrowIcon {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%) scale(1.9);
   right: 20px;
+  top: 25px;
 
   path {
     fill: white;

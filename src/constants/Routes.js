@@ -25,10 +25,12 @@ const getRouteWithParameters = function (route, parameterValues) {
 export default {
   getRouteWithParameters,
   bet: '/trade/:eventSlug?/:betSlug?',
+  newBet: '/trade/new',
   events: '/events/:category?',
   games: '/games',
   home: '/',
   liveEvents: '/live-events/:category?',
+  newLiveEvent: '/live-events/new',
   logout: '/logout',
   privacyPolicy: '/privacy-policy',
   rosiGame: '/games/rosi-game',

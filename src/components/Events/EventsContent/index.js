@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import Search from '../../Search';
@@ -10,6 +10,8 @@ import { useMappedActions } from './hooks/useMappedActions';
 import { useSortFilter } from './hooks/useSortFilter';
 import { useRouteHandling } from './hooks/useRouteHandling';
 import ContentFooter from 'components/ContentFooter';
+import AdminOnly from 'components/AdminOnly';
+import Routes from 'constants/Routes';
 
 function EventsContent({ eventType, categories, setCategories }) {
   const [searchInput, setSearchInput] = useState('');
@@ -116,6 +118,11 @@ function EventsContent({ eventType, categories, setCategories }) {
             />
           </Link>
         ))}
+        <AdminOnly>
+          <Link to={Routes.newLiveEvent} className={styles.newEventLink}>
+            New Event
+          </Link>
+        </AdminOnly>
       </section>
       <ContentFooter />
     </>
