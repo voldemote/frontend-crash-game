@@ -3,18 +3,26 @@ import RosiAnimationBackground from './Background';
 import { CoinAnimation } from './CoinAndTrajectory';
 import TWEEN from '@tweenjs/tween.js';
 import CoinExplosion from './CoinExplosion';
+import { isMobileRosiGame } from './utils';
 
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
 
 function loadAssets(loader) {
+  const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
+  const resolution =
+    deviceType === 'mobile' ? Math.min(window.devicePixelRatio, 2) : 1;
+
+  const constructPath = asset =>
+    `/images/rosi-game/${deviceType}/@${resolution}x/${asset}`;
+
   loader
-    .add('coin', '/images/rosi-game/coin.png')
-    .add('elonmusk', '/images/rosi-game/elonmusk.png')
-    .add('redPlanet', '/images/rosi-game/redPlanet.png')
-    .add('purplePlanet', '/images/rosi-game/purplePlanet.png')
-    .add('star1', '/images/rosi-game/star1.png')
-    .add('star2', '/images/rosi-game/star2.png');
+    .add('coin', constructPath('coin.png'))
+    .add('elonmusk', constructPath('elonmusk.png'))
+    .add('redPlanet', constructPath('redPlanet.png'))
+    .add('purplePlanet', constructPath('purplePlanet.png'))
+    .add('star1', constructPath('star1.png'))
+    .add('star2', constructPath('star2.png'));
 
   loader.load();
 

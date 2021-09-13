@@ -1,4 +1,6 @@
+import { ROSI_GAME_MAX_DURATION_SEC } from 'constants/RosiGame';
 import * as PIXI from 'pixi.js';
+import { calcPercent } from './utils';
 
 export class CoinAnimation {
   constructor(app) {
@@ -12,13 +14,11 @@ export class CoinAnimation {
     this.container.addChild(this.elonAndCoin);
 
     this.coin = new PIXI.Sprite(this.app.loader.resources.coin.texture);
-    this.coin.scale.set(0.8);
     this.elonAndCoin.addChild(this.coin);
 
     this.elon = new PIXI.Sprite(this.app.loader.resources.elonmusk.texture);
-    this.elon.scale.set(0.29);
-    this.elon.x -= 20;
-    this.elon.y -= 90;
+    this.elon.x -= calcPercent(this.elon.width, 20);
+    this.elon.y -= calcPercent(this.elon.height, 70);
     this.elonAndCoin.addChild(this.elon);
 
     this.elonAndCoindAnimationHandle = null;
@@ -46,15 +46,16 @@ export class CoinAnimation {
     this.setCoinDefaultPosition();
 
     /* Coin and Elon */
-    const destX = this.app.renderer.width - 180;
-    const destY = 100;
+    const destX = this.app.renderer.width;
+    const destY = calcPercent(this.app.renderer.height, 15);
     const distanceX = destX - this.elonAndCoin.x;
     const distanceY = destY - this.elonAndCoin.y;
     const length = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
     const vx = distanceX / length;
     const vy = distanceY / length;
-    let speed = 1.5;
-    let acceleration = 6;
+    const defaultSpeed = length / (ROSI_GAME_MAX_DURATION_SEC * 100);
+    // start with higher speed for the boost effect
+    let speed = defaultSpeed * 10;
 
     let x = -40;
     let y = this.app.renderer.height - 20;
@@ -62,29 +63,27 @@ export class CoinAnimation {
     // save for later elon flying animation after coin explosion
     this.elonAndCoin.vx = vx;
     this.elonAndCoin.vy = vy;
-    this.elonAndCoin.speed = speed;
+    this.elonAndCoin.speed = defaultSpeed;
 
     const update = dt => {
       if (this.elonAndCoin.x < destX || this.elonAndCoin.y > destY) {
-        this.elonAndCoin.x += vx * acceleration * speed * dt;
-        this.elonAndCoin.y += vy * acceleration * speed * dt;
+        this.elonAndCoin.x += vx * speed * dt;
+        this.elonAndCoin.y += vy * speed * dt;
       }
 
       let prev_x = x;
       let prev_y = y;
-      x += vx * acceleration * speed * dt;
-      y += vy * acceleration * speed * dt;
+      x += vx * speed * dt;
+      y += vy * speed * dt;
 
       this.trajectory.lineStyle(2, 0x7300d8, 1);
       this.trajectory.moveTo(prev_x, prev_y);
       this.trajectory.lineTo(x, y);
 
-      if (this.elonAndCoin.x > destX - 150 && speed > 0) {
-        speed -= 0.05 * dt;
-      }
-
-      if (acceleration > 1) {
-        acceleration -= 0.1 * dt;
+      if (speed > defaultSpeed) {
+        speed -= (defaultSpeed / 8) * dt; // 8 is a magic number...
+      } else {
+        speed = defaultSpeed;
       }
     };
 
@@ -104,8 +103,8 @@ export class CoinAnimation {
 
   startElonAfterExplosionAnimation() {
     const rotationSpeed = 0.005;
-    // for the sake of simplicty animate elonAndCoin container instead of just elon
-    // coin is hidden anyway and positions are already being reset before next animation
+    // For the sake of simplicty animate elonAndCoin container instead of just elon.
+    // Coin is hidden anyway and positions are already being reset before next animation.
     const update = dt => {
       this.elonAndCoin.rotation += rotationSpeed * dt;
       this.elonAndCoin.x += this.elonAndCoin.vx * this.elonAndCoin.speed * dt;
