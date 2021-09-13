@@ -55,6 +55,7 @@ const resendEmailVerification = () => {
   return Api.get(ApiUrls.API_AUTHENTICATION_RESEND_EMAIL_VERIFICATION).catch(
     error => {
       console.log('[API Error] called verifyEmail:', error);
+      throw error;
     }
   );
 };
@@ -225,6 +226,26 @@ const sendEventEvaluate = (betQuestion, rating, comment) => {
     payload,
   }).catch(error => {
     console.log('[API Error] called: sendEventEvaluate', error);
+  })
+}
+
+const getRewardsQuestions = (questionId, answerId) => {
+  return Api.get('api/rewards/questions').catch(error => {
+    console.log('[API Error] called: getUser', error);
+    throw error;
+  });
+};
+
+const postRewardAnswer = (questionId, answerId, userId) => {
+  return Api.post('api/rewards/answer', {
+    user: {
+      id: userId,
+    },
+    questionId,
+    answerId,
+  }).catch(error => {
+    console.log('[API Error] called: getUser', error);
+    throw error;
   });
 };
 
@@ -253,4 +274,6 @@ export {
   getTags,
   getEventHistoryChartData,
   sendEventEvaluate,
+  getRewardsQuestions,
+  postRewardAnswer,
 };
