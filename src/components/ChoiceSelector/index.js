@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import SelectionHelper from '../../helper/SelectionHelper';
@@ -6,14 +5,12 @@ import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _ from 'lodash';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
-import Icon from '../Icon';
-import IconType from '../Icon/IconType';
-import IconTheme from '../Icon/IconTheme';
+import { calculateGain } from 'helper/Calculation';
 
 const ChoiceSelector = ({
   name,
   winAmount,
-  wfairValue,
+  commitment,
   selected,
   className,
   theme,
@@ -22,6 +19,8 @@ const ChoiceSelector = ({
   onClick,
 }) => {
   const renderWinAmount = () => {
+    const gain = calculateGain(commitment, winAmount);
+
     if (!hideAmount) {
       const roundedWinAmount = _.round(winAmount, 2);
       const winAmountString = roundedWinAmount
@@ -33,27 +32,21 @@ const ChoiceSelector = ({
           )
         : '-';
 
-      const euroAmount = wfairValue * roundedWinAmount;
-      const euroAmountString = euroAmount
-        ? formatToFixed(
-            euroAmount,
-            3 - parseInt(euroAmount, 10).toString().length > 0
-              ? 3 - parseInt(euroAmount, 10).toString().length
-              : 0
-          )
-        : '-';
-
       return (
         <div className={styles.choiceWinAmountContainer}>
           <div className={styles.choiceWinAmount}>{winAmountString}</div>
           <div className={styles.choiceWinAmountUnitContainer}>
             <div className={styles.choiceWinAmountUnit}>{TOKEN_NAME}</div>
             <div className={styles.choiceWinAmountCash}>
-              {euroAmountString} EURO
-              <Icon
-                className={styles.infoIcon}
-                iconType={IconType.infoReverse}
-              />
+              {gain.negative ? 'Loss' : 'Gain'}
+              <span
+                className={classNames(
+                  styles.percentage,
+                  gain.negative ? styles.negative : null
+                )}
+              >
+                {gain.value}
+              </span>
             </div>
           </div>
         </div>

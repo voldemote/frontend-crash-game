@@ -259,10 +259,10 @@ const BetView = ({
     return !isSell || getOpenBetsValue(index) > 0;
   };
 
-  const switchableChange = index => {
-    setChoice(null);
-    setCurrentTradeView(index);
-  };
+  // const switchableChange = index => {
+  //   setChoice(null);
+  //   setCurrentTradeView(index);
+  // };
 
   // const renderSwitchableView = () => {
   //   // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
@@ -307,7 +307,7 @@ const BetView = ({
         className={styles.choice}
         name={name}
         winAmount={getOutcome(index)}
-        wfairValue={wfairValue}
+        commitment={tokenNumber}
         selected={choice === index || forceSelect}
         onClick={!resolved ? onChoiceSelect(index, enabled) : _.noop}
         hideAmount={resolved}
