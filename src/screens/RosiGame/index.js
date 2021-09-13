@@ -41,6 +41,12 @@ const RosiGame = () => {
       });
   }, [dispatch]);
 
+  //Bets state update interval
+  useEffect(() => {
+    const interval = setInterval(() => dispatch(RosiGameActions.tick()), 500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>

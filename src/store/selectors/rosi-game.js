@@ -4,5 +4,26 @@ export const selectGameStartTimestamp = state =>
 export const selectUserBet = state => state.rosiGame.userBet;
 export const selectLastCrashes = state =>
   state.rosiGame.lastCrashes.slice(0, 10);
-export const selectInGameBets = state => state.rosiGame.inGameBets;
-export const selectCashedOut = state => state.rosiGame.cashedOut;
+export const selectInGameBets = ({ rosiGame }) => {
+  if (rosiGame.hasStarted) {
+    const currentCrashFactor =
+      (Date.now() - rosiGame.gameStartTimestamp) / 1000;
+    return rosiGame.inGameBets.filter(
+      bet => bet.crashFactor > currentCrashFactor
+    );
+  } else {
+    return rosiGame.inGameBets;
+  }
+};
+
+export const selectCashedOut = ({ rosiGame }) => {
+  if (rosiGame.hasStarted) {
+    const currentCrashFactor =
+      (Date.now() - rosiGame.gameStartTimestamp) / 1000;
+    return rosiGame.inGameBets.filter(
+      bet => bet.crashFactor <= currentCrashFactor
+    );
+  } else {
+    return rosiGame.cashedOut;
+  }
+};
