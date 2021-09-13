@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import RosiAnimationBackground from './Background';
 import { CoinAnimation } from './CoinAndTrajectory';
 import TWEEN from '@tweenjs/tween.js';
+import CoinExplosion from './CoinExplosion';
 
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
@@ -28,7 +29,7 @@ class RosiAnimationController {
       view: canvas,
       backgroundColor: 0x12132e,
       resizeTo: canvas.parentElement,
-      resolution: window.devicePixelRatio >= 2 ? 2 : 1,
+      resolution: 1,
       antialias: true,
     });
 
