@@ -4,6 +4,7 @@
   width: 100%;
   margin: 0 auto;
   color: $colorWhite;
+  background-image: url('../../data/backgrounds/orb-bg.svg');
 
   @media (min-width: $screen-lg) {
     max-width: 1240px;
@@ -19,6 +20,7 @@
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
 
@@ -32,6 +34,39 @@
     font-size: 24px;
     font-weight: 500;
     margin-bottom: 10px;
+  }
+}
+
+.celebrationBadge {
+  align-self: flex-end;
+  animation: fadeIn 0.5s forwards;
+
+  @media screen and (max-width: $screen-sm-max) {
+    transform: translate(100px, -50px);
+  }
+
+  img {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+  }
+  span {
+    position: absolute;
+    right: 60px;
+    top: 97px;
+    width: 60px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -83,8 +118,13 @@
   flex: 0 415px;
 
   h3 {
-    font-size: 66px;
+    font-size: 32px;
     margin-bottom: 22px;
+
+    @media screen and (min-width: $screen-md) {
+      font-size: 66px;
+      word-spacing: 100vw;
+    }
   }
 
   p {
@@ -96,9 +136,11 @@
 .cardButton {
   height: 42px;
   font-size: 14px;
-  background-color: #ffffff;
+  background-color: #ffffff !important;
   background-image: url('../../data/images/signup-background-one.svg');
   background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .cardButtonDone {
@@ -129,22 +171,35 @@
 }
 
 .radioButton {
-  display: inline-block;
   background-color: #201f3b;
   border-radius: 10px;
   padding: 20px;
   user-select: none;
+  cursor: pointer;
+  text-align: left;
 
   input {
     margin-right: 22px;
   }
+
+  @media screen and (min-width: $screen-md) {
+    flex-basis: calc(33.3% - 20px);
+  }
 }
 
 .questionOptions {
-  display: grid;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: stretch;
   grid-gap: 20px;
-  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 40px;
+
+  @media screen and (min-width: $screen-md) {
+    justify-content: center;
+    align-items: center;
+    flex-flow: wrap;
+  }
 }
 
 .questionNumberLabel {
@@ -157,11 +212,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 80px;
+  flex-flow: wrap;
+  @media screen and (min-width: $screen-xs) {
+    margin-bottom: 80px;
+    flex-flow: nowrap;
+  }
 }
 
 .nextQuestionBtn {
   min-width: 220px;
+  font-size: 14px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: $screen-xs-max) {
+    flex: auto;
+    margin-top: 20px;
+  }
 }
 
 .skipQuestionBtn {
@@ -170,8 +237,11 @@
   min-width: 120px;
   border-radius: 10px;
   border: solid 1px rgba(226, 255, 84, 0.69);
-  background-color: transparent;
+  background-color: transparent !important;
   color: #e2ff54;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
 
   svg {
     width: 12px;
@@ -180,5 +250,56 @@
 
   svg * {
     stroke: #e2ff54 !important;
+  }
+}
+
+input[type='radio'] {
+  &.checkbox {
+    position: absolute;
+    left: -9999px;
+
+    & + label {
+      position: relative;
+      padding: 20px 20px 20px 60px;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        display: block;
+        transition-property: border-color, background-color;
+        transition: 0.2s ease-in-out;
+      }
+    }
+    &:checked + label {
+      &::before {
+        background: #e2ff54;
+        border: 2px solid #201f3b;
+      }
+    }
+  }
+}
+
+.loader {
+  animation: spin 2s linear infinite;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  opacity: 0.6;
+  border-bottom-color: transparent;
+  margin-bottom: 20px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
