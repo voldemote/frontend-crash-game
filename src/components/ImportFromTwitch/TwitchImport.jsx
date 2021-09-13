@@ -17,9 +17,6 @@ const TwitchImport = () => {
         value={url}
         setValue={setUrl}
         showDeleteIcon={false}
-        // disabled={userUnableToBet}
-        // className={styles.input}
-        // containerClassName={styles.inputBoxContainer}
       />
       <br />
       <Button

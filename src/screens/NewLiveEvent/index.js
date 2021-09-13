@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import Button from 'components/Button';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import ImportFromTwitch from 'components/ImportFromTwitch';
+import NewEventForm from 'components/NewEventForm';
 import styles from './styles.module.scss';
 
-import TwitchImport from './TwitchImport';
-import ManualCreate from './ManualCreate';
-
-const NewLiveEvents = ({ history }) => {
+const NewLiveEvents = () => {
   const [selectedMenu, setSelectedMenu] = useState('');
   const openTwitchMenu = () => {
     setSelectedMenu('twitch');
@@ -14,8 +13,6 @@ const NewLiveEvents = ({ history }) => {
   const openManualMenu = () => {
     setSelectedMenu('manual');
   };
-
-  console.log('MENU: ', selectedMenu);
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -39,8 +36,8 @@ const NewLiveEvents = ({ history }) => {
             </Button>
           </>
         )}
-        {selectedMenu === 'twitch' && <TwitchImport />}
-        {selectedMenu === 'manual' && <ManualCreate />}
+        {selectedMenu === 'twitch' && <ImportFromTwitch />}
+        {selectedMenu === 'manual' && <NewEventForm />}
       </div>
     </BaseContainerWithNavbar>
   );
