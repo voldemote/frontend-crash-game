@@ -109,8 +109,10 @@
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(2, 1fr);
-
   flex: 0 624px;
+  @media screen and (max-width: $screen-xs-max) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .rewardsInfo {

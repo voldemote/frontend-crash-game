@@ -22,6 +22,7 @@ import CelebrationBadge from '../../data/images/confetti-winnings-badge.svg';
 
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from 'constants/Token';
+import React from 'react';
 
 const RewardCard = ({
   rewardAmount = 0,
@@ -250,7 +251,7 @@ const LotteryGame = ({
           {activeQuestion.questions.map(({ index, name }) => {
             const elementId = `${activeQuestion._id}_${index}`;
             return (
-              <>
+              <React.Fragment key={elementId}>
                 <input
                   type="radio"
                   id={elementId}
@@ -260,14 +261,14 @@ const LotteryGame = ({
                   onChange={() => setOption(index)}
                 />
                 <label
-                  key={index}
+                  key={elementId}
                   htmlFor={elementId}
                   className={styles.radioButton}
                   checked={checkedOption === index}
                 >
                   {name}
                 </label>
-              </>
+              </React.Fragment>
             );
           })}
         </div>
