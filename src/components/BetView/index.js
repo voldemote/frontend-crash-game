@@ -580,6 +580,13 @@ const BetView = ({
               See <strong>Trade</strong> Details
             </span>
           </div>
+          <div
+            className={styles.menuItem}
+            onClick={() => showPopup(PopupTheme.editBet, { event, bet })}
+          >
+            {renderMenuInfoIcon()}
+            <span>Edit Bet</span>
+          </div>
         </div>
       </div>
     );

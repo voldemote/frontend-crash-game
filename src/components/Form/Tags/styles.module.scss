@@ -4,7 +4,7 @@
   width: 100%;
   border: 1px solid rgba(14, 9, 39, 0.1);
   border-radius: 12px;
-  padding: 18px 15px;
+  padding: 18px 25px 18px 15px;
 
   &:focus {
     outline: none;
@@ -16,6 +16,7 @@
 }
 
 .tag {
+  position: relative;
   width: 175px;
   float: left;
   margin-bottom: 10px;
@@ -37,6 +38,17 @@
   justify-content: space-around;
   border: 1px dashed rgba(14, 9, 39, 0.1);
   border-radius: 12px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.deleteTag {
+  display: inline-block;
+  position: absolute;
+  top: 14px;
+  right: 10px;
 
   &:hover {
     cursor: pointer;

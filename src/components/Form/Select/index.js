@@ -10,8 +10,6 @@ function Select({ value, handleSelect, placeholder, options }) {
     setIsOpen(false);
   });
 
-  console.log(isOpen);
-
   const handleSelectOpen = () => {
     setIsOpen(prevValue => !prevValue);
   };

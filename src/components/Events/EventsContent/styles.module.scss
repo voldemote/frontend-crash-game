@@ -93,4 +93,8 @@
   display: block;
   font-size: 20px;
   color: $colorWhite;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

@@ -35,6 +35,7 @@ import { useChartData } from './hooks/useChartData';
 import Placeholder from '../../components/Placeholder';
 import { useNewsFeed } from './hooks/useNewsFeed';
 import { useTabOptions } from './hooks/useTabOptions';
+import AdminOnly from 'components/AdminOnly';
 
 const Bet = ({
   showPopup,
@@ -556,6 +557,20 @@ const Bet = ({
           </div>
           <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
         </div>
+        <AdminOnly>
+          <span
+            className={styles.editEventLink}
+            onClick={() => showPopup(PopupTheme.editEvent, event)}
+          >
+            Edit Event
+          </span>
+          <span
+            className={styles.newBetLink}
+            onClick={() => showPopup(PopupTheme.newBet, { event })}
+          >
+            New Bet
+          </span>
+        </AdminOnly>
       </div>
     </BaseContainerWithNavbar>
   );

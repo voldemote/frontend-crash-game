@@ -17,4 +17,8 @@ export default {
   verifyEmail: 'verifyEmail',
   pulloutApprove: 'pulloutApprove',
   lotteryGameAnswered: 'lotteryGameAnswered',
+  newEvent: 'newEvent',
+  editEvent: 'editEvent',
+  newBet: 'newBet',
+  editBet: 'editBet',
 };
