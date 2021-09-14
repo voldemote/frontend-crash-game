@@ -122,7 +122,15 @@
     flex-direction: column;
   }
 
-  .categories,
+  .categories {
+    width: 100%;
+    padding: 0 10px;
+
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
+  }
+
   .leaderboard {
     width: 100%;
     padding: 0 10px;

@@ -11,6 +11,7 @@ import { BetActions } from 'store/actions/bet';
 import { TOKEN_NAME } from 'constants/Token';
 import { formatToFixed } from 'helper/FormatNumbers';
 import LikeIcon from '../../data/icons/like-icon.svg';
+import HighlightType from 'components/Highlight/HighlightType';
 
 const PulloutApprovePopup = ({
   hidePopup,
@@ -37,23 +38,28 @@ const PulloutApprovePopup = ({
         <strong>
           {formatToFixed(amount)} {TOKEN_NAME}
         </strong>
+        ?
       </p>
 
-      <Button
-        withoutBackground={true}
-        className={styles.approvePulloutButton}
-        onClick={onApprovePulloutClick}
-      >
-        OK
-      </Button>
+      <div className={styles.buttonContainer}>
+        <Button
+          withoutBackground={true}
+          className={styles.cancelPulloutButton}
+          onClick={onCancelPulloutClick}
+        >
+          Cancel
+        </Button>
 
-      <Button
-        withoutBackground={true}
-        className={styles.cancelPulloutButton}
-        onClick={onCancelPulloutClick}
-      >
-        Cancel
-      </Button>
+        <Button
+          withoutBackground={true}
+          className={styles.approvePulloutButton}
+          highlightType={HighlightType.highlightModalButton}
+          withoutBackground={true}
+          onClick={onApprovePulloutClick}
+        >
+          OK
+        </Button>
+      </div>
     </div>
   );
 };

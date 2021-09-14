@@ -21,10 +21,16 @@
       font-family: $fontBold;
     }
   }
+  .buttonContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
  
   .approvePulloutButton {
     background-color: $colorWhite;
-    width: 100%;
+    width: 100px;
     height: 60px;
     font-size: 20px;
     background-image: url('../../data/images/signup-background-one.svg');
@@ -34,5 +40,6 @@
   }
   .cancelPulloutButton {
     font-size: 15px;
+    margin-right: 100px;
   }
 }

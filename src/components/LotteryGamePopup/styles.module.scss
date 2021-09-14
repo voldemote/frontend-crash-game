@@ -23,6 +23,10 @@
     font-family: $fontBold;
     font-size: 30px;
     margin: 10px 0;
+
+    @media screen and (max-width: $screen-xs-max) {
+      font-size: 22px;
+    }
   }
 
   .subtitle {
