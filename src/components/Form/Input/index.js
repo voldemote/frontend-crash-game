@@ -8,6 +8,7 @@ const Input = ({ value, onChange, ...props }) => {
   return (
     <input
       type={props.type || 'text'}
+      value={value}
       onChange={handleChange}
       className={styles.input}
       {...props}

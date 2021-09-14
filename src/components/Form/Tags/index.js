@@ -6,11 +6,11 @@ const Tags = ({ tags, onTagChange, addTag }) => {
   return (
     <div className={styles.tags}>
       {tags.map((tag, index) => (
-        <div key={tag.id} className={styles.tag}>
+        <div key={tag._id} className={styles.tag}>
           <Input
             type="text"
-            value={tags[index].value}
-            onChange={value => onTagChange(value, tag.id)}
+            value={tags[index].name}
+            onChange={value => onTagChange(value, tag._id)}
             className={styles.tagInput}
           />
         </div>

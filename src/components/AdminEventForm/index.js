@@ -16,54 +16,74 @@ const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
   value: c.value,
 }));
 
-const NewEventForm = () => {
-  const [eventName, setEventName] = useState('');
-  const [seoPiece, setSeoPiece] = useState('');
-  const [streamUrl, setStreamUrl] = useState('');
-  const [offlinePictureUrl, setOfflinePictureUrl] = useState('');
-  const [category, setCategory] = useState(categoriesOptions[0].value);
-  const [tags, setTags] = useState([{ id: Date.now(), value: '' }]);
-  const [date, setDate] = useState(new Moment());
+const AdminEventForm = ({ event = null }) => {
+  const [name, setName] = useState(event.name || '');
+  const [slug, setSlug] = useState(event.slug || '');
+  const [streamUrl, setStreamUrl] = useState(event.streamUrl || '');
+  const [previewImageUrl, setPreviewImageUrl] = useState(
+    event.previewImageUrl || ''
+  );
+  const [category, setCategory] = useState(
+    event.category || categoriesOptions[0].value
+  );
+  const [tags, setTags] = useState(
+    event.tags || [{ _id: Date.now(), name: '' }]
+  );
+  const [date, setDate] = useState(event.date || new Moment());
+
+  console.log({
+    name,
+    slug,
+    streamUrl,
+    previewImageUrl,
+    category,
+    tags,
+    date,
+  });
 
   const handleSave = () => {
     console.log({
-      eventName,
-      seoPiece,
+      name,
+      slug,
       streamUrl,
-      offlinePictureUrl,
+      previewImageUrl,
       category,
-      tags: tags.map(t => t.value).filter(t => t !== ''),
+      tags: tags.filter(t => t.name !== ''),
       date,
     });
   };
 
-  const handleTagChange = (value, id) => {
+  const handleTagChange = (name, id) => {
     setTags(prevTags =>
-      prevTags.map(tag => (tag.id === id ? { ...tag, value } : tag))
+      prevTags.map(tag => (tag._id === id ? { ...tag, name } : tag))
     );
   };
 
   const addNewTag = () => {
-    setTags(prevTags => [...prevTags, { id: Date.now(), value: '' }]);
+    setTags(prevTags => [...prevTags, { _id: Date.now(), name: '' }]);
   };
 
   return (
     <>
       <FormGroup>
         <InputLabel>Event Name</InputLabel>
-        <Input type="text" onChange={setEventName} />
+        <Input type="text" value={name} onChange={setName} />
       </FormGroup>
       <FormGroup>
         <InputLabel>SEO-Optimized URL Piece</InputLabel>
-        <Input type="text" onChange={setSeoPiece} />
+        <Input type="text" value={slug} onChange={setSlug} />
       </FormGroup>
       <FormGroup>
         <InputLabel>Stream URL</InputLabel>
-        <Input type="text" onChange={setStreamUrl} />
+        <Input type="text" value={streamUrl} onChange={setStreamUrl} />
       </FormGroup>
       <FormGroup>
         <InputLabel>Offline Picture URL</InputLabel>
-        <Input type="text" onChange={setOfflinePictureUrl} />
+        <Input
+          type="text"
+          value={previewImageUrl}
+          onChange={setPreviewImageUrl}
+        />
       </FormGroup>
       <FormGroup>
         <InputLabel>Category</InputLabel>
@@ -97,4 +117,4 @@ const NewEventForm = () => {
   );
 };
 
-export default NewEventForm;
+export default AdminEventForm;

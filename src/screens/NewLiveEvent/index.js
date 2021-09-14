@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from 'components/Button';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import ImportFromTwitch from 'components/ImportFromTwitch';
-import NewEventForm from 'components/NewEventForm';
+import AdminEventForm from 'components/AdminEventForm';
 import styles from './styles.module.scss';
 
 const NewLiveEvents = () => {
@@ -37,7 +37,7 @@ const NewLiveEvents = () => {
           </>
         )}
         {selectedMenu === 'twitch' && <ImportFromTwitch />}
-        {selectedMenu === 'manual' && <NewEventForm />}
+        {selectedMenu === 'manual' && <AdminEventForm />}
       </div>
     </BaseContainerWithNavbar>
   );
