@@ -248,7 +248,7 @@ const LotteryGame = ({
         <p>Lottery Game</p>
         <h3>{activeQuestion.title}</h3>
         <div className={styles.questionOptions}>
-          {activeQuestion.questions.map(({ index, name }) => {
+          {activeQuestion.questions.map(({ index, name, imageUrl }) => {
             const elementId = `${activeQuestion._id}_${index}`;
             return (
               <React.Fragment key={elementId}>
@@ -266,7 +266,8 @@ const LotteryGame = ({
                   className={styles.radioButton}
                   checked={checkedOption === index}
                 >
-                  {name}
+                  <span>{name}</span>
+                  {!!imageUrl && <img src={imageUrl} alt={name} />}
                 </label>
               </React.Fragment>
             );
