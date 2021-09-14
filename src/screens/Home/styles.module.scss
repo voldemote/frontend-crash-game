@@ -20,6 +20,53 @@
   }
 }
 
+.mainHeadline {
+  color: $colorWhite;
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto;
+  margin-top: 143px;
+  padding: 0 20px;
+
+  h1 {
+    font-family: $fontBold;
+    font-size: 46px;
+    font-weight: bold;
+    line-height: 1.13;
+
+    @media (max-width: $screen-md) {
+      font-size: 38px;
+    }
+  }
+
+  p {
+    padding: 10px 0;
+    color: $colorWhite50;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.39;
+
+    @media (max-width: $screen-md) {
+      font-size: 16px;
+    }
+  }
+
+  div.slogan {
+    padding: 12px 0;
+    font-size: 24px;
+    font-family: $fontMedium;
+
+    span {
+      font-family: $fontBold;
+      color: $colorYellowLight;
+    }
+
+    @media (max-width: $screen-md) {
+      font-size: 20px;
+    }
+  }
+}
+
 .banner {
   background-image: url('../../data/backgrounds/games/rosi-games-banner-lg.png');
   min-height: 232px;

@@ -26,6 +26,21 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
     }
   }, []);
 
+  const renderHeadline = () => {
+    return (
+      <div className={styles.mainHeadline}>
+        <h1>Wallfair Is A Social Entertainment Platform</h1>
+        <p>
+          That decentralizes the creative economy, enabling real-time
+          speculation on live and non-live events.
+        </p>
+        <div className={styles.slogan}>
+          Create<span>.</span>Play<span>.</span>Earn<span>.</span>
+        </div>
+      </div>
+    );
+  };
+
   const renderEventCreationButton = () => {
     return <FixedEventCreationIconButton />;
   };
@@ -87,6 +102,7 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
 
   return (
     <BaseContainerWithNavbar>
+      {renderHeadline()}
       <Header />
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
