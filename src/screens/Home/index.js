@@ -32,11 +32,10 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
         <h1>
           Decentralized Events
           <br />
-          Anytime, Anywhere
+          Anywhere, Anytime
         </h1>
-        <p>Be The House</p>
         <div className={styles.slogan}>
-          Create<span>.</span>Play<span>.</span>Earn<span>.</span>
+          Be<span>.</span>The<span>.</span>House<span>.</span>
         </div>
       </div>
     );
