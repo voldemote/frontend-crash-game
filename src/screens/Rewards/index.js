@@ -36,7 +36,7 @@ const RewardCard = ({
   return (
     <div className={styles.card}>
       <div className={styles.cardReward}>
-        <span>{rewardAmount} Wfair</span>
+        <span>{rewardAmount} WFAIR</span>
       </div>
       <p>{title}</p>
       <div className={styles.cardRewardDescrption}>{description}</div>
@@ -318,16 +318,25 @@ const Rewards = ({ user, showPopup }) => {
           <div className={styles.rewardsInfo}>
             <h3>Activation Games</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam
-              feugiat, turpis at pulvinar vulputate, erat libero tristique
-              tellus, nec bibendum odio risus sit amet ante. Fusce consectetuer
-              risus a nunc. Cras pede libero, dapibus nec, pretium sit amet.
+              Want to earn some extra WFAIR to use in the platform? Our
+              activation games are simple, fun and come with extra rewards. Each
+              week, we will add new activation games as you complete previous
+              levels. This could be anything from verifying your email address,
+              refering a friend or even submitting an event proposal.
             </p>
             <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam
-              feugiat, turpis at pulvinar vulputate, erat libero tristique
-              tellus, nec bibendum odio risus sit amet ante.
+              Low on WFAIR and your favourite event is coming up soon? No
+              problem! Play our Activation Games &amp; earn quickly, get back in
+              the game and don't miss a second.
             </p>
+            <p>So how does it work?</p>
+            <ul>
+              <li>Click one of the green buttons</li>
+              <li>Complete the game</li>
+              <li>Get WFAIR tokens dropped into your wallet</li>
+              <li>Play</li>
+            </ul>
+            <p>It is really that easy.</p>
           </div>
           <RewardCards user={user} />
         </div>

@@ -133,6 +133,26 @@
     margin-bottom: 14px;
     opacity: 0.6;
   }
+
+  ul {
+    margin-bottom: 14px;
+
+    li {
+      list-style: none;
+      margin-bottom: 5px;
+      opacity: 0.6;
+    }
+
+    li:before {
+      content: '';
+      display: inline-block;
+      height: 14px;
+      width: 14px;
+      background-image: url('../../data/icons/arrow-small-right.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
 }
 
 .cardButton {
