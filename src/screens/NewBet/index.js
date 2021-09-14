@@ -1,4 +1,4 @@
-import NewBetForm from 'components/NewBetForm';
+import AdminBetForm from 'components/AdminBetForm';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import styles from './styles.module.scss';
 
@@ -8,7 +8,7 @@ const NewLiveEvents = () => {
       <div className={styles.layout}>
         <h2>Bet Settings</h2>
         <br />
-        <NewBetForm />
+        <AdminBetForm />
       </div>
     </BaseContainerWithNavbar>
   );

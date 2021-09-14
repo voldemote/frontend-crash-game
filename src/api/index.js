@@ -226,8 +226,8 @@ const sendEventEvaluate = (betQuestion, rating, comment) => {
     payload,
   }).catch(error => {
     console.log('[API Error] called: sendEventEvaluate', error);
-  })
-}
+  });
+};
 
 const getRewardsQuestions = (questionId, answerId) => {
   return Api.get('api/rewards/questions').catch(error => {
@@ -247,6 +247,12 @@ const postRewardAnswer = (questionId, answerId, userId) => {
     console.log('[API Error] called: getUser', error);
     throw error;
   });
+};
+
+const createEvent = payload => {
+  return Api.post(ApiUrls.API_EVENT_CREATE, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
 };
 
 export {
@@ -276,4 +282,5 @@ export {
   sendEventEvaluate,
   getRewardsQuestions,
   postRewardAnswer,
+  createEvent,
 };

@@ -51,8 +51,8 @@ const App = () => {
               component={PrivacyPolicy}
             />
             <Route exact path={Routes.home} component={Home} />
-            <Route exact path={Routes.bet} component={Bet} />
             <Route exact path={Routes.newBet} component={NewBet} />
+            <Route exact path={Routes.bet} component={Bet} />
             <Route
               exact
               path={Routes.walletDeposit}

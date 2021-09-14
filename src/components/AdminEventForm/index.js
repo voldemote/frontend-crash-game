@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router';
 import Moment from 'moment';
 import {
   DateTimePicker,
@@ -8,7 +9,9 @@ import {
   Select,
   Tags,
 } from '../Form';
+import * as Api from 'api';
 import { LIVE_EVENTS_CATEGORIES } from 'constants/EventCategories';
+import Routes from 'constants/Routes';
 import styles from './styles.module.scss';
 
 const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
@@ -17,6 +20,7 @@ const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
 }));
 
 const AdminEventForm = ({ event = null }) => {
+  const history = useHistory();
   const [name, setName] = useState(event?.name || '');
   const [slug, setSlug] = useState(event?.slug || '');
   const [streamUrl, setStreamUrl] = useState(event?.streamUrl || '');
@@ -27,30 +31,30 @@ const AdminEventForm = ({ event = null }) => {
     event?.category || categoriesOptions[0].value
   );
   const [tags, setTags] = useState(
-    event?.tags || [{ _id: Date.now(), name: '' }]
+    event?.tags || [{ _id: Date.now().toString(), name: '' }]
   );
   const [date, setDate] = useState(event?.date || new Moment());
 
-  console.log({
-    name,
-    slug,
-    streamUrl,
-    previewImageUrl,
-    category,
-    tags,
-    date,
-  });
-
   const handleSave = () => {
-    console.log({
+    Api.createEvent({
       name,
       slug,
       streamUrl,
       previewImageUrl,
       category,
-      tags: tags.filter(t => t.name !== ''),
+      tags: tags.map(t => ({ name: t.name })).filter(t => t.name !== ''),
       date,
-    });
+      type: 'streamed',
+    })
+      .then(response => response.response.data)
+      .then(data => {
+        history.push(
+          Routes.getRouteWithParameters(Routes.bet, {
+            eventSlug: data.slug,
+            betSlug: '',
+          })
+        );
+      });
   };
 
   const handleTagChange = (name, id) => {
@@ -60,7 +64,10 @@ const AdminEventForm = ({ event = null }) => {
   };
 
   const addTag = () => {
-    setTags(prevTags => [...prevTags, { _id: Date.now(), name: '' }]);
+    setTags(prevTags => [
+      ...prevTags,
+      { _id: Date.now().toString(), name: '' },
+    ]);
   };
 
   const removeTag = id => {

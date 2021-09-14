@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { DateTimePicker, FormGroup, Input, InputLabel, Tags } from '../Form';
 import styles from './styles.module.scss';
 
-const NewBetForm = () => {
+const NewBetForm = ({ bet = null }) => {
   const [name, setName] = useState('');
   const [seoPiece, setSeoPiece] = useState('');
   const [options, setOptions] = useState([{ id: Date.now(), value: '' }]);
