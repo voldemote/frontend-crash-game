@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import Search from '../../Search';
@@ -12,8 +12,11 @@ import { useRouteHandling } from './hooks/useRouteHandling';
 import ContentFooter from 'components/ContentFooter';
 import AdminOnly from 'components/AdminOnly';
 import Routes from 'constants/Routes';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
 
 function EventsContent({ eventType, categories, setCategories }) {
+  const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState('');
 
   const { location, category } = useRouteHandling(eventType);
@@ -118,10 +121,22 @@ function EventsContent({ eventType, categories, setCategories }) {
             />
           </Link>
         ))}
+      </section>
+      <section className={styles.main}>
         <AdminOnly>
-          <Link to={Routes.newLiveEvent} className={styles.newEventLink}>
+          <div
+            className={styles.newEventLink}
+            onClick={() => {
+              dispatch(
+                PopupActions.show({
+                  popupType: PopupTheme.newEvent,
+                  options: {},
+                })
+              );
+            }}
+          >
             New Event
-          </Link>
+          </div>
         </AdminOnly>
       </section>
       <ContentFooter />

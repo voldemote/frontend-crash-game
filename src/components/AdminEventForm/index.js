@@ -35,8 +35,17 @@ const AdminEventForm = ({ event = null }) => {
   );
   const [date, setDate] = useState(event?.date || new Moment());
 
+  const handleSuccess = ({ response: { data } }) => {
+    history.push(
+      Routes.getRouteWithParameters(Routes.bet, {
+        eventSlug: data.slug,
+        betSlug: '',
+      })
+    );
+  };
+
   const handleSave = () => {
-    Api.createEvent({
+    const payload = {
       name,
       slug,
       streamUrl,
@@ -44,17 +53,14 @@ const AdminEventForm = ({ event = null }) => {
       category,
       tags: tags.map(t => ({ name: t.name })).filter(t => t.name !== ''),
       date,
-      type: 'streamed',
-    })
-      .then(response => response.response.data)
-      .then(data => {
-        history.push(
-          Routes.getRouteWithParameters(Routes.bet, {
-            eventSlug: data.slug,
-            betSlug: '',
-          })
-        );
-      });
+      type: event ? event.type : 'streamed',
+    };
+
+    if (event) {
+      Api.editEvent(event._id, payload).then(handleSuccess);
+    } else {
+      Api.createEvent(payload).then(handleSuccess);
+    }
   };
 
   const handleTagChange = (name, id) => {

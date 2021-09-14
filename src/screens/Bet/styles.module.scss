@@ -390,3 +390,15 @@
 .tabOptions {
   margin-top: 20px;
 }
+
+.editEventLink,
+.newBetLink {
+  display: inline;
+  font-size: 20px;
+  margin: 10px;
+  color: $colorWhite;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
