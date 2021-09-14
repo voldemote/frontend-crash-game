@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import styles from './styles.module.scss';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { getDefaultUser } from '../../helper/Profile';
@@ -11,10 +11,12 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import IconType from '../Icon/IconType';
-import { TOKEN_NAME } from '../../constants/Token';
+import { selectUser } from 'store/selectors/authentication';
 
 const MyBetCard = ({ onClick, transaction, showPopup }) => {
   const [menuOpened, setMenuOpened] = useState(false);
+
+  const { currency } = useSelector(selectUser);
 
   const renderFooter = () => {
     return (
@@ -48,7 +50,7 @@ const MyBetCard = ({ onClick, transaction, showPopup }) => {
         <div className={styles.summaryRow}>
           <span className={styles.infoName}>Start Price:</span>
           <span className={styles.infoValue}>
-            {amount} {TOKEN_NAME}
+            {amount} {currency}
           </span>
         </div>
         <div className={styles.summaryRow}>
@@ -59,7 +61,7 @@ const MyBetCard = ({ onClick, transaction, showPopup }) => {
 
         <div className={styles.summaryRow}>
           <span className={styles.cashoutValue}>
-            Cashout {outcomeReturn} {TOKEN_NAME}
+            Cashout {outcomeReturn} {currency}
           </span>
         </div>
       </div>

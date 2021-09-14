@@ -49,6 +49,7 @@ import { convert } from 'helper/Currency';
 const BetView = ({
   betId,
   eventId,
+  openBets,
   actionIsInProgress,
   closed,
   isPopup = false,
@@ -89,7 +90,6 @@ const BetView = ({
   const state = _.get(bet, 'status');
   const outcomes = _.get(useSelector(selectOutcomes), 'outcomes', {});
   const sellOutcomes = _.get(useSelector(selectSellOutcomes), 'outcomes', {});
-  const openBets = useSelector(selectOpenBets);
   const userLoggedIn = useSelector(
     state => state.authentication.authState === 'LOGGED_IN'
   );

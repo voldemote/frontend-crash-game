@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 import TimeLeftCounter from 'components/TimeLeftCounter';
 import ViewerBadge from 'components/ViewerBadge';
 import { Carousel } from 'react-responsive-carousel';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
@@ -36,20 +36,20 @@ import Placeholder from '../../components/Placeholder';
 import { useNewsFeed } from './hooks/useNewsFeed';
 import { useTabOptions } from './hooks/useTabOptions';
 import AdminOnly from 'components/AdminOnly';
+import { selectOpenBets } from 'store/selectors/bet';
+import { selectTransactions } from 'store/selectors/transaction';
+import { TransactionActions } from 'store/actions/transaction';
 
 const Bet = ({
   showPopup,
-  transactions,
-  openBets,
   authState,
   events,
   fetchOpenBets,
+  fetchTransactions,
 }) => {
   const { eventSlug, betSlug } = useParams();
 
   const [betId, setBetId] = useState(null);
-  const history = useHistory();
-
   const [swiper, setSwiper] = useState(null);
   const [betAction, setBetAction] = useState(2);
   const [betViewIsOpen, setBetViewIsOpen] = useState(false);
@@ -58,6 +58,10 @@ const Bet = ({
   const [relatedBets, setRelatedBets] = useState([]);
 
   const mobileChatRef = useRef(null);
+  const history = useHistory();
+
+  const openBets = useSelector(selectOpenBets);
+  const transactions = useSelector(selectTransactions);
 
   const currentFromLocation = useBetPreviousLocation();
   const {
@@ -115,6 +119,7 @@ const Bet = ({
     }
 
     fetchOpenBets();
+    fetchTransactions();
   }, [eventSlug, betSlug]);
 
   useEffect(() => {
@@ -556,8 +561,6 @@ const Bet = ({
 const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
-    transactions: state.transaction.transactions,
-    openBets: state.bet.openBets,
     events: state.event.events,
   };
 };
@@ -574,6 +577,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchOpenBets: () => {
       dispatch(BetActions.fetchOpenBets());
+    },
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
     },
   };
 };
