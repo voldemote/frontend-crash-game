@@ -18,7 +18,11 @@ import {
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from '../../store/actions/popup';
 
+import CelebrationBadge from '../../data/images/confetti-winnings-badge.svg';
+
 import styles from './styles.module.scss';
+import { TOKEN_NAME } from 'constants/Token';
+import React from 'react';
 
 const RewardCard = ({
   rewardAmount = 0,
@@ -50,14 +54,12 @@ const RewardCard = ({
           disabled={isDisabled}
           onClick={onClick}
         >
-          <div>
-            <span>{buttonText}</span>
-            <Icon
-              className={styles.iconRightSide}
-              iconType={IconType.arrowSmallRight}
-              iconTheme={IconTheme.black}
-            />
-          </div>
+          <span>{buttonText}</span>
+          <Icon
+            className={styles.iconRightSide}
+            iconType={IconType.arrowSmallRight}
+            iconTheme={IconTheme.black}
+          />
         </Button>
       )}
     </div>
@@ -150,10 +152,12 @@ const LotteryGame = ({
   );
   const [checkedOption, setCheckedOption] = useState(null);
   const [complete, setCompleted] = useState(isComplete);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getRewardsQuestions().then(res => {
       setQuestions(res.data);
+      setLoading(false);
     });
   }, []);
 
@@ -191,9 +195,28 @@ const LotteryGame = ({
     setCheckedOption(value);
   };
 
+  if (loading) {
+    return (
+      <div className={classNames(styles.card, styles.cardCenter)}>
+        <div className={styles.lotteryGameContent}>
+          <span className={styles.loader}></span>
+          <p>Looking for open lottery games...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!questions.length) {
-    // TODO loading layout
-    return null;
+    return (
+      <div className={classNames(styles.card, styles.cardCenter)}>
+        <div className={styles.lotteryGameContent}>
+          <p>
+            You've completed all existing lottery questions. <br /> Come back
+            later for more.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (complete) {
@@ -210,6 +233,12 @@ const LotteryGame = ({
 
   return (
     <div className={styles.card}>
+      {!isSubmitDisabled && (
+        <div className={styles.celebrationBadge}>
+          <img src={CelebrationBadge} alt="celebration" />
+          <span>180 {TOKEN_NAME}</span>
+        </div>
+      )}
       <div>
         <span className={styles.questionNumberLabel}>
           {activeQuestionNumber + 1}/{questions.length}
@@ -219,25 +248,28 @@ const LotteryGame = ({
         <p>Lottery Game</p>
         <h3>{activeQuestion.title}</h3>
         <div className={styles.questionOptions}>
-          {activeQuestion.questions.map(({ index, name }) => {
+          {activeQuestion.questions.map(({ index, name, imageUrl }) => {
             const elementId = `${activeQuestion._id}_${index}`;
             return (
-              <label
-                key={index}
-                for={elementId}
-                onClick={() => setOption(index)}
-                className={styles.radioButton}
-                checked={checkedOption === index}
-              >
+              <React.Fragment key={elementId}>
                 <input
                   type="radio"
                   id={elementId}
-                  name={name}
+                  name={activeQuestion._id}
                   value={index}
-                  checked={checkedOption === index}
+                  className={styles.checkbox}
+                  onChange={() => setOption(index)}
                 />
-                {name}
-              </label>
+                <label
+                  key={elementId}
+                  htmlFor={elementId}
+                  className={styles.radioButton}
+                  checked={checkedOption === index}
+                >
+                  <span>{name}</span>
+                  {!!imageUrl && <img src={imageUrl} alt={name} />}
+                </label>
+              </React.Fragment>
             );
           })}
         </div>
@@ -284,11 +316,7 @@ const Rewards = ({ user, showPopup }) => {
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.rewardsInfo}>
-            <h3>
-              Activation
-              <br />
-              Games
-            </h3>
+            <h3>Activation Games</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam
               feugiat, turpis at pulvinar vulputate, erat libero tristique
