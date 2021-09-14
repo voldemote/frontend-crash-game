@@ -4,6 +4,7 @@ import { CoinAnimation } from './CoinAndTrajectory';
 import TWEEN from '@tweenjs/tween.js';
 import CoinExplosion from './CoinExplosion';
 import { isMobileRosiGame } from './utils';
+import CashedOutAnimation from './CashedOutAnimation';
 
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
@@ -65,10 +66,14 @@ class RosiAnimationController {
 
     this.coinAndTrajectory = new CoinAnimation(this.app);
     this.app.stage.addChild(this.coinAndTrajectory.container);
+
+    this.cashedOut = new CashedOutAnimation(this.app);
+    this.app.stage.addChild(this.cashedOut.container);
   }
 
   start() {
     this.coinAndTrajectory.startCoinFlyingAnimation();
+    this.cashedOut.reset();
   }
 
   end() {
@@ -76,6 +81,11 @@ class RosiAnimationController {
     this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
     this.coinAndTrajectory.endCoinFlyingAnimation();
     this.coinAndTrajectory.startElonAfterExplosionAnimation();
+  }
+
+  doCashedOutAnimation(data) {
+    const point = this.coinAndTrajectory.getCoinExplosionPosition();
+    this.cashedOut.animate(point.x, point.y, data.amount, data.crashFactor);
   }
 }
 

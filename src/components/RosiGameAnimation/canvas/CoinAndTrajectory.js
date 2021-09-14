@@ -46,7 +46,7 @@ export class CoinAnimation {
     this.setCoinDefaultPosition();
 
     /* Coin and Elon */
-    const destX = this.app.renderer.width;
+    const destX = calcPercent(this.app.renderer.width, 90);
     const destY = calcPercent(this.app.renderer.height, 15);
     const distanceX = destX - this.elonAndCoin.x;
     const distanceY = destY - this.elonAndCoin.y;
@@ -97,7 +97,6 @@ export class CoinAnimation {
       this.elonAndCoindAnimationHandle = null;
     }
 
-    this.trajectory.clear();
     this.coin.alpha = 0;
   }
 

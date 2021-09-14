@@ -8,6 +8,7 @@ import {
   selectHasStarted,
   selectTimeStarted,
   selectLastCrash,
+  selectCashedOut,
 } from 'store/selectors/rosi-game';
 import Timer from './Timer';
 import Counter from './Counter';
@@ -18,6 +19,8 @@ const RosiGameAnimation = () => {
   const canvasRef = useRef(null);
   const lastCrashValue = useSelector(selectLastCrash);
   const gameStarted = useSelector(selectHasStarted);
+  const cashedOut = useSelector(selectCashedOut);
+  const [cashedOutCount, setCashedOutCount] = useState(0);
   const [isPreparingRound, setIsPreparingRound] = useState(!gameStarted);
   const [animationReady, setAnimationReady] = useState(false);
 
@@ -44,6 +47,7 @@ const RosiGameAnimation = () => {
     }
 
     if (gameStarted) {
+      setCashedOutCount(0);
       setIsPreparingRound(false);
       RosiGameAnimationController.start();
       return;
@@ -56,6 +60,19 @@ const RosiGameAnimation = () => {
       setTimeout(() => setIsPreparingRound(true), ROSI_GAME_AFTER_CRASH_DELAY);
     }
   }, [gameStarted, animationReady]); // eslint-disable-line
+
+  useEffect(() => {
+    if (!animationReady || !gameStarted) {
+      return;
+    }
+
+    if (cashedOut && cashedOut.length > cashedOutCount) {
+      setCashedOutCount(cashedOutCount + 1);
+      RosiGameAnimationController.doCashedOutAnimation(
+        cashedOut[cashedOut.length - 1]
+      );
+    }
+  }, [animationReady, gameStarted, cashedOut]);
 
   return (
     <div className={styles.animation}>
