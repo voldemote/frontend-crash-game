@@ -2,7 +2,7 @@ import { ReactComponent as AddTagIcon } from './add-icon.svg';
 import Input from '../Input';
 import styles from './styles.module.scss';
 
-const Tags = ({ tags, onTagChange, addTag }) => {
+const Tags = ({ tags, onTagChange, addTag, removeTag }) => {
   return (
     <div className={styles.tags}>
       {tags.map((tag, index) => (
@@ -13,6 +13,9 @@ const Tags = ({ tags, onTagChange, addTag }) => {
             onChange={value => onTagChange(value, tag._id)}
             className={styles.tagInput}
           />
+          <span className={styles.deleteTag} onClick={() => removeTag(tag._id)}>
+            x
+          </span>
         </div>
       ))}
       <div className={styles.tag}>

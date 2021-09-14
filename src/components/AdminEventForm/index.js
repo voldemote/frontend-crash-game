@@ -17,19 +17,19 @@ const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
 }));
 
 const AdminEventForm = ({ event = null }) => {
-  const [name, setName] = useState(event.name || '');
-  const [slug, setSlug] = useState(event.slug || '');
-  const [streamUrl, setStreamUrl] = useState(event.streamUrl || '');
+  const [name, setName] = useState(event?.name || '');
+  const [slug, setSlug] = useState(event?.slug || '');
+  const [streamUrl, setStreamUrl] = useState(event?.streamUrl || '');
   const [previewImageUrl, setPreviewImageUrl] = useState(
-    event.previewImageUrl || ''
+    event?.previewImageUrl || ''
   );
   const [category, setCategory] = useState(
-    event.category || categoriesOptions[0].value
+    event?.category || categoriesOptions[0].value
   );
   const [tags, setTags] = useState(
-    event.tags || [{ _id: Date.now(), name: '' }]
+    event?.tags || [{ _id: Date.now(), name: '' }]
   );
-  const [date, setDate] = useState(event.date || new Moment());
+  const [date, setDate] = useState(event?.date || new Moment());
 
   console.log({
     name,
@@ -59,8 +59,12 @@ const AdminEventForm = ({ event = null }) => {
     );
   };
 
-  const addNewTag = () => {
+  const addTag = () => {
     setTags(prevTags => [...prevTags, { _id: Date.now(), name: '' }]);
+  };
+
+  const removeTag = id => {
+    setTags(prevTags => prevTags.filter(tag => tag._id !== id));
   };
 
   return (
@@ -95,7 +99,12 @@ const AdminEventForm = ({ event = null }) => {
       </FormGroup>
       <FormGroup>
         <InputLabel>Tags</InputLabel>
-        <Tags tags={tags} onTagChange={handleTagChange} addTag={addNewTag} />
+        <Tags
+          tags={tags}
+          onTagChange={handleTagChange}
+          addTag={addTag}
+          removeTag={removeTag}
+        />
       </FormGroup>
       <FormGroup>
         <InputLabel>Date</InputLabel>
