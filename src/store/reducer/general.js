@@ -3,6 +3,9 @@ import { GeneralTypes } from '../actions/general';
 const initialState = {
   openDrawer: '',
   editProfileVisible: false,
+  myTradesVisible: false,
+  emailNotificationsVisible: false,
+  preferencesVisible: false,
 };
 
 const setDrawer = (state, { payload }) => {
@@ -33,11 +36,19 @@ const setEmailNotificationsVisible = (state, action) => {
   };
 };
 
+const setPreferencesVisible = (state, action) => {
+  return {
+    ...state,
+    preferencesVisible: action.visible,
+  };
+};
+
 const reducers = {
   [GeneralTypes.SET_GLOBAL_DRAWER]: setDrawer,
   [GeneralTypes.SET_EDIT_PROFILE_VISIBLE]: setEditProfileVisible,
   [GeneralTypes.SET_MY_TRADES_VISIBLE]: setMyTradesVisible,
   [GeneralTypes.SET_EMAIL_NOTIFICATIONS_VISIBLE]: setEmailNotificationsVisible,
+  [GeneralTypes.SET_PREFERENCES_VISIBLE]: setPreferencesVisible,
 };
 
 export default function (state = initialState, action) {

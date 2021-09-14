@@ -96,9 +96,9 @@ const fetchOutcomes = function* (action) {
     if (response) {
       const result = response.data;
       const outcomes = {
-        [amount]: {
-          ...result,
-        },
+        betId,
+        amount,
+        outcomes: result,
       };
 
       yield put(

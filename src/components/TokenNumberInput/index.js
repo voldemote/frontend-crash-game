@@ -4,12 +4,12 @@ import Input from '../Input';
 import classNames from 'classnames';
 import _ from 'lodash';
 import ErrorHint from '../ErrorHint';
-import { TOKEN_NAME } from '../../constants/Token';
 
 const TokenNumberInput = ({
   value,
   setValue,
   maxValue,
+  currency,
   errorText,
   className,
   ...props
@@ -42,7 +42,7 @@ const TokenNumberInput = ({
           step={0.1}
           {...props}
         />
-        <span className={styles.eventTokenLabel}>{TOKEN_NAME}</span>
+        <span className={styles.eventTokenLabel}>{currency}</span>
       </div>
       <ErrorHint
         className={styles.tokenNumberErrorHint}

@@ -77,10 +77,7 @@ const updateOutcomes = (outcomeType, action, state) => {
   return {
     ...state,
     [outcomeType]: {
-      [action.betId]: {
-        ...state[outcomeType][action.betId],
-        ...action.outcomes,
-      },
+      ...action.outcomes,
     },
   };
 };

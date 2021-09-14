@@ -24,6 +24,7 @@ const initialState = {
   toNextRank: 0,
   totalInvestmentAmount: 0,
   totalOpenTradesAmount: 0,
+  preferences: {},
 };
 
 const requestSmsSucceeded = (action, state) => {

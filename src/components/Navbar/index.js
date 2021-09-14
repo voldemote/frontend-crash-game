@@ -13,7 +13,6 @@ import Leaderboard from '../Leaderboard';
 import Notifications from '../Notifications';
 import { connect } from 'react-redux';
 import { NotificationActions } from 'store/actions/notification';
-import { formatToFixed } from '../../helper/FormatNumbers';
 import { LOGGED_IN } from 'constants/AuthState';
 import Button from '../Button';
 import Wallet from '../Wallet';
@@ -22,16 +21,16 @@ import { matchPath } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { GeneralActions } from '../../store/actions/general';
 import { useSelector } from 'react-redux';
-import { TOKEN_NAME } from '../../constants/Token';
 import PopupTheme from '../Popup/PopupTheme';
 import { PopupActions } from '../../store/actions/popup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
+import { selectUser } from 'store/selectors/authentication';
+import { formatToFixed } from 'helper/FormatNumbers';
 
 const Navbar = ({
   user,
   notifications,
   setUnread,
-  transactions,
   authState,
   location,
   handleLeaderboardDrawer,
@@ -47,6 +46,8 @@ const Navbar = ({
   const drawerWrapper = useOutsideClick(() => {
     closeDrawers();
   });
+
+  const { balance, currency, toNextRank } = useSelector(selectUser);
 
   useEffect(() => {
     if (leaderboardOpen) {
@@ -69,11 +70,6 @@ const Navbar = ({
     wallet: 'wallet',
     emailNotifications: 'emailNotifications',
   };
-
-  const sellTransactions = transactions
-    .filter(transaction => transaction.direction === 'SELL')
-    .slice(-3)
-    .reverse();
 
   const unreadNotifications = notifications.filter(
     notification => !notification.read
@@ -106,16 +102,6 @@ const Navbar = ({
     return {
       backgroundImage: 'url("' + profilePicture + '")',
     };
-  };
-
-  const getBalance = () => {
-    const userBalance = user.balance;
-
-    if (!_.isNull(userBalance)) {
-      return formatToFixed(userBalance);
-    }
-
-    return '-';
   };
 
   const renderNavbarLink = (route, text, isLogo = false) => {
@@ -189,7 +175,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.wallet)}
       >
         <Icon iconType={'wallet'} />
-        {getBalance()} {TOKEN_NAME}
+        {formatToFixed(balance)} {currency}
       </div>
     );
 
@@ -252,7 +238,7 @@ const Navbar = ({
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
           {number}
-          <span className={style.leaderboardInfoItemToken}> {TOKEN_NAME}</span>
+          <span className={style.leaderboardInfoItemToken}> {currency}</span>
         </div>
       </div>
     );
@@ -290,7 +276,7 @@ const Navbar = ({
         {isLoggedIn() && (
           <div className={style.leaderboardInfo}>
             {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
-            {renderLeaderboardInfo('MISSING TO NEXT RANK', user.toNextRank)}
+            {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
           </div>
         )}
         <Leaderboard
@@ -389,7 +375,6 @@ const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
     notifications: state.notification.notifications,
-    transactions: state.transaction.transactions,
     user: state.authentication,
     location: state.router.location,
     leaderboardOpen: state.leaderboard.leaderboard.openDrawer,
