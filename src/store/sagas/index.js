@@ -8,22 +8,19 @@ import ChatSagas from './chat';
 import WebsocketsSagas from './websockets';
 import LeaderboardSagas from './leaderboard';
 import { all, select } from 'redux-saga/effects';
-import { AuthenticationActions } from '../actions/authentication';
 import { AuthenticationTypes } from '../actions/authentication';
-import { BetActions } from '../actions/bet';
 import { BetTypes } from '../actions/bet';
 import { EventActions } from '../actions/event';
 import { EventTypes } from '../actions/event';
 import { REHYDRATE } from 'redux-persist';
 import { takeLatest, takeEvery, put } from 'redux-saga/effects';
-import { TransactionActions } from '../actions/transaction';
 import { TransactionTypes } from '../actions/transaction';
 import { UserTypes } from '../actions/user';
 import { AlertTypes } from '../actions/alert';
 import { ChatTypes, ChatActions } from '../actions/chat';
 import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
 import { LOCATION_CHANGE } from 'connected-react-router';
-import { LeaderboardActions, LeaderboardTypes } from '../actions/leaderboard';
+import { LeaderboardTypes } from '../actions/leaderboard';
 
 const root = function* () {
   yield all([
@@ -89,7 +86,6 @@ const root = function* () {
     takeEvery([EventTypes.FETCH_HOME_EVENTS], EventSagas.fetchHomeEvents),
     takeLatest([BetTypes.PLACE], BetSagas.place),
     takeLatest([BetTypes.CREATE], BetSagas.create),
-    takeLatest([BetTypes.SET_COMMITMENT], BetSagas.setCommitment),
     takeEvery([BetTypes.FETCH_OUTCOMES], BetSagas.fetchOutcomes),
     takeEvery([BetTypes.FETCH_SELL_OUTCOMES], BetSagas.fetchSellOutcomes),
     takeLatest([BetTypes.FETCH_OPEN_BETS], BetSagas.fetchOpenBets),

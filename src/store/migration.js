@@ -114,6 +114,7 @@ export const migrations = {
         outcomes: {},
         sellOutcomes: {},
         selectedCommitment: undefined,
+        selectedChoice: undefined,
       },
     };
   },

@@ -21,6 +21,7 @@ import { TransactionActions } from 'store/actions/transaction';
 import { AuthenticationActions } from 'store/actions/authentication';
 import useTransactions from 'hooks/useTransactions';
 import { selectUser } from 'store/selectors/authentication';
+import { formatToFixed } from 'helper/FormatNumbers';
 
 const Wallet = ({
   show,
@@ -200,7 +201,7 @@ const Wallet = ({
                   </>,
                   <>
                     <span className={styles[direction.toLowerCase()]}>
-                      {tokenAmount}
+                      {formatToFixed(tokenAmount)}
                     </span>
                     <span className={styles.secondaryData}>
                       {moment(trx_timestamp).format('DD.MM.YYYY')}

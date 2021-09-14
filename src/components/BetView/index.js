@@ -56,8 +56,6 @@ const BetView = ({
   // disableSwitcher = false,
   showEventEnd,
   events,
-  choice,
-  setChoice,
   placeBet,
   // pullOutBet,
   showPopup,
@@ -106,6 +104,7 @@ const BetView = ({
   const [menuOpened, setMenuOpened] = useState(false);
   // const [openBetsRef, setOpenBetsRef] = useState(openBets);
   const [showAllEvidence, setShowAllEvidence] = useState(false);
+  const [choice, setChoice] = useState(null);
   const [commitment, setCommitment] = useState(defaultBetValue);
   const [convertedCommitment, setConvertedCommitment] = useState(
     convert(commitment, currency)
@@ -757,16 +756,12 @@ const BetView = ({
 const mapStateToProps = state => {
   return {
     actionIsInProgress: state.bet.actionIsInProgress,
-    choice: state.bet.selectedChoice,
     events: state.event.events,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setChoice: choice => {
-      dispatch(BetActions.selectChoice({ choice }));
-    },
     fetchOutcomes: (amount, betId) => {
       dispatch(BetActions.fetchOutcomes({ amount, betId }));
     },
