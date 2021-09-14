@@ -12,6 +12,7 @@ export const chartOptions = (type, data) => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      tension: 0.35,
       plugins: {
         legend: {
           display: true,
