@@ -39,7 +39,6 @@ import AdminOnly from 'components/AdminOnly';
 
 const Bet = ({
   showPopup,
-  rawOutcomes,
   transactions,
   openBets,
   authState,
@@ -188,31 +187,10 @@ const Bet = ({
   };
 
   const getMyEventTrades = () => {
-    const currentBets = _.map(openBets, openBet => {
-      const betId = openBet.betId;
-      const bet = State.getTradeByEvent(_.get(openBet, 'betId'), event);
-      let outcomes = _.get(rawOutcomes, betId, {});
-
-      if (outcomes) {
-        const outcomeValues = _.get(outcomes, 'values', {});
-        const amount = _.get(openBet, 'investmentAmount');
-        outcomes = _.get(outcomeValues, amount, {});
-      }
-
-      return {
-        ...openBet,
-        outcomes,
-        bet,
-        event,
-      };
-    });
-
     return _.map([...transactions], transaction => {
       const betId = _.get(transaction, 'bet');
       const bet = State.getTradeByEvent(betId, event);
-      const openBet = _.find(currentBets, {
-        betId: betId,
-      });
+      const openBet = _.find(openBets, { betId });
 
       if (bet) {
         return {
@@ -578,7 +556,6 @@ const Bet = ({
 const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
-    rawOutcomes: state.bet.outcomes,
     transactions: state.transaction.transactions,
     openBets: state.bet.openBets,
     events: state.event.events,
