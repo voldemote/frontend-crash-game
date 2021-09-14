@@ -11,6 +11,7 @@ import { BetActions } from 'store/actions/bet';
 import { TOKEN_NAME } from 'constants/Token';
 import { formatToFixed } from 'helper/FormatNumbers';
 import LikeIcon from '../../data/icons/like-icon.svg';
+import HighlightType from 'components/Highlight/HighlightType';
 
 const PulloutApprovePopup = ({
   hidePopup,
@@ -52,6 +53,8 @@ const PulloutApprovePopup = ({
         <Button
           withoutBackground={true}
           className={styles.approvePulloutButton}
+          highlightType={HighlightType.highlightModalButton}
+          withoutBackground={true}
           onClick={onApprovePulloutClick}
         >
           OK
