@@ -1,129 +1,137 @@
 @import '../../styles/all';
 
 .containerWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 3rem;
 
-    @media (max-width: $screen-sm) {
-        margin: 0 15px;
-    }
+  @media (max-width: $screen-sm) {
+    margin: 0 15px;
+  }
 }
 
 .container {
-    width: 100%;
+  width: 100%;
 
-    @media (min-width: $screen-lg) {
-        max-width: 1300px;
-    }
+  @media (min-width: $screen-lg) {
+    max-width: 1300px;
+  }
 }
 
 .banner {
-    background-image: url('../../data/backgrounds/games/rosi-games-banner-lg.png');
-    min-height: 232px;
-    width: 100%;
-    padding: 50px 30px 20px 30px;
-    background-repeat: no-repeat;
-    background-size: contain;
+  background-image: url('../../data/backgrounds/games/rosi-games-banner-lg.png');
+  min-height: 232px;
+  width: 100%;
+  padding: 50px 30px 20px 30px;
+  background-repeat: no-repeat;
+  background-size: contain;
 
-    @media(max-width: $screen-md) {
-        padding: 20px;
-        min-height: unset;
-        height: 150px;
+  @media (max-width: $screen-md) {
+    padding: 20px;
+    min-height: unset;
+    height: 150px;
+  }
+
+  @media (max-width: $screen-sm) {
+    background-image: url('../../data/backgrounds/games/rosi-games-banner-mobile.png');
+    height: 100vw;
+    background-position: center;
+    padding: 80px;
+  }
+
+  @media (max-width: $screen-xs) {
+    padding: 40px;
+  }
+
+  .title {
+    font-family: $fontBold;
+    font-size: 30px;
+    color: $colorWhite;
+
+    @media (max-width: $screen-md) {
+      font-size: 22px;
     }
 
     @media (max-width: $screen-sm) {
-        background-image: url('../../data/backgrounds/games/rosi-games-banner-mobile.png');
-        height: 100vw;
-        background-position: center;
-        padding: 80px;
+      font-size: 16px;
+      margin-top: 100%;
     }
 
     @media (max-width: $screen-xs) {
-        padding: 40px;
+      font-size: 12px;
     }
-
-    .title {
-        font-family: $fontBold;
-        font-size: 30px;
-        color: $colorWhite;
-
-        @media(max-width: $screen-md) {
-            font-size: 22px;
-        }
-
-        @media(max-width: $screen-sm) {
-            font-size: 16px;
-            margin-top: 100%;
-        }
-
-        @media(max-width: $screen-xs) {
-            font-size: 12px;
-        }
-    }
+  }
 }
 
 .bottomWrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 80px;
+
+  @media (max-width: $screen-md) {
+    flex-direction: column;
+  }
+
+  .categories {
+    width: 100%;
+    padding: 0 10px;
+
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
+  }
+
+  .leaderboard {
+    width: 100%;
+    padding: 0 10px;
+
+    @media (max-width: $screen-sm) {
+      padding: 0;
+    }
+  }
+
+  .headline {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    margin-top: 80px;
+    color: $colorWhite;
+    font-family: $fontRegular;
+    font-size: 24px;
+    margin-bottom: 20px;
 
-    @media(max-width: $screen-md) {
-        flex-direction: column;
+    .leaderboardLink {
+      font-size: 14px;
+      color: $colorWhite;
+      line-height: 12px;
+      letter-spacing: 0.6px;
+      font-family: $fontLight;
+      cursor: pointer;
+      text-decoration: underline;
     }
-
-    .categories,
-    .leaderboard {
-        width: 100%;
-        padding: 0 10px;
-
-        @media (max-width: $screen-sm) {
-            padding: 0;
-        }
-    }
-
-    .headline {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color:       $colorWhite;
-        font-family: $fontRegular;
-        font-size:   24px;
-        margin-bottom: 20px;
-
-        .leaderboardLink {
-            font-size: 14px;
-            color: $colorWhite;
-            line-height: 12px;
-            letter-spacing: 0.6px;
-            font-family: $fontLight;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-    }
+  }
 }
 
 .tags {
-    display: flex;
-    flex-flow: wrap;
-    margin: 20px 0;
+  display: flex;
+  flex-flow: wrap;
+  margin: 20px 0;
 
-    .tag {
-        background-color: rgba(172, 196, 255, 0.1);
-        padding: 10px;
-        font-size: 12px;
-        color: $colorWhite;
-        cursor: pointer;
-        border-radius: 2px;
-        margin: 5px;
-        opacity: 0.8;
-    
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            opacity: 1;
-        }
+  .tag {
+    background-color: rgba(172, 196, 255, 0.1);
+    padding: 10px;
+    font-size: 12px;
+    color: $colorWhite;
+    cursor: pointer;
+    border-radius: 2px;
+    margin: 5px;
+    opacity: 0.8;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      opacity: 1;
     }
+  }
 }
