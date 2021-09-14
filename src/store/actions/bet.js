@@ -60,13 +60,11 @@ const setCommitment = makeActionCreator(BetTypes.SET_COMMITMENT, {
 });
 
 const setOutcomes = makeActionCreator(BetTypes.SET_OUTCOMES, {
-  betId: null,
-  outcomes: [],
+  outcomes: {},
 });
 
 const setSellOutcomes = makeActionCreator(BetTypes.SET_SELL_OUTCOMES, {
-  betId: null,
-  sellOutcomes: [],
+  sellOutcomes: {},
 });
 
 const fetchSellOutcomes = makeActionCreator(BetTypes.FETCH_SELL_OUTCOMES, {

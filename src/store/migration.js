@@ -113,6 +113,7 @@ export const migrations = {
         ...state.bet,
         outcomes: {},
         sellOutcomes: {},
+        selectedCommitment: undefined,
       },
     };
   },

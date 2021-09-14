@@ -103,7 +103,6 @@ const fetchOutcomes = function* (action) {
 
       yield put(
         BetActions.setOutcomes({
-          betId,
           outcomes,
         })
       );
@@ -121,14 +120,13 @@ const fetchSellOutcomes = function* (action) {
     if (response) {
       const result = response.data;
       const outcomes = {
-        [amount]: {
-          ...result,
-        },
+        betId,
+        amount,
+        sellOutcomes: result,
       };
 
       yield put(
         BetActions.setSellOutcomes({
-          betId,
           outcomes,
         })
       );

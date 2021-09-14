@@ -66,6 +66,7 @@ const BetView = ({
   setOpenDrawer,
   fetchOutcomes,
   // fetchSellOutcomes,
+  resetOutcomes,
 }) => {
   // GLOBAL
   const maxBetAmount = 2800;
@@ -77,7 +78,10 @@ const BetView = ({
       0
     )
   );
-  const defaultBetValue = _.min([wfairBalance, maxBetAmount * 0.1]);
+  const defaultBetValue =
+    wfairBalance > 0
+      ? _.min([wfairBalance, maxBetAmount * 0.1])
+      : maxBetAmount * 0.1;
   const event = _.find(events, {
     _id: eventId,
   });
@@ -156,6 +160,12 @@ const BetView = ({
   //   });
   // }
 
+  useEffect(() => {
+    return () => {
+      resetOutcomes();
+    };
+  }, []);
+
   useEffect(
     () => {
       if (hasMounted) {
@@ -172,8 +182,8 @@ const BetView = ({
 
   useEffect(() => {
     if (!closed) {
-      fetchOutcomes(commitment, betId);
       validateInput();
+      fetchOutcomes(commitment, betId);
       setConvertedCommitment(convert(commitment, currency));
     }
   }, [commitment, currency]);
@@ -225,10 +235,20 @@ const BetView = ({
     };
   };
 
+  const debouncedSetCommitment = useCallback(
+    _.debounce(number => {
+      const newCommitment =
+        currency !== TOKEN_NAME
+          ? convert(number, TOKEN_NAME, currency)
+          : number;
+      setCommitment(newCommitment);
+    }, 300),
+    []
+  );
+
   const onTokenNumberChange = number => {
-    setCommitment(
-      currency !== TOKEN_NAME ? convert(number, TOKEN_NAME, currency) : number
-    );
+    setConvertedCommitment(number);
+    debouncedSetCommitment(number);
   };
 
   const getOpenBet = index => {
@@ -769,6 +789,10 @@ const mapDispatchToProps = dispatch => {
     },
     setOpenDrawer: drawer => {
       dispatch(GeneralActions.setDrawer(drawer));
+    },
+    resetOutcomes: () => {
+      dispatch(BetActions.setOutcomes());
+      dispatch(BetActions.setSellOutcomes());
     },
   };
 };
