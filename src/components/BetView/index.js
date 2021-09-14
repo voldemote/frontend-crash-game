@@ -409,12 +409,13 @@ const BetView = ({
     );
   };
 
-  const renderTradeButton = enabled => {
+  const renderTradeButton = () => {
     const isSell = hasSellView();
     const finalOutcome = getFinalOutcome();
 
     if (!isSell && !finalOutcome) {
-      const tradeButtonDisabled = !(validInput && enabled);
+      const tradeButtonDisabled =
+        !(validInput && state === BetState.active) || !userLoggedIn;
       let tradeButtonTheme = null;
 
       return (
@@ -625,8 +626,6 @@ const BetView = ({
   // };
 
   const renderStateConditionalContent = () => {
-    const interactionEnabled = state === BetState.active;
-
     if (
       state === BetState.active ||
       state === BetState.canceled ||
@@ -635,9 +634,7 @@ const BetView = ({
       return (
         <>
           {renderPlaceBetContentContainer()}
-          <div className={styles.betButtonContainer}>
-            {renderTradeButton(interactionEnabled)}
-          </div>
+          <div className={styles.betButtonContainer}>{renderTradeButton()}</div>
         </>
       );
     } else if (state === BetState.resolved) {
