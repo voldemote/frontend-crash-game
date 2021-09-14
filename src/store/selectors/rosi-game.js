@@ -7,7 +7,7 @@ export const selectLastCrashes = state =>
 export const selectInGameBets = ({ rosiGame }) => {
   if (rosiGame.hasStarted) {
     const currentCrashFactor =
-      (Date.now() - rosiGame.gameStartTimestamp) / 1000;
+      (Date.now() - new Date(rosiGame.timeStarted).getTime()) / 1000;
     return rosiGame.inGameBets.filter(
       bet => bet.crashFactor > currentCrashFactor
     );
@@ -19,7 +19,7 @@ export const selectInGameBets = ({ rosiGame }) => {
 export const selectCashedOut = ({ rosiGame }) => {
   if (rosiGame.hasStarted) {
     const currentCrashFactor =
-      (Date.now() - rosiGame.gameStartTimestamp) / 1000;
+      (Date.now() - new Date(rosiGame.timeStarted).getTime()) / 1000;
     return rosiGame.inGameBets
       .filter(bet => bet.crashFactor <= currentCrashFactor)
       .map(bet => ({ ...bet, amount: bet.amount * bet.crashFactor }));
