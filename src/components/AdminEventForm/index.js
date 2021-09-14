@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router';
 import Moment from 'moment';
 import {
   DateTimePicker,
@@ -11,7 +10,6 @@ import {
 } from '../Form';
 import * as Api from 'api';
 import { LIVE_EVENTS_CATEGORIES } from 'constants/EventCategories';
-import Routes from 'constants/Routes';
 import styles from './styles.module.scss';
 
 const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
@@ -20,7 +18,6 @@ const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
 }));
 
 const AdminEventForm = ({ event = null }) => {
-  const history = useHistory();
   const [name, setName] = useState(event?.name || '');
   const [slug, setSlug] = useState(event?.slug || '');
   const [streamUrl, setStreamUrl] = useState(event?.streamUrl || '');
@@ -36,12 +33,8 @@ const AdminEventForm = ({ event = null }) => {
   const [date, setDate] = useState(event?.date || new Moment());
 
   const handleSuccess = ({ response: { data } }) => {
-    history.push(
-      Routes.getRouteWithParameters(Routes.bet, {
-        eventSlug: data.slug,
-        betSlug: '',
-      })
-    );
+    // there is a strange bug when I use history.push(); to navigate, layout becomes white
+    window.location.reload();
   };
 
   const handleSave = () => {

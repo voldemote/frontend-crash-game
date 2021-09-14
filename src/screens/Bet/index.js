@@ -564,7 +564,12 @@ const Bet = ({
           >
             Edit Event
           </span>
-          <span className={styles.newBetLink}>New Bet</span>
+          <span
+            className={styles.newBetLink}
+            onClick={() => showPopup(PopupTheme.newBet, { event })}
+          >
+            New Bet
+          </span>
         </AdminOnly>
       </div>
     </BaseContainerWithNavbar>

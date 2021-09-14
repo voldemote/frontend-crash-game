@@ -19,4 +19,6 @@ export default {
   lotteryGameAnswered: 'lotteryGameAnswered',
   newEvent: 'newEvent',
   editEvent: 'editEvent',
+  newBet: 'newBet',
+  editBet: 'editBet',
 };

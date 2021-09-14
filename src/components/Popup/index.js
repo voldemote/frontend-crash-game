@@ -28,6 +28,8 @@ import PulloutApprovePopup from '../PulloutApprovePopup';
 import LotteryGamePopup from '../LotteryGamePopup';
 import NewEventPopup from '../NewEventPopup';
 import EditEventPopup from '../EditEventPopup';
+import NewBetPopup from '../NewBetPopup';
+import EditBetPopup from '../EditBetPopup';
 
 const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -129,6 +131,10 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
         return <NewEventPopup />;
       case PopupTheme.editEvent:
         return <EditEventPopup />;
+      case PopupTheme.newBet:
+        return <NewBetPopup />;
+      case PopupTheme.editBet:
+        return <EditBetPopup />;
     }
 
     return null;

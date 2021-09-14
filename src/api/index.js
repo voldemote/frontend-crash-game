@@ -261,6 +261,18 @@ const editEvent = (id, payload) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const createEventBet = payload => {
+  return Api.post(ApiUrls.API_EVENT_BET_CREATE, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const editEventBet = (betId, payload) => {
+  return Api.post(ApiUrls.API_EVENT_BET_EDIT.replace(':betId', betId), payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -290,4 +302,6 @@ export {
   postRewardAnswer,
   createEvent,
   editEvent,
+  createEventBet,
+  editEventBet,
 };

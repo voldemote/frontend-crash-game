@@ -19,7 +19,11 @@ const NewLiveEvents = () => {
       <br />
       {selectedMenu === '' && (
         <>
-          <Button className={styles.addOutcomeButton} onClick={openTwitchMenu}>
+          <Button
+            className={styles.addOutcomeButton}
+            onClick={openTwitchMenu}
+            disabled
+          >
             Import From Twitch
           </Button>
           <br />

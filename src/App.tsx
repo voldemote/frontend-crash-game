@@ -1,7 +1,6 @@
 import './styles.module.scss';
 import AlertBox from './components/AlertBox';
 import Bet from './screens/Bet';
-import NewBet from './screens/NewBet';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
 import Popup from './components/Popup';
@@ -21,7 +20,6 @@ import NavbarFooter from 'components/NavbarFooter';
 import NavbarFooterAction from 'components/NavbarFooterAction';
 import IconType from 'components/Icon/IconType';
 import Events from './screens/Events';
-import NewLiveEvent from './screens/NewLiveEvent';
 import LiveEvents from './screens/LiveEvents';
 import RosiGame from './screens/RosiGame';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -51,7 +49,6 @@ const App = () => {
               component={PrivacyPolicy}
             />
             <Route exact path={Routes.home} component={Home} />
-            <Route exact path={Routes.newBet} component={NewBet} />
             <Route exact path={Routes.bet} component={Bet} />
             <Route
               exact
@@ -63,7 +60,6 @@ const App = () => {
               path={Routes.walletConfirmation}
               component={PaymentConfirmation}
             />
-            <Route exact path={Routes.newLiveEvent} component={NewLiveEvent} />
             <Route exact path={Routes.liveEvents} component={LiveEvents} />
             <Route exact path={Routes.events} component={Events} />
             <Route exact path={Routes.rosiGame} component={RosiGame} />
