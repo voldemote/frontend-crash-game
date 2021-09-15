@@ -1,9 +1,7 @@
 import styles from './styles.module.scss';
-import LogoDemo from '../../data/images/logo-demo.svg';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
@@ -39,10 +37,6 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
         </div>
       </div>
     );
-  };
-
-  const renderEventCreationButton = () => {
-    return <FixedEventCreationIconButton />;
   };
 
   const onSeeLeaderboard = () => {
@@ -113,7 +107,6 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
           <ContentFooter />
         </div>
       </div>
-      {/* {renderEventCreationButton()} -> TODO: Check if needed */}
     </BaseContainerWithNavbar>
   );
 };

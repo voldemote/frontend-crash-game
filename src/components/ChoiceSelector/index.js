@@ -4,7 +4,6 @@ import SelectionHelper from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _ from 'lodash';
 import { formatToFixed } from '../../helper/FormatNumbers';
-import { TOKEN_NAME } from '../../constants/Token';
 import { calculateGain } from 'helper/Calculation';
 
 const ChoiceSelector = ({
