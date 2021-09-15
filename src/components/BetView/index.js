@@ -317,9 +317,9 @@ const BetView = ({
         theme={choiceSelectorTheme}
         className={styles.choice}
         name={name}
-        winAmount={outcome.outcome}
+        winAmount={outcome?.outcome || 0}
         currency={currency}
-        gain={outcome.gain}
+        gain={outcome?.gain || 0}
         selected={choice === index || forceSelect}
         onClick={!resolved ? onChoiceSelect(index, enabled) : _.noop}
         hideAmount={resolved}
