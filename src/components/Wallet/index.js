@@ -57,9 +57,9 @@ const Wallet = ({
 
   useEffect(() => {
     if (!show) {
+      fetchReferrals();
       setOpenMenu(menus.wallet);
     }
-    fetchReferrals();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
