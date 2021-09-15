@@ -9,7 +9,7 @@ import { calculateGain } from 'helper/Calculation';
 const ChoiceSelector = ({
   name,
   winAmount,
-  commitment,
+  gain,
   currency,
   selected,
   className,
@@ -19,8 +19,6 @@ const ChoiceSelector = ({
   onClick,
 }) => {
   const renderWinAmount = () => {
-    const gain = calculateGain(commitment, winAmount);
-
     if (!hideAmount) {
       const roundedWinAmount = _.round(winAmount, 2);
       const winAmountString = roundedWinAmount

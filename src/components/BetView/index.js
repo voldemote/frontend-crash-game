@@ -17,7 +17,6 @@ import { BetActions } from '../../store/actions/bet';
 import { connect, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHasMounted } from '../hoc/useHasMounted';
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import ChoiceSelectorList from '../ChoiceSelectorList';
 import Icon from '../Icon';
@@ -37,11 +36,7 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
 import { GeneralActions } from 'store/actions/general';
 import ReactTooltip from 'react-tooltip';
-import {
-  selectOpenBets,
-  selectOutcomes,
-  selectSellOutcomes,
-} from 'store/selectors/bet';
+import { selectOutcomes, selectSellOutcomes } from 'store/selectors/bet';
 import { selectUser } from 'store/selectors/authentication';
 import { convert } from 'helper/Currency';
 
@@ -208,9 +203,7 @@ const BetView = ({
   };
 
   const getFinalOutcome = () => {
-    const finalOutcome = _.get(bet, 'finalOutcome', false);
-
-    return finalOutcome;
+    return _.get(bet, 'finalOutcome', false);
   };
 
   const onTradeButtonConfirm = () => {
@@ -266,7 +259,7 @@ const BetView = ({
   };
 
   const getOutcome = index => {
-    return _.get(hasSellView() ? sellOutcomes : outcomes, [index, 'outcome']);
+    return _.get(hasSellView() ? sellOutcomes : outcomes, [index]);
   };
 
   const isChoiceSelectorEnabled = index => {
@@ -316,6 +309,7 @@ const BetView = ({
     forceSelect = false
   ) => {
     const enabled = isChoiceSelectorEnabled(index);
+    const outcome = getOutcome(index);
 
     return (
       <ChoiceSelector
@@ -323,9 +317,9 @@ const BetView = ({
         theme={choiceSelectorTheme}
         className={styles.choice}
         name={name}
-        winAmount={getOutcome(index)}
+        winAmount={outcome.outcome}
         currency={currency}
-        commitment={convertedCommitment}
+        gain={outcome.gain}
         selected={choice === index || forceSelect}
         onClick={!resolved ? onChoiceSelect(index, enabled) : _.noop}
         hideAmount={resolved}
