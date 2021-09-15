@@ -1,10 +1,22 @@
 @import '../../styles/all';
 
+.bgRewards {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../data/backgrounds/orb-bg.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 0;
+}
+
 .container {
+  position: relative;
   width: 100%;
   margin: 0 auto;
   color: $colorWhite;
-  background-image: url('../../data/backgrounds/orb-bg.svg');
+  z-index: 1;
 
   @media (min-width: $screen-lg) {
     max-width: 1240px;
