@@ -148,6 +148,7 @@ const Icon = ({
           [IconTheme.primaryLightTransparent]:
             styles.iconPrimaryLightTransparent,
           [IconTheme.white]: styles.iconWhite,
+          [IconTheme.notification]: styles.notificationCheckbox,
         }),
         circle === true ? styles.iconCircled : null
       )}

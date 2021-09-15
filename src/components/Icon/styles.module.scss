@@ -48,4 +48,15 @@
             @include svgColorStroke($colorWhite)
         }
     }
+    &.notificationCheckbox
+    {
+      width: 30px;
+      height: 30px;
+      margin: 0 16px;
+      > svg
+      {
+        @include svgColorFill($colorBlue);
+      }
+    }
+
 }
