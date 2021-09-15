@@ -1,134 +1,124 @@
 @import '../../styles/all';
 
-.eventTradesContainer
-{
-    display:     flex;
-    align-items: center;
-    width:       100%;
-    padding-top: 2rem;
+.eventTradesContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-top: 2rem;
 
-    &.fullWidthSwitches
-    {
-        justify-content: center;
+  &.fullWidthSwitches {
+    justify-content: center;
 
-        .switchableViews
-        {
-            width:        100%;
-            margin-right: 0 !important;
-        }
+    .switchableViews {
+      width: 100%;
+      margin-right: 0 !important;
+    }
+  }
+
+  .eventViews {
+    display: block;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.4rem;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 24px;
+
+    @media (max-width: $screen-md) {
+      width: 100%;
+      margin: 0;
+      border-bottom: 1px solid $colorWhite;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      padding: 10px 10px;
+      font-size: 14px;
+      flex-shrink: 1;
+      white-space: nowrap;
     }
 
-    .eventViews
-    {
-        display:             block;
-        text-align:          center;
-        position:            relative;
-        padding-bottom:      0.4rem;
-        cursor:              pointer;
-        font-size:           16px;
-        -webkit-user-select: none;
-        -moz-user-select:    none;
-        -ms-user-select:     none;
-        user-select:         none;
-        margin-right:        24px;
+    &.tabHidden {
+      display: none;
+    }
+
+    &.underlineInactive {
+      &:not(.selected) {
+        .line {
+          opacity: 0.1;
+          height: 1px;
+          background-color: $colorBlack;
+        }
+      }
+
+      &.selected {
+        .line {
+          height: 2px;
+          background-color: $colorBlack;
+        }
+      }
+    }
+
+    &.selected {
+      .line {
+        opacity: 1;
+      }
+      .textBlock {
+        .name {
+          font-weight: bold;
+          opacity: 1;
+        }
+
+        .tradeCounter {
+          opacity: 0.67;
+        }
+      }
+    }
+
+    .textBlock {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      .name {
+        opacity: 0.3;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      .tradeCounter {
+        width: 16px;
+        height: 16px;
+        padding: 2px 2px;
+        opacity: 0.48;
+        background-color: #636276;
+        border-radius: 16px;
+        font-size: 10px;
+        line-height: 14px;
+        margin: 3px 0 2px 5px;
+        transition: opacity 0.2s ease-in-out;
 
         @media (max-width: $screen-md) {
-            width: 100%;
-            margin: 0;
-            border-bottom: 1px solid $colorWhite;
-            border-bottom: 1px solid rgba(255, 255, 255, .3);
-            -webkit-background-clip: padding-box;
-            background-clip: padding-box;
-            padding: 10px 10px;
-            font-size: 14px;
-            flex-shrink: 1;
-            white-space: nowrap;
+          width: 14px;
+          height: 14px;
+          font-size: 8px;
+          line-height: 10px;
+          margin: 2px 0 0px 5px;
         }
-
-        &.underlineInactive
-        {
-            &:not(.selected)
-            {
-                .line
-                {
-                    opacity:          0.1;
-                    height:           1px;
-                    background-color: $colorBlack;
-                }
-            }
-
-            &.selected
-            {
-                .line
-                {
-                    height:           2px;
-                    background-color: $colorBlack;
-                }
-            }
-        }
-
-        &.selected
-        {
-            .line
-            {
-                opacity: 1;
-            }
-            .textBlock {
-                .name
-                {
-                    font-weight: bold;
-                    opacity:     1;
-                }
-
-                .tradeCounter {
-                    opacity: 0.67;
-                }
-            }
-        }
-
-        .textBlock
-        {
-            display:         flex;
-            flex-direction:  row;
-            justify-content: center;
-
-            .name {
-                opacity:    0.3;
-                transition: opacity 0.2s ease-in-out;
-            }
-
-            .tradeCounter {
-                width: 16px;
-                height: 16px;
-                padding: 2px 2px;
-                opacity: 0.48;
-                background-color: #636276;
-                border-radius: 16px;
-                font-size: 10px;
-                line-height: 14px;
-                margin: 3px 0 2px 5px;
-                transition: opacity 0.2s ease-in-out;
-
-                @media (max-width: $screen-md) {
-                    width: 14px;
-                    height: 14px;
-                    font-size: 8px;
-                    line-height: 10px;
-                    margin: 2px 0 0px 5px;
-                }
-            }
-        }
-
-        .line
-        {
-            position:         absolute;
-            bottom:           0;
-            left:             0;
-            height:           1px;
-            width:            100%;
-            background-color: $colorYellow;
-            opacity:          0;
-            transition:       opacity 0.2s ease-in-out;
-        }
+      }
     }
+
+    .line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      width: 100%;
+      background-color: $colorYellow;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+  }
 }

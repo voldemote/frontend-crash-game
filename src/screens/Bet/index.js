@@ -40,6 +40,13 @@ import { selectOpenBets } from 'store/selectors/bet';
 import { selectTransactions } from 'store/selectors/transaction';
 import { TransactionActions } from 'store/actions/transaction';
 
+const BET_ACTIONS = {
+  Chat: 0,
+  News: 1,
+  EventTrades: 2,
+  MyTrades: 3,
+};
+
 const Bet = ({
   showPopup,
   authState,
@@ -51,7 +58,7 @@ const Bet = ({
 
   const [betId, setBetId] = useState(null);
   const [swiper, setSwiper] = useState(null);
-  const [betAction, setBetAction] = useState(2);
+  const [betAction, setBetAction] = useState(0);
   const [betViewIsOpen, setBetViewIsOpen] = useState(false);
   const [singleBet, setSingleBet] = useState(false);
   const [event, setEvent] = useState(null);
@@ -73,7 +80,7 @@ const Bet = ({
 
   useNewsFeed(event);
 
-  const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions();
+  const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
 
   const status = {
     active: 1,
@@ -83,7 +90,9 @@ const Bet = ({
 
   useEffect(() => {
     if (window.innerWidth < 992) {
-      setBetAction(0);
+      setBetAction(BET_ACTIONS.Chat);
+    } else {
+      setBetAction(BET_ACTIONS.EventTrades);
     }
 
     setSingleBet(false);
@@ -140,7 +149,7 @@ const Bet = ({
       );
 
       setBetViewIsOpen(false);
-      onBetActionSwitch(2);
+      onBetActionSwitch(BET_ACTIONS.EventTrades);
     };
   };
 
@@ -320,7 +329,13 @@ const Bet = ({
   const renderSwitchableView = () => {
     const eventViews = [
       EventTradeViewsHelper.getView('Chat', undefined, false, styles.chatTab),
-      EventTradeViewsHelper.getView('News', undefined, false, styles.newsTab),
+      EventTradeViewsHelper.getView(
+        'News',
+        undefined,
+        false,
+        styles.newsTab,
+        event.type === 'streamed'
+      ),
       EventTradeViewsHelper.getView('Event Trades'),
       EventTradeViewsHelper.getView(
         'My Trades',
@@ -341,9 +356,9 @@ const Bet = ({
   };
 
   const renderContent = () => {
-    if (betAction === 0) {
+    if (betAction === BET_ACTIONS.Chat) {
       return <Chat className={styles.mobileChat} event={event} />;
-    } else if (betAction === 2) {
+    } else if (betAction === BET_ACTIONS.EventTrades) {
       return (
         <div className={styles.relatedBets}>
           <Carousel
@@ -409,9 +424,11 @@ const Bet = ({
           </div>
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          <div>
-            <News />
-          </div>
+          {event.type !== 'streamed' && (
+            <div>
+              <News />
+            </div>
+          )}
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
           <div>{renderRelatedBetList(true)}</div>
