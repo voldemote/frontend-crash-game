@@ -27,13 +27,13 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
   const renderHeadline = () => {
     return (
       <div className={styles.mainHeadline}>
-        <h1>Wallfair Is A Social Entertainment Platform</h1>
-        <p>
-          That decentralizes the creative economy, enabling real-time
-          speculation on live and non-live events.
-        </p>
+        <h1>
+          Decentralized Events
+          <br />
+          Anywhere, Anytime
+        </h1>
         <div className={styles.slogan}>
-          Create<span>.</span>Play<span>.</span>Earn<span>.</span>
+          Be<span>.</span>The<span>.</span>House<span>.</span>
         </div>
       </div>
     );
