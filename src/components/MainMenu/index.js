@@ -30,6 +30,7 @@ const MainMenu = ({
   emailNotificationsVisible,
   preferencesVisible,
   close,
+  updateNotificationSettings,
   fetchOpenBets,
   fetchTransactions,
 }) => {
@@ -147,7 +148,11 @@ const MainMenu = ({
           Email Notification
         </h2>
 
-        <EmailNotifications close={close} />
+        <EmailNotifications
+          close={close}
+          updateNotificationSettings={updateNotificationSettings}
+          settings={user.notificationSettings}
+        />
       </div>
     );
   };
@@ -319,6 +324,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         AuthenticationActions.initiateUpdateUserData({
           user: { name, username, email, profilePicture },
+        })
+      );
+    },
+    updateNotificationSettings: notificationSettings => {
+      dispatch(
+        AuthenticationActions.initiateUpdateUserData({
+          user: { notificationSettings },
         })
       );
     },

@@ -3,4 +3,5 @@ export default {
   primary: 'primary',
   primaryLightTransparent: 'primaryLightTransparent',
   white: 'white',
+  notification: 'notification',
 };

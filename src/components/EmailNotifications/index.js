@@ -1,20 +1,28 @@
 import styles from './styles.module.scss';
-import _ from 'lodash';
 import { useState } from 'react';
 import classNames from 'classnames';
 import highlightBg from '../../data/backgrounds/highlight-modal-button.svg';
+import Icon from '../Icon';
+import IconTheme from '../Icon/IconTheme';
+import { options as text } from './options';
 
-const EmailNotifications = ({ close: closeDrawer }) => {
-  const options = {
-    1: 'One of my trades has been resolved',
-    2: 'One of my trades has been resolved',
-    3: 'One of my trades has been resolved',
-  };
-
-  const [selectedOption, setSelectedOption] = useState(1);
+const EmailNotifications = ({
+  close: closeDrawer,
+  updateNotificationSettings,
+  settings = {
+    newBetInEvent: false,
+    newRewardReceived: false,
+    myBetResolved: false,
+    eventOnline: false,
+    eventOffline: false,
+    placeBet: false,
+    cashoutBet: false,
+  },
+}) => {
+  const [options, setOptions] = useState(settings);
 
   const handleSave = () => {
-    //To do: api connection
+    updateNotificationSettings(options);
     closeDrawer();
   };
 
@@ -25,17 +33,20 @@ const EmailNotifications = ({ close: closeDrawer }) => {
         {Object.keys(options).map(key => {
           return (
             <div
-              className={classNames(
-                styles.option,
-                selectedOption == key && styles.selected
-              )}
+              className={classNames(styles.option, styles.selected)}
               key={key}
-              onClick={() => setSelectedOption(key)}
+              onClick={() => {
+                const o = { ...options };
+                o[key] = !o[key];
+                setOptions(o);
+              }}
             >
-              <div className={styles.optionIcon}>
-                <div className={styles.optionIconCore}></div>
-              </div>
-              <div className={styles.optionText}>{options[key]}</div>
+              {options[key] ? (
+                <Icon iconTheme={IconTheme.notification} iconType="checked" />
+              ) : (
+                <div className={styles.box} />
+              )}
+              <div className={styles.optionText}>{text[key]}</div>
             </div>
           );
         })}
