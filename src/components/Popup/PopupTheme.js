@@ -20,4 +20,5 @@ export default {
   editEvent: 'editEvent',
   newBet: 'newBet',
   editBet: 'editBet',
+  viewImage: 'viewImage',
 };

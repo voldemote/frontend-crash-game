@@ -28,6 +28,8 @@ import NewEventPopup from '../NewEventPopup';
 import EditEventPopup from '../EditEventPopup';
 import NewBetPopup from '../NewBetPopup';
 import EditBetPopup from '../EditBetPopup';
+import ViewImagePopup from 'components/ViewImagePopup';
+import { useOutsideClick } from 'hooks/useOutsideClick';
 
 const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -39,6 +41,10 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
       document.body.style.overflow = null;
     };
   }, [visible]);
+
+  const popupElement = useOutsideClick(() => {
+    hidePopup();
+  });
 
   const renderPopup = () => {
     const eventId = _.get(options, 'eventId');
@@ -130,6 +136,8 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
         return <NewBetPopup />;
       case PopupTheme.editBet:
         return <EditBetPopup />;
+      case PopupTheme.viewImage:
+        return <ViewImagePopup imageURL={options.imageURL} />;
     }
 
     return null;
@@ -138,6 +146,7 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   if (type === PopupTheme.tradeView) {
     return (
       <div
+        ref={popupElement}
         className={classNames(
           styles.popupFullScreenContainer,
           visible ? null : styles.hidden
@@ -171,6 +180,7 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
       )}
     >
       <div
+        ref={popupElement}
         className={classNames(
           styles.popupContainer,
           type === PopupTheme.signUpNotificationFirst ||

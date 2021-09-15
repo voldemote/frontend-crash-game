@@ -191,6 +191,13 @@ const LotteryGame = ({
     );
   };
 
+  const handleImageClick = event => {
+    const imageURL = event.target.src;
+    showPopup(PopupTheme.viewImage, {
+      imageURL,
+    });
+  };
+
   const setOption = value => {
     setCheckedOption(value);
   };
@@ -252,23 +259,27 @@ const LotteryGame = ({
             const elementId = `${activeQuestion._id}_${index}`;
             return (
               <React.Fragment key={elementId}>
-                <input
-                  type="radio"
-                  id={elementId}
-                  name={activeQuestion._id}
-                  value={index}
-                  className={styles.checkbox}
-                  onChange={() => setOption(index)}
-                />
-                <label
-                  key={elementId}
-                  htmlFor={elementId}
-                  className={styles.radioButton}
-                  checked={checkedOption === index}
-                >
-                  <span>{name}</span>
-                  {!!imageUrl && <img src={imageUrl} alt={name} />}
-                </label>
+                <div className={styles.radioButtonContainer}>
+                  <input
+                    type="radio"
+                    id={elementId}
+                    name={activeQuestion._id}
+                    value={index}
+                    className={styles.checkbox}
+                    onChange={() => setOption(index)}
+                  />
+                  <label
+                    key={elementId}
+                    htmlFor={elementId}
+                    className={styles.radioButton}
+                    checked={checkedOption === index}
+                  >
+                    <span>{name}</span>
+                  </label>
+                  {!!imageUrl && (
+                    <img src={imageUrl} onClick={handleImageClick} alt={name} />
+                  )}
+                </div>
               </React.Fragment>
             );
           })}
