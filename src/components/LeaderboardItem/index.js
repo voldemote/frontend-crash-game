@@ -39,7 +39,9 @@ const LeaderboardItem = ({
               #{user.rank} <img src={medalGold} alt="medal" />
             </p>
             <p className={style.firstName}>{getUsername(user.username)}</p>
-            <p className={style.firstBalance}>{user.amountWon}</p>
+            <p className={style.firstBalance}>
+              {formatToFixed(user.amountWon)}
+            </p>
           </div>
         </>
       ) : user.rank === 2 ? (
@@ -50,7 +52,9 @@ const LeaderboardItem = ({
               #{user.rank} <img src={medalSilver} alt="medal" />
             </p>
             <p className={style.secondName}>{getUsername(user.username)}</p>
-            <p className={style.secondBalance}>{user.amountWon}</p>
+            <p className={style.secondBalance}>
+              {formatToFixed(user.amountWon)}
+            </p>
           </div>
         </>
       ) : user.rank === 3 ? (
@@ -61,7 +65,9 @@ const LeaderboardItem = ({
               #{user.rank} <img src={medalBronze} alt="medal" />
             </p>
             <p className={style.thirdName}>{getUsername(user.username)}</p>
-            <p className={style.thirdBalance}>{user.amountWon}</p>
+            <p className={style.thirdBalance}>
+              {formatToFixed(user.amountWon)}
+            </p>
           </div>
         </>
       ) : (
@@ -75,7 +81,9 @@ const LeaderboardItem = ({
           >
             <p className={style.entryRank}>#{user.rank}</p>
             <p className={style.entryName}>{getUsername(user.username)}</p>
-            <p className={style.entryBalance}>{user.amountWon}</p>
+            <p className={style.entryBalance}>
+              {formatToFixed(user.amountWon)}
+            </p>
           </div>
           {showLoadButton && renderLoadButton()}
         </>

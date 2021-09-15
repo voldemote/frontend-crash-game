@@ -11,6 +11,7 @@ const ChoiceSelector = ({
   name,
   winAmount,
   commitment,
+  currency,
   selected,
   className,
   theme,
@@ -36,7 +37,7 @@ const ChoiceSelector = ({
         <div className={styles.choiceWinAmountContainer}>
           <div className={styles.choiceWinAmount}>{winAmountString}</div>
           <div className={styles.choiceWinAmountUnitContainer}>
-            <div className={styles.choiceWinAmountUnit}>{TOKEN_NAME}</div>
+            <div className={styles.choiceWinAmountUnit}>{currency}</div>
             <div className={styles.choiceWinAmountCash}>
               {gain.negative ? 'Loss' : 'Gain'}
               <span

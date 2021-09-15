@@ -1,0 +1,46 @@
+@import "../../styles/all";
+
+.preferences {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+    color: $colorWhite;
+    height: 100%;
+
+    .label {
+        margin-bottom: 20px;
+    }
+
+    .item {
+        margin-bottom: 20px;
+    }
+
+    .btnContainer {
+        width: 100%;
+        height: 60px;
+        position: relative;
+        margin-bottom: 30px;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            width: calc(100% - 60px);
+            height: 60px;
+            position: absolute;
+            top: 0;
+            left: 30px;
+            z-index: 0;
+        }
+
+        span {
+            color: black;
+            font-size: 18px;
+            font-family: $fontBold;
+            z-index: 1;
+        }
+    }
+}
+

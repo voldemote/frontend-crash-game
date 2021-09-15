@@ -15,6 +15,7 @@ const HomeSettings = ({
   onEditClick,
   onMyTradesClick,
   onEmailNotificationClick,
+  onPreferencesClick,
 }) => {
   const dispatch = useDispatch();
 
@@ -86,25 +87,6 @@ const HomeSettings = ({
         <div
           className={classNames(
             styles.singleSettingHolder,
-            styles.settingDeactive
-          )}
-        >
-          <img
-            src={SettingPhone}
-            alt="phone"
-            className={styles.settingIcon}
-            style={{ width: '16px', marginLeft: '7px' }}
-          />
-          <p className={styles.settingTitle}>Change Phone Number</p>
-          <Icon
-            width={15}
-            iconType={IconType.arrowSmallRight}
-            className={styles.goIntoSettingIcon}
-          />
-        </div>
-        <div
-          className={classNames(
-            styles.singleSettingHolder,
             styles.settingActive
           )}
           onClick={onEmailNotificationClick}
@@ -116,6 +98,25 @@ const HomeSettings = ({
             style={{ width: '22px', marginLeft: '4px' }}
           />
           <p className={styles.settingTitle}>Email Notifications</p>
+          <Icon
+            width={15}
+            iconType={IconType.arrowSmallRight}
+            className={styles.goIntoSettingIcon}
+          />
+        </div>
+        <div
+          className={classNames(
+            styles.singleSettingHolder,
+            styles.settingActive
+          )}
+          onClick={onPreferencesClick}
+        >
+          <Icon
+            width={15}
+            iconType={IconType.settings}
+            className={styles.leftIcon}
+          />
+          <p className={styles.settingTitle}>Preferences</p>
           <Icon
             width={15}
             iconType={IconType.arrowSmallRight}

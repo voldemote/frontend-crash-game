@@ -3,6 +3,7 @@ export const GeneralTypes = {
   SET_EDIT_PROFILE_VISIBLE: 'General/SET_EDIT_PROFILE_VISIBLE',
   SET_MY_TRADES_VISIBLE: 'General/SET_MY_TRADES_VISIBLE',
   SET_EMAIL_NOTIFICATIONS_VISIBLE: 'General/EMAIL_NOTIFICATIONS_VISIBLE',
+  SET_PREFERENCES_VISIBLE: 'General/SET_PREFERENCES_VISIBLE',
 };
 
 const setDrawer = payload => ({
@@ -25,9 +26,15 @@ const setEmailNotificationsVisible = visible => ({
   visible,
 });
 
+const setPreferencesVisible = visible => ({
+  type: GeneralTypes.SET_PREFERENCES_VISIBLE,
+  visible,
+});
+
 export const GeneralActions = {
   setDrawer,
   setEditProfileVisible,
   setMyTradesVisible,
   setEmailNotificationsVisible,
+  setPreferencesVisible,
 };

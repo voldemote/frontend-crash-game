@@ -2,14 +2,13 @@ import style from './styles.module.scss';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import _ from 'lodash';
 import LeaderboardItem from '../LeaderboardItem';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { LOGGED_IN } from 'constants/AuthState';
+import { selectLeaderboard } from 'store/selectors/leaderboard';
+import { selectUser } from 'store/selectors/authentication';
 
 const Leaderboard = ({
-  users = [],
-  usersWithCurrent = [],
-  user,
   fetchLeaderboard,
   fetch = false,
   setMissingAmount = () => {},
@@ -20,6 +19,12 @@ const Leaderboard = ({
   const LIMIT_FOR_CURRENT = small ? 5 : 5;
 
   const [fetched, setFetched] = useState(false);
+
+  const leaderboard = useSelector(selectLeaderboard);
+
+  const users = _.get(leaderboard, 'users', []);
+  const usersWithCurrent = _.get(leaderboard, 'usersWithCurrent', []);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (fetch && !fetched) {
@@ -97,18 +102,6 @@ const Leaderboard = ({
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    users: _.get(state.leaderboard.leaderboard, 'users', []),
-    usersWithCurrent: _.get(
-      state.leaderboard.leaderboard,
-      'usersWithCurrent',
-      []
-    ),
-    user: state.authentication,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     fetchLeaderboard: (
@@ -131,4 +124,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard);
+export default connect(null, mapDispatchToProps)(Leaderboard);

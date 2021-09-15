@@ -4,13 +4,78 @@ import SwitchableHelper from '../../helper/SwitchableHelper';
 import { useState } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import MyTradesList from '../MyTradesList';
+import { selectOpenBets } from 'store/selectors/bet';
+import { selectTransactions } from 'store/selectors/transaction';
 
-const MyTrades = ({ openBets, transactions, close: closeDrawer }) => {
+const MyTrades = ({ close: closeDrawer }) => {
   const [switchIndex, setSwitchIndex] = useState(0);
+
+  const events = useSelector(state => state.event.events);
+  const openBets = useSelector(selectOpenBets);
+  const transactions = useSelector(selectTransactions);
+
+  const getTrade = betId => {
+    const event = State.getEventByTrade(betId, events);
+    const bet = State.getTradeByEvent(betId, event);
+
+    return {
+      betId,
+      eventId: event?._id,
+      imageUrl: event?.previewImageUrl,
+      marketQuestion: bet?.marketQuestion,
+      endDate: moment(_.get(bet, 'endDate', new Date())).format('DD.MM.YYYY'),
+      status: bet?.status,
+      outcomes: bet?.outcomes,
+      eventSlug: event?.slug,
+      betSlug: bet?.slug,
+    };
+  };
+
+  const getOpenBets = () => {
+    return _.map(openBets, openBet => {
+      const trade = getTrade(openBet.betId);
+      const outcomeValue = _.get(trade, ['outcomes', openBet.outcome, 'name']);
+      const outcomeAmount = formatToFixed(_.get(openBet, 'outcomeAmount', 0));
+      const investmentAmount = formatToFixed(
+        _.get(openBet, 'investmentAmount', 0)
+      );
+
+      return {
+        ...trade,
+        outcomeValue,
+        outcomeAmount,
+        investmentAmount,
+      };
+    });
+  };
+
+  const getTransactions = () => {
+    return _.map(transactions, transaction => {
+      const trade = getTrade(transaction.bet);
+      const outcomeValue = _.get(trade, [
+        'outcomes',
+        transaction.outcome,
+        'name',
+      ]);
+      const outcomeAmount = formatToFixed(
+        _.get(transaction, 'outcomeTokensBought', 0)
+      );
+      const investmentAmount = formatToFixed(
+        _.get(transaction, 'investmentAmount', 0)
+      );
+
+      return {
+        ...trade,
+        outcomeValue,
+        outcomeAmount,
+        investmentAmount,
+      };
+    });
+  };
 
   const renderSwitchableView = () => {
     const switchableViews = [
@@ -37,7 +102,7 @@ const MyTrades = ({ openBets, transactions, close: closeDrawer }) => {
   const renderOpenBets = () => {
     return (
       <MyTradesList
-        bets={openBets}
+        bets={getOpenBets()}
         withStatus={true}
         closeDrawer={closeDrawer}
         allowCashout={true}
@@ -46,7 +111,7 @@ const MyTrades = ({ openBets, transactions, close: closeDrawer }) => {
   };
 
   const renderBetHistory = () => {
-    return <MyTradesList bets={transactions} closeDrawer={closeDrawer} />;
+    return <MyTradesList bets={getTransactions()} closeDrawer={closeDrawer} />;
   };
 
   return (
@@ -57,67 +122,4 @@ const MyTrades = ({ openBets, transactions, close: closeDrawer }) => {
   );
 };
 
-const getTrade = (betId, events) => {
-  const event = State.getEventByTrade(betId, events);
-  const bet = State.getTradeByEvent(betId, event);
-
-  return {
-    betId,
-    eventId: event?._id,
-    imageUrl: event?.previewImageUrl,
-    marketQuestion: bet?.marketQuestion,
-    endDate: moment(_.get(bet, 'endDate', new Date())).format('DD.MM.YYYY'),
-    status: bet?.status,
-    outcomes: bet?.outcomes,
-    eventSlug: event?.slug,
-    betSlug: bet?.slug,
-  };
-};
-
-const mapStateToProps = state => {
-  const events = state.event.events;
-
-  const openBets = _.map(state.bet.openBets, openBet => {
-    const trade = getTrade(openBet.betId, events);
-    const outcomeValue = _.get(trade, ['outcomes', openBet.outcome, 'name']);
-    const outcomeAmount = formatToFixed(_.get(openBet, 'outcomeAmount', 0));
-    const investmentAmount = formatToFixed(
-      _.get(openBet, 'investmentAmount', 0)
-    );
-
-    return {
-      ...trade,
-      outcomeValue,
-      outcomeAmount,
-      investmentAmount,
-    };
-  });
-  const transactions = _.map(state.transaction.transactions, transaction => {
-    const trade = getTrade(transaction.bet, events);
-    const outcomeValue = _.get(trade, [
-      'outcomes',
-      transaction.outcome,
-      'name',
-    ]);
-    const outcomeAmount = formatToFixed(
-      _.get(transaction, 'outcomeTokensBought', 0)
-    );
-    const investmentAmount = formatToFixed(
-      _.get(transaction, 'investmentAmount', 0)
-    );
-
-    return {
-      ...trade,
-      outcomeValue,
-      outcomeAmount,
-      investmentAmount,
-    };
-  });
-
-  return {
-    openBets,
-    transactions,
-  };
-};
-
-export default connect(mapStateToProps, null)(MyTrades);
+export default MyTrades;
