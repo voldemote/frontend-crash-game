@@ -25,6 +25,7 @@ const MainMenu = ({
   myTradesVisible,
   emailNotificationsVisible,
   close,
+  updateNotificationSettings,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -134,7 +135,11 @@ const MainMenu = ({
           Email Notification
         </h2>
 
-        <EmailNotifications close={close} />
+        <EmailNotifications
+          close={close}
+          updateNotificationSettings={updateNotificationSettings}
+          settings={user.notificationSettings}
+        />
       </div>
     );
   };
@@ -278,6 +283,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         AuthenticationActions.initiateUpdateUserData({
           user: { name, username, email, profilePicture },
+        })
+      );
+    },
+    updateNotificationSettings: notificationSettings => {
+      dispatch(
+        AuthenticationActions.initiateUpdateUserData({
+          user: { notificationSettings },
         })
       );
     },

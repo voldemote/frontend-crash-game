@@ -30,44 +30,34 @@
             border-radius: 8px;
             margin: 12px 0;
             cursor: pointer;
-
+            .box{
+              width: 30px;
+              height: 30px;
+              margin: 0 16px;
+              border-radius: 15px;
+              background: $colorBlue;
+            }
             .optionIcon {
                 width: 24px;
                 height: 24px;
                 margin: 0 16px;
                 border-radius: 12px;
                 background-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0px 2px 4px rgba(158, 158, 158, 0.16);
-                .optionIconCore {
-                    display: none;
+                svg{
+                  fill: #3570FF;
+                  stroke: none;
                 }
             }
 
             &.selected {
                 background-color: rgba(255, 255, 255, 0.2);
-
-                .optionIcon {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: #3570ff;
-                    box-shadow: 0px 2px 4px rgba(158, 158, 158, 0.16);
-
-                    .optionIconCore {
-                        display: flex;
-                        width: 8px;
-                        height: 8px;
-                        border-radius: 4px;
-                        background-color: white;
-                    }
-                }
             }
 
             &:hover {
                 background-color: rgba(255, 255, 255, 0.2);
             }
 
-            
+
 
             .optionText {
                 flex: 1;
