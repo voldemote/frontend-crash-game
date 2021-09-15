@@ -11,13 +11,15 @@ import {
 import * as Api from 'api';
 import { LIVE_EVENTS_CATEGORIES } from 'constants/EventCategories';
 import styles from './styles.module.scss';
+import { connect } from 'react-redux';
+import { setUniqueSlug } from '../../helper/Slug';
 
 const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
   label: c.value,
   value: c.value,
 }));
 
-const AdminEventForm = ({ event = null }) => {
+const AdminEventForm = ({ event = null, eventSlugs }) => {
   const [name, setName] = useState(event?.name || '');
   const [slug, setSlug] = useState(event?.slug || '');
   const [streamUrl, setStreamUrl] = useState(event?.streamUrl || '');
@@ -31,6 +33,14 @@ const AdminEventForm = ({ event = null }) => {
     event?.tags || [{ _id: Date.now().toString(), name: '' }]
   );
   const [date, setDate] = useState(event?.date || new Moment());
+
+  const onNameChange = newName => {
+    const slugs =
+      event === null ? eventSlugs : eventSlugs.filter(s => s !== event?.slug);
+
+    setName(newName);
+    setUniqueSlug(newName, slugs, setSlug);
+  };
 
   const handleSuccess = ({ response: { data } }) => {
     // there is a strange bug when I use history.push(); to navigate, layout becomes white
@@ -77,7 +87,7 @@ const AdminEventForm = ({ event = null }) => {
     <>
       <FormGroup>
         <InputLabel>Event Name</InputLabel>
-        <Input type="text" value={name} onChange={setName} />
+        <Input type="text" value={name} onChange={onNameChange} />
       </FormGroup>
       <FormGroup>
         <InputLabel>SEO-Optimized URL Piece</InputLabel>
@@ -132,4 +142,10 @@ const AdminEventForm = ({ event = null }) => {
   );
 };
 
-export default AdminEventForm;
+const mapStateToProps = state => {
+  return {
+    eventSlugs: state.event.events.map(({ slug }) => slug).filter(Boolean),
+  };
+};
+
+export default connect(mapStateToProps, null)(AdminEventForm);
