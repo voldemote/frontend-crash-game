@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DateTimePicker, FormGroup, Input, InputLabel, Tags } from '../Form';
 import * as Api from 'api';
 import styles from './styles.module.scss';
+import { setUniqueSlug } from 'helper/Slug';
 
 const AdminBetForm = ({ event, bet = null }) => {
   const [marketQuestion, setMarketQuestion] = useState(
@@ -15,6 +16,15 @@ const AdminBetForm = ({ event, bet = null }) => {
     bet?.evidenceDescription || ''
   );
   const [date, setDate] = useState(bet?.data || null);
+
+  const betSlugs = (
+    !!bet ? event.bets.filter(({ _id }) => bet._id !== _id) : event.bets
+  ).map(({ slug }) => slug);
+
+  const onNameChange = newName => {
+    setMarketQuestion(newName);
+    setUniqueSlug(newName, betSlugs, setSlug);
+  };
 
   const handleSuccess = ({ response: { data } }) => {
     // there is a strange bug when I use history.push(); to navigate, layout becomes white
@@ -61,11 +71,7 @@ const AdminBetForm = ({ event, bet = null }) => {
     <>
       <FormGroup>
         <InputLabel>Name</InputLabel>
-        <Input
-          type="text"
-          value={marketQuestion}
-          onChange={setMarketQuestion}
-        />
+        <Input type="text" value={marketQuestion} onChange={onNameChange} />
       </FormGroup>
       <FormGroup>
         <InputLabel>SEO-Optimized URL Piece</InputLabel>
