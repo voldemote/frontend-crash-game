@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 import State from '../../helper/State';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
@@ -7,7 +6,6 @@ import { PopupActions } from '../../store/actions/popup';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import BetSummaryHelper from '../../helper/BetSummary';
-import BetSummaryContainer from '../BetSummaryContainer';
 import SummaryRowContainer from '../SummaryRowContainer';
 import StateBadge from '../StateBadge';
 

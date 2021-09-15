@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames';
 import Icon from '../Icon';
 import IconTheme from '../Icon/IconTheme';
@@ -8,7 +7,6 @@ import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useEffect } from 'react';
 import PopupTheme from './PopupTheme';
-import BetCreation from '../BetCreation';
 import BetView from '../BetView';
 import _ from 'lodash';
 import ReferralList from '../ReferralList';
@@ -53,9 +51,6 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
     switch (type) {
       case PopupTheme.betApprove:
         return <BetApproveView />;
-
-      case PopupTheme.betCreation:
-        return <BetCreation closed={!visible} eventId={eventId} />;
 
       case PopupTheme.betView:
         return (
