@@ -1,15 +1,21 @@
+import { calculateGain } from 'helper/Calculation';
 import { formatToFixed } from 'helper/FormatNumbers';
 import _ from 'lodash';
 import { convert } from '../../helper/Currency';
 import { selectCurrency } from './authentication';
 
 const mapOutcomes = (outcomes, state) => {
+  const currency = selectCurrency(state);
+  const amount = convert(outcomes.amount, currency);
   return {
     ...outcomes,
+    amount,
     outcomes: _.map(outcomes.outcomes, o => {
+      const outcome = convert(o.outcome, currency);
       return {
         ...o,
-        outcome: convert(o.outcome, selectCurrency(state)),
+        outcome,
+        gain: calculateGain(amount, outcome),
       };
     }),
   };
