@@ -9,6 +9,15 @@ export function useTabOptions(event) {
     { name: 'news', isActive: false },
   ]);
 
+  useEffect(() => {
+    if (event && event.type === 'streamed') {
+      const updatedTabOptions = tabOptions.filter(
+        item => event.type === 'streamed' && item.name !== 'news'
+      );
+      setTabOptions(updatedTabOptions);
+    }
+  }, [event]);
+
   const handleSwitchTab = option => {
     const newValue = tabOptions.map(tabOption => {
       if (option.name !== tabOption.name)

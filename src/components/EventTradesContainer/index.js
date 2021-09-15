@@ -30,6 +30,7 @@ const EventTradesContainer = ({
     );
     const counter = _.get(viewOptions, 'counter');
     const showCounter = _.get(viewOptions, 'showCounter');
+    const hidden = _.get(viewOptions, 'hidden');
 
     return (
       <div
@@ -38,7 +39,8 @@ const EventTradesContainer = ({
           styles.eventViews,
           isCurrent ? styles.selected : null,
           underlineInactive ? styles.underlineInactive : null,
-          viewOptions.className
+          viewOptions.className,
+          hidden ? styles.tabHidden : null
         )}
         onClick={onClick(index)}
       >
