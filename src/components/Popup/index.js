@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames';
 import Icon from '../Icon';
 import IconTheme from '../Icon/IconTheme';
@@ -8,7 +7,6 @@ import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useEffect } from 'react';
 import PopupTheme from './PopupTheme';
-import BetCreation from '../BetCreation';
 import BetView from '../BetView';
 import _ from 'lodash';
 import ReferralList from '../ReferralList';
@@ -25,8 +23,13 @@ import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
 import PulloutApprovePopup from '../PulloutApprovePopup';
+import LotteryGamePopup from '../LotteryGamePopup';
+import NewEventPopup from '../NewEventPopup';
+import EditEventPopup from '../EditEventPopup';
+import NewBetPopup from '../NewBetPopup';
+import EditBetPopup from '../EditBetPopup';
 
-const Popup = ({ type, visible, options, events, hidePopup }) => {
+const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
 
   useEffect(() => {
@@ -48,9 +51,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
     switch (type) {
       case PopupTheme.betApprove:
         return <BetApproveView />;
-
-      case PopupTheme.betCreation:
-        return <BetCreation closed={!visible} eventId={eventId} />;
 
       case PopupTheme.betView:
         return (
@@ -78,7 +78,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
       case PopupTheme.signUpNotificationFirst:
       case PopupTheme.signUpNotificationSecond:
         return <SignUpPopup closed={!visible} />;
-
       case PopupTheme.tradeView:
         return (
           <TradeViewPopup
@@ -98,10 +97,8 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             fee={withdrawalSuccessOptions.fee}
           />
         );
-
       case PopupTheme.deposit:
         return <DepositSuccessPopup address={depositSuccessOptions.address} />;
-
       case PopupTheme.evaluateEvent:
         return (
           <EvaluateEventPopup
@@ -109,7 +106,6 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
             hidePopup={hidePopup}
           />
         );
-
       case PopupTheme.reportEvent:
         return <ReportEventPopup />;
 
@@ -121,6 +117,19 @@ const Popup = ({ type, visible, options, events, hidePopup }) => {
 
       case PopupTheme.pulloutApprove:
         return <PulloutApprovePopup betData={_.get(options, 'betData')} />;
+
+      case PopupTheme.lotteryGameAnswered:
+        return (
+          <LotteryGamePopup hidePopup={hidePopup} rewardId={options.rewardId} />
+        );
+      case PopupTheme.newEvent:
+        return <NewEventPopup />;
+      case PopupTheme.editEvent:
+        return <EditEventPopup />;
+      case PopupTheme.newBet:
+        return <NewBetPopup />;
+      case PopupTheme.editBet:
+        return <EditBetPopup />;
     }
 
     return null;

@@ -1,20 +1,11 @@
 import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
-
-function calcPercent(totalValue, percentToGet) {
-  return (percentToGet / 100) * totalValue;
-}
-
-function getRandomInRange(min, max) {
-  return Math.random() * (max - min) + min;
-}
+import { isMobileRosiGame, calcPercent, getRandomInRange } from './utils';
 
 class RosiAnimationBackground {
   constructor(app) {
     this.app = app;
     this.container = new PIXI.Container();
-
-    this.onTick = this.update.bind(this);
 
     // dark circle shade on the background
     this.circle = new PIXI.Graphics();
@@ -30,7 +21,7 @@ class RosiAnimationBackground {
   }
 
   createStars() {
-    const segmentWidth = 150;
+    const segmentWidth = isMobileRosiGame ? 50 : 150;
     const segmentsCount =
       Math.trunc(this.app.renderer.width / segmentWidth) + 1;
 
@@ -69,23 +60,28 @@ class RosiAnimationBackground {
   }
 
   drawCircle() {
-    const radiusRatio = this.app.renderer.width / this.app.renderer.height;
+    let x, y, radius;
+
+    if (isMobileRosiGame) {
+      x = calcPercent(this.app.renderer.width, 85);
+      y = 0;
+      radius = calcPercent(this.app.renderer.width, 65);
+    } else {
+      x = this.app.renderer.width / 2;
+      y = this.app.renderer.height / 2;
+      radius = calcPercent(this.app.renderer.width, 30);
+    }
 
     this.circle.clear();
     this.circle.beginFill(0x00193d);
-    this.circle.drawCircle(0, 0, calcPercent(this.app.renderer.width, 30));
+    this.circle.drawCircle(x, y, radius);
     this.circle.endFill();
-
-    this.circle.x = this.app.renderer.width / 2;
-    this.circle.y = this.app.renderer.height / 2;
   }
 
   startAnimation() {
-    console.log('startAnimation');
     for (const star of this.stars) {
       this.animateSingleStar(star);
     }
-    // this.app.ticker.add(this.onTick);
   }
 
   animateSingleStar(star) {
@@ -104,12 +100,6 @@ class RosiAnimationBackground {
       })
       .start();
   }
-
-  stopAnimation() {
-    // this.app.ticker.remove(this.onTick);
-  }
-
-  update(dt) {}
 }
 
 export default RosiAnimationBackground;

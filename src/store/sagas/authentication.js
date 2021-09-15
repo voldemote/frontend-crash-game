@@ -8,10 +8,7 @@ import { EventActions } from '../actions/event';
 import { push } from 'connected-react-router';
 import { put, call, select, delay } from 'redux-saga/effects';
 import { UserActions } from '../actions/user';
-import { BetActions } from '../actions/bet';
-import { TransactionActions } from '../actions/transaction';
 import { PopupActions } from '../actions/popup';
-import { ChatActions } from '../actions/chat';
 import { WebsocketsActions } from '../actions/websockets';
 import PopupTheme from '../../components/Popup/PopupTheme';
 
@@ -277,8 +274,6 @@ const refreshImportantData = function* () {
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ forceFetch: true }));
     yield put(EventActions.fetchAll());
-    yield put(AuthenticationActions.fetchReferrals());
-    yield put(TransactionActions.fetchAll());
 
     yield delay(10 * 1000);
     yield call(refreshImportantData);

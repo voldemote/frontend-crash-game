@@ -11,8 +11,11 @@ import { useHistory } from 'react-router';
 import HomeSettings from '../HomeSettings';
 import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
-import { GeneralActions, GeneralTypes } from 'store/actions/general';
+import { GeneralActions } from 'store/actions/general';
 import EmailNotifications from 'components/EmailNotifications';
+import { BetActions } from 'store/actions/bet';
+import { TransactionActions } from 'store/actions/transaction';
+import Preferences from 'components/Preferences';
 
 const MainMenu = ({
   opened,
@@ -21,11 +24,15 @@ const MainMenu = ({
   setEditVisible,
   handleMyTradesVisible,
   handleEmailNotificationsVisible,
+  handlePreferencesVisible,
   editVisible,
   myTradesVisible,
   emailNotificationsVisible,
+  preferencesVisible,
   close,
   updateNotificationSettings,
+  fetchOpenBets,
+  fetchTransactions,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -51,11 +58,17 @@ const MainMenu = ({
   };
 
   const onMyTradesClick = () => {
+    fetchOpenBets();
+    fetchTransactions();
     handleMyTradesVisible(!myTradesVisible);
   };
 
   const onEmailNotificationClick = () => {
     handleEmailNotificationsVisible(!emailNotificationsVisible);
+  };
+
+  const onPreferencesClick = () => {
+    handlePreferencesVisible(!preferencesVisible);
   };
 
   const handleName = e => {
@@ -111,7 +124,7 @@ const MainMenu = ({
           My Trades
         </h2>
 
-        <MyTrades close={close} />
+        <MyTrades close={close} fetchBets={myTradesVisible} />
       </div>
     );
   };
@@ -140,6 +153,28 @@ const MainMenu = ({
           updateNotificationSettings={updateNotificationSettings}
           settings={user.notificationSettings}
         />
+      </div>
+    );
+  };
+
+  const renderPreferencesDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !preferencesVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => handlePreferencesVisible(!preferencesVisible)}
+          />
+          Preferences
+        </h2>
+
+        <Preferences close={close} />
       </div>
     );
   };
@@ -239,7 +274,10 @@ const MainMenu = ({
         className={classNames(
           styles.panel,
           styles.firstPanel,
-          (myTradesVisible || editVisible || emailNotificationsVisible) &&
+          (myTradesVisible ||
+            editVisible ||
+            emailNotificationsVisible ||
+            preferencesVisible) &&
             styles.panelHidden
         )}
       >
@@ -249,6 +287,7 @@ const MainMenu = ({
             onEditClick={() => onClickShowEditProfile()}
             onMyTradesClick={() => onMyTradesClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}
+            onPreferencesClick={() => onPreferencesClick()}
           />
 
           <div className={styles.buttonContainer}>
@@ -264,6 +303,7 @@ const MainMenu = ({
       {editProfileWrapper()}
       {renderMyTradesDrawer()}
       {renderEmailNotificationDrawer()}
+      {renderPreferencesDrawer()}
     </div>
   );
 };
@@ -274,6 +314,7 @@ const mapStateToProps = state => {
     editVisible: state.general.editProfileVisible,
     myTradesVisible: state.general.myTradesVisible,
     emailNotificationsVisible: state.general.emailNotificationsVisible,
+    preferencesVisible: state.general.preferencesVisible,
   };
 };
 
@@ -301,6 +342,15 @@ const mapDispatchToProps = dispatch => {
     },
     handleEmailNotificationsVisible: bool => {
       dispatch(GeneralActions.setEmailNotificationsVisible(bool));
+    },
+    handlePreferencesVisible: bool => {
+      dispatch(GeneralActions.setPreferencesVisible(bool));
+    },
+    fetchOpenBets: () => {
+      dispatch(BetActions.fetchOpenBets());
+    },
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
     },
   };
 };

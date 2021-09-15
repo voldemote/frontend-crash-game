@@ -1,0 +1,28 @@
+@import '../../styles/all';
+
+.button {
+  margin: 30px auto;
+  width: 15em;
+  height: 72px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-image: url('../../data/backgrounds/games/games-highlight.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.buttonDisabled {
+  opacity: 0.5;
+
+  &:hover {
+    cursor: not-allowed;
+  }
+}

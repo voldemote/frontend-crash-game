@@ -1,0 +1,56 @@
+@import '../../../styles/all';
+
+.tagInput {
+  width: 100%;
+  border: 1px solid rgba(14, 9, 39, 0.1);
+  border-radius: 12px;
+  padding: 18px 25px 18px 15px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.tags {
+  overflow: hidden;
+}
+
+.tag {
+  position: relative;
+  width: 175px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.tag:nth-child(odd) {
+  margin-right: 5px;
+}
+
+.tag:nth-child(even) {
+  margin-left: 5px;
+}
+
+.newTag {
+  height: 52px;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px dashed rgba(14, 9, 39, 0.1);
+  border-radius: 12px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.deleteTag {
+  display: inline-block;
+  position: absolute;
+  top: 14px;
+  right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

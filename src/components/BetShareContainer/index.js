@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
-import ShareType from '../BetCard/ShareType';
+import ShareType from './ShareType';
 import styles from './styles.module.scss';
 import { FacebookIcon } from 'react-share';
 import { TwitterIcon } from 'react-share';

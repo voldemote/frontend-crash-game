@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 import TimeLeftCounter from 'components/TimeLeftCounter';
 import ViewerBadge from 'components/ViewerBadge';
 import { Carousel } from 'react-responsive-carousel';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
@@ -35,21 +35,21 @@ import { useChartData } from './hooks/useChartData';
 import Placeholder from '../../components/Placeholder';
 import { useNewsFeed } from './hooks/useNewsFeed';
 import { useTabOptions } from './hooks/useTabOptions';
+import AdminOnly from 'components/AdminOnly';
+import { selectOpenBets } from 'store/selectors/bet';
+import { selectTransactions } from 'store/selectors/transaction';
+import { TransactionActions } from 'store/actions/transaction';
 
 const Bet = ({
   showPopup,
-  rawOutcomes,
-  transactions,
-  openBets,
   authState,
   events,
   fetchOpenBets,
+  fetchTransactions,
 }) => {
   const { eventSlug, betSlug } = useParams();
 
   const [betId, setBetId] = useState(null);
-  const history = useHistory();
-
   const [swiper, setSwiper] = useState(null);
   const [betAction, setBetAction] = useState(2);
   const [betViewIsOpen, setBetViewIsOpen] = useState(false);
@@ -58,6 +58,10 @@ const Bet = ({
   const [relatedBets, setRelatedBets] = useState([]);
 
   const mobileChatRef = useRef(null);
+  const history = useHistory();
+
+  const openBets = useSelector(selectOpenBets);
+  const transactions = useSelector(selectTransactions);
 
   const currentFromLocation = useBetPreviousLocation();
   const {
@@ -115,6 +119,7 @@ const Bet = ({
     }
 
     fetchOpenBets();
+    fetchTransactions();
   }, [eventSlug, betSlug]);
 
   useEffect(() => {
@@ -187,31 +192,10 @@ const Bet = ({
   };
 
   const getMyEventTrades = () => {
-    const currentBets = _.map(openBets, openBet => {
-      const betId = openBet.betId;
-      const bet = State.getTradeByEvent(_.get(openBet, 'betId'), event);
-      let outcomes = _.get(rawOutcomes, betId, {});
-
-      if (outcomes) {
-        const outcomeValues = _.get(outcomes, 'values', {});
-        const amount = _.get(openBet, 'investmentAmount');
-        outcomes = _.get(outcomeValues, amount, {});
-      }
-
-      return {
-        ...openBet,
-        outcomes,
-        bet,
-        event,
-      };
-    });
-
     return _.map([...transactions], transaction => {
       const betId = _.get(transaction, 'bet');
       const bet = State.getTradeByEvent(betId, event);
-      const openBet = _.find(currentBets, {
-        betId: betId,
-      });
+      const openBet = _.find(openBets, { betId });
 
       if (bet) {
         return {
@@ -556,6 +540,20 @@ const Bet = ({
           </div>
           <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
         </div>
+        <AdminOnly>
+          <span
+            className={styles.editEventLink}
+            onClick={() => showPopup(PopupTheme.editEvent, event)}
+          >
+            Edit Event
+          </span>
+          <span
+            className={styles.newBetLink}
+            onClick={() => showPopup(PopupTheme.newBet, { event })}
+          >
+            New Bet
+          </span>
+        </AdminOnly>
       </div>
     </BaseContainerWithNavbar>
   );
@@ -563,9 +561,6 @@ const Bet = ({
 const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
-    rawOutcomes: state.bet.outcomes,
-    transactions: state.transaction.transactions,
-    openBets: state.bet.openBets,
     events: state.event.events,
   };
 };
@@ -582,6 +577,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchOpenBets: () => {
       dispatch(BetActions.fetchOpenBets());
+    },
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
     },
   };
 };

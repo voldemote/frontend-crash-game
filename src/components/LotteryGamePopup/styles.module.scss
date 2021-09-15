@@ -1,0 +1,51 @@
+@import '../../styles/all';
+
+.reportEvent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 35px;
+  text-align: center;
+
+  .logo {
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 0;
+  }
+
+  .title {
+    font-family: $fontBold;
+    font-size: 30px;
+    margin: 10px 0;
+
+    @media screen and (max-width: $screen-xs-max) {
+      font-size: 22px;
+    }
+  }
+
+  .subtitle {
+    font-family: $fontRegular;
+    font-size: 30px;
+    padding-top: 5px;
+  }
+
+  .content {
+    width: 70%;
+    margin-top: 40px;
+
+    @media (max-width: $screen-xs) {
+      width: 100%;
+    }
+  }
+
+  .sendButton {
+    font-size: 14px;
+    margin-top: 40px;
+  }
+}

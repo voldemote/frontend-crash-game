@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Icon from '../Icon';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import _ from 'lodash';
 import MenuItem from '../MenuItem';
@@ -11,22 +11,25 @@ import SwitchableContainer from 'components/SwitchableContainer';
 import { useEffect, useState } from 'react';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import IconTheme from 'components/Icon/IconTheme';
-import State from 'helper/State';
 import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
-import { TOKEN_NAME } from '../../constants/Token';
 import WalletBalance from '../WalletBalance';
 import PaymentForm from '../PaymentForm';
 import { PAYMENT_TYPE } from 'constants/Payment';
+import { TransactionActions } from 'store/actions/transaction';
+import { AuthenticationActions } from 'store/actions/authentication';
+import useTransactions from 'hooks/useTransactions';
+import { selectUser } from 'store/selectors/authentication';
+import { formatToFixed } from 'helper/FormatNumbers';
 
 const Wallet = ({
   show,
   referralCount,
-  transactionCount,
   close,
-  transactions,
   referrals,
+  fetchTransactions,
+  fetchReferrals,
 }) => {
   const menus = {
     wallet: 'wallet',
@@ -42,6 +45,10 @@ const Wallet = ({
   const [paymentAction, setPaymentAction] = useState(PaymentAction.deposit);
   const [openMenu, setOpenMenu] = useState(menus.wallet);
 
+  const { currency } = useSelector(selectUser);
+
+  const { transactions, transactionCount } = useTransactions();
+
   const isOpen = page => openMenu === page;
   const paymentType = {
     [PaymentAction.deposit]: PAYMENT_TYPE.deposit,
@@ -50,6 +57,7 @@ const Wallet = ({
 
   useEffect(() => {
     if (!show) {
+      fetchReferrals();
       setOpenMenu(menus.wallet);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,6 +125,16 @@ const Wallet = ({
     );
   };
 
+  const onTransactionsClick = () => {
+    fetchTransactions();
+    setOpenMenu(menus.transactionHistory);
+  };
+
+  const onReferralsClick = () => {
+    fetchReferrals();
+    setOpenMenu(menus.referrals);
+  };
+
   return (
     <div
       className={classNames(
@@ -138,13 +156,13 @@ const Wallet = ({
               icon={
                 <Icon className={styles.optionIcon} iconType={'activities'} />
               }
-              onClick={() => setOpenMenu(menus.transactionHistory)}
+              onClick={() => onTransactionsClick()}
             />
             <MenuItem
               classes={[styles.referrals]}
               label={`Referrals (${referralCount})`}
               icon={<Icon className={styles.optionIcon} iconType={'chat'} />}
-              onClick={() => setOpenMenu(menus.referrals)}
+              onClick={() => onReferralsClick()}
             />
 
             {renderSwitchableView()}
@@ -160,7 +178,7 @@ const Wallet = ({
             Transaction History
           </>,
           <TwoColumnTable
-            headings={['Latest transactions', TOKEN_NAME]}
+            headings={['Latest transactions', currency]}
             rows={transactions.map(
               ({
                 event,
@@ -183,7 +201,7 @@ const Wallet = ({
                   </>,
                   <>
                     <span className={styles[direction.toLowerCase()]}>
-                      {tokenAmount}
+                      {formatToFixed(tokenAmount)}
                     </span>
                     <span className={styles.secondaryData}>
                       {moment(trx_timestamp).format('DD.MM.YYYY')}
@@ -238,25 +256,22 @@ const Wallet = ({
 
 const mapStateToProps = state => {
   const referralCount = _.size(state.authentication.referralList);
-  const transactionCount = _.size(state.transaction.transactions);
-  const transactions = _.map(state.transaction.transactions, transaction => {
-    const betId = _.get(transaction, 'bet');
-    const event = State.getEventByTrade(betId, state.event.events);
-    const bet = State.getTradeByEvent(betId, event);
-
-    return {
-      ...transaction,
-      bet,
-      event,
-    };
-  });
 
   return {
     referralCount,
-    transactionCount,
-    transactions: _.orderBy(transactions, ['trx_timestamp'], ['desc']),
     referrals: state.authentication.referralList,
   };
 };
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
+    },
+    fetchReferrals: () => {
+      dispatch(AuthenticationActions.fetchReferrals());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

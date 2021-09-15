@@ -1,6 +1,5 @@
 export default {
   betApprove: 'betApprove',
-  betCreation: 'betCreation',
   betView: 'betView',
   eventDetails: 'eventDetails',
   referralList: 'referralList',
@@ -16,4 +15,9 @@ export default {
   loginRegister: 'loginRegister',
   verifyEmail: 'verifyEmail',
   pulloutApprove: 'pulloutApprove',
+  lotteryGameAnswered: 'lotteryGameAnswered',
+  newEvent: 'newEvent',
+  editEvent: 'editEvent',
+  newBet: 'newBet',
+  editBet: 'editBet',
 };

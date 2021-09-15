@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import _ from 'lodash';
@@ -12,10 +12,15 @@ import TimeLeftCounter from '../TimeLeftCounter';
 
 const Header = ({ events }) => {
   let [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [currentEvents, setCurrentEvents] = useState([]);
   const location = useLocation();
 
+  useEffect(() => {
+    setCurrentEvents(events.filter(event => event.state === 'online'));
+  }, [events]);
+
   const renderContent = (event, eventIndex, index) => {
-    if (eventIndex != index || event.type != 'streamed') {
+    if (eventIndex !== index || event.type !== 'streamed') {
       return (
         <img src={event.previewImageUrl} className={styles.previewImage} />
       );
@@ -35,8 +40,8 @@ const Header = ({ events }) => {
     <div>
       <div className={styles.header}>
         <CoverFlowCarousel onSlideChange={setCurrentSlideIndex}>
-          {events &&
-            events.map((event, eventIndex) => {
+          {currentEvents &&
+            currentEvents.map((event, eventIndex) => {
               const startDate = moment(_.get(event, 'date'));
               const endDate = moment(_.get(event, 'endDate'));
               const currentDate = moment();

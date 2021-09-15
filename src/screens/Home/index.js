@@ -1,9 +1,7 @@
 import styles from './styles.module.scss';
-import LogoDemo from '../../data/images/logo-demo.svg';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import FixedEventCreationIconButton from '../../components/FixedEventCreationIconButton';
 import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
@@ -26,8 +24,19 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
     }
   }, []);
 
-  const renderEventCreationButton = () => {
-    return <FixedEventCreationIconButton />;
+  const renderHeadline = () => {
+    return (
+      <div className={styles.mainHeadline}>
+        <h1>Wallfair Is A Social Entertainment Platform</h1>
+        <p>
+          That decentralizes the creative economy, enabling real-time
+          speculation on live and non-live events.
+        </p>
+        <div className={styles.slogan}>
+          Create<span>.</span>Play<span>.</span>Earn<span>.</span>
+        </div>
+      </div>
+    );
   };
 
   const onSeeLeaderboard = () => {
@@ -87,6 +96,7 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
 
   return (
     <BaseContainerWithNavbar>
+      {renderHeadline()}
       <Header />
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
@@ -97,7 +107,6 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
           <ContentFooter />
         </div>
       </div>
-      {/* {renderEventCreationButton()} -> TODO: Check if needed */}
     </BaseContainerWithNavbar>
   );
 };

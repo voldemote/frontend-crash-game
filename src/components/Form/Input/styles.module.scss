@@ -1,0 +1,14 @@
+@import '../../../styles/all';
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(14, 9, 39, 0.1);
+  border-radius: 12px;
+  padding: 18px 15px;
+  font-size: 14px;
+  color: rgba(18, 14, 39, 0.5);
+
+  &:focus {
+    outline: none;
+  }
+}

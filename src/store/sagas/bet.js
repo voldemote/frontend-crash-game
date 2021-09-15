@@ -8,7 +8,6 @@ import { EventActions } from '../actions/event';
 import { PopupActions } from '../actions/popup';
 import { AuthenticationActions } from '../actions/authentication';
 import { TransactionActions } from '../actions/transaction';
-import { delay } from 'redux-saga/effects';
 import { UserActions } from '../actions/user';
 
 const create = function* (action) {
@@ -74,18 +73,6 @@ const place = function* (action) {
   }
 };
 
-const setCommitment = function* (action) {
-  let betId = action.betId;
-  const amount = yield select(state => state.bet.selectedCommitment);
-
-  yield put(
-    BetActions.fetchOutcomes({
-      betId,
-      amount,
-    })
-  );
-};
-
 const fetchOutcomes = function* (action) {
   const betId = action.betId;
   const amount = action.amount;
@@ -96,14 +83,13 @@ const fetchOutcomes = function* (action) {
     if (response) {
       const result = response.data;
       const outcomes = {
-        [amount]: {
-          ...result,
-        },
+        betId,
+        amount,
+        outcomes: result,
       };
 
       yield put(
         BetActions.setOutcomes({
-          betId,
           outcomes,
         })
       );
@@ -121,14 +107,13 @@ const fetchSellOutcomes = function* (action) {
     if (response) {
       const result = response.data;
       const outcomes = {
-        [amount]: {
-          ...result,
-        },
+        betId,
+        amount,
+        sellOutcomes: result,
       };
 
       yield put(
         BetActions.setSellOutcomes({
-          betId,
           outcomes,
         })
       );
@@ -199,5 +184,4 @@ export default {
   fetchSellOutcomes,
   place,
   pullOut,
-  setCommitment,
 };

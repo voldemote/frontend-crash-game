@@ -14,8 +14,8 @@ import useCurrentUser from 'hooks/useCurrentUser';
 const PlaceBet = () => {
   const dispatch = useDispatch();
   const user = useCurrentUser();
-  const userBalance = parseInt(user.balance, 10);
-  const sliderMinAmount = user.balance > 50 ? 50 : 0;
+  const userBalance = parseInt(user?.balance || 0, 10);
+  const sliderMinAmount = userBalance > 50 ? 50 : 0;
   const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const userPlacedABet = useSelector(selectUserBet);

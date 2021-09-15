@@ -55,6 +55,7 @@ const resendEmailVerification = () => {
   return Api.get(ApiUrls.API_AUTHENTICATION_RESEND_EMAIL_VERIFICATION).catch(
     error => {
       console.log('[API Error] called verifyEmail:', error);
+      throw error;
     }
   );
 };
@@ -228,6 +229,50 @@ const sendEventEvaluate = (betQuestion, rating, comment) => {
   });
 };
 
+const getRewardsQuestions = (questionId, answerId) => {
+  return Api.get('api/rewards/questions').catch(error => {
+    console.log('[API Error] called: getUser', error);
+    throw error;
+  });
+};
+
+const postRewardAnswer = (questionId, answerId, userId) => {
+  return Api.post('api/rewards/answer', {
+    user: {
+      id: userId,
+    },
+    questionId,
+    answerId,
+  }).catch(error => {
+    console.log('[API Error] called: getUser', error);
+    throw error;
+  });
+};
+
+const createEvent = payload => {
+  return Api.post(ApiUrls.API_EVENT_CREATE, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const editEvent = (id, payload) => {
+  return Api.post(ApiUrls.API_EVENT_EDIT.replace(':id', id), payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const createEventBet = payload => {
+  return Api.post(ApiUrls.API_EVENT_BET_CREATE, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const editEventBet = (betId, payload) => {
+  return Api.post(ApiUrls.API_EVENT_BET_EDIT.replace(':betId', betId), payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -253,4 +298,10 @@ export {
   getTags,
   getEventHistoryChartData,
   sendEventEvaluate,
+  getRewardsQuestions,
+  postRewardAnswer,
+  createEvent,
+  editEvent,
+  createEventBet,
+  editEventBet,
 };

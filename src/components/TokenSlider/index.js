@@ -60,6 +60,10 @@ const TSlider = withStyles({
 })(Slider);
 
 const TokenSlider = ({ value, setValue, maxValue, ...props }) => {
+  if (maxValue < 1) {
+    maxValue = 2800;
+  }
+
   const marks = [
     {
       value: 1,

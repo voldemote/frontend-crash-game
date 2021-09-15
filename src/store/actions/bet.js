@@ -15,8 +15,6 @@ export const BetTypes = {
   PULL_OUT_BET: 'Bet/PULL_OUT_BET',
   PULL_OUT_BET_FAILED: 'Bet/PULL_OUT_BET_FAILED',
   PULL_OUT_BET_SUCCEEDED: 'Bet/PULL_OUT_BET_SUCCEEDED',
-  SELECT_CHOICE: 'Bet/SELECT_CHOICE',
-  SET_COMMITMENT: 'Bet/SET_COMMITMENT',
   SET_OUTCOMES: 'Bet/SET_OUTCOMES',
   SET_SELL_OUTCOMES: 'Bet/SET_SELL_OUTCOMES',
 };
@@ -50,23 +48,12 @@ const placeSucceeded = makeActionCreator(BetTypes.PLACE_SUCCEEDED, {
 
 const placeFailed = makeActionCreator(BetTypes.PLACE_FAILED);
 
-const selectChoice = makeActionCreator(BetTypes.SELECT_CHOICE, {
-  choice: null,
-});
-
-const setCommitment = makeActionCreator(BetTypes.SET_COMMITMENT, {
-  commitment: null,
-  betId: null,
-});
-
 const setOutcomes = makeActionCreator(BetTypes.SET_OUTCOMES, {
-  betId: null,
-  outcomes: [],
+  outcomes: {},
 });
 
 const setSellOutcomes = makeActionCreator(BetTypes.SET_SELL_OUTCOMES, {
-  betId: null,
-  sellOutcomes: [],
+  sellOutcomes: {},
 });
 
 const fetchSellOutcomes = makeActionCreator(BetTypes.FETCH_SELL_OUTCOMES, {
@@ -115,8 +102,6 @@ export const BetActions = {
   pullOutBet,
   pullOutBetFailed,
   pullOutBetSucceeded,
-  selectChoice,
-  setCommitment,
   setOutcomes,
   setSellOutcomes,
 };

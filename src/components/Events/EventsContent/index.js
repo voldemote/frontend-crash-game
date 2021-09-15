@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import Search from '../../Search';
@@ -10,8 +10,13 @@ import { useMappedActions } from './hooks/useMappedActions';
 import { useSortFilter } from './hooks/useSortFilter';
 import { useRouteHandling } from './hooks/useRouteHandling';
 import ContentFooter from 'components/ContentFooter';
+import AdminOnly from 'components/AdminOnly';
+import Routes from 'constants/Routes';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
 
 function EventsContent({ eventType, categories, setCategories }) {
+  const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState('');
 
   const { location, category } = useRouteHandling(eventType);
@@ -109,13 +114,30 @@ function EventsContent({ eventType, categories, setCategories }) {
               title={item.name}
               organizer={''}
               viewers={12345}
-              live={eventType === 'streamed'}
+              live={item.state === 'online'}
               tags={mappedTags(item._id)}
               image={item.previewImageUrl}
               eventEnd={item.date}
             />
           </Link>
         ))}
+      </section>
+      <section className={styles.main}>
+        <AdminOnly>
+          <div
+            className={styles.newEventLink}
+            onClick={() => {
+              dispatch(
+                PopupActions.show({
+                  popupType: PopupTheme.newEvent,
+                  options: {},
+                })
+              );
+            }}
+          >
+            New Event
+          </div>
+        </AdminOnly>
       </section>
       <ContentFooter />
     </>
