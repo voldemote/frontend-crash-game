@@ -25,8 +25,14 @@ const LeaderboardItem = ({
   };
 
   const getUsername = () => {
-    if (isCurrentUser) return user.username + ' (You)';
-    return user.username;
+    let formattedUsername = user.username;
+
+    if (formattedUsername.length > 20) {
+      formattedUsername = formattedUsername.substring(0, 17) + '...';
+    }
+
+    if (isCurrentUser) return formattedUsername + ' (You)';
+    return formattedUsername;
   };
 
   return (

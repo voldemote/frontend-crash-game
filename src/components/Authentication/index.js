@@ -88,7 +88,7 @@ const Authentication = ({
   };
 
   const usernameIsValid = () => {
-    return username && username.length >= 3;
+    return username && username.length >= 3 && username.length <= 25;
   };
 
   const validateInput = () => {
