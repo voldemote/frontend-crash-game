@@ -6,13 +6,17 @@
   background-color: $colorPrimaryDark;
   min-height: 100%;
   color: $colorWhite;
-  padding: 0.5rem 1.7rem;
+  padding: 0.5rem 1.7rem 2.5rem 1.7rem;
   font-family: $fontLight;
   position: relative;
 
   @media (max-width: $screen-md) {
     padding-top: 1rem;
     padding-bottom: 0;
+
+    & .betFooter {
+      display: none;
+    }
   }
 
   .upperLeftOval,

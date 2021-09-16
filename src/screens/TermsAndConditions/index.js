@@ -2,6 +2,7 @@ import HeaderWithHeadline from '../../components/HeaderWithHeadline';
 import LegalText from '../../components/LegalText';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import { TOKEN_NAME } from '../../constants/Token';
+import ContentFooter from 'components/ContentFooter';
 
 const TermsAndConditions = () => {
   return (
@@ -206,6 +207,7 @@ const TermsAndConditions = () => {
             Wiesbaden, July 1, 2021
           </section>
         </LegalText>
+        <ContentFooter />
       </BaseContainerWithNavbar>
     </div>
   );

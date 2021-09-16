@@ -20,6 +20,7 @@ import {
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
+import ContentFooter from 'components/ContentFooter';
 
 const gameEvent = { _id: ROSI_GAME_EVENT_ID };
 
@@ -76,6 +77,7 @@ const RosiGame = () => {
           </Grid>
           {isSmallDevice && <MobileBets />}
         </div>
+        <ContentFooter />
       </div>
     </BaseContainerWithNavbar>
   );
