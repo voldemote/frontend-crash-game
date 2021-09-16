@@ -105,12 +105,6 @@ const Bet = ({
   useEffect(() => {
     ref.current = true;
 
-    if (isMobile) {
-      setBetAction(BET_ACTIONS.Chat);
-    } else {
-      setBetAction(BET_ACTIONS.EventTrades);
-    }
-
     setSingleBet(false);
     setBetViewIsOpen(false);
 
@@ -147,8 +141,13 @@ const Bet = ({
   }, [eventSlug, betSlug]);
 
   useEffect(() => {
-    if (ref.current && !isMobile) {
+    if (ref.current && !isMobile && relatedBets.length === 1) {
       selectSingleBet();
+    }
+    if (isMobile) {
+      setBetAction(BET_ACTIONS.Chat);
+    } else {
+      setBetAction(BET_ACTIONS.EventTrades);
     }
   }, [isMobile]);
 
