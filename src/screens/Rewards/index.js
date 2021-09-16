@@ -313,6 +313,7 @@ const LotteryGame = ({
 const Rewards = ({ user, showPopup }) => {
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
+      <div className={styles.bgRewards} />
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.rewardsInfo}>
