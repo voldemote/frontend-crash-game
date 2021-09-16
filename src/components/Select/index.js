@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-import Routes from '../../constants/Routes';
+import { useState } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
-import Input from '../Input';
-import Icon from '../Icon';
-import IconType from '../Icon/IconType';
 import { ReactComponent as ArrowIcon } from '../../data/icons/arrow-down.svg';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 
-function Select({ value, handleSelect, placeholder, options }) {
+function Select({ value, handleSelect, placeholder, options = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const element = useOutsideClick(() => {
     setIsOpen(false);
@@ -25,8 +19,9 @@ function Select({ value, handleSelect, placeholder, options }) {
     setIsOpen(false);
   };
 
-  const getLabel = value =>
-    options.find(option => option.value === value).label;
+  const getLabel = value => {
+    options ? options.find(option => option.value === value).label : '';
+  };
 
   return (
     <div className={styles.selectContainer} ref={element}>

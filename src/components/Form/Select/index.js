@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { ReactComponent as ChevronDownIcon } from './chevron-down-icon.svg';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 
-function Select({ value, handleSelect, placeholder, options }) {
+function Select({ value, handleSelect, placeholder, options = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const element = useOutsideClick(() => {
     setIsOpen(false);
@@ -19,8 +19,9 @@ function Select({ value, handleSelect, placeholder, options }) {
     setIsOpen(false);
   };
 
-  const getLabel = value =>
-    options.find(option => option.value === value).label;
+  const getLabel = value => {
+    options ? options.find(option => option.value === value).label : '';
+  };
 
   return (
     <div className={styles.selectContainer} ref={element}>
