@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import { ChatTypes } from '../actions/chat';
 
 const initialState = {
-  messagesByEvent: {},
+  messagesByRoom: {},
 };
 
 const sortChatMessages = chatMessages =>
@@ -15,7 +15,7 @@ const sortChatMessages = chatMessages =>
   });
 
 const addMessages = (state, roomId, messages) => {
-  const currentMessages = _.get(state, ['messagesByEvent', roomId], []);
+  const currentMessages = _.get(state, ['messagesByRoom', roomId], []);
   const sortedChatMessages = sortChatMessages(
     _.uniqWith(
       _.concat(currentMessages, messages)
@@ -32,7 +32,7 @@ const addMessages = (state, roomId, messages) => {
   );
 
   return update(state, {
-    messagesByEvent: {
+    messagesByRoom: {
       [roomId]: {
         $set: sortedChatMessages,
       },

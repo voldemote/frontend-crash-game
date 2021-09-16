@@ -30,7 +30,6 @@ function createSocketChannel(socket) {
     };
     const addBetCreatedHandler = event => {
       const message = {
-        type: ChatMessageType.createBet,
         ...event,
       };
 
@@ -39,7 +38,6 @@ function createSocketChannel(socket) {
 
     const addNewBetPlaceHandler = event => {
       const message = {
-        type: ChatMessageType.placeBet,
         ...event,
       };
 
@@ -48,7 +46,6 @@ function createSocketChannel(socket) {
 
     const addNewBetPullOutHandler = event => {
       const message = {
-        type: ChatMessageType.pulloutBet,
         ...event,
       };
 
@@ -184,7 +181,6 @@ export function* init() {
             case ChatMessageType.pulloutBet:
             case ChatMessageType.createBet:
             case ChatMessageType.placeBet:
-            case ChatMessageType.chatMessage:
             case ChatMessageType.event:
             case ChatMessageType.game:
             case ChatMessageType.user:
