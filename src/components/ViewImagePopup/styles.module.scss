@@ -1,0 +1,17 @@
+@import '../../styles/all';
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(14, 9, 39, 0);
+  align-items: center;
+  overflow: hidden;
+
+  img {
+    width: auto;
+    height: 90%;
+    object-fit: contain;
+  }
+}
