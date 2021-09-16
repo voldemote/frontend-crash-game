@@ -1,8 +1,13 @@
 import HeaderWithHeadline from '../../components/HeaderWithHeadline';
 import LegalText from '../../components/LegalText';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import { useEffect } from 'react';
 
-const TermsAndConditions = () => {
+const PrivacyPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <BaseContainerWithNavbar withPaddingTop={true}>
@@ -831,4 +836,4 @@ const TermsAndConditions = () => {
   );
 };
 
-export default TermsAndConditions;
+export default PrivacyPolicy;
