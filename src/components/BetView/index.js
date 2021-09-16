@@ -177,6 +177,10 @@ const BetView = ({
   }, [commitment, currency]);
 
   useEffect(() => {
+    validateInput();
+  }, [choice]);
+
+  useEffect(() => {
     setShowLoadingAnimation(actionIsInProgress);
 
     if (!actionIsInProgress) {
