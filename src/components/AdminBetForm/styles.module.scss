@@ -18,3 +18,20 @@
     cursor: pointer;
   }
 }
+
+.betTemplateHint {
+  margin-bottom: 10px;
+  display: block;
+  opacity: 0.4;
+}
+
+.templatePicker {
+  display: flex;
+}
+
+.applyButton {
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 14px;
+}
