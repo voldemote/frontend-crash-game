@@ -226,14 +226,16 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   } else {
     const userId = yield select(state => state.authentication.userId);
     const room = yield select(state => state.websockets.room);
-    let eventId = null;
     const pathname = action.payload.location.pathname;
     const pathSlugs = pathname.slice(1).split('/');
     // event page
 
     if (pathSlugs[0] === 'trade') {
-      eventId = pathSlugs[1];
-      if (eventId !== room) {
+      const eventSlug = pathSlugs[1];
+      const events = yield select(state => state.event.events);
+      const event = events.find(e => e.slug === eventSlug);
+
+      if (eventSlug !== room) {
         if (room) {
           yield put(
             WebsocketsActions.leaveRoom({
@@ -242,12 +244,14 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
             })
           );
         }
-        yield put(
-          WebsocketsActions.joinRoom({
-            userId,
-            eventId,
-          })
-        );
+        if (event) {
+          yield put(
+            WebsocketsActions.joinRoom({
+              userId,
+              eventId: event._id,
+            })
+          );
+        }
       }
     } else if (pathSlugs[1] === 'rosi-game') {
       yield put(

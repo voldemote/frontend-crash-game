@@ -39,6 +39,7 @@ import AdminOnly from 'components/AdminOnly';
 import { selectOpenBets } from 'store/selectors/bet';
 import { selectTransactions } from 'store/selectors/transaction';
 import { TransactionActions } from 'store/actions/transaction';
+import { ChatActions } from 'store/actions/chat';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -53,6 +54,7 @@ const Bet = ({
   events,
   fetchOpenBets,
   fetchTransactions,
+  fetchChatMessages,
 }) => {
   const { eventSlug, betSlug } = useParams();
 
@@ -127,6 +129,7 @@ const Bet = ({
       setSingleBet(true);
     }
 
+    fetchChatMessages(currentEvent._id);
     fetchOpenBets();
     fetchTransactions();
   }, [eventSlug, betSlug]);
@@ -597,6 +600,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchTransactions: () => {
       dispatch(TransactionActions.fetchAll());
+    },
+    fetchChatMessages: eventId => {
+      dispatch(ChatActions.fetch({ eventId }));
     },
   };
 };
