@@ -7,4 +7,7 @@ export default {
   casinoEnd: 'CASINO_END',
   casinoTrade: 'CASINO_TRADE',
   casinoReward: 'CASINO_REWARD',
+  event: 'event',
+  game: 'game',
+  user: 'user',
 };

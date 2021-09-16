@@ -21,11 +21,11 @@ const connected = makeActionCreator(WebsocketsTypes.CONNECTED);
 const close = makeActionCreator(WebsocketsTypes.CLOSE);
 const joinRoom = makeActionCreator(WebsocketsTypes.JOIN_ROOM, {
   userId: null,
-  eventId: null,
+  roomId: null,
 });
 const leaveRoom = makeActionCreator(WebsocketsTypes.LEAVE_ROOM, {
   userId: null,
-  eventId: null,
+  roomId: null,
 });
 const sendChatMessage = makeActionCreator(WebsocketsTypes.SEND_CHAT_MESSAGE, {
   messageObject: null,

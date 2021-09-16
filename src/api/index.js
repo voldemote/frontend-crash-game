@@ -273,10 +273,21 @@ const editEventBet = (betId, payload) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+<<<<<<< HEAD
 const getBetTemplates = () => {
   return Api.get(ApiUrls.API_BET_TEMPLATES)
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
+=======
+const fetchChatMessagesByRoom = (roomId, limit, skip) => {
+  return Api.get(
+    ApiUrls.API_CHAT_MESSAGES.replace(':roomId', roomId)
+      .replace(':limit', limit)
+      .replace(':skip', skip)
+  )
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+>>>>>>> d551a02 (MVP2-270: Support multiple rooms for chat)
 };
 
 export {
@@ -310,5 +321,9 @@ export {
   editEvent,
   createEventBet,
   editEventBet,
+<<<<<<< HEAD
   getBetTemplates,
+=======
+  fetchChatMessagesByRoom,
+>>>>>>> d551a02 (MVP2-270: Support multiple rooms for chat)
 };

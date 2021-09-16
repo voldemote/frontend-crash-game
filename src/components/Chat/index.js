@@ -21,7 +21,8 @@ const Chat = ({
   messagesClassName,
   userId,
   userName,
-  event,
+  roomId,
+  chatMessageType,
   messages,
   sendChatMessage,
   hideInput = false,
@@ -29,7 +30,6 @@ const Chat = ({
   const messageListRef = useRef();
   const [message, setMessage] = useState('');
   const [lastMessageSent, setLastMessageSent] = useState(0);
-  const eventId = _.get(event, '_id');
   const prevMessages = usePrevPropValue(messages);
   const isMount = useIsMount();
 
@@ -53,11 +53,11 @@ const Chat = ({
 
       if (difference >= 2 * 1000) {
         const messageData = {
-          type: ChatMessageType.chatMessage,
+          type: chatMessageType,
           message: message,
           date: new Date(),
           name: userName,
-          eventId,
+          roomId,
           userId,
         };
 
@@ -72,7 +72,6 @@ const Chat = ({
     return _.map(messages, (chatMessage, index) => {
       const userId = _.get(chatMessage, 'userId');
       const date = _.get(chatMessage, 'date');
-
       return (
         <ChatMessageWrapper
           key={index}
@@ -137,11 +136,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     userId: state.authentication.userId,
     userName: state.authentication.name,
-    messages: _.get(
-      state,
-      ['chat', 'messagesByEvent', _.get(ownProps.event, '_id')],
-      []
-    ),
+    messages: _.get(state, ['chat', 'messagesByEvent', ownProps.roomId], []),
     connected: state.websockets.connected,
   };
 };

@@ -36,6 +36,9 @@ const ChatMessageWrapper = ({ user, message, date }) => {
     const messageText = _.get(message, 'message');
 
     switch (type) {
+      case ChatMessageType.event:
+      case ChatMessageType.game:
+      case ChatMessageType.user:
       case ChatMessageType.chatMessage:
         return (
           <ChatMessage
