@@ -65,8 +65,10 @@ const Bet = ({
   const [singleBet, setSingleBet] = useState(false);
   const [event, setEvent] = useState(null);
   const [relatedBets, setRelatedBets] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
 
   const mobileChatRef = useRef(null);
+  const ref = useRef(null);
   const history = useHistory();
 
   const openBets = useSelector(selectOpenBets);
@@ -90,8 +92,20 @@ const Bet = ({
     closed: 3,
   };
 
+  window.onresize = () => ref.current && setIsMobile(window.innerWidth < 992);
+
+  const selectSingleBet = () => {
+    const singleBet = _.get(relatedBets, '[0]');
+    const betId = _.get(singleBet, '_id');
+    const betSlug = _.get(singleBet, 'slug');
+    selectBet(betId, betSlug);
+    setSingleBet(true);
+  };
+
   useEffect(() => {
-    if (window.innerWidth < 992) {
+    ref.current = true;
+
+    if (isMobile) {
       setBetAction(BET_ACTIONS.Chat);
     } else {
       setBetAction(BET_ACTIONS.EventTrades);
@@ -121,18 +135,22 @@ const Bet = ({
       selectBet(currentBetId, betSlug);
     }
 
-    if (eventBets.length === 1 && !singleBet) {
-      const singleBet = _.get(eventBets, '[0]');
-      const betId = _.get(singleBet, '_id');
-      const betSlug = _.get(singleBet, 'slug');
-      selectBet(betId, betSlug);
-      setSingleBet(true);
+    if (!isMobile && eventBets.length === 1 && !singleBet) {
+      selectSingleBet();
     }
 
     fetchChatMessages(currentEvent._id);
     fetchOpenBets();
     fetchTransactions();
+
+    return () => (ref.current = false);
   }, [eventSlug, betSlug]);
+
+  useEffect(() => {
+    if (ref.current && !isMobile) {
+      selectSingleBet();
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     if (swiper && !swiper.destroyed) {
@@ -447,7 +465,7 @@ const Bet = ({
     if (betViewIsOpen) {
       return (
         <div>
-          {relatedBets.length > 1 && (
+          {(isMobile || relatedBets.length > 1) && (
             <div className={styles.betViewClose} onClick={onBetClose()}>
               <Icon
                 iconType={'arrowLeft'}
