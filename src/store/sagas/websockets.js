@@ -244,12 +244,14 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
             })
           );
         }
-        yield put(
-          WebsocketsActions.joinRoom({
-            userId,
-            eventId: event._id,
-          })
-        );
+        if (event) {
+          yield put(
+            WebsocketsActions.joinRoom({
+              userId,
+              eventId: event._id,
+            })
+          );
+        }
       }
     } else if (pathSlugs[1] === 'rosi-game') {
       yield put(
