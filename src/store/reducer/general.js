@@ -6,9 +6,20 @@ const initialState = {
   myTradesVisible: false,
   emailNotificationsVisible: false,
   preferencesVisible: false,
+  preferencesVisible: false,
 };
 
 const setDrawer = (state, { payload }) => {
+  if (!payload || payload.length === 0) {
+    return {
+      ...state,
+      openDrawer: payload,
+      editProfileVisible: false,
+      myTradesVisible: false,
+      emailNotificationsVisible: false,
+    };
+  }
+
   return {
     ...state,
     openDrawer: payload,
