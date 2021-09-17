@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const Timer = ({ pause, startSeconds, startMs }) => {
-  const [seconds, setSeconds] = useState(startSeconds);
-  const [ms, setMs] = useState(startMs);
+const Timer = ({ pause, startTimeMs }) => {
+  const startTime = new Date(startTimeMs);
+  const [seconds, setSeconds] = useState(startTime.getSeconds());
+  const [ms, setMs] = useState(startTime.getMilliseconds());
 
   useEffect(() => {
     let timeoutHandle;
