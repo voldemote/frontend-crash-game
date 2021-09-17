@@ -36,7 +36,6 @@ const PlaceBet = () => {
     Api.createTrade(payload)
       .then(response => {
         dispatch(RosiGameActions.setUserBet(payload));
-        setAmount(sliderMinAmount);
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
