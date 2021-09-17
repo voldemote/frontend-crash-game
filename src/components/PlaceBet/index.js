@@ -21,7 +21,7 @@ const PlaceBet = () => {
   const userPlacedABet = useSelector(selectUserBet);
   const userUnableToBet = isGameRunning || userPlacedABet;
   const [amount, setAmount] = useState(sliderMinAmount);
-  const [crashFactor, setCrashFactor] = useState(0);
+  const [crashFactor, setCrashFactor] = useState(1);
 
   const placeABet = () => {
     if (userUnableToBet) return;
