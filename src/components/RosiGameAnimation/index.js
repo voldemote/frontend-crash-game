@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -97,7 +98,11 @@ const RosiGameAnimation = () => {
           </div>
         </div>
       ) : (
-        <div className={styles.timer}>
+        <div
+          className={cn(styles.timer, {
+            [styles.flashAnimation]: !gameStarted,
+          })}
+        >
           {gameStarted ? (
             <Timer pause={!gameStarted} startTimeMs={timerStartTime} />
           ) : (
