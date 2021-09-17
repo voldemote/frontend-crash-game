@@ -4,7 +4,6 @@ import Routes from '../../constants/Routes';
 import { useHistory } from 'react-router';
 import ProfilePicture from '../ProfilePicture';
 import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
-import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'store/selectors/authentication';
@@ -18,10 +17,10 @@ const BetActionChatMessage = ({
 }) => {
   const history = useHistory();
 
-  const { betId, eventId, amount, outcome } = message;
+  const { betId, roomId, amount, outcome } = message;
 
-  const events = useSelector(state => state.event.events);
-  const event = _.get(events, { _id: eventId }, {});
+  const events = useSelector(state => state.event.events) || [];
+  const event = events.find(e => e._id === roomId);
   const bets = event.bets || [];
   const bet = bets.find(b => b._id === betId);
 
