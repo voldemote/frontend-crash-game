@@ -6,8 +6,9 @@ const LastCrashes = ({ lastCrashes }) => {
       <span className={styles.title}>Last Crashes</span>
       <div className={styles.crashes}>
         <div className={styles.overlay}></div>
-        {lastCrashes.map(crash => (
-          <span key={crash} className={styles.crash}>
+        {lastCrashes.map((crash, i) => (
+          /* Crash factors are not guaranteed to be unique, so create a unique key - crash + index */
+          <span key={`${crash}${i}`} className={styles.crash}>
             {crash.toFixed(2)}x
           </span>
         ))}
