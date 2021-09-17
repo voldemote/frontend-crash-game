@@ -3,17 +3,17 @@ import { CURRENCIES } from '../../constants/Currency';
 import { useState } from 'react';
 import highlightBg from '../../data/backgrounds/highlight-modal-button.svg';
 import Dropdown from '../Dropdown';
-import { AuthenticationActions } from 'store/actions/authentication';
 import { connect, useSelector } from 'react-redux';
 import { selectUser } from 'store/selectors/authentication';
+import { UserActions } from 'store/actions/user';
 
 const Preferences = ({ close: closeDrawer, updateUser }) => {
-  const { currency } = useSelector(selectUser);
+  const { currency, userId } = useSelector(selectUser);
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
 
   const save = () => {
     if (currency !== selectedCurrency) {
-      updateUser({
+      updateUser(userId, {
         currency: selectedCurrency,
       });
     }
@@ -42,12 +42,8 @@ const Preferences = ({ close: closeDrawer, updateUser }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateUser: preferences => {
-      dispatch(
-        AuthenticationActions.initiateUpdateUserData({
-          user: { preferences },
-        })
-      );
+    updateUser: (userId, preferences) => {
+      dispatch(UserActions.updatePreferences({ userId, preferences }));
     },
   };
 };

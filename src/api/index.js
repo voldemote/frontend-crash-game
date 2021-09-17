@@ -120,6 +120,14 @@ const updateUser = (userId, user) => {
   );
 };
 
+const updateUserPreferences = (userId, preferences) => {
+  return Api.patch(_.replace(ApiUrls.API_USER_PREFERENCES, ':id', userId), {
+    preferences,
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.message }));
+};
+
 const getLeaderboard = (skip, limit) => {
   return Api.get(
     ApiUrls.API_LEADERBOARD.replace(':skip', skip).replace(':limit', limit)
@@ -313,4 +321,5 @@ export {
   editEventBet,
   getBetTemplates,
   fetchChatMessagesByRoom,
+  updateUserPreferences,
 };
