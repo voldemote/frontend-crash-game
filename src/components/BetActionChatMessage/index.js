@@ -18,11 +18,19 @@ const BetActionChatMessage = ({
 }) => {
   const history = useHistory();
 
+  const { betId, eventId, amount, outcome } = message;
+
   const events = useSelector(state => state.event.events);
-  const event = State.getEventByTrade(message.betId, events);
-  const bet = State.getTradeByEvent(message.betId, event);
+  const event = _.get(events, { _id: eventId }, {});
+  const bets = event.bets || [];
+  const bet = bets.find(b => b._id === betId);
 
   const { currency } = useSelector(selectUser);
+
+  const userName = _.get(user, 'name');
+  const tokenAmount = formatToFixed(convert(amount, currency));
+  const betOutcome = _.get(bet, ['outcomes', outcome]);
+  const outcomeValue = _.get(betOutcome, 'name');
 
   if (!user) {
     return null;
@@ -31,21 +39,13 @@ const BetActionChatMessage = ({
   const onClick = () => {
     history.push(
       Routes.getRouteWithParameters(Routes.bet, {
-        eventSlug: event.slug,
-        betSlug: bet.slug,
+        eventSlug: event?.slug,
+        betSlug: bet?.slug,
       })
     );
   };
 
   const getMessage = () => {
-    const userName = _.get(user, 'name');
-    const amount = _.get(message, 'amount');
-    const tokenAmount = formatToFixed(convert(amount, currency));
-    const outcome = _.get(message, 'outcome');
-
-    const betOutcome = _.get(bet, ['outcomes', outcome]);
-    const outcomeValue = _.get(betOutcome, 'name');
-
     switch (chatMessageType) {
       case ChatMessageType.createBet:
         return (
