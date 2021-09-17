@@ -20,7 +20,7 @@ function Select({ value, handleSelect, placeholder, options = [] }) {
   };
 
   const getLabel = value => {
-    return options ? options.find(option => option.value === value).label : '';
+    return options ? options.find(option => option.value === value)?.label : '';
   };
 
   return (

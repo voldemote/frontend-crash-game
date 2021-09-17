@@ -19,6 +19,9 @@ const BetActionChatMessage = ({
   const history = useHistory();
 
   const events = useSelector(state => state.event.events);
+  const event = State.getEventByTrade(message.betId, events);
+  const bet = State.getTradeByEvent(message.betId, event);
+
   const { currency } = useSelector(selectUser);
 
   if (!user) {
@@ -28,8 +31,8 @@ const BetActionChatMessage = ({
   const onClick = () => {
     history.push(
       Routes.getRouteWithParameters(Routes.bet, {
-        eventId: message.eventId,
-        betId: message.betId,
+        eventSlug: event.slug,
+        betSlug: bet.slug,
       })
     );
   };
@@ -39,9 +42,6 @@ const BetActionChatMessage = ({
     const amount = _.get(message, 'amount');
     const tokenAmount = formatToFixed(convert(amount, currency));
     const outcome = _.get(message, 'outcome');
-
-    const event = State.getEventByTrade(message.betId, events);
-    const bet = State.getTradeByEvent(message.betId, event);
 
     const betOutcome = _.get(bet, ['outcomes', outcome]);
     const outcomeValue = _.get(betOutcome, 'name');
