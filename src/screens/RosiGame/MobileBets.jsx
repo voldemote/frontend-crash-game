@@ -7,7 +7,6 @@ import GameBets from 'components/GameBets';
 import PlaceBet from 'components/PlaceBet';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
-import { winners, inGameBets } from './fakeData';
 import styles from './styles.module.scss';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 
@@ -38,7 +37,7 @@ const useTabStyles = makeStyles({
   }
 });
 
-const MobileBets = () => {
+const MobileBets = ({ inGameBets, cashedOut }) => {
   const tabsClasses = useTabsStyles();
   const tabClasses = useTabStyles();
   const [selectedTab, setSelectedTab] = useState(0);
@@ -80,7 +79,7 @@ const MobileBets = () => {
       </TabPanel>
       <TabPanel value={selectedTab} index={1} className={tabClasses.tabPanel}>
         <Chat 
-          roomId={{ _id: ROSI_GAME_EVENT_ID }} 
+          roomId={ROSI_GAME_EVENT_ID}
           className={styles.chatContainer} 
           chatMessageType={ChatMessageType.game} 
         />
@@ -88,15 +87,13 @@ const MobileBets = () => {
       <TabPanel value={selectedTab} index={2} className={tabClasses.tabPanel}>
         <GameBets
           label="In Game Bets"
-          total="2.700,50"
           bets={inGameBets}
         />
       </TabPanel>
       <TabPanel value={selectedTab} index={3} className={tabClasses.tabPanel}>
         <GameBets
           label="Cashed Out"
-          total="2.700,50"
-          bets={winners}
+          bets={cashedOut}
           showCrashFactor
         />
       </TabPanel>

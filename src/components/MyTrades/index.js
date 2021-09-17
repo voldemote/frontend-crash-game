@@ -115,10 +115,10 @@ const MyTrades = ({ close: closeDrawer }) => {
   };
 
   return (
-    <>
+    <div className={styles.myTradesContainer}>
       {renderSwitchableView()}
       <div className={styles.myTrades}>{renderContent()}</div>
-    </>
+    </div>
   );
 };
 
