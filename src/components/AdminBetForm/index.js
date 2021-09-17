@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DateTimePicker, FormGroup, Input, InputLabel, Tags } from '../Form';
 import * as Api from 'api';
 import styles from './styles.module.scss';
 import { setUniqueSlug } from 'helper/Slug';
+import PopupTheme from 'components/Popup/PopupTheme';
+import { connect } from 'react-redux';
+import Dropdown from 'components/Dropdown';
+import Button from 'components/Button';
 
-const AdminBetForm = ({ event, bet = null }) => {
+const AdminBetForm = ({ event, bet = null, visible }) => {
   const [marketQuestion, setMarketQuestion] = useState(
     bet?.marketQuestion || ''
   );
   const [slug, setSlug] = useState(bet?.slug || '');
+  const [betTemplates, setBetTemplates] = useState([]);
   const [outcomes, setOutcomes] = useState(
     bet?.outcomes || [{ id: Date.now(), name: '' }]
   );
@@ -16,6 +21,7 @@ const AdminBetForm = ({ event, bet = null }) => {
     bet?.evidenceDescription || ''
   );
   const [date, setDate] = useState(bet?.data || null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
   const betSlugs = (
     !!bet ? event.bets.filter(({ _id }) => bet._id !== _id) : event.bets
@@ -30,6 +36,18 @@ const AdminBetForm = ({ event, bet = null }) => {
     // there is a strange bug when I use history.push(); to navigate, layout becomes white
     window.location.reload();
   };
+
+  useEffect(async () => {
+    if (visible) {
+      Api.getBetTemplates().then(({ response }) => {
+        setBetTemplates(response.data);
+        setSelectedTemplateId(
+          betTemplates.find(({ category }) => category === event?.category)
+            ?._id || null
+        );
+      });
+    }
+  }, [visible]);
 
   const handleSave = () => {
     const payload = {
@@ -67,8 +85,49 @@ const AdminBetForm = ({ event, bet = null }) => {
     setOutcomes(prevOutcomes => prevOutcomes.filter(tag => tag._id !== id));
   };
 
+  const applyTemplate = () => {
+    const template = betTemplates.find(({ _id }) => _id === selectedTemplateId);
+    if (!template) return;
+
+    const { marketQuestion: templateQuestion, outcomes: templateOutcomes } =
+      template;
+
+    onNameChange(templateQuestion);
+    setOutcomes(templateOutcomes);
+  };
+
+  const betTemplateOptions = betTemplates.map(
+    ({ category, marketQuestion, _id }) => ({
+      label: `${category} / ${marketQuestion}`,
+      value: _id,
+    })
+  );
+
   return (
     <>
+      {!bet?._id && (
+        <FormGroup className={styles.betTemplate}>
+          <span className={styles.betTemplateHint}>
+            Use a template to populate bet details quicker.
+          </span>
+          <div className={styles.templatePicker}>
+            <Dropdown
+              options={betTemplateOptions}
+              placeholder={'Bet templates'}
+              setValue={setSelectedTemplateId}
+              value={selectedTemplateId}
+            />
+            <Button
+              className={styles.applyButton}
+              onClick={applyTemplate}
+              disabled={selectedTemplateId === null}
+              withoutBackground={true}
+            >
+              Apply
+            </Button>
+          </div>
+        </FormGroup>
+      )}
       <FormGroup>
         <InputLabel>Name</InputLabel>
         <Input type="text" value={marketQuestion} onChange={onNameChange} />
@@ -114,4 +173,12 @@ const AdminBetForm = ({ event, bet = null }) => {
   );
 };
 
-export default AdminBetForm;
+const mapStateToProps = state => {
+  return {
+    visible:
+      state.popup.visible &&
+      [PopupTheme.newBet, PopupTheme.editBet].includes(state.popup.popupType),
+  };
+};
+
+export default connect(mapStateToProps, null)(AdminBetForm);

@@ -273,6 +273,12 @@ const editEventBet = (betId, payload) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const getBetTemplates = () => {
+  return Api.get(ApiUrls.API_BET_TEMPLATES)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -304,4 +310,5 @@ export {
   editEvent,
   createEventBet,
   editEventBet,
+  getBetTemplates,
 };
