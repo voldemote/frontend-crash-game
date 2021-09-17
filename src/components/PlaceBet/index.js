@@ -37,7 +37,6 @@ const PlaceBet = () => {
       .then(response => {
         dispatch(RosiGameActions.setUserBet(payload));
         setAmount(sliderMinAmount);
-        setCrashFactor(0);
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
