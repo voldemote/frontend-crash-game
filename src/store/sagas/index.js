@@ -100,6 +100,7 @@ const root = function* () {
     ),
     takeEvery([UserTypes.FETCH], UserSagas.fetch),
     takeEvery([UserTypes.FETCH_SUCCEEDED], UserSagas.fetchSucceeded),
+    takeLatest([UserTypes.UPDATE_PREFERENCES], UserSagas.updatePreferences),
     takeEvery([ChatTypes.ADD_MESSAGE], ChatSagas.addMessage),
     takeEvery([ChatTypes.FETCH_BY_ROOM], ChatSagas.fetchByRoom),
     takeLatest([WebsocketsTypes.INIT], WebsocketsSagas.init),

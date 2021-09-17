@@ -35,6 +35,7 @@ export const API_EVENT_LIST_FILTERED =
 export const API_EVENT_CHAT_MESSAGES = 'api/event/chat-messages/:id';
 export const API_EVENT_EVALUATE_SEND = 'api/event/evaluate';
 export const API_USER = 'api/user/:id';
+export const API_USER_PREFERENCES = 'api/user/:id/preferences';
 export const API_LEADERBOARD = 'api/user/getLeaderboard/:skip/:limit';
 export const API_USER_HISTORY = 'api/user/history';
 export const API_USER_OPEN_BETS = 'api/user/open-bets';
