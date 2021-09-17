@@ -14,14 +14,15 @@ import { useState } from 'react';
 import { WebsocketsActions } from '../../store/actions/websockets';
 import { usePrevPropValue } from '../../hooks/usePrevPropValue';
 import { useIsMount } from '../hoc/useIsMount';
+import { LOGGED_IN } from 'constants/AuthState';
 
 const Chat = ({
   className,
   inputClassName,
   messagesClassName,
-  userId,
-  userName,
-  event,
+  user,
+  roomId,
+  chatMessageType,
   messages,
   sendChatMessage,
   hideInput = false,
@@ -29,9 +30,10 @@ const Chat = ({
   const messageListRef = useRef();
   const [message, setMessage] = useState('');
   const [lastMessageSent, setLastMessageSent] = useState(0);
-  const eventId = _.get(event, '_id');
   const prevMessages = usePrevPropValue(messages);
   const isMount = useIsMount();
+
+  const isLoggedIn = () => user.authState === LOGGED_IN;
 
   useEffect(() => {
     if (
@@ -53,12 +55,17 @@ const Chat = ({
 
       if (difference >= 2 * 1000) {
         const messageData = {
-          type: ChatMessageType.chatMessage,
+          roomId,
+          user: {
+            name: user.name,
+            username: user.username,
+            profilePicture: user.profilePicture,
+            profilePictureUrl: user.profilePictureUrl,
+          },
+          type: chatMessageType,
           message: message,
           date: new Date(),
-          name: userName,
-          eventId,
-          userId,
+          userId: user?.userId,
         };
 
         setMessage('');
@@ -70,16 +77,9 @@ const Chat = ({
 
   const renderMessages = () => {
     return _.map(messages, (chatMessage, index) => {
-      const userId = _.get(chatMessage, 'userId');
       const date = _.get(chatMessage, 'date');
-
       return (
-        <ChatMessageWrapper
-          key={index}
-          message={chatMessage}
-          userId={userId}
-          date={date}
-        />
+        <ChatMessageWrapper key={index} message={chatMessage} date={date} />
       );
     });
   };
@@ -114,14 +114,14 @@ const Chat = ({
           styles.messageInput,
           inputClassName,
           hideInput ? styles.messageInputHidden : null,
-          !userId ? styles.disabled : null
+          !isLoggedIn() ? styles.disabled : null
         )}
       >
         <Input
           type={'text'}
           placeholder={'Comment...'}
           value={message}
-          disabled={!userId}
+          disabled={!isLoggedIn()}
           onChange={onMessageInputChange}
           onSubmit={onMessageSend}
         />
@@ -135,13 +135,8 @@ const Chat = ({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userId: state.authentication.userId,
-    userName: state.authentication.name,
-    messages: _.get(
-      state,
-      ['chat', 'messagesByEvent', _.get(ownProps.event, '_id')],
-      []
-    ),
+    user: state.authentication,
+    messages: _.get(state, ['chat', 'messagesByRoom', ownProps.roomId], []),
     connected: state.websockets.connected,
   };
 };

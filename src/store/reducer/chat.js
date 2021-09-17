@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import { ChatTypes } from '../actions/chat';
 
 const initialState = {
-  messagesByEvent: {},
+  messagesByRoom: {},
 };
 
 const sortChatMessages = chatMessages =>
@@ -14,8 +14,8 @@ const sortChatMessages = chatMessages =>
     return aDate < bDate ? -1 : aDate === bDate ? 0 : 1;
   });
 
-const addMessages = (state, eventId, messages) => {
-  const currentMessages = _.get(state, ['messagesByEvent', eventId], []);
+const addMessages = (state, roomId, messages) => {
+  const currentMessages = _.get(state, ['messagesByRoom', roomId], []);
   const sortedChatMessages = sortChatMessages(
     _.uniqWith(
       _.concat(currentMessages, messages)
@@ -32,35 +32,31 @@ const addMessages = (state, eventId, messages) => {
   );
 
   return update(state, {
-    messagesByEvent: {
-      [eventId]: {
+    messagesByRoom: {
+      [roomId]: {
         $set: sortedChatMessages,
       },
     },
   });
 };
 
-const fetchSucceeded = (action, state) => {
-  const { messages, eventId } = action;
+const addMessage = (action, state) => {
+  const { message, roomId } = action;
 
-  return addMessages(state, eventId, messages);
+  return addMessages(state, roomId, [message]);
 };
 
-const addMessage = (action, state) => {
-  const { message, eventId } = action;
-
-  return addMessages(state, eventId, [message]);
+const fetchByRoomSuccess = (action, state) => {
+  return addMessages(state, action.roomId, action.messages);
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     // @formatter:off
-    case ChatTypes.FETCH_SUCCEEDED:
-      return fetchSucceeded(action, state);
-    case ChatTypes.FETCH_INITIAL_SUCCEEDED:
-      return fetchSucceeded(action, state);
     case ChatTypes.ADD_MESSAGE:
       return addMessage(action, state);
+    case ChatTypes.FETCH_BY_ROOM_SUCCESS:
+      return fetchByRoomSuccess(action, state);
     default:
       return state;
     // @formatter:on

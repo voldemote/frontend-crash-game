@@ -194,14 +194,6 @@ const placeBet = (betId, amount, outcome) => {
   });
 };
 
-const getChatMessagesByEventId = eventId => {
-  return Api.get(_.replace(ApiUrls.API_EVENT_CHAT_MESSAGES, ':id', eventId))
-    .then(response => ({ response }))
-    .catch(error => {
-      console.log('[API Error] called: getChatMessagesByEventId', error);
-    });
-};
-
 const getTags = () => {
   return Api.get(ApiUrls.API_TAGS_LIST).catch(error => {
     console.log('[API Error] called: getTags', error);
@@ -279,11 +271,20 @@ const getBetTemplates = () => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const fetchChatMessagesByRoom = (roomId, limit, skip) => {
+  return Api.get(
+    ApiUrls.API_CHAT_MESSAGES.replace(':roomId', roomId)
+      .replace(':limit', limit)
+      .replace(':skip', skip)
+  )
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
+
 export {
   Api,
   createBet,
   fetchReferrals,
-  getChatMessagesByEventId,
   getOpenBets,
   getOutcomes,
   getSellOutcomes,
@@ -311,4 +312,5 @@ export {
   createEventBet,
   editEventBet,
   getBetTemplates,
+  fetchChatMessagesByRoom,
 };

@@ -10,6 +10,7 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
+import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -22,7 +23,6 @@ function createSocketChannel(socket) {
     };
     const chatMessageHandler = event => {
       const message = {
-        type: ChatMessageType.chatMessage,
         ...event,
       };
 
@@ -30,7 +30,6 @@ function createSocketChannel(socket) {
     };
     const addBetCreatedHandler = event => {
       const message = {
-        type: ChatMessageType.createBet,
         ...event,
       };
 
@@ -39,7 +38,6 @@ function createSocketChannel(socket) {
 
     const addNewBetPlaceHandler = event => {
       const message = {
-        type: ChatMessageType.placeBet,
         ...event,
       };
 
@@ -48,7 +46,6 @@ function createSocketChannel(socket) {
 
     const addNewBetPullOutHandler = event => {
       const message = {
-        type: ChatMessageType.pulloutBet,
         ...event,
       };
 
@@ -184,10 +181,12 @@ export function* init() {
             case ChatMessageType.pulloutBet:
             case ChatMessageType.createBet:
             case ChatMessageType.placeBet:
-            case ChatMessageType.chatMessage:
+            case ChatMessageType.event:
+            case ChatMessageType.game:
+            case ChatMessageType.user:
               yield put(
                 ChatActions.addMessage({
-                  eventId: payload.eventId,
+                  roomId: payload.roomId,
                   message: payload,
                 })
               );
@@ -240,7 +239,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
           yield put(
             WebsocketsActions.leaveRoom({
               userId,
-              eventId: room,
+              roomId: room,
             })
           );
         }
@@ -248,7 +247,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
           yield put(
             WebsocketsActions.joinRoom({
               userId,
-              eventId: event._id,
+              roomId: event._id,
             })
           );
         }
@@ -257,7 +256,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
       yield put(
         WebsocketsActions.joinRoom({
           userId,
-          eventId: 'CASINO_ROSI',
+          roomId: ROSI_GAME_EVENT_ID,
         })
       );
     } else {
@@ -265,16 +264,10 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
         yield put(
           WebsocketsActions.leaveRoom({
             userId,
-            eventId: room,
+            roomId: room,
           })
         );
       }
-      yield put(
-        WebsocketsActions.joinRoom({
-          userId,
-          eventId: 'undefinedEventId',
-        })
-      );
     }
   }
 }
@@ -295,7 +288,7 @@ export function* connected(action) {
       yield put(
         WebsocketsActions.joinRoom({
           userId,
-          eventId,
+          roomId: eventId,
         })
       );
     }

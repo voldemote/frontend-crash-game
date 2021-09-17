@@ -40,6 +40,7 @@ import { selectOpenBets } from 'store/selectors/bet';
 import { selectTransactions } from 'store/selectors/transaction';
 import { TransactionActions } from 'store/actions/transaction';
 import { ChatActions } from 'store/actions/chat';
+import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -377,7 +378,13 @@ const Bet = ({
 
   const renderContent = () => {
     if (betAction === BET_ACTIONS.Chat) {
-      return <Chat className={styles.mobileChat} event={event} />;
+      return (
+        <Chat
+          className={styles.mobileChat}
+          roomId={event._id}
+          chatMessageType={ChatMessageType.event}
+        />
+      );
     } else if (betAction === BET_ACTIONS.EventTrades) {
       return (
         <div className={styles.relatedBets}>
@@ -440,7 +447,11 @@ const Bet = ({
       >
         <SwiperSlide className={styles.carouselSlide}>
           <div ref={mobileChatRef}>
-            <Chat event={event} className={styles.mobileChat} />
+            <Chat
+              roomId={event._id}
+              chatMessageType={ChatMessageType.event}
+              className={styles.mobileChat}
+            />
           </div>
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
@@ -570,7 +581,11 @@ const Bet = ({
               )}
             </TabOptions>
             {selectedTab === 'chat' ? (
-              <Chat className={styles.desktopChat} event={event} />
+              <Chat
+                className={styles.desktopChat}
+                roomId={event._id}
+                chatMessageType={ChatMessageType.event}
+              />
             ) : (
               <News />
             )}
@@ -619,7 +634,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(TransactionActions.fetchAll());
     },
     fetchChatMessages: eventId => {
-      dispatch(ChatActions.fetch({ eventId }));
+      dispatch(ChatActions.fetchByRoom({ roomId: eventId }));
     },
   };
 };

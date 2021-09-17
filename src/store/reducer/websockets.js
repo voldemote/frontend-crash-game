@@ -16,7 +16,7 @@ const connected = (action, state) => {
   return { ...state, connected: true };
 };
 const joinRoom = (action, state) => {
-  return { ...state, room: action.eventId };
+  return { ...state, room: action.roomId };
 };
 const leaveRoom = (action, state) => {
   return { ...state, room: null };

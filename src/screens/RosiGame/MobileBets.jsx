@@ -9,6 +9,7 @@ import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { winners, inGameBets } from './fakeData';
 import styles from './styles.module.scss';
+import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 
 const useTabsStyles = makeStyles({
   indicator: {
@@ -78,7 +79,11 @@ const MobileBets = () => {
         <PlaceBet />
       </TabPanel>
       <TabPanel value={selectedTab} index={1} className={tabClasses.tabPanel}>
-        <Chat event={{ _id: ROSI_GAME_EVENT_ID }} className={styles.chatContainer} />
+        <Chat 
+          roomId={{ _id: ROSI_GAME_EVENT_ID }} 
+          className={styles.chatContainer} 
+          chatMessageType={ChatMessageType.game} 
+        />
       </TabPanel>
       <TabPanel value={selectedTab} index={2} className={tabClasses.tabPanel}>
         <GameBets
