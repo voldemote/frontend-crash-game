@@ -20,7 +20,7 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
   const [evidenceDescription, setEvidenceDescription] = useState(
     bet?.evidenceDescription || ''
   );
-  const [date, setDate] = useState(bet?.data || null);
+  const [endDate, setEndDate] = useState(bet?.endDate || null);
   const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
   const betSlugs = (
@@ -32,7 +32,7 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
     setUniqueSlug(newName, betSlugs, setSlug);
   };
 
-  const handleSuccess = ({ response: { data } }) => {
+  const handleSuccess = async () => {
     // there is a strange bug when I use history.push(); to navigate, layout becomes white
     window.location.reload();
   };
@@ -58,7 +58,8 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
       outcomes: outcomes
         .map(t => ({ name: t.name }))
         .filter(t => t.name !== ''),
-      date,
+      endDate,
+      date: bet?.date || new Date(),
     };
 
     if (bet) {
@@ -156,8 +157,8 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
       <FormGroup>
         <InputLabel>End Date</InputLabel>
         <DateTimePicker
-          value={date}
-          onChange={date => setDate(date)}
+          value={endDate}
+          onChange={date => setEndDate(date)}
           ampm={false}
         />
       </FormGroup>
