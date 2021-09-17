@@ -105,27 +105,29 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
 
   return (
     <>
-      <FormGroup className={styles.betTemplate}>
-        <span className={styles.betTemplateHint}>
-          Use a template to populate bet details quicker.
-        </span>
-        <div className={styles.templatePicker}>
-          <Dropdown
-            options={betTemplateOptions}
-            placeholder={'Bet templates'}
-            setValue={setSelectedTemplateId}
-            value={selectedTemplateId}
-          />
-          <Button
-            className={styles.applyButton}
-            onClick={applyTemplate}
-            disabled={selectedTemplateId === null}
-            withoutBackground={true}
-          >
-            Apply
-          </Button>
-        </div>
-      </FormGroup>
+      {!bet?._id && (
+        <FormGroup className={styles.betTemplate}>
+          <span className={styles.betTemplateHint}>
+            Use a template to populate bet details quicker.
+          </span>
+          <div className={styles.templatePicker}>
+            <Dropdown
+              options={betTemplateOptions}
+              placeholder={'Bet templates'}
+              setValue={setSelectedTemplateId}
+              value={selectedTemplateId}
+            />
+            <Button
+              className={styles.applyButton}
+              onClick={applyTemplate}
+              disabled={selectedTemplateId === null}
+              withoutBackground={true}
+            >
+              Apply
+            </Button>
+          </div>
+        </FormGroup>
+      )}
       <FormGroup>
         <InputLabel>Name</InputLabel>
         <Input type="text" value={marketQuestion} onChange={onNameChange} />
