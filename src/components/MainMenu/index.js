@@ -124,7 +124,7 @@ const MainMenu = ({
           My Trades
         </h2>
 
-        <MyTrades close={close} fetchBets={myTradesVisible} />
+        <MyTrades close={close} />
       </div>
     );
   };
