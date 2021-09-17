@@ -99,7 +99,7 @@ const RosiGameAnimation = () => {
               startMs={timerMs}
             />
           ) : (
-            <span>{(Math.trunc(lastCrashValue * 100) / 100).toFixed(2)}</span>
+            <span>{lastCrashValue.toFixed(2)}</span>
           )}
           x
         </div>
