@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 // import SwitchableContainer from '../SwitchableContainer';
 // import SwitchableHelper from '../../helper/SwitchableHelper';
 import TimeLeftCounter from '../../components/TimeLeftCounter';
+import TimeCounter from '../../components/TimeCounter';
 import TokenNumberInput from '../TokenNumberInput';
 import { BetActions } from '../../store/actions/bet';
 import { connect, useSelector } from 'react-redux';
@@ -724,20 +725,22 @@ const BetView = ({
           {renderLoadingAnimation()}
           {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
           <div className={styles.betMarketQuestion}>{bet.marketQuestion}</div>
+          {showEventEnd && (
+            <>
+              <span className={styles.timerLabel}>Event ends in:</span>
+              <div
+                className={classNames(
+                  styles.timeLeftCounterContainer,
+                  isTradeViewPopup ? styles.fixedTimer : null
+                )}
+              >
+                <TimeCounter endDate={endDate} />
+              </div>
+            </>
+          )}
           {renderStateConditionalContent()}
         </div>
       </div>
-      {showEventEnd && (
-        <div
-          className={classNames(
-            styles.timeLeftCounterContainer,
-            isTradeViewPopup ? styles.fixedTimer : null
-          )}
-        >
-          <span>Event ends in:</span>
-          <TimeLeftCounter endDate={endDate} />
-        </div>
-      )}
     </>
   );
 };
