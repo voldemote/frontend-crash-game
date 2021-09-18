@@ -12,26 +12,18 @@ import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
-import {
-  selectLastCrashes,
-  selectInGameBets,
-  selectCashedOut,
-} from 'store/selectors/rosi-game';
+import useRosiData from 'hooks/useRosiData';
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
-import { useHasMounted } from 'components/hoc/useHasMounted';
 import { ChatActions } from 'store/actions/chat';
 
 const RosiGame = () => {
   const dispatch = useDispatch();
-  const lastCrashes = useSelector(selectLastCrashes);
-  const inGameBets = useSelector(selectInGameBets);
-  const cashedOut = useSelector(selectCashedOut);
+  const { lastCrashes, inGameBets, cashedOut } = useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
-  const hasMounted = useHasMounted();
 
   useEffect(() => {
     Api.getCurrentGameInfo()
@@ -81,7 +73,9 @@ const RosiGame = () => {
               </>
             )}
           </Grid>
-          {isSmallDevice && <MobileBets />}
+          {isSmallDevice && (
+            <MobileBets inGameBets={inGameBets} cashedOut={cashedOut} />
+          )}
         </div>
       </div>
     </BaseContainerWithNavbar>

@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid';
-import { ReactComponent as UserAvatarIcon } from './user-icon.svg';
 import { TOKEN_NAME } from '../../constants/Token';
 import styles from './styles.module.scss';
 

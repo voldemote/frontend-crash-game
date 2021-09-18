@@ -24,8 +24,6 @@ const MyTradesList = ({
     [BetState.closed, BetState.canceled].includes(status);
 
   const renderBets = () => {
-    console.log('bets', bets);
-    console.log('bets sorted', betsSorted);
     return _.map(betsSorted, (item, index) => {
       const gain = calculateGain(item.investmentAmount, item.outcomeAmount);
 

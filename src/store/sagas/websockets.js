@@ -155,7 +155,6 @@ export function* init() {
               yield put(WebsocketsActions.connected());
               break;
             case ChatMessageType.casinoStart:
-              console.log(payload);
               yield put(
                 RosiGameActions.setHasStarted({
                   timeStarted: payload.timeStarted,
@@ -164,7 +163,6 @@ export function* init() {
               yield put(RosiGameActions.resetCashedOut());
               break;
             case ChatMessageType.casinoEnd:
-              console.log(payload);
               yield put(
                 RosiGameActions.addLastCrash({
                   crashFactor: payload.crashFactor,
@@ -172,7 +170,6 @@ export function* init() {
               );
               break;
             case ChatMessageType.casinoTrade:
-              console.log(payload);
               yield put(RosiGameActions.addInGameBet(payload));
               break;
             case ChatMessageType.casinoReward:

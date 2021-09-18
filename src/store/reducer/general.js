@@ -17,6 +17,7 @@ const setDrawer = (state, { payload }) => {
       editProfileVisible: false,
       myTradesVisible: false,
       emailNotificationsVisible: false,
+      preferencesVisible: false,
     };
   }
 

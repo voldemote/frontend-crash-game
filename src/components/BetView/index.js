@@ -226,10 +226,10 @@ const BetView = ({
   };
 
   const debouncedSetCommitment = useCallback(
-    _.debounce(number => {
+    _.debounce((number, toCurrency) => {
       const newCommitment =
-        currency !== TOKEN_NAME
-          ? convert(number, TOKEN_NAME, currency)
+        toCurrency !== TOKEN_NAME
+          ? convert(number, TOKEN_NAME, toCurrency)
           : number;
       setCommitment(newCommitment);
     }, 300),
@@ -238,7 +238,7 @@ const BetView = ({
 
   const onTokenNumberChange = number => {
     setConvertedCommitment(number);
-    debouncedSetCommitment(number);
+    debouncedSetCommitment(number, currency);
   };
 
   const getOpenBet = index => {
