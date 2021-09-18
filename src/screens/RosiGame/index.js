@@ -77,8 +77,8 @@ const RosiGame = () => {
           {isSmallDevice && (
             <MobileBets inGameBets={inGameBets} cashedOut={cashedOut} />
           )}
+          <ContentFooter className={styles.betFooter} />
         </div>
-        <ContentFooter />
       </div>
     </BaseContainerWithNavbar>
   );
