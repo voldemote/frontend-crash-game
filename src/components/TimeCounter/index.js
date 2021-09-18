@@ -11,7 +11,6 @@ const TimeLeftCounter = ({ endDate }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));
 
   useEffect(() => {
-    console.log('timeLeftCounter', endDate, _.get(timeLeft, 'days'));
     const timerId = setTimeout(() => {
       setTimeLeft(calculateTimeLeft(endDate));
     }, 1000);

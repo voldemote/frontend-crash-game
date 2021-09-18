@@ -42,7 +42,7 @@ export function useChartData(betId) {
     );
   };
 
-  const handleChartDirectionFilter = directionIndex => {
+  const handleChartDirectionFilter = (directionIndex = 0) => {
     currentParams.current.direction = directionIndex === 0 ? 'BUY' : 'SELL';
 
     dispatch(
