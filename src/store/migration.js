@@ -1,4 +1,4 @@
-export const MIGRATION_VERSION = 5;
+export const MIGRATION_VERSION = 6;
 
 export const migrations = {
   0: state => {
@@ -115,6 +115,16 @@ export const migrations = {
         sellOutcomes: {},
         selectedCommitment: undefined,
         selectedChoice: undefined,
+      },
+    };
+  },
+  6: state => {
+    return {
+      ...state,
+      chat: {
+        ...state.chat,
+        messagesByEvent: undefined,
+        messagesByRoom: {},
       },
     };
   },

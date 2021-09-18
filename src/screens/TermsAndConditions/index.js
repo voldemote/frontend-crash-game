@@ -3,8 +3,13 @@ import LegalText from '../../components/LegalText';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import { TOKEN_NAME } from '../../constants/Token';
 import ContentFooter from 'components/ContentFooter';
+import { useEffect } from 'react';
 
 const TermsAndConditions = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <BaseContainerWithNavbar withPaddingTop={true}>

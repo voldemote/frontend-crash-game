@@ -11,7 +11,5 @@ export const convert = (amount, currency, fromCurrency) => {
     ? CONVERSION_RATES[fromCurrency]
     : CONVERSION_RATES[currency];
 
-  return tokenCurrency
-    ? (_.toNumber(amount) * 1) / rate
-    : _.toNumber(amount) * rate;
+  return tokenCurrency ? _.toNumber(amount) / rate : _.toNumber(amount) * rate;
 };

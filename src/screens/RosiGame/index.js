@@ -12,23 +12,17 @@ import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { RosiGameActions } from 'store/actions/rosi-game';
-import {
-  selectLastCrashes,
-  selectInGameBets,
-  selectCashedOut,
-} from 'store/selectors/rosi-game';
+import useRosiData from 'hooks/useRosiData';
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import ContentFooter from 'components/ContentFooter';
-
-const gameEvent = { _id: ROSI_GAME_EVENT_ID };
+import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
+import { ChatActions } from 'store/actions/chat';
 
 const RosiGame = () => {
   const dispatch = useDispatch();
-  const lastCrashes = useSelector(selectLastCrashes);
-  const inGameBets = useSelector(selectInGameBets);
-  const cashedOut = useSelector(selectCashedOut);
+  const { lastCrashes, inGameBets, cashedOut } = useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
@@ -40,6 +34,7 @@ const RosiGame = () => {
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+    dispatch(ChatActions.fetchByRoom({ roomId: ROSI_GAME_EVENT_ID }));
   }, [dispatch]);
 
   //Bets state update interval
@@ -64,7 +59,11 @@ const RosiGame = () => {
                   <PlaceBet />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Chat event={gameEvent} className={styles.chatContainer} />
+                  <Chat
+                    roomId={ROSI_GAME_EVENT_ID}
+                    className={styles.chatContainer}
+                    chatMessageType={ChatMessageType.game}
+                  />
                 </Grid>
                 <Grid item md={4}>
                   <GameBets label="In Game Bets" bets={inGameBets} />
@@ -75,7 +74,9 @@ const RosiGame = () => {
               </>
             )}
           </Grid>
-          {isSmallDevice && <MobileBets />}
+          {isSmallDevice && (
+            <MobileBets inGameBets={inGameBets} cashedOut={cashedOut} />
+          )}
         </div>
         <ContentFooter />
       </div>

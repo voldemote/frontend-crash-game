@@ -354,6 +354,7 @@
 
     .logoMobile {
         width: auto;
+        max-width: 80px;
 
         & > svg,  & > svg > *{
             width: 100%;

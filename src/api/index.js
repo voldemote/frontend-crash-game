@@ -120,6 +120,14 @@ const updateUser = (userId, user) => {
   );
 };
 
+const updateUserPreferences = (userId, preferences) => {
+  return Api.patch(_.replace(ApiUrls.API_USER_PREFERENCES, ':id', userId), {
+    preferences,
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.message }));
+};
+
 const getLeaderboard = (skip, limit) => {
   return Api.get(
     ApiUrls.API_LEADERBOARD.replace(':skip', skip).replace(':limit', limit)
@@ -194,14 +202,6 @@ const placeBet = (betId, amount, outcome) => {
   });
 };
 
-const getChatMessagesByEventId = eventId => {
-  return Api.get(_.replace(ApiUrls.API_EVENT_CHAT_MESSAGES, ':id', eventId))
-    .then(response => ({ response }))
-    .catch(error => {
-      console.log('[API Error] called: getChatMessagesByEventId', error);
-    });
-};
-
 const getTags = () => {
   return Api.get(ApiUrls.API_TAGS_LIST).catch(error => {
     console.log('[API Error] called: getTags', error);
@@ -273,11 +273,26 @@ const editEventBet = (betId, payload) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const getBetTemplates = () => {
+  return Api.get(ApiUrls.API_BET_TEMPLATES)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const fetchChatMessagesByRoom = (roomId, limit, skip) => {
+  return Api.get(
+    ApiUrls.API_CHAT_MESSAGES.replace(':roomId', roomId)
+      .replace(':limit', limit)
+      .replace(':skip', skip)
+  )
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
+
 export {
   Api,
   createBet,
   fetchReferrals,
-  getChatMessagesByEventId,
   getOpenBets,
   getOutcomes,
   getSellOutcomes,
@@ -304,4 +319,7 @@ export {
   editEvent,
   createEventBet,
   editEventBet,
+  getBetTemplates,
+  fetchChatMessagesByRoom,
+  updateUserPreferences,
 };

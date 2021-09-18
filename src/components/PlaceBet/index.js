@@ -21,7 +21,7 @@ const PlaceBet = () => {
   const userPlacedABet = useSelector(selectUserBet);
   const userUnableToBet = isGameRunning || userPlacedABet;
   const [amount, setAmount] = useState(sliderMinAmount);
-  const [crashFactor, setCrashFactor] = useState(0);
+  const [crashFactor, setCrashFactor] = useState(1);
 
   const placeABet = () => {
     if (userUnableToBet) return;
@@ -36,8 +36,6 @@ const PlaceBet = () => {
     Api.createTrade(payload)
       .then(response => {
         dispatch(RosiGameActions.setUserBet(payload));
-        setAmount(sliderMinAmount);
-        setCrashFactor(0);
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
@@ -69,9 +67,8 @@ const PlaceBet = () => {
           min="0"
           value={crashFactor}
           setValue={setCrashFactor}
-          placeholder="25:00"
+          placeholder="0"
           showDeleteIcon={false}
-          disabled={userUnableToBet}
           className={styles.input}
           containerClassName={styles.inputBoxContainer}
         />

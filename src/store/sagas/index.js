@@ -17,7 +17,7 @@ import { takeLatest, takeEvery, put } from 'redux-saga/effects';
 import { TransactionTypes } from '../actions/transaction';
 import { UserTypes } from '../actions/user';
 import { AlertTypes } from '../actions/alert';
-import { ChatTypes, ChatActions } from '../actions/chat';
+import { ChatTypes } from '../actions/chat';
 import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { LeaderboardTypes } from '../actions/leaderboard';
@@ -100,9 +100,9 @@ const root = function* () {
     ),
     takeEvery([UserTypes.FETCH], UserSagas.fetch),
     takeEvery([UserTypes.FETCH_SUCCEEDED], UserSagas.fetchSucceeded),
+    takeLatest([UserTypes.UPDATE_PREFERENCES], UserSagas.updatePreferences),
     takeEvery([ChatTypes.ADD_MESSAGE], ChatSagas.addMessage),
-    takeEvery([ChatTypes.FETCH], ChatSagas.fetch),
-    takeLatest([ChatTypes.FETCH_INITIAL], ChatSagas.fetchInitial),
+    takeEvery([ChatTypes.FETCH_BY_ROOM], ChatSagas.fetchByRoom),
     takeLatest([WebsocketsTypes.INIT], WebsocketsSagas.init),
     takeLatest([WebsocketsTypes.CONNECTED], WebsocketsSagas.connected),
     takeEvery([WebsocketsTypes.JOIN_ROOM], WebsocketsSagas.joinRoom),
@@ -115,7 +115,6 @@ const root = function* () {
     takeLatest([REHYDRATE], AuthenticationSagas.restoreToken),
     takeLatest([REHYDRATE], AuthenticationSagas.refreshImportantData),
     takeLatest([REHYDRATE], AuthenticationSagas.firstSignUpPopup),
-    takeLatest([REHYDRATE], ChatSagas.rehydrate),
     takeLatest([LeaderboardTypes.FETCH_ALL], LeaderboardSagas.fetchAll),
     takeLatest([EventTypes.FETCH_TAGS], EventSagas.fetchTags),
     takeLatest([REHYDRATE], rehydrationDone),
@@ -138,7 +137,6 @@ const rehydrationDone = function* () {
 
 const preLoading = function* () {
   yield put(EventActions.fetchAll());
-  yield put(ChatActions.fetchInitial());
   yield put(WebsocketsActions.init());
 
   const userId = yield select(state => state.authentication.userId);
@@ -146,7 +144,7 @@ const preLoading = function* () {
     yield put(
       WebsocketsActions.joinRoom({
         userId,
-        eventId: 'undefinedRoom',
+        roomId: 'undefinedRoom',
       })
     );
   }

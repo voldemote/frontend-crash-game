@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -20,18 +21,20 @@ const RosiGameAnimation = () => {
   const lastCrashValue = useSelector(selectLastCrash);
   const gameStarted = useSelector(selectHasStarted);
   const cashedOut = useSelector(selectCashedOut);
+  const gameStartedTimeStamp = useSelector(selectTimeStarted);
+  const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
+
   const [cashedOutCount, setCashedOutCount] = useState(0);
   const [isPreparingRound, setIsPreparingRound] = useState(!gameStarted);
   const [animationReady, setAnimationReady] = useState(false);
 
-  const gameStartedTimeStamp = useSelector(selectTimeStarted);
-  const gameStartedTime = new Date(gameStartedTimeStamp);
+  // If user lands on the page while game is in progress, then should start counting from current crash
+  // factor, which is time elapsed since game started. This value is reset once first game ends and is not
+  // used after that.
+  const [timerStartTime, setTimerStartTime] = useState(
+    gameStarted ? Date.now() - gameStartedTime : 0
+  );
 
-  const elapsed = new Date(Date.now() - gameStartedTime.getTime());
-  const timerSeconds = elapsed.getSeconds();
-  const timerMs = Math.round(elapsed.getMilliseconds() / 10) * 10;
-
-  // init animation on mount
   useEffect(() => {
     if (canvasRef.current) {
       RosiGameAnimationController.init(canvasRef.current);
@@ -53,11 +56,15 @@ const RosiGameAnimation = () => {
       return;
     }
 
-    const elapsedAfterGameStart = Date.now() - gameStartedTime.getTime();
+    const elapsedAfterGameStart = Date.now() - gameStartedTime;
     if (!gameStarted && elapsedAfterGameStart > 100) {
       RosiGameAnimationController.end();
+
       // leave some time for player to see crash value
-      setTimeout(() => setIsPreparingRound(true), ROSI_GAME_AFTER_CRASH_DELAY);
+      setTimeout(() => {
+        setIsPreparingRound(true);
+        setTimerStartTime(0);
+      }, ROSI_GAME_AFTER_CRASH_DELAY);
     }
   }, [gameStarted, animationReady]); // eslint-disable-line
 
@@ -91,15 +98,15 @@ const RosiGameAnimation = () => {
           </div>
         </div>
       ) : (
-        <div className={styles.timer}>
+        <div
+          className={cn(styles.timer, {
+            [styles.flashAnimation]: !gameStarted,
+          })}
+        >
           {gameStarted ? (
-            <Timer
-              pause={!gameStarted}
-              startSeconds={timerSeconds}
-              startMs={timerMs}
-            />
+            <Timer pause={!gameStarted} startTimeMs={timerStartTime} />
           ) : (
-            <span>{(Math.trunc(lastCrashValue * 100) / 100).toFixed(2)}</span>
+            <span>{lastCrashValue.toFixed(2)}</span>
           )}
           x
         </div>

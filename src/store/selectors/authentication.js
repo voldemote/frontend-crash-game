@@ -9,7 +9,7 @@ export const selectCurrency = ({ authentication }) => {
 export const selectUserId = state => state.authentication.userId;
 
 export const selectUser = state => {
-  const user = state.authentication.user;
+  const user = state.authentication;
   const currency = selectCurrency(state);
 
   return {

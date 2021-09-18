@@ -61,8 +61,6 @@ const BetView = ({
   // fetchSellOutcomes,
   resetOutcomes,
 }) => {
-  // GLOBAL
-  const maxBetAmount = 2800;
   const { currency, balance } = useSelector(selectUser);
   const wfairBalance = formatToFixed(
     _.get(
@@ -71,10 +69,7 @@ const BetView = ({
       0
     )
   );
-  const defaultBetValue =
-    wfairBalance > 0
-      ? _.min([wfairBalance, maxBetAmount * 0.1])
-      : maxBetAmount * 0.1;
+  const defaultBetValue = 1;
   const event = _.find(events, {
     _id: eventId,
   });
@@ -182,6 +177,10 @@ const BetView = ({
   }, [commitment, currency]);
 
   useEffect(() => {
+    validateInput();
+  }, [choice]);
+
+  useEffect(() => {
     setShowLoadingAnimation(actionIsInProgress);
 
     if (!actionIsInProgress) {
@@ -227,10 +226,10 @@ const BetView = ({
   };
 
   const debouncedSetCommitment = useCallback(
-    _.debounce(number => {
+    _.debounce((number, toCurrency) => {
       const newCommitment =
-        currency !== TOKEN_NAME
-          ? convert(number, TOKEN_NAME, currency)
+        toCurrency !== TOKEN_NAME
+          ? convert(number, TOKEN_NAME, toCurrency)
           : number;
       setCommitment(newCommitment);
     }, 300),
@@ -239,7 +238,7 @@ const BetView = ({
 
   const onTokenNumberChange = number => {
     setConvertedCommitment(number);
-    debouncedSetCommitment(number);
+    debouncedSetCommitment(number, currency);
   };
 
   const getOpenBet = index => {

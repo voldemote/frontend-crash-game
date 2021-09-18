@@ -6,6 +6,7 @@ import { put } from 'redux-saga/effects';
 import { select } from 'redux-saga/effects';
 import { UserActions } from '../actions/user';
 import { LOGGED_IN } from 'constants/AuthState';
+import { AlertActions } from 'store/actions/alert';
 
 const fetch = function* (action) {
   const forceFetch = action.forceFetch;
@@ -76,7 +77,30 @@ const fetchSucceeded = function* (action) {
   }
 };
 
+const updatePreferences = function* (action) {
+  const { userId, preferences } = action;
+  const { response, error } = yield call(
+    Api.updateUserPreferences,
+    userId,
+    preferences
+  );
+
+  if (response) {
+    const stateUser = yield select(state => state.authentication);
+
+    yield put(
+      AuthenticationActions.updateUserDataSucceeded({
+        ...stateUser,
+        preferences,
+      })
+    );
+  } else {
+    yield put(AlertActions.showError(error));
+  }
+};
+
 export default {
   fetch,
   fetchSucceeded,
+  updatePreferences,
 };

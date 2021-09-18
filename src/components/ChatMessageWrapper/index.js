@@ -1,14 +1,12 @@
 import _ from 'lodash';
-import { connect } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import DateText from '../../helper/DateText';
 import ChatMessageType from './ChatMessageType';
 import ChatMessage from '../ChatMessage';
 import BetActionChatMessage from '../BetActionChatMessage';
-import State from '../../helper/State';
 
-const ChatMessageWrapper = ({ user, message, date }) => {
+const ChatMessageWrapper = ({ message, date }) => {
   const [dateString, setDateString] = useState('');
 
   const updateDateText = useCallback(() => {
@@ -25,22 +23,18 @@ const ChatMessageWrapper = ({ user, message, date }) => {
     return () => clearInterval(timerId);
   }, [date, updateDateText]);
 
-  if (!user) {
-    user = {
-      name: message.name, // temporary user object until we need more info when user is not logged in
-    };
-  }
-
   const renderMessageContent = () => {
     const type = _.get(message, 'type');
-    const messageText = _.get(message, 'message');
+    const user = _.get(message, 'user');
 
     switch (type) {
-      case ChatMessageType.chatMessage:
+      case ChatMessageType.event:
+      case ChatMessageType.game:
+      case ChatMessageType.user:
         return (
           <ChatMessage
             user={user}
-            message={messageText}
+            message={_.get(message, 'message')}
             dateString={dateString}
           />
         );
@@ -64,12 +58,4 @@ const ChatMessageWrapper = ({ user, message, date }) => {
   return renderMessageContent();
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const { userId } = ownProps;
-
-  return {
-    user: State.getUser(userId, state.user.users),
-  };
-};
-
-export default connect(mapStateToProps, null)(ChatMessageWrapper);
+export default ChatMessageWrapper;

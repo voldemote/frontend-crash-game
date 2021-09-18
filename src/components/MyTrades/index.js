@@ -3,7 +3,6 @@ import SwitchableContainer from '../../components/SwitchableContainer';
 import SwitchableHelper from '../../helper/SwitchableHelper';
 import { useState } from 'react';
 import _ from 'lodash';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import State from '../../helper/State';
 import { formatToFixed } from '../../helper/FormatNumbers';
@@ -27,7 +26,6 @@ const MyTrades = ({ close: closeDrawer }) => {
       eventId: event?._id,
       imageUrl: event?.previewImageUrl,
       marketQuestion: bet?.marketQuestion,
-      endDate: moment(_.get(bet, 'endDate', new Date())).format('DD.MM.YYYY'),
       status: bet?.status,
       outcomes: bet?.outcomes,
       eventSlug: event?.slug,
@@ -49,6 +47,7 @@ const MyTrades = ({ close: closeDrawer }) => {
         outcomeValue,
         outcomeAmount,
         investmentAmount,
+        date: openBet.lastDate,
       };
     });
   };
@@ -73,6 +72,7 @@ const MyTrades = ({ close: closeDrawer }) => {
         outcomeValue,
         outcomeAmount,
         investmentAmount,
+        date: transaction.trx_timestamp,
       };
     });
   };
@@ -115,10 +115,10 @@ const MyTrades = ({ close: closeDrawer }) => {
   };
 
   return (
-    <>
+    <div className={styles.myTradesContainer}>
       {renderSwitchableView()}
       <div className={styles.myTrades}>{renderContent()}</div>
-    </>
+    </div>
   );
 };
 

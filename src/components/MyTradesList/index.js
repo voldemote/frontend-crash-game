@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
+import moment from 'moment';
+import BetState from 'constants/BetState';
 
 const MyTradesList = ({
   bets,
@@ -16,8 +18,13 @@ const MyTradesList = ({
   allowCashout = false,
   showPulloutBetPopup,
 }) => {
+  const betsSorted = _.orderBy(bets, ['date'], ['desc']);
+
+  const isFinalizedTrade = status =>
+    [BetState.closed, BetState.canceled].includes(status);
+
   const renderBets = () => {
-    return _.map(bets, (item, index) => {
+    return _.map(betsSorted, (item, index) => {
       const gain = calculateGain(item.investmentAmount, item.outcomeAmount);
 
       return (
@@ -43,7 +50,8 @@ const MyTradesList = ({
                 </div>
               </Link>
               <div className={styles.subtitle}>
-                {item.endDate} | Your Prediction: {item.outcomeValue}
+                {moment(item.date).format('DD.MM.YYYY')} | Your Prediction:{' '}
+                {item.outcomeValue}
               </div>
             </div>
             <div className={styles.numbersContainer}>
@@ -61,7 +69,7 @@ const MyTradesList = ({
               <div className={styles.invested}>
                 Invested: {item.investmentAmount}
               </div>
-              {allowCashout && (
+              {allowCashout && !isFinalizedTrade(item.status) && (
                 <button
                   className={styles.betCashoutButton}
                   onClick={() =>

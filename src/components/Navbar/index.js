@@ -237,7 +237,7 @@ const Navbar = ({
       <div className={style.leaderboardInfoItem}>
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
-          {number}
+          {formatToFixed(number)}
           <span className={style.leaderboardInfoItemToken}> {currency}</span>
         </div>
       </div>
