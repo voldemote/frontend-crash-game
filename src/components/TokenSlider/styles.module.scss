@@ -1,7 +1,17 @@
 @import '../../styles/all';
 
-.tokenSlider
-{
-    margin-top:     51px;
-    margin-bottom:  17px !important;
+.tokenSlider {
+  margin-top: 32px;
+  width: 96% !important;
+  margin-bottom: 17px !important;
+}
+@media screen and (max-width: 991px) {
+  .tokenSlider {
+    width: 98% !important;
+  }
+}
+@media screen and (max-width: 763px) {
+  .tokenSlider {
+    width: 95% !important;
+  }
 }
