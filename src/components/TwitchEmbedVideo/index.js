@@ -12,6 +12,8 @@ const TwitchEmbedVideo = ({
   muted = false,
   ...props
 }) => {
+  const embeddingDomains = ['main.wallfair.io', 'staging.wallfair.io'];
+
   const getStreamChannel = () => {
     let streamChannel = channel;
 
@@ -46,7 +48,8 @@ const TwitchEmbedVideo = ({
       muted={muted}
       allowfullscreen={true}
       layout={'video'}
-      controls={false}
+      controls={true}
+      parent={embeddingDomains}
     />
   );
 };
