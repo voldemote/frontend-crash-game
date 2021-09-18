@@ -11,7 +11,7 @@ const TSlider = withStyles({
     height: 33,
     width: 33,
     backgroundColor: '#fff',
-    border: '8px solid currentColor',
+    border: '8px solid #acc4ff',
     marginTop: -14,
     marginLeft: -12,
     '&:focus, &:hover, &$active': {
@@ -36,26 +36,31 @@ const TSlider = withStyles({
   track: {
     height: 6,
     borderRadius: 3,
+    color: '#e6edff',
   },
   rail: {
     height: 6,
     borderRadius: 3,
-    color: '#6751EC',
+    color: '#e6edff',
     opacity: 1,
   },
   mark: {
-    width: 0,
-    height: 0,
+    width: 15,
+    height: 15,
+    borderRadius: '50px',
+    marginTop: '-4px',
+    background: '#e6edff',
+    border: '2px solid #fff',
   },
   markLabel: {
-    top: -5,
+    top: -9,
     fontFamily: 'PlusJakarta-Regular',
     fontSize: 11,
     fontStyle: 'normal',
     fontWeight: 400,
     letterSpacing: 0,
     textAlign: 'left',
-    marginLeft: -1,
+    marginLeft: 7,
   },
 })(Slider);
 
@@ -67,11 +72,23 @@ const TokenSlider = ({ value, setValue, maxValue, ...props }) => {
   const marks = [
     {
       value: 1,
-      label: 1,
+      label: '1%',
+    },
+    {
+      value: maxValue / 4,
+      label: `25%`,
+    },
+    {
+      value: maxValue / 2,
+      label: `50%`,
+    },
+    {
+      value: maxValue * 0.75,
+      label: `75%`,
     },
     {
       value: maxValue,
-      label: maxValue,
+      label: '100%',
     },
   ];
 
@@ -83,9 +100,15 @@ const TokenSlider = ({ value, setValue, maxValue, ...props }) => {
       max={maxValue}
       value={value}
       onChange={(event, v) => {
+        console.log(v);
         setValue(v);
       }}
-      valueLabelDisplay="on"
+      valueLabelFormat={`${
+        parseInt((value * 100) / maxValue) < 2
+          ? 1
+          : parseInt((value * 100) / maxValue)
+      }%`}
+      valueLabelDisplay="off"
       className={styles.tokenSlider}
       marks={marks}
     />
