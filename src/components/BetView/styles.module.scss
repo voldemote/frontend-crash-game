@@ -424,7 +424,7 @@
     align-items:        center;
     flex-direction:     row;
     width:              100%;
-    padding:            20px 25px;
+    padding:            10px 25px;
     color:              $colorBlack;
     font-size:          12px;
 
@@ -432,13 +432,20 @@
     border:             1px solid $colorWhite17;
     box-sizing:         border-box;
     border-radius:      10px;
-    margin-top:         5px;
 
     &.fixedTimer {
         position: fixed;
         bottom: 0;
         background-color: $colorPrimary90;
     }
+}
+
+.timerLabel{
+    margin-top:         20px;
+    color:              $colorBlack60;
+    font-family:        $fontRegular;
+    font-size:          16px;
+
 }
 
 .tooltip {

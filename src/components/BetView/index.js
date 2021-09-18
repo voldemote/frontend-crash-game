@@ -725,19 +725,22 @@ const BetView = ({
           {renderLoadingAnimation()}
           {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
           <div className={styles.betMarketQuestion}>{bet.marketQuestion}</div>
+          {showEventEnd && (
+            <>
+              <span className={styles.timerLabel}>Event ends in:</span>
+              <div
+                className={classNames(
+                  styles.timeLeftCounterContainer,
+                  isTradeViewPopup ? styles.fixedTimer : null
+                )}
+              >
+                <TimeCounter endDate={endDate} />
+              </div>
+            </>
+          )}
           {renderStateConditionalContent()}
         </div>
       </div>
-      {showEventEnd && (
-        <div
-          className={classNames(
-            styles.timeLeftCounterContainer,
-            isTradeViewPopup ? styles.fixedTimer : null
-          )}
-        >
-          <TimeCounter endDate={endDate} />
-        </div>
-      )}
     </>
   );
 };

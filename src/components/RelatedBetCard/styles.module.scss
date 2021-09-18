@@ -2,129 +2,127 @@
 
 .relatedBetCard
 {
-    width:           100%;
-    border-radius:   10px;
-    font-family:     $fontLight;
-    color:           $colorWhite;
-    display:         flex;
-    position:        relative;
-    justify-content: space-between;
-    flex-direction:  column;
-    user-select:     none;
-    overflow:        hidden;
-    z-index:         1;
-    margin-bottom:   1.5rem;
-    color: #120e27;
+  width:           100%;
+  border-radius:   10px;
+  font-family:     $fontLight;
+  color:           $colorWhite;
+  display:         flex;
+  position:        relative;
+  justify-content: space-between;
+  flex-direction:  column;
+  user-select:     none;
+  overflow:        hidden;
+  z-index:         1;
+  margin-bottom:   1.5rem;
+  color: #120e27;
 
-    .relatedBetCardContainer
+  .relatedBetCardContainer
+  {
+    padding:          1.5rem 1.5rem;
+    border-radius:    6px 6px 0 0;
+    background-color: $colorWhite;
+    position:         relative;
+    display:          flex;
+    justify-content:  space-between;
+    flex-flow:        column wrap;
+
+    .relatedBetCardHeader
     {
-        padding:          1.5rem 1.5rem;
-        border-radius:    6px 6px 0 0;
-        background-color: $colorWhite;
-        position:         relative;
-        display:          flex;
-        justify-content:  space-between;
-        flex-flow:        column wrap;
+      display:         flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom:  1rem;
 
-        .relatedBetCardHeader
+      .menuMain
+      {
+        cursor:      pointer;
+        display: flex;
+        align-items: center;
+
+        .menuBox
         {
-            display:         flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding-bottom:  1rem;
+          display:          none;
+          flex-direction:   column;
+          position:         absolute;
+          top:              50px;
+          width:            200px;
+          z-index:          $zIndexBetMenu;
+          right:            15px;
+          padding:          0 17px 0 19px;
+          border-radius:    10px;
+          background-color: $colorWhite;
+          box-shadow:       0 1px 8px 0 $colorBlack10;
 
-            .menuMain
-            {
-                cursor:      pointer;
-                display: flex;
-                align-items: center;
-
-                .menuBox
-                {
-                    display:          none;
-                    flex-direction:   column;
-                    position:         absolute;
-                    top:              50px;
-                    width:            200px;
-                    z-index:          $zIndexBetMenu;
-                    right:            15px;
-                    padding:          0 17px 0 19px;
-                    border-radius:    10px;
-                    background-color: $colorWhite;
-                    box-shadow:       0 1px 8px 0 $colorBlack10;
-
-                    &.menuBoxOpened
-                    {
-                        display: flex;
-                    }
-
-                    .menuItem
-                    {
-                        display:        flex;
-                        flex-direction: row;
-                        align-items:    center;
-                        width:          100%;
-                        padding:        12px 0;
-
-                        .menuInfoIcon
-                        {
-                            margin-right: 12px;
-                        }
-
-                        strong
-                        {
-                            font-family: $fontBold;
-                        }
-
-                        &:not(:last-child )
-                        {
-                            border-bottom: solid 0.5px $colorPrimary10;
-                        }
-                    }
-                }
-
-                .menuBoxIcon {
-                    margin-left: 10px;
-                }
-            }
-        }
-
-        .stateBadgeContainer
-        {
-            width: 100%;
+          &.menuBoxOpened
+          {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+          }
+
+          .menuItem
+          {
+            display:        flex;
+            flex-direction: row;
+            align-items:    center;
+            width:          100%;
+            padding:        12px 0;
+
+            .menuInfoIcon
+            {
+              margin-right: 12px;
+            }
+
+            strong
+            {
+              font-family: $fontBold;
+            }
+
+            &:not(:last-child )
+            {
+              border-bottom: solid 0.5px $colorPrimary10;
+            }
+          }
         }
-    }
 
-    .title
-    {
-        font-family: $fontBold;
-        display:     flex;
-        text-align: left;
-    }
-
-    .pillFooter
-    {
-        display:          flex;
-        justify-content:  flex-end;
-        align-items:      center;
-        background-color: rgba(255, 255, 255, 0.12);
-        border-radius:    0 0 6px 6px;
-
-        .timeLeftCounterContainer
-        {
-          display:            flex;
-          justify-content:    center;
-          align-items:        center;
-          flex-direction:     row;
-          width:              100%;
-          padding:            20px 25px;
-          color:              $colorBlack;
-          font-size:          12px;
-
-          background:         $colorWhite;
+        .menuBoxIcon {
+          margin-left: 10px;
         }
+      }
     }
+
+    .stateBadgeContainer
+    {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .title
+  {
+    font-family: $fontBold;
+    display:     flex;
+    text-align: left;
+  }
+
+  .pillFooter
+  {
+    display:          flex;
+    justify-content:  flex-end;
+    align-items:      center;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius:    0 0 6px 6px;
+
+    .timeLeftCounterContainer
+    {
+      display:          flex;
+      justify-content:  flex-end;
+      align-items:      center;
+      flex-direction:   row;
+      width:            100%;
+      padding:          0.5rem;
+      color:            $colorWhite;
+      font-size:        11px;
+    }
+  }
 }

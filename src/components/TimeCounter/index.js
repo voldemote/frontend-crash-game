@@ -38,13 +38,13 @@ const TimeLeftCounter = ({ endDate }) => {
 
   return (
     <>
-      {renderTimeLeft('d', _.get(timeLeft, 'days'), false)}
+      {renderTimeLeft('days', _.get(timeLeft, 'days'), false)}
       {_.get(timeLeft, 'days') ? (
         <div className={styles.timerColon}>:</div>
       ) : null}
-      {renderTimeLeft('hrs', _.get(timeLeft, 'hours'))}
+      {renderTimeLeft('hours', _.get(timeLeft, 'hours'))}
       <div className={styles.timerColon}>:</div>
-      {renderTimeLeft('min', _.get(timeLeft, 'minutes'))}
+      {renderTimeLeft('minutes', _.get(timeLeft, 'minutes'))}
       {/*<div className={styles.timerColon}>:</div>*/}
       {/* {renderTimeLeft('sec', _.get(timeLeft, 'seconds'))} */}
     </>
