@@ -40,6 +40,7 @@ import { selectOpenBets } from 'store/selectors/bet';
 import { selectTransactions } from 'store/selectors/transaction';
 import { TransactionActions } from 'store/actions/transaction';
 import { ChatActions } from 'store/actions/chat';
+import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import OfflineBadge from 'components/OfflineBadge';
 import { EVENT_STATES } from 'constants/EventStates';
@@ -612,6 +613,7 @@ const Bet = ({
             New Bet
           </span>
         </AdminOnly>
+        <ContentFooter className={styles.betFooter} />
       </div>
     </BaseContainerWithNavbar>
   );

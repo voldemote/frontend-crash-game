@@ -16,6 +16,7 @@ import useRosiData from 'hooks/useRosiData';
 import MobileBets from './MobileBets';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
+import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 
@@ -76,6 +77,7 @@ const RosiGame = () => {
           {isSmallDevice && (
             <MobileBets inGameBets={inGameBets} cashedOut={cashedOut} />
           )}
+          <ContentFooter className={styles.betFooter} />
         </div>
       </div>
     </BaseContainerWithNavbar>

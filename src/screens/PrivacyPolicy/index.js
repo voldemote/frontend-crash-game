@@ -1,6 +1,7 @@
 import HeaderWithHeadline from '../../components/HeaderWithHeadline';
 import LegalText from '../../components/LegalText';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import ContentFooter from 'components/ContentFooter';
 import { useEffect } from 'react';
 
 const PrivacyPolicy = () => {
@@ -831,6 +832,7 @@ const PrivacyPolicy = () => {
             decision-making or profiling.
           </p>
         </LegalText>
+        <ContentFooter />
       </BaseContainerWithNavbar>
     </div>
   );
