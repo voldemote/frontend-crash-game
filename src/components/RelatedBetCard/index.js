@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { useState } from 'react';
@@ -13,16 +14,30 @@ import IconType from '../Icon/IconType';
 import ButtonSmall from '../ButtonSmall';
 import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
 import BetState from '../../constants/BetState';
+import { BET_STATUS_DESCRIPTIONS } from '../../helper/BetStatusDesc';
 
 const RelatedBetCard = ({ onClick, bet, showPopup }) => {
   const [menuOpened, setMenuOpened] = useState(false);
 
   const renderFooter = () => {
+    const status = _.get(bet, 'status');
+
     return (
       <div className={styles.pillFooter}>
         <div className={styles.timeLeftCounterContainer}>
-          <span>Event ends in:</span>
-          <TimeLeftCounter endDate={bet.endDate} />
+          <span className={styles.description}>
+            {BET_STATUS_DESCRIPTIONS[status]}
+          </span>
+          {['resolved', 'canceled', 'closed'].includes(status) && (
+            <span className={styles.endDate}>
+              {moment(bet.endDate).format('MM/DD/YYYY')}
+            </span>
+          )}
+          {['active', 'upcoming'].includes(status) && (
+            <TimeLeftCounter
+              endDate={status === 'active' ? bet.endDate : bet.date}
+            />
+          )}
         </div>
       </div>
     );
