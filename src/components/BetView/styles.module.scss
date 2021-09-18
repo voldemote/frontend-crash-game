@@ -420,15 +420,15 @@
 .timeLeftCounterContainer
 {
     display:            flex;
-    justify-content:    space-between;
+    justify-content:    center;
     align-items:        center;
     flex-direction:     row;
     width:              100%;
-    padding:            7px 15px;
-    color:              $colorWhite;
+    padding:            20px 25px;
+    color:              $colorBlack;
     font-size:          12px;
 
-    background:         $colorPrimary45;
+    background:         $colorWhite;
     border:             1px solid $colorWhite17;
     box-sizing:         border-box;
     border-radius:      10px;

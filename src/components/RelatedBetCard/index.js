@@ -5,6 +5,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { getDefaultUser } from '../../helper/Profile';
 import TimeLeftCounter from 'components/TimeLeftCounter';
+import TimeCounter from 'components/TimeCounter';
 import Icon from 'components/Icon';
 import StateBadge from 'components/StateBadge';
 import { PopupActions } from '../../store/actions/popup';
@@ -21,8 +22,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
     return (
       <div className={styles.pillFooter}>
         <div className={styles.timeLeftCounterContainer}>
-          <span>Event ends in:</span>
-          <TimeLeftCounter endDate={bet.endDate} />
+          <TimeCounter endDate={bet.endDate} />
         </div>
       </div>
     );
