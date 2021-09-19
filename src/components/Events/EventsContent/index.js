@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -12,15 +11,13 @@ import { useSortFilter } from './hooks/useSortFilter';
 import { useRouteHandling } from './hooks/useRouteHandling';
 import ContentFooter from 'components/ContentFooter';
 import AdminOnly from 'components/AdminOnly';
+import Routes from 'constants/Routes';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
-import EventJumbotron from 'components/EventJumbotron';
-import { getCoverStream } from 'api';
 
 function EventsContent({ eventType, categories, setCategories }) {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState('');
-  const [coverStream, setCoverStream] = useState('');
 
   const { location, category } = useRouteHandling(eventType);
 
@@ -70,10 +67,6 @@ function EventsContent({ eventType, categories, setCategories }) {
   }, [category, selectedSortItem, fetchFilteredEvents, handleSelectCategory]);
 
   useEffect(() => {
-    getCoverStream().then(({ response }) => {
-      const responseCoverStream = _.chain(response).get('data').first().value();
-      setCoverStream(responseCoverStream);
-    });
     return () => {
       resetDefaultParamsValues();
     };
@@ -82,9 +75,15 @@ function EventsContent({ eventType, categories, setCategories }) {
   return (
     <>
       <section className={styles.title}>
-        <EventJumbotron event={coverStream} />
+        {eventType === 'streamed' ? 'Live streams' : 'Events'}
       </section>
       <section className={styles.header}>
+        <div className={styles.categories}>
+          <CategoryList
+            categories={categories}
+            handleSelect={handleSelectCategory}
+          />
+        </div>
         <div className={styles.search}>
           <Search
             value={searchInput}
@@ -100,16 +99,6 @@ function EventsContent({ eventType, categories, setCategories }) {
             handleSelect={handleSelectSortItem}
           />
         </div>
-      </section>
-      <section className={styles.title}>Popular Categories</section>
-      <section className={styles.header}>
-        <CategoryList
-          categories={categories}
-          handleSelect={handleSelectCategory}
-        />
-      </section>
-      <section className={styles.title}>
-        {eventType === 'streamed' ? 'Current Live Streams' : 'Events'}
       </section>
       <section className={styles.main}>
         {events.map(item => (
