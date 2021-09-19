@@ -9,11 +9,16 @@ import { selectUserBet, selectHasStarted } from 'store/selectors/rosi-game';
 import InputBox from 'components/InputBox';
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
+import { formatToFixed } from '../../helper/FormatNumbers';
+import { selectUser } from 'store/selectors/authentication';
+import TokenNumberInput from 'components/TokenNumberInput';
+import Input from '../Input';
 import useCurrentUser from 'hooks/useCurrentUser';
-
+import TokenSlider from 'components/TokenSlider';
 const PlaceBet = () => {
   const dispatch = useDispatch();
   const user = useCurrentUser();
+  const { currency, balance } = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
   const sliderMinAmount = userBalance > 50 ? 50 : 0;
   const sliderMaxAmount = Math.min(500, userBalance);
@@ -22,6 +27,17 @@ const PlaceBet = () => {
   const userUnableToBet = isGameRunning || userPlacedABet;
   const [amount, setAmount] = useState(sliderMinAmount);
   const [crashFactor, setCrashFactor] = useState(1);
+
+  const onTokenNumberChange = number => {
+    console.log(number);
+    setAmount(number);
+    // debouncedSetCommitment(number, currency);
+  };
+  const onCrashFactorChange = number => {
+    console.log(number);
+    setCrashFactor(number.target.value);
+    // debouncedSetCommitment(number, currency);
+  };
 
   const placeABet = () => {
     if (userUnableToBet) return;
@@ -46,9 +62,28 @@ const PlaceBet = () => {
     <div className={classNames(styles.container)}>
       <div className={styles.inputContainer}>
         <div>
-          <label className={styles.label}>Trade Amount in {TOKEN_NAME}</label>
+          <h2 className={styles.placebidTitle}>Place Bet</h2>
+          {/* <label className={styles.titlelabel}>
+            Trade Amount in {TOKEN_NAME}
+          </label> */}
         </div>
-        <Slider
+        <div className={styles.sliderContainer}>
+          <label className={styles.label}>Bet Amount</label>
+          <TokenNumberInput
+            value={amount}
+            currency={currency}
+            setValue={onTokenNumberChange}
+            maxValue={formatToFixed(balance)}
+          />
+        </div>
+        {/* <div className={styles.sliderContainer}>
+          <TokenSlider
+            value={amount}
+            setValue={onTokenNumberChange}
+            maxValue={sliderMaxAmount}
+          />
+        </div> */}
+        {/* <Slider
           min={sliderMinAmount}
           max={sliderMaxAmount}
           marks={[
@@ -58,25 +93,23 @@ const PlaceBet = () => {
           valueLabelDisplay="auto"
           value={amount}
           onChange={(_, value) => setAmount(value)}
-        />
+        /> */}
       </div>
       <div className={styles.inputContainer}>
-        <label className={styles.label}>Cashout</label>
-        <InputBox
-          type="number"
-          min="0"
-          value={crashFactor}
-          setValue={setCrashFactor}
-          placeholder="0"
-          showDeleteIcon={false}
-          className={styles.input}
-          containerClassName={styles.inputBoxContainer}
-        />
-        <span className={styles.actions}>
-          <span className={styles.action} onClick={() => setCrashFactor(0)}>
-            X
+        <label className={styles.label}>Auto Cashout at</label>
+        <div className={classNames(styles.cashedOutInputContainer)}>
+          <Input
+            className={styles.input}
+            type={'number'}
+            value={crashFactor}
+            onChange={onCrashFactorChange}
+            step={0.1}
+            min="1"
+          />
+          <span className={styles.eventTokenLabel}>
+            <span onClick={() => setCrashFactor(0)}>X</span>
           </span>
-        </span>
+        </div>
       </div>
       <span
         role="button"
