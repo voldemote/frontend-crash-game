@@ -153,6 +153,24 @@
       list-style: none;
       margin-bottom: 5px;
       opacity: 0.6;
+
+      &.mobileOnly {
+        display: block;
+      }
+
+      &.desktopOnly {
+        display: none;
+      }
+
+      @media screen and (min-width: $screen-md) {
+        &.mobileOnly {
+          display: none;
+        }
+
+        &.desktopOnly {
+          display: block;
+        }
+      }
     }
 
     li:before {

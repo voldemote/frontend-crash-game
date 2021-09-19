@@ -330,25 +330,24 @@ const Rewards = ({ user, showPopup }) => {
           <div className={styles.rewardsInfo}>
             <h3>Activation Games</h3>
             <p>
-              Want to earn some extra WFAIR to use in the platform? Our
-              activation games are simple, fun and come with extra rewards. Each
-              week, we will add new activation games as you complete previous
-              levels. This could be anything from verifying your email address,
-              refering a friend or even submitting an event proposal.
+              Earn extra $WFAIR Tokens to use instantly, playing our activation
+              games are simple and get you back in the game, fast.
             </p>
             <p>
-              Low on WFAIR and your favourite event is coming up soon? No
-              problem! Play our Activation Games &amp; earn quickly, get back in
-              the game and don't miss a second.
+              Come back every week for new ways for you to earn more tokens.
             </p>
-            <p>So how does it work?</p>
+            <p>Playing is easy:</p>
             <ul>
-              <li>Click one of the green buttons</li>
-              <li>Complete the game</li>
-              <li>Get WFAIR tokens dropped into your wallet</li>
-              <li>Play</li>
+              <li className={styles.desktopOnly}>
+                Click one of the buttons to the right
+              </li>
+              <li className={styles.mobileOnly}>
+                Click one of the buttons below
+              </li>
+              <li>Follow the prompts</li>
+              <li>Get tokens instantly dropped into your wallet</li>
+              <li>Play, win. Easy</li>
             </ul>
-            <p>It is really that easy.</p>
           </div>
           <RewardCards user={user} />
         </div>
