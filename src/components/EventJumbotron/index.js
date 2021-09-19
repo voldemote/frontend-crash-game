@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import moment from 'moment';
 import LiveBadge from '../LiveBadge';
 import styles from './styles.module.scss';
-import TwitchEmbedVideo from '../TwitchEmbedVideo';
 import TimeLeftCounter from '../TimeLeftCounter';
+import TwitchEmbedVideoOld from '../TwitchEmbedVideoOld';
 
 const EventJumbotron = ({ event }) => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const EventJumbotron = ({ event }) => {
         >
           <div className={styles.headerOverlay}></div>
           {isLive && (
-            <TwitchEmbedVideo
+            <TwitchEmbedVideoOld
               targetId={event._id}
               video={event.streamUrl}
               muted={true}
