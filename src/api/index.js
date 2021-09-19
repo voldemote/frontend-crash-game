@@ -289,6 +289,18 @@ const fetchChatMessagesByRoom = (roomId, limit, skip) => {
     .catch(error => ({ error: error.message }));
 };
 
+const createEventFromTwitchUrl = data => {
+  return Api.post(ApiUrls.API_EVENT_CREATE_FROM_TWITCH, data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
+
+const createEventFromYoutubeUrl = data => {
+  return Api.post(ApiUrls.API_EVENT_CREATE_FROM_YOUTUBE, data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
+
 export {
   Api,
   createBet,
@@ -322,4 +334,6 @@ export {
   getBetTemplates,
   fetchChatMessagesByRoom,
   updateUserPreferences,
+  createEventFromTwitchUrl,
+  createEventFromYoutubeUrl,
 };

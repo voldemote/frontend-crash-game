@@ -1,3 +1,4 @@
+import * as Api from 'api';
 import { useState } from 'react';
 import { FormGroup, Input, InputLabel } from '../Form';
 import styles from './styles.module.scss';
@@ -6,13 +7,15 @@ const ImportFromTwitch = () => {
   const [url, setUrl] = useState('');
 
   const handleSave = () => {
-    console.log(url);
+    Api.createEventFromTwitchUrl({ streamUrl: url }).then(() => {
+      window.location.reload();
+    });
   };
 
   return (
     <>
       <FormGroup>
-        <InputLabel>Stream URL</InputLabel>
+        <InputLabel>Twitch Stream URL</InputLabel>
         <Input type="text" value={url} onChange={setUrl} />
       </FormGroup>
       <span
