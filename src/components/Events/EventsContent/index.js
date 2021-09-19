@@ -84,7 +84,16 @@ function EventsContent({ eventType, categories, setCategories }) {
       <section className={styles.title}>
         <EventJumbotron event={coverStream} />
       </section>
+      <section className={styles.title}>
+        {eventType === 'streamed' ? 'Current Live Streams' : 'Events'}
+      </section>
       <section className={styles.header}>
+        <div className={styles.categories}>
+          <CategoryList
+            categories={categories}
+            handleSelect={handleSelectCategory}
+          />
+        </div>
         <div className={styles.search}>
           <Search
             value={searchInput}
@@ -100,16 +109,6 @@ function EventsContent({ eventType, categories, setCategories }) {
             handleSelect={handleSelectSortItem}
           />
         </div>
-      </section>
-      <section className={styles.title}>Popular Categories</section>
-      <section className={styles.header}>
-        <CategoryList
-          categories={categories}
-          handleSelect={handleSelectCategory}
-        />
-      </section>
-      <section className={styles.title}>
-        {eventType === 'streamed' ? 'Current Live Streams' : 'Events'}
       </section>
       <section className={styles.main}>
         {events.map(item => (
