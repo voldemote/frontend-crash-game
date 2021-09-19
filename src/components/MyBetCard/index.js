@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 import styles from './styles.module.scss';
 import { connect, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -8,6 +9,7 @@ import TimeLeftCounter from 'components/TimeLeftCounter';
 import Icon from 'components/Icon';
 import StateBadge from 'components/StateBadge';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { BET_STATUS_DESCRIPTIONS } from '../../helper/BetStatusDesc';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import IconType from '../Icon/IconType';
@@ -19,11 +21,28 @@ const MyBetCard = ({ onClick, transaction, showPopup }) => {
   const { currency } = useSelector(selectUser);
 
   const renderFooter = () => {
+    const status = _.get(transaction.bet, 'status');
+
     return (
       <div className={styles.pillFooter}>
         <div className={styles.timeLeftCounterContainer}>
-          <span>Event ends in:</span>
-          <TimeLeftCounter endDate={transaction.bet.endDate} />
+          <span className={styles.description}>
+            {BET_STATUS_DESCRIPTIONS[status]}
+          </span>
+          {['resolved', 'canceled', 'closed'].includes(status) && (
+            <span className={styles.endDate}>
+              {moment(transaction.bet.endDate).format('MM/DD/YYYY')}
+            </span>
+          )}
+          {['active', 'upcoming'].includes(status) && (
+            <TimeLeftCounter
+              endDate={
+                status === 'active'
+                  ? transaction.bet.endDate
+                  : transaction.bet.date
+              }
+            />
+          )}
         </div>
       </div>
     );
