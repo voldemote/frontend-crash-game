@@ -54,7 +54,7 @@ const MobileBets = ({ inGameBets, cashedOut }) => {
         classes={{ indicator: tabsClasses.indicator }}
       >
         <Tab
-          label="Trade"
+          label="Place Bet"
           disableRipple
           classes={{ root: tabClasses.root }}
         />
