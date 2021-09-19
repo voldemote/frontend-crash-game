@@ -4,6 +4,7 @@ export const GeneralTypes = {
   SET_MY_TRADES_VISIBLE: 'General/SET_MY_TRADES_VISIBLE',
   SET_EMAIL_NOTIFICATIONS_VISIBLE: 'General/EMAIL_NOTIFICATIONS_VISIBLE',
   SET_PREFERENCES_VISIBLE: 'General/SET_PREFERENCES_VISIBLE',
+  SET_REFERRALS_VISIBLE: 'General/SET_REFFERRALS_VISIBLE',
 };
 
 const setDrawer = payload => ({
@@ -31,10 +32,16 @@ const setPreferencesVisible = visible => ({
   visible,
 });
 
+const setReferralsVisible = visible => ({
+  type: GeneralTypes.SET_REFERRALS_VISIBLE,
+  visible,
+});
+
 export const GeneralActions = {
   setDrawer,
   setEditProfileVisible,
   setMyTradesVisible,
   setEmailNotificationsVisible,
   setPreferencesVisible,
+  setReferralsVisible,
 };

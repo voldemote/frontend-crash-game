@@ -6,7 +6,7 @@ const initialState = {
   myTradesVisible: false,
   emailNotificationsVisible: false,
   preferencesVisible: false,
-  preferencesVisible: false,
+  referralsVisible: false,
 };
 
 const setDrawer = (state, { payload }) => {
@@ -55,12 +55,20 @@ const setPreferencesVisible = (state, action) => {
   };
 };
 
+const setReferralsVisible = (state, action) => {
+  return {
+    ...state,
+    referralsVisible: action.visible,
+  };
+};
+
 const reducers = {
   [GeneralTypes.SET_GLOBAL_DRAWER]: setDrawer,
   [GeneralTypes.SET_EDIT_PROFILE_VISIBLE]: setEditProfileVisible,
   [GeneralTypes.SET_MY_TRADES_VISIBLE]: setMyTradesVisible,
   [GeneralTypes.SET_EMAIL_NOTIFICATIONS_VISIBLE]: setEmailNotificationsVisible,
   [GeneralTypes.SET_PREFERENCES_VISIBLE]: setPreferencesVisible,
+  [GeneralTypes.SET_REFERRALS_VISIBLE]: setReferralsVisible,
 };
 
 export default function (state = initialState, action) {

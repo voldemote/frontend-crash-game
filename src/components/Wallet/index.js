@@ -15,21 +15,25 @@ import TwoColumnTable from 'components/TwoColumnTable';
 import moment from 'moment';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
 import WalletBalance from '../WalletBalance';
-import PaymentForm from '../PaymentForm';
-import { PAYMENT_TYPE } from 'constants/Payment';
 import { TransactionActions } from 'store/actions/transaction';
 import { AuthenticationActions } from 'store/actions/authentication';
 import useTransactions from 'hooks/useTransactions';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
+import { BetActions } from 'store/actions/bet';
+import State from '../../helper/State';
+
+import MyTradesList from '../MyTradesList';
+import { selectOpenBets } from 'store/selectors/bet';
+import { selectTransactions } from 'store/selectors/transaction';
 
 const Wallet = ({
   show,
   referralCount,
   close,
   referrals,
+  fetchOpenBets,
   fetchTransactions,
-  fetchReferrals,
 }) => {
   const menus = {
     wallet: 'wallet',
@@ -50,14 +54,76 @@ const Wallet = ({
   const { transactions, transactionCount } = useTransactions();
 
   const isOpen = page => openMenu === page;
-  const paymentType = {
-    [PaymentAction.deposit]: PAYMENT_TYPE.deposit,
-    [PaymentAction.withdrawal]: PAYMENT_TYPE.withdrawal,
+
+  const [switchIndex, setSwitchIndex] = useState(0);
+  const events = useSelector(state => state.event.events);
+  const openBets = useSelector(selectOpenBets);
+  const temp_transactions = useSelector(selectTransactions);
+
+  const getTrade = betId => {
+    const event = State.getEventByTrade(betId, events);
+    const bet = State.getTradeByEvent(betId, event);
+
+    return {
+      betId,
+      eventId: event?._id,
+      imageUrl: event?.previewImageUrl,
+      marketQuestion: bet?.marketQuestion,
+      status: bet?.status,
+      outcomes: bet?.outcomes,
+      eventSlug: event?.slug,
+      betSlug: bet?.slug,
+    };
+  };
+
+  const getOpenBets = () => {
+    return _.map(openBets, openBet => {
+      const trade = getTrade(openBet.betId);
+      const outcomeValue = _.get(trade, ['outcomes', openBet.outcome, 'name']);
+      const outcomeAmount = formatToFixed(_.get(openBet, 'outcomeAmount', 0));
+      const investmentAmount = formatToFixed(
+        _.get(openBet, 'investmentAmount', 0)
+      );
+
+      return {
+        ...trade,
+        outcomeValue,
+        outcomeAmount,
+        investmentAmount,
+        date: openBet.lastDate,
+      };
+    });
+  };
+
+  const getTransactions = () => {
+    return _.map(temp_transactions, transaction => {
+      const trade = getTrade(transaction.bet);
+      const outcomeValue = _.get(trade, [
+        'outcomes',
+        transaction.outcome,
+        'name',
+      ]);
+      const outcomeAmount = formatToFixed(
+        _.get(transaction, 'outcomeTokensBought', 0)
+      );
+      const investmentAmount = formatToFixed(
+        _.get(transaction, 'investmentAmount', 0)
+      );
+
+      return {
+        ...trade,
+        outcomeValue,
+        outcomeAmount,
+        investmentAmount,
+        date: transaction.trx_timestamp,
+      };
+    });
   };
 
   useEffect(() => {
+    fetchOpenBets();
+    fetchTransactions();
     if (!show) {
-      fetchReferrals();
       setOpenMenu(menus.wallet);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,6 +171,39 @@ const Wallet = ({
     );
   };
 
+  const renderTradeSwitchableView = () => {
+    const switchableViews = [
+      SwitchableHelper.getSwitchableView('Open trades'),
+      SwitchableHelper.getSwitchableView('Trade history'),
+    ];
+
+    return (
+      <SwitchableContainer
+        className={styles.switchablePayment}
+        whiteBackground={false}
+        fullWidth={false}
+        switchableViews={switchableViews}
+        currentIndex={switchIndex}
+        setCurrentIndex={setSwitchIndex}
+      />
+    );
+  };
+
+  const renderOpenBets = () => {
+    return (
+      <MyTradesList
+        bets={getOpenBets()}
+        withStatus={true}
+        closeDrawer={closeDrawer}
+        allowCashout={true}
+      />
+    );
+  };
+
+  const renderBetHistory = () => {
+    return <MyTradesList bets={getTransactions()} closeDrawer={closeDrawer} />;
+  };
+
   const walletContainerWrapper = (
     open,
     heading,
@@ -126,13 +225,8 @@ const Wallet = ({
   };
 
   const onTransactionsClick = () => {
-    fetchTransactions();
+    // fetchTransactions();
     setOpenMenu(menus.transactionHistory);
-  };
-
-  const onReferralsClick = () => {
-    fetchReferrals();
-    setOpenMenu(menus.referrals);
   };
 
   return (
@@ -158,15 +252,9 @@ const Wallet = ({
               }
               onClick={() => onTransactionsClick()}
             />
-            <MenuItem
-              classes={[styles.referrals]}
-              label={`Referrals (${referralCount})`}
-              icon={<Icon className={styles.optionIcon} iconType={'chat'} />}
-              onClick={() => onReferralsClick()}
-            />
 
-            {renderSwitchableView()}
-            <PaymentForm paymentType={paymentType[paymentAction]} />
+            {renderTradeSwitchableView()}
+            {switchIndex === 0 ? renderOpenBets() : renderBetHistory()}
           </>,
           true
         )}
@@ -213,37 +301,6 @@ const Wallet = ({
             noResultMessage={'No transactions yet.'}
           />
         )}
-
-        {walletContainerWrapper(
-          isOpen(menus.referrals),
-          <>
-            {backButton()}
-            Referrals
-          </>,
-          <>
-            <ReferralLinkCopyInputBox
-              className={styles.referralLink}
-              inputTheme={InputBoxTheme.copyToClipboardInputWhite}
-            />
-            <TwoColumnTable
-              headings={['Referrals', 'Joined date']}
-              rows={referrals.map(({ username, name, date }) => {
-                return [
-                  <>
-                    <span className={styles.primaryData}>{name}</span>
-                    <span className={styles.secondaryData}>{username}</span>
-                  </>,
-                  <>
-                    <span className={styles.secondaryData}>
-                      {moment(date).format('DD.MM.YYYY')}
-                    </span>
-                  </>,
-                ];
-              })}
-              noResultMessage={'No referrals yet.'}
-            />
-          </>
-        )}
       </div>
       <Icon
         iconType={'cross'}
@@ -265,11 +322,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchOpenBets: () => {
+      dispatch(BetActions.fetchOpenBets());
+    },
     fetchTransactions: () => {
       dispatch(TransactionActions.fetchAll());
-    },
-    fetchReferrals: () => {
-      dispatch(AuthenticationActions.fetchReferrals());
     },
   };
 };

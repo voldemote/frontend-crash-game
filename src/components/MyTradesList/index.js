@@ -92,7 +92,7 @@ const MyTradesList = ({
     });
   };
 
-  return <>{renderBets()}</>;
+  return <div className={styles.betContainer}>{renderBets()}</div>;
 };
 
 const mapDispatchToProps = dispatch => {
