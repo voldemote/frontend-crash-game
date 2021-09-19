@@ -12,7 +12,12 @@ const TwitchEmbedVideo = ({
   muted = false,
   ...props
 }) => {
-  const embeddingDomains = ['main.wallfair.io', 'staging.wallfair.io'];
+  const embeddingDomains = [
+    'main.wallfair.io',
+    'staging.wallfair.io',
+    'demo.wallfair.io',
+    'play.wallfair.io',
+  ];
 
   const getStreamChannel = () => {
     let streamChannel = channel;
