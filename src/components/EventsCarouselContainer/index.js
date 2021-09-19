@@ -19,12 +19,12 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
   const carouselProps = {
     streamed: {
       title: 'Streams',
-      titleLink: 'Discover more Streams',
+      titleLink: 'Discover more',
       titleLinkTo: '/live-events',
     },
     'non-streamed': {
-      title: 'Trade on the future',
-      titleLink: 'Discover more Events',
+      title: 'Predict the Future',
+      titleLink: 'Discover more',
       titleLinkTo: '/events',
     },
   };
