@@ -92,9 +92,18 @@
 .newEventLink {
   display: block;
   font-size: 20px;
+  font-size: 20px;
   color: $colorWhite;
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.hideMobile {
+  display: none;
+
+  @media (min-width: $screen-lg) {
+    display: block;
   }
 }
