@@ -13,9 +13,8 @@ import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { GeneralActions } from 'store/actions/general';
 import EmailNotifications from 'components/EmailNotifications';
-import { BetActions } from 'store/actions/bet';
-import { TransactionActions } from 'store/actions/transaction';
 import Preferences from 'components/Preferences';
+import Referrals from 'components/Referrals';
 
 const MainMenu = ({
   opened,
@@ -25,14 +24,15 @@ const MainMenu = ({
   handleMyTradesVisible,
   handleEmailNotificationsVisible,
   handlePreferencesVisible,
+  handleReferralsVisible,
   editVisible,
   myTradesVisible,
   emailNotificationsVisible,
   preferencesVisible,
+  referralsVisible,
   close,
   updateNotificationSettings,
-  fetchOpenBets,
-  fetchTransactions,
+  fetchReferrals,
 }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -57,10 +57,13 @@ const MainMenu = ({
     setEditVisible(!editVisible);
   };
 
-  const onMyTradesClick = () => {
-    fetchOpenBets();
-    fetchTransactions();
-    handleMyTradesVisible(!myTradesVisible);
+  const onMyWalletClick = name => {
+    // fetchOpenBets();
+    // fetchTransactions();
+    // setOpenDrawer(name);
+    // handleMyTradesVisible(!myTradesVisible);
+    fetchReferrals();
+    // setOpenMenu(menus.referrals);
   };
 
   const onEmailNotificationClick = () => {
@@ -69,6 +72,10 @@ const MainMenu = ({
 
   const onPreferencesClick = () => {
     handlePreferencesVisible(!preferencesVisible);
+  };
+
+  const onReferralsClick = () => {
+    handleReferralsVisible(!referralsVisible);
   };
 
   const handleName = e => {
@@ -179,6 +186,28 @@ const MainMenu = ({
     );
   };
 
+  const renderReferralsDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !referralsVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => handleReferralsVisible(!referralsVisible)}
+          />
+          Referrals
+        </h2>
+
+        <Referrals close={close} />
+      </div>
+    );
+  };
+
   const editProfileWrapper = () => {
     return (
       <div
@@ -277,7 +306,8 @@ const MainMenu = ({
           (myTradesVisible ||
             editVisible ||
             emailNotificationsVisible ||
-            preferencesVisible) &&
+            preferencesVisible ||
+            referralsVisible) &&
             styles.panelHidden
         )}
       >
@@ -285,7 +315,7 @@ const MainMenu = ({
         <div className={styles.mainContent}>
           <HomeSettings
             onEditClick={() => onClickShowEditProfile()}
-            onMyTradesClick={() => onMyTradesClick()}
+            onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}
             onPreferencesClick={() => onPreferencesClick()}
           />
@@ -302,6 +332,7 @@ const MainMenu = ({
       </div>
       {editProfileWrapper()}
       {renderMyTradesDrawer()}
+      {renderReferralsDrawer()}
       {renderEmailNotificationDrawer()}
       {renderPreferencesDrawer()}
     </div>
@@ -315,6 +346,7 @@ const mapStateToProps = state => {
     myTradesVisible: state.general.myTradesVisible,
     emailNotificationsVisible: state.general.emailNotificationsVisible,
     preferencesVisible: state.general.preferencesVisible,
+    referralsVisible: state.general.referralsVisible,
   };
 };
 
@@ -346,11 +378,11 @@ const mapDispatchToProps = dispatch => {
     handlePreferencesVisible: bool => {
       dispatch(GeneralActions.setPreferencesVisible(bool));
     },
-    fetchOpenBets: () => {
-      dispatch(BetActions.fetchOpenBets());
+    handleReferralsVisible: bool => {
+      dispatch(GeneralActions.setReferralsVisible(bool));
     },
-    fetchTransactions: () => {
-      dispatch(TransactionActions.fetchAll());
+    fetchReferrals: () => {
+      dispatch(AuthenticationActions.fetchReferrals());
     },
   };
 };

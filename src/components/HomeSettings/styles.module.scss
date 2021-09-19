@@ -83,6 +83,18 @@ $largeMobileHeight: 700px;
                 }
             }
 
+            .referralIcon
+            {
+                position: absolute;
+                left:     23px;
+                width:    30px;
+
+                @media (max-width: $screen-sm)
+                {
+                  left: 15px;
+                }
+            }
+
             .settingTitle
             {
                 position:    absolute;
