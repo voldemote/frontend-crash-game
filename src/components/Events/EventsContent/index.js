@@ -16,6 +16,7 @@ import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import EventJumbotron from 'components/EventJumbotron';
 import { getCoverStream } from 'api';
+import classNames from 'classnames';
 
 function EventsContent({ eventType, categories, setCategories }) {
   const dispatch = useDispatch();
@@ -81,7 +82,7 @@ function EventsContent({ eventType, categories, setCategories }) {
 
   return (
     <>
-      <section className={styles.title}>
+      <section className={classNames(styles.title, styles.hideMobile)}>
         <EventJumbotron event={coverStream} />
       </section>
       <section className={styles.title}>
