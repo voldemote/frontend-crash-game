@@ -56,7 +56,7 @@ const BetView = ({
   // pullOutBet,
   showPopup,
   isTradeViewPopup,
-  // handleChartDirectionFilter,
+  handleChartDirectionFilter,
   setOpenDrawer,
   fetchOutcomes,
   // fetchSellOutcomes,
@@ -211,6 +211,12 @@ const BetView = ({
 
     if (validInput) {
       placeBet(betId, commitment, choice);
+
+      if (event.type === 'non-streamed') {
+        setTimeout(() => {
+          handleChartDirectionFilter();
+        }, 1000);
+      }
     }
   };
 
