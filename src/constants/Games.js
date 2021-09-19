@@ -13,8 +13,8 @@ export const CASINO_GAMES = [
   {
     background: RosiImg,
     title: 'Rosi Games',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    subtitle: '',
+    description: '',
     active: true,
     linkTo: Routes.rosiGame,
   },
