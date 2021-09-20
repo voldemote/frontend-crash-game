@@ -172,12 +172,12 @@ const BetView = ({
   );
 
   useEffect(() => {
-    if (!closed) {
+    if (!closed && !!betId) {
       validateInput();
       fetchOutcomes(commitment, betId);
       setConvertedCommitment(convert(commitment, currency));
     }
-  }, [commitment, currency]);
+  }, [commitment, currency, betId]);
 
   useEffect(() => {
     validateInput();
@@ -450,7 +450,9 @@ const BetView = ({
               }
               disabledWithOverlay={false}
             >
-              <span className={'buttonText'}>{userLoggedIn ? 'Trade!' : 'Join Now And Start Trading'}</span>
+              <span className={'buttonText'}>
+                {userLoggedIn ? 'Trade!' : 'Join Now And Start Trading'}
+              </span>
             </Button>
           </span>
 
@@ -623,6 +625,18 @@ const BetView = ({
           >
             {renderMenuInfoIcon()}
             <span>Edit Bet</span>
+          </div>
+          <div
+            className={styles.menuItem}
+            onClick={() =>
+              showPopup(PopupTheme.resolveBet, {
+                eventId: event._id,
+                tradeId: bet._id,
+              })
+            }
+          >
+            {renderMenuInfoIcon()}
+            <span>Resolve Bet</span>
           </div>
         </div>
       </div>

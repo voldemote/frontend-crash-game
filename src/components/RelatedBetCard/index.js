@@ -15,6 +15,7 @@ import ButtonSmall from '../ButtonSmall';
 import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
 import BetState from '../../constants/BetState';
 import { BET_STATUS_DESCRIPTIONS } from '../../helper/BetStatusDesc';
+import AdminOnly from 'components/AdminOnly';
 
 const RelatedBetCard = ({ onClick, bet, showPopup }) => {
   const [menuOpened, setMenuOpened] = useState(false);
@@ -133,13 +134,25 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
           </div>
         </div>
         <div className={styles.stateBadgeContainer}>
-          <StateBadge state={_.get(bet, 'status')} />
+          <StateBadge
+            className={styles.stateBadge}
+            state={_.get(bet, 'status')}
+          />
           {bet?.status === BetState.resolved && (
             <ButtonSmall
               text="Report"
               butonTheme={ButtonSmallTheme.red}
               onClick={openReport}
             />
+          )}
+          {bet?.status === BetState.active && (
+            <AdminOnly>
+              <ButtonSmall
+                text="Resolve"
+                butonTheme={ButtonSmallTheme.dark}
+                onClick={e => openInfoPopup(PopupTheme.resolveBet, e)}
+              />
+            </AdminOnly>
           )}
           {bet?.status === BetState.active && (
             <ButtonSmall
