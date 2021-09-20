@@ -307,6 +307,12 @@ const getCoverStream = () => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const resolveBet = (betId, data) => {
+  return Api.post(ApiUrls.API_BET_RESOLVE.replace(':id', betId), data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -343,4 +349,5 @@ export {
   createEventFromTwitchUrl,
   createEventFromYoutubeUrl,
   getCoverStream,
+  resolveBet,
 };
