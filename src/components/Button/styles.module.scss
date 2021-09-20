@@ -72,4 +72,12 @@
             z-index: 1;
         }
     }
+    .buttonText{
+      &:not(.buttonDisabledOverlay):not(.highlight)
+      {
+        z-index: 2;
+      }
+    }
 }
+
+

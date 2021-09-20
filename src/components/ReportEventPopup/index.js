@@ -49,7 +49,7 @@ const ReportEventPopup = () => {
         disabledWithOverlay={false}
         withoutBackground={true}
       >
-        Send
+        <span className={'buttonText'}>Send</span>
       </Button>
     </div>
   );

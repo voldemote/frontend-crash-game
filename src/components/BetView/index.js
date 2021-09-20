@@ -432,7 +432,7 @@ const BetView = ({
               disabled={tradeButtonDisabled}
               disabledWithOverlay={false}
             >
-              Trade!
+              <span className={'buttonText'}>Trade!</span>
             </Button>
           </span>
 
