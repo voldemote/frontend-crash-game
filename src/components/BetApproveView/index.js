@@ -89,7 +89,7 @@ const BetApproveView = ({ visible, hidePopup }) => {
           disabledWithOverlay={false}
           onClick={hidePopup}
         >
-          Keep Going
+          <span className={'buttonText'}>Keep Going</span>
         </Button>
       </div>
       <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />

@@ -50,7 +50,6 @@ const PulloutApprovePopup = ({
         </Button>
 
         <Button
-          withoutBackground={true}
           className={styles.approvePulloutButton}
           highlightType={HighlightType.highlightModalButton}
           withoutBackground={true}
