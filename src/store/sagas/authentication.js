@@ -214,13 +214,14 @@ const registrationSucceeded = function* (action) {
 const authenticationSucceeded = function* (action) {
   const authState = yield select(state => state.authentication.authState);
   const userId = yield select(state => state.authentication.userId);
+  const redirectUrl = yield select(state => state.popup.options.redirectUrl);
 
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ userId, forceFetch: true }));
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
-    yield put(push(afterLoginRoute));
+    yield put(push(redirectUrl || afterLoginRoute));
   }
 };
 
