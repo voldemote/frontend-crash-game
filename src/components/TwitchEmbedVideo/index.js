@@ -59,4 +59,4 @@ const TwitchEmbedVideo = ({
   );
 };
 
-export default TwitchEmbedVideo;
+export default React.memo(TwitchEmbedVideo);
