@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Button from '../Button';
 import ChoiceSelector from '../ChoiceSelector';
 import classNames from 'classnames';
+import { useRouteMatch } from 'react-router-dom';
 import HighlightTheme from '../Highlight/HighlightTheme';
 import HighlightType from '../../components/Highlight/HighlightType';
 import moment from 'moment';
@@ -101,6 +102,7 @@ const BetView = ({
   );
 
   const hasMounted = useHasMounted();
+  const match = useRouteMatch();
 
   const validateInput = () => {
     const betEndDate = _.get(bet, 'endDate');
@@ -220,6 +222,10 @@ const BetView = ({
     }
   };
 
+  const showJoinPopup = () => {
+    showPopup(PopupTheme.loginRegister, { redirectUrl: match.url });
+  };
+
   // const sellBet = () => {
   //   pullOutBet(betId, choice, getOpenBetsValue(choice));
   // };
@@ -329,7 +335,7 @@ const BetView = ({
         selected={choice === index || forceSelect}
         onClick={!resolved ? onChoiceSelect(index, enabled) : _.noop}
         hideAmount={resolved}
-        disabled={!enabled}
+        disabled={!enabled || !userLoggedIn}
       />
     );
   };
@@ -417,6 +423,16 @@ const BetView = ({
         !(validInput && state === BetState.active) || !userLoggedIn;
       let tradeButtonTheme = null;
 
+      const handleClick = () => {
+        if (!userLoggedIn) {
+          showJoinPopup();
+        } else if (!tradeButtonDisabled) {
+          onTradeButtonConfirm();
+        } else {
+          _.noop();
+        }
+      };
+
       return (
         <>
           {renderTradeDesc()}
@@ -426,13 +442,15 @@ const BetView = ({
           >
             <Button
               className={classNames(styles.betButton)}
-              onClick={!tradeButtonDisabled ? onTradeButtonConfirm : _.noop}
+              onClick={handleClick}
               highlightType={HighlightType.highlightHomeCtaBet}
               highlightTheme={tradeButtonTheme}
-              disabled={tradeButtonDisabled}
+              disabled={
+                userLoggedIn && !(validInput && state === BetState.active)
+              }
               disabledWithOverlay={false}
             >
-              <span className={'buttonText'}>Trade!</span>
+              <span className={'buttonText'}>{userLoggedIn ? 'Trade!' : 'Join Now And Start Trading'}</span>
             </Button>
           </span>
 
