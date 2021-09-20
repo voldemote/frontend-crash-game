@@ -56,7 +56,7 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
 
     switch (type) {
       case PopupTheme.betApprove:
-        return <BetApproveView />;
+        return <BetApproveView options={options} />;
 
       case PopupTheme.betView:
         return (

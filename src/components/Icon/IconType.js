@@ -54,4 +54,5 @@ export default {
   wallet: 'wallet',
   withdrawal: 'withdrawal',
   newsIcon: 'newsIcon',
+  shareLink: 'shareLink',
 };
