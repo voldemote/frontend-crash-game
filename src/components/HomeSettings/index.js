@@ -11,6 +11,7 @@ const HomeSettings = ({
   onReferralsClick,
   onEmailNotificationClick,
   onPreferencesClick,
+  onLogoutClick,
 }) => {
   return (
     <div className={styles.settings}>
@@ -101,6 +102,26 @@ const HomeSettings = ({
             style={{ width: '22px', marginLeft: '4px' }}
           />
           <p className={styles.settingTitle}>Support</p>
+          <Icon
+            width={15}
+            iconType={IconType.arrowSmallRight}
+            className={styles.goIntoSettingIcon}
+          />
+        </div>
+        <div
+          className={classNames(
+            styles.singleSettingHolder,
+            styles.settingActive
+          )}
+          onClick={onLogoutClick}
+        >
+          <Icon
+            width={15}
+            iconType={IconType.logout}
+            className={classNames(styles.settingIcon)}
+            style={{ width: '22px', marginLeft: '4px' }}
+          />
+          <p className={styles.settingTitle}>Logout</p>
           <Icon
             width={15}
             iconType={IconType.arrowSmallRight}

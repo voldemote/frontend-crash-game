@@ -68,6 +68,7 @@ const Icon = ({
   height,
   onClick,
   children,
+  style,
 }) => {
   const renderIcon = () => {
     return SelectionHelper.get(iconType, {
@@ -131,16 +132,17 @@ const Icon = ({
     });
   };
 
-  const getIconStyle = () => {
+  const getIconStyle = (style = {}) => {
     return {
       width: width,
       height: height,
+      ...style,
     };
   };
 
   return (
     <span
-      style={getIconStyle()}
+      style={getIconStyle(style)}
       className={classNames(
         styles.icon,
         className,

@@ -48,9 +48,7 @@ const MainMenu = ({
   const history = useHistory();
 
   const onClickGoToRoute = destinationRoute => {
-    return () => {
-      history.push(destinationRoute);
-    };
+    history.push(destinationRoute);
   };
 
   const onClickShowEditProfile = () => {
@@ -318,16 +316,8 @@ const MainMenu = ({
             onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}
             onPreferencesClick={() => onPreferencesClick()}
+            onLogoutClick={() => onClickGoToRoute(Routes.logout)}
           />
-
-          <div className={styles.buttonContainer}>
-            <div
-              className={styles.logoutButton}
-              onClick={onClickGoToRoute(Routes.logout)}
-            >
-              <Icon iconTheme={IconTheme.black} iconType={IconType.logout} />
-            </div>
-          </div>
         </div>
       </div>
       {editProfileWrapper()}
