@@ -82,9 +82,11 @@ function EventsContent({ eventType, categories, setCategories }) {
 
   return (
     <>
-      <section className={classNames(styles.title, styles.hideMobile)}>
-        <EventJumbotron event={coverStream} />
-      </section>
+      {eventType === 'streamed' && (
+        <section className={classNames(styles.title, styles.hideMobile)}>
+          <EventJumbotron event={coverStream} />
+        </section>
+      )}
       <section className={styles.title}>
         {eventType === 'streamed' ? 'Current Live Streams' : 'Events'}
       </section>

@@ -12,9 +12,11 @@ const EventJumbotron = ({ event }) => {
   const startDate = moment(_.get(event, 'date'));
   const endDate = moment(_.get(event, 'endDate'));
   const currentDate = moment();
+
   if (!event) {
     return null;
   }
+  
   const isLive = event.type === 'streamed';
 
   return (
