@@ -42,10 +42,13 @@ export const API_USER_OPEN_BETS = 'api/user/open-bets';
 export const API_USER_REFERRAL_LIST = 'api/user/refList';
 export const API_TAGS_LIST = 'api/event/tags';
 export const API_CURRENT = 'api/current';
-export const API_TRADE_CREATE = 'api/trade';
 export const API_CHART_DATA = 'api/event/bet/:betId/history';
 export const API_CHAT_MESSAGES =
   'api/chat/chat-messages/:roomId?skip=:skip&limit=:limit';
 export const API_EVENT_CREATE_FROM_TWITCH = 'api/event/extract/twitch';
 export const API_EVENT_CREATE_FROM_YOUTUBE = 'api/event/create-from-youtube';
 export const API_EVENT_GET_COVER_STREAM = 'api/event/cover/streamed';
+
+//TRADE
+export const API_TRADE_CREATE = 'api/trade';
+export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';

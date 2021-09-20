@@ -17,21 +17,27 @@ import ContentFooter from '../../components/ContentFooter';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
 import { select } from 'redux-saga/effects';
+import { getTradeById } from '../../api';
 
 const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
 
-  const renderBetApprovePopup = () => {
+  const renderBetApprovePopup = async () => {
     if (isMount) {
       if (eventId && betId && tradeId) {
         const event = State.getEventByTrade(betId, events);
         const bet = State.getTradeByEvent(betId, event);
         const trade = State.getTrade(tradeId, events);
 
+        const tradeResponse = await getTradeById(tradeId).catch(err => {
+          console.error("Can't get trade by id:", err);
+        });
+
         console.log('###bet', bet);
         console.log('###event', event);
         console.log('###trade', trade);
+        console.log('###tradeResponse', tradeResponse);
         //
         // const user = State.getUser(userId, users);
 
@@ -40,8 +46,8 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
           betId: betId,
           tradeId: tradeId,
           data: {
-            bet: {},
-            trade: {},
+            bet: bet,
+            trade: _.get(tradeResponse, 'data', null),
           },
         };
 
