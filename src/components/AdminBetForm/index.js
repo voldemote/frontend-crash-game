@@ -37,7 +37,7 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
     window.location.reload();
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (visible) {
       Api.getBetTemplates().then(({ response }) => {
         setBetTemplates(response.data);
@@ -47,7 +47,7 @@ const AdminBetForm = ({ event, bet = null, visible }) => {
         );
       });
     }
-  }, [visible]);
+  }, [visible, betTemplates, event]);
 
   const handleSave = () => {
     const payload = {
