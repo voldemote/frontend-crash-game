@@ -45,6 +45,10 @@
     line-height: 1;
     font-size: 20px;
 
+    @media (max-width: $screen-sm) {
+      font-size: 16px;
+    }
+
     .entry {
       margin-bottom: 25px;
       display: flex;

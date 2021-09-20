@@ -13,6 +13,7 @@ import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import { calculateGain } from 'helper/Calculation';
+import State from '../../helper/State';
 
 const canvasStyles = {
   position: 'fixed',
@@ -24,7 +25,7 @@ const canvasStyles = {
 };
 
 let animationInstance;
-const BetApproveView = ({ visible, hidePopup, options }) => {
+const BetApproveView = ({ visible, hidePopup, options, events }) => {
   const trade = _.get(options, 'data.trade');
   const bet = _.get(options, 'data.bet');
   const amountPlaced = _.get(trade, 'investmentAmount', 0);
@@ -35,6 +36,12 @@ const BetApproveView = ({ visible, hidePopup, options }) => {
   const gainTypeClass = potentialPercentType ? 'negative' : 'positive';
   const outcomeIndex = _.get(trade, 'outcomeIndex');
   const outcomeValue = _.get(bet, ['outcomes', outcomeIndex, 'name']);
+
+  const tradeId = _.get(trade, '_id');
+  const eventId = _.get(bet, 'event');
+  const betId = _.get(trade, 'betId');
+
+  console.log({ tradeId, eventId, betId });
 
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
@@ -161,9 +168,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
+  console.log('state', state);
   return {
     visible:
       state.popup.popupType === PopupTheme.betApprove && state.popup.visible,
+    events: _.get(state, 'event.events', []),
   };
 };
 

@@ -7,20 +7,55 @@ import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
 import CategoryList from '../../components/CategoryList';
 import { EVENT_CATEGORIES } from '../../constants/EventCategories';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import { useEffect } from 'react';
 import Routes from 'constants/Routes';
 import ContentFooter from '../../components/ContentFooter';
+import { PopupActions } from '../../store/actions/popup';
+import State from '../../helper/State';
+import { select } from 'redux-saga/effects';
 
-const Home = ({ tags, openDrawer, fetchTags }) => {
+const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
+  const { eventId, betId, tradeId } = useParams();
+
+  const renderBetApprovePopup = () => {
+    if (isMount) {
+      if (eventId && betId && tradeId) {
+        const event = State.getEventByTrade(betId, events);
+        const bet = State.getTradeByEvent(betId, event);
+        const trade = State.getTrade(tradeId, events);
+
+        console.log('###bet', bet);
+        console.log('###event', event);
+        console.log('###trade', trade);
+        //
+        // const user = State.getUser(userId, users);
+
+        const options = {
+          eventId: eventId,
+          betId: betId,
+          tradeId: tradeId,
+          data: {
+            bet: {},
+            trade: {},
+          },
+        };
+
+        console.log('options', options);
+
+        showPopup('betApprove', options);
+      }
+    }
+  };
 
   useEffect(() => {
     if (isMount) {
       fetchTags();
+      renderBetApprovePopup();
     }
   }, []);
 
@@ -114,6 +149,7 @@ const Home = ({ tags, openDrawer, fetchTags }) => {
 const mapStateToProps = state => {
   return {
     tags: state.event.tags,
+    events: state.event.events,
   };
 };
 
@@ -124,6 +160,14 @@ const mapDispatchToProps = dispatch => {
     },
     fetchTags: () => {
       dispatch(EventActions.fetchTags());
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
     },
   };
 };
