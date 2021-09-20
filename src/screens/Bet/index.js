@@ -98,12 +98,14 @@ const Bet = ({
 
   window.onresize = () => ref.current && setIsMobile(window.innerWidth < 992);
 
-  const selectSingleBet = () => {
-    const singleBet = _.get(relatedBets, '[0]');
-    const betId = _.get(singleBet, '_id');
-    const betSlug = _.get(singleBet, 'slug');
-    selectBet(betId, betSlug);
-    setSingleBet(true);
+  const selectSingleBet = bets => {
+    if (relatedBets.length || bets.length) {
+      const singleBet = _.get(relatedBets.length ? relatedBets : bets, '[0]');
+      const betId = _.get(singleBet, '_id');
+      const betSlug = _.get(singleBet, 'slug');
+      selectBet(betId, betSlug);
+      setSingleBet(true);
+    }
   };
 
   useEffect(() => {
@@ -134,7 +136,7 @@ const Bet = ({
     }
 
     if (!isMobile && eventBets.length === 1 && !singleBet) {
-      selectSingleBet();
+      selectSingleBet(eventBets);
     }
 
     fetchChatMessages(currentEvent._id);
