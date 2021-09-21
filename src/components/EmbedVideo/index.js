@@ -51,20 +51,21 @@ const UniversalVideoEmbed = props => {
   const SelectedComponent = _.get(VideoComponents, streamType);
 
   return (
-    <SelectedComponent
-      targetClass={classNames(styles.universalStream, className)}
-      width={'100%'}
-      height={'100%'}
-      video={video}
-      theme={'dark'}
-      allowfullscreen={true}
-      layout={'video'}
-      controls={true}
-      embeddingDomains={embeddingDomains}
-      autoplay={autoPlay}
-      muted={muted}
-      {...props}
-    />
+    <div className={classNames(styles.universalStream, className)}>
+      <SelectedComponent
+        width={'100%'}
+        height={'100%'}
+        video={video}
+        theme={'dark'}
+        allowfullscreen={true}
+        layout={'video'}
+        controls={true}
+        embeddingDomains={embeddingDomains}
+        autoplay={autoPlay}
+        muted={muted}
+        {...props}
+      />
+    </div>
   );
 };
 
