@@ -8,7 +8,10 @@ import { selectUserBet, selectHasStarted } from 'store/selectors/rosi-game';
 import styles from './styles.module.scss';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { selectUser } from 'store/selectors/authentication';
+import { PopupActions } from 'store/actions/popup';
 import TokenNumberInput from 'components/TokenNumberInput';
+import PopupTheme from '../Popup/PopupTheme';
+import Routes from 'constants/Routes';
 import Input from '../Input';
 
 const PlaceBet = () => {
@@ -19,7 +22,7 @@ const PlaceBet = () => {
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const userPlacedABet = useSelector(selectUserBet);
-  const userUnableToBet = isGameRunning || userPlacedABet || !user.isLoggedIn;
+  const userUnableToBet = isGameRunning || userPlacedABet;
   const [amount, setAmount] = useState(sliderMinAmount);
   const [crashFactor, setCrashFactor] = useState(1);
 
@@ -51,6 +54,15 @@ const PlaceBet = () => {
       });
   };
 
+  const showLoginPopup = () => {
+    dispatch(
+      PopupActions.show({
+        popupType: PopupTheme.loginRegister,
+        options: { redirectUrl: Routes.rosiGame },
+      })
+    );
+  };
+
   return (
     <div className={classNames(styles.container)}>
       <div className={styles.inputContainer}>
@@ -64,6 +76,7 @@ const PlaceBet = () => {
             currency={user?.currency}
             setValue={onTokenNumberChange}
             maxValue={formatToFixed(user.balance)}
+            disabled={!user.isLoggedIn}
           />
         </div>
       </div>
@@ -77,6 +90,7 @@ const PlaceBet = () => {
             onChange={onCrashFactorChange}
             step={0.1}
             min="1"
+            disabled={!user.isLoggedIn}
           />
           <span className={styles.eventTokenLabel}>
             <span onClick={() => setCrashFactor(0)}>X</span>
@@ -89,9 +103,9 @@ const PlaceBet = () => {
         className={classNames(styles.button, {
           [styles.buttonDisabled]: userUnableToBet,
         })}
-        onClick={placeABet}
+        onClick={user.isLoggedIn ? placeABet : showLoginPopup}
       >
-        Place Bet
+        {user.isLoggedIn ? 'Place Bet' : 'Join To Start Betting'}
       </span>
     </div>
   );
