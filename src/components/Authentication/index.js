@@ -7,10 +7,8 @@ import StepsContainer from '../StepsContainer';
 import styles from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect } from 'react-redux';
-
 import { useEffect, useState } from 'react';
 import { useIsMount } from '../hoc/useIsMount';
-import _ from 'lodash';
 import CheckBox from '../CheckBox';
 import React from 'react';
 import ReactTooltip from 'react-tooltip';

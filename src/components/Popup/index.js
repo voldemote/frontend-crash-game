@@ -44,8 +44,14 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   }, [visible]);
 
   const popupElement = useOutsideClick(() => {
-    //@todo bug when using external datePicker, initial popup is closing in the background
-    // hidePopup();
+    if (
+      PopupTheme.newEvent ||
+      PopupTheme.editEvent ||
+      PopupTheme.newBet ||
+      PopupTheme.editBet
+    )
+      return;
+    hidePopup();
   });
 
   const renderPopup = () => {
