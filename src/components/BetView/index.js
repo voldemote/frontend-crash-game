@@ -26,7 +26,7 @@ import BetSummaryHelper from '../../helper/BetSummary';
 import BetState from '../../constants/BetState';
 import BetShareContainer from '../BetShareContainer';
 import ShareType from '../BetShareContainer/ShareType';
-import { PopupActions } from '../../store/actions/popup';
+import { PopupActions, PopupTypes } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import ErrorHint from '../ErrorHint';
 import { formatToFixed } from '../../helper/FormatNumbers';
@@ -39,6 +39,9 @@ import { convert } from 'helper/Currency';
 import DateText from 'helper/DateText';
 import AdminOnly from 'components/AdminOnly';
 import StateBadge from 'components/StateBadge';
+import AuthedOnly from 'components/AuthedOnly';
+import ButtonSmall from 'components/ButtonSmall';
+import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
 
 const BetView = ({
   betId,
@@ -566,6 +569,17 @@ const BetView = ({
             {data('Outcome', finalOutcome)}
             {data('Evidence', evidence, { smallText: true })}
           </div>
+          <AuthedOnly>
+            <div className={styles.disputeButtonContainer}>
+              <ButtonSmall
+                text="Dispute"
+                butonTheme={ButtonSmallTheme.red}
+                onClick={() =>
+                  showPopup(PopupTheme.reportEvent, { small: true })
+                }
+              />
+            </div>
+          </AuthedOnly>
         </div>
       );
     }
