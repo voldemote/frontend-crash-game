@@ -13,6 +13,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { history } from './store';
 import { Provider } from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import PrivateRoute from 'components/PrivateRoute';
 import Navbar from 'components/Navbar';
 import NavbarFooter from 'components/NavbarFooter';
 import NavbarFooterAction from 'components/NavbarFooterAction';
@@ -54,7 +55,7 @@ const App = () => {
             <Route exact path={Routes.rosiGame} component={RosiGame} />
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
-            <Route path={Routes.rewards} component={Rewards} />
+            <PrivateRoute path={Routes.rewards} component={Rewards} />
             <Redirect to={Routes.home} />
           </Switch>
           <NavbarFooter skipRoutes={[Routes.bet, Routes.verify]}>

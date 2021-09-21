@@ -110,7 +110,6 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
         <div className={styles.categories}>
           <div className={styles.headline}>Discover Categories</div>
           <CategoryList categories={EVENT_CATEGORIES} />
-          {renderTags()}
         </div>
         <div className={styles.leaderboard}>
           <div className={styles.headline}>

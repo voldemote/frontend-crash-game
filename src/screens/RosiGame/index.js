@@ -59,11 +59,13 @@ const RosiGame = () => {
                   <PlaceBet />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Chat
-                    roomId={ROSI_GAME_EVENT_ID}
-                    className={styles.chatContainer}
-                    chatMessageType={ChatMessageType.game}
-                  />
+                  <div className={styles.chatWrapper}>
+                    <Chat
+                      roomId={ROSI_GAME_EVENT_ID}
+                      className={styles.chatContainer}
+                      chatMessageType={ChatMessageType.game}
+                    />
+                  </div>
                 </Grid>
                 <Grid item md={4}>
                   <GameBets label="In Game Bets" bets={inGameBets} />
