@@ -24,8 +24,14 @@ import RosiGame from './screens/RosiGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
 import Rewards from './screens/Rewards';
+import TagManager, { TagManagerArgs } from 'react-gtm-module';
 
 const { store, persistor } = configStore();
+
+const tagManagerArgs:TagManagerArgs = {
+    gtmId: process.env.REACT_APP_GTM_ID ?? "",
+};
+TagManager.initialize(tagManagerArgs);
 
 const App = () => {
   return (
