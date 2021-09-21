@@ -32,7 +32,7 @@ const NewLiveEvents = () => {
           </Button>
           <br />
           <Button className={styles.addOutcomeButton} onClick={openManualMenu}>
-            Import Manually
+            Input Manually
           </Button>
         </>
       )}
