@@ -10,7 +10,6 @@ import { FormGroup, InputLabel } from '@material-ui/core';
 import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
 import AuthenticationType from './AuthenticationType';
-import PopupTheme from 'components/Popup/PopupTheme';
 
 const Authentication = ({
   loading,
@@ -21,8 +20,8 @@ const Authentication = ({
   popupVisible,
 }) => {
   const [email, setInputEmail] = useState('');
-  const [password, setPassword] = useState(null);
-  const [passwordConfirmation, setPasswordConfirmation] = useState(null);
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
