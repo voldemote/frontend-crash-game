@@ -59,13 +59,21 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     return (
       <div className={styles.mainHeadline}>
         <h1>
-          Decentralized Events
+          The first Casino
           <br />
-          Anywhere, Anytime
+          with no Bullshit
         </h1>
         <div className={styles.slogan}>
-          Be<span>.</span>The<span>.</span>House<span>.</span>
+          No revenues<span>.</span> No middle men<span>.</span> No boring bets
+          <span>.</span>
         </div>
+        <ul>
+          <li>Risk free: Sign up and get 1.000 EUR play money tokens</li>
+          <li>
+            Big wins: Win up to 20.000 EUR weekly (Next payout: October 9th)
+          </li>
+          <li>Coming soon: Create own bets, collect NFT, in-game betting</li>
+        </ul>
       </div>
     );
   };
