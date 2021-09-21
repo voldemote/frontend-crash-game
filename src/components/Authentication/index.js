@@ -17,17 +17,16 @@ const Authentication = ({
   authenticationType,
   signUp,
   login,
+  popupVisible,
 }) => {
   const [email, setInputEmail] = useState('');
-  const [password, setPassword] = useState(null);
-  const [passwordConfirmation, setPasswordConfirmation] = useState(null);
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
-  const action =
-    authenticationType === AuthenticationType.login ? 'Login' : 'Sign Up';
-  let fooRef = useRef(null);
 
+  let fooRef = useRef(null);
   let emailRef = useRef(null);
   let pwRef = useRef(null);
   let pwConfirmRef = useRef(null);
@@ -35,6 +34,30 @@ const Authentication = ({
   let genericRef = useRef(null);
 
   const isSignUp = () => authenticationType === AuthenticationType.register;
+
+  const action = isSignUp() ? 'Sign Up' : 'Login';
+
+  useEffect(() => {
+    setInputEmail('');
+    setPassword('');
+    setPasswordConfirmation('');
+    setLegalAuthorizationAgreed(false);
+    setError(null);
+  }, [popupVisible]);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+
+    if (errorState) {
+      fooRef.current = genericRef;
+      setError(errorState);
+      ReactTooltip.show(fooRef);
+    }
+
+    return () => {
+      setError(null);
+    };
+  }, [errorState, fooRef]);
 
   const emailIsValid = () => {
     return email && email.length >= 6;
@@ -75,20 +98,6 @@ const Authentication = ({
 
     return error;
   };
-
-  useEffect(() => {
-    ReactTooltip.rebuild();
-
-    if (errorState) {
-      fooRef.current = genericRef;
-      setError(errorState);
-      ReactTooltip.show(fooRef);
-    }
-
-    return () => {
-      setError(null);
-    };
-  }, [errorState, fooRef]);
 
   const onConfirm = () => {
     const error = validateInput();
@@ -248,6 +257,7 @@ const mapStateToProps = state => {
   return {
     loading: state.authentication.loading,
     errorState: state.authentication.error,
+    popupVisible: state.popup.visible,
   };
 };
 
