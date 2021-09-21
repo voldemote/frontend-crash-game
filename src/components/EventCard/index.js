@@ -21,6 +21,7 @@ const EventCard = ({
   eventEnd,
   eventCardClass,
   streamUrl,
+  playImmediately,
 }) => {
   const isOnlineState = state === EVENT_STATES.ONLINE;
   const isOfflineState = state === EVENT_STATES.OFFLINE;
@@ -40,7 +41,7 @@ const EventCard = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {isOnlineState && inHover ? (
+        {(isOnlineState && inHover) || (isOnlineState && playImmediately) ? (
           <>
             <TwitchEmbedVideo
               className={styles.eventVideoBackground}
