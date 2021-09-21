@@ -40,8 +40,8 @@ const Authentication = ({
 
   useEffect(() => {
     setInputEmail('');
-    setPassword(null);
-    setPasswordConfirmation(null);
+    setPassword('');
+    setPasswordConfirmation('');
     setLegalAuthorizationAgreed(false);
     setError(null);
   }, [popupVisible]);
