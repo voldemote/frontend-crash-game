@@ -8,7 +8,7 @@ import OfflineBadge from '../OfflineBadge';
 import Tags from '../Tags';
 import TimeLeftCounter from '../TimeLeftCounter';
 import classNames from 'classnames';
-import TwitchEmbedVideo from 'components/TwitchEmbedVideo';
+import EmbedVideo from 'components/EmbedVideo';
 
 const EventCard = ({
   onClick,
@@ -42,7 +42,7 @@ const EventCard = ({
       >
         {isOnlineState && inHover ? (
           <>
-            <TwitchEmbedVideo
+            <EmbedVideo
               className={styles.eventVideoBackground}
               video={streamUrl}
               muted={true}
