@@ -9,6 +9,8 @@ const TokenNumberInput = ({
   value,
   setValue,
   maxValue,
+  minValue,
+  decimalPlaces,
   currency,
   errorText,
   className,
@@ -25,12 +27,21 @@ const TokenNumberInput = ({
     if (maxValue && targetValue > _.toNumber(maxValue)) {
       targetValue = maxValue;
     }
+    //same with the minValue
+    if (minValue && targetValue < _.toNumber(minValue)) {
+      targetValue = minValue;
+    }
+
+    if (decimalPlaces || decimalPlaces === 0) {
+      targetValue = _.floor(targetValue, decimalPlaces);
+    }
 
     // TODO: do we want to prevent the unlikely case somebody deliberately or accidentally puts an 'e' for an exponential number?!
     event.target.value = targetValue;
 
     setValue(targetValue);
   };
+
   return (
     <>
       <div className={classNames(styles.tokenNumberInputContainer, className)}>
@@ -52,6 +63,8 @@ const TokenNumberInput = ({
         value={Number(value)}
         setValue={setValue}
         maxValue={maxValue}
+        minValue={minValue}
+        decimalPlaces={decimalPlaces}
       />
     </>
   );
