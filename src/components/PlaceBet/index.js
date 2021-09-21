@@ -13,6 +13,9 @@ import TokenNumberInput from 'components/TokenNumberInput';
 import PopupTheme from '../Popup/PopupTheme';
 import Routes from 'constants/Routes';
 import Input from '../Input';
+import useCurrentUser from 'hooks/useCurrentUser';
+import TokenSlider from 'components/TokenSlider';
+import { round } from 'lodash/math';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
@@ -31,9 +34,10 @@ const PlaceBet = () => {
     setAmount(number);
     // debouncedSetCommitment(number, currency);
   };
-  const onCrashFactorChange = number => {
-    console.log(number);
-    setCrashFactor(number.target.value);
+  const onCrashFactorChange = event => {
+    const value = event.target.value;
+    const v = value < 1 ? 1 : round(value, 2);
+    setCrashFactor(v);
     // debouncedSetCommitment(number, currency);
   };
 
@@ -75,6 +79,8 @@ const PlaceBet = () => {
             value={amount}
             currency={user?.currency}
             setValue={onTokenNumberChange}
+            minValue={1}
+            decimalPlaces={0}
             maxValue={formatToFixed(user.balance)}
             disabled={!user.isLoggedIn}
           />
@@ -88,12 +94,12 @@ const PlaceBet = () => {
             type={'number'}
             value={crashFactor}
             onChange={onCrashFactorChange}
-            step={0.1}
+            step={0.01}
             min="1"
             disabled={!user.isLoggedIn}
           />
           <span className={styles.eventTokenLabel}>
-            <span onClick={() => setCrashFactor(0)}>X</span>
+            <span>X</span>
           </span>
         </div>
       </div>
