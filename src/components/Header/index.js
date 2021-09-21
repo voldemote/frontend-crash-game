@@ -7,7 +7,7 @@ import moment from 'moment';
 import { EVENT_STATES } from 'constants/EventStates';
 import LiveBadge from '../LiveBadge';
 import styles from './styles.module.scss';
-import TwitchEmbedVideo from '../TwitchEmbedVideo';
+import EmbedVideo from '../EmbedVideo';
 import CoverFlowCarousel from '../CoverFlowCarousel';
 import TimeLeftCounter from '../TimeLeftCounter';
 
@@ -29,7 +29,7 @@ const Header = ({ events }) => {
       );
     } else {
       return (
-        <TwitchEmbedVideo
+        <EmbedVideo
           targetId={event._id}
           className={styles.twitchStream}
           video={event.streamUrl}

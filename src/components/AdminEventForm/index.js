@@ -13,13 +13,14 @@ import { LIVE_EVENTS_CATEGORIES } from 'constants/EventCategories';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { setUniqueSlug } from '../../helper/Slug';
+import { PopupActions } from '../../store/actions/popup';
 
 const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
   label: c.value,
   value: c.value,
 }));
 
-const AdminEventForm = ({ event = null, eventSlugs }) => {
+const AdminEventForm = ({ event = null, eventSlugs, hidePopup }) => {
   const [name, setName] = useState(event?.name || '');
   const [slug, setSlug] = useState(event?.slug || '');
   const [streamUrl, setStreamUrl] = useState(event?.streamUrl || '');
@@ -43,7 +44,7 @@ const AdminEventForm = ({ event = null, eventSlugs }) => {
   };
 
   const handleSuccess = ({ response: { data } }) => {
-    // there is a strange bug when I use history.push(); to navigate, layout becomes white
+    //@todo there is a strange bug when I use history.push(); to navigate, layout becomes white
     window.location.reload();
   };
 
@@ -60,9 +61,17 @@ const AdminEventForm = ({ event = null, eventSlugs }) => {
     };
 
     if (event) {
-      Api.editEvent(event._id, payload).then(handleSuccess);
+      Api.editEvent(event._id, payload)
+        .then(handleSuccess)
+        .catch(err => {
+          console.error(err);
+        });
     } else {
-      Api.createEvent(payload).then(handleSuccess);
+      Api.createEvent(payload)
+        .then(handleSuccess)
+        .catch(err => {
+          console.error(err);
+        });
     }
   };
 

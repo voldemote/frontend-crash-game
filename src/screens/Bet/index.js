@@ -12,7 +12,7 @@ import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
-import TwitchEmbedVideo from '../../components/TwitchEmbedVideo';
+import EmbedVideo from '../../components/EmbedVideo';
 import BetView from '../../components/BetView';
 import RelatedBetCard from '../../components/RelatedBetCard';
 import MyBetCard from '../../components/MyBetCard';
@@ -570,7 +570,7 @@ const Bet = ({
                   )}
                 </div>
               ) : (
-                <TwitchEmbedVideo video={event.streamUrl} />
+                <EmbedVideo video={event.streamUrl} />
               )}
               {event.type === 'streamed' && (
                 <div className={styles.timeLeft}>
