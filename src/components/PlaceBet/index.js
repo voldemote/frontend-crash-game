@@ -99,7 +99,7 @@ const PlaceBet = () => {
             disabled={!user.isLoggedIn}
           />
           <span className={styles.eventTokenLabel}>
-            <span onClick={() => setCrashFactor(1)}>X</span>
+            <span>X</span>
           </span>
         </div>
       </div>
