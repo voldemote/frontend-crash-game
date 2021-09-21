@@ -76,7 +76,6 @@ const EventCard = ({
                 <br />
                 {organizer}
               </span>
-              <Tags tags={tags} />
             </div>
             {eventEnd && (
               <div className={styles.timer}>
