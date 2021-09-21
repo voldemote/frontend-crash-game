@@ -7,6 +7,7 @@ import SettingNotification from '../../data/images/setting-notifications.png';
 import SettingSupport from '../../data/images/setting-support.png';
 import React from 'react';
 import style from '../Navbar/styles.module.scss';
+import IconTheme from '../Icon/IconTheme';
 
 const HomeSettings = ({
   onEditClick,
@@ -131,15 +132,11 @@ const HomeSettings = ({
             className={styles.goIntoSettingIcon}
           />
         </div>
-        <div
-          className={classNames(styles.closeProfileContainer)}
-          onClick={onCloseProfile}
-        >
+        <div className={styles.closeProfileContainer} onClick={onCloseProfile}>
           <Icon
+            iconTheme={IconTheme.white}
             iconType={IconType.cross}
-            // onClick={}
-            className={classNames(styles.closeProfile)}
-            style={{ width: '30px', color: 'white' }}
+            className={styles.closeProfile}
           />
         </div>
       </div>

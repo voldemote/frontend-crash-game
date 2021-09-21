@@ -8,12 +8,13 @@ import HighlightType from 'components/Highlight/HighlightType';
 import classNames from 'classnames';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import { calculateGain } from 'helper/Calculation';
-import State from '../../helper/State';
+import { selectUser } from 'store/selectors/authentication';
+import { convert } from '../../helper/Currency';
 
 const canvasStyles = {
   position: 'fixed',
@@ -26,10 +27,13 @@ const canvasStyles = {
 
 let animationInstance;
 const BetApproveView = ({ visible, hidePopup, options, events }) => {
+  const { currency } = useSelector(selectUser);
+
   const trade = _.get(options, 'data.trade');
   const bet = _.get(options, 'data.bet');
-  const amountPlaced = _.get(trade, 'investmentAmount', 0);
-  const potentialOutcome = _.get(trade, 'outcomeTokens', 0);
+
+  const amountPlaced = convert(_.get(trade, 'investmentAmount', 0), currency);
+  const potentialOutcome = convert(_.get(trade, 'outcomeTokens', 0), currency);
   const potentialPercent = calculateGain(amountPlaced, potentialOutcome);
   const potentialPercentGain = _.get(potentialPercent, 'value');
   const potentialPercentType = _.get(potentialPercent, 'negative', false);
@@ -37,11 +41,10 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
   const outcomeIndex = _.get(trade, 'outcomeIndex');
   const outcomeValue = _.get(bet, ['outcomes', outcomeIndex, 'name']);
 
+  //for later - share button logic
   const tradeId = _.get(trade, '_id');
   const eventId = _.get(bet, 'event');
   const betId = _.get(trade, 'betId');
-
-  console.log({ tradeId, eventId, betId });
 
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
@@ -109,13 +112,13 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Amount placed</div>
           <div className={styles.value}>
-            {amountPlaced} <span>WFAIR</span>
+            {amountPlaced} <span>{currency}</span>
           </div>
         </div>
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Potential outcome</div>
           <div className={styles.value}>
-            {potentialOutcome} <span>WFAIR</span>
+            {potentialOutcome} <span>{currency}</span>
           </div>
         </div>
         <div className={classNames(styles.entry, styles.alignRight)}>
@@ -141,12 +144,7 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
       </div>
 
       <div className={styles.ShareButtonContainer}>
-        <div
-          className={styles.shareButton}
-          highlightType={HighlightType.highlightHomeCtaBet}
-          disabledWithOverlay={false}
-          onClick={hidePopup}
-        >
+        <div className={styles.shareButton} onClick={hidePopup}>
           <div className={styles.shareIcon}>
             <Icon iconType={IconType.shareLink} iconTheme={IconTheme.primary} />
           </div>{' '}
@@ -168,7 +166,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  console.log('state', state);
   return {
     visible:
       state.popup.popupType === PopupTheme.betApprove && state.popup.visible,
