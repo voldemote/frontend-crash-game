@@ -186,11 +186,13 @@ const signUpFail = makeActionCreator(AuthenticationTypes.SIGN_UP_FAIL, {
 const login = makeActionCreator(AuthenticationTypes.LOGIN, {
   email: null,
   password: null,
+  showWelcome: false,
 });
 
 const loginSuccess = makeActionCreator(AuthenticationTypes.LOGIN_SUCCESS, {
   userId: null,
   session: null,
+  showWelcome: false,
 });
 
 const loginFail = makeActionCreator(AuthenticationTypes.LOGIN_FAIL, {

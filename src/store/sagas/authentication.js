@@ -221,7 +221,15 @@ const authenticationSucceeded = function* (action) {
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
-    yield put(PopupActions.hide());
+    if (action.showWelcome) {
+      yield put(
+        PopupActions.show({
+          popupType: PopupTheme.welcome,
+        })
+      );
+    } else {
+      yield put(PopupActions.hide());
+    }
     yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
   }
 };
@@ -334,6 +342,7 @@ const signUp = function* (action) {
       AuthenticationActions.login({
         email: action.email,
         password: action.password,
+        showWelcome: true,
       })
     );
   } else {
@@ -363,6 +372,7 @@ const login = function* (action) {
       AuthenticationActions.loginSuccess({
         userId: data.userId,
         session: data.session,
+        showWelcome: action.showWelcome,
       })
     );
   } else {
