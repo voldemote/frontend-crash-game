@@ -15,6 +15,7 @@ import TokenNumberInput from 'components/TokenNumberInput';
 import Input from '../Input';
 import useCurrentUser from 'hooks/useCurrentUser';
 import TokenSlider from 'components/TokenSlider';
+import { round } from 'lodash/math';
 const PlaceBet = () => {
   const dispatch = useDispatch();
   const user = useCurrentUser();
@@ -33,9 +34,10 @@ const PlaceBet = () => {
     setAmount(number);
     // debouncedSetCommitment(number, currency);
   };
-  const onCrashFactorChange = number => {
-    console.log(number);
-    setCrashFactor(number.target.value);
+  const onCrashFactorChange = event => {
+    const value = event.target.value;
+    const v = value < 1 ? 1 : round(value, 2);
+    setCrashFactor(v);
     // debouncedSetCommitment(number, currency);
   };
 
@@ -74,6 +76,8 @@ const PlaceBet = () => {
             currency={currency}
             setValue={onTokenNumberChange}
             maxValue={formatToFixed(balance)}
+            minValue={1}
+            decimalPlaces={0}
           />
         </div>
         {/* <div className={styles.sliderContainer}>
@@ -103,11 +107,11 @@ const PlaceBet = () => {
             type={'number'}
             value={crashFactor}
             onChange={onCrashFactorChange}
-            step={0.1}
+            step={0.01}
             min="1"
           />
           <span className={styles.eventTokenLabel}>
-            <span onClick={() => setCrashFactor(0)}>X</span>
+            <span onClick={() => setCrashFactor(1)}>X</span>
           </span>
         </div>
       </div>
