@@ -44,6 +44,27 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
     );
   };
 
+  const renderOutcome = () => {
+    const status = _.get(bet, 'status');
+    if (status !== BetState.resolved) {
+      return null;
+    }
+
+    const { outcomes, finalOutcome } = bet;
+    const outcome = outcomes?.find(({ index }) => index === +finalOutcome);
+
+    if (!outcome) {
+      return null;
+    }
+
+    return (
+      <div className={styles.resolutionOutcome}>
+        <span className={styles.outcomeLabel}>Outcome:</span>
+        <span className={styles.outcomeValue}>{outcome.name}</span>
+      </div>
+    );
+  };
+
   const openInfoPopup = (popupType, e) => {
     e.stopPropagation();
     const options = {
@@ -83,6 +104,10 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
   const openReport = () => {
     showPopup(PopupTheme.reportEvent, { small: true });
   };
+
+  const betLinkLabel = label => (
+    <span className={styles.betLinkButtonLabel}>{label}</span>
+  );
 
   return (
     <div className={styles.relatedBetCard}>
@@ -133,6 +158,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
             </div>
           </div>
         </div>
+        {renderOutcome()}
         <div className={styles.stateBadgeContainer}>
           <StateBadge
             className={styles.stateBadge}
@@ -140,7 +166,7 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
           />
           {bet?.status === BetState.resolved && (
             <ButtonSmall
-              text="Report"
+              text="Dispute"
               butonTheme={ButtonSmallTheme.red}
               onClick={openReport}
             />
@@ -154,9 +180,14 @@ const RelatedBetCard = ({ onClick, bet, showPopup }) => {
               />
             </AdminOnly>
           )}
-          {bet?.status === BetState.active && (
+          {[BetState.active, BetState.resolved].includes(bet?.status) && (
             <ButtonSmall
-              text="Bet"
+              text={
+                {
+                  [BetState.active]: betLinkLabel('Bet'),
+                  [BetState.resolved]: betLinkLabel('View'),
+                }[bet.status]
+              }
               iconType={IconType.arrowButtonRight}
               butonTheme={ButtonSmallTheme.dark}
               onClick={onClick}

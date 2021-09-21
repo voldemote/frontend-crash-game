@@ -41,6 +41,7 @@ import ReactTooltip from 'react-tooltip';
 import { selectOutcomes, selectSellOutcomes } from 'store/selectors/bet';
 import { selectUser } from 'store/selectors/authentication';
 import { convert } from 'helper/Currency';
+import DateText from 'helper/DateText';
 
 const BetView = ({
   betId,
@@ -142,15 +143,6 @@ const BetView = ({
     return valid;
   };
 
-  // async function loadAfterMount() {
-  //   await SleepHelper.sleep(100);
-
-  //   setCommitment(defaultBetValue, betId);
-  //   openBets.map(openBet => {
-  //     fetchSellOutcomes(openBet.outcomeAmount, openBet.betId);
-  //   });
-  // }
-
   useEffect(() => {
     return () => {
       resetOutcomes();
@@ -191,15 +183,6 @@ const BetView = ({
     }
   }, [actionIsInProgress]);
 
-  // useEffect(() => {
-  //   if (JSON.stringify(openBets) != JSON.stringify(openBetsRef)) {
-  //     openBets.map(openBet => {
-  //       fetchSellOutcomes(openBet.outcomeAmount, openBet.betId);
-  //     });
-  //   }
-  //   setOpenBetsRef(openBets);
-  // }, [openBets]);
-
   const hasSellView = () => {
     return (currentTradeView === 1 || forceSellView) && _.size(openBets);
   };
@@ -225,10 +208,6 @@ const BetView = ({
   const showJoinPopup = () => {
     showPopup(PopupTheme.loginRegister, { redirectUrl: match.url });
   };
-
-  // const sellBet = () => {
-  //   pullOutBet(betId, choice, getOpenBetsValue(choice));
-  // };
 
   const onChoiceSelect = (id, enabled) => {
     return () => {
@@ -281,37 +260,6 @@ const BetView = ({
     return !hasSellView() || getOpenBetsValue(index) > 0;
   };
 
-  // const switchableChange = index => {
-  //   setChoice(null);
-  //   setCurrentTradeView(index);
-  // };
-
-  // const renderSwitchableView = () => {
-  //   // @TODO: this is not very readable, couldn't we use a "standard" tab interface, would be good for a11y as well
-  //   // like e.g. react-aria tablist
-  //   // @see: https://react-spectrum.adobe.com/react-aria/useTabList.html
-  //   if (_.size(openBets) && !disableSwitcher) {
-  //     const switchableViews = [
-  //       SwitchableHelper.getSwitchableView('Buy'),
-  //       SwitchableHelper.getSwitchableView('Sell'),
-  //     ];
-
-  //     return (
-  //       <div className={styles.switchableContainer}>
-  //         <SwitchableContainer
-  //           switchableViews={switchableViews}
-  //           currentIndex={currentTradeView}
-  //           setCurrentIndex={switchableChange}
-  //           underlineInactive={true}
-  //           handleChartDirectionFilter={handleChartDirectionFilter}
-  //         />
-  //       </div>
-  //     );
-  //   }
-
-  //   return null;
-  // };
-
   const renderChoiceSelector = (
     index,
     name,
@@ -360,27 +308,6 @@ const BetView = ({
       </>
     );
   };
-
-  // const renderSellInformation = () => {
-  //   const openBet = getOpenBet(choice);
-
-  //   if (openBet) {
-  //     const investmentAmount = _.get(openBet, 'investmentAmount');
-  //     const summaryRows = [
-  //       BetSummaryHelper.getKeyValue(
-  //         'Your Investment',
-  //         investmentAmount + ' ' + TOKEN_NAME
-  //       ),
-  //       BetSummaryHelper.getDivider(),
-  //     ];
-
-  //     return (
-  //       <div className={styles.summaryRowContainer}>
-  //         <SummaryRowContainer summaryRows={summaryRows} />
-  //       </div>
-  //     );
-  //   }
-  // };
 
   const renderTradeDesc = () => {
     if (!bet.evidenceDescription) {
@@ -467,23 +394,6 @@ const BetView = ({
         </>
       );
     }
-    // if (isSell && !finalOutcome && validInput) {
-    //   const outcome = _.floor(getOutcome(choice), 2).toFixed(2);
-
-    //   return (
-    //     <>
-    //       {renderSellInformation()}
-    //       <Button
-    //         className={classNames(styles.betButton, styles.sellButton)}
-    //         highlightType={HighlightType.highlightHomeCtaBet}
-    //         onClick={sellBet}
-    //         disabledWithOverlay={false}
-    //       >
-    //         Cashout {formatToFixed(outcome)} {TOKEN_NAME}
-    //       </Button>
-    //     </>
-    //   );
-    // }
   };
 
   const renderChoiceSelectors = (resolved = false, forceSelect) => {
@@ -626,35 +536,24 @@ const BetView = ({
             {renderMenuInfoIcon()}
             <span>Edit Bet</span>
           </div>
-          <div
-            className={styles.menuItem}
-            onClick={() =>
-              showPopup(PopupTheme.resolveBet, {
-                eventId: event._id,
-                tradeId: bet._id,
-              })
-            }
-          >
-            {renderMenuInfoIcon()}
-            <span>Resolve Bet</span>
-          </div>
+          {bet?.status === BetState.active && (
+            <div
+              className={styles.menuItem}
+              onClick={() =>
+                showPopup(PopupTheme.resolveBet, {
+                  eventId: event._id,
+                  tradeId: bet._id,
+                })
+              }
+            >
+              {renderMenuInfoIcon()}
+              <span>Resolve Bet</span>
+            </div>
+          )}
         </div>
       </div>
     );
   };
-
-  // const renderCurrentBalance = () => {
-  //   return (
-  //     <div className={classNames(styles.currentBalanceContainer)}>
-  //       <Icon
-  //         className={styles.currentBalanceIcon}
-  //         iconTheme={IconTheme.primaryLightTransparent}
-  //         iconType={IconType.wallet2}
-  //       />
-  //       {formatToFixed(balance)}
-  //     </div>
-  //   );
-  // };
 
   const renderStateConditionalContent = () => {
     if (
@@ -678,19 +577,23 @@ const BetView = ({
         _.get(bet, 'finalOutcome'),
         'name',
       ]);
-      // console.debug(bet);
+      const description = _.get(bet, 'evidenceDescription');
+      const evidence = _.get(bet, 'evidenceActual');
+
       const summaryRows = [
         BetSummaryHelper.getDivider(),
         BetSummaryHelper.getKeyValue('Overall trades', overallTrades),
         BetSummaryHelper.getKeyValue(
-          TOKEN_NAME + ' tokens traded',
-          tokensTraded + ' ' + TOKEN_NAME
+          `${currency} traded`,
+          `${tokensTraded} ${currency}`
         ),
-        BetSummaryHelper.getKeyValue('Outcome', finalOutcome),
+        BetSummaryHelper.getKeyValue('Outcome', finalOutcome, true, true),
+        BetSummaryHelper.getKeyValue('Description', description),
+        BetSummaryHelper.getKeyValue('Evidence', evidence),
         BetSummaryHelper.getDivider(),
         BetSummaryHelper.getKeyValue(
-          TOKEN_NAME + ' tokens won',
-          tokensWon + ' ' + TOKEN_NAME,
+          `${currency} won`,
+          `${tokensWon} ${currency}`,
           false,
           false,
           true,
@@ -763,19 +666,34 @@ const BetView = ({
           {renderLoadingAnimation()}
           {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
           <div className={styles.betMarketQuestion}>{bet.marketQuestion}</div>
-          {showEventEnd && (
-            <>
-              <span className={styles.timerLabel}>Event ends in:</span>
-              <div
-                className={classNames(
-                  styles.timeLeftCounterContainer,
-                  isTradeViewPopup ? styles.fixedTimer : null
-                )}
-              >
-                <TimeCounter endDate={endDate} />
-              </div>
-            </>
-          )}
+          {showEventEnd &&
+            (endDate < Date.now() ? (
+              <>
+                <span className={styles.timerLabel}>Event ends in:</span>
+                <div
+                  className={classNames(
+                    styles.timeLeftCounterContainer,
+                    isTradeViewPopup && styles.fixedTimer
+                  )}
+                >
+                  <TimeCounter endDate={endDate} />
+                </div>
+              </>
+            ) : (
+              <>
+                <h2
+                  className={classNames(
+                    styles.timerLabel,
+                    styles.resolutionTitle
+                  )}
+                >
+                  Bet resolved at
+                </h2>
+                <span className={styles.dateTimeLabel}>
+                  {DateText.formatDate(endDate)}
+                </span>
+              </>
+            ))}
           {renderStateConditionalContent()}
         </div>
       </div>

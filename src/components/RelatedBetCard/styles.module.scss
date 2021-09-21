@@ -125,3 +125,22 @@
     }
   }
 }
+
+.resolutionOutcome {
+  margin-bottom: 25px;
+  font-size: 14px;
+  width: auto;
+  align-self: flex-start;
+  border-radius: 4px;
+
+  .outcomeLabel {
+    margin-right: 6px;
+  }
+  .outcomeValue {
+    font-family: $fontMedium;
+  }
+}
+
+.betLinkButtonLabel {
+  margin-right: 5px;
+}
