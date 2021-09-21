@@ -308,6 +308,12 @@ const getCoverStream = () => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const resolveBet = (betId, data) => {
+  return Api.post(ApiUrls.API_BET_RESOLVE.replace(':id', betId), data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 const getTradeById = id => {
   return Api.get(_.replace(ApiUrls.API_TRADE_GET_BY_ID, ':id', id)).catch(
     error => {
@@ -353,4 +359,5 @@ export {
   createEventFromYoutubeUrl,
   getCoverStream,
   getTradeById,
+  resolveBet,
 };

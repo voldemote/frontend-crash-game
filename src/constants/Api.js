@@ -48,6 +48,7 @@ export const API_CHAT_MESSAGES =
 export const API_EVENT_CREATE_FROM_TWITCH = 'api/event/extract/twitch';
 export const API_EVENT_CREATE_FROM_YOUTUBE = 'api/event/create-from-youtube';
 export const API_EVENT_GET_COVER_STREAM = 'api/event/cover/streamed';
+export const API_BET_RESOLVE = 'api/event/bet/:id/resolve';
 
 //TRADE
 export const API_TRADE_CREATE = 'api/trade';

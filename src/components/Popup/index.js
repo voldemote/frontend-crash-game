@@ -29,6 +29,7 @@ import EditEventPopup from '../EditEventPopup';
 import NewBetPopup from '../NewBetPopup';
 import EditBetPopup from '../EditBetPopup';
 import ViewImagePopup from 'components/ViewImagePopup';
+import ResolveBetPopup from 'components/ResolveBetPopup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 
 const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
@@ -138,6 +139,10 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
         return <EditBetPopup />;
       case PopupTheme.viewImage:
         return <ViewImagePopup imageURL={options.imageURL} />;
+      case PopupTheme.resolveBet:
+        return (
+          <ResolveBetPopup betId={options.tradeId} eventId={options.eventId} />
+        );
     }
 
     return null;

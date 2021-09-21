@@ -41,7 +41,6 @@ const TwitchEmbedVideo = ({
 
   return (
     <ReactTwitchEmbedVideo
-      {...props}
       targetId={getId()}
       targetClass={classNames(styles.twitchStream, className)}
       width={'100%'}
@@ -55,8 +54,9 @@ const TwitchEmbedVideo = ({
       layout={'video'}
       controls={true}
       parent={embeddingDomains}
+      {...props}
     />
   );
 };
 
-export default TwitchEmbedVideo;
+export default React.memo(TwitchEmbedVideo);
