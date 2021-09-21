@@ -48,6 +48,7 @@ const App = () => {
             />
             <Route exact path={Routes.home} component={Home} />
             <Route exact path={Routes.bet} component={Bet} />
+            <Route exact path={Routes.betApproveDirect} component={Home} />
             <Route exact path={Routes.liveEvents} component={LiveEvents} />
             <Route exact path={Routes.events} component={Events} />
             <Route exact path={Routes.rosiGame} component={RosiGame} />

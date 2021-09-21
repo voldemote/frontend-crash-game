@@ -2,6 +2,7 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
+import { API_TRADE_GET_BY_ID } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -313,6 +314,14 @@ const resolveBet = (betId, data) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const getTradeById = id => {
+  return Api.get(_.replace(ApiUrls.API_TRADE_GET_BY_ID, ':id', id)).catch(
+    error => {
+      console.log('[API Error] called: getTradeById', error);
+    }
+  );
+};
+
 export {
   Api,
   createBet,
@@ -349,5 +358,6 @@ export {
   createEventFromTwitchUrl,
   createEventFromYoutubeUrl,
   getCoverStream,
+  getTradeById,
   resolveBet,
 };

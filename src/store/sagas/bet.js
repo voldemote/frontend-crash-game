@@ -62,7 +62,9 @@ const place = function* (action) {
     yield put(
       PopupActions.show({
         popupType: PopupTheme.betApprove,
-        options: {},
+        options: {
+          data: response.data,
+        },
       })
     );
     yield put(BetActions.fetchOpenBets());

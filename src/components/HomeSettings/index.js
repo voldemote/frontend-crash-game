@@ -5,12 +5,17 @@ import IconType from '../Icon/IconType';
 import DefaultProfilePicture from '../../data/images/logo.png';
 import SettingNotification from '../../data/images/setting-notifications.png';
 import SettingSupport from '../../data/images/setting-support.png';
+import React from 'react';
+import style from '../Navbar/styles.module.scss';
+import IconTheme from '../Icon/IconTheme';
 
 const HomeSettings = ({
   onEditClick,
   onReferralsClick,
   onEmailNotificationClick,
   onPreferencesClick,
+  onLogoutClick,
+  onCloseProfile,
 }) => {
   return (
     <div className={styles.settings}>
@@ -105,6 +110,33 @@ const HomeSettings = ({
             width={15}
             iconType={IconType.arrowSmallRight}
             className={styles.goIntoSettingIcon}
+          />
+        </div>
+        <div
+          className={classNames(
+            styles.singleSettingHolder,
+            styles.settingActive
+          )}
+          onClick={onLogoutClick}
+        >
+          <Icon
+            width={15}
+            iconType={IconType.logout}
+            className={classNames(styles.settingIcon)}
+            style={{ width: '22px', marginLeft: '4px' }}
+          />
+          <p className={styles.settingTitle}>Logout</p>
+          <Icon
+            width={15}
+            iconType={IconType.arrowSmallRight}
+            className={styles.goIntoSettingIcon}
+          />
+        </div>
+        <div className={styles.closeProfileContainer} onClick={onCloseProfile}>
+          <Icon
+            iconTheme={IconTheme.white}
+            iconType={IconType.cross}
+            className={styles.closeProfile}
           />
         </div>
       </div>

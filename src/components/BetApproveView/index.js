@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import styles from './styles.module.scss';
@@ -8,7 +8,13 @@ import HighlightType from 'components/Highlight/HighlightType';
 import classNames from 'classnames';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import Icon from '../Icon';
+import IconType from '../Icon/IconType';
+import IconTheme from '../Icon/IconTheme';
+import { calculateGain } from 'helper/Calculation';
+import { selectUser } from 'store/selectors/authentication';
+import { convert } from '../../helper/Currency';
 
 const canvasStyles = {
   position: 'fixed',
@@ -20,7 +26,26 @@ const canvasStyles = {
 };
 
 let animationInstance;
-const BetApproveView = ({ visible, hidePopup }) => {
+const BetApproveView = ({ visible, hidePopup, options, events }) => {
+  const { currency } = useSelector(selectUser);
+
+  const trade = _.get(options, 'data.trade');
+  const bet = _.get(options, 'data.bet');
+
+  const amountPlaced = convert(_.get(trade, 'investmentAmount', 0), currency);
+  const potentialOutcome = convert(_.get(trade, 'outcomeTokens', 0), currency);
+  const potentialPercent = calculateGain(amountPlaced, potentialOutcome);
+  const potentialPercentGain = _.get(potentialPercent, 'value');
+  const potentialPercentType = _.get(potentialPercent, 'negative', false);
+  const gainTypeClass = potentialPercentType ? 'negative' : 'positive';
+  const outcomeIndex = _.get(trade, 'outcomeIndex');
+  const outcomeValue = _.get(bet, ['outcomes', outcomeIndex, 'name']);
+
+  //for later - share button logic
+  const tradeId = _.get(trade, '_id');
+  const eventId = _.get(bet, 'event');
+  const betId = _.get(trade, 'betId');
+
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
       animationInstance({
@@ -82,6 +107,31 @@ const BetApproveView = ({ visible, hidePopup }) => {
         Your Bet Has Been <br />
         Posted
       </span>
+
+      <div className={styles.betOverview}>
+        <div className={classNames(styles.entry)}>
+          <div className={styles.label}>Amount placed</div>
+          <div className={styles.value}>
+            {amountPlaced} <span>{currency}</span>
+          </div>
+        </div>
+        <div className={classNames(styles.entry)}>
+          <div className={styles.label}>Potential outcome</div>
+          <div className={styles.value}>
+            {potentialOutcome} <span>{currency}</span>
+          </div>
+        </div>
+        <div className={classNames(styles.entry, styles.alignRight)}>
+          <div className={classNames(styles.valueHint, styles[gainTypeClass])}>
+            {potentialPercentGain}
+          </div>
+        </div>
+        <div className={classNames(styles.entry)}>
+          <div className={styles.label}>Option selected</div>
+          <div className={styles.value}>{outcomeValue}</div>
+        </div>
+      </div>
+
       <div className={styles.betButtonContainer}>
         <Button
           className={classNames(styles.betButton)}
@@ -92,6 +142,16 @@ const BetApproveView = ({ visible, hidePopup }) => {
           <span className={'buttonText'}>Keep Going</span>
         </Button>
       </div>
+
+      <div className={styles.ShareButtonContainer}>
+        <div className={styles.shareButton} onClick={hidePopup}>
+          <div className={styles.shareIcon}>
+            <Icon iconType={IconType.shareLink} iconTheme={IconTheme.primary} />
+          </div>{' '}
+          Share
+        </div>
+      </div>
+
       <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
     </div>
   );
@@ -109,6 +169,7 @@ const mapStateToProps = state => {
   return {
     visible:
       state.popup.popupType === PopupTheme.betApprove && state.popup.visible,
+    events: _.get(state, 'event.events', []),
   };
 };
 

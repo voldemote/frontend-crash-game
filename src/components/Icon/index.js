@@ -57,6 +57,7 @@ import { ReactComponent as IconWallet } from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 } from '../../data/icons/wallet-2.svg';
 import { ReactComponent as IconWithdrawal } from '../../data/icons/withdrawal.svg';
 import { ReactComponent as NewsIcon } from '../../data/icons/news-icon.svg';
+import { ReactComponent as ShareIcon } from '../../data/icons/share-solid-fa.svg';
 
 const Icon = ({
   className,
@@ -67,6 +68,7 @@ const Icon = ({
   height,
   onClick,
   children,
+  style,
 }) => {
   const renderIcon = () => {
     return SelectionHelper.get(iconType, {
@@ -126,19 +128,21 @@ const Icon = ({
       [IconType.success]: <IconSuccess />,
       [IconType.withdrawal]: <IconWithdrawal />,
       [IconType.newsIcon]: <NewsIcon />,
+      [IconType.shareLink]: <ShareIcon />,
     });
   };
 
-  const getIconStyle = () => {
+  const getIconStyle = (style = {}) => {
     return {
       width: width,
       height: height,
+      ...style,
     };
   };
 
   return (
     <span
-      style={getIconStyle()}
+      style={getIconStyle(style)}
       className={classNames(
         styles.icon,
         className,

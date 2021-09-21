@@ -11,6 +11,76 @@
     color:            $colorPrimaryDark;
     border-radius:    10px;
 
+  .ShareButtonContainer {
+    padding-top:   10px;
+    padding-bottom:   50px;
+
+    .shareButton {
+      display: flex;
+      background-color: $colorPrimaryDark;
+      color: white;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+
+      .shareIcon {
+        width: 20px;
+        margin-right: 6px;
+        color: $colorYellowLight;
+      }
+    }
+
+    @media (max-width: $screen-sm) {
+      padding-top:   20px;
+      padding-bottom:   30px;
+    }
+  }
+
+  .betOverview {
+    width: 70%;
+    min-width: 300px;
+    margin: 25px 0 20px;
+    line-height: 1;
+    font-size: 20px;
+
+    @media (max-width: $screen-sm) {
+      font-size: 16px;
+    }
+
+    .entry {
+      margin-bottom: 25px;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      &.alignRight {
+        justify-content: right;
+      }
+
+      .valueHint {
+        color: $colorGreenDarker;
+        font-weight: bold;
+
+        &.negative {
+          color: $colorRedDark;
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .value {
+      font-weight: bold;
+    }
+
+    .label {
+      color: $colorGray;
+    }
+  }
+
     .approveBetHeadline {
         display:        flex;
         flex-direction: column;
