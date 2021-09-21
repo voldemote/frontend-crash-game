@@ -304,44 +304,6 @@
     }
   }
 
-  .summaryRowContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0 30px 20px;
-
-    .walletLink {
-      display: inline-flex;
-      flex-direction: row;
-      text-decoration: none;
-      border-bottom: 1px solid $colorPrimary;
-      margin-left: auto;
-      cursor: pointer;
-
-      .walletLinkIcon {
-        width: auto;
-        display: inline-block;
-        margin-left: 5px;
-      }
-    }
-
-    .confettiLeft,
-    .confettiRight {
-      position: absolute;
-      pointer-events: none;
-
-      &.confettiLeft {
-        left: -30px;
-        bottom: 40px;
-      }
-
-      &.confettiRight {
-        right: -100px;
-        bottom: 180px;
-      }
-    }
-  }
-
   &.closedStatus {
     .placeBetContentContainer,
     .betButton {
@@ -404,6 +366,40 @@
   margin-top: 10px;
 }
 
-.resolutionTitle {
-  color: $colorBlack;
+.resolvedBetLayout {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.resolutionData {
+  text-align: center;
+  margin-bottom: 20px;
+  border-top: 1px solid $colorGrayLight4;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  h3 {
+    font-size: 16px;
+    margin: 20px 0 10px;
+  }
+  p {
+    color: $colorGrayLight1;
+    &.smallText {
+      font-size: 14px;
+    }
+  }
+}
+
+.stateBadgeContainer {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.disputeButtonContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 }
