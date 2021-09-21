@@ -57,8 +57,8 @@ const PlaceBet = () => {
   const showLoginPopup = () => {
     dispatch(
       PopupActions.show({
-        popupType: PopupTheme.loginRegister,
-        options: { redirectUrl: Routes.rosiGame },
+        popupType: PopupTheme.auth,
+        options: { small: true },
       })
     );
   };

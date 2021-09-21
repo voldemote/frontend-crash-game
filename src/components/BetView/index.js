@@ -206,7 +206,7 @@ const BetView = ({
   };
 
   const showJoinPopup = () => {
-    showPopup(PopupTheme.loginRegister, { redirectUrl: match.url });
+    showPopup(PopupTheme.auth, { small: true });
   };
 
   const onChoiceSelect = (id, enabled) => {
