@@ -597,7 +597,7 @@ const BetView = ({
             {!isTradeViewPopup && renderMenuContainerWithCurrentBalance()}
           </AdminOnly>
           <div className={styles.betMarketQuestion}>{bet.marketQuestion}</div>
-          {showEventEnd && endDate < Date.now() && (
+          {showEventEnd && state !== BetState.resolved && (
             <>
               <span className={styles.timerLabel}>Event ends in:</span>
               <div
