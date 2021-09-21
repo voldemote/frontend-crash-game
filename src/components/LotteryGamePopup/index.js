@@ -92,7 +92,7 @@ const LotteryGamePopup = ({ hidePopup, rewardId, visible }) => {
         disabledWithOverlay={false}
         withoutBackground={true}
       >
-        Keep Going!
+        <span className={'buttonText'}>Keep Going!</span>
       </Button>
 
       <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />

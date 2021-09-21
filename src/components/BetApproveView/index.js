@@ -136,7 +136,7 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
           disabledWithOverlay={false}
           onClick={hidePopup}
         >
-          Keep Going
+          <span className={'buttonText'}>Keep Going</span>
         </Button>
       </div>
 
