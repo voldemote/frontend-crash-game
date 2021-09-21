@@ -34,13 +34,6 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
           console.error("Can't get trade by id:", err);
         });
 
-        console.log('###bet', bet);
-        console.log('###event', event);
-        console.log('###trade', trade);
-        console.log('###tradeResponse', tradeResponse);
-        //
-        // const user = State.getUser(userId, users);
-
         const options = {
           eventId: eventId,
           betId: betId,
@@ -50,9 +43,6 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
             trade: _.get(tradeResponse, 'data', null),
           },
         };
-
-        console.log('options', options);
-
         showPopup('betApprove', options);
       }
     }

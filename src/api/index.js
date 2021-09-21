@@ -309,9 +309,11 @@ const getCoverStream = () => {
 };
 
 const getTradeById = id => {
-  return Api.get(ApiUrls.API_TRADE_GET_BY_ID).catch(error => {
-    console.log('[API Error] called: getTradeById', error);
-  });
+  return Api.get(_.replace(ApiUrls.API_TRADE_GET_BY_ID, ':id', id)).catch(
+    error => {
+      console.log('[API Error] called: getTradeById', error);
+    }
+  );
 };
 
 export {
