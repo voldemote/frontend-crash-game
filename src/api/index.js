@@ -320,6 +320,18 @@ const getTradeById = id => {
       console.log('[API Error] called: getTradeById', error);
     }
   );
+}
+
+const signUp = payload => {
+  return Api.post(ApiUrls.API_AUTH_SIGNUP, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const login = payload => {
+  return Api.post(ApiUrls.API_AUTH_LOGIN, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
 };
 
 export {
@@ -360,4 +372,6 @@ export {
   getCoverStream,
   getTradeById,
   resolveBet,
+  login,
+  signUp,
 };

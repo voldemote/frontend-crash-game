@@ -49,7 +49,7 @@ export const API_EVENT_CREATE_FROM_TWITCH = 'api/event/extract/twitch';
 export const API_EVENT_CREATE_FROM_YOUTUBE = 'api/event/create-from-youtube';
 export const API_EVENT_GET_COVER_STREAM = 'api/event/cover/streamed';
 export const API_BET_RESOLVE = 'api/event/bet/:id/resolve';
-
-//TRADE
 export const API_TRADE_CREATE = 'api/trade';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
+export const API_AUTH_LOGIN = 'api/auth/login';
+export const API_AUTH_SIGNUP = 'api/auth/sign-up';

@@ -26,6 +26,7 @@ import { PopupActions } from '../../store/actions/popup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
+import AuthenticationType from '../Authentication/AuthenticationType';
 
 const Navbar = ({
   user,
@@ -124,9 +125,9 @@ const Navbar = ({
     document.body.style.overflow = 'auto';
   }
 
-  const goToJoinPage = () => {
+  const showPopupForUnauthenticated = authenticationType => {
     if (!isLoggedIn()) {
-      showPopup(PopupTheme.loginRegister, {});
+      showPopup(PopupTheme.auth, { small: true, authenticationType });
     }
   };
 
@@ -204,11 +205,20 @@ const Navbar = ({
     const joinBtn = (
       <div className={style.navbarItems}>
         <Button
+          className={style.loginButton}
+          withoutBackground={true}
+          onClick={() => showPopupForUnauthenticated(AuthenticationType.login)}
+        >
+          Login
+        </Button>
+        <Button
           className={style.signUpButton}
           withoutBackground={true}
-          onClick={goToJoinPage}
+          onClick={() =>
+            showPopupForUnauthenticated(AuthenticationType.register)
+          }
         >
-          Join now
+          Sign Up
         </Button>
       </div>
     );

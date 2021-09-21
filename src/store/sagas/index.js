@@ -55,9 +55,12 @@ const root = function* () {
       [
         AuthenticationTypes.VERIFY_SMS_SUCCEEDED,
         AuthenticationTypes.SAVE_ADDITIONAL_INFO_SUCCEEDED,
+        AuthenticationTypes.LOGIN_SUCCESS,
       ],
       AuthenticationSagas.authenticationSucceeded
     ),
+    takeLatest([AuthenticationTypes.SIGN_UP], AuthenticationSagas.signUp),
+    takeLatest([AuthenticationTypes.LOGIN], AuthenticationSagas.login),
     takeEvery(
       [
         AuthenticationTypes.FETCH_REFERRALS_FAILED,
