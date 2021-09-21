@@ -5,6 +5,8 @@ import IconType from '../Icon/IconType';
 import DefaultProfilePicture from '../../data/images/logo.png';
 import SettingNotification from '../../data/images/setting-notifications.png';
 import SettingSupport from '../../data/images/setting-support.png';
+import React from 'react';
+import style from '../Navbar/styles.module.scss';
 
 const HomeSettings = ({
   onEditClick,
@@ -12,6 +14,7 @@ const HomeSettings = ({
   onEmailNotificationClick,
   onPreferencesClick,
   onLogoutClick,
+  onCloseProfile,
 }) => {
   return (
     <div className={styles.settings}>
@@ -126,6 +129,17 @@ const HomeSettings = ({
             width={15}
             iconType={IconType.arrowSmallRight}
             className={styles.goIntoSettingIcon}
+          />
+        </div>
+        <div
+          className={classNames(styles.closeProfileContainer)}
+          onClick={onCloseProfile}
+        >
+          <Icon
+            iconType={IconType.cross}
+            // onClick={}
+            className={classNames(styles.closeProfile)}
+            style={{ width: '30px', color: 'white' }}
           />
         </div>
       </div>

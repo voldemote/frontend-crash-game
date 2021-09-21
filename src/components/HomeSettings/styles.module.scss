@@ -153,5 +153,21 @@ $largeMobileHeight: 700px;
         {
             cursor: not-allowed;
         }
+
+      .closeProfileContainer {
+        text-align: right;
+        justify-content: right;
+        width: 100%;
+        display: flex;
+        margin-top: 35px;
+
+        @media (min-width: $screen-md) {
+          display: none;
+        }
+
+        .closeProfile {
+          cursor: pointer;
+        }
+      }
     }
 }

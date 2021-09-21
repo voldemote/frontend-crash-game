@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import Icon from '../Icon';
@@ -317,6 +317,7 @@ const MainMenu = ({
             onEmailNotificationClick={() => onEmailNotificationClick()}
             onPreferencesClick={() => onPreferencesClick()}
             onLogoutClick={() => onClickGoToRoute(Routes.logout)}
+            onCloseProfile={() => close()}
           />
         </div>
       </div>
