@@ -2,7 +2,6 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_TRADE_GET_BY_ID } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -320,7 +319,7 @@ const getTradeById = id => {
       console.log('[API Error] called: getTradeById', error);
     }
   );
-}
+};
 
 const signUp = payload => {
   return Api.post(ApiUrls.API_AUTH_SIGNUP, payload)
