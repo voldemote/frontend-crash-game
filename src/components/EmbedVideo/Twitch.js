@@ -11,6 +11,7 @@ const TwitchVideo = props => {
     muted,
     className,
     title,
+    controls,
   } = props;
 
   const getStreamChannel = () => {
@@ -47,6 +48,12 @@ const TwitchVideo = props => {
   urlObj.searchParams.set('allowfullscreen', 'true');
   urlObj.searchParams.set('channel', getStreamChannel());
   urlObj.searchParams.set('layout', 'video');
+
+  urlObj.searchParams.set('controls', 'false');
+
+  if (controls) {
+    urlObj.searchParams.set('controls', 'true');
+  }
 
   let urlParamParent = '';
 

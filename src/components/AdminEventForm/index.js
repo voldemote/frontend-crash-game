@@ -44,7 +44,7 @@ const AdminEventForm = ({ event = null, eventSlugs }) => {
 
   const handleSuccess = ({ response: { data } }) => {
     // there is a strange bug when I use history.push(); to navigate, layout becomes white
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleSave = () => {

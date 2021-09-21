@@ -12,6 +12,7 @@ const YoutubeVideo = props => {
     muted,
     className,
     title,
+    controls,
   } = props;
   const videoUrl = new URL(video);
 
@@ -23,6 +24,10 @@ const YoutubeVideo = props => {
 
   if (autoPlay) {
     embedUrl.searchParams.set('autoplay', 'true');
+  }
+
+  if (!controls) {
+    embedUrl.searchParams.set('controls', '0');
   }
 
   return (
