@@ -2,7 +2,6 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_TRADE_GET_BY_ID } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -322,6 +321,18 @@ const getTradeById = id => {
   );
 };
 
+const signUp = payload => {
+  return Api.post(ApiUrls.API_AUTH_SIGNUP, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const login = payload => {
+  return Api.post(ApiUrls.API_AUTH_LOGIN, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -360,4 +371,6 @@ export {
   getCoverStream,
   getTradeById,
   resolveBet,
+  login,
+  signUp,
 };

@@ -11,6 +11,7 @@ import { UserActions } from '../actions/user';
 import { PopupActions } from '../actions/popup';
 import { WebsocketsActions } from '../actions/websockets';
 import PopupTheme from '../../components/Popup/PopupTheme';
+import { AlertActions } from 'store/actions/alert';
 
 const afterLoginRoute = Routes.home;
 
@@ -214,14 +215,22 @@ const registrationSucceeded = function* (action) {
 const authenticationSucceeded = function* (action) {
   const authState = yield select(state => state.authentication.authState);
   const userId = yield select(state => state.authentication.userId);
-  const redirectUrl = yield select(state => state.popup.options.redirectUrl);
 
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ userId, forceFetch: true }));
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
-    yield put(push(redirectUrl || afterLoginRoute));
+    if (action.showWelcome) {
+      yield put(
+        PopupActions.show({
+          popupType: PopupTheme.welcome,
+        })
+      );
+    } else {
+      yield put(PopupActions.hide());
+    }
+    yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
   }
 };
 
@@ -319,6 +328,62 @@ const updateUserData = function* ({ payload }) {
   }
 };
 
+const signUp = function* (action) {
+  const payload = {
+    email: action.email,
+    password: action.password,
+    passwordConfirm: action.passwordConfirm,
+  };
+
+  const { response, error } = yield call(Api.signUp, payload);
+
+  if (response) {
+    yield put(
+      AuthenticationActions.login({
+        email: action.email,
+        password: action.password,
+        showWelcome: true,
+      })
+    );
+  } else {
+    yield put(
+      AuthenticationActions.signUpFail({
+        message: error.message,
+      })
+    );
+  }
+};
+
+const login = function* (action) {
+  const payload = {
+    userIdentifier: action.email,
+    password: action.password,
+  };
+
+  const { response, error } = yield call(Api.login, payload);
+
+  if (response) {
+    const data = response.data;
+
+    Api.setToken(data.session);
+    crashGameApi.setToken(data.session);
+
+    yield put(
+      AuthenticationActions.loginSuccess({
+        userId: data.userId,
+        session: data.session,
+        showWelcome: action.showWelcome,
+      })
+    );
+  } else {
+    yield put(
+      AuthenticationActions.loginFail({
+        message: error.message,
+      })
+    );
+  }
+};
+
 export default {
   authenticationSucceeded,
   fetchReferrals,
@@ -333,4 +398,6 @@ export default {
   verifyEmail,
   firstSignUpPopup,
   updateUserData,
+  signUp,
+  login,
 };

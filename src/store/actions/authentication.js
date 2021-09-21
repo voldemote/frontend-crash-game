@@ -29,6 +29,11 @@ export const AuthenticationTypes = {
   UPDATE_USER_DATA_SUCCEEDED: 'Authentication/UPDATE_USER_DATA_SUCCEEDED',
   UPDATE_USER_DATA_FAILED: 'Authentication/UPDATE_USER_DATA_FAILED',
   UPDATE_INVESTMENT_DATA: 'Authentication/UPDATE_INVESTMENT_DATA',
+  SIGN_UP: 'Authentication/SIGN_UP',
+  SIGN_UP_FAIL: 'Authentication/SIGN_UP_FAIL',
+  LOGIN: 'Authentication/LOGIN',
+  LOGIN_SUCCESS: 'Authentication/LOGIN_SUCCESS',
+  LOGIN_FAIL: 'Authentication/LOGIN_FAIL',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -168,6 +173,32 @@ const updateInvestmentData = makeActionCreator(
   }
 );
 
+const signUp = makeActionCreator(AuthenticationTypes.SIGN_UP, {
+  email: null,
+  password: null,
+  passwordConfirm: null,
+});
+
+const signUpFail = makeActionCreator(AuthenticationTypes.SIGN_UP_FAIL, {
+  message: null,
+});
+
+const login = makeActionCreator(AuthenticationTypes.LOGIN, {
+  email: null,
+  password: null,
+  showWelcome: false,
+});
+
+const loginSuccess = makeActionCreator(AuthenticationTypes.LOGIN_SUCCESS, {
+  userId: null,
+  session: null,
+  showWelcome: false,
+});
+
+const loginFail = makeActionCreator(AuthenticationTypes.LOGIN_FAIL, {
+  message: null,
+});
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -196,4 +227,9 @@ export const AuthenticationActions = {
   updateUserDataSucceeded,
   updateUserDataFailed,
   updateInvestmentData,
+  signUp,
+  signUpFail,
+  login,
+  loginSuccess,
+  loginFail,
 };

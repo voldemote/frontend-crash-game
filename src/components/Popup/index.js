@@ -28,9 +28,11 @@ import NewEventPopup from '../NewEventPopup';
 import EditEventPopup from '../EditEventPopup';
 import NewBetPopup from '../NewBetPopup';
 import EditBetPopup from '../EditBetPopup';
+import AuthenticationPopup from '../AuthenticationPopup';
 import ViewImagePopup from 'components/ViewImagePopup';
 import ResolveBetPopup from 'components/ResolveBetPopup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
+import AuthenticationType from 'components/Authentication/AuthenticationType';
 
 const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -149,6 +151,14 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
       case PopupTheme.resolveBet:
         return (
           <ResolveBetPopup betId={options.tradeId} eventId={options.eventId} />
+        );
+      case PopupTheme.auth:
+        return (
+          <AuthenticationPopup
+            authenticationType={
+              options.authenticationType || AuthenticationType.register
+            }
+          />
         );
     }
 

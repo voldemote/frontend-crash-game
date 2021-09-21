@@ -54,6 +54,39 @@
         justify-content: flex-end;
       }
     }
+    .signUpButton {
+      background-color: $colorWhite;
+      width: 11rem;
+      height: 55px;
+      border-radius: 4px;
+      font-size: 16px;
+      margin-left: 0;
+      background-image: url('../../data/images/signup-background-one.svg');
+      background-position: center;
+
+      @media (max-width: $screen-sm) {
+        width: 8rem;
+        height: 40px;
+        font-size: 14px;
+      }
+    }
+
+    .loginButton {
+      background-color: transparent;
+      color: $colorWhite;
+      width: 11rem;
+      height: 55px;
+      font-size: 16px;
+      border: 1px solid $colorWhite;
+      font-family: $fontRegular;
+      margin-right: 20px;
+
+      @media (max-width: $screen-sm) {
+        width: 8rem;
+        height: 40px;
+        font-size: 14px;
+      }
+    }
 
     a {
       color: $colorWhite;
