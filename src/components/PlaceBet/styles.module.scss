@@ -169,15 +169,15 @@
   width: 100%;
   align-items: center;
   padding: 10.5px;
-  padding-right: 110px !important;
+  //padding-right: 110px !important;
   height: 45px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
-  justify-content: center;
+  justify-content: space-between;
 
   @media (min-width: $screen-lg) {
-    padding: 1rem 4rem;
+    padding: 1rem 1rem 1rem 2rem;
   }
 
   .input {
