@@ -86,7 +86,7 @@ const Header = ({ events }) => {
                       </div>
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className={classNames(
                       styles.timeLeftCounterContainer,
                       currentSlideIndex === eventIndex &&
@@ -97,7 +97,7 @@ const Header = ({ events }) => {
                       Event ends in:
                     </span>
                     <TimeLeftCounter endDate={endDate} />
-                  </div>
+                  </div> */}
                 </Link>
               );
             })}
