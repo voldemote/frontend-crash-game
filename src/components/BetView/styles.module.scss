@@ -258,11 +258,15 @@
       font-weight: 500;
       font-size: 12px;
       line-height: 17px;
-      text-transform: capitalize;
       color: $colorGrayLight1;
       text-align: center;
       letter-spacing: 0.3px;
       padding: 0 7%;
+      margin-bottom: 16px;
+      a {
+        text-decoration: underline;
+        color: $colorPurple;
+      }
     }
     .tradeShortDesc {
       margin-bottom: 16px;
