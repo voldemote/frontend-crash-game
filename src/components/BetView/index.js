@@ -22,7 +22,7 @@ import LoadingAnimation from '../../data/animations/sending-transaction.gif';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import SummaryRowContainer from '../SummaryRowContainer';
-import BetSummaryHelper from '../../helper/BetSummary';
+import TextHelper from '../../helper/Text';
 import BetState from '../../constants/BetState';
 import BetShareContainer from '../BetShareContainer';
 import ShareType from '../BetShareContainer/ShareType';
@@ -314,7 +314,12 @@ const BetView = ({
       return null;
     }
     const shortLength = 200;
-    const isDescShort = bet.evidenceDescription.length <= shortLength;
+    const desc = TextHelper.linkifyIntextURLS(bet.evidenceDescription);
+    const plainDesc = TextHelper.linkifyIntextURLS(
+      bet.evidenceDescription,
+      true
+    );
+    const isDescShort = plainDesc.length <= shortLength;
     return (
       <>
         <p
@@ -324,9 +329,9 @@ const BetView = ({
           )}
         >
           {showAllEvidence || isDescShort
-            ? bet.evidenceDescription
-            : bet.evidenceDescription
-            ? bet.evidenceDescription.substring(0, shortLength) + '...'
+            ? desc
+            : desc
+            ? plainDesc.substring(0, shortLength) + '...'
             : ''}
         </p>
         {!isDescShort && (
