@@ -1,38 +1,9 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
-import Icon from '../Icon';
-import IconType from '../Icon/IconType';
-import { useCallback, useState } from 'react';
-// import { useLocation } from 'react-router';
 
-const states = {
-  HIDDEN: 'hidden',
-  CLOSEDBYUSER: 'closedbyuser',
-  ACTIVE: 'active',
-};
-
-const DisclaimerLightbox = ({ className = '' }) => {
-  const [viewState, setViewState] = useState(states.ACTIVE);
-
-  const handleClick = useCallback(async () => {
-    setViewState(states.CLOSEDBYUSER);
-  }, []);
-
-  //TODO add view state to Redux
-
+const Disclaimer = ({ className = '' }) => {
   return (
-    <div
-      className={classNames(
-        styles.lightbox,
-        className,
-        viewState !== states.ACTIVE ? styles.hidden : styles.active
-      )}
-    >
-      <Icon
-        className={styles.closeButton}
-        iconType={IconType.cross}
-        onClick={handleClick}
-      />
+    <div className={classNames(styles.lightbox, className)}>
       <div className={styles.content}>
         <p>Disclaimer</p>
         <p>
@@ -48,12 +19,12 @@ const DisclaimerLightbox = ({ className = '' }) => {
           participation in the events and trades on the website is voluntary and
           final and the availability of the platform may be affected by the
           online connection enabled by your local internet provider. All
-          questions and doubts can be addressed to the team at
-          hello@wallfair.io.
+          questions and doubts can be addressed to the team at{' '}
+          <a href="mailto:hello@wallfair.io">hello@wallfair.io</a>.
         </p>
       </div>
     </div>
   );
 };
 
-export default DisclaimerLightbox;
+export default Disclaimer;

@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import LogoDemo from '../../data/images/logo-demo.svg';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import DisclaimerLightbox from 'components/DisclaimerLightbox';
+import Disclaimer from 'components/Disclaimer';
 
 const ContentFooter = ({ className = '' }) => {
   return (
@@ -15,7 +15,7 @@ const ContentFooter = ({ className = '' }) => {
           <Link to={'/terms-and-conditions'}>{'Terms & Conditions'}</Link>
         </div>
       </div>
-      <DisclaimerLightbox />
+      <Disclaimer />
     </div>
   );
 };

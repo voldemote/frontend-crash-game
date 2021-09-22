@@ -8,12 +8,9 @@
   font-size: 11px;
   color: $colorWhite;
   width: calc(100% - 40px);
-  padding: 20px 20px 30px 20px;
+  padding: 20px;
   margin: 0 auto;
   margin-top: 40px;
-
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
 
   &.hidden {
     display: none;
@@ -21,13 +18,13 @@
 
   .content {
     opacity: 0.6;
-    line-height: 15px;
-    padding-right: 15px;
+    line-height: 17px;
     text-align: justify;
 
     & p:first-child {
       font-weight: bold;
       line-height: 30px;
+      text-align: center;
     }
 
     a {
