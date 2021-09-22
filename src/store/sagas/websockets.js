@@ -220,7 +220,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   } else {
     const userId = yield select(state => state.authentication.userId);
     const room = yield select(state => state.websockets.room);
-    const pathname = action.payload.location.pathname;
+    const pathname = yield select(state => state.router.location.pathname);
     const pathSlugs = pathname.slice(1).split('/');
     // event page
 
