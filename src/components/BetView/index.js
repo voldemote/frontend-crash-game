@@ -22,7 +22,7 @@ import LoadingAnimation from '../../data/animations/sending-transaction.gif';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import SummaryRowContainer from '../SummaryRowContainer';
-import BetSummaryHelper from '../../helper/BetSummary';
+import TextHelper from '../../helper/Text';
 import BetState from '../../constants/BetState';
 import BetShareContainer from '../BetShareContainer';
 import ShareType from '../BetShareContainer/ShareType';
@@ -313,23 +313,25 @@ const BetView = ({
     if (!bet.evidenceDescription) {
       return null;
     }
-    const shortLength = 200;
-    const isDescShort = bet.evidenceDescription.length <= shortLength;
+    const shortLength = 100;
+    const desc = TextHelper.linkifyIntextURLS(bet.evidenceDescription);
+    const plainDesc = TextHelper.linkifyIntextURLS(
+      bet.evidenceDescription,
+      true
+    );
+    const isDescShort = plainDesc.length <= shortLength;
     return (
       <>
         <p
           className={classNames(
             styles.tradeDesc,
+            !isDescShort && !showAllEvidence && styles.hidden,
             isDescShort && styles.tradeShortDesc
           )}
         >
-          {showAllEvidence || isDescShort
-            ? bet.evidenceDescription
-            : bet.evidenceDescription
-            ? bet.evidenceDescription.substring(0, shortLength) + '...'
-            : ''}
+          {desc}
         </p>
-        {!isDescShort && (
+        {!!desc && !isDescShort && (
           <button
             className={styles.seeMore}
             onClick={() => setShowAllEvidence(!showAllEvidence)}

@@ -72,11 +72,14 @@ const Header = ({ events }) => {
                       </div>
                       <span className={styles.title}>{event.name}</span>
                       <div className={styles.tagList}>
-                        {event.tags.map(({ name }, tagIndex) => (
+                        {!!event.category && (
+                          <span className={styles.tag}>{event.category}</span>
+                        )}
+                        {/* {event.tags.map(({ name }, tagIndex) => (
                           <span key={tagIndex} className={styles.tag}>
                             #{name.toLowerCase()}
                           </span>
-                        ))}
+                        ))} */}
                       </div>
                       <div>
                         <div className={styles.goToEvent}>
@@ -86,7 +89,7 @@ const Header = ({ events }) => {
                       </div>
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className={classNames(
                       styles.timeLeftCounterContainer,
                       currentSlideIndex === eventIndex &&
@@ -97,7 +100,7 @@ const Header = ({ events }) => {
                       Event ends in:
                     </span>
                     <TimeLeftCounter endDate={endDate} />
-                  </div>
+                  </div> */}
                 </Link>
               );
             })}

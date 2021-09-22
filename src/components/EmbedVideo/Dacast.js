@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 
-const YoutubeVideo = props => {
+const DacastVideo = props => {
   const {
     channel,
     video,
@@ -14,25 +14,20 @@ const YoutubeVideo = props => {
     title,
     controls,
   } = props;
-  const videoUrl = new URL(video);
-
-  const getVideoId = () => {
-    return videoUrl.searchParams.get('v');
-  };
-
-  const embedUrl = new URL(`https://www.youtube.com/embed/${getVideoId()}`);
+  const embedUrl = new URL(video);
 
   if (autoPlay) {
     embedUrl.searchParams.set('autoplay', 'true');
   }
 
   if (!controls) {
-    embedUrl.searchParams.set('controls', '0');
+    embedUrl.searchParams.set('controls', 'false');
   }
 
   return (
     <iframe
       title={title}
+      scrolling={'no'}
       className={classNames(styles.videoIframe, className)}
       allow={`accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture`}
       allowFullScreen={true}
@@ -44,4 +39,4 @@ const YoutubeVideo = props => {
   );
 };
 
-export default YoutubeVideo;
+export default DacastVideo;

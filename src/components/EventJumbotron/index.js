@@ -37,6 +37,7 @@ const EventJumbotron = ({ event }) => {
               targetId={event._id}
               video={event.streamUrl}
               muted={true}
+              controls={false}
             />
           )}
           {!isLive && (
@@ -63,7 +64,7 @@ const EventJumbotron = ({ event }) => {
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             className={classNames(
               styles.timeLeftCounterContainer,
               styles.showTimeLeftCounter
@@ -71,7 +72,7 @@ const EventJumbotron = ({ event }) => {
           >
             <span className={styles.timeLeftCaption}>Event ends in:</span>
             <TimeLeftCounter endDate={endDate} />
-          </div>
+          </div> */}
         </Link>
       </div>
     </div>

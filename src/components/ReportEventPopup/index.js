@@ -12,7 +12,8 @@ import { PopupActions } from 'store/actions/popup';
 
 const disputeReasonOptions = [
   { label: 'Outcome', value: 'OUTCOME' },
-  { label: 'Outcome Evidence', value: 'OUTCOME_EVIDENCE' },
+  { label: 'Evidence', value: 'EVIDENCE' },
+  { label: 'Resolved too early', value: 'TOO_EARLY' },
   { label: 'Other', value: 'OTHER' },
 ];
 
