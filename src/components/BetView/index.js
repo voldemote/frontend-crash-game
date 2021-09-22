@@ -313,7 +313,7 @@ const BetView = ({
     if (!bet.evidenceDescription) {
       return null;
     }
-    const shortLength = 200;
+    const shortLength = 100;
     const desc = TextHelper.linkifyIntextURLS(bet.evidenceDescription);
     const plainDesc = TextHelper.linkifyIntextURLS(
       bet.evidenceDescription,
@@ -325,16 +325,13 @@ const BetView = ({
         <p
           className={classNames(
             styles.tradeDesc,
+            !isDescShort && !showAllEvidence && styles.hidden,
             isDescShort && styles.tradeShortDesc
           )}
         >
-          {showAllEvidence || isDescShort
-            ? desc
-            : desc
-            ? plainDesc.substring(0, shortLength) + '...'
-            : ''}
+          {desc}
         </p>
-        {!isDescShort && (
+        {!!desc && !isDescShort && (
           <button
             className={styles.seeMore}
             onClick={() => setShowAllEvidence(!showAllEvidence)}
