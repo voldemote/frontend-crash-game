@@ -1,6 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
 import styles from './styles.module.scss';
+import classNames from 'classnames';
 
 const YoutubeVideo = props => {
   const {
@@ -33,7 +33,7 @@ const YoutubeVideo = props => {
   return (
     <iframe
       title={title}
-      className={className}
+      className={classNames(styles.videoIframe, className)}
       allow={`accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture`}
       allowFullScreen={true}
       frameBorder={0}

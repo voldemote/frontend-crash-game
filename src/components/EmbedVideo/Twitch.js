@@ -1,5 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
+import styles from './styles.module.scss';
+import classNames from 'classnames';
 
 const TwitchVideo = props => {
   const {
@@ -65,7 +67,7 @@ const TwitchVideo = props => {
     <iframe
       sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
       title={title}
-      className={className}
+      className={classNames(styles.videoIframe, className)}
       allow={`accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture`}
       allowFullScreen={true}
       frameBorder={0}
