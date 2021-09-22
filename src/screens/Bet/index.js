@@ -572,14 +572,14 @@ const Bet = ({
               ) : (
                 <EmbedVideo video={event.streamUrl} />
               )}
-              {event.type === 'streamed' && (
+              {/* {event.type === 'streamed' && (
                 <div className={styles.timeLeft}>
                   <span>Estimated end:</span>
                   <TimeLeftCounter
                     endDate={new Date(_.get(event, 'endDate'))}
                   />
                 </div>
-              )}
+              )} */}
             </div>
             <TabOptions options={tabOptions} className={styles.tabOptions}>
               {option => (
