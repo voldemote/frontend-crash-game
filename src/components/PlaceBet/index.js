@@ -32,7 +32,7 @@ const PlaceBet = () => {
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const userUnableToBet =
-    isGameRunning || userPlacedABet || amount < 1 || crashFactor < 1;
+    isGameRunning || userPlacedABet || amount < 1 || crashFactor <= 1;
 
   const onTokenNumberChange = number => {
     console.log(number);
