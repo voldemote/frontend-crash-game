@@ -570,7 +570,7 @@ const Bet = ({
                   )}
                 </div>
               ) : (
-                <EmbedVideo video={event.streamUrl} />
+                <EmbedVideo video={event.streamUrl} autoPlay={true} />
               )}
               {event.type === 'streamed' && (
                 <div className={styles.timeLeft}>
