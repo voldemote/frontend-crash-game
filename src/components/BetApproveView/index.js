@@ -15,6 +15,7 @@ import IconTheme from '../Icon/IconTheme';
 import { calculateGain } from 'helper/Calculation';
 import { selectUser } from 'store/selectors/authentication';
 import { convert } from '../../helper/Currency';
+import ReactTooltip from 'react-tooltip';
 
 const canvasStyles = {
   position: 'fixed',
@@ -32,8 +33,14 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
   const trade = _.get(options, 'data.trade');
   const bet = _.get(options, 'data.bet');
 
-  const amountPlaced = convert(_.get(trade, 'investmentAmount', 0), currency);
-  const potentialOutcome = convert(_.get(trade, 'outcomeTokens', 0), currency);
+  const amountPlaced = convert(
+    _.get(trade, 'investmentAmount', 0),
+    currency
+  ).toFixed(2);
+  const potentialOutcome = convert(
+    _.get(trade, 'outcomeTokens', 0),
+    currency
+  ).toFixed(2);
   const potentialPercent = calculateGain(amountPlaced, potentialOutcome);
   const potentialPercentGain = _.get(potentialPercent, 'value');
   const potentialPercentType = _.get(potentialPercent, 'negative', false);
@@ -144,13 +151,26 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
       </div>
 
       <div className={styles.ShareButtonContainer}>
-        <div className={styles.shareButton} onClick={hidePopup}>
-          <div className={styles.shareIcon}>
-            <Icon iconType={IconType.shareLink} iconTheme={IconTheme.primary} />
-          </div>{' '}
-          Share
+        <div data-for="coming-soon-tooltip" data-tip={'Coming soon'}>
+          <div className={styles.shareButton} onClick={hidePopup}>
+            <div className={styles.shareIcon}>
+              <Icon
+                iconType={IconType.shareLink}
+                iconTheme={IconTheme.primary}
+              />
+            </div>{' '}
+            Share
+          </div>
         </div>
       </div>
+
+      <ReactTooltip
+        id="coming-soon-tooltip"
+        className={styles.tooltip}
+        place="bottom"
+        effect="solid"
+        offset={{ bottom: 0 }}
+      />
 
       <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
     </div>
