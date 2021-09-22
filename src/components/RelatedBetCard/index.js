@@ -107,7 +107,9 @@ const RelatedBetCard = ({ onClick, bet, showPopup, events }) => {
     <div className={styles.relatedBetCard}>
       <div className={styles.relatedBetCardContainer}>
         <div className={styles.relatedBetCardHeader}>
-          <span className={styles.title}>{bet.marketQuestion}</span>
+          <span className={styles.title} onClick={onClick}>
+            {bet.marketQuestion}
+          </span>
 
           <div className={styles.menuMain}>
             <AuthedOnly>
