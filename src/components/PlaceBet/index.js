@@ -16,6 +16,7 @@ import Input from '../Input';
 import useCurrentUser from 'hooks/useCurrentUser';
 import TokenSlider from 'components/TokenSlider';
 import { round } from 'lodash/math';
+import _ from 'lodash';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
@@ -25,9 +26,10 @@ const PlaceBet = () => {
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const userPlacedABet = useSelector(selectUserBet);
-  const userUnableToBet = isGameRunning || userPlacedABet;
   const [amount, setAmount] = useState(sliderMinAmount);
   const [crashFactor, setCrashFactor] = useState(1);
+  const userUnableToBet =
+    isGameRunning || userPlacedABet || amount < 1 || crashFactor < 1;
 
   const onTokenNumberChange = number => {
     console.log(number);
@@ -35,9 +37,11 @@ const PlaceBet = () => {
     // debouncedSetCommitment(number, currency);
   };
   const onCrashFactorChange = event => {
-    const value = event.target.value;
-    const v = value < 1 ? 1 : round(value, 2);
-    setCrashFactor(v);
+    let value = _.get(event, 'target.value', 0);
+    const regex = new RegExp('^0+(?!$)', 'g');
+    const result = round(_.toNumber(value.replaceAll(regex, '')), 2);
+    event.target.value = result;
+    setCrashFactor(result);
     // debouncedSetCommitment(number, currency);
   };
 
