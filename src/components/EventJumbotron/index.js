@@ -37,6 +37,7 @@ const EventJumbotron = ({ event }) => {
               targetId={event._id}
               video={event.streamUrl}
               muted={true}
+              controls={false}
             />
           )}
           {!isLive && (
