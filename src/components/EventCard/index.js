@@ -68,7 +68,7 @@ const EventCard = ({
             </div>
             <div
               className={classNames(styles.content, {
-                [styles.timerActive]: eventEnd,
+                // [styles.timerActive]: eventEnd,
               })}
             >
               <span className={styles.title}>
@@ -77,14 +77,14 @@ const EventCard = ({
                 {organizer}
               </span>
             </div>
-            {eventEnd && (
+            {/* {eventEnd && (
               <div className={styles.timer}>
                 <span className={styles.timerTitle}>Event ends in:</span>
                 <span>
                   <TimeLeftCounter endDate={eventEnd} />
                 </span>
               </div>
-            )}
+            )} */}
           </>
         )}
       </div>
