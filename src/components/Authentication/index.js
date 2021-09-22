@@ -219,11 +219,14 @@ const Authentication = ({
         data-event-off="dblclick"
         className={styles.authenticationLegalAuthorizationAgreementText}
       >
-        Herewith I confirm to be legally authorized to access and distribute all
-        content displayed in connection with the events I am planning to post
-        and advertise on <Link to={'https://wallfair.io'}>wallfair.io</Link> and
-        indemnify <Link to={'https://wallfair.io'}>wallfair.io</Link> with
-        regard to all claims that may arise in connection hereto.
+        I have read and agree to the{' '}
+        <a
+          href="https://files.wallfair.io/wallfair_t_and_c.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Terms and Conditions
+        </a>
       </p>
     );
 
