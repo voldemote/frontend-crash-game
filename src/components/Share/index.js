@@ -17,6 +17,8 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 const Share = props => {
   const { className, shareIconTypes, showPopup, authentication } = props;
 
+  const defaultSharing = ['facebook', 'twitter', 'telegram', 'reddit'];
+
   const [shortUrl, setShortUrl] = useState();
   const [showPopover, setShowPopover] = useState(false);
   const isMounted = useIsMount();
@@ -31,7 +33,6 @@ const Share = props => {
   const realUrl = urlOrigin + urlPath;
 
   const closeOutside = useOutsideClick(() => {
-    console.log('OUTSIDE');
     setShowPopover(false);
   });
 
@@ -75,7 +76,7 @@ const Share = props => {
             className={styles.sharePopover}
           >
             <Popup
-              shareIconTypes={shareIconTypes}
+              shareIconTypes={shareIconTypes || defaultSharing}
               realUrl={realUrl}
               shortUrl={shortUrl}
             />

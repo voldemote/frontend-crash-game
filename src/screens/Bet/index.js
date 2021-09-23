@@ -545,9 +545,7 @@ const Bet = ({
               </div>
             </Link>
 
-            <Share
-              shareIconTypes={['facebook', 'twitter', 'whatsapp', 'telegram']}
-            />
+            <Share />
           </div>
         </div>
         <div className={styles.row}>

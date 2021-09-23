@@ -7,12 +7,12 @@ import classNames from 'classnames';
 import ShareType from './ShareType';
 import { FacebookIcon } from 'react-share';
 import { TwitterIcon } from 'react-share';
-import { WhatsappIcon } from 'react-share';
 import { TelegramIcon } from 'react-share';
+import { RedditIcon } from 'react-share';
 import { FacebookShareButton } from 'react-share';
 import { TwitterShareButton } from 'react-share';
-import { WhatsappShareButton } from 'react-share';
 import { TelegramShareButton } from 'react-share';
+import { RedditShareButton } from 'react-share';
 import { PopupActions } from '../../store/actions/popup';
 
 import InputBox from '../InputBox';
@@ -46,19 +46,18 @@ const SharePopup = props => {
             <TwitterIcon size={iconSize} round={true} />
           </TwitterShareButton>
         );
-      case ShareType.whatsapp:
-        return (
-          <WhatsappShareButton url={realUrl}>
-            <WhatsappIcon size={iconSize} round={true} />
-          </WhatsappShareButton>
-        );
       case ShareType.telegram:
         return (
           <TelegramShareButton url={realUrl}>
             <TelegramIcon size={iconSize} round={true} />
           </TelegramShareButton>
         );
-      // @formatter:on
+      case ShareType.reddit:
+        return (
+          <RedditShareButton url={realUrl}>
+            <RedditIcon size={iconSize} round={true} />
+          </RedditShareButton>
+        );
     }
   };
 
@@ -71,29 +70,23 @@ const SharePopup = props => {
   return (
     <div className={classNames(styles.sharePopupContainer, className)}>
       <h3 className={styles.headline}>Share With Your Friends</h3>
-      <span className={styles.shareText}>By link</span>
       <div className={styles.shareButtons}>
-        <div
-          className={
-            copied ? styles.inputContainerCopied : styles.inputContainer
-          }
-        >
-          <InputBox
-            type={'text'}
-            value={shortUrl}
-            onClick={(e, val) => {
-              setCopied(true);
-              document.getSelection().removeAllRanges();
-            }}
-            theme={InputBoxTheme.copyToClipboardInput}
-          />
-        </div>
-
-        {/*{shortUrl}*/}
+        <div className={styles.shareButtons}>{renderShareIcons()}</div>
       </div>
       <div className={styles.separator}></div>
-      <span className={styles.shareText}>By social media</span>
-      <div className={styles.shareButtons}>{renderShareIcons()}</div>
+      <div
+        className={copied ? styles.inputContainerCopied : styles.inputContainer}
+      >
+        <InputBox
+          type={'text'}
+          value={shortUrl}
+          onClick={(e, val) => {
+            setCopied(true);
+            document.getSelection().removeAllRanges();
+          }}
+          theme={InputBoxTheme.copyToClipboardInput}
+        />
+      </div>
     </div>
   );
 };
