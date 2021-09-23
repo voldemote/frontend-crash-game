@@ -339,6 +339,9 @@ const shortenerTinyUrl = url => {
     params: {
       url,
     },
+    paramsSerializer: function (params) {
+      return `url=${params.url}`;
+    },
   })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));

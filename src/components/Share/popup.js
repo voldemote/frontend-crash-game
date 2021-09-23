@@ -81,7 +81,6 @@ const SharePopup = props => {
           <InputBox
             type={'text'}
             value={shortUrl}
-            // setValue={}
             onClick={(e, val) => {
               setCopied(true);
               document.getSelection().removeAllRanges();
