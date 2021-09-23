@@ -33,6 +33,7 @@ import ViewImagePopup from 'components/ViewImagePopup';
 import ResolveBetPopup from 'components/ResolveBetPopup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
+import SharePopup from '../Share/popup';
 
 const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -160,6 +161,8 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
             }
           />
         );
+      case PopupTheme.share:
+        return <SharePopup hidePopup={hidePopup} {...options} />;
     }
 
     return null;
@@ -212,6 +215,7 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
           type === PopupTheme.loginRegister ? styles.joinPopupContainer : null,
           type === PopupTheme.welcome ? styles.welcomeContainer : null,
           type === PopupTheme.betApprove ? styles.betApproveContainer : null,
+          type === PopupTheme.share ? styles.sharePopupContainer : null,
           type === PopupTheme.verifyEmail
             ? styles.verifyEmailPopupContainer
             : null,

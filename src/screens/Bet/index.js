@@ -44,6 +44,7 @@ import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import OfflineBadge from 'components/OfflineBadge';
 import { EVENT_STATES } from 'constants/EventStates';
+import Share from '../../components/Share';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -543,6 +544,10 @@ const Bet = ({
                 </div>
               </div>
             </Link>
+
+            <Share
+              shareIconTypes={['facebook', 'twitter', 'whatsapp', 'telegram']}
+            />
           </div>
         </div>
         <div className={styles.row}>

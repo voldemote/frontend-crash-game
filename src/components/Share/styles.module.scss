@@ -1,0 +1,117 @@
+@import '../../styles/all';
+
+.shareContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 20px 20px;
+  width: 360px;
+
+  .shareButtons {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .shareIcon {
+      background-color: transparent;
+      border-radius: 50%;
+      height: 70px;
+      width: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid $colorPrimary05;
+      cursor: pointer;
+      overflow: hidden;
+      margin: 7.5px;
+      transition: border-color .2s ease-in;
+
+      &:hover {
+        border-color: $colorPrimary50;
+      }
+
+      > button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        > svg {
+          width: 45px;
+          height: 45px;
+
+          > rect {
+            fill: none;
+          }
+
+          > path {
+            fill: $colorBlack;
+          }
+        }
+      }
+    }
+  }
+
+  .shareText {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    opacity: .6;
+    color: $colorBlack;
+  }
+
+  .separator {
+    height: 2px;
+    background: radial-gradient(circle, $colorGray 0%, transparent 90%);
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .inputContainer, .inputContainerCopied {
+    width: 100%;
+
+    input {
+      font-family: $fontLight;
+      font-size: 16px;
+    }
+  }
+
+  .inputContainerCopied {
+    input {
+      color:$colorGreenDarker !important;
+    }
+  }
+}
+
+.ShareButtonContainer {
+
+  .shareButton {
+    display: flex;
+    background-color: $colorYellowLight;
+    color: $colorDarkSlateGray;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: transform .15s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    .shareIcon {
+      width: 18px;
+      line-height: 1;
+      margin-right: 6px;
+      color: $colorDarkSlateGray;
+    }
+  }
+}
+
+.shareTrigger {
+
+}
