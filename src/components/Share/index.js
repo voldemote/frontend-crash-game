@@ -12,11 +12,13 @@ import { useHistory, useLocation } from 'react-router';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
+import { useOutsideClick } from 'hooks/useOutsideClick';
 
 const Share = props => {
   const { className, shareIconTypes, showPopup, authentication } = props;
 
   const [shortUrl, setShortUrl] = useState();
+  const [showPopover, setShowPopover] = useState(false);
   const isMounted = useIsMount();
   const location = useLocation();
 
@@ -27,6 +29,11 @@ const Share = props => {
   const username = _.get(authentication, 'username');
 
   const realUrl = urlOrigin + urlPath;
+
+  const closeOutside = useOutsideClick(() => {
+    console.log('OUTSIDE');
+    setShowPopover(false);
+  });
 
   useEffect(() => {
     (async () => {
@@ -45,26 +52,33 @@ const Share = props => {
   }, [isMounted]);
 
   return (
-    <div className={classNames(styles.shareTrigger, className)}>
+    <div
+      ref={closeOutside}
+      className={classNames(styles.shareTrigger, className)}
+    >
       <div className={styles.ShareButtonContainer}>
-        <div data-for="coming-soon-tooltip" data-tip={'Coming soon'}>
+        <div
+          className={styles.shareButton}
+          onClick={e => {
+            setShowPopover(show => !show);
+          }}
+        >
+          <div className={styles.shareIcon}>
+            <Icon iconType={IconType.shareLink} iconTheme={IconTheme.primary} />
+          </div>{' '}
+          Share
           <div
-            className={styles.shareButton}
-            onClick={() => {
-              showPopup(PopupTheme.share, {
-                shareIconTypes,
-                realUrl,
-                shortUrl,
-              });
+            onClick={e => {
+              e.stopPropagation();
             }}
+            style={{ opacity: showPopover ? 1 : 0 }}
+            className={styles.sharePopover}
           >
-            <div className={styles.shareIcon}>
-              <Icon
-                iconType={IconType.shareLink}
-                iconTheme={IconTheme.primary}
-              />
-            </div>{' '}
-            Share
+            <Popup
+              shareIconTypes={shareIconTypes}
+              realUrl={realUrl}
+              shortUrl={shortUrl}
+            />
           </div>
         </div>
       </div>
@@ -73,7 +87,6 @@ const Share = props => {
 };
 
 const mapStateToProps = state => {
-  console.log('state', state);
   return {
     authentication: state.authentication,
   };

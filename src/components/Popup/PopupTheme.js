@@ -23,5 +23,4 @@ export default {
   editBet: 'editBet',
   viewImage: 'viewImage',
   resolveBet: 'resolveBet',
-  share: 'share',
 };

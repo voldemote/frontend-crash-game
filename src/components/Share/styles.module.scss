@@ -1,12 +1,16 @@
 @import '../../styles/all';
 
-.shareContainer {
+.sharePopupContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 30px 20px 20px;
-  width: 360px;
+  padding: 30px 20px 20px;
+  width: 390px;
+
+  @media (max-width: $screen-sm) {
+    width: 100%;
+  }
 
   .shareButtons {
     display: flex;
@@ -14,6 +18,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-bottom: -15px;
 
     .shareIcon {
       background-color: transparent;
@@ -29,8 +34,14 @@
       margin: 7.5px;
       transition: border-color .2s ease-in;
 
+      @media (max-width: $screen-sm) {
+        height: 50px;
+        width: 50px;
+        margin: 4px;
+      }
+
       &:hover {
-        border-color: $colorPrimary50;
+        border-color: $colorGray;
       }
 
       > button {
@@ -43,24 +54,28 @@
           width: 45px;
           height: 45px;
 
-          > rect {
+          > circle {
             fill: none;
           }
 
           > path {
-            fill: $colorBlack;
+            fill: $colorGray;
           }
         }
       }
     }
   }
 
-  .shareText {
+  .headline {
     margin-top: 5px;
     margin-bottom: 10px;
-    font-size: 15px;
-    opacity: .6;
-    color: $colorBlack;
+    font-size: 18px;
+  }
+
+  .shareText {
+    font-size: 16px;
+    margin: 6px 0 10px;
+    color: $colorWhite;
   }
 
   .separator {
@@ -76,6 +91,11 @@
     input {
       font-family: $fontLight;
       font-size: 16px;
+
+
+      @media (max-width: $screen-sm) {
+        font-size: 14px;
+      }
     }
   }
 
@@ -88,27 +108,41 @@
 
 .ShareButtonContainer {
 
+  .sharePopover {
+    background-color: #201D38;
+    color: white;
+    position: absolute;
+    left: 90px;
+    top: -20px;
+    border-radius: 15px;
+    transition: opacity .10s ease-in;
+    border: 1px solid $colorGray;
+
+    @media (max-width: $screen-sm) {
+      left: auto;
+      right: -10px;
+      top: 40px;
+    }
+  }
+
   .shareButton {
     display: flex;
-    background-color: $colorYellowLight;
-    color: $colorDarkSlateGray;
+    color: $colorWhite;
+    background-color: #201D38;
+    border: 1px solid $colorDarkSlateGray;
     text-align: center;
     padding: 4px 8px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 15px;
-    transition: transform .15s ease;
+    position: relative;
+  }
 
-    &:hover {
-      transform: scale(1.1);
-    }
-
-    .shareIcon {
-      width: 18px;
-      line-height: 1;
-      margin-right: 6px;
-      color: $colorDarkSlateGray;
-    }
+  .shareIcon {
+    width: 18px;
+    line-height: 1;
+    margin-right: 6px;
+    color: $colorYellowLight;
   }
 }
 

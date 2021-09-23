@@ -64,15 +64,13 @@ const SharePopup = props => {
 
   const renderShareIcons = () => {
     return _.map(shareIconTypes, (shareIconType, index) => (
-      <div className={styles.shareIcon} key={Math.random()}>
-        {renderShareIcon(shareIconType)}
-      </div>
+      <div className={styles.shareIcon}>{renderShareIcon(shareIconType)}</div>
     ));
   };
 
   return (
-    <div className={classNames(styles.shareContainer, className)}>
-      <h3 className={styles.shareText}>Content sharing</h3>
+    <div className={classNames(styles.sharePopupContainer, className)}>
+      <h3 className={styles.headline}>Share With Your Friends</h3>
       <span className={styles.shareText}>By link</span>
       <div className={styles.shareButtons}>
         <div
