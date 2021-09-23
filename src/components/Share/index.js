@@ -28,9 +28,9 @@ const Share = props => {
   const urlPath = location.pathname;
 
   const userId = _.get(authentication, 'userId');
-  const username = _.get(authentication, 'username');
 
-  const realUrl = urlOrigin + urlPath;
+  const realUrl = new URL(urlOrigin + urlPath);
+  realUrl.searchParams.set('ref', userId);
 
   const closeOutside = useOutsideClick(() => {
     setShowPopover(false);
@@ -39,9 +39,11 @@ const Share = props => {
   useEffect(() => {
     (async () => {
       if (isMounted) {
-        const shorterUrl = await shortenerTinyUrl(realUrl).catch(err => {
-          console.error('[Share shortenerTinyUrl]', err);
-        });
+        const shorterUrl = await shortenerTinyUrl(realUrl.toString()).catch(
+          err => {
+            console.error('[Share shortenerTinyUrl]', err);
+          }
+        );
 
         setShortUrl(_.get(shorterUrl, 'response.data', null));
       }
@@ -77,7 +79,7 @@ const Share = props => {
           >
             <Popup
               shareIconTypes={shareIconTypes || defaultSharing}
-              realUrl={realUrl}
+              realUrl={realUrl.toString()}
               shortUrl={shortUrl}
             />
           </div>

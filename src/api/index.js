@@ -334,7 +334,6 @@ const login = payload => {
 };
 
 const shortenerTinyUrl = url => {
-  console.log('shortenerTinyUrl', url);
   return Api.get(ApiUrls.TINYURL_SHORTENER, {
     params: {
       url,
