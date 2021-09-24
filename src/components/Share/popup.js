@@ -112,14 +112,16 @@ const SharePopup = props => {
 
   const renderShareIcons = () => {
     return _.map(shareIconTypes, (shareIconType, index) => (
-      <div className={styles.shareIcon}>{renderShareIcon(shareIconType)}</div>
+      <div className={styles.shareIcon} key={index + shareIconType}>
+        {renderShareIcon(shareIconType)}
+      </div>
     ));
   };
 
   return (
     <div className={classNames(styles.sharePopupContainer, className)}>
       <h3 className={styles.headline}>Share With Your Friends</h3>
-      <div className={styles.shareButtons}>
+      <div>
         <div className={styles.shareButtons}>{renderShareIcons()}</div>
       </div>
       <div className={styles.separator}></div>

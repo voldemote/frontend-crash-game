@@ -165,7 +165,11 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
 
       {options.hideShare ? null : (
         <div className={styles.ShareButtonContainer}>
-          <Share popupPosition={'top'} directUrl={directUrlObj.toString()} />
+          <Share
+            popupPosition={'top'}
+            directUrl={directUrlObj.toString()}
+            skipCalculatePos={true}
+          />
         </div>
       )}
 

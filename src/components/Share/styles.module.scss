@@ -134,9 +134,8 @@
     }
 
     @media (max-width: $screen-sm) {
-      left: auto;
-      right: -105px;
-      top: 40px;
+      left: 10px;
+      right: 10px;
 
       &.popup-position-top {
         left: -110px;

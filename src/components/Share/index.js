@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -23,9 +23,11 @@ const Share = props => {
     directUrl,
     dynamicTitle,
     dynamicText,
+    skipCalculatePos,
   } = props;
 
   const defaultSharing = ['facebook', 'twitter', 'telegram', 'reddit'];
+  const shareButtonRef = useRef();
 
   const [shortUrl, setShortUrl] = useState();
   const [showPopover, setShowPopover] = useState(false);
@@ -63,6 +65,16 @@ const Share = props => {
     })();
   }, [isMounted]);
 
+  let popoverTopSpacing = 0;
+
+  if (shareButtonRef.current) {
+    const target = shareButtonRef.current;
+    const coords = target.getBoundingClientRect();
+    popoverTopSpacing = coords.top + coords.height + 15;
+  }
+
+  let matchMedia = window.matchMedia(`(max-width: ${768}px)`).matches;
+
   return (
     <div
       ref={closeOutside}
@@ -70,7 +82,8 @@ const Share = props => {
     >
       <div className={styles.ShareButtonContainer}>
         <div
-          className={styles.shareButton}
+          ref={shareButtonRef}
+          className={classNames(styles.shareButton)}
           onClick={e => {
             setShowPopover(show => !show);
           }}
@@ -83,13 +96,24 @@ const Share = props => {
             onClick={e => {
               e.stopPropagation();
             }}
-            style={{ opacity: showPopover ? 1 : 0 }}
+            style={_.extend(
+              {
+                opacity: showPopover ? 1 : 0,
+              },
+              matchMedia && !skipCalculatePos
+                ? {
+                    top: `${popoverTopSpacing}px`,
+                    position: 'fixed',
+                  }
+                : {}
+            )}
             className={classNames(
               styles.sharePopover,
               styles[`popup-position-${popupPosition}`]
             )}
           >
             <Popup
+              mobileTopSpacing={popoverTopSpacing}
               shareIconTypes={shareIconTypes || defaultSharing}
               realUrl={realUrl.toString()}
               shortUrl={shortUrl}
