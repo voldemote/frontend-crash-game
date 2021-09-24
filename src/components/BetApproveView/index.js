@@ -17,6 +17,10 @@ import { selectUser } from 'store/selectors/authentication';
 import { convert } from '../../helper/Currency';
 import ReactTooltip from 'react-tooltip';
 
+import Share from '../../components/Share';
+
+import routes from '../../constants/Routes';
+
 const canvasStyles = {
   position: 'fixed',
   pointerEvents: 'none',
@@ -51,7 +55,16 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
   //for later - share button logic
   const tradeId = _.get(trade, '_id');
   const eventId = _.get(bet, 'event');
-  const betId = _.get(trade, 'betId');
+  const betId = _.get(trade, 'betId._id');
+
+  const buildDirectLink = routes.betApproveDirect
+    .replace(':eventId', eventId)
+    .replace(':tradeId', tradeId)
+    .replace(':betId', betId);
+
+  const urlOrigin = window.location.origin;
+
+  const directUrlObj = new URL(urlOrigin + buildDirectLink);
 
   const makeShot = (particleRatio, opts) => {
     animationInstance &&
@@ -150,27 +163,15 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
         </Button>
       </div>
 
-      <div className={styles.ShareButtonContainer}>
-        <div data-for="coming-soon-tooltip" data-tip={'Coming soon'}>
-          <div className={styles.shareButton} onClick={hidePopup}>
-            <div className={styles.shareIcon}>
-              <Icon
-                iconType={IconType.shareLink}
-                iconTheme={IconTheme.primary}
-              />
-            </div>{' '}
-            Share
-          </div>
+      {options.hideShare ? null : (
+        <div className={styles.ShareButtonContainer}>
+          <Share
+            popupPosition={'top'}
+            directUrl={directUrlObj.toString()}
+            skipCalculatePos={true}
+          />
         </div>
-      </div>
-
-      <ReactTooltip
-        id="coming-soon-tooltip"
-        className={styles.tooltip}
-        place="bottom"
-        effect="solid"
-        offset={{ bottom: 0 }}
-      />
+      )}
 
       <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
     </div>

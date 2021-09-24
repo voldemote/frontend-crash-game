@@ -24,8 +24,6 @@ import IconTheme from '../Icon/IconTheme';
 import SummaryRowContainer from '../SummaryRowContainer';
 import TextHelper from '../../helper/Text';
 import BetState from '../../constants/BetState';
-import BetShareContainer from '../BetShareContainer';
-import ShareType from '../BetShareContainer/ShareType';
 import { PopupActions, PopupTypes } from '../../store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import ErrorHint from '../ErrorHint';

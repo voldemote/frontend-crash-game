@@ -59,7 +59,7 @@
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
 
     @media (min-width: $screen-md) {
       margin-bottom: 2rem;
@@ -433,3 +433,14 @@
     }
   }
 }
+
+.shareButton {
+  margin-left: 10px;
+}
+
+@media (max-width: $screen-md) {
+  .shareButton {
+    margin-bottom: 1rem;
+  }
+}
+

@@ -44,6 +44,7 @@ import { EVENT_STATES } from 'constants/EventStates';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import EventTypes from 'constants/EventTypes';
+import Share from '../../components/Share';
 import { formatToFixed } from '../../helper/FormatNumbers';
 
 const BET_ACTIONS = {
@@ -536,6 +537,9 @@ const Bet = ({
                 )}
               </div>
             </Link>
+            <div className={styles.shareButton}>
+              <Share />
+            </div>
           </div>
           <AdminOnly>
             <div className={styles.eventAdminActionsContainer}>

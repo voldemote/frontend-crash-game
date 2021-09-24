@@ -333,6 +333,19 @@ const login = payload => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const shortenerTinyUrl = url => {
+  return Api.get(ApiUrls.TINYURL_SHORTENER, {
+    params: {
+      url,
+    },
+    paramsSerializer: function (params) {
+      return `url=${params.url}`;
+    },
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -373,4 +386,5 @@ export {
   resolveBet,
   login,
   signUp,
+  shortenerTinyUrl,
 };
