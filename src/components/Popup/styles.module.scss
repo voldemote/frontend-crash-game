@@ -1,21 +1,5 @@
 @import '../../styles/all';
 
-.modalBackdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1040;
-  width: 100vw;
-  height: 100vh;
-  //background-color: #000;
-  background-color: $colorPrimary50;
-  opacity: 1;
-
-  &.hidden {
-    display: none;
-  }
-}
-
 .modal {
   position: fixed;
   top: 0;
@@ -53,6 +37,7 @@
     justify-content: center;
     overflow: auto;
 
+    //here specific popup sizes per type, if needed
     &.small {
       max-width: 500px;
       height: auto;
@@ -78,154 +63,20 @@
 
     }
   }
+}
 
-  .popupContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    pointer-events: auto;
-    background-color: $colorWhite;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: .3rem;
-    outline: 0;
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  //background-color: #000;
+  background-color: $colorPrimary50;
+  opacity: 1;
 
-
-
-    @media (max-width: $screen-sm) {
-      //&.signUpPopupContainer {
-      //  border-radius: 30px 30px 0 0;
-      //  position: absolute;
-      //  bottom: 0;
-      //  height: 60%;
-      //}
-
-      //&.tradeViewContainer {
-      //  border-radius: 30px 30px 0 0;
-      //  position: absolute;
-      //  bottom: 0;
-      //  height: 90%;
-      //
-      //  .closeButton {
-      //    position: sticky;
-      //    left: 30px;
-      //  }
-      //}
-
-      &.small {
-        border-radius: 30px 30px 0 0;
-        //position: absolute;
-        //bottom: 0;
-        //height: auto;
-      }
-
-      &.joinPopupContainer {
-        border-radius: 30px 30px 0 0;
-        //position: absolute;
-        //bottom: 0;
-        //height: 80%;
-      }
-
-      //&.verifyEmailPopupContainer {
-      //  border-radius: 30px 30px 0 0;
-      //  position: absolute;
-      //  bottom: 0;
-      //  height: 60%;
-      //}
-      //
-      //&.welcomeContainer {
-      //  border-radius: 30px 30px 0 0;
-      //  position: absolute;
-      //  bottom: 0;
-      //  height: 70%;
-      //}
-    }
-
-    @media (min-width: $screen-sm) {
-      //width: 80%;
-      //height: 90%;
-      //border-radius: 10px;
-      //overflow-y: hidden;
-      //
-      //@media (min-height: 900px) {
-      //  height: 80%;
-      //}
-
-      //&.signUpPopupContainer {
-      //  width: 40%;
-      //  height: 40%;
-      //}
-
-      &.small {
-        width: 500px;
-        height: auto;
-      }
-
-      //&.joinPopupContainer {
-      //  width: 532px;
-      //}
-      //
-      //&.verifyEmailPopupContainer {
-      //  width: 532px;
-      //  height: 470px;
-      //}
-      //
-      //&.welcomeContainer {
-      //  width: 632px;
-      //  height: 400px;
-      //}
-      //
-      //&.betApproveContainer {
-      //  width: 632px;
-      //  height: 80%;
-      //  max-height: 650px;
-      //}
-    }
-
-    //@media (min-width: $screen-lg) {
-    //  width: 70%;
-    //  border-radius: 10px;
-    //
-    //  @media (min-height: 1200px) {
-    //    height: 60%;
-    //  }
-    //  &.signUpPopupContainer {
-    //    width: 40%;
-    //    height: 40%;
-    //  }
-    //
-    //  &.small {
-    //    width: 500px;
-    //    height: auto;
-    //  }
-    //
-    //  &.joinPopupContainer {
-    //    width: 532px;
-    //  }
-    //
-    //  &.verifyEmailPopupContainer {
-    //    width: 532px;
-    //    height: 470px;
-    //  }
-    //
-    //  &.welcomeContainer {
-    //    width: 632px;
-    //    height: 400px;
-    //  }
-    //
-    //  &.betApproveContainer {
-    //    width: 632px;
-    //    height: 80%;
-    //    max-height: 650px;
-    //  }
-    //}
-
-    //.popupContentContainer {
-    //  display: block;
-    //  width: 100%;
-    //  height: 100%;
-    //  overflow: auto;
-    //}
+  &.hidden {
+    display: none;
   }
 }

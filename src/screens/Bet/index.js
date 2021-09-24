@@ -223,15 +223,6 @@ const Bet = ({
 
       selectBet(betId, betSlug);
       setBetId(betId);
-
-      if (popup) {
-        setBetViewIsOpen(false);
-        showPopup(PopupTheme.tradeView, {
-          betId,
-          eventId,
-          openBets: _.filter(openBets, { betId }),
-        });
-      }
     };
   };
 

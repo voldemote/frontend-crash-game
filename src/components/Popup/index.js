@@ -165,35 +165,6 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
     return null;
   };
 
-  if (type === PopupTheme.tradeView) {
-    return (
-      <div
-        ref={popupElement}
-        className={classNames(
-          styles.popupFullScreenContainer,
-          visible ? null : styles.hidden
-        )}
-      >
-        <div
-          className={classNames(
-            styles.popupContainer,
-            styles.tradeViewContainer
-          )}
-        >
-          <Icon
-            width={30}
-            height={30}
-            className={styles.closeButton}
-            iconType={IconType.arrowLeft}
-            iconTheme={IconTheme.primary}
-            onClick={hidePopup}
-          />
-          <div className={styles.popupContentContainer}>{renderPopup()}</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className={classNames(styles.modal, visible ? null : styles.hidden)}>
