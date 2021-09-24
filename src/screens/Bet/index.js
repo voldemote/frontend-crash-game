@@ -5,8 +5,6 @@ import Link from '../../components/Link';
 import LiveBadge from 'components/LiveBadge';
 import Routes from '../../constants/Routes';
 import styles from './styles.module.scss';
-import TimeLeftCounter from 'components/TimeLeftCounter';
-import ViewerBadge from 'components/ViewerBadge';
 import { Carousel } from 'react-responsive-carousel';
 import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
@@ -15,7 +13,7 @@ import { useRef, useState, useEffect } from 'react';
 import EmbedVideo from '../../components/EmbedVideo';
 import BetView from '../../components/BetView';
 import RelatedBetCard from '../../components/RelatedBetCard';
-import MyBetCard from '../../components/MyBetCard';
+import MyTradesList from '../../components/MyTradesList';
 import { useHistory } from 'react-router-dom';
 import Chat from '../../components/Chat';
 import News from '../../components/News';
@@ -37,7 +35,6 @@ import { useNewsFeed } from './hooks/useNewsFeed';
 import { useTabOptions } from './hooks/useTabOptions';
 import AdminOnly from 'components/AdminOnly';
 import { selectOpenBets } from 'store/selectors/bet';
-import { selectTransactions } from 'store/selectors/transaction';
 import { TransactionActions } from 'store/actions/transaction';
 import { ChatActions } from 'store/actions/chat';
 import ContentFooter from 'components/ContentFooter';
@@ -48,6 +45,7 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import EventTypes from 'constants/EventTypes';
 import Share from '../../components/Share';
+import { formatToFixed } from '../../helper/FormatNumbers';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -80,7 +78,6 @@ const Bet = ({
   const history = useHistory();
 
   const openBets = useSelector(selectOpenBets);
-  const transactions = useSelector(selectTransactions);
 
   const currentFromLocation = useBetPreviousLocation();
   const {
@@ -224,35 +221,49 @@ const Bet = ({
 
       selectBet(betId, betSlug);
       setBetId(betId);
+    };
+  };
 
-      if (popup) {
-        setBetViewIsOpen(false);
-        showPopup(PopupTheme.tradeView, {
-          betId,
-          eventId,
-          openBets: _.filter(openBets, { betId }),
-        });
-      }
+  const getTrade = betId => {
+    const event = State.getEventByTrade(betId, events);
+    const bet = State.getTradeByEvent(betId, event);
+
+    return {
+      betId,
+      eventId: event?._id,
+      imageUrl: event?.previewImageUrl,
+      marketQuestion: bet?.marketQuestion,
+      status: bet?.status,
+      outcomes: bet?.outcomes,
+      eventSlug: event?.slug,
+      betSlug: bet?.slug,
     };
   };
 
   const getMyEventTrades = () => {
-    return _.map([...transactions], transaction => {
-      const betId = _.get(transaction, 'bet');
-      const bet = State.getTradeByEvent(betId, event);
-      const openBet = _.find(openBets, { betId });
+    return _.map(openBets, openBet => {
+      const trade = getTrade(openBet.betId);
+      if (trade.eventId !== event?._id) return;
+      const outcomeValue = _.get(trade, ['outcomes', openBet.outcome, 'name']);
+      const outcomeAmount = formatToFixed(_.get(openBet, 'outcomeAmount', 0));
+      const investmentAmount = formatToFixed(
+        _.get(openBet, 'investmentAmount', 0)
+      );
+      const sellAmount = formatToFixed(_.get(openBet, 'sellAmount', 0));
+      const currentBuyAmount = formatToFixed(
+        _.get(openBet, 'currentBuyAmount', 0)
+      );
 
-      if (bet) {
-        return {
-          ...transaction,
-          event,
-          bet,
-          openBet,
-        };
-      }
-    })
-      .filter(Boolean)
-      .sort((a, b) => status[a.bet.status] - status[b.bet.status]);
+      return {
+        ...trade,
+        outcomeValue,
+        outcomeAmount,
+        investmentAmount,
+        sellAmount,
+        currentBuyAmount,
+        date: openBet.lastDate,
+      };
+    }).filter(Boolean);
   };
 
   const renderNoTrades = () => {
@@ -269,14 +280,13 @@ const Bet = ({
     });
   };
 
-  const renderMyTradesList = (popup = false) => {
+  const renderMyTradesList = () => {
     const myEventTrades = getMyEventTrades();
     if (!isLoggedIn() || myEventTrades.length < 1) {
       return renderNoTrades();
     }
-    return _.map(myEventTrades, (transaction, index) => {
-      return renderMyBetCard(transaction, index, popup);
-    });
+
+    return renderMyBetCard(myEventTrades);
   };
 
   const renderRelatedBetCard = (bet, index, popup) => {
@@ -296,42 +306,17 @@ const Bet = ({
   const renderMyBetCard = (transaction, index, popup) => {
     if (transaction) {
       return (
-        <MyBetCard
-          key={index}
-          transaction={transaction}
-          onClick={onBetClick(transaction.bet, popup)}
-        />
+        <div className={styles.myTrades}>
+          <MyTradesList
+            bets={transaction}
+            withStatus={true}
+            allowCashout={true}
+          />
+        </div>
       );
     }
 
     return <div />;
-  };
-
-  const renderMyBetSliders = myEventTrades => {
-    const size = getRelatedBetSliderPages(myEventTrades, 2);
-
-    return _.map(_.range(0, size), (sliderPage, index) =>
-      renderMyBetSlider(sliderPage, index, myEventTrades)
-    );
-  };
-
-  const renderMyBetSlider = (pageIndex, index, myEventTrades) => {
-    const indexes = [];
-    const listLength = myEventTrades.length > 2 ? 2 : myEventTrades.length;
-
-    for (let i = 0; i < listLength; i++) {
-      indexes.push(pageIndex * 2 + i);
-    }
-
-    return (
-      <div
-        key={index}
-        className={classNames(styles.carouselSlide, styles.relatedBetSlide)}
-      >
-        {renderMyBetCard(_.get(myEventTrades, '[' + indexes[0] + ']'))}
-        {renderMyBetCard(_.get(myEventTrades, '[' + indexes[1] + ']'))}
-      </div>
-    );
   };
 
   const renderRelatedBetSliders = () => {
@@ -443,7 +428,7 @@ const Bet = ({
           showStatus={false}
           interval={1e11}
         >
-          {renderMyBetSliders(myEventTrades)}
+          {renderMyTradesList()}
         </Carousel>
       </div>
     );
@@ -480,7 +465,7 @@ const Bet = ({
           <div>{renderRelatedBetList(true)}</div>
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          <div>{renderMyTradesList(true)}</div>
+          <div>{renderMyTradesList()}</div>
         </SwiperSlide>
       </Swiper>
     );

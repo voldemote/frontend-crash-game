@@ -57,6 +57,14 @@ const Navbar = ({
   }, [leaderboardOpen]);
 
   useEffect(() => {
+    if (openDrawer) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openDrawer]);
+
+  useEffect(() => {
     closeDrawers();
   }, [location.pathname]);
 
@@ -118,12 +126,6 @@ const Navbar = ({
   };
 
   const hasOpenDrawer = !isOpen('');
-
-  if (hasOpenDrawer) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = 'auto';
-  }
 
   const showPopupForUnauthenticated = authenticationType => {
     if (!isLoggedIn()) {

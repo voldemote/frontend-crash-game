@@ -59,7 +59,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "production": "yarn build && node server/index.js"
+    "production": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [

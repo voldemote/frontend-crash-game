@@ -261,7 +261,6 @@
   .relatedBets {
     display: flex;
     flex-direction: column;
-    margin-top: 2rem;
 
     .headline {
       margin-bottom: 1rem;
@@ -273,6 +272,17 @@
         font-family: $fontBold;
         font-size: 20px;
         margin-right: 1rem;
+      }
+    }
+
+    .myTrades {
+      > div:first-child > div {
+        padding: 20px 0 !important;
+        text-align: left;
+      }
+
+      img {
+        width: 70px !important;
       }
     }
 
