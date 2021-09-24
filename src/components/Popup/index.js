@@ -38,10 +38,10 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
 
   useEffect(() => {
-    document.body.style.overflow = visible ? 'hidden' : null;
+    document.body.style.overflow = visible ? 'hidden' : 'auto';
 
     return () => {
-      document.body.style.overflow = null;
+      document.body.style.overflow = 'auto';
     };
   }, [visible]);
 
@@ -195,42 +195,52 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   }
 
   return (
-    <div
-      className={classNames(
-        styles.popupFullScreenContainer,
-        visible ? null : styles.hidden
-      )}
-    >
-      <div
-        ref={popupElement}
-        className={classNames(
-          styles.popupContainer,
-          type === PopupTheme.signUpNotificationFirst ||
-            type === PopupTheme.signUpNotificationSecond
-            ? styles.signUpPopupContainer
-            : null,
-          type === PopupTheme.loginRegister ? styles.joinPopupContainer : null,
-          type === PopupTheme.welcome ? styles.welcomeContainer : null,
-          type === PopupTheme.betApprove ? styles.betApproveContainer : null,
-          type === PopupTheme.verifyEmail
-            ? styles.verifyEmailPopupContainer
-            : null,
-          small ? styles.small : null
-        )}
-      >
-        {type !== PopupTheme.signUpNotificationSecond && (
-          <Icon
-            width={30}
-            height={30}
-            className={styles.closeButton}
-            iconType={IconType.deleteInput}
-            iconTheme={IconTheme.primary}
-            onClick={hidePopup}
-          />
-        )}
-        <div className={styles.popupContentContainer}>{renderPopup()}</div>
+    <>
+      <div className={classNames(styles.modal, visible ? null : styles.hidden)}>
+        <div
+          ref={popupElement}
+          className={classNames(
+            styles.modalDialog,
+            type === PopupTheme.signUpNotificationFirst ||
+              type === PopupTheme.signUpNotificationSecond
+              ? styles.signUpPopupContainer
+              : null,
+            type === PopupTheme.loginRegister
+              ? styles.joinPopupContainer
+              : null,
+            type === PopupTheme.welcome ? styles.welcomeContainer : null,
+            type === PopupTheme.betApprove ? styles.betApproveContainer : null,
+            type === PopupTheme.verifyEmail
+              ? styles.verifyEmailPopupContainer
+              : null,
+            small ? styles.small : null
+          )}
+        >
+          <div className={styles.modalContent}>
+            <div className={styles.closeButtonContainer}>
+              {type !== PopupTheme.signUpNotificationSecond && (
+                <Icon
+                  width={30}
+                  height={30}
+                  className={styles.closeButton}
+                  iconType={IconType.deleteInput}
+                  iconTheme={IconTheme.primary}
+                  onClick={hidePopup}
+                />
+              )}
+            </div>
+
+            {renderPopup()}
+          </div>
+        </div>
       </div>
-    </div>
+      <div
+        className={classNames(
+          styles.modalBackdrop,
+          visible ? null : styles.hidden
+        )}
+      ></div>
+    </>
   );
 };
 
