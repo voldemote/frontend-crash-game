@@ -15,7 +15,13 @@ import IconTheme from '../Icon/IconTheme';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 
 const Share = props => {
-  const { className, shareIconTypes, showPopup, authentication } = props;
+  const {
+    className,
+    shareIconTypes,
+    authentication,
+    popupPosition,
+    directUrl,
+  } = props;
 
   const defaultSharing = ['facebook', 'twitter', 'telegram', 'reddit'];
 
@@ -29,7 +35,12 @@ const Share = props => {
 
   const userId = _.get(authentication, 'userId');
 
-  const realUrl = new URL(urlOrigin + urlPath);
+  let realUrl = new URL(urlOrigin + urlPath);
+
+  if (directUrl) {
+    realUrl = new URL(directUrl);
+  }
+
   realUrl.searchParams.set('ref', userId);
 
   const closeOutside = useOutsideClick(() => {
@@ -75,12 +86,16 @@ const Share = props => {
               e.stopPropagation();
             }}
             style={{ opacity: showPopover ? 1 : 0 }}
-            className={styles.sharePopover}
+            className={classNames(
+              styles.sharePopover,
+              styles[`popup-position-${popupPosition}`]
+            )}
           >
             <Popup
               shareIconTypes={shareIconTypes || defaultSharing}
               realUrl={realUrl.toString()}
               shortUrl={shortUrl}
+              popupPosition={popupPosition}
             />
           </div>
         </div>

@@ -124,10 +124,22 @@
     transition: opacity .10s ease-in;
     border: 1px solid $colorGray;
 
+    &.popup-position-top {
+      bottom: 32px;
+      top: auto;
+      left: -155px;
+      right: auto;
+      z-index: 50;
+    }
+
     @media (max-width: $screen-sm) {
       left: auto;
       right: -10px;
       top: 40px;
+
+      &.popup-position-top {
+        left: -110px;
+      }
     }
   }
 

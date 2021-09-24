@@ -42,6 +42,7 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
             bet: bet,
             trade: _.get(tradeResponse, 'data', null),
           },
+          hideShare: true,
         };
         showPopup('betApprove', options);
       }
