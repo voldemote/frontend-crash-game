@@ -39,3 +39,14 @@ export const selectOutcomes = state => {
 export const selectSellOutcomes = state => {
   return mapOutcomes(state.bet.sellOutcomes, state);
 };
+
+export const selectTradeHistory = state => {
+  return _.map(state.bet.tradeHistory.trades, trade => {
+    return {
+      ...trade,
+      investmentAmount: convert(trade.investmentAmount, selectCurrency(state)),
+      outcomeAmount: convert(trade.outcomeAmount, selectCurrency(state)),
+      soldAmount: convert(trade.soldAmount, selectCurrency(state)),
+    };
+  });
+};
