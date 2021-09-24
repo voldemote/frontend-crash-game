@@ -406,3 +406,10 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: $screen-sm) {
+  .shareButton {
+    margin-bottom: 1rem;
+  }
+}
+

@@ -544,8 +544,9 @@ const Bet = ({
                 </div>
               </div>
             </Link>
-
-            <Share />
+            <div className={styles.shareButton}>
+              <Share />
+            </div>
           </div>
         </div>
         <div className={styles.row}>
