@@ -339,6 +339,18 @@ const login = payload => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const forgotPassword = payload => {
+  return Api.post(ApiUrls.API_AUTH_FORGOT_PASSWORD, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const resetPassword = payload => {
+  return Api.post(ApiUrls.API_AUTH_RESET_PASSWORD, payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 const shortenerTinyUrl = url => {
   return Api.get(ApiUrls.TINYURL_SHORTENER, {
     params: {
@@ -393,5 +405,7 @@ export {
   resolveBet,
   login,
   signUp,
+  forgotPassword,
+  resetPassword,
   shortenerTinyUrl,
 };

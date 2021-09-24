@@ -61,6 +61,14 @@ const root = function* () {
     ),
     takeLatest([AuthenticationTypes.SIGN_UP], AuthenticationSagas.signUp),
     takeLatest([AuthenticationTypes.LOGIN], AuthenticationSagas.login),
+    takeLatest(
+      [AuthenticationTypes.FORGOT_PASSWORD],
+      AuthenticationSagas.forgotPassword
+    ),
+    takeLatest(
+      [AuthenticationTypes.RESET_PASSWORD],
+      AuthenticationSagas.resetPassword
+    ),
     takeEvery(
       [
         AuthenticationTypes.FETCH_REFERRALS_FAILED,

@@ -352,6 +352,28 @@ const signUpFail = (action, state) => {
   });
 };
 
+const forgotPasswordFail = (action, state) => {
+  return update(state, {
+    loading: {
+      $set: false,
+    },
+    error: {
+      $set: action?.message,
+    },
+  });
+};
+
+const resetPasswordFail = (action, state) => {
+  return update(state, {
+    loading: {
+      $set: false,
+    },
+    error: {
+      $set: action?.message,
+    },
+  });
+};
+
 // update user data reducers
 const initiateUpdateUserData = ({ payload }, state) => {
   return {
@@ -443,6 +465,10 @@ export default function (state = initialState, action) {
       return loginFail(action, state);
     case AuthenticationTypes.SIGN_UP_FAIL:
       return signUpFail(action, state);
+    case AuthenticationTypes.FORGOT_PASSWORD_FAIL:
+      return forgotPasswordFail(action, state);
+    case AuthenticationTypes.RESET_PASSWORD_FAIL:
+      return resetPasswordFail(action, state);
     default:
       return cleanErrors(action, state);
     // @formatter:on
