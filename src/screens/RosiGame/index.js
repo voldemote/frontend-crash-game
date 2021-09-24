@@ -19,6 +19,7 @@ import { AlertActions } from '../../store/actions/alert';
 import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
+import Share from '../../components/Share';
 
 const RosiGame = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,9 @@ const RosiGame = () => {
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <BackLink to="/games" text="Rosi Game" />
+          <BackLink to="/games" text="Rosi Game">
+            <Share />
+          </BackLink>
           <Grid container spacing={1}>
             <Grid item xs={12} md={9}>
               <LastCrashes lastCrashes={lastCrashes} />

@@ -113,6 +113,7 @@
 }
 
 .ShareButtonContainer {
+  display: inline-block;
 
   .sharePopover {
     background-color: #201D38;
@@ -165,5 +166,6 @@
 }
 
 .shareTrigger {
-
+  position: relative;
+  z-index: 10;
 }
