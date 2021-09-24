@@ -55,7 +55,7 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
   //for later - share button logic
   const tradeId = _.get(trade, '_id');
   const eventId = _.get(bet, 'event');
-  const betId = _.get(trade, 'betId');
+  const betId = _.get(trade, 'betId._id');
 
   const buildDirectLink = routes.betApproveDirect
     .replace(':eventId', eventId)

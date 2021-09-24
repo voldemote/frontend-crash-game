@@ -59,10 +59,6 @@ const Share = props => {
         setShortUrl(_.get(shorterUrl, 'response.data', null));
       }
     })();
-
-    return function cleanup() {
-      setShortUrl(undefined);
-    };
   }, [isMounted]);
 
   return (

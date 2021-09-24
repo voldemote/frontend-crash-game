@@ -28,11 +28,11 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
       if (eventId && betId && tradeId) {
         const event = State.getEventByTrade(betId, events);
         const bet = State.getTradeByEvent(betId, event);
-        const trade = State.getTrade(tradeId, events);
-
         const tradeResponse = await getTradeById(tradeId).catch(err => {
           console.error("Can't get trade by id:", err);
         });
+
+        const trade = _.get(tradeResponse, 'data', null);
 
         const options = {
           eventId: eventId,
@@ -40,11 +40,14 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
           tradeId: tradeId,
           data: {
             bet: bet,
-            trade: _.get(tradeResponse, 'data', null),
+            trade: trade,
           },
           hideShare: true,
         };
-        showPopup('betApprove', options);
+
+        if (betId && tradeId && eventId) {
+          showPopup('betApprove', options);
+        }
       }
     }
   };
