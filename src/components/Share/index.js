@@ -21,6 +21,8 @@ const Share = props => {
     authentication,
     popupPosition,
     directUrl,
+    dynamicTitle,
+    dynamicText,
   } = props;
 
   const defaultSharing = ['facebook', 'twitter', 'telegram', 'reddit'];
@@ -92,6 +94,8 @@ const Share = props => {
               realUrl={realUrl.toString()}
               shortUrl={shortUrl}
               popupPosition={popupPosition}
+              dynamicTitle={dynamicTitle || ''}
+              dynamicText={dynamicText || ''}
             />
           </div>
         </div>

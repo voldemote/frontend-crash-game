@@ -19,8 +19,17 @@ import InputBox from '../InputBox';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
 
 const SharePopup = props => {
-  const { className, shareIconTypes, hidePopup, visible, shortUrl, realUrl } =
-    props;
+  const {
+    className,
+    shareIconTypes,
+    hidePopup,
+    visible,
+    shortUrl,
+    realUrl,
+    dynamicTitle,
+    dynamicText,
+    dynamicHashtags,
+  } = props;
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -28,33 +37,73 @@ const SharePopup = props => {
     }
   }, [visible]);
 
+  let isNativeShare = false;
+
+  if (navigator.share) {
+    isNativeShare = true;
+  }
+
+  const handleNativeShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: dynamicTitle,
+          text: dynamicText,
+          url: realUrl,
+        })
+        .then(() => console.log('Successful share'))
+        .catch(error => console.log('Error sharing', error));
+    } else {
+      console.log('Share not supported on this browser, do it the old way.');
+    }
+  };
+
   const renderShareIcon = shareIconType => {
-    // const parsedUrl = url.replace('localhost', 'wallfair.io');
     const iconSize = 26;
 
     switch (shareIconType) {
       // @formatter:off
       case ShareType.facebook:
         return (
-          <FacebookShareButton url={realUrl}>
+          <FacebookShareButton
+            title={dynamicTitle}
+            url={realUrl}
+            openShareDialogOnClick={isNativeShare ? false : true}
+            beforeOnClick={handleNativeShare}
+          >
             <FacebookIcon size={iconSize} round={true} />
           </FacebookShareButton>
         );
       case ShareType.twitter:
         return (
-          <TwitterShareButton url={realUrl}>
+          <TwitterShareButton
+            title={dynamicTitle}
+            url={realUrl}
+            openShareDialogOnClick={isNativeShare ? false : true}
+            beforeOnClick={handleNativeShare}
+          >
             <TwitterIcon size={iconSize} round={true} />
           </TwitterShareButton>
         );
       case ShareType.telegram:
         return (
-          <TelegramShareButton url={realUrl}>
+          <TelegramShareButton
+            title={dynamicTitle}
+            url={realUrl}
+            openShareDialogOnClick={isNativeShare ? false : true}
+            beforeOnClick={handleNativeShare}
+          >
             <TelegramIcon size={iconSize} round={true} />
           </TelegramShareButton>
         );
       case ShareType.reddit:
         return (
-          <RedditShareButton url={realUrl}>
+          <RedditShareButton
+            title={dynamicTitle}
+            url={realUrl}
+            openShareDialogOnClick={isNativeShare ? false : true}
+            beforeOnClick={handleNativeShare}
+          >
             <RedditIcon size={iconSize} round={true} />
           </RedditShareButton>
         );
