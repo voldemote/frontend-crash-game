@@ -24,6 +24,7 @@
   .navbarItems {
     display: flex;
     align-items: center;
+    z-index: 2;
 
     .signUpButton {
       width: 11rem;
@@ -272,6 +273,7 @@
     background-color: rgba(14, 9, 39, 0.86);
     display: flex;
     flex-flow: column nowrap;
+    z-index: 5;
 
     .closeLeaderboard {
       @extend .floatingCloseButton;
