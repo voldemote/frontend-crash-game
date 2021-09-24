@@ -232,24 +232,15 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
         e => e.slug === (!!currentAction[1] ? currentAction[1] : eventSlug)
       );
 
-      if (eventSlug !== currentAction[1]) {
-        if (room) {
-          yield put(
-            WebsocketsActions.leaveRoom({
-              userId,
-              roomId: room,
-            })
-          );
-        }
-        if (event) {
-          yield put(
-            WebsocketsActions.joinRoom({
-              userId,
-              roomId: event._id,
-            })
-          );
-        }
-      } else {
+      if (room) {
+        yield put(
+          WebsocketsActions.leaveRoom({
+            userId,
+            roomId: room,
+          })
+        );
+      }
+      if (event) {
         yield put(
           WebsocketsActions.joinRoom({
             userId,
