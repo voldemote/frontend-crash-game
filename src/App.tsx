@@ -58,7 +58,7 @@ const App = () => {
             <Route exact path={Routes.rosiGame} component={RosiGame} />
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
-            <PrivateRoute path={Routes.rewards} component={Rewards} />
+            {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
             <Redirect to={Routes.home} />
           </Switch>
           <NavbarFooter skipRoutes={[Routes.bet, Routes.verify]}>
