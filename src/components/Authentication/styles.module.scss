@@ -79,6 +79,7 @@
     align-self: flex-end;
     margin-bottom: 100px;
     text-decoration: underline;
+    cursor: pointer;
 
     @media (max-width: $screen-sm) {
       margin: 10px 0;

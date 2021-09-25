@@ -24,6 +24,7 @@ import RosiGame from './screens/RosiGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
 import Rewards from './screens/Rewards';
+import ResetPassword from './screens/ResetPassword';
 import initTagManager from './config/gtm';
 
 const { store, persistor } = configStore();
@@ -58,6 +59,7 @@ const App = () => {
             <Route exact path={Routes.rosiGame} component={RosiGame} />
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
+            <Route path={Routes.resetPassword} component={ResetPassword} />
             {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
             <Redirect to={Routes.home} />
           </Switch>

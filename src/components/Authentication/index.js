@@ -1,5 +1,4 @@
 import InputBox from '../InputBox';
-import Link from '../Link';
 import styles from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect } from 'react-redux';
@@ -17,6 +16,7 @@ const Authentication = ({
   authenticationType,
   signUp,
   login,
+  initForgotPassword,
   popupVisible,
 }) => {
   const [email, setInputEmail] = useState('');
@@ -25,6 +25,7 @@ const Authentication = ({
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
+  const [forgotPassword, setForgotPassword] = useState(false);
 
   let fooRef = useRef(null);
   let emailRef = useRef(null);
@@ -43,6 +44,7 @@ const Authentication = ({
     setPasswordConfirmation('');
     setLegalAuthorizationAgreed(false);
     setError(null);
+    setForgotPassword(false);
   }, [popupVisible]);
 
   useEffect(() => {
@@ -74,15 +76,15 @@ const Authentication = ({
   const validateInput = () => {
     let error;
 
-    if (isSignUp() && !legalAuthorizationAgreed) {
+    if (isSignUp() && !forgotPassword && !legalAuthorizationAgreed) {
       error = "Confirm that you're legally authorized";
       fooRef = acceptRef;
     }
-    if (isSignUp() && !passwordsMatch()) {
+    if (isSignUp() && !forgotPassword && !passwordsMatch()) {
       error = 'Passwords do not match';
       fooRef = pwConfirmRef;
     }
-    if (!passwordIsValid()) {
+    if (!passwordIsValid() && !forgotPassword) {
       error = 'Password is not valid';
       fooRef = pwRef;
     }
@@ -103,16 +105,20 @@ const Authentication = ({
     const error = validateInput();
     if (error) return;
 
-    isSignUp()
-      ? signUp({
-          email,
-          password,
-          passwordConfirm: passwordConfirmation,
-        })
-      : login({
-          email,
-          password,
-        });
+    if (forgotPassword) {
+      initForgotPassword(email);
+    } else {
+      isSignUp()
+        ? signUp({
+            email,
+            password,
+            passwordConfirm: passwordConfirmation,
+          })
+        : login({
+            email,
+            password,
+          });
+    }
   };
 
   const renderInputBoxes = () => {
@@ -158,24 +164,27 @@ const Authentication = ({
           />
         </FormGroup>
 
-        <FormGroup
-          className={styles.formGroup}
-          data-tip
-          ref={ref => (pwRef = ref)}
-          data-event="none"
-          data-event-off="dblclick"
-        >
-          <InputLabel className={styles.inputLabel}>Password</InputLabel>
-          <InputBox
-            type="password"
-            className={styles.inputBox}
-            placeholder="***********"
-            value={password}
-            setValue={setPassword}
-          />
-        </FormGroup>
+        {!forgotPassword && (
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            ref={ref => (pwRef = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+            hidden={forgotPassword}
+          >
+            <InputLabel className={styles.inputLabel}>Password</InputLabel>
+            <InputBox
+              type="password"
+              className={styles.inputBox}
+              placeholder="***********"
+              value={password}
+              setValue={setPassword}
+            />
+          </FormGroup>
+        )}
 
-        {authenticationType === AuthenticationType.register && (
+        {authenticationType === AuthenticationType.register && !forgotPassword && (
           <FormGroup
             className={styles.formGroup}
             data-tip
@@ -207,7 +216,7 @@ const Authentication = ({
           disabled={loading}
           disabledWithOverlay={true}
         >
-          <span>{action}</span>
+          <span>{forgotPassword ? 'Send' : action}</span>
         </Button>
       </form>
     );
@@ -245,15 +254,21 @@ const Authentication = ({
 
   const renderForgotPasswordLink = () => {
     return (
-      <Link to="" className={styles.forgotPasswordLink}>
+      <div
+        onClick={() => setForgotPassword(true)}
+        className={styles.forgotPasswordLink}
+        hidden={forgotPassword}
+      >
         Forgot Password
-      </Link>
+      </div>
     );
   };
 
   return (
     <div className={styles.authentication}>
-      <h2 className={styles.title}>{action}</h2>
+      <h2 className={styles.title}>
+        {forgotPassword ? 'Password Reset' : action}
+      </h2>
       {renderInputBoxes()}
     </div>
   );
@@ -274,6 +289,9 @@ const mapDispatchToProps = dispatch => {
     },
     login: payload => {
       dispatch(AuthenticationActions.login(payload));
+    },
+    initForgotPassword: email => {
+      dispatch(AuthenticationActions.forgotPassword({ email }));
     },
   };
 };

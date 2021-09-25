@@ -34,6 +34,10 @@ export const AuthenticationTypes = {
   LOGIN: 'Authentication/LOGIN',
   LOGIN_SUCCESS: 'Authentication/LOGIN_SUCCESS',
   LOGIN_FAIL: 'Authentication/LOGIN_FAIL',
+  FORGOT_PASSWORD: 'Authentication/FORGOT_PASSWORD',
+  FORGOT_PASSWORD_FAIL: 'Authentication/FORGOT_PASSWORD_FAIL',
+  RESET_PASSWORD: 'Authentication/RESET_PASSWORD',
+  RESET_PASSWORD_FAIL: 'Authentication/RESET_PASSWORD_FAIL',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -199,6 +203,25 @@ const loginFail = makeActionCreator(AuthenticationTypes.LOGIN_FAIL, {
   message: null,
 });
 
+const forgotPassword = makeActionCreator(AuthenticationTypes.FORGOT_PASSWORD, {
+  email: null,
+});
+
+const forgotPasswordFail = makeActionCreator(
+  AuthenticationTypes.FORGOT_PASSWORD_FAIL
+);
+
+const resetPassword = makeActionCreator(AuthenticationTypes.RESET_PASSWORD, {
+  email: null,
+  password: null,
+  passwordConfirmation: null,
+  token: null,
+});
+
+const resetPasswordFail = makeActionCreator(
+  AuthenticationTypes.RESET_PASSWORD_FAIL
+);
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -232,4 +255,8 @@ export const AuthenticationActions = {
   login,
   loginSuccess,
   loginFail,
+  forgotPassword,
+  forgotPasswordFail,
+  resetPassword,
+  resetPasswordFail,
 };

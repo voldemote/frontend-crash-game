@@ -293,7 +293,11 @@ const refreshImportantData = function* () {
 const firstSignUpPopup = function* (options) {
   yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
   const authState = yield select(state => state.authentication.authState);
-  if (authState === AuthState.LOGGED_OUT) {
+  const popupVisible = yield select(state => state.popup.visible);
+  const popupType = yield select(state => state.popup.popupType);
+  const skip = popupVisible && popupType === PopupTheme.auth;
+
+  if (authState === AuthState.LOGGED_OUT && !skip) {
     yield put(
       PopupActions.show({
         popupType: options.last
@@ -384,6 +388,53 @@ const login = function* (action) {
   }
 };
 
+const forgotPassword = function* (action) {
+  const payload = { email: action.email };
+
+  const { response, error } = yield call(Api.forgotPassword, payload);
+
+  if (response) {
+    yield put(PopupActions.hide());
+    yield put(
+      AlertActions.showSuccess({
+        message: `Email sent to ${payload.email}`,
+      })
+    );
+  } else {
+    yield put(
+      AuthenticationActions.forgotPasswordFail({
+        message: error.message,
+      })
+    );
+  }
+};
+
+const resetPassword = function* (action) {
+  const payload = {
+    email: action.email,
+    password: action.password,
+    passwordConfirmation: action.passwordConfirmation,
+    passwordResetToken: action.token,
+  };
+
+  const { response, error } = yield call(Api.resetPassword, payload);
+
+  if (response) {
+    yield put(push(Routes.home));
+    yield put(
+      AlertActions.showSuccess({
+        message: 'Password changed successfully',
+      })
+    );
+  } else {
+    yield put(
+      AuthenticationActions.resetPasswordFail({
+        message: error.message,
+      })
+    );
+  }
+};
+
 export default {
   authenticationSucceeded,
   fetchReferrals,
@@ -400,4 +451,6 @@ export default {
   updateUserData,
   signUp,
   login,
+  forgotPassword,
+  resetPassword,
 };
