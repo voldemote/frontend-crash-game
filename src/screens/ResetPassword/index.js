@@ -40,8 +40,6 @@ const ResetPassword = ({ loading, errorState, resetPassword }) => {
 
     if (error) return;
 
-    const q = query;
-    debugger;
     resetPassword({
       email,
       password,

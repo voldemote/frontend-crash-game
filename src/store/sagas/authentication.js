@@ -293,7 +293,11 @@ const refreshImportantData = function* () {
 const firstSignUpPopup = function* (options) {
   yield delay((options && options.duration ? options.duration : 1) * 60 * 1000);
   const authState = yield select(state => state.authentication.authState);
-  if (authState === AuthState.LOGGED_OUT) {
+  const popupVisible = yield select(state => state.popup.visible);
+  const popupType = yield select(state => state.popup.popupType);
+  const skip = popupVisible && popupType === PopupTheme.auth;
+
+  if (authState === AuthState.LOGGED_OUT && !skip) {
     yield put(
       PopupActions.show({
         popupType: options.last

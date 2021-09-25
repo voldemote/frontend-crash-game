@@ -184,27 +184,26 @@ const Authentication = ({
           </FormGroup>
         )}
 
-        {authenticationType === AuthenticationType.register &&
-          !forgotPassword(
-            <FormGroup
-              className={styles.formGroup}
-              data-tip
-              ref={ref => (pwConfirmRef = ref)}
-              data-event="none"
-              data-event-off="dblclick"
-            >
-              <InputLabel className={styles.inputLabel}>
-                Confirm Password
-              </InputLabel>
-              <InputBox
-                type="password"
-                className={styles.inputBox}
-                placeholder="***********"
-                value={passwordConfirmation}
-                setValue={setPasswordConfirmation}
-              />
-            </FormGroup>
-          )}
+        {authenticationType === AuthenticationType.register && !forgotPassword && (
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            ref={ref => (pwConfirmRef = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+          >
+            <InputLabel className={styles.inputLabel}>
+              Confirm Password
+            </InputLabel>
+            <InputBox
+              type="password"
+              className={styles.inputBox}
+              placeholder="***********"
+              value={passwordConfirmation}
+              setValue={setPasswordConfirmation}
+            />
+          </FormGroup>
+        )}
 
         {isSignUp() && renderLegalAuthorizationAgreementCheckBox()}
         {!isSignUp() && renderForgotPasswordLink()}
