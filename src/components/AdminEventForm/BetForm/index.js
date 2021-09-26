@@ -86,13 +86,14 @@ const BetForm = ({ setBetData, styles }) => {
         />
       </FormGroup>
       <FormGroup className={styles.inputContainer}>
-        <InputLabel>Evidence Description</InputLabel>
+        <InputLabel>Description</InputLabel>
         <Input
           type="text"
-          value={evidenceDescription}
-          onChange={updateValue('evidenceDescription')}
+          value={description}
+          onChange={updateValue('description')}
         />
       </FormGroup>
+
       <FormGroup className={styles.inputContainer}>
         <InputLabel>End Date</InputLabel>
         <DateTimePicker
@@ -102,11 +103,11 @@ const BetForm = ({ setBetData, styles }) => {
         />
       </FormGroup>
       <FormGroup className={styles.inputContainer}>
-        <InputLabel>Description</InputLabel>
+        <InputLabel>Evidence Description</InputLabel>
         <Input
           type="text"
-          value={description}
-          onChange={updateValue('description')}
+          value={evidenceDescription}
+          onChange={updateValue('evidenceDescription')}
         />
       </FormGroup>
       <FormGroup className={styles.inputContainer}>
