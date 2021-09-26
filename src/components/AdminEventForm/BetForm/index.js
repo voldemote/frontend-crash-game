@@ -13,12 +13,16 @@ const BetForm = ({ setBetData, styles }) => {
     { _id: Date.now().toString(), name: '' },
   ]);
   const [evidenceDescription, setEvidenceDescription] = useState('');
+  const [evidenceSource, setEvidenceSource] = useState('');
+  const [description, setDescription] = useState('');
   const [endDate, setEndDate] = useState(null);
 
   const betData = {
     marketQuestion,
     outcomes,
     evidenceDescription,
+    evidenceSource,
+    description,
     endDate,
     slug: 'bet',
   };
@@ -28,6 +32,8 @@ const BetForm = ({ setBetData, styles }) => {
     outcomes: setOutcomes,
     evidenceDescription: setEvidenceDescription,
     endDate: setEndDate,
+    evidenceSource: setEvidenceSource,
+    description: setDescription,
   };
 
   const setFormValue = (key, value) => {
@@ -93,6 +99,22 @@ const BetForm = ({ setBetData, styles }) => {
           value={endDate}
           onChange={updateValue('endDate')}
           ampm={false}
+        />
+      </FormGroup>
+      <FormGroup className={styles.inputContainer}>
+        <InputLabel>Description</InputLabel>
+        <Input
+          type="text"
+          value={description}
+          onChange={updateValue('description')}
+        />
+      </FormGroup>
+      <FormGroup className={styles.inputContainer}>
+        <InputLabel>Evidence Source</InputLabel>
+        <Input
+          type="text"
+          value={evidenceSource}
+          onChange={updateValue('evidenceSource')}
         />
       </FormGroup>
     </div>
