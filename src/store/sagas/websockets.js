@@ -151,10 +151,6 @@ export function* init() {
         const payload = yield take(socketChannel);
         const type = _.get(payload, 'type');
 
-        //get listen for all type of events
-        yield put(ActivitiesActions.addActivity(payload));
-        console.log('websockets init', payload);
-
         switch (type) {
           case 'connect':
             yield put(WebsocketsActions.connected());

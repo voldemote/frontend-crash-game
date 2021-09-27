@@ -3,13 +3,75 @@
 .activitiesTrackerContainer {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
-  height: 40vh;
+  padding-top: 0;
+  height: 470px;
   position: relative;
   // margin-top:     -20vh;
 
+  .chatMessage {
+    position: relative;
+    color: $colorWhite;
+    padding: 1rem 1.5rem;
+    padding-right: 40px;
+    border-radius: 10px;
+    background-color: $colorWhite10;
+    display: inline-flex;
+    margin-top: 0.5rem;
+    font-size: 14px;
+    text-align: left;
+    hyphens: auto;
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+
+    &.isVisible {
+      opacity: 0.3;
+
+      & ~ .isVisible {
+        opacity: 1;
+      }
+    }
+
+    img {
+      width: 30px !important;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid $colorWhite !important;
+      margin-right: 0.5rem;
+    }
+
+    span {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      :first-child {
+        font-size: 12px;
+        font-family: $fontBold;
+      }
+
+      :last-child {
+        font-size: 12px;
+        text-align: right;
+        color: $colorGray;
+        width: 60px;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .dateString {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+
   .messageItem {
     opacity: 1;
+    font-size: 15px;
+    align-items: center;
+    //width: 100%;
   }
 
   .categoryList {
@@ -22,12 +84,6 @@
 
     > :not(:last-child) {
       margin-right: 15px;
-    }
-
-
-    .swiper-pagination-progressbar {
-      background: red;
-      display: none;
     }
   }
 
@@ -59,6 +115,7 @@
 
     &:hover, &.categorySelected {
       cursor: pointer;
+
       .imageIcon {
         opacity: initial;
       }
@@ -103,8 +160,6 @@
   }
 
 
-
-
   @media (max-width: $screen-md) {
     padding-top: 0;
     margin-top: 0;
@@ -118,8 +173,10 @@
     overflow-y: scroll;
     margin-bottom: 0;
     position: relative;
-    height: 260px;
-    margin-top: 125px;
+    //height: 260px;
+    //margin-top: 125px;
+    height: 500px;
+    margin-top: 0;
 
     &::-webkit-scrollbar {
       width: 0;
@@ -205,10 +262,6 @@
         width: 100px;
         height: 100%;
         z-index: -1;
-
-        @media (min-width: $screen-sm) {
-          display: none;
-        }
       }
 
       & span > svg {

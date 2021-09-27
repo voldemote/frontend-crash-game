@@ -75,12 +75,13 @@ const ActivitiesTracker = ({
   }, [isMount]);
 
   const renderActivities = () => {
-    const categoryFiltered = _.filter(notifications, item => {
-      return item.type === selectedCategory;
-    });
+    // console.log("notifications", notifications);
+    // const categoryFiltered = _.filter(notifications, item => {
+    //   return item.type.indexOf(selectedCategory) > -1;
+    // });
 
-    return _.map(categoryFiltered, (activityMessage, index) => {
-      const date = _.get(activityMessage, 'date');
+    return _.map(notifications, (activityMessage, index) => {
+      const date = _.get(activityMessage, 'updatedAt');
       return (
         <ActivityMessage key={index} activity={activityMessage} date={date} />
       );
@@ -146,7 +147,7 @@ const ActivitiesTracker = ({
 
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
-      {renderCategories()}
+      {/*{renderCategories()}*/}
       <div
         className={classNames(messagesClassName, styles.messageContainer)}
         ref={messageListRef}
@@ -158,8 +159,6 @@ const ActivitiesTracker = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('###[ActivityMessage] state', state);
-
   return {
     user: state.authentication,
     connected: state.websockets.connected,
