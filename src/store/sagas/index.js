@@ -5,6 +5,7 @@ import EventSagas from './event';
 import TransactionSagas from './transaction';
 import UserSagas from './user';
 import ChatSagas from './chat';
+import ActivitiesSagas from './activities';
 import WebsocketsSagas from './websockets';
 import LeaderboardSagas from './leaderboard';
 import { all, select } from 'redux-saga/effects';
@@ -21,6 +22,7 @@ import { ChatTypes } from '../actions/chat';
 import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { LeaderboardTypes } from '../actions/leaderboard';
+import { ActivitiesTypes } from '../actions/activities';
 
 const root = function* () {
   yield all([
@@ -114,6 +116,9 @@ const root = function* () {
     takeEvery([UserTypes.FETCH_SUCCEEDED], UserSagas.fetchSucceeded),
     takeLatest([UserTypes.UPDATE_PREFERENCES], UserSagas.updatePreferences),
     takeEvery([ChatTypes.ADD_MESSAGE], ChatSagas.addMessage),
+
+    takeEvery([ActivitiesTypes.ADD_ACTIVITY], ActivitiesSagas.addActivity),
+
     takeEvery([ChatTypes.FETCH_BY_ROOM], ChatSagas.fetchByRoom),
     takeLatest([WebsocketsTypes.INIT], WebsocketsSagas.init),
     takeLatest([WebsocketsTypes.CONNECTED], WebsocketsSagas.connected),

@@ -1,4 +1,16 @@
 import _ from 'lodash';
+import { Swiper, SwiperSlide } from 'swiper/react';
+// swiper bundle styles
+import 'swiper/swiper-bundle.min.css';
+
+// swiper core styles
+import 'swiper/swiper.min.css';
+// modules styles
+import 'swiper/components/navigation/navigation.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+
+import SwiperCore, { Pagination, Navigation } from 'swiper';
+
 import ChatMessageWrapper from '../ChatMessageWrapper';
 import classNames from 'classnames';
 import Icon from '../Icon';
@@ -7,7 +19,7 @@ import IconType from '../../components/Icon/IconType';
 import Input from '../Input';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { WebsocketsActions } from '../../store/actions/websockets';
@@ -15,6 +27,15 @@ import { usePrevPropValue } from '../../hooks/usePrevPropValue';
 import { useIsMount } from '../hoc/useIsMount';
 import { LOGGED_IN } from 'constants/AuthState';
 import ActivityMessage from './ActivityMessage';
+import CategoryListItem from '../CategoryList/CategoryListItem';
+import { getNotificationEvents } from '../../api';
+
+import { ACTIVITIES_TO_TRACK } from '../../constants/Activities';
+
+import testData from './testData';
+import { getTradeById } from '../../api';
+
+SwiperCore.use([Navigation, Pagination]);
 
 const ActivitiesTracker = ({
   className,
@@ -23,43 +44,94 @@ const ActivitiesTracker = ({
   user,
   roomId,
   chatMessageType,
-  activities,
   sendChatMessage,
   hideInput = false,
 }) => {
   const messageListRef = useRef();
-  // const [activities, setActivities] = useState([
-  //   {
-  //     "_id": "6144df6846b30eac45f02397",
-  //     "date": "2021-09-17T18:33:12.762Z",
-  //     "roomId": "61306f0ff4a38e1aa57379a1",
-  //     "type": "EVENT",
-  //     "message": "Test",
-  //     "userId": "61375f520e3c80822364daa0",
-  //     "user": {
-  //       "username": "appmaticstest",
-  //       "name": "Appmatics",
-  //       "profilePicture": ""
-  //     }
-  //   }
-  // ]);
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    ACTIVITIES_TO_TRACK[0].value
+  );
+
+  const [activities, setActivities] = useState(testData);
+
+  const [notifications, setInitialNotifications] = useState();
   const isMount = useIsMount();
 
-  const prepareMessageByType = message => {
-    switch (message.type) {
-      case 'SOMETHING':
-        return message;
-      default:
-        return message;
+  useEffect(() => {
+    if (isMount) {
+      (async () => {
+        const initialNotifications = await getNotificationEvents().catch(
+          err => {
+            console.error("Can't get trade by id:", err);
+          }
+        );
+
+        setInitialNotifications(_.get(initialNotifications, 'data', []));
+      })().catch(err => {
+        console.error('initialNotification error', err);
+      });
     }
-  };
+  }, [isMount]);
 
   const renderActivities = () => {
-    return _.map(activities, (activityMessage, index) => {
-      const date = _.get(activityMessage, 'date');
-      const message = prepareMessageByType(activityMessage);
-      return <ActivityMessage key={index} message={message} date={date} />;
+    const categoryFiltered = _.filter(notifications, item => {
+      return item.type === selectedCategory;
     });
+
+    return _.map(categoryFiltered, (activityMessage, index) => {
+      const date = _.get(activityMessage, 'date');
+      return (
+        <ActivityMessage key={index} activity={activityMessage} date={date} />
+      );
+    });
+  };
+
+  const categorySelectHandler = (activity, e) => {
+    setSelectedCategory(activity.value);
+  };
+
+  const renderCategories = () => {
+    return (
+      <div className={styles.categoryList}>
+        <Swiper
+          navigation={true}
+          slidesPerView={6}
+          spaceBetween={0}
+          pagination={{
+            clickable: true,
+            type: 'progressbar',
+          }}
+          autoHeight={true}
+          className={classNames(styles.swiperElement)}
+        >
+          {ACTIVITIES_TO_TRACK.map((activity, index) => (
+            <SwiperSlide key={`swiper-slide-${index}`}>
+              <div
+                className={classNames(styles.boxIcon, {
+                  [styles.categorySelected]:
+                    selectedCategory === activity.value,
+                })}
+                role="button"
+                tabIndex="0"
+                onClick={e => {
+                  categorySelectHandler(activity, e);
+                }}
+              >
+                <img
+                  src={activity.image}
+                  alt={`category ${activity.value}`}
+                  className={classNames(styles.imageIcon)}
+                />
+                <label className={classNames(styles.label)}>
+                  {activity.category}
+                </label>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    );
   };
 
   const messageListScrollToBottom = () => {
@@ -74,6 +146,7 @@ const ActivitiesTracker = ({
 
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
+      {renderCategories()}
       <div
         className={classNames(messagesClassName, styles.messageContainer)}
         ref={messageListRef}
@@ -85,10 +158,9 @@ const ActivitiesTracker = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('##state', state);
-  console.log('##ownProps', ownProps);
+  console.log('###[ActivityMessage] state', state);
+
   return {
-    activities: state.activities,
     user: state.authentication,
     connected: state.websockets.connected,
   };

@@ -12,6 +12,7 @@ import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
+import { EventActions } from '../actions/event';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -151,11 +152,8 @@ export function* init() {
         const type = _.get(payload, 'type');
 
         //get listen for all type of events
-        // yield put(
-        //   ActivitiesActions.addActivity({
-        //     data: payload
-        //   })
-        // );
+        yield put(ActivitiesActions.addActivity(payload));
+        console.log('websockets init', payload);
 
         switch (type) {
           case 'connect':
