@@ -1,4 +1,3 @@
-import activitiesReducer from '../reducer/activities';
 import alertReducer from '../reducer/alert';
 import betReducer from '../reducer/bet';
 import eventReducer from '../reducer/event';
@@ -17,7 +16,6 @@ import { connectRouter } from 'connected-react-router';
 
 export default history =>
   combineReducers({
-    activities: activitiesReducer,
     alert: alertReducer,
     authentication: authenticationReducer,
     bet: betReducer,
