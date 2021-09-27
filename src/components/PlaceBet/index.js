@@ -21,6 +21,7 @@ import {
   selectDisplayBetButton,
 } from '../../store/selectors/rosi-game';
 import ReactCanvasConfetti from 'react-canvas-confetti';
+import { playWinSound } from '../../helper/Audio';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
@@ -90,10 +91,10 @@ const PlaceBet = () => {
   };
 
   const cashOut = () => {
-    setAnimate(true);
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
       .then(response => {
+        setAnimate(true);
         AlertActions.showSuccess(JSON.stringify(response));
       })
       .catch(error => {
@@ -169,6 +170,7 @@ const PlaceBet = () => {
         particleCount={300}
         spread={360}
         origin={{ x: 0.4, y: 0.45 }}
+        onFire={() => playWinSound()}
       />
       <div className={styles.inputContainer}>
         <div>
