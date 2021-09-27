@@ -24,6 +24,8 @@ const setHasStarted = (action, state) => {
     ...state,
     hasStarted: true,
     timeStarted: action.payload.timeStarted,
+    placedBetInQueue: false,
+    betQueue: [],
   };
 };
 
@@ -37,6 +39,7 @@ const setUserBet = (action, state) => {
   return {
     ...state,
     userBet: action.payload,
+    placedBetInQueue: false,
   };
 };
 
