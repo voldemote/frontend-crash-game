@@ -41,6 +41,14 @@ export class CoinAnimation {
     };
   }
 
+  getCoinCrashPosition() {
+    const coinGlobalPos = this.coin.toGlobal(this.coin.position);
+    return {
+      x: coinGlobalPos.x,
+      y: coinGlobalPos.y + this.coin.height / 2,
+    };
+  }
+
   startCoinFlyingAnimation() {
     this.resetAllAnimations();
     this.setCoinDefaultPosition();
