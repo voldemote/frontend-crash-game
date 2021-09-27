@@ -360,8 +360,8 @@ const Navbar = ({
         )}
 
         <div className={style.linkWrapper}>
-          {renderNavbarLink(`/live-events`, 'Streams')}
-          {renderNavbarLink(`/events`, 'Predict the Future')}
+          {renderNavbarLink(`/live-events`, 'Live Events')}
+          {renderNavbarLink(`/events`, 'Events')}
           {renderNavbarLink(`/games`, 'Games')}
           {/* {isLoggedIn() && renderNavbarLink(`/rewards`, 'Earn')} */}
         </div>
