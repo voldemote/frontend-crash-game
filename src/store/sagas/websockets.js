@@ -165,6 +165,7 @@ export function* init() {
             const userId = yield select(state => state.authentication.userId);
             yield put(
               RosiGameActions.addLastCrash({
+                nextGameAt: payload.nextGameAt,
                 crashFactor: payload.crashFactor,
                 userId,
               })

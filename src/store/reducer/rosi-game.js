@@ -10,6 +10,7 @@ const initialState = {
   timeStarted: null,
   isCashedOut: false,
   placedBetInQueue: false,
+  nextGameAt: null,
 };
 
 const initializeState = (action, state) => {
@@ -47,6 +48,7 @@ const addLastCrash = (action, state) => {
   return {
     ...state,
     hasStarted: false,
+    nextGameAt: action.payload.nextGameAt,
     userBet: state.betQueue.find(bet => bet.userId === action.payload.userId),
     lastCrashes: [action.payload.crashFactor, ...state.lastCrashes],
     // cashedOut: [
