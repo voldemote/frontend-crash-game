@@ -56,8 +56,7 @@ const RosiGameAnimation = () => {
       return;
     }
 
-    const elapsedAfterGameStart = Date.now() - gameStartedTime;
-    if (!gameStarted && elapsedAfterGameStart > 100) {
+    if (!gameStarted) {
       RosiGameAnimationController.end();
 
       // leave some time for player to see crash value
