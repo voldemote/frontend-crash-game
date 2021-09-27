@@ -1,6 +1,10 @@
 class Text {
   static linkifyIntextURLS(text, plainText = false) {
-    const urls = text
+    if (!text) {
+      return '';
+    }
+
+    let urls = text
       .split(' ')
       .filter(
         snip => snip.startsWith('http://') || snip.startsWith('https://')
