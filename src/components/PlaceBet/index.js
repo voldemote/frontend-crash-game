@@ -91,10 +91,10 @@ const PlaceBet = () => {
   };
 
   const cashOut = () => {
-    setAnimate(true);
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
       .then(response => {
+        setAnimate(true);
         AlertActions.showSuccess(JSON.stringify(response));
       })
       .catch(error => {
