@@ -248,7 +248,10 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
           })
         );
       }
-    } else if (pathSlugs[1] === 'rosi-game') {
+    } else if (
+      currentAction[1] === 'rosi-game' ||
+      pathSlugs[1] === 'rosi-game'
+    ) {
       if (room) {
         yield put(
           WebsocketsActions.leaveRoom({
