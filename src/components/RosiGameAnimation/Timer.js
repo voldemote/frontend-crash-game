@@ -4,17 +4,13 @@ import { useEffect, useState } from 'react';
 const TIME_TO_FACTOR_RATIO = 0.5; // 1s = 0.5x
 const START_FACTOR = 1;
 
-function round5(x) {
-  return Math.floor(x / 5) * 5;
-}
-
 const Timer = ({ pause, startTimeMs }) => {
   const startTime = new Date(startTimeMs);
   const [elapsed, setElapsed] = useState(startTime.getTime());
   const elapsedSeconds = (elapsed * TIME_TO_FACTOR_RATIO) / 1000 + START_FACTOR;
   const wholePart = Math.trunc(elapsedSeconds);
   // round up decimal part to the previous multiple of 5. So it would count 40, 45, 50, 55 ...
-  const decimalPart = round5(
+  const decimalPart = Math.floor(
     (elapsedSeconds - Math.floor(elapsedSeconds)) * 100
   );
 
