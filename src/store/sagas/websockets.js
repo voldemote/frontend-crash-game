@@ -2,6 +2,7 @@ import { take, put, call, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { RosiGameActions } from '../actions/rosi-game';
 import { NotificationActions } from '../actions/notification';
+import { ActivitiesActions } from '../actions/activities';
 import _ from 'lodash';
 import ChatMessageType from '../../components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from '../actions/chat';
@@ -148,6 +149,13 @@ export function* init() {
       try {
         const payload = yield take(socketChannel);
         const type = _.get(payload, 'type');
+
+        //get listen for all type of events
+        // yield put(
+        //   ActivitiesActions.addActivity({
+        //     data: payload
+        //   })
+        // );
 
         switch (type) {
           case 'connect':
