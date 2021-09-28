@@ -124,7 +124,7 @@ const fetchHistoryChartData = function* ({ betId, params }) {
     Api.setToken(token);
 
     const { data } = yield call(() =>
-      Api.getEventHistoryChartData(betId, params)
+      Api.getEventHistoryChartData(betId ?? params.betId, params)
     );
 
     yield put(EventActions.fetchChartDataSuccess(data));

@@ -17,6 +17,7 @@ const InfoBox = ({
   position = POSITIONS.topLeft,
   iconType = IconType.info,
   iconClassName = ``,
+  autoWidth = false,
 }) => {
   const [showContent, setShowContent] = useState(false);
 
@@ -48,6 +49,7 @@ const InfoBox = ({
         <div
           className={classNames(
             styles.infoBoxContentContainer,
+            autoWidth ? styles.autoWidth : null,
             styles[position]
           )}
         >
