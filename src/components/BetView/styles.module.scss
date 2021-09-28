@@ -200,6 +200,10 @@
       align-items: flex-start;
     }
 
+    .labelWrapper {
+      display: flex;
+    }
+
     .label {
       color: $colorPrimaryDark;
       font-family: $fontRegular;

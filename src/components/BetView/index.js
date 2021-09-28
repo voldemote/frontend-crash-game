@@ -297,7 +297,12 @@ const BetView = ({
 
     return (
       <>
-        <label className={styles.label}>You trade:</label>
+        <div className={styles.labelWrapper}>
+          <label className={styles.label}>You trade:</label>
+          <InfoBox autoWidth={true} iconType={IconType.question}>
+            1 WFAIR equals 0.20€
+          </InfoBox>
+        </div>
         <TokenNumberInput
           value={convertedCommitment}
           setValue={onTokenNumberChange}
