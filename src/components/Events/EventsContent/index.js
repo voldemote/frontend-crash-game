@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
+import BetCard from '../../BetCard';
 
 function EventsContent({ eventType, categories, setCategories }) {
   const dispatch = useDispatch();
@@ -201,8 +202,9 @@ function EventsContent({ eventType, categories, setCategories }) {
               }}
               key={item._id}
             >
-              <EventCard
+              <BetCard
                 key={item._id}
+                betId={item._id}
                 title={item.marketQuestion}
                 organizer={''}
                 viewers={12345}
@@ -210,7 +212,7 @@ function EventsContent({ eventType, categories, setCategories }) {
                 tags={item.tags}
                 image={item.previewImageUrl}
                 eventEnd={item.endDate}
-                // streamUrl={item.streamUrl}
+                outcomes={item.outcomes}
               />
             </Link>
           ))}

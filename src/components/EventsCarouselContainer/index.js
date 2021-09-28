@@ -8,6 +8,7 @@ import EventCard from '../EventCard';
 import { EventActions } from '../../store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import styles from './styles.module.scss';
+import BetCard from 'components/BetCard';
 
 const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
   const location = useLocation();
@@ -121,8 +122,9 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
       const betId = _.get(bet, '_id');
       const eventSlug = _.get(bet, 'eventSlug');
       const betSlug = _.get(bet, 'slug');
-      const mappedTags = _.map(bet.tags, tag => tag.name);
+      // const mappedTags = _.map(bet.tags, tag => tag.name);
       const marketQuestion = _.get(bet, 'marketQuestion');
+      const outcomes = _.get(bet, 'outcomes');
 
       return (
         <Link
@@ -133,15 +135,14 @@ const EventsCarouselContainer = ({ events, eventType, fetchEvents }) => {
           }}
           className={styles.eventLink}
         >
-          <EventCard
+          <BetCard
             key={betId}
+            betId={betId}
             title={marketQuestion}
             organizer={''}
-            viewers={12345}
-            live={eventType === 'streamed'}
-            tags={mappedTags}
             image={bet.previewImageUrl}
-            eventEnd={bet.date}
+            eventEnd={bet.endDate}
+            outcomes={outcomes}
             eventCardClass={styles.eventCardHome}
           />
         </Link>
