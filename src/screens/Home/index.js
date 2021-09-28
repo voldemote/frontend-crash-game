@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
@@ -19,10 +19,14 @@ import State from '../../helper/State';
 import { select } from 'redux-saga/effects';
 import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
+import LandingPage from 'screens/LandingPage';
 
 const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
+  const userLoggedIn = useSelector(
+    state => state.authentication.authState === 'LOGGED_IN'
+  );
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -126,6 +130,8 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
       </div>
     );
   };
+
+  if (!userLoggedIn) return <LandingPage />;
 
   return (
     <BaseContainerWithNavbar>
