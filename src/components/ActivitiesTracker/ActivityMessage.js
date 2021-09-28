@@ -2,12 +2,8 @@ import _ from 'lodash';
 import { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import DateText from '../../helper/DateText';
-import ChatMessage from '../ChatMessage';
-import BetActionChatMessage from '../BetActionChatMessage';
-import ChatMessageType from '../ChatMessageWrapper/ChatMessageType';
 import styles from './styles.module.scss';
 import State from '../../helper/State';
-import { WebsocketsActions } from '../../store/actions/websockets';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
@@ -61,14 +57,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     }
 
     switch (activity.type) {
-      case 'Notification/EVENT_START':
-        return `Event [NAME] `;
-      case 'Notification/EVENT_RESOLVE':
-        return `Event resolved [EVENT DATA] `;
-      case 'Notification/EVENT_CANCEL':
-        return `Event cancelled [EVENT DATA] `;
-      case 'Notification/EVENT_NEW_REWARD':
-        return `New reward [EVENT DATA] `;
+      case 'Notification/EVENT_BET_CANCELED':
+        return `Event ${data.event.name} cancelled.`;
+      case 'Notification/EVENT_USER_REWARD':
+        return `New user reward.`;
       case 'Notification/EVENT_ONLINE':
         return `Stream ${data.event.name} has become online.`; //EDITED
       case 'Notification/EVENT_OFFLINE':
@@ -82,8 +74,8 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_NEW_BET':
         return (
           <div>
-            New bet has created $
-            {
+            New bet has created{' '}
+            <b>
               <a
                 target={'_blank'}
                 href={`${window.location.origin}/trade/${_.get(
@@ -93,7 +85,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
               >
                 {_.get(event, 'bets[0].marketQuestion')}
               </a>
-            }
+            </b>
             .
           </div>
         ); //EDITED
@@ -113,24 +105,37 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                 <b>{data.bet.marketQuestion}</b>
               </a>
             }{' '}
-            with {data.bet.outcomes[data.trade.outcomeIndex].name}.
+            with <b>{data.bet.outcomes[data.trade.outcomeIndex].name}</b>.
           </div>
         );
       case 'Notification/EVENT_BET_CASHED_OUT':
-        return `${user.username} has cashed out from ${data}.`;
+        return (
+          <div>
+            <b>{user.username}</b> has cashed out from{' '}
+            <b>{_.get(data, 'bet.marketQuestion')}</b>.
+          </div>
+        );
       case 'Notification/EVENT_BET_RESOLVED':
-        return `Event has been resolved [EVENT DATA] `;
+        return (
+          <div>
+            Event has been resolved <b>{getEventUrl(data)}</b>.
+          </div>
+        );
       default:
-        return '';
+        return null;
     }
   };
 
   const renderMessageContent = () => {
     const type = _.get(activity, 'type');
     const userId = _.get(activity, 'userId');
-    const user = State.getUser(userId, users);
-    const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
-    const userName = _.get(user, 'username', 'Unknown');
+    let user = State.getUser(userId, users);
+    // const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
+    // const userName = _.get(user, 'username', _.get(activity, 'data.user.username'));
+
+    if (!user) {
+      user = _.get(activity, 'data.user');
+    }
 
     return (
       <div className={classNames(styles.chatMessage, styles.messageItem)}>
@@ -140,12 +145,6 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           {prepareMessageByType(activity, user)}
         </div>
       </div>
-      // <ChatMessage
-      //   className={styles.messageItem}
-      //   // user={user}
-      //   message={prepareMessageByType(activity, user)}
-      //   dateString={dateString}
-      // />
     );
 
     return null;
