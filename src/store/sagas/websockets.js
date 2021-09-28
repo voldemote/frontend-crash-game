@@ -12,6 +12,7 @@ import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { EventActions } from '../actions/event';
+import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -103,7 +104,8 @@ function createSocketChannel(socket) {
 
     const onAnyListener = (eventName, data) => {
       const message = {
-        type: eventName,
+        type: 'any',
+        eventName,
         data,
       };
       emit(message);
@@ -213,21 +215,15 @@ export function* init() {
               })
             );
             break;
-          case 'Notification/EVENT_USER_REWARD':
-          case 'Notification/EVENT_ONLINE':
-          case 'Notification/EVENT_OFFLINE':
-          case 'Notification/EVENT_NEW':
-          case 'Notification/EVENT_NEW_BET':
-          case 'Notification/EVENT_BET_PLACED':
-          case 'Notification/EVENT_BET_CASHED_OUT':
-          case 'Notification/EVENT_BET_RESOLVED':
-          case 'Notification/EVENT_BET_CANCELED':
-            yield put(
-              NotificationActions.addActivity({
-                activity: payload.data,
-                eventName: payload.type,
-              })
-            );
+          case 'any':
+            if (trackedActivities.indexOf(payload.eventName) > -1) {
+              yield put(
+                NotificationActions.addActivity({
+                  activity: payload.data,
+                  eventName: payload.eventName,
+                })
+              );
+            }
             break;
         }
       } catch (err) {
