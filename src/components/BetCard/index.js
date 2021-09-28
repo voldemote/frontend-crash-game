@@ -19,8 +19,6 @@ const BetCard = ({
     };
   };
 
-  console.log(outcomes);
-
   const [outcomeValues, setOutcomeValues] = useState([
     ...outcomes.map(outcome => ({ ...outcome, amount: '...' })),
   ]);
