@@ -80,7 +80,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_NEW_BET':
         return (
           <div>
-            New bet has created{' '}
+            New bet has been created{' '}
             <b>
               <a
                 target={'_blank'}
