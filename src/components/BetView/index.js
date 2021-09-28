@@ -334,6 +334,9 @@ const BetView = ({
 
     return (
       <>
+        {evidenceSource && (
+          <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
+        )}
         <p
           className={classNames(
             styles.tradeDesc,
@@ -353,7 +356,7 @@ const BetView = ({
             className={styles.seeMore}
             onClick={() => setShowAllEvidence(!showAllEvidence)}
           >
-            {showAllEvidence ? 'SHOW LESS' : 'SEE MORE'}
+            {showAllEvidence ? 'HIDE' : 'LEARN MORE'}
           </button>
         )}
       </>
