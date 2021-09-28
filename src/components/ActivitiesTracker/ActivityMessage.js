@@ -51,6 +51,15 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           {_.get(event, 'bets[0].marketQuestion')}
         </a>
       );
+    } else {
+      return (
+        <a
+          target={'_blank'}
+          href={`${window.location.origin}/trade/${eventSlug}/bet`}
+        >
+          {_.get(event, 'name')}
+        </a>
+      );
     }
   };
 
