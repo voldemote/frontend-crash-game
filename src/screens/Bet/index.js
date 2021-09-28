@@ -137,9 +137,10 @@ const Bet = ({
     const currentBet = _.find(eventBets, {
       slug: betSlug,
     });
-    const currentBetId = isNonStreamed
-      ? _.get(event, 'bets[0]._id')
-      : _.get(currentBet, '_id');
+    const currentBetId =
+      isNonStreamed || event.bets.length === 1
+        ? _.get(event, 'bets[0]._id')
+        : _.get(currentBet, '_id');
     setBetId(currentBetId);
 
     if (betSlug) {
@@ -166,7 +167,7 @@ const Bet = ({
       setBetAction(BET_ACTIONS.EventTrades);
       selectSingleBet();
     }
-    if (isMobile) {
+    if (isMobile && (isNonStreamed || relatedBets.legnth === 1)) {
       onBetClose()();
       setBetAction(BET_ACTIONS.EventTrades);
     }
@@ -419,7 +420,7 @@ const Bet = ({
           )}
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          {!isNonStreamed ? (
+          {!isNonStreamed && relatedBets.length > 1 ? (
             <div>{renderRelatedBetList(true)}</div>
           ) : (
             <BetView
