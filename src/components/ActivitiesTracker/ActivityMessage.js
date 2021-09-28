@@ -128,7 +128,8 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_BET_CASHED_OUT':
         return (
           <div>
-            <b>{_.get(user, 'username')}</b> has cashed out from{' '}
+            <b>{_.get(user, 'username')}</b> has cashed out{' '}
+            <b>{_.get(data, 'amount')} WFAIR</b> from{' '}
             <b>
               <a
                 target={'_blank'}
