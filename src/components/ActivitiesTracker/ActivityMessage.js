@@ -26,23 +26,29 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
   const getEventUrl = data => {
     const event = _.get(data, 'event');
+    const eventType = _.get(event, 'type');
+    const eventSlug = _.get(event, 'slug');
+    const bets = _.get(event, 'bets', []);
 
-    if (event.type === 'streamed') {
+    if (eventType === 'streamed') {
       return (
         <a
           target={'_blank'}
-          href={`${window.location.origin}/trade/${event.slug}`}
+          href={`${window.location.origin}/trade/${_.get(event, 'slug')}`}
         >
-          {event.name}
+          {_.get(event, 'name')}
         </a>
       );
-    } else if (event.type === 'non-streamed' && event.bets.length === 1) {
+    } else if (eventType === 'non-streamed' && bets.length === 1) {
       return (
         <a
           target={'_blank'}
-          href={`${window.location.origin}/trade/${event.slug}/${event.bets[0].slug}`}
+          href={`${window.location.origin}/trade/${eventSlug}/${_.get(
+            bets,
+            '[0].slug'
+          )}`}
         >
-          {event.bets[0].marketQuestion}
+          {_.get(event, 'bets[0].marketQuestion')}
         </a>
       );
     }
@@ -58,13 +64,13 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     switch (activity.type) {
       case 'Notification/EVENT_BET_CANCELED':
-        return `Event ${data.event.name} cancelled.`;
+        return `Event ${_.get(data, 'event.name')} cancelled.`;
       case 'Notification/EVENT_USER_REWARD':
         return `New user reward.`;
       case 'Notification/EVENT_ONLINE':
-        return `Stream ${data.event.name} has become online.`; //EDITED
+        return `Stream ${_.get(data, 'event.name')} has become online.`; //EDITED
       case 'Notification/EVENT_OFFLINE':
-        return `Stream ${data.event.name} has become offline.`; //EDITED
+        return `Stream ${_.get(data, 'event.name')} has become offline.`; //EDITED
       case 'Notification/EVENT_NEW':
         return (
           <div>
@@ -90,10 +96,12 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           </div>
         ); //EDITED
       case 'Notification/EVENT_BET_PLACED':
+        const outcomeIndex = _.get(data, 'trade.outcomeIndex');
+        const outcomesName = _.get(data, `bet.outcomes[${outcomeIndex}].name`);
         return (
           <div>
             <b>{_.get(user, 'username', 'Unknown user')}</b> has bet{' '}
-            {data.trade.investmentAmount} WFAIR on{' '}
+            {_.get(data, 'trade.investmentAmount')} WFAIR on{' '}
             {
               <a
                 target={'_blank'}
@@ -102,16 +110,16 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                   'slug'
                 )}/${_.get(data, 'bet.slug')}`}
               >
-                <b>{data.bet.marketQuestion}</b>
+                <b>{_.get(data, 'bet.marketQuestion')}</b>
               </a>
             }{' '}
-            with <b>{data.bet.outcomes[data.trade.outcomeIndex].name}</b>.
+            with <b>{outcomesName}</b>.
           </div>
         );
       case 'Notification/EVENT_BET_CASHED_OUT':
         return (
           <div>
-            <b>{user.username}</b> has cashed out from{' '}
+            <b>{_.get(user, 'username')}</b> has cashed out from{' '}
             <b>
               <a
                 target={'_blank'}
@@ -120,7 +128,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                   'slug'
                 )}/${_.get(data, 'bet.slug')}`}
               >
-                <b>{data.bet.marketQuestion}</b>
+                <b>{_.get(data, 'bet.marketQuestion')}</b>
               </a>
             </b>
             .
