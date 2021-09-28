@@ -34,7 +34,7 @@ const RosiGameAnimation = () => {
   // factor, which is time elapsed since game started. This value is reset once first game ends and is not
   // used after that.
   const [timerStartTime, setTimerStartTime] = useState(
-    gameStarted ? Date.now() - gameStartedTime : 0
+    gameStarted ? Date.now() - gameStartedTime : 1
   );
 
   useEffect(() => {
