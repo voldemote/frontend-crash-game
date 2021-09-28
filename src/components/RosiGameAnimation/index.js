@@ -58,7 +58,7 @@ const RosiGameAnimation = () => {
       return;
     }
 
-    if (!gameStarted) {
+    if (!gameStarted && !isPreparingRound) {
       RosiGameAnimationController.end();
 
       // leave some time for player to see crash value
