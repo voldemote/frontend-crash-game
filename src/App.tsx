@@ -55,8 +55,7 @@ const App = () => {
               path={Routes.privacyPolicy}
               component={PrivacyPolicy}
             />
-            {/* <Route exact path={Routes.home} component={Home} /> */}
-            <GuestRoute exact path={Routes.home} component={LandingPage} />
+            <Route exact path={Routes.home} component={Home} />
             <Route exact path={Routes.bet} component={Bet} />
             <Route exact path={Routes.betApproveDirect} component={Home} />
             <Route exact path={Routes.liveEvents} component={LiveEvents} />
