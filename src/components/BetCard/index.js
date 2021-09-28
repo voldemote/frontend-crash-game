@@ -1,92 +1,87 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import { EVENT_STATES } from 'constants/EventStates';
-import LiveBadge from '../LiveBadge';
-import ViewerBadge from '../ViewerBadge';
-import OfflineBadge from '../OfflineBadge';
-import Tags from '../Tags';
 import TimeLeftCounter from '../TimeLeftCounter';
 import classNames from 'classnames';
-import EmbedVideo from 'components/EmbedVideo';
+import { getOutcomes } from 'api';
 
 const BetCard = ({
+  betId,
   onClick,
   title,
-  organizer,
   image,
-  state,
   viewers,
   tags,
   eventEnd,
   eventCardClass,
-  streamUrl,
+  outcomes,
 }) => {
-  const isOnlineState = state === EVENT_STATES.ONLINE;
-  const isOfflineState = state === EVENT_STATES.OFFLINE;
-
   const getEventCardStyle = () => {
     return {
       backgroundImage: 'url("' + image + '")',
     };
   };
 
-  const [inHover, setHover] = useState(false);
+  console.log(outcomes);
+
+  const [outcomeValues, setOutcomeValues] = useState([
+    ...outcomes.map(outcome => ({ ...outcome, amount: '...' })),
+  ]);
+
+  const roundOutcome = value => {
+    return Math.ceil((1 / value) * 100) / 100;
+  };
+
+  useEffect(() => {
+    const fetchOutcome = async () => {
+      const result = await getOutcomes(betId, 1);
+      if (result) {
+        const populatedValues = result.data;
+        const mergedData = outcomes.map(outcome => ({
+          ...outcome,
+          amount: roundOutcome(+populatedValues[outcome.index].outcome),
+        }));
+        setOutcomeValues(mergedData);
+      }
+    };
+
+    fetchOutcome();
+  }, []);
 
   return (
     <div className={styles.betCardContainer} onClick={onClick}>
-      <div
-        className={classNames(styles.betCard, eventCardClass)}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        {isOnlineState && inHover ? (
-          <>
-            <EmbedVideo
-              className={styles.eventVideoBackground}
-              video={streamUrl}
-              muted={true}
-              controls={false}
-            />
-            <div className={styles.betCardVideoBackground}></div>
-          </>
-        ) : (
-          <>
-            <div
-              className={styles.betCardBackgroundBlur}
-              style={getEventCardStyle()}
-            ></div>
-            <div className={styles.betCardBackground}></div>
-            <div>
-              {isOnlineState && (
-                <>
-                  <LiveBadge />
-                  <ViewerBadge viewers={viewers} />
-                </>
-              )}
-              {isOfflineState && <OfflineBadge />}
+      <div className={classNames(styles.betCard, eventCardClass)}>
+        <>
+          <div
+            className={styles.betCardBackgroundBlur}
+            style={getEventCardStyle()}
+          ></div>
+          <div className={styles.betCardBackground}></div>
+          <div
+            className={classNames(styles.content, {
+              // [styles.timerActive]: eventEnd,
+            })}
+          >
+            <span className={styles.title}>{title}</span>
+            <div className={styles.outcomesContainer}>
+              {outcomeValues.map(outcome => (
+                <div className={styles.outcome}>
+                  <span className={styles.amount}>{outcome.amount}</span>
+                  <span className={styles.outcomeName} title={outcome.name}>
+                    {outcome.name}
+                  </span>
+                </div>
+              ))}
             </div>
-            <div
-              className={classNames(styles.content, {
-                // [styles.timerActive]: eventEnd,
-              })}
-            >
-              <span className={styles.title}>
-                {title}
-                <br />
-                {organizer}
+          </div>
+          {eventEnd && (
+            <div className={styles.timer}>
+              <span className={styles.timerTitle}>Event ends in:</span>
+              <span>
+                <TimeLeftCounter endDate={eventEnd} viewSeconds={true} />
               </span>
             </div>
-            {eventEnd && (
-              <div className={styles.timer}>
-                <span className={styles.timerTitle}>Event ends in:</span>
-                <span>
-                  <TimeLeftCounter endDate={eventEnd} viewSeconds={true} />
-                </span>
-              </div>
-            )}
-          </>
-        )}
+          )}
+        </>
       </div>
     </div>
   );

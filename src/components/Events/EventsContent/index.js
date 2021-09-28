@@ -203,6 +203,7 @@ function EventsContent({ eventType, categories, setCategories }) {
             >
               <BetCard
                 key={item._id}
+                betId={item._id}
                 title={item.marketQuestion}
                 organizer={''}
                 viewers={12345}
@@ -210,7 +211,7 @@ function EventsContent({ eventType, categories, setCategories }) {
                 tags={item.tags}
                 image={item.previewImageUrl}
                 eventEnd={item.endDate}
-                // streamUrl={item.streamUrl}
+                outcomes={item.outcomes}
               />
             </Link>
           ))}
