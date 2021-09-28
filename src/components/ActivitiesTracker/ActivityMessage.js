@@ -112,7 +112,18 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{user.username}</b> has cashed out from{' '}
-            <b>{_.get(data, 'bet.marketQuestion')}</b>.
+            <b>
+              <a
+                target={'_blank'}
+                href={`${window.location.origin}/trade/${_.get(
+                  event,
+                  'slug'
+                )}/${_.get(data, 'bet.slug')}`}
+              >
+                <b>{data.bet.marketQuestion}</b>
+              </a>
+            </b>
+            .
           </div>
         );
       case 'Notification/EVENT_BET_RESOLVED':
