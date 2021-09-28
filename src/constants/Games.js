@@ -31,7 +31,7 @@ export const CASINO_GAMES = [
 export const SLOTS_GAMES = [
   {
     background: Second,
-    title: 'Name Games',
+    title: 'Dice',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
@@ -39,7 +39,7 @@ export const SLOTS_GAMES = [
   },
   {
     background: Third,
-    title: 'Name Games',
+    title: 'Mines',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
@@ -47,7 +47,15 @@ export const SLOTS_GAMES = [
   },
   {
     background: Fourth,
-    title: 'Name Games',
+    title: 'Hi Lo',
+    subtitle: 'lorem ipsum',
+    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    active: false,
+    linkTo: '',
+  },
+  {
+    background: Fourth,
+    title: 'Coin Flip',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
@@ -58,7 +66,7 @@ export const SLOTS_GAMES = [
 export const SPORTS_BETTING_GAMES = [
   {
     background: Fifth,
-    title: 'Name Games',
+    title: 'Esports',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
@@ -66,7 +74,7 @@ export const SPORTS_BETTING_GAMES = [
   },
   {
     background: Sixth,
-    title: 'Name Games',
+    title: 'Baseball',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
@@ -74,7 +82,7 @@ export const SPORTS_BETTING_GAMES = [
   },
   {
     background: Seventh,
-    title: 'Name Games',
+    title: 'Football',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
@@ -82,7 +90,7 @@ export const SPORTS_BETTING_GAMES = [
   },
   {
     background: Eight,
-    title: 'Name Games',
+    title: 'Tennis',
     subtitle: 'lorem ipsum',
     description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
     active: false,
