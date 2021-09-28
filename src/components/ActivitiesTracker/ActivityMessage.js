@@ -31,11 +31,18 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     const bets = _.get(event, 'bets', []);
 
     if (eventType === 'streamed') {
+      const bet = _.get(data, 'bet');
+      let thisUrl = `${window.location.origin}/trade/${_.get(event, 'slug')}`;
+
+      if (bet) {
+        thisUrl = `${window.location.origin}/trade/${_.get(
+          event,
+          'slug'
+        )}/${_.get(bet, 'slug')}`;
+      }
+
       return (
-        <a
-          target={'_blank'}
-          href={`${window.location.origin}/trade/${_.get(event, 'slug')}`}
-        >
+        <a target={'_blank'} href={thisUrl}>
           {_.get(event, 'name')}
         </a>
       );
@@ -49,6 +56,15 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           )}`}
         >
           {_.get(event, 'bets[0].marketQuestion')}
+        </a>
+      );
+    } else {
+      return (
+        <a
+          target={'_blank'}
+          href={`${window.location.origin}/trade/${eventSlug}/bet`}
+        >
+          {_.get(event, 'name')}
         </a>
       );
     }
@@ -66,7 +82,11 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_BET_CANCELED':
         return `Event ${_.get(data, 'event.name')} cancelled.`;
       case 'Notification/EVENT_USER_REWARD':
-        return `New user reward.`;
+        return (
+          <div>
+            <b>{_.get(user, 'username', 'Unknown user')}</b> has been rewarded.
+          </div>
+        );
       case 'Notification/EVENT_ONLINE':
         return `Stream ${_.get(data, 'event.name')} has become online.`; //EDITED
       case 'Notification/EVENT_OFFLINE':
@@ -119,7 +139,8 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_BET_CASHED_OUT':
         return (
           <div>
-            <b>{_.get(user, 'username')}</b> has cashed out from{' '}
+            <b>{_.get(user, 'username')}</b> has cashed out{' '}
+            <b>{_.get(data, 'amount')} WFAIR</b> from{' '}
             <b>
               <a
                 target={'_blank'}
@@ -137,7 +158,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_BET_RESOLVED':
         return (
           <div>
-            Event has been resolved <b>{getEventUrl(data)}</b>.
+            Bet <b>{getEventUrl(data)}</b> has been resolved.
           </div>
         );
       default:
@@ -147,7 +168,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
   const renderMessageContent = () => {
     const type = _.get(activity, 'type');
-    const userId = _.get(activity, 'userId');
+    const userId = _.get(activity, 'userId', _.get(activity, 'data.userId'));
     let user = State.getUser(userId, users);
     // const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
     // const userName = _.get(user, 'username', _.get(activity, 'data.user.username'));
@@ -159,9 +180,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     return (
       <div className={classNames(styles.chatMessage, styles.messageItem)}>
         {/*<img src={profilePicture} alt={userName} />*/}
-        <div>
-          <small className={styles.dateString}>{dateString}</small>
+        <div className={styles.dateStringContainer}>
           {prepareMessageByType(activity, user)}
+          <small className={styles.dateString}>{dateString}</small>
         </div>
       </div>
     );

@@ -111,8 +111,6 @@ function createSocketChannel(socket) {
       emit(message);
     };
 
-    socket.onAny(onAnyListener);
-
     // setup the subscription
     socket.on('connect', connectHandler);
     socket.on('chatMessage', chatMessageHandler);
@@ -125,6 +123,7 @@ function createSocketChannel(socket) {
     socket.on('CASINO_END', casinoEndHandler);
     socket.on('CASINO_TRADE', casinoTradeHandler);
     socket.on('CASINO_REWARD', casinoRewardHandler);
+    socket.onAny(onAnyListener);
 
     const unsubscribe = () => {
       socket.off('chatMessage', chatMessageHandler);
