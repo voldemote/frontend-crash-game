@@ -9,8 +9,6 @@ const BetCard = ({
   onClick,
   title,
   image,
-  viewers,
-  tags,
   eventEnd,
   eventCardClass,
   outcomes,
