@@ -11,8 +11,7 @@
   .chatMessage {
     position: relative;
     color: $colorWhite;
-    padding: 1rem 1.5rem;
-    padding-right: 40px;
+    padding: 1rem 20px;
     border-radius: 10px;
     background-color: $colorWhite10;
     display: inline-flex;
@@ -59,13 +58,21 @@
     }
   }
 
+  .dateStringContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .dateString {
-    position: absolute;
-    right: 10px;
-    top: 0;
-    bottom: 0;
+    position: relative;
     display: flex;
     align-items: center;
+    right: -6px;
+    text-align: center;
+    width: 47px;
+    justify-content: flex-end;
+    text-align: right;
   }
 
   .messageItem {

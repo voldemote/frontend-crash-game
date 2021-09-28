@@ -168,9 +168,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     return (
       <div className={classNames(styles.chatMessage, styles.messageItem)}>
         {/*<img src={profilePicture} alt={userName} />*/}
-        <div>
-          <small className={styles.dateString}>{dateString}</small>
+        <div className={styles.dateStringContainer}>
           {prepareMessageByType(activity, user)}
+          <small className={styles.dateString}>{dateString}</small>
         </div>
       </div>
     );
