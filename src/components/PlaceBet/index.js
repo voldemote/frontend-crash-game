@@ -135,7 +135,7 @@ const PlaceBet = () => {
           className={classNames(styles.button, styles.buttonDisabled)}
           onClick={user.isLoggedIn ? () => {} : showLoginPopup}
         >
-          {user.isLoggedIn ? 'Waiting...' : 'Join To Start Betting'}
+          {user.isLoggedIn ? 'Bet Placed' : 'Join To Start Betting'}
         </span>
       );
     } else {
