@@ -47,9 +47,7 @@ const ActivitiesTracker = ({
           console.error("Can't get trade by id:", err);
         });
 
-        await addInitialActivities(initialActivities).catch(err => {
-          console.error('[addInitialActivities] err', err);
-        });
+        addInitialActivities(initialActivities);
       })().catch(err => {
         console.error('initialNotification error', err);
       });
