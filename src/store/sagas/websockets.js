@@ -273,6 +273,8 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
             roomId: event._id,
           })
         );
+
+        return;
       }
     }
     if (currentAction[1] === 'rosi-game' || pathSlugs[1] === 'rosi-game') {
@@ -291,6 +293,8 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
           roomId: ROSI_GAME_EVENT_ID,
         })
       );
+
+      return;
     } else {
       if (room) {
         yield put(
