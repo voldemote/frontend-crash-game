@@ -193,10 +193,21 @@ export function* init() {
             break;
           case ChatMessageType.pulloutBet:
           case ChatMessageType.createBet:
-          case ChatMessageType.placeBet:
           case ChatMessageType.event:
           case ChatMessageType.game:
           case ChatMessageType.user:
+            yield put(
+              ChatActions.addMessage({
+                roomId: payload.roomId,
+                message: payload,
+              })
+            );
+            break;
+          case ChatMessageType.placeBet:
+            const chartParams = yield select(state => state.event.chartParams);
+            yield put(
+              EventActions.initiateFetchChartData(payload.betId, chartParams)
+            );
             yield put(
               ChatActions.addMessage({
                 roomId: payload.roomId,

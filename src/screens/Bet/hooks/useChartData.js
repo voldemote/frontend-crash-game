@@ -56,11 +56,10 @@ export function useChartData(betId) {
           ...currentParams.current,
           ...chartParams,
         };
-        const filter = filterMap.find(
-          f => f.rangeValue === chartParams.rangeValue
+        const active = Object.keys(filterMap).find(
+          key => filterMap[key].rangeValue === chartParams.rangeValue
         );
-        debugger;
-        // if (filter) setFilterActive(filter)
+        if (active) setFilterActive(active);
       }
       dispatch(
         EventActions.initiateFetchChartData(betId, currentParams.current)
