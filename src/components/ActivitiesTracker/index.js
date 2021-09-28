@@ -50,9 +50,7 @@ const ActivitiesTracker = ({
         await addInitialActivities(initialActivities).catch(err => {
           console.error('[addInitialActivities] err', err);
         });
-      })().catch(err => {
-        console.error('initialNotification error', err);
-      });
+      })();
     }
   }, [isMount]);
 
