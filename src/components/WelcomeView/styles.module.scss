@@ -41,14 +41,19 @@
     padding: 0 30px;
 
     .welcomeTextHeadline {
-      font-size: 50px;
+      font-size: 35px;
       margin-bottom: 10px;
       position: relative;
       text-align: center;
       z-index: 1;
 
+      span {
+        font-size: 30px;
+        vertical-align: top;
+      }
+
       @media (min-width: $screen-sm) {
-        font-size: 66px;
+        font-size: 50px;
       }
 
       .welcomeTextHeadlineUnderline {
@@ -61,13 +66,14 @@
 
         @media (min-width: $screen-sm) {
           left: 5%;
-          width: 100%;
+          width: 90%;
         }
       }
     }
 
     .welcomeTextText,
     .welcomeTextTextBelow {
+      margin-top: 20px;
       font-size: 20px;
 
       @media (min-width: $screen-sm) {
@@ -80,6 +86,7 @@
       font-size: 12px;
       font-family: $fontRegular;
       text-align: justify;
+      opacity: 0.7;
     }
 
     .readmore {

@@ -23,10 +23,7 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
     const name = _.get(user, 'name');
 
     return (
-      <span className={styles.welcomeHeadline}>
-        Welcome {name}, <br />
-        free for full Wallfair experience!
-      </span>
+      <span className={styles.welcomeHeadline}>Welcome! We just sent you</span>
     );
   };
 
@@ -35,7 +32,11 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
       <div className={styles.welcomeTextContainer}>
         <span className={styles.welcomeTextHeadline}>
           5.000 {TOKEN_NAME}
+          <span>*</span>
           <span className={styles.welcomeTextHeadlineUnderline}></span>
+        </span>
+        <span className={styles.welcomeHeadline}>
+          to get you started on the full Wallfair experience!
         </span>
         <span className={styles.welcomeTextText}>
           Refer a friend and get additional 500 {TOKEN_NAME}.
@@ -48,9 +49,10 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
     return (
       <div className={styles.welcomeTextContainer}>
         <span className={styles.disclaimer}>
-          Please be aware that the platform you are currently using is based on
-          the virtual WFAIR tokens that have been implemented with the purpose
-          to provide a full impression of the Wallfair gaming experience.{' '}
+          * Please be aware that the platform you are currently using is based
+          on the virtual WFAIR tokens that have been implemented with the
+          purpose to provide a full impression of the Wallfair gaming
+          experience.{' '}
           {!readMore && (
             <span className={styles.readmore} onClick={handleClickReadMore}>
               READ MORE
