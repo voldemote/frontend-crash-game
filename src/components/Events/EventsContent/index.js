@@ -119,7 +119,16 @@ function EventsContent({ eventType, categories, setCategories }) {
         </section>
       )}
       <section className={styles.title}>
-        {eventType === 'streamed' ? 'Current Live Streams' : 'Events'}
+        <span>
+          {eventType === 'streamed' ? 'Current Live Streams' : 'Events'}
+        </span>
+        <Icon
+          className={styles.questionIcon}
+          iconType={IconType.question}
+          iconTheme={IconTheme.white}
+          height={25}
+          width={25}
+        />
       </section>
       <section className={styles.header}>
         <div className={styles.categories}>

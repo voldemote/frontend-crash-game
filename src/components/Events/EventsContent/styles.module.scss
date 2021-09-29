@@ -1,6 +1,9 @@
 @import '../../../styles/all';
 
 .title {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -11,6 +14,16 @@
 
   margin: 32px auto 0;
   width: 80%;
+
+  .questionIcon {
+    svg {
+      g,
+      path,
+      circle {
+        fill: $colorYellow;
+      }
+    }
+  }
 
   @media (max-width: $screen-sm) {
     margin: 0;
