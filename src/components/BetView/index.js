@@ -196,12 +196,6 @@ const BetView = ({
 
     if (validInput) {
       placeBet(betId, commitment, choice);
-
-      if (event.type === 'non-streamed') {
-        setTimeout(() => {
-          handleChartDirectionFilter();
-        }, 1000);
-      }
     }
   };
 
