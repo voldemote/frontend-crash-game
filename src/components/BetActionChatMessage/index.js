@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useRef, useEffect, useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import Routes from '../../constants/Routes';
@@ -10,13 +10,13 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'store/selectors/authentication';
 import { convert } from 'helper/Currency';
+import { useChatIntersection } from '../../hooks/useChatIntersection';
 
 const BetActionChatMessage = ({
   chatMessageType,
   user,
   message,
   dateString,
-  observer,
   parentRef,
   lastMessage,
 }) => {
@@ -37,23 +37,7 @@ const BetActionChatMessage = ({
   const outcomeValue = _.get(betOutcome, 'name');
 
   const [isVisible, setVisible] = useState(false);
-  const domRef = useRef(null);
-
-  useEffect(() => {
-    const { current } = domRef;
-    const intObserver = new IntersectionObserver(_ => {
-      setVisible(observer(parentRef, domRef, true));
-    });
-
-    intObserver.observe(current);
-
-    return () => {
-      if (current) {
-        intObserver.unobserve(current);
-        intObserver.disconnect(current);
-      }
-    };
-  }, []);
+  const elementRef = useChatIntersection(parentRef, setVisible);
 
   if (!user) {
     return null;
@@ -110,7 +94,7 @@ const BetActionChatMessage = ({
         lastMessage ? styles.newMessage : null,
         isVisible ? styles.isVisible : null
       )}
-      ref={domRef}
+      ref={elementRef}
       onClick={onClick}
     >
       <ProfilePicture user={user} width={20} height={20} />

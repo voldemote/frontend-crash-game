@@ -2,37 +2,21 @@ import _ from 'lodash';
 import styles from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import classNames from 'classnames';
-import { useRef, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useChatIntersection } from '../../hooks/useChatIntersection';
 
 const ChatMessage = ({
   user,
   message,
   dateString,
   className,
-  observer,
   parentRef,
   lastMessage,
 }) => {
   const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
   const userName = _.get(user, 'username', 'Unknown');
   const [isVisible, setVisible] = useState(false);
-  const domRef = useRef(null);
-
-  useEffect(() => {
-    const { current } = domRef;
-    const intObserver = new IntersectionObserver(_ => {
-      setVisible(observer(parentRef, domRef, true));
-    });
-
-    intObserver.observe(current);
-
-    return () => {
-      if (current) {
-        intObserver.unobserve(current);
-        intObserver.disconnect(current);
-      }
-    };
-  }, []);
+  const elementRef = useChatIntersection(parentRef, setVisible);
 
   return (
     <div
@@ -42,7 +26,7 @@ const ChatMessage = ({
         lastMessage ? styles.newMessage : null,
         isVisible ? styles.isVisible : null
       )}
-      ref={domRef}
+      ref={elementRef}
     >
       <img src={profilePicture} alt={userName} />
       <div>
