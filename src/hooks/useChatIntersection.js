@@ -20,7 +20,7 @@ export const useChatIntersection = (parentRef, setVisible) => {
       setVisible(isInView(parentRef, elementRef, true));
     });
 
-    intObserver.observe(current);
+    if (current) intObserver.observe(current);
 
     return () => {
       if (current) {
