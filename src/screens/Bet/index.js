@@ -46,6 +46,8 @@ import EventTypes from 'constants/EventTypes';
 import Share from '../../components/Share';
 import useTrades from '../../hooks/useTrades';
 import BetState from 'constants/BetState';
+import TextHelper from '../../helper/Text';
+import TimeCounter from '../../components/TimeCounter';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -93,6 +95,10 @@ const Bet = ({
 
   const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
   const { activeBets } = useTrades(event?._id);
+
+  const bet = _.find(_.get(event, 'bets', []), {
+    _id: betId,
+  });
 
   const status = {
     active: 1,
@@ -320,11 +326,13 @@ const Bet = ({
         event.type === 'streamed'
       ),
       EventTradeViewsHelper.getView('Event Trades'),
-      EventTradeViewsHelper.getView(
-        'My Trades',
-        isLoggedIn() ? activeBets.length : 0,
-        true
-      ),
+      event.type === 'non-streamed'
+        ? EventTradeViewsHelper.getView('Evidence', undefined, false)
+        : EventTradeViewsHelper.getView(
+            'My Trades',
+            isLoggedIn() ? activeBets.length : 0,
+            true
+          ),
     ];
 
     return (
@@ -395,6 +403,7 @@ const Bet = ({
   };
 
   const renderMobileContent = () => {
+    let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
     return (
       <Swiper
         slidesPerView={1}
@@ -438,7 +447,28 @@ const Bet = ({
           )}
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          <div>{renderMyTradesList()}</div>
+          {isNonStreamed ? (
+            bet && (
+              <div>
+                <div className={styles.evidenceSource}>
+                  <b>Evidence source: </b>{' '}
+                  <span
+                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                  ></span>
+                </div>
+                <br />
+                <div className={styles.evidenceDescription}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: bet.evidenceDescription,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            )
+          ) : (
+            <div>{renderMyTradesList()}</div>
+          )}
         </SwiperSlide>
       </Swiper>
     );
@@ -458,7 +488,28 @@ const Bet = ({
               <span>Go back to all tracks</span>
             </div>
           )}
+
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
+            {![BetState.resolved, BetState.closed].includes(
+              _.get(bet, 'status')
+            ) && (
+              <>
+                <div
+                  className={classNames(
+                    styles.timeLeftCounterContainer,
+                    styles.fixedTimer,
+                    styles.timerOnlyDesktop
+                  )}
+                >
+                  <div className={styles.timerLabel}>Event ends in:</div>
+
+                  <div className={styles.timerParts}>
+                    <TimeCounter endDate={bet.endDate} />
+                  </div>
+                </div>
+              </>
+            )}
+
             <BetView
               betId={betId}
               eventId={event._id}
@@ -487,6 +538,55 @@ const Bet = ({
 
   const hasOnlineState = event?.state === EVENT_STATES.ONLINE;
   const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
+
+  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
+
+  const renderTradeDesc = (withTitle = false) => {
+    const evidenceSource = bet.evidenceSource;
+
+    return (
+      <>
+        <div className={styles.descriptionContainer}>
+          {evidenceSource && withTitle && (
+            <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
+          )}
+          <p className={classNames(styles.tradeDesc)}>
+            <div
+              className={styles.betDescription}
+              dangerouslySetInnerHTML={{ __html: bet.description }}
+            ></div>
+            <div className={styles.evidenceSource}>
+              <b>Evidence source: </b>{' '}
+              <span
+                dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+              ></span>
+            </div>
+          </p>
+        </div>
+
+        <div className={styles.timerOnlyMobile}>
+          {![BetState.resolved, BetState.closed].includes(
+            _.get(bet, 'status')
+          ) && (
+            <>
+              <div
+                className={classNames(
+                  styles.timeLeftCounterContainer,
+                  styles.fixedTimer
+                )}
+              >
+                <div className={styles.timerLabel}>Event ends in:</div>
+
+                <div className={styles.timerParts}>
+                  <TimeCounter endDate={bet.endDate} />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </>
+    );
+  };
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} withoutPaddingBottom={true}>
@@ -558,8 +658,9 @@ const Bet = ({
             >
               {event.type === 'non-streamed' ? (
                 <div className={styles.chart}>
+                  {bet && renderTradeDesc()}
                   <Chart
-                    height={400}
+                    height={matchMediaMobile ? 300 : 400}
                     data={chartData}
                     filterActive={filterActive}
                     handleChartPeriodFilter={handleChartPeriodFilter}
@@ -599,6 +700,25 @@ const Bet = ({
               />
             ) : (
               <News />
+            )}
+
+            {selectedTab === 'evidence' && (
+              <div>
+                <div className={styles.evidenceSource}>
+                  <b>Evidence source: </b>{' '}
+                  <span
+                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                  ></span>
+                </div>
+                <br />
+                <div className={styles.evidenceDescription}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: bet.evidenceDescription,
+                    }}
+                  ></div>
+                </div>
+              </div>
             )}
           </div>
           <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
