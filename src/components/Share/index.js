@@ -75,6 +75,12 @@ const Share = props => {
 
   let matchMedia = window.matchMedia(`(max-width: ${768}px)`).matches;
 
+  const shareData = {
+    title: dynamicTitle,
+    text: dynamicText,
+    url: realUrl,
+  };
+
   return (
     <div
       ref={closeOutside}
@@ -85,7 +91,13 @@ const Share = props => {
           ref={shareButtonRef}
           className={classNames(styles.shareButton)}
           onClick={e => {
-            setShowPopover(show => !show);
+            if (navigator.canShare) {
+              navigator.share(shareData);
+              setShowPopover(false);
+              return;
+            } else {
+              setShowPopover(show => !show);
+            }
           }}
         >
           <div className={styles.shareIcon}>
