@@ -333,31 +333,31 @@ const BetView = ({
 
     return (
       <>
-        {evidenceSource && withTitle && (
-          <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
-        )}
-        <p
-          className={classNames(
-            styles.tradeDesc,
-            !isDescShort && !showAllEvidence && styles.hidden,
-            isDescShort && styles.tradeShortDesc
-          )}
-        >
-          {desc}
-          {evidenceSource && evidenceDescription && showAllEvidence && (
-            <p className={styles.evidenceDescription}>{evidenceDescription}</p>
-          )}
-        </p>
+        {/*{evidenceSource && withTitle && (*/}
+        {/*  <h4 className={styles.tradeDescTitle}>Evidence Source</h4>*/}
+        {/*)}*/}
+        {/*<p*/}
+        {/*  className={classNames(*/}
+        {/*    styles.tradeDesc,*/}
+        {/*    !isDescShort && !showAllEvidence && styles.hidden,*/}
+        {/*    isDescShort && styles.tradeShortDesc*/}
+        {/*  )}*/}
+        {/*>*/}
+        {/*  {desc}*/}
+        {/*  {evidenceSource && evidenceDescription && showAllEvidence && (*/}
+        {/*    <p className={styles.evidenceDescription}>{evidenceDescription}</p>*/}
+        {/*  )}*/}
+        {/*</p>*/}
 
-        {((desc && !isDescShort) ||
-          (evidenceSource && plainEvidenceDescription)) && (
-          <button
-            className={styles.seeMore}
-            onClick={() => setShowAllEvidence(!showAllEvidence)}
-          >
-            {showAllEvidence ? 'HIDE' : 'LEARN MORE'}
-          </button>
-        )}
+        {/*{((desc && !isDescShort) ||*/}
+        {/*  (evidenceSource && plainEvidenceDescription)) && (*/}
+        {/*  <button*/}
+        {/*    className={styles.seeMore}*/}
+        {/*    onClick={() => setShowAllEvidence(!showAllEvidence)}*/}
+        {/*  >*/}
+        {/*    {showAllEvidence ? 'HIDE' : 'LEARN MORE'}*/}
+        {/*  </button>*/}
+        {/*)}*/}
       </>
     );
   };
