@@ -165,6 +165,10 @@
     margin-bottom: 20px;
     position: relative;
 
+    @media screen and (max-width: $screen-md) {
+      display: none;
+    }
+
     .info {
       font-size: 14px;
       font-family: $fontRegular;
