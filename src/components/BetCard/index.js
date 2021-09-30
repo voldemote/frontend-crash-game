@@ -27,7 +27,7 @@ const BetCard = ({
   ]);
 
   const roundOutcome = value => {
-    return Math.floor((1 / value) * 100) + '%';
+    return Math.min(100, Math.floor((1 / value) * 100)) + '%';
   };
 
   useEffect(() => {
