@@ -320,6 +320,18 @@ const resolveBet = (betId, data) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const cancelBet = (betId, payload) => {
+  return Api.post(ApiUrls.API_BET_CANCEL.replace(':id', betId), payload)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const deleteBet = betId => {
+  return Api.delete(ApiUrls.API_BET_DELETE.replace(':id', betId))
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 const getTradeById = id => {
   return Api.get(_.replace(ApiUrls.API_TRADE_GET_BY_ID, ':id', id)).catch(
     error => {
@@ -410,6 +422,8 @@ export {
   getCoverStream,
   getTradeById,
   resolveBet,
+  cancelBet,
+  deleteBet,
   login,
   signUp,
   forgotPassword,
