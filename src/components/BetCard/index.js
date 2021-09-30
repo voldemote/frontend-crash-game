@@ -27,7 +27,7 @@ const BetCard = ({
   ]);
 
   const roundOutcome = value => {
-    return Math.ceil((1 / value) * 100) / 100;
+    return Math.floor((1 / value) * 100) + '%';
   };
 
   useEffect(() => {
@@ -64,7 +64,12 @@ const BetCard = ({
             <div className={styles.outcomesContainer}>
               {outcomeValues.map(outcome => (
                 <div className={styles.outcome}>
-                  <span className={styles.amount}>{outcome.amount}</span>
+                  <span
+                    className={styles.amount}
+                    title="Likelihood of happening"
+                  >
+                    {outcome.amount}
+                  </span>
                   <span className={styles.outcomeName} title={outcome.name}>
                     {outcome.name}
                   </span>
