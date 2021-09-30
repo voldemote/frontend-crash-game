@@ -147,6 +147,7 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
       <section className={styles.header}>
         <div className={styles.categories}>
           <CategoryList
+            eventType={eventType}
             categories={categories}
             handleSelect={handleSelectCategory}
           />
