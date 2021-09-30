@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { useRef, useEffect, useState } from 'react';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 import Routes from '../../constants/Routes';
 import { useHistory } from 'react-router';
@@ -14,6 +16,9 @@ const BetActionChatMessage = ({
   user,
   message,
   dateString,
+  observer,
+  parentRef,
+  lastMessage,
 }) => {
   const history = useHistory();
 
@@ -30,6 +35,25 @@ const BetActionChatMessage = ({
   const tokenAmount = formatToFixed(convert(amount, currency));
   const betOutcome = _.get(bet, ['outcomes', outcome]);
   const outcomeValue = _.get(betOutcome, 'name');
+
+  const [isVisible, setVisible] = useState(false);
+  const domRef = useRef(null);
+
+  useEffect(() => {
+    const { current } = domRef;
+    const intObserver = new IntersectionObserver(_ => {
+      setVisible(observer(parentRef, domRef, true));
+    });
+
+    intObserver.observe(current);
+
+    return () => {
+      if (current) {
+        intObserver.unobserve(current);
+        intObserver.disconnect(current);
+      }
+    };
+  }, []);
 
   if (!user) {
     return null;
@@ -80,7 +104,15 @@ const BetActionChatMessage = ({
   };
 
   return (
-    <div className={styles.betActionChatMessage} onClick={onClick}>
+    <div
+      className={classNames(
+        styles.betActionChatMessage,
+        lastMessage ? styles.newMessage : null,
+        isVisible ? styles.isVisible : null
+      )}
+      ref={domRef}
+      onClick={onClick}
+    >
       <ProfilePicture user={user} width={20} height={20} />
       {renderText()}
       <small>{dateString}</small>

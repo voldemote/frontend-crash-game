@@ -6,7 +6,7 @@ import ChatMessageType from './ChatMessageType';
 import ChatMessage from '../ChatMessage';
 import BetActionChatMessage from '../BetActionChatMessage';
 
-const ChatMessageWrapper = ({ message, date }) => {
+const ChatMessageWrapper = ({ message, date, parentRef, lastMessage }) => {
   const [dateString, setDateString] = useState('');
 
   const updateDateText = useCallback(() => {
@@ -23,6 +23,17 @@ const ChatMessageWrapper = ({ message, date }) => {
     return () => clearInterval(timerId);
   }, [date, updateDateText]);
 
+  const isInView = (parent, el) => {
+    const container = parent.current;
+    const element = el.current;
+    const { bottom, height, top } = element.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    return top <= containerRect.top
+      ? containerRect.top - top <= height
+      : bottom - containerRect.bottom <= height;
+  };
+
   const renderMessageContent = () => {
     const type = _.get(message, 'type');
     const user = _.get(message, 'user');
@@ -33,6 +44,9 @@ const ChatMessageWrapper = ({ message, date }) => {
       case ChatMessageType.user:
         return (
           <ChatMessage
+            lastMessage={lastMessage}
+            observer={isInView}
+            parentRef={parentRef}
             user={user}
             message={_.get(message, 'message')}
             dateString={dateString}
@@ -44,6 +58,9 @@ const ChatMessageWrapper = ({ message, date }) => {
       case ChatMessageType.pulloutBet:
         return (
           <BetActionChatMessage
+            lastMessage={lastMessage}
+            observer={isInView}
+            parentRef={parentRef}
             chatMessageType={type}
             message={message}
             user={user}

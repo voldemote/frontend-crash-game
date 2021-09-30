@@ -4,25 +4,32 @@ import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import classNames from 'classnames';
 import { useRef, useEffect, useState } from 'react';
 
-const ChatMessage = ({ user, message, dateString, className }) => {
+const ChatMessage = ({
+  user,
+  message,
+  dateString,
+  className,
+  observer,
+  parentRef,
+  lastMessage,
+}) => {
   const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
   const userName = _.get(user, 'username', 'Unknown');
   const [isVisible, setVisible] = useState(false);
-
   const domRef = useRef(null);
 
   useEffect(() => {
     const { current } = domRef;
-    const observer = new IntersectionObserver(entries => {
-      setVisible(entries[0].isIntersecting);
+    const intObserver = new IntersectionObserver(_ => {
+      setVisible(observer(parentRef, domRef, true));
     });
 
-    observer.observe(current);
+    intObserver.observe(current);
 
     return () => {
       if (current) {
-        observer.unobserve(current);
-        observer.disconnect(current);
+        intObserver.unobserve(current);
+        intObserver.disconnect(current);
       }
     };
   }, []);
@@ -32,6 +39,7 @@ const ChatMessage = ({ user, message, dateString, className }) => {
       className={classNames(
         styles.chatMessage,
         className,
+        lastMessage ? styles.newMessage : null,
         isVisible ? styles.isVisible : null
       )}
       ref={domRef}
