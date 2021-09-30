@@ -486,6 +486,8 @@ const Bet = ({
   const hasOnlineState = event?.state === EVENT_STATES.ONLINE;
   const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
 
+  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true} withoutPaddingBottom={true}>
       <div className={styles.bet}>
@@ -557,7 +559,7 @@ const Bet = ({
               {event.type === 'non-streamed' ? (
                 <div className={styles.chart}>
                   <Chart
-                    height={400}
+                    height={matchMediaMobile ? 300 : 400}
                     data={chartData}
                     filterActive={filterActive}
                     handleChartPeriodFilter={handleChartPeriodFilter}
