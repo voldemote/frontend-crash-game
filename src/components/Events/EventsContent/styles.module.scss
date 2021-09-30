@@ -2,6 +2,7 @@
 
 .title {
   display: flex;
+  column-gap: 10px;
   align-items: center;
   column-gap: 10px;
   font-size: 30px;
@@ -15,7 +16,25 @@
   margin: 32px auto 0;
   width: 80%;
 
+  .howtoLink {
+    cursor: pointer;
+    font-size: 11px;
+    font-family: $fontRegular;
+    text-decoration: underline;
+    color: $colorYellow;
+
+    @media (max-width: $screen-xs) {
+      display: none;
+      margin: 0;
+      width: 100%;
+      padding: 0 15px 15px;
+    }
+  }
+
   .questionIcon {
+    cursor: pointer;
+    display: none;
+
     svg {
       g,
       path,
@@ -23,12 +42,17 @@
         fill: $colorYellow;
       }
     }
+
+    @media (max-width: $screen-xs) {
+      display: block;
+    }
   }
 
   @media (max-width: $screen-sm) {
     margin: 0;
     width: 100%;
     padding: 0 15px 15px;
+    align-items: center;
   }
 }
 .header {

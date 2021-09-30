@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import Search from '../../Search';
@@ -22,7 +22,7 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import BetCard from '../../BetCard';
 
-function EventsContent({ eventType, categories, setCategories }) {
+function EventsContent({ eventType, categories, setCategories, showPopup }) {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState('');
   const [coverStream, setCoverStream] = useState('');
@@ -111,6 +111,12 @@ function EventsContent({ eventType, categories, setCategories }) {
     };
   }, []);
 
+  const handleHelpClick = useCallback(event => {
+    showPopup(PopupTheme.explanation, {
+      type: eventType,
+    });
+  }, []);
+
   return (
     <>
       {eventType === 'streamed' && (
@@ -128,7 +134,11 @@ function EventsContent({ eventType, categories, setCategories }) {
           iconTheme={IconTheme.white}
           height={25}
           width={25}
+          onClick={handleHelpClick}
         />
+        <span onClick={handleHelpClick} className={styles.howtoLink}>
+          How does it work?
+        </span>
       </section>
       <section className={styles.header}>
         <div className={styles.categories}>
@@ -231,4 +241,20 @@ function EventsContent({ eventType, categories, setCategories }) {
   );
 }
 
-export default EventsContent;
+const mapDispatchToProps = dispatch => {
+  return {
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(EventsContent);
