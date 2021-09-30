@@ -100,8 +100,6 @@ const Bet = ({
     _id: betId,
   });
 
-  console.log('bet', bet);
-
   const status = {
     active: 1,
     resolved: 2,
@@ -326,11 +324,13 @@ const Bet = ({
         event.type === 'streamed'
       ),
       EventTradeViewsHelper.getView('Event Trades'),
-      EventTradeViewsHelper.getView(
-        'My Trades',
-        isLoggedIn() ? activeBets.length : 0,
-        true
-      ),
+      event.type === 'non-streamed'
+        ? EventTradeViewsHelper.getView('Evidence', undefined, false)
+        : EventTradeViewsHelper.getView(
+            'My Trades',
+            isLoggedIn() ? activeBets.length : 0,
+            true
+          ),
     ];
 
     return (
@@ -401,6 +401,7 @@ const Bet = ({
   };
 
   const renderMobileContent = () => {
+    let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
     return (
       <Swiper
         slidesPerView={1}
@@ -444,7 +445,28 @@ const Bet = ({
           )}
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          <div>{renderMyTradesList()}</div>
+          {isNonStreamed ? (
+            bet && (
+              <div>
+                <div className={styles.evidenceSource}>
+                  <b>Evidence source: </b>{' '}
+                  <span
+                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                  ></span>
+                </div>
+                <br />
+                <div className={styles.evidenceDescription}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: bet.evidenceDescription,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            )
+          ) : (
+            <div>{renderMyTradesList()}</div>
+          )}
         </SwiperSlide>
       </Swiper>
     );
@@ -519,26 +541,6 @@ const Bet = ({
 
   const renderTradeDesc = (withTitle = false) => {
     const evidenceSource = bet.evidenceSource;
-
-    // const shortLength = 200;
-    // const evidenceDescription = TextHelper.linkifyIntextURLS(
-    //   bet.evidenceDescription
-    // );
-    // const plainEvidenceDescription = TextHelper.linkifyIntextURLS(
-    //   bet.evidenceDescription,
-    //   true
-    // );
-    // const desc = evidenceSource
-    //   ? TextHelper.linkifyIntextURLS(bet.evidenceSource)
-    //   : evidenceDescription;
-    // const plainDesc = evidenceSource
-    //   ? TextHelper.linkifyIntextURLS(bet.evidenceSource, true)
-    //   : plainEvidenceDescription;
-
-    // const isDescShort =
-    //   plainDesc.length +
-    //   (evidenceSource ? plainEvidenceDescription.length : 0) <=
-    //   shortLength;
 
     return (
       <>
@@ -696,6 +698,25 @@ const Bet = ({
               />
             ) : (
               <News />
+            )}
+
+            {selectedTab === 'evidence' && (
+              <div>
+                <div className={styles.evidenceSource}>
+                  <b>Evidence source: </b>{' '}
+                  <span
+                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                  ></span>
+                </div>
+                <br />
+                <div className={styles.evidenceDescription}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: bet.evidenceDescription,
+                    }}
+                  ></div>
+                </div>
+              </div>
             )}
           </div>
           <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
