@@ -24,4 +24,6 @@ export default {
   viewImage: 'viewImage',
   resolveBet: 'resolveBet',
   explanation: 'explanation',
+  cancelBet: 'cancelBet',
+  deleteBet: 'deleteBet',
 };

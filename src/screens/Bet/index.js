@@ -164,8 +164,10 @@ const Bet = ({
       !isMobile &&
       (relatedBets.length === 1 || isNonStreamed)
     ) {
-      setBetAction(BET_ACTIONS.EventTrades);
       selectSingleBet();
+    }
+    if (!isMobile) {
+      setBetAction(BET_ACTIONS.EventTrades);
     }
     if (isMobile && (isNonStreamed || relatedBets.length === 1)) {
       onBetClose()();

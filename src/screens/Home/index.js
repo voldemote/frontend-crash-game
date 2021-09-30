@@ -5,8 +5,6 @@ import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
-import CategoryList from '../../components/CategoryList';
-import { EVENT_CATEGORIES } from '../../constants/EventCategories';
 import { Link, useParams } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { EventActions } from 'store/actions/event';

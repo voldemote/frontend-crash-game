@@ -42,6 +42,7 @@ import ButtonSmall from 'components/ButtonSmall';
 import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
 import InfoBox from 'components/InfoBox';
 import EventTypes from 'constants/EventTypes';
+import BetActionsMenu from 'components/BetActionsMenu';
 
 const BetView = ({
   betId,
@@ -93,8 +94,6 @@ const BetView = ({
   const [validInput, setValidInput] = useState(false);
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
   const [commitmentErrorText, setCommitmentErrorText] = useState('');
-  const [menuOpened, setMenuOpened] = useState(false);
-  // const [openBetsRef, setOpenBetsRef] = useState(openBets);
   const [showAllEvidence, setShowAllEvidence] = useState(false);
   const [choice, setChoice] = useState(null);
   const [commitment, setCommitment] = useState(defaultBetValue);
@@ -103,7 +102,6 @@ const BetView = ({
   );
 
   const hasMounted = useHasMounted();
-  const match = useRouteMatch();
 
   const validateInput = () => {
     const betEndDate = _.get(bet, 'endDate');
@@ -333,31 +331,31 @@ const BetView = ({
 
     return (
       <>
-        {evidenceSource && withTitle && (
-          <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
-        )}
-        <p
-          className={classNames(
-            styles.tradeDesc,
-            !isDescShort && !showAllEvidence && styles.hidden,
-            isDescShort && styles.tradeShortDesc
-          )}
-        >
-          {desc}
-          {evidenceSource && evidenceDescription && showAllEvidence && (
-            <p className={styles.evidenceDescription}>{evidenceDescription}</p>
-          )}
-        </p>
+        {/*{evidenceSource && withTitle && (*/}
+        {/*  <h4 className={styles.tradeDescTitle}>Evidence Source</h4>*/}
+        {/*)}*/}
+        {/*<p*/}
+        {/*  className={classNames(*/}
+        {/*    styles.tradeDesc,*/}
+        {/*    !isDescShort && !showAllEvidence && styles.hidden,*/}
+        {/*    isDescShort && styles.tradeShortDesc*/}
+        {/*  )}*/}
+        {/*>*/}
+        {/*  {desc}*/}
+        {/*  {evidenceSource && evidenceDescription && showAllEvidence && (*/}
+        {/*    <p className={styles.evidenceDescription}>{evidenceDescription}</p>*/}
+        {/*  )}*/}
+        {/*</p>*/}
 
-        {((desc && !isDescShort) ||
-          (evidenceSource && plainEvidenceDescription)) && (
-          <button
-            className={styles.seeMore}
-            onClick={() => setShowAllEvidence(!showAllEvidence)}
-          >
-            {showAllEvidence ? 'HIDE' : 'LEARN MORE'}
-          </button>
-        )}
+        {/*{((desc && !isDescShort) ||*/}
+        {/*  (evidenceSource && plainEvidenceDescription)) && (*/}
+        {/*  <button*/}
+        {/*    className={styles.seeMore}*/}
+        {/*    onClick={() => setShowAllEvidence(!showAllEvidence)}*/}
+        {/*  >*/}
+        {/*    {showAllEvidence ? 'HIDE' : 'LEARN MORE'}*/}
+        {/*  </button>*/}
+        {/*)}*/}
       </>
     );
   };
@@ -516,54 +514,7 @@ const BetView = ({
   };
 
   const renderMenu = () => {
-    return (
-      <div className={styles.menu}>
-        <Icon
-          className={styles.menuIcon}
-          iconType={IconType.menu}
-          iconTheme={null}
-          onClick={() => setMenuOpened(!menuOpened)}
-        />
-        <div
-          className={classNames(
-            styles.menuBox,
-            menuOpened ? styles.menuBoxOpened : null
-          )}
-        >
-          <div
-            className={styles.menuItem}
-            onClick={() => showPopup(PopupTheme.editBet, { event, bet })}
-          >
-            <Icon
-              className={styles.menuInfoIcon}
-              iconType={IconType.edit}
-              iconTheme={null}
-              width={16}
-            />
-            <span>Edit Bet</span>
-          </div>
-          {[BetState.active, BetState.closed].includes(bet?.status) && (
-            <div
-              className={styles.menuItem}
-              onClick={() =>
-                showPopup(PopupTheme.resolveBet, {
-                  eventId: event._id,
-                  tradeId: bet._id,
-                })
-              }
-            >
-              <Icon
-                className={styles.menuInfoIcon}
-                iconType={IconType.hourglass}
-                iconTheme={null}
-                width={16}
-              />
-              <span>Resolve Bet</span>
-            </div>
-          )}
-        </div>
-      </div>
-    );
+    return <BetActionsMenu event={event} bet={bet} />;
   };
 
   const renderStateConditionalContent = () => {

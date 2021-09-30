@@ -93,57 +93,6 @@
         margin-right: 11px;
       }
     }
-
-    .menu {
-      position: relative;
-      margin-left: 20px;
-      cursor: pointer;
-
-      .menuIcon {
-        opacity: 0.3;
-        padding: 5px 15px;
-        margin: -5px -15px 0 0;
-        width: 40px;
-      }
-
-      .menuBox {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 25px;
-        width: 200px;
-        z-index: $zIndexBetMenu;
-        right: 0;
-        padding: 0 17px 0 19px;
-        border-radius: 10px;
-        background-color: $colorWhite;
-        box-shadow: 0 1px 8px 0 $colorBlack10;
-
-        &.menuBoxOpened {
-          display: flex;
-        }
-
-        .menuItem {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          width: 100%;
-          padding: 12px 0;
-
-          .menuInfoIcon {
-            margin-right: 12px;
-          }
-
-          strong {
-            font-family: $fontBold;
-          }
-
-          &:not(:last-child) {
-            border-bottom: solid 0.5px $colorPrimary10;
-          }
-        }
-      }
-    }
   }
 
   .eventName {
@@ -241,6 +190,7 @@
 
     .canceledErrorText {
       width: 100%;
+      margin-bottom: 10px;
     }
   }
 
