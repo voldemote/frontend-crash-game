@@ -33,6 +33,7 @@ import ViewImagePopup from 'components/ViewImagePopup';
 import ResolveBetPopup from 'components/ResolveBetPopup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
+import ExplanationViewPopup from 'components/ExplanationViewPopup';
 
 const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -175,6 +176,8 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
             }
           />
         );
+      case PopupTheme.explanation:
+        return <ExplanationViewPopup type={options.type} closed={!visible} />;
     }
 
     return null;

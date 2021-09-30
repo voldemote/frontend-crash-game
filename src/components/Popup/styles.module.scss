@@ -56,6 +56,12 @@
     }
   }
 
+  &.explanationContainer {
+    @media (max-width: 768px) {
+      min-height: 100vh;
+    }
+  }
+
   &.hidden {
     display: none;
   }
