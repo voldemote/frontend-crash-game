@@ -89,7 +89,11 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
   }, []);
 
   const filteredBets = allBets.filter(bet => {
-    return betIdsFromCurrentEvents.includes(bet._id) && bet.published;
+    return (
+      betIdsFromCurrentEvents.includes(bet._id) &&
+      bet.published &&
+      bet.status === 'active'
+    );
   });
 
   useEffect(() => {

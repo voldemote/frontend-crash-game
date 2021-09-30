@@ -14,7 +14,7 @@ const BetCard = ({
   eventCardClass,
   outcomes,
 }) => {
-  const happensWithin24h = moment(eventEnd).diff(moment(), 'h') >= 24;
+  const happensWithin24h = moment(eventEnd).diff(moment(), 'h') <= 24;
 
   const getEventCardStyle = () => {
     return {
