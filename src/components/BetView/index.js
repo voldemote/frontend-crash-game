@@ -333,31 +333,31 @@ const BetView = ({
 
     return (
       <>
-        {/*{evidenceSource && withTitle && (*/}
-        {/*  <h4 className={styles.tradeDescTitle}>Evidence Source</h4>*/}
-        {/*)}*/}
-        {/*<p*/}
-        {/*  className={classNames(*/}
-        {/*    styles.tradeDesc,*/}
-        {/*    !isDescShort && !showAllEvidence && styles.hidden,*/}
-        {/*    isDescShort && styles.tradeShortDesc*/}
-        {/*  )}*/}
-        {/*>*/}
-        {/*  {desc}*/}
-        {/*  {evidenceSource && evidenceDescription && showAllEvidence && (*/}
-        {/*    <p className={styles.evidenceDescription}>{evidenceDescription}</p>*/}
-        {/*  )}*/}
-        {/*</p>*/}
+        {evidenceSource && withTitle && (
+          <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
+        )}
+        <p
+          className={classNames(
+            styles.tradeDesc,
+            !isDescShort && !showAllEvidence && styles.hidden,
+            isDescShort && styles.tradeShortDesc
+          )}
+        >
+          {desc}
+          {evidenceSource && evidenceDescription && showAllEvidence && (
+            <p className={styles.evidenceDescription}>{evidenceDescription}</p>
+          )}
+        </p>
 
-        {/*{((desc && !isDescShort) ||*/}
-        {/*  (evidenceSource && plainEvidenceDescription)) && (*/}
-        {/*  <button*/}
-        {/*    className={styles.seeMore}*/}
-        {/*    onClick={() => setShowAllEvidence(!showAllEvidence)}*/}
-        {/*  >*/}
-        {/*    {showAllEvidence ? 'HIDE' : 'LEARN MORE'}*/}
-        {/*  </button>*/}
-        {/*)}*/}
+        {((desc && !isDescShort) ||
+          (evidenceSource && plainEvidenceDescription)) && (
+          <button
+            className={styles.seeMore}
+            onClick={() => setShowAllEvidence(!showAllEvidence)}
+          >
+            {showAllEvidence ? 'HIDE' : 'LEARN MORE'}
+          </button>
+        )}
       </>
     );
   };
@@ -383,7 +383,7 @@ const BetView = ({
 
       return (
         <>
-          {renderTradeDesc()}
+          {/*{renderTradeDesc()}*/}
           <span
             data-for="tool-tip"
             data-tip={'You Need To Select An Option First'}
@@ -670,20 +670,20 @@ const BetView = ({
               </span>
             )}
           </div>
-          {showEventEnd &&
-            ![BetState.resolved, BetState.closed].includes(state) && (
-              <>
-                <span className={styles.timerLabel}>Event ends in:</span>
-                <div
-                  className={classNames(
-                    styles.timeLeftCounterContainer,
-                    isTradeViewPopup && styles.fixedTimer
-                  )}
-                >
-                  <TimeCounter endDate={endDate} />
-                </div>
-              </>
-            )}
+          {/*{showEventEnd &&*/}
+          {/*  ![BetState.resolved, BetState.closed].includes(state) && (*/}
+          {/*    <>*/}
+          {/*      <span className={styles.timerLabel}>Event ends in:</span>*/}
+          {/*      <div*/}
+          {/*        className={classNames(*/}
+          {/*          styles.timeLeftCounterContainer,*/}
+          {/*          isTradeViewPopup && styles.fixedTimer*/}
+          {/*        )}*/}
+          {/*      >*/}
+          {/*        <TimeCounter endDate={endDate} />*/}
+          {/*      </div>*/}
+          {/*    </>*/}
+          {/*  )}*/}
           {renderStateConditionalContent()}
         </div>
       </div>

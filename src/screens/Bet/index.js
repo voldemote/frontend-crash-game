@@ -46,6 +46,8 @@ import EventTypes from 'constants/EventTypes';
 import Share from '../../components/Share';
 import useTrades from '../../hooks/useTrades';
 import BetState from 'constants/BetState';
+import TextHelper from '../../helper/Text';
+import TimeCounter from '../../components/TimeCounter';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -93,6 +95,12 @@ const Bet = ({
 
   const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
   const { activeBets } = useTrades(event?._id);
+
+  const bet = _.find(_.get(event, 'bets', []), {
+    _id: betId,
+  });
+
+  console.log('bet', bet);
 
   const status = {
     active: 1,
@@ -456,7 +464,28 @@ const Bet = ({
               <span>Go back to all tracks</span>
             </div>
           )}
+
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
+            {![BetState.resolved, BetState.closed].includes(
+              _.get(bet, 'status')
+            ) && (
+              <>
+                <div
+                  className={classNames(
+                    styles.timeLeftCounterContainer,
+                    styles.fixedTimer,
+                    styles.timerOnlyDesktop
+                  )}
+                >
+                  <div className={styles.timerLabel}>Event ends in:</div>
+
+                  <div className={styles.timerParts}>
+                    <TimeCounter endDate={bet.endDate} />
+                  </div>
+                </div>
+              </>
+            )}
+
             <BetView
               betId={betId}
               eventId={event._id}
@@ -487,6 +516,73 @@ const Bet = ({
   const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
 
   let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
+
+  const renderTradeDesc = (withTitle = false) => {
+    const evidenceSource = bet.evidenceSource;
+
+    // const shortLength = 200;
+    // const evidenceDescription = TextHelper.linkifyIntextURLS(
+    //   bet.evidenceDescription
+    // );
+    // const plainEvidenceDescription = TextHelper.linkifyIntextURLS(
+    //   bet.evidenceDescription,
+    //   true
+    // );
+    // const desc = evidenceSource
+    //   ? TextHelper.linkifyIntextURLS(bet.evidenceSource)
+    //   : evidenceDescription;
+    // const plainDesc = evidenceSource
+    //   ? TextHelper.linkifyIntextURLS(bet.evidenceSource, true)
+    //   : plainEvidenceDescription;
+
+    // const isDescShort =
+    //   plainDesc.length +
+    //   (evidenceSource ? plainEvidenceDescription.length : 0) <=
+    //   shortLength;
+
+    return (
+      <>
+        <div className={styles.descriptionContainer}>
+          {evidenceSource && withTitle && (
+            <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
+          )}
+          <p className={classNames(styles.tradeDesc)}>
+            <div
+              className={styles.betDescription}
+              dangerouslySetInnerHTML={{ __html: bet.description }}
+            ></div>
+            <div className={styles.evidenceSource}>
+              <b>Evidence source: </b>{' '}
+              <span
+                dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+              ></span>
+            </div>
+          </p>
+        </div>
+
+        <div className={styles.timerOnlyMobile}>
+          {![BetState.resolved, BetState.closed].includes(
+            _.get(bet, 'status')
+          ) && (
+            <>
+              <div
+                className={classNames(
+                  styles.timeLeftCounterContainer,
+                  styles.fixedTimer
+                )}
+              >
+                <div className={styles.timerLabel}>Event ends in:</div>
+
+                <div className={styles.timerParts}>
+                  <TimeCounter endDate={bet.endDate} />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </>
+    );
+  };
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} withoutPaddingBottom={true}>
@@ -558,6 +654,7 @@ const Bet = ({
             >
               {event.type === 'non-streamed' ? (
                 <div className={styles.chart}>
+                  {bet && renderTradeDesc()}
                   <Chart
                     height={matchMediaMobile ? 300 : 400}
                     data={chartData}

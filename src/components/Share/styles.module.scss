@@ -115,6 +115,10 @@
 .ShareButtonContainer {
   display: inline-block;
 
+  @media (max-width: $screen-sm) {
+    margin-bottom: 5px;
+  }
+
   .sharePopover {
     background-color: #201D38;
     color: white;
