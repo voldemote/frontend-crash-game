@@ -85,7 +85,7 @@ const Authentication = ({
       fooRef = pwConfirmRef;
     }
     if (!passwordIsValid() && !forgotPassword) {
-      error = 'Password is not valid';
+      error = 'Your password needs to be 8 characters long';
       fooRef = pwRef;
     }
     if (!emailIsValid()) {
@@ -160,7 +160,9 @@ const Authentication = ({
             className={styles.inputBox}
             placeholder="john.doe@gmail.com"
             value={email}
-            setValue={setInputEmail}
+            setValue={e => {
+              setInputEmail(e.trim().toLowerCase());
+            }}
             onConfirm={onConfirm}
           />
         </FormGroup>

@@ -37,6 +37,10 @@
     justify-content: center;
     overflow: auto;
 
+    &.welcomeContainer {
+      overflow: visible;
+    }
+
     //here specific popup sizes per type, if needed
     &.small {
       max-width: 500px;
@@ -45,6 +49,10 @@
 
     @media (max-width: 768px) {
       min-height: calc(100vh - 20px);
+
+      &.welcomeContainer {
+        min-height: calc(100vh - 100px);
+      }
     }
   }
 
