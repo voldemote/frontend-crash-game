@@ -23,6 +23,7 @@ import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
 import PulloutApprovePopup from '../PulloutApprovePopup';
+import BetActionPopup from '../BetActionPopup';
 import LotteryGamePopup from '../LotteryGamePopup';
 import NewEventPopup from '../NewEventPopup';
 import EditEventPopup from '../EditEventPopup';
@@ -168,6 +169,10 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
         return (
           <ResolveBetPopup betId={options.tradeId} eventId={options.eventId} />
         );
+      case PopupTheme.cancelBet:
+        return <BetActionPopup bet={options?.bet} actionType={'cancel'} />;
+      case PopupTheme.deleteBet:
+        return <BetActionPopup bet={options?.bet} actionType={'delete'} />;
       case PopupTheme.auth:
         return (
           <AuthenticationPopup
