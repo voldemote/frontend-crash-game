@@ -23,8 +23,6 @@ const Timer = ({ startTimeMs }) => {
       lastDelay = intervalTime + lastDelay - timeDiff;
       timeoutId = setTimeout(tick, lastDelay);
 
-      // console.log(((lastTime - startTime.getTime()) * TIME_TO_FACTOR_RATIO) / 1000 + 1);
-      // console.log((now - lastDelay) - startTime.getTime());
       setElapsed(now - startTime.getTime());
     };
 
