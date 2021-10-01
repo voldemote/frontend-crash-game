@@ -22,7 +22,12 @@ const SectionOne = ({ classes }) => {
           betting options for our players. Sign up now.
         </p>
       </div>
-      <img src={Image} width={400} alt="section-one" />
+      <img
+        className={classes.sectionImage}
+        src={Image}
+        width={400}
+        alt="section-one"
+      />
     </section>
   );
 };

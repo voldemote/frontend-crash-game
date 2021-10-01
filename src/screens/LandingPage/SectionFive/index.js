@@ -36,7 +36,12 @@ const SectionFive = ({ classes }) => {
           events.
         </p>
       </div>
-      <img src={Image} width={350} alt="section-one" />
+      <img
+        className={classes.sectionImage}
+        src={Image}
+        width={350}
+        alt="section-one"
+      />
     </section>
   );
 };
