@@ -1,4 +1,5 @@
 import { RosiGameTypes } from '../actions/rosi-game';
+import { round } from 'lodash';
 const TIME_TO_FACTOR_RATIO = 0.1; // 1s = 0.1x
 const START_FACTOR = 1;
 const initialState = {
@@ -125,7 +126,7 @@ const cashedOutGuest = (action, state) => {
   const lastTime = Date.now();
   const bet = {
     ...action.payload,
-    amount: state.userBet.amount * factor,
+    amount: round(state.userBet.amount * factor, 0),
     username: 'Guest',
     userId: 'Guest',
     crashFactor: factor.toFixed(2),

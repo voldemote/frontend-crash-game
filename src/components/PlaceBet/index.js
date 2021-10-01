@@ -141,7 +141,7 @@ const PlaceBet = () => {
           })}
           onClick={user.isLoggedIn ? placeABet : placeGuestBet}
         >
-          {user.isLoggedIn ? 'Place Bet' : 'Place Bet (Guest)'}
+          {user.isLoggedIn ? 'Place Bet' : 'Place Bet'}
         </span>
       );
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
@@ -152,7 +152,7 @@ const PlaceBet = () => {
           className={classNames(styles.button, styles.buttonDisabled)}
           onClick={user.isLoggedIn ? () => {} : showLoginPopup}
         >
-          {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed (Guest)'}
+          {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed'}
         </span>
       );
     } else {
@@ -166,7 +166,7 @@ const PlaceBet = () => {
           })}
           onClick={user.isLoggedIn ? cashOut : cashOutGuest}
         >
-          {user.isLoggedIn ? 'Cash Out' : 'Cash Out (Guest)'}
+          {user.isLoggedIn ? 'Cash Out' : 'Cash Out'}
         </span>
       );
     }
