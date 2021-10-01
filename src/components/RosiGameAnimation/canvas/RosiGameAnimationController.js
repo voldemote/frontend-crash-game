@@ -43,24 +43,25 @@ class RosiAnimationController {
       resolution: 1,
       antialias: true,
     });
-
-    this.app.ticker.add(() => {
-      TWEEN.update(this.app.ticker.lastTime);
-    });
   }
 
   load(done) {
     loadAssets(this.app.loader).then(() => {
       if (done) {
         this.drawElements();
+        this.app.ticker.add(dt => this.update(dt));
         done();
       }
     });
   }
 
+  update(dt) {
+    TWEEN.update(this.app.ticker.lastTime);
+    this.background.update(dt);
+  }
+
   drawElements() {
     this.background = new RosiAnimationBackground(this.app);
-    this.background.startAnimation();
     this.app.stage.addChild(this.background.container);
 
     this.coinExplosion = new CoinExplosion(this.app);
@@ -76,10 +77,11 @@ class RosiAnimationController {
     this.app.stage.addChild(this.preparingRound.container);
   }
 
-  start() {
+  start(gameStartTime) {
     this.preparingRound.hide();
     this.coinAndTrajectory.startCoinFlyingAnimation();
     this.cashedOut.reset();
+    this.background.updateAnimationSpeed(gameStartTime);
   }
 
   end() {
