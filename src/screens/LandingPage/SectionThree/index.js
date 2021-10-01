@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import styles from './styles.module.scss';
+import AuthenticationType from 'components/Authentication/AuthenticationType';
 
 const SectionThree = ({ classes }) => {
   const dispatch = useDispatch();
@@ -12,7 +13,10 @@ const SectionThree = ({ classes }) => {
     dispatch(
       PopupActions.show({
         popupType: PopupTheme.auth,
-        options: { small: true },
+        options: {
+          small: true,
+          authenticationType: AuthenticationType.register,
+        },
       })
     );
   };
