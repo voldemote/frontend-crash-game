@@ -8,7 +8,9 @@ import { ReactComponent as ConfettiLeft } from '../../data/icons/confetti-left.s
 import { ReactComponent as ConfettiRight } from '../../data/icons/confetti-right.svg';
 
 const AuthenticationPopup = ({ authenticationType }) => {
-  const promoDeadline = process.env.REACT_APP_SIGNUP_PROMO_DEADLINE_DATETIME;
+  const promoDeadline =
+    process.env.REACT_APP_SIGNUP_PROMO_DEADLINE_DATETIME ||
+    '2021-10-12T08:00:00';
   const isPromoWindow = !!promoDeadline && new Date() < new Date(promoDeadline);
 
   const renderPromoMessage = () => (
