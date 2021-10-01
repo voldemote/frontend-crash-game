@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserBet } from '../../store/selectors/rosi-game';
+import { calcCrashFactorFromElapsedTime } from './canvas/utils';
 
 // Crash factor = (elapsed time) * TIME_TO_FACTOR_RATIO
 const TIME_TO_FACTOR_RATIO = 0.1; // 1s = 0.1x
 const START_FACTOR = 1;
-
-import { calcCrashFactorFromElapsedTime } from './canvas/utils';
 
 const Timer = ({ startTimeMs, showIncome = false }) => {
   const startTime = new Date(startTimeMs);
