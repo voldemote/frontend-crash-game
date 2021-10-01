@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 
 const classes = {
   section: styles.section,
+  sectionImage: styles.sectionImage,
   sectionNumber: styles.sectionNumber,
   sectionHeading: styles.sectionHeading,
   textParagraph: styles.textParagraph,
