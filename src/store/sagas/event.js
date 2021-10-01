@@ -95,7 +95,7 @@ const fetchHomeEvents = function* (action) {
     yield put(
       EventActions.fetchHomeEventsSuccess({
         eventType: params.type,
-        state: params.state,
+        state: action.state,
         events: response.data,
         page: params.page,
         count: params.count,
