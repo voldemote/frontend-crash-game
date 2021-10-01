@@ -6,12 +6,16 @@ import styles from './styles.module.scss';
 import timerStyles from './timer-styles.module.scss';
 import { ReactComponent as ConfettiLeft } from '../../data/icons/confetti-left.svg';
 import { ReactComponent as ConfettiRight } from '../../data/icons/confetti-right.svg';
+import AuthenticationType from 'components/Authentication/AuthenticationType';
 
 const AuthenticationPopup = ({ authenticationType }) => {
   const promoDeadline =
     process.env.REACT_APP_SIGNUP_PROMO_DEADLINE_DATETIME ||
     '2021-10-12T08:00:00';
-  const isPromoWindow = !!promoDeadline && new Date() < new Date(promoDeadline);
+  const isPromoWindow =
+    AuthenticationType.register === authenticationType &&
+    !!promoDeadline &&
+    new Date() < new Date(promoDeadline);
 
   const renderPromoMessage = () => (
     <div className={styles.promoMessage}>
