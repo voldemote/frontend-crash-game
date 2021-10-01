@@ -26,7 +26,6 @@ const EventsCarouselContainer = ({
   const [page, setPage] = useState(1);
   const [currentEvents, setCurrentEvents] = useState([]);
   const [allLoaded, setAllLoaded] = useState(false);
-  const isMount = useIsMount();
 
   const allEvents = useSelector(state => state.event.events);
 
@@ -142,9 +141,11 @@ const EventsCarouselContainer = ({
       return concat;
     }, []);
 
-    const filteredBets = allBets.filter(bet => {
-      return betIdsFromCurrentEvents.includes(bet._id) && bet.published;
-    });
+    const filteredBets = betIdsFromCurrentEvents
+      ? allBets.filter(bet => {
+          return betIdsFromCurrentEvents.includes(bet._id) && bet.published;
+        })
+      : [];
 
     return _.map(filteredBets, bet => {
       const betId = _.get(bet, '_id');
