@@ -43,6 +43,9 @@
 .profit {
   position: relative;
   bottom: -30px;
+  @media screen and (max-width: $screen-sm) {
+    bottom: -5px;
+  }
   font-size: 18pt;
   color: $colorGreen;
   display: flex;
