@@ -84,6 +84,9 @@ const fetchHomeEvents = function* (action) {
     type: action.eventType,
     page: action.page,
     count: action.count,
+    category: action.category || 'all',
+    upcoming: action.upcoming,
+    deactivated: action.deactivated,
   };
 
   const response = yield call(Api.listEventsFiltered, params);
@@ -92,6 +95,7 @@ const fetchHomeEvents = function* (action) {
     yield put(
       EventActions.fetchHomeEventsSuccess({
         eventType: params.type,
+        state: params.state,
         events: response.data,
         page: params.page,
         count: params.count,

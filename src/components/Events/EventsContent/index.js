@@ -3,12 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
-import Search from '../../Search';
-import Select from '../../Select';
-import EventCard from '../../EventCard';
 import CategoryList from '../../CategoryList';
 import { useMappedActions } from './hooks/useMappedActions';
-import { useSortFilter } from './hooks/useSortFilter';
 import { useRouteHandling } from './hooks/useRouteHandling';
 import ContentFooter from 'components/ContentFooter';
 import AdminOnly from 'components/AdminOnly';
@@ -21,26 +17,16 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import BetCard from '../../BetCard';
+import EventsCarouselContainer from 'components/EventsCarouselContainer';
 
 function EventsContent({ eventType, categories, setCategories, showPopup }) {
   const dispatch = useDispatch();
-  const [searchInput, setSearchInput] = useState('');
   const [coverStream, setCoverStream] = useState('');
 
   const { location, category: encodedCategory } = useRouteHandling(eventType);
   const category = decodeURIComponent(encodedCategory);
 
-  const { fetchFilteredEvents, resetDefaultParamsValues } =
-    useMappedActions(eventType);
-
-  const { handleSelectSortItem, selectedSortItem, sortOptions } =
-    useSortFilter();
-
-  const handleSearchSubmit = val => {
-    fetchFilteredEvents({
-      searchQuery: searchInput,
-    });
-  };
+  const { resetDefaultParamsValues } = useMappedActions(eventType);
 
   const handleSelectCategory = useCallback(
     value => {
@@ -98,12 +84,7 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
 
   useEffect(() => {
     handleSelectCategory(category);
-
-    fetchFilteredEvents({
-      category: category,
-      sortBy: selectedSortItem,
-    });
-  }, [category, selectedSortItem, fetchFilteredEvents, handleSelectCategory]);
+  }, [category, handleSelectCategory]);
 
   useEffect(() => {
     getCoverStream().then(({ response }) => {
@@ -152,21 +133,6 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
             handleSelect={handleSelectCategory}
           />
         </div>
-        <div className={styles.search}>
-          <Search
-            value={searchInput}
-            handleChange={value => setSearchInput(value)}
-            handleConfirm={handleSearchSubmit}
-          />
-        </div>
-        <div className={styles.sort}>
-          <Select
-            value={selectedSortItem}
-            placeholder="Sort by"
-            options={sortOptions}
-            handleSelect={handleSelectSortItem}
-          />
-        </div>
       </section>
       <section className={styles.main}>
         <AdminOnly>
@@ -194,28 +160,36 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
           </div>
         </AdminOnly>
 
-        {eventType === 'streamed' &&
-          events.map(item => (
-            <Link
-              to={{
-                pathname: `/trade/${item.slug}`,
-                state: { fromLocation: location },
-              }}
-              key={item._id}
-            >
-              <EventCard
-                key={item._id}
-                title={item.name}
-                organizer={''}
-                viewers={12345}
-                state={item.state}
-                tags={mappedTags(item._id)}
-                image={item.previewImageUrl}
-                eventEnd={item.date}
-                streamUrl={item.streamUrl}
-              />
-            </Link>
-          ))}
+        {eventType === 'streamed' && (
+          <div className={styles.streamedContainer}>
+            <EventsCarouselContainer
+              eventType="streamed"
+              category={category}
+              state="online"
+              title="Current Live Streams"
+              titleLink={false}
+              noEventsMessage="No live events right now. Please check back soon."
+            />
+            <EventsCarouselContainer
+              eventType="streamed"
+              category={category}
+              state="coming_soon"
+              title="Upcoming Events"
+              titleLink={false}
+              upcoming={true}
+              noEventsMessage="No upcoming events on this category. Please check back soon."
+            />
+            <EventsCarouselContainer
+              eventType="streamed"
+              category={category}
+              state="offline"
+              title="Past events"
+              titleLink={false}
+              deactivated={true}
+              noEventsMessage="No past events in this category yet. Please check back soon."
+            />
+          </div>
+        )}
 
         {eventType === 'non-streamed' &&
           filteredBets.map(item => (
