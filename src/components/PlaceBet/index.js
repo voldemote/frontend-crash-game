@@ -19,19 +19,24 @@ import {
   betInQueue,
   isCashedOut,
   selectDisplayBetButton,
+  selectTimeStarted,
 } from '../../store/selectors/rosi-game';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { playWinSound } from '../../helper/Audio';
 import InfoBox from 'components/InfoBox';
 import IconType from '../Icon/IconType';
+import AuthenticationType from 'components/Authentication/AuthenticationType';
+import Timer from '../RosiGameAnimation/Timer';
 
 const PlaceBet = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = userBalance > 50 ? 50 : 0;
+  const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
+  const gameStartedTimeStamp = useSelector(selectTimeStarted);
+  const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
   const userPlacedABet = useSelector(selectUserBet);
   const displayBetButton = useSelector(selectDisplayBetButton);
   const isBetInQueue = useSelector(betInQueue);
@@ -41,7 +46,17 @@ const PlaceBet = () => {
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
-  const userUnableToBet = amount < 1;
+  const [canBet, setCanBet] = useState(true);
+  const userUnableToBet = amount < 1 || !canBet;
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setCanBet(true);
+    }, 300);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [canBet]);
 
   const onTokenNumberChange = number => {
     setAmount(number);
@@ -92,7 +107,20 @@ const PlaceBet = () => {
       });
   };
 
+  const placeGuestBet = () => {
+    if (userUnableToBet) return;
+    const payload = {
+      amount,
+      crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,
+      username: 'Guest',
+      userId: 'Guest',
+    };
+    dispatch(RosiGameActions.setUserBet(payload));
+    dispatch(RosiGameActions.addInGameBet(payload));
+  };
+
   const cashOut = () => {
+    setCanBet(false);
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
       .then(response => {
@@ -104,11 +132,20 @@ const PlaceBet = () => {
       });
   };
 
+  const cashOutGuest = () => {
+    setCanBet(false);
+    dispatch(RosiGameActions.cashOutGuest());
+    setAnimate(true);
+  };
+
   const showLoginPopup = () => {
     dispatch(
       PopupActions.show({
         popupType: PopupTheme.auth,
-        options: { small: true },
+        options: {
+          small: true,
+          authenticationType: AuthenticationType.register,
+        },
       })
     );
   };
@@ -122,9 +159,9 @@ const PlaceBet = () => {
           className={classNames(styles.button, {
             [styles.buttonDisabled]: userUnableToBet || isBetInQueue,
           })}
-          onClick={user.isLoggedIn ? placeABet : showLoginPopup}
+          onClick={user.isLoggedIn ? placeABet : placeGuestBet}
         >
-          {user.isLoggedIn ? 'Place Bet' : 'Join To Start Betting'}
+          {user.isLoggedIn ? 'Place Bet' : 'Place Bet'}
         </span>
       );
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
@@ -135,7 +172,7 @@ const PlaceBet = () => {
           className={classNames(styles.button, styles.buttonDisabled)}
           onClick={user.isLoggedIn ? () => {} : showLoginPopup}
         >
-          {user.isLoggedIn ? 'Bet Placed' : 'Join To Start Betting'}
+          {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed'}
         </span>
       );
     } else {
@@ -147,9 +184,9 @@ const PlaceBet = () => {
             [styles.buttonDisabled]:
               (!userPlacedABet && isGameRunning) || !isGameRunning,
           })}
-          onClick={cashOut}
+          onClick={user.isLoggedIn ? cashOut : cashOutGuest}
         >
-          Cash Out
+          {user.isLoggedIn ? 'Cash Out' : 'Cash Out'}
         </span>
       );
     }
@@ -219,10 +256,20 @@ const PlaceBet = () => {
             maxValue={formatToFixed(
               user.balance > 10000 ? 10000 : user.balance
             )}
-            disabled={!user.isLoggedIn}
           />
         </div>
       </div>
+      {userPlacedABet && isGameRunning ? (
+        <div className={styles.profit}>
+          <Timer
+            showIncome
+            pause={!isGameRunning}
+            startTimeMs={gameStartedTime}
+          />
+        </div>
+      ) : (
+        <div className={styles.profit}>&nbsp;</div>
+      )}
       {renderButton()}
     </div>
   );

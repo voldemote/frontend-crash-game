@@ -13,6 +13,7 @@ import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import { useOutsideClick } from 'hooks/useOutsideClick';
+import { isMobile } from 'react-device-detect';
 
 const Share = props => {
   const {
@@ -91,7 +92,7 @@ const Share = props => {
           ref={shareButtonRef}
           className={classNames(styles.shareButton)}
           onClick={e => {
-            if (navigator.canShare) {
+            if (navigator.canShare && isMobile) {
               navigator.share(shareData);
               setShowPopover(false);
               return;
