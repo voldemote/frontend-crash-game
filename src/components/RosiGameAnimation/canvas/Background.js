@@ -1,6 +1,11 @@
 import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
-import { isMobileRosiGame, calcPercent, getRandomInRange } from './utils';
+import {
+  isMobileRosiGame,
+  calcPercent,
+  getRandomInRange,
+  calcCrashFactorFromElapsedTime,
+} from './utils';
 
 class RosiAnimationBackground {
   constructor(app) {
@@ -17,6 +22,7 @@ class RosiAnimationBackground {
 
     this.redPlanet = null;
     this.purplePlanet = null;
+    this.planets = [];
     this.createPlanets();
   }
 
@@ -57,6 +63,8 @@ class RosiAnimationBackground {
     this.purplePlanet.y =
       this.app.renderer.height / 2 - this.purplePlanet.height / 2;
     this.container.addChild(this.purplePlanet);
+
+    this.planets = [this.redPlanet, this.purplePlanet];
   }
 
   drawCircle() {
@@ -78,27 +86,24 @@ class RosiAnimationBackground {
     this.circle.endFill();
   }
 
-  startAnimation() {
-    for (const star of this.stars) {
-      this.animateSingleStar(star);
-    }
+  updateAnimationSpeed(gameStartTime) {
+    this.gameStartTime = new Date(gameStartTime).getTime();
   }
 
-  animateSingleStar(star) {
-    const coords = { x: star.x };
-    const speed = getRandomInRange(0.1, 0.4) / 20;
+  update(dt) {
+    const calcSpeed = factor => Math.pow(factor, factor / 2) / 10;
+    const elapsed = Date.now() - this.gameStartTime;
+    const crashFactor = Number(calcCrashFactorFromElapsedTime(elapsed)) || 1.0;
+    const maxSpeed = calcSpeed(6);
 
-    new TWEEN.Tween(coords)
-      .to({ x: -star.width }, star.x / speed)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(() => {
-        star.x = coords.x;
-      })
-      .onComplete(() => {
-        star.x = this.app.renderer.width;
-        this.animateSingleStar(star);
-      })
-      .start();
+    for (const star of this.stars) {
+      const speed = Math.min(calcSpeed(crashFactor), maxSpeed);
+      star.x -= speed;
+
+      if (star.x < -star.width) {
+        star.x = this.app.renderer.width * dt;
+      }
+    }
   }
 }
 
