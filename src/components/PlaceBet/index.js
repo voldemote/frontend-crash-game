@@ -29,7 +29,7 @@ const PlaceBet = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = userBalance > 50 ? 50 : 0;
+  const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const userPlacedABet = useSelector(selectUserBet);
@@ -92,6 +92,18 @@ const PlaceBet = () => {
       });
   };
 
+  const placeGuestBet = () => {
+    if (userUnableToBet) return;
+    const payload = {
+      amount,
+      crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,
+      username: 'Guest',
+      userId: 'Guest',
+    };
+    dispatch(RosiGameActions.setUserBet(payload));
+    dispatch(RosiGameActions.addInGameBet(payload));
+  };
+
   const cashOut = () => {
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
@@ -102,6 +114,11 @@ const PlaceBet = () => {
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+  };
+
+  const cashOutGuest = () => {
+    dispatch(RosiGameActions.cashOutGuest());
+    setAnimate(true);
   };
 
   const showLoginPopup = () => {
@@ -122,9 +139,9 @@ const PlaceBet = () => {
           className={classNames(styles.button, {
             [styles.buttonDisabled]: userUnableToBet || isBetInQueue,
           })}
-          onClick={user.isLoggedIn ? placeABet : showLoginPopup}
+          onClick={user.isLoggedIn ? placeABet : placeGuestBet}
         >
-          {user.isLoggedIn ? 'Place Bet' : 'Join To Start Betting'}
+          {user.isLoggedIn ? 'Place Bet' : 'Place Bet (Guest)'}
         </span>
       );
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
@@ -135,7 +152,7 @@ const PlaceBet = () => {
           className={classNames(styles.button, styles.buttonDisabled)}
           onClick={user.isLoggedIn ? () => {} : showLoginPopup}
         >
-          {user.isLoggedIn ? 'Bet Placed' : 'Join To Start Betting'}
+          {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed (Guest)'}
         </span>
       );
     } else {
@@ -147,9 +164,9 @@ const PlaceBet = () => {
             [styles.buttonDisabled]:
               (!userPlacedABet && isGameRunning) || !isGameRunning,
           })}
-          onClick={cashOut}
+          onClick={user.isLoggedIn ? cashOut : cashOutGuest}
         >
-          Cash Out
+          {user.isLoggedIn ? 'Cash Out' : 'Cash Out (Guest)'}
         </span>
       );
     }
@@ -219,7 +236,6 @@ const PlaceBet = () => {
             maxValue={formatToFixed(
               user.balance > 10000 ? 10000 : user.balance
             )}
-            disabled={!user.isLoggedIn}
           />
         </div>
       </div>
