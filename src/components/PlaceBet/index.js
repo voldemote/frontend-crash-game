@@ -41,7 +41,17 @@ const PlaceBet = () => {
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
-  const userUnableToBet = amount < 1;
+  const [canBet, setCanBet] = useState(true);
+  const userUnableToBet = amount < 1 || !canBet;
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setCanBet(true);
+    }, 300);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [canBet]);
 
   const onTokenNumberChange = number => {
     setAmount(number);
@@ -105,6 +115,7 @@ const PlaceBet = () => {
   };
 
   const cashOut = () => {
+    setCanBet(false);
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
       .then(response => {
@@ -117,6 +128,7 @@ const PlaceBet = () => {
   };
 
   const cashOutGuest = () => {
+    setCanBet(false);
     dispatch(RosiGameActions.cashOutGuest());
     setAnimate(true);
   };
