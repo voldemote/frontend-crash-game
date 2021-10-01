@@ -52,6 +52,9 @@ const RosiGameAnimation = () => {
       RosiGameAnimationController.init(canvasRef.current);
       RosiGameAnimationController.load(() => {
         setAnimationReady(true);
+        if (isPreparingRound) {
+          RosiGameAnimationController.preparingRound.show();
+        }
       });
     }
   }, []);
@@ -73,6 +76,7 @@ const RosiGameAnimation = () => {
 
       // leave some time for player to see crash value
       setTimeout(() => {
+        RosiGameAnimationController.preparingRound.show();
         setIsPreparingRound(true);
       }, ROSI_GAME_AFTER_CRASH_DELAY);
     }
