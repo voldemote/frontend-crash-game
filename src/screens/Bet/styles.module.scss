@@ -529,3 +529,13 @@
     display: none ;
   }
 }
+
+.eventNotExist {
+  min-height: 200px;
+  font-size: 26px;
+
+  .eventNotExistLabel {
+    font-size: 16px;
+    font-style: italic;
+  }
+}

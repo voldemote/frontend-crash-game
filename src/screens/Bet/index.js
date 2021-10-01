@@ -532,9 +532,9 @@ const Bet = ({
     );
   };
 
-  if (!event) {
-    return null;
-  }
+  // if (!event) {
+  //   return null;
+  // }
 
   const hasOnlineState = event?.state === EVENT_STATES.ONLINE;
   const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
@@ -593,87 +593,89 @@ const Bet = ({
       <div className={styles.bet}>
         <div className={styles.upperLeftOval}></div>
         <div className={styles.centeredBottomOval}></div>
-        <div className={styles.headlineContainer}>
-          <div>
-            <Link
-              to={currentFromLocation?.pathname || '/'}
-              className={styles.linkBack}
-            >
-              <div className={styles.arrowBack}></div>
-              <div className={styles.headline}>
-                {renderTitle()}
-                {(hasOnlineState || hasOfflineState) && (
-                  <div className={styles.streamStateBadge}>
-                    {hasOnlineState && <LiveBadge />}
-                    {hasOfflineState && <OfflineBadge />}
-                  </div>
-                )}
-              </div>
-            </Link>
-          </div>
-          <div className={styles.shareButton}>
-            <Share />
-          </div>
-          <AdminOnly>
-            <div className={styles.eventAdminActionsContainer}>
-              <span
-                className={styles.editEventLink}
-                onClick={() => showPopup(PopupTheme.editEvent, event)}
-              >
-                <Icon
-                  className={styles.icon}
-                  iconType={IconType.edit}
-                  iconTheme={IconTheme.white}
-                  height={20}
-                  width={20}
-                />
-                Edit Event
-              </span>
-              {event.type === EventTypes.streamed && (
-                <span
-                  className={styles.newBetLink}
-                  onClick={() => showPopup(PopupTheme.newBet, { event })}
+        {event ? (
+          <>
+            <div className={styles.headlineContainer}>
+              <div>
+                <Link
+                  to={currentFromLocation?.pathname || '/'}
+                  className={styles.linkBack}
                 >
-                  <Icon
-                    className={styles.icon}
-                    iconType={IconType.addBet}
-                    iconTheme={IconTheme.white}
-                    height={24}
-                    width={24}
-                  />
-                  New Bet
-                </span>
-              )}
-            </div>
-          </AdminOnly>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.columnLeft}>
-            <div
-              className={
-                event.type === 'streamed'
-                  ? styles.streamContainer
-                  : styles.nonStreamContainer
-              }
-            >
-              {event.type === 'non-streamed' ? (
-                <div className={styles.chart}>
-                  {bet && renderTradeDesc()}
-                  <Chart
-                    height={matchMediaMobile ? 300 : 400}
-                    data={chartData}
-                    filterActive={filterActive}
-                    handleChartPeriodFilter={handleChartPeriodFilter}
-                  />
+                  <div className={styles.arrowBack}></div>
+                  <div className={styles.headline}>
+                    {renderTitle()}
+                    {(hasOnlineState || hasOfflineState) && (
+                      <div className={styles.streamStateBadge}>
+                        {hasOnlineState && <LiveBadge />}
+                        {hasOfflineState && <OfflineBadge />}
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              </div>
+              <div className={styles.shareButton}>
+                <Share />
+              </div>
+              <AdminOnly>
+                <div className={styles.eventAdminActionsContainer}>
+                  <span
+                    className={styles.editEventLink}
+                    onClick={() => showPopup(PopupTheme.editEvent, event)}
+                  >
+                    <Icon
+                      className={styles.icon}
+                      iconType={IconType.edit}
+                      iconTheme={IconTheme.white}
+                      height={20}
+                      width={20}
+                    />
+                    Edit Event
+                  </span>
+                  {event.type === EventTypes.streamed && (
+                    <span
+                      className={styles.newBetLink}
+                      onClick={() => showPopup(PopupTheme.newBet, { event })}
+                    >
+                      <Icon
+                        className={styles.icon}
+                        iconType={IconType.addBet}
+                        iconTheme={IconTheme.white}
+                        height={24}
+                        width={24}
+                      />
+                      New Bet
+                    </span>
+                  )}
                 </div>
-              ) : (
-                <EmbedVideo
-                  video={event.streamUrl}
-                  autoPlay={true}
-                  controls={true}
-                />
-              )}
-              {/* {event.type === 'streamed' && (
+              </AdminOnly>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.columnLeft}>
+                <div
+                  className={
+                    event.type === 'streamed'
+                      ? styles.streamContainer
+                      : styles.nonStreamContainer
+                  }
+                >
+                  {event.type === 'non-streamed' ? (
+                    <div className={styles.chart}>
+                      {bet && renderTradeDesc()}
+                      <Chart
+                        height={matchMediaMobile ? 300 : 400}
+                        data={chartData}
+                        filterActive={filterActive}
+                        handleChartPeriodFilter={handleChartPeriodFilter}
+                      />
+                    </div>
+                  ) : (
+                    <EmbedVideo
+                      video={event.streamUrl}
+                      autoPlay={true}
+                      controls={true}
+                    />
+                  )}
+                  {/* {event.type === 'streamed' && (
                 <div className={styles.timeLeft}>
                   <span>Estimated end:</span>
                   <TimeLeftCounter
@@ -681,48 +683,59 @@ const Bet = ({
                   />
                 </div>
               )} */}
-            </div>
-            <TabOptions options={tabOptions} className={styles.tabOptions}>
-              {option => (
-                <div
-                  className={styles.tabStyle}
-                  onClick={() => handleSwitchTab(option)}
-                >
-                  {option.name}
                 </div>
-              )}
-            </TabOptions>
-            {selectedTab === 'chat' ? (
-              <Chat
-                className={styles.desktopChat}
-                roomId={event._id}
-                chatMessageType={ChatMessageType.event}
-              />
-            ) : (
-              <News />
-            )}
+                <TabOptions options={tabOptions} className={styles.tabOptions}>
+                  {option => (
+                    <div
+                      className={styles.tabStyle}
+                      onClick={() => handleSwitchTab(option)}
+                    >
+                      {option.name}
+                    </div>
+                  )}
+                </TabOptions>
+                {selectedTab === 'chat' ? (
+                  <Chat
+                    className={styles.desktopChat}
+                    roomId={event._id}
+                    chatMessageType={ChatMessageType.event}
+                  />
+                ) : (
+                  <News />
+                )}
 
-            {selectedTab === 'evidence' && (
-              <div>
-                <div className={styles.evidenceSource}>
-                  <b>Evidence source: </b>{' '}
-                  <span
-                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
-                  ></span>
-                </div>
-                <br />
-                <div className={styles.evidenceDescription}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: bet.evidenceDescription,
-                    }}
-                  ></div>
-                </div>
+                {selectedTab === 'evidence' && (
+                  <div>
+                    <div className={styles.evidenceSource}>
+                      <b>Evidence source: </b>{' '}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                      ></span>
+                    </div>
+                    <br />
+                    <div className={styles.evidenceDescription}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: bet.evidenceDescription,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+              <div className={styles.columnRight}>
+                {renderBetSidebarContent()}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className={styles.eventNotExist}>
+            Event does not exist.
+            <div className={styles.eventNotExistLabel}>
+              {window.location.href}
+            </div>
           </div>
-          <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
-        </div>
+        )}
         <ContentFooter className={styles.betFooter} />
       </div>
     </BaseContainerWithNavbar>
