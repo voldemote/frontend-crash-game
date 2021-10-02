@@ -1,0 +1,95 @@
+{
+	"frames": {
+		"1-01.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 338,
+				"h": 110
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 338,
+				"h": 110
+			},
+			"sourceSize": {
+				"w": 338,
+				"h": 110
+			}
+		},
+		"2-01.png": {
+			"frame": {
+				"x": 1,
+				"y": 113,
+				"w": 338,
+				"h": 110
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 338,
+				"h": 110
+			},
+			"sourceSize": {
+				"w": 338,
+				"h": 110
+			}
+		},
+		"3-01.png": {
+			"frame": {
+				"x": 1,
+				"y": 225,
+				"w": 338,
+				"h": 110
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 338,
+				"h": 110
+			},
+			"sourceSize": {
+				"w": 338,
+				"h": 110
+			}
+		},
+		"4-01.png": {
+			"frame": {
+				"x": 341,
+				"y": 1,
+				"w": 338,
+				"h": 110
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 338,
+				"h": 110
+			},
+			"sourceSize": {
+				"w": 338,
+				"h": 110
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "preparing-round-anim-car.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 680,
+			"h": 336
+		},
+		"scale": "1"
+	}
+}

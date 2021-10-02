@@ -25,7 +25,15 @@ function loadAssets(loader) {
     .add('purplePlanet', constructPath('purplePlanet.png'))
     .add('star1', constructPath('star1.png'))
     .add('star2', constructPath('star2.png'))
-    .add('preparing-round-anim', constructPath('preparing-round-anim.json'));
+    .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
+    .add(
+      'preparing-round-anim-car',
+      constructPath('preparing-round-anim-car.json')
+    )
+    .add(
+      'preparing-round-anim-running',
+      constructPath('preparing-round-anim-running.json')
+    );
 
   loader.load();
 
