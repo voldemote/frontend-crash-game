@@ -71,15 +71,15 @@ class PreparingRound {
       this.rocketDefaultY = this.rocketAnim.y;
     } else if (this.animationIndex === ROSI_GAME_PLAYGROUND_CAR) {
       this.rocketAnim.anchor.set(0.5);
-      this.rocketAnim.scale.set(1.4);
+      this.rocketAnim.scale.set(0.8);
       if (isMobileRosiGame) {
         this.rocketAnim.x =
-          this.app.renderer.width / 2 - this.rocketAnim.width / 2 + 15;
+          this.app.renderer.width / 2 - this.rocketAnim.width + 25;
         this.rocketAnim.y =
           this.app.renderer.height - this.rocketAnim.height / 2;
       } else {
         this.rocketAnim.x =
-          this.app.renderer.width / 2 - this.rocketAnim.width / 2 - 40;
+          this.app.renderer.width / 2 - this.rocketAnim.width - 25;
         this.rocketAnim.y = this.app.renderer.height / 2;
       }
       this.rocketDefaultX = this.rocketAnim.x;
@@ -100,7 +100,7 @@ class PreparingRound {
       }
       this.rocketDefaultX = this.rocketAnim.x;
       this.rocketDefaultY = this.rocketAnim.y;
-      this.rocketAnim.animationSpeed = 0.2;
+      this.rocketAnim.animationSpeed = 0.3;
     }
     this.container.addChild(this.rocketAnim);
   }
