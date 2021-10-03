@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import TWEEN from '@tweenjs/tween.js';
 import {
   isMobileRosiGame,
   calcPercent,
@@ -86,18 +85,8 @@ class RosiAnimationBackground {
     this.circle.endFill();
   }
 
-  updateAnimationSpeed(gameStartTime) {
-    this.gameStartTime = new Date(gameStartTime).getTime();
-  }
-
-  update(dt) {
-    const calcSpeed = factor => Math.pow(factor, factor / 2) / 10;
-    const elapsed = Date.now() - this.gameStartTime;
-    const crashFactor = Number(calcCrashFactorFromElapsedTime(elapsed)) || 1.0;
-    const maxSpeed = calcSpeed(6);
-
+  update(dt, speed) {
     for (const star of this.stars) {
-      const speed = Math.min(calcSpeed(crashFactor), maxSpeed);
       star.x -= speed;
 
       if (star.x < -star.width) {
