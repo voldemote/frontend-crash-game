@@ -30,9 +30,9 @@ const Disclaimer = ({ className = '' }) => {
           the team at <a href="mailto:hello@wallfair.io">hello@wallfair.io</a>.
         </p>
         {!readMore && (
-          <span className={styles.readmore} onClick={handleClickReadMore}>
+          <p className={styles.readmore} onClick={handleClickReadMore}>
             READ MORE
-          </span>
+          </p>
         )}
         {readMore && (
           <>

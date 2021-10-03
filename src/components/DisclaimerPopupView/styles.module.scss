@@ -14,6 +14,10 @@
   overflow: visible;
   border-radius: 10px;
 
+  @media (max-width: $screen-sm) {
+    padding: 35px 10px;
+  }
+
   .ctaButton {
     overflow: hidden;
     font-size: 16px;
@@ -21,10 +25,6 @@
     margin: 20px 0 0;
     width: 100%;
     max-width: 200px;
-
-    &.disabled {
-      opacity: 0.6;
-    }
 
     @media (max-width: $screen-sm) {
       height: 50px;
@@ -36,6 +36,10 @@
     }
   }
 
+  .disabledCTA {
+    background: $colorGrayLight5 !important;
+  }
+
   .disclaimerPopupTextContainer {
     display: flex;
     flex-direction: column;
@@ -44,41 +48,37 @@
 
     .disclaimerPopupTextHeadline {
       font-family: $fontBold;
-      font-size: 11px;
-      margin-bottom: 10px;
+      color: $colorPrimary;
+      font-size: 25px;
+      margin-bottom: 20px;
       position: relative;
       text-align: center;
       z-index: 1;
-      padding-top: 25px;
 
       @media (max-width: $screen-xs) {
-        padding-top: 35px;
-      }
-
-      .disclaimerPopupTextHeadlineUnderline {
-        position: absolute;
-        bottom: 10px;
-        left: 0;
-        top: 40px;
-        width: 100%;
-        border-bottom: 9px solid $colorYellowLight;
-        z-index: -1;
+        font-size: 20px;
+        margin-bottom: 10px;
+        .highlight {
+          top: 15px;
+        }
       }
     }
 
     .disclaimerPopupText {
-      font-size: 15px;
-      margin-bottom: 20px;
+      font-size: 13px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       text-align: justify;
       z-index: 1;
 
       p {
         margin-bottom: 10px;
+        -webkit-text-size-adjust: 100%;
 
         @media (max-width: $screen-xs) {
-          font-size: 13px;
           padding: 0;
-          margin-bottom: 0;
+          margin-top: 0;
+          margin-bottom: 5px;
         }
       }
     }
@@ -87,9 +87,10 @@
   .disclaimerPopupScrollableContainer {
     width: 100%;
     height: fit-content;
-    border: 1px solid #000;
+    border: 1px solid $colorPrimaryDark;
     border-radius: 10px;
-    padding: 10px;
+    position: relative;
+    padding: 10px 0 10px 10px;
 
     .disclaimerPopupScrollableText {
       font-family: $fontBold;
@@ -97,7 +98,6 @@
       height: 108px;
       overflow-y: scroll;
       font-size: 11px;
-      z-index: 1;
       padding: 0 20px 0 0;
       text-align: justify;
 
@@ -116,6 +116,7 @@
   .authenticationLegalAuthorizationAgreementCheckBox {
     font-family: $fontBold;
     font-size: 13px;
-    margin: 20px 35px 0px 35px;
+    margin: 20px 30px 10px 30px;
+    -webkit-text-size-adjust: 100%;
   }
 }

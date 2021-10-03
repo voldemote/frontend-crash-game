@@ -25,12 +25,18 @@
     cursor: pointer;
 
     &:checked:after {
-      content: '\2714';
+      content: '\2714 \fe0e';
       position: absolute;
-      left: 4px;
-      top: 1px;
-      font-size: 14px;
+      left: 2px;
+      top: 0;
+      font-size: 17px;
       color: $colorBlack60;
+
+      @media (max-width: $screen-xs) {
+        left: 1px;
+        top: -2px;
+        font-size: 15px;
+      }
     }
   }
 

@@ -2,15 +2,11 @@ import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import Button from '../Button';
 import { PopupActions } from '../../store/actions/popup';
-import { TOKEN_NAME } from '../../constants/Token';
-import { useLocation } from 'react-router';
 import CheckBox from '../CheckBox';
 import { useState } from 'react';
-import HighlightType from 'components/Highlight/HighlightType';
+import classNames from 'classnames';
 
 const DisclaimerPopupView = ({ closed, hidePopup }) => {
-  const { pathname } = useLocation();
-
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
   const handleClickButton = () => {
@@ -21,22 +17,19 @@ const DisclaimerPopupView = ({ closed, hidePopup }) => {
   const renderDisclaimerText = () => {
     return (
       <div className={styles.disclaimerPopupTextContainer}>
-        {/* 
-          <h3 className={styles.disclaimerPopupTextHeadline}>
-          
-            <span className={styles.disclaimerPopupTextHeadlineUnderline}></span>
-          </h3> 
-        */}
+        <h3 className={styles.disclaimerPopupTextHeadline}>
+          Please read the disclaimer
+        </h3>
 
         <span className={styles.disclaimerPopupText}>
           <p>
             Wallfair Alpha is a graphical user interface for visualizing data
-            and interacting with a simulation of the upcoming social events
-            betting platform.
+            and interacting with a simulation of our upcoming platform.
           </p>
           <p>
-            Wallfair does not take any custody, profits or host over any
-            markets. Please read the disclaimer below before proceeding.
+            Wallfair does not take any custody, profits or host any events that
+            have not been prepared by or agreed with the team of Wallfair.
+            Please read the full disclaimer below before proceeding.
           </p>
         </span>
 
@@ -90,20 +83,8 @@ const DisclaimerPopupView = ({ closed, hidePopup }) => {
         className={styles.authenticationLegalAuthorizationAgreementCheckBox}
         checked={agreedWithTerms}
         setChecked={setAgreedWithTerms}
-        clickable={false}
-        text={
-          <span>
-            I Agree with the{' '}
-            <a
-              href="https://files.wallfair.io/wallfair_t_and_c.pdf"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Terms &amp; Conditions
-            </a>{' '}
-            and I'm aware of the Disclosure
-          </span>
-        }
+        clickable={true}
+        text={<span>I have read and agree to the disclaimer</span>}
       />
     );
   };
@@ -112,11 +93,12 @@ const DisclaimerPopupView = ({ closed, hidePopup }) => {
     return (
       <Button
         onClick={handleClickButton}
-        withoutBackground={true}
-        highlightType={HighlightType.highlightAuthButton}
-        className={styles.ctaButton}
+        className={classNames(
+          styles.ctaButton,
+          !agreedWithTerms ? styles.disabledCTA : null
+        )}
         disabled={!agreedWithTerms}
-        disabledWithOverlay={true}
+        disabledWithOverlay={false}
       >
         <span>Proceed</span>
       </Button>

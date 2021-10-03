@@ -194,11 +194,18 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
 
   return (
     <>
-      <div className={classNames(styles.modal, visible ? null : styles.hidden)}>
+      <div
+        className={classNames(
+          styles.modal,
+          visible ? null : styles.hidden,
+          type === PopupTheme.disclaimer ? styles.disclaimerContainer : null
+        )}
+      >
         <div
           ref={popupElement}
           className={classNames(
             styles.modalDialog,
+            type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.signUpNotificationFirst ||
               type === PopupTheme.signUpNotificationSecond
               ? styles.signUpPopupContainer
