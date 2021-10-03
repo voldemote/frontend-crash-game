@@ -140,4 +140,11 @@ export class CoinAnimation {
     this.elonAndCoin.rotation = 0;
     this.trajectory.clear();
   }
+
+  getCurrentVelocty() {
+    return {
+      x: this.elonAndCoin.vx,
+      y: this.elonAndCoin.vy,
+    };
+  }
 }
