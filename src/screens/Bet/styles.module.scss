@@ -60,6 +60,7 @@
     flex-flow: row wrap;
     align-items: center;
     z-index: 2;
+    margin-bottom: 1rem;
 
     @media (min-width: $screen-md) {
       margin-bottom: 2rem;
@@ -177,7 +178,17 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        min-height: 70vh;
+        position: relative;
+        // harcoded 16:9 aspect ration of the container
+        padding-top: calc(9 / 16 * 100%);
+
+        .streamPositioner {
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
 
         .twitchStream {
           display: flex;
