@@ -89,7 +89,7 @@ const ExplanationViewPopup = ({ closed, hidePopup }) => {
     return (
       <div className={styles.explanationTextContainer}>
         <h3 className={styles.explanationTextHeadline}>
-          How to earn with Games
+          How to earn with Elon Game
           <span className={styles.explanationTextHeadlineUnderline}></span>
         </h3>
 

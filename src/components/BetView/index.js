@@ -384,7 +384,9 @@ const BetView = ({
           {/*{renderTradeDesc()}*/}
           <span
             data-for="tool-tip"
-            data-tip={'You Need To Select An Option First'}
+            data-tip={
+              userLoggedIn ? 'You Need To Select An Option First' : null
+            }
           >
             <Button
               className={classNames(styles.betButton)}
