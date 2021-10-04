@@ -1,4 +1,4 @@
-import { take, put, call, select } from 'redux-saga/effects';
+import { take, put, call, select, delay } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { RosiGameActions } from '../actions/rosi-game';
 import { NotificationActions } from '../actions/notification';
@@ -152,9 +152,10 @@ export function* init() {
   const token = yield select(state => state.authentication.token);
 
   try {
+    if (websocket && websocket.connected) return;
+
     const socket = yield call(createSocket, token);
     const socketChannel = yield call(createSocketChannel, socket);
-
     yield put(WebsocketsActions.initSucceeded());
 
     while (true) {
@@ -164,7 +165,20 @@ export function* init() {
 
         switch (type) {
           case 'connect':
-            yield put(WebsocketsActions.connected());
+            if (socket && socket.connected) {
+              yield put(WebsocketsActions.connected());
+              const userId = yield select(state => state.authentication.userId);
+              const room = yield select(state => state.websockets.room);
+
+              yield put(
+                WebsocketsActions.joinRoom({
+                  userId,
+                  roomId: room,
+                })
+              );
+            } else {
+              yield put(WebsocketsActions.disconnected());
+            }
             break;
           case ChatMessageType.casinoStart:
             yield put(
@@ -256,9 +270,10 @@ export function* init() {
 }
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
+  const ready = yield select(state => state.websockets.init);
   const connected = yield select(state => state.websockets.connected);
 
-  if (!connected) {
+  if (!ready && !connected) {
     yield call(init);
     // @TODO: we need to call/fork from init to join-or-leave
   } else {
@@ -325,7 +340,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   }
 }
 
-export function* connected(action) {
+export function* connected() {
   const location = yield select(state => state.router.location);
   const matchesTradeRoute = matchPath(location.pathname, Routes.bet);
 
@@ -375,6 +390,15 @@ export function* sendChatMessage(action) {
   }
 }
 
+export function* idleCheck() {
+  if (websocket && !websocket.connected) {
+    yield put(WebsocketsActions.disconnected());
+  }
+
+  yield delay(5000);
+  yield call(idleCheck);
+}
+
 export default {
   init,
   connected,
@@ -382,4 +406,5 @@ export default {
   leaveRoom,
   sendChatMessage,
   joinOrLeaveRoomOnRouteChange,
+  idleCheck,
 };

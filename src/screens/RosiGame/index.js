@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import * as Api from 'api/crash-game';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -26,12 +26,11 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 
-const RosiGame = ({ showPopup }) => {
+const RosiGame = ({ showPopup, connected }) => {
   const dispatch = useDispatch();
   const { lastCrashes, inGameBets, cashedOut } = useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
-  const [factor, setFactor] = useState(0);
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
@@ -46,7 +45,7 @@ const RosiGame = ({ showPopup }) => {
         dispatch(AlertActions.showError(error.message));
       });
     dispatch(ChatActions.fetchByRoom({ roomId: ROSI_GAME_EVENT_ID }));
-  }, [dispatch]);
+  }, [dispatch, connected]);
 
   //Bets state update interval
   useEffect(() => {
@@ -82,7 +81,7 @@ const RosiGame = ({ showPopup }) => {
             {isMiddleOrLargeDevice && (
               <>
                 <Grid item xs={12} md={3}>
-                  <PlaceBet />
+                  <PlaceBet connected={connected} />
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <div className={styles.chatWrapper}>
@@ -112,6 +111,12 @@ const RosiGame = ({ showPopup }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    connected: state.websockets.connected,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     hidePopup: () => {
@@ -128,4 +133,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(RosiGame);
+export default connect(mapStateToProps, mapDispatchToProps)(RosiGame);

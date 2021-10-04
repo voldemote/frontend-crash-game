@@ -1,6 +1,7 @@
 import cn from 'classnames';
+import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
 import {
   selectHasStarted,
@@ -26,7 +27,16 @@ const PreparingRound = ({ secondsUntilNextGame }) => (
   </div>
 );
 
-const RosiGameAnimation = () => {
+const GameOffline = () => (
+  <div className={styles.preparingRound}>
+    <div>
+      <h2 className={styles.title}>You are disconnected</h2>
+      <div className={styles.description}>Attempting to reconnect...</div>
+    </div>
+  </div>
+);
+
+const RosiGameAnimation = ({ connected }) => {
   const canvasRef = useRef(null);
   const lastCrashValue = useSelector(selectLastCrash);
   const gameStarted = useSelector(selectHasStarted);
@@ -94,6 +104,8 @@ const RosiGameAnimation = () => {
   }, [isAnimationReady, gameStarted, cashedOut]); // eslint-disable-line
 
   function render() {
+    if (!connected) return <GameOffline />;
+
     if (isPreparingRound) {
       return <PreparingRound secondsUntilNextGame={secondsUntilNextGame} />;
     }
@@ -115,7 +127,10 @@ const RosiGameAnimation = () => {
   return (
     <div className={styles.animation}>
       <canvas
-        className={styles.canvas}
+        className={classNames(
+          styles.canvas,
+          !connected ? styles.gameOffline : null
+        )}
         id="rosi-game-animation"
         ref={canvasRef}
       />
@@ -128,4 +143,10 @@ const RosiGameAnimation = () => {
   );
 };
 
-export default RosiGameAnimation;
+const mapStateToProps = state => {
+  return {
+    connected: state.websockets.connected,
+  };
+};
+
+export default connect(mapStateToProps, null)(RosiGameAnimation);
