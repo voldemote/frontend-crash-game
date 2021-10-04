@@ -34,7 +34,7 @@
     border-radius: 30px;
     outline: 0;
 
-    @media (max-width: 992px) {
+    @media (max-width: $screen-md) {
       border-radius: 30px 30px 0 0;
     }
   }
@@ -70,7 +70,7 @@
       overflow: visible;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: $screen-sm) {
       min-height: calc(100vh - 20px);
 
       &.welcomeContainer {
@@ -82,7 +82,7 @@
       }
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: $screen-md) {
       justify-content: flex-end;
       min-height: 100vh;
       margin-bottom: 0;
@@ -90,7 +90,7 @@
   }
 
   &.explanationContainer {
-    @media (max-width: 768px) {
+    @media (max-width: $screen-sm) {
       min-height: 100vh;
     }
   }
