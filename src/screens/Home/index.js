@@ -18,6 +18,7 @@ import { select } from 'redux-saga/effects';
 import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import LandingPage from 'screens/LandingPage';
+import classNames from 'classnames';
 
 const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
@@ -92,6 +93,16 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     );
   };
 
+  const renderBlogBanner = () => {
+    return (
+      <Link to={Routes.blog}>
+        <div className={classNames(styles.banner, styles.blogBanner)}>
+          <div className={styles.title}>Blog</div>
+        </div>
+      </Link>
+    );
+  };
+
   const renderRosiBanner = () => {
     return (
       <Link to={Routes.rosiGame}>
@@ -136,6 +147,7 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           <EventsCarouselContainer eventType="streamed" />
+          {renderBlogBanner()}
           <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
           {renderCategoriesAndLeaderboard()}
