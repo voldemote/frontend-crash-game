@@ -7,13 +7,12 @@ import UserSagas from './user';
 import ChatSagas from './chat';
 import WebsocketsSagas from './websockets';
 import LeaderboardSagas from './leaderboard';
-import { all, select } from 'redux-saga/effects';
+import { all, select, takeLatest, takeEvery, put } from 'redux-saga/effects';
 import { AuthenticationTypes } from '../actions/authentication';
 import { BetTypes } from '../actions/bet';
 import { EventActions } from '../actions/event';
 import { EventTypes } from '../actions/event';
 import { REHYDRATE } from 'redux-persist';
-import { takeLatest, takeEvery, put } from 'redux-saga/effects';
 import { TransactionTypes } from '../actions/transaction';
 import { UserTypes } from '../actions/user';
 import { AlertTypes } from '../actions/alert';
@@ -123,6 +122,7 @@ const root = function* () {
       [WebsocketsTypes.SEND_CHAT_MESSAGE],
       WebsocketsSagas.sendChatMessage
     ),
+    takeLatest([REHYDRATE], WebsocketsSagas.idleCheck),
     takeEvery([LOCATION_CHANGE], WebsocketsSagas.joinOrLeaveRoomOnRouteChange),
     takeLatest([REHYDRATE], AuthenticationSagas.restoreToken),
     takeLatest([REHYDRATE], AuthenticationSagas.refreshImportantData),

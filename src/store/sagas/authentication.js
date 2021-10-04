@@ -237,7 +237,6 @@ const authenticationSucceeded = function* (action) {
 const logout = function* () {
   Api.setToken(null);
   crashGameApi.setToken(null);
-  yield put(WebsocketsActions.close());
   yield put(push(Routes.home));
 };
 
