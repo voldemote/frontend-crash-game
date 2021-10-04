@@ -46,6 +46,7 @@
     flex-direction: column;
     justify-content: center;
     overflow: auto;
+    pointer-events: none;
 
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
