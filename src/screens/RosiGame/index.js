@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as Api from 'api/crash-game';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -20,13 +20,22 @@ import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 import Share from '../../components/Share';
+import PopupTheme from 'components/Popup/PopupTheme';
+import Icon from 'components/Icon';
+import IconType from 'components/Icon/IconType';
+import IconTheme from 'components/Icon/IconTheme';
+import { PopupActions } from 'store/actions/popup';
 
-const RosiGame = () => {
+const RosiGame = ({ showPopup }) => {
   const dispatch = useDispatch();
   const { lastCrashes, inGameBets, cashedOut } = useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [factor, setFactor] = useState(0);
+
+  const handleHelpClick = useCallback(event => {
+    showPopup(PopupTheme.explanation);
+  }, []);
 
   useEffect(() => {
     Api.getCurrentGameInfo()
@@ -49,9 +58,22 @@ const RosiGame = () => {
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <BackLink to="/games" text="Elon Game">
-            <Share />
-          </BackLink>
+          <div className={styles.headlineWrapper}>
+            <BackLink to="/games" text="Elon Game" />
+            <Share popupPosition="right" className={styles.shareButton} />
+            <Icon
+              className={styles.questionIcon}
+              iconType={IconType.question}
+              iconTheme={IconTheme.white}
+              height={25}
+              width={25}
+              onClick={handleHelpClick}
+            />
+            <span onClick={handleHelpClick} className={styles.howtoLink}>
+              How does it work?
+            </span>
+          </div>
+
           <Grid container spacing={1}>
             <Grid item xs={12} md={9}>
               <LastCrashes lastCrashes={lastCrashes} />
@@ -90,4 +112,20 @@ const RosiGame = () => {
   );
 };
 
-export default RosiGame;
+const mapDispatchToProps = dispatch => {
+  return {
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RosiGame);
