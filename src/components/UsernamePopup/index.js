@@ -65,10 +65,14 @@ const UsernamePopup = ({
         <Button
           onClick={onConfirm}
           withoutBackground={true}
-          highlightType={HighlightType.highlightModalButton2}
+          highlightType={
+            loading
+              ? HighlightType.highlightModalButton2Disabled
+              : HighlightType.highlightModalButton2
+          }
           className={styles.button}
           disabled={loading}
-          disabledWithOverlay={true}
+          disabledWithOverlay={false}
         >
           Submit
         </Button>
