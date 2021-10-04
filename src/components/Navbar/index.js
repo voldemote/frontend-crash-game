@@ -128,9 +128,10 @@ const Navbar = ({
   const hasOpenDrawer = !isOpen('');
 
   const showPopupForUnauthenticated = authenticationType => {
-    if (!isLoggedIn()) {
-      showPopup(PopupTheme.auth, { small: true, authenticationType });
-    }
+    showPopup(PopupTheme.welcome);
+    // if (!isLoggedIn()) {
+    //   showPopup(PopupTheme.auth, { small: true, authenticationType });
+    // }
   };
 
   const isLoggedIn = () => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import _ from 'lodash';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import styles from './styles.module.scss';
@@ -9,13 +9,9 @@ import classNames from 'classnames';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import { connect, useSelector } from 'react-redux';
-import Icon from '../Icon';
-import IconType from '../Icon/IconType';
-import IconTheme from '../Icon/IconTheme';
 import { calculateGain } from 'helper/Calculation';
 import { selectUser } from 'store/selectors/authentication';
 import { convert } from '../../helper/Currency';
-import ReactTooltip from 'react-tooltip';
 
 import Share from '../../components/Share';
 
@@ -32,7 +28,7 @@ const canvasStyles = {
 };
 
 let animationInstance;
-const BetApproveView = ({ visible, hidePopup, options, events }) => {
+const BetApproveView = ({ visible, hidePopup, options }) => {
   const { currency } = useSelector(selectUser);
 
   const trade = _.get(options, 'data.trade');
@@ -122,7 +118,7 @@ const BetApproveView = ({ visible, hidePopup, options, events }) => {
   return (
     <div className={styles.approveBetContainer}>
       <span className={styles.approveBetHeadline}>
-        <img src={LogoSplash} className={styles.logo} />
+        <img src={LogoSplash} className={styles.logo} alt="logo" />
         Congratulations!
       </span>
       <span className={styles.betPostedHeadline}>
@@ -192,7 +188,6 @@ const mapStateToProps = state => {
   return {
     visible:
       state.popup.popupType === PopupTheme.betApprove && state.popup.visible,
-    events: _.get(state, 'event.events', []),
   };
 };
 

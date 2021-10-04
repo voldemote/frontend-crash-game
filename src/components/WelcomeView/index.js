@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import styles from './styles.module.scss';
@@ -8,9 +6,14 @@ import Button from '../Button';
 import { PopupActions } from '../../store/actions/popup';
 import { TOKEN_NAME } from '../../constants/Token';
 import { useCallback, useState } from 'react';
+import ReactCanvasConfetti from 'react-canvas-confetti';
+import useAnimation from '../../hooks/useAnimation';
+import PopupTheme from 'components/Popup/PopupTheme';
 
-const WelcomeView = ({ closed, user, hidePopup }) => {
+const WelcomeView = ({ hidePopup, visible }) => {
   const [readMore, setReadMore] = useState(false);
+
+  const { getAnimationInstance, canvasStyles } = useAnimation({ visible });
 
   const handleClickReadMore = useCallback(
     event => {
@@ -20,8 +23,6 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
   );
 
   const renderHeadline = () => {
-    const name = _.get(user, 'name');
-
     return (
       <span className={styles.welcomeHeadline}>Welcome! We just sent you</span>
     );
@@ -101,13 +102,18 @@ const WelcomeView = ({ closed, user, hidePopup }) => {
       {renderWelcomeText()}
       {renderStartTradingButton()}
       {renderAlphaDisclaimer()}
+      <ReactCanvasConfetti
+        refConfetti={getAnimationInstance}
+        style={canvasStyles}
+      />
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    user: state.authentication,
+    visible:
+      state.popup.visible && state.popup.popupType === PopupTheme.welcome,
   };
 };
 
