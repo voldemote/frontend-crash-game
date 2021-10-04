@@ -198,7 +198,7 @@ const login = makeActionCreator(AuthenticationTypes.LOGIN, {
 const loginSuccess = makeActionCreator(AuthenticationTypes.LOGIN_SUCCESS, {
   userId: null,
   session: null,
-  showWelcome: false,
+  newUser: false,
 });
 
 const loginFail = makeActionCreator(AuthenticationTypes.LOGIN_FAIL, {

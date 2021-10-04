@@ -221,12 +221,16 @@ const authenticationSucceeded = function* (action) {
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
-    yield put(
-      PopupActions.show({
-        popupType: PopupTheme.username,
-      })
-    );
     yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
+    if (action.newUser) {
+      yield put(
+        PopupActions.show({
+          popupType: PopupTheme.username,
+        })
+      );
+    } else {
+      yield put(PopupActions.hide());
+    }
   }
 };
 
@@ -352,7 +356,7 @@ const signUp = function* (action) {
       AuthenticationActions.login({
         email: action.email,
         password: action.password,
-        showWelcome: true,
+        newUser: true,
       })
     );
   } else {
@@ -382,7 +386,7 @@ const login = function* (action) {
       AuthenticationActions.loginSuccess({
         userId: data.userId,
         session: data.session,
-        showWelcome: action.showWelcome,
+        newUser: action.newUser,
       })
     );
   } else {
