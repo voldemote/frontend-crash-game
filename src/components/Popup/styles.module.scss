@@ -48,7 +48,8 @@
     overflow: auto;
 
     &.signUpNotificationPopupContainer,
-    &.welcomeContainer {
+    &.welcomeContainer,
+    &.usernamePopup {
       overflow: visible;
     }
 
