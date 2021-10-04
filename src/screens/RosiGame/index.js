@@ -81,7 +81,7 @@ const RosiGame = ({ showPopup, connected }) => {
             {isMiddleOrLargeDevice && (
               <>
                 <Grid item xs={12} md={3}>
-                  <PlaceBet />
+                  <PlaceBet connected={connected} />
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <div className={styles.chatWrapper}>
