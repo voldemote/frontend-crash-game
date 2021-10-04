@@ -27,4 +27,5 @@ export default {
   cancelBet: 'cancelBet',
   deleteBet: 'deleteBet',
   disclaimer: 'disclaimer',
+  username: 'username',
 };

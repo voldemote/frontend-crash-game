@@ -36,8 +36,9 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import ExplanationViewPopup from 'components/ExplanationViewPopup';
 import DisclaimerPopupView from 'components/DisclaimerPopupView';
+import UsernamePopup from 'components/UsernamePopup';
 
-const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
+const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
 
   useEffect(() => {
@@ -187,6 +188,8 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
         return <ExplanationViewPopup type={options.type} closed={!visible} />;
       case PopupTheme.disclaimer:
         return <DisclaimerPopupView />;
+      case PopupTheme.username:
+        return <UsernamePopup />;
     }
 
     return null;
@@ -215,9 +218,7 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
               : null,
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
-            type === PopupTheme.verifyEmail
-              ? styles.verifyEmailPopupContainer
-              : null,
+            type === PopupTheme.username ? styles.usernamePopup : null,
             small ? styles.small : null,
             type === PopupTheme.auth &&
               options?.authenticationType === 'register' &&
@@ -262,7 +263,6 @@ const mapStateToProps = state => {
     type: state.popup.popupType,
     options: state.popup.options,
     visible: state.popup.visible,
-    events: state.event.events,
   };
 };
 
