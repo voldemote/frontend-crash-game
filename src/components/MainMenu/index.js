@@ -330,11 +330,11 @@ const MainMenu = ({
           />
         </div>
       </div>
-      {editProfileWrapper()}
-      {renderMyTradesDrawer()}
-      {renderReferralsDrawer()}
-      {renderEmailNotificationDrawer()}
-      {renderPreferencesDrawer()}
+      {editVisible && editProfileWrapper()}
+      {myTradesVisible && renderMyTradesDrawer()}
+      {referralsVisible && renderReferralsDrawer()}
+      {emailNotificationsVisible && renderEmailNotificationDrawer()}
+      {preferencesVisible && renderPreferencesDrawer()}
     </div>
   );
 };
