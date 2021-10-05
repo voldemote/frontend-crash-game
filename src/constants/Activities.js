@@ -86,4 +86,16 @@ export const ACTIVITIES_TO_TRACK = [
     image: VegasIcon,
     isActive: true,
   },
+  {
+    value: 'CASINO_PLACE_BET',
+    category: 'Casino Bet Placed',
+    image: AllImageIcon,
+    isActive: true,
+  },
+  {
+    value: 'CASINO_CASHOUT',
+    category: 'Casino Bet Cashed-Out',
+    image: AllImageIcon,
+    isActive: true,
+  },
 ];
