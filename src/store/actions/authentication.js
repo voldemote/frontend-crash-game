@@ -183,6 +183,7 @@ const signUp = makeActionCreator(AuthenticationTypes.SIGN_UP, {
   email: null,
   password: null,
   passwordConfirm: null,
+  ref: null,
 });
 
 const signUpFail = makeActionCreator(AuthenticationTypes.SIGN_UP_FAIL, {
