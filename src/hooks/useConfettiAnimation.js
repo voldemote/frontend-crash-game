@@ -59,7 +59,6 @@ const useAnimation = ({ visible }) => {
   };
 
   useEffect(() => {
-    console.log('visible', visible);
     if (visible) {
       startAnimation();
       playWinSound();
