@@ -152,8 +152,6 @@ export function* init() {
   const token = yield select(state => state.authentication.token);
 
   try {
-    if (websocket && websocket.connected) return;
-
     const socket = yield call(createSocket, token);
     const socketChannel = yield call(createSocketChannel, socket);
     yield put(WebsocketsActions.initSucceeded());
@@ -170,12 +168,14 @@ export function* init() {
               const userId = yield select(state => state.authentication.userId);
               const room = yield select(state => state.websockets.room);
 
-              yield put(
-                WebsocketsActions.joinRoom({
-                  userId,
-                  roomId: room,
-                })
-              );
+              if (room) {
+                yield put(
+                  WebsocketsActions.joinRoom({
+                    userId,
+                    roomId: room,
+                  })
+                );
+              }
             } else {
               yield put(WebsocketsActions.disconnected());
             }
