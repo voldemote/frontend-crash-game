@@ -7,13 +7,15 @@ import { PopupActions } from '../../store/actions/popup';
 import { TOKEN_NAME } from '../../constants/Token';
 import { useCallback, useState } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
-import useAnimation from '../../hooks/useAnimation';
+import useConfettiAnimation from '../../hooks/useConfettiAnimation';
 import PopupTheme from 'components/Popup/PopupTheme';
 
 const WelcomeView = ({ hidePopup, visible }) => {
   const [readMore, setReadMore] = useState(false);
 
-  const { getAnimationInstance, canvasStyles } = useAnimation({ visible });
+  const { getAnimationInstance, canvasStyles } = useConfettiAnimation({
+    visible,
+  });
 
   const handleClickReadMore = useCallback(
     event => {
