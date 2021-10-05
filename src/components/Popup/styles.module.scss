@@ -13,6 +13,7 @@
   z-index: $zIndexPopup;
 
   &.disclaimerContainer {
+    height: 100vh;
     @media (orientation: landscape) {
       overflow-y: auto;
     }
@@ -33,10 +34,6 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 30px;
     outline: 0;
-
-    @media (max-width: $screen-md) {
-      border-radius: 30px 30px 0 0;
-    }
   }
 
   .modalDialog {
@@ -64,6 +61,11 @@
       height: auto;
     }
 
+    &.disclaimerContainer {
+      max-width: 800px;
+      height: auto;
+    }
+
     &.registrationPopupContainer {
       width: auto;
       max-width: max-content;
@@ -80,12 +82,6 @@
       &.disclaimerContainer {
         min-height: calc(100vh - 25%);
       }
-    }
-
-    @media (max-width: $screen-md) {
-      justify-content: flex-end;
-      min-height: 100vh;
-      margin-bottom: 0;
     }
   }
 

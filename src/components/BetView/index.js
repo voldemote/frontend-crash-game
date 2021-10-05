@@ -18,7 +18,7 @@ import { useHasMounted } from '../hoc/useHasMounted';
 import { useState } from 'react';
 import ChoiceSelectorList from '../ChoiceSelectorList';
 import Icon from '../Icon';
-import LoadingAnimation from '../../data/animations/sending-transaction.gif';
+import LoadingAnimation from '../../data/animations/wcoin.gif';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import SummaryRowContainer from '../SummaryRowContainer';
