@@ -110,7 +110,12 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     return (
       <div className={styles.bottomWrapper}>
         <div className={styles.categories}>
-          <div className={styles.headline}>Activities</div>
+          <div className={styles.headline}>
+            Activities{' '}
+            <Link className={styles.seeAllActivities} to={Routes.activities}>
+              See all
+            </Link>
+          </div>
           <ActivitiesTracker />
           {/*<CategoryList categories={EVENT_CATEGORIES} />*/}
         </div>

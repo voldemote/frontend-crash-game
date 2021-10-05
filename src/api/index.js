@@ -344,8 +344,11 @@ const getTradeById = id => {
   );
 };
 
-const getNotificationEvents = () => {
-  return Api.get(ApiUrls.API_GET_NOTIFICATION_EVENTS).catch(error => {
+const getNotificationEvents = params => {
+  const limit = _.get(params, 'limit', 10);
+  return Api.get(
+    ApiUrls.API_GET_NOTIFICATION_EVENTS.replace(':limit', limit)
+  ).catch(error => {
     console.log('[API Error] called: getNotificationEvents', error);
   });
 };
