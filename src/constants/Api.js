@@ -29,6 +29,7 @@ export const API_BET_SELL_OUTCOMES = 'api/event/bet/:id/outcomes/sell';
 export const API_BET_TEMPLATES = 'api/bet-template';
 export const API_EVENT_CREATE = 'api/event/create';
 export const API_EVENT_EDIT = 'api/event/:id';
+export const API_EVENT_DELETE = 'api/event/:id';
 export const API_EVENT_LIST = 'api/event/list';
 export const API_EVENT_LIST_FILTERED =
   'api/event/list/:type/:category/:count/:page/:sortBy/:upcoming/:deactivated/:searchQuery';

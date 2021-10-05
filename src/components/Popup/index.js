@@ -23,7 +23,8 @@ import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
 import PulloutApprovePopup from '../PulloutApprovePopup';
-import BetActionPopup from '../BetActionPopup';
+import DialogActionPopup from '../DialogActionPopup';
+import DialogActions from 'components/DialogActionPopup/DialogActions';
 import LotteryGamePopup from '../LotteryGamePopup';
 import NewEventPopup from '../NewEventPopup';
 import EditEventPopup from '../EditEventPopup';
@@ -162,6 +163,13 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <NewEventPopup eventType={options.eventType} />;
       case PopupTheme.editEvent:
         return <EditEventPopup />;
+      case PopupTheme.deleteEvent:
+        return (
+          <DialogActionPopup
+            data={options?.event}
+            actionType={DialogActions.deleteEvent}
+          />
+        );
       case PopupTheme.newBet:
         return <NewBetPopup />;
       case PopupTheme.editBet:
@@ -173,9 +181,19 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           <ResolveBetPopup betId={options.tradeId} eventId={options.eventId} />
         );
       case PopupTheme.cancelBet:
-        return <BetActionPopup bet={options?.bet} actionType={'cancel'} />;
+        return (
+          <DialogActionPopup
+            data={options?.bet}
+            actionType={DialogActions.cancelBet}
+          />
+        );
       case PopupTheme.deleteBet:
-        return <BetActionPopup bet={options?.bet} actionType={'delete'} />;
+        return (
+          <DialogActionPopup
+            data={options?.bet}
+            actionType={DialogActions.deleteBet}
+          />
+        );
       case PopupTheme.auth:
         return (
           <AuthenticationPopup

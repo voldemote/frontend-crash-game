@@ -19,6 +19,7 @@ export default {
   lotteryGameAnswered: 'lotteryGameAnswered',
   newEvent: 'newEvent',
   editEvent: 'editEvent',
+  deleteEvent: 'deleteEvent',
   newBet: 'newBet',
   editBet: 'editBet',
   viewImage: 'viewImage',

@@ -1,12 +1,13 @@
-import { put } from 'redux-saga/effects';
-import { call } from 'redux-saga/effects';
+import { put, all, call, select } from 'redux-saga/effects';
 import * as Api from '../../api';
 import { getNews } from '../../api/third-party';
 import { EventActions } from '../actions/event';
-import { select } from 'redux-saga/effects';
 import AuthState from '../../constants/AuthState';
 import _ from 'lodash';
 import { UserActions } from '../actions/user';
+import { push } from 'connected-react-router';
+import Routes from 'constants/Routes';
+import { PopupActions } from 'store/actions/popup';
 
 const fetchAll = function* (action) {
   const authState = yield select(state => state.authentication.authState);
@@ -147,6 +148,26 @@ const fetchNewsData = function* ({ params }) {
   }
 };
 
+const deleteEvent = function* ({ payload: eventId }) {
+  try {
+    const { data } = yield call(() => Api.deleteEvent(eventId));
+
+    yield all([
+      put(PopupActions.hide()),
+      put(
+        push(
+          Routes.getRouteWithParameters(Routes.liveEvents, { category: 'all' })
+        )
+      ),
+      put(EventActions.deleteEventSuccess(data)),
+      put(EventActions.fetchAll()),
+      put(EventActions.initiateFetchFilteredEvents()),
+    ]);
+  } catch (error) {
+    yield put(EventActions.deleteEventFail());
+  }
+};
+
 export default {
   fetchAll,
   fetchAllSucceeded,
@@ -155,4 +176,5 @@ export default {
   fetchTags,
   fetchHistoryChartData,
   fetchNewsData,
+  deleteEvent,
 };
