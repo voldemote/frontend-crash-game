@@ -8,16 +8,17 @@
   }
 
   .betCard {
-    width: 300px;
+    background: white;
+    padding: 28px;
+    width: 327px;
+    height: 222px;
+    min-height: 260px;
     border-radius: 6px;
     font-family: $fontLight;
     color: $colorWhite;
-    min-height: 200px;
-    padding: 1rem;
     display: flex;
     position: relative;
     z-index: 0;
-    justify-content: space-between;
     flex-direction: column;
     user-select: none;
     cursor: pointer;
@@ -43,73 +44,96 @@
       height: 100%;
       z-index: 10;
     }
-    .betCardBackground,
-    .betCardBackgroundBlur {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      background-color: $colorPrimary66;
 
-      &.betCardBackgroundBlur {
-        filter: blur(2px);
-        -webkit-filter: blur(2px);
-      }
+    .titleContainer{
+      max-width: 185px;
+      max-height: 72px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: $colorBlack;
     }
 
     .title {
-      font-family: $fontBold;
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 10px;
-      width: fit-content;
-      border-radius: 10px;
-      display: block;
-      text-align: center;
-      margin: 0 auto;
+      font-family: $fontRegular;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: $colorBlack;
+      vertical-align: top;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .section {
+      color: #c1c8d2;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .special{
+      display: flex;
+      flex-direction: column;
+      .star{
+        font-size: 16px;
+        color: black;
+      }
     }
 
     .outcomesContainer {
-      font-size: 11px;
       width: 100%;
-      display: grid;
-      grid-gap: 10px;
-      grid-template-columns: repeat(2, 1fr);
-      margin-top: 5px;
-
+      padding: calc(50px - 28px);
+      display: flex;
+      flex-direction: column;
       .outcome {
-        display: flex;
-        align-items: center;
-        column-gap: 5px;
-
+        display: grid;
+       grid-template-columns: 80px 100px 20px;
+        grid-gap: 16px;
         .amount {
-          background-color: rgba(0, 0, 0, 0.3);
-          padding: 10px;
-          width: fit-content;
-          border-radius: 50px;
-        }
+          font-size: 8px;
+          font-weight: 500;
+          align-self: center;
 
+          color: #c1c8d2;
+        }
         .outcomeName {
-          text-shadow: 1px 1px 10px #333333, 1px 1px 10px #333333;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          width: object-fit;
-          max-width: 80px;
-        }
+          font-family: $fontRegular;
+          font-size: 16px;
+          line-height: 1.5;
+          font-weight: 500;
+          color: #000;
+          align-self: center;
 
-        &:nth-child(even) {
-          display: flex;
-          flex-direction: row-reverse;
         }
       }
     }
   }
 }
+
+.visualization{
+  position: relative;
+  background: $colorYellowAdjusted;
+  width: 100px;
+  min-height: 6px;
+  max-height: 6px;
+  border-radius: 3px;
+  align-self: center;
+}
+
+.gauge{
+  position: absolute;
+  width: 1px;
+  min-height: 6px;
+  max-height: 6px;
+  max-width: 100px;
+  border-radius: 3px;
+  background: #120f27;
+}
+
 .content {
   &.timerActive {
     position: relative;
@@ -117,30 +141,23 @@
   }
 }
 
+
 .timer {
-  position: absolute;
-  bottom: 5px;
-  left: 0;
-  right: 0;
-  height: 30px;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: -1;
-  padding: 10px;
-  width: fit-content;
-  border-radius: 50px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+  width: max-content;
+  border-radius: 2px;
+  background-color: #f6f7f8;
+  div{
+    display: flex;
+    flex-direction: row;
+    opacity: 1;
+    padding: 3px;
+  }
+  span{
+    font-size: 8px;
+    font-weight: 500;
+    min-width: 5px;
+    color: #8192a6 !important;
+  }
 }
 
-.timerTitle {
-  font-size: 0.8rem;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: white;
-}
+

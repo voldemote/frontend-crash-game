@@ -4,6 +4,7 @@ import TimeLeftCounter from '../TimeLeftCounter';
 import classNames from 'classnames';
 import { getOutcomes } from 'api';
 import moment from 'moment';
+import { truncate } from 'lodash/string';
 
 const BetCard = ({
   betId,
@@ -27,7 +28,7 @@ const BetCard = ({
   ]);
 
   const roundOutcome = value => {
-    return Math.min(100, Math.floor((1 / value) * 100)) + '%';
+    return Math.min(100, Math.floor((1 / value) * 100));
   };
 
   useEffect(() => {
@@ -46,45 +47,51 @@ const BetCard = ({
     fetchOutcome();
   }, []);
 
+  function getGaugeWidth(amount = 1) {
+    console.log(amount);
+    return {
+      width: `${amount}px`,
+    };
+  }
+
   return (
     <div className={styles.betCardContainer} onClick={onClick}>
       <div className={classNames(styles.betCard, eventCardClass)}>
         <>
-          <div
-            className={styles.betCardBackgroundBlur}
-            style={getEventCardStyle()}
-          ></div>
-          <div className={styles.betCardBackground}></div>
-          <div
-            className={classNames(styles.content, {
-              // [styles.timerActive]: eventEnd,
-            })}
-          >
-            <span className={styles.title}>{title}</span>
-            <div className={styles.outcomesContainer}>
-              {outcomeValues.map(outcome => (
-                <div className={styles.outcome}>
-                  <span
-                    className={styles.amount}
-                    title="Likelihood of happening"
-                  >
-                    {outcome.amount}
-                  </span>
-                  <span className={styles.outcomeName} title={outcome.name}>
-                    {outcome.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          {eventEnd && happensWithin24h && (
-            <div className={styles.timer}>
-              <span className={styles.timerTitle}>Event ends in:</span>
-              <span>
-                <TimeLeftCounter endDate={eventEnd} viewSeconds={true} />
+          <span className={styles.section}>Wallfair</span>
+          <div className={styles.header}>
+            <div className={styles.titleContainer} title={title}>
+              <span className={styles.title}>
+                {truncate(title, { length: 62 })}
               </span>
             </div>
-          )}
+            <div className={styles.special}>
+              <div className="star"></div>
+              {eventEnd && happensWithin24h && (
+                <div className={styles.timer}>
+                  <TimeLeftCounter endDate={eventEnd} viewSeconds={true} />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className={styles.outcomesContainer}>
+            {outcomeValues.map(outcome => (
+              <div className={styles.outcome}>
+                <span className={styles.outcomeName} title={outcome.name}>
+                  {outcome.name}
+                </span>
+                <div className={styles.visualization}>
+                  <div
+                    className={styles.gauge}
+                    style={getGaugeWidth(outcome.amount)}
+                  />
+                </div>
+                <span className={styles.amount} title="Likelihood of happening">
+                  {outcome.amount}%
+                </span>
+              </div>
+            ))}
+          </div>
         </>
       </div>
     </div>
