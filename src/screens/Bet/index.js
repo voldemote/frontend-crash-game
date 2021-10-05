@@ -744,18 +744,18 @@ const Bet = ({
                     </div>
                   )}
                 </TabOptions>
-                {selectedTab === 'chat' ? (
+                {selectedTab === 'chat' && (
                   <Chat
                     className={styles.desktopChat}
                     roomId={event._id}
                     chatMessageType={ChatMessageType.event}
                   />
-                ) : (
-                  <News />
                 )}
 
+                {selectedTab === 'news' && <News />}
+
                 {selectedTab === 'evidence' && (
-                  <div>
+                  <div className={styles.evidenceTabContainerDesktop}>
                     <div className={styles.evidenceSource}>
                       <b>Evidence source: </b>{' '}
                       <span
