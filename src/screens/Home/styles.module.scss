@@ -129,7 +129,11 @@
 }
 
 .blogBanner {
-  background-image: url('../../data/backgrounds/games/blog-banner-lg.png');
+  background-image: url('../../data/backgrounds/blogs/blog-banner-lg.png');
+
+  @media (max-width: $screen-sm) {
+    background-image: url('../../data/backgrounds/blogs/blog-banner-mobile.png');
+  }
 }
 
 .bottomWrapper {

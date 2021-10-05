@@ -1,21 +1,20 @@
+import { useState } from 'react';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import styles from './styles.module.scss';
-
 import ContentFooter from 'components/ContentFooter';
-import Link from 'components/Link';
-import classNames from 'classnames';
-import bgSrc from '../../data/backgrounds/blogs/test-blog-bg.png';
+import { BLOG_CATEGORIES } from '../../constants/BlogCategories';
 import BlogCards from 'components/BlogCards';
+import CategoryList from 'components/CategoryList';
+import blogJson from '../../data/blogs/blogs.json';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en.json';
+
+TimeAgo.addDefaultLocale(en);
 
 const Blog = () => {
-  const blogs = [
-    {
-      background: bgSrc,
-    },
-    {
-      background: bgSrc,
-    },
-  ];
+  const [categories, setCategories] = useState(BLOG_CATEGORIES);
+  const blogs = Object.values(blogJson);
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -24,11 +23,11 @@ const Blog = () => {
         </section>
         <section className={styles.header}>
           <div className={styles.categories}>
-            {/* <CategoryList
-              eventType={eventType}
+            <CategoryList
+              //   eventType={eventType}
               categories={categories}
-              handleSelect={handleSelectCategory}
-            /> */}
+              //   handleSelect={handleSelectCategory}
+            />
           </div>
         </section>
         <BlogCards blogs={blogs}></BlogCards>

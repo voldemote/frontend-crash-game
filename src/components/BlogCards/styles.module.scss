@@ -13,7 +13,7 @@
   padding: 30px;
 
   @media (max-width: $screen-md) {
-    padding: 0 150px 15px;
+    padding: 0 30px 15px;
   }
 
   @media (max-width: $screen-sm) {
@@ -22,50 +22,6 @@
 
   @media (max-width: $screen-xs) {
     padding: 0 15px 15px;
-  }
-}
-
-.gamesCategory {
-  display: flex;
-  flex-direction: row;
-  column-gap: 10px;
-  align-items: center;
-  color: $colorWhite;
-  font-family: $fontRegular;
-  font-size: 24px;
-  font-weight: 700;
-  padding-bottom: 20px;
-
-  .howtoLink {
-    cursor: pointer;
-    font-size: 11px;
-    font-family: $fontRegular;
-    text-decoration: underline;
-    color: $colorYellow;
-
-    @media (max-width: $screen-xs) {
-      display: none;
-      margin: 0;
-      width: 100%;
-      padding: 0 15px 15px;
-    }
-  }
-
-  .questionIcon {
-    cursor: pointer;
-    display: none;
-
-    svg {
-      g,
-      path,
-      circle {
-        fill: $colorYellow;
-      }
-    }
-
-    @media (max-width: $screen-xs) {
-      display: block;
-    }
   }
 }
 
@@ -130,8 +86,16 @@
     }
 
     .blogText {
-      font-size: 14px;
-      padding: 20px 14px;
+      //   font-size: 14px;
+      padding: 0px 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-height: 16px; /* fallback */
+      max-height: 72px; /* fallback */
+      -webkit-line-clamp: 3; /* number of lines to show */
+      -webkit-box-orient: vertical;
+      margin: 20px 0;
     }
 
     .blogItem {
@@ -148,52 +112,6 @@
         object-fit: cover;
         border-radius: 20px;
         border: 2px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .gameInfo {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        color: $colorWhite;
-        font-family: $fontRegular;
-        padding: 30px;
-
-        .title {
-          font-size: 36px;
-          font-weight: 700;
-          padding: 10px 0;
-          line-height: 1;
-        }
-
-        .subtitle {
-          font-size: 14px;
-          opacity: 0.7;
-        }
-
-        .description {
-          font-size: 16px;
-          opacity: 0.7;
-          min-height: 60px;
-        }
-      }
-
-      .inactivePlaceholder {
-        background-image: url('../../data/backgrounds/games/games-highlight.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 250px;
-        min-height: 70px;
-        transform: translate(-50%, -50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        font-family: $fontRegular;
-        color: $colorBlack;
-        font-weight: 700;
       }
     }
   }
