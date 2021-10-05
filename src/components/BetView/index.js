@@ -65,7 +65,11 @@ const BetView = ({
   // fetchSellOutcomes,
   resetOutcomes,
 }) => {
+  // Static balance amount to simulate for non-logged users
+  // Slider is also using 2800 as max value
+  const BALANCE_NOT_LOGGED = 2800;
   const { currency, balance } = useSelector(selectUser);
+
   const wfairBalance = formatToFixed(
     _.get(
       useSelector(state => state.authentication),
@@ -292,7 +296,10 @@ const BetView = ({
         <div className={styles.labelWrapper}>
           <label className={styles.label}>You trade:</label>
           <InfoBox autoWidth={true} iconType={IconType.question}>
-            1 WFAIR equals 0.20€
+            {/* 1 WFAIR equals 0.20€ */}
+            You need to have a suficient amount of WFAIR tokens to participate
+            in events
+            {/* How to buy WFAIR token? */}
           </InfoBox>
         </div>
         <TokenNumberInput
@@ -300,7 +307,7 @@ const BetView = ({
           setValue={onTokenNumberChange}
           currency={currency}
           errorText={commitmentErrorText}
-          maxValue={formatToFixed(balance)}
+          maxValue={formatToFixed(userLoggedIn ? balance : BALANCE_NOT_LOGGED)}
         />
       </>
     );
@@ -399,7 +406,7 @@ const BetView = ({
               disabledWithOverlay={false}
             >
               <span className={'buttonText'}>
-                {userLoggedIn ? 'Place bet' : 'Join Now And Start Trading'}
+                {userLoggedIn ? 'Place Trade' : 'Join Now And Start Trading'}
               </span>
             </Button>
           </span>
