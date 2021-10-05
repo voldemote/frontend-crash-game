@@ -12,10 +12,25 @@ const Blog = () => {
     {
       background: bgSrc,
     },
+    {
+      background: bgSrc,
+    },
   ];
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
+        <section className={styles.title}>
+          <span>{'Blog'}</span>
+        </section>
+        <section className={styles.header}>
+          <div className={styles.categories}>
+            {/* <CategoryList
+              eventType={eventType}
+              categories={categories}
+              handleSelect={handleSelectCategory}
+            /> */}
+          </div>
+        </section>
         <BlogCards blogs={blogs}></BlogCards>
         <ContentFooter />
       </div>

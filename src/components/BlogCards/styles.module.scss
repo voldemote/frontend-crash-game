@@ -17,7 +17,7 @@
   }
 
   @media (max-width: $screen-sm) {
-    padding: 0 100px 15px;
+    padding: 0 20px 15px;
   }
 
   @media (max-width: $screen-xs) {
@@ -71,6 +71,8 @@
 
 .blogs {
   display: flex;
+  flex-direction: column;
+  gap: 33px;
   width: 100%;
 
   @media (max-width: $screen-md) {
@@ -79,91 +81,65 @@
 
   .wrapper {
     position: relative;
+    max-width: 653px;
     height: 370px;
     flex-basis: 50%;
     padding-right: 10px;
+    background-color: $colorWhite;
+    border-radius: 16px;
+    padding: 10px;
 
     @media (max-width: $screen-md) {
-      padding: 20px 0;
+      padding: 13px;
     }
 
-    &:last-child {
-      padding-right: 0;
+    .blogHeader {
+      display: flex;
+      padding: 3px 7px;
+      gap: 5px;
+
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: $colorYellowLight;
+      }
+
+      .blogInformations {
+        display: flex;
+        width: 100%;
+        max-width: 500px;
+        justify-content: space-between;
+        gap: 20px;
+        font-size: 14px;
+
+        .blogCategory {
+          font-weight: 700;
+        }
+
+        .blogDate {
+          color: $colorGrayLight1;
+        }
+      }
     }
 
-    .gameItem {
+    .blogTitle {
+      font-size: 27px;
+      font-weight: 700;
+      padding: 20px 14px;
+    }
+
+    .blogText {
+      font-size: 14px;
+      padding: 20px 14px;
+    }
+
+    .blogItem {
       height: 100%;
 
-      // &.inactive {
-      //   img,
-      //   .gameInfo {
-      //     filter: opacity(0.4);
-      //   }
-      // }
-
-      &.gameItemLg {
-        .gameInfo {
-          .title {
-            @media (max-width: $screen-md) {
-              font-size: 16px;
-            }
-          }
-
-          .subtitle {
-            @media (max-width: $screen-md) {
-              font-size: 12px;
-            }
-          }
-
-          .description {
-            @media (max-width: $screen-md) {
-              font-size: 14px;
-            }
-          }
-        }
-
-        .inactivePlaceholder {
-          @media (max-width: $screen-md) {
-            min-width: 150px;
-            min-height: 45px;
-            font-size: 14px;
-          }
-        }
-      }
-
-      &.gameItemMd,
-      &.gameItemSm {
-        .inactivePlaceholder {
-          min-width: 150px;
-          min-height: 45px;
-          font-size: 14px;
-        }
-      }
-
-      &.gameItemMd {
-        .gameInfo {
-          .title {
-            @media (max-width: $screen-md) {
-              font-size: 26px;
-            }
-          }
-        }
-      }
-
-      &.gameItemSm {
-        .gameInfo {
-          .title {
-            font-size: 26px;
-          }
-        }
-
-        .inactivePlaceholder {
-          @media (max-width: $screen-md) {
-            min-width: 250px;
-            min-height: 70px;
-            font-size: 18px;
-          }
-        }
+      .imgContainer {
+        // max-width: 634px;
+        height: 168px;
       }
 
       img {
@@ -218,14 +194,6 @@
         font-family: $fontRegular;
         color: $colorBlack;
         font-weight: 700;
-      }
-    }
-
-    .gameLink {
-      text-decoration: none;
-
-      &.gameLinkInactive {
-        cursor: not-allowed;
       }
     }
   }
