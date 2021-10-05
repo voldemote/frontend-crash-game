@@ -202,3 +202,15 @@
     }
   }
 }
+
+.seeAllActivities {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: $colorWhite;
+  line-height: 12px;
+  letter-spacing: 0.6px;
+  font-family: $fontLight;
+  cursor: pointer;
+  text-decoration: underline;
+}
