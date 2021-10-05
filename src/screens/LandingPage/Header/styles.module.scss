@@ -2,7 +2,18 @@
 
 .header {
   text-align: center;
-  margin: 100px auto;
+  margin: 50px auto;
+
+  .socialIcons {
+    margin-bottom: 40px;
+    @media (max-width: $screen-sm) {
+      padding: 0px;
+    }
+  }
+
+  @media (max-width: $screen-sm) {
+    margin-top: 0px;
+  }
 }
 
 .subHeading {

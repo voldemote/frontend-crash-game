@@ -28,6 +28,10 @@
   margin-top: 143px;
   padding: 0 20px;
 
+  @media (max-width: $screen-sm) {
+    margin-top: 133px;
+  }
+
   h1 {
     font-family: $fontBold;
     font-size: 46px;
