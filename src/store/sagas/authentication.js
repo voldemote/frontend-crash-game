@@ -346,6 +346,7 @@ const signUp = function* (action) {
     email: action.email,
     password: action.password,
     passwordConfirm: action.passwordConfirm,
+    ref: action.ref,
   };
 
   const { response, error } = yield call(Api.signUp, payload);
