@@ -13,6 +13,7 @@
   z-index: $zIndexPopup;
 
   &.disclaimerContainer {
+    height: 100vh;
     @media (orientation: landscape) {
       overflow-y: auto;
     }
@@ -57,6 +58,11 @@
     //here specific popup sizes per type, if needed
     &.small {
       max-width: 500px;
+      height: auto;
+    }
+
+    &.disclaimerContainer {
+      max-width: 800px;
       height: auto;
     }
 
