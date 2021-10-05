@@ -42,7 +42,7 @@ const getFailMessage = action => {
 const getSuccessMessage = action => {
   switch (action.type) {
     case EventTypes.DELETE_EVENT_SUCCEEDED:
-      return `"${action.payload.name}" was successfully deleted!`;
+      return 'The event was successfully deleted!';
 
     case BetTypes.CREATE_SUCCEEDED:
       return 'The trade was successfully created!';
