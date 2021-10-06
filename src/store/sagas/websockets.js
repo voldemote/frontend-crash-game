@@ -102,6 +102,15 @@ function createSocketChannel(socket) {
       emit(message);
     };
 
+    const betStartedHandler = data => {
+      const message = {
+        ...data,
+        type: notificationTypes.BET_STARTED,
+      };
+
+      emit(message);
+    };
+
     const onAnyListener = (eventName, data) => {
       const message = {
         type: 'any',
@@ -123,6 +132,7 @@ function createSocketChannel(socket) {
     socket.on('CASINO_END', casinoEndHandler);
     socket.on('CASINO_TRADE', casinoTradeHandler);
     socket.on('CASINO_REWARD', casinoRewardHandler);
+    socket.on('BET_STARTED', betStartedHandler);
     socket.onAny(onAnyListener);
 
     const unsubscribe = () => {
@@ -135,6 +145,7 @@ function createSocketChannel(socket) {
       socket.off('CASINO_END', casinoEndHandler);
       socket.off('CASINO_TRADE', casinoTradeHandler);
       socket.off('CASINO_REWARD', casinoRewardHandler);
+      socket.off('BET_STARTED', betStartedHandler);
       socket.offAny(onAnyListener);
     };
 
@@ -146,14 +157,13 @@ const notificationTypes = {
   EVENT_START: 'Notification/EVENT_START',
   EVENT_RESOLVE: 'Notification/EVENT_RESOLVE',
   EVENT_CANCEL: 'Notification/EVENT_CANCEL',
+  BET_STARTED: 'Notification/EVENT_BET_STARTED',
 };
 
 export function* init() {
   const token = yield select(state => state.authentication.token);
 
   try {
-    if (websocket && websocket.connected) return;
-
     const socket = yield call(createSocket, token);
     const socketChannel = yield call(createSocketChannel, socket);
     yield put(WebsocketsActions.initSucceeded());
@@ -170,12 +180,14 @@ export function* init() {
               const userId = yield select(state => state.authentication.userId);
               const room = yield select(state => state.websockets.room);
 
-              yield put(
-                WebsocketsActions.joinRoom({
-                  userId,
-                  roomId: room,
-                })
-              );
+              if (room) {
+                yield put(
+                  WebsocketsActions.joinRoom({
+                    userId,
+                    roomId: room,
+                  })
+                );
+              }
             } else {
               yield put(WebsocketsActions.disconnected());
             }
@@ -245,6 +257,9 @@ export function* init() {
                 notification: payload,
               })
             );
+            break;
+          case notificationTypes.BET_STARTED:
+            yield put(EventActions.fetchAll());
             break;
           case 'any':
             if (trackedActivities.indexOf(payload.eventName) > -1) {

@@ -1,82 +1,101 @@
-import AllImageIcon from '../data/icons/events-all-icon.svg';
+import AllIcon from '../data/icons/events-all-icon.svg';
+import VegasIcon from '../data/icons/vegas.svg';
 
 export const ACTIVITIES_TO_TRACK = [
   {
+    value: 'ALL',
+    category: 'All',
+    image: AllIcon,
+    isActive: true,
+  },
+  {
     value: 'EVENT_START',
     category: 'Event Start',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_BET_RESOLVED',
     category: 'Event Resolved',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_BET_CANCELED',
     category: 'Event Cancelled',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_USER_REWARD',
     category: 'Event Reward',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_ONLINE',
     category: 'Event Online',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_OFFLINE',
     category: 'Event Offline',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_NEW',
     category: 'Event New',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_UPDATED',
     category: 'Event Updated',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_NEW_BET',
     category: 'Bet New',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_BET_PLACED',
     category: 'Bet Placed',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_BET_STARTED',
     category: 'Bet Started',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_BET_CASHED_OUT',
     category: 'Bet Cashed-Out',
-    image: AllImageIcon,
+    image: VegasIcon,
     isActive: true,
   },
   {
     value: 'EVENT_BET_RESOLVED',
     category: 'Bet Resolved',
-    image: AllImageIcon,
+    image: VegasIcon,
+    isActive: true,
+  },
+  {
+    value: 'CASINO_PLACE_BET',
+    category: 'Casino Bet Placed',
+    image: AllIcon,
+    isActive: true,
+  },
+  {
+    value: 'CASINO_CASHOUT',
+    category: 'Casino Bet Cashed-Out',
+    image: AllIcon,
     isActive: true,
   },
 ];

@@ -425,14 +425,24 @@
   }
 }
 
+.deleteEventLink,
 .editEventLink,
 .newBetLink {
+  position: relative;
   display: flex;
   align-items: center;
   font-size: 16px;
   margin: 10px;
   color: $colorWhite;
   cursor: pointer;
+
+  &.fadedLink {
+    color: $colorWhite50;
+    .icon {
+      opacity: 0.5;
+    }
+    cursor: not-allowed;
+  }
 
   .icon {
     margin-right: 7px;
@@ -441,6 +451,25 @@
       path {
         fill: $colorWhite;
       }
+    }
+  }
+  .infoTooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $colorBlack;
+    border-radius: 8px;
+    padding: 10px;
+    width: max-content;
+    max-width: 250px;
+    color: $colorWhite;
+  }
+
+  &:hover {
+    .infoTooltip {
+      display: block;
     }
   }
 }

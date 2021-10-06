@@ -31,6 +31,7 @@ const ActivitiesTracker = ({
   messagesClassName,
   activities,
   addInitialActivities,
+  showCategories,
 }) => {
   const messageListRef = useRef();
 
@@ -43,7 +44,9 @@ const ActivitiesTracker = ({
   useEffect(() => {
     if (isMount) {
       (async () => {
-        const initialActivities = await getNotificationEvents().catch(err => {
+        const initialActivities = await getNotificationEvents({
+          limit: 50,
+        }).catch(err => {
           console.error("Can't get trade by id:", err);
         });
 
@@ -60,11 +63,15 @@ const ActivitiesTracker = ({
 
   const renderActivities = () => {
     // console.log("notifications", notifications);
-    // const categoryFiltered = _.filter(notifications, item => {
-    //   return item.type.indexOf(selectedCategory) > -1;
-    // });
+    const categoryFiltered = _.filter(activities, item => {
+      if (selectedCategory.toLowerCase() === 'all') {
+        return true;
+      }
 
-    return _.map(activities, (activityMessage, index) => {
+      return item.type.indexOf(selectedCategory) > -1;
+    });
+
+    return _.map(categoryFiltered, (activityMessage, index) => {
       let date = _.get(activityMessage, 'updatedAt');
 
       //try to get trade updatedAt date
@@ -95,16 +102,46 @@ const ActivitiesTracker = ({
   const renderCategories = () => {
     return (
       <div className={styles.categoryList}>
+        <div className={styles.swiperNavContainer}>
+          <div className={styles.activitiesSwiperButtonNext}></div>
+          <div className={styles.activitiesSwiperButtonPrev}></div>
+        </div>
         <Swiper
           navigation={true}
-          slidesPerView={6}
+          slidesPerView={8}
           spaceBetween={0}
           pagination={{
             clickable: true,
             type: 'progressbar',
           }}
+          navigation={{
+            nextEl: '.' + styles.activitiesSwiperButtonNext,
+            prevEl: '.' + styles.activitiesSwiperButtonPrev,
+          }}
           autoHeight={true}
-          className={classNames(styles.swiperElement)}
+          className={showCategories && classNames(styles.swiperElement)}
+          // Responsive breakpoints
+          breakpoints={{
+            320: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            // when window width is >= 320px
+            480: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+            },
+            // when window width is >= 480px
+            992: {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
+            // when window width is >= 480px
+            1200: {
+              slidesPerView: 8,
+              spaceBetween: 30,
+            },
+          }}
         >
           {ACTIVITIES_TO_TRACK.map((activity, index) => (
             <SwiperSlide key={`swiper-slide-${index}`}>
@@ -147,7 +184,7 @@ const ActivitiesTracker = ({
 
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
-      {/*{renderCategories()}*/}
+      {showCategories && renderCategories()}
       <div
         className={classNames(messagesClassName, styles.messageContainer)}
         ref={messageListRef}

@@ -42,7 +42,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       }
 
       return (
-        <a target={'_blank'} href={thisUrl}>
+        <a target={'_blank'} href={thisUrl} rel="noreferrer">
           {_.get(event, 'name')}
         </a>
       );
@@ -54,6 +54,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             bets,
             '[0].slug'
           )}`}
+          rel="noreferrer"
         >
           {_.get(event, 'bets[0].marketQuestion')}
         </a>
@@ -63,6 +64,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         <a
           target={'_blank'}
           href={`${window.location.origin}/trade/${eventSlug}/bet`}
+          rel="noreferrer"
         >
           {_.get(event, 'name')}
         </a>
@@ -108,6 +110,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                   event,
                   'slug'
                 )}/${_.get(event, 'bets[0].slug')}`}
+                rel="noreferrer"
               >
                 {_.get(event, 'bets[0].marketQuestion')}
               </a>
@@ -129,6 +132,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                   event,
                   'slug'
                 )}/${_.get(data, 'bet.slug')}`}
+                rel="noreferrer"
               >
                 <b>{_.get(data, 'bet.marketQuestion')}</b>
               </a>
@@ -148,6 +152,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                   event,
                   'slug'
                 )}/${_.get(data, 'bet.slug')}`}
+                rel="noreferrer"
               >
                 <b>{_.get(data, 'bet.marketQuestion')}</b>
               </a>
@@ -160,6 +165,22 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           <div>
             Bet <b>{getEventUrl(data)}</b> has been resolved.
           </div>
+        );
+      case 'Casino/CASINO_PLACE_BET':
+        return (
+          <div>
+            <b>{_.get(data, 'username')}</b> has placed{' '}
+            <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game{' '}
+          </div>
+          // TODO: Replace this hardcoded game name with actual one later
+        );
+      case 'Casino/CASINO_CASHOUT':
+        return (
+          <div>
+            <b>{_.get(data, 'username')}</b> has cashed out{' '}
+            <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game{' '}
+          </div>
+          // TODO: Replace this hardcoded game name with actual one later
         );
       default:
         return null;

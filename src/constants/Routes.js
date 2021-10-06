@@ -24,6 +24,7 @@ const getRouteWithParameters = function (route, parameterValues) {
 
 export default {
   getRouteWithParameters,
+  activities: '/activities',
   bet: '/trade/:eventSlug?/:betSlug?',
   betApproveDirect: '/bet/:eventId/:betId/:tradeId',
   newBet: '/trade/new',

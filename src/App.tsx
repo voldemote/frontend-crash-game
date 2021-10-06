@@ -24,6 +24,7 @@ import LiveEvents from './screens/LiveEvents';
 import RosiGame from './screens/RosiGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
+import Activities from './screens/Activities';
 import Rewards from './screens/Rewards';
 import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
@@ -66,6 +67,7 @@ const App = () => {
             <Route exact path={Routes.liveEvents} component={LiveEvents} />
             <Route exact path={Routes.events} component={Events} />
             <Route exact path={Routes.rosiGame} component={RosiGame} />
+            <Route exact path={Routes.activities} component={Activities} />
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
             <Route path={Routes.resetPassword} component={ResetPassword} />
