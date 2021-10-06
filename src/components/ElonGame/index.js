@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './styles.module.scss';
-import RosiImg from '../../data/backgrounds/games/rosi-games-banner.png';
+import ElonInSpace from '../../data/backgrounds/elon/elon-in-space.png';
 import { ELON_GAME_STEPS } from 'constants/ElonGame';
 import Routes from 'constants/Routes';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,9 @@ const ElonGame = props => {
       </div>
       <div className={styles.elonGameContainer}>
         <div className={styles.leftColumn}>
-          <img src={RosiImg} alt="elon" />
+          <div className={styles.imgWrapper}>
+            <img src={ElonInSpace} alt="elon" />
+          </div>
           <div className={styles.buttonWrapper}>
             <Link to={Routes.rosiGame}>
               <button className={styles.button}>Play now</button>
@@ -37,11 +39,11 @@ const ElonGame = props => {
                 className={styles.imageContainer}
                 style={{ marginLeft: step.marginLeftImage }}
               >
-                {step.svg}
-                {/* <img src={step.image} /> */}
                 {step.imageText && (
                   <div className={styles.imageText}>{step.imageText}</div>
                 )}
+                {step.svg}
+                <img src={step.image} />
               </div>
             </div>
           ))}

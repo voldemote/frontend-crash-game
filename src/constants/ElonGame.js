@@ -1,4 +1,6 @@
 import { ReactComponent as ElonOnRocketSvg } from '../data/icons/elon-on-rocket.svg';
+import Bet from '../data/images/elongame/bet.png';
+import Explosion from '../data/images/elongame/explosion.png';
 
 export const ELON_GAME_STEPS = [
   {
@@ -6,6 +8,7 @@ export const ELON_GAME_STEPS = [
     title: 'Place a bet',
     description: 'Set the amount of your bet',
     marginLeftText: -30,
+    image: Bet,
   },
   {
     number: '02',
@@ -19,5 +22,6 @@ export const ELON_GAME_STEPS = [
     number: '03',
     title: 'Take profit before Elon explodes',
     description: 'If Elon explodes before you take profit, you lose your bet',
+    image: Explosion,
   },
 ];

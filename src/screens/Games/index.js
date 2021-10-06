@@ -10,11 +10,11 @@ const Games = () => {
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <ElonGame />
-        <GameCards
+        {/* <GameCards
           games={CASINO_GAMES}
           category="Elon Game"
           showHowtoLink={true}
-        />
+        /> */}
         <GameCards games={SLOTS_GAMES} category="House Games" />
         <ContentFooter />
       </div>
