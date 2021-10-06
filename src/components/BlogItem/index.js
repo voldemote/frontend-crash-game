@@ -17,7 +17,7 @@ export default function BlogItem() {
   const { slug } = useParams();
   const blog = blogs[slug];
   if (!blog) {
-    history.push('/');
+    history.push('/blog');
   }
 
   const file_name = `${slug}.md`;
@@ -36,50 +36,48 @@ export default function BlogItem() {
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
-      <div className={styles.container}>
-        <div className={styles.headlineContainer}>
-          <div>
-            <Link
-              //   to={currentFromLocation?.pathname || '/'}
-              to={'/blog'}
-              className={styles.linkBack}
-            >
-              <div className={styles.arrowBack}></div>
-              <div className={styles.headline}>
-                <h2>{blog.title}</h2>
+      {blog && (
+        <div className={styles.container}>
+          <div className={styles.headlineContainer}>
+            <div>
+              <Link to={'/blog'} className={styles.linkBack}>
+                <div className={styles.arrowBack}></div>
+                <div className={styles.headline}>
+                  <h2>{blog.title}</h2>
+                </div>
+              </Link>
+            </div>
+            <div className={styles.shareButton}>
+              <Share />
+            </div>
+          </div>
+          <div className={styles.blogContainer}>
+            <div className={styles.blogHeader}>
+              <div className={styles.circle} />
+              <div className={styles.blogInformations}>
+                <div className={styles.blogCategory}>{blog.category}</div>
+                <div>{blog.author}</div>
+                <div className={styles.blogDateAgo}>
+                  <ReactTimeAgo date={blog.date} locale="en-US" />
+                </div>
               </div>
-            </Link>
-          </div>
-          <div className={styles.shareButton}>
-            <Share />
-          </div>
-        </div>
-        <div className={styles.blogContainer}>
-          <div className={styles.blogHeader}>
-            <div className={styles.circle} />
-            <div className={styles.blogInformations}>
-              <div className={styles.blogCategory}>{blog.category}</div>
-              <div>{blog.author}</div>
-              <div className={styles.blogDateAgo}>
-                <ReactTimeAgo date={blog.date} locale="en-US" />
+            </div>
+            <div className={styles.imgContainer}>
+              <img src={blog.background} />
+            </div>
+            <div className={styles.blogDate}>
+              {dateFormat(new Date(blog.date), 'mmmm d, yyyy')}
+            </div>
+            <div className={styles.blogContentContainer}>
+              <div className={classNames('markdown-body', styles.markdown)}>
+                <ReactMarkdown source={post}>{post}</ReactMarkdown>
               </div>
             </div>
           </div>
-          <div className={styles.imgContainer}>
-            <img src={blog.background} />
-          </div>
-          <div className={styles.blogDate}>
-            {dateFormat(new Date(blog.date), 'mmmm d, yyyy')}
-          </div>
-          <div className={styles.blogContentContainer}>
-            <div className={classNames('markdown-body', styles.markdown)}>
-              <ReactMarkdown source={post}>{post}</ReactMarkdown>
-            </div>
-          </div>
-        </div>
 
-        <ContentFooter />
-      </div>
+          <ContentFooter />
+        </div>
+      )}
     </BaseContainerWithNavbar>
   );
 }

@@ -27,92 +27,12 @@
 
 .blogs {
   display: flex;
-  flex-direction: column;
+  //   flex-direction: column;
+  flex-wrap: wrap;
   gap: 33px;
   width: 100%;
 
   @media (max-width: $screen-md) {
-    flex-direction: column;
-  }
-
-  .wrapper {
-    position: relative;
-    max-width: 653px;
-    height: 370px;
-    flex-basis: 50%;
-    padding-right: 10px;
-    background-color: $colorWhite;
-    border-radius: 16px;
-    padding: 10px;
-
-    @media (max-width: $screen-md) {
-      padding: 13px;
-    }
-
-    .blogHeader {
-      display: flex;
-      padding: 3px 7px;
-      gap: 5px;
-
-      .circle {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: $colorYellowLight;
-      }
-
-      .blogInformations {
-        display: flex;
-        width: 100%;
-        max-width: 500px;
-        justify-content: space-between;
-        gap: 20px;
-        font-size: 14px;
-
-        .blogCategory {
-          font-weight: 700;
-        }
-
-        .blogDate {
-          color: $colorGrayLight1;
-        }
-      }
-    }
-
-    .blogTitle {
-      font-size: 27px;
-      font-weight: 700;
-      padding: 20px 14px;
-    }
-
-    .blogText {
-      //   font-size: 14px;
-      padding: 0px 14px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      line-height: 16px; /* fallback */
-      max-height: 72px; /* fallback */
-      -webkit-line-clamp: 3; /* number of lines to show */
-      -webkit-box-orient: vertical;
-      margin: 20px 0;
-    }
-
-    .blogItem {
-      height: 100%;
-
-      .imgContainer {
-        // max-width: 634px;
-        height: 168px;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 20px;
-        border: 2px solid rgba(255, 255, 255, 0.1);
-      }
-    }
+    justify-content: center;
   }
 }
