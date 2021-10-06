@@ -35,10 +35,7 @@ const ElonGame = props => {
                 <div className={styles.title}>{step.title}</div>
                 <div className={styles.description}>{step.description}</div>
               </div>
-              <div
-                className={styles.imageContainer}
-                style={{ marginLeft: step.marginLeftImage }}
-              >
+              <div className={styles.imageContainer}>
                 {step.imageText && (
                   <div className={styles.imageText}>{step.imageText}</div>
                 )}

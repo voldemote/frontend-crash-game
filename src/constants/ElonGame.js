@@ -1,6 +1,6 @@
-import { ReactComponent as ElonOnRocketSvg } from '../data/icons/elon-on-rocket.svg';
 import Bet from '../data/images/elongame/bet.png';
 import Explosion from '../data/images/elongame/explosion.png';
+import ElonOnRocket from '../data/images/elongame/eleon-on-rocket.png';
 
 export const ELON_GAME_STEPS = [
   {
@@ -14,9 +14,8 @@ export const ELON_GAME_STEPS = [
     number: '02',
     title: 'Wait until next round starts',
     description: `You'll see a countdown on the game screen`,
+    image: ElonOnRocket,
     imageText: 'Starting in 24.30',
-    svg: <ElonOnRocketSvg width={105} height={105} />,
-    marginLeftImage: -20,
   },
   {
     number: '03',
