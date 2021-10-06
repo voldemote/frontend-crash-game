@@ -165,7 +165,12 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
           </div>
         </section>
       </AdminOnly>
-      <section className={styles.main}>
+      <section
+        className={classNames([
+          styles.main,
+          eventType !== 'streamed' ? styles.notStreamed : '',
+        ])}
+      >
         {eventType === 'streamed' && (
           <div className={styles.streamedContainer}>
             <EventsCarouselContainer
