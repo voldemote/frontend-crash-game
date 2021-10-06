@@ -187,7 +187,7 @@ const Bet = ({
       setBetAction(BET_ACTIONS.EventTrades);
     }
     if (isMobile && (isNonStreamed || relatedBets.length === 1)) {
-      onBetClose();
+      onBetClose()();
       setBetAction(BET_ACTIONS.EventTrades);
     }
   }, [isMobile, relatedBets, event]);
