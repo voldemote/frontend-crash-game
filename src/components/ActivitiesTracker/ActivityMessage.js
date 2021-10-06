@@ -84,11 +84,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_BET_CANCELED':
         return (
           <div>
-            Event{' '}
-            <b>
-              {_.get(data, 'bet.marketQuestion', _.get(data, 'event.name'))}
-            </b>{' '}
-            cancelled.
+            Event <b>{_.get(event, 'name')}</b> cancelled.
           </div>
         );
       case 'Notification/EVENT_USER_REWARD':
@@ -204,6 +200,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     if (!user) {
       user = _.get(activity, 'data.user');
+    }
+
+    if (!user) {
+      //@todo sometimes user is not there, we are displaying 'Unknown user' we should do an api call to get this? Better to add missing part to the event message in USER_REWARDED
     }
 
     return (
