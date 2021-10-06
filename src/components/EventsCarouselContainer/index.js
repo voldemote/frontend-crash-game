@@ -126,7 +126,6 @@ const EventsCarouselContainer = ({
     //Improvement: use API endpoint /event/bets/... to list and filter bets
 
     const allValidBets = allEvents.reduce((acc, current) => {
-      console.log(current);
       if (current.type === 'streamed') {
         return acc;
       }
