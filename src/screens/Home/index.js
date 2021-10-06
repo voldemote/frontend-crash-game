@@ -16,6 +16,7 @@ import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import LandingPage from 'screens/LandingPage';
+import classNames from 'classnames';
 
 const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
@@ -90,6 +91,21 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     );
   };
 
+  const renderBlogBanner = () => {
+    return (
+      <Link to={Routes.blog}>
+        <div className={classNames(styles.banner, styles.blogBanner)}>
+          {/* <div className={styles.title}>Blog</div> */}
+          <div className={styles.title}>
+            {'        '}
+            <br />
+            {'         '}
+          </div>
+        </div>
+      </Link>
+    );
+  };
+
   const renderRosiBanner = () => {
     return (
       <Link to={Routes.rosiGame}>
@@ -141,6 +157,7 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
           {renderRosiBanner()}
           <EventsCarouselContainer eventType="non-streamed" />
           <EventsCarouselContainer eventType="streamed" />
+          {renderBlogBanner()}
           {renderCategoriesAndLeaderboard()}
           <ContentFooter />
         </div>
