@@ -1,8 +1,7 @@
 import SportsImageIcon from '../data/icons/events-sports-icon.svg';
 import CryptoImageIcon from '../data/icons/events-other-icon.svg';
 import ControllerImageIcon from '../data/icons/controller.svg';
-import NewsImageIcon from '../data/icons/news.svg';
-import VegasImageIcon from '../data/icons/vegas.svg';
+import PoliticsImageIcon from '../data/icons/news.svg';
 import JokerImageIcon from '../data/icons/joker.svg';
 import TradingImageIcon from '../data/icons/trading.svg';
 import AllImageIcon from '../data/icons/events-all-icon.svg';
@@ -32,13 +31,6 @@ export const EVENT_CATEGORIES = [
     disabled: false,
   },
   {
-    value: 'Vegas',
-    image: VegasImageIcon,
-    isActive: false,
-    type: 'icon',
-    disabled: false,
-  },
-  {
     value: 'Sports',
     image: SportsImageIcon,
     isActive: false,
@@ -46,8 +38,8 @@ export const EVENT_CATEGORIES = [
     disabled: false,
   },
   {
-    value: 'News',
-    image: NewsImageIcon,
+    value: 'Politics',
+    image: PoliticsImageIcon,
     isActive: false,
     type: 'icon',
     disabled: false,
@@ -90,19 +82,13 @@ export const LIVE_EVENTS_CATEGORIES = [
     type: 'image',
   },
   {
-    value: 'Vegas',
-    image: ApexLegendsImage,
-    isActive: false,
-    type: 'image',
-  },
-  {
     value: 'Sports',
     image: CSImage,
     isActive: false,
     type: 'image',
   },
   {
-    value: 'News',
+    value: 'Politics',
     image: FortniteImage,
     isActive: false,
     type: 'image',
