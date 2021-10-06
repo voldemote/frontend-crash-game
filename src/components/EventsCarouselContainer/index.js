@@ -125,31 +125,49 @@ const EventsCarouselContainer = ({
   const renderBetCards = () => {
     //Improvement: use API endpoint /event/bets/... to list and filter bets
 
-    const allBets = allEvents.reduce((acc, current) => {
-      const bets = current.bets.map(bet => ({
-        ...bet,
-        eventSlug: current.slug,
-        previewImageUrl: current.previewImageUrl,
-        tags: _.map(current.tags, tag => tag.name),
-      }));
+    const allValidBets = allEvents.reduce((acc, current) => {
+      console.log(current);
+      if (current.type === 'streamed') {
+        return acc;
+      }
+
+      const bets = current.bets
+        .map(bet => ({
+          ...bet,
+          eventSlug: current.slug,
+          previewImageUrl: current.previewImageUrl,
+          tags: _.map(current.tags, tag => tag.name),
+        }))
+        .filter(bet => {
+          return (
+            bet.published &&
+            [BetState.active, BetState.upcoming].includes(bet.status)
+          );
+        });
+
       const concat = [...acc, ...bets];
       return concat;
     }, []);
 
-    const betIdsFromCurrentEvents = currentEvents?.reduce((acc, current) => {
-      const concat = [...acc, ...current.bets];
-      return concat;
-    }, []);
+    // const betIdsFromCurrentEvents = currentEvents?.reduce((acc, current) => {
+    //   const concat = [...acc, ...current.bets];
+    //   return concat;
+    // }, []);
 
-    const filteredBets = betIdsFromCurrentEvents
-      ? allBets.filter(bet => {
-          return (
-            betIdsFromCurrentEvents.includes(bet._id) &&
-            bet.published &&
-            [BetState.active, BetState.upcoming].includes(bet.status)
-          );
-        })
-      : [];
+    // const filteredBets = betIdsFromCurrentEvents
+    //   ? allBets.filter(bet => {
+    //       return (
+    //         betIdsFromCurrentEvents.includes(bet._id) &&
+    //         bet.published &&
+    //         [BetState.active, BetState.upcoming].includes(bet.status)
+    //       );
+    //     })
+    //   : [];
+
+    // MUST CHANGE THAT TO READ FROM BETS ENDPOINT
+    const currentItem = (page - 1) * COUNT;
+    const lastItem = currentItem + COUNT;
+    const filteredBets = allValidBets.slice(currentItem, lastItem);
 
     return _.map(filteredBets, bet => {
       const betId = _.get(bet, '_id');
