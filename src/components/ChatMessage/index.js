@@ -3,10 +3,12 @@ import styles from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useChatIntersection } from '../../hooks/useChatIntersection';
 
 const ChatMessage = ({
   user,
+  userId,
   message,
   dateString,
   className,
@@ -17,7 +19,6 @@ const ChatMessage = ({
   const userName = _.get(user, 'username', 'Unknown');
   const [isVisible, setVisible] = useState(false);
   const elementRef = useChatIntersection(parentRef, setVisible);
-
   return (
     <div
       className={classNames(
@@ -30,10 +31,12 @@ const ChatMessage = ({
     >
       <img src={profilePicture} alt={userName} />
       <div>
-        <span>
-          <small>{userName}</small>
-          <small>{dateString}</small>
-        </span>
+        <Link to={`/user/${userId}`}>
+          <span>
+            <small>{userName}</small>
+            <small>{dateString}</small>
+          </span>
+        </Link>
         <p>{message}</p>
       </div>
     </div>

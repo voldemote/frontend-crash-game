@@ -1,0 +1,331 @@
+@import '../../styles/all';
+
+
+.container {
+  width: 100%;
+
+  @media (min-width: $screen-lg) {
+    max-width: 1300px;
+  }
+}
+
+.containerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;  
+  margin: 0 1rem;
+  .webWrapper{   
+    margin: 0 2rem;     
+    @media (max-width: $screen-sm) {
+      display: none;
+    }
+    .containerHeader {
+      position: relative;
+      width: 100%;
+      height: 344px;
+      background-image: url('../../data/backgrounds/profile/background.png');
+      background-repeat: no-repeat;
+      background-position: top;
+      background-size: cover;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      .avatarBox {
+        position: absolute;
+        left: 60px;
+        bottom: -50px;
+        border-radius: 50%;
+        width: 110px;
+        height: 110px;
+        background-color: $colorPrimaryDark;
+        .profileImage {
+          object-fit: cover;
+          object-position: center;
+          border-radius: 50%;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+        }        
+      }
+
+      .profileTitle {
+        color: $colorWhite;
+        margin-left: 250px;
+        margin-bottom: 16px;        
+        h6 {
+          font-family: $fontRegular;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 13px;
+        }
+        h2 {
+          font-family: $fontBold;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 30px;
+          line-height: 39px;
+        }
+      }
+    }
+    .headerContent {      
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 183px;
+      background-color: #21203C;
+      color: $colorWhite;
+      padding-top: 20px;      
+      padding-right: 16px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      .aboutSection {
+        padding-left: 250px;
+        h3 {
+          font-family: $fontRegular;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 23px;
+        }
+        h5 {
+          margin-top: 8px;
+          font-family: $fontRegular;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 24px;
+          opacity: 0.6;
+        }
+      }
+    }  
+    .tabLayout {
+      display: flex;
+      margin-left: 34px;
+      align-items: flex-end;
+      color: $colorWhite;
+      font-family: $fontRegular;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 18px;
+      .tabItem {
+        margin-right: 40px; 
+        padding-bottom: 12px;               
+        opacity: 0.3;
+      }
+      .tabItemSelected {
+        margin-right: 40px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #F1FF54;        
+        opacity: 1;
+      }
+    }
+    .userActivities {      
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      margin-top: 20px;      
+      .templateImage {
+        width: 100%;        
+        filter: blur(2px);
+      }
+      .activityWrapper {
+        width: 75%
+      }
+      .statistics {
+        width: 25%
+      }
+      .inactivePlaceholder {        
+        background-image: url('../../data/backgrounds/games/games-highlight.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 250px;
+        min-height: 70px;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-family: $fontRegular;
+        color: $colorBlack;
+        font-weight: 700;
+      }
+    }
+  }
+  .mobileWrapper{   
+    margin: 0 3rem; 
+    width: 100%;
+    @media (min-width: $screen-sm) {
+      display: none;
+    }
+    .containerHeader {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      background-image: url('../../data/backgrounds/profile/background.png');
+      background-repeat: no-repeat;
+      background-position: top;
+      background-size: cover;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      display: flex;
+      flex-direction: row;      
+      justify-content: center;
+      align-items: flex-end;
+      .avatarBox {
+        position: absolute;
+        bottom: -42px;
+        border-radius: 50%;
+        width: 93.7px;
+        height: 93.7px;
+        background-color: $colorPrimaryDark;
+        .profileImage {
+          object-fit: cover;
+          object-position: center;
+          border-radius: 50%;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+        }  
+      }
+    }
+    .headerContent {      
+      background-color: #21203C;
+      color: $colorWhite;
+      padding-top: 68px;      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      .profileName {
+        color: $colorWhite;
+        h2 {
+          font-family: $fontRegular;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 31px;
+        }
+      }
+      .aboutSection {
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        h3 {
+          font-family: $fontRegular;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 23px;
+        }
+        h5 {
+          margin-top: 8px;
+          font-family: $fontRegular;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 24px;
+          opacity: 0.6;
+        }
+      }
+      .tabLayout {        
+        display: flex;           
+        justify-content: space-between;        
+        margin-top: 20px;        
+        align-items: flex-end;
+        color: $colorWhite;
+        font-family: $fontRegular;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 14px;
+        .tabItem {
+          text-align: center;
+          margin: 0 12px; 
+          padding-bottom: 12px;               
+          opacity: 0.3;          
+        }
+        .tabItemSelected {
+          text-align: center;
+          margin: 0 12px;
+          padding-bottom: 12px;
+          border-bottom: 2px solid #F1FF54;        
+          opacity: 1;
+        }
+      }
+    }
+    .userActivities {      
+      position: relative;
+      margin-top: 20px;      
+      .templateImage {
+        width: 100%;                
+        filter: blur(2px);
+      }
+      .inactivePlaceholder {        
+        background-image: url('../../data/backgrounds/games/games-highlight.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 250px;
+        min-height: 70px;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-family: $fontRegular;
+        color: $colorBlack;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.bottomWrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 24px;  
+
+  .leaderboard {
+    width: 100%;
+    border-radius: 8px;
+    @media (max-width: $screen-sm) {
+      padding: 0;
+    }
+  }
+
+  .headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $colorWhite;
+    font-family: $fontRegular;
+    font-size: 24px;
+    margin-bottom: 20px;
+
+    .leaderboardLink {
+      font-size: 14px;
+      color: $colorWhite;
+      line-height: 12px;
+      letter-spacing: 0.6px;
+      font-family: $fontLight;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+
+

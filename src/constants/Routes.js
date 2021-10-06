@@ -40,4 +40,5 @@ export default {
   chart: 'event/bet/:betId/history/chart',
   rewards: '/rewards',
   resetPassword: '/reset-password',
+  user: '/user/:userId?',
 };

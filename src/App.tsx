@@ -26,6 +26,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
 import Rewards from './screens/Rewards';
 import ResetPassword from './screens/ResetPassword';
+import UserProfile from './screens/UserProfile';
 import LandingPage from 'screens/LandingPage';
 import initTagManager from './config/gtm';
 import AudioContent from "./components/AudioContent";
@@ -68,6 +69,7 @@ const App = () => {
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
             <Route path={Routes.resetPassword} component={ResetPassword} />
+            <Route exact path={Routes.user} component={UserProfile} />
             {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
             <Redirect to={Routes.home} />
           </Switch>
