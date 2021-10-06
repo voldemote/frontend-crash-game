@@ -32,6 +32,7 @@ const ActivitiesTracker = ({
   activities,
   addInitialActivities,
   showCategories,
+  activitiesLimit,
 }) => {
   const messageListRef = useRef();
 
@@ -47,7 +48,7 @@ const ActivitiesTracker = ({
     if (isMount) {
       (async () => {
         const initialActivities = await getNotificationEvents({
-          limit: 50,
+          limit: activitiesLimit || 10,
           category: selectedCategory,
         }).catch(err => {
           console.error("Can't get trade by id:", err);
@@ -65,7 +66,7 @@ const ActivitiesTracker = ({
     if (initialLoaded) {
       (async () => {
         const initialActivities = await getNotificationEvents({
-          limit: 50,
+          limit: activitiesLimit || 10,
           category: selectedCategory,
         }).catch(err => {
           console.error("Can't get trade by id:", err);

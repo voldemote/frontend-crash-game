@@ -15,6 +15,7 @@ const Activities = () => {
 
         <ActivitiesTracker
           showCategories={true}
+          activitiesLimit={50}
           className={
             styles.activitiesTrackerContainerFull + ' activities-tracker-swiper'
           }
