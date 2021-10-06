@@ -72,6 +72,7 @@ const root = function* () {
       [
         AuthenticationTypes.FETCH_REFERRALS_FAILED,
         EventTypes.FETCH_ALL_FAILED,
+        EventTypes.DELETE_EVENT_FAILED,
         BetTypes.CREATE_FAILED,
         BetTypes.PLACE_FAILED,
         BetTypes.PULL_OUT_BET_FAILED,
@@ -80,6 +81,7 @@ const root = function* () {
     ),
     takeEvery(
       [
+        EventTypes.DELETE_EVENT_SUCCEEDED,
         BetTypes.CREATE_SUCCEEDED,
         BetTypes.PLACE_SUCCEEDED,
         BetTypes.PULL_OUT_BET_SUCCEEDED,
@@ -139,6 +141,7 @@ const root = function* () {
       EventSagas.fetchHistoryChartData
     ),
     takeLatest([EventTypes.FETCH_NEWS_DATA], EventSagas.fetchNewsData),
+    takeLatest([EventTypes.DELETE_EVENT], EventSagas.deleteEvent),
     // @formatter:on
   ]);
 };

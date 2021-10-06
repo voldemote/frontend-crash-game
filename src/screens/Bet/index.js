@@ -101,6 +101,9 @@ const Bet = ({
   useNewsFeed(event);
 
   const isNonStreamed = _.get(event, 'type') === EventTypes.nonStreamed;
+  const canDeleteEvent = _.get(event, 'bets')?.every(
+    ({ status }) => status === BetState.canceled
+  );
 
   const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
   const { activeBets } = useTrades(event?._id);
@@ -667,6 +670,31 @@ const Bet = ({
                       width={20}
                     />
                     Edit Event
+                  </span>
+                  <span
+                    className={classNames(
+                      styles.deleteEventLink,
+                      !canDeleteEvent && styles.fadedLink
+                    )}
+                    onClick={() =>
+                      canDeleteEvent &&
+                      showPopup(PopupTheme.deleteEvent, { event })
+                    }
+                  >
+                    <Icon
+                      className={styles.icon}
+                      iconType={IconType.trash}
+                      iconTheme={IconTheme.white}
+                      height={20}
+                      width={20}
+                    />
+                    Delete Event
+                    {!canDeleteEvent && (
+                      <span className={styles.infoTooltip}>
+                        All bets must be cancelled or deleted in order to delete
+                        an event.
+                      </span>
+                    )}
                   </span>
                   {event.type === EventTypes.streamed && (
                     <span
