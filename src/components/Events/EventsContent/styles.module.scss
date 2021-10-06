@@ -146,11 +146,12 @@
 
 > * {
   margin-bottom: 10px;
+  display: block;
+  break-inside: avoid-column;
 }
 
 > a {
   text-decoration: none;
-
   @media (max-width: $screen-xs) {
   }
 }
