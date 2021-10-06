@@ -49,14 +49,6 @@ export const CASINO_GAMES = [
 
 export const SLOTS_GAMES = [
   {
-    background: First,
-    title: 'Midas Trader',
-    subtitle: '',
-    description: 'Market 1X2 – you know where the prices are going? Prove it!',
-    active: false,
-    linkTo: '',
-  },
-  {
     background: Second,
     title: 'Treasure Island',
     subtitle: '',
@@ -88,6 +80,14 @@ export const SLOTS_GAMES = [
     subtitle: '',
     description:
       'Game and learn candlestick trading strategy in this jackpot tournament',
+    active: false,
+    linkTo: '',
+  },
+  {
+    background: First,
+    title: 'Midas Trader',
+    subtitle: '',
+    description: 'Market 1X2 – you know where the prices are going? Prove it!',
     active: false,
     linkTo: '',
   },

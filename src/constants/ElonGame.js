@@ -7,7 +7,7 @@ export const ELON_GAME_STEPS = [
     number: '01',
     title: 'Place a bet',
     description: 'Set the amount of your bet',
-    marginLeftText: -30,
+    marginLeftText: -27,
     image: Bet,
   },
   {
