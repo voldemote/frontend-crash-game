@@ -82,7 +82,15 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     switch (activity.type) {
       case 'Notification/EVENT_BET_CANCELED':
-        return `Event ${_.get(data, 'event.name')} cancelled.`;
+        return (
+          <div>
+            Event{' '}
+            <b>
+              {_.get(data, 'bet.marketQuestion', _.get(data, 'event.name'))}
+            </b>{' '}
+            cancelled.
+          </div>
+        );
       case 'Notification/EVENT_USER_REWARD':
         return (
           <div>
