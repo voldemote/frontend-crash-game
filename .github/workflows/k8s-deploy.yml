@@ -9,7 +9,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: k8s-setup
+          ref: kubernetes-build
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
