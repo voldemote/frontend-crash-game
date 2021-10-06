@@ -352,8 +352,12 @@ const getTradeById = id => {
 
 const getNotificationEvents = params => {
   const limit = _.get(params, 'limit', 10);
+  const category = _.get(params, 'category', 10);
   return Api.get(
-    ApiUrls.API_GET_NOTIFICATION_EVENTS.replace(':limit', limit)
+    ApiUrls.API_GET_NOTIFICATION_EVENTS.replace(':limit', limit).replace(
+      ':category',
+      category
+    )
   ).catch(error => {
     console.log('[API Error] called: getNotificationEvents', error);
   });
