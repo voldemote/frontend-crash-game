@@ -13,7 +13,7 @@ import Routes from './Routes';
 export const CASINO_GAMES = [
   {
     background: RosiImg,
-    title: 'Rosi Games',
+    title: 'Elon Game',
     subtitle: '',
     description: '',
     active: true,
@@ -23,11 +23,11 @@ export const CASINO_GAMES = [
       content: (
         <div>
           <p>
-            <strong>What is Rosi Game?</strong>
+            <strong>What is Elon Game?</strong>
           </p>
           <p>&nbsp;</p>
           <p>
-            The Rosi Game is a crash game which promises pure fun and
+            The Elon Game is a crash game which promises pure fun and
             excitement, every fall counts!
           </p>
           <p>
@@ -35,7 +35,7 @@ export const CASINO_GAMES = [
             will go up till it crashes at some random time.
           </p>
           <p>
-            In Rosi Game, the longer the coin flies, the higher the chance that
+            In Elon Game, the longer the coin flies, the higher the chance that
             it will crash. If you cash out before the coin explodes, your bet
             will be multiplied by the current number the graph has by the time
             you cash out. If you do not cash out before the graph crashes, you
@@ -47,9 +47,9 @@ export const CASINO_GAMES = [
   },
   {
     background: First,
-    title: 'Name Games',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    title: 'Midas Trader',
+    subtitle: '',
+    description: 'Market 1X2 – you know where the prices are going? Prove it!',
     active: false,
     linkTo: '',
   },
@@ -58,33 +58,36 @@ export const CASINO_GAMES = [
 export const SLOTS_GAMES = [
   {
     background: Second,
-    title: 'Dice',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    title: 'Treasure Island',
+    subtitle: '',
+    description: 'Market top and flop jackpot tournament',
     active: false,
     linkTo: '',
   },
   {
     background: Third,
-    title: 'Mines',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    title: 'Market Runner',
+    subtitle: '',
+    description:
+      'Jump and run on each price tick, are you heading north, south or staying put?',
     active: false,
     linkTo: '',
   },
   {
     background: Fourth,
-    title: 'Hi Lo',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    title: 'Financial Poker',
+    subtitle: '',
+    description:
+      'Bring your poker face and portfolio management skills to live financial poker',
     active: false,
     linkTo: '',
   },
   {
-    background: Fourth,
-    title: 'Coin Flip',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    background: Fifth,
+    title: 'Candle Stick',
+    subtitle: '',
+    description:
+      'Game and learn candlestick trading strategy in this jackpot tournament',
     active: false,
     linkTo: '',
   },
@@ -94,32 +97,32 @@ export const SPORTS_BETTING_GAMES = [
   {
     background: Fifth,
     title: 'Esports',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    subtitle: '',
+    description: '',
     active: false,
     linkTo: '',
   },
   {
     background: Sixth,
     title: 'Baseball',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    subtitle: '',
+    description: '',
     active: false,
     linkTo: '',
   },
   {
     background: Seventh,
     title: 'Football',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    subtitle: '',
+    description: '',
     active: false,
     linkTo: '',
   },
   {
     background: Eight,
     title: 'Tennis',
-    subtitle: 'lorem ipsum',
-    description: 'Tempor diam eu malesuada adipiscing velit, sit lorem libero.',
+    subtitle: '',
+    description: '',
     active: false,
     linkTo: '',
   },

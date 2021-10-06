@@ -23,4 +23,9 @@ export default {
   editBet: 'editBet',
   viewImage: 'viewImage',
   resolveBet: 'resolveBet',
+  explanation: 'explanation',
+  cancelBet: 'cancelBet',
+  deleteBet: 'deleteBet',
+  disclaimer: 'disclaimer',
+  username: 'username',
 };

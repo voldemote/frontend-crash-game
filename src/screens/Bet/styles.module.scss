@@ -60,6 +60,7 @@
     flex-flow: row wrap;
     align-items: center;
     z-index: 2;
+    margin-bottom: 1rem;
 
     @media (min-width: $screen-md) {
       margin-bottom: 2rem;
@@ -177,7 +178,17 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        min-height: 70vh;
+        position: relative;
+        // harcoded 16:9 aspect ration of the container
+        padding-top: calc(9 / 16 * 100%);
+
+        .streamPositioner {
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
 
         .twitchStream {
           display: flex;
@@ -435,8 +446,167 @@
 }
 
 .shareButton {
-  margin-left: auto;
+  margin-left: 20px;
+
+  @media screen and (max-width: $screen-md) {
+    margin: 0 auto;
+  }
+}
+
+.descriptionContainer {
+  margin-bottom: 10px;
+
+  .tradeDescTitle {
+    font-size: 16px;
+    font-family: $fontBold;
+    margin-bottom: 5px;
+  }
+
+  .tradeDesc {
+    font-family: $fontRegular;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    color: $colorGrayLight1;
+    text-align: left;
+    letter-spacing: 0.3px;
+    padding: 0;
+    margin-bottom: 16px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    a {
+      text-decoration: underline;
+      color: $colorPurple;
+    }
+    &.hidden {
+      -webkit-line-clamp: 3;
+    }
+
+    .evidenceDescription {
+      padding-top: 10px;
+    }
+  }
+  .tradeShortDesc {
+    margin-bottom: 16px;
+  }
+
+  .evidenceSource {
+    margin-top: 15px;
+  }
+
+  .betDescription {
+    @media screen and (max-width: $screen-md) {
+      display: none;
+    }
+  }
+}
+
+.evidenceTabContainerDesktop {
+  margin-top: 20px;
+}
+
+.timeLeftCounterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 25px 10px;
+  color: $colorWhite;
+  font-size: 12px;
+}
+
+.timerLabel {
+  color: $colorWhite;
+  font-family: $fontRegular;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.timerParts {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.timerOnlyDesktop {
+  @media screen and (max-width: $screen-md) {
+    display: none;
+  }
+}
+
+.timerOnlyMobile {
   @media screen and (min-width: $screen-md) {
-    margin-left: 20px;
+    display: none;
+  }
+
+  .timeLeftCounterContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0 20px;
+    color: $colorWhite;
+    font-size: 12px;
+  }
+
+  .timerLabel {
+    color: $colorWhite;
+    font-family: $fontRegular;
+    font-size: 20px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  .timerParts {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+
+    .timePartContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+.diagramButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+  background: #201d38;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 15px;
+  padding: 5px 0;
+  cursor: pointer;
+  margin-bottom: 10px;
+  -webkit-tap-highlight-color: transparent;
+
+  svg {
+    margin-top: 2px;
+  }
+}
+
+.eventNotExist {
+  min-height: 200px;
+  font-size: 26px;
+  position: relative;
+  z-index: 20;
+
+  .eventNotExistLabel {
+    font-size: 16px;
+    font-style: italic;
+    word-break: break-all;
   }
 }

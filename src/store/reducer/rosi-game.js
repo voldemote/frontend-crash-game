@@ -1,5 +1,7 @@
 import { RosiGameTypes } from '../actions/rosi-game';
-
+import { round } from 'lodash';
+const TIME_TO_FACTOR_RATIO = 0.1; // 1s = 0.1x
+const START_FACTOR = 1;
 const initialState = {
   hasStarted: false,
   lastCrashes: [],
@@ -53,7 +55,12 @@ const addLastCrash = (action, state) => {
     ...state,
     hasStarted: false,
     nextGameAt: action.payload.nextGameAt,
-    userBet: state.betQueue.find(bet => bet.userId === action.payload.userId),
+    userBet: state.betQueue.find(bet => {
+      if (!action.payload.userId) {
+        return bet.userId === 'Guest';
+      }
+      return bet.userId === action.payload.userId;
+    }),
     lastCrashes: [action.payload.crashFactor, ...state.lastCrashes],
     // cashedOut: [
     //   ...state.inGameBets.filter(
@@ -72,12 +79,24 @@ const addInGameBet = (action, state) => {
   if (state.hasStarted) {
     return {
       ...state,
-      betQueue: [action.payload, ...state.betQueue],
+      betQueue: [
+        {
+          ...action.payload,
+          isFresh: true,
+        },
+        ...state.betQueue,
+      ],
     };
   }
   return {
     ...state,
-    inGameBets: [action.payload, ...state.inGameBets],
+    inGameBets: [
+      {
+        ...action.payload,
+        isFresh: true,
+      },
+      ...state.inGameBets,
+    ],
   };
 };
 
@@ -110,14 +129,40 @@ const cashedOut = (action, state) => {
   };
 };
 
+const cashedOutGuest = (action, state) => {
+  const startTime = new Date(state.timeStarted);
+  const now = Date.now();
+  let factor =
+    ((now - startTime.getTime()) / 1000) * TIME_TO_FACTOR_RATIO + START_FACTOR;
+
+  const lastTime = Date.now();
+  const bet = {
+    ...action.payload,
+    amount: round(state.userBet.amount * factor, 0),
+    username: 'Guest',
+    userId: 'Guest',
+    crashFactor: factor.toFixed(2),
+    isFresh: true,
+  };
+  return {
+    ...state,
+    userBet: null,
+    isCashedOut: true,
+    cashedOut: [bet, ...state.cashedOut],
+    inGameBets: state.inGameBets.filter(bet => bet.userId !== 'Guest'),
+  };
+};
+
 const addReward = (action, state) => {
   const correspondingBet = state.inGameBets.find(
     bet => action.payload.userId.toString() === bet.userId
   );
   const bet = {
     ...action.payload,
+    crashFactor: round(action.payload.crashFactor, 2),
     amount: action.payload.reward,
     username: correspondingBet?.username,
+    isFresh: true,
   };
   return {
     ...state,
@@ -125,6 +170,14 @@ const addReward = (action, state) => {
     inGameBets: state.inGameBets.filter(
       bet => bet.userId !== correspondingBet.userId
     ),
+  };
+};
+
+const onTick = (action, state) => {
+  return {
+    ...state,
+    cashedOut: state.cashedOut.map(bet => ({ ...bet, isFresh: false })),
+    inGameBets: state.inGameBets.map(bet => ({ ...bet, isFresh: false })),
   };
 };
 
@@ -148,8 +201,12 @@ export default function (state = initialState, action) {
       return resetCashedOut(action, state);
     case RosiGameTypes.CASH_OUT:
       return cashedOut(action, state);
+    case RosiGameTypes.CASH_OUT_GUEST:
+      return cashedOutGuest(action, state);
     case RosiGameTypes.ADD_REWARD:
       return addReward(action, state);
+    case RosiGameTypes.TICK:
+      return onTick(action, state);
     default:
       return state;
   }

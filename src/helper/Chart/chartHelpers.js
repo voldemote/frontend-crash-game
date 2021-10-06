@@ -15,10 +15,10 @@ export const calcDatasets = data => {
     },
     fill: {
       above: {
-        0: 'rgba(255, 166, 84, 0.12)',
-        1: 'rgba(45, 203, 112, 0.12)',
-        2: 'rgba(248, 83, 251, 0.12)',
-        3: 'rgba(103, 81, 236, 0.12)',
+        0: 'rgba(255, 166, 84, 0)',
+        1: 'rgba(45, 203, 112, 0)',
+        2: 'rgba(248, 83, 251, 0)',
+        3: 'rgba(103, 81, 236, 0)',
       },
     },
   };
@@ -35,6 +35,7 @@ export const calcDatasets = data => {
       backgroundColor: colorSchema.main[index],
       borderColor: colorSchema.main[index],
       borderWidth: 2,
+      pointRadius: 0,
     };
   });
 };

@@ -12,6 +12,17 @@
   outline: 0;
   z-index: $zIndexPopup;
 
+  &.disclaimerContainer {
+    height: 100vh;
+    @media (orientation: landscape) {
+      overflow-y: auto;
+    }
+
+    @media (orientation: portrait) {
+      overflow-y: hidden;
+    }
+  }
+
   .modalContent {
     position: relative;
     display: flex;
@@ -20,7 +31,7 @@
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 30px;
     outline: 0;
   }
@@ -36,6 +47,13 @@
     flex-direction: column;
     justify-content: center;
     overflow: auto;
+    pointer-events: none;
+
+    &.signUpNotificationPopupContainer,
+    &.welcomeContainer,
+    &.usernamePopup {
+      overflow: visible;
+    }
 
     //here specific popup sizes per type, if needed
     &.small {
@@ -43,8 +61,33 @@
       height: auto;
     }
 
-    @media(max-width: 768px) {
+    &.disclaimerContainer {
+      max-width: 800px;
+      height: auto;
+    }
+
+    &.registrationPopupContainer {
+      width: auto;
+      max-width: max-content;
+      overflow: visible;
+    }
+
+    @media (max-width: $screen-sm) {
       min-height: calc(100vh - 20px);
+
+      &.welcomeContainer {
+        min-height: calc(100vh - 100px);
+      }
+
+      &.disclaimerContainer {
+        min-height: calc(100vh - 25%);
+      }
+    }
+  }
+
+  &.explanationContainer {
+    @media (max-width: $screen-sm) {
+      min-height: 100vh;
     }
   }
 
@@ -60,7 +103,6 @@
     .closeButton {
       z-index: $zIndexPopup + 1;
       cursor: pointer;
-
     }
   }
 }

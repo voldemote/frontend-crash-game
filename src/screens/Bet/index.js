@@ -2,19 +2,19 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _ from 'lodash';
 import Icon from '../../components/Icon';
 import Link from '../../components/Link';
+import BackLink from '../../components/BackLink';
 import LiveBadge from 'components/LiveBadge';
 import Routes from '../../constants/Routes';
 import styles from './styles.module.scss';
 import { Carousel } from 'react-responsive-carousel';
 import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
-import { useParams } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import EmbedVideo from '../../components/EmbedVideo';
 import BetView from '../../components/BetView';
 import RelatedBetCard from '../../components/RelatedBetCard';
 import MyTradesList from '../../components/MyTradesList';
-import { useHistory } from 'react-router-dom';
 import Chat from '../../components/Chat';
 import News from '../../components/News';
 import TabOptions from '../../components/TabOptions';
@@ -29,13 +29,13 @@ import { BetActions } from 'store/actions/bet';
 import { useBetPreviousLocation } from './hooks/useBetPreviousLocation';
 import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
-import Placeholder from '../../components/Placeholder';
 import { useNewsFeed } from './hooks/useNewsFeed';
 import { useTabOptions } from './hooks/useTabOptions';
 import AdminOnly from 'components/AdminOnly';
 import { selectOpenBets } from 'store/selectors/bet';
 import { TransactionActions } from 'store/actions/transaction';
 import { ChatActions } from 'store/actions/chat';
+import { GeneralActions } from 'store/actions/general';
 import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import OfflineBadge from 'components/OfflineBadge';
@@ -46,6 +46,9 @@ import EventTypes from 'constants/EventTypes';
 import Share from '../../components/Share';
 import useTrades from '../../hooks/useTrades';
 import BetState from 'constants/BetState';
+import TimeCounter from '../../components/TimeCounter';
+import { useIsMount } from '../../components/hoc/useIsMount';
+import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart.svg';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -61,8 +64,10 @@ const Bet = ({
   fetchOpenBets,
   fetchTransactions,
   fetchChatMessages,
+  handleDislaimerHidden,
 }) => {
   const { eventSlug, betSlug } = useParams();
+  const isMounted = useIsMount();
 
   const [betId, setBetId] = useState(null);
   const [swiper, setSwiper] = useState(null);
@@ -72,10 +77,16 @@ const Bet = ({
   const [event, setEvent] = useState(null);
   const [relatedBets, setRelatedBets] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
+  const [isReady, setIsReady] = useState(false);
+  const [showChart, setShowChart] = useState(false);
 
   const mobileChatRef = useRef(null);
   const ref = useRef(null);
   const history = useHistory();
+
+  const onShowHideChart = useCallback(event => {
+    setShowChart(current => !current);
+  }, []);
 
   const openBets = useSelector(selectOpenBets);
 
@@ -94,6 +105,10 @@ const Bet = ({
   const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
   const { activeBets } = useTrades(event?._id);
 
+  const bet = _.find(_.get(event, 'bets', []), {
+    _id: betId,
+  });
+
   const status = {
     active: 1,
     resolved: 2,
@@ -101,16 +116,6 @@ const Bet = ({
   };
 
   window.onresize = () => ref.current && setIsMobile(window.innerWidth < 992);
-
-  const selectSingleBet = bets => {
-    if (relatedBets?.length || bets?.length) {
-      const loneBet = _.get(relatedBets.length ? relatedBets : bets, '[0]');
-      const betId = _.get(loneBet, '_id');
-      const betSlug = _.get(loneBet, 'slug');
-      selectBet(betId, betSlug);
-      setSingleBet(true);
-    }
-  };
 
   useEffect(() => {
     const sluggedEvent = _.find(events, {
@@ -147,7 +152,13 @@ const Bet = ({
       selectBet(currentBetId, betSlug);
     }
 
-    if (!isMobile && eventBets.length === 1 && !singleBet) {
+    if (
+      !isMobile &&
+      eventBets.length === 1 &&
+      !singleBet &&
+      !betSlug &&
+      !betViewIsOpen
+    ) {
       selectSingleBet(eventBets);
     }
 
@@ -162,13 +173,18 @@ const Bet = ({
     if (
       ref.current &&
       !isMobile &&
+      !betSlug &&
+      !singleBet &&
+      !betViewIsOpen &&
       (relatedBets.length === 1 || isNonStreamed)
     ) {
-      setBetAction(BET_ACTIONS.EventTrades);
       selectSingleBet();
     }
+    if (!isMobile) {
+      setBetAction(BET_ACTIONS.EventTrades);
+    }
     if (isMobile && (isNonStreamed || relatedBets.length === 1)) {
-      onBetClose()();
+      onBetClose();
       setBetAction(BET_ACTIONS.EventTrades);
     }
   }, [isMobile, relatedBets, event]);
@@ -179,11 +195,21 @@ const Bet = ({
     }
   }, [betAction]);
 
+  useEffect(() => {
+    if (event) {
+      setIsReady(true);
+    } else {
+      if (isMounted) {
+        setIsReady(true);
+      }
+    }
+  }, [event, isMounted]);
+
   const onBetClose = () => {
     return () => {
       const eventSlug = _.get(event, 'slug', null);
 
-      history.push(
+      history.replace(
         Routes.getRouteWithParameters(Routes.bet, {
           eventSlug,
           betSlug: '',
@@ -211,8 +237,20 @@ const Bet = ({
     return authState === LOGGED_IN;
   };
 
+  const selectSingleBet = bets => {
+    if (singleBet) return;
+
+    if (relatedBets?.length || bets?.length) {
+      const loneBet = _.get(relatedBets.length ? relatedBets : bets, '[0]');
+      const betId = _.get(loneBet, '_id');
+      const betSlug = _.get(loneBet, 'slug');
+      selectBet(betId, betSlug);
+      setSingleBet(true);
+    }
+  };
+
   const selectBet = (betId, betSlug) => {
-    history.push(
+    history.replace(
       Routes.getRouteWithParameters(Routes.bet, {
         eventSlug,
         betSlug,
@@ -225,7 +263,6 @@ const Bet = ({
   const onBetClick = (bet, popup) => {
     return () => {
       const betId = _.get(bet, '_id');
-      const eventId = _.get(event, '_id');
       const betSlug = _.get(bet, 'slug');
 
       selectBet(betId, betSlug);
@@ -318,11 +355,13 @@ const Bet = ({
         event.type === 'streamed'
       ),
       EventTradeViewsHelper.getView('Event Trades'),
-      EventTradeViewsHelper.getView(
-        'My Trades',
-        isLoggedIn() ? activeBets.length : 0,
-        true
-      ),
+      event.type === 'non-streamed'
+        ? EventTradeViewsHelper.getView('Evidence', undefined, false)
+        : EventTradeViewsHelper.getView(
+            'My Trades',
+            isLoggedIn() ? activeBets.length : 0,
+            true
+          ),
     ];
 
     return (
@@ -400,8 +439,12 @@ const Bet = ({
           clickable: false,
         }}
         autoHeight={true}
-        onSlideChange={swiper => onBetActionSwitch(swiper.activeIndex)}
+        onSlideChange={swiper => {
+          handleDislaimerHidden(!swiper.activeIndex);
+          onBetActionSwitch(swiper.activeIndex);
+        }}
         onSwiper={onSwiper}
+        noSwipingClass={`MuiSlider-root`}
       >
         <SwiperSlide className={styles.carouselSlide}>
           <div ref={mobileChatRef}>
@@ -436,7 +479,28 @@ const Bet = ({
           )}
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          <div>{renderMyTradesList()}</div>
+          {isNonStreamed ? (
+            bet && (
+              <div>
+                <div className={styles.evidenceSource}>
+                  <b>Evidence source: </b>{' '}
+                  <span
+                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                  ></span>
+                </div>
+                <br />
+                <div className={styles.evidenceDescription}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: bet.evidenceDescription,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            )
+          ) : (
+            <div>{renderMyTradesList()}</div>
+          )}
         </SwiperSlide>
       </Swiper>
     );
@@ -456,7 +520,28 @@ const Bet = ({
               <span>Go back to all tracks</span>
             </div>
           )}
+
           <div className={classNames({ [styles.betViewContent]: !singleBet })}>
+            {![BetState.resolved, BetState.closed].includes(
+              _.get(bet, 'status')
+            ) && (
+              <>
+                <div
+                  className={classNames(
+                    styles.timeLeftCounterContainer,
+                    styles.fixedTimer,
+                    styles.timerOnlyDesktop
+                  )}
+                >
+                  <div className={styles.timerLabel}>Event ends in:</div>
+
+                  <div className={styles.timerParts}>
+                    <TimeCounter endDate={bet.endDate} />
+                  </div>
+                </div>
+              </>
+            )}
+
             <BetView
               betId={betId}
               eventId={event._id}
@@ -479,98 +564,174 @@ const Bet = ({
     );
   };
 
-  if (!event) {
-    return null;
-  }
-
   const hasOnlineState = event?.state === EVENT_STATES.ONLINE;
   const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
+
+  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
+
+  const renderTradeDesc = (withTitle = false) => {
+    const evidenceSource = bet.evidenceSource;
+
+    return (
+      <>
+        <div className={styles.descriptionContainer}>
+          {evidenceSource && withTitle && (
+            <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
+          )}
+          <p className={classNames(styles.tradeDesc)}>
+            <div
+              className={styles.betDescription}
+              dangerouslySetInnerHTML={{ __html: bet.description }}
+            ></div>
+            <div className={styles.evidenceSource}>
+              <b>Evidence source: </b>{' '}
+              <span
+                dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+              ></span>
+            </div>
+          </p>
+        </div>
+
+        <div className={styles.timerOnlyMobile}>
+          {![BetState.resolved, BetState.closed].includes(
+            _.get(bet, 'status')
+          ) && (
+            <>
+              <div
+                className={classNames(
+                  styles.timeLeftCounterContainer,
+                  styles.fixedTimer
+                )}
+              >
+                <div className={styles.timerLabel}>Event ends in:</div>
+
+                <div className={styles.timerParts}>
+                  <TimeCounter
+                    endDate={bet.endDate}
+                    externalStyles={{
+                      timePartContainer: styles.timePartContainer,
+                    }}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </>
+    );
+  };
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} withoutPaddingBottom={true}>
       <div className={styles.bet}>
         <div className={styles.upperLeftOval}></div>
         <div className={styles.centeredBottomOval}></div>
-        <div className={styles.headlineContainer}>
-          <div>
-            <Link
-              to={currentFromLocation?.pathname || '/'}
-              className={styles.linkBack}
-            >
-              <div className={styles.arrowBack}></div>
-              <div className={styles.headline}>
-                {renderTitle()}
-                {(hasOnlineState || hasOfflineState) && (
-                  <div className={styles.streamStateBadge}>
-                    {hasOnlineState && <LiveBadge />}
-                    {hasOfflineState && <OfflineBadge />}
-                  </div>
-                )}
-              </div>
-            </Link>
-          </div>
-          <div className={styles.shareButton}>
-            <Share />
-          </div>
-          <AdminOnly>
-            <div className={styles.eventAdminActionsContainer}>
-              <span
-                className={styles.editEventLink}
-                onClick={() => showPopup(PopupTheme.editEvent, event)}
-              >
-                <Icon
-                  className={styles.icon}
-                  iconType={IconType.edit}
-                  iconTheme={IconTheme.white}
-                  height={20}
-                  width={20}
-                />
-                Edit Event
-              </span>
-              {event.type === EventTypes.streamed && (
-                <span
-                  className={styles.newBetLink}
-                  onClick={() => showPopup(PopupTheme.newBet, { event })}
+        {event ? (
+          <>
+            <div className={styles.headlineContainer}>
+              <div>
+                <Link
+                  to={currentFromLocation?.pathname || '/'}
+                  className={styles.linkBack}
                 >
-                  <Icon
-                    className={styles.icon}
-                    iconType={IconType.addBet}
-                    iconTheme={IconTheme.white}
-                    height={24}
-                    width={24}
-                  />
-                  New Bet
-                </span>
-              )}
-            </div>
-          </AdminOnly>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.columnLeft}>
-            <div
-              className={
-                event.type === 'streamed'
-                  ? styles.streamContainer
-                  : styles.nonStreamContainer
-              }
-            >
-              {event.type === 'non-streamed' ? (
-                <div className={styles.chart}>
-                  <Chart
-                    height={400}
-                    data={chartData}
-                    filterActive={filterActive}
-                    handleChartPeriodFilter={handleChartPeriodFilter}
-                  />
+                  <div className={styles.arrowBack}></div>
+                  <div className={styles.headline}>
+                    {renderTitle()}
+                    {(hasOnlineState || hasOfflineState) && (
+                      <div className={styles.streamStateBadge}>
+                        {hasOnlineState && <LiveBadge />}
+                        {hasOfflineState && <OfflineBadge />}
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              </div>
+              <div className={styles.shareButton}>
+                <Share />
+              </div>
+              <AdminOnly>
+                <div className={styles.eventAdminActionsContainer}>
+                  <span
+                    className={styles.editEventLink}
+                    onClick={() => showPopup(PopupTheme.editEvent, event)}
+                  >
+                    <Icon
+                      className={styles.icon}
+                      iconType={IconType.edit}
+                      iconTheme={IconTheme.white}
+                      height={20}
+                      width={20}
+                    />
+                    Edit Event
+                  </span>
+                  {event.type === EventTypes.streamed && (
+                    <span
+                      className={styles.newBetLink}
+                      onClick={() => showPopup(PopupTheme.newBet, { event })}
+                    >
+                      <Icon
+                        className={styles.icon}
+                        iconType={IconType.addBet}
+                        iconTheme={IconTheme.white}
+                        height={24}
+                        width={24}
+                      />
+                      New Bet
+                    </span>
+                  )}
                 </div>
-              ) : (
-                <EmbedVideo
-                  video={event.streamUrl}
-                  autoPlay={true}
-                  controls={true}
-                />
-              )}
-              {/* {event.type === 'streamed' && (
+              </AdminOnly>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.columnLeft}>
+                <div
+                  className={
+                    event.type === 'streamed'
+                      ? styles.streamContainer
+                      : styles.nonStreamContainer
+                  }
+                >
+                  {event.type === 'non-streamed' ? (
+                    <div className={styles.chart}>
+                      {bet && renderTradeDesc()}
+                      {matchMediaMobile && (
+                        <div
+                          className={styles.diagramButton}
+                          onClick={onShowHideChart}
+                        >
+                          {' '}
+                          <LineChartIcon />
+                          <span>
+                            {showChart
+                              ? 'Hide probabilities'
+                              : 'Show probabilities'}
+                          </span>
+                        </div>
+                      )}
+                      {((matchMediaMobile && showChart) ||
+                        !matchMediaMobile) && (
+                        <Chart
+                          height={matchMediaMobile ? 300 : 400}
+                          data={chartData}
+                          filterActive={filterActive}
+                          handleChartPeriodFilter={handleChartPeriodFilter}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <div className={styles.streamPositioner}>
+                      <EmbedVideo
+                        video={event.streamUrl}
+                        autoPlay={true}
+                        controls={true}
+                      />
+                    </div>
+                  )}
+                  {/* {event.type === 'streamed' && (
                 <div className={styles.timeLeft}>
                   <span>Estimated end:</span>
                   <TimeLeftCounter
@@ -578,29 +739,61 @@ const Bet = ({
                   />
                 </div>
               )} */}
-            </div>
-            <TabOptions options={tabOptions} className={styles.tabOptions}>
-              {option => (
-                <div
-                  className={styles.tabStyle}
-                  onClick={() => handleSwitchTab(option)}
-                >
-                  {option.name}
                 </div>
-              )}
-            </TabOptions>
-            {selectedTab === 'chat' ? (
-              <Chat
-                className={styles.desktopChat}
-                roomId={event._id}
-                chatMessageType={ChatMessageType.event}
-              />
-            ) : (
-              <News />
-            )}
+                <TabOptions options={tabOptions} className={styles.tabOptions}>
+                  {option => (
+                    <div
+                      className={styles.tabStyle}
+                      onClick={() => handleSwitchTab(option)}
+                    >
+                      {option.name}
+                    </div>
+                  )}
+                </TabOptions>
+                {selectedTab === 'chat' && (
+                  <Chat
+                    className={styles.desktopChat}
+                    roomId={event._id}
+                    chatMessageType={ChatMessageType.event}
+                  />
+                )}
+
+                {selectedTab === 'news' && <News />}
+
+                {selectedTab === 'evidence' && (
+                  <div className={styles.evidenceTabContainerDesktop}>
+                    <div className={styles.evidenceSource}>
+                      <b>Evidence source: </b>{' '}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
+                      ></span>
+                    </div>
+                    <br />
+                    <div className={styles.evidenceDescription}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: bet.evidenceDescription,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className={styles.columnRight}>
+                {renderBetSidebarContent()}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className={styles.eventNotExist}>
+            <BackLink to="/" text="Home"></BackLink>
+            <div>Event does not exist.</div>
+
+            <div className={styles.eventNotExistLabel}>
+              {window.location.href}
+            </div>
           </div>
-          <div className={styles.columnRight}>{renderBetSidebarContent()}</div>
-        </div>
+        )}
         <ContentFooter className={styles.betFooter} />
       </div>
     </BaseContainerWithNavbar>
@@ -631,6 +824,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchChatMessages: eventId => {
       dispatch(ChatActions.fetchByRoom({ roomId: eventId }));
+    },
+    handleDislaimerHidden: bool => {
+      dispatch(GeneralActions.setDisclaimerHidden(bool));
     },
   };
 };

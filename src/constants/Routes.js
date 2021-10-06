@@ -24,6 +24,7 @@ const getRouteWithParameters = function (route, parameterValues) {
 
 export default {
   getRouteWithParameters,
+  activities: '/activities',
   bet: '/trade/:eventSlug?/:betSlug?',
   betApproveDirect: '/bet/:eventId/:betId/:tradeId',
   newBet: '/trade/new',
@@ -34,7 +35,7 @@ export default {
   newLiveEvent: '/live-events/new',
   logout: '/logout',
   privacyPolicy: '/privacy-policy',
-  rosiGame: '/games/rosi-game',
+  rosiGame: '/games/elon-game',
   termsAndConditions: '/terms-and-conditions',
   verify: '/verify',
   chart: 'event/bet/:betId/history/chart',

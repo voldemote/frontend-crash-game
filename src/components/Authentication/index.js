@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import CheckBox from '../CheckBox';
 import ReactTooltip from 'react-tooltip';
 import { FormGroup, InputLabel } from '@material-ui/core';
@@ -19,6 +20,8 @@ const Authentication = ({
   initForgotPassword,
   popupVisible,
 }) => {
+  const location = useLocation();
+  let urlParams = new URLSearchParams(location.search);
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -85,7 +88,7 @@ const Authentication = ({
       fooRef = pwConfirmRef;
     }
     if (!passwordIsValid() && !forgotPassword) {
-      error = 'Password is not valid';
+      error = 'Your password needs to be 8 characters long';
       fooRef = pwRef;
     }
     if (!emailIsValid()) {
@@ -105,6 +108,8 @@ const Authentication = ({
     const error = validateInput();
     if (error) return;
 
+    const urlRef = urlParams.get('ref');
+
     if (forgotPassword) {
       initForgotPassword(email);
     } else {
@@ -113,6 +118,7 @@ const Authentication = ({
             email,
             password,
             passwordConfirm: passwordConfirmation,
+            ref: urlRef,
           })
         : login({
             email,
@@ -160,7 +166,10 @@ const Authentication = ({
             className={styles.inputBox}
             placeholder="john.doe@gmail.com"
             value={email}
-            setValue={setInputEmail}
+            setValue={e => {
+              setInputEmail(e.trim().toLowerCase());
+            }}
+            onConfirm={onConfirm}
           />
         </FormGroup>
 
@@ -180,6 +189,7 @@ const Authentication = ({
               placeholder="***********"
               value={password}
               setValue={setPassword}
+              onConfirm={onConfirm}
             />
           </FormGroup>
         )}
@@ -201,6 +211,7 @@ const Authentication = ({
               placeholder="***********"
               value={passwordConfirmation}
               setValue={setPasswordConfirmation}
+              onConfirm={onConfirm}
             />
           </FormGroup>
         )}

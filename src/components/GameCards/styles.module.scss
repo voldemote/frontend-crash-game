@@ -17,11 +17,47 @@
 }
 
 .gamesCategory {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  align-items: center;
   color: $colorWhite;
   font-family: $fontRegular;
   font-size: 24px;
   font-weight: 700;
   padding-bottom: 20px;
+
+  .howtoLink {
+    cursor: pointer;
+    font-size: 11px;
+    font-family: $fontRegular;
+    text-decoration: underline;
+    color: $colorYellow;
+
+    @media (max-width: $screen-xs) {
+      display: none;
+      margin: 0;
+      width: 100%;
+      padding: 0 15px 15px;
+    }
+  }
+
+  .questionIcon {
+    cursor: pointer;
+    display: none;
+
+    svg {
+      g,
+      path,
+      circle {
+        fill: $colorYellow;
+      }
+    }
+
+    @media (max-width: $screen-xs) {
+      display: block;
+    }
+  }
 }
 
 .games {
@@ -49,12 +85,12 @@
     .gameItem {
       height: 100%;
 
-      &.inactive {
-        img,
-        .gameInfo {
-          filter: opacity(0.4);
-        }
-      }
+      // &.inactive {
+      //   img,
+      //   .gameInfo {
+      //     filter: opacity(0.4);
+      //   }
+      // }
 
       &.gameItemLg {
         .gameInfo {
@@ -152,6 +188,7 @@
         .description {
           font-size: 16px;
           opacity: 0.7;
+          min-height: 60px;
         }
       }
 

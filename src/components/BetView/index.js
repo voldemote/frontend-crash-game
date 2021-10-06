@@ -18,7 +18,7 @@ import { useHasMounted } from '../hoc/useHasMounted';
 import { useState } from 'react';
 import ChoiceSelectorList from '../ChoiceSelectorList';
 import Icon from '../Icon';
-import LoadingAnimation from '../../data/animations/sending-transaction.gif';
+import LoadingAnimation from '../../data/animations/wcoin.gif';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import SummaryRowContainer from '../SummaryRowContainer';
@@ -42,6 +42,7 @@ import ButtonSmall from 'components/ButtonSmall';
 import ButtonSmallTheme from 'components/ButtonSmall/ButtonSmallTheme';
 import InfoBox from 'components/InfoBox';
 import EventTypes from 'constants/EventTypes';
+import BetActionsMenu from 'components/BetActionsMenu';
 
 const BetView = ({
   betId,
@@ -64,7 +65,11 @@ const BetView = ({
   // fetchSellOutcomes,
   resetOutcomes,
 }) => {
+  // Static balance amount to simulate for non-logged users
+  // Slider is also using 2800 as max value
+  const BALANCE_NOT_LOGGED = 2800;
   const { currency, balance } = useSelector(selectUser);
+
   const wfairBalance = formatToFixed(
     _.get(
       useSelector(state => state.authentication),
@@ -93,8 +98,6 @@ const BetView = ({
   const [validInput, setValidInput] = useState(false);
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
   const [commitmentErrorText, setCommitmentErrorText] = useState('');
-  const [menuOpened, setMenuOpened] = useState(false);
-  // const [openBetsRef, setOpenBetsRef] = useState(openBets);
   const [showAllEvidence, setShowAllEvidence] = useState(false);
   const [choice, setChoice] = useState(null);
   const [commitment, setCommitment] = useState(defaultBetValue);
@@ -103,7 +106,6 @@ const BetView = ({
   );
 
   const hasMounted = useHasMounted();
-  const match = useRouteMatch();
 
   const validateInput = () => {
     const betEndDate = _.get(bet, 'endDate');
@@ -196,12 +198,6 @@ const BetView = ({
 
     if (validInput) {
       placeBet(betId, commitment, choice);
-
-      if (event.type === 'non-streamed') {
-        setTimeout(() => {
-          handleChartDirectionFilter();
-        }, 1000);
-      }
     }
   };
 
@@ -300,7 +296,10 @@ const BetView = ({
         <div className={styles.labelWrapper}>
           <label className={styles.label}>You trade:</label>
           <InfoBox autoWidth={true} iconType={IconType.question}>
-            1 WFAIR equals 0.20€
+            {/* 1 WFAIR equals 0.20€ */}
+            You need to have a suficient amount of WFAIR tokens to participate
+            in events
+            {/* How to buy WFAIR token? */}
           </InfoBox>
         </div>
         <TokenNumberInput
@@ -308,7 +307,7 @@ const BetView = ({
           setValue={onTokenNumberChange}
           currency={currency}
           errorText={commitmentErrorText}
-          maxValue={formatToFixed(balance)}
+          maxValue={formatToFixed(userLoggedIn ? balance : BALANCE_NOT_LOGGED)}
         />
       </>
     );
@@ -389,10 +388,12 @@ const BetView = ({
 
       return (
         <>
-          {renderTradeDesc()}
+          {/*{renderTradeDesc()}*/}
           <span
             data-for="tool-tip"
-            data-tip={'You Need To Select An Option First'}
+            data-tip={
+              userLoggedIn ? 'You Need To Select An Option First' : null
+            }
           >
             <Button
               className={classNames(styles.betButton)}
@@ -405,7 +406,7 @@ const BetView = ({
               disabledWithOverlay={false}
             >
               <span className={'buttonText'}>
-                {userLoggedIn ? 'Place bet' : 'Join Now And Start Trading'}
+                {userLoggedIn ? 'Place Trade' : 'Join Now And Start Trading'}
               </span>
             </Button>
           </span>
@@ -522,54 +523,7 @@ const BetView = ({
   };
 
   const renderMenu = () => {
-    return (
-      <div className={styles.menu}>
-        <Icon
-          className={styles.menuIcon}
-          iconType={IconType.menu}
-          iconTheme={null}
-          onClick={() => setMenuOpened(!menuOpened)}
-        />
-        <div
-          className={classNames(
-            styles.menuBox,
-            menuOpened ? styles.menuBoxOpened : null
-          )}
-        >
-          <div
-            className={styles.menuItem}
-            onClick={() => showPopup(PopupTheme.editBet, { event, bet })}
-          >
-            <Icon
-              className={styles.menuInfoIcon}
-              iconType={IconType.edit}
-              iconTheme={null}
-              width={16}
-            />
-            <span>Edit Bet</span>
-          </div>
-          {[BetState.active, BetState.closed].includes(bet?.status) && (
-            <div
-              className={styles.menuItem}
-              onClick={() =>
-                showPopup(PopupTheme.resolveBet, {
-                  eventId: event._id,
-                  tradeId: bet._id,
-                })
-              }
-            >
-              <Icon
-                className={styles.menuInfoIcon}
-                iconType={IconType.hourglass}
-                iconTheme={null}
-                width={16}
-              />
-              <span>Resolve Bet</span>
-            </div>
-          )}
-        </div>
-      </div>
-    );
+    return <BetActionsMenu event={event} bet={bet} />;
   };
 
   const renderStateConditionalContent = () => {
@@ -582,6 +536,7 @@ const BetView = ({
       );
     } else if (state === BetState.resolved || state === BetState.closed) {
       const isClosed = state === BetState.closed;
+      const outcomeNames = _.map(bet.outcomes, 'name') || [];
       const finalOutcome = _.get(bet, [
         'outcomes',
         _.get(bet, 'finalOutcome'),
@@ -612,6 +567,15 @@ const BetView = ({
               `Bet ${isClosed ? 'closed' : 'resolved'} at`,
               DateText.formatDate(endDate)
             )}
+            {isClosed &&
+              data(
+                'Outcomes',
+                <ul>
+                  {outcomeNames.map(outcome => (
+                    <li>{outcome}</li>
+                  ))}
+                </ul>
+              )}
             {data(
               'Outcome',
               isClosed
@@ -676,20 +640,20 @@ const BetView = ({
               </span>
             )}
           </div>
-          {showEventEnd &&
-            ![BetState.resolved, BetState.closed].includes(state) && (
-              <>
-                <span className={styles.timerLabel}>Event ends in:</span>
-                <div
-                  className={classNames(
-                    styles.timeLeftCounterContainer,
-                    isTradeViewPopup && styles.fixedTimer
-                  )}
-                >
-                  <TimeCounter endDate={endDate} />
-                </div>
-              </>
-            )}
+          {/*{showEventEnd &&*/}
+          {/*  ![BetState.resolved, BetState.closed].includes(state) && (*/}
+          {/*    <>*/}
+          {/*      <span className={styles.timerLabel}>Event ends in:</span>*/}
+          {/*      <div*/}
+          {/*        className={classNames(*/}
+          {/*          styles.timeLeftCounterContainer,*/}
+          {/*          isTradeViewPopup && styles.fixedTimer*/}
+          {/*        )}*/}
+          {/*      >*/}
+          {/*        <TimeCounter endDate={endDate} />*/}
+          {/*      </div>*/}
+          {/*    </>*/}
+          {/*  )}*/}
           {renderStateConditionalContent()}
         </div>
       </div>

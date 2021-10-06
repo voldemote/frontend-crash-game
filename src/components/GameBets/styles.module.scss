@@ -33,6 +33,7 @@
   overflow: auto;
 
   .bet {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,6 +43,39 @@
     letter-spacing: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding: 12px 20px;
+  }
+  .bet.flash{
+    animation-name: flash;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+  }
+
+  .bet.flashGreen{
+    animation-name: flash-green;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+  }
+
+  @keyframes flash {
+    from {
+      background: $colorYellowFlash;
+      left: -12px;
+    }
+    to {
+      background: transparent;
+      left: 0;
+    }
+  }
+
+  @keyframes flash-green {
+    from {
+      background: $colorGreenFlash;
+      left: -12px;
+    }
+    to {
+      background: transparent;
+      left: 0;
+    }
   }
 
   .user {
@@ -65,4 +99,9 @@
 .amount {
   color: $colorWhite;
   opacity: 0.5;
+}
+
+.positive {
+  color: $colorGreen;
+  opacity: 1;
 }

@@ -5,8 +5,6 @@ import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
-import CategoryList from '../../components/CategoryList';
-import { EVENT_CATEGORIES } from '../../constants/EventCategories';
 import { Link, useParams } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { EventActions } from 'store/actions/event';
@@ -68,10 +66,8 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     return (
       <div className={styles.mainHeadline}>
         <h1>Betting Reimagined</h1>
-        <div className={styles.slogan}>
-          No revenues<span>.</span> No Bookies<span>.</span> No Boring Bets
-          <span>.</span>
-        </div>
+
+        <div className={styles.slogan}>Clear, Social &amp; Fair</div>
       </div>
     );
   };
@@ -103,7 +99,7 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
           <div className={styles.title}>
             Play the
             <br />
-            Rosi Game
+            Elon Game
           </div>
         </div>
       </Link>
@@ -114,7 +110,12 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     return (
       <div className={styles.bottomWrapper}>
         <div className={styles.categories}>
-          <div className={styles.headline}>Activities</div>
+          <div className={styles.headline}>
+            Activities{' '}
+            <Link className={styles.seeAllActivities} to={Routes.activities}>
+              See all
+            </Link>
+          </div>
           <ActivitiesTracker />
           {/*<CategoryList categories={EVENT_CATEGORIES} />*/}
         </div>

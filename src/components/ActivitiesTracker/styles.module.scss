@@ -15,6 +15,8 @@
     border-radius: 10px;
     background-color: $colorWhite10;
     display: inline-flex;
+    display: -ms-inline-flexbox;
+    display: -webkit-box;
     margin-top: 0.5rem;
     font-size: 14px;
     text-align: left;
@@ -84,15 +86,15 @@
 
   .categoryList {
     display: flex;
-    overflow: hidden;
-    position: absolute;
+    position: relative;
     left: 0;
     top: 0;
     width: 100%;
+    margin: auto;
 
-    > :not(:last-child) {
-      margin-right: 15px;
-    }
+    //> :not(:last-child) {
+    //  margin-right: 15px;
+    //}
   }
 
   .box {
@@ -115,13 +117,14 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 100px;
+    //width: 100px;
     padding: 2px;
     border: 1px solid transparent;
     position: relative;
     word-break: break-word;
 
-    &:hover, &.categorySelected {
+    &:hover,
+    &.categorySelected {
       cursor: pointer;
 
       .imageIcon {
@@ -132,13 +135,13 @@
         opacity: initial;
       }
     }
-
   }
 
+  //only with cats
   .swiperElement {
     padding: 15px 0;
+    width: 93%;
   }
-
 
   .label {
     font-size: 13px;
@@ -151,7 +154,7 @@
     color: white;
     opacity: 0.5;
     margin-top: 10px;
-    transition: opacity .2s ease-in;
+    transition: opacity 0.2s ease-in;
 
     &.active {
       opacity: initial;
@@ -160,13 +163,12 @@
 
   .imageIcon {
     opacity: 0.5;
-    transition: opacity .2s ease-in;
+    transition: opacity 0.2s ease-in;
 
     &.active {
       opacity: initial;
     }
   }
-
 
   @media (max-width: $screen-md) {
     padding-top: 0;
@@ -193,6 +195,49 @@
 
     > :first-child {
       margin-top: auto;
+    }
+  }
+
+  .swiperNavContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .activitiesSwiperButtonNext, .activitiesSwiperButtonPrev {
+      position: absolute;
+      top: -5px;
+      bottom: 0;
+      height: 100%;
+      z-index: 10;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #E6FE00;
+      width: 5%;
+
+      &:after {
+        font-family: swiper-icons;
+        font-size: 40px;
+        letter-spacing: 0;
+        text-transform: none;
+        font-variant: initial;
+        line-height: 1;
+      }
+    }
+
+    .activitiesSwiperButtonNext {
+      right: 0px;
+      &:after {
+        content: "next";
+      }
+    }
+
+    .activitiesSwiperButtonPrev {
+      left: 0;
+      &:after {
+        content: "prev";
+      }
     }
   }
 }

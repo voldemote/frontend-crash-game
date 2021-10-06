@@ -7,9 +7,7 @@ import IconType from '../../components/Icon/IconType';
 import Input from '../Input';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WebsocketsActions } from '../../store/actions/websockets';
 import { usePrevPropValue } from '../../hooks/usePrevPropValue';
 import { useIsMount } from '../hoc/useIsMount';
@@ -25,6 +23,7 @@ const Chat = ({
   messages,
   sendChatMessage,
   hideInput = false,
+  connected,
 }) => {
   const messageListRef = useRef();
   const [message, setMessage] = useState('');
@@ -49,10 +48,10 @@ const Chat = ({
 
   const onMessageSend = () => {
     if (message) {
-      const currentTimeStamp = +new Date();
-      const difference = currentTimeStamp - lastMessageSent;
+      const messageTime = new Date();
+      const currentTimeStamp = +messageTime;
 
-      if (difference >= 2 * 1000) {
+      if (currentTimeStamp - lastMessageSent >= 2 * 1000) {
         const messageData = {
           roomId,
           user: {
@@ -63,7 +62,7 @@ const Chat = ({
           },
           type: chatMessageType,
           message: message,
-          date: new Date(),
+          date: messageTime,
           userId: user?.userId,
         };
 
@@ -78,7 +77,13 @@ const Chat = ({
     return _.map(messages, (chatMessage, index) => {
       const date = _.get(chatMessage, 'date');
       return (
-        <ChatMessageWrapper key={index} message={chatMessage} date={date} />
+        <ChatMessageWrapper
+          key={index}
+          message={chatMessage}
+          date={date}
+          parentRef={messageListRef}
+          lastMessage={index === messages.length - 1}
+        />
       );
     });
   };
@@ -113,7 +118,7 @@ const Chat = ({
           styles.messageInput,
           inputClassName,
           hideInput ? styles.messageInputHidden : null,
-          !isLoggedIn() ? styles.disabled : null
+          !isLoggedIn() || !connected ? styles.disabled : null
         )}
       >
         <Input

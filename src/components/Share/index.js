@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -13,6 +13,7 @@ import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import { useOutsideClick } from 'hooks/useOutsideClick';
+import { isMobile } from 'react-device-detect';
 
 const Share = props => {
   const {
@@ -75,6 +76,32 @@ const Share = props => {
 
   let matchMedia = window.matchMedia(`(max-width: ${768}px)`).matches;
 
+  const handleShareClicked = useCallback(
+    async event => {
+      const shareData = {
+        title: dynamicTitle,
+        text: dynamicText,
+        url: realUrl,
+      };
+
+      try {
+        if (navigator.canShare && isMobile) {
+          await navigator.share(shareData);
+          setShowPopover(false);
+          return;
+        } else {
+          setShowPopover(show => !show);
+        }
+      } catch (err) {
+        console.log(`native share error`, err);
+        if (!err.toString().includes('AbortError')) {
+          setShowPopover(show => !show);
+        }
+      }
+    },
+    [dynamicTitle, dynamicText, realUrl]
+  );
+
   return (
     <div
       ref={closeOutside}
@@ -84,9 +111,7 @@ const Share = props => {
         <div
           ref={shareButtonRef}
           className={classNames(styles.shareButton)}
-          onClick={e => {
-            setShowPopover(show => !show);
-          }}
+          onClick={handleShareClicked}
         >
           <div className={styles.shareIcon}>
             <Icon iconType={IconType.shareLink} iconTheme={IconTheme.primary} />

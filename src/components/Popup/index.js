@@ -23,6 +23,7 @@ import ReportEventPopup from '../ReportEventPopup';
 import JoinPopup from '../JoinPopup';
 import VerifyEmailPopup from '../VerifyEmailPopup';
 import PulloutApprovePopup from '../PulloutApprovePopup';
+import BetActionPopup from '../BetActionPopup';
 import LotteryGamePopup from '../LotteryGamePopup';
 import NewEventPopup from '../NewEventPopup';
 import EditEventPopup from '../EditEventPopup';
@@ -33,9 +34,26 @@ import ViewImagePopup from 'components/ViewImagePopup';
 import ResolveBetPopup from 'components/ResolveBetPopup';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
+import ExplanationViewPopup from 'components/ExplanationViewPopup';
+import DisclaimerPopupView from 'components/DisclaimerPopupView';
+import UsernamePopup from 'components/UsernamePopup';
 
-const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
+const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
+
+  useEffect(() => {
+    const close = e => {
+      if (type === PopupTheme.disclaimer) return;
+      // Keycode is deprecated: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+      // Adding still for older browsers
+      if (e?.keyCode === 27 || e?.key === 'Escape') {
+        hidePopup();
+      }
+    };
+
+    visible && window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, [hidePopup, visible]);
 
   useEffect(() => {
     document.body.style.overflow = visible ? 'hidden' : 'auto';
@@ -154,6 +172,10 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
         return (
           <ResolveBetPopup betId={options.tradeId} eventId={options.eventId} />
         );
+      case PopupTheme.cancelBet:
+        return <BetActionPopup bet={options?.bet} actionType={'cancel'} />;
+      case PopupTheme.deleteBet:
+        return <BetActionPopup bet={options?.bet} actionType={'delete'} />;
       case PopupTheme.auth:
         return (
           <AuthenticationPopup
@@ -162,6 +184,12 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
             }
           />
         );
+      case PopupTheme.explanation:
+        return <ExplanationViewPopup type={options.type} closed={!visible} />;
+      case PopupTheme.disclaimer:
+        return <DisclaimerPopupView />;
+      case PopupTheme.username:
+        return <UsernamePopup />;
     }
 
     return null;
@@ -169,11 +197,18 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
 
   return (
     <>
-      <div className={classNames(styles.modal, visible ? null : styles.hidden)}>
+      <div
+        className={classNames(
+          styles.modal,
+          visible ? null : styles.hidden,
+          type === PopupTheme.disclaimer ? styles.disclaimerContainer : null
+        )}
+      >
         <div
           ref={popupElement}
           className={classNames(
             styles.modalDialog,
+            type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.signUpNotificationFirst ||
               type === PopupTheme.signUpNotificationSecond
               ? styles.signUpPopupContainer
@@ -183,24 +218,30 @@ const Popup = ({ type, visible, options = {}, events, hidePopup }) => {
               : null,
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
-            type === PopupTheme.verifyEmail
-              ? styles.verifyEmailPopupContainer
-              : null,
-            small ? styles.small : null
+            type === PopupTheme.username ? styles.usernamePopup : null,
+            small ? styles.small : null,
+            type === PopupTheme.auth &&
+              options?.authenticationType === 'register' &&
+              styles.registrationPopupContainer,
+            [
+              PopupTheme.signUpNotificationFirst,
+              PopupTheme.signUpNotificationSecond,
+            ].includes(type) && styles.signUpNotificationPopupContainer
           )}
         >
           <div className={styles.modalContent}>
             <div className={styles.closeButtonContainer}>
-              {type !== PopupTheme.signUpNotificationSecond && (
-                <Icon
-                  width={30}
-                  height={30}
-                  className={styles.closeButton}
-                  iconType={IconType.deleteInput}
-                  iconTheme={IconTheme.primary}
-                  onClick={hidePopup}
-                />
-              )}
+              {type !== PopupTheme.signUpNotificationSecond &&
+                type !== PopupTheme.disclaimer && (
+                  <Icon
+                    width={30}
+                    height={30}
+                    className={styles.closeButton}
+                    iconType={IconType.deleteInput}
+                    iconTheme={IconTheme.primary}
+                    onClick={hidePopup}
+                  />
+                )}
             </div>
 
             {renderPopup()}
@@ -222,7 +263,6 @@ const mapStateToProps = state => {
     type: state.popup.popupType,
     options: state.popup.options,
     visible: state.popup.visible,
-    events: state.event.events,
   };
 };
 
