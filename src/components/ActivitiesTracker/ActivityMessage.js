@@ -170,7 +170,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{_.get(data, 'username')}</b> has placed{' '}
-            <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game{' '}
+            <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
@@ -178,7 +178,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{_.get(data, 'username')}</b> has cashed out{' '}
-            <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game{' '}
+            <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );

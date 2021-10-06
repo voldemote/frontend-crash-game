@@ -14,7 +14,7 @@ const Activities = () => {
         </div>
 
         <ActivitiesTracker
-          showCategories={false}
+          showCategories={true}
           className={
             styles.activitiesTrackerContainerFull + ' activities-tracker-swiper'
           }
