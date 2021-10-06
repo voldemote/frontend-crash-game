@@ -22,10 +22,20 @@ const CarouselContainer = ({
 }) => {
   return (
     <div className={classNames(styles.carouselContainer)}>
+      {withComingSoonBanner && (
+        <div className={styles.inactivePlaceholder}>Coming soon</div>
+      )}
       <div className={styles.titleContainer}>
         <div className={styles.title}>{title}</div>
 
-        <div className={styles.scrollButtons}>
+        <div
+          className={classNames(styles.scrollButtons, {
+            [styles.blurContainer]: withComingSoonBanner,
+          })}
+        >
+          {withComingSoonBanner && (
+            <div className={styles.comingSoonContainer} />
+          )}
           {titleLink && (
             <Link to={titleLinkTo} className={styles.titleLink}>
               {titleLink}
@@ -64,9 +74,7 @@ const CarouselContainer = ({
           [styles.blurContainer]: withComingSoonBanner,
         })}
       >
-        {withComingSoonBanner && (
-          <div className={styles.comingSoonContainer}></div>
-        )}
+        {withComingSoonBanner && <div className={styles.comingSoonContainer} />}
         {children}
       </div>
     </div>
