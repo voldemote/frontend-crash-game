@@ -65,6 +65,7 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
       eventSlug: current.slug,
       previewImageUrl: current.previewImageUrl,
       tags: mappedTags(current._id),
+      category: current.category,
     }));
     const concat = [...acc, ...bets];
     return concat;
@@ -138,8 +139,8 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
           />
         </div>
       </section>
-      <section className={styles.main}>
-        <AdminOnly>
+      <AdminOnly>
+        <section className={styles.main}>
           <div
             className={styles.newEventLink}
             onClick={() => {
@@ -162,8 +163,14 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
             />
             <span>New Event</span>
           </div>
-        </AdminOnly>
-
+        </section>
+      </AdminOnly>
+      <section
+        className={classNames([
+          styles.main,
+          eventType !== 'streamed' ? styles.notStreamed : '',
+        ])}
+      >
         {eventType === 'streamed' && (
           <div className={styles.streamedContainer}>
             <EventsCarouselContainer
@@ -195,29 +202,35 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
           </div>
         )}
 
-        {eventType === 'non-streamed' &&
-          filteredBets.map(item => (
-            <Link
-              to={{
-                pathname: `/trade/${item.eventSlug}/${item.slug}`,
-                state: { fromLocation: location },
-              }}
-              key={item._id}
-            >
-              <BetCard
-                key={item._id}
-                betId={item._id}
-                title={item.marketQuestion}
-                organizer={''}
-                viewers={12345}
-                state={item.status}
-                tags={item.tags}
-                image={item.previewImageUrl}
-                eventEnd={item.endDate}
-                outcomes={item.outcomes}
-              />
-            </Link>
-          ))}
+        <div className={styles.nonStreamed}>
+          {eventType === 'non-streamed' &&
+            filteredBets
+              .filter(item => item.eventSlug && item.slug)
+              .map(item => (
+                <Link
+                  to={{
+                    pathname: `/trade/${item.eventSlug}/${item.slug}`,
+                    state: { fromLocation: location },
+                  }}
+                  key={item._id}
+                >
+                  <BetCard
+                    item={item}
+                    key={item._id}
+                    betId={item._id}
+                    title={item.marketQuestion}
+                    organizer={''}
+                    viewers={12345}
+                    state={item.status}
+                    tags={item.tags}
+                    image={item.previewImageUrl}
+                    eventEnd={item.endDate}
+                    outcomes={item.outcomes}
+                    category={item.category}
+                  />
+                </Link>
+              ))}
+        </div>
       </section>
       <ContentFooter />
     </>
