@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import Leaderboard from '../../components/Leaderboard';
+import TabOptions from '../../components/TabOptions';
 import { getUser } from '../../api';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
@@ -16,11 +17,18 @@ import ProfileActivityMobileTemplate2 from '../../data/backgrounds/profile/userp
 import ProfileActivityMobileTemplate3 from '../../data/backgrounds/profile/userprofile_mobile_activity3.png';
 
 const UserProfile = () => {
+  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
+
   const { userId } = useParams();
   const [profilePic, setProfilePic] = useState('');
   const [userName, setUserName] = useState('');
   const [aboutMe, setAboutMe] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
+  const tabOptions = [
+    { name: 'TRANSACTION HISTORY', index: 0 },
+    { name: 'ACTIVITIES', index: 1 },
+    { name: 'LEADERBOARD', index: 2 },
+  ];
 
   useEffect(() => {
     fetchUser(userId);
@@ -33,10 +41,15 @@ const UserProfile = () => {
     const user = _.get(userResponse, 'data', null);
     setProfilePic(user?.profilePicture);
     setUserName(user?.username);
-    if (user?.aboutMe == undefined)
+    if (user?.aboutMe == undefined) {
       setAboutMe('This user has not provided an about info yet. How boring!');
-    else setAboutMe(user?.aboutMe);
-    console.log('userInfo: ', user);
+    } else {
+      setAboutMe(user?.aboutMe);
+    }
+  };
+
+  const handleSwitchTab = option => {
+    setTabIndex(option.index);
   };
 
   const renderCategoriesAndLeaderboard = () => {
@@ -52,8 +65,9 @@ const UserProfile = () => {
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.containerWrapper}>
-        <div className={styles.webWrapper}>
-          <div className={styles.containerHeader}>
+        <div className={styles.container}>
+          <div className={styles.containerHeader}></div>
+          <div className={styles.headerBody}>
             <div className={styles.avatarBox}>
               <img
                 class={styles.profileImage}
@@ -63,108 +77,49 @@ const UserProfile = () => {
             <div className={styles.profileTitle}>
               <h2>{userName}</h2>
             </div>
-          </div>
-          <div className={styles.headerContent}>
             <div className={styles.aboutSection}>
               <h3>About</h3>
-              <h5> {aboutMe} </h5>
+              <p> {aboutMe} </p>
             </div>
-            <div className={styles.tabLayout}>
-              <div
-                onClick={() => setTabIndex(0)}
-                className={
-                  tabIndex == 0 ? styles.tabItemSelected : styles.tabItem
-                }
-              >
-                TRANSACTION HISTORY
-              </div>
-              <div
-                onClick={() => setTabIndex(1)}
-                className={
-                  tabIndex == 1 ? styles.tabItemSelected : styles.tabItem
-                }
-              >
-                ACTIVITIES
-              </div>
-              <div
-                onClick={() => setTabIndex(2)}
-                className={
-                  tabIndex == 2 ? styles.tabItemSelected : styles.tabItem
-                }
-              >
-                LEADERBOARD
-              </div>
-            </div>
+            <TabOptions options={tabOptions} className={styles.tabLayout}>
+              {option => (
+                <div
+                  className={
+                    option.index == tabIndex
+                      ? styles.tabItemSelected
+                      : styles.tabItem
+                  }
+                  onClick={() => handleSwitchTab(option)}
+                >
+                  {option.name}
+                </div>
+              )}
+            </TabOptions>
           </div>
           <div className={styles.userActivities}>
-            <img
-              src={
-                tabIndex == 0
-                  ? ProfileActivityTemplate1
-                  : tabIndex == 1
-                  ? ProfileActivityTemplate2
-                  : ProfileActivityTemplate3
-              }
-              className={styles.templateImage}
-            />
-            <div className={styles.inactivePlaceholder}>Coming soon</div>
-          </div>
-        </div>
-        <div className={styles.mobileWrapper}>
-          <div className={styles.containerHeader}>
-            <div className={styles.avatarBox}>
+            {matchMediaMobile ? (
               <img
-                class={styles.profileImage}
-                src={getProfilePictureUrl(profilePic)}
+                src={
+                  tabIndex == 0
+                    ? ProfileActivityMobileTemplate1
+                    : tabIndex == 1
+                    ? ProfileActivityMobileTemplate2
+                    : ProfileActivityMobileTemplate3
+                }
+                className={styles.templateImage}
               />
-            </div>
-          </div>
-          <div className={styles.headerContent}>
-            <div className={styles.profileName}>
-              <h2>{userName}</h2>
-            </div>
-            <div className={styles.aboutSection}>
-              <h3>About</h3>
-              <h5>{aboutMe}</h5>
-            </div>
-            <div className={styles.tabLayout}>
-              <div
-                onClick={() => setTabIndex(0)}
-                className={
-                  tabIndex == 0 ? styles.tabItemSelected : styles.tabItem
+            ) : (
+              <img
+                src={
+                  tabIndex == 0
+                    ? ProfileActivityTemplate1
+                    : tabIndex == 1
+                    ? ProfileActivityTemplate2
+                    : ProfileActivityTemplate3
                 }
-              >
-                TRANSACTION HISTORY
-              </div>
-              <div
-                onClick={() => setTabIndex(1)}
-                className={
-                  tabIndex == 1 ? styles.tabItemSelected : styles.tabItem
-                }
-              >
-                ACTIVITIES
-              </div>
-              <div
-                onClick={() => setTabIndex(2)}
-                className={
-                  tabIndex == 2 ? styles.tabItemSelected : styles.tabItem
-                }
-              >
-                LEADERBOARD
-              </div>
-            </div>
-          </div>
-          <div className={styles.userActivities}>
-            <img
-              src={
-                tabIndex == 0
-                  ? ProfileActivityMobileTemplate1
-                  : tabIndex == 1
-                  ? ProfileActivityMobileTemplate2
-                  : ProfileActivityMobileTemplate3
-              }
-              className={styles.templateImage}
-            />
+                className={styles.templateImage}
+              />
+            )}
             <div className={styles.inactivePlaceholder}>Coming soon</div>
           </div>
         </div>
