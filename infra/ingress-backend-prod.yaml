@@ -17,3 +17,13 @@ spec:
               name: backend
               port:
                 number: 80
+  - host: frontend-k8s.wallfair.io
+    http:
+      paths:
+        - path: /events/backend(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 80
