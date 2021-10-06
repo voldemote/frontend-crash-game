@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,9 +6,9 @@ import _ from 'lodash';
 import CarouselContainer from '../CarouselContainer';
 import EventCard from '../EventCard';
 import { EventActions } from '../../store/actions/event';
-import { useIsMount } from 'components/hoc/useIsMount';
 import styles from './styles.module.scss';
 import BetCard from 'components/BetCard';
+import BetState from 'constants/BetState';
 
 const EventsCarouselContainer = ({
   events,
@@ -143,7 +143,11 @@ const EventsCarouselContainer = ({
 
     const filteredBets = betIdsFromCurrentEvents
       ? allBets.filter(bet => {
-          return betIdsFromCurrentEvents.includes(bet._id) && bet.published;
+          return (
+            betIdsFromCurrentEvents.includes(bet._id) &&
+            bet.published &&
+            [BetState.active, BetState.upcoming].includes(bet.status)
+          );
         })
       : [];
 
