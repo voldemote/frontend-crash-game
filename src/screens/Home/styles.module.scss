@@ -29,7 +29,7 @@
   padding: 0 20px;
 
   @media (max-width: $screen-sm) {
-    margin-top: 133px;
+    margin-top: 90px;
   }
 
   h1 {
@@ -82,7 +82,7 @@
 
     @media (max-width: $screen-md) {
       font-size: 24px;
-      padding: 12px 15px;
+      padding: 12px 15px 0;
     }
   }
 }
