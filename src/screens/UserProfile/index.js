@@ -9,14 +9,17 @@ import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 import ProfileActivityTemplate1 from '../../data/backgrounds/profile/userprofile_activity1.png';
 import ProfileActivityTemplate2 from '../../data/backgrounds/profile/userprofile_activity2.png';
+import ProfileActivityTemplate3 from '../../data/backgrounds/profile/userprofile_activity3.png';
 
 import ProfileActivityMobileTemplate1 from '../../data/backgrounds/profile/userprofile_mobile_activity1.png';
 import ProfileActivityMobileTemplate2 from '../../data/backgrounds/profile/userprofile_mobile_activity2.png';
+import ProfileActivityMobileTemplate3 from '../../data/backgrounds/profile/userprofile_mobile_activity3.png';
 
 const UserProfile = () => {
   const { userId } = useParams();
   const [profilePic, setProfilePic] = useState('');
   const [userName, setUserName] = useState('');
+  const [aboutMe, setAboutMe] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
@@ -30,6 +33,9 @@ const UserProfile = () => {
     const user = _.get(userResponse, 'data', null);
     setProfilePic(user?.profilePicture);
     setUserName(user?.username);
+    if (user?.aboutMe == undefined)
+      setAboutMe('This user has not provided an about info yet. How boring!');
+    else setAboutMe(user?.aboutMe);
     console.log('userInfo: ', user);
   };
 
@@ -61,11 +67,7 @@ const UserProfile = () => {
           <div className={styles.headerContent}>
             <div className={styles.aboutSection}>
               <h3>About</h3>
-              <h5>
-                Hello, I am capping European basketball since many years. Every
-                day I will be posting here my 3 basketball POD's(picks of the
-                day)
-              </h5>
+              <h5> {aboutMe} </h5>
             </div>
             <div className={styles.tabLayout}>
               <div
@@ -97,9 +99,11 @@ const UserProfile = () => {
           <div className={styles.userActivities}>
             <img
               src={
-                tabIndex == 2
+                tabIndex == 0
+                  ? ProfileActivityTemplate1
+                  : tabIndex == 1
                   ? ProfileActivityTemplate2
-                  : ProfileActivityTemplate1
+                  : ProfileActivityTemplate3
               }
               className={styles.templateImage}
             />
@@ -121,11 +125,7 @@ const UserProfile = () => {
             </div>
             <div className={styles.aboutSection}>
               <h3>About</h3>
-              <h5>
-                Hello, I am capping European basketball since many years. Every
-                day I will be posting here my 3 basketball POD's(picks of the
-                day)
-              </h5>
+              <h5>{aboutMe}</h5>
             </div>
             <div className={styles.tabLayout}>
               <div
@@ -157,9 +157,11 @@ const UserProfile = () => {
           <div className={styles.userActivities}>
             <img
               src={
-                tabIndex == 2
+                tabIndex == 0
+                  ? ProfileActivityMobileTemplate1
+                  : tabIndex == 1
                   ? ProfileActivityMobileTemplate2
-                  : ProfileActivityMobileTemplate1
+                  : ProfileActivityMobileTemplate3
               }
               className={styles.templateImage}
             />

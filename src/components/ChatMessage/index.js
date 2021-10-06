@@ -29,7 +29,9 @@ const ChatMessage = ({
       )}
       ref={elementRef}
     >
-      <img src={profilePicture} alt={userName} />
+      <Link to={`/user/${userId}`}>
+        <img src={profilePicture} alt={userName} />
+      </Link>
       <div>
         <Link to={`/user/${userId}`}>
           <span>

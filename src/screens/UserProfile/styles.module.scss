@@ -117,12 +117,14 @@
         margin-right: 40px; 
         padding-bottom: 12px;               
         opacity: 0.3;
+        cursor: pointer;
       }
       .tabItemSelected {
         margin-right: 40px;
         padding-bottom: 12px;
         border-bottom: 2px solid #F1FF54;        
         opacity: 1;
+        cursor: pointer;
       }
     }
     .userActivities {      
@@ -145,7 +147,7 @@
         background-repeat: no-repeat;
         background-size: contain;
         position: absolute;
-        top: 50%;
+        top: 25%;
         left: 50%;
         min-width: 250px;
         min-height: 70px;
@@ -275,7 +277,7 @@
         background-repeat: no-repeat;
         background-size: contain;
         position: absolute;
-        top: 50%;
+        top: 25%;
         left: 50%;
         min-width: 250px;
         min-height: 70px;
