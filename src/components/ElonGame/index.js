@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 const ElonGame = props => {
   return (
     <div className={styles.elonGameWrapper}>
-      <div className={styles.headerTitle}>
-        Elon Game <span className={styles.howItWorks}> How does it work?</span>
-      </div>
+      <div className={styles.headerTitle}>Elon Game</div>
       <div className={styles.elonGameContainer}>
         <div className={styles.leftColumn}>
           <div className={styles.imgWrapper}>
