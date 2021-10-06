@@ -2,11 +2,11 @@
 
 .container {
   display: flex;
-  padding: 40px;
+  padding: 20px;
 
   @media screen and (max-width: $screen-xs) {
     display: block;
-    padding: 20px;
+    padding: 0 20px;
   }
 }
 
