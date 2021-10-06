@@ -7,6 +7,7 @@ import State from '../../helper/State';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
+import { formatToFixed } from 'helper/FormatNumbers';
 
 const ActivityMessage = ({ activity, date, users, events }) => {
   const [dateString, setDateString] = useState('');
@@ -90,7 +91,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_USER_REWARD':
         return (
           <div>
-            <b>{_.get(user, 'username', 'Unknown user')}</b> has been rewarded.
+            <b>{_.get(user, 'username', 'Unknown user')}</b> has been rewarded
+            with <b>{formatToFixed(_.get(data, 'winToken'), 0)} WFAIR</b> from{' '}
+            <b>{_.get(event, 'name')}</b>.
           </div>
         );
       case 'Notification/EVENT_ONLINE':
