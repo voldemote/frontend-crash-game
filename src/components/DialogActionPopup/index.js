@@ -55,7 +55,6 @@ const actionTypes = {
 };
 
 const DialogActionPopup = ({ data, actionType, actionDispatchers }) => {
-  console.log(data);
   const { onAccept, title, text, getBody, acceptLabel, declineLabel, form } =
     actionTypes[actionType];
 

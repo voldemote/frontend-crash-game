@@ -8,6 +8,7 @@ import { UserActions } from '../actions/user';
 import { push } from 'connected-react-router';
 import Routes from 'constants/Routes';
 import { PopupActions } from 'store/actions/popup';
+import EventTypes from 'constants/EventTypes';
 
 const fetchAll = function* (action) {
   const authState = yield select(state => state.authentication.authState);
@@ -150,18 +151,21 @@ const fetchNewsData = function* ({ params }) {
 
 const deleteEvent = function* ({ payload: eventId }) {
   try {
-    const { data } = yield call(() => Api.deleteEvent(eventId));
+    yield put(PopupActions.hide());
+    const {
+      response: { data },
+    } = yield call(() => Api.deleteEvent(eventId));
+
+    const route =
+      {
+        [EventTypes.streamed]: Routes.liveEvents,
+        [EventTypes.nonStreamed]: Routes.events,
+      }[data.type] || Routes.home;
 
     yield all([
-      put(PopupActions.hide()),
-      put(
-        push(
-          Routes.getRouteWithParameters(Routes.liveEvents, { category: 'all' })
-        )
-      ),
-      put(EventActions.deleteEventSuccess(data)),
       put(EventActions.fetchAll()),
-      put(EventActions.initiateFetchFilteredEvents()),
+      put(push(Routes.getRouteWithParameters(route, { category: 'all' }))),
+      put(EventActions.deleteEventSuccess(data)),
     ]);
   } catch (error) {
     yield put(EventActions.deleteEventFail());
