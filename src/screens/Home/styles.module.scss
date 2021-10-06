@@ -28,6 +28,10 @@
   margin-top: 143px;
   padding: 0 20px;
 
+  @media (max-width: $screen-sm) {
+    margin-top: 133px;
+  }
+
   h1 {
     font-family: $fontBold;
     font-size: 46px;
@@ -205,4 +209,16 @@
       opacity: 1;
     }
   }
+}
+
+.seeAllActivities {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: $colorWhite;
+  line-height: 12px;
+  letter-spacing: 0.6px;
+  font-family: $fontLight;
+  cursor: pointer;
+  text-decoration: underline;
 }

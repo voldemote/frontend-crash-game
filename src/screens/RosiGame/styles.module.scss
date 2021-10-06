@@ -14,6 +14,51 @@
   padding-right: 20px;
   flex: 1;
 
+  .headlineWrapper {
+    display: flex;
+    align-items: center;
+
+    .howtoLink {
+      padding-bottom: 20px;
+      cursor: pointer;
+      font-size: 11px;
+      font-family: $fontRegular;
+      text-decoration: underline;
+      color: $colorYellow;
+
+      @media (max-width: $screen-xs) {
+        display: none;
+        margin: 0;
+        width: 100%;
+        padding: 0 15px 15px;
+      }
+    }
+    .shareButton {
+      padding-bottom: 15px;
+      padding-right: 10px;
+    }
+
+    .questionIcon {
+      cursor: pointer;
+      display: none;
+      margin-bottom: 20px;
+      width: 25px;
+      height: 25px;
+
+      svg {
+        g,
+        path,
+        circle {
+          fill: $colorYellow;
+        }
+      }
+
+      @media (max-width: $screen-xs) {
+        display: block;
+      }
+    }
+  }
+
   @media screen and (max-width: $screen-xs) {
     padding-right: 0px;
 

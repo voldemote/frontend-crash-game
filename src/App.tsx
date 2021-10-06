@@ -26,6 +26,7 @@ import Blog from './screens/Blog';
 import BlogItem from './components/BlogItem';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
+import Activities from './screens/Activities';
 import Rewards from './screens/Rewards';
 import ResetPassword from './screens/ResetPassword';
 import LandingPage from 'screens/LandingPage';
@@ -76,6 +77,7 @@ const App = () => {
                 </>
               )}
             />
+            <Route exact path={Routes.activities} component={Activities} />
             <Route path={Routes.verify} component={EmailVerification} />
             <Route path={Routes.games} component={Games} />
             <Route path={Routes.resetPassword} component={ResetPassword} />

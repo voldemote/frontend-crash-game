@@ -221,23 +221,22 @@ const authenticationSucceeded = function* (action) {
     yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
-    if (action.showWelcome) {
+    yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
+    if (action.newUser) {
       yield put(
         PopupActions.show({
-          popupType: PopupTheme.welcome,
+          popupType: PopupTheme.username,
         })
       );
     } else {
       yield put(PopupActions.hide());
     }
-    yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
   }
 };
 
 const logout = function* () {
   Api.setToken(null);
   crashGameApi.setToken(null);
-  yield put(WebsocketsActions.close());
   yield put(push(Routes.home));
 };
 
@@ -310,12 +309,12 @@ const firstSignUpPopup = function* (options) {
   }
 };
 
-const updateUserData = function* ({ payload }) {
+const updateUserData = function* (action) {
   try {
     const userId = yield select(state => state.authentication.userId);
 
     const userFiltered = Object.fromEntries(
-      Object.entries(payload.user).filter(([key, value]) => value)
+      Object.entries(action.payload.user).filter(([key, value]) => value)
     );
 
     const response = yield call(Api.updateUser, userId, userFiltered);
@@ -328,6 +327,14 @@ const updateUserData = function* ({ payload }) {
           ...userFiltered,
         })
       );
+
+      if (action.newUser) {
+        yield put(
+          PopupActions.show({
+            popupType: PopupTheme.welcome,
+          })
+        );
+      }
     }
   } catch (error) {
     yield put(AuthenticationActions.updateUserDataFailed());
@@ -339,6 +346,7 @@ const signUp = function* (action) {
     email: action.email,
     password: action.password,
     passwordConfirm: action.passwordConfirm,
+    ref: action.ref,
   };
 
   const { response, error } = yield call(Api.signUp, payload);
@@ -348,7 +356,7 @@ const signUp = function* (action) {
       AuthenticationActions.login({
         email: action.email,
         password: action.password,
-        showWelcome: true,
+        newUser: true,
       })
     );
   } else {
@@ -378,7 +386,7 @@ const login = function* (action) {
       AuthenticationActions.loginSuccess({
         userId: data.userId,
         session: data.session,
-        showWelcome: action.showWelcome,
+        newUser: action.newUser,
       })
     );
   } else {
