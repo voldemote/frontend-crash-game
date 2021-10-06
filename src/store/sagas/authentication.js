@@ -313,9 +313,18 @@ const updateUserData = function* (action) {
   try {
     const userId = yield select(state => state.authentication.userId);
 
-    const userFiltered = Object.fromEntries(
+    let userFiltered = Object.fromEntries(
       Object.entries(action.payload.user).filter(([key, value]) => value)
     );
+
+    if (userFiltered.imageName) {
+      userFiltered.image = {
+        filename: userFiltered.imageName,
+        src: userFiltered.profilePic,
+      };
+
+      userFiltered = _.omit(userFiltered, ['imageName', 'profilePic']);
+    }
 
     const response = yield call(Api.updateUser, userId, userFiltered);
     if (response) {
@@ -324,7 +333,7 @@ const updateUserData = function* (action) {
       yield put(
         AuthenticationActions.updateUserDataSucceeded({
           ...stateUser,
-          ...userFiltered,
+          ...response.data,
         })
       );
 
