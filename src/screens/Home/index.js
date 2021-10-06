@@ -97,7 +97,12 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     return (
       <Link to={Routes.blog}>
         <div className={classNames(styles.banner, styles.blogBanner)}>
-          <div className={styles.title}>Blog</div>
+          {/* <div className={styles.title}>Blog</div> */}
+          <div className={styles.title}>
+            {'        '}
+            <br />
+            {'         '}
+          </div>
         </div>
       </Link>
     );
@@ -152,9 +157,9 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           <EventsCarouselContainer eventType="streamed" />
-          {renderBlogBanner()}
           <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
+          {renderBlogBanner()}
           {renderCategoriesAndLeaderboard()}
           <ContentFooter />
         </div>
