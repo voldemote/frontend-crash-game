@@ -189,6 +189,9 @@ const EventsCarouselContainer = ({
       nextArrowInactive={allLoaded}
       onNext={nextPage}
       onPrevious={previousPage}
+      withComingSoonBanner={
+        eventType === 'streamed' && currentEvents?.length > 0
+      }
     >
       {eventType === 'streamed' && currentEvents?.length > 0
         ? renderLiveEvents()

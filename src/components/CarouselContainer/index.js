@@ -18,6 +18,7 @@ const CarouselContainer = ({
   nextArrowInactive,
   onNext,
   onPrevious,
+  withComingSoonBanner,
 }) => {
   return (
     <div className={classNames(styles.carouselContainer)}>
@@ -58,7 +59,16 @@ const CarouselContainer = ({
           </div>
         </div>
       </div>
-      <div className={styles.carousel}>{children}</div>
+      <div
+        className={classNames(styles.carousel, {
+          [styles.blurContainer]: withComingSoonBanner,
+        })}
+      >
+        {withComingSoonBanner && (
+          <div className={styles.comingSoonContainer}></div>
+        )}
+        {children}
+      </div>
     </div>
   );
 };
