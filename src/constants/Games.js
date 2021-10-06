@@ -13,7 +13,7 @@ import Routes from './Routes';
 export const CASINO_GAMES = [
   {
     background: RosiImg,
-    title: 'Elon Game',
+    title: '',
     subtitle: '',
     description: '',
     active: true,
@@ -45,6 +45,9 @@ export const CASINO_GAMES = [
       ),
     },
   },
+];
+
+export const SLOTS_GAMES = [
   {
     background: First,
     title: 'Midas Trader',
@@ -53,9 +56,6 @@ export const CASINO_GAMES = [
     active: false,
     linkTo: '',
   },
-];
-
-export const SLOTS_GAMES = [
   {
     background: Second,
     title: 'Treasure Island',
