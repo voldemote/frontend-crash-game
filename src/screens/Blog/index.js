@@ -21,7 +21,7 @@ const Blog = () => {
         <section className={styles.title}>
           <span>{'Blog'}</span>
         </section>
-        <section className={styles.header}>
+        {/* <section className={styles.header}>
           <div className={styles.categories}>
             <CategoryList
               //   eventType={eventType}
@@ -29,7 +29,7 @@ const Blog = () => {
               //   handleSelect={handleSelectCategory}
             />
           </div>
-        </section>
+        </section> */}
         <BlogCards blogs={blogs}></BlogCards>
         <ContentFooter />
       </div>
