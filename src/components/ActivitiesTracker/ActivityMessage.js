@@ -82,7 +82,11 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     switch (activity.type) {
       case 'Notification/EVENT_BET_CANCELED':
-        return `Event ${_.get(data, 'event.name')} cancelled.`;
+        return (
+          <div>
+            Event <b>{_.get(event, 'name')}</b> cancelled.
+          </div>
+        );
       case 'Notification/EVENT_USER_REWARD':
         return (
           <div>
@@ -170,7 +174,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{_.get(data, 'username')}</b> has placed{' '}
-            <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game{' '}
+            <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
@@ -178,7 +182,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{_.get(data, 'username')}</b> has cashed out{' '}
-            <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game{' '}
+            <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
@@ -196,6 +200,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     if (!user) {
       user = _.get(activity, 'data.user');
+    }
+
+    if (!user) {
+      //@todo sometimes user is not there, we are displaying 'Unknown user' we should do an api call to get this? Better to add missing part to the event message in USER_REWARDED
     }
 
     return (
