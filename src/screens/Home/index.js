@@ -2,7 +2,6 @@ import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect, useSelector } from 'react-redux';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
 import { Link, useParams } from 'react-router-dom';
@@ -14,7 +13,6 @@ import Routes from 'constants/Routes';
 import ContentFooter from '../../components/ContentFooter';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
-import { select } from 'redux-saga/effects';
 import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import LandingPage from 'screens/LandingPage';
@@ -137,12 +135,12 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   return (
     <BaseContainerWithNavbar>
       {renderHeadline()}
-      <Header />
+      {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          <EventsCarouselContainer eventType="streamed" />
-          <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
+          <EventsCarouselContainer eventType="non-streamed" />
+          <EventsCarouselContainer eventType="streamed" />
           {renderCategoriesAndLeaderboard()}
           <ContentFooter />
         </div>
