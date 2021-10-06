@@ -5,6 +5,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import ContentFooter from 'components/ContentFooter';
 import blogs from '../../data/blogs/blogs.json';
 import marked from 'marked';
+import ReactMarkdown from 'react-markdown';
+import 'github-markdown-css';
 
 export default function BlogItem() {
   let history = useHistory();
@@ -44,7 +46,10 @@ export default function BlogItem() {
           </div>
           <div className={styles.blogDate}>{blog.date}</div>
           <div className={styles.blogContentContainer}>
-            <div
+            <div className="markdown-body" style={{ color: 'white' }}>
+              <ReactMarkdown source={post}>{post}</ReactMarkdown>
+            </div>
+            {/* <div
               dangerouslySetInnerHTML={{
                 __html: marked(post, {
                   gfm: true,
@@ -56,7 +61,7 @@ export default function BlogItem() {
                   smartypants: true,
                 }),
               }}
-            />
+            /> */}
           </div>
         </div>
 

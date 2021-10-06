@@ -78,18 +78,27 @@
 
 .blogContentContainer {
   max-width: 727px;
+  padding: 5px;
   color: $colorWhite;
 
   @media (max-width: $screen-md) {
     padding: 10px;
   }
 
-  h2 {
-    margin-top: 20px;
-    text-transform: capitalize;
+  .markdown-body h1 {
+    color: $colorWhite !important;
   }
 
-  * {
-    padding: 5px;
-  }
+  //   h2 {
+  //     margin-top: 20px;
+  //     text-transform: capitalize;
+  //   }
+
+  //   * {
+  //     padding: 5px;
+  //   }
+}
+
+.markdown-body {
+  color: antiquewhite !important;
 }
