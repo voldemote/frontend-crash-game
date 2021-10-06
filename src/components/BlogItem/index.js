@@ -4,9 +4,13 @@ import styles from './styles.module.scss';
 import { useParams, useHistory } from 'react-router-dom';
 import ContentFooter from 'components/ContentFooter';
 import blogs from '../../data/blogs/blogs.json';
-import marked from 'marked';
+import dateFormat from 'dateformat';
 import ReactMarkdown from 'react-markdown';
+import ReactTimeAgo from 'react-time-ago';
+import classNames from 'classnames';
 import 'github-markdown-css';
+import Share from 'components/Share';
+import Link from 'components/Link';
 
 export default function BlogItem() {
   let history = useHistory();
@@ -29,39 +33,48 @@ export default function BlogItem() {
       })
       .catch(err => console.log(err));
   });
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
+        <div className={styles.headlineContainer}>
+          <div>
+            <Link
+              //   to={currentFromLocation?.pathname || '/'}
+              to={'/blog'}
+              className={styles.linkBack}
+            >
+              <div className={styles.arrowBack}></div>
+              <div className={styles.headline}>
+                <h2>{blog.title}</h2>
+              </div>
+            </Link>
+          </div>
+          <div className={styles.shareButton}>
+            <Share />
+          </div>
+        </div>
         <div className={styles.blogContainer}>
           <div className={styles.blogHeader}>
             <div className={styles.circle} />
             <div className={styles.blogInformations}>
               <div className={styles.blogCategory}>{blog.category}</div>
               <div>{blog.author}</div>
-              <div className={styles.blogDateAgo}>{blog.date}</div>
+              <div className={styles.blogDateAgo}>
+                <ReactTimeAgo date={blog.date} locale="en-US" />
+              </div>
             </div>
           </div>
           <div className={styles.imgContainer}>
             <img src={blog.background} />
           </div>
-          <div className={styles.blogDate}>{blog.date}</div>
+          <div className={styles.blogDate}>
+            {dateFormat(new Date(blog.date), 'mmmm d, yyyy')}
+          </div>
           <div className={styles.blogContentContainer}>
-            <div className="markdown-body" style={{ color: 'white' }}>
+            <div className={classNames('markdown-body', styles.markdown)}>
               <ReactMarkdown source={post}>{post}</ReactMarkdown>
             </div>
-            {/* <div
-              dangerouslySetInnerHTML={{
-                __html: marked(post, {
-                  gfm: true,
-                  tables: true,
-                  breaks: true,
-                  pedantic: true,
-                  sanitize: true,
-                  smartLists: true,
-                  smartypants: true,
-                }),
-              }}
-            /> */}
           </div>
         </div>
 
