@@ -1,0 +1,119 @@
+@import '../../styles/all';
+
+.elonGameWrapper {
+  padding: 30px;
+
+  .headerTitle {
+    color: $colorWhite;
+    font-family: $fontRegular;
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 20px;
+
+    .howItWorks {
+      color: $colorYellow;
+      font-weight: 400;
+      text-decoration: underline;
+      font-size: 16px;
+    }
+  }
+
+  .elonGameContainer {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    height: 370px;
+
+    .leftColumn {
+      width: 50%;
+      flex-basis: 50%;
+      position: relative;
+
+      .buttonWrapper {
+        position: absolute;
+        bottom: 35px;
+        width: 100%;
+
+        .button {
+          margin: 0 auto;
+          width: 15em;
+          height: 72px;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          background-image: url('../../data/backgrounds/games/games-highlight.png');
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-color: transparent;
+          border: none;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scaleX(-1);
+      }
+    }
+
+    .rightColumn {
+      background: #081737;
+      width: 50%;
+      flex-basis: 50%;
+      padding: 0px 15px 15px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .stepContainer {
+        display: flex;
+
+        .numberStep {
+          font-family: $fontMedium;
+          color: #39455F;
+          font-size: 62px;
+        }
+
+        .textContainer {
+          margin-top: 54px;
+          margin-left: -40px;
+
+          .title {
+            color: $colorYellow;
+            font-family: $fontBold;
+            font-size: 22px;
+          }
+
+          .description {
+            color: $colorWhite;
+            font-family: $fontLight;
+            font-size: 12px;
+          }
+        }
+
+        .imageContainer {
+          margin-left: 25px;
+          height: 95px;
+          position: relative;
+
+          .imageText {
+            color: $colorYellow;
+            font-family: $fontLight;
+            font-size: 8px;
+            position: absolute;
+            bottom: 0;
+            right: -35px;
+          }
+        }
+      }
+    }
+  }
+}
