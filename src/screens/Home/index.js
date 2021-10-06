@@ -140,9 +140,9 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
       <Header />
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          <EventsCarouselContainer eventType="streamed" />
-          <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
+          <EventsCarouselContainer eventType="non-streamed" />
+          <EventsCarouselContainer eventType="streamed" />
           {renderCategoriesAndLeaderboard()}
           <ContentFooter />
         </div>
