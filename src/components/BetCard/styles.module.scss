@@ -2,18 +2,17 @@
 
 .betCardContainer {
   padding-right: 20px;
-
+  padding-bottom: 60px;
   @media (max-width: $screen-xs) {
-    padding: 0;
+    padding-right: 0;
+    padding-bottom: 20px;
   }
 
   .betCard {
     background: white;
-    padding: 28px;
-    width: 327px;
-    height: 222px;
-    min-height: 260px;
-    border-radius: 6px;
+    padding: 0;
+    width: 314px;
+    border-radius: 12px;
     font-family: $fontLight;
     color: $colorWhite;
     display: flex;
@@ -23,11 +22,8 @@
     user-select: none;
     cursor: pointer;
     overflow: hidden;
-
     @media (max-width: $screen-xs) {
-      width: 100%;
-      margin: 0 0 15px;
-      padding: 10px;
+      width: 374px;
     }
     .eventVideoBackground {
       position: absolute;
@@ -46,8 +42,6 @@
     }
 
     .titleContainer{
-      max-width: 185px;
-      max-height: 72px;
       text-overflow: ellipsis;
       overflow: hidden;
       color: $colorBlack;
@@ -68,16 +62,20 @@
       color: #c1c8d2;
       font-size: 10px;
       font-weight: 500;
+      align-self: end;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
+      //margin-bottom: 15px;
+      padding: 16px 16px 16px 28px;
     }
 
     .special{
       display: flex;
-      flex-direction: column;
+      flex-direction: row-reverse;
+      align-items: end;
       .star{
         font-size: 16px;
         color: black;
@@ -86,23 +84,23 @@
 
     .outcomesContainer {
       width: 100%;
-      padding: calc(50px - 28px);
       display: flex;
+      padding: 14px 0 14px 0;
       flex-direction: column;
       .outcome {
         display: grid;
        grid-template-columns: 80px 100px 20px;
         grid-gap: 16px;
         .amount {
-          font-size: 8px;
+          font-size: 8pt;
           font-weight: 500;
           align-self: center;
-
-          color: #c1c8d2;
+          font-weight: bold;
+          color: #979ea7;
         }
         .outcomeName {
           font-family: $fontRegular;
-          font-size: 16px;
+          font-size: 10pt;
           line-height: 1.5;
           font-weight: 500;
           color: #000;
@@ -118,8 +116,8 @@
   position: relative;
   background: $colorYellowAdjusted;
   width: 100px;
-  min-height: 6px;
-  max-height: 6px;
+  min-height: 3px;
+  max-height: 3px;
   border-radius: 3px;
   align-self: center;
 }
@@ -127,37 +125,66 @@
 .gauge{
   position: absolute;
   width: 1px;
-  min-height: 6px;
-  max-height: 6px;
+  min-height: 3px;
+  max-height: 3px;
   max-width: 100px;
   border-radius: 3px;
   background: #120f27;
 }
 
 .content {
+  padding: 0 28px 5px 28px;
   &.timerActive {
     position: relative;
     bottom: 30px;
   }
 }
 
-
 .timer {
   width: max-content;
   border-radius: 2px;
   background-color: #f6f7f8;
-  div{
-    display: flex;
-    flex-direction: row;
-    opacity: 1;
-    padding: 3px;
-  }
+  padding: 5px 9px 4px 9px;
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+
   span{
-    font-size: 8px;
     font-weight: 500;
     min-width: 5px;
-    color: #8192a6 !important;
+    color: #8192a6;
+    font-size: 8px;
   }
 }
+
+.star{
+  background-image: url("../../data/icons/star-1.svg");
+  background-repeat: no-repeat;
+  width: 17px;
+  height: 17px;
+  background-size: cover;
+}
+
+.picture{
+  width: 100%;
+  height: 90px;
+  background-size: cover;
+  background-color: #f6f7f8;
+  //border-radius: 12px;
+  z-index: 2;
+}
+
+.categorySticker{
+  width: 52px;
+  height: 52px;
+  background: url("../../data/icons/events-all-icon.svg");
+  border-radius: 50%;
+  //background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 56px;
+  z-index: 3;
+}
+
 
 

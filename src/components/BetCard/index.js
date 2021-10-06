@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import TimeLeftCounter from '../TimeLeftCounter';
 import classNames from 'classnames';
 import { getOutcomes } from 'api';
-import moment from 'moment';
-import { truncate } from 'lodash/string';
-
+import { calculateTimeLeft } from '../../helper/Time';
+import { kebabCase, startCase } from 'lodash/string';
+import { EVENT_CATEGORIES } from '../../constants/EventCategories';
 const BetCard = ({
   betId,
   onClick,
@@ -14,14 +13,34 @@ const BetCard = ({
   eventEnd,
   eventCardClass,
   outcomes,
+  category,
+  item,
 }) => {
-  const happensWithin24h = moment(eventEnd).diff(moment(), 'h') <= 24;
-
   const getEventCardStyle = () => {
     return {
       backgroundImage: 'url("' + image + '")',
     };
   };
+
+  const getStickerStyle = category => {
+    const cat = EVENT_CATEGORIES.find(c => c.value === category);
+    if (!cat) return {};
+    return {
+      backgroundImage: 'url("' + cat.image + '")',
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(
+    calculateTimeLeft(new Date(eventEnd))
+  );
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft(new Date(eventEnd)));
+    }, 60000);
+
+    return () => clearTimeout(timerId);
+  }, [eventEnd]);
 
   const [outcomeValues, setOutcomeValues] = useState([
     ...outcomes.map(outcome => ({ ...outcome, amount: '...' })),
@@ -48,7 +67,6 @@ const BetCard = ({
   }, []);
 
   function getGaugeWidth(amount = 1) {
-    console.log(amount);
     return {
       width: `${amount}px`,
     };
@@ -57,22 +75,30 @@ const BetCard = ({
   return (
     <div className={styles.betCardContainer} onClick={onClick}>
       <div className={classNames(styles.betCard, eventCardClass)}>
-        <>
-          <span className={styles.section}>Wallfair</span>
-          <div className={styles.header}>
-            <div className={styles.titleContainer} title={title}>
-              <span className={styles.title}>
-                {truncate(title, { length: 62 })}
-              </span>
-            </div>
-            <div className={styles.special}>
-              <div className="star"></div>
-              {eventEnd && happensWithin24h && (
-                <div className={styles.timer}>
-                  <TimeLeftCounter endDate={eventEnd} viewSeconds={true} />
-                </div>
-              )}
-            </div>
+        <div className={styles.picture} style={getEventCardStyle()} />
+        <div className={styles.header}>
+          <span className={styles.section}>{category}</span>
+
+          <div className={styles.special}>
+            <div className={styles.star}></div>
+            {eventEnd && (
+              <div className={styles.timer}>
+                <span>
+                  {timeLeft?.days || 0}d {timeLeft?.hours || 0}h{' '}
+                  {timeLeft?.minutes || 0}m
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={styles.content}>
+          <div
+            className={classNames([styles.categorySticker])}
+            style={getStickerStyle(category)}
+          />
+
+          <div className={styles.titleContainer} title={title}>
+            <span className={styles.title}>{title}</span>
           </div>
           <div className={styles.outcomesContainer}>
             {outcomeValues.map(outcome => (
@@ -92,7 +118,7 @@ const BetCard = ({
               </div>
             ))}
           </div>
-        </>
+        </div>
       </div>
     </div>
   );
