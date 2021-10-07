@@ -7,7 +7,10 @@
     padding-right: 0;
     padding-bottom: 20px;
   }
-
+  @media (max-width: $screen-md) {
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
   .betCard {
     background: white;
     padding: 0;
@@ -23,8 +26,9 @@
     cursor: pointer;
     overflow: hidden;
     @media (max-width: $screen-xs) {
-      width: 374px;
+      width: 340px;
     }
+
     .eventVideoBackground {
       position: absolute;
       top: 0;
