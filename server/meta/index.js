@@ -107,7 +107,8 @@ module.exports = {
       const aboutMe =
         data['aboutMe'] ||
         'This user has not provided an about info yet. How boring!';
-      const photoUrl = 'https://main.wallfair.io/logo192.png';
+      const photoUrl =
+        data['profilePicture'] || 'https://main.wallfair.io/logo192.png';
       const userTag = '/user/' + userId;
       meta[userTag] = {
         title: userName,
