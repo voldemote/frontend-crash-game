@@ -78,6 +78,10 @@
 
 .chatWrapper {
   height: 300px;
+
+  @media screen and (max-width: $screen-xs) {
+    margin-bottom: 20px;
+  }
 }
 
 .chatContainer {
@@ -88,4 +92,10 @@
   margin: 0px;
   height: 100%;
   padding: 10px;
+
+  .chatMessageContainer {
+    @media (max-width: $screen-sm) {
+      margin-bottom: 0;
+    }
+  }
 }
