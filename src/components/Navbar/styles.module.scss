@@ -25,6 +25,21 @@
     display: contents;
   }
 
+  .drawerBackdropBg {
+    backdrop-filter: blur(6px);
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .drawerContent {
+    z-index: 5;
+    display: flex;
+    flex-flow: column nowrap;
+    height: inherit;
+  }
+
   .navbarItems {
     display: flex;
     align-items: center;

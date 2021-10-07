@@ -266,36 +266,39 @@ const Navbar = ({
           !isOpen(drawers.leaderboard || leaderboardOpen) && style.drawerHidden
         )}
       >
-        <Icon
-          iconType={'cross'}
-          onClick={closeDrawers}
-          className={style.closeLeaderboard}
-        />
-        <div className={style.leaderboardHeadingWrapper}>
-          <p className={style.leaderboardHeading}>
-            Community
-            <br />
-            Leaderboard
-          </p>
-          {isLoggedIn() && (
-            <div className={style.leaderboardHeadingRank}>
-              <div className={style.leaderboardHeadingRankText}>MY RANK</div>
-              <div className={style.leaderboardHeadingRankValue}>
-                #{user.rank}
+        <div className={classNames(style.drawerContent)}>
+          <Icon
+            iconType={'cross'}
+            onClick={closeDrawers}
+            className={style.closeLeaderboard}
+          />
+          <div className={style.leaderboardHeadingWrapper}>
+            <p className={style.leaderboardHeading}>
+              Community
+              <br />
+              Leaderboard
+            </p>
+            {isLoggedIn() && (
+              <div className={style.leaderboardHeadingRank}>
+                <div className={style.leaderboardHeadingRankText}>MY RANK</div>
+                <div className={style.leaderboardHeadingRankValue}>
+                  #{user.rank}
+                </div>
               </div>
+            )}
+          </div>
+          {isLoggedIn() && (
+            <div className={style.leaderboardInfo}>
+              {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
+              {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
             </div>
           )}
+          <Leaderboard
+            fetch={openDrawer === drawers.leaderboard}
+            setMissingAmount={setMisingWinnerAmount}
+          />
         </div>
-        {isLoggedIn() && (
-          <div className={style.leaderboardInfo}>
-            {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
-            {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
-          </div>
-        )}
-        <Leaderboard
-          fetch={openDrawer === drawers.leaderboard}
-          setMissingAmount={setMisingWinnerAmount}
-        />
+        <div className={style.drawerBackdropBg}></div>
       </div>
     );
   };
@@ -308,12 +311,15 @@ const Navbar = ({
           !isOpen(drawers.notifications) && style.drawerHidden
         )}
       >
-        <Notifications
-          notifications={notifications}
-          unreadNotifications={unreadNotifications}
-          closeNotifications={closeDrawers}
-          setUnread={setUnread}
-        />
+        <div className={classNames(style.drawerContent)}>
+          <Notifications
+            notifications={notifications}
+            unreadNotifications={unreadNotifications}
+            closeNotifications={closeDrawers}
+            setUnread={setUnread}
+          />
+        </div>
+        <div className={style.drawerBackdropBg}></div>
       </div>
     );
   };

@@ -339,3 +339,9 @@
   border-left: 4px solid $colorYellow;
   background-color: #24203d;
 }
+
+.rankingTooltip {
+  font-family: $fontBold;
+  max-width: 180px;
+  background-color: $colorPrimary45 !important;
+}

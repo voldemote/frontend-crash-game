@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import style from './styles.module.scss';
 import medalGold from '../../data/icons/medal-gold.png';
@@ -5,6 +6,22 @@ import medalSilver from '../../data/icons/medal-silver.png';
 import medalBronze from '../../data/icons/medal-bronze.png';
 import { formatToFixed } from 'helper/FormatNumbers';
 import classNames from 'classnames';
+import ReactTooltip from 'react-tooltip';
+import styles from '../BetView/styles.module.scss';
+import { useEffect } from 'react';
+
+const topRewards = {
+  1: 6200,
+  2: 4450,
+  3: 3750,
+  4: 2970,
+  5: 2400,
+  6: 1980,
+  7: 1500,
+  8: 1000,
+  9: 500,
+  10: 250,
+};
 
 const LeaderboardItem = ({
   user,
@@ -38,12 +55,25 @@ const LeaderboardItem = ({
 
   return (
     <>
+      <ReactTooltip
+        id="userRankingTooltip"
+        place="top"
+        effect="solid"
+        className={style.rankingTooltip}
+      ></ReactTooltip>
+
       {user.rank === 1 ? (
         <>
           <div className={style.placeSeperate} />
           <div className={style.tableFirst}>
             <p className={style.firstRank}>
-              #{user.rank} <img src={medalGold} alt="medal" />
+              #{user.rank}{' '}
+              <img
+                data-for={'userRankingTooltip'}
+                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                src={medalGold}
+                alt="medal"
+              />
             </p>
             <p className={style.firstName}>
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
@@ -58,7 +88,13 @@ const LeaderboardItem = ({
           <div className={style.placeSeperate} />
           <div className={style.tableSecond}>
             <p className={style.secondRank}>
-              #{user.rank} <img src={medalSilver} alt="medal" />
+              #{user.rank}{' '}
+              <img
+                data-for={'userRankingTooltip'}
+                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                src={medalSilver}
+                alt="medal"
+              />
             </p>
             <p className={style.secondName}>
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
@@ -73,7 +109,34 @@ const LeaderboardItem = ({
           <div className={style.placeSeperate} />
           <div className={style.tableThird}>
             <p className={style.thirdRank}>
-              #{user.rank} <img src={medalBronze} alt="medal" />
+              #{user.rank}{' '}
+              <img
+                data-for={'userRankingTooltip'}
+                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                src={medalBronze}
+                alt="medal"
+              />
+            </p>
+            <p className={style.thirdName}>
+              <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
+            </p>
+            <p className={style.thirdBalance}>
+              {formatToFixed(user.amountWon)}
+            </p>
+          </div>
+        </>
+      ) : user.rank <= 10 ? (
+        <>
+          <div className={style.placeSeperate} />
+          <div className={style.tableThird}>
+            <p className={style.thirdRank}>
+              #{user.rank}{' '}
+              <img
+                data-for={'userRankingTooltip'}
+                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                src={medalBronze}
+                alt="medal"
+              />
             </p>
             <p className={style.thirdName}>
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
