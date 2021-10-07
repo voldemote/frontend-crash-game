@@ -17,6 +17,7 @@ import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import LandingPage from 'screens/LandingPage';
 import classNames from 'classnames';
+import SocialIcons from 'components/SocialIcons';
 
 const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
@@ -67,6 +68,8 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
         <h1>Betting Reimagined</h1>
 
         <div className={styles.slogan}>Clear, Social &amp; Fair</div>
+
+        <SocialIcons className={styles.socialIcons} />
       </div>
     );
   };
