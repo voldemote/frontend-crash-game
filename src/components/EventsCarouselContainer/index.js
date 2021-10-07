@@ -137,6 +137,7 @@ const EventsCarouselContainer = ({
           eventSlug: current.slug,
           previewImageUrl: current.previewImageUrl,
           tags: _.map(current.tags, tag => tag.name),
+          category: current.category
         }))
         .filter(bet => {
           return (
@@ -195,6 +196,7 @@ const EventsCarouselContainer = ({
             eventEnd={bet.endDate}
             outcomes={outcomes}
             eventCardClass={styles.eventCardHome}
+            category={bet?.category ? bet.category : 'all'}
           />
         </Link>
       );
