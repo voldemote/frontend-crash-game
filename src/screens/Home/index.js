@@ -18,6 +18,7 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 import LandingPage from 'screens/LandingPage';
 import classNames from 'classnames';
 import SocialIcons from 'components/SocialIcons';
+import YellowButton from 'components/YellowButton';
 
 const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
@@ -118,6 +119,7 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
             <br />
             Elon Game
           </div>
+          <YellowButton className={styles.button}>Play now</YellowButton>
         </div>
       </Link>
     );
