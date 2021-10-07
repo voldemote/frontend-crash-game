@@ -5,7 +5,7 @@
   background: #fff;
   border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 10px;
-  padding: 25px 20px 10px 20px;
+  padding: 25px 20px 20px 20px;
   min-height: 100%;
 
   @media screen and (max-width: $screen-xs) {
@@ -156,7 +156,7 @@
   left: -50%;
   right: -50%;
   margin: 0px auto;
-  margin-top: 50px;
+  margin-top: 40px;
   outline: 0;
   @media screen and (max-width: $screen-xs) {
     margin-top: 10px;
@@ -289,15 +289,14 @@
   font-size: 14px;
   color: $colorGray;
   margin: 0 auto;
-  padding-top: 5px;
+  padding-top: 0;
   width: max-content;
 }
 
 .betInfo.guestInfo{
   padding-top: 30px;
-  font-size: 12px;
-
   @media screen and (max-width: $screen-xs) {
+    font-size: 12px;
     padding-top: 5px;
   }
 }
