@@ -115,6 +115,10 @@ const ActivitiesTracker = ({
         date = _.get(activityMessage, 'data.event.date');
       }
 
+      if (!date) {
+        date = _.get(activityMessage, 'data.updatedAt');
+      }
+
       return (
         <ActivityMessage key={index} activity={activityMessage} date={date} />
       );
