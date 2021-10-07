@@ -65,7 +65,9 @@ const AdminEventForm = ({ event = null, eventSlugs, hidePopup, eventType }) => {
     event?.date || new Moment()
   );
   const [betData, setBetData] = useState({});
-  const [isBetFormValid, setIsBetFormValid] = useState(isStreamedEventType);
+  const [isBetFormValid, setIsBetFormValid] = useState(
+    !!event || isStreamedEventType
+  );
 
   const isFormValid =
     [
