@@ -131,6 +131,7 @@ const EventsCarouselContainer = ({
         eventSlug: current.slug,
         previewImageUrl: current.previewImageUrl,
         tags: _.map(current.tags, tag => tag.name),
+        category: current.category,
       }));
       const concat = [...acc, ...bets];
       return concat;
@@ -173,6 +174,7 @@ const EventsCarouselContainer = ({
             eventEnd={bet.endDate}
             outcomes={outcomes}
             eventCardClass={styles.eventCardHome}
+            category={bet?.category ? bet.category : 'all'}
           />
         </Link>
       );
