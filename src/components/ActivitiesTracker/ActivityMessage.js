@@ -7,6 +7,7 @@ import State from '../../helper/State';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
+import { formatToFixed } from 'helper/FormatNumbers';
 
 const ActivityMessage = ({ activity, date, users, events }) => {
   const [dateString, setDateString] = useState('');
@@ -72,6 +73,24 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     }
   };
 
+  const getUserProfileUrl = user => {
+    if (!user) {
+      return 'Unknown user';
+    }
+
+    const userId = _.get(user, 'userId');
+
+    return (
+      <a
+        target={'_blank'}
+        href={`${window.location.origin}/user/${userId}`}
+        rel="noreferrer"
+      >
+        {_.get(user, 'username', 'Unknown user')}
+      </a>
+    );
+  };
+
   const prepareMessageByType = (activity, user) => {
     const data = activity.data;
     let event = _.get(data, 'event');
@@ -90,7 +109,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_USER_REWARD':
         return (
           <div>
-            <b>{_.get(user, 'username', 'Unknown user')}</b> has been rewarded.
+            <b>{getUserProfileUrl(data)}</b> has been rewarded with{' '}
+            <b>{formatToFixed(_.get(data, 'winToken'), 0)} WFAIR</b> from{' '}
+            <b>{_.get(event, 'name')}</b>.
           </div>
         );
       case 'Notification/EVENT_ONLINE':
@@ -127,7 +148,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         const outcomesName = _.get(data, `bet.outcomes[${outcomeIndex}].name`);
         return (
           <div>
-            <b>{_.get(user, 'username', 'Unknown user')}</b> has bet{' '}
+            <b>{getUserProfileUrl(data)}</b> has bet{' '}
             {_.get(data, 'trade.investmentAmount')} WFAIR on{' '}
             {
               <a
@@ -147,7 +168,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_BET_CASHED_OUT':
         return (
           <div>
-            <b>{_.get(user, 'username')}</b> has cashed out{' '}
+            <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <b>{_.get(data, 'amount')} WFAIR</b> from{' '}
             <b>
               <a
@@ -173,7 +194,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Casino/CASINO_PLACE_BET':
         return (
           <div>
-            <b>{_.get(data, 'username')}</b> has placed{' '}
+            <b>{getUserProfileUrl(data)}</b> has placed{' '}
             <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
@@ -181,7 +202,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Casino/CASINO_CASHOUT':
         return (
           <div>
-            <b>{_.get(data, 'username')}</b> has cashed out{' '}
+            <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later

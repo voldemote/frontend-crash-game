@@ -126,6 +126,14 @@
   }
 }
 
+.notStreamed{
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    padding: 0 0;
+    width: 100%;
+  }
+}
+
 .nonStreamed {
   color: white;
   width: max-content;
@@ -134,9 +142,16 @@
   column-gap: 60px;
 @media (max-width: $screen-sm) {
   margin:0 auto;
-  padding-top: 11px;
+  padding: 11px 0px 0px 0px;
   column-count: 1;
 }
+
+  @media (max-width: $screen-md) {
+    margin:0 auto;
+    padding: 11px 0px 0px 0px;
+    column-count: 2;
+    column-gap: 20px;
+  }
 
 @media (max-width: $screen-xs) {
   flex-direction: column;

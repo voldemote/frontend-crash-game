@@ -36,6 +36,7 @@ export default {
   logout: '/logout',
   privacyPolicy: '/privacy-policy',
   rosiGame: '/games/elon-game',
+  blog: '/blog',
   termsAndConditions: '/terms-and-conditions',
   verify: '/verify',
   chart: 'event/bet/:betId/history/chart',

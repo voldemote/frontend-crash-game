@@ -227,6 +227,9 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           className={classNames(
             styles.modalDialog,
             type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
+            type === PopupTheme.explanation
+              ? styles.explanationPopupVisual
+              : null,
             type === PopupTheme.signUpNotificationFirst ||
               type === PopupTheme.signUpNotificationSecond
               ? styles.signUpPopupContainer

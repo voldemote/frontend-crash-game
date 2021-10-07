@@ -187,7 +187,7 @@ const Bet = ({
       setBetAction(BET_ACTIONS.EventTrades);
     }
     if (isMobile && (isNonStreamed || relatedBets.length === 1)) {
-      onBetClose();
+      onBetClose()();
       setBetAction(BET_ACTIONS.EventTrades);
     }
   }, [isMobile, relatedBets, event]);
@@ -539,7 +539,7 @@ const Bet = ({
                   <div className={styles.timerLabel}>Event ends in:</div>
 
                   <div className={styles.timerParts}>
-                    <TimeCounter endDate={bet.endDate} />
+                    <TimeCounter endDate={bet?.endDate} />
                   </div>
                 </div>
               </>
