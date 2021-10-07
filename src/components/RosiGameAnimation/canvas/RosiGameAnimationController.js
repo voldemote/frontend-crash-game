@@ -13,8 +13,7 @@ PIXI.utils.skipHello();
 
 function loadAssets(loader) {
   const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
-  const resolution =
-    deviceType === 'mobile' ? Math.min(window.devicePixelRatio, 2) : 1;
+  const resolution = deviceType === 'mobile' ? 2 : 1;
 
   const constructPath = asset =>
     `/images/rosi-game/${deviceType}/@${resolution}x/${asset}`;
@@ -27,6 +26,7 @@ function loadAssets(loader) {
     .add('star1', constructPath('star1.png'))
     .add('star2', constructPath('star2.png'))
     .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
+    .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
     .add(
       'preparing-round-anim-car',
       constructPath('preparing-round-anim-car.json')
@@ -54,6 +54,7 @@ class RosiAnimationController {
     });
 
     this.gameStartTime = 0;
+    this.lastCrashFactor = 1.0;
   }
 
   load(done) {
@@ -71,6 +72,13 @@ class RosiAnimationController {
       Math.min(Math.pow(factor, factor / 2) / 10, maxFactor);
     const elapsed = Date.now() - this.gameStartTime;
     const crashFactor = Number(calcCrashFactorFromElapsedTime(elapsed)) || 1.0;
+
+    if (
+      Math.floor(crashFactor) >
+      this.coinAndTrajectory.getCurrentElonFrame() + 1
+    ) {
+      this.coinAndTrajectory.advanceElonAnim();
+    }
 
     TWEEN.update(this.app.ticker.lastTime);
     this.cashedOut.update(dt);

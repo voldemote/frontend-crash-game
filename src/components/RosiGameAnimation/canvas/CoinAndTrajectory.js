@@ -1,6 +1,6 @@
 import { ROSI_GAME_MAX_DURATION_SEC } from 'constants/RosiGame';
 import * as PIXI from 'pixi.js';
-import { calcPercent } from './utils';
+import { calcPercent, isMobileRosiGame } from './utils';
 
 export class CoinAnimation {
   constructor(app) {
@@ -16,9 +16,11 @@ export class CoinAnimation {
     this.coin = new PIXI.Sprite(this.app.loader.resources.coin.texture);
     this.elonAndCoin.addChild(this.coin);
 
-    this.elon = new PIXI.Sprite(this.app.loader.resources.elonmusk.texture);
-    this.elon.x -= calcPercent(this.elon.width, 20);
-    this.elon.y -= calcPercent(this.elon.height, 70);
+    const spritesheet =
+      this.app.loader.resources['elon-coin-animation'].spritesheet;
+    this.elon = new PIXI.AnimatedSprite(Object.values(spritesheet.textures));
+    this.elon.x = -92 / (isMobileRosiGame ? 2 : 1);
+    this.elon.y = -111 / (isMobileRosiGame ? 2 : 1);
     this.elonAndCoin.addChild(this.elon);
 
     this.elonAndCoindAnimationHandle = null;
@@ -27,6 +29,16 @@ export class CoinAnimation {
     this.setCoinDefaultPosition();
 
     this.container.visible = false;
+  }
+
+  getCurrentElonFrame() {
+    return this.elon.currentFrame;
+  }
+
+  advanceElonAnim() {
+    if (this.elon.currentFrame + 1 < this.elon.totalFrames) {
+      this.elon.gotoAndStop(this.elon.currentFrame + 1);
+    }
   }
 
   setCoinDefaultPosition() {
@@ -138,6 +150,7 @@ export class CoinAnimation {
 
     this.coin.alpha = 1;
     this.elonAndCoin.rotation = 0;
+    this.elon.gotoAndStop(0);
     this.trajectory.clear();
   }
 
