@@ -79,11 +79,14 @@ const MobileBets = ({ inGameBets, cashedOut }) => {
         <PlaceBet />
       </TabPanel>
       <TabPanel value={selectedTab} index={1} className={tabClasses.tabPanel}>
-        <Chat 
-          roomId={ROSI_GAME_EVENT_ID}
-          className={styles.chatContainer} 
-          chatMessageType={ChatMessageType.game} 
-        />
+        <div className={styles.chatWrapper}>
+          <Chat
+            roomId={ROSI_GAME_EVENT_ID}
+            className={styles.chatContainer}
+            chatMessageType={ChatMessageType.game}
+            messagesClassName={styles.chatMessageContainer}
+          />
+        </div>
       </TabPanel>
       <TabPanel value={selectedTab} index={2} className={tabClasses.tabPanel}>
         <GameBets

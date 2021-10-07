@@ -108,7 +108,7 @@ const Chat = ({
   return (
     <div className={classNames(styles.chatContainer, className)}>
       <div
-        className={classNames(messagesClassName, styles.messageContainer)}
+        className={classNames(styles.messageContainer, messagesClassName)}
         ref={messageListRef}
       >
         {renderMessages()}
