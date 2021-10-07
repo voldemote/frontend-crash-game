@@ -68,21 +68,34 @@ class RosiAnimationController {
   }
 
   update(dt) {
-    const calcSpeed = (factor, maxFactor) =>
-      Math.min(Math.pow(factor, factor / 2) / 10, maxFactor);
     const elapsed = Date.now() - this.gameStartTime;
     const crashFactor = Number(calcCrashFactorFromElapsedTime(elapsed)) || 1.0;
+    const maxElonFrames = this.coinAndTrajectory.getElonFramesCount();
+    const intervals = [
+      // fromFactor, toFactor, speed, elonFrame
+      [1, 1.5, 1, 0],
+      [1.5, 2, 2, 1],
+      [2, 3, 3, 2],
+      [3, 3.5, 4, 3],
+      [3.5, 4, 5, 4],
+      [4, 4.5, 6, 5],
+    ];
 
-    if (
-      Math.floor(crashFactor) >
-      this.coinAndTrajectory.getCurrentElonFrame() + 1
-    ) {
-      this.coinAndTrajectory.advanceElonAnim();
+    const currentInterval =
+      intervals.find(
+        ([fromFactor, toFactor]) =>
+          crashFactor >= fromFactor && crashFactor < toFactor
+      ) || intervals[intervals.length - 1];
+
+    const [_f, _t, speed, elonFrame] = currentInterval;
+
+    if (elonFrame < maxElonFrames) {
+      this.coinAndTrajectory.setElonFrame(elonFrame);
     }
 
     TWEEN.update(this.app.ticker.lastTime);
     this.cashedOut.update(dt);
-    this.background.update(dt, calcSpeed(crashFactor, 6));
+    this.background.update(dt, speed);
   }
 
   drawElements() {
@@ -113,7 +126,6 @@ class RosiAnimationController {
     const coinPosition = this.coinAndTrajectory.getCoinExplosionPosition();
     this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
     this.coinAndTrajectory.endCoinFlyingAnimation();
-    this.coinAndTrajectory.startElonAfterExplosionAnimation();
   }
 
   doCashedOutAnimation(data) {

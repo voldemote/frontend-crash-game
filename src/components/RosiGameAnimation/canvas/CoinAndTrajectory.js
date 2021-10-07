@@ -35,9 +35,19 @@ export class CoinAnimation {
     return this.elon.currentFrame;
   }
 
+  getElonFramesCount() {
+    return this.elon.totalFrames;
+  }
+
   advanceElonAnim() {
     if (this.elon.currentFrame + 1 < this.elon.totalFrames) {
       this.elon.gotoAndStop(this.elon.currentFrame + 1);
+    }
+  }
+
+  setElonFrame(frame) {
+    if (frame <= this.elon.totalFrames) {
+      this.elon.gotoAndStop(frame);
     }
   }
 
@@ -121,20 +131,20 @@ export class CoinAnimation {
     }
 
     this.coin.alpha = 0;
+    this.elon.alpha = 0;
   }
 
   startElonAfterExplosionAnimation() {
-    const rotationSpeed = 0.005;
+    // const rotationSpeed = 0.005;
     // For the sake of simplicty animate elonAndCoin container instead of just elon.
     // Coin is hidden anyway and positions are already being reset before next animation.
-    const update = dt => {
-      this.elonAndCoin.rotation += rotationSpeed * dt;
-      this.elonAndCoin.x += this.elonAndCoin.vx * this.elonAndCoin.speed * dt;
-      this.elonAndCoin.y += this.elonAndCoin.vy * this.elonAndCoin.speed * dt;
-    };
-
-    this.elonAfterExplosionAnimationHandle = update;
-    this.app.ticker.add(update);
+    // const update = dt => {
+    //   this.elonAndCoin.rotation += rotationSpeed * dt;
+    //   this.elonAndCoin.x += this.elonAndCoin.vx * this.elonAndCoin.speed * dt;
+    //   this.elonAndCoin.y += this.elonAndCoin.vy * this.elonAndCoin.speed * dt;
+    // };
+    // this.elonAfterExplosionAnimationHandle = update;
+    // this.app.ticker.add(update);
   }
 
   resetAllAnimations() {
@@ -149,6 +159,7 @@ export class CoinAnimation {
     }
 
     this.coin.alpha = 1;
+    this.elon.alpha = 1;
     this.elonAndCoin.rotation = 0;
     this.elon.gotoAndStop(0);
     this.trajectory.clear();
