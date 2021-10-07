@@ -56,6 +56,12 @@
   justify-content: center;
   align-items: center;
   font-family: monospace $fontMedium;
+  .empty {
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+    color: $colorWhite !important;
+  }
   .positive {
     color: $colorGreen;
   }
@@ -65,7 +71,27 @@
   .negative {
     color: $colorRed;
   }
+
+
 }
+
+.profitPlaceholder {
+  position: relative;
+  bottom: -30px;
+  @media screen and (max-width: $screen-sm) {
+    bottom: -10px;
+  }
+  font-size: 18pt;
+  color: $colorWhite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace $fontMedium;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}
+
 .inputBoxContainer {
   display: flex;
   width: 100%;

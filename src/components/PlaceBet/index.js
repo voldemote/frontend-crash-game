@@ -227,6 +227,27 @@ const PlaceBet = ({ connected }) => {
       );
     }
   };
+
+  const renderProfit = () => {
+    if (userPlacedABet && isGameRunning) {
+      return (
+        <div className={styles.profit}>
+          <Timer
+            showIncome
+            pause={!isGameRunning}
+            startTimeMs={gameStartedTime}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.profitPlaceholder}>
+          <span>+0 WFAIR</span>
+        </div>
+      );
+    }
+  };
+
   const canvasStyles = {
     position: 'fixed',
     pointerEvents: 'none',
@@ -312,17 +333,7 @@ const PlaceBet = ({ connected }) => {
           )}
         </div>
       </div>
-      {userPlacedABet && isGameRunning ? (
-        <div className={styles.profit}>
-          <Timer
-            showIncome
-            pause={!isGameRunning}
-            startTimeMs={gameStartedTime}
-          />
-        </div>
-      ) : (
-        <div className={styles.profit}>&nbsp;</div>
-      )}
+      {renderProfit()}
       {renderButton()}
       {renderMessage()}
     </div>
