@@ -19,6 +19,8 @@ import IconTheme from 'components/Icon/IconTheme';
 import BetCard from '../../BetCard';
 import EventsCarouselContainer from 'components/EventsCarouselContainer';
 
+import { PopupButton } from '@typeform/embed-react';
+
 function EventsContent({ eventType, categories, setCategories, showPopup }) {
   const dispatch = useDispatch();
   const [coverStream, setCoverStream] = useState('');
@@ -186,6 +188,10 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
           eventType !== 'streamed' ? styles.notStreamed : '',
         ])}
       >
+        <PopupButton id="XbyRBuOp" className={styles.suggestAnEventTrigger}>
+          Suggest an event
+        </PopupButton>
+
         {eventType === 'streamed' && (
           <div className={styles.streamedContainer}>
             <EventsCarouselContainer
