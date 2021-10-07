@@ -11,9 +11,16 @@ import useTransactions from 'hooks/useTransactions';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
 import { BetActions } from 'store/actions/bet';
+import { TransactionActions } from 'store/actions/transaction';
 import MyTrades from 'components/MyTrades';
 
-const Wallet = ({ show, close, fetchOpenBets, fetchTradeHistory }) => {
+const Wallet = ({
+  show,
+  close,
+  fetchOpenBets,
+  fetchTradeHistory,
+  fetchTransactions,
+}) => {
   const menus = {
     wallet: 'wallet',
     transactionHistory: 'transactionHistory',
@@ -36,6 +43,7 @@ const Wallet = ({ show, close, fetchOpenBets, fetchTradeHistory }) => {
     if (show) {
       fetchOpenBets();
       fetchTradeHistory();
+      fetchTransactions();
     } else {
       setOpenMenu(menus.wallet);
     }
@@ -71,7 +79,6 @@ const Wallet = ({ show, close, fetchOpenBets, fetchTradeHistory }) => {
   };
 
   const onTransactionsClick = () => {
-    // fetchTransactions();
     setOpenMenu(menus.transactionHistory);
   };
 
@@ -167,6 +174,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchOpenBets: () => {
       dispatch(BetActions.fetchOpenBets());
+    },
+    fetchTransactions: () => {
+      dispatch(TransactionActions.fetchAll());
     },
     fetchTradeHistory: () => {
       dispatch(BetActions.fetchTradeHistory());
