@@ -188,10 +188,11 @@ function EventsContent({ eventType, categories, setCategories, showPopup }) {
           eventType !== 'streamed' ? styles.notStreamed : '',
         ])}
       >
-        <PopupButton id="XbyRBuOp" className={styles.suggestAnEventTrigger}>
-          Suggest an event
-        </PopupButton>
-
+        <div className={styles.suggestAnEventTriggerContainer}>
+          <PopupButton id="XbyRBuOp" className={styles.suggestAnEventTrigger}>
+            Suggest an event
+          </PopupButton>
+        </div>
         {eventType === 'streamed' && (
           <div className={styles.streamedContainer}>
             <EventsCarouselContainer

@@ -235,10 +235,16 @@
   }
 }
 
+.suggestAnEventTriggerContainer {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+}
+
 .suggestAnEventTrigger {
+  display: block;
   all: unset;
   font-family: Helvetica, Arial, sans-serif;
-  display: inline-block;
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -252,7 +258,7 @@
   height: 40px;
   cursor: pointer;
   text-align: center;
-  margin: 0;
+  margin: 2px 0;
   text-decoration: none;
 
   @media (max-width: $screen-sm) {
