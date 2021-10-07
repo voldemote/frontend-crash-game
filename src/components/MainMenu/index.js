@@ -39,6 +39,7 @@ const MainMenu = ({
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [profilePic, setProfilePic] = useState(user.profilePicture);
+  const [imageName, setImageName] = useState(null);
   const [aboutMe, setAboutMe] = useState(user.aboutMe);
 
   const profilePictureRefName = useRef(null);
@@ -61,6 +62,7 @@ const MainMenu = ({
   };
 
   const onClickShowEditProfile = () => {
+    setProfilePic(user.profilePicture);
     setEditVisible(!editVisible);
   };
 
@@ -99,13 +101,15 @@ const MainMenu = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    updateUser(name, username, email, profilePic, aboutMe);
+    updateUser(name, username, email, imageName, aboutMe, profilePic);
     setEditVisible(false);
   };
 
   const handleProfilePictureUpload = async e => {
+    if (!e.target.files.length) return;
     const base64 = await convertToBase64(e.target.files[0]);
     setProfilePic(base64);
+    setImageName(e.target.files[0].name);
   };
 
   const convertToBase64 = file => {
@@ -363,10 +367,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateUser: (name, username, email, profilePicture, aboutMe) => {
+    updateUser: (name, username, email, imageName, aboutMe, profilePic) => {
       dispatch(
         AuthenticationActions.initiateUpdateUserData({
-          user: { name, username, email, profilePicture, aboutMe },
+          user: { name, username, email, imageName, aboutMe, profilePic },
         })
       );
     },
