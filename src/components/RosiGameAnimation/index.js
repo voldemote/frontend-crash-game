@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector, connect } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
 import {
   selectHasStarted,
@@ -40,6 +40,7 @@ const GameOffline = () => (
 );
 
 const RosiGameAnimation = ({ connected, muteButtonClick, isMute }) => {
+  const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const lastCrashValue = useSelector(selectLastCrash);
   const gameStarted = useSelector(selectHasStarted);
@@ -73,12 +74,13 @@ const RosiGameAnimation = ({ connected, muteButtonClick, isMute }) => {
       setCashedOutCount(0);
       setIsPreparingRound(false);
       RosiGameAnimationController.start(gameStartedTime);
+      dispatch(RosiGameActions.playFlyingSound());
       return;
     }
 
     if (!gameStarted && !isPreparingRound) {
       RosiGameAnimationController.end();
-
+      dispatch(RosiGameActions.stopFlyingSound());
       // leave some time for player to see crash value
       setTimeout(() => {
         RosiGameAnimationController.preparingRound.show();
