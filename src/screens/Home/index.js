@@ -163,7 +163,6 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
           {renderRosiBanner()}
           <EventsCarouselContainer eventType="non-streamed" />
           <EventsCarouselContainer eventType="streamed" />
-          {renderBlogBanner()}
           {renderCategoriesAndLeaderboard()}
           <ContentFooter />
         </div>
