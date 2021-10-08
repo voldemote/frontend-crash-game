@@ -360,11 +360,35 @@
       display: flex;
       color: $colorWhite;
       align-items: center;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 15px;
 
-      padding: 5px 0;
-      width: 88%;
-      margin: auto;
-      justify-content: space-between;
+      @media (max-width: $screen-sm) {
+        padding: 0 15px;
+      }
+
+      .leaderboardInfoItem {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 88%;
+
+        &:last-child {
+          margin-right: 0;
+          margin-left: 0;
+        }
+
+        @media (max-width: $screen-sm) {
+          width: 100%;
+          //padding: 20px 15px;
+
+          @media (max-width: $screen-sm) {
+            flex-direction: column;
+          }
+        }
+
+      }
 
 
       @media (max-width: $screen-sm) {
@@ -379,7 +403,9 @@
       }
 
       .linkSide {
+        font-size: 15px;
         text-decoration: underline;
+        color: $colorYellow;
       }
     }
 
