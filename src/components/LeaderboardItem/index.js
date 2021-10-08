@@ -7,6 +7,7 @@ import medalBronze from '../../data/icons/medal-bronze.png';
 import { formatToFixed } from 'helper/FormatNumbers';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import { TOKEN_NAME } from '../../constants/Token';
 import styles from '../BetView/styles.module.scss';
 import { useEffect } from 'react';
 
@@ -70,7 +71,10 @@ const LeaderboardItem = ({
               #{user.rank}{' '}
               <img
                 data-for={'userRankingTooltip'}
-                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                data-tip={`Reward: ${_.get(
+                  topRewards,
+                  user.rank
+                )} ${TOKEN_NAME}`}
                 src={medalGold}
                 alt="medal"
               />
@@ -91,7 +95,10 @@ const LeaderboardItem = ({
               #{user.rank}{' '}
               <img
                 data-for={'userRankingTooltip'}
-                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                data-tip={`Reward: ${_.get(
+                  topRewards,
+                  user.rank
+                )} ${TOKEN_NAME}`}
                 src={medalSilver}
                 alt="medal"
               />
@@ -112,7 +119,10 @@ const LeaderboardItem = ({
               #{user.rank}{' '}
               <img
                 data-for={'userRankingTooltip'}
-                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                data-tip={`Reward: ${_.get(
+                  topRewards,
+                  user.rank
+                )} ${TOKEN_NAME}`}
                 src={medalBronze}
                 alt="medal"
               />
@@ -133,7 +143,10 @@ const LeaderboardItem = ({
               #{user.rank}{' '}
               <img
                 data-for={'userRankingTooltip'}
-                data-tip={`Reward: ${_.get(topRewards, user.rank)}`}
+                data-tip={`Reward: ${_.get(
+                  topRewards,
+                  user.rank
+                )} ${TOKEN_NAME}`}
                 src={medalBronze}
                 alt="medal"
               />
