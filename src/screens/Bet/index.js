@@ -659,7 +659,11 @@ const Bet = ({
                 </Link>
               </div>
               <div className={styles.shareButton}>
-                <Share popupPosition={title.length < 16 ? 'right' : 'left'} />
+                <Share
+                  popupPosition={
+                    matchMediaMobile ? '' : title.length < 16 ? 'right' : 'left'
+                  }
+                />
               </div>
               <AdminOnly>
                 <div className={styles.eventAdminActionsContainer}>
