@@ -13,6 +13,7 @@ import { formatToFixed } from 'helper/FormatNumbers';
 import { BetActions } from 'store/actions/bet';
 import { TransactionActions } from 'store/actions/transaction';
 import MyTrades from 'components/MyTrades';
+import navbarStyle from '../Navbar/styles.module.scss';
 
 const Wallet = ({
   show,
@@ -90,82 +91,87 @@ const Wallet = ({
         !show && styles.drawerHidden
       )}
     >
-      <div className={styles.menuContainer}>
-        {walletContainerWrapper(
-          isOpen(menus.wallet),
-          'My Wallet',
-          <>
-            <WalletBalance />
+      <div className={classNames(navbarStyle.drawerContent)}>
+        <div className={styles.menuContainer}>
+          {walletContainerWrapper(
+            isOpen(menus.wallet),
+            'My Wallet',
+            <>
+              <WalletBalance />
 
-            <MenuItem
-              classes={[styles.transactionHistory]}
-              label={`Transaction History (${transactionCount})`}
-              icon={
-                <Icon className={styles.optionIcon} iconType={'activities'} />
-              }
-              onClick={() => onTransactionsClick()}
-            />
+              <MenuItem
+                classes={[styles.transactionHistory]}
+                label={`Transaction History (${transactionCount})`}
+                icon={
+                  <Icon className={styles.optionIcon} iconType={'activities'} />
+                }
+                onClick={() => onTransactionsClick()}
+              />
 
-            <div className={styles.myTradesContainer}>
-              <MyTrades close={closeDrawer} />
-            </div>
-          </>,
-          true
-        )}
+              <div className={styles.myTradesContainer}>
+                <MyTrades close={closeDrawer} />
+              </div>
+            </>,
+            true
+          )}
 
-        {walletContainerWrapper(
-          isOpen(menus.transactionHistory),
-          <>
-            {backButton()}
-            Transaction History
-          </>,
-          <TwoColumnTable
-            headings={['Latest transactions', currency]}
-            rows={transactions.map(
-              ({
-                event,
-                bet,
-                direction,
-                trx_timestamp,
-                outcomeTokensBought,
-                investmentAmount,
-                type,
-              }) => {
-                const tokenAmount =
-                  direction === 'PAYOUT'
-                    ? outcomeTokensBought
-                    : investmentAmount;
-                return [
-                  type === 'BET' ? (
+          {walletContainerWrapper(
+            isOpen(menus.transactionHistory),
+            <>
+              {backButton()}
+              Transaction History
+            </>,
+            <TwoColumnTable
+              headings={['Latest transactions', currency]}
+              rows={transactions.map(
+                ({
+                  event,
+                  bet,
+                  direction,
+                  trx_timestamp,
+                  outcomeTokensBought,
+                  investmentAmount,
+                  type,
+                }) => {
+                  const tokenAmount =
+                    direction === 'PAYOUT'
+                      ? outcomeTokensBought
+                      : investmentAmount;
+                  return [
+                    type === 'BET' ? (
+                      <>
+                        <span className={styles.primaryData}>
+                          {event?.name}
+                        </span>
+                        <span className={styles.secondaryData}>
+                          {bet?.marketQuestion}
+                        </span>
+                      </>
+                    ) : (
+                      <span className={styles.primaryData}>Casino Game</span>
+                    ),
                     <>
-                      <span className={styles.primaryData}>{event?.name}</span>
-                      <span className={styles.secondaryData}>
-                        {bet?.marketQuestion}
+                      <span className={styles[direction.toLowerCase()]}>
+                        {formatToFixed(tokenAmount)}
                       </span>
-                    </>
-                  ) : (
-                    <span className={styles.primaryData}>Casino Game</span>
-                  ),
-                  <>
-                    <span className={styles[direction.toLowerCase()]}>
-                      {formatToFixed(tokenAmount)}
-                    </span>
-                    <span className={styles.secondaryData}>
-                      {moment(trx_timestamp).format('DD.MM.YYYY')}
-                    </span>
-                  </>,
-                ];
-              }
-            )}
-            noResultMessage={'No transactions yet.'}
-          />
-        )}
+                      <span className={styles.secondaryData}>
+                        {moment(trx_timestamp).format('DD.MM.YYYY')}
+                      </span>
+                    </>,
+                  ];
+                }
+              )}
+              noResultMessage={'No transactions yet.'}
+            />
+          )}
+        </div>
+        <Icon
+          iconType={'cross'}
+          onClick={closeDrawer}
+          className={styles.closeButton}
+        />
       </div>
-      <Icon
-        iconType={'cross'}
-        onClick={closeDrawer}
-        className={styles.closeButton}
-      />
+      <div className={navbarStyle.drawerBackdropBg}></div>
     </div>
   );
 };

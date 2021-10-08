@@ -27,6 +27,9 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
 import AuthenticationType from '../Authentication/AuthenticationType';
+import TimeLeftCounter from '../TimeLeftCounter';
+import Moment from 'moment';
+import { nextDayweek } from '../../helper/Time';
 
 const Navbar = ({
   user,
@@ -257,6 +260,12 @@ const Navbar = ({
     );
   };
 
+  const leaderboardWeeklyDate = nextDayweek(new Date(), 3, {
+    hour: 12,
+    minute: 0,
+    second: 0,
+  });
+
   const renderLeaderboardDrawer = () => {
     return (
       <div
@@ -266,36 +275,60 @@ const Navbar = ({
           !isOpen(drawers.leaderboard || leaderboardOpen) && style.drawerHidden
         )}
       >
-        <Icon
-          iconType={'cross'}
-          onClick={closeDrawers}
-          className={style.closeLeaderboard}
-        />
-        <div className={style.leaderboardHeadingWrapper}>
-          <p className={style.leaderboardHeading}>
-            Community
-            <br />
-            Leaderboard
-          </p>
-          {isLoggedIn() && (
-            <div className={style.leaderboardHeadingRank}>
-              <div className={style.leaderboardHeadingRankText}>MY RANK</div>
-              <div className={style.leaderboardHeadingRankValue}>
-                #{user.rank}
+        <div className={classNames(style.drawerContent)}>
+          <Icon
+            iconType={'cross'}
+            onClick={closeDrawers}
+            className={style.closeLeaderboard}
+          />
+          <div className={style.leaderboardHeadingWrapper}>
+            <p className={style.leaderboardHeading}>
+              Community
+              <br />
+              Leaderboard
+            </p>
+            {isLoggedIn() && (
+              <div className={style.leaderboardHeadingRank}>
+                <div className={style.leaderboardHeadingRankText}>MY RANK</div>
+                <div className={style.leaderboardHeadingRankValue}>
+                  #{user.rank}
+                </div>
               </div>
+            )}
+          </div>
+          {isLoggedIn() && (
+            <div className={style.leaderboardInfo}>
+              {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
+              {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
             </div>
           )}
-        </div>
-        {isLoggedIn() && (
-          <div className={style.leaderboardInfo}>
-            {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
-            {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
+
+          <div className={style.leaderboardCountdownBlock}>
+            <div className={style.timerSide}>
+              <span>Next draft at: </span>
+              <TimeLeftCounter
+                endDate={leaderboardWeeklyDate}
+                containerClass={style.leaderboardTimerComponent}
+              />
+            </div>
+            <div className={style.linkSide}>
+              <a
+                href={
+                  'https://wallfair.gitbook.io/wallfair/the-magical-leaderboard'
+                }
+                target={'_blank'}
+              >
+                Learn more
+              </a>
+            </div>
           </div>
-        )}
-        <Leaderboard
-          fetch={openDrawer === drawers.leaderboard}
-          setMissingAmount={setMisingWinnerAmount}
-        />
+
+          <Leaderboard
+            fetch={openDrawer === drawers.leaderboard}
+            setMissingAmount={setMisingWinnerAmount}
+          />
+        </div>
+        <div className={style.drawerBackdropBg}></div>
       </div>
     );
   };
@@ -308,12 +341,15 @@ const Navbar = ({
           !isOpen(drawers.notifications) && style.drawerHidden
         )}
       >
-        <Notifications
-          notifications={notifications}
-          unreadNotifications={unreadNotifications}
-          closeNotifications={closeDrawers}
-          setUnread={setUnread}
-        />
+        <div className={classNames(style.drawerContent)}>
+          <Notifications
+            notifications={notifications}
+            unreadNotifications={unreadNotifications}
+            closeNotifications={closeDrawers}
+            setUnread={setUnread}
+          />
+        </div>
+        <div className={style.drawerBackdropBg}></div>
       </div>
     );
   };
