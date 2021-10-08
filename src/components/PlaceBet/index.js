@@ -22,7 +22,6 @@ import {
   selectTimeStarted,
 } from '../../store/selectors/rosi-game';
 import ReactCanvasConfetti from 'react-canvas-confetti';
-import { playWinSound } from '../../helper/Audio';
 import InfoBox from 'components/InfoBox';
 import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
@@ -266,7 +265,7 @@ const PlaceBet = ({ connected }) => {
         particleCount={300}
         spread={360}
         origin={{ x: 0.4, y: 0.45 }}
-        onFire={() => playWinSound()}
+        onFire={() => dispatch(RosiGameActions.playWinSound())}
       />
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
