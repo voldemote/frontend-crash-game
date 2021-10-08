@@ -15,6 +15,7 @@ import Counter from './Counter';
 import styles from './styles.module.scss';
 import RosiGameAnimationController from './canvas/RosiGameAnimationController';
 import { CircularProgress } from '@material-ui/core';
+import { RosiGameActions } from '../../store/actions/rosi-game';
 
 const PreparingRound = ({ nextGameAt }) => (
   <div className={styles.preparingRound}>
@@ -38,7 +39,7 @@ const GameOffline = () => (
   </div>
 );
 
-const RosiGameAnimation = ({ connected }) => {
+const RosiGameAnimation = ({ connected, muteButtonClick, isMute }) => {
   const canvasRef = useRef(null);
   const lastCrashValue = useSelector(selectLastCrash);
   const gameStarted = useSelector(selectHasStarted);
@@ -120,6 +121,13 @@ const RosiGameAnimation = ({ connected }) => {
 
   return (
     <div className={styles.animation}>
+      <div
+        className={classNames({
+          [styles.muteButton]: true,
+          [styles.mute]: isMute,
+        })}
+        onClick={muteButtonClick}
+      />
       <canvas
         className={classNames(
           styles.canvas,
@@ -140,7 +148,16 @@ const RosiGameAnimation = ({ connected }) => {
 const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
+    isMute: state.rosiGame.isMute,
   };
 };
 
-export default connect(mapStateToProps, null)(RosiGameAnimation);
+const mapDispatchToProps = dispatch => {
+  return {
+    muteButtonClick: () => {
+      dispatch(RosiGameActions.muteButtonClick());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RosiGameAnimation);
