@@ -169,6 +169,9 @@ const PlaceBet = ({ connected }) => {
             [styles.notConnected]: !connected,
           })}
           onClick={user.isLoggedIn ? placeABet : placeGuestBet}
+          data-tracking-id={
+            user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
+          }
         >
           {user.isLoggedIn ? 'Place Bet' : 'Play Demo'}
         </span>
@@ -181,6 +184,9 @@ const PlaceBet = ({ connected }) => {
             tabIndex="0"
             className={classNames(styles.button, styles.buttonDisabled)}
             onClick={user.isLoggedIn ? () => {} : showLoginPopup}
+            data-tracking-id={
+              user.isLoggedIn ? null : 'elongame-showloginpopup'
+            }
           >
             {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed'}
           </span>
@@ -199,6 +205,9 @@ const PlaceBet = ({ connected }) => {
             [styles.notConnected]: !connected,
           })}
           onClick={user.isLoggedIn ? cashOut : cashOutGuest}
+          data-tracking-id={
+            user.isLoggedIn ? 'elongame-cashout' : 'elongame-cashout-guest'
+          }
         >
           {user.isLoggedIn ? 'Cash Out' : 'Cash Out'}
         </span>
