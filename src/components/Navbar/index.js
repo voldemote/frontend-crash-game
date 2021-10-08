@@ -304,11 +304,18 @@ const Navbar = ({
           )}
 
           <div className={style.leaderboardCountdownBlock}>
-            <span>Next draft at: </span>
-            <TimeLeftCounter
-              endDate={leaderboardWeeklyDate}
-              containerClass={style.leaderboardTimerComponent}
-            />
+            <div className={style.timerSide}>
+              <span>Next draft at: </span>
+              <TimeLeftCounter
+                endDate={leaderboardWeeklyDate}
+                containerClass={style.leaderboardTimerComponent}
+              />
+            </div>
+            <div className={style.linkSide}>
+              <a href={'#'} target={'_blank'}>
+                Learn more
+              </a>
+            </div>
           </div>
 
           <Leaderboard

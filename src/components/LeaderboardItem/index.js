@@ -135,7 +135,7 @@ const LeaderboardItem = ({
             </p>
           </div>
         </>
-      ) : user.rank <= 10 ? (
+      ) : user.rank <= 9 ? (
         <>
           <div className={style.placeSeperate} />
           <div className={style.tableThird}>
@@ -165,10 +165,26 @@ const LeaderboardItem = ({
           <div
             className={classNames(
               style.tableEntryHolder,
-              isCurrentUser && style.tableCurrentUser
+              isCurrentUser && style.tableCurrentUser,
+              user.rank <= 10 && style.tableThird
             )}
           >
-            <p className={style.entryRank}>#{user.rank}</p>
+            {user.rank <= 10 ? (
+              <p className={style.thirdRank}>
+                #{user.rank}{' '}
+                <img
+                  data-for={'userRankingTooltip'}
+                  data-tip={`Reward: ${_.get(
+                    topRewards,
+                    user.rank
+                  )} ${TOKEN_NAME}`}
+                  src={medalBronze}
+                  alt="medal"
+                />
+              </p>
+            ) : (
+              <p className={style.entryRank}>#{user.rank}</p>
+            )}
             <p className={style.entryName}>
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
             </p>
