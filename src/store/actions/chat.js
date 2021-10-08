@@ -14,7 +14,7 @@ const addMessage = makeActionCreator(ChatTypes.ADD_MESSAGE, {
 
 const fetchByRoom = makeActionCreator(ChatTypes.FETCH_BY_ROOM, {
   roomId: null,
-  limit: 10,
+  limit: 20,
   skip: 0,
 });
 

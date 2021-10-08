@@ -41,7 +41,7 @@ const Chat = ({
   const [prevScrollPosition, setPrevScrollPosition] = useState(null);
   const [prevScrollHeight, setPrevScrollHeight] = useState(null);
 
-  const LIMIT = 10;
+  const LIMIT = 20;
 
   const observer = useRef();
   const intersectionElementRef = useCallback(
