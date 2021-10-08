@@ -77,10 +77,11 @@ const Leaderboard = ({
       <div className={style.leaderboardRanking}>
         {users &&
           users.map(u => {
+            const isThisUserRow = u._id === user.userId;
             return (
               <LeaderboardItem
                 user={u}
-                isCurrentUser={u._id == user.userId}
+                isCurrentUser={isThisUserRow}
                 key={u.rank}
                 showLoadButton={users[users.length - 1] === u}
                 onLoad={() => onLeaderboardLoad()}
@@ -90,10 +91,11 @@ const Leaderboard = ({
 
         {isLoggedIn() && usersWithCurrent
           ? usersWithCurrent.map(u => {
+              const isThisUserRow = u._id === user.userId;
               return (
                 <LeaderboardItem
                   user={u}
-                  isCurrentUser={u._id === user.userId}
+                  isCurrentUser={isThisUserRow}
                   key={u.rank}
                   showLoadButton={
                     usersWithCurrent[usersWithCurrent.length - 1] === u

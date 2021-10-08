@@ -66,7 +66,12 @@ const LeaderboardItem = ({
       {user.rank === 1 ? (
         <>
           <div className={style.placeSeperate} />
-          <div className={style.tableFirst}>
+          <div
+            className={classNames(
+              style.tableFirst,
+              isCurrentUser && style.tableCurrentUser
+            )}
+          >
             <p className={style.firstRank}>
               #{user.rank}{' '}
               <img
@@ -90,7 +95,12 @@ const LeaderboardItem = ({
       ) : user.rank === 2 ? (
         <>
           <div className={style.placeSeperate} />
-          <div className={style.tableSecond}>
+          <div
+            className={classNames(
+              style.tableSecond,
+              isCurrentUser && style.tableCurrentUser
+            )}
+          >
             <p className={style.secondRank}>
               #{user.rank}{' '}
               <img
@@ -114,7 +124,12 @@ const LeaderboardItem = ({
       ) : user.rank === 3 ? (
         <>
           <div className={style.placeSeperate} />
-          <div className={style.tableThird}>
+          <div
+            className={classNames(
+              style.tableThird,
+              isCurrentUser && style.tableCurrentUser
+            )}
+          >
             <p className={style.thirdRank}>
               #{user.rank}{' '}
               <img
@@ -138,7 +153,12 @@ const LeaderboardItem = ({
       ) : user.rank <= 9 ? (
         <>
           <div className={style.placeSeperate} />
-          <div className={style.tableThird}>
+          <div
+            className={classNames(
+              style.tableThird,
+              isCurrentUser && style.tableCurrentUser
+            )}
+          >
             <p className={style.thirdRank}>
               #{user.rank}{' '}
               <img
@@ -158,6 +178,7 @@ const LeaderboardItem = ({
               {formatToFixed(user.amountWon)}
             </p>
           </div>
+          {showLoadButton && renderLoadButton()}
         </>
       ) : (
         <>
