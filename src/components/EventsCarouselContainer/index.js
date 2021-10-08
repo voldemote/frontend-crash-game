@@ -126,7 +126,6 @@ const EventsCarouselContainer = ({
     //Improvement: use API endpoint /event/bets/... to list and filter bets
 
     const allValidBets = allEvents.reduce((acc, current) => {
-      console.log(current);
       if (current.type === 'streamed') {
         return acc;
       }
@@ -137,7 +136,7 @@ const EventsCarouselContainer = ({
           eventSlug: current.slug,
           previewImageUrl: current.previewImageUrl,
           tags: _.map(current.tags, tag => tag.name),
-          category: current.category
+          category: current.category,
         }))
         .filter(bet => {
           return (
