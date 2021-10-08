@@ -46,13 +46,12 @@
     }
 
     img {
-      width: 20px;
       height: 26px;
-      margin: 0;
+      margin-left: 15px;
 
       @media (max-width: $screen-md) {
-        width: 15px;
         height: 20px;
+        margin-left: 16px;
       }
     }
   }
@@ -119,13 +118,12 @@
     }
 
     img {
-      width: 20px;
       height: 26px;
-      margin: 0;
+      margin-left: 14px;
 
       @media (max-width: $screen-md) {
-        width: 15px;
         height: 20px;
+        margin-left: 15px;
       }
     }
   }
@@ -192,12 +190,10 @@
     }
 
     img {
-      width: 20px;
       height: 26px;
-      margin: 0;
+      margin-left: 16px;
 
       @media (max-width: $screen-md) {
-        width: 15px;
         height: 20px;
       }
     }
