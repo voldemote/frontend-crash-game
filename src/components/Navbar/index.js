@@ -253,7 +253,7 @@ const Navbar = ({
       <div className={style.leaderboardInfoItem}>
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
-          {formatToFixed(number)}
+          {formatToFixed(number, 0)}
           <span className={style.leaderboardInfoItemToken}> {currency}</span>
         </div>
       </div>
@@ -304,22 +304,24 @@ const Navbar = ({
           )}
 
           <div className={style.leaderboardCountdownBlock}>
-            <div className={style.timerSide}>
-              <span>Next draft at: </span>
-              <TimeLeftCounter
-                endDate={leaderboardWeeklyDate}
-                containerClass={style.leaderboardTimerComponent}
-              />
-            </div>
-            <div className={style.linkSide}>
-              <a
-                href={
-                  'https://wallfair.gitbook.io/wallfair/the-magical-leaderboard'
-                }
-                target={'_blank'}
-              >
-                Learn more
-              </a>
+            <div className={style.leaderboardInfoItem}>
+              <div className={style.timerSide}>
+                <span>Next draft at: </span>
+                <TimeLeftCounter
+                  endDate={leaderboardWeeklyDate}
+                  containerClass={style.leaderboardTimerComponent}
+                />
+              </div>
+              <div className={style.linkSide}>
+                <a
+                  href={
+                    'https://wallfair.gitbook.io/wallfair/the-magical-leaderboard'
+                  }
+                  target={'_blank'}
+                >
+                  Learn more
+                </a>
+              </div>
             </div>
           </div>
 
