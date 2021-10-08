@@ -74,6 +74,7 @@ const root = function* () {
         EventTypes.FETCH_ALL_FAILED,
         EventTypes.DELETE_EVENT_FAILED,
         BetTypes.CREATE_FAILED,
+        BetTypes.EDIT_FAILED,
         BetTypes.PLACE_FAILED,
         BetTypes.PULL_OUT_BET_FAILED,
       ],
@@ -83,6 +84,7 @@ const root = function* () {
       [
         EventTypes.DELETE_EVENT_SUCCEEDED,
         BetTypes.CREATE_SUCCEEDED,
+        BetTypes.EDIT_SUCCEEDED,
         BetTypes.PLACE_SUCCEEDED,
         BetTypes.PULL_OUT_BET_SUCCEEDED,
       ],
@@ -98,6 +100,7 @@ const root = function* () {
     takeEvery([EventTypes.FETCH_HOME_EVENTS], EventSagas.fetchHomeEvents),
     takeLatest([BetTypes.PLACE], BetSagas.place),
     takeLatest([BetTypes.CREATE], BetSagas.create),
+    takeLatest([BetTypes.EDIT], BetSagas.edit),
     takeEvery([BetTypes.FETCH_OUTCOMES], BetSagas.fetchOutcomes),
     takeEvery([BetTypes.FETCH_SELL_OUTCOMES], BetSagas.fetchSellOutcomes),
     takeLatest([BetTypes.FETCH_OPEN_BETS], BetSagas.fetchOpenBets),
