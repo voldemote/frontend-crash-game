@@ -3,7 +3,7 @@ import _ from 'lodash';
 import AuthState from '../../constants/AuthState';
 import PopupTheme from '../../components/Popup/PopupTheme';
 import { BetActions } from '../actions/bet';
-import { call, put, select, all } from 'redux-saga/effects';
+import { call, put, select, all, delay } from 'redux-saga/effects';
 import { EventActions } from '../actions/event';
 import { PopupActions } from '../actions/popup';
 import { AuthenticationActions } from '../actions/authentication';
@@ -12,15 +12,15 @@ import { UserActions } from '../actions/user';
 import Routes from 'constants/Routes';
 import { push } from 'connected-react-router';
 
-const create = function* (action) {
-  const response = yield call(Api.createBet, action.bet);
+const create = function* ({ bet }) {
+  const response = yield call(Api.createBet, bet);
 
   try {
     if (!response) {
       throw new Error('No create bet response.');
     }
 
-    const bet = response.data;
+    const createdBet = response.data;
     const event = yield select(state =>
       state.event.events.find(({ _id }) => _id === bet.event)
     );
@@ -30,12 +30,11 @@ const create = function* (action) {
       betSlug: bet.slug,
     });
 
-    yield all([
-      put(PopupActions.hide()),
-      put(EventActions.fetchAll()),
-      put(BetActions.createSucceeded({ bet })),
-      put(push(route)),
-    ]);
+    yield put(PopupActions.hide());
+    yield put(EventActions.fetchAll());
+    yield put(push(route));
+    yield delay(1 * 1000);
+    yield put(BetActions.createSucceeded({ bet: createdBet }));
   } catch (_) {
     yield put(BetActions.createFailed());
   }
@@ -60,9 +59,7 @@ const edit = function* (action) {
 
     yield put(EventActions.fetchAll());
 
-    const shouldRedirect = oldBet.slug !== bet.slug;
-
-    if (shouldRedirect) {
+    if (oldBet.slug !== bet.slug) {
       const route = Routes.getRouteWithParameters(Routes.bet, {
         eventSlug: event.slug,
         betSlug: bet.slug,
@@ -71,6 +68,7 @@ const edit = function* (action) {
       yield put(push(route));
     }
 
+    yield delay(1 * 1000);
     yield put(BetActions.editSucceeded({ bet }));
   } catch (_) {
     yield put(BetActions.editFailed());

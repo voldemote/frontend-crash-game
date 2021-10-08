@@ -23,6 +23,12 @@ const getFailMessage = action => {
     case EventTypes.FETCH_ALL_FAILED:
       return 'An error occurred fetching all events.';
 
+    case EventTypes.CREATE_EVENT_FAILED:
+      return 'An error occurred while creating event.';
+
+    case EventTypes.EDIT_EVENT_FAILED:
+      return 'An error occurred while updating event.';
+
     case EventTypes.DELETE_EVENT_FAILED:
       return 'An error occurred while deleting event.';
 
@@ -44,6 +50,12 @@ const getFailMessage = action => {
 
 const getSuccessMessage = action => {
   switch (action.type) {
+    case EventTypes.CREATE_EVENT_SUCCEEDED:
+      return 'The event was successfully created!';
+
+    case EventTypes.EDIT_EVENT_SUCCEEDED:
+      return 'The event was successfully updated!';
+
     case EventTypes.DELETE_EVENT_SUCCEEDED:
       return 'The event was successfully deleted!';
 

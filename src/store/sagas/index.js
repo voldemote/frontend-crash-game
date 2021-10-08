@@ -71,6 +71,8 @@ const root = function* () {
     takeEvery(
       [
         AuthenticationTypes.FETCH_REFERRALS_FAILED,
+        EventTypes.CREATE_EVENT_FAILED,
+        EventTypes.EDIT_EVENT_FAILED,
         EventTypes.FETCH_ALL_FAILED,
         EventTypes.DELETE_EVENT_FAILED,
         BetTypes.CREATE_FAILED,
@@ -82,6 +84,8 @@ const root = function* () {
     ),
     takeEvery(
       [
+        EventTypes.CREATE_EVENT_SUCCEEDED,
+        EventTypes.EDIT_EVENT_SUCCEEDED,
         EventTypes.DELETE_EVENT_SUCCEEDED,
         BetTypes.CREATE_SUCCEEDED,
         BetTypes.EDIT_SUCCEEDED,
@@ -144,6 +148,8 @@ const root = function* () {
       EventSagas.fetchHistoryChartData
     ),
     takeLatest([EventTypes.FETCH_NEWS_DATA], EventSagas.fetchNewsData),
+    takeLatest([EventTypes.CREATE_EVENT], EventSagas.createEvent),
+    takeLatest([EventTypes.EDIT_EVENT], EventSagas.editEvent),
     takeLatest([EventTypes.DELETE_EVENT], EventSagas.deleteEvent),
     // @formatter:on
   ]);
