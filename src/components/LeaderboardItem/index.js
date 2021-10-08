@@ -88,7 +88,7 @@ const LeaderboardItem = ({
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
             </p>
             <p className={style.firstBalance}>
-              {formatToFixed(user.amountWon)}
+              {formatToFixed(user.amountWon, 0)}
             </p>
           </div>
         </>
@@ -117,7 +117,7 @@ const LeaderboardItem = ({
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
             </p>
             <p className={style.secondBalance}>
-              {formatToFixed(user.amountWon)}
+              {formatToFixed(user.amountWon, 0)}
             </p>
           </div>
         </>
@@ -146,7 +146,7 @@ const LeaderboardItem = ({
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
             </p>
             <p className={style.thirdBalance}>
-              {formatToFixed(user.amountWon)}
+              {formatToFixed(user.amountWon, 0)}
             </p>
           </div>
         </>
@@ -175,7 +175,7 @@ const LeaderboardItem = ({
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
             </p>
             <p className={style.thirdBalance}>
-              {formatToFixed(user.amountWon)}
+              {formatToFixed(user.amountWon, 0)}
             </p>
           </div>
           {showLoadButton && renderLoadButton()}
@@ -210,7 +210,7 @@ const LeaderboardItem = ({
               <Link to={`/user/${user._id}`}>{getUsername(user.username)}</Link>
             </p>
             <p className={style.entryBalance}>
-              {formatToFixed(user.amountWon)}
+              {formatToFixed(user.amountWon, 0)}
             </p>
           </div>
           {showLoadButton && renderLoadButton()}
