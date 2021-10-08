@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import classNames from 'classnames';
-import medalGold from '../../data/icons/medal-gold.png';
+import medalCoin from '../../data/icons/medal-coin.png';
 import LogoDemo from '../../data/images/logo-demo.svg';
 import style from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
@@ -153,7 +153,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
         data-tracking-id="menu-leaderboard"
       >
-        <img src={medalGold} alt="medal" className={style.medal} />
+        <img src={medalCoin} alt="medal" className={style.medal} />
         <p className={style.rankingText}>
           {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
         </p>
