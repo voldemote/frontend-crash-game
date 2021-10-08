@@ -312,7 +312,12 @@ const Navbar = ({
               />
             </div>
             <div className={style.linkSide}>
-              <a href={'#'} target={'_blank'}>
+              <a
+                href={
+                  'https://wallfair.gitbook.io/wallfair/the-magical-leaderboard'
+                }
+                target={'_blank'}
+              >
                 Learn more
               </a>
             </div>
