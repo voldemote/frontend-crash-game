@@ -289,7 +289,7 @@
   }
 
   .leaderboard {
-    background-color: rgba(14, 9, 39, 0.86);
+    background-color: rgba(14, 9, 39, 1);
     display: flex;
     flex-flow: column nowrap;
     z-index: 5;
@@ -309,7 +309,7 @@
     }
 
     .leaderboardHeading {
-      padding: 90px 30px 40px 30px;
+      padding: 20px 30px;
       font-size: 20px;
       line-height: 1.2;
       letter-spacing: 0.75px;
@@ -326,7 +326,7 @@
       flex-direction: column;
       align-items: flex-end;
       color: $colorWhite;
-      padding: 90px 30px 40px 0;
+      padding: 20px 30px;
       min-width: 90px;
     }
 
@@ -347,7 +347,24 @@
       justify-content: center;
       height: 90px;
       width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+
+    .leaderboardCountdownBlock {
+      display: flex;
+      justify-content: center;
+      color: $colorWhite;
+      font-weight: bold;
+      font-size: 17px;
+      border-top: 1px solid $colorWhite;
+      border-bottom: 1px solid $colorWhite;
+      padding: 5px 0;
+      width: 88%;
+      margin: auto;
+    }
+
+    .time-part-name {
+      font-size: 16px;
     }
 
     .leaderboardInfoItem {

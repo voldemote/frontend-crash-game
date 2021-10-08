@@ -27,6 +27,9 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
 import AuthenticationType from '../Authentication/AuthenticationType';
+import TimeLeftCounter from '../TimeLeftCounter';
+import Moment from 'moment';
+import { nextDayweek } from '../../helper/Time';
 
 const Navbar = ({
   user,
@@ -257,6 +260,12 @@ const Navbar = ({
     );
   };
 
+  const leaderboardWeeklyDate = nextDayweek(new Date(), 3, {
+    hour: 12,
+    minute: 0,
+    second: 0,
+  });
+
   const renderLeaderboardDrawer = () => {
     return (
       <div
@@ -293,6 +302,15 @@ const Navbar = ({
               {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
             </div>
           )}
+
+          <div className={style.leaderboardCountdownBlock}>
+            <span>Next draft at: </span>
+            <TimeLeftCounter
+              endDate={leaderboardWeeklyDate}
+              containerClass={style.leaderboardTimerComponent}
+            />
+          </div>
+
           <Leaderboard
             fetch={openDrawer === drawers.leaderboard}
             setMissingAmount={setMisingWinnerAmount}
