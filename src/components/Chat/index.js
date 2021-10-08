@@ -43,9 +43,12 @@ const Chat = ({
 
   const LIMIT = 20;
 
+  let intersectionObservableRef = useRef();
   const observer = useRef();
   const intersectionElementRef = useCallback(
     e => {
+      intersectionObservableRef.current = e;
+
       if (loading) return;
 
       if (observer.current) {
@@ -77,6 +80,17 @@ const Chat = ({
   );
 
   const isLoggedIn = () => user.authState === LOGGED_IN;
+
+  useEffect(() => {
+    return () => {
+      const { current } = intersectionObservableRef;
+
+      if (current && observer.current) {
+        observer.current.disconnect();
+        observer.current.unobserve(current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setSkip(messages.length);
