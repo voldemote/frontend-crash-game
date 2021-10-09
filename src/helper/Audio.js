@@ -52,6 +52,7 @@ export function stopFlyingSound() {
     if (el.play) {
       el.volume = 0.5;
       el.pause();
+      el.currentTime = 0;
     }
   } catch (e) {
     console.error(e);
