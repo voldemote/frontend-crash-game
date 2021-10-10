@@ -15,6 +15,7 @@ import ProfileActivityTemplate3 from '../../data/backgrounds/profile/userprofile
 import ProfileActivityMobileTemplate1 from '../../data/backgrounds/profile/userprofile_mobile_activity1.png';
 import ProfileActivityMobileTemplate2 from '../../data/backgrounds/profile/userprofile_mobile_activity2.png';
 import ProfileActivityMobileTemplate3 from '../../data/backgrounds/profile/userprofile_mobile_activity3.png';
+import { trackPageView } from 'config/gtm';
 
 const UserProfile = () => {
   let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
@@ -32,6 +33,10 @@ const UserProfile = () => {
 
   useEffect(() => {
     fetchUser(userId);
+
+    trackPageView({
+      pageTitle: `User Profile - ${userId}`,
+    });
   }, [userId]);
 
   const fetchUser = async userId => {

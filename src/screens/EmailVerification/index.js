@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AuthenticationActions } from '../../store/actions/authentication';
+import { trackPageView } from 'config/gtm';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -14,6 +15,12 @@ const EmailVerification = ({ emailVerificationState, verifyEmail }) => {
   const history = useHistory();
   const userId = useQuery().get('userId');
   const code = useQuery().get('code');
+
+  useEffect(() => {
+    trackPageView({
+      pageTitle: 'EmailVerification',
+    });
+  }, []);
 
   useEffect(async () => {
     await verifyEmail(userId, code);

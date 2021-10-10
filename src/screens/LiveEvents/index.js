@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import EventsContent from 'components/Events/EventsContent';
 import { EVENT_CATEGORIES } from 'constants/EventCategories';
 import LiveEventsScreenshot from 'data/images/live-events-screenshot.png';
 import LiveEventsScreenshotMobile from 'data/images/live-events-screenshot-mobile.png';
 import styles from './styles.module.scss';
+import { trackPageView } from 'config/gtm';
 
 const LiveEvents = () => {
   const [categories, setCategories] = useState(EVENT_CATEGORIES);
+
+  useEffect(() => {
+    trackPageView({
+      pageTitle: 'Live Events',
+    });
+  }, []);
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>

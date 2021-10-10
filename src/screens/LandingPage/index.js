@@ -9,6 +9,8 @@ import SectionPolygon from './SectionPolygon';
 import SignUp from './SignUp';
 import styles from './styles.module.scss';
 import ContentFooter from 'components/ContentFooter';
+import { useEffect } from 'react';
+import { trackPageView } from 'config/gtm';
 
 const classes = {
   section: styles.section,
@@ -20,6 +22,12 @@ const classes = {
 };
 
 const LandingPage = () => {
+  useEffect(() => {
+    trackPageView({
+      pageTitle: 'Landing Page',
+    });
+  }, []);
+
   return (
     <BaseContainerWithNavbar withPaddingTop>
       <div className={styles.layout}>

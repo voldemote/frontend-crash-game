@@ -4,10 +4,15 @@ import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import { TOKEN_NAME } from '../../constants/Token';
 import ContentFooter from 'components/ContentFooter';
 import { useEffect } from 'react';
+import { trackPageView } from 'config/gtm';
 
 const TermsAndConditions = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    trackPageView({
+      pageTitle: 'Terms and Conditions',
+    });
   }, []);
 
   return (
