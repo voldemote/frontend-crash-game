@@ -6,8 +6,6 @@ export const useTracking = value => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log('test location change');
-
     trackPageView({
       // pageTitle: location.pathname,
     });
