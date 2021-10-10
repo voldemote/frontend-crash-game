@@ -20,7 +20,6 @@ import classNames from 'classnames';
 import SocialIcons from 'components/SocialIcons';
 import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
-import { trackPageView } from 'config/gtm';
 
 const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
@@ -62,9 +61,6 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
     if (isMount) {
       fetchTags();
       renderBetApprovePopup();
-      trackPageView({
-        pageTitle: 'Home',
-      });
     }
   }, []);
 

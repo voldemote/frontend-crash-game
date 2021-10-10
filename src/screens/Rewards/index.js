@@ -23,7 +23,6 @@ import CelebrationBadge from '../../data/images/confetti-winnings-badge.svg';
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from 'constants/Token';
 import React from 'react';
-import { trackPageView } from 'config/gtm';
 
 const RewardCard = ({
   rewardAmount = 0,
@@ -71,12 +70,6 @@ const RewardCards = ({ user }) => {
   const history = useHistory();
 
   const [isLoadingResend, setIsLoadingResend] = useState(false);
-
-  useEffect(() => {
-    trackPageView({
-      pageTitle: 'Rewards',
-    });
-  }, []);
 
   const handleResendEmail = () => {
     setIsLoadingResend(true);

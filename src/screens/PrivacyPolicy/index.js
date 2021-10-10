@@ -3,15 +3,10 @@ import LegalText from '../../components/LegalText';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import ContentFooter from 'components/ContentFooter';
 import { useEffect } from 'react';
-import { trackPageView } from 'config/gtm';
 
 const PrivacyPolicy = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    trackPageView({
-      pageTitle: 'Privacy Policy',
-    });
   }, []);
 
   return (

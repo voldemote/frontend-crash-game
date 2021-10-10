@@ -35,16 +35,19 @@ import { initTagManager } from './config/gtm';
 import AudioContent from './components/AudioContent';
 import ScrollToTop from 'utils/ScrollToTop';
 import DisclaimerPopupContainer from 'components/DisclaimerPopupContainer';
+import PageTracker from 'components/PageTracker';
 
 const { store, persistor } = configStore();
 
 initTagManager();
 
 const App = () => {
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
+          <PageTracker />
           <ScrollToTop />
           <Navbar skipRoutes={[]} />
           <AlertBox />

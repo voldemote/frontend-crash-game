@@ -8,19 +8,12 @@ import CategoryList from 'components/CategoryList';
 import blogJson from '../../data/blogs/blogs.json';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
-import { trackPageView } from 'config/gtm';
 
 TimeAgo.addDefaultLocale(en);
 
 const Blog = () => {
   const [categories, setCategories] = useState(BLOG_CATEGORIES);
   const blogs = Object.values(blogJson);
-
-  useEffect(() => {
-    trackPageView({
-      pageTitle: 'Blog',
-    });
-  }, []);
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>

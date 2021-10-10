@@ -7,7 +7,6 @@ import { FormGroup, InputLabel } from '@material-ui/core';
 import InputBox from '../../components/InputBox';
 import Button from '../../components/Button';
 import { useLocation } from 'react-router';
-import { trackPageView } from 'config/gtm';
 
 const ResetPassword = ({ loading, errorState, resetPassword }) => {
   const [password, setPassword] = useState('');
@@ -18,12 +17,6 @@ const ResetPassword = ({ loading, errorState, resetPassword }) => {
   const query = new URLSearchParams(location.search);
   const email = query.get('email');
   const passwordResetToken = query.get('passwordResetToken');
-
-  useEffect(() => {
-    trackPageView({
-      pageTitle: 'Reset Password',
-    });
-  }, []);
 
   useEffect(() => {
     setError(errorState);
