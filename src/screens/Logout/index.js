@@ -4,9 +4,14 @@ import { GeneralActions } from '../../store/actions/general';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
+import { trackPageView } from 'config/gtm';
 
 const Logout = ({ removeAlerts, logout, setOpenDrawer }) => {
   useEffect(() => {
+    trackPageView({
+      pageTitle: 'Logout',
+    });
+
     setOpenDrawer();
     removeAlerts();
     logout();

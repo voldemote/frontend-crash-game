@@ -4,8 +4,16 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 import ContentFooter from 'components/ContentFooter';
 
 import './swiper.scss'; //workaround for swiper module
+import { useEffect } from 'react';
+import { trackPageView } from 'config/gtm';
 
 const Activities = () => {
+  useEffect(() => {
+    trackPageView({
+      pageTitle: 'Activities',
+    });
+  }, []);
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>

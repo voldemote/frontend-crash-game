@@ -25,12 +25,19 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
+import { trackPageView } from 'config/gtm';
 
 const RosiGame = ({ showPopup, connected }) => {
   const dispatch = useDispatch();
   const { lastCrashes, inGameBets, cashedOut } = useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
+
+  useEffect(() => {
+    trackPageView({
+      pageTitle: 'Elon Game',
+    });
+  }, []);
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
