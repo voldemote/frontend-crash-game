@@ -366,6 +366,7 @@ const signUp = function* (action) {
     password: action.password,
     passwordConfirm: action.passwordConfirm,
     ref: action.ref,
+    recaptchaToken: action.recaptchaToken,
   };
 
   const { response, error } = yield call(Api.signUp, payload);

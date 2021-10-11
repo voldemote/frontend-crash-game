@@ -9,6 +9,7 @@ export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 export const NEWS_API_SSL_MODE =
   process.env.REACT_APP_NEWS_API_SSL_MODE === 'true';
+export const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY;
 
 // Services
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';

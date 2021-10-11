@@ -7,6 +7,8 @@ import timerStyles from './timer-styles.module.scss';
 import { ReactComponent as ConfettiLeft } from '../../data/icons/confetti-left.svg';
 import { ReactComponent as ConfettiRight } from '../../data/icons/confetti-right.svg';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { RECAPTCHA_KEY } from 'constants/Api';
 
 const AuthenticationPopup = ({ authenticationType }) => {
   const promoDeadline =
@@ -41,7 +43,14 @@ const AuthenticationPopup = ({ authenticationType }) => {
     >
       {isPromoWindow && renderPromoMessage()}
       <div className={styles.form}>
-        <Authentication authenticationType={authenticationType} />
+        <GoogleReCaptchaProvider
+          reCaptchaKey={RECAPTCHA_KEY}
+          scriptProps={{
+            async: true,
+          }}
+        >
+          <Authentication authenticationType={authenticationType} />
+        </GoogleReCaptchaProvider>
       </div>
     </div>
   );
