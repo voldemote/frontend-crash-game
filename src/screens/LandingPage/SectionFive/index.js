@@ -40,7 +40,7 @@ const SectionFive = ({ classes }) => {
         <p className={classes.textParagraph}>
           To register, please follow the instructions on our website; we want to
           let you know that you will be joining the Alpha version of the
-          platform where you will be granted a certain amount of Play-
+          platform where you will be granted a certain amount of the play money
           {TOKEN_NAME}
           tokens to test our event and betting experience.
         </p>

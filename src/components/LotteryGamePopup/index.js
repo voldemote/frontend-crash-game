@@ -78,7 +78,7 @@ const LotteryGamePopup = ({ hidePopup, rewardId, visible }) => {
       <p>Congratulations!</p>
       <div className={styles.title}>Your Number: {rewardId}</div>
       <div className={styles.subtitle}>
-        You Have A Chance To Win Up To 5000 {TOKEN_NAME}
+        You Have A Chance To Win Up To 5,000 {TOKEN_NAME}
       </div>
 
       <div className={styles.content}>
