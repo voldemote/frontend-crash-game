@@ -50,7 +50,7 @@ const App = () => {
   
   const onScroll = useCallback(
     (event) => {
-      const {scrollTop} = event.target;
+      const { scrollTop } = event.target;
 
       // when user scrolls down and the mobile navbar is hidden
       if(lastScrollTop.current < scrollTop) {
@@ -71,7 +71,7 @@ const App = () => {
   );
 
   return (
-    <div onScroll={onScroll}>
+    <div onScroll={process.env.REACT_HIDE_MOBILE_SCROLLING_SHOW_MENU ? undefined : onScroll}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
@@ -117,7 +117,10 @@ const App = () => {
             {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
             <Redirect to={Routes.home} />
           </Switch>
-          <NavbarFooter hideVisibility={hideMobileNavbar} skipRoutes={[Routes.bet, Routes.verify]}>
+          <NavbarFooter 
+            hideVisibility={process.env.REACT_HIDE_MOBILE_SCROLLING_SHOW_MENU ? undefined : hideMobileNavbar}
+            skipRoutes={[Routes.bet, Routes.verify]}
+          >
             <NavbarFooterAction
               route={Routes.home}
               iconType={IconType.home}
