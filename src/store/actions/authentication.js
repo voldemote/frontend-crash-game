@@ -189,6 +189,7 @@ const signUp = makeActionCreator(AuthenticationTypes.SIGN_UP, {
   password: null,
   passwordConfirm: null,
   ref: null,
+  recaptchaToken: null,
 });
 
 const signUpFail = makeActionCreator(AuthenticationTypes.SIGN_UP_FAIL, {
