@@ -279,6 +279,14 @@ const deleteEvent = id => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const bookmarkEvent = id => {
+  return Api.put(ApiUrls.API_EVENT_BOOKMARK.replace(':id', id));
+};
+
+const bookmarkEventCancel = id => {
+  return Api.put(ApiUrls.API_EVENT_BOOKMARK_CANCEL.replace(':id', id));
+};
+
 const createEventBet = payload => {
   return Api.post(ApiUrls.API_EVENT_BET_CREATE, payload)
     .then(response => ({ response }))
@@ -431,6 +439,8 @@ export {
   createEvent,
   editEvent,
   deleteEvent,
+  bookmarkEvent,
+  bookmarkEventCancel,
   createEventBet,
   editEventBet,
   getBetTemplates,

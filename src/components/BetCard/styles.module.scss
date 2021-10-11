@@ -74,6 +74,7 @@
       justify-content: space-between;
       //margin-bottom: 15px;
       padding: 16px 16px 16px 28px;
+      cursor: default;
     }
 
     .special{
@@ -167,6 +168,18 @@
   width: 17px;
   height: 17px;
   background-size: cover;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.starFull{
+  background-image: url("../../data/icons/star-2.svg");
+  background-repeat: no-repeat;
+  width: 17px;
+  height: 17px;
+  background-size: cover;
+  z-index: 10;
+  cursor: pointer;
 }
 
 .picture{
