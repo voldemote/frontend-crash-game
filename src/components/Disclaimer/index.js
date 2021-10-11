@@ -35,8 +35,8 @@ const Disclaimer = ({ className = '' }) => {
             </li>
             <li>
               Wallfair.io is a blockchain-based platform built on Polygon chain
-              and incorporating the usability function of an ERC-20 token (“
-              WFAIR”) minted in Alderney and distributed through decentralized
+              and incorporating the usability function of an ERC-20 token
+              (“WFAIR”) minted in Alderney and distributed through decentralized
               exchanges as well as the Trustpad launchpad (www.trustpad.io).
             </li>
             <li>
