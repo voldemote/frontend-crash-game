@@ -146,7 +146,7 @@ const bookmarkEvent = (state, { eventId, userId }) => {
   return state;
 };
 
-const bookmarkEventCancel = (state, { payload: { eventId, userId } }) => {
+const bookmarkEventCancel = (state, { eventId, userId }) => {
   const idx = state.events.findIndex(event => event._id === eventId);
   if (idx > -1 && userId) {
     return update(state, {
