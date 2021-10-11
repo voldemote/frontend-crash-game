@@ -36,39 +36,14 @@ import AudioContent from './components/AudioContent';
 import ScrollToTop from 'utils/ScrollToTop';
 import DisclaimerPopupContainer from 'components/DisclaimerPopupContainer';
 import PageTracker from 'components/PageTracker';
-import { useCallback, useRef, useState } from 'react';
-
+import useHideMobileScrollingMenu from 'hooks/useHideMobileScrollingMenu';
 
 const { store, persistor } = configStore();
 
 initTagManager();
 
 const App = () => {
-  const lastScrollTop = useRef(0);
-  const [hideMobileNavbar, setHideMobileNavbar] = useState(true);
-  const timerRef = useRef<any>();
-  
-  const onScroll = useCallback(
-    (event) => {
-      const { scrollTop } = event.target;
-
-      // when user scrolls down and the mobile navbar is hidden
-      if(lastScrollTop.current < scrollTop) {
-        if(hideMobileNavbar) setHideMobileNavbar(false);
-
-        clearTimeout(timerRef.current);
-        // hide the navbar when the user stops scrolling (effect after 3 seconds)
-        timerRef.current = setTimeout(() => {
-          if(!hideMobileNavbar) {
-            setHideMobileNavbar(true)
-          }
-        }, 3000);
-      }
-
-      lastScrollTop.current  = scrollTop;   
-    },
-    [hideMobileNavbar],
-  );
+  const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
 
   return (
     <div onScroll={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : onScroll}>
@@ -118,7 +93,7 @@ const App = () => {
             <Redirect to={Routes.home} />
           </Switch>
           <NavbarFooter 
-            hideVisibility={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : hideMobileNavbar}
+            hideVisibility={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : hideNavbar}
             skipRoutes={[Routes.bet, Routes.verify]}
           >
             <NavbarFooterAction
