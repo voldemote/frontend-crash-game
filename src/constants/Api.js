@@ -9,8 +9,6 @@ export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 export const NEWS_API_SSL_MODE =
   process.env.REACT_APP_NEWS_API_SSL_MODE === 'true';
-
-  console.log('BACKEND URL JE JEBOTE', BACKEND_URL)
 // Services
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL =

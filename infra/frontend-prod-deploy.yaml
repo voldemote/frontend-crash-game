@@ -16,7 +16,7 @@ spec:
         app: frontend
     spec:
       containers:
-        - image: registry.digitalocean.com/wallfair/frontend_k8s@sha256:ced41746d5a6baf6a47c280eaf558b7d0e7de096348cca73ef501fe6c7ce916c
+        - image: registry.digitalocean.com/wallfair/frontend_k8s@sha256:ddea1cacab61ba184ce5638453dca5a14445bf457128bf0ca2cad821b3ca2b9b
           imagePullPolicy: Always
           resources:
             limits:
@@ -28,6 +28,8 @@ spec:
           envFrom:
           - configMapRef:
               name: frontend-config
+          - configMapRef:
+              name: frontend-app-secrets
           ports:
             - containerPort: 80
 
@@ -61,4 +63,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 3000
