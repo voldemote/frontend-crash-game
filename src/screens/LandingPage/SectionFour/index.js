@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
+import { TOKEN_NAME } from 'constants/Token';
 
 const SectionFour = ({ classes }) => {
   const dispatch = useDispatch();
@@ -35,12 +36,12 @@ const SectionFour = ({ classes }) => {
       <div className={classes.sectionNumber}>04</div>
       <div className={classes.textContainer}>
         <h2 className={classes.sectionHeading}>
-          The WFAIR Token and its Abilities
+          The {TOKEN_NAME} Token and its Abilities
         </h2>
         <p className={classes.textParagraph}>
           Good question, Jimmy. Think of it as your own in-game currency, think
-          of it as coins in your wallet or even a casino chip. The $WFAIR token
-          is our very own, in-house crypto and the best part is, it’s easy
+          of it as coins in your wallet or even a casino chip. The ${TOKEN_NAME}{' '}
+          token is our very own, in-house crypto and the best part is, it’s easy
           Crypto.
         </p>
         <br />
@@ -49,11 +50,11 @@ const SectionFour = ({ classes }) => {
           partners and that's it, you’re ready to go. Not only that, but we have
           hidden more ways to earn more tokens everywhere throughout our
           platform, either through rewards or hidden items and collectables. The
-          price for one $WFAIR Token on Alpha is 0,20€ and will change after our
-          official token listing event with our exchange partners and users will
-          get new tokens every week as well as from referring friends, family
-          and completing feedback tasks to help the Wallfair team improve the
-          user journey for our valued players.
+          price for one ${TOKEN_NAME} Token on Alpha is 0,20€ and will change
+          after our official token listing event with our exchange partners and
+          users will get new tokens every week as well as from referring
+          friends, family and completing feedback tasks to help the Wallfair
+          team improve the user journey for our valued players.
         </p>
         {/* <br />
         <br /> */}
