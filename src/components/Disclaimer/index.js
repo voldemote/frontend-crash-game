@@ -1,7 +1,6 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import { useCallback, useState } from 'react';
-import { TOKEN_NAME } from '../../constants/Token';
 
 const Disclaimer = ({ className = '' }) => {
   const [readMore, setReadMore] = useState(false);
@@ -37,9 +36,8 @@ const Disclaimer = ({ className = '' }) => {
             <li>
               Wallfair.io is a blockchain-based platform built on Polygon chain
               and incorporating the usability function of an ERC-20 token (“
-              {TOKEN_NAME}”) minted in Alderney and distributed through
-              decentralized exchanges as well as the Trustpad launchpad
-              (www.trustpad.io).
+              WFAIR”) minted in Alderney and distributed through decentralized
+              exchanges as well as the Trustpad launchpad (www.trustpad.io).
             </li>
             <li>
               The platform serves informational, entertainment and educational

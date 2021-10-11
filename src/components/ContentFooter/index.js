@@ -14,7 +14,6 @@ import { LeaderboardActions } from 'store/actions/leaderboard';
 import { useCallback } from 'react';
 import { GeneralActions } from 'store/actions/general';
 import Routes from 'constants/Routes';
-import { TOKEN_NAME } from '../../constants/Token';
 
 const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   const openLeaderboard = useCallback(event => {
@@ -60,7 +59,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 rel="noreferrer"
                 data-tracking-id="footer-buy-wfair"
               >
-                Buy {TOKEN_NAME} real tokens
+                Buy WFAIR real tokens
               </a>
 
               <a
