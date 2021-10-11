@@ -36,14 +36,42 @@ import AudioContent from './components/AudioContent';
 import ScrollToTop from 'utils/ScrollToTop';
 import DisclaimerPopupContainer from 'components/DisclaimerPopupContainer';
 import PageTracker from 'components/PageTracker';
+import { useCallback, useRef, useState } from 'react';
+
 
 const { store, persistor } = configStore();
 
 initTagManager();
 
 const App = () => {
+  const lastScrollTop = useRef(0);
+  const [hideMobileNavbar, setHideMobileNavbar] = useState(true);
+  const timerRef = useRef<any>();
+  
+  const onScroll = useCallback(
+    (event) => {
+      const {scrollTop} = event.target;
+
+      // when user scrolls down and the mobile navbar is hidden
+      if(lastScrollTop.current < scrollTop) {
+        if(hideMobileNavbar) setHideMobileNavbar(false);
+
+        clearTimeout(timerRef.current);
+        // hide the navbar when the user stops scrolling (effect after 3 seconds)
+        timerRef.current = setTimeout(() => {
+          if(!hideMobileNavbar) {
+            setHideMobileNavbar(true)
+          }
+        }, 3000);
+      }
+
+      lastScrollTop.current  = scrollTop;   
+    },
+    [hideMobileNavbar],
+  );
 
   return (
+    <div onScroll={onScroll}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
@@ -89,7 +117,7 @@ const App = () => {
             {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
             <Redirect to={Routes.home} />
           </Switch>
-          <NavbarFooter skipRoutes={[Routes.bet, Routes.verify]}>
+          <NavbarFooter hideVisibility={hideMobileNavbar} skipRoutes={[Routes.bet, Routes.verify]}>
             <NavbarFooterAction
               route={Routes.home}
               iconType={IconType.home}
@@ -118,14 +146,9 @@ const App = () => {
         </ConnectedRouter>
       </PersistGate>
     </Provider>
+    </div>
   );
 };
 
-// Recalculating after resizing screen
-window.addEventListener('resize', () => {
-  let vh = window.innerHeight * 0.01;
-
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
 
 export default App;
