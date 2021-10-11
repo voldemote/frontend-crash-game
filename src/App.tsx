@@ -46,7 +46,7 @@ const App = () => {
   const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
 
   return (
-    <div onScroll={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : onScroll}>
+    <div onScroll={onScroll}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
@@ -93,7 +93,7 @@ const App = () => {
             <Redirect to={Routes.home} />
           </Switch>
           <NavbarFooter 
-            hideVisibility={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : hideNavbar}
+            hideVisibility={hideNavbar}
             skipRoutes={[Routes.bet, Routes.verify]}
           >
             <NavbarFooterAction
