@@ -33,6 +33,7 @@ const ActivitiesTracker = ({
   addInitialActivities,
   showCategories,
   activitiesLimit,
+  betId,
 }) => {
   const messageListRef = useRef();
 
@@ -78,10 +79,6 @@ const ActivitiesTracker = ({
     }
   }, [selectedCategory]);
 
-  useEffect(() => {
-    messageListScrollToBottom();
-  }, [activities.length]);
-
   const renderActivities = () => {
     const selectedCategoryLower = selectedCategory.toLowerCase();
     const categoryCfg = _.find(ACTIVITIES_TO_TRACK, {
@@ -90,6 +87,15 @@ const ActivitiesTracker = ({
     const categoryEvents = _.get(categoryCfg, 'eventsCats', []);
     // console.log("notifications", notifications);
     const categoryFiltered = _.filter(activities, item => {
+      if (betId) {
+        const eventBets = _.get(item, 'data.event.bets', []);
+        return (
+          betId === _.get(item, 'data.bet._id') ||
+          betId === _.get(item, 'data.trade.betId') ||
+          eventBets.indexOf(betId) > -1
+        );
+      }
+
       if (selectedCategoryLower === 'all') {
         return true;
       }
@@ -211,6 +217,10 @@ const ActivitiesTracker = ({
       });
     }
   };
+
+  useEffect(() => {
+    messageListScrollToBottom();
+  }, [activities]);
 
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>

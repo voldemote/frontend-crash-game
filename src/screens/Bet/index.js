@@ -49,6 +49,7 @@ import BetState from 'constants/BetState';
 import TimeCounter from '../../components/TimeCounter';
 import { useIsMount } from '../../components/hoc/useIsMount';
 import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart.svg';
+import ActivitiesTracker from '../../components/ActivitiesTracker';
 // import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
@@ -822,7 +823,12 @@ const Bet = ({
 
                 {selectedTab === 'activities' && (
                   <div className={styles.activitiesTabContainerDesktop}>
-                    Activities component
+                    <ActivitiesTracker
+                      showCategories={false}
+                      activitiesLimit={50}
+                      betId={betId}
+                      className={styles.activitiesTrackerTabBlock}
+                    />
                   </div>
                 )}
 
