@@ -1,12 +1,14 @@
-import { put } from 'redux-saga/effects';
-import { call } from 'redux-saga/effects';
+import { put, all, call, select, delay } from 'redux-saga/effects';
 import * as Api from '../../api';
 import { getNews } from '../../api/third-party';
 import { EventActions } from '../actions/event';
-import { select } from 'redux-saga/effects';
 import AuthState from '../../constants/AuthState';
 import _ from 'lodash';
 import { UserActions } from '../actions/user';
+import { push } from 'connected-react-router';
+import Routes from 'constants/Routes';
+import { PopupActions } from 'store/actions/popup';
+import EventTypes from 'constants/EventTypes';
 
 const fetchAll = function* (action) {
   const authState = yield select(state => state.authentication.authState);
@@ -147,6 +149,75 @@ const fetchNewsData = function* ({ params }) {
   }
 };
 
+const createEvent = function* ({ event }) {
+  try {
+    yield put(PopupActions.hide());
+
+    const { response } = yield call(Api.createEvent, event);
+
+    const createdEvent = response.data;
+
+    const route = Routes.getRouteWithParameters(Routes.event, {
+      eventSlug: createdEvent.slug,
+    });
+
+    yield put(EventActions.fetchAll());
+    yield put(push(route));
+    yield delay(1 * 1000);
+    yield put(EventActions.createEventSuccess(createdEvent));
+  } catch (error) {
+    yield put(EventActions.createEventFail());
+  }
+};
+
+const editEvent = function* ({ eventId, event }) {
+  try {
+    yield put(PopupActions.hide());
+    const { response } = yield call(Api.editEvent, eventId, event);
+
+    const updatedEvent = response.data;
+    const oldEvent = yield select(state =>
+      state.event.events.find(({ _id }) => _id === updatedEvent._id)
+    );
+
+    yield put(EventActions.fetchAll());
+
+    if (oldEvent.slug !== updatedEvent.slug) {
+      const route = Routes.getRouteWithParameters(Routes.event, {
+        eventSlug: updatedEvent.slug,
+      });
+      yield put(push(route));
+    }
+
+    yield delay(1 * 1000);
+    yield put(EventActions.editEventSuccess(updatedEvent));
+  } catch (error) {
+    yield put(EventActions.editEventFail());
+  }
+};
+
+const deleteEvent = function* ({ payload: { eventId } }) {
+  try {
+    yield put(PopupActions.hide());
+    const {
+      response: { data },
+    } = yield call(Api.deleteEvent, eventId);
+
+    const route =
+      {
+        [EventTypes.streamed]: Routes.liveEvents,
+        [EventTypes.nonStreamed]: Routes.events,
+      }[data.type] || Routes.home;
+
+    yield put(EventActions.fetchAll());
+    yield put(push(Routes.getRouteWithParameters(route, { category: 'all' })));
+    yield delay(1 * 1000);
+    yield put(EventActions.deleteEventSuccess({ event: data }));
+  } catch (error) {
+    yield put(EventActions.deleteEventFail());
+  }
+};
+
 export default {
   fetchAll,
   fetchAllSucceeded,
@@ -155,4 +226,7 @@ export default {
   fetchTags,
   fetchHistoryChartData,
   fetchNewsData,
+  createEvent,
+  editEvent,
+  deleteEvent,
 };

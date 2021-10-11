@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import classNames from 'classnames';
-import medalGold from '../../data/icons/medal-gold.png';
+import medalCoin from '../../data/icons/medal-coin.png';
 import LogoDemo from '../../data/images/logo-demo.svg';
 import style from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
@@ -27,6 +27,9 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
 import AuthenticationType from '../Authentication/AuthenticationType';
+import TimeLeftCounter from '../TimeLeftCounter';
+import Moment from 'moment';
+import { nextDayweek } from '../../helper/Time';
 
 const Navbar = ({
   user,
@@ -113,9 +116,10 @@ const Navbar = ({
     };
   };
 
-  const renderNavbarLink = (route, text, isLogo = false) => {
+  const renderNavbarLink = (route, text, isLogo = false, trackingId) => {
     return (
       <NavLink
+        data-tracking-id={trackingId}
         to={route}
         activeClassName={isLogo ? null : style.active}
         className={isLogo ? style.logoLink : null}
@@ -143,11 +147,13 @@ const Navbar = ({
         className={classNames(
           style.ranking,
           style.pillButton,
+          !isLoggedIn() ? style.hiddenMobile : null,
           isOpen(drawers.leaderboard) ? style.pillButtonActive : null
         )}
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
+        data-tracking-id="menu-leaderboard"
       >
-        <img src={medalGold} alt="medal" className={style.medal} />
+        <img src={medalCoin} alt="medal" className={style.medal} />
         <p className={style.rankingText}>
           {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
         </p>
@@ -176,6 +182,7 @@ const Navbar = ({
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
         onClick={() => toggleOpenDrawer(drawers.wallet)}
+        data-tracking-id="menu-wallet-icon"
       >
         <Icon iconType={'wallet'} />
         {formatToFixed(balance, 0)} {currency}
@@ -230,7 +237,7 @@ const Navbar = ({
         <div className={style.navbarItems}>
           {leaderboardBtn}
           {walletBtn}
-          {notificationsBtn}
+          {/* {notificationsBtn} */}
           {profileBtn}
         </div>
       );
@@ -249,12 +256,18 @@ const Navbar = ({
       <div className={style.leaderboardInfoItem}>
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
-          {formatToFixed(number)}
+          {formatToFixed(number, 0)}
           <span className={style.leaderboardInfoItemToken}> {currency}</span>
         </div>
       </div>
     );
   };
+
+  const leaderboardWeeklyDate = nextDayweek(new Date(), 3, {
+    hour: 12,
+    minute: 0,
+    second: 0,
+  });
 
   const renderLeaderboardDrawer = () => {
     return (
@@ -265,36 +278,63 @@ const Navbar = ({
           !isOpen(drawers.leaderboard || leaderboardOpen) && style.drawerHidden
         )}
       >
-        <Icon
-          iconType={'cross'}
-          onClick={closeDrawers}
-          className={style.closeLeaderboard}
-        />
-        <div className={style.leaderboardHeadingWrapper}>
-          <p className={style.leaderboardHeading}>
-            Community
-            <br />
-            Leaderboard
-          </p>
-          {isLoggedIn() && (
-            <div className={style.leaderboardHeadingRank}>
-              <div className={style.leaderboardHeadingRankText}>MY RANK</div>
-              <div className={style.leaderboardHeadingRankValue}>
-                #{user.rank}
+        <div className={classNames(style.drawerContent)}>
+          <Icon
+            iconType={'cross'}
+            onClick={closeDrawers}
+            className={style.closeLeaderboard}
+          />
+          <div className={style.leaderboardHeadingWrapper}>
+            <p className={style.leaderboardHeading}>
+              Community
+              <br />
+              Leaderboard
+            </p>
+            {isLoggedIn() && (
+              <div className={style.leaderboardHeadingRank}>
+                <div className={style.leaderboardHeadingRankText}>MY RANK</div>
+                <div className={style.leaderboardHeadingRankValue}>
+                  #{user.rank}
+                </div>
               </div>
+            )}
+          </div>
+          {isLoggedIn() && (
+            <div className={style.leaderboardInfo}>
+              {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
+              {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
             </div>
           )}
-        </div>
-        {isLoggedIn() && (
-          <div className={style.leaderboardInfo}>
-            {renderLeaderboardInfo('MISSING TO WINNER', missingWinnerAmount)}
-            {renderLeaderboardInfo('MISSING TO NEXT RANK', toNextRank)}
+
+          <div className={style.leaderboardCountdownBlock}>
+            <div className={style.leaderboardInfoItem}>
+              <div className={style.timerSide}>
+                <span>Next draft at: </span>
+                <TimeLeftCounter
+                  endDate={leaderboardWeeklyDate}
+                  containerClass={style.leaderboardTimerComponent}
+                />
+              </div>
+              <div className={style.linkSide}>
+                <a
+                  href={
+                    'https://wallfair.gitbook.io/wallfair/the-magical-leaderboard'
+                  }
+                  target={'_blank'}
+                  rel="noreferrer"
+                >
+                  Learn more
+                </a>
+              </div>
+            </div>
           </div>
-        )}
-        <Leaderboard
-          fetch={openDrawer === drawers.leaderboard}
-          setMissingAmount={setMisingWinnerAmount}
-        />
+
+          <Leaderboard
+            fetch={openDrawer === drawers.leaderboard}
+            setMissingAmount={setMisingWinnerAmount}
+          />
+        </div>
+        <div className={style.drawerBackdropBg}></div>
       </div>
     );
   };
@@ -307,12 +347,15 @@ const Navbar = ({
           !isOpen(drawers.notifications) && style.drawerHidden
         )}
       >
-        <Notifications
-          notifications={notifications}
-          unreadNotifications={unreadNotifications}
-          closeNotifications={closeDrawers}
-          setUnread={setUnread}
-        />
+        <div className={classNames(style.drawerContent)}>
+          <Notifications
+            notifications={notifications}
+            unreadNotifications={unreadNotifications}
+            closeNotifications={closeDrawers}
+            setUnread={setUnread}
+          />
+        </div>
+        <div className={style.drawerBackdropBg}></div>
       </div>
     );
   };
@@ -360,10 +403,15 @@ const Navbar = ({
         )}
 
         <div className={style.linkWrapper}>
-          {renderNavbarLink(`/live-events/all`, 'Live Events')}
-          {renderNavbarLink(`/events`, 'Events')}
-          {renderNavbarLink(`/games`, 'Games')}
-          {/* {isLoggedIn() && renderNavbarLink(`/rewards`, 'Earn')} */}
+          {renderNavbarLink(
+            `/live-events/all`,
+            'Live Events',
+            null,
+            'menu-live-events'
+          )}
+          {renderNavbarLink(`/events`, 'Events', null, 'menu-events')}
+          {renderNavbarLink(`/games`, 'Games', null, 'menu-games')}
+          {/* {isLoggedIn() && renderNavbarLink(`/rewards`, 'Earn', null, 'menu-earn')} */}
         </div>
       </div>
 

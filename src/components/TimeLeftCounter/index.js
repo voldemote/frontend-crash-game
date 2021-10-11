@@ -6,8 +6,9 @@ import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import classNames from 'classnames';
 
-const TimeLeftCounter = ({ endDate, viewSeconds = false }) => {
+const TimeLeftCounter = ({ endDate, viewSeconds = false, containerClass }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));
 
   useEffect(() => {
@@ -36,11 +37,13 @@ const TimeLeftCounter = ({ endDate, viewSeconds = false }) => {
   };
 
   return (
-    <div>
+    <div className={containerClass}>
       {renderTimeLeft('d', _.get(timeLeft, 'days'), false)}
       {renderTimeLeft('hrs', _.get(timeLeft, 'hours'))}
       {renderTimeLeft('min', _.get(timeLeft, 'minutes'))}
-      {viewSeconds && renderTimeLeft('sec', _.get(timeLeft, 'seconds'))}
+      {(viewSeconds ||
+        (_.get(timeLeft, 'minutes') === 0 && _.get(timeLeft, 'hours') === 0)) &&
+        renderTimeLeft('sec', _.get(timeLeft, 'seconds'))}
     </div>
   );
 };

@@ -56,24 +56,30 @@ const fetchSucceeded = function* (action) {
     const profilePicture = user.profilePicture;
     const balance = user.balance;
     const username = user.username;
+    const name = user.name;
     const admin = user.admin;
     const totalWin = user.totalWin;
     const rank = user.rank;
     const amountWon = user.amountWon;
     const toNextRank = user.toNextRank;
     const email = user.email;
+    const preferences = user.preferences;
+    const aboutMe = user.aboutMe;
 
     yield put(
       AuthenticationActions.updateData({
         profilePicture,
         balance,
         username,
+        name,
         admin,
         totalWin,
         rank,
         amountWon,
         toNextRank,
         email,
+        preferences,
+        aboutMe,
       })
     );
   }

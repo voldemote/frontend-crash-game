@@ -11,6 +11,7 @@ const initialState = {
   phone: '',
   country: '49',
   email: '',
+  aboutMe: '',
   emailVerificationState: null,
   token: null,
   balance: 0,
@@ -212,6 +213,9 @@ const updateData = (action, state) => {
     username: {
       $set: action.username,
     },
+    name: {
+      $set: action.name,
+    },
     email: {
       $set: action.email,
     },
@@ -229,6 +233,12 @@ const updateData = (action, state) => {
     },
     toNextRank: {
       $set: action.toNextRank,
+    },
+    preferences: {
+      $set: action.preferences,
+    },
+    aboutMe: {
+      $set: action.aboutMe,
     },
   });
 };
@@ -411,6 +421,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     // @formatter:off
     case AuthenticationTypes.LOGOUT:
+    case AuthenticationTypes.FORCED_LOGOUT:
       return logout(action, state);
     case AuthenticationTypes.SET_EMAIL:
       return setEmail(action, state);

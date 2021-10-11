@@ -49,6 +49,7 @@ import BetState from 'constants/BetState';
 import TimeCounter from '../../components/TimeCounter';
 import { useIsMount } from '../../components/hoc/useIsMount';
 import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart.svg';
+// import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
   Chat: 0,
@@ -101,6 +102,9 @@ const Bet = ({
   useNewsFeed(event);
 
   const isNonStreamed = _.get(event, 'type') === EventTypes.nonStreamed;
+  const canDeleteEvent = _.get(event, 'bets')?.every(
+    ({ status }) => status === BetState.canceled
+  );
 
   const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
   const { activeBets } = useTrades(event?._id);
@@ -165,6 +169,16 @@ const Bet = ({
     fetchChatMessages(event._id);
     fetchOpenBets();
     fetchTransactions();
+
+    // const currentBetTitle =
+    //   isNonStreamed || event.bets.length === 1
+    //     ? _.get(event, 'bets[0].marketQuestion')
+    //     : _.get(currentBet, 'name');
+
+    // trackPageView({
+    //   pageTitle: `Bet - ${currentBetTitle}`,
+    // });
+
     return () => (ref.current = false);
   }, [eventSlug, betSlug, event]);
 
@@ -184,7 +198,7 @@ const Bet = ({
       setBetAction(BET_ACTIONS.EventTrades);
     }
     if (isMobile && (isNonStreamed || relatedBets.length === 1)) {
-      onBetClose();
+      onBetClose()();
       setBetAction(BET_ACTIONS.EventTrades);
     }
   }, [isMobile, relatedBets, event]);
@@ -536,7 +550,7 @@ const Bet = ({
                   <div className={styles.timerLabel}>Event ends in:</div>
 
                   <div className={styles.timerParts}>
-                    <TimeCounter endDate={bet.endDate} />
+                    <TimeCounter endDate={bet?.endDate} />
                   </div>
                 </div>
               </>
@@ -667,6 +681,31 @@ const Bet = ({
                       width={20}
                     />
                     Edit Event
+                  </span>
+                  <span
+                    className={classNames(
+                      styles.deleteEventLink,
+                      !canDeleteEvent && styles.fadedLink
+                    )}
+                    onClick={() =>
+                      canDeleteEvent &&
+                      showPopup(PopupTheme.deleteEvent, { event })
+                    }
+                  >
+                    <Icon
+                      className={styles.icon}
+                      iconType={IconType.trash}
+                      iconTheme={IconTheme.white}
+                      height={20}
+                      width={20}
+                    />
+                    Delete Event
+                    {!canDeleteEvent && (
+                      <span className={styles.infoTooltip}>
+                        All bets must be cancelled or deleted in order to delete
+                        an event.
+                      </span>
+                    )}
                   </span>
                   {event.type === EventTypes.streamed && (
                     <span

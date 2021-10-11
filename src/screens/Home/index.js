@@ -2,7 +2,6 @@ import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect, useSelector } from 'react-redux';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import Header from '../../components/Header/index';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
 import { Link, useParams } from 'react-router-dom';
@@ -14,12 +13,15 @@ import Routes from 'constants/Routes';
 import ContentFooter from '../../components/ContentFooter';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
-import { select } from 'redux-saga/effects';
 import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import LandingPage from 'screens/LandingPage';
+import classNames from 'classnames';
+import SocialIcons from 'components/SocialIcons';
+import YellowButton from 'components/YellowButton';
+import { GeneralActions } from '../../store/actions/general';
 
-const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
+const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const userLoggedIn = useSelector(
@@ -68,13 +70,15 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
         <h1>Betting Reimagined</h1>
 
         <div className={styles.slogan}>Clear, Social &amp; Fair</div>
+
+        <SocialIcons className={styles.socialIcons} />
       </div>
     );
   };
 
   const onSeeLeaderboard = () => {
     window.scrollTo(0, 0);
-    openDrawer();
+    setOpenDrawer('leaderboard');
   };
 
   const renderTags = () => {
@@ -92,15 +96,31 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
     );
   };
 
+  const renderBlogBanner = () => {
+    return (
+      <Link to={Routes.blog}>
+        <div className={classNames(styles.banner, styles.blogBanner)}>
+          {/* <div className={styles.title}>Blog</div> */}
+          <div className={styles.title}>
+            {'        '}
+            <br />
+            {'         '}
+          </div>
+        </div>
+      </Link>
+    );
+  };
+
   const renderRosiBanner = () => {
     return (
-      <Link to={Routes.rosiGame}>
+      <Link data-tracking-id="home-play-elon" to={Routes.rosiGame}>
         <div className={styles.banner}>
           <div className={styles.title}>
             Play the
             <br />
             Elon Game
           </div>
+          <YellowButton className={styles.button}>Play now</YellowButton>
         </div>
       </Link>
     );
@@ -137,12 +157,12 @@ const Home = ({ tags, openDrawer, fetchTags, showPopup, events, users }) => {
   return (
     <BaseContainerWithNavbar>
       {renderHeadline()}
-      <Header />
+      {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          <EventsCarouselContainer eventType="streamed" />
-          <EventsCarouselContainer eventType="non-streamed" />
           {renderRosiBanner()}
+          <EventsCarouselContainer eventType="non-streamed" />
+          <EventsCarouselContainer eventType="streamed" />
           {renderCategoriesAndLeaderboard()}
           <ContentFooter />
         </div>
@@ -160,8 +180,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openDrawer: () => {
-      dispatch(LeaderboardActions.handleDrawer({ open: true }));
+    setOpenDrawer: drawerName => {
+      dispatch(GeneralActions.setDrawer(drawerName));
     },
     fetchTags: () => {
       dispatch(EventActions.fetchTags());

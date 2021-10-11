@@ -32,6 +32,7 @@ const ActivitiesTracker = ({
   activities,
   addInitialActivities,
   showCategories,
+  activitiesLimit,
 }) => {
   const messageListRef = useRef();
 
@@ -39,36 +40,61 @@ const ActivitiesTracker = ({
     ACTIVITIES_TO_TRACK[0].value
   );
 
+  const [initialLoaded, setInitialLoaded] = useState(false);
+
   const isMount = useIsMount();
 
   useEffect(() => {
     if (isMount) {
       (async () => {
         const initialActivities = await getNotificationEvents({
-          limit: 50,
+          limit: activitiesLimit || 10,
+          category: selectedCategory,
         }).catch(err => {
           console.error("Can't get trade by id:", err);
         });
 
         addInitialActivities(initialActivities);
+        setInitialLoaded(true);
       })().catch(err => {
         console.error('initialNotification error', err);
       });
     }
-  }, [isMount]);
+  }, [isMount, selectedCategory]);
+
+  useEffect(() => {
+    if (initialLoaded) {
+      (async () => {
+        const initialActivities = await getNotificationEvents({
+          limit: activitiesLimit || 10,
+          category: selectedCategory,
+        }).catch(err => {
+          console.error("Can't get trade by id:", err);
+        });
+        addInitialActivities(initialActivities);
+      })().catch(err => {
+        console.error('initialNotification error', err);
+      });
+    }
+  }, [selectedCategory]);
 
   useEffect(() => {
     messageListScrollToBottom();
   }, [activities.length]);
 
   const renderActivities = () => {
+    const selectedCategoryLower = selectedCategory.toLowerCase();
+    const categoryCfg = _.find(ACTIVITIES_TO_TRACK, {
+      value: selectedCategoryLower,
+    });
+    const categoryEvents = _.get(categoryCfg, 'eventsCats', []);
     // console.log("notifications", notifications);
     const categoryFiltered = _.filter(activities, item => {
-      if (selectedCategory.toLowerCase() === 'all') {
+      if (selectedCategoryLower === 'all') {
         return true;
       }
 
-      return item.type.indexOf(selectedCategory) > -1;
+      return categoryEvents.indexOf(item.type) > -1;
     });
 
     return _.map(categoryFiltered, (activityMessage, index) => {
@@ -87,6 +113,10 @@ const ActivitiesTracker = ({
       //try to get event updatedAt date
       if (!date) {
         date = _.get(activityMessage, 'data.event.date');
+      }
+
+      if (!date) {
+        date = _.get(activityMessage, 'data.updatedAt');
       }
 
       return (
@@ -133,12 +163,12 @@ const ActivitiesTracker = ({
             },
             // when window width is >= 480px
             992: {
-              slidesPerView: 5,
+              slidesPerView: 4,
               spaceBetween: 30,
             },
             // when window width is >= 480px
             1200: {
-              slidesPerView: 8,
+              slidesPerView: 4,
               spaceBetween: 30,
             },
           }}

@@ -25,6 +25,10 @@ const root = function* () {
   yield all([
     // @formatter:off
     takeLatest([AuthenticationTypes.LOGOUT], AuthenticationSagas.logout),
+    takeLatest(
+      [AuthenticationTypes.FORCED_LOGOUT],
+      AuthenticationSagas.forcedLogout
+    ),
     takeLatest([AuthenticationTypes.VERIFY_SMS], AuthenticationSagas.verifySms),
     takeLatest(
       [AuthenticationTypes.REQUEST_SMS],
@@ -71,8 +75,12 @@ const root = function* () {
     takeEvery(
       [
         AuthenticationTypes.FETCH_REFERRALS_FAILED,
+        EventTypes.CREATE_EVENT_FAILED,
+        EventTypes.EDIT_EVENT_FAILED,
         EventTypes.FETCH_ALL_FAILED,
+        EventTypes.DELETE_EVENT_FAILED,
         BetTypes.CREATE_FAILED,
+        BetTypes.EDIT_FAILED,
         BetTypes.PLACE_FAILED,
         BetTypes.PULL_OUT_BET_FAILED,
       ],
@@ -80,7 +88,11 @@ const root = function* () {
     ),
     takeEvery(
       [
+        EventTypes.CREATE_EVENT_SUCCEEDED,
+        EventTypes.EDIT_EVENT_SUCCEEDED,
+        EventTypes.DELETE_EVENT_SUCCEEDED,
         BetTypes.CREATE_SUCCEEDED,
+        BetTypes.EDIT_SUCCEEDED,
         BetTypes.PLACE_SUCCEEDED,
         BetTypes.PULL_OUT_BET_SUCCEEDED,
       ],
@@ -96,6 +108,7 @@ const root = function* () {
     takeEvery([EventTypes.FETCH_HOME_EVENTS], EventSagas.fetchHomeEvents),
     takeLatest([BetTypes.PLACE], BetSagas.place),
     takeLatest([BetTypes.CREATE], BetSagas.create),
+    takeLatest([BetTypes.EDIT], BetSagas.edit),
     takeEvery([BetTypes.FETCH_OUTCOMES], BetSagas.fetchOutcomes),
     takeEvery([BetTypes.FETCH_SELL_OUTCOMES], BetSagas.fetchSellOutcomes),
     takeLatest([BetTypes.FETCH_OPEN_BETS], BetSagas.fetchOpenBets),
@@ -139,6 +152,9 @@ const root = function* () {
       EventSagas.fetchHistoryChartData
     ),
     takeLatest([EventTypes.FETCH_NEWS_DATA], EventSagas.fetchNewsData),
+    takeLatest([EventTypes.CREATE_EVENT], EventSagas.createEvent),
+    takeLatest([EventTypes.EDIT_EVENT], EventSagas.editEvent),
+    takeLatest([EventTypes.DELETE_EVENT], EventSagas.deleteEvent),
     // @formatter:on
   ]);
 };

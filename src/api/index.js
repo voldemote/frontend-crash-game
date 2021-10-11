@@ -2,10 +2,15 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_GET_NOTIFICATION_EVENTS } from '../constants/Api';
+import Store from '../store';
+import { AuthenticationActions } from 'store/actions/authentication';
+
+const {
+  store: { dispatch },
+} = Store();
 
 const createInstance = (host, apiPath) => {
-  return axios.create({
+  const axiosClient = axios.create({
     baseURL: `${host}${apiPath}`,
     timeout: 30000,
     headers: {
@@ -13,6 +18,16 @@ const createInstance = (host, apiPath) => {
       accept: ContentTypes.applicationJSON,
     },
   });
+  axiosClient.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response.status === 401) {
+        dispatch(AuthenticationActions.forcedLogout());
+      }
+      throw error;
+    }
+  );
+  return axiosClient;
 };
 
 const Api = createInstance(ApiUrls.BACKEND_URL, '/');
@@ -141,22 +156,8 @@ const getLeaderboard = (skip, limit) => {
   });
 };
 
-const createBet = (
-  eventId,
-  marketQuestion,
-  description,
-  outcomes,
-  endDate,
-  liquidityAmount
-) => {
-  return Api.post(ApiUrls.API_BET_CREATE, {
-    eventId,
-    marketQuestion,
-    description,
-    outcomes,
-    endDate,
-    liquidityAmount,
-  }).catch(error => {
+const createBet = payload => {
+  return Api.post(ApiUrls.API_BET_CREATE, payload).catch(error => {
     console.log('[API Error] called: createBet', error);
   });
 };
@@ -272,6 +273,12 @@ const editEvent = (id, payload) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const deleteEvent = id => {
+  return Api.delete(ApiUrls.API_EVENT_DELETE.replace(':id', id))
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 const createEventBet = payload => {
   return Api.post(ApiUrls.API_EVENT_BET_CREATE, payload)
     .then(response => ({ response }))
@@ -346,8 +353,12 @@ const getTradeById = id => {
 
 const getNotificationEvents = params => {
   const limit = _.get(params, 'limit', 10);
+  const category = _.get(params, 'category', 10);
   return Api.get(
-    ApiUrls.API_GET_NOTIFICATION_EVENTS.replace(':limit', limit)
+    ApiUrls.API_GET_NOTIFICATION_EVENTS.replace(':limit', limit).replace(
+      ':category',
+      category
+    )
   ).catch(error => {
     console.log('[API Error] called: getNotificationEvents', error);
   });
@@ -419,6 +430,7 @@ export {
   postRewardAnswer,
   createEvent,
   editEvent,
+  deleteEvent,
   createEventBet,
   editEventBet,
   getBetTemplates,

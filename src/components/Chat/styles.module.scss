@@ -26,7 +26,7 @@
     }
 
     @media (max-width: $screen-sm) {
-      margin-bottom: 4rem;
+      margin-bottom: 80px;
     }
 
     &::-webkit-scrollbar {
@@ -36,6 +36,11 @@
 
     > :first-child {
       margin-top: auto;
+    }
+
+    .paginationIntersection {
+      min-height: 50px;
+      width: 100px;
     }
   }
 
@@ -50,7 +55,7 @@
 
     @media (max-width: $screen-sm) {
       position: fixed;
-      bottom: 40px;
+      bottom: 58px;
       left: 0;
       z-index: 1001;
       width: 100vw;

@@ -22,7 +22,6 @@ import {
   selectTimeStarted,
 } from '../../store/selectors/rosi-game';
 import ReactCanvasConfetti from 'react-canvas-confetti';
-import { playWinSound } from '../../helper/Audio';
 import InfoBox from 'components/InfoBox';
 import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
@@ -166,22 +165,31 @@ const PlaceBet = ({ connected }) => {
           className={classNames(styles.button, {
             [styles.buttonDisabled]:
               !connected || userUnableToBet || isBetInQueue,
+            [styles.notConnected]: !connected,
           })}
           onClick={user.isLoggedIn ? placeABet : placeGuestBet}
+          data-tracking-id={
+            user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
+          }
         >
           {user.isLoggedIn ? 'Place Bet' : 'Play Demo'}
         </span>
       );
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
       return (
-        <span
-          role="button"
-          tabIndex="0"
-          className={classNames(styles.button, styles.buttonDisabled)}
-          onClick={user.isLoggedIn ? () => {} : showLoginPopup}
-        >
-          {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed'}
-        </span>
+        <>
+          <span
+            role="button"
+            tabIndex="0"
+            className={classNames(styles.button, styles.buttonDisabled)}
+            onClick={user.isLoggedIn ? () => {} : showLoginPopup}
+            data-tracking-id={
+              user.isLoggedIn ? null : 'elongame-showloginpopup'
+            }
+          >
+            {user.isLoggedIn ? 'Bet Placed' : 'Bet Placed'}
+          </span>
+        </>
       );
     } else {
       return (
@@ -193,14 +201,61 @@ const PlaceBet = ({ connected }) => {
               !connected ||
               (!userPlacedABet && isGameRunning) ||
               !isGameRunning,
+            [styles.notConnected]: !connected,
           })}
           onClick={user.isLoggedIn ? cashOut : cashOutGuest}
+          data-tracking-id={
+            user.isLoggedIn ? 'elongame-cashout' : 'elongame-cashout-guest'
+          }
         >
           {user.isLoggedIn ? 'Cash Out' : 'Cash Out'}
         </span>
       );
     }
   };
+
+  const renderMessage = () => {
+    if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
+      return (
+        <div
+          className={classNames([
+            styles.betInfo,
+            !user.isLoggedIn ? styles.guestInfo : [],
+          ])}
+        >
+          Waiting for the next round to start
+        </div>
+      );
+    }
+    if (!user.isLoggedIn) {
+      return (
+        <div className={classNames([styles.betInfo, styles.guestInfo])}>
+          This is a simulated version. Signin to start playing.
+        </div>
+      );
+    }
+  };
+
+  const renderProfit = () => {
+    if (userPlacedABet && isGameRunning) {
+      return (
+        <div className={styles.profit}>
+          <Timer
+            showIncome
+            pause={!isGameRunning}
+            startTimeMs={gameStartedTime}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.profitPlaceholder}>
+          <span>+0 WFAIR</span>
+        </div>
+      );
+    }
+  };
+
   const canvasStyles = {
     position: 'fixed',
     pointerEvents: 'none',
@@ -219,7 +274,7 @@ const PlaceBet = ({ connected }) => {
         particleCount={300}
         spread={360}
         origin={{ x: 0.4, y: 0.45 }}
-        onFire={() => playWinSound()}
+        onFire={() => dispatch(RosiGameActions.playWinSound())}
       />
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
@@ -286,18 +341,9 @@ const PlaceBet = ({ connected }) => {
           )}
         </div>
       </div>
-      {userPlacedABet && isGameRunning ? (
-        <div className={styles.profit}>
-          <Timer
-            showIncome
-            pause={!isGameRunning}
-            startTimeMs={gameStartedTime}
-          />
-        </div>
-      ) : (
-        <div className={styles.profit}>&nbsp;</div>
-      )}
+      {renderProfit()}
       {renderButton()}
+      {renderMessage()}
     </div>
   );
 };
