@@ -26,6 +26,20 @@ import { NotificationActions } from '../../store/actions/notification';
 
 SwiperCore.use([Navigation, Pagination]);
 
+/***
+ *
+ * @param className - class name for container
+ * @param messagesClassName - class name for messages
+ * @param activities - saga state for global activities (api initial call + websocket combined)
+ * @param addInitialActivities - saga action to dispatch
+ * @param showCategories - show categories selector
+ * @param activitiesLimit - api call activities limit to fetch
+ * @param betId - when exist we are showing things related with defined betId
+ * @param user - when exist we are showing things related with defined user
+ * @returns {JSX.Element}
+ * @constructor
+ */
+
 const ActivitiesTracker = ({
   className,
   messagesClassName,
@@ -34,6 +48,7 @@ const ActivitiesTracker = ({
   showCategories,
   activitiesLimit,
   betId,
+  user,
 }) => {
   const messageListRef = useRef();
 

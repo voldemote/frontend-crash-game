@@ -337,7 +337,9 @@ const MainMenu = ({
         )}
       >
         <h2 className={styles.profileHeading}>
-          <Link to={Routes.user}>My Profile</Link>
+          <Link to={Routes.user.replace(':userId', user.userId)}>
+            My Profile
+          </Link>
         </h2>
         <div className={styles.mainContent}>
           <HomeSettings
