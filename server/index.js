@@ -16,6 +16,9 @@ const apiPath =
 const listPaths = ['api/event/list'];
 const listPathForUser = 'api/user/';
 
+console.log('PROCESS ENV ####################################')
+console.log(process.env)
+
 const indexPath = path.resolve(__dirname, '..', 'build', 'index.html');
 
 appendRoutes(apiPath, listPaths).then(meta => {
