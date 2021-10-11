@@ -16,6 +16,7 @@ import EmailNotifications from 'components/EmailNotifications';
 import Preferences from 'components/Preferences';
 import Referrals from 'components/Referrals';
 import Textarea from 'components/Textarea';
+import { Link } from 'react-router-dom';
 
 const MainMenu = ({
   opened,
@@ -335,7 +336,9 @@ const MainMenu = ({
             styles.panelHidden
         )}
       >
-        <h2 className={styles.profileHeading}>My Profile</h2>
+        <h2 className={styles.profileHeading}>
+          <Link to={Routes.user}>My Profile</Link>
+        </h2>
         <div className={styles.mainContent}>
           <HomeSettings
             onEditClick={() => onClickShowEditProfile()}
