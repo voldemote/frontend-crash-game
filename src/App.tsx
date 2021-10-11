@@ -71,7 +71,7 @@ const App = () => {
   );
 
   return (
-    <div onScroll={process.env.REACT_HIDE_MOBILE_SCROLLING_SHOW_MENU ? undefined : onScroll}>
+    <div onScroll={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : onScroll}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
@@ -118,7 +118,7 @@ const App = () => {
             <Redirect to={Routes.home} />
           </Switch>
           <NavbarFooter 
-            hideVisibility={process.env.REACT_HIDE_MOBILE_SCROLLING_SHOW_MENU ? undefined : hideMobileNavbar}
+            hideVisibility={process.env.REACT_APP_HIDE_MOBILE_SCROLLING_MENU_BEHAVIOR ? undefined : hideMobileNavbar}
             skipRoutes={[Routes.bet, Routes.verify]}
           >
             <NavbarFooterAction
@@ -153,5 +153,11 @@ const App = () => {
   );
 };
 
+// Recalculating after resizing screen
+window.addEventListener('resize', () => {
+  let vh = window.innerHeight * 0.01;
+
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
 
 export default App;
