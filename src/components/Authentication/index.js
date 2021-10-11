@@ -85,7 +85,7 @@ const Authentication = ({
     let error;
 
     if (isSignUp() && !forgotPassword && !legalAuthorizationAgreed) {
-      error = "Confirm that you're legally authorized";
+      error = 'Confirm that you agree with Terms and Conditions';
       fooRef = acceptRef;
     }
     if (isSignUp() && !forgotPassword && !passwordsMatch()) {
