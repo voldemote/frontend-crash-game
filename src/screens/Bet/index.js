@@ -372,14 +372,18 @@ const Bet = ({
       EventTradeViewsHelper.getView('Event Trades'),
       event.type === 'non-streamed'
         ? EventTradeViewsHelper.getView('Evidence', undefined, false)
-        : // EventTradeViewsHelper.getView('Activities', undefined, false),
-          // EventTradeViewsHelper.getView('All trades', undefined, false))
-          EventTradeViewsHelper.getView(
+        : EventTradeViewsHelper.getView(
             'My Trades',
             isLoggedIn() ? activeBets.length : 0,
             true
           ),
     ];
+
+    if (event.type === 'non-streamed') {
+      eventViews.push(
+        EventTradeViewsHelper.getView('Activities', undefined, false)
+      );
+    }
 
     return (
       <EventTradesContainer
