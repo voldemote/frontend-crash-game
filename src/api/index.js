@@ -23,9 +23,8 @@ const createInstance = (host, apiPath) => {
     error => {
       if (error.response.status === 401) {
         dispatch(AuthenticationActions.forcedLogout());
-        return null;
       }
-      return error;
+      throw error;
     }
   );
   return axiosClient;
