@@ -523,6 +523,12 @@ const Bet = ({
             <div>{renderMyTradesList()}</div>
           )}
         </SwiperSlide>
+
+        {isNonStreamed && bet && (
+          <SwiperSlide className={styles.carouselSlide}>
+            <div>ACTIVITIES</div>
+          </SwiperSlide>
+        )}
       </Swiper>
     );
   };
