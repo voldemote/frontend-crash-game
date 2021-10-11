@@ -73,12 +73,14 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     }
   };
 
-  const getUserProfileUrl = user => {
-    if (!user) {
-      return 'Unknown user';
-    }
+  const getUserProfileUrl = data => {
+    let user = _.get(data, 'user');
+    let userId = _.get(user, '_id');
 
-    const userId = _.get(user, 'userId');
+    //fallback if not yet, new event structure contains userId directly in event payload
+    if (!userId) {
+      userId = _.get(data, 'trade.userId');
+    }
 
     return (
       <a
