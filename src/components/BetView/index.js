@@ -77,7 +77,7 @@ const BetView = ({
       0
     )
   );
-  const defaultBetValue = 1;
+  const defaultBetValue = 50;
   const event = _.find(events, {
     _id: eventId,
   });
