@@ -526,7 +526,14 @@ const Bet = ({
 
         {isNonStreamed && bet && (
           <SwiperSlide className={styles.carouselSlide}>
-            <div>ACTIVITIES</div>
+            <div className={styles.activitiesTabContainerMobile}>
+              <ActivitiesTracker
+                showCategories={false}
+                activitiesLimit={50}
+                betId={betId}
+                className={styles.activitiesTrackerTabBlock}
+              />
+            </div>
           </SwiperSlide>
         )}
       </Swiper>
