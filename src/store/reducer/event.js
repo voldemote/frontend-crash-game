@@ -185,8 +185,12 @@ export default function (state = initialState, action) {
       return fetchTagsSuccess(action, state);
     case EventTypes.BOOKMARK_EVENT_INIT:
       return bookmarkEvent(state, action);
+    case EventTypes.BOOKMARK_EVENT_FAILED:
+      return bookmarkEventCancel(state, action);
     case EventTypes.BOOKMARK_EVENT_CANCEL_INIT:
       return bookmarkEventCancel(state, action);
+    case EventTypes.BOOKMARK_EVENT_CANCEL_FAILED:
+      return bookmarkEvent(state, action);
     default:
       return state;
     // @formatter:on

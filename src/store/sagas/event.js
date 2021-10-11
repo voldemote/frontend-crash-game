@@ -219,8 +219,8 @@ const deleteEvent = function* ({ payload: { eventId } }) {
 };
 
 const bookmarkEvent = function* ({ eventId }) {
+  const userId = yield select(state => state.authentication.userId);
   try {
-    const userId = yield select(state => state.authentication.userId);
     if (userId) {
       yield put(
         EventActions.bookmarkEventInit({
@@ -232,13 +232,18 @@ const bookmarkEvent = function* ({ eventId }) {
       yield put(EventActions.bookmarkEventSuccess());
     }
   } catch (error) {
-    yield put(EventActions.bookmarkEventFail());
+    yield put(
+      EventActions.bookmarkEventFail({
+        eventId,
+        userId,
+      })
+    );
   }
 };
 
 const bookmarkEventCancel = function* ({ eventId }) {
+  const userId = yield select(state => state.authentication.userId);
   try {
-    const userId = yield select(state => state.authentication.userId);
     if (userId) {
       yield put(
         EventActions.bookmarkEventCancelInit({
@@ -250,7 +255,12 @@ const bookmarkEventCancel = function* ({ eventId }) {
       yield put(EventActions.bookmarkEventCancelSuccess());
     }
   } catch (error) {
-    yield put(EventActions.bookmarkEventCancelFail());
+    yield put(
+      EventActions.bookmarkEventCancelFail({
+        eventId,
+        userId,
+      })
+    );
   }
 };
 
