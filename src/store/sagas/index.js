@@ -25,6 +25,10 @@ const root = function* () {
   yield all([
     // @formatter:off
     takeLatest([AuthenticationTypes.LOGOUT], AuthenticationSagas.logout),
+    takeLatest(
+      [AuthenticationTypes.FORCED_LOGOUT],
+      AuthenticationSagas.forcedLogout
+    ),
     takeLatest([AuthenticationTypes.VERIFY_SMS], AuthenticationSagas.verifySms),
     takeLatest(
       [AuthenticationTypes.REQUEST_SMS],
