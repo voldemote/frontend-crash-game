@@ -2,10 +2,15 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_GET_NOTIFICATION_EVENTS } from '../constants/Api';
+import Store from '../store';
+import { AuthenticationActions } from 'store/actions/authentication';
+
+const {
+  store: { dispatch },
+} = Store();
 
 const createInstance = (host, apiPath) => {
-  return axios.create({
+  const axiosClient = axios.create({
     baseURL: `${host}${apiPath}`,
     timeout: 30000,
     headers: {
@@ -13,6 +18,17 @@ const createInstance = (host, apiPath) => {
       accept: ContentTypes.applicationJSON,
     },
   });
+  axiosClient.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response.status === 401) {
+        dispatch(AuthenticationActions.forcedLogout());
+        return null;
+      }
+      return error;
+    }
+  );
+  return axiosClient;
 };
 
 const Api = createInstance(ApiUrls.BACKEND_URL, '/');
