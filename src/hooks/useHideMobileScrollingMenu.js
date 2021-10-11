@@ -9,7 +9,7 @@ const useHideMobileScrollingMenu = () => {
     event => {
       const { scrollTop } = event.target;
 
-      // when user scrolls down and the mobile navbar is hidden
+      // when user scrolls down
       if (lastScrollTop.current < scrollTop) {
         if (hideNavbar) setHideNavbar(false);
 
