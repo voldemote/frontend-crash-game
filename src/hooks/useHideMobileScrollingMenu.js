@@ -1,28 +1,19 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useHideMobileScrollingMenu = () => {
-  const lastScrollTop = useRef(0);
-  const [hideNavbar, setHideNavbar] = useState(true);
-  const timerRef = useRef();
+  const [hideNavbar, setHideNavbar] = useState(false);
 
   const onScroll = useCallback(
     event => {
       const { scrollTop } = event.target;
 
-      // when user scrolls down
-      if (lastScrollTop.current < scrollTop) {
-        if (hideNavbar) setHideNavbar(false);
-
-        clearTimeout(timerRef.current);
-        // hide the navbar when the user stops scrolling (effect after 3 seconds)
-        timerRef.current = setTimeout(() => {
-          if (!hideNavbar) {
-            setHideNavbar(true);
-          }
-        }, 3000);
+      // when user scrolls down and the navbar is not hidden
+      if (scrollTop > 0 && !hideNavbar) {
+        setHideNavbar(true);
+        // if the user is on the top of the screen
+      } else if (scrollTop === 0) {
+        setHideNavbar(false);
       }
-
-      lastScrollTop.current = scrollTop;
     },
     [hideNavbar]
   );
