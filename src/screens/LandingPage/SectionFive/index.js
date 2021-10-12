@@ -5,7 +5,6 @@ import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import styles from './styles.module.scss';
-import { TOKEN_NAME } from 'constants/Token';
 
 const SectionFive = ({ classes }) => {
   const dispatch = useDispatch();

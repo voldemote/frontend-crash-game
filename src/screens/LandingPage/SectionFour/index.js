@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
-import { TOKEN_NAME } from 'constants/Token';
 
 const SectionFour = ({ classes }) => {
   const dispatch = useDispatch();
@@ -36,12 +35,12 @@ const SectionFour = ({ classes }) => {
       <div className={classes.sectionNumber}>04</div>
       <div className={classes.textContainer}>
         <h2 className={classes.sectionHeading}>
-          The {TOKEN_NAME} Token and its Abilities
+          The WFAIR Token and its Abilities
         </h2>
         <p className={classes.textParagraph}>
           Good question, Jimmy. Think of it as your own in-game currency, think
-          of it as coins in your wallet or even a casino chip. The ${TOKEN_NAME}{' '}
-          token is our very own, in-house crypto and the best part is, it’s easy
+          of it as coins in your wallet or even a casino chip. The $WFAIR token
+          is our very own, in-house crypto and the best part is, it’s easy
           Crypto.
         </p>
         <br />

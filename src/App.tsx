@@ -32,14 +32,17 @@ import AudioContent from './components/AudioContent';
 import ScrollToTop from 'utils/ScrollToTop';
 import DisclaimerPopupContainer from 'components/DisclaimerPopupContainer';
 import PageTracker from 'components/PageTracker';
+import useHideMobileScrollingMenu from 'hooks/useHideMobileScrollingMenu';
 
 const { store, persistor } = configStore();
 
 initTagManager();
 
 const App = () => {
+  const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
 
   return (
+    <div onScroll={onScroll}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ConnectedRouter history={history}>
@@ -85,7 +88,10 @@ const App = () => {
             {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
             <Redirect to={Routes.home} />
           </Switch>
-          <NavbarFooter skipRoutes={[Routes.bet, Routes.verify]}>
+          <NavbarFooter 
+            hideVisibility={hideNavbar}
+            skipRoutes={[Routes.bet, Routes.verify]}
+          >
             <NavbarFooterAction
               route={Routes.home}
               iconType={IconType.home}
@@ -114,6 +120,7 @@ const App = () => {
         </ConnectedRouter>
       </PersistGate>
     </Provider>
+    </div>
   );
 };
 

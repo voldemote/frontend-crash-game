@@ -1,4 +1,3 @@
-import { TOKEN_NAME } from 'constants/Token';
 import Image from './image.png';
 import styles from './styles.module.scss';
 

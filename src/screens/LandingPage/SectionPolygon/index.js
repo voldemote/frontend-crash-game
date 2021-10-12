@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
-import { TOKEN_NAME } from 'constants/Token';
 
 const SectionPolygon = ({ classes }) => {
   const dispatch = useDispatch();
@@ -34,8 +33,8 @@ const SectionPolygon = ({ classes }) => {
           house. Betting on Wallfair is as simple as searching for your
           favourite event, or why not even create one of your own, jumping right
           into the action and simply clicking the “place bet” button. Then sit
-          back and watch your ${TOKEN_NAME} tokens grow. The more you play, the
-          more you earn.
+          back and watch your $WFAIR tokens grow. The more you play, the more
+          you earn.
         </p>
         {/* <br />
         <br />

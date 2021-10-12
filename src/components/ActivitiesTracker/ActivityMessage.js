@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import { formatToFixed } from 'helper/FormatNumbers';
-import { TOKEN_NAME } from '../../constants/Token';
+import { TOKEN_NAME } from 'constants/Token';
 
 const ActivityMessage = ({ activity, date, users, events }) => {
   const [dateString, setDateString] = useState('');
