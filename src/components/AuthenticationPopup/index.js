@@ -25,10 +25,10 @@ const AuthenticationPopup = ({ authenticationType }) => {
         <TimeCounter endDate={promoDeadline} externalStyles={timerStyles} />
       </div>
       <p>
-        Sign up <strong>now</strong> for a chance to be one of the 5000 early
+        Sign up <strong>now</strong> for a chance to be one of the 5,000 early
         access testers and earn
       </p>
-      <span className={styles.prizeAmount}>5.000 {TOKEN_NAME}</span>
+      <span className={styles.prizeAmount}>5,000 {TOKEN_NAME}</span>
       <ConfettiLeft className={styles.confettiLeft} />
       <ConfettiRight className={styles.confettiRight} />
     </div>

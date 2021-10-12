@@ -19,7 +19,7 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
         <img className={styles.logoMini} src={LogoMini} />
         <span className={styles.welcomeTextText}>Sign up and get</span>
         <span className={styles.welcomeTextHeadline}>
-          5.000 {TOKEN_NAME} for free!
+          5,000 {TOKEN_NAME} for free!
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
       </div>

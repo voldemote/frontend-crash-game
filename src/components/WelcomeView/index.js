@@ -34,7 +34,7 @@ const WelcomeView = ({ hidePopup, visible }) => {
     return (
       <div className={styles.welcomeTextContainer}>
         <span className={styles.welcomeTextHeadline}>
-          5.000 {TOKEN_NAME}
+          5,000 {TOKEN_NAME}
           <span>*</span>
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
