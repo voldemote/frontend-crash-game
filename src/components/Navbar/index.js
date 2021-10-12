@@ -185,7 +185,7 @@ const Navbar = ({
         data-tracking-id="menu-wallet-icon"
       >
         <Icon iconType={'wallet'} />
-        {formatToFixed(balance, 0)} {currency}
+        {formatToFixed(balance, 0, true)} {currency}
       </div>
     );
 
@@ -256,7 +256,7 @@ const Navbar = ({
       <div className={style.leaderboardInfoItem}>
         <div className={style.leaderboardInfoItemText}>{text}</div>
         <div className={style.leaderboardInfoItemNumber}>
-          {formatToFixed(number, 0)}
+          {formatToFixed(number, 0, true)}
           <span className={style.leaderboardInfoItemToken}> {currency}</span>
         </div>
       </div>

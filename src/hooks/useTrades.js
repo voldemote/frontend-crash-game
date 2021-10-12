@@ -24,21 +24,13 @@ const getOpenBets = (openBets, events) => {
   return _.map(openBets, openBet => {
     const trade = getTrade(openBet.betId, events);
     const outcomeValue = _.get(trade, ['outcomes', openBet.outcome, 'name']);
-    const outcomeAmount = formatToFixed(
-      _.get(openBet, 'outcomeAmount', 0),
-      2,
-      false
-    );
+    const outcomeAmount = formatToFixed(_.get(openBet, 'outcomeAmount', 0));
     const investmentAmount = formatToFixed(
-      _.get(openBet, 'investmentAmount', 0),
-      2,
-      false
+      _.get(openBet, 'investmentAmount', 0)
     );
     const sellAmount = formatToFixed(_.get(openBet, 'sellAmount', 0));
     const currentBuyAmount = formatToFixed(
-      _.get(openBet, 'currentBuyAmount', 0),
-      2,
-      false
+      _.get(openBet, 'currentBuyAmount', 0)
     );
 
     return {
@@ -59,13 +51,9 @@ const getTransactions = (trades, events) => {
   return _.map(trades, t => {
     const trade = getTrade(t.betId, events);
     const outcomeValue = _.get(trade, ['outcomes', t.outcomeIndex, 'name']);
-    const outcomeAmount = formatToFixed(_.get(t, 'outcomeAmount', 0), 2, false);
-    const investmentAmount = formatToFixed(
-      _.get(t, 'investmentAmount', 0),
-      2,
-      false
-    );
-    const soldAmount = formatToFixed(_.get(t, 'soldAmount', 0), 2, false);
+    const outcomeAmount = formatToFixed(_.get(t, 'outcomeAmount', 0));
+    const investmentAmount = formatToFixed(_.get(t, 'investmentAmount', 0));
+    const soldAmount = formatToFixed(_.get(t, 'soldAmount', 0));
 
     return {
       ...trade,

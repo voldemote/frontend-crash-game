@@ -306,11 +306,7 @@ const BetView = ({
           setValue={onTokenNumberChange}
           currency={currency}
           errorText={commitmentErrorText}
-          maxValue={formatToFixed(
-            userLoggedIn ? balance : BALANCE_NOT_LOGGED,
-            2,
-            false
-          )}
+          maxValue={formatToFixed(userLoggedIn ? balance : BALANCE_NOT_LOGGED)}
         />
       </>
     );
