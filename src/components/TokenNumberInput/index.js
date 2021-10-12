@@ -41,6 +41,17 @@ const TokenNumberInput = ({
     setValue(targetValue);
   };
 
+  const onBetAmountChanged = multiplier => {
+    const changedValue = _.floor(value * multiplier, 0);
+    if (changedValue > maxValue) {
+      setValue(_.floor(maxValue, 0));
+    } else if (changedValue < 1) {
+      setValue(1);
+    } else {
+      setValue(changedValue);
+    }
+  };
+
   return (
     <>
       <div className={classNames(styles.tokenNumberInputContainer, className)}>
@@ -53,6 +64,17 @@ const TokenNumberInput = ({
           {...props}
         />
         <span className={styles.eventTokenLabel}>{currency}</span>
+        <div className={styles.buttonWrapper}>
+          <span
+            className={styles.button}
+            onClick={() => onBetAmountChanged(0.5)}
+          >
+            ½
+          </span>
+          <span className={styles.button} onClick={() => onBetAmountChanged(2)}>
+            2x
+          </span>
+        </div>
       </div>
       <ErrorHint
         className={styles.tokenNumberErrorHint}
