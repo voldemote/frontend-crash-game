@@ -58,16 +58,21 @@ const BetActionChatMessage = ({
         return (
           <>
             {userName} created trade{' '}
-            <strong>{`${tokenAmount} ${currency}`}</strong> on{' '}
-            <strong>{outcomeValue}</strong>.
+            <div className={'global-token-currency'}>
+              <strong>{`${tokenAmount} ${currency}`}</strong>
+            </div>{' '}
+            on <strong>{outcomeValue}</strong>.
           </>
         );
 
       case ChatMessageType.placeBet:
         return (
           <>
-            {userName} bought <strong>{`${tokenAmount} ${currency}`}</strong> of{' '}
-            <strong>{outcomeValue}</strong>.
+            {userName} bought{' '}
+            <div className={'global-token-currency'}>
+              <strong>{`${tokenAmount} ${currency}`}</strong>
+            </div>{' '}
+            of <strong>{outcomeValue}</strong>.
           </>
         );
 
@@ -75,7 +80,10 @@ const BetActionChatMessage = ({
         return (
           <>
             {userName} sold <strong>{outcomeValue}</strong> for{' '}
-            <strong>{`${tokenAmount} ${currency}`}</strong>.
+            <div className={'global-token-currency'}>
+              <strong>{`${tokenAmount} ${currency}`}</strong>
+            </div>
+            .
           </>
         );
     }
