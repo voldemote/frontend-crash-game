@@ -31,7 +31,7 @@
 
 
 .drawerHidden {
-  right: -101%;
+  right: -105%;
 }
 
 .backButton {
@@ -89,4 +89,25 @@ $border: 1px solid $colorWhite30;
     font-size: 15px;
     padding: 0 10px;
   }
+}
+
+.swiper-events-tabs {
+  .swiper-pagination-bullet {
+    background: $colorGrayLight;
+
+    &.swiper-pagination-bullet-active {
+      background: $colorYellow;
+    }
+  }
+}
+
+.global-token-currency {
+  color: $colorYellow;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.global-link-style {
+  font-weight: bold;
+  text-decoration: underline;
 }
