@@ -126,6 +126,9 @@ const BetCard = ({
               </div>
             ))}
           </div>
+          <div className={styles.buttonContainer}>
+            <div className={styles.button}>Trade</div>
+          </div>
         </div>
       </div>
     </div>
