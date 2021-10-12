@@ -242,9 +242,6 @@ const Bet = ({
 
   const onBetActionSwitch = newIndex => {
     setBetAction(newIndex);
-    if (newIndex === 0) {
-      mobileChatRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   const isLoggedIn = () => {
