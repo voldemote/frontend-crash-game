@@ -2,10 +2,15 @@ import * as ApiUrls from '../constants/Api';
 import _ from 'lodash';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_GET_NOTIFICATION_EVENTS } from '../constants/Api';
+import Store from '../store';
+import { AuthenticationActions } from 'store/actions/authentication';
+
+const {
+  store: { dispatch },
+} = Store();
 
 const createInstance = (host, apiPath) => {
-  return axios.create({
+  const axiosClient = axios.create({
     baseURL: `${host}${apiPath}`,
     timeout: 30000,
     headers: {
@@ -13,6 +18,16 @@ const createInstance = (host, apiPath) => {
       accept: ContentTypes.applicationJSON,
     },
   });
+  axiosClient.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response.status === 401) {
+        dispatch(AuthenticationActions.forcedLogout());
+      }
+      throw error;
+    }
+  );
+  return axiosClient;
 };
 
 const Api = createInstance(ApiUrls.BACKEND_URL, '/');
@@ -264,6 +279,14 @@ const deleteEvent = id => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const bookmarkEvent = id => {
+  return Api.put(ApiUrls.API_EVENT_BOOKMARK.replace(':id', id));
+};
+
+const bookmarkEventCancel = id => {
+  return Api.put(ApiUrls.API_EVENT_BOOKMARK_CANCEL.replace(':id', id));
+};
+
 const createEventBet = payload => {
   return Api.post(ApiUrls.API_EVENT_BET_CREATE, payload)
     .then(response => ({ response }))
@@ -442,6 +465,8 @@ export {
   createEvent,
   editEvent,
   deleteEvent,
+  bookmarkEvent,
+  bookmarkEventCancel,
   createEventBet,
   editEventBet,
   getBetTemplates,

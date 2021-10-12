@@ -9,6 +9,7 @@ export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 export const NEWS_API_SSL_MODE =
   process.env.REACT_APP_NEWS_API_SSL_MODE === 'true';
+export const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY;
 
 // Services
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';
@@ -30,6 +31,8 @@ export const API_BET_TEMPLATES = 'api/bet-template';
 export const API_EVENT_CREATE = 'api/event/create';
 export const API_EVENT_EDIT = 'api/event/:id';
 export const API_EVENT_DELETE = 'api/event/:id';
+export const API_EVENT_BOOKMARK = 'api/event/:id/bookmark';
+export const API_EVENT_BOOKMARK_CANCEL = 'api/event/:id/bookmark/cancel';
 export const API_EVENT_LIST = 'api/event/list';
 export const API_EVENT_LIST_FILTERED =
   'api/event/list/:type/:category/:count/:page/:sortBy/:upcoming/:deactivated/:searchQuery';
