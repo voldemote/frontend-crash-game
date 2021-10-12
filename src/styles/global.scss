@@ -90,3 +90,13 @@ $border: 1px solid $colorWhite30;
     padding: 0 10px;
   }
 }
+
+.swiper-events-tabs {
+  .swiper-pagination-bullet {
+    background: $colorGrayLight;
+
+    &.swiper-pagination-bullet-active {
+      background: $colorYellow;
+    }
+  }
+}

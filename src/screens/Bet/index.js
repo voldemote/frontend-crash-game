@@ -455,6 +455,7 @@ const Bet = ({
   const renderMobileContent = () => {
     return (
       <Swiper
+        className={'swiper-events-tabs'}
         slidesPerView={1}
         pagination={{
           clickable: false,
