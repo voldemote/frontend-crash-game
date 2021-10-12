@@ -153,7 +153,7 @@ function EventsContent({
 
   const showJoinPopup = useCallback(event => {
     showPopup(PopupTheme.auth, {
-      small: true,
+      small: false,
     });
   }, []);
 
