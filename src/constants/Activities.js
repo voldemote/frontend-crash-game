@@ -20,13 +20,18 @@ export const ACTIVITIES_TO_TRACK = [
       'Notification/EVENT_BET_CASHED_OUT',
       'Notification/EVENT_BET_RESOLVED',
       'Notification/EVENT_BET_CANCELED',
+      'Notification/EVENT_BET_EVALUATED',
     ],
   },
   {
     value: 'users',
     category: 'Users',
     image: VegasIcon,
-    eventsCats: ['Notification/EVENT_USER_REWARD'],
+    eventsCats: [
+      `Notification/EVENT_USER_SIGNED_IN`,
+      `Notification/EVENT_USER_SIGNED_UP`,
+      'Notification/EVENT_USER_REWARD',
+    ],
   },
   {
     value: 'elongame',

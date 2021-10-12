@@ -105,7 +105,7 @@ const UserProfile = () => {
               <ActivitiesTracker
                 showCategories={false}
                 activitiesLimit={50}
-                user={user}
+                preselectedCategory={'users'}
                 className={styles.activitiesTrackerUserPage}
               />
             ) : (

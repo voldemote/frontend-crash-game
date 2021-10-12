@@ -35,7 +35,7 @@ SwiperCore.use([Navigation, Pagination]);
  * @param showCategories - show categories selector
  * @param activitiesLimit - api call activities limit to fetch
  * @param betId - when exist we are showing things related with defined betId
- * @param user - when exist we are showing things related with defined user
+ * @param preselectedCategory - focus on specific categories only
  * @returns {JSX.Element}
  * @constructor
  */
@@ -48,7 +48,6 @@ const ActivitiesTracker = ({
   showCategories,
   activitiesLimit,
   betId,
-  user,
   preselectedCategory,
 }) => {
   const messageListRef = useRef();

@@ -202,6 +202,13 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             Bet <b>{getEventUrl(data)}</b> has been resolved.
           </div>
         );
+      case 'Notification/EVENT_BET_EVALUATED':
+        return (
+          <div>
+            Bet <b>{_.get(data, 'bet_question')}</b> has been rated as{' '}
+            <b>{_.get(data, 'rating')}</b>.
+          </div>
+        );
       case 'Casino/CASINO_PLACE_BET':
         return (
           <div>
@@ -217,6 +224,18 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
+        );
+      case 'Notification/EVENT_USER_SIGNED_IN':
+        return (
+          <div>
+            <b>{getUserProfileUrl(data)}</b> has signed in.
+          </div>
+        );
+      case 'Notification/EVENT_USER_SIGNED_UP':
+        return (
+          <div>
+            <b>{getUserProfileUrl(data)}</b> has signed up.
+          </div>
         );
       default:
         return null;

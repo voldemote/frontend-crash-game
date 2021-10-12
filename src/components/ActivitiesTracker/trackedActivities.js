@@ -1,4 +1,6 @@
 export default [
+  `Notification/EVENT_USER_SIGNED_IN`,
+  `Notification/EVENT_USER_SIGNED_UP`,
   'Notification/EVENT_USER_REWARD',
   'Notification/EVENT_ONLINE',
   'Notification/EVENT_OFFLINE',
@@ -8,6 +10,7 @@ export default [
   'Notification/EVENT_BET_CASHED_OUT',
   'Notification/EVENT_BET_RESOLVED',
   'Notification/EVENT_BET_CANCELED',
+  'Notification/EVENT_BET_EVALUATED',
   'Casino/CASINO_PLACE_BET',
   'Casino/CASINO_CASHOUT',
 ];
