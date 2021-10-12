@@ -96,9 +96,7 @@ const RosiGame = ({ showPopup, connected }) => {
                     />
                   </div>
                 </Grid>
-                <Grid item md={4}>
-                  <GameBets label="In Game Bets" bets={inGameBets} />
-                </Grid>
+                <Grid item md={4}></Grid>
                 <Grid item md={4}>
                   <GameBets
                     label="Cashed Out"
