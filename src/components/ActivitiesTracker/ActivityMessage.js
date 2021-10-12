@@ -114,8 +114,6 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       event = State.getEvent(_.get(data, 'bet.event'), events);
     }
 
-    console.log('activity.type', activity.type);
-
     switch (activity.type) {
       case 'Notification/EVENT_BET_CANCELED':
         return (

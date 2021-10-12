@@ -19,7 +19,11 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { useIsMount } from '../hoc/useIsMount';
 import ActivityMessage from './ActivityMessage';
-import { getNotificationEvents } from '../../api';
+import {
+  getNotificationEvents,
+  getNotificationEventsByBet,
+  getNotificationEventsByUser,
+} from '../../api';
 
 import { ACTIVITIES_TO_TRACK } from '../../constants/Activities';
 import { NotificationActions } from '../../store/actions/notification';
@@ -40,6 +44,34 @@ SwiperCore.use([Navigation, Pagination]);
  * @constructor
  */
 
+const callByParams = async params => {
+  const { betId, userId, activitiesLimit, selectedCategory } = params;
+  if (betId) {
+    return await getNotificationEventsByBet({
+      limit: activitiesLimit || 10,
+      betId,
+    }).catch(err => {
+      console.error("Can't getNotificationEventsByBet", err);
+    });
+  }
+
+  if (userId) {
+    return await getNotificationEventsByUser({
+      limit: activitiesLimit || 10,
+      userId,
+    }).catch(err => {
+      console.error("Can't getNotificationEventsByUser", err);
+    });
+  }
+
+  return getNotificationEvents({
+    limit: activitiesLimit || 10,
+    category: selectedCategory,
+  }).catch(err => {
+    console.error("Can't getNotificationEvents", err);
+  });
+};
+
 const ActivitiesTracker = ({
   className,
   messagesClassName,
@@ -48,6 +80,7 @@ const ActivitiesTracker = ({
   showCategories,
   activitiesLimit,
   betId,
+  userId,
   preselectedCategory,
 }) => {
   const messageListRef = useRef();
@@ -68,11 +101,13 @@ const ActivitiesTracker = ({
   useEffect(() => {
     if (isMount) {
       (async () => {
-        const initialActivities = await getNotificationEvents({
-          limit: activitiesLimit || 10,
-          category: selectedCategory,
+        let initialActivities = await callByParams({
+          betId,
+          userId,
+          activitiesLimit,
+          selectedCategory,
         }).catch(err => {
-          console.error("Can't get trade by id:", err);
+          console.error("Can't callByParams", err);
         });
 
         addInitialActivities(initialActivities);
@@ -107,15 +142,6 @@ const ActivitiesTracker = ({
     const categoryEvents = _.get(categoryCfg, 'eventsCats', []);
     // console.log("notifications", notifications);
     const categoryFiltered = _.filter(activities, item => {
-      if (betId) {
-        const eventBets = _.get(item, 'data.event.bets', []);
-        return (
-          betId === _.get(item, 'data.bet._id') ||
-          betId === _.get(item, 'data.trade.betId') ||
-          eventBets.indexOf(betId) > -1
-        );
-      }
-
       if (selectedCategoryLower === 'all') {
         return true;
       }
