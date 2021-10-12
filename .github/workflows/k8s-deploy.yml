@@ -44,7 +44,7 @@ jobs:
           kustomize: 4.2.0
           command: |
             cd infra/environments/staging
-            kustomize edit set image registry.digitalocean.com/wallfair/backend_k8s:${GITHUB_SHA::6}
+            kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s:${GITHUB_SHA::6}
             kustomize build .
       - uses: actions-hub/kubectl@master
         env:
