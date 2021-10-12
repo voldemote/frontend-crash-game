@@ -379,11 +379,12 @@ const Bet = ({
           ),
     ];
 
-    if (event.type === 'non-streamed') {
-      eventViews.push(
-        EventTradeViewsHelper.getView('Activities', undefined, false)
-      );
-    }
+    //remove activities on mobile
+    // if (event.type === 'non-streamed') {
+    //   eventViews.push(
+    //     EventTradeViewsHelper.getView('Activities', undefined, false)
+    //   );
+    // }
 
     return (
       <EventTradesContainer
@@ -525,18 +526,19 @@ const Bet = ({
           )}
         </SwiperSlide>
 
-        {isNonStreamed && bet && (
-          <SwiperSlide className={styles.carouselSlide}>
-            <div className={styles.activitiesTabContainerMobile}>
-              <ActivitiesTracker
-                showCategories={false}
-                activitiesLimit={50}
-                betId={betId}
-                className={styles.activitiesTrackerTabBlock}
-              />
-            </div>
-          </SwiperSlide>
-        )}
+        {/*//remove activities on mobile*/}
+        {/*{isNonStreamed && bet && (*/}
+        {/*  <SwiperSlide className={styles.carouselSlide}>*/}
+        {/*    <div className={styles.activitiesTabContainerMobile}>*/}
+        {/*      <ActivitiesTracker*/}
+        {/*        showCategories={false}*/}
+        {/*        activitiesLimit={50}*/}
+        {/*        betId={betId}*/}
+        {/*        className={styles.activitiesTrackerTabBlock}*/}
+        {/*      />*/}
+        {/*    </div>*/}
+        {/*  </SwiperSlide>*/}
+        {/*)}*/}
       </Swiper>
     );
   };

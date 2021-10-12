@@ -142,7 +142,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_NEW_BET':
         return (
           <div>
-            New bet has been created{' '}
+            New event has been created:
             <b>
               <a
                 target={'_blank'}
@@ -229,12 +229,6 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
-      case 'Notification/EVENT_USER_SIGNED_IN':
-        return (
-          <div>
-            <b>{getUserProfileUrl(data)}</b> has signed in.
-          </div>
-        );
       case 'Notification/EVENT_USER_SIGNED_UP':
         return (
           <div>
@@ -264,7 +258,8 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       case 'Notification/EVENT_USER_CHANGED_ABOUT_ME':
         return (
           <div>
-            <b>{getUserProfileUrl(data)}</b> has changed "About me" page.
+            <b>{getUserProfileUrl(data)}</b> has changed its profile's "About
+            me" section.
           </div>
         );
       default:
