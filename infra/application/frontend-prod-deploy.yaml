@@ -16,7 +16,7 @@ spec:
         app: frontend
     spec:
       containers:
-        - image: registry.digitalocean.com/wallfair/frontend_k8s@sha256:ddea1cacab61ba184ce5638453dca5a14445bf457128bf0ca2cad821b3ca2b9b
+        - image: registry.digitalocean.com/wallfair/frontend_k8s
           imagePullPolicy: Always
           resources:
             limits:
