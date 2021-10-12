@@ -26,7 +26,6 @@ import InfoBox from 'components/InfoBox';
 import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
-import { TOKEN_NAME } from 'constants/Token';
 
 const PlaceBet = ({ connected }) => {
   const dispatch = useDispatch();
@@ -251,7 +250,7 @@ const PlaceBet = ({ connected }) => {
     } else {
       return (
         <div className={styles.profitPlaceholder}>
-          <span>+0 {TOKEN_NAME}</span>
+          <span>+0 WFAIR</span>
         </div>
       );
     }
@@ -336,7 +335,7 @@ const PlaceBet = ({ connected }) => {
                 max={'10000'}
               />
               <span className={styles.eventTokenLabel}>
-                <span>{TOKEN_NAME}</span>
+                <span>WFAIR</span>
               </span>
             </div>
           )}
