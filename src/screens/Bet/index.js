@@ -49,6 +49,7 @@ import BetState from 'constants/BetState';
 import TimeCounter from '../../components/TimeCounter';
 import { useIsMount } from '../../components/hoc/useIsMount';
 import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart.svg';
+import ActivitiesTracker from '../../components/ActivitiesTracker';
 // import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
@@ -378,6 +379,13 @@ const Bet = ({
           ),
     ];
 
+    //remove activities on mobile
+    // if (event.type === 'non-streamed') {
+    //   eventViews.push(
+    //     EventTradeViewsHelper.getView('Activities', undefined, false)
+    //   );
+    // }
+
     return (
       <EventTradesContainer
         className={styles.eventTradesContainer}
@@ -448,6 +456,7 @@ const Bet = ({
   const renderMobileContent = () => {
     return (
       <Swiper
+        className={'swiper-events-tabs'}
         slidesPerView={1}
         pagination={{
           clickable: false,
@@ -516,6 +525,20 @@ const Bet = ({
             <div>{renderMyTradesList()}</div>
           )}
         </SwiperSlide>
+
+        {/*//remove activities on mobile*/}
+        {/*{isNonStreamed && bet && (*/}
+        {/*  <SwiperSlide className={styles.carouselSlide}>*/}
+        {/*    <div className={styles.activitiesTabContainerMobile}>*/}
+        {/*      <ActivitiesTracker*/}
+        {/*        showCategories={false}*/}
+        {/*        activitiesLimit={50}*/}
+        {/*        betId={betId}*/}
+        {/*        className={styles.activitiesTrackerTabBlock}*/}
+        {/*      />*/}
+        {/*    </div>*/}
+        {/*  </SwiperSlide>*/}
+        {/*)}*/}
       </Swiper>
     );
   };
@@ -815,6 +838,23 @@ const Bet = ({
                         }}
                       ></div>
                     </div>
+                  </div>
+                )}
+
+                {selectedTab === 'activities' && (
+                  <div className={styles.activitiesTabContainerDesktop}>
+                    <ActivitiesTracker
+                      showCategories={false}
+                      activitiesLimit={50}
+                      betId={betId}
+                      className={styles.activitiesTrackerTabBlock}
+                    />
+                  </div>
+                )}
+
+                {selectedTab === 'all trades' && (
+                  <div className={styles.activitiesTabContainerDesktop}>
+                    All trades component
                   </div>
                 )}
               </div>
