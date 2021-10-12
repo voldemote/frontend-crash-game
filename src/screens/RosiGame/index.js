@@ -28,7 +28,7 @@ import { PopupActions } from 'store/actions/popup';
 
 const RosiGame = ({ showPopup, connected }) => {
   const dispatch = useDispatch();
-  const { lastCrashes, inGameBets, cashedOut } = useRosiData();
+  const { lastCrashes, inGameBets, cashedOut, hasStarted } = useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
@@ -100,7 +100,14 @@ const RosiGame = ({ showPopup, connected }) => {
                   <GameBets label="In Game Bets" bets={inGameBets} />
                 </Grid>
                 <Grid item md={4}>
-                  <GameBets label="Cashed Out" bets={cashedOut} cashedOut />
+                  <GameBets
+                    label="Cashed Out"
+                    bets={[
+                      ...inGameBets.map(b => ({ ...b, cashedOut: false })),
+                      ...cashedOut.map(b => ({ ...b, cashedOut: true })),
+                    ]}
+                    gameRunning={hasStarted}
+                  />
                 </Grid>
               </>
             )}
