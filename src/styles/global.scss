@@ -100,3 +100,14 @@ $border: 1px solid $colorWhite30;
     }
   }
 }
+
+.global-token-currency {
+  color: $colorYellow;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.global-link-style {
+  font-weight: bold;
+  text-decoration: underline;
+}

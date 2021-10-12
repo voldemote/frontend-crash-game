@@ -43,13 +43,19 @@ const ActivityMessage = ({ activity, date, users, events }) => {
       }
 
       return (
-        <a target={'_blank'} href={thisUrl} rel="noreferrer">
+        <a
+          className={'global-link-style'}
+          target={'_blank'}
+          href={thisUrl}
+          rel="noreferrer"
+        >
           {_.get(event, 'name')}
         </a>
       );
     } else if (eventType === 'non-streamed' && bets.length === 1) {
       return (
         <a
+          className={'global-link-style'}
           target={'_blank'}
           href={`${window.location.origin}/trade/${eventSlug}/${_.get(
             bets,
@@ -63,6 +69,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     } else {
       return (
         <a
+          className={'global-link-style'}
           target={'_blank'}
           href={`${window.location.origin}/trade/${eventSlug}/bet`}
           rel="noreferrer"
@@ -97,6 +104,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     return (
       <a
+        className={'global-link-style'}
         target={'_blank'}
         href={`${window.location.origin}/user/${userId}`}
         rel="noreferrer"
@@ -125,8 +133,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has been rewarded with{' '}
-            <b>{formatToFixed(_.get(data, 'winToken'), 0)} WFAIR</b> from{' '}
-            <b>{_.get(event, 'name')}</b>.
+            <div className={'global-token-currency'}>
+              <b>{formatToFixed(_.get(data, 'winToken'), 0)} WFAIR</b>
+            </div>{' '}
+            from <b>{_.get(event, 'name')}</b>.
           </div>
         );
       case 'Notification/EVENT_ONLINE':
@@ -145,6 +155,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             New event has been created:
             <b>
               <a
+                className={'global-link-style'}
                 target={'_blank'}
                 href={`${window.location.origin}/trade/${_.get(
                   event,
@@ -164,9 +175,13 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has bet{' '}
-            {_.get(data, 'trade.investmentAmount')} WFAIR on{' '}
+            <div className={'global-token-currency'}>
+              {_.get(data, 'trade.investmentAmount')} WFAIR
+            </div>{' '}
+            on{' '}
             {
               <a
+                className={'global-link-style'}
                 target={'_blank'}
                 href={`${window.location.origin}/trade/${_.get(
                   event,
@@ -184,9 +199,13 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
-            <b>{_.get(data, 'amount')} WFAIR</b> from{' '}
+            <div className={'global-token-currency'}>
+              <b>{_.get(data, 'amount')} WFAIR</b>
+            </div>{' '}
+            from{' '}
             <b>
               <a
+                className={'global-link-style'}
                 target={'_blank'}
                 href={`${window.location.origin}/trade/${_.get(
                   event,
@@ -217,7 +236,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has placed{' '}
-            <b>{_.get(data, 'amount')} WFAIR</b> bet on Elon Game.{' '}
+            <div className={'global-token-currency'}>
+              <b>{_.get(data, 'amount')} WFAIR</b>
+            </div>{' '}
+            bet on Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
@@ -225,7 +247,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
-            <b>{_.get(data, 'reward')} WFAIR</b> from Elon Game.{' '}
+            <div className={'global-token-currency'}>
+              <b>{_.get(data, 'reward')} WFAIR</b>
+            </div>{' '}
+            from Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
