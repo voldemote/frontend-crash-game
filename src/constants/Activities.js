@@ -31,6 +31,10 @@ export const ACTIVITIES_TO_TRACK = [
       `Notification/EVENT_USER_SIGNED_IN`,
       `Notification/EVENT_USER_SIGNED_UP`,
       'Notification/EVENT_USER_REWARD',
+      'Notification/EVENT_USER_UPLOADED_PICTURE',
+      'Notification/EVENT_USER_CHANGED_USERNAME',
+      'Notification/EVENT_USER_CHANGED_NAME',
+      'Notification/EVENT_USER_CHANGED_ABOUT_ME',
     ],
   },
   {

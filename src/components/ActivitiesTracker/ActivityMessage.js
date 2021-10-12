@@ -90,6 +90,10 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     if (!userName) {
       userName = _.get(data, 'username');
     }
+    //use name as username
+    if (!userName) {
+      userName = _.get(data, 'name');
+    }
 
     return (
       <a
@@ -109,6 +113,8 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     if (!event) {
       event = State.getEvent(_.get(data, 'bet.event'), events);
     }
+
+    console.log('activity.type', activity.type);
 
     switch (activity.type) {
       case 'Notification/EVENT_BET_CANCELED':
@@ -235,6 +241,32 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has signed up.
+          </div>
+        );
+      case 'Notification/EVENT_USER_UPLOADED_PICTURE':
+        return (
+          <div>
+            <b>{getUserProfileUrl(data)}</b> has updated avatar.
+          </div>
+        );
+      case 'Notification/EVENT_USER_CHANGED_USERNAME':
+        return (
+          <div>
+            <b>{_.get(data, 'oldUsername')}</b> has changed username to{' '}
+            <b>{getUserProfileUrl(data)}</b>.
+          </div>
+        );
+      case 'Notification/EVENT_USER_CHANGED_NAME':
+        return (
+          <div>
+            <b>{_.get(data, 'oldName')}</b> has changed name to{' '}
+            <b>{getUserProfileUrl(data)}</b>.
+          </div>
+        );
+      case 'Notification/EVENT_USER_CHANGED_ABOUT_ME':
+        return (
+          <div>
+            <b>{getUserProfileUrl(data)}</b> has changed "About me" page.
           </div>
         );
       default:
