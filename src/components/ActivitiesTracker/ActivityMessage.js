@@ -76,10 +76,19 @@ const ActivityMessage = ({ activity, date, users, events }) => {
   const getUserProfileUrl = data => {
     let user = _.get(data, 'user');
     let userId = _.get(user, '_id');
+    let userName = _.get(user, 'username');
 
     //fallback if not yet, new event structure contains userId directly in event payload
     if (!userId) {
       userId = _.get(data, 'trade.userId');
+    }
+
+    if (!userId) {
+      userId = _.get(data, 'userId');
+    }
+
+    if (!userName) {
+      userName = _.get(data, 'username');
     }
 
     return (
@@ -88,7 +97,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         href={`${window.location.origin}/user/${userId}`}
         rel="noreferrer"
       >
-        {_.get(user, 'username', 'Unknown user')}
+        {userName || 'Unknown user'}
       </a>
     );
   };
@@ -223,10 +232,6 @@ const ActivityMessage = ({ activity, date, users, events }) => {
 
     if (!user) {
       user = _.get(activity, 'data.user');
-    }
-
-    if (!user) {
-      //@todo sometimes user is not there, we are displaying 'Unknown user' we should do an api call to get this? Better to add missing part to the event message in USER_REWARDED
     }
 
     return (

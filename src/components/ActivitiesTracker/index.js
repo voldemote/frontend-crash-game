@@ -49,12 +49,18 @@ const ActivitiesTracker = ({
   activitiesLimit,
   betId,
   user,
+  preselectedCategory,
 }) => {
   const messageListRef = useRef();
 
-  const [selectedCategory, setSelectedCategory] = useState(
-    ACTIVITIES_TO_TRACK[0].value
-  );
+  const preselectCategory = preselectedCategory
+    ? _.get(
+        _.find(ACTIVITIES_TO_TRACK, { value: preselectedCategory }),
+        'value'
+      )
+    : ACTIVITIES_TO_TRACK[0].value;
+
+  const [selectedCategory, setSelectedCategory] = useState(preselectCategory);
 
   const [initialLoaded, setInitialLoaded] = useState(false);
 

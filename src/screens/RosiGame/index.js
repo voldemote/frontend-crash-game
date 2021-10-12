@@ -104,6 +104,7 @@ const RosiGame = ({ showPopup, connected }) => {
                         showCategories={false}
                         activitiesLimit={50}
                         className={styles.activitiesTrackerGamesBlock}
+                        preselectedCategory={'elongame'}
                       />
                     </div>
                   </div>
