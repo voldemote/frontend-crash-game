@@ -120,7 +120,7 @@ const UserProfile = () => {
                 className={styles.templateImage}
               />
             )}
-            <div className={styles.inactivePlaceholder}>Coming soon</div>
+            <div className={styles.inactivePlaceholder}>Coming Soon</div>
           </div>
         </div>
       </div>
