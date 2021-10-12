@@ -321,7 +321,9 @@ const PlaceBet = ({ connected }) => {
               minValue={1}
               decimalPlaces={0}
               maxValue={formatToFixed(
-                user.balance > 10000 ? 10000 : user.balance
+                user.balance > 10000 ? 10000 : user.balance,
+                2,
+                false
               )}
             />
           ) : (
