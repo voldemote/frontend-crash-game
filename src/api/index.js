@@ -279,6 +279,14 @@ const deleteEvent = id => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const bookmarkEvent = id => {
+  return Api.put(ApiUrls.API_EVENT_BOOKMARK.replace(':id', id));
+};
+
+const bookmarkEventCancel = id => {
+  return Api.put(ApiUrls.API_EVENT_BOOKMARK_CANCEL.replace(':id', id));
+};
+
 const createEventBet = payload => {
   return Api.post(ApiUrls.API_EVENT_BET_CREATE, payload)
     .then(response => ({ response }))
@@ -364,6 +372,32 @@ const getNotificationEvents = params => {
   });
 };
 
+const getNotificationEventsByBet = params => {
+  const limit = _.get(params, 'limit', 10);
+  const betId = _.get(params, 'betId', 10);
+  return Api.get(
+    ApiUrls.API_GET_NOTIFICATION_EVENTS_BY_BET.replace(':limit', limit).replace(
+      ':betId',
+      betId
+    )
+  ).catch(error => {
+    console.log('[API Error] called: getNotificationEventsByBet', error);
+  });
+};
+
+const getNotificationEventsByUser = params => {
+  const limit = _.get(params, 'limit', 10);
+  const userId = _.get(params, 'userId', 10);
+  return Api.get(
+    ApiUrls.API_GET_NOTIFICATION_EVENTS_BY_USER.replace(
+      ':limit',
+      limit
+    ).replace(':userId', userId)
+  ).catch(error => {
+    console.log('[API Error] called: getNotificationEventsByUser', error);
+  });
+};
+
 const signUp = payload => {
   return Api.post(ApiUrls.API_AUTH_SIGNUP, payload)
     .then(response => ({ response }))
@@ -431,6 +465,8 @@ export {
   createEvent,
   editEvent,
   deleteEvent,
+  bookmarkEvent,
+  bookmarkEventCancel,
   createEventBet,
   editEventBet,
   getBetTemplates,
@@ -449,4 +485,6 @@ export {
   resetPassword,
   shortenerTinyUrl,
   getNotificationEvents,
+  getNotificationEventsByBet,
+  getNotificationEventsByUser,
 };

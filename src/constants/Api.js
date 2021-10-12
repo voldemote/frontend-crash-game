@@ -10,6 +10,8 @@ export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 export const NEWS_API_SSL_MODE =
   process.env.REACT_APP_NEWS_API_SSL_MODE === 'true';
+export const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY;
+
 // Services
 export const API_AUTHENTICATION_REQUEST_SMS_URL = 'api/user/login';
 export const API_AUTHENTICATION_SAVE_ADD_INFO_URL =
@@ -30,6 +32,8 @@ export const API_BET_TEMPLATES = 'api/bet-template';
 export const API_EVENT_CREATE = 'api/event/create';
 export const API_EVENT_EDIT = 'api/event/:id';
 export const API_EVENT_DELETE = 'api/event/:id';
+export const API_EVENT_BOOKMARK = 'api/event/:id/bookmark';
+export const API_EVENT_BOOKMARK_CANCEL = 'api/event/:id/bookmark/cancel';
 export const API_EVENT_LIST = 'api/event/list';
 export const API_EVENT_LIST_FILTERED =
   'api/event/list/:type/:category/:count/:page/:sortBy/:upcoming/:deactivated/:searchQuery';
@@ -58,6 +62,10 @@ export const API_CASH_OUT = 'api/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_GET_NOTIFICATION_EVENTS =
   'api/notification-events/list?limit=:limit&cat=:category';
+export const API_GET_NOTIFICATION_EVENTS_BY_BET =
+  'api/notification-events/list/bets/:betId?limit=:limit';
+export const API_GET_NOTIFICATION_EVENTS_BY_USER =
+  'api/notification-events/list/users/:userId?limit=:limit';
 export const API_AUTH_LOGIN = 'api/auth/login';
 export const API_AUTH_SIGNUP = 'api/auth/sign-up';
 export const API_AUTH_FORGOT_PASSWORD = 'api/auth/forgot-password';

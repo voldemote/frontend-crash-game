@@ -150,7 +150,7 @@ const RosiGameAnimation = ({ connected, muteButtonClick, isMute }) => {
 const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
-    isMute: state.rosiGame.isMute,
+    isMute: !state.rosiGame.volumeLevel,
   };
 };
 

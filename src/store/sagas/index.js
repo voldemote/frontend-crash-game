@@ -155,6 +155,11 @@ const root = function* () {
     takeLatest([EventTypes.CREATE_EVENT], EventSagas.createEvent),
     takeLatest([EventTypes.EDIT_EVENT], EventSagas.editEvent),
     takeLatest([EventTypes.DELETE_EVENT], EventSagas.deleteEvent),
+    takeLatest([EventTypes.BOOKMARK_EVENT], EventSagas.bookmarkEvent),
+    takeLatest(
+      [EventTypes.BOOKMARK_EVENT_CANCEL],
+      EventSagas.bookmarkEventCancel
+    ),
     // @formatter:on
   ]);
 };
