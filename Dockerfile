@@ -1,0 +1,15 @@
+FROM node:14-slim
+
+COPY . /app
+WORKDIR /app
+
+ARG REACT_APP_CRASH_GAME_BACKEND_URL
+ARG REACT_APP_BACKEND_URL
+ARG REACT_APP_NEWS_API_KEY
+
+RUN npm install
+RUN npm run build
+
+CMD npm run production
+
+EXPOSE 3000

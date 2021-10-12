@@ -6,6 +6,8 @@ import {
   playWinSound,
   playFlyingSound,
   stopFlyingSound,
+  silenceAllSounds,
+  resetAllSounds,
 } from '../../helper/Audio';
 const TIME_TO_FACTOR_RATIO = 0.1; // 1s = 0.1x
 const START_FACTOR = 1;
@@ -20,7 +22,7 @@ const initialState = {
   isCashedOut: false,
   placedBetInQueue: false,
   nextGameAt: null,
-  isMute: false,
+  volumeLevel: 0.5,
 };
 
 const initializeState = (action, state) => {
@@ -60,9 +62,9 @@ const setUserBet = (action, state) => {
 
 const addLastCrash = (action, state) => {
   if (action.payload.crashFactor <= 1) {
-    if (!state.isMute) playFailSound();
+    playFailSound(state.volumeLevel);
   } else {
-    if (!state.isMute) playCrashSound();
+    playCrashSound(state.volumeLevel);
   }
 
   return {
@@ -196,19 +198,25 @@ const onTick = (action, state) => {
 };
 
 const onMuteButtonClick = (action, state) => {
+  if (state.volumeLevel) {
+    silenceAllSounds();
+  } else {
+    resetAllSounds();
+  }
   return {
     ...state,
-    isMute: !state.isMute,
+    volumeLevel: state.volumeLevel ? 0.0 : 0.5,
   };
 };
 
 const onPlayWinSound = (action, state) => {
-  if (!state.isMute) playWinSound();
+  playWinSound(state.volumeLevel);
   return state;
 };
 
 const onPlayFlyingSound = (action, state) => {
-  if (!state.isMute) playFlyingSound();
+  const diff = (Date.now() - new Date(state.timeStarted).getTime()) / 1000;
+  playFlyingSound(state.volumeLevel, diff);
   return state;
 };
 

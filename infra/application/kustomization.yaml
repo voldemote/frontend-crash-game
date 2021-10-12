@@ -1,0 +1,4 @@
+resources:
+  - frontend-prod-deploy.yaml
+  - frontend-prod-configmap.yaml
+  - ingress-prod.yaml
