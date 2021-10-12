@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import { formatToFixed } from 'helper/FormatNumbers';
+import { TOKEN_NAME } from '../../constants/Token';
 
 const ActivityMessage = ({ activity, date, users, events }) => {
   const [dateString, setDateString] = useState('');
@@ -134,7 +135,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           <div>
             <b>{getUserProfileUrl(data)}</b> has been rewarded with{' '}
             <div className={'global-token-currency'}>
-              <b>{formatToFixed(_.get(data, 'winToken'), 0)} WFAIR</b>
+              <b>
+                {formatToFixed(_.get(data, 'winToken'), 0)} {TOKEN_NAME}
+              </b>
             </div>{' '}
             from <b>{_.get(event, 'name')}</b>.
           </div>
@@ -176,7 +179,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           <div>
             <b>{getUserProfileUrl(data)}</b> has bet{' '}
             <div className={'global-token-currency'}>
-              {_.get(data, 'trade.investmentAmount')} WFAIR
+              {_.get(data, 'trade.investmentAmount')} {TOKEN_NAME}
             </div>{' '}
             on{' '}
             {
@@ -200,7 +203,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <div className={'global-token-currency'}>
-              <b>{_.get(data, 'amount')} WFAIR</b>
+              <b>
+                {_.get(data, 'amount')} {TOKEN_NAME}
+              </b>
             </div>{' '}
             from{' '}
             <b>
@@ -237,7 +242,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           <div>
             <b>{getUserProfileUrl(data)}</b> has placed{' '}
             <div className={'global-token-currency'}>
-              <b>{_.get(data, 'amount')} WFAIR</b>
+              <b>
+                {_.get(data, 'amount')} {TOKEN_NAME}
+              </b>
             </div>{' '}
             bet on Elon Game.{' '}
           </div>
@@ -248,7 +255,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <div className={'global-token-currency'}>
-              <b>{_.get(data, 'reward')} WFAIR</b>
+              <b>
+                {_.get(data, 'reward')} {TOKEN_NAME}
+              </b>
             </div>{' '}
             from Elon Game.{' '}
           </div>
