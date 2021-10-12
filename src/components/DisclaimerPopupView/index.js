@@ -5,7 +5,6 @@ import { PopupActions } from '../../store/actions/popup';
 import CheckBox from '../CheckBox';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { TOKEN_NAME } from '../../constants/Token';
 
 const DisclaimerPopupView = ({ closed, hidePopup }) => {
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
@@ -52,9 +51,9 @@ const DisclaimerPopupView = ({ closed, hidePopup }) => {
               <li>
                 Wallfair.io is a blockchain-based platform built on Polygon
                 chain and incorporating the usability function of an ERC-20
-                token (“{TOKEN_NAME}”) minted in Alderney and distributed
-                through decentralized exchanges as well as the Trustpad
-                launchpad (www.trustpad.io).
+                token (“WFAIR”) minted in Alderney and distributed through
+                decentralized exchanges as well as the Trustpad launchpad
+                (www.trustpad.io).
               </li>
               <li>
                 The platform serves informational, entertainment and educational

@@ -1,1 +1,1 @@
-export const TOKEN_NAME = 'PFAIR';
+export const TOKEN_NAME = 'WFAIR';
