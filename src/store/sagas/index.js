@@ -21,7 +21,7 @@ import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { LeaderboardTypes } from '../actions/leaderboard';
 import { RosiGameTypes } from '../actions/rosi-game';
-import { endGame } from './rosi-game';
+import { endGame, stopSound } from './rosi-game';
 
 const root = function* () {
   yield all([
@@ -162,6 +162,7 @@ const root = function* () {
       [EventTypes.BOOKMARK_EVENT_CANCEL],
       EventSagas.bookmarkEventCancel
     ),
+    takeLatest([WebsocketsTypes.LEAVE_ROOM], stopSound),
     takeEvery([RosiGameTypes.ADD_LAST_CRASH], endGame),
     // @formatter:on
   ]);
