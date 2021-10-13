@@ -94,10 +94,17 @@ $largeMobileHeight: 700px;
     text-decoration: underline;
   }
 
-
   .profileErrorHandLing {
-    color: $colorRed;
-    font-size: 14px;
+    font-size: 14.5px;
+    height: 60px;
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $colorRedLight;
+    color: $colorWhite;
+    border-radius: 10px;
   }
 
   .editProfileContent {
@@ -146,6 +153,7 @@ $largeMobileHeight: 700px;
               fill: white;
             }
           }
+
           > .profileImage {
             object-fit: cover;
             object-position: center;
@@ -155,6 +163,7 @@ $largeMobileHeight: 700px;
             margin: 0;
           }
         }
+
         .profilePictureUploadLabel {
           font-size: 12px;
           opacity: 0.4;
@@ -163,6 +172,7 @@ $largeMobileHeight: 700px;
         }
       }
     }
+
     .profileContent {
       padding: 25px;
 
@@ -229,11 +239,13 @@ $largeMobileHeight: 700px;
     height: calc(100vh - 150px);
   }
 }
+
 .firstPanel {
   &.panelHidden {
     transform: translateX(-110%);
   }
 }
+
 .panelHidden {
   opacity: 0;
   transform: translateX(110%);

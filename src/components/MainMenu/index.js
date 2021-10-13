@@ -100,7 +100,7 @@ const MainMenu = ({
   const handleUsernameDebounceAction = useMemo(() => {
     return _.debounce(async eventValue => {
       const response = await checkUsername(eventValue).catch(err => {
-        console.error("Can't getNotificationEventsByBet", err);
+        console.error('checkUsername err', err);
       });
 
       const isUnique = _.get(response, 'data.isUnique', false);
