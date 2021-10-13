@@ -23,6 +23,7 @@ const initialState = {
   placedBetInQueue: false,
   nextGameAt: null,
   volumeLevel: 0.5,
+  isEndgame: false,
 };
 
 const initializeState = (action, state) => {
@@ -78,16 +79,7 @@ const addLastCrash = (action, state) => {
       return bet.userId === action.payload.userId;
     }),
     lastCrashes: [action.payload.crashFactor, ...state.lastCrashes],
-    // cashedOut: [
-    //   ...state.inGameBets.filter(
-    //     bet => bet.crashFactor <= action.payload.crashFactor
-    //   ),
-    // ].map(bet => ({ ...bet, amount: bet.amount * bet.crashFactor })),
-    cashedOut: state.cashedOut,
-    inGameBets: state.betQueue,
     isCashedOut: false,
-    betQueue: [],
-    placedBetInQueue: false,
   };
 };
 
@@ -119,14 +111,9 @@ const addInGameBet = (action, state) => {
 const resetInGameBets = (action, state) => {
   return {
     ...state,
-    inGameBets: [],
-  };
-};
-
-const addCashedOut = (action, state) => {
-  return {
-    ...state,
-    cashedOut: [action.payload, ...state.cashedOut],
+    inGameBets: state.betQueue,
+    betQueue: [],
+    placedBetInQueue: false,
   };
 };
 
@@ -151,7 +138,6 @@ const cashedOutGuest = (action, state) => {
   let factor =
     ((now - startTime.getTime()) / 1000) * TIME_TO_FACTOR_RATIO + START_FACTOR;
 
-  const lastTime = Date.now();
   const bet = {
     ...action.payload,
     amount: round(state.userBet.amount * factor, 0),
@@ -225,6 +211,20 @@ const onStopFlyingSound = (action, state) => {
   return state;
 };
 
+const onStartEndgamePeriod = (action, state) => {
+  return {
+    ...state,
+    isEndgame: true,
+  };
+};
+
+const onEndEndgamePeriod = (action, state) => {
+  return {
+    ...state,
+    isEndgame: false,
+  };
+};
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case RosiGameTypes.INITIALIZE_STATE:
@@ -259,6 +259,10 @@ export default function (state = initialState, action) {
       return onPlayFlyingSound(action, state);
     case RosiGameTypes.STOP_FLYING_SOUND:
       return onStopFlyingSound(action, state);
+    case RosiGameTypes.START_ENDGAME_PERIOD:
+      return onStartEndgamePeriod(action, state);
+    case RosiGameTypes.END_ENDGAME_PERIOD:
+      return onEndEndgamePeriod(action, state);
     default:
       return state;
   }

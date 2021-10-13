@@ -9,28 +9,28 @@ const calculateTotal = bets => {
   return bets.reduce((total, bet) => total + bet.amount, 0);
 };
 
-const renderValue = (bet, gameRunning) => {
+const renderValue = (bet, gameRunning, endGame) => {
   if (gameRunning && !bet.cashedOut) {
     return formatAmount(bet.amount);
   }
   if (bet.cashedOut) {
     return `+ ${formatAmount(bet.amount * bet.crashFactor)}`;
   }
-  if (!gameRunning && !bet.cashedOut) {
-    return `${formatAmount(bet.amount)}`;
+  if (endGame && !bet.cashedOut) {
+    return `- ${formatAmount(bet.amount)}`;
   }
   return formatAmount(bet.amount);
 };
 
-const Bet = ({ cashedOut, bet, gameRunning }) => {
+const Bet = ({ cashedOut, bet, gameRunning, endGame }) => {
   return (
     <div
       className={classNames({
         [styles.bet]: true,
         [styles.flash]: bet.isFresh && !cashedOut,
         [styles.flashGreen]: bet.isFresh && cashedOut,
-        [styles.endGame]: !gameRunning,
-        [styles.cashed]: !gameRunning,
+        [styles.endGame]: endGame,
+        [styles.cashed]: cashedOut && endGame,
       })}
     >
       <div className={styles.user}>{bet.username}</div>
@@ -42,10 +42,10 @@ const Bet = ({ cashedOut, bet, gameRunning }) => {
           className={classNames({
             [styles.amount]: true,
             [styles.positive]: cashedOut,
-            [styles.negative]: false,
+            [styles.negative]: endGame && !cashedOut,
           })}
         >
-          {renderValue(bet, gameRunning)} {TOKEN_NAME}
+          {renderValue(bet, gameRunning, endGame)} {TOKEN_NAME}
         </span>
         <div className={styles.coin}></div>
       </div>
@@ -53,10 +53,9 @@ const Bet = ({ cashedOut, bet, gameRunning }) => {
   );
 };
 
-const GameBets = ({ label, bets, cashedOut }) => {
+const GameBets = ({ bets, endGame }) => {
   return (
     <div className={styles.container}>
-      {/*<div className={styles.title}>{label}</div>*/}
       <div className={styles.total}>
         <div className={styles.label}>Total</div>
         <div className={styles.value}>
@@ -68,7 +67,12 @@ const GameBets = ({ label, bets, cashedOut }) => {
           .map(b => ({ ...b, updatedAt: b.updatedAt || 0 }))
           .sort((b1, b2) => b2.amount - b1.amount)
           .map(bet => (
-            <Bet bet={bet} cashedOut={bet.cashedOut} key={nanoid()} />
+            <Bet
+              bet={bet}
+              endGame={endGame}
+              cashedOut={bet.cashedOut}
+              key={nanoid()}
+            />
           ))}
       </div>
     </div>

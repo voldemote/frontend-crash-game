@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import * as Api from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -29,7 +29,8 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 
 const RosiGame = ({ showPopup, connected }) => {
   const dispatch = useDispatch();
-  const { lastCrashes, inGameBets, cashedOut, hasStarted } = useRosiData();
+  const { lastCrashes, inGameBets, cashedOut, hasStarted, isEndgame } =
+    useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
 
@@ -110,13 +111,14 @@ const RosiGame = ({ showPopup, connected }) => {
                   </div>
                 </Grid>
                 <Grid item md={4}>
-                   <GameBets
+                  <GameBets
                     label="Cashed Out"
                     bets={[
                       ...inGameBets.map(b => ({ ...b, cashedOut: false })),
                       ...cashedOut.map(b => ({ ...b, cashedOut: true })),
                     ]}
                     gameRunning={hasStarted}
+                    endGame={isEndgame}
                   />
                 </Grid>
               </>
