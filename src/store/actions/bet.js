@@ -92,6 +92,7 @@ const pullOutBet = makeActionCreator(BetTypes.PULL_OUT_BET, {
   betId: null,
   outcome: null,
   amount: null,
+  gain: null,
 });
 
 const pullOutBetSucceeded = makeActionCreator(BetTypes.PULL_OUT_BET_SUCCEEDED);

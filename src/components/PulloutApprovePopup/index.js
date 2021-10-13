@@ -10,12 +10,12 @@ import { selectUser } from 'store/selectors/authentication';
 const PulloutApprovePopup = ({
   hidePopup,
   pullOutBet,
-  betData: { betId, amount, outcome },
+  betData: { betId, amount, outcome, gain },
 }) => {
   const { currency } = useSelector(selectUser);
 
   const onApprovePulloutClick = () => {
-    pullOutBet(betId, outcome, amount);
+    pullOutBet(betId, outcome, amount, gain);
     hidePopup();
   };
 
@@ -64,8 +64,8 @@ const mapDispatchToProps = dispatch => {
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },
-    pullOutBet: (betId, outcome, amount) => {
-      dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
+    pullOutBet: (betId, outcome, amount, gain) => {
+      dispatch(BetActions.pullOutBet({ betId, outcome, amount, gain }));
     },
   };
 };

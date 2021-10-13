@@ -198,8 +198,9 @@ const pullOut = function* (action) {
   const betId = action.betId;
   const amount = action.amount;
   const outcome = action.outcome;
+  const gain = action.gain;
 
-  const response = yield call(Api.pullOutBet, betId, amount, outcome);
+  const response = yield call(Api.pullOutBet, betId, amount, outcome, gain);
 
   if (response) {
     yield put(BetActions.pullOutBetSucceeded());
