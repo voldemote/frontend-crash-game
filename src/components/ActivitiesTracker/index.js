@@ -265,8 +265,10 @@ const ActivitiesTracker = ({
   };
 
   useEffect(() => {
-    messageListScrollToBottom();
-  }, [activities]);
+    if (initialLoaded) {
+      messageListScrollToBottom();
+    }
+  }, [activities, initialLoaded]);
 
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
@@ -275,7 +277,7 @@ const ActivitiesTracker = ({
         className={classNames(messagesClassName, styles.messageContainer)}
         ref={messageListRef}
       >
-        {renderActivities()}
+        {initialLoaded && renderActivities()}
       </div>
     </div>
   );
