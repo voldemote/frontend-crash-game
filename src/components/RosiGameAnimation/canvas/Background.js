@@ -1,33 +1,11 @@
 import * as PIXI from 'pixi.js';
-import { isMobileRosiGame, calcPercent, getRandomInRange } from './utils';
-
-function intersect(x1, y1, x2, y2, x3, y3, x4, y4) {
-  // Check if none of the lines are of length 0
-  if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
-    return false;
-  }
-
-  let denominator = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
-
-  // Lines are parallel
-  if (denominator === 0) {
-    return false;
-  }
-
-  let ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator;
-  let ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator;
-
-  // is the intersection along the segments
-  if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {
-    return false;
-  }
-
-  // Return a object with the x and y coordinates of the intersection
-  let x = x1 + ua * (x2 - x1);
-  let y = y1 + ua * (y2 - y1);
-
-  return { x, y };
-}
+import {
+  isMobileRosiGame,
+  calcPercent,
+  getRandomInRange,
+  intersect,
+} from './utils';
+import TWEEN from '@tweenjs/tween.js';
 
 class RosiAnimationBackground {
   constructor(app) {
@@ -46,41 +24,38 @@ class RosiAnimationBackground {
     this.purplePlanet = null;
     this.planets = [];
     this.createPlanets();
+    this.currentIntervalIndex = 0;
+    this.starsSpeed = 0;
+  }
+
+  setIntervalIndex(index) {
+    this.currentIntervalIndex = index;
   }
 
   createStars() {
+    const h = this.app.renderer.height;
     const segmentWidth = isMobileRosiGame ? 50 : 160;
     const segmentsCount =
       Math.trunc(this.app.renderer.width / segmentWidth) + 1;
-
-    // const star = new PIXI.Sprite(this.app.loader.resources.star2.texture);
-    // star.x = 590;
-    // star.y = 300;
-    // this.stars.push(star);
-    // this.container.addChild(star);
-    // return;
-
-    const h = this.app.renderer.height;
-    const yPos = [
-      -calcPercent(h, 35),
-      calcPercent(h, 0),
-      calcPercent(h, 35),
-      calcPercent(h, 70),
-    ];
-
+    const yStepPercent = 35;
     const starWidth = new PIXI.Sprite(this.app.loader.resources.star2.texture)
       .width;
-    for (let i = 0; i < segmentsCount; i++) {
+
+    for (let i = 0; i < segmentsCount + 1; i++) {
       const randomYOffset = getRandomInRange(
-        calcPercent(h, 10),
-        calcPercent(h, 30)
+        calcPercent(h, 15),
+        calcPercent(h, 25)
       );
+
       const randomXOffset = getRandomInRange(
         calcPercent(starWidth, 50),
         calcPercent(starWidth, 100)
       );
-      for (let j = 0; j < yPos.length; j++) {
+
+      let currYPercent = 100 - yStepPercent;
+      for (let j = 0; j < 3 + i; j++) {
         const star = new PIXI.Sprite(this.app.loader.resources.star2.texture);
+        // ofset star to the left or right
         let plusOrMinus = j % 2 === 0 ? -1 : 1;
         plusOrMinus *= i % 2 === 0 ? 1 : -1;
 
@@ -89,10 +64,21 @@ class RosiAnimationBackground {
           segmentWidth / 2 -
           star.width +
           randomXOffset * plusOrMinus;
-        star.y = yPos[j] + randomYOffset;
-        star.speed = getRandomInRange(0.1, 0.3);
+
+        star.y = calcPercent(h, currYPercent) + randomYOffset;
+        if (star.y < 0) {
+          star.defaultX = star.x;
+          star.defaultY = star.y;
+        }
+
+        star.speed = getRandomInRange(0.09, 0.25);
         this.stars.push(star);
         this.container.addChild(star);
+        currYPercent -= yStepPercent;
+
+        if (star.speed <= 0.15) {
+          star.alpha = 0.4;
+        }
       }
     }
   }
@@ -133,9 +119,22 @@ class RosiAnimationBackground {
     this.circle.endFill();
   }
 
-  update(dt, speed, angle) {
-    const vx = speed * Math.cos(angle);
-    const vy = speed * Math.sin(angle);
+  setStarsSpeed(speed) {
+    const tweenData = { speed: this.starsSpeed };
+
+    new TWEEN.Tween(tweenData)
+      .to({ speed }, 500)
+      .onUpdate(() => {
+        this.starsSpeed = tweenData.speed;
+      })
+      .interpolation(TWEEN.Interpolation.Linear)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start();
+  }
+
+  update(dt, angle) {
+    const vx = this.starsSpeed * Math.cos(angle);
+    const vy = this.starsSpeed * Math.sin(angle);
 
     for (const star of this.stars) {
       star.x -= vx * star.speed * dt;
@@ -162,7 +161,7 @@ class RosiAnimationBackground {
         const x4 = x3 + length * Math.cos(angle);
         const y4 = y3 - length * Math.sin(angle);
 
-        // if (this.stars[1] === star) {
+        // if (this.stars[0] === star) {
         //   console.log(`
         //     x1: ${x1}
         //     y1: ${y1}
@@ -180,7 +179,12 @@ class RosiAnimationBackground {
         const intersection = intersect(x1, y1, x2, y2, x3, y3, x4, y4);
 
         star.x = intersection.x;
-        star.y = -star.height;
+        star.y = intersection.y;
+
+        if (star.defaultX || star.defaultY) {
+          star.x = star.defaultX;
+          star.y = star.defaultY;
+        }
       }
 
       /*
@@ -205,6 +209,11 @@ class RosiAnimationBackground {
 
         star.x = intersection.x;
         star.y = intersection.y;
+
+        if (star.defaultX || star.defaultY) {
+          star.x = star.defaultX;
+          star.y = star.defaultY;
+        }
       }
 
       /*
@@ -225,8 +234,13 @@ class RosiAnimationBackground {
 
         const intersection = intersect(x1, y1, x2, y2, x3, y3, x4, y4);
 
-        star.x = w;
+        star.x = intersection.x;
         star.y = intersection.y;
+
+        if (star.defaultX || star.defaultY) {
+          star.x = star.defaultX;
+          star.y = star.defaultY;
+        }
       }
     }
   }
