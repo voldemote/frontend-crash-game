@@ -55,6 +55,41 @@ const RosiGame = ({ showPopup, connected }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const renderActivities = () => (
+    <Grid item xs={12} md={4}>
+      <div className={styles.chatWrapper}>
+        <div className={styles.chatContainer}>
+          <ActivitiesTracker
+            showCategories={false}
+            activitiesLimit={50}
+            className={styles.activitiesTrackerGamesBlock}
+            preselectedCategory={'elongame'}
+          />
+        </div>
+      </div>
+    </Grid>
+  );
+
+  const renderBets = () => (
+    <Grid item xs={12} md={4}>
+      <GameBets
+        label="Cashed Out"
+        bets={[
+          ...inGameBets.map(b => ({
+            ...b,
+            cashedOut: false,
+          })),
+          ...cashedOut.map(b => ({
+            ...b,
+            cashedOut: true,
+          })),
+        ]}
+        gameRunning={hasStarted}
+        endGame={isEndgame}
+      />
+    </Grid>
+  );
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -84,49 +119,23 @@ const RosiGame = ({ showPopup, connected }) => {
               <LastCrashes lastCrashes={lastCrashes} />
               <GameAnimation inGameBets={inGameBets} />
             </Grid>
-            {isMiddleOrLargeDevice && (
-              <>
-                <Grid item xs={12} md={3}>
-                  <PlaceBet connected={connected} />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <div className={styles.chatWrapper}>
-                    <Chat
-                      roomId={ROSI_GAME_EVENT_ID}
-                      className={styles.chatContainer}
-                      chatMessageType={ChatMessageType.game}
-                    />
-                  </div>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <div className={styles.chatWrapper}>
-                    <div className={styles.chatContainer}>
-                      <ActivitiesTracker
-                        showCategories={false}
-                        activitiesLimit={50}
-                        className={styles.activitiesTrackerGamesBlock}
-                        preselectedCategory={'elongame'}
-                      />
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item md={4}>
-                  <GameBets
-                    label="Cashed Out"
-                    bets={[
-                      ...inGameBets.map(b => ({ ...b, cashedOut: false })),
-                      ...cashedOut.map(b => ({ ...b, cashedOut: true })),
-                    ]}
-                    gameRunning={hasStarted}
-                    endGame={isEndgame}
+            <Grid item xs={12} md={3}>
+              <PlaceBet connected={connected} />
+            </Grid>
+            {isMiddleOrLargeDevice ? (
+              <Grid item xs={12} md={4}>
+                <div className={styles.chatWrapper}>
+                  <Chat
+                    roomId={ROSI_GAME_EVENT_ID}
+                    className={styles.chatContainer}
+                    chatMessageType={ChatMessageType.game}
                   />
-                </Grid>
-              </>
-            )}
+                </div>
+              </Grid>
+            ) : null}
+            {isMiddleOrLargeDevice ? renderActivities() : renderBets()}
+            {isMiddleOrLargeDevice ? renderBets() : null}
           </Grid>
-          {isSmallDevice && (
-            <MobileBets inGameBets={inGameBets} cashedOut={cashedOut} />
-          )}
           <ContentFooter className={styles.betFooter} />
         </div>
       </div>
