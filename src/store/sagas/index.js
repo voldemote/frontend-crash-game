@@ -20,6 +20,8 @@ import { ChatTypes } from '../actions/chat';
 import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { LeaderboardTypes } from '../actions/leaderboard';
+import { RosiGameTypes } from '../actions/rosi-game';
+import { endGame } from './rosi-game';
 
 const root = function* () {
   yield all([
@@ -160,6 +162,7 @@ const root = function* () {
       [EventTypes.BOOKMARK_EVENT_CANCEL],
       EventSagas.bookmarkEventCancel
     ),
+    takeEvery([RosiGameTypes.ADD_LAST_CRASH], endGame),
     // @formatter:on
   ]);
 };

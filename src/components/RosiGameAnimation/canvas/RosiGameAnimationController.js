@@ -11,6 +11,27 @@ import PreparingRound from './PreparingRound';
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
 
+const intervals = [
+  // fromFactor, toFactor, speed, elonFrame
+  [1, 1.2, 1, 0],
+  [1.2, 1.5, 2, 0],
+  [1.5, 2, 4, 1],
+  [2, 3, 7, 2],
+  [3, 4, 9, 3],
+  [4, 5, 11, 4],
+  [5, 7.5, 13, 5],
+  [7.5, 10, 15, 5],
+  [10, 15, 19, 5],
+  [15, 20, 24, 5],
+  [20, 25, 28, 5],
+  [25, 30, 32, 5],
+  [30, 35, 36, 5],
+  [35, 40, 40, 5],
+  [40, 45, 44, 5],
+  [45, 50, 48, 5],
+  [50, 100, 60, 5],
+];
+
 function loadAssets(loader) {
   const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
   const resolution = deviceType === 'mobile' ? 2 : 1;
@@ -68,18 +89,10 @@ class RosiAnimationController {
   }
 
   update(dt) {
+    const coinPos = this.coinAndTrajectory.getCoinCrashPosition();
     const elapsed = Date.now() - this.gameStartTime;
     const crashFactor = Number(calcCrashFactorFromElapsedTime(elapsed)) || 1.0;
     const maxElonFrames = this.coinAndTrajectory.getElonFramesCount();
-    const intervals = [
-      // fromFactor, toFactor, speed, elonFrame
-      [1, 1.5, 1, 0],
-      [1.5, 2, 2, 1],
-      [2, 3, 3, 2],
-      [3, 3.5, 4, 3],
-      [3.5, 4, 5, 4],
-      [4, 4.5, 6, 5],
-    ];
 
     const currentInterval =
       intervals.find(
@@ -89,13 +102,16 @@ class RosiAnimationController {
 
     const [_f, _t, speed, elonFrame] = currentInterval;
 
-    if (elonFrame < maxElonFrames) {
+    if (
+      this.coinAndTrajectory.canUpdateElonFrame() &&
+      elonFrame < maxElonFrames
+    ) {
       this.coinAndTrajectory.setElonFrame(elonFrame);
     }
 
     TWEEN.update(this.app.ticker.lastTime);
-    this.cashedOut.update(dt);
-    this.background.update(dt, speed);
+    this.cashedOut.update(dt, elapsed / 1000, coinPos);
+    this.background.update(dt, speed, this.coinAndTrajectory.trajectoryAngle);
   }
 
   drawElements() {
@@ -103,15 +119,13 @@ class RosiAnimationController {
     this.app.stage.addChild(this.background.container);
 
     this.coinExplosion = new CoinExplosion(this.app);
-    this.app.stage.addChild(this.coinExplosion.container);
-
     this.coinAndTrajectory = new CoinAnimation(this.app);
-    this.app.stage.addChild(this.coinAndTrajectory.container);
-
-    this.cashedOut = new CashedOutAnimation(this.app);
-    this.app.stage.addChild(this.cashedOut.container);
-
+    this.cashedOut = new CashedOutAnimation(this.app, this.coinAndTrajectory);
     this.preparingRound = new PreparingRound(this.app);
+
+    this.app.stage.addChild(this.coinExplosion.container);
+    this.app.stage.addChild(this.coinAndTrajectory.container);
+    this.app.stage.addChild(this.cashedOut.container);
     this.app.stage.addChild(this.preparingRound.container);
   }
 
@@ -129,14 +143,13 @@ class RosiAnimationController {
   }
 
   doCashedOutAnimation(data) {
+    const elapsed = Date.now() - this.gameStartTime;
     const point = this.coinAndTrajectory.getCoinCrashPosition();
-    const elonVelocity = this.coinAndTrajectory.getCurrentVelocty();
     this.cashedOut.animate(
       point.x,
-      point.y,
       data.amount,
-      data.crashFactor,
-      elonVelocity
+      calcCrashFactorFromElapsedTime(elapsed),
+      elapsed / 1000
     );
   }
 }
