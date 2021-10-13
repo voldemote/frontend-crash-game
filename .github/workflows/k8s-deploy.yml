@@ -26,7 +26,7 @@ jobs:
         run: doctl registry login
       - name: Build the docker image
         id: docker_build
-        run: docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://staging-elon-api.wallfair.io/" --build-arg REACT_APP_BACKEND_URL="https://staging-api.wallfair.io/" -t registry.digitalocean.com/wallfair/frontend_k8s:${GITHUB_SHA::6}
+        run: docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://staging-elon-api.wallfair.io/" --build-arg REACT_APP_BACKEND_URL="https://staging-api.wallfair.io/" --build-arg REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }} -t registry.digitalocean.com/wallfair/frontend_k8s:${GITHUB_SHA::6}
       - name: Publish the docker image to Digital Ocean
         run: docker push registry.digitalocean.com/wallfair/frontend_k8s:${GITHUB_SHA::6}
   
