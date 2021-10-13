@@ -151,13 +151,13 @@ function EventsContent({
         showPopup(PopupTheme.explanation, {
           type: eventType,
         });
-        localStorage.setItem(`eventHowDoesWorkItTip-${eventType}`, true);
+        localStorage.setItem(`eventHowDoesItWorkTip-${eventType}`, true);
       }
     }, 1000);
   }, []);
 
   const isPopupDisplayed = () => {
-    return localStorage.getItem(`eventHowDoesWorkItTip-${eventType}`) || false;
+    return localStorage.getItem(`eventHowDoesItWorkTip-${eventType}`) || false;
   };
 
   const handleHelpClick = useCallback(event => {

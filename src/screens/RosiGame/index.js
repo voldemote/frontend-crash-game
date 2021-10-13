@@ -58,13 +58,13 @@ const RosiGame = ({ showPopup, connected }) => {
     setTimeout(() => {
       if (!isPopupDisplayed()) {
         showPopup(PopupTheme.explanation);
-        localStorage.setItem('gameHowDoesWorkItTip', true);
+        localStorage.setItem('gameHowDoesItWorkTip', true);
       }
     }, 1000);
   }, []);
 
   const isPopupDisplayed = () => {
-    return localStorage.getItem('gameHowDoesWorkItTip') || false;
+    return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
   return (
