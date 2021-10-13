@@ -55,6 +55,20 @@ const RosiGame = ({ showPopup, connected }) => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (!isPopupDisplayed()) {
+        showPopup(PopupTheme.explanation);
+        localStorage.setItem('gameHowDoesItWorkTip', true);
+      }
+    }, 1000);
+    return () => clearTimeout(timerId);
+  }, []);
+
+  const isPopupDisplayed = () => {
+    return localStorage.getItem('gameHowDoesItWorkTip') || false;
+  };
+
   const renderActivities = () => (
     <Grid item xs={12} md={4}>
       <div className={styles.chatWrapper}>
