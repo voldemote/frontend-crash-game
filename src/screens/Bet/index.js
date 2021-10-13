@@ -213,12 +213,13 @@ const Bet = ({
   useEffect(() => {
     if (event) {
       setIsReady(true);
-      setTimeout(() => {
+      const timerId = setTimeout(() => {
         if (!isPopupDisplayed(event)) {
           showPopup(PopupTheme.explanation);
           localStorage.setItem(`eventHowDoesItWorkTip-${event.type}`, true);
         }
       }, 1000);
+      return () => clearTimeout(timerId);
     } else {
       if (isMounted) {
         setIsReady(true);

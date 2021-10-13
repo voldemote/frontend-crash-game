@@ -56,12 +56,13 @@ const RosiGame = ({ showPopup, connected }) => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       if (!isPopupDisplayed()) {
         showPopup(PopupTheme.explanation);
         localStorage.setItem('gameHowDoesItWorkTip', true);
       }
     }, 1000);
+    return () => clearTimeout(timerId);
   }, []);
 
   const isPopupDisplayed = () => {
