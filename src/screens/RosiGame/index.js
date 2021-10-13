@@ -54,6 +54,19 @@ const RosiGame = ({ showPopup, connected }) => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (!isPopupDisplayed()) {
+        showPopup(PopupTheme.explanation);
+        localStorage.setItem('gameHowDoesWorkItTip', true);
+      }
+    }, 1000);
+  }, []);
+
+  const isPopupDisplayed = () => {
+    return localStorage.getItem('gameHowDoesWorkItTip') || false;
+  };
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -110,7 +123,7 @@ const RosiGame = ({ showPopup, connected }) => {
                   </div>
                 </Grid>
                 <Grid item md={4}>
-                   <GameBets
+                  <GameBets
                     label="Cashed Out"
                     bets={[
                       ...inGameBets.map(b => ({ ...b, cashedOut: false })),

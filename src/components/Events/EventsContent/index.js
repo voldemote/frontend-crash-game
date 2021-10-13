@@ -145,6 +145,21 @@ function EventsContent({
     };
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (!isPopupDisplayed()) {
+        showPopup(PopupTheme.explanation, {
+          type: eventType,
+        });
+        localStorage.setItem(`eventHowDoesWorkItTip-${eventType}`, true);
+      }
+    }, 1000);
+  }, []);
+
+  const isPopupDisplayed = () => {
+    return localStorage.getItem(`eventHowDoesWorkItTip-${eventType}`) || false;
+  };
+
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation, {
       type: eventType,
