@@ -145,21 +145,6 @@ function EventsContent({
     };
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (!isPopupDisplayed()) {
-        showPopup(PopupTheme.explanation, {
-          type: eventType,
-        });
-        localStorage.setItem(`eventHowDoesItWorkTip-${eventType}`, true);
-      }
-    }, 1000);
-  }, []);
-
-  const isPopupDisplayed = () => {
-    return localStorage.getItem(`eventHowDoesItWorkTip-${eventType}`) || false;
-  };
-
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation, {
       type: eventType,
