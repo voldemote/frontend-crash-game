@@ -202,6 +202,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         );
       case 'Notification/EVENT_BET_CASHED_OUT':
         const gainValueEvent = _.get(data, 'gain.value');
+        const gainNegativeEvent = _.get(data, 'gain.negative');
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
@@ -211,7 +212,15 @@ const ActivityMessage = ({ activity, date, users, events }) => {
               </b>
             </div>{' '}
             {gainValueEvent && (
-              <div className={'global-cashout-profit'}>({gainValueEvent})</div>
+              <div
+                className={
+                  gainNegativeEvent
+                    ? 'global-cashout-loss'
+                    : 'global-cashout-profit'
+                }
+              >
+                ({gainValueEvent})
+              </div>
             )}{' '}
             from{' '}
             <b>
@@ -261,6 +270,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         const reward = _.get(data, 'reward');
         const gain = calculateGain(stakedAmount, reward);
         const gainValueCasino = _.get(gain, 'value');
+        const gainNegativeCasino = _.get(gain, 'negative');
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
@@ -270,7 +280,15 @@ const ActivityMessage = ({ activity, date, users, events }) => {
               </b>
             </div>{' '}
             {gainValueCasino && (
-              <div className={'global-cashout-profit'}>({gainValueCasino})</div>
+              <div
+                className={
+                  gainNegativeCasino
+                    ? 'global-cashout-loss'
+                    : 'global-cashout-profit'
+                }
+              >
+                ({gainValueCasino})
+              </div>
             )}{' '}
             from Elon Game.{' '}
           </div>
