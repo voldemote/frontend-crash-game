@@ -134,7 +134,7 @@ const RosiGame = ({ showPopup, connected }) => {
               </Grid>
             ) : null}
             {isMiddleOrLargeDevice ? renderActivities() : renderBets()}
-            {isMiddleOrLargeDevice ? renderBets() : renderActivities()}
+            {isMiddleOrLargeDevice ? renderBets() : null}
           </Grid>
           <ContentFooter className={styles.betFooter} />
         </div>
