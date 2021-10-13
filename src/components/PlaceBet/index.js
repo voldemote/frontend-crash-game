@@ -91,6 +91,17 @@ const PlaceBet = ({ connected }) => {
     setAmount(amount <= 10000 ? amount : 10000);
   };
 
+  const onBetAmountChanged = multiplier => {
+    const changedValue = _.floor(amount * multiplier, 0);
+    if (changedValue > 10000) {
+      setAmount(10000);
+    } else if (changedValue < 1) {
+      setAmount(1);
+    } else {
+      setAmount(changedValue);
+    }
+  };
+
   useEffect(() => {
     ReactTooltip.rebuild();
   }, [showCashoutWarning]);
@@ -338,6 +349,20 @@ const PlaceBet = ({ connected }) => {
               <span className={styles.eventTokenLabel}>
                 <span>{TOKEN_NAME}</span>
               </span>
+              <div className={styles.buttonWrapper}>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => onBetAmountChanged(0.5)}
+                >
+                  ½
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => onBetAmountChanged(2)}
+                >
+                  2x
+                </span>
+              </div>
             </div>
           )}
         </div>
