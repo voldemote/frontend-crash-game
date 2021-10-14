@@ -116,8 +116,7 @@ const MyTradesList = ({
                           item.outcomes.find(
                             ({ name }) => name === item.outcomeValue
                           ).index,
-                          item.sellAmount,
-                          gain
+                          item.sellAmount
                         )
                       }
                       data-tracking-id="wallet-cashout"

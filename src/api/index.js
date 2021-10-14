@@ -178,11 +178,10 @@ const getSellOutcomes = (betId, amount) => {
   });
 };
 
-const pullOutBet = (betId, amount, outcome, gain) => {
+const pullOutBet = (betId, amount, outcome) => {
   return Api.post(_.replace(ApiUrls.API_BET_PULL_OUT, ':id', betId), {
     amount,
     outcome,
-    gain,
   }).catch(error => {
     console.log('[API Error] called: pullOutBet', error);
   });

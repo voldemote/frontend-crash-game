@@ -10,12 +10,12 @@ import { selectUser } from 'store/selectors/authentication';
 const PulloutApprovePopup = ({
   hidePopup,
   pullOutBet,
-  betData: { betId, amount, outcome, gain },
+  betData: { betId, amount, outcome },
 }) => {
   const { currency } = useSelector(selectUser);
 
   const onApprovePulloutClick = () => {
-    pullOutBet(betId, outcome, amount, gain);
+    pullOutBet(betId, outcome, amount);
     hidePopup();
   };
 
