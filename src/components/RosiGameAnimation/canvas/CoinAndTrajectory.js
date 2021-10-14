@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { calcPercent, isMobileRosiGame } from './utils';
 import TWEEN from '@tweenjs/tween.js';
-
+import * as particles from '@pixi/particle-emitter';
 export class CoinAnimation {
   constructor(app) {
     this.app = app;
@@ -43,6 +43,129 @@ export class CoinAnimation {
 
     this.initialBoostAnimationComplete = false;
     this.trajectoryCurrentX = 0;
+
+    // particle
+    this.flameEmitter = new particles.Emitter(this.container, {
+      lifetime: {
+        min: 0.3,
+        max: 0.75,
+      },
+      frequency: 0.0004,
+      spawnChance: 0.05,
+      emitterLifetime: 0,
+      maxParticles: 1000,
+      addAtBack: false,
+      pos: {
+        x: 0,
+        y: 0,
+      },
+      behaviors: [
+        {
+          type: 'alpha',
+          config: {
+            alpha: {
+              list: [
+                {
+                  time: 0,
+                  value: 1,
+                },
+                {
+                  time: 1,
+                  value: 0,
+                },
+              ],
+            },
+          },
+        },
+        {
+          type: 'moveSpeedStatic',
+          config: {
+            min: 300,
+            max: 500,
+          },
+        },
+        {
+          type: 'scale',
+          config: {
+            scale: {
+              list: [
+                {
+                  time: 0,
+                  value: 0.25,
+                },
+                {
+                  time: 1,
+                  value: 0.55,
+                },
+              ],
+            },
+            minMult: 1,
+          },
+        },
+        {
+          type: 'color',
+          config: {
+            color: {
+              list: [
+                {
+                  time: 0,
+                  value: 'ffff91',
+                },
+                {
+                  time: 1,
+                  value: 'ffffff',
+                },
+              ],
+            },
+          },
+        },
+        {
+          type: 'rotation',
+          config: {
+            accel: 0,
+            minSpeed: 50,
+            maxSpeed: 50,
+            minStart: 265,
+            maxStart: 275,
+          },
+        },
+        {
+          type: 'textureRandom',
+          config: {
+            textures: [
+              this.app.loader.resources.star1.texture,
+              this.app.loader.resources.star2.texture,
+              this.app.loader.resources.particle.texture,
+            ],
+          },
+        },
+        {
+          type: 'spawnShape',
+          config: {
+            type: 'torus',
+            data: {
+              x: 0,
+              y: 0,
+              radius: 30, // TODO: depends on the coin size
+              innerRadius: 0,
+              affectRotation: false,
+            },
+          },
+        },
+      ],
+    });
+
+    this.flameElapsed = Date.now();
+    this.flameEmitter.rotate(Math.PI * 1.5);
+
+    const flameUpdate = () => {
+      requestAnimationFrame(flameUpdate);
+      var now = Date.now();
+      this.flameEmitter.update((now - this.flameElapsed) * 0.001);
+      this.flameElapsed = now;
+    };
+    this.flameEmitter.emit = true;
+    flameUpdate();
   }
 
   getCurrentElonFrame() {
@@ -91,6 +214,8 @@ export class CoinAnimation {
     this.container.visible = true;
     this.resetAllAnimations();
     this.setCoinDefaultPosition();
+    // flame starts
+    this.flameEmitter.emit = true;
 
     const easing = TWEEN.Easing.Quintic.Out;
     const interpolation = TWEEN.Interpolation.Linear;
@@ -104,6 +229,12 @@ export class CoinAnimation {
       .onUpdate(() => {
         this.elonAndCoin.x = coinTweenData.x;
         this.elonAndCoin.y = coinTweenData.y;
+
+        // flame follows
+        this.flameEmitter.updateOwnerPos(
+          this.elonAndCoin.x,
+          this.elonAndCoin.y + 50
+        );
 
         const percentComplete = (coinTweenData.x * 100) / this.destX;
         if (percentComplete >= 98) {
@@ -152,6 +283,9 @@ export class CoinAnimation {
       this.drawLineTween.stop();
       this.drawLineTween = null;
     }
+
+    // flame ends
+    this.flameEmitter.emit = false;
 
     this.coin.alpha = 0;
     this.elon.alpha = 0;
