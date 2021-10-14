@@ -52,6 +52,10 @@ const TokenNumberInput = ({
     }
   };
 
+  const onBetAmountMax = () => {
+    setValue(_.floor(maxValue, 0));
+  };
+
   return (
     <>
       <div className={classNames(styles.tokenNumberInputContainer, className)}>
@@ -73,6 +77,9 @@ const TokenNumberInput = ({
           </span>
           <span className={styles.button} onClick={() => onBetAmountChanged(2)}>
             2x
+          </span>
+          <span className={styles.button} onClick={() => onBetAmountMax()}>
+            Max
           </span>
         </div>
       </div>
