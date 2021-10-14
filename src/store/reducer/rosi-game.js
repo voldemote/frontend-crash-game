@@ -9,6 +9,7 @@ import {
   silenceAllSounds,
   resetAllSounds,
 } from '../../helper/Audio';
+import { calcCrashFactorFromElapsedTime } from '../../components/RosiGameAnimation/canvas/utils';
 const TIME_TO_FACTOR_RATIO = 0.1; // 1s = 0.1x
 const START_FACTOR = 1;
 const initialState = {
@@ -135,15 +136,14 @@ const cashedOut = (action, state) => {
 const cashedOutGuest = (action, state) => {
   const startTime = new Date(state.timeStarted);
   const now = Date.now();
-  let factor =
-    ((now - startTime.getTime()) / 1000) * TIME_TO_FACTOR_RATIO + START_FACTOR;
+  let factor = calcCrashFactorFromElapsedTime(now - startTime.getTime());
 
   const bet = {
     ...action.payload,
     amount: round(state.userBet.amount * factor, 0),
     username: 'Guest',
     userId: 'Guest',
-    crashFactor: factor.toFixed(2),
+    crashFactor: factor,
     isFresh: true,
   };
   return {

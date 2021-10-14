@@ -14,7 +14,7 @@ const renderValue = (bet, gameRunning, endGame) => {
     return formatAmount(bet.amount);
   }
   if (bet.cashedOut) {
-    return `+ ${formatAmount(bet.amount * bet.crashFactor)}`;
+    return `+ ${formatAmount(bet.amount)}`;
   }
   if (endGame && !bet.cashedOut) {
     return `- ${formatAmount(bet.amount)}`;
