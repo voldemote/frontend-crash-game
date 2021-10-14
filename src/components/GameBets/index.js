@@ -4,9 +4,27 @@ import styles from './styles.module.scss';
 import classNames from 'classnames';
 
 const formatAmount = amount => amount.toFixed(0);
+const isCashedOut = bets => bets.findIndex(b => b.cashedOut) > -1;
 
-const calculateTotal = bets => {
-  return bets.reduce((total, bet) => total + bet.amount, 0);
+const calculateTotal = (bets, gameRunning, endGame) => {
+  if (isCashedOut(bets) && gameRunning) {
+    return `+ ${formatAmount(
+      bets
+        .filter(b => b.cashedOut)
+        .reduce((total, bet) => total + bet.amount, 0)
+    )}`;
+  }
+  if (endGame && isCashedOut(bets)) {
+    return `+ ${formatAmount(
+      bets
+        .filter(b => b.cashedOut)
+        .reduce((total, bet) => total + bet.amount, 0)
+    )}`;
+  }
+  if (endGame && !isCashedOut(bets)) {
+    return 0;
+  }
+  return formatAmount(bets.reduce((total, bet) => total + bet.amount, 0));
 };
 
 const renderValue = (bet, gameRunning, endGame) => {
@@ -14,7 +32,7 @@ const renderValue = (bet, gameRunning, endGame) => {
     return formatAmount(bet.amount);
   }
   if (bet.cashedOut) {
-    return `+ ${formatAmount(bet.amount * bet.crashFactor)}`;
+    return `+ ${formatAmount(bet.amount)}`;
   }
   if (endGame && !bet.cashedOut) {
     return `- ${formatAmount(bet.amount)}`;
@@ -53,13 +71,18 @@ const Bet = ({ cashedOut, bet, gameRunning, endGame }) => {
   );
 };
 
-const GameBets = ({ bets, endGame }) => {
+const GameBets = ({ bets, endGame, gameRunning }) => {
   return (
     <div className={styles.container}>
       <div className={styles.total}>
         <div className={styles.label}>Total</div>
-        <div className={styles.value}>
-          {formatAmount(calculateTotal(bets))} {TOKEN_NAME}
+        <div
+          className={classNames({
+            [styles.value]: true,
+            [styles.positive]: isCashedOut(bets) && (gameRunning || endGame),
+          })}
+        >
+          {calculateTotal(bets, gameRunning, endGame)} {TOKEN_NAME}
         </div>
       </div>
       <div className={styles.bets}>

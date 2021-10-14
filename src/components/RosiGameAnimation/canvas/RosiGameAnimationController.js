@@ -76,6 +76,7 @@ class RosiAnimationController {
 
     this.gameStartTime = 0;
     this.lastCrashFactor = 1.0;
+    this.currentIntervalIndex = -1;
   }
 
   load(done) {
@@ -101,6 +102,7 @@ class RosiAnimationController {
       ) || intervals[intervals.length - 1];
 
     const [_f, _t, speed, elonFrame] = currentInterval;
+    const currentIntervalIndex = intervals.indexOf(currentInterval);
 
     if (
       this.coinAndTrajectory.canUpdateElonFrame() &&
@@ -109,9 +111,14 @@ class RosiAnimationController {
       this.coinAndTrajectory.setElonFrame(elonFrame);
     }
 
+    if (this.currentIntervalIndex !== currentIntervalIndex) {
+      this.background.setStarsSpeed(speed);
+      this.currentIntervalIndex = currentIntervalIndex;
+    }
+
     TWEEN.update(this.app.ticker.lastTime);
     this.cashedOut.update(dt, elapsed / 1000, coinPos);
-    this.background.update(dt, speed, this.coinAndTrajectory.trajectoryAngle);
+    this.background.update(dt, this.coinAndTrajectory.trajectoryAngle);
   }
 
   drawElements() {
@@ -134,6 +141,7 @@ class RosiAnimationController {
     this.coinAndTrajectory.startCoinFlyingAnimation();
     this.cashedOut.reset();
     this.gameStartTime = gameStartTime;
+    this.currentIntervalIndex = -1;
   }
 
   end() {
@@ -148,7 +156,7 @@ class RosiAnimationController {
     this.cashedOut.animate(
       point.x,
       data.amount,
-      calcCrashFactorFromElapsedTime(elapsed),
+      data.crashFactor,
       elapsed / 1000
     );
   }

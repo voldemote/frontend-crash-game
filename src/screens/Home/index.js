@@ -4,6 +4,8 @@ import { connect, useSelector } from 'react-redux';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
+import Lightbox from '../../components/Lightbox/Lightbox';
+import UniswapContent from '../../components/Lightbox/UniswapContent';
 import { Link, useParams } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { EventActions } from 'store/actions/event';
@@ -126,6 +128,16 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
     );
   };
 
+  const renderUniswap = () => {
+    return (
+      <div className={styles.lightboxWrapper}>
+        <Lightbox>
+          <UniswapContent />
+        </Lightbox>
+      </div>
+    );
+  };
+
   const renderCategoriesAndLeaderboard = () => {
     return (
       <div className={styles.bottomWrapper}>
@@ -164,6 +176,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
           <EventsCarouselContainer eventType="non-streamed" />
           <EventsCarouselContainer eventType="streamed" />
           {renderCategoriesAndLeaderboard()}
+          {renderUniswap()}
           <ContentFooter />
         </div>
       </div>
