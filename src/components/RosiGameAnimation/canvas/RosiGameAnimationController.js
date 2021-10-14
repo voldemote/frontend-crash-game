@@ -156,7 +156,7 @@ class RosiAnimationController {
     this.cashedOut.animate(
       point.x,
       data.amount,
-      calcCrashFactorFromElapsedTime(elapsed),
+      data.crashFactor,
       elapsed / 1000
     );
   }
