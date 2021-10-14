@@ -362,6 +362,12 @@ const PlaceBet = ({ connected }) => {
                 >
                   2x
                 </span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setAmount(10000)}
+                >
+                  Max
+                </span>
               </div>
             </div>
           )}
