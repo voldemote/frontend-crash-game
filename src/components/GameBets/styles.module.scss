@@ -25,6 +25,10 @@
 
       .value {
         color: $colorWhite;
+        transition: color 0.2s ease-in;
+      }
+      .value.positive{
+        color: $colorGreen;
       }
     }
 }
@@ -34,6 +38,7 @@
   .bet:nth-child(even) {
     background-color: #18152f;
   }
+
   .bet {
     position: relative;
     display: flex;
