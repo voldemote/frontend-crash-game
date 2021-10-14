@@ -330,7 +330,7 @@ const createEventFromYoutubeUrl = data => {
 const getCoverStream = () => {
   return Api.get(ApiUrls.API_EVENT_GET_COVER_STREAM)
     .then(response => ({ response }))
-    .catch(error => ({ error: error.response.data }));
+    .catch(error => ({ error: error.response?.data }));
 };
 
 const resolveBet = (betId, data) => {

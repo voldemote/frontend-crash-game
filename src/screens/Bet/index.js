@@ -4,6 +4,7 @@ import Icon from '../../components/Icon';
 import Link from '../../components/Link';
 import BackLink from '../../components/BackLink';
 import LiveBadge from 'components/LiveBadge';
+import AllTrades from '../../components/AllTrades';
 import Routes from '../../constants/Routes';
 import styles from './styles.module.scss';
 import { Carousel } from 'react-responsive-carousel';
@@ -862,7 +863,7 @@ const Bet = ({
 
                 {selectedTab === 'all trades' && (
                   <div className={styles.activitiesTabContainerDesktop}>
-                    All trades component
+                    <AllTrades betId={event.bets?.[0]._id} />
                   </div>
                 )}
               </div>
