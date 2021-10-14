@@ -51,6 +51,9 @@ import { useIsMount } from '../../components/hoc/useIsMount';
 import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart.svg';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import TimeCounterVTwo from 'components/TimeCounterVTwo';
+import { EVENT_CATEGORIES } from 'constants/EventCategories';
+import { EventActions } from 'store/actions/event';
+import Favorite from 'components/Favorite';
 // import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
@@ -63,11 +66,14 @@ const BET_ACTIONS = {
 const BetVTwo = ({
   showPopup,
   authState,
+  userId,
   events,
   fetchOpenBets,
   fetchTransactions,
   fetchChatMessages,
   handleDislaimerHidden,
+  bookmarkEvent = () => {},
+  bookmarkEventCancel = () => {},
 }) => {
   const { eventSlug, betSlug } = useParams();
   const isMounted = useIsMount();
@@ -343,6 +349,14 @@ const BetVTwo = ({
     );
   };
 
+  const getStickerStyle = category => {
+    const cat = EVENT_CATEGORIES.find(c => c.value === category);
+    if (!cat) return {};
+    return {
+      backgroundImage: 'url("' + cat.image + '")',
+    };
+  };
+
   const renderRelatedBetSlider = (pageIndex, index) => {
     const indexes = [];
     const listLength = relatedBets.length > 3 ? 3 : relatedBets.length;
@@ -605,7 +619,6 @@ const BetVTwo = ({
   if (!isReady) {
     return null;
   }
-
   return (
     <BaseContainerWithNavbar withPaddingTop={true} withoutPaddingBottom={true}>
       <div className={styles.bet}>
@@ -613,6 +626,11 @@ const BetVTwo = ({
           <>
             <div className={styles.headlineContainer}>
               <div className={styles.headlineImage}>
+                <div
+                  className={classNames([styles.categorySticker])}
+                  style={getStickerStyle(event.category)}
+                />
+
                 {(hasOnlineState || hasOfflineState) && (
                   <div className={styles.streamStateBadge}>
                     {hasOnlineState && <LiveBadge />}
@@ -758,6 +776,15 @@ const BetVTwo = ({
               </div>
               <div className={styles.columnRight}>
                 <div className={styles.shareButton}>
+                  <Favorite
+                    isFavorite={!!event?.bookmarks?.includes(userId)}
+                    onBookmark={() => {
+                      bookmarkEvent(event?._id);
+                    }}
+                    onBookmarkCancel={() => {
+                      bookmarkEventCancel(event?._id);
+                    }}
+                  />
                   <Share />
                 </div>
                 {renderBetSidebarContent()}
@@ -838,6 +865,7 @@ const BetVTwo = ({
 const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
+    userId: state.authentication.userId,
     events: state.event.events,
   };
 };
@@ -863,6 +891,12 @@ const mapDispatchToProps = dispatch => {
     },
     handleDislaimerHidden: bool => {
       dispatch(GeneralActions.setDisclaimerHidden(bool));
+    },
+    bookmarkEvent: eventId => {
+      dispatch(EventActions.bookmarkEvent({ eventId }));
+    },
+    bookmarkEventCancel: eventId => {
+      dispatch(EventActions.bookmarkEventCancel({ eventId }));
     },
   };
 };

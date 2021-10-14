@@ -74,13 +74,26 @@
       max-width: 35%;
       padding: 0 1rem;
       position: relative;
+      .categorySticker {
+        width: 52px;
+        height: 52px;
+        background: url('../../data/icons/events-all-icon.svg');
+        border-radius: 50%;
+        //background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: -25px;
+        z-index: 3;
+        right: -5px;
+      }
+
       img {
         border-radius: 20px;
         max-width: 100%;
       }
       .streamStateBadge {
         position: absolute;
-        right: -10px;
+        left: -10px;
         top: -10px;
       }
     }
@@ -144,7 +157,7 @@
       }
     }
     .columnLeft {
-      width: 70%;
+      width: 50%;
       padding-left: 3rem;
       padding-right: 1rem;
       display: flex;
@@ -212,7 +225,7 @@
     .columnRight {
       display: flex;
       flex-direction: column;
-      width: 30%;
+      width: 50%;
       padding-left: 2em;
       text-align: right;
 
@@ -221,7 +234,7 @@
         padding: 0;
       }
 
-      > div:first-child {
+      > div {
         margin-bottom: 30px;
       }
 
@@ -468,6 +481,12 @@
 }
 
 .shareButton {
+  display: flex;
+  justify-content: flex-end;
+
+  > div:first-child {
+    margin-right: 15px;
+  }
   @media screen and (max-width: $screen-md) {
     margin: 0 auto;
   }
