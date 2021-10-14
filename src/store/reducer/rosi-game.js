@@ -10,8 +10,7 @@ import {
   resetAllSounds,
 } from '../../helper/Audio';
 import { calcCrashFactorFromElapsedTime } from '../../components/RosiGameAnimation/canvas/utils';
-const TIME_TO_FACTOR_RATIO = 0.1; // 1s = 0.1x
-const START_FACTOR = 1;
+
 const initialState = {
   hasStarted: false,
   lastCrashes: [],
@@ -85,7 +84,7 @@ const addLastCrash = (action, state) => {
 };
 
 const addInGameBet = (action, state) => {
-  if (state.hasStarted) {
+  if (state.hasStarted || state.isEndgame) {
     return {
       ...state,
       betQueue: [
