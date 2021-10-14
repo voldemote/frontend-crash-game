@@ -34,12 +34,10 @@ class RosiAnimationBackground {
 
   createStars() {
     const h = this.app.renderer.height;
-    const segmentWidth = isMobileRosiGame ? 50 : 160;
+    const segmentWidth = isMobileRosiGame ? 120 : 240;
     const segmentsCount =
       Math.trunc(this.app.renderer.width / segmentWidth) + 1;
     const yStepPercent = 35;
-    const starWidth = new PIXI.Sprite(this.app.loader.resources.star2.texture)
-      .width;
 
     for (let i = 0; i < segmentsCount + 1; i++) {
       const randomYOffset = getRandomInRange(
@@ -47,14 +45,22 @@ class RosiAnimationBackground {
         calcPercent(h, 25)
       );
 
-      const randomXOffset = getRandomInRange(
-        calcPercent(starWidth, 50),
-        calcPercent(starWidth, 100)
-      );
-
       let currYPercent = 100 - yStepPercent;
-      for (let j = 0; j < 3 + i; j++) {
-        const star = new PIXI.Sprite(this.app.loader.resources.star2.texture);
+      for (let j = 0; j < 3 + Math.max(i - 3, 0); j++) {
+        let textureName = 'star2';
+
+        if ((i === 1 || i === 3 || i === 6) && (j === 1 || j >= 3)) {
+          textureName = 'star1';
+        }
+
+        const texture = this.app.loader.resources[textureName].texture;
+        const starWidth = new PIXI.Sprite(texture).width;
+        const randomXOffset = getRandomInRange(
+          calcPercent(starWidth, 50),
+          calcPercent(starWidth, 100)
+        );
+
+        const star = new PIXI.Sprite(texture);
         // ofset star to the left or right
         let plusOrMinus = j % 2 === 0 ? -1 : 1;
         plusOrMinus *= i % 2 === 0 ? 1 : -1;
@@ -71,7 +77,7 @@ class RosiAnimationBackground {
           star.defaultY = star.y;
         }
 
-        star.speed = getRandomInRange(0.09, 0.25);
+        star.speed = getRandomInRange(0.08, 0.3);
         this.stars.push(star);
         this.container.addChild(star);
         currYPercent -= yStepPercent;
@@ -201,9 +207,9 @@ class RosiAnimationBackground {
         const y2 = h;
         const x3 = star.x;
         const y3 = star.y;
-        const length = w - star.height;
-        const x4 = this.app.renderer.width;
-        const y4 = y3 - star.height - length * Math.sin(angle);
+        const length = w * 2;
+        const x4 = x3 + length * Math.cos(angle);
+        const y4 = y3 - length * Math.sin(angle);
 
         const intersection = intersect(x1, y1, x2, y2, x3, y3, x4, y4);
 
