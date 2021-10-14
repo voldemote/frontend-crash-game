@@ -107,6 +107,16 @@ $border: 1px solid $colorWhite30;
   display: inline-block;
 }
 
+.global-cashout-profit, .global-cashout-loss {
+  color: $colorGreen;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.global-cashout-loss {
+  color: $colorRed;
+}
+
 .global-link-style {
   font-weight: bold;
   text-decoration: underline;

@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import { formatToFixed } from 'helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
+import { calculateGain } from '../../helper/Calculation';
 
 const ActivityMessage = ({ activity, date, users, events }) => {
   const [dateString, setDateString] = useState('');
@@ -200,6 +201,8 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           </div>
         );
       case 'Notification/EVENT_BET_CASHED_OUT':
+        const gainValueEvent = _.get(data, 'gain.value');
+        const gainNegativeEvent = _.get(data, 'gain.negative');
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
@@ -208,6 +211,17 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                 {formatToFixed(_.get(data, 'amount'), 0, true)} {TOKEN_NAME}
               </b>
             </div>{' '}
+            {gainValueEvent && (
+              <div
+                className={
+                  gainNegativeEvent
+                    ? 'global-cashout-loss'
+                    : 'global-cashout-profit'
+                }
+              >
+                ({gainValueEvent})
+              </div>
+            )}{' '}
             from{' '}
             <b>
               <a
@@ -252,6 +266,11 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           // TODO: Replace this hardcoded game name with actual one later
         );
       case 'Casino/CASINO_CASHOUT':
+        const stakedAmount = _.get(data, 'stakedAmount');
+        const reward = _.get(data, 'reward');
+        const gain = calculateGain(stakedAmount, reward);
+        const gainValueCasino = _.get(gain, 'value');
+        const gainNegativeCasino = _.get(gain, 'negative');
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
@@ -260,6 +279,17 @@ const ActivityMessage = ({ activity, date, users, events }) => {
                 {formatToFixed(_.get(data, 'reward'), 0, true)} {TOKEN_NAME}
               </b>
             </div>{' '}
+            {gainValueCasino && (
+              <div
+                className={
+                  gainNegativeCasino
+                    ? 'global-cashout-loss'
+                    : 'global-cashout-profit'
+                }
+              >
+                ({gainValueCasino})
+              </div>
+            )}{' '}
             from Elon Game.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
