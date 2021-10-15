@@ -7,7 +7,7 @@ spec:
   - hosts:
     - play.wallfair.io
     - prod.wallfair.io
-    secretName: backend-production-cert-secret
+    secretName: frontend-production-cert-secret
   rules:
   - host: play.wallfair.io
     http:
