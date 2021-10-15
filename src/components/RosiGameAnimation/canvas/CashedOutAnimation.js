@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
-import { isMobileRosiGame, calcPercent } from './utils';
+import { isMobileRosiGame, calcPercent, calcTotalDelayTime } from './utils';
 
 const AMOUNT_TEXT_FILL_COLOR = 0xefff54;
 const AMOUN_FONT_FAMILY = 'PlusJakarta-Bold';
@@ -26,6 +26,7 @@ class Animation {
     this.amountTextTween = amountTextTween;
 
     this.crashFactorText = this.createCashFactorText();
+    this.initialAnimationFrameDone = false;
   }
 
   createAmountText() {
@@ -118,6 +119,7 @@ class Animation {
     this.coin.scale.set(COIN_DEFAULT_SCALE);
     this.container.visible = false;
     this.speed = 0;
+    this.initialAnimationFrameDone = false;
   }
 
   setSpeed(speed) {
@@ -179,7 +181,7 @@ class CashedOutAnimation {
     }
   }
 
-  animate(x, amount, crashFactor, elapsedTime) {
+  animate(x, amount, crashFactor) {
     const previousAnimX =
       this.currentAnims.length > 0
         ? this.currentAnims[this.currentAnims.length - 1].getX()
@@ -196,7 +198,7 @@ class CashedOutAnimation {
 
     this.currentAnims.push(anim);
 
-    anim.elapsedTime = elapsedTime;
+    anim.elapsedTime = calcTotalDelayTime(crashFactor) / 1000;
     anim.crashFactor = crashFactor;
     anim.setTextValues(amount, crashFactor);
 
@@ -222,11 +224,9 @@ class CashedOutAnimation {
     }
   }
 
-  update(dt, elapsedTime, coinPos) {
+  update(dt, elapsedTime) {
     let prevAnim;
     for (const anim of this.currentAnims) {
-      // const animSpeed = anim.getX() / 1000;
-
       if (
         prevAnim &&
         prevAnim.isTextVisible() &&
@@ -237,12 +237,10 @@ class CashedOutAnimation {
 
       anim.update(dt);
 
-      if (this.currentAnims[0] === anim) {
-        anim.index = 0;
-      }
-
       const x = anim.elapsedTime;
-      const sw = this.coinAndTrajectory.trajectoryCurrentX;
+      const sw = this.coinAndTrajectory.isBoostAnimComplete()
+        ? this.coinAndTrajectory.trajectoryDestX
+        : this.coinAndTrajectory.trajectoryCurrentX;
       const scaleX = (sw * 2) / (-elapsedTime - x);
 
       anim.container.x = sw / 2 + -x * scaleX - sw / 2;

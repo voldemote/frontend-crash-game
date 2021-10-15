@@ -132,10 +132,19 @@ const getUser = userId => {
   });
 };
 
+const checkUsername = username => {
+  return Api.post(ApiUrls.API_USER_CHECK_USERNAME, { username }).catch(
+    error => {
+      console.log('[API Error] called: getUser', error);
+    }
+  );
+};
+
 const updateUser = (userId, user) => {
   return Api.patch(_.replace(ApiUrls.API_USER, ':id', userId), user).catch(
     error => {
       console.log('[API Error] called: patchUser', error);
+      return error;
     }
   );
 };
@@ -487,4 +496,5 @@ export {
   getNotificationEvents,
   getNotificationEventsByBet,
   getNotificationEventsByUser,
+  checkUsername,
 };

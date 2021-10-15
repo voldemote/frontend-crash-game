@@ -7,30 +7,10 @@ import CoinExplosion from './CoinExplosion';
 import { calcCrashFactorFromElapsedTime, isMobileRosiGame } from './utils';
 import CashedOutAnimation from './CashedOutAnimation';
 import PreparingRound from './PreparingRound';
+import { ROSI_GAME_INTERVALS } from 'constants/RosiGame';
 
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
-
-const intervals = [
-  // fromFactor, toFactor, speed, elonFrame
-  [1, 1.2, 1, 0],
-  [1.2, 1.5, 2, 0],
-  [1.5, 2, 4, 1],
-  [2, 3, 7, 2],
-  [3, 4, 9, 3],
-  [4, 5, 11, 4],
-  [5, 7.5, 13, 5],
-  [7.5, 10, 15, 5],
-  [10, 15, 19, 5],
-  [15, 20, 24, 5],
-  [20, 25, 28, 5],
-  [25, 30, 32, 5],
-  [30, 35, 36, 5],
-  [35, 40, 40, 5],
-  [40, 45, 44, 5],
-  [45, 50, 48, 5],
-  [50, 100, 60, 5],
-];
 
 function loadAssets(loader) {
   const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
@@ -46,6 +26,7 @@ function loadAssets(loader) {
     .add('purplePlanet', constructPath('purplePlanet.png'))
     .add('star1', constructPath('star1.png'))
     .add('star2', constructPath('star2.png'))
+    .add('starship', constructPath('starship.png'))
     .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
     .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
     .add(
@@ -95,6 +76,7 @@ class RosiAnimationController {
     const crashFactor = Number(calcCrashFactorFromElapsedTime(elapsed)) || 1.0;
     const maxElonFrames = this.coinAndTrajectory.getElonFramesCount();
 
+    const intervals = ROSI_GAME_INTERVALS;
     const currentInterval =
       intervals.find(
         ([fromFactor, toFactor]) =>
@@ -114,6 +96,10 @@ class RosiAnimationController {
     if (this.currentIntervalIndex !== currentIntervalIndex) {
       this.background.setStarsSpeed(speed);
       this.currentIntervalIndex = currentIntervalIndex;
+    }
+
+    if (this.background.shouldShowStarshipAnimation(crashFactor)) {
+      this.background.doStarshipAnimation();
     }
 
     TWEEN.update(this.app.ticker.lastTime);
@@ -142,6 +128,7 @@ class RosiAnimationController {
     this.cashedOut.reset();
     this.gameStartTime = gameStartTime;
     this.currentIntervalIndex = -1;
+    this.background.updateStarshipAnimationTrigger();
   }
 
   end() {
@@ -151,14 +138,9 @@ class RosiAnimationController {
   }
 
   doCashedOutAnimation(data) {
-    const elapsed = Date.now() - this.gameStartTime;
     const point = this.coinAndTrajectory.getCoinCrashPosition();
-    this.cashedOut.animate(
-      point.x,
-      data.amount,
-      data.crashFactor,
-      elapsed / 1000
-    );
+
+    this.cashedOut.animate(point.x, data.amount, data.crashFactor);
   }
 }
 
