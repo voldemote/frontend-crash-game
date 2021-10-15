@@ -128,6 +128,7 @@ export class CoinAnimation {
       .onStart(() => {
         const lineWidth = 2;
         this.trajectory.lineStyle(lineWidth, 0x7300d8, 1);
+        this.trajectoryCurrentX = lineTweenData.x;
       })
       .onUpdate(() => {
         this.trajectory.moveTo(prevX, prevY);
@@ -136,7 +137,7 @@ export class CoinAnimation {
         prevX = lineTweenData.x;
         prevY = lineTweenData.y;
 
-        this.trajectoryCurrentX = prevX;
+        this.trajectoryCurrentX = lineTweenData.x;
       })
       .start();
   }
@@ -172,5 +173,9 @@ export class CoinAnimation {
     this.elon.alpha = 1;
     this.elonAndCoin.rotation = 0;
     this.trajectory.clear();
+  }
+
+  isBoostAnimComplete() {
+    return this.initialBoostAnimationComplete === true;
   }
 }

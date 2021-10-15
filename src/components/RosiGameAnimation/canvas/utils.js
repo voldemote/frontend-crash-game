@@ -61,6 +61,42 @@ export function calcCrashFactorFromElapsedTime(timeDiff) {
   return (((timeDiff - offsetTime) / speed) * 0.01 + offsetFactor).toFixed(2); //currentCrashFactor
 }
 
+export function calcTotalDelayTime(crashFactor) {
+  let totalDelayTime = 0;
+  let delay = 0;
+
+  for (let i = 1; i <= crashFactor; i = i + 0.01) {
+    if (i > 1 && i < 2.5) {
+      delay = 120; //speed: 18000/150 => 120 per 0.01 increment
+    }
+    if (i >= 2.5 && i < 5) {
+      delay = 100; //speed: 25000/250 => 100 per 0.01 increment
+    }
+    if (i >= 5.0 && i < 7.5) {
+      delay = 60; //speed: 15000/250 => 60 per 0.01 increment
+    }
+    if (i >= 7.5 && i < 10) {
+      delay = 40; //speed: 10000/250 => 40 per 0.01 increment
+    }
+    if (i >= 10 && i < 25) {
+      delay = 30;
+    }
+    if (i >= 25 && i < 50) {
+      delay = 20;
+    }
+    if (i >= 50 && i < 75) {
+      delay = 10;
+    }
+    if (i >= 75) {
+      delay = 5;
+    }
+
+    totalDelayTime = totalDelayTime + delay;
+  }
+
+  return totalDelayTime; //in seconds
+}
+
 export function intersect(x1, y1, x2, y2, x3, y3, x4, y4) {
   // Check if none of the lines are of length 0
   if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
