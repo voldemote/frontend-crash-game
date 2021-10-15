@@ -9,6 +9,7 @@ import moment from 'moment';
 
 const TimeCounterVTwo = ({ endDate, externalStyles }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));
+  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
 
   const styles = {
     ...componentStyles,
@@ -40,11 +41,14 @@ const TimeCounterVTwo = ({ endDate, externalStyles }) => {
     return null;
   };
 
+  const hoursLabel = matchMediaMobile ? 'hrs' : 'hours';
+  const minutesLabel = matchMediaMobile ? 'min' : 'minutes';
+
   return (
     <>
       {renderTimeLeft('days', _.get(timeLeft, 'days'), false)}
-      {renderTimeLeft('hours', _.get(timeLeft, 'hours'))}
-      {renderTimeLeft('minutes', _.get(timeLeft, 'minutes'))}
+      {renderTimeLeft(hoursLabel, _.get(timeLeft, 'hours'))}
+      {renderTimeLeft(minutesLabel, _.get(timeLeft, 'minutes'))}
       {/*<div className={styles.timerColon}>:</div>*/}
       {/* {renderTimeLeft('sec', _.get(timeLeft, 'seconds'))} */}
     </>

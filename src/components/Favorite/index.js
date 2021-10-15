@@ -3,12 +3,15 @@ import _ from 'lodash';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
+import classNames from 'classnames';
 
 const Favorite = props => {
   const {
     isFavorite = false,
     onBookmark = () => {},
     onBookmarkCancel = () => {},
+    isMobile = false,
+    buttonClass,
   } = props;
 
   const iconToUse = isFavorite ? IconType.starFull : IconType.star;
@@ -17,7 +20,7 @@ const Favorite = props => {
     <div className={styles.fvtTrigger}>
       <div className={styles.fvtContainer}>
         <div
-          className={styles.fvtButton}
+          className={classNames(styles.fvtButton, buttonClass)}
           onClick={() => {
             isFavorite ? onBookmarkCancel() : onBookmark();
           }}
@@ -25,7 +28,7 @@ const Favorite = props => {
           <div className={styles.fvtIcon}>
             <Icon iconType={iconToUse} iconTheme={IconTheme.favorite} />
           </div>
-          Favorite
+          {!isMobile && `Favorite`}
         </div>
       </div>
     </div>

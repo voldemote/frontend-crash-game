@@ -19,6 +19,7 @@ import Chat from '../../components/Chat';
 import News from '../../components/News';
 import TabOptions from '../../components/TabOptions';
 import classNames from 'classnames';
+import { Switch } from '@material-ui/core';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import EventTradesContainer from '../../components/EventTradesContainer';
 import EventTradeViewsHelper from '../../helper/EventTradeViewsHelper';
@@ -48,12 +49,13 @@ import useTrades from '../../hooks/useTrades';
 import BetState from 'constants/BetState';
 import TimeCounter from '../../components/TimeCounter';
 import { useIsMount } from '../../components/hoc/useIsMount';
-import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart.svg';
+import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart-new.svg';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import TimeCounterVTwo from 'components/TimeCounterVTwo';
 import { EVENT_CATEGORIES } from 'constants/EventCategories';
 import { EventActions } from 'store/actions/event';
 import Favorite from 'components/Favorite';
+import SwitchButton from 'components/SwitchButton';
 // import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
@@ -243,17 +245,8 @@ const BetVTwo = ({
     };
   };
 
-  const onSwiper = swiper => {
-    setSwiper(swiper);
-    swiper.slideTo(betAction);
-  };
-
   const onBetActionSwitch = newIndex => {
     setBetAction(newIndex);
-  };
-
-  const isLoggedIn = () => {
-    return authState === LOGGED_IN;
   };
 
   const selectSingleBet = bets => {
@@ -279,24 +272,6 @@ const BetVTwo = ({
     setBetViewIsOpen(true);
   };
 
-  const onBetClick = (bet, popup) => {
-    return () => {
-      const betId = _.get(bet, '_id');
-      const betSlug = _.get(bet, 'slug');
-
-      selectBet(betId, betSlug);
-      setBetId(betId);
-    };
-  };
-
-  const renderNoTrades = () => {
-    return <div className={styles.relatedBetsNone}>No trades placed.</div>;
-  };
-
-  const getRelatedBetSliderPages = (bets, size) => {
-    return _.ceil(_.size(bets) / size);
-  };
-
   const renderTitle = () => {
     const key = isNonStreamed ? 'bets[0].marketQuestion' : 'name';
     const title = _.get(event, key);
@@ -309,46 +284,6 @@ const BetVTwo = ({
     return <img src={imgUrl} alt={`trade`} />;
   };
 
-  const renderRelatedBetList = (popup = false) => {
-    return _.map(relatedBets, (bet, index) => {
-      return renderRelatedBetCard(bet, index, popup);
-    });
-  };
-
-  const renderMyTradesList = () => {
-    if (!isLoggedIn() || activeBets.length < 1) {
-      return renderNoTrades();
-    }
-
-    return (
-      <div className={styles.myTrades}>
-        <MyTradesList bets={activeBets} withStatus={true} allowCashout={true} />
-      </div>
-    );
-  };
-
-  const renderRelatedBetCard = (bet, index, popup) => {
-    if (bet) {
-      return (
-        <RelatedBetCard
-          key={index}
-          bet={bet}
-          onClick={onBetClick(bet, popup)}
-        />
-      );
-    }
-
-    return <div />;
-  };
-
-  const renderRelatedBetSliders = () => {
-    const size = getRelatedBetSliderPages(relatedBets, 3);
-
-    return _.map(_.range(0, size), (sliderPage, index) =>
-      renderRelatedBetSlider(sliderPage, index)
-    );
-  };
-
   const getStickerStyle = category => {
     const cat = EVENT_CATEGORIES.find(c => c.value === category);
     if (!cat) return {};
@@ -357,252 +292,33 @@ const BetVTwo = ({
     };
   };
 
-  const renderRelatedBetSlider = (pageIndex, index) => {
-    const indexes = [];
-    const listLength = relatedBets.length > 3 ? 3 : relatedBets.length;
-
-    for (let i = 0; i < listLength; i++) {
-      indexes.push(pageIndex * 3 + i);
-    }
-
-    return (
-      <div
-        key={index}
-        className={classNames(styles.carouselSlide, styles.relatedBetSlide)}
-      >
-        {renderRelatedBetCard(_.get(relatedBets, '[' + indexes[0] + ']'))}
-        {renderRelatedBetCard(_.get(relatedBets, '[' + indexes[1] + ']'))}
-        {renderRelatedBetCard(_.get(relatedBets, '[' + indexes[2] + ']'))}
-      </div>
-    );
-  };
-
-  const renderSwitchableView = () => {
-    const eventViews = [
-      EventTradeViewsHelper.getView('Chat', undefined, false, styles.chatTab),
-      EventTradeViewsHelper.getView(
-        'News',
-        undefined,
-        false,
-        styles.newsTab,
-        event.type === 'streamed'
-      ),
-      EventTradeViewsHelper.getView('Event Trades'),
-      event.type === 'non-streamed'
-        ? EventTradeViewsHelper.getView('Evidence', undefined, false)
-        : EventTradeViewsHelper.getView(
-            'My Trades',
-            isLoggedIn() ? activeBets.length : 0,
-            true
-          ),
-    ];
-
-    //remove activities on mobile
-    // if (event.type === 'non-streamed') {
-    //   eventViews.push(
-    //     EventTradeViewsHelper.getView('Activities', undefined, false)
-    //   );
-    // }
-
-    return (
-      <EventTradesContainer
-        className={styles.eventTradesContainer}
-        fullWidth={false}
-        eventViews={eventViews}
-        currentIndex={betAction}
-        setCurrentIndex={onBetActionSwitch}
-      />
-    );
-  };
-
-  const renderContent = () => {
-    if (betAction === BET_ACTIONS.Chat) {
-      return (
-        <Chat
-          className={styles.mobileChat}
-          roomId={event._id}
-          chatMessageType={ChatMessageType.event}
-        />
-      );
-    } else if (betAction === BET_ACTIONS.EventTrades) {
-      return (
-        <div className={styles.relatedBets}>
-          <Carousel
-            className={classNames(
-              styles.relatedBetsCarousel,
-              relatedBets.length > 3 ? '' : styles.oneCarouselPage
-            )}
-            dynamicHeight={false}
-            emulateTouch={true}
-            infiniteLoop={true}
-            autoPlay={false}
-            showArrows={false}
-            showStatus={false}
-            interval={1e11}
-          >
-            {renderRelatedBetSliders()}
-          </Carousel>
-        </div>
-      );
-    }
-
-    if (!isLoggedIn() || activeBets.length < 1) {
-      return renderNoTrades();
-    }
-
-    return (
-      <div className={styles.relatedBets}>
-        <Carousel
-          className={classNames(
-            styles.relatedBetsCarousel,
-            activeBets.length > 2 ? '' : styles.oneCarouselPage
-          )}
-          dynamicHeight={false}
-          emulateTouch={true}
-          infiniteLoop={true}
-          autoPlay={false}
-          showArrows={false}
-          showStatus={false}
-          interval={1e11}
-        >
-          {renderMyTradesList()}
-        </Carousel>
-      </div>
-    );
-  };
-
-  const renderMobileContent = () => {
-    return (
-      <Swiper
-        className={'swiper-events-tabs'}
-        slidesPerView={1}
-        pagination={{
-          clickable: false,
-        }}
-        autoHeight={true}
-        onSlideChange={swiper => {
-          handleDislaimerHidden(!swiper.activeIndex);
-          onBetActionSwitch(swiper.activeIndex);
-        }}
-        onSwiper={onSwiper}
-        noSwipingClass={`MuiSlider-root`}
-      >
-        <SwiperSlide className={styles.carouselSlide}>
-          <div ref={mobileChatRef}>
-            <Chat
-              roomId={event._id}
-              chatMessageType={ChatMessageType.event}
-              className={styles.mobileChat}
-            />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className={styles.carouselSlide}>
-          {event.type !== 'streamed' && (
-            <div>
-              <News />
-            </div>
-          )}
-        </SwiperSlide>
-        <SwiperSlide className={styles.carouselSlide}>
-          {!isNonStreamed && relatedBets.length > 1 ? (
-            <div>{renderRelatedBetList(true)}</div>
-          ) : (
-            <BetView
-              betId={betId}
-              eventId={event._id}
-              openBets={_.filter(openBets, {
-                betId: betId,
-              })}
-              closed={false}
-              showEventEnd={true}
-              handleChartDirectionFilter={handleChartDirectionFilter}
-            />
-          )}
-        </SwiperSlide>
-        <SwiperSlide className={styles.carouselSlide}>
-          {isNonStreamed ? (
-            bet && (
-              <div>
-                <div className={styles.evidenceSource}>
-                  <b>Evidence source: </b>{' '}
-                  <span
-                    dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}
-                  ></span>
-                </div>
-                <br />
-                <div className={styles.evidenceDescription}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: bet.evidenceDescription,
-                    }}
-                  ></div>
-                </div>
-              </div>
-            )
-          ) : (
-            <div>{renderMyTradesList()}</div>
-          )}
-        </SwiperSlide>
-
-        {/*//remove activities on mobile*/}
-        {/*{isNonStreamed && bet && (*/}
-        {/*  <SwiperSlide className={styles.carouselSlide}>*/}
-        {/*    <div className={styles.activitiesTabContainerMobile}>*/}
-        {/*      <ActivitiesTracker*/}
-        {/*        showCategories={false}*/}
-        {/*        activitiesLimit={50}*/}
-        {/*        betId={betId}*/}
-        {/*        className={styles.activitiesTrackerTabBlock}*/}
-        {/*      />*/}
-        {/*    </div>*/}
-        {/*  </SwiperSlide>*/}
-        {/*)}*/}
-      </Swiper>
-    );
-  };
-
   const renderBetSidebarContent = () => {
-    if (betViewIsOpen) {
-      return (
-        <div>
-          {event.type === EventTypes.streamed && relatedBets.length > 1 && (
-            <div className={styles.betViewClose} onClick={onBetClose()}>
-              <Icon
-                iconType={'arrowLeft'}
-                iconTheme={'white'}
-                className={styles.arrowBack}
-              />
-              <span>Go back to all tracks</span>
-            </div>
-          )}
-
-          <div className={classNames({ [styles.betViewContent]: !singleBet })}>
-            <BetView
-              betId={betId}
-              eventId={event._id}
-              openBets={_.filter(openBets, { betId })}
-              closed={false}
-              showEventEnd={true}
-              handleChartDirectionFilter={handleChartDirectionFilter}
-            />
-          </div>
-        </div>
-      );
-    }
-
     return (
-      <div>
-        {renderSwitchableView()}
-        <div className={styles.desktopCarousel}>{renderContent()}</div>
-        <div className={styles.mobileCarousel}>{renderMobileContent()}</div>
+      <div className={styles.betViewWrapper}>
+        {event.type === EventTypes.streamed && relatedBets.length > 1 && (
+          <div className={styles.betViewClose} onClick={onBetClose()}>
+            <Icon
+              iconType={'arrowLeft'}
+              iconTheme={'white'}
+              className={styles.arrowBack}
+            />
+            <span>Go back to all tracks</span>
+          </div>
+        )}
+
+        <div className={styles.betViewContent}>
+          <BetView
+            betId={betId}
+            eventId={event._id}
+            openBets={_.filter(openBets, { betId })}
+            closed={false}
+            showEventEnd={true}
+            handleChartDirectionFilter={handleChartDirectionFilter}
+          />
+        </div>
       </div>
     );
   };
-
-  const hasOnlineState = event?.state === EVENT_STATES.ONLINE;
-  const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
-
-  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
 
   const renderTradeDesc = () => {
     return (
@@ -615,6 +331,10 @@ const BetVTwo = ({
       </p>
     );
   };
+  const hasOnlineState = event?.state === EVENT_STATES.ONLINE;
+  const hasOfflineState = event?.state === EVENT_STATES.OFFLINE;
+
+  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
 
   if (!isReady) {
     return null;
@@ -622,130 +342,149 @@ const BetVTwo = ({
   return (
     <BaseContainerWithNavbar withPaddingTop={true} withoutPaddingBottom={true}>
       <div className={styles.bet}>
+        <AdminOnly>
+          <div className={styles.eventAdminActionsContainer}>
+            <span
+              className={styles.editEventLink}
+              onClick={() => showPopup(PopupTheme.editEvent, event)}
+            >
+              <Icon
+                className={styles.icon}
+                iconType={IconType.edit}
+                iconTheme={IconTheme.white}
+                height={20}
+                width={20}
+              />
+              Edit Event
+            </span>
+            <span
+              className={classNames(
+                styles.deleteEventLink,
+                !canDeleteEvent && styles.fadedLink
+              )}
+              onClick={() =>
+                canDeleteEvent && showPopup(PopupTheme.deleteEvent, { event })
+              }
+            >
+              <Icon
+                className={styles.icon}
+                iconType={IconType.trash}
+                iconTheme={IconTheme.white}
+                height={20}
+                width={20}
+              />
+              Delete Event
+              {!canDeleteEvent && (
+                <span className={styles.infoTooltip}>
+                  All bets must be cancelled or deleted in order to delete an
+                  event.
+                </span>
+              )}
+            </span>
+            {event.type === EventTypes.streamed && (
+              <span
+                className={styles.newBetLink}
+                onClick={() => showPopup(PopupTheme.newBet, { event })}
+              >
+                <Icon
+                  className={styles.icon}
+                  iconType={IconType.addBet}
+                  iconTheme={IconTheme.white}
+                  height={24}
+                  width={24}
+                />
+                New Bet
+              </span>
+            )}
+          </div>
+        </AdminOnly>
+
         {event ? (
           <>
             <div className={styles.headlineContainer}>
               <div className={styles.headlineImage}>
-                <div
-                  className={classNames([styles.categorySticker])}
-                  style={getStickerStyle(event.category)}
-                />
+                <div>
+                  <div
+                    className={classNames([styles.categorySticker])}
+                    style={getStickerStyle(event.category)}
+                  />
 
-                {(hasOnlineState || hasOfflineState) && (
-                  <div className={styles.streamStateBadge}>
-                    {hasOnlineState && <LiveBadge />}
-                    {hasOfflineState && <OfflineBadge />}
+                  {(hasOnlineState || hasOfflineState) && (
+                    <div className={styles.streamStateBadge}>
+                      {hasOnlineState && <LiveBadge />}
+                      {hasOfflineState && <OfflineBadge />}
+                    </div>
+                  )}
+                  {renderImage()}
+                </div>
+                {matchMediaMobile && (
+                  <div className={styles.shareButton}>
+                    <Favorite
+                      isFavorite={!!event?.bookmarks?.includes(userId)}
+                      onBookmark={() => {
+                        bookmarkEvent(event?._id);
+                      }}
+                      onBookmarkCancel={() => {
+                        bookmarkEventCancel(event?._id);
+                      }}
+                      buttonClass={styles.mobileFavorite}
+                      isMobile={true}
+                    />
+                    <Share
+                      buttonClass={styles.mobileFavorite}
+                      isMobile={true}
+                    />
                   </div>
                 )}
-                {renderImage()}
               </div>
               <div className={styles.headline}>
                 {renderTitle()}
                 {bet && renderTradeDesc()}
               </div>
-
-              <AdminOnly>
-                <div className={styles.eventAdminActionsContainer}>
-                  <span
-                    className={styles.editEventLink}
-                    onClick={() => showPopup(PopupTheme.editEvent, event)}
-                  >
-                    <Icon
-                      className={styles.icon}
-                      iconType={IconType.edit}
-                      iconTheme={IconTheme.white}
-                      height={20}
-                      width={20}
-                    />
-                    Edit Event
-                  </span>
-                  <span
-                    className={classNames(
-                      styles.deleteEventLink,
-                      !canDeleteEvent && styles.fadedLink
-                    )}
-                    onClick={() =>
-                      canDeleteEvent &&
-                      showPopup(PopupTheme.deleteEvent, { event })
-                    }
-                  >
-                    <Icon
-                      className={styles.icon}
-                      iconType={IconType.trash}
-                      iconTheme={IconTheme.white}
-                      height={20}
-                      width={20}
-                    />
-                    Delete Event
-                    {!canDeleteEvent && (
-                      <span className={styles.infoTooltip}>
-                        All bets must be cancelled or deleted in order to delete
-                        an event.
-                      </span>
-                    )}
-                  </span>
-                  {event.type === EventTypes.streamed && (
-                    <span
-                      className={styles.newBetLink}
-                      onClick={() => showPopup(PopupTheme.newBet, { event })}
-                    >
-                      <Icon
-                        className={styles.icon}
-                        iconType={IconType.addBet}
-                        iconTheme={IconTheme.white}
-                        height={24}
-                        width={24}
-                      />
-                      New Bet
-                    </span>
-                  )}
-                </div>
-              </AdminOnly>
             </div>
             <div className={styles.row}>
               <div className={styles.columnLeft}>
-                <div
-                  className={classNames(
-                    styles.timeLeftCounterContainer,
-                    styles.fixedTimer,
-                    styles.timerOnlyDesktop
-                  )}
-                >
-                  {![BetState.resolved, BetState.closed].includes(
-                    _.get(bet, 'status')
-                  ) && (
-                    <>
-                      <div className={styles.timerLabel}>Event ends in:</div>
+                <div className={styles.timeOutterWrapper}>
+                  <div
+                    className={classNames(
+                      styles.timeLeftCounterContainer,
+                      styles.fixedTimer,
+                      styles.timerOnlyDesktop
+                    )}
+                  >
+                    {![BetState.resolved, BetState.closed].includes(
+                      _.get(bet, 'status')
+                    ) && (
+                      <>
+                        <div className={styles.timerLabel}>Event ends in:</div>
 
-                      <div className={styles.timerParts}>
-                        <TimeCounterVTwo endDate={bet?.endDate} />
-                      </div>
-                    </>
+                        <div className={styles.timerParts}>
+                          <TimeCounterVTwo endDate={bet?.endDate} />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  {event.type === 'non-streamed' && matchMediaMobile && (
+                    <div
+                      className={styles.diagramButton}
+                      onClick={onShowHideChart}
+                    >
+                      {' '}
+                      <LineChartIcon />
+                      <SwitchButton checked={showChart} size={`small`} />
+                    </div>
                   )}
                 </div>
                 <div
-                  className={
+                  className={classNames(
+                    styles.chartMainWrapper,
                     event.type === 'streamed'
                       ? styles.streamContainer
                       : styles.nonStreamContainer
-                  }
+                  )}
                 >
                   {event.type === 'non-streamed' ? (
                     <div className={styles.chart}>
-                      {matchMediaMobile && (
-                        <div
-                          className={styles.diagramButton}
-                          onClick={onShowHideChart}
-                        >
-                          {' '}
-                          <LineChartIcon />
-                          <span>
-                            {showChart
-                              ? 'Hide probabilities'
-                              : 'Show probabilities'}
-                          </span>
-                        </div>
-                      )}
                       {((matchMediaMobile && showChart) ||
                         !matchMediaMobile) && (
                         <Chart
@@ -766,32 +505,47 @@ const BetVTwo = ({
                     </div>
                   )}
                 </div>
-                <div className={styles.chatWrapper}>
-                  <Chat
-                    className={styles.desktopChat}
-                    roomId={event._id}
-                    chatMessageType={ChatMessageType.event}
-                  />
-                </div>
+                {!matchMediaMobile && (
+                  <div className={styles.chatWrapper}>
+                    <Chat
+                      className={styles.desktopChat}
+                      roomId={event._id}
+                      chatMessageType={ChatMessageType.event}
+                    />
+                  </div>
+                )}
               </div>
               <div className={styles.columnRight}>
-                <div className={styles.shareButton}>
-                  <Favorite
-                    isFavorite={!!event?.bookmarks?.includes(userId)}
-                    onBookmark={() => {
-                      bookmarkEvent(event?._id);
-                    }}
-                    onBookmarkCancel={() => {
-                      bookmarkEventCancel(event?._id);
-                    }}
-                  />
-                  <Share />
-                </div>
+                {!matchMediaMobile && (
+                  <div className={styles.shareButton}>
+                    <Favorite
+                      isFavorite={!!event?.bookmarks?.includes(userId)}
+                      onBookmark={() => {
+                        bookmarkEvent(event?._id);
+                      }}
+                      onBookmarkCancel={() => {
+                        bookmarkEventCancel(event?._id);
+                      }}
+                    />
+                    <Share />
+                  </div>
+                )}
                 {renderBetSidebarContent()}
               </div>
             </div>
             <div className={styles.row}>
               <div className={styles.columnFull}>
+                {matchMediaMobile && (
+                  <div className={styles.chatWrapper}>
+                    <Chat
+                      className={styles.desktopChat}
+                      inputClassName={styles.inputArea}
+                      messagesClassName={styles.messageArea}
+                      roomId={event._id}
+                      chatMessageType={ChatMessageType.event}
+                    />
+                  </div>
+                )}
                 {bet && (
                   <div className={styles.evidenceWrapper}>
                     <div className={styles.sectionHeader}>
@@ -817,15 +571,9 @@ const BetVTwo = ({
                     </div>
                   </div>
                 )}
-                <div className={styles.newsWrapper}>
-                  <div className={styles.sectionHeader}>
-                    <h4>{`NEWS`}</h4>
-                  </div>
-                  <News />
-                </div>
                 <div className={styles.activitiesWrapper}>
                   <div className={styles.sectionHeader}>
-                    <h4>{`Activities`}</h4>
+                    <h4>{`ACTIVITIES`}</h4>
                   </div>
                   <div className={styles.activitiesTabContainerDesktop}>
                     <ActivitiesTracker
@@ -838,11 +586,17 @@ const BetVTwo = ({
                 </div>
                 <div className={styles.tradesWrapper}>
                   <div className={styles.sectionHeader}>
-                    <h4>{`All Trades`}</h4>
+                    <h4>{`ALL TRADES`}</h4>
                   </div>
                   <div className={styles.activitiesTabContainerDesktop}>
                     All trades component
                   </div>
+                </div>
+                <div className={styles.newsWrapper}>
+                  <div className={styles.sectionHeader}>
+                    <h4>{`NEWS`}</h4>
+                  </div>
+                  <News className={styles.newsContainer} />
                 </div>
               </div>
             </div>

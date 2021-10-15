@@ -74,35 +74,71 @@
       max-width: 35%;
       padding: 0 1rem;
       position: relative;
-      .categorySticker {
-        width: 52px;
-        height: 52px;
-        background: url('../../data/icons/events-all-icon.svg');
-        border-radius: 50%;
-        //background-size: cover;
-        background-position: center;
-        position: absolute;
-        top: -25px;
-        z-index: 3;
-        right: -5px;
+
+      @media (max-width: $screen-sm) {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       img {
         border-radius: 20px;
         max-width: 100%;
+        @media (max-width: $screen-sm) {
+          width: 52px;
+          height: 52px;
+          border-radius: 100%;
+          display: inline-block;
+        }
       }
+
+      .categorySticker {
+        width: 52px;
+        height: 52px;
+        background: url('../../data/icons/events-all-icon.svg');
+        border-radius: 50%;
+        background-position: center;
+        position: absolute;
+        top: -25px;
+        z-index: 3;
+        right: -5px;
+
+        @media (max-width: $screen-sm) {
+          display: inline-block;
+          position: static;
+          margin-right: 10px;
+        }
+      }
+
       .streamStateBadge {
         position: absolute;
         left: -10px;
         top: -10px;
+
+        @media (max-width: $screen-sm) {
+          display: none;
+        }
       }
     }
     .headline {
       flex: 0 0 65%;
       max-width: 65%;
       padding: 0 1rem;
+
+      @media (max-width: $screen-sm) {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+
       h2 {
         margin-bottom: 15px;
+        @media (max-width: $screen-sm) {
+          font-size: 20px;
+        }
       }
       p {
         color: $colorGrayLight9;
@@ -117,8 +153,8 @@
     display: flex;
     flex-direction: row;
     flex: 1;
-    margin-left: -3rem;
-    margin-right: -3rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
     margin-bottom: 40px;
     z-index: 1;
 
@@ -129,9 +165,13 @@
     }
     .columnFull {
       width: 100%;
-      padding-left: 3rem;
+      padding: 0 1rem;
       display: flex;
       flex-direction: column;
+
+      @media (max-width: $screen-md) {
+        padding: 0 20px;
+      }
 
       > div {
         margin-bottom: 60px;
@@ -158,16 +198,14 @@
     }
     .columnLeft {
       width: 50%;
-      padding-left: 3rem;
-      padding-right: 1rem;
+      padding: 0 1rem;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
 
       @media (max-width: $screen-md) {
         width: 100%;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding: 0 20px;
       }
 
       > div {
@@ -176,10 +214,16 @@
         background-color: $colorBackgroundShadeLighter;
       }
 
-      .chatWrapper {
-        padding: 15px;
+      .timeOutterWrapper {
+        @media all and (max-width: $screen-sm) {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: none;
+          border-radius: 0;
+          margin-bottom: 10px;
+        }
       }
-
       .streamContainer {
         display: flex;
         flex-direction: column;
@@ -226,12 +270,12 @@
       display: flex;
       flex-direction: column;
       width: 50%;
-      padding-left: 2em;
+      padding: 0 1em;
       text-align: right;
 
       @media (max-width: $screen-md) {
+        padding: 0 20px;
         width: 100%;
-        padding: 0;
       }
 
       > div {
@@ -253,6 +297,15 @@
         .newsTab {
           @media (min-width: $screen-md) {
             display: none;
+          }
+        }
+      }
+      .betViewWrapper {
+        height: 100%;
+        .betViewContent {
+          height: 100%;
+          > div {
+            height: 100%;
           }
         }
       }
@@ -351,7 +404,7 @@
   .desktopChat,
   .desktopCarousel {
     @media (max-width: $screen-md) {
-      display: none;
+      // display: none;
     }
   }
 
@@ -487,8 +540,12 @@
   > div:first-child {
     margin-right: 15px;
   }
-  @media screen and (max-width: $screen-md) {
-    margin: 0 auto;
+
+  .mobileFavorite {
+    padding: 10px !important;
+    div {
+      margin-right: 0 !important;
+    }
   }
 }
 
@@ -565,23 +622,26 @@
   color: $colorWhite;
   font-size: 12px;
   padding: 6px 16px;
+  @media (max-width: $screen-sm) {
+    flex: 0 0 70%;
+    max-width: 70%;
+    border-radius: 10px;
+    background-color: $colorBackgroundShadeLighter;
+  }
 }
 
 .timerLabel {
   color: $colorWhite;
   font-family: $fontBold;
   font-size: 12px;
+  @media (max-width: $screen-sm) {
+    font-size: 10px;
+  }
 }
 
 .timerParts {
   display: flex;
   justify-content: center;
-}
-
-.timerOnlyDesktop {
-  @media screen and (max-width: $screen-md) {
-    display: none;
-  }
 }
 
 .timerOnlyMobile {
@@ -626,19 +686,17 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  column-gap: 5px;
-  background: #201d38;
+  background-color: $colorBackgroundShadeLighter;
   border-radius: 10px;
-  margin: 0 auto;
-  width: 100%;
-  font-size: 15px;
-  padding: 5px 0;
-  cursor: pointer;
-  margin-bottom: 10px;
-  -webkit-tap-highlight-color: transparent;
-
+  padding: 8px 16px;
+  flex: 0 0 25%;
+  max-width: 25%;
   svg {
-    margin-top: 2px;
+    width: 15px;
+    height: 12px;
+    fill: $colorWhite;
+    color: $colorWhite;
+    margin-right: 12px;
   }
 }
 
@@ -653,4 +711,39 @@
     font-style: italic;
     word-break: break-all;
   }
+}
+.chatWrapper {
+  padding: 15px;
+
+  @media (max-width: $screen-sm) {
+    background-color: $colorBackgroundShadeLighter;
+    border-radius: 10px;
+  }
+  .desktopChat {
+    @media (max-width: $screen-sm) {
+      height: auto;
+      max-height: 400px;
+    }
+  }
+  .messageArea {
+    @media (max-width: $screen-sm) {
+      margin-bottom: 20px;
+    }
+  }
+  .inputArea {
+    @media (max-width: $screen-sm) {
+      position: static !important;
+      width: 100% !important;
+      padding: 0px 15px !important;
+      border-radius: 10px !important;
+    }
+  }
+}
+.activitiesTrackerTabBlock {
+  height: 230px !important;
+}
+.newsContainer {
+  justify-content: space-between;
+  row-gap: 60px !important;
+  grid-row-gap: 60px !important;
 }
