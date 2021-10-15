@@ -8,12 +8,16 @@ commonLabels:
   environment: production
 
 configMapGenerator:
-  - name: frontend-config
-    behavior: merge
-    envs:
-      - environment
+- behavior: merge
+  envs:
+  - environment
+  name: frontend-config
 
 patches:
-  - ingressPatch.yaml
-  - replicasPatch.yaml
-  - resourcesPatch.yaml
+- ingressPatch.yaml
+- replicasPatch.yaml
+- resourcesPatch.yaml
+
+images:
+- name: registry.digitalocean.com/wallfair/frontend_k8s
+  newTag: delete

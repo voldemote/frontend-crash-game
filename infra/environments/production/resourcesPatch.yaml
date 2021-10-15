@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - name: backend
+        - name: frontend
           resources:
             limits:
               cpu: 2000m

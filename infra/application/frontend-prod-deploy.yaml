@@ -15,22 +15,22 @@ spec:
         app: frontend
     spec:
       containers:
-        - image: registry.digitalocean.com/wallfair/frontend_k8s
-          imagePullPolicy: Always
-          resources:
-            limits:
-              cpu: 1000m 
-            requests:
-              cpu: 400m
-              memory: 1024Mi
-          name: frontend
-          envFrom:
-          - configMapRef:
-              name: frontend-config
-          - configMapRef:
-              name: frontend-app-secrets
-          ports:
-            - containerPort: 80
+      - image: registry.digitalocean.com/wallfair/frontend_k8s
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 1000m 
+          requests:
+            cpu: 400m
+            memory: 1024Mi
+        name: frontend
+        envFrom:
+        - configMapRef:
+            name: frontend-config
+        - configMapRef:
+            name: frontend-app-secrets
+        ports:
+          - containerPort: 80
 
 ---
 
