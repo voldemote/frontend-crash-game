@@ -13,7 +13,8 @@ configMapGenerator:
   - environment
   name: frontend-config
 
-patchesStrategicMerge:
+patches:
 - ingressPatch.yaml
 - replicasPatch.yaml
 - resourcesPatch.yaml
+- prodConfigPatch.yaml
