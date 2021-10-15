@@ -1,7 +1,7 @@
+import { ROSI_GAME_MAX_DURATION_SEC } from 'constants/RosiGame';
 import * as PIXI from 'pixi.js';
-import { calcPercent, isMobileRosiGame } from './utils';
-import TWEEN from '@tweenjs/tween.js';
 import * as particles from '@pixi/particle-emitter';
+import { calcPercent, isMobileRosiGame } from './utils';
 export class CoinAnimation {
   constructor(app) {
     this.app = app;
@@ -16,22 +16,11 @@ export class CoinAnimation {
     this.coin = new PIXI.Sprite(this.app.loader.resources.coin.texture);
     this.elonAndCoin.addChild(this.coin);
 
-    this.destX = calcPercent(this.app.renderer.width, 85);
-    this.destY = calcPercent(this.app.renderer.height, 28);
-    this.trajectoryDestX = this.destX;
-    this.trajectoryDestY = this.destY + this.coin.height * 0.6;
-    this.trajectoryAngle = Math.atan2(
-      this.app.renderer.height - this.trajectoryDestY,
-      this.trajectoryDestX,
-      0
-    );
-
     const spritesheet =
       this.app.loader.resources['elon-coin-animation'].spritesheet;
     this.elon = new PIXI.AnimatedSprite(Object.values(spritesheet.textures));
     this.elon.x = -92 / (isMobileRosiGame ? 2 : 1);
     this.elon.y = -111 / (isMobileRosiGame ? 2 : 1);
-    this.elon.gotoAndStop(4);
     this.elonAndCoin.addChild(this.elon);
 
     this.elonAndCoindAnimationHandle = null;
@@ -41,10 +30,14 @@ export class CoinAnimation {
 
     this.container.visible = false;
 
-    this.initialBoostAnimationComplete = false;
-    this.trajectoryCurrentX = 0;
+    this.boundary = {
+      x0: 0,
+      x1: calcPercent(this.app.renderer.width, 90),
+      y0: calcPercent(this.app.renderer.height, 90),
+      y1: calcPercent(this.app.renderer.height, 30),
+    };
 
-    // particle
+    /* Particle (flame) */
     this.flameEmitter = new particles.Emitter(this.container, {
       lifetime: {
         min: 0.3,
@@ -177,18 +170,14 @@ export class CoinAnimation {
   }
 
   setElonFrame(frame) {
-    if (frame <= this.elon.totalFrames && this.elon.currentFrame !== frame) {
+    if (frame <= this.elon.totalFrames) {
       this.elon.gotoAndStop(frame);
     }
   }
 
-  canUpdateElonFrame() {
-    return this.initialBoostAnimationComplete;
-  }
-
   setCoinDefaultPosition() {
-    this.elonAndCoin.scale.set(1);
-    this.elonAndCoin.x = -this.elonAndCoin.width / 2;
+    this.elonAndCoin.scale.set(0.8);
+    this.elonAndCoin.x = 0;
     this.elonAndCoin.y = this.app.renderer.height - this.coin.height / 2;
   }
 
@@ -208,84 +197,122 @@ export class CoinAnimation {
     };
   }
 
+  canUpdateElonFrame() {
+    return true; // TODO: consider further
+  }
+
+  getGlobalPositionByTime(time) {
+    // global {x, y}
+    const x = time * 5; // TODO: ref-1
+    const y = time * time * time * 0.00005;
+    return { x, y };
+  }
+
+  getTime(rX, scaleX) {
+    const x = (rX - this.boundary.x0) / scaleX;
+    const time = x / 5; // TODO: ref-1
+    return time;
+  }
+
+  getRealPosition(gPos) {
+    // get real {x, y, scale} on canvas
+    const { x, y } = gPos; // global {x, y}
+    const dX = this.boundary.x1 - this.boundary.x0;
+    const dY = this.boundary.y0 - this.boundary.y1;
+
+    const scaleX = x > dX ? dX / x : 1;
+    const scaleY = y > dY ? dY / y : 1;
+
+    return this.getRealPositionByScale(gPos, { scaleX, scaleY });
+  }
+
+  getRealPositionByScale(gPos, scale) {
+    // get real {x, y, scale} on canvas
+    const { x, y } = gPos; // global {x, y}
+    const { scaleX, scaleY } = scale;
+
+    const rX = x * scaleX + this.boundary.x0;
+    const rY = -y * scaleY + this.boundary.y0;
+
+    return {
+      x: rX,
+      y: rY,
+      scaleX,
+      scaleY,
+    };
+  }
+
   startCoinFlyingAnimation() {
-    this.setElonFrame(4);
-    this.initialBoostAnimationComplete = false;
     this.container.visible = true;
     this.resetAllAnimations();
     this.setCoinDefaultPosition();
-    // flame starts
+
+    /* Star Particle (flame) */
     this.flameEmitter.emit = true;
 
-    const easing = TWEEN.Easing.Quintic.Out;
-    const interpolation = TWEEN.Interpolation.Linear;
-    const time = 1500;
+    /* Coin and Elon */
+    let time = 0;
+    /* Trajectory */
+    let randYArray = Array(this.app.renderer.width + 1)
+      .fill()
+      .map(() => null); // trajectory path: traPath[rX] = rY
 
-    // move elonAndCoin
-    const coinTweenData = { x: 0, y: this.app.renderer.height };
-    new TWEEN.Tween(coinTweenData)
-      .to({ x: this.destX, y: this.destY }, time)
-      .easing(easing)
-      .onUpdate(() => {
-        this.elonAndCoin.x = coinTweenData.x;
-        this.elonAndCoin.y = coinTweenData.y;
+    const firstPos = this.getRealPosition({ x: 0, y: 0 });
+    let prevPos = firstPos;
 
-        // flame follows
-        this.flameEmitter.updateOwnerPos(
-          this.elonAndCoin.x,
-          this.elonAndCoin.y + 50
-        );
+    const update = dt => {
+      time += dt;
 
-        const percentComplete = (coinTweenData.x * 100) / this.destX;
-        if (percentComplete >= 98) {
-          this.initialBoostAnimationComplete = true;
+      const gPos = this.getGlobalPositionByTime(time);
+      const rPos = this.getRealPosition(gPos);
+
+      this.elonAndCoin.x = rPos.x;
+      this.elonAndCoin.y = rPos.y;
+      this.flameEmitter.updateOwnerPos(
+        this.elonAndCoin.x,
+        this.elonAndCoin.y + 50
+      ); // set flame
+
+      this.flameEmitter.rotate(Math.PI * 1.5 * Math.max(rPos.scaleX, 0.965)); // TODO: particle direction
+
+      // Draw trajectory path
+      this.trajectory.clear();
+      this.trajectory.lineStyle(2, 0x7300d8, 1);
+      this.trajectory.moveTo(firstPos.x, firstPos.y);
+      const randEtries = Object.entries(randYArray);
+      randEtries.forEach(e => {
+        const t = this.getTime(e[0], prevPos.scaleX);
+        const gP = this.getGlobalPositionByTime(t);
+
+        if (e[1] !== null) {
+          const rP = this.getRealPositionByScale(
+            { x: gP.x, y: gP.y + e[1] * 1 },
+            rPos
+          );
+          this.trajectory.lineTo(rP.x, rP.y);
+          randYArray[Math.floor(rP.x)] = e[1];
+        } else {
+          const rP = this.getRealPositionByScale({ x: gP.x, y: gP.y }, rPos);
+          randYArray[Math.floor(rP.x)] = null;
         }
-      })
-      .onComplete(() => {
-        this.initialBoostAnimationComplete = true;
-      })
-      .interpolation(interpolation)
-      .start();
+      });
+      randYArray[Math.floor(rPos.x)] =
+        (Math.random() - 0.5) * 2 + Math.sin(time * 50) * 3;
 
-    const lineTweenData = { x: coinTweenData.x, y: coinTweenData.y };
-    let prevX = lineTweenData.x;
-    let prevY = lineTweenData.y;
+      prevPos = rPos;
+    };
 
-    // draw line
-    this.drawLineTween = new TWEEN.Tween(lineTweenData)
-      .to({ x: this.trajectoryDestX, y: this.trajectoryDestY }, time)
-      .easing(easing)
-      .interpolation(interpolation)
-      .onStart(() => {
-        const lineWidth = 2;
-        this.trajectory.lineStyle(lineWidth, 0x7300d8, 1);
-        this.trajectoryCurrentX = lineTweenData.x;
-      })
-      .onUpdate(() => {
-        this.trajectory.moveTo(prevX, prevY);
-        this.trajectory.lineTo(lineTweenData.x, lineTweenData.y);
-
-        prevX = lineTweenData.x;
-        prevY = lineTweenData.y;
-
-        this.trajectoryCurrentX = lineTweenData.x;
-      })
-      .start();
+    this.elonAndCoindAnimationHandle = update;
+    this.app.ticker.add(update);
   }
 
   endCoinFlyingAnimation() {
+    this.flameEmitter.emit = false;
+
     if (this.elonAndCoindAnimationHandle) {
       this.app.ticker.remove(this.elonAndCoindAnimationHandle);
       this.elonAndCoindAnimationHandle = null;
     }
-
-    if (this.drawLineTween) {
-      this.drawLineTween.stop();
-      this.drawLineTween = null;
-    }
-
-    // flame ends
-    this.flameEmitter.emit = false;
 
     this.coin.alpha = 0;
     this.elon.alpha = 0;
@@ -302,10 +329,13 @@ export class CoinAnimation {
       this.elonAfterExplosionAnimationHandle = null;
     }
 
-    this.initialBoostAnimationComplete = false;
     this.coin.alpha = 1;
     this.elon.alpha = 1;
     this.elonAndCoin.rotation = 0;
+    this.elon.gotoAndStop(0);
+
+    this.flameEmitter.emit = false;
+
     this.trajectory.clear();
   }
 
