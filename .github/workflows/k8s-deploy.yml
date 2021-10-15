@@ -48,7 +48,7 @@ jobs:
           kustomize: 4.2.0
           command: |
             cd infra/environments/staging
-            kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
+            kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s=registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
             kustomize build .
       - name: Edit deployment image (production)
         if: github.ref == 'refs/heads/k8s-production-config'
@@ -57,7 +57,7 @@ jobs:
           kustomize: 4.2.0
           command: |
             cd infra/environments/production
-            kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
+            kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s=registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
             kustomize build .
       - uses: actions-hub/kubectl@master
         if: github.ref == 'refs/heads/main'

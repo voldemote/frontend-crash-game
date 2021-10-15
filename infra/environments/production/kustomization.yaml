@@ -13,11 +13,7 @@ configMapGenerator:
   - environment
   name: frontend-config
 
-patches:
+patchesStrategicMerge:
 - ingressPatch.yaml
 - replicasPatch.yaml
 - resourcesPatch.yaml
-
-images:
-- name: registry.digitalocean.com/wallfair/frontend_k8s
-  newTag: delete
