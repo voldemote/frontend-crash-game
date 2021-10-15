@@ -36,7 +36,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Edit deployment image
+      - name: Edit deployment image (staging)
+        if: github.ref == 'refs/heads/main'
         uses: stefanprodan/kube-tools@v1
         with:
           kustomize: 4.2.0
@@ -44,9 +45,25 @@ jobs:
             cd infra/environments/staging
             kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s:${GITHUB_SHA::6}
             kustomize build .
+      - name: Edit deployment image (production)
+        if: github.ref == 'refs/heads/k8s-production-config'
+        uses: stefanprodan/kube-tools@v1
+        with:
+          kustomize: 4.2.0
+          command: |
+            cd infra/environments/production
+            kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s:${GITHUB_SHA::6}
+            kustomize build .
       - uses: actions-hub/kubectl@master
+        if: github.ref == 'refs/heads/main'
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
           args: apply -k infra/environments/staging
+      - uses: actions-hub/kubectl@master
+        if: github.ref == 'refs/heads/k8s-production-config'
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: apply -k infra/environments/production
   
