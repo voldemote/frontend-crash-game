@@ -6,6 +6,7 @@ import {
   intersect,
 } from './utils';
 import TWEEN from '@tweenjs/tween.js';
+import { ROSI_GAME_MAX_CRASH_FACTOR } from 'constants/RosiGame';
 
 class RosiAnimationBackground {
   constructor(app) {
@@ -20,16 +21,51 @@ class RosiAnimationBackground {
     this.stars = [];
     this.createStars();
 
+    this.createStarship();
+
     this.redPlanet = null;
     this.purplePlanet = null;
     this.planets = [];
     this.createPlanets();
     this.currentIntervalIndex = 0;
     this.starsSpeed = 0;
+    this.starshipAnimationTriggered = false;
+    this.starshipAnimationCrashFactor = 100;
   }
 
   setIntervalIndex(index) {
     this.currentIntervalIndex = index;
+  }
+
+  createStarship() {
+    this.starship = new PIXI.Sprite(this.app.loader.resources.starship.texture);
+    this.starship.x = 0;
+    this.starship.y = this.app.renderer.height;
+    this.container.addChild(this.starship);
+  }
+
+  doStarshipAnimation() {
+    this.starshipAnimationTriggered = true;
+    this.starship.x = calcPercent(this.app.renderer.width, 10);
+    this.starship.y = this.app.renderer.height;
+    const tweenData = this.starship.position;
+    new TWEEN.Tween(tweenData)
+      .to({ y: -this.starship.height * 2 }, 4000)
+      .interpolation(TWEEN.Interpolation.Linear)
+      .start();
+  }
+
+  shouldShowStarshipAnimation(crashFactor) {
+    return (
+      this.starshipAnimationTriggered === false &&
+      this.starshipAnimationCrashFactor === Math.trunc(crashFactor)
+    );
+  }
+
+  updateStarshipAnimationTrigger() {
+    const rnd = getRandomInRange(1, ROSI_GAME_MAX_CRASH_FACTOR);
+    this.starshipAnimationTriggered = false;
+    this.starshipAnimationCrashFactor = Math.trunc(rnd);
   }
 
   createStars() {
