@@ -28,8 +28,6 @@ import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
 import AuthenticationType from '../Authentication/AuthenticationType';
 import TimeLeftCounter from '../TimeLeftCounter';
-import Moment from 'moment';
-import { nextDayweek } from '../../helper/Time';
 
 const Navbar = ({
   user,
@@ -263,11 +261,7 @@ const Navbar = ({
     );
   };
 
-  const leaderboardWeeklyDate = nextDayweek(new Date(), 3, {
-    hour: 12,
-    minute: 0,
-    second: 0,
-  });
+  const leaderboardWeeklyDate = new Date('2021-11-01T12:00:00.000Z');
 
   const renderLeaderboardDrawer = () => {
     return (
