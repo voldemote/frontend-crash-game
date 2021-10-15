@@ -33,7 +33,7 @@ export class CoinAnimation {
     this.boundary = {
       x0: 0,
       x1: calcPercent(this.app.renderer.width, 90),
-      y0: calcPercent(this.app.renderer.height, 90),
+      y0: calcPercent(this.app.renderer.height, 80),
       y1: calcPercent(this.app.renderer.height, 30),
     };
 
@@ -203,14 +203,16 @@ export class CoinAnimation {
 
   getGlobalPositionByTime(time) {
     // global {x, y}
-    const x = time * 5; // TODO: ref-1
-    const y = time * time * time * 0.00005;
+    const a = this.app.renderer.width * 8;
+    const x = Math.sqrt(time * a);
+    const y = time * time * 0.005;
     return { x, y };
   }
 
   getTime(rX, scaleX) {
+    const a = this.app.renderer.width * 8;
     const x = (rX - this.boundary.x0) / scaleX;
-    const time = x / 5; // TODO: ref-1
+    const time = (x * x) / a;
     return time;
   }
 
@@ -293,11 +295,12 @@ export class CoinAnimation {
           randYArray[Math.floor(rP.x)] = e[1];
         } else {
           const rP = this.getRealPositionByScale({ x: gP.x, y: gP.y }, rPos);
-          randYArray[Math.floor(rP.x)] = null;
+          randYArray[Math.round(rP.x)] = null;
         }
       });
       randYArray[Math.floor(rPos.x)] =
-        (Math.random() - 0.5) * 2 + Math.sin(time * 50) * 3;
+        (Math.random() - 0.5) * 2 +
+        Math.sin(time * 50) * (2.5 / Math.min(rPos.scaleX, rPos.scaleY));
 
       prevPos = rPos;
     };
