@@ -138,14 +138,9 @@ class RosiAnimationController {
   }
 
   doCashedOutAnimation(data) {
-    const elapsed = Date.now() - this.gameStartTime;
     const point = this.coinAndTrajectory.getCoinCrashPosition();
-    this.cashedOut.animate(
-      point.x,
-      data.amount,
-      data.crashFactor,
-      elapsed / 1000
-    );
+
+    this.cashedOut.animate(point.x, data.amount, data.crashFactor);
   }
 }
 

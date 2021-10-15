@@ -41,17 +41,23 @@ class RosiAnimationBackground {
     this.starship = new PIXI.Sprite(this.app.loader.resources.starship.texture);
     this.starship.x = 0;
     this.starship.y = this.app.renderer.height;
+    this.starship.visible = false;
     this.container.addChild(this.starship);
   }
 
   doStarshipAnimation() {
     this.starshipAnimationTriggered = true;
+    this.starship.visible = true;
     this.starship.x = calcPercent(this.app.renderer.width, 10);
     this.starship.y = this.app.renderer.height;
     const tweenData = this.starship.position;
+    // TODO: reset tween if it hasn't finished and new animation is requested
     new TWEEN.Tween(tweenData)
       .to({ y: -this.starship.height * 2 }, 4000)
       .interpolation(TWEEN.Interpolation.Linear)
+      .onComplete(() => {
+        this.starship.visible = false;
+      })
       .start();
   }
 
