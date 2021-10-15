@@ -124,8 +124,8 @@ const RosiGameAnimation = ({
       >
         {gameStarted && (
           <>
-            {/* <Timer pause={!gameStarted} startTimeMs={gameStartedTime} />
-            <span>x</span> */}
+            <Timer pause={!gameStarted} startTimeMs={gameStartedTime} />
+            <span>x</span>
           </>
         )}
         {!gameStarted && !!lastCrashValue && (
@@ -162,8 +162,7 @@ const RosiGameAnimation = ({
 
 const mapStateToProps = state => {
   return {
-    connected: !state.websockets.connected,
-    // connected: state.websockets.connected, // TODO:
+    connected: state.websockets.connected,
     isMute: !state.rosiGame.volumeLevel,
     isSynced: state.rosiGame.timeStarted || state.rosiGame.nextGameAt,
   };

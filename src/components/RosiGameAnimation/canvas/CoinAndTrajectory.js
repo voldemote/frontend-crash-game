@@ -37,6 +37,12 @@ export class CoinAnimation {
       y1: calcPercent(this.app.renderer.height, 30),
     };
 
+    this.trajectoryAngle = Math.atan2(
+      this.boundary.y0 - this.boundary.y1,
+      this.boundary.x1 - this.boundary.x0,
+      0
+    );
+
     /* Particle (flame) */
     this.flameEmitter = new particles.Emitter(this.container, {
       lifetime: {
