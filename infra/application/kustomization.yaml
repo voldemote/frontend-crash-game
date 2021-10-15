@@ -1,4 +1,9 @@
 resources:
   - frontend-prod-deploy.yaml
-  - frontend-prod-configmap.yaml
   - ingress-prod.yaml
+
+
+configMapGenerator:
+  - name: frontend-config
+    envs:
+      - environment
