@@ -110,8 +110,12 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <TradeDetailView tradeId={betId} />;
 
       case PopupTheme.welcome:
-        return <WelcomeView closed={!visible} />;
-
+        return (
+          <WelcomeView
+            closed={!visible}
+            initialReward={options?.initialReward}
+          />
+        );
       case PopupTheme.signUpNotificationFirst:
       case PopupTheme.signUpNotificationSecond:
         return <SignUpPopup closed={!visible} />;
@@ -207,7 +211,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.disclaimer:
         return <DisclaimerPopupView />;
       case PopupTheme.username:
-        return <UsernamePopup />;
+        return <UsernamePopup initialReward={options.initialReward} />;
     }
 
     return null;
