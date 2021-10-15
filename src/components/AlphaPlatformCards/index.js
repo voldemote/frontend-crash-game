@@ -25,7 +25,13 @@ const AlphaPlatformCards = ({ alphaplatforms, showHowtoLink, showPopup }) => {
           return (
             <div className={styles.wrapper} key={`alphaplatformcard-${index}`}>
               <div key={index} className={styles.alphaplatformItem}>
-                <img src={alphaplatform.background} />
+                <div className={styles.alphaplatformHeader}>
+                  <img src={alphaplatform.title} className={styles.title} />
+                  <img
+                    src={alphaplatform.background}
+                    className={styles.background}
+                  />
+                </div>
                 <div className={styles.alphaplatformInfo}>
                   <div className={styles.description}>
                     {alphaplatform.description}
