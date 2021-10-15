@@ -67,7 +67,7 @@ jobs:
         with:
           args: apply -k infra/environments/staging
       - uses: actions-hub/kubectl@master
-        if: github.ref == 'refs/heads/production
+        if: github.ref == 'refs/heads/production'
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
