@@ -724,9 +724,10 @@
     border-radius: 10px;
   }
   .desktopChat {
+    max-height: 300px !important;
     @media (max-width: $screen-sm) {
       height: auto;
-      max-height: 400px;
+      max-height: 300px;
     }
   }
   .messageArea {
