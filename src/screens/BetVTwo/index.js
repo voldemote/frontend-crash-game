@@ -1,28 +1,19 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _ from 'lodash';
 import Icon from '../../components/Icon';
-import Link from '../../components/Link';
 import BackLink from '../../components/BackLink';
 import LiveBadge from 'components/LiveBadge';
 import Routes from '../../constants/Routes';
 import styles from './styles.module.scss';
-import { Carousel } from 'react-responsive-carousel';
 import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams, useHistory } from 'react-router-dom';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import EmbedVideo from '../../components/EmbedVideo';
 import BetView from '../../components/BetView';
-import RelatedBetCard from '../../components/RelatedBetCard';
-import MyTradesList from '../../components/MyTradesList';
 import Chat from '../../components/Chat';
 import News from '../../components/News';
-import TabOptions from '../../components/TabOptions';
 import classNames from 'classnames';
-import { Switch } from '@material-ui/core';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import EventTradesContainer from '../../components/EventTradesContainer';
-import EventTradeViewsHelper from '../../helper/EventTradeViewsHelper';
 import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PopupTheme from '../../components/Popup/PopupTheme';
@@ -47,7 +38,6 @@ import EventTypes from 'constants/EventTypes';
 import Share from '../../components/Share';
 import useTrades from '../../hooks/useTrades';
 import BetState from 'constants/BetState';
-import TimeCounter from '../../components/TimeCounter';
 import { useIsMount } from '../../components/hoc/useIsMount';
 import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart-new.svg';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
@@ -56,6 +46,7 @@ import { EVENT_CATEGORIES } from 'constants/EventCategories';
 import { EventActions } from 'store/actions/event';
 import Favorite from 'components/Favorite';
 import SwitchButton from 'components/SwitchButton';
+import AuthenticationType from 'components/Authentication/AuthenticationType';
 // import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
@@ -228,6 +219,10 @@ const BetVTwo = ({
       }
     }
   }, [event, isMounted]);
+
+  const isLoggedIn = () => {
+    return authState === LOGGED_IN;
+  };
 
   const onBetClose = () => {
     return () => {
@@ -422,7 +417,12 @@ const BetVTwo = ({
                     <Favorite
                       isFavorite={!!event?.bookmarks?.includes(userId)}
                       onBookmark={() => {
-                        bookmarkEvent(event?._id);
+                        isLoggedIn()
+                          ? bookmarkEvent(event?._id)
+                          : showPopup(PopupTheme.auth, {
+                              small: true,
+                              authenticationType: AuthenticationType.register,
+                            });
                       }}
                       onBookmarkCancel={() => {
                         bookmarkEventCancel(event?._id);
@@ -521,7 +521,12 @@ const BetVTwo = ({
                     <Favorite
                       isFavorite={!!event?.bookmarks?.includes(userId)}
                       onBookmark={() => {
-                        bookmarkEvent(event?._id);
+                        isLoggedIn()
+                          ? bookmarkEvent(event?._id)
+                          : showPopup(PopupTheme.auth, {
+                              small: true,
+                              authenticationType: AuthenticationType.register,
+                            });
                       }}
                       onBookmarkCancel={() => {
                         bookmarkEventCancel(event?._id);
@@ -582,14 +587,6 @@ const BetVTwo = ({
                       betId={betId}
                       className={styles.activitiesTrackerTabBlock}
                     />
-                  </div>
-                </div>
-                <div className={styles.tradesWrapper}>
-                  <div className={styles.sectionHeader}>
-                    <h4>{`ALL TRADES`}</h4>
-                  </div>
-                  <div className={styles.activitiesTabContainerDesktop}>
-                    All trades component
                   </div>
                 </div>
                 <div className={styles.newsWrapper}>

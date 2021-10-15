@@ -146,6 +146,10 @@
       strong {
         font-family: $fontBold;
       }
+      a {
+        color: $colorYellow;
+        text-decoration: underline;
+      }
     }
   }
 
