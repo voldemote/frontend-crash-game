@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import Icon from '../Icon';
 import LogoMini from '../../data/images/logo.png';
 import IconType from '../Icon/IconType';
@@ -11,6 +9,7 @@ import { PopupActions } from '../../store/actions/popup';
 import { LOGGED_IN } from 'constants/AuthState';
 import { TOKEN_NAME } from '../../constants/Token';
 import PopupTheme from '../Popup/PopupTheme';
+import AuthenticationType from '../Authentication/AuthenticationType';
 
 const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
   const renderWelcomeText = () => {
@@ -28,7 +27,10 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
 
   const goToJoinPage = () => {
     if (authState !== LOGGED_IN) {
-      showPopup(PopupTheme.auth, { small: true });
+      showPopup(PopupTheme.auth, {
+        small: true,
+        authenticationType: AuthenticationType.register,
+      });
     }
   };
 
