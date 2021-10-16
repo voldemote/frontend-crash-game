@@ -33,8 +33,8 @@ export class CoinAnimation {
     this.boundary = {
       x0: 0,
       x1: calcPercent(this.app.renderer.width, 90),
-      y0: calcPercent(this.app.renderer.height, 80),
-      y1: calcPercent(this.app.renderer.height, 30),
+      y0: calcPercent(this.app.renderer.height, 82),
+      y1: calcPercent(this.app.renderer.height, 20),
     };
 
     this.trajectoryAngle = Math.atan2(
@@ -165,6 +165,48 @@ export class CoinAnimation {
     };
     this.flameEmitter.emit = true;
     flameUpdate();
+
+    /* TODO: move to  utils */
+    this.getGlobalPositionByTime = time => {
+      // global {x, y}
+      const a = this.app.renderer.width * 8;
+      const x = Math.sqrt(time * a);
+      const y = time * time * 0.005 + time * 0.2;
+      return { x, y };
+    };
+
+    this.getTime = (rX, scaleX) => {
+      const a = this.app.renderer.width * 8;
+      const x = (rX - this.boundary.x0) / scaleX;
+      const time = (x * x) / a;
+      return time;
+    };
+
+    this.getRealPosition = gPos => {
+      const { x, y } = gPos; // global {x, y}
+      const dX = this.boundary.x1 - this.boundary.x0;
+      const dY = this.boundary.y0 - this.boundary.y1;
+
+      const scaleX = x > dX ? dX / x : 1;
+      const scaleY = y > dY ? dY / y : 1;
+
+      return this.getRealPositionByScale(gPos, { scaleX, scaleY });
+    };
+
+    this.getRealPositionByScale = (gPos, scale) => {
+      const { x, y } = gPos; // global {x, y}
+      const { scaleX, scaleY } = scale;
+
+      const rX = x * scaleX + this.boundary.x0;
+      const rY = -y * scaleY + this.boundary.y0;
+
+      return {
+        x: rX,
+        y: rY,
+        scaleX,
+        scaleY,
+      };
+    };
   }
 
   getCurrentElonFrame() {
@@ -182,7 +224,7 @@ export class CoinAnimation {
   }
 
   setCoinDefaultPosition() {
-    this.elonAndCoin.scale.set(0.8);
+    this.elonAndCoin.scale.set(1);
     this.elonAndCoin.x = 0;
     this.elonAndCoin.y = this.app.renderer.height - this.coin.height / 2;
   }
@@ -205,49 +247,6 @@ export class CoinAnimation {
 
   canUpdateElonFrame() {
     return true; // TODO: consider further
-  }
-
-  getGlobalPositionByTime(time) {
-    // global {x, y}
-    const a = this.app.renderer.width * 8;
-    const x = Math.sqrt(time * a);
-    const y = time * time * 0.005;
-    return { x, y };
-  }
-
-  getTime(rX, scaleX) {
-    const a = this.app.renderer.width * 8;
-    const x = (rX - this.boundary.x0) / scaleX;
-    const time = (x * x) / a;
-    return time;
-  }
-
-  getRealPosition(gPos) {
-    // get real {x, y, scale} on canvas
-    const { x, y } = gPos; // global {x, y}
-    const dX = this.boundary.x1 - this.boundary.x0;
-    const dY = this.boundary.y0 - this.boundary.y1;
-
-    const scaleX = x > dX ? dX / x : 1;
-    const scaleY = y > dY ? dY / y : 1;
-
-    return this.getRealPositionByScale(gPos, { scaleX, scaleY });
-  }
-
-  getRealPositionByScale(gPos, scale) {
-    // get real {x, y, scale} on canvas
-    const { x, y } = gPos; // global {x, y}
-    const { scaleX, scaleY } = scale;
-
-    const rX = x * scaleX + this.boundary.x0;
-    const rY = -y * scaleY + this.boundary.y0;
-
-    return {
-      x: rX,
-      y: rY,
-      scaleX,
-      scaleY,
-    };
   }
 
   startCoinFlyingAnimation() {
@@ -284,9 +283,10 @@ export class CoinAnimation {
       this.flameEmitter.rotate(Math.PI * 1.5 * Math.max(rPos.scaleX, 0.965)); // TODO: particle direction
 
       // Draw trajectory path
+      const offsetY = 60;
       this.trajectory.clear();
       this.trajectory.lineStyle(2, 0x7300d8, 1);
-      this.trajectory.moveTo(firstPos.x, firstPos.y);
+      this.trajectory.moveTo(firstPos.x, firstPos.y + offsetY);
       const randEtries = Object.entries(randYArray);
       randEtries.forEach(e => {
         const t = this.getTime(e[0], prevPos.scaleX);
@@ -297,7 +297,7 @@ export class CoinAnimation {
             { x: gP.x, y: gP.y + e[1] * 1 },
             rPos
           );
-          this.trajectory.lineTo(rP.x, rP.y);
+          this.trajectory.lineTo(rP.x, rP.y + offsetY);
           randYArray[Math.floor(rP.x)] = e[1];
         } else {
           const rP = this.getRealPositionByScale({ x: gP.x, y: gP.y }, rPos);

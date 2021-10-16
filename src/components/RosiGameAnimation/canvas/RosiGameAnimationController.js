@@ -108,7 +108,7 @@ class RosiAnimationController {
     }
 
     TWEEN.update(this.app.ticker.lastTime);
-    this.cashedOut.update(dt, elapsed / 1000, coinPos);
+    this.cashedOut.update(dt, elapsed, coinPos);
     this.background.update(dt, this.coinAndTrajectory.trajectoryAngle);
   }
 
@@ -144,8 +144,8 @@ class RosiAnimationController {
 
   doCashedOutAnimation(data) {
     const point = this.coinAndTrajectory.getCoinCrashPosition();
-
-    this.cashedOut.animate(point.x, data.amount, data.crashFactor);
+    const elapsed = Date.now() - this.gameStartTime;
+    this.cashedOut.animate(point.x, data.amount, data.crashFactor, elapsed);
   }
 }
 
