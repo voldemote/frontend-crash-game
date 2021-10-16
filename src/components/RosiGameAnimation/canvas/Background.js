@@ -186,8 +186,6 @@ class RosiAnimationBackground {
     return getRandomInRange(calcPercent(sw, -5), calcPercent(sw, 25));
   }
 
-  getRandomPlanetTexture() {}
-
   doPlanetPopInAnimation(planet) {
     const tweenData = { scale: 0 };
     new TWEEN.Tween(tweenData)
