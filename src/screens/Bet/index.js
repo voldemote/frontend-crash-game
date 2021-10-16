@@ -68,6 +68,7 @@ const Bet = ({
   fetchTransactions,
   fetchChatMessages,
   handleDislaimerHidden,
+  userId,
 }) => {
   const { eventSlug, betSlug } = useParams();
   const isMounted = useIsMount();
@@ -171,15 +172,6 @@ const Bet = ({
     fetchChatMessages(event._id);
     fetchOpenBets();
     fetchTransactions();
-
-    // const currentBetTitle =
-    //   isNonStreamed || event.bets.length === 1
-    //     ? _.get(event, 'bets[0].marketQuestion')
-    //     : _.get(currentBet, 'name');
-
-    // trackPageView({
-    //   pageTitle: `Bet - ${currentBetTitle}`,
-    // });
 
     return () => (ref.current = false);
   }, [eventSlug, betSlug, event]);
@@ -371,13 +363,6 @@ const Bet = ({
   const renderSwitchableView = () => {
     const eventViews = [
       EventTradeViewsHelper.getView('Chat', undefined, false, styles.chatTab),
-      EventTradeViewsHelper.getView(
-        'News',
-        undefined,
-        false,
-        styles.newsTab,
-        event.type === 'streamed'
-      ),
       EventTradeViewsHelper.getView('Event Trades'),
       event.type === 'non-streamed'
         ? EventTradeViewsHelper.getView('Evidence', undefined, false)
@@ -386,14 +371,8 @@ const Bet = ({
             isLoggedIn() ? activeBets.length : 0,
             true
           ),
+      ...(isNonStreamed && [EventTradeViewsHelper.getView('All Trades')]),
     ];
-
-    //remove activities on mobile
-    // if (event.type === 'non-streamed') {
-    //   eventViews.push(
-    //     EventTradeViewsHelper.getView('Activities', undefined, false)
-    //   );
-    // }
 
     return (
       <EventTradesContainer
@@ -488,13 +467,6 @@ const Bet = ({
           </div>
         </SwiperSlide>
         <SwiperSlide className={styles.carouselSlide}>
-          {event.type !== 'streamed' && (
-            <div>
-              <News />
-            </div>
-          )}
-        </SwiperSlide>
-        <SwiperSlide className={styles.carouselSlide}>
           {!isNonStreamed && relatedBets.length > 1 ? (
             <div>{renderRelatedBetList(true)}</div>
           ) : (
@@ -534,20 +506,9 @@ const Bet = ({
             <div>{renderMyTradesList()}</div>
           )}
         </SwiperSlide>
-
-        {/*//remove activities on mobile*/}
-        {/*{isNonStreamed && bet && (*/}
-        {/*  <SwiperSlide className={styles.carouselSlide}>*/}
-        {/*    <div className={styles.activitiesTabContainerMobile}>*/}
-        {/*      <ActivitiesTracker*/}
-        {/*        showCategories={false}*/}
-        {/*        activitiesLimit={50}*/}
-        {/*        betId={betId}*/}
-        {/*        className={styles.activitiesTrackerTabBlock}*/}
-        {/*      />*/}
-        {/*    </div>*/}
-        {/*  </SwiperSlide>*/}
-        {/*)}*/}
+        <SwiperSlide className={styles.carouselSlide}>
+          <div>All Trades</div>
+        </SwiperSlide>
       </Swiper>
     );
   };
@@ -802,14 +763,6 @@ const Bet = ({
                       />
                     </div>
                   )}
-                  {/* {event.type === 'streamed' && (
-                <div className={styles.timeLeft}>
-                  <span>Estimated end:</span>
-                  <TimeLeftCounter
-                    endDate={new Date(_.get(event, 'endDate'))}
-                  />
-                </div>
-              )} */}
                 </div>
                 <TabOptions options={tabOptions} className={styles.tabOptions}>
                   {option => (
@@ -863,7 +816,7 @@ const Bet = ({
 
                 {selectedTab === 'all trades' && (
                   <div className={styles.activitiesTabContainerDesktop}>
-                    <AllTrades betId={event.bets?.[0]._id} />
+                    <AllTrades bet={event.bets[0]} currentUserId={userId} />
                   </div>
                 )}
               </div>
@@ -891,6 +844,7 @@ const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
     events: state.event.events,
+    userId: state.authentication.userId,
   };
 };
 
