@@ -581,12 +581,14 @@ const BetVTwo = ({
                     <h4>{`ACTIVITIES`}</h4>
                   </div>
                   <div className={styles.activitiesTabContainerDesktop}>
-                    <ActivitiesTracker
-                      showCategories={false}
-                      activitiesLimit={50}
-                      betId={betId}
-                      className={styles.activitiesTrackerTabBlock}
-                    />
+                    {betId && (
+                      <ActivitiesTracker
+                        showCategories={false}
+                        activitiesLimit={50}
+                        betId={betId}
+                        className={styles.activitiesTrackerTabBlock}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className={styles.newsWrapper}>
