@@ -198,7 +198,7 @@ class CashedOutAnimation {
 
     this.currentAnims.push(anim);
 
-    anim.elapsedTime = calcTotalDelayTime(crashFactor) / 1000;
+    anim.elapsedTime = calcTotalDelayTime(crashFactor);
     anim.crashFactor = crashFactor;
     anim.setTextValues(amount, crashFactor);
 
