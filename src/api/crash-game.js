@@ -27,6 +27,7 @@ const createTrade = payload => {
     console.log('[API Error] called: createTrade', error);
     throw error;
   });
+
 };
 
 const getCurrentGameInfo = () => {
