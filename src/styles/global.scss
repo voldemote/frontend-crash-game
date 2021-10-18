@@ -129,7 +129,7 @@ $border: 1px solid $colorWhite30;
 }
 
 .main-page-background {
-  background: #29254c;
+  background: #120e27;
   position: relative;
   z-index: 1;
 
@@ -143,8 +143,8 @@ $border: 1px solid $colorWhite30;
     z-index: -1;
     position: absolute;
     background: linear-gradient(
-        180deg, rgba(2, 0, 36, 0) 18%, rgb(41, 37, 76) 100%), linear-gradient(
-        360deg, rgba(2, 0, 36, 0) 10%, rgb(41, 37, 76) 100%);
+        180deg, rgba(2, 0, 36, 0) 18%, rgb(18, 14, 39) 100%), linear-gradient(
+        360deg, rgba(2, 0, 36, 0) 10%, rgb(18, 14, 39) 100%);
     max-height: 700px;
     background-repeat: no-repeat;
     background-position: top;
