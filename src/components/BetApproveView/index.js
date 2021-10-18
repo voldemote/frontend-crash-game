@@ -25,14 +25,8 @@ const BetApproveView = ({ visible, hidePopup, options }) => {
   const trade = _.get(options, 'data.trade');
   const bet = _.get(options, 'data.bet');
 
-  const amountPlaced = convert(
-    _.get(trade, 'investmentAmount', 0),
-    currency
-  ).toFixed(2);
-  const potentialOutcome = convert(
-    _.get(trade, 'outcomeTokens', 0),
-    currency
-  ).toFixed(2);
+  const amountPlaced = convert(_.get(trade, 'investmentAmount', 0), currency);
+  const potentialOutcome = convert(_.get(trade, 'outcomeTokens', 0), currency);
   const potentialPercent = calculateGain(amountPlaced, potentialOutcome);
   const potentialPercentGain = _.get(potentialPercent, 'value');
   const potentialPercentType = _.get(potentialPercent, 'negative', false);
