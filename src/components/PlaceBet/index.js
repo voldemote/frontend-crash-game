@@ -117,11 +117,15 @@ const PlaceBet = ({ connected }) => {
     };
 
     Api.createTrade(payload)
-      .then(response => {
+      .then(_ => {
         dispatch(RosiGameActions.setUserBet(payload));
       })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
+      .catch(_ => {
+        dispatch(
+          AlertActions.showError({
+            message: 'Elon Game: Place Bet failed',
+          })
+        );
       });
   };
 
@@ -145,8 +149,12 @@ const PlaceBet = ({ connected }) => {
         setAnimate(true);
         AlertActions.showSuccess(JSON.stringify(response));
       })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
+      .catch(_ => {
+        dispatch(
+          AlertActions.showError({
+            message: 'Elon Game: Cashout failed',
+          })
+        );
       });
   };
 
