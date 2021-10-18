@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import TabOptions from '../../components/TabOptions';
-import { getUserPublicInfo } from '../../api';
+import { getUserPublicInfo, getUserPublicStats } from '../../api';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 import ProfileActivityTemplate1 from '../../data/backgrounds/profile/userprofile_activity1.png';
@@ -24,6 +24,7 @@ const UserProfile = () => {
 
   const { userId } = useParams();
   const [user, setUser] = useState();
+  const [userStats, setUserStats] = useState();
   const [suspendButtonVisible, setSuspendButtonVisible] = useState(false);
   const [locked, setLocked] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
@@ -38,6 +39,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     fetchUser(userId);
+    fetchUserStats(userId);
   }, [userId]);
 
   const fetchUser = async userId => {
@@ -50,6 +52,14 @@ const UserProfile = () => {
     setSuspendButtonVisible(currentUser.admin && currentUser.userId !== userId);
   };
 
+  const fetchUserStats = async userId => {
+    const statsResponse = await getUserPublicStats(userId).catch(err => {
+      console.error("Can't get user stats by id:", err);
+    });
+    const userStats = _.get(statsResponse, 'data.stats', null);
+    setUserStats(userStats);
+  };
+
   const handleSwitchTab = option => {
     setTabIndex(option.index);
   };
@@ -57,6 +67,28 @@ const UserProfile = () => {
   const onSuspendButtonClick = status => {
     dispatch(AuthenticationActions.updateStatus({ userId, status }));
     setLocked(status === 'locked');
+  };
+
+  const UserStatsSide = () => {
+    return (
+      <>
+        <div className={styles.header}>Statistics</div>
+        <div className={styles.statsBlock}>
+          <div>
+            <div>casinoGameCashoutCount:</div>
+            <div>{userStats?.casinoGameCashoutCount}</div>
+            <div>casinoGamePlayCount:</div>
+            <div>{userStats?.casinoGamePlayCount}</div>
+            <div>totalBets:</div>
+            <div>{userStats?.userBetsAmount?.totalBets}</div>
+            <div>userBetsCashouts:</div>
+            <div>{userStats?.userBetsCashouts?.totalCashouts}</div>
+            <div>userBetsRewards:</div>
+            <div>{userStats?.userBetsRewards?.totalRewards}</div>
+          </div>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -114,44 +146,54 @@ const UserProfile = () => {
               )}
             </TabOptions>
           </div>
-          <div className={styles.userActivities}>
-            {tabOption === 'ACTIVITIES' ? (
-              <ActivitiesTracker
-                showCategories={false}
-                activitiesLimit={50}
-                userId={userId}
-                className={styles.activitiesTrackerUserPage}
-              />
-            ) : (
-              <>
-                {matchMediaMobile ? (
-                  <img
-                    src={
-                      tabIndex === 0
-                        ? ProfileActivityMobileTemplate1
-                        : tabIndex === 1
-                        ? ProfileActivityMobileTemplate2
-                        : ProfileActivityMobileTemplate3
-                    }
-                    className={styles.templateImage}
-                    alt=""
+          <div className={styles.contentBlock}>
+            <div className={styles.mainContent}>
+              <div className={styles.userActivities}>
+                {tabOption === 'ACTIVITIES' ? (
+                  <ActivitiesTracker
+                    showCategories={false}
+                    activitiesLimit={50}
+                    userId={userId}
+                    className={styles.activitiesTrackerUserPage}
                   />
                 ) : (
-                  <img
-                    src={
-                      tabIndex === 0
-                        ? ProfileActivityTemplate1
-                        : tabIndex === 1
-                        ? ProfileActivityTemplate2
-                        : ProfileActivityTemplate3
-                    }
-                    className={styles.templateImage}
-                    alt=""
-                  />
+                  <>
+                    {matchMediaMobile ? (
+                      <img
+                        src={
+                          tabIndex === 0
+                            ? ProfileActivityMobileTemplate1
+                            : tabIndex === 1
+                            ? ProfileActivityMobileTemplate2
+                            : ProfileActivityMobileTemplate3
+                        }
+                        className={styles.templateImage}
+                        alt=""
+                      />
+                    ) : (
+                      <img
+                        src={
+                          tabIndex === 0
+                            ? ProfileActivityTemplate1
+                            : tabIndex === 1
+                            ? ProfileActivityTemplate2
+                            : ProfileActivityTemplate3
+                        }
+                        className={styles.templateImage}
+                        alt=""
+                      />
+                    )}
+                    <div className={styles.inactivePlaceholder}>
+                      Coming soon
+                    </div>
+                  </>
                 )}
-                <div className={styles.inactivePlaceholder}>Coming soon</div>
-              </>
-            )}
+              </div>
+            </div>
+
+            <div className={styles.sideContent}>
+              <UserStatsSide />
+            </div>
           </div>
         </div>
       </div>
