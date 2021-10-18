@@ -39,7 +39,12 @@ const GameOffline = () => (
   </div>
 );
 
-const RosiGameAnimation = ({ connected, muteButtonClick, isMute }) => {
+const RosiGameAnimation = ({
+  connected,
+  muteButtonClick,
+  isMute,
+  isSynced,
+}) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const lastCrashValue = useSelector(selectLastCrash);
@@ -143,7 +148,7 @@ const RosiGameAnimation = ({ connected, muteButtonClick, isMute }) => {
         id="rosi-game-animation"
         ref={canvasRef}
       />
-      {isAnimationReady ? (
+      {isAnimationReady && isSynced ? (
         render()
       ) : (
         <CircularProgress style={{ position: 'absolute', margin: '0 auto' }} />
@@ -156,6 +161,7 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     isMute: !state.rosiGame.volumeLevel,
+    isSynced: state.rosiGame.timeStarted || state.rosiGame.nextGameAt,
   };
 };
 
