@@ -58,6 +58,7 @@ const RosiGameAnimation = ({
 
   const [isPreparingRound, setIsPreparingRound] = useState(!gameStarted);
   const [isAnimationReady, setAnimationReady] = useState(false);
+  const [isAudioReady, setAudioReady] = useState(false);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -79,7 +80,6 @@ const RosiGameAnimation = ({
     if (gameStarted) {
       setIsPreparingRound(false);
       RosiGameAnimationController.start(gameStartedTime);
-      dispatch(RosiGameActions.playFlyingSound());
 
       if (cashedOut.length > 0) {
         for (const cashOut of cashedOut) {
@@ -92,7 +92,6 @@ const RosiGameAnimation = ({
 
     if (!gameStarted && !isPreparingRound) {
       RosiGameAnimationController.end();
-      dispatch(RosiGameActions.stopFlyingSound());
       // leave some time for player to see crash value
       setTimeout(() => {
         RosiGameAnimationController.preparingRound.show(animationIndex);

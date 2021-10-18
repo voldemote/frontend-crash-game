@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
 import '@pixi/math-extras';
+import '@pixi/sound';
+import * as Sound from '@pixi/sound';
 import RosiAnimationBackground from './Background';
 import { CoinAnimation } from './CoinAndTrajectory';
 import TWEEN from '@tweenjs/tween.js';
@@ -60,6 +62,25 @@ class RosiAnimationController {
       antialias: true,
     });
 
+    this.audioReady = false;
+    Sound.sound.add(
+      {
+        flying: {
+          url: '/sounds/elon/elon_bgm.mp3',
+          loop: true,
+        },
+        gameover: {
+          url: '/sounds/elon/sfx_gameover.mp3',
+          loop: false,
+        },
+      },
+      {
+        loaded: (err, data) => {
+          console.log(err, data);
+        },
+        preload: true,
+      }
+    );
     this.gameStartTime = 0;
     this.lastCrashFactor = 1.0;
     this.currentIntervalIndex = -1;
@@ -74,6 +95,30 @@ class RosiAnimationController {
         done();
       }
     });
+  }
+
+  playFlyingSound() {
+    try {
+      Sound.sound.play('flying');
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  stopFlyingSound() {
+    try {
+      Sound.sound.stop('flying');
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  playGameOverSound() {
+    try {
+      Sound.sound.play('gameover');
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   update(dt) {
@@ -135,12 +180,15 @@ class RosiAnimationController {
     this.gameStartTime = gameStartTime;
     this.currentIntervalIndex = -1;
     this.background.updateStarshipAnimationTrigger();
+    this.playFlyingSound();
   }
 
   end() {
     const coinPosition = this.coinAndTrajectory.getCoinExplosionPosition();
     this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
     this.coinAndTrajectory.endCoinFlyingAnimation();
+    this.stopFlyingSound();
+    this.playGameOverSound();
   }
 
   doCashedOutAnimation(data) {
