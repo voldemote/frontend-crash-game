@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import _ from 'lodash';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import TabOptions from '../../components/TabOptions';
@@ -74,17 +74,38 @@ const UserProfile = () => {
       <>
         <div className={styles.header}>Statistics</div>
         <div className={styles.statsBlock}>
-          <div>
-            <div>casinoGameCashoutCount:</div>
-            <div>{userStats?.casinoGameCashoutCount}</div>
-            <div>casinoGamePlayCount:</div>
-            <div>{userStats?.casinoGamePlayCount}</div>
-            <div>totalBets:</div>
-            <div>{userStats?.userBetsAmount?.totalBets}</div>
-            <div>userBetsCashouts:</div>
-            <div>{userStats?.userBetsCashouts?.totalCashouts}</div>
-            <div>userBetsRewards:</div>
-            <div>{userStats?.userBetsRewards?.totalRewards}</div>
+          <div className={styles.statItem}>
+            <div className={styles.statItemHead}>
+              <span>{userStats?.casinoGamePlayCount}</span> Games
+            </div>
+            <div className={styles.statItemHint}>Total casino games played</div>
+          </div>
+          <div className={styles.statItem}>
+            <div className={styles.statItemHead}>
+              <span>{userStats?.casinoGameCashoutCount}</span> Cashouts
+            </div>
+            <div className={styles.statItemHint}>Total casino cashouts</div>
+          </div>
+
+          <div className={styles.statItem}>
+            <div className={styles.statItemHead}>
+              <span>{userStats?.userBetsAmount?.totalBets}</span> Bets
+            </div>
+            <div className={styles.statItemHint}>Total bets</div>
+          </div>
+
+          <div className={styles.statItem}>
+            <div className={styles.statItemHead}>
+              <span>{userStats?.userBetsCashouts?.totalCashouts}</span> Cashouts
+            </div>
+            <div className={styles.statItemHint}>Total bet cashouts</div>
+          </div>
+
+          <div className={styles.statItem}>
+            <div className={styles.statItemHead}>
+              <span>{userStats?.userBetsRewards?.totalRewards}</span> Rewards
+            </div>
+            <div className={styles.statItemHint}>Total bet rewards</div>
           </div>
         </div>
       </>
