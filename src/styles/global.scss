@@ -129,9 +129,13 @@ $border: 1px solid $colorWhite30;
 }
 
 .main-page-background {
-  background: #120e27;
-  position: relative;
+  background: $colorPrimaryDark;
   z-index: -1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
 
   &:before {
     top: 0;
@@ -141,7 +145,7 @@ $border: 1px solid $colorWhite30;
     content: "";
     opacity: 1;
     z-index: -2;
-    position: fixed;
+    position: absolute;
     background: linear-gradient(
         180deg, rgba(2, 0, 36, 0) 18%, rgb(18, 14, 39) 100%), linear-gradient(
         360deg, rgba(2, 0, 36, 0) 10%, rgb(18, 14, 39) 100%);
@@ -158,7 +162,7 @@ $border: 1px solid $colorWhite30;
     content: "";
     opacity: 1;
     z-index: -3;
-    position: fixed;
+    position: absolute;
     max-height: 700px;
     background-size: cover;
     background-image: url('../data/backgrounds/main-page-bg.png');
