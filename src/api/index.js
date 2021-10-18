@@ -452,6 +452,14 @@ const shortenerTinyUrl = url => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const updateStatus = (userId, status) => {
+  return Api.post(ApiUrls.API_USER_UPDATE_STATUS.replace(':id', userId), {
+    status,
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -506,4 +514,5 @@ export {
   getNotificationEventsByUser,
   checkUsername,
   getUserPublicInfo,
+  updateStatus,
 };
