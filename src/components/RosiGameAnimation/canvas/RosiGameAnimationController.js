@@ -31,6 +31,9 @@ function loadAssets(loader) {
     .add('star1', constructPath('star1.png'))
     .add('star2', constructPath('star2.png'))
     .add('starship', constructPath('starship.png'))
+    .add('particle', constructPath('particle.png'))
+    .add('coin-anim', constructPath('coin-anim.json'))
+    .add('explode-anim', constructPath('explode-anim.json'))
     .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
     .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
     .add(
@@ -107,7 +110,7 @@ class RosiAnimationController {
     }
 
     TWEEN.update(this.app.ticker.lastTime);
-    this.cashedOut.update(dt, elapsed / 1000, coinPos);
+    this.cashedOut.update(dt, elapsed, coinPos);
     this.background.update(dt, this.coinAndTrajectory.trajectoryAngle);
   }
 
@@ -120,15 +123,15 @@ class RosiAnimationController {
     this.cashedOut = new CashedOutAnimation(this.app, this.coinAndTrajectory);
     this.preparingRound = new PreparingRound(this.app);
 
-    this.app.stage.addChild(this.coinExplosion.container);
     this.app.stage.addChild(this.coinAndTrajectory.container);
     this.app.stage.addChild(this.cashedOut.container);
+    this.app.stage.addChild(this.coinExplosion.container);
     this.app.stage.addChild(this.preparingRound.container);
   }
 
   start(gameStartTime) {
     this.preparingRound.hide();
-    this.coinAndTrajectory.startCoinFlyingAnimation();
+    this.coinAndTrajectory.startCoinFlyingAnimation(gameStartTime);
     this.cashedOut.reset();
     this.gameStartTime = gameStartTime;
     this.currentIntervalIndex = -1;
@@ -143,8 +146,8 @@ class RosiAnimationController {
 
   doCashedOutAnimation(data) {
     const point = this.coinAndTrajectory.getCoinCrashPosition();
-
-    this.cashedOut.animate(point.x, data.amount, data.crashFactor);
+    const elapsed = Date.now() - this.gameStartTime;
+    this.cashedOut.animate(point.x, data.amount, data.crashFactor, elapsed);
   }
 }
 

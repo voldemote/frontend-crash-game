@@ -122,12 +122,18 @@ const RosiGameAnimation = ({
       <div
         className={cn(styles.timer, { [styles.flashAnimation]: !gameStarted })}
       >
-        {gameStarted ? (
-          <Timer pause={!gameStarted} startTimeMs={gameStartedTime} />
-        ) : (
-          <span>{lastCrashValue.toFixed(2)}</span>
+        {gameStarted && (
+          <>
+            <Timer pause={!gameStarted} startTimeMs={gameStartedTime} />
+            <span>x</span>
+          </>
         )}
-        <span>x</span>
+        {!gameStarted && !!lastCrashValue && (
+          <>
+            <span>{lastCrashValue.toFixed(2)}</span>
+            <span>x</span>
+          </>
+        )}
       </div>
     );
   }
