@@ -227,16 +227,17 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     @media (max-width: $screen-sm) {
       flex-direction: column;
     }
 
-
     .mainContent {
-      //flex-grow: 1;
       margin-right: 15px;
       border-radius: 10px;
+      width: 100%;
     }
 
     .sideContent {
