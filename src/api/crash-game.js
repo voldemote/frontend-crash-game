@@ -23,7 +23,11 @@ const setToken = token => {
 };
 
 const createTrade = payload => {
-  return Api.post(ApiUrls.API_TRADE_CREATE, payload);
+  return Api.post(ApiUrls.API_TRADE_CREATE, payload).catch(error => {
+    console.log('[API Error] called: createTrade', error);
+    throw error;
+  });
+
 };
 
 const getCurrentGameInfo = () => {
@@ -35,6 +39,7 @@ const getCurrentGameInfo = () => {
 const cashOut = () => {
   return Api.post(ApiUrls.API_CASH_OUT, {}).catch(error => {
     console.log('[API Error] called: Cash Out', error);
+    throw error;
   });
 };
 
