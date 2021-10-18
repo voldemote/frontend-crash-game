@@ -595,7 +595,11 @@ const BetVTwo = ({
                   <div className={styles.sectionHeader}>
                     <h4>{`NEWS`}</h4>
                   </div>
-                  <News className={styles.newsContainer} />
+                  <News
+                    className={styles.newsContainer}
+                    showMoreButton={true}
+                    limit={3}
+                  />
                 </div>
               </div>
             </div>
