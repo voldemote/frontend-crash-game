@@ -171,7 +171,7 @@ export class CoinAnimation {
     /* TODO: move to  utils */
     this.getGlobalPositionByTime = time => {
       const x = time * 0.8;
-      const y = Math.pow(time * 0.01, time * 0.00003) + time * time * 0.001;
+      const y = Math.pow(time * 0.01, time * 0.000015) + time * time * 0.001; // TODO: normalize factors (sync with game's multiplier)
       return { x, y };
     };
 
