@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import Leaderboard from '../../components/Leaderboard';
 import TabOptions from '../../components/TabOptions';
-import { getUserPublicInfo } from '../../api';
+import { getUserPublicInfo, getUserPublicStats } from '../../api';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 import ProfileActivityTemplate1 from '../../data/backgrounds/profile/userprofile_activity1.png';
@@ -23,6 +23,7 @@ const UserProfile = () => {
   const { userId } = useParams();
   const [profilePic, setProfilePic] = useState('');
   const [user, setUser] = useState();
+  const [userStats, setUserStats] = useState();
   const [userName, setUserName] = useState('');
   const [aboutMe, setAboutMe] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
@@ -35,6 +36,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     fetchUser(userId);
+    fetchUserStats(userId);
   }, [userId]);
 
   const fetchUser = async userId => {
@@ -52,6 +54,16 @@ const UserProfile = () => {
     }
   };
 
+  const fetchUserStats = async userId => {
+    const statsResponse = await getUserPublicStats(userId).catch(err => {
+      console.error("Can't get user stats", err);
+    });
+    const stats = _.get(statsResponse, 'data.stats', null);
+
+    console.log('stats', stats);
+    setUserStats(stats);
+  };
+
   const handleSwitchTab = option => {
     setTabIndex(option.index);
   };
@@ -63,6 +75,28 @@ const UserProfile = () => {
           <Leaderboard fetch={true} small={true} />
         </div>
       </div>
+    );
+  };
+
+  const UserStatsSide = () => {
+    return (
+      <>
+        <div className={styles.header}>Statistics</div>
+        <div className={styles.statsBlock}>
+          <div>
+            <div>casinoGameCashoutCount:</div>
+            <div>{userStats?.casinoGameCashoutCount}</div>
+            <div>casinoGamePlayCount:</div>
+            <div>{userStats?.casinoGamePlayCount}</div>
+            <div>totalBets:</div>
+            <div>{userStats?.userBetsAmount?.totalBets}</div>
+            <div>userBetsCashouts:</div>
+            <div>{userStats?.userBetsCashouts?.totalCashouts}</div>
+            <div>userBetsRewards:</div>
+            <div>{userStats?.userBetsRewards?.totalRewards}</div>
+          </div>
+        </div>
+      </>
     );
   };
 
@@ -100,42 +134,52 @@ const UserProfile = () => {
               )}
             </TabOptions>
           </div>
-          <div className={styles.userActivities}>
-            {tabOption === 'ACTIVITIES' ? (
-              <ActivitiesTracker
-                showCategories={false}
-                activitiesLimit={50}
-                userId={userId}
-                className={styles.activitiesTrackerUserPage}
-              />
-            ) : (
-              <>
-                {matchMediaMobile ? (
-                  <img
-                    src={
-                      tabIndex == 0
-                        ? ProfileActivityMobileTemplate1
-                        : tabIndex == 1
-                        ? ProfileActivityMobileTemplate2
-                        : ProfileActivityMobileTemplate3
-                    }
-                    className={styles.templateImage}
+          <div className={styles.contentBlock}>
+            <div className={styles.mainContent}>
+              <div className={styles.userActivities}>
+                {tabOption === 'ACTIVITIES' ? (
+                  <ActivitiesTracker
+                    showCategories={false}
+                    activitiesLimit={50}
+                    userId={userId}
+                    className={styles.activitiesTrackerUserPage}
                   />
                 ) : (
-                  <img
-                    src={
-                      tabIndex == 0
-                        ? ProfileActivityTemplate1
-                        : tabIndex == 1
-                        ? ProfileActivityTemplate2
-                        : ProfileActivityTemplate3
-                    }
-                    className={styles.templateImage}
-                  />
+                  <>
+                    {matchMediaMobile ? (
+                      <img
+                        src={
+                          tabIndex == 0
+                            ? ProfileActivityMobileTemplate1
+                            : tabIndex == 1
+                            ? ProfileActivityMobileTemplate2
+                            : ProfileActivityMobileTemplate3
+                        }
+                        className={styles.templateImage}
+                      />
+                    ) : (
+                      <img
+                        src={
+                          tabIndex == 0
+                            ? ProfileActivityTemplate1
+                            : tabIndex == 1
+                            ? ProfileActivityTemplate2
+                            : ProfileActivityTemplate3
+                        }
+                        className={styles.templateImage}
+                      />
+                    )}
+                    <div className={styles.inactivePlaceholder}>
+                      Coming soon
+                    </div>
+                  </>
                 )}
-                <div className={styles.inactivePlaceholder}>Coming soon</div>
-              </>
-            )}
+              </div>
+            </div>
+
+            <div className={styles.sideContent}>
+              <UserStatsSide />
+            </div>
           </div>
         </div>
       </div>

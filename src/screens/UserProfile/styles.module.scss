@@ -6,6 +6,7 @@
   justify-content: center;
   flex-direction: column;
   margin: 0 1rem;
+
   .container{
     margin: 0 2rem;
     max-width: 930px;
@@ -184,6 +185,34 @@
       }
     }
   }
+
+
+  .contentBlock {
+    display: flex;
+    justify-content: space-between;
+
+
+    .mainContent {
+      //flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    .sideContent {
+      width: 300px;
+      //flex-grow: 1;
+      //width: 300px;
+      color: white;
+
+      .header {
+        font-size: 18px;
+      }
+
+      .statsBlock {
+        font-size: 14px;
+      }
+    }
+  }
+
 }
 
 .bottomWrapper {
