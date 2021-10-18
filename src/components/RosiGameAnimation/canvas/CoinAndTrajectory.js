@@ -32,9 +32,9 @@ export class CoinAnimation {
 
     this.boundary = {
       x0: 0,
-      x1: calcPercent(this.app.renderer.width, 90),
+      x1: calcPercent(this.app.renderer.width, 85),
       y0: calcPercent(this.app.renderer.height, 82),
-      y1: calcPercent(this.app.renderer.height, 20),
+      y1: calcPercent(this.app.renderer.height, 25),
     };
 
     this.trajectoryAngle = Math.atan2(
@@ -42,6 +42,8 @@ export class CoinAnimation {
       this.boundary.x1 - this.boundary.x0,
       0
     );
+
+    this.gameStartTime = Date.now();
 
     /* Particle (flame) */
     this.flameEmitter = new particles.Emitter(this.container, {
@@ -168,33 +170,32 @@ export class CoinAnimation {
 
     /* TODO: move to  utils */
     this.getGlobalPositionByTime = time => {
-      // global {x, y}
-      const a = this.app.renderer.width * 8;
-      const x = Math.sqrt(time * a);
-      const y = time * time * 0.005 + time * 0.2;
+      const x = time * 0.8;
+      const y = Math.pow(time * 0.01, time * 0.00003) + time * time * 0.001;
       return { x, y };
     };
 
     this.getTime = (rX, scaleX) => {
-      const a = this.app.renderer.width * 8;
       const x = (rX - this.boundary.x0) / scaleX;
-      const time = (x * x) / a;
-      return time;
+      return x;
     };
 
     this.getRealPosition = gPos => {
-      const { x, y } = gPos; // global {x, y}
+      const { x, y } = gPos;
       const dX = this.boundary.x1 - this.boundary.x0;
       const dY = this.boundary.y0 - this.boundary.y1;
+      const scaleX = x > dX ? dX / x : 2 - x / dX;
 
-      const scaleX = x > dX ? dX / x : 1;
-      const scaleY = y > dY ? dY / y : 1;
+      let scaleY = scaleX * 0.005;
+      if (y * scaleY > dY) {
+        scaleY = dY / y;
+      }
 
       return this.getRealPositionByScale(gPos, { scaleX, scaleY });
     };
 
     this.getRealPositionByScale = (gPos, scale) => {
-      const { x, y } = gPos; // global {x, y}
+      const { x, y } = gPos;
       const { scaleX, scaleY } = scale;
 
       const rX = x * scaleX + this.boundary.x0;
@@ -249,7 +250,8 @@ export class CoinAnimation {
     return true; // TODO: consider further
   }
 
-  startCoinFlyingAnimation() {
+  startCoinFlyingAnimation(gameStartTime) {
+    this.gameStartTime = gameStartTime;
     this.container.visible = true;
     this.resetAllAnimations();
     this.setCoinDefaultPosition();
@@ -260,55 +262,56 @@ export class CoinAnimation {
     /* Coin and Elon */
     let time = 0;
     /* Trajectory */
-    let randYArray = Array(this.app.renderer.width + 1)
+    const tSegs = 2000;
+    let randYArray = Array(tSegs + 1)
       .fill()
       .map(() => null); // trajectory path: traPath[rX] = rY
 
     const firstPos = this.getRealPosition({ x: 0, y: 0 });
-    let prevPos = firstPos;
+    let prevTime = Date.now() - this.gameStartTime;
 
     const update = dt => {
-      time += dt;
-
+      time = Date.now() - this.gameStartTime;
       const gPos = this.getGlobalPositionByTime(time);
       const rPos = this.getRealPosition(gPos);
 
-      this.elonAndCoin.x = rPos.x;
-      this.elonAndCoin.y = rPos.y;
+      this.elonAndCoin.x = rPos.x + Math.cos(time / 100) / 3 - 5;
+      this.elonAndCoin.y = rPos.y + Math.sin(time / 200) * 1.5 + Math.random();
+      this.elonAndCoin.rotation = -Math.sin(time / 100) / 100;
       this.flameEmitter.updateOwnerPos(
         this.elonAndCoin.x,
-        this.elonAndCoin.y + 50
+        this.elonAndCoin.y + (isMobileRosiGame ? 25 : 50)
       ); // set flame
 
-      this.flameEmitter.rotate(Math.PI * 1.5 * Math.max(rPos.scaleX, 0.965)); // TODO: particle direction
+      this.flameEmitter.rotate(-this.trajectoryAngle + (Math.PI * 3) / 2); // TODO: particle direction
 
       // Draw trajectory path
-      const offsetY = 60;
+      const offsetY = isMobileRosiGame ? 30 : 60;
       this.trajectory.clear();
       this.trajectory.lineStyle(2, 0x7300d8, 1);
       this.trajectory.moveTo(firstPos.x, firstPos.y + offsetY);
-      const randEtries = Object.entries(randYArray);
-      randEtries.forEach(e => {
-        const t = this.getTime(e[0], prevPos.scaleX);
+      const randEtries = [...randYArray];
+      randYArray = [];
+
+      randEtries.forEach((e, i) => {
+        const t = (i / tSegs) * prevTime;
+        const tP = Math.floor((t / time) * tSegs);
+
         const gP = this.getGlobalPositionByTime(t);
 
-        if (e[1] !== null) {
-          const rP = this.getRealPositionByScale(
-            { x: gP.x, y: gP.y + e[1] * 1 },
-            rPos
-          );
-          this.trajectory.lineTo(rP.x, rP.y + offsetY);
-          randYArray[Math.floor(rP.x)] = e[1];
-        } else {
-          const rP = this.getRealPositionByScale({ x: gP.x, y: gP.y }, rPos);
-          randYArray[Math.round(rP.x)] = null;
-        }
+        const rP = this.getRealPositionByScale(
+          { x: gP.x, y: gP.y + rPos.scaleY * (e ? e * 1 : 0) },
+          rPos
+        );
+        this.trajectory.lineTo(rP.x, rP.y + offsetY);
+        const gP1 = this.getGlobalPositionByTime(t + 1000);
+        randYArray[tP] = e ? e : Math.sin(t * 0.01) * (gP1.y - gP.y) * 50;
       });
-      randYArray[Math.floor(rPos.x)] =
-        (Math.random() - 0.5) * 2 +
-        Math.sin(time * 50) * (2.5 / Math.min(rPos.scaleX, rPos.scaleY));
+      const gPos1 = this.getGlobalPositionByTime(time + 1000);
 
-      prevPos = rPos;
+      randYArray[tSegs] = Math.sin(time * 0.01) * (gPos1.y - gPos.y) * 50;
+
+      prevTime = time;
     };
 
     this.elonAndCoindAnimationHandle = update;

@@ -254,8 +254,7 @@ class CashedOutAnimation {
       );
 
       anim.container.x = rPos.x;
-      anim.container.y = rPos.y + 40;
-
+      anim.container.y = rPos.y + 35;
       prevAnim = anim;
     }
   }

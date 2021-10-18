@@ -129,7 +129,7 @@ class RosiAnimationController {
 
   start(gameStartTime) {
     this.preparingRound.hide();
-    this.coinAndTrajectory.startCoinFlyingAnimation();
+    this.coinAndTrajectory.startCoinFlyingAnimation(gameStartTime);
     this.cashedOut.reset();
     this.gameStartTime = gameStartTime;
     this.currentIntervalIndex = -1;
