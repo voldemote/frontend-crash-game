@@ -32,8 +32,6 @@ function loadAssets(loader) {
     .add('star2', constructPath('star2.png'))
     .add('starship', constructPath('starship.png'))
     .add('particle', constructPath('particle.png'))
-    .add('coin-anim', constructPath('coin-anim.json'))
-    .add('explode-anim', constructPath('explode-anim.json'))
     .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
     .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
     .add(

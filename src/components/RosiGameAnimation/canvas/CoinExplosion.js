@@ -1,150 +1,89 @@
 import * as PIXI from 'pixi.js';
-import * as particles from '@pixi/particle-emitter';
+import { getRandomInRange } from './utils';
+
+const NUM_OF_PARTICLES = 100;
+
 class CoinExplosion {
   constructor(app) {
     this.app = app;
     this.container = new PIXI.Container();
-    this.container.visible = true;
+    this.container.visible = false;
 
-    const textures = this.app.loader.resources['coin-anim'].textures;
+    this.coins = [];
+    this.createCoins();
 
-    this.emitter = new particles.Emitter(
-      this.container,
+    this.fadeOutCoinTween = window.startCoinExplosion =
+      this.startAnimation.bind(this);
+  }
 
-      {
-        lifetime: {
-          min: 0.5,
-          max: 0.7,
-        },
-        frequency: 0.02,
-        emitterLifetime: 0.31,
-        maxParticles: 1000,
-        addAtBack: false,
-        pos: {
-          x: 0,
-          y: 0,
-        },
-        behaviors: [
-          {
-            type: 'alpha',
-            config: {
-              alpha: {
-                list: [
-                  {
-                    time: 0,
-                    value: 1,
-                  },
-                  {
-                    time: 1,
-                    value: 0.8,
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: 'moveSpeed',
-            config: {
-              speed: {
-                list: [
-                  {
-                    time: 0,
-                    value: 200,
-                  },
-                  {
-                    time: 1,
-                    value: 100,
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: 'scaleStatic',
-            config: {
-              min: 0.3,
-              max: 0.5,
-            },
-          },
-          {
-            type: 'animatedRandom',
-            config: {
-              anims: [
-                {
-                  framerate: 20,
-                  loop: true,
-                  textures: Object.keys(textures),
-                },
-                {
-                  framerate: 20,
-                  loop: true,
-                  textures: Object.keys(textures),
-                },
-                {
-                  framerate: 1,
-                  loop: false,
-                  textures: [this.app.loader.resources.star1.texture],
-                },
-              ],
-            },
-          },
-          {
-            type: 'spawnShape',
-            config: {
-              type: 'torus',
-              data: {
-                x: 0,
-                y: 0,
-                radius: 40,
-                innerRadius: 39,
-                affectRotation: true,
-              },
-            },
-          },
-        ],
-      }
-    );
-
-    this.elapsed = Date.now();
-
-    const update = () => {
-      requestAnimationFrame(update);
-      var now = Date.now();
-      this.emitter.update((now - this.elapsed) * 0.001);
-      this.elapsed = now;
-    };
-
-    update();
-
-    const spritesheet = this.app.loader.resources['explode-anim'].spritesheet;
-    this.explosion = new PIXI.AnimatedSprite(
-      Object.values(spritesheet.textures)
-    );
-    this.explosion.anchor.set(0.5);
-    this.explosion.scale.set(1);
-    this.explosion.animationSpeed = 0.1;
-    this.explosion.visible = false;
-    this.explosion.loop = false;
-    this.explosion.onComplete = () => {
-      this.explosion.stop();
-      this.explosion.visible = false;
-    };
-    this.container.addChild(this.explosion);
+  createCoins() {
+    for (let i = 0; i < NUM_OF_PARTICLES; i++) {
+      const texture = this.app.loader.resources.coin.texture;
+      const coin = new PIXI.Sprite(texture);
+      coin.anchor.set(0.5); // easier to center at explosion point
+      this.container.addChild(coin);
+      this.coins.push(coin);
+    }
   }
 
   startAnimation(x, y) {
-    this.emitter.emit = true;
-    this.elapsed = Date.now();
-    this.emitter.resetPositionTracking();
-    this.emitter.updateOwnerPos(x, y);
-    this.explosion.position.x = x;
-    this.explosion.position.y = y;
-    this.explosion.gotoAndPlay(0);
-    this.explosion.visible = true;
+    if (this.coinExplosionAnimationHandle) {
+      this.app.ticker.remove(this.coinExplosionAnimationHandle);
+      this.coinExplosionAnimationHandle = null;
+    }
+
+    for (const coin of this.coins) {
+      const directionAngle = Math.random() * Math.PI * 2;
+      const vx = Math.cos(directionAngle);
+      const vy = Math.sin(directionAngle);
+      coin.x = x;
+      coin.y = y;
+      coin.vx = vx;
+      coin.vy = vy;
+      coin.tint = Math.random() > 0.5 ? 0xfff200 : 0xffffff; // add yellow tint to some coins for variety
+      coin.speed = getRandomInRange(0.5, 1.2);
+      coin.acceleration = getRandomInRange(2.5, 4);
+      coin.deceleration = getRandomInRange(0.02, 0.06);
+      coin.alpha = 1;
+      coin.fadeOutDelay = getRandomInRange(1800, 2200);
+      coin.fadeOutSpeed = getRandomInRange(0.01, 0.03);
+
+      const plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+      coin.rotation = Math.random() * Math.PI * plusOrMinus; // random between -180 and 180 degress
+      coin.scale.set(getRandomInRange(0.1, 0.25));
+    }
+
+    const animationStartTime = this.app.ticker.lastTime;
+
+    const update = dt => {
+      for (const coin of this.coins) {
+        coin.x += coin.vx * coin.acceleration * coin.speed * dt;
+        coin.y += coin.vy * coin.acceleration * coin.speed * dt;
+        coin.rotation += 0.01;
+
+        if (coin.acceleration > 1) {
+          coin.acceleration -= coin.deceleration * dt;
+        }
+
+        if (
+          coin.alpha > 0 &&
+          this.app.ticker.lastTime - animationStartTime > coin.fadeOutDelay
+        ) {
+          coin.alpha -= coin.fadeOutSpeed * dt;
+        }
+      }
+    };
+
+    this.container.visible = true;
+    this.coinExplosionAnimationHandle = update;
+    this.app.ticker.add(update);
   }
 
   stopAnimation() {
-    this.emitter.emit = false;
+    if (this.coinExplosionAnimationHandle) {
+      this.app.ticker.remove(this.coinExplosionAnimationHandle);
+      this.coinExplosionAnimationHandle = null;
+    }
   }
 }
 
