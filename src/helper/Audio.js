@@ -96,11 +96,11 @@ export function stopFlyingSound() {
   try {
     const el = document.getElementById('audio-flying');
     const el2 = document.getElementById('audio-bgm');
-    if (el.play) {
+    if (el?.play) {
       el.pause();
       el.currentTime = 0;
     }
-    if (el2.play) {
+    if (el2?.play) {
       el2.pause();
       el2.currentTime = 0;
     }
