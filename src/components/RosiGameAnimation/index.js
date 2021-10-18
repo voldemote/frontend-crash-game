@@ -14,7 +14,6 @@ import Timer from './Timer';
 import Counter from './Counter';
 import styles from './styles.module.scss';
 import RosiGameAnimationController from './canvas/RosiGameAnimationController';
-import { CircularProgress } from '@material-ui/core';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 
 const PreparingRound = ({ nextGameAt }) => (
@@ -33,8 +32,10 @@ const PreparingRound = ({ nextGameAt }) => (
 const GameOffline = () => (
   <div className={styles.preparingRound}>
     <div>
-      <h2 className={styles.title}>You are disconnected</h2>
-      <div className={styles.description}>Attempting to reconnect...</div>
+      <h2 className={styles.title}>Connecting to the game engine</h2>
+      <div className={styles.description}>
+        If this takes too long, try reloading the page
+      </div>
     </div>
   </div>
 );
@@ -143,16 +144,12 @@ const RosiGameAnimation = ({
       <canvas
         className={classNames(
           styles.canvas,
-          !connected ? styles.gameOffline : null
+          !connected || !isSynced ? styles.gameOffline : null
         )}
         id="rosi-game-animation"
         ref={canvasRef}
       />
-      {isAnimationReady && isSynced ? (
-        render()
-      ) : (
-        <CircularProgress style={{ position: 'absolute', margin: '0 auto' }} />
-      )}
+      {isAnimationReady && isSynced ? render() : <GameOffline />}
     </div>
   );
 };
