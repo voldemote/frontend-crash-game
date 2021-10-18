@@ -23,9 +23,7 @@ const setToken = token => {
 };
 
 const createTrade = payload => {
-  return Api.post(ApiUrls.API_TRADE_CREATE, payload).catch(error => {
-    console.log('[API Error] called: createTrade', error);
-  });
+  return Api.post(ApiUrls.API_TRADE_CREATE, payload);
 };
 
 const getCurrentGameInfo = () => {
