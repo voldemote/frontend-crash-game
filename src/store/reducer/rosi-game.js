@@ -8,6 +8,9 @@ import {
   stopFlyingSound,
   silenceAllSounds,
   resetAllSounds,
+  playBetSound,
+  playLoseSound,
+  playGameoverSound,
 } from '../../helper/Audio';
 import { calcCrashFactorFromElapsedTime } from '../../components/RosiGameAnimation/canvas/utils';
 
@@ -62,6 +65,7 @@ const setHasStarted = (action, state) => {
 };
 
 const setUserBet = (action, state) => {
+  playBetSound(state.volumeLevel);
   if (state.hasStarted) {
     return {
       ...state,
@@ -76,10 +80,14 @@ const setUserBet = (action, state) => {
 };
 
 const addLastCrash = (action, state) => {
-  if (action.payload.crashFactor <= 1) {
-    playFailSound(state.volumeLevel);
+  if (state.userBet && !state.isCashedOut) {
+    playLoseSound(state.volumeLevel);
   } else {
-    playCrashSound(state.volumeLevel);
+    if (action.payload.crashFactor <= 1) {
+      playLoseSound(state.volumeLevel);
+    } else {
+      playGameoverSound(state.volumeLevel);
+    }
   }
 
   return {
