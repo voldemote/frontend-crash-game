@@ -14,13 +14,13 @@ const BaseContainerWithNavbar = ({
     <div
       className={classNames(
         styles.baseContainer,
-        'main-page-background',
         withPaddingTop ? styles.baseContainerWithPaddingTop : null,
         contentPadding ? styles.baseContainerWithContentPadding : null,
         withoutPaddingBottom ? styles.baseContainerWithPaddingBottomZero : null
       )}
     >
       {children}
+      <div className={'main-page-background'}></div>
     </div>
   );
 };
