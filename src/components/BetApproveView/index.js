@@ -69,7 +69,7 @@ const BetApproveView = ({ visible, hidePopup, options }) => {
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Potential outcome</div>
           <div className={styles.value}>
-            {potentialOutcome} <span>{currency}</span>
+            {potentialOutcome.toFixed(2)} <span>{currency}</span>
           </div>
         </div>
         <div className={classNames(styles.entry, styles.alignRight)}>
