@@ -254,7 +254,7 @@ class CashedOutAnimation {
       );
 
       anim.container.x = rPos.x;
-      anim.container.y = rPos.y + 35;
+      anim.container.y = rPos.y + (isMobileRosiGame ? 20 : 45);
       prevAnim = anim;
     }
   }

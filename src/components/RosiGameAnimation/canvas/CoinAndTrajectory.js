@@ -32,8 +32,8 @@ export class CoinAnimation {
 
     this.boundary = {
       x0: 0,
-      x1: calcPercent(this.app.renderer.width, 85),
-      y0: calcPercent(this.app.renderer.height, 82),
+      x1: calcPercent(this.app.renderer.width, 95),
+      y0: calcPercent(this.app.renderer.height, 77),
       y1: calcPercent(this.app.renderer.height, 25),
     };
 
@@ -262,7 +262,7 @@ export class CoinAnimation {
     /* Coin and Elon */
     let time = 0;
     /* Trajectory */
-    const tSegs = 2000;
+    const tSegs = 1000;
     let randYArray = Array(tSegs + 1)
       .fill()
       .map(() => null); // trajectory path: traPath[rX] = rY
@@ -275,7 +275,8 @@ export class CoinAnimation {
       const gPos = this.getGlobalPositionByTime(time);
       const rPos = this.getRealPosition(gPos);
 
-      this.elonAndCoin.x = rPos.x + Math.cos(time / 100) / 3 - 5;
+      this.elonAndCoin.x =
+        rPos.x + Math.cos(time / 100) / 3 - (isMobileRosiGame ? 25 : 50);
       this.elonAndCoin.y = rPos.y + Math.sin(time / 200) * 1.5 + Math.random();
       this.elonAndCoin.rotation = -Math.sin(time / 100) / 100;
       this.flameEmitter.updateOwnerPos(
@@ -288,7 +289,6 @@ export class CoinAnimation {
       // Draw trajectory path
       const offsetY = isMobileRosiGame ? 30 : 60;
       this.trajectory.clear();
-      this.trajectory.lineStyle(2, 0x7300d8, 1);
       this.trajectory.moveTo(firstPos.x, firstPos.y + offsetY);
       const randEtries = [...randYArray];
       randYArray = [];
@@ -298,18 +298,28 @@ export class CoinAnimation {
         const tP = Math.floor((t / time) * tSegs);
 
         const gP = this.getGlobalPositionByTime(t);
-
+        this.trajectory.lineStyle(
+          2,
+          0x7300d8,
+          Math.floor(t / 1000) % 2 ? 1 : 1.5
+        );
         const rP = this.getRealPositionByScale(
           { x: gP.x, y: gP.y + rPos.scaleY * (e ? e * 1 : 0) },
           rPos
         );
         this.trajectory.lineTo(rP.x, rP.y + offsetY);
         const gP1 = this.getGlobalPositionByTime(t + 1000);
-        randYArray[tP] = e ? e : Math.sin(t * 0.01) * (gP1.y - gP.y) * 50;
+        randYArray[tP] = e
+          ? e
+          : Math.sin((t / 1000) * Math.PI * 2) * (gP1.y - gP.y) * t * 0.02;
       });
       const gPos1 = this.getGlobalPositionByTime(time + 1000);
 
-      randYArray[tSegs] = Math.sin(time * 0.01) * (gPos1.y - gPos.y) * 50;
+      randYArray[tSegs] =
+        Math.sin((time / 1000) * Math.PI * 2) *
+        (gPos1.y - gPos.y) *
+        time *
+        0.02;
 
       prevTime = time;
     };
