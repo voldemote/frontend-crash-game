@@ -1,5 +1,3 @@
-import { random } from 'lodash/number';
-
 export function playWinSound(volumeLevel) {
   try {
     const el = document.getElementById('audio-win');
@@ -75,8 +73,8 @@ export function playFailSound(volumeLevel = 0.5) {
 export function playFlyingSound(volumeLevel = 0.5, seek = 0) {
   try {
     let el = document.getElementById('audio-flying');
-
-    if (random(0, 1, false) > 0) {
+    const r = Math.random();
+    if (r > 0.5) {
       el = document.getElementById('audio-bgm');
     }
     if (el.play) {
