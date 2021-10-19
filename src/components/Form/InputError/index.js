@@ -9,6 +9,8 @@ const ERROR_MESSAGES = {
   dateBeforeLimit: 'Datetime should be after "{0}".',
   invalidNumber: 'Must be a number.',
   notInteger: 'Number must be round.',
+  tooLow: 'Must be greater than {0}.',
+  tooHigh: 'Must be lower than {0}.',
 };
 
 const InputError = ({

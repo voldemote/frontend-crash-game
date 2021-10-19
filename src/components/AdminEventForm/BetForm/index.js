@@ -163,7 +163,7 @@ const BetForm = ({ setBetData, styles, fgClasses, setValidity }) => {
         />
         <InputError
           errors={liquidityErrors}
-          errorMessages={{ tooLow: 'Must be greater than 0.' }}
+          placeholderValues={{ tooLow: [0] }}
         />
       </FormGroup>
     </div>

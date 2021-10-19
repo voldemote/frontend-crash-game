@@ -61,9 +61,8 @@ const OutcomeInput = ({ outcome, onChange, setIsValid }) => {
       />
       <InputError
         errors={probabilityErrors}
+        placeholderValues={{ tooHigh: [1], tooLow: [0] }}
         errorMessages={{
-          tooHigh: 'Must be less than 1.',
-          tooLow: 'Must be greater than 0.',
           invalidNumber: 'Must be a valid decimal between 0 and 1.',
         }}
       />
