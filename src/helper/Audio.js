@@ -70,11 +70,11 @@ export function playFailSound(volumeLevel = 0.5) {
   }
 }
 
-export function playFlyingSound(volumeLevel = 0.5, seek = 0) {
+export function playFlyingSound(volumeLevel = 0.5, seek = 0, musicIndex = 0) {
   try {
     let el = document.getElementById('audio-flying');
     const r = Math.random();
-    if (r > 0.5) {
+    if (musicIndex === 1) {
       el = document.getElementById('audio-bgm');
     }
     if (el.play) {

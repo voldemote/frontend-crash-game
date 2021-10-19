@@ -51,7 +51,7 @@ function loadAssets(loader) {
 }
 
 class RosiAnimationController {
-  init(canvas) {
+  init(canvas, animationIndex) {
     this.app = new PIXI.Application({
       view: canvas,
       backgroundColor: 0x12132e,
@@ -63,6 +63,7 @@ class RosiAnimationController {
     this.gameStartTime = 0;
     this.lastCrashFactor = 1.0;
     this.currentIntervalIndex = -1;
+    this.animationIndex = animationIndex;
   }
 
   load(done) {
@@ -119,7 +120,7 @@ class RosiAnimationController {
     this.coinExplosion = new CoinExplosion(this.app);
     this.coinAndTrajectory = new CoinAnimation(this.app);
     this.cashedOut = new CashedOutAnimation(this.app, this.coinAndTrajectory);
-    this.preparingRound = new PreparingRound(this.app);
+    this.preparingRound = new PreparingRound(this.app, this.animationIndex);
 
     this.app.stage.addChild(this.coinAndTrajectory.container);
     this.app.stage.addChild(this.cashedOut.container);
