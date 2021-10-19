@@ -7,6 +7,8 @@ const ERROR_MESSAGES = {
   minLength: 'Must be have at least {0} {1}.',
   hasEmptyMembers: 'All {0} require a value.',
   dateBeforeLimit: 'Datetime should be after "{0}".',
+  invalidNumber: 'Must be a number.',
+  notInteger: 'Number must be round.',
 };
 
 const InputError = ({
@@ -19,8 +21,8 @@ const InputError = ({
     const messageValues = placeholderValues?.[errorName] || [];
 
     const uninterpolatedErrorMessage =
-      ERROR_MESSAGES[errorName] ||
       errorMessages?.[errorName] ||
+      ERROR_MESSAGES[errorName] ||
       `Unknown Input Error - ${errorName}.`;
 
     return messageValues.reduce(

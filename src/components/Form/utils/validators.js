@@ -5,6 +5,10 @@ export const isValid = errors =>
 
 export const hasError = (errorKey, errors) => !!errors[errorKey];
 
+const utils = {
+  isNumber: val => !isNaN(+val) && val !== null && val !== '',
+};
+
 export const Validators = {
   required: val =>
     !!val && val !== null && val !== '' ? null : { required: true },
@@ -46,15 +50,23 @@ export const Validators = {
       },
     };
 
-    const isNumber = val => !isNaN(+val) && val !== null && val !== '';
-
     const { isWithinLimit, errorKey } = config[direction];
 
     return value => {
-      if (!isNumber(value)) {
+      if (!utils.isNumber(value)) {
         return { invalidNumber: true };
       }
       return isWithinLimit(+value) ? null : { [errorKey]: true };
     };
+  },
+
+  integer: value => {
+    if (!utils.isNumber(value)) {
+      return { invalidNumber: true };
+    }
+    if (+value !== Math.round(+value)) {
+      return { notInteger: true };
+    }
+    return null;
   },
 };

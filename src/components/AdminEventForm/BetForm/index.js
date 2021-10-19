@@ -31,6 +31,11 @@ const BetForm = ({ setBetData, styles, fgClasses, setValidity }) => {
     new Moment().add(1, 'hour'),
     [Validators.required, Validators.dateAfter(new Moment())]
   );
+  const [liquidity, setLiquidity, liquidityErrors] = useValidatedState(50000, [
+    Validators.required,
+    Validators.integer,
+    Validators.numberLimit(0, 'floor'),
+  ]);
 
   const isFormValid =
     [
@@ -53,6 +58,7 @@ const BetForm = ({ setBetData, styles, fgClasses, setValidity }) => {
     description,
     endDate,
     slug: 'bet',
+    liquidity,
   };
 
   const setters = {
@@ -62,6 +68,7 @@ const BetForm = ({ setBetData, styles, fgClasses, setValidity }) => {
     endDate: setEndDate,
     evidenceSource: setEvidenceSource,
     description: setDescription,
+    liquidity: setLiquidity,
   };
 
   const setFormValue = (key, value) => {
@@ -145,6 +152,19 @@ const BetForm = ({ setBetData, styles, fgClasses, setValidity }) => {
           onChange={updateValue('evidenceSource')}
         />
         <InputError errors={evidenceSourceErrors} />
+      </FormGroup>
+
+      <FormGroup className={fgClasses(liquidityErrors)}>
+        <InputLabel>Liquidity</InputLabel>
+        <Input
+          type="text"
+          value={liquidity}
+          onChange={updateValue('liquidity')}
+        />
+        <InputError
+          errors={liquidityErrors}
+          errorMessages={{ tooLow: 'Must be greater than 0.' }}
+        />
       </FormGroup>
     </div>
   );
