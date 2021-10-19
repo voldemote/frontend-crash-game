@@ -380,6 +380,7 @@ const BetView = ({
           showJoinPopup();
         } else if (!tradeButtonDisabled) {
           onTradeButtonConfirm();
+          fetchOutcomes(commitment, betId);
         } else {
           _.noop();
         }

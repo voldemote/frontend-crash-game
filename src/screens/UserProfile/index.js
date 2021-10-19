@@ -121,7 +121,7 @@ const UserProfile = () => {
             <div className={styles.avatarBox}>
               <img
                 className={styles.profileImage}
-                src={getProfilePictureUrl(user?.profilePic)}
+                src={getProfilePictureUrl(user?.profilePicture)}
                 alt="Profile"
               />
             </div>
