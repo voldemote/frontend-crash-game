@@ -296,7 +296,7 @@ const BetView = ({
         <div className={styles.labelWrapper}>
           <label className={styles.label}>You trade:</label>
           <InfoBox autoWidth={true} iconType={IconType.question}>
-            You need to have a suficient amount of {TOKEN_NAME} tokens to
+            You need to have a sufficient amount of {TOKEN_NAME} tokens to
             participate in events
             {/* How to buy WFAIR token? */}
           </InfoBox>
