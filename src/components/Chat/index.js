@@ -176,6 +176,7 @@ const Chat = ({
               date={date}
               parentRef={messageListRef}
               lastMessage={index === messages.length - 1}
+              currentUser={isLoggedIn() ? user : null}
             />
           );
         })}
@@ -222,7 +223,7 @@ const Chat = ({
       >
         <Input
           type={'text'}
-          placeholder={'Comment...'}
+          placeholder={'Write here...'}
           value={message}
           disabled={!isLoggedIn()}
           onChange={onMessageInputChange}
