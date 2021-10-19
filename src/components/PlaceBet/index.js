@@ -59,7 +59,7 @@ const PlaceBet = ({ connected }) => {
   }, [canBet]);
 
   useEffect(() => {
-    if (userBalance < amount) {
+    if (user.isLoggedIn && userBalance < amount) {
       setAmount(userBalance);
     }
   }, [user]);
