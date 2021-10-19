@@ -379,6 +379,8 @@ const BetView = ({
         if (!userLoggedIn) {
           showJoinPopup();
         } else if (!tradeButtonDisabled) {
+          fetchOutcomes(commitment, betId);
+          setConvertedCommitment(convert(commitment, currency));
           onTradeButtonConfirm();
         } else {
           _.noop();
