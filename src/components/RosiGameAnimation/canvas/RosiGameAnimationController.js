@@ -14,6 +14,110 @@ import { ROSI_GAME_INTERVALS } from 'constants/RosiGame';
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
 
+class AudioController {
+  constructor(volume = 1, bgmIndex = 0) {
+    Sound.sound.add(
+      {
+        bgm: {
+          url: '/sounds/elon/elon_bgm.mp3',
+          loop: true,
+        },
+        flying: {
+          url: '/sounds/elon/flying.mp3',
+          loop: true,
+        },
+        gameover: {
+          url: '/sounds/elon/sfx_gameover.mp3',
+          loop: false,
+        },
+        lose: {
+          url: '/sounds/elon/sfx_lose.mp3',
+          loop: false,
+        },
+        cashout: {
+          url: '/sounds/elon/sfx_cashout3.mp3',
+          loop: false,
+        },
+        placebet: {
+          url: '/sounds/elon/sfx_placebet.mp3',
+          loop: false,
+        },
+      },
+      {
+        loaded: (err, data) => {
+          console.log(err);
+          console.log('sounds loaded', data);
+        },
+        preload: true,
+      }
+    );
+
+    this.volume = volume;
+    this.bgmIndex = bgmIndex;
+    this.elapsed = 0;
+  }
+
+  setVolume(volume = 1) {
+    this.volume = parseFloat(volume.toFixed(1));
+    Sound.sound.volume('bgm', this.volume);
+    Sound.sound.volume('flying', this.volume);
+  }
+
+  mute() {
+    this.setVolume(0.0);
+  }
+
+  setElapsed(elapsed) {
+    this.elapsed = elapsed;
+  }
+
+  setBgmIndex(idx = 0) {
+    this.bgmIndex = idx;
+  }
+
+  playSound(name, loop = false) {
+    Sound.sound.volume(name, this.volume);
+    Sound.sound.play(name, {
+      loop: loop,
+    });
+  }
+
+  stopSound(name) {
+    Sound.sound.stop(name);
+  }
+
+  startBgm() {
+    const diff = this.elapsed / 1000;
+    if (this.bgmIndex === 0) {
+      this.playSound('bgm', true);
+    }
+    if (this.bgmIndex === 1) {
+      this.playSound('flying', true);
+    }
+  }
+
+  stopBgm() {
+    this.stopSound('bgm');
+    this.stopSound('flying');
+  }
+
+  playGameOverSound() {
+    this.playSound('gameover');
+  }
+
+  playLoseSound() {
+    this.playSound('lose');
+  }
+
+  playWinSound() {
+    this.playSound('cashout');
+  }
+
+  playBetSound() {
+    this.playSound('placebet');
+  }
+}
+
 function loadAssets(loader) {
   const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
   const resolution = deviceType === 'mobile' ? 2 : 1;
@@ -53,7 +157,7 @@ function loadAssets(loader) {
 }
 
 class RosiAnimationController {
-  init(canvas, animationIndex) {
+  init(canvas, options) {
     this.app = new PIXI.Application({
       view: canvas,
       backgroundColor: 0x12132e,
@@ -63,28 +167,23 @@ class RosiAnimationController {
     });
 
     this.audioReady = false;
-    Sound.sound.add(
-      {
-        flying: {
-          url: '/sounds/elon/elon_bgm.mp3',
-          loop: true,
-        },
-        gameover: {
-          url: '/sounds/elon/sfx_gameover.mp3',
-          loop: false,
-        },
-      },
-      {
-        loaded: (err, data) => {
-          console.log(err, data);
-        },
-        preload: true,
-      }
-    );
+    let volumeLevel = '1.0';
+    try {
+      volumeLevel = localStorage.getItem('gameVolume');
+    } catch (e) {
+      console.error(e);
+    }
+    this.audio = new AudioController(parseFloat(volumeLevel));
+
+    this.audio.setBgmIndex(options.musicIndex);
+
     this.gameStartTime = 0;
     this.lastCrashFactor = 1.0;
     this.currentIntervalIndex = -1;
-    this.animationIndex = animationIndex;
+    this.animationIndex = options.animationIndex;
+    return {
+      audio: this.audio,
+    };
   }
 
   load(done) {
@@ -95,30 +194,6 @@ class RosiAnimationController {
         done();
       }
     });
-  }
-
-  playFlyingSound() {
-    try {
-      Sound.sound.play('flying');
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  stopFlyingSound() {
-    try {
-      Sound.sound.stop('flying');
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  playGameOverSound() {
-    try {
-      Sound.sound.play('gameover');
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   update(dt) {
@@ -136,6 +211,10 @@ class RosiAnimationController {
 
     const [_f, _t, speed, elonFrame] = currentInterval;
     const currentIntervalIndex = intervals.indexOf(currentInterval);
+
+    if (this.audio) {
+      this.audio.setElapsed(elapsed);
+    }
 
     if (
       this.coinAndTrajectory.canUpdateElonFrame() &&
@@ -173,22 +252,23 @@ class RosiAnimationController {
     this.app.stage.addChild(this.preparingRound.container);
   }
 
-  start(gameStartTime) {
+  start(gameStartTime, musicIndex) {
     this.preparingRound.hide();
     this.coinAndTrajectory.startCoinFlyingAnimation(gameStartTime);
     this.cashedOut.reset();
     this.gameStartTime = gameStartTime;
     this.currentIntervalIndex = -1;
     this.background.updateStarshipAnimationTrigger();
-    this.playFlyingSound();
+    this.audio.setBgmIndex(musicIndex);
+    this.audio.startBgm();
   }
 
-  end() {
+  end(isLosing) {
     const coinPosition = this.coinAndTrajectory.getCoinExplosionPosition();
     this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
     this.coinAndTrajectory.endCoinFlyingAnimation();
-    this.stopFlyingSound();
-    this.playGameOverSound();
+    isLosing ? this.audio.playLoseSound() : this.audio.playGameOverSound();
+    this.audio.stopBgm();
   }
 
   doCashedOutAnimation(data) {
