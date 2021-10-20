@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as Api from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -26,6 +26,7 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
+import TabOptions from '../../components/TabOptions';
 
 const RosiGame = ({ showPopup, connected, userId }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,12 @@ const RosiGame = ({ showPopup, connected, userId }) => {
     useRosiData();
   const isSmallDevice = useMediaQuery('(max-width:768px)');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
-
+  const [tabIndex, setTabIndex] = useState(0);
+  const tabOptions = [
+    { name: 'ALL', index: 0 },
+    { name: 'HIGH WINS', index: 1 },
+    { name: 'LUCKY WINS', index: 2 },
+  ];
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
@@ -78,10 +84,28 @@ const RosiGame = ({ showPopup, connected, userId }) => {
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
+  const handleSwitchTab = option => {
+    setTabIndex(option.index);
+  };
+
   const renderActivities = () => (
-    <Grid item xs={12} md={4}>
-      <div className={styles.chatWrapper}>
-        <div className={styles.chatContainer}>
+    <Grid item xs={12} md={12}>
+      <div className={styles.activityWrapper}>
+        <TabOptions options={tabOptions} className={styles.tabLayout}>
+          {option => (
+            <div
+              className={
+                option.index === tabIndex
+                  ? styles.tabItemSelected
+                  : styles.tabItem
+              }
+              onClick={() => handleSwitchTab(option)}
+            >
+              {option.name}
+            </div>
+          )}
+        </TabOptions>
+        <div className={styles.activityContainer}>
           <ActivitiesTracker
             showCategories={false}
             activitiesLimit={50}
@@ -94,23 +118,21 @@ const RosiGame = ({ showPopup, connected, userId }) => {
   );
 
   const renderBets = () => (
-    <Grid item xs={12} md={4}>
-      <GameBets
-        label="Cashed Out"
-        bets={[
-          ...inGameBets.map(b => ({
-            ...b,
-            cashedOut: false,
-          })),
-          ...cashedOut.map(b => ({
-            ...b,
-            cashedOut: true,
-          })),
-        ]}
-        gameRunning={hasStarted}
-        endGame={isEndgame}
-      />
-    </Grid>
+    <GameBets
+      label="Cashed Out"
+      bets={[
+        ...inGameBets.map(b => ({
+          ...b,
+          cashedOut: false,
+        })),
+        ...cashedOut.map(b => ({
+          ...b,
+          cashedOut: true,
+        })),
+      ]}
+      gameRunning={hasStarted}
+      endGame={isEndgame}
+    />
   );
 
   return (
@@ -143,22 +165,23 @@ const RosiGame = ({ showPopup, connected, userId }) => {
               <GameAnimation inGameBets={inGameBets} />
             </Grid>
             <Grid item xs={12} md={3}>
-              <PlaceBet connected={connected} />
+              <div className={styles.placeContainer}>
+                <PlaceBet connected={connected} />
+                {isMiddleOrLargeDevice ? renderBets() : null}
+              </div>
             </Grid>
-            {isMiddleOrLargeDevice ? (
-              <Grid item xs={12} md={4}>
-                <div className={styles.chatWrapper}>
-                  <Chat
-                    roomId={ROSI_GAME_EVENT_ID}
-                    className={styles.chatContainer}
-                    chatMessageType={ChatMessageType.game}
-                  />
-                </div>
-              </Grid>
-            ) : null}
-            {isMiddleOrLargeDevice ? renderActivities() : renderBets()}
-            {isMiddleOrLargeDevice ? renderBets() : null}
           </Grid>
+          {isMiddleOrLargeDevice ? (
+            <div className={styles.chatWrapper}>
+              <Chat
+                roomId={ROSI_GAME_EVENT_ID}
+                className={styles.chatContainer}
+                chatMessageType={ChatMessageType.game}
+              />
+            </div>
+          ) : null}
+          {isMiddleOrLargeDevice ? renderActivities() : renderBets()}
+
           <ContentFooter className={styles.betFooter} />
         </div>
       </div>

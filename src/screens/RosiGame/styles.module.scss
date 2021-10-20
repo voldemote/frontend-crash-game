@@ -1,12 +1,16 @@
 @import '../../styles/all';
 
 .container {
-  display: flex;
-  padding: 20px;
+  width: 100%;
+  margin: 0 auto;
 
   @media screen and (max-width: $screen-xs) {
     display: block;
     padding: 0 20px;
+  }
+
+  @media (min-width: $screen-lg) {
+    max-width: 80%;
   }
 }
 
@@ -66,6 +70,17 @@
       display: none;
     }
   }
+
+  .placeContainer {
+    display: flex;
+    flex-direction: column;
+    height: 582px;
+    padding-left: 10px;
+    @media (max-width: $screen-xs) {
+      padding-left: 0px;
+      height: 100%;
+    }
+  }
 }
 
 .sidebar {
@@ -78,6 +93,7 @@
 
 .chatWrapper {
   height: 300px;
+  margin-top: 52px;
 
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
@@ -92,10 +108,68 @@
   margin: 0px;
   height: 100%;
   padding: 10px;
+  margin-top: 12px;
 
   .chatMessageContainer {
     @media (max-width: $screen-sm) {
       margin-bottom: 0;
+    }
+  }
+}
+
+.activityWrapper {
+  margin-top: 32px;
+
+  @media screen and (max-width: $screen-xs) {
+    margin-bottom: 20px;
+  }
+
+  .tabLayout {
+    display: flex;
+    align-items: flex-end;
+    color: $colorWhite;
+    font-family: $fontRegular;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    padding-top: 24px;
+    margin-left: 16px;
+    @media (max-width: $screen-sm) {
+      margin-left: 0px;
+      justify-content: space-between;
+      font-size: 11px;
+      line-height: 14px;
+    }
+
+    .tabItem {
+      text-align: center;
+      padding-bottom: 12px;
+      opacity: 0.3;
+      cursor: pointer;
+    }
+
+    .tabItemSelected {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #F1FF54;
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+  .activityContainer {
+    height: 300px;
+    background: rgba(34, 35, 62, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 10px;
+    margin: 0px;
+    padding: 10px;
+    margin-top: 12px;
+
+    .chatMessageContainer {
+      @media (max-width: $screen-sm) {
+        margin-bottom: 0;
+      }
     }
   }
 }
