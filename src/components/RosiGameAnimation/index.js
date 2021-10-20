@@ -65,6 +65,7 @@ const RosiGameAnimation = ({
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
+    let audioInstance = null;
     if (canvasRef.current) {
       const { audio } = RosiGameAnimationController.init(canvasRef.current, {
         animationIndex,
@@ -72,6 +73,7 @@ const RosiGameAnimation = ({
         musicIndex,
       });
       setAudio(audio);
+      audioInstance = audio;
       onInit(audio);
       RosiGameAnimationController.load(() => {
         setAnimationReady(true);
@@ -80,6 +82,7 @@ const RosiGameAnimation = ({
         }
       });
     }
+    return () => audioInstance.stopBgm();
   }, []);
 
   useEffect(() => {
@@ -153,7 +156,7 @@ const RosiGameAnimation = ({
       <div
         className={classNames({
           [styles.muteButton]: true,
-          [styles.mute]: isMute,
+          [styles.mute]: !(audio?.volume > 0),
         })}
         onClick={() => {
           muteButtonClick();
