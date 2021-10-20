@@ -59,7 +59,9 @@ const initializeState = (action, state) => {
     animationIndex,
     musicIndex,
     bgIndex,
-    volumeLevel: parseFloat(volumeLevel),
+    placedBetInQueue: !!upcomingBets.find(b => b.userId === userId),
+    isCashedOut: !!cashedOutBets.find(b => b.userId === userId),
+    volumeLevel: parseInt(volumeLevel),
   };
 };
 
@@ -227,6 +229,15 @@ const onEndEndgamePeriod = (action, state) => {
   };
 };
 
+function clearGuestData(action, state) {
+  return {
+    ...state,
+    placedBetInQueue: false,
+    isCashedOut: false,
+    userBet: null,
+  };
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case RosiGameTypes.INITIALIZE_STATE:
@@ -257,6 +268,8 @@ export default function (state = initialState, action) {
       return onMuteButtonClick(action, state);
     case RosiGameTypes.END_ENDGAME_PERIOD:
       return onEndEndgamePeriod(action, state);
+    case RosiGameTypes.CLEAR_GUEST_DATA:
+      return clearGuestData(action, state);
     default:
       return state;
   }
