@@ -176,7 +176,7 @@ const RosiGameAnimation = ({
 const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
-    isMute: state.rosiGame.volumeLevel === 0.0,
+    isMute: state.rosiGame.volumeLevel == 0,
     volumeLevel: state.rosiGame.volumeLevel,
     musicIndex: state.rosiGame.musicIndex,
     isSynced: state.rosiGame.timeStarted || state.rosiGame.nextGameAt,

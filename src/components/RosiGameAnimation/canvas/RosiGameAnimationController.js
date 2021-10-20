@@ -10,12 +10,13 @@ import { calcCrashFactorFromElapsedTime, isMobileRosiGame } from './utils';
 import CashedOutAnimation from './CashedOutAnimation';
 import PreparingRound from './PreparingRound';
 import { ROSI_GAME_INTERVALS } from 'constants/RosiGame';
+import { isString } from 'lodash/lang';
 
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
 
 class AudioController {
-  constructor(volume = 1, bgmIndex = 0) {
+  constructor(volume = 1.0, bgmIndex = 0) {
     Sound.sound.add(
       {
         bgm: {
@@ -52,13 +53,20 @@ class AudioController {
       }
     );
 
-    this.volume = volume;
+    this.volume = isString(volume) ? parseInt(volume) : volume;
     this.bgmIndex = bgmIndex;
     this.elapsed = 0;
   }
 
-  setVolume(volume = 1) {
-    this.volume = parseFloat(volume.toFixed(1));
+  setVolume(volume = 1.0) {
+    if (volume === 1 || volume === '1') {
+      this.volume = 1.0;
+    } else if (!volume) {
+      this.volume = 0.0;
+    } else {
+      this.volume = volume;
+    }
+
     Sound.sound.volume('bgm', this.volume);
     Sound.sound.volume('flying', this.volume);
   }
@@ -173,7 +181,7 @@ class RosiAnimationController {
     } catch (e) {
       console.error(e);
     }
-    this.audio = new AudioController(parseFloat(volumeLevel));
+    this.audio = new AudioController(1.0);
 
     this.audio.setBgmIndex(options.musicIndex);
 
