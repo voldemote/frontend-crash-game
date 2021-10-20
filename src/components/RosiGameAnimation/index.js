@@ -45,7 +45,11 @@ const RosiGameAnimation = ({
   muteButtonClick,
   isMute,
   isSynced,
+  isLosing,
+  volumeLevel,
+  musicIndex,
   animationIndex,
+  onInit,
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -58,10 +62,17 @@ const RosiGameAnimation = ({
 
   const [isPreparingRound, setIsPreparingRound] = useState(!gameStarted);
   const [isAnimationReady, setAnimationReady] = useState(false);
+  const [audio, setAudio] = useState(null);
 
   useEffect(() => {
     if (canvasRef.current) {
-      RosiGameAnimationController.init(canvasRef.current, animationIndex);
+      const { audio } = RosiGameAnimationController.init(canvasRef.current, {
+        animationIndex,
+        volumeLevel,
+        musicIndex,
+      });
+      setAudio(audio);
+      onInit(audio);
       RosiGameAnimationController.load(() => {
         setAnimationReady(true);
         if (isPreparingRound) {
@@ -78,8 +89,7 @@ const RosiGameAnimation = ({
 
     if (gameStarted) {
       setIsPreparingRound(false);
-      RosiGameAnimationController.start(gameStartedTime);
-      dispatch(RosiGameActions.playFlyingSound());
+      RosiGameAnimationController.start(gameStartedTime, musicIndex);
 
       if (cashedOut.length > 0) {
         for (const cashOut of cashedOut) {
@@ -91,8 +101,7 @@ const RosiGameAnimation = ({
     }
 
     if (!gameStarted && !isPreparingRound) {
-      RosiGameAnimationController.end();
-      dispatch(RosiGameActions.stopFlyingSound());
+      RosiGameAnimationController.end(isLosing);
       // leave some time for player to see crash value
       setTimeout(() => {
         RosiGameAnimationController.preparingRound.show(animationIndex);
@@ -146,7 +155,10 @@ const RosiGameAnimation = ({
           [styles.muteButton]: true,
           [styles.mute]: isMute,
         })}
-        onClick={muteButtonClick}
+        onClick={() => {
+          muteButtonClick();
+          audio.volume === 0.0 ? audio.setVolume(1.0) : audio.mute();
+        }}
       />
       <canvas
         className={classNames(
@@ -164,9 +176,12 @@ const RosiGameAnimation = ({
 const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
-    isMute: !state.rosiGame.volumeLevel,
+    isMute: state.rosiGame.volumeLevel == 0,
+    volumeLevel: state.rosiGame.volumeLevel,
+    musicIndex: state.rosiGame.musicIndex,
     isSynced: state.rosiGame.timeStarted || state.rosiGame.nextGameAt,
     animationIndex: state.rosiGame.animationIndex,
+    isLosing: state.rosiGame.userBet && !state.rosiGame.isCashedOut,
   };
 };
 
