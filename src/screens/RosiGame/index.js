@@ -32,7 +32,7 @@ const RosiGame = ({ showPopup, connected, userId }) => {
   const dispatch = useDispatch();
   const { lastCrashes, inGameBets, cashedOut, hasStarted, isEndgame } =
     useRosiData();
-  const isSmallDevice = useMediaQuery('(max-width:768px)');
+  const [audio, setAudio] = useState(null);
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [tabIndex, setTabIndex] = useState(0);
   const tabOptions = [
@@ -162,11 +162,22 @@ const RosiGame = ({ showPopup, connected, userId }) => {
           <Grid container spacing={1}>
             <Grid item xs={12} md={9}>
               <LastCrashes lastCrashes={lastCrashes} />
-              <GameAnimation inGameBets={inGameBets} />
+              <GameAnimation
+                inGameBets={inGameBets}
+                onInit={audio => setAudio(audio)}
+              />
             </Grid>
             <Grid item xs={12} md={3}>
               <div className={styles.placeContainer}>
-                <PlaceBet connected={connected} />
+                <PlaceBet
+                  connected={connected}
+                  onBet={() => {
+                    audio.playBetSound();
+                  }}
+                  onCashout={() => {
+                    audio.playWinSound();
+                  }}
+                />
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
             </Grid>
