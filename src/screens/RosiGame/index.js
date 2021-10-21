@@ -25,7 +25,7 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
-import ActivitiesTracker from '../../components/ActivitiesTracker';
+import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 
 const RosiGame = ({ showPopup, connected, userId }) => {
@@ -106,8 +106,7 @@ const RosiGame = ({ showPopup, connected, userId }) => {
           )}
         </TabOptions>
         <div className={styles.activityContainer}>
-          <ActivitiesTracker
-            showCategories={false}
+          <EventActivitiesTracker
             activitiesLimit={50}
             className={styles.activitiesTrackerGamesBlock}
             preselectedCategory={'elongame'}
