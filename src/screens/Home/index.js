@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect, useSelector } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
@@ -120,15 +121,20 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
   };
 
   const renderRosiBanner = () => {
+    let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
     return (
       <Link data-tracking-id="home-play-elon" to={Routes.rosiGame}>
         <div className={styles.banner}>
-          <div className={styles.title}>
-            Play the
-            <br />
-            Elon Game
-          </div>
-          <YellowButton className={styles.button}>Play now</YellowButton>
+          {matchMediaMobile && (
+            <>
+              <div className={styles.title}>
+                Play the
+                <br />
+                Elon Game
+              </div>
+              <YellowButton className={styles.button}>Play now</YellowButton>
+            </>
+          )}
         </div>
       </Link>
     );
