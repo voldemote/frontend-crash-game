@@ -92,6 +92,7 @@ const ActivitiesTracker = ({
   betId,
   userId,
   preselectedCategory,
+  cleanUpActivities,
 }) => {
   const messageListRef = useRef();
 
@@ -113,6 +114,8 @@ const ActivitiesTracker = ({
   useEffect(() => {
     if (isMount) {
       (async () => {
+        //make sure we have clear redux-persist initially
+        cleanUpActivities();
         let initialActivities = await callByParams({
           betId,
           userId,
@@ -134,6 +137,7 @@ const ActivitiesTracker = ({
   useEffect(() => {
     if (initialLoaded) {
       (async () => {
+        setActivitiesToDisplay([]);
         const initialActivities = await getNotificationEvents({
           limit: activitiesLimit || 10,
           category: selectedCategory,
@@ -174,7 +178,11 @@ const ActivitiesTracker = ({
       });
 
       setActivitiesToDisplay(stateData => {
-        return [...initialApiActivities, ...newFiltered];
+        if (stateData.length === 0) {
+          return [...initialApiActivities];
+        } else {
+          return [...stateData, ...newFiltered];
+        }
       });
     }
   }, [activities, initialApiActivities]);
@@ -326,6 +334,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addActivity: (type, activity) => {
       dispatch(NotificationActions.addActivity({ type, activity }));
+    },
+    cleanUpActivities: data => {
+      dispatch(NotificationActions.cleanUpActivities());
     },
   };
 };
