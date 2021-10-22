@@ -177,13 +177,11 @@ const ActivitiesTracker = ({
         return categoryEvents.indexOf(item.type) > -1;
       });
 
-      setActivitiesToDisplay(stateData => {
-        if (stateData.length === 0) {
-          return [...initialApiActivities];
-        } else {
-          return [...stateData, ...newFiltered];
-        }
-      });
+      if (activitiesToDisplay.length === 0) {
+        setActivitiesToDisplay(initialApiActivities);
+      } else {
+        setActivitiesToDisplay([...initialApiActivities, ...newFiltered]);
+      }
     }
   }, [activities, initialApiActivities]);
 
@@ -293,19 +291,23 @@ const ActivitiesTracker = ({
     );
   };
 
-  const messageListScrollToBottom = () => {
+  const messageListScrollToBottom = (behavior = 'smooth') => {
     if (messageListRef) {
       messageListRef.current.scrollTo({
         top: messageListRef.current.scrollHeight,
         left: 0,
-        behavior: 'smooth',
+        behavior: behavior,
       });
     }
   };
 
   useEffect(() => {
     if (initialLoaded) {
-      messageListScrollToBottom();
+      if (activities.length === 0) {
+        messageListScrollToBottom('instant');
+      } else {
+        messageListScrollToBottom();
+      }
     }
   }, [activitiesToDisplay, initialLoaded]);
 
