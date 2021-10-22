@@ -7,12 +7,12 @@ import LiveEventsScreenshotMobile from 'data/images/live-events-screenshot-mobil
 import styles from './styles.module.scss';
 
 const LiveEvents = () => {
-  const showUpcoming = process.env.SHOW_UPCOMING_FEATURES || false;
+  const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
   const [categories, setCategories] = useState(EVENT_CATEGORIES);
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
-      {!showUpcoming ? (
+      {showUpcoming === 'false' ? (
         <div className={styles.placeholderLiveEventsScreenshot}>
           <div className={styles.inactivePlaceholder}>Coming Soon</div>
           <img
