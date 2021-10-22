@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -23,6 +23,18 @@ spec:
           requests:
             cpu: 400m
             memory: 1024Mi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 3
         name: frontend
         envFrom:
         - configMapRef:
