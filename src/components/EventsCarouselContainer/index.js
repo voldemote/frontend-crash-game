@@ -28,7 +28,7 @@ const EventsCarouselContainer = ({
   bookmarkEventCancel,
   showPopup,
 }) => {
-  const showUpcoming = process.env.SHOW_UPCOMING_FEATURES || false;
+  const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
   const location = useLocation();
   const [page, setPage] = useState(1);
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -241,7 +241,7 @@ const EventsCarouselContainer = ({
       nextArrowInactive={allLoaded}
       onNext={nextPage}
       onPrevious={previousPage}
-      withComingSoonBanner={!showUpcoming}
+      withComingSoonBanner={showUpcoming === 'false'}
     >
       {eventType === 'streamed' && currentEvents?.length > 0
         ? renderLiveEvents()
