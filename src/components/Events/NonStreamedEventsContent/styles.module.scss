@@ -1,0 +1,199 @@
+@import '../../../styles/all';
+
+.title {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.02;
+  letter-spacing: 0.75px;
+  color: white;
+
+  margin: 32px auto 0;
+  width: 80%;
+
+  .howtoLink {
+    cursor: pointer;
+    font-size: 11px;
+    font-family: $fontRegular;
+    text-decoration: underline;
+    color: $colorYellow;
+
+    @media (max-width: $screen-xs) {
+      display: none;
+      margin: 0;
+      width: 100%;
+      padding: 0 15px 15px;
+    }
+  }
+
+  .questionIcon {
+    cursor: pointer;
+    display: none;
+
+    svg {
+      g,
+      path,
+      circle {
+        fill: $colorYellow;
+      }
+    }
+
+    @media (max-width: $screen-xs) {
+      display: block;
+    }
+  }
+
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    width: 100%;
+    padding: 0 15px 15px;
+    align-items: center;
+  }
+}
+
+.header {
+  color: white;
+  width: 80%;
+  margin: 32px auto 0;
+
+  @media (min-width: $screen-lg) {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+.categories {
+}
+
+.main {
+  color: white;
+  width: 80%;
+  margin: 32px auto 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @media (max-width: $screen-sm) {
+    margin: 0;
+    padding: 0 15px;
+    width: 100%;
+  }
+
+  @media (max-width: $screen-xs) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  > * {
+    margin-bottom: 10px;
+  }
+
+  > a {
+    text-decoration: none;
+
+    @media (max-width: $screen-xs) {
+      width: 100%;
+    }
+  }
+}
+
+.nonStreamed {
+  color: white;
+  width: 100%;
+  margin: 32px 0 0 0;
+  column-count: 1;
+  column-gap: 60px;
+  align-items: center;
+
+  @media screen and (min-width: $screen-sm) {
+    column-count: 2;
+    column-gap: 20px;
+    padding: 0;
+  }
+  @media screen and (min-width: $screen-md) {
+    column-count: 3;
+    column-gap: 60px;
+  }
+
+  > * {
+    display: block;
+    break-inside: avoid-column;
+  }
+}
+
+.streamedContainer {
+  max-width: 1300px;
+  width: 100%;
+}
+
+.newEventLink {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: $colorWhite;
+  cursor: pointer;
+  width: 100%;
+  max-width: 340px;
+  height: 150px;
+  margin-right: 20px;
+  border: 1px solid $colorWhite30;
+  background-color: rgba(172, 196, 255, 0.12);
+  border-radius: 12px;
+  margin-bottom: 20px;
+
+  @media screen and (min-width: $screen-md) {
+    margin-bottom: 60px;
+  }
+
+  span {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0.5;
+  }
+
+  &:hover span {
+    opacity: 0.8;
+  }
+
+  .newEventIcon {
+    margin-bottom: 10px;
+  }
+
+  svg {
+    g,
+    path,
+    circle {
+      stroke: $colorWhite;
+      fill: transparent;
+    }
+
+    // special handling for add-yellow icon
+    path {
+      display: none;
+
+      &:first-child {
+        display: block;
+      }
+    }
+  }
+}
+
+.betLinkWrapper {
+  text-decoration: none;
+  margin-bottom: 20px;
+  @media screen and (min-width: $screen-md) {
+    margin-bottom: 60px;
+  }
+}
