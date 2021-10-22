@@ -121,20 +121,15 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
   };
 
   const renderRosiBanner = () => {
-    let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
     return (
       <Link data-tracking-id="home-play-elon" to={Routes.rosiGame}>
         <div className={styles.banner}>
-          {matchMediaMobile && (
-            <>
-              <div className={styles.title}>
-                Play the
-                <br />
-                Elon Game
-              </div>
-              <YellowButton className={styles.button}>Play now</YellowButton>
-            </>
-          )}
+          <div className={styles.title}>
+            Play the
+            <br />
+            Elon Game
+          </div>
+          <YellowButton className={styles.button}>Play now</YellowButton>
         </div>
       </Link>
     );
