@@ -74,8 +74,8 @@
   .placeContainer {
     display: flex;
     flex-direction: column;
-    height: 582px;
-    padding-left: 10px;
+    height: 596px;
+    padding-left: 6px;
     @media (max-width: $screen-xs) {
       padding-left: 0px;
       height: 100%;
