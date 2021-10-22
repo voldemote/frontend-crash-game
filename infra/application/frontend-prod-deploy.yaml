@@ -27,14 +27,14 @@ spec:
           httpGet:
             path: /
             port: 80
-            initialDelaySeconds: 2
-            periodSeconds: 10
+          initialDelaySeconds: 2
+          periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /
             port: 80
-            initialDelaySeconds: 2
-            periodSeconds: 3
+          initialDelaySeconds: 2
+          periodSeconds: 3
         name: frontend
         envFrom:
         - configMapRef:
