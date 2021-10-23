@@ -34,9 +34,11 @@ const RosiGame = ({ showPopup, connected, userId }) => {
     useRosiData();
   const [audio, setAudio] = useState(null);
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
-  const [tabIndex, setTabIndex] = useState(0);
-  const tabOptions = [
-    { name: 'ALL', index: 0 },
+  const [chatTabIndex, setChatTabIndex] = useState(0);
+  const chatTabOptions = [{ name: 'CHAT', index: 0 }];
+  const [activityTabIndex, setActivityTabIndex] = useState(0);
+  const activityTabOptions = [
+    { name: 'ACTIVITIES', index: 0 },
     { name: 'HIGH WINS', index: 1 },
     { name: 'LUCKY WINS', index: 2 },
   ];
@@ -84,22 +86,26 @@ const RosiGame = ({ showPopup, connected, userId }) => {
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
-  const handleSwitchTab = option => {
-    setTabIndex(option.index);
+  const handleChatSwitchTab = option => {
+    setChatTabIndex(option.index);
+  };
+
+  const handleActivitySwitchTab = option => {
+    setActivityTabIndex(option.index);
   };
 
   const renderActivities = () => (
-    <Grid item xs={12} md={12}>
+    <Grid item xs={12} md={6}>
       <div className={styles.activityWrapper}>
-        <TabOptions options={tabOptions} className={styles.tabLayout}>
+        <TabOptions options={activityTabOptions} className={styles.tabLayout}>
           {option => (
             <div
               className={
-                option.index === tabIndex
+                option.index === activityTabIndex
                   ? styles.tabItemSelected
                   : styles.tabItem
               }
-              onClick={() => handleSwitchTab(option)}
+              onClick={() => handleActivitySwitchTab(option)}
             >
               {option.name}
             </div>
@@ -112,6 +118,32 @@ const RosiGame = ({ showPopup, connected, userId }) => {
             preselectedCategory={'elongame'}
           />
         </div>
+      </div>
+    </Grid>
+  );
+
+  const renderChat = () => (
+    <Grid item xs={12} md={6}>
+      <div className={styles.chatWrapper}>
+        <TabOptions options={chatTabOptions} className={styles.tabLayout}>
+          {option => (
+            <div
+              className={
+                option.index === chatTabIndex
+                  ? styles.tabItemSelected
+                  : styles.tabItem
+              }
+              onClick={() => handleChatSwitchTab(option)}
+            >
+              {option.name}
+            </div>
+          )}
+        </TabOptions>
+        <Chat
+          roomId={ROSI_GAME_EVENT_ID}
+          className={styles.chatContainer}
+          chatMessageType={ChatMessageType.game}
+        />
       </div>
     </Grid>
   );
@@ -181,17 +213,13 @@ const RosiGame = ({ showPopup, connected, userId }) => {
               </div>
             </Grid>
           </Grid>
+          {isMiddleOrLargeDevice ? null : renderBets()}
           {isMiddleOrLargeDevice ? (
-            <div className={styles.chatWrapper}>
-              <Chat
-                roomId={ROSI_GAME_EVENT_ID}
-                className={styles.chatContainer}
-                chatMessageType={ChatMessageType.game}
-              />
+            <div className={styles.bottomWrapper}>
+              {renderChat()}
+              {renderActivities()}
             </div>
           ) : null}
-          {isMiddleOrLargeDevice ? renderActivities() : renderBets()}
-
           <ContentFooter className={styles.betFooter} />
         </div>
       </div>
