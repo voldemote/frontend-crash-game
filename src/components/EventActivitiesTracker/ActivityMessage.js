@@ -76,7 +76,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
               </div>
             </Grid>
             <Grid item xs>
-              <div className={styles.messageCenter}>
+              <div className={styles.messageRight}>
                 {stakedAmount} {TOKEN_NAME}
                 <img src={medalCoin} alt="medal" />
               </div>
