@@ -143,8 +143,8 @@ const RosiGameAnimation = ({
         )}
         {!gameStarted && !!lastCrashValue && (
           <>
-            <span>{Math.round(lastCrashValue * 100)}</span>
-            <span>%</span>
+            <span>{lastCrashValue.toFixed(2)}</span>
+            <span>x</span>
           </>
         )}
       </div>
