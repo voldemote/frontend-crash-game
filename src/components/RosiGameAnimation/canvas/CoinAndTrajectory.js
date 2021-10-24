@@ -197,7 +197,6 @@ export class CoinAnimation {
       const x = time * 0.8;
 
       const y = (calcCrashFactorFromElapsedTime(time) - 1) * 100;
-      // const y = Math.pow(time * 0.01, time * 0.000015) + time * time * 0.001; // TODO: normalize factors (sync with game's multiplier)
       return { x, y };
     };
 
@@ -209,9 +208,7 @@ export class CoinAnimation {
     this.getScaleYByGlobalY = y => {
       const dY = this.boundary.y0 - this.boundary.y1;
       let scaleY = 1;
-      // if (y > 1.5 * 100) {
-      //   scaleY = y - 1.6
-      // }
+
       if (y * scaleY >= dY) {
         scaleY = dY / y;
       }
@@ -221,16 +218,9 @@ export class CoinAnimation {
     this.getRealPosition = gPos => {
       const { x, y } = gPos;
       const dX = this.boundary.x1 - this.boundary.x0;
-      // const dY = this.boundary.y0 - this.boundary.y1;
       const scaleX = x > dX ? dX / x : 2 - x / dX;
 
       const scaleY = this.getScaleYByGlobalY(y);
-      // let scaleY = scaleX * 0.005;
-
-      // if (y * scaleY > dY) {
-      //   scaleY = dY / y;
-      // }
-
       return this.getRealPositionByScale(gPos, { scaleX, scaleY });
     };
 
