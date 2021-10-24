@@ -56,7 +56,7 @@ export class CoinAnimation {
 
     this.boundary = {
       x0: 0,
-      x1: calcPercent(this.app.renderer.width, isMobileRosiGame ? 85 : 95),
+      x1: calcPercent(this.app.renderer.width, isMobileRosiGame ? 86 : 94),
       y0: calcPercent(this.app.renderer.height, 74),
       y1: calcPercent(this.app.renderer.height, 25),
     };
