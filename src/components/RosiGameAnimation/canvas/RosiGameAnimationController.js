@@ -287,6 +287,7 @@ class RosiAnimationController {
   end(isLosing) {
     const coinPosition = this.coinAndTrajectory.getCoinExplosionPosition();
     this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
+    this.cashedOut.crashed = true;
     this.coinAndTrajectory.endCoinFlyingAnimation();
     isLosing ? this.audio.playLoseSound() : this.audio.playGameOverSound();
     this.audio.stopBgm();
