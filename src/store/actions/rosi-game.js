@@ -19,6 +19,7 @@ export const RosiGameTypes = {
   START_ENDGAME_PERIOD: 'RosiGame/START_ENDGAME_PERIOD',
   END_ENDGAME_PERIOD: 'RosiGame/END_ENDGAME_PERIOD',
   CLEAR_GUEST_DATA: 'RosiGame/CLEAR_GUEST_DATA',
+  CANCEL_BET: 'RosiGame/CANCEL_BET',
 };
 
 const initializeState = payload => ({
@@ -111,6 +112,11 @@ const clearGuestData = payload => ({
   payload,
 });
 
+const cancelBet = payload => ({
+  type: RosiGameTypes.CANCEL_BET,
+  payload,
+});
+
 export const RosiGameActions = {
   initializeState,
   setHasStarted,
@@ -131,4 +137,5 @@ export const RosiGameActions = {
   startEndgamePeriod,
   endEndgamePeriod,
   clearGuestData,
+  cancelBet,
 };

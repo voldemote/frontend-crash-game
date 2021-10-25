@@ -254,6 +254,23 @@ function clearGuestData(action, state) {
     placedBetInQueue: false,
     isCashedOut: false,
     userBet: null,
+    betQueue: state.betQueue.filter(bet => bet?.userId !== 'Guest'),
+    inGameBets: state.inGameBets.filter(bet => bet?.userId !== 'Guest'),
+  };
+}
+
+function cancelBet(action, state) {
+  return {
+    ...state,
+    placedBetInQueue: false,
+    isCashedOut: false,
+    userBet: null,
+    betQueue: state.betQueue.filter(
+      bet => bet?.userId !== action.payload.userId
+    ),
+    inGameBets: state.inGameBets.filter(
+      bet => bet?.userId !== action.payload.userId
+    ),
   };
 }
 
@@ -291,6 +308,8 @@ export default function (state = initialState, action) {
       return onStartEndgamePeriod(action, state);
     case RosiGameTypes.CLEAR_GUEST_DATA:
       return clearGuestData(action, state);
+    case RosiGameTypes.CANCEL_BET:
+      return cancelBet(action, state);
     default:
       return state;
   }
