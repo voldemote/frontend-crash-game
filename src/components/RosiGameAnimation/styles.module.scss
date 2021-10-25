@@ -113,6 +113,16 @@
 .audioControls{
   position: absolute;
   z-index: 999;
-  right: 56px;
+  left: 20px;
   top: 10px;
+  svg{
+    fill: #f2ff53 !important;
+  }
+  @media (max-width: $screen-xs-max) {
+
+  }
+  @media screen and (max-width: 768px){
+    top: 60px;
+    left: 5px !important;
+  }
 }
