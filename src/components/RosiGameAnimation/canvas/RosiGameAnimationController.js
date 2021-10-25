@@ -17,6 +17,12 @@ PIXI.utils.skipHello();
 
 class AudioController {
   constructor(volume = 1.0, bgmIndex = 0) {
+    this.errors = [];
+    this.volume = isString(volume) ? parseInt(volume) : volume;
+    this.bgmIndex = bgmIndex;
+    this.elapsed = 0;
+    this.ready = true;
+
     Sound.sound.add(
       {
         bgm: {
@@ -46,29 +52,30 @@ class AudioController {
       },
       {
         loaded: (err, data) => {
-          console.log(err);
-          console.log('sounds loaded', data);
+          if (err) {
+            this.errors = [...this.errors, err];
+          }
         },
         preload: true,
       }
     );
-
-    this.volume = isString(volume) ? parseInt(volume) : volume;
-    this.bgmIndex = bgmIndex;
-    this.elapsed = 0;
   }
 
   setVolume(volume = 1.0) {
-    if (volume === 1 || volume === '1') {
-      this.volume = 1.0;
-    } else if (!volume) {
-      this.volume = 0.0;
-    } else {
-      this.volume = volume;
-    }
+    try {
+      if (volume === 1 || volume === '1') {
+        this.volume = 1.0;
+      } else if (!volume) {
+        this.volume = 0.0;
+      } else {
+        this.volume = volume;
+      }
 
-    Sound.sound.volume('bgm', this.volume);
-    Sound.sound.volume('flying', this.volume);
+      Sound.sound.volume('bgm', this.volume);
+      Sound.sound.volume('flying', this.volume);
+    } catch (e) {
+      console.error('Audio output error');
+    }
   }
 
   mute() {
@@ -84,10 +91,16 @@ class AudioController {
   }
 
   playSound(name, loop = false) {
-    Sound.sound.volume(name, this.volume);
-    Sound.sound.play(name, {
-      loop: loop,
-    });
+    try {
+      if (this.ready) {
+        Sound.sound.volume(name, this.volume);
+        Sound.sound.play(name, {
+          loop: loop,
+        });
+      }
+    } catch (e) {
+      console.error('Audio output error');
+    }
   }
 
   stopSound(name) {
@@ -274,6 +287,7 @@ class RosiAnimationController {
   end(isLosing) {
     const coinPosition = this.coinAndTrajectory.getCoinExplosionPosition();
     this.coinExplosion.startAnimation(coinPosition.x, coinPosition.y);
+    this.cashedOut.crashed = true;
     this.coinAndTrajectory.endCoinFlyingAnimation();
     isLosing ? this.audio.playLoseSound() : this.audio.playGameOverSound();
     this.audio.stopBgm();
