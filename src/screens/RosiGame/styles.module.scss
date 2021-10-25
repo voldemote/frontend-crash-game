@@ -10,7 +10,7 @@
   }
 
   @media (min-width: $screen-lg) {
-    max-width: 1440px;
+    max-width: 1300px;
   }
 }
 
@@ -74,19 +74,19 @@
   }
   .mainContainer {
     display: flex;
-    @media (max-width: $screen-xs) {
+    @media (max-width: $screen-md) {
       flex-direction: column;
     }
     .leftContainer {      
       width: calc(100% - 340px);
-      @media (max-width: $screen-xs) {
+      @media (max-width: $screen-md) {
         width: 100%;
       }
     }
     .rightContainer {
       width: 340px;
       padding-left: 14px;
-      @media (max-width: $screen-xs) {
+      @media (max-width: $screen-md) {
         padding-left: 0px;
         width: 100%;
         margin-top: 7px;
@@ -95,7 +95,7 @@
         display: flex;
         flex-direction: column;
         height: 596px;        
-        @media (max-width: $screen-xs) {          
+        @media (max-width: $screen-md) {          
           height: 100%;
         }
       }

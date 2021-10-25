@@ -8,7 +8,7 @@
   padding: 25px 20px 20px 20px;  
   margin-bottom: 14px;  
 
-  @media screen and (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-md) {
     margin-top: 7px;
     padding: 5px 20px;
   }
@@ -27,7 +27,7 @@
     color: $colorRed;
   }
 
-  @media (max-width: $screen-xs) {
+  @media (max-width: $screen-md) {
     margin-top: 0;
   }
 }
