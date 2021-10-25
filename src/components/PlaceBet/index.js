@@ -53,9 +53,8 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const [canBet, setCanBet] = useState(true);
   const gameOffline = useSelector(selectGameOffline);
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
-  const numberOfDemoPlays = Number(
-    localStorage.getItem('numberOfElonGameDemoPlays')
-  );
+  const numberOfDemoPlays =
+    Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
 
   useEffect(() => {
     const handler = setTimeout(() => {
