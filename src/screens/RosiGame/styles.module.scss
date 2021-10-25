@@ -78,13 +78,13 @@
       flex-direction: column;
     }
     .leftContainer {      
-      width: calc(100% - 340px);
+      width: calc(100% - 370px);
       @media (max-width: $screen-md) {
         width: 100%;
       }
     }
     .rightContainer {
-      width: 340px;
+      width: 370px;
       padding-left: 14px;
       @media (max-width: $screen-md) {
         padding-left: 0px;
