@@ -112,11 +112,15 @@ const RosiGame = ({ showPopup, connected, userId }) => {
           )}
         </TabOptions>
         <div className={styles.activityContainer}>
-          <EventActivitiesTracker
-            activitiesLimit={50}
-            className={styles.activitiesTrackerGamesBlock}
-            preselectedCategory={'elongame'}
-          />
+          {activityTabIndex == 0 ? (
+            <EventActivitiesTracker
+              activitiesLimit={50}
+              className={styles.activitiesTrackerGamesBlock}
+              preselectedCategory={'elongame'}
+            />
+          ) : (
+            <div className={styles.inactivePlaceholder}>Coming soon</div>
+          )}
         </div>
       </div>
     </Grid>
