@@ -53,6 +53,9 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const [canBet, setCanBet] = useState(true);
   const gameOffline = useSelector(selectGameOffline);
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
+  const numberOfDemoPlays = Number(
+    localStorage.getItem('numberOfElonGameDemoPlays')
+  );
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -143,6 +146,11 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   };
 
   const placeGuestBet = () => {
+    if (numberOfDemoPlays === 3) {
+      showLoginPopup();
+      return;
+    }
+
     if (userUnableToBet) return;
     onBet();
     const payload = {
@@ -153,6 +161,10 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     };
     dispatch(RosiGameActions.setUserBet(payload));
     dispatch(RosiGameActions.addInGameBet(payload));
+
+    if (numberOfDemoPlays < 3) {
+      localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
+    }
   };
 
   const cashOut = () => {
