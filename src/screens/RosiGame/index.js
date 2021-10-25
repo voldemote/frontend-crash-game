@@ -194,15 +194,15 @@ const RosiGame = ({ showPopup, connected, userId }) => {
             </span>
           </div>
 
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={9}>
+          <div className={styles.mainContainer}>
+            <div className={styles.leftContainer}>
               <LastCrashes lastCrashes={lastCrashes} />
               <GameAnimation
                 inGameBets={inGameBets}
                 onInit={audio => setAudio(audio)}
               />
-            </Grid>
-            <Grid item xs={12} md={3}>
+            </div>
+            <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
                 <PlaceBet
                   connected={connected}
@@ -215,8 +215,8 @@ const RosiGame = ({ showPopup, connected, userId }) => {
                 />
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
           {isMiddleOrLargeDevice ? null : renderBets()}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
