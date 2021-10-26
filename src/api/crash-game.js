@@ -1,7 +1,10 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { API_CASH_OUT } from '../constants/Api';
+import {
+  API_CASH_OUT,
+  CRASH_GAME_API_GET_GAME_DETAILS,
+} from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -27,7 +30,6 @@ const createTrade = payload => {
     console.log('[API Error] called: createTrade', error);
     throw error;
   });
-
 };
 
 const getCurrentGameInfo = () => {
@@ -43,4 +45,19 @@ const cashOut = () => {
   });
 };
 
-export { Api, setToken, createTrade, getCurrentGameInfo, cashOut };
+const getGameDetailById = gameId => {
+  return Api.get(
+    ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(':gameId', gameId)
+  ).catch(error => {
+    console.log('[API Error] called: getGameDetailById', error);
+  });
+};
+
+export {
+  Api,
+  setToken,
+  createTrade,
+  getCurrentGameInfo,
+  cashOut,
+  getGameDetailById,
+};

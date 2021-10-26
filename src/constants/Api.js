@@ -76,3 +76,4 @@ export const API_AUTH_FORGOT_PASSWORD = 'api/auth/forgot-password';
 export const API_AUTH_RESET_PASSWORD = 'api/auth/reset-password';
 //3rd parties
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
+export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/matches/:gameId';

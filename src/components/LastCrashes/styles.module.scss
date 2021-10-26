@@ -35,13 +35,19 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: linear-gradient(270deg, #1f1d38 0%, rgba(9, 9, 121, 0) 50%);
+    background: linear-gradient(270deg, #1f1d38 0%, rgba(9, 9, 121, 0) 40%);
     z-index: 2;
+    pointer-events: none;
   }
 
   .crash {
     color: $colorYellow;
-    margin-right: 50px;
+    margin-right: 16px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
 
     @media screen and (max-width: $screen-sm) {
       margin-right: 30px;

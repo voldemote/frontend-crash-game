@@ -40,6 +40,7 @@ import DisclaimerPopupView from 'components/DisclaimerPopupView';
 import UsernamePopup from 'components/UsernamePopup';
 import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
+import LastGamesDetailPopup from '../LastGamesDetailPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -151,7 +152,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         );
       case PopupTheme.reportEvent:
         return <ReportEventPopup />;
-
+      case PopupTheme.lastGamesDetail:
+        return <LastGamesDetailPopup data={options?.data} />;
       case PopupTheme.loginRegister:
         return <JoinPopup />;
 
