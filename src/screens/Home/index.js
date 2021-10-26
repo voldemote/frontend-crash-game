@@ -76,7 +76,14 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
 
         <div className={styles.slogan}>Clear, Social &amp; Fair</div>
 
-        <SocialIcons className={styles.socialIcons} />
+        <SocialIcons
+          className={styles.socialIcons}
+          dataTrackingIds={{
+            telegram: 'home-telegram',
+            instagram: 'home-instagram',
+            twitter: 'home-twitter',
+          }}
+        />
       </div>
     );
   };
