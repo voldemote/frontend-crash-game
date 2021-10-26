@@ -246,7 +246,7 @@ export class CoinAnimation {
     this.fireworks = new PIXI.AnimatedSprite(
       Object.values(fireworksSpriteSheet.textures)
     );
-    this.fireworks.scale.set(isMobileRosiGame ? 1.2 : 0.5);
+    this.fireworks.scale.set(isMobileRosiGame ? 0.6 : 1.2);
     this.fireworks.anchor.set(0.5);
     this.fireworks.loop = false;
     this.fireworks.x = this.app.renderer.width / 2;
