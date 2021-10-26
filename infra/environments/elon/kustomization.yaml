@@ -3,14 +3,16 @@ kind: Kustomization
 resources:
 - ../../application
 
-namespace: staging
+namespace: elon
 commonLabels:
-  environment: staging
+  environment: elon
+
 
 configMapGenerator:
   - name: frontend-config
     behavior: merge
     envs:
       - environment
+    
 patches:
-- priorityPatch.yaml
+  - ingressPatch.yaml

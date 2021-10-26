@@ -72,13 +72,22 @@ const TokenNumberInput = ({
           <span
             className={styles.button}
             onClick={() => onBetAmountChanged(0.5)}
+            data-tracking-id="nonstreamed-event-input-field-half"
           >
             ½
           </span>
-          <span className={styles.button} onClick={() => onBetAmountChanged(2)}>
+          <span
+            className={styles.button}
+            onClick={() => onBetAmountChanged(2)}
+            data-tracking-id="nonstreamed-event-input-field-double"
+          >
             2x
           </span>
-          <span className={styles.button} onClick={() => onBetAmountMax()}>
+          <span
+            className={styles.button}
+            onClick={() => onBetAmountMax()}
+            data-tracking-id="nonstreamed-event-input-field-allin"
+          >
             Max
           </span>
         </div>
@@ -87,13 +96,13 @@ const TokenNumberInput = ({
         className={styles.tokenNumberErrorHint}
         errorText={errorText}
       />
-      <TokenSlider
+      {/* <TokenSlider
         value={Number(value)}
         setValue={setValue}
         maxValue={maxValue}
         minValue={minValue}
         decimalPlaces={decimalPlaces}
-      />
+      /> */}
     </>
   );
 };
