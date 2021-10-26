@@ -80,6 +80,10 @@ const BetCard = ({
       <div className={classNames(styles.betCard, eventCardClass)}>
         <div className={styles.picture} style={getEventCardStyle()} />
         <div className={styles.header}>
+          <div
+            className={classNames([styles.categorySticker])}
+            style={getStickerStyle(category)}
+          />
           <span className={styles.section}>{category}</span>
 
           <div className={styles.special}>
@@ -100,11 +104,6 @@ const BetCard = ({
           </div>
         </div>
         <div className={styles.content}>
-          <div
-            className={classNames([styles.categorySticker])}
-            style={getStickerStyle(category)}
-          />
-
           <div className={styles.titleContainer} title={title}>
             <span className={styles.title}>{title}</span>
           </div>

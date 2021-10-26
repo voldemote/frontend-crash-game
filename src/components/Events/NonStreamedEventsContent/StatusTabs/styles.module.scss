@@ -29,7 +29,7 @@
 
   .tabButtonActive {
     color: $colorWhite;
-    font-family: $fontMedium;
+    font-weight: 900;
 
     &:after {
       content: '';
@@ -44,7 +44,7 @@
 
 .suggestEventButton {
   position: absolute;
-  bottom: calc(-200%);
+  bottom: -70px;
   > button {
     margin: 0;
   }

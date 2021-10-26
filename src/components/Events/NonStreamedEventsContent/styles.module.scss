@@ -112,29 +112,34 @@
   color: white;
   width: 100%;
   margin: 32px 0 0 0;
-  column-count: 1;
-  column-gap: 60px;
-  align-items: center;
+  grid-gap: 20px;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+
+  .betLinkWrapper {
+    display: block;
+    flex-basis: 100%;
+    text-decoration: none;
+  }
 
   @media screen and (min-width: $screen-sm) {
-    column-count: 2;
-    column-gap: 20px;
     padding: 0;
+    .betLinkWrapper {
+      flex-basis: calc(50% - 10px);
+    }
   }
   @media screen and (min-width: $screen-md) {
-    column-count: 3;
-    column-gap: 60px;
+    grid-gap: 60px;
+    .betLinkWrapper {
+      flex-basis: calc(33.33% - 40px);
+    }
   }
-
-  > * {
-    display: block;
-    break-inside: avoid-column;
+  @media screen and (min-width: $screen-xl) {
+    .betLinkWrapper {
+      flex: 330px 0 1;
+    }
   }
-}
-
-.streamedContainer {
-  max-width: 1300px;
-  width: 100%;
 }
 
 .newEventLink {
@@ -187,13 +192,5 @@
         display: block;
       }
     }
-  }
-}
-
-.betLinkWrapper {
-  text-decoration: none;
-  margin-bottom: 20px;
-  @media screen and (min-width: $screen-md) {
-    margin-bottom: 60px;
   }
 }
