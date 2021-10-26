@@ -13,6 +13,7 @@ const SocialIcons = ({ className }) => {
         href="https://t.me/joinchat/gLi7w6CeHlpiNThi"
         target="_blank"
         rel="noreferrer"
+        data-tracking-id="home-telegram"
       >
         <div className={styles.iconWrapper}>
           <SocialFollowerBadge className={styles.badge} followers="90K" />
@@ -24,6 +25,7 @@ const SocialIcons = ({ className }) => {
         href="https://instagram.com/wallfair.io"
         target="_blank"
         rel="noreferrer"
+        data-tracking-id="home-instagram"
       >
         <div className={styles.iconWrapper}>
           <SocialFollowerBadge className={styles.badge} followers="1,6K" />
@@ -35,6 +37,7 @@ const SocialIcons = ({ className }) => {
         href="https://twitter.com/joinwallfair"
         target="_blank"
         rel="noreferrer"
+        data-tracking-id="home-twitter"
       >
         <div className={styles.iconWrapper}>
           <SocialFollowerBadge className={styles.badge} followers="60K" />
