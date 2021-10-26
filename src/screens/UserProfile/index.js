@@ -170,7 +170,7 @@ const UserProfile = () => {
             <div className={styles.userInfo}>
               <div>
                 <div className={styles.profileTitle}>
-                  <h2>{user?.userName}</h2>
+                  <h2>{user?.username}</h2>
                 </div>
                 <div className={styles.aboutSection}>
                   <h3>About</h3>
