@@ -238,6 +238,22 @@ export class CoinAnimation {
         scaleY,
       };
     };
+
+    /* fireworks */
+
+    const fireworksSpriteSheet =
+      this.app.loader.resources['fireworks'].spritesheet;
+    this.fireworks = new PIXI.AnimatedSprite(
+      Object.values(fireworksSpriteSheet.textures)
+    );
+    this.fireworks.scale.set(1.2);
+    this.fireworks.anchor.set(0.5);
+    this.fireworks.loop = false;
+    this.fireworks.x = this.app.renderer.width / 2;
+    this.fireworks.y = this.app.renderer.width / 3;
+    this.fireworks.animationSpeed = 0.25;
+
+    this.container.addChild(this.fireworks);
   }
 
   getCurrentElonFrame() {
