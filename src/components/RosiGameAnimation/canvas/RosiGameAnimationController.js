@@ -170,7 +170,6 @@ function loadAssets(loader) {
     .add('particle', constructPath('particle.png'))
     .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
     .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
-    .add('fireworks', constructPath('fireworks.json'))
     .add(
       'preparing-round-anim-car',
       constructPath('preparing-round-anim-car.json')
@@ -307,9 +306,6 @@ class RosiAnimationController {
     const point = this.coinAndTrajectory.getCoinCrashPosition();
     const elapsed = Date.now() - this.gameStartTime;
     this.cashedOut.animate(point.x, data.amount, data.crashFactor, elapsed);
-    if (!this.coinAndTrajectory.fireworks.playing) {
-      this.coinAndTrajectory.fireworks.gotoAndPlay(0);
-    }
   }
 }
 
