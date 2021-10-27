@@ -93,12 +93,16 @@ const BetCard = ({
               <div className={styles.star} onClick={onBookmark} />
             )}
 
-            {eventEnd && (
+            {eventEnd && eventEnd < new Date() ? (
               <div className={styles.timer}>
                 <span>
                   {timeLeft?.days || 0}d {timeLeft?.hours || 0}h{' '}
                   {timeLeft?.minutes || 0}m
                 </span>
+              </div>
+            ) : (
+              <div className={styles.timer}>
+                <span>Ended</span>
               </div>
             )}
           </div>
