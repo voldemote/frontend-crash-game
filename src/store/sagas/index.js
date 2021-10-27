@@ -16,8 +16,12 @@ import { REHYDRATE } from 'redux-persist';
 import { TransactionTypes } from '../actions/transaction';
 import { UserTypes } from '../actions/user';
 import { AlertTypes } from '../actions/alert';
-import { ChatTypes } from '../actions/chat';
-import { WebsocketsTypes, WebsocketsActions } from '../actions/websockets';
+import { ChatActions, ChatTypes } from '../actions/chat';
+import {
+  WebsocketsTypes,
+  WebsocketsActions,
+  UserMessageRoomId,
+} from '../actions/websockets';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { LeaderboardTypes } from '../actions/leaderboard';
 import { RosiGameTypes } from '../actions/rosi-game';
@@ -132,6 +136,7 @@ const root = function* () {
     takeEvery([UserTypes.FETCH_SUCCEEDED], UserSagas.fetchSucceeded),
     takeLatest([UserTypes.UPDATE_PREFERENCES], UserSagas.updatePreferences),
     takeEvery([ChatTypes.ADD_MESSAGE], ChatSagas.addMessage),
+    takeEvery([ChatTypes.SET_MESSAGE_READ], ChatSagas.setMessageRead),
     takeEvery([ChatTypes.FETCH_BY_ROOM], ChatSagas.fetchByRoom),
     takeLatest([WebsocketsTypes.INIT], WebsocketsSagas.init),
     takeLatest([WebsocketsTypes.CONNECTED], WebsocketsSagas.connected),
@@ -186,13 +191,15 @@ const preLoading = function* () {
   yield put(WebsocketsActions.init());
 
   const userId = yield select(state => state.authentication.userId);
+
   if (userId) {
     yield put(
       WebsocketsActions.joinRoom({
         userId,
-        roomId: 'undefinedRoom',
+        roomId: UserMessageRoomId,
       })
     );
+    yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
   }
 };
 
