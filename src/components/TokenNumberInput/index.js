@@ -14,6 +14,7 @@ const TokenNumberInput = ({
   currency,
   errorText,
   className,
+  dataTrackingIds,
   ...props
 }) => {
   const onChange = event => {
@@ -72,13 +73,22 @@ const TokenNumberInput = ({
           <span
             className={styles.button}
             onClick={() => onBetAmountChanged(0.5)}
+            data-tracking-id={dataTrackingIds.inputFieldHalf}
           >
             ½
           </span>
-          <span className={styles.button} onClick={() => onBetAmountChanged(2)}>
+          <span
+            className={styles.button}
+            onClick={() => onBetAmountChanged(2)}
+            data-tracking-id={dataTrackingIds.inputFieldDouble}
+          >
             2x
           </span>
-          <span className={styles.button} onClick={() => onBetAmountMax()}>
+          <span
+            className={styles.button}
+            onClick={() => onBetAmountMax()}
+            data-tracking-id={dataTrackingIds.inputFieldAllIn}
+          >
             Max
           </span>
         </div>
@@ -87,13 +97,13 @@ const TokenNumberInput = ({
         className={styles.tokenNumberErrorHint}
         errorText={errorText}
       />
-      <TokenSlider
+      {/* <TokenSlider
         value={Number(value)}
         setValue={setValue}
         maxValue={maxValue}
         minValue={minValue}
         decimalPlaces={decimalPlaces}
-      />
+      /> */}
     </>
   );
 };
