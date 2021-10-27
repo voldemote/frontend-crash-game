@@ -115,7 +115,6 @@
   grid-gap: 20px;
   display: flex;
   flex-flow: wrap;
-  justify-content: center;
 
   .betLinkWrapper {
     display: block;
@@ -136,6 +135,7 @@
     }
   }
   @media screen and (min-width: $screen-xl) {
+    justify-content: center;
     .betLinkWrapper {
       flex: 330px 0 1;
     }
@@ -144,24 +144,17 @@
 
 .newEventLink {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: nowrap;
   justify-content: center;
   align-items: center;
   font-size: 16px;
   color: $colorWhite;
   cursor: pointer;
   width: 100%;
-  max-width: 340px;
-  height: 150px;
-  margin-right: 20px;
+  height: 40px;
   border: 1px solid $colorWhite30;
   background-color: rgba(172, 196, 255, 0.12);
   border-radius: 12px;
-  margin-bottom: 20px;
-
-  @media screen and (min-width: $screen-md) {
-    margin-bottom: 60px;
-  }
 
   span {
     transition: opacity 0.2s ease-in-out;
@@ -173,7 +166,7 @@
   }
 
   .newEventIcon {
-    margin-bottom: 10px;
+    margin-right: 10px;
   }
 
   svg {

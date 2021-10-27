@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
@@ -17,7 +17,6 @@ import IconTheme from 'components/Icon/IconTheme';
 import BetCard from '../../BetCard';
 
 import { EventActions } from '../../../store/actions/event';
-import SuggestEventButton from '../SuggestEventButton';
 import StatusTabs from './StatusTabs';
 
 const NonStreamedEventsContent = ({
@@ -35,6 +34,8 @@ const NonStreamedEventsContent = ({
   const { location, category: encodedCategory } = useRouteHandling(eventType);
   const category = decodeURIComponent(encodedCategory);
 
+  const [status, setStatus] = useState('current');
+
   const { fetchFilteredEvents, resetDefaultParamsValues } =
     useMappedActions(eventType);
 
@@ -50,32 +51,32 @@ const NonStreamedEventsContent = ({
     [setCategories]
   );
 
-  const events = _.orderBy(
-    useSelector(state => state.event.filteredEvents),
-    ['date'],
-    ['desc']
-  );
+  const events = useSelector(state => state.event.filteredEvents);
 
   const mappedTags = id =>
     events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
+  const statusWhitelist = {
+    current: ['active'],
+    past: ['closed'],
+  }[status];
+
   //Improvement: API endpoints to list and filter bets?
-  const allEvents = useSelector(state => state.event.events);
   const mappedCategories = _.map(categories, c => {
     return {
       ...c,
       disabled:
         c.value !== 'all' &&
-        !allEvents.some(e => {
+        !events.some(e => {
           return (
             e.type === eventType &&
             e.category === c.value &&
-            e.bets?.some(b => b.published && b.status === 'active')
+            e.bets?.some(b => b.published && statusWhitelist.includes(b.status))
           );
         }),
     };
   });
-  const allBets = allEvents.reduce((acc, current) => {
+  const allBets = events.reduce((acc, current) => {
     const bets = current.bets.map(bet => ({
       ...bet,
       eventSlug: current.slug,
@@ -89,17 +90,8 @@ const NonStreamedEventsContent = ({
     return concat;
   }, []);
 
-  const betIdsFromCurrentEvents = events.reduce((acc, current) => {
-    const concat = [...acc, ...current.bets];
-    return concat;
-  }, []);
-
   const filteredBets = allBets.filter(bet => {
-    return (
-      betIdsFromCurrentEvents.includes(bet._id) &&
-      bet.published &&
-      bet.status === 'active'
-    );
+    return bet.published && statusWhitelist.includes(bet.status);
   });
 
   useEffect(() => {
@@ -107,10 +99,10 @@ const NonStreamedEventsContent = ({
 
     fetchFilteredEvents({
       category: encodedCategory,
-      sortBy: 'name',
-      count: 50,
+      sortBy: 'date',
+      count: 100,
     });
-  }, [category, fetchFilteredEvents, handleSelectCategory]);
+  }, [category]);
 
   useEffect(() => () => resetDefaultParamsValues(), []);
 
@@ -153,9 +145,7 @@ const NonStreamedEventsContent = ({
       </section>
 
       <section className={classNames([styles.main, styles.notStreamed])}>
-        <StatusTabs />
-
-        {/* <SuggestEventButton /> */}
+        <StatusTabs onSelect={setStatus} />
 
         <div className={styles.nonStreamed}>
           <AdminOnly>

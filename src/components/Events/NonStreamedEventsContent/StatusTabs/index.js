@@ -10,7 +10,6 @@ import SuggestEventButton from 'components/Events/SuggestEventButton';
 
 const TABS = {
   current: 'current',
-  future: 'future',
   past: 'past',
 };
 
@@ -24,7 +23,6 @@ const StatusTabs = ({ onSelect = () => {}, preselected = TABS.current }) => {
 
   const tabLabels = {
     [TABS.current]: 'Current Events',
-    [TABS.future]: 'Future Events',
     [TABS.past]: 'Past Events',
   };
 
