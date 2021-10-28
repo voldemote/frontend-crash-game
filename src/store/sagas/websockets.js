@@ -202,6 +202,7 @@ export function* init() {
               RosiGameActions.addLastCrash({
                 nextGameAt: payload.nextGameAt,
                 crashFactor: payload.crashFactor,
+                gameHash: payload.gameId,
                 userId,
               })
             );

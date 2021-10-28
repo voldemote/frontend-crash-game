@@ -23,9 +23,25 @@
     padding-top: 5px;
   }
 
+  .separator {
+    margin: 5px 0 15px;
+    height: 1px;
+    width: 160px;
+    background-color: $colorGrayLight1;
+    border-radius: 100%;
+  }
+
   .content {
-    width: 70%;
-    margin-top: 40px;
+    width: 80%;
+    font-size: 15px;
+
+    & > div {
+      margin-bottom: 4px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
 
     @media (max-width: $screen-xs) {
       width: 100%;

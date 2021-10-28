@@ -7,14 +7,14 @@ import _ from 'lodash';
 
 const LastCrashes = ({ lastCrashes, showPopup }) => {
   const handleCrashFactorClick = async (crash, e) => {
-    const response = await getGameDetailById('0').catch(err => {
+    const gameHash = crash?.gameHash;
+    const response = await getGameDetailById(gameHash).catch(err => {
       console.error("Can't get user by id:", err);
     });
     const details = response?.data || null;
 
     if (details) {
       showPopup(PopupTheme.lastGamesDetail, {
-        small: true,
         data: {
           details,
           crash,
@@ -32,10 +32,10 @@ const LastCrashes = ({ lastCrashes, showPopup }) => {
           /* Crash factors are not guaranteed to be unique, so create a unique key - crash + index */
           <span
             onClick={e => handleCrashFactorClick(crash, e)}
-            key={`${crash}${i}`}
+            key={`${crash?.crashFactor}${i}`}
             className={styles.crash}
           >
-            {crash.toFixed(2)}x
+            {crash?.crashFactor?.toFixed(2)}
           </span>
         ))}
       </div>
