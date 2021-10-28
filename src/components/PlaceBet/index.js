@@ -253,7 +253,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
             role="button"
             tabIndex="0"
             className={classNames(styles.button)}
-            onClick={user.isLoggedIn ? cancelBet : showLoginPopup}
+            onClick={user.isLoggedIn ? cancelBet : cancelGuestBet}
             data-tracking-id={
               user.isLoggedIn ? null : 'elongame-showloginpopup'
             }
