@@ -211,6 +211,31 @@ const addReward = (action, state) => {
   };
 };
 
+const removeCanceledBet = (action, state) => {
+  const { clientUserId, userId } = action.payload;
+  let betQueue = state.betQueue;
+  let inGameBets = state.inGameBets;
+
+  if (!state.hasStarted && !state.isEndgame) {
+    inGameBets = (action, state) =>
+      state.betQueue.filter(bet => bet?.userId !== action.payload.userId);
+  } else {
+    betQueue = state.betQueue.filter(
+      bet => bet?.userId !== action.payload.userId
+    );
+  }
+
+  let userBet = inGameBets.find(b => b.userId === clientUserId);
+
+  return {
+    ...state,
+    placedBetInQueue: !!betQueue.find(b => b.userId === clientUserId),
+    userBet: userBet ? userBet : null,
+    betQueue: betQueue,
+    inGameBets: inGameBets,
+  };
+};
+
 const onTick = (action, state) => {
   return {
     ...state,
@@ -260,18 +285,32 @@ function clearGuestData(action, state) {
 }
 
 function cancelBet(action, state) {
-  return {
-    ...state,
-    placedBetInQueue: false,
-    isCashedOut: false,
-    userBet: null,
-    betQueue: state.betQueue.filter(
+  let inGameBets = state.inGameBets;
+  let betQueue = state.betQueue;
+
+  if (!state.hasStarted && !state.isEndgame) {
+    inGameBets = state.inGameBets.filter(
       bet => bet?.userId !== action.payload.userId
-    ),
-    inGameBets: state.inGameBets.filter(
+    );
+    return {
+      ...state,
+      placedBetInQueue: false,
+      isCashedOut: false,
+      userBet: null,
+      inGameBets: inGameBets,
+    };
+  } else {
+    betQueue = state.betQueue.filter(
       bet => bet?.userId !== action.payload.userId
-    ),
-  };
+    );
+    return {
+      ...state,
+      placedBetInQueue: false,
+      isCashedOut: false,
+      userBet: null,
+      betQueue: betQueue,
+    };
+  }
 }
 
 export default function (state = initialState, action) {
@@ -310,6 +349,8 @@ export default function (state = initialState, action) {
       return clearGuestData(action, state);
     case RosiGameTypes.CANCEL_BET:
       return cancelBet(action, state);
+    case RosiGameTypes.HANDLE_CANCEL_BET:
+      return removeCanceledBet(action, state);
     default:
       return state;
   }

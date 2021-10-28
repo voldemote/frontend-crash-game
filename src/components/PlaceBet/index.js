@@ -144,7 +144,9 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
       });
   };
 
-  const cancelBet = () => {
+  const cancelBet = e => {
+    e.preventDefault();
+    e.stopPropagation();
     setCanBet(false);
     Api.cancelBet()
       .then(() => {
