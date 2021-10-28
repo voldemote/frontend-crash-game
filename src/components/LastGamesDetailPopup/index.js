@@ -1,8 +1,5 @@
 import styles from './styles.module.scss';
 import LogoSplash from '../../data/images/wfair-logo-splash.png';
-import { useState } from 'react';
-import Textarea from '../Textarea';
-import Button from 'components/Button';
 import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 
@@ -24,7 +21,8 @@ const LastGamesDetailsPopup = ({ hidePopup, data }) => {
           <b>Crash factor:</b> <span>{details?.crashfactor}</span>
         </div>
         <div>
-          <b>Game duration (s):</b> <span>{details?.gamelengthinseconds}</span>
+          <b>Game duration (s):</b>{' '}
+          <span>{details?.gamelengthinseconds / 1000}</span>
         </div>
         <div>
           <b>Sum invested:</b> <span>{details?.amountinvestedsum || 0}</span>
