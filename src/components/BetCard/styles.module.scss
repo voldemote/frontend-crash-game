@@ -1,7 +1,6 @@
 @import '../../styles/all';
 
 .betCardContainer {
-  height: 100%;
   .betCard {
     background: white;
     padding: 0;
@@ -200,7 +199,6 @@
 .picture {
   width: 100%;
   min-height: 120px;
-  flex: auto;
   background-size: cover;
   background-position: center;
   background-color: #f6f7f8;

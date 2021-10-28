@@ -1,11 +1,8 @@
 import _ from 'lodash';
-import React, { useEffect, useCallback, useState } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
-import { PopupActions } from 'store/actions/popup';
 import classNames from 'classnames';
 
-import { EventActions } from '../../../../store/actions/event';
 import SuggestEventButton from 'components/Events/SuggestEventButton';
 
 const TABS = {

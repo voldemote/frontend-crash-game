@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect, useCallback, useState } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import CategoryList from '../../CategoryList';
@@ -26,9 +26,9 @@ const NonStreamedEventsContent = ({
   userId,
   bookmarkEvent,
   bookmarkEventCancel,
+  events,
+  filteredEvents,
 }) => {
-  const dispatch = useDispatch();
-
   const eventType = 'non-streamed';
 
   const { location, category: encodedCategory } = useRouteHandling(eventType);
@@ -51,8 +51,6 @@ const NonStreamedEventsContent = ({
     [setCategories]
   );
 
-  const events = useSelector(state => state.event.filteredEvents);
-
   const mappedTags = id =>
     events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
 
@@ -71,12 +69,15 @@ const NonStreamedEventsContent = ({
           return (
             e.type === eventType &&
             e.category === c.value &&
-            e.bets?.some(b => b.published && statusWhitelist.includes(b.status))
+            e.bets?.some(
+              b => b.published && ['closed', 'active'].includes(b.status)
+            )
           );
         }),
     };
   });
-  const allBets = events.reduce((acc, current) => {
+
+  const allBets = filteredEvents.reduce((acc, current) => {
     const bets = current.bets.map(bet => ({
       ...bet,
       eventSlug: current.slug,
@@ -100,7 +101,7 @@ const NonStreamedEventsContent = ({
     fetchFilteredEvents({
       category: encodedCategory,
       sortBy: 'date',
-      count: 100,
+      count: 0,
     });
   }, [category]);
 
@@ -193,7 +194,7 @@ const NonStreamedEventsContent = ({
                     e.preventDefault();
                     e.stopPropagation();
                     if (!userId) {
-                      showJoinPopup(e);
+                      return showJoinPopup(e);
                     }
                     bookmarkEvent(item.eventId);
                   }}
@@ -237,6 +238,8 @@ const mapDispatchToProps = dispatch => {
 function mapStateToProps(state) {
   return {
     userId: state.authentication.userId,
+    events: state.event.events,
+    filteredEvents: state.event.filteredEvents,
   };
 }
 
