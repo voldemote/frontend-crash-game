@@ -81,6 +81,10 @@
   .betsTableContainer {
     margin-top: 15px;
 
+    @media (max-width: $screen-sm) {
+      display: none;
+    }
+
     //
     .betState1, .betState4, .betState3 {
       color: $colorRedDark;
