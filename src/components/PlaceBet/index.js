@@ -90,10 +90,6 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     let v = value.replaceAll(regex, '');
     v = v.replaceAll(',', '.');
     v = v.replaceAll(/[^0-9.]+/g, '');
-    const match = v.match(/\d+$/g);
-    if (match && match.length && match[0] && match[0].length > 2) {
-      v = `${parseFloat(v).toFixed(2)}`;
-    }
     return v;
   };
 
