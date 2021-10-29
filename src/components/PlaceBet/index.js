@@ -534,7 +534,6 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
                 onChange={onCrashFactorChange}
                 onBlur={onCrashFactorLostFocus}
                 min="1"
-                inputmode={'numeric'}
                 pattern={/^[^0-9.]+/}
               />
               <span className={styles.eventTokenLabel}>
