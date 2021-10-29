@@ -41,14 +41,21 @@ const Notifications = ({
             />
           );
         })}
+
         {total === 0 && (
-          <div className={style.emptyList}>
-            <Icon
-              className={style.emptyListIcon}
-              iconTheme={IconTheme.white}
-              iconType={IconType.success}
-            />
-            <p className={style.emptyListLabel}>No new notifications</p>
+          <div className={style.emptyListWrapper}>
+            <div className={style.emptyListPicture}>
+              <div className={style.emptyListPictureContainer}>
+                <div className={style.iconContainer}>
+                  <Icon
+                    className={style.emptyListIcon}
+                    iconTheme={IconTheme.white}
+                    iconType={IconType.success}
+                  />
+                </div>
+              </div>
+              <p className={style.emptyListLabel}>No new notifications</p>
+            </div>
           </div>
         )}
       </div>
