@@ -15,6 +15,7 @@ const LastCrashes = ({ lastCrashes, showPopup }) => {
 
     if (details) {
       showPopup(PopupTheme.lastGamesDetail, {
+        maxWidth: true,
         data: {
           details,
           crash,

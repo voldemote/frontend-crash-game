@@ -24,16 +24,24 @@
   }
 
   .separator {
-    margin: 5px 0 15px;
+    margin: 5px 0;
     height: 1px;
     width: 160px;
     background-color: $colorGrayLight1;
     border-radius: 100%;
   }
 
+  .gameDate {
+    font-size: 14px;
+    color: $colorDarkSlateGray;
+    margin-bottom: 15px;
+  }
+
   .content {
-    width: 80%;
+    width: 800px;
     font-size: 15px;
+
+
 
     & > div {
       margin-bottom: 4px;
@@ -43,18 +51,49 @@
       }
     }
 
-    @media (max-width: $screen-xs) {
+    @media (max-width: $screen-md) {
       width: 100%;
     }
   }
 
-  .sendButton {
-    font-size: 14px;
-    margin-top: 40px;
+  .betsTableContainer {
+    margin-top: 15px;
+
+    //
+    .betState1, .betState4, .betState3 {
+      color: $colorRedDark;
+      font-weight: bold;
+    }
+
+    //cashout
+    .betState2 {
+      color: $colorGreen;
+      font-weight: bold;
+    }
+
+    table {
+      width:100%;
+      table-layout: fixed;
+      overflow-wrap: break-word;
+      border-collapse: collapse;
+    }
+
+    /* Zebra striping */
+    tr:nth-of-type(odd) {
+      background: $colorGrayLight5;
+    }
+
+    th {
+      background: $colorDarkSlateGray;
+      color: white;
+      font-weight: bold;
+    }
+
+    td, th {
+      padding: 5px;
+      border: 1px solid #ccc;
+      text-align: left;
+      font-size: 15px;
+    }
   }
-}
-.textarea {
-  background-color: $colorWhite;
-  border-color: $colorPrimary10;
-  color: $colorPrimary50;
 }

@@ -44,6 +44,7 @@ import LastGamesDetailPopup from '../LastGamesDetailPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
+  const maxWidth = _.get(options, 'maxWidth', false);
 
   useEffect(() => {
     const close = e => {
@@ -258,6 +259,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
             type === PopupTheme.username ? styles.usernamePopup : null,
             small ? styles.small : null,
+            maxWidth ? styles.maxWidth : null,
             type === PopupTheme.auth &&
               options?.authenticationType === 'register' &&
               styles.registrationPopupContainer,
