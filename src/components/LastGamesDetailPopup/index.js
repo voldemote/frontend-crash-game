@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import moment from 'moment';
 
+const roundToTwo = num => {
+  return +(Math.round(num + 'e+2') + 'e-2');
+};
+
 const getReadableAmount = amount => {
   const one = 10000;
-  return Math.round(((+amount / one) * 100) / 100);
+  return roundToTwo(+amount / one);
 };
 
 const BetsTable = props => {
@@ -34,9 +38,11 @@ const BetsTable = props => {
                   {bet.userid}
                 </a>
               </td>
-              <td>{getReadableAmount(bet.stakedamount)}</td>
               <td className={styles[`betState${bet.state}`]}>
-                {bet.crashfactor}
+                {getReadableAmount(bet.stakedamount)}
+              </td>
+              <td className={styles[`betState${bet.state}`]}>
+                {bet.crashfactor == 999 ? '-' : bet.crashfactor}
               </td>
             </tr>
           );
@@ -59,20 +65,24 @@ const LastGamesDetailsPopup = ({ hidePopup, data }) => {
   return (
     <div className={styles.gameDetails}>
       <img src={LogoSplash} className={styles.logo} />
-      <div className={styles.title}>Game details</div>
+      <div className={styles.title}>
+        Game details
+        <div className={styles.nextGame}>{'<'} Next</div>
+        <div className={styles.prevGame}>Prev {'>'}</div>
+      </div>
       <div className={styles.separator}></div>
       <div className={styles.gameDate}>
         <span>{date}</span>
       </div>
       <div className={styles.content}>
         <div>
+          <b>Crash factor:</b> <span>{roundToTwo(match?.crashfactor)}</span>
+        </div>
+        <div>
           <b>Game ID:</b> <span>{match?.id}</span>
         </div>
         <div>
           <b>Game Hash:</b> <span>{match?.gamehash}</span>
-        </div>
-        <div>
-          <b>Crash factor:</b> <span>{match?.crashfactor}</span>
         </div>
         <div>
           <b>Game duration (s):</b>{' '}

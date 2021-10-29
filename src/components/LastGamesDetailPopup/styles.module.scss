@@ -12,9 +12,31 @@
   }
 
   .title {
+    position: relative;
     font-family: $fontBold;
     font-size: 20px;
     margin-top: 20px;
+  }
+
+  .nextGame, .prevGame {
+    font-size: 13px;
+    position: absolute;
+    font-weight: 100;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .prevGame {
+    right: -80px;
+    bottom: -12px;
+  }
+
+  .nextGame {
+    left: -80px;
+    bottom: -12px;
   }
 
   .subtitle {
@@ -67,7 +89,7 @@
 
     //cashout
     .betState2 {
-      color: $colorGreen;
+      color: $colorGreenDarker;
       font-weight: bold;
     }
 
