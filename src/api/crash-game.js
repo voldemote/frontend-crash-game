@@ -45,10 +45,13 @@ const cashOut = () => {
   });
 };
 
-const getGameDetailById = gameId => {
-  return Api.get(
-    ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(':gameId', gameId)
-  ).catch(error => {
+const getGameDetailById = (gameId, type) => {
+  const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
+    ':gameId',
+    gameId
+  );
+
+  return Api.get(gameUrl + (type ? `/${type}` : '')).catch(error => {
     console.log('[API Error] called: getGameDetailById', error);
   });
 };

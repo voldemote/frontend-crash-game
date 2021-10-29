@@ -18,7 +18,6 @@ const LastCrashes = ({ lastCrashes, showPopup }) => {
         maxWidth: true,
         data: {
           details,
-          crash,
         },
       });
     }

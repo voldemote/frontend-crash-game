@@ -3,6 +3,8 @@ import LogoSplash from '../../data/images/wfair-logo-splash.png';
 import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import moment from 'moment';
+import { getGameDetailById } from '../../api/crash-game';
+import PopupTheme from '../Popup/PopupTheme';
 
 const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
@@ -52,7 +54,7 @@ const BetsTable = props => {
   );
 };
 
-const LastGamesDetailsPopup = ({ hidePopup, data }) => {
+const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
   const { details } = data;
   const { match, bets } = details;
 
@@ -62,13 +64,45 @@ const LastGamesDetailsPopup = ({ hidePopup, data }) => {
     ? moment(matchDate).format('HH:mm:ss | DD/MM/YYYY')
     : '---';
 
+  const handleCrashFactorChange = async (gameHash, type) => {
+    const response = await getGameDetailById(gameHash, type).catch(err => {
+      console.error('getGameDetailById err', err);
+    });
+    const details = response?.data || null;
+
+    if (details.match) {
+      showPopup(PopupTheme.lastGamesDetail, {
+        maxWidth: true,
+        data: {
+          details,
+        },
+      });
+    } else {
+      hidePopup();
+    }
+  };
+
   return (
     <div className={styles.gameDetails}>
       <img src={LogoSplash} className={styles.logo} />
       <div className={styles.title}>
         Game details
-        <div className={styles.nextGame}>{'<'} Next</div>
-        <div className={styles.prevGame}>Prev {'>'}</div>
+        <div
+          className={styles.nextGame}
+          onClick={() => {
+            handleCrashFactorChange(match.gamehash, 'next');
+          }}
+        >
+          {'<'} Next
+        </div>
+        <div
+          className={styles.prevGame}
+          onClick={() => {
+            handleCrashFactorChange(match.gamehash, 'prev');
+          }}
+        >
+          Prev {'>'}
+        </div>
       </div>
       <div className={styles.separator}></div>
       <div className={styles.gameDate}>
@@ -112,6 +146,14 @@ const LastGamesDetailsPopup = ({ hidePopup, data }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
+    },
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },
