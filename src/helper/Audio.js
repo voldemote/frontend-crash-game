@@ -1,4 +1,4 @@
-export function playWinSound(volumeLevel) {
+export function playWinSound(volumeLevel = 0.2) {
   try {
     const el = document.getElementById('audio-win');
     if (el.play) {
