@@ -24,6 +24,7 @@ const BetsTable = props => {
           <th scope="col">User</th>
           <th scope="col">Bet amount</th>
           <th scope="col">Crash factor</th>
+          <th scope="col">Cashout</th>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +46,11 @@ const BetsTable = props => {
               </td>
               <td className={styles[`betState${bet.state}`]}>
                 {bet.crashfactor == 999 ? '-' : bet.crashfactor}
+              </td>
+              <td className={styles[`betState${bet.state}`]}>
+                {bet.crashfactor == 999
+                  ? '-'
+                  : getReadableAmount(bet.stakedamount * bet.crashfactor)}
               </td>
             </tr>
           );

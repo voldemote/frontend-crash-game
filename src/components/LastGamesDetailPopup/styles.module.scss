@@ -116,6 +116,10 @@
       border: 1px solid #ccc;
       text-align: left;
       font-size: 15px;
+
+      &:nth-of-type(1) {
+        width: 230px;
+      }
     }
   }
 }
