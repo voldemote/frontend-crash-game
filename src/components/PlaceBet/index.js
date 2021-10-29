@@ -84,41 +84,38 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     setAmount(number);
     // debouncedSetCommitment(number, currency);
   };
+
+  const processAutoCashoutValue = value => {
+    const regex = new RegExp('^[0w]+(?!$)', 'g');
+    let v = value.replaceAll(regex, '');
+    v = v.replaceAll(',', '.');
+    v = v.replaceAll(/[^0-9.]+/g, '');
+    const match = v.match(/\d+$/g);
+    if (match && match.length && match[0] && match[0].length > 2) {
+      v = `${parseFloat(v).toFixed(2)}`;
+    }
+    return v;
+  };
+
   const onCrashFactorChange = event => {
     setCrashFactorDirty(true);
     let value = _.get(event, 'target.value', 0);
-    const regex = new RegExp('^0+(?!$)', 'g');
-    const v = value.replaceAll(regex, '');
+    const v = processAutoCashoutValue(value);
+    event.target.value = v;
 
-    const [f, s] = v.split('.');
-    let result = round(v, 2);
-    //check so we don't round up values such as 1.05
-    //TODO: look for a better way to achieve this
-    if (f && s && s === '0') {
-      result = v;
-    }
-    event.target.value = result;
-    setCrashFactor(round(v, 2));
+    setCrashFactor(v);
+    let result = parseFloat(v);
     if (result > 0 && result < 1) {
       setShowCashoutWarning(true);
     } else {
       setShowCashoutWarning(false);
     }
-    // debouncedSetCommitment(number, currency);
   };
 
   const onCrashFactorLostFocus = event => {
     let value = _.get(event, 'target.value', 0);
-    const regex = new RegExp('^0+(?!$)', 'g');
-    const v = value.replaceAll(regex, '');
-
-    const [f, s] = v.split('.');
-    let result = round(v, 2);
-    //check so we don't round up values such as 1.05
-    //TODO: look for a better way to achieve this
-    if (f && s && s === '0') {
-      result = v;
-    }
+    const v = processAutoCashoutValue(value);
+    let result = parseFloat(v);
 
     trackElonChangeAutoCashout({ multiplier: result });
   };
@@ -527,12 +524,13 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
             >
               <Input
                 className={styles.input}
-                type={'number'}
+                type={'text'}
                 value={crashFactor}
                 onChange={onCrashFactorChange}
                 onBlur={onCrashFactorLostFocus}
-                step={0.01}
                 min="1"
+                inputmode={'numeric'}
+                pattern={/^[^0-9.]+/}
               />
               <span className={styles.eventTokenLabel}>
                 <span>×</span>
