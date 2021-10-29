@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import style from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
+import { UserNotificationTypes } from '../../store/actions/alert';
+import { listenerCount } from 'process';
 
 const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
   const markNotificationRead = () => {
@@ -54,7 +56,10 @@ const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
     );
   };
 
-  const imageUrl = notification.payload?.imageUrl;
+  let imageUrl = notification.payload?.imageUrl;
+  if (notification.type === UserNotificationTypes.EVENT_USER_AWARD) {
+    imageUrl = 'static/media/medal-second.96a51a45.png';
+  }
 
   return (
     notification && (
