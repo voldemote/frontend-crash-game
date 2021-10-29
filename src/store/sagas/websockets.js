@@ -252,11 +252,11 @@ export function* init() {
           case notificationTypes.EVENT_CANCEL:
           case notificationTypes.EVENT_RESOLVE:
           case notificationTypes.EVENT_START:
-            const msg = payload.message.replace(
-              '[event]',
-              payload.eventName ? ` event, ${payload.eventName}, ` : 'event'
+            yield put(
+              AlertActions.showNotification({
+                notification: payload,
+              })
             );
-            yield put(AlertActions.showSuccess({ message: msg }));
             yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
             break;
           case notificationTypes.BET_STARTED:

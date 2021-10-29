@@ -109,7 +109,11 @@ const root = function* () {
       AlertSagas.handleSuccess
     ),
     takeEvery(
-      [AlertTypes.SHOW_SUCCESS, AlertTypes.SHOW_ERROR],
+      [
+        AlertTypes.SHOW_SUCCESS,
+        AlertTypes.SHOW_ERROR,
+        AlertTypes.SHOW_NOTIFICATION,
+      ],
       AlertSagas.handleShown
     ),
     takeLatest([EventTypes.FETCH_ALL], EventSagas.fetchAll),

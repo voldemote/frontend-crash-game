@@ -24,12 +24,7 @@ const Notifications = ({
           iconType={IconType.cross}
           onClick={closeNotifications}
         />
-        <p className={style.notificationHeadline}>
-          Notifications &nbsp;
-          {total > 0 && (
-            <span className={style.notificationUnreadBadge}>{total}</span>
-          )}
-        </p>
+        <p className={style.notificationHeadline}>Notifications</p>
         {total > 0 && (
           <p className={style.markRead} onClick={markAllRead}>
             Mark all as read

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import style from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
-import { EVENT_CATEGORIES } from '../../constants/EventCategories';
 
 const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
   const markNotificationRead = () => {
@@ -39,21 +38,9 @@ const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
     }
   };
 
-  const getStickerStyle = () => {
-    const event = tryLoadEventFromPayload();
-    if (!event) return {};
-
-    const cat = EVENT_CATEGORIES.find(c => c.value === event.category);
-    if (!cat) return {};
-
-    return {
-      backgroundImage: 'url("' + cat.image + '")',
-    };
-  };
-
   const getMessageContent = () => {
     let messageContent = notification.message;
-    if (messageContent.indexOf('[event]') > -1) {
+    if (messageContent?.indexOf('[event]') > -1) {
       messageContent = replaceEventWithLink(messageContent);
     }
 
@@ -70,28 +57,32 @@ const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
   const imageUrl = notification.payload?.imageUrl;
 
   return (
-    <>
-      <div key={notification.id} className={style.notificationCardUnread}>
-        <div className={style.categorySticker} style={getStickerStyle()} />
-        <Icon
-          className={style.closeIcon}
-          iconType={IconType.deleteInput}
-          onClick={markNotificationRead}
-        />
-        <div className={style.notificationCardContent}>
-          <div className={style.notificationMessage}>
-            {getMessageContent()}
-            {imageUrl ? (
-              <img
-                className={style.notificationCardThumbnail}
-                alt={'notification'}
-                src={imageUrl}
+    notification && (
+      <>
+        <div key={notification.id} className={style.notificationCardUnread}>
+          <div className={style.notificationCardContent}>
+            <div className={style.notificationMessage}>
+              {getMessageContent()}
+
+              <div className={style.imageContainer}>
+                {imageUrl ? (
+                  <img
+                    className={style.notificationCardThumbnail}
+                    alt={'notification'}
+                    src={imageUrl}
+                  />
+                ) : null}
+              </div>
+              <Icon
+                className={style.closeIcon}
+                iconType={IconType.deleteInput}
+                onClick={markNotificationRead}
               />
-            ) : null}
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 };
 

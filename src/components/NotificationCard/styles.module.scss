@@ -6,14 +6,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 35px 25px 5px 35px;
-  padding: 8px 10px 10px 40px;
+  margin: 5px 25px 15px 25px;
+  padding: 15px 0px 0px 10px;
   background-color: #27223f;
 
   .notificationCardContent {
     display: flex;
     align-items: center;
-    margin-right: 28px;
 
     .notificationMessage {
       display: flex;
@@ -23,7 +22,8 @@
       font-size: 14px;
       line-height: 20px;
       color: #ffffff;
-      margin-right: 10px;
+      margin-right: 15px;
+      margin-left: 10px;
 
       em {
         font-size: 11px;
@@ -41,29 +41,41 @@
         flex: 1;
       }
 
-      img.notificationCardThumbnail {
-        height: 70px;
-        width: 110px;
-        object-fit: cover;
-        border-radius: 6px;
-        margin-left: 4px;
-        margin-right: 0px;
+      .imageContainer {
+        display: flex;
+        align-items: center;
+
+        img.notificationCardThumbnail {
+          height: 70px;
+          width: 110px;
+          object-fit: cover;
+          border-radius: 6px;
+          margin-left: 6px;
+          margin-right: 6px;
+        }
       }
+    }
+
+    .categorySticker {
+      width: 35px;
+      height: 35px;
+      background-position: center;
+      position: absolute;
+      top: 7px;
+      right: 100px;
+      z-index: 1;
     }
   }
 
   .closeIcon {
     width: 25px;
     height: 25px;
-    margin-left: auto;
 
     * {
       stroke: $colorPrimary;
     }
 
-    &.closeIcon {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 
   .markSingleRead {
@@ -79,18 +91,4 @@
     opacity: 0.3;
     cursor: pointer;
   }
-}
-
-.categorySticker {
-  width: 52px;
-  height: 52px;
-  background: url('../../data/icons/events-all-icon.svg');
-  border-radius: 50%;
-  //background-size: cover;
-  background-position: center;
-  position: absolute;
-  top: -21px;
-  left: -15px;
-  z-index: 1;
-  outline: thick solid rgba(14, 9, 39, 0.86);
 }
