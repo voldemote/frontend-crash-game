@@ -129,7 +129,8 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
           <span>{match?.gamelengthinseconds / 1000}</span>
         </div>
         <div>
-          <b>Sum invested:</b> <span>{getReadableAmount(500000) || 0}</span>
+          <b>Sum invested:</b>{' '}
+          <span>{getReadableAmount(match?.amountinvestedsum) || 0}</span>
         </div>
         <div>
           <b>Sum rewarded:</b>{' '}
