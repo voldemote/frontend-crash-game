@@ -32,6 +32,11 @@ const createTrade = payload => {
   });
 };
 
+const cancelBet = () =>
+  Api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {
+    throw error;
+  });
+
 const getCurrentGameInfo = () => {
   return Api.get(ApiUrls.API_CURRENT).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);
@@ -62,5 +67,6 @@ export {
   createTrade,
   getCurrentGameInfo,
   cashOut,
+  cancelBet,
   getGameDetailById,
 };
