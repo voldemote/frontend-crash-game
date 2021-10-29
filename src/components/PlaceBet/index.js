@@ -183,7 +183,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
 
     Api.createTrade(payload)
       .then(_ => {
-        trackElonPlaceBet({ amount: payload.amount, crashFactor: crashFactor });
+        trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
         dispatch(RosiGameActions.setUserBet(payload));
       })
       .catch(_ => {
@@ -246,7 +246,12 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
       .then(response => {
-        trackElonCashout({ amount });
+        const { crashFactor: crashFactorCashout, reward } = response.data;
+
+        trackElonCashout({
+          amount: reward,
+          multiplier: parseFloat(crashFactorCashout),
+        });
         setAnimate(true);
         onCashout();
         AlertActions.showSuccess(JSON.stringify(response));
