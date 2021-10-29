@@ -167,7 +167,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.notifications)}
       >
         <Icon iconType={IconType.bell} className={style.notificationIcon} />
-        {userMessages.total > 0 && (
+        {userMessages?.total > 0 && (
           <div className={style.notificationNew}>
             <p className={style.notificationNewText}>{userMessages.total}</p>
           </div>
@@ -340,12 +340,14 @@ const Navbar = ({
         )}
       >
         <div className={classNames(style.drawerContent)}>
-          <Notifications
-            notifications={userMessages.messages}
-            total={userMessages.total}
-            closeNotifications={closeDrawers}
-            setUnread={setMessageRead}
-          />
+          {userMessages && (
+            <Notifications
+              notifications={userMessages.messages}
+              total={userMessages.total}
+              closeNotifications={closeDrawers}
+              setUnread={setMessageRead}
+            />
+          )}
         </div>
         <div className={style.drawerBackdropBg}></div>
       </div>
