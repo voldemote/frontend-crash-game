@@ -132,17 +132,21 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
       const autoCashoutAt = parseFloat(crashFactor);
       const factor = calcCrashFactorFromElapsedTime(diff < 1 ? 1 : diff);
       if (factor >= autoCashoutAt) {
-        cashOut();
+        if (user.isLoggedIn) {
+          cashOut();
+        } else {
+          cashOutGuest();
+        }
         clearInterval(intervalId);
       }
     };
 
-    if (!userPlacedABet || !isGameRunning) return;
+    if (!userPlacedABet || !isGameRunning || userCashedOut) return;
     if (userPlacedABet && isGameRunning) {
       intervalId = setInterval(tick, intervalTime);
       return () => clearInterval(intervalId);
     }
-  }, [isGameRunning, crashFactor]);
+  }, [isGameRunning, crashFactor, userCashedOut]);
 
   const placeABet = () => {
     if (userUnableToBet) return;
@@ -433,9 +437,14 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
               }}
             />
           ) : (
-            <div className={classNames(styles.cashedOutInputContainer)}>
+            <div
+              className={classNames(
+                styles.cashedOutInputContainer,
+                styles.demoInput
+              )}
+            >
               <Input
-                className={styles.input}
+                className={classNames(styles.input)}
                 type={'number'}
                 value={amount}
                 onChange={onGuestAmountChange}
@@ -475,7 +484,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
                 showCashoutWarning ? styles.warning : null
               )}
             >
-              Auto Cashout at
+              Attempt Auto Cashout at
             </label>
             <div
               className={classNames(
@@ -490,10 +499,9 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
                 onChange={onCrashFactorChange}
                 step={0.01}
                 min="1"
-                disabled={!user.isLoggedIn}
               />
               <span className={styles.eventTokenLabel}>
-                <span>x</span>
+                <span>×</span>
               </span>
             </div>
           </div>

@@ -46,7 +46,15 @@
   bottom: -10px;
   div{
     margin-bottom: 0;
+    @media screen and (max-width: $screen-sm) {
+      margin-bottom: 1rem;
+    }
+    div{
+      margin-bottom: 0;
+
+    }
   }
+
 }
 .profit {
   position: relative;
@@ -149,6 +157,8 @@
     }
   }
 }
+
+
 
 .inputContainer {
   position: relative;
@@ -270,6 +280,10 @@
     padding: 1rem 120px 1rem 1rem;
   }
 
+  @media (max-width: $screen-sm) {
+    padding-right: 120px;
+  }
+
   .input {
     flex: none;
     text-align: right;
@@ -296,6 +310,7 @@
     border: 2px solid $colorRed;
   }
 
+
   .eventTokenLabel {
     color: $colorGrayLight1;
     font-family: $fontRegular;
@@ -305,6 +320,9 @@
     line-height: 24px;
     letter-spacing: 0px;
     text-align: left;
+    span{
+      font-size: 30px;
+    }
   }
 
   .buttonWrapper
@@ -331,6 +349,15 @@
           font-family:    $fontMedium;
           cursor:         pointer;
       }
+  }
+}
+
+.cashedOutInputContainer.demoInput{
+  padding-right: 1rem;
+  .eventTokenLabel {
+    span{
+      font-size: 20px;
+    }
   }
 }
 
