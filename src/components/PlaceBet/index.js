@@ -55,7 +55,8 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const isBetInQueue = useSelector(betInQueue);
   const userCashedOut = useSelector(isCashedOut);
   const [amount, setAmount] = useState(sliderMinAmount);
-  const [crashFactor, setCrashFactor] = useState('25.00');
+  // const [crashFactor, setCrashFactor] = useState('25.00');
+  const [crashFactor, setCrashFactor] = useState(999);
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -93,28 +94,28 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     return v;
   };
 
-  const onCrashFactorChange = event => {
-    setCrashFactorDirty(true);
-    let value = _.get(event, 'target.value', 0);
-    const v = processAutoCashoutValue(value);
-    event.target.value = v;
+  // const onCrashFactorChange = event => {
+  //   setCrashFactorDirty(true);
+  //   let value = _.get(event, 'target.value', 0);
+  //   const v = processAutoCashoutValue(value);
+  //   event.target.value = v;
 
-    setCrashFactor(v);
-    let result = parseFloat(v);
-    if (result > 0 && result < 1) {
-      setShowCashoutWarning(true);
-    } else {
-      setShowCashoutWarning(false);
-    }
-  };
+  //   setCrashFactor(v);
+  //   let result = parseFloat(v);
+  //   if (result > 0 && result < 1) {
+  //     setShowCashoutWarning(true);
+  //   } else {
+  //     setShowCashoutWarning(false);
+  //   }
+  // };
 
-  const onCrashFactorLostFocus = event => {
-    let value = _.get(event, 'target.value', 0);
-    const v = processAutoCashoutValue(value);
-    let result = parseFloat(v);
+  // const onCrashFactorLostFocus = event => {
+  //   let value = _.get(event, 'target.value', 0);
+  //   const v = processAutoCashoutValue(value);
+  //   let result = parseFloat(v);
 
-    trackElonChangeAutoCashout({ multiplier: result });
-  };
+  //   trackElonChangeAutoCashout({ multiplier: result });
+  // };
 
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
@@ -140,30 +141,30 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     setAnimate(false);
   }, [isGameRunning]);
 
-  useEffect(() => {
-    const intervalTime = 4;
-    let intervalId;
-    const tick = () => {
-      let now = Date.now();
-      const diff = now - gameStartedTime;
-      const autoCashoutAt = parseFloat(crashFactor);
-      const factor = calcCrashFactorFromElapsedTime(diff < 1 ? 1 : diff);
-      if (factor >= autoCashoutAt) {
-        if (user.isLoggedIn) {
-          cashOut();
-        } else {
-          cashOutGuest();
-        }
-        clearInterval(intervalId);
-      }
-    };
+  // useEffect(() => {
+  //   const intervalTime = 4;
+  //   let intervalId;
+  //   const tick = () => {
+  //     let now = Date.now();
+  //     const diff = now - gameStartedTime;
+  //     const autoCashoutAt = parseFloat(crashFactor);
+  //     const factor = calcCrashFactorFromElapsedTime(diff < 1 ? 1 : diff);
+  //     if (factor >= autoCashoutAt) {
+  //       if (user.isLoggedIn) {
+  //         cashOut();
+  //       } else {
+  //         cashOutGuest();
+  //       }
+  //       clearInterval(intervalId);
+  //     }
+  //   };
 
-    if (!userPlacedABet || !isGameRunning || userCashedOut) return;
-    if (userPlacedABet && isGameRunning) {
-      intervalId = setInterval(tick, intervalTime);
-      return () => clearInterval(intervalId);
-    }
-  }, [isGameRunning, crashFactor, userCashedOut]);
+  //   if (!userPlacedABet || !isGameRunning || userCashedOut) return;
+  //   if (userPlacedABet && isGameRunning) {
+  //     intervalId = setInterval(tick, intervalTime);
+  //     return () => clearInterval(intervalId);
+  //   }
+  // }, [isGameRunning, crashFactor, userCashedOut]);
 
   const placeABet = () => {
     if (userUnableToBet) return;
@@ -508,7 +509,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
               </div>
             </div>
           )}
-          <div className={styles.inputContainer}>
+          {/* <div className={styles.inputContainer}>
             <label
               className={classNames(
                 styles.label,
@@ -535,8 +536,8 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
               <span className={styles.eventTokenLabel}>
                 <span>×</span>
               </span>
-            </div>
-          </div>
+            </div> 
+          </div>*/}
         </div>
       </div>
       {showCashoutWarning ? (
