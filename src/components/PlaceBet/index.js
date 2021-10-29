@@ -32,6 +32,14 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/utils';
+import { getMaxListeners } from 'process';
+import {
+  trackElonChangeAutoCashout,
+  trackElonPlaceBet,
+  trackElonCashout,
+  trackElonPlaceBetGuest,
+  trackElonCancelBet,
+} from '../../config/gtm';
 
 const PlaceBet = ({ connected, onBet, onCashout }) => {
   const dispatch = useDispatch();
@@ -99,6 +107,22 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     // debouncedSetCommitment(number, currency);
   };
 
+  const onCrashFactorLostFocus = event => {
+    let value = _.get(event, 'target.value', 0);
+    const regex = new RegExp('^0+(?!$)', 'g');
+    const v = value.replaceAll(regex, '');
+
+    const [f, s] = v.split('.');
+    let result = round(v, 2);
+    //check so we don't round up values such as 1.05
+    //TODO: look for a better way to achieve this
+    if (f && s && s === '0') {
+      result = v;
+    }
+
+    trackElonChangeAutoCashout({ multiplier: result });
+  };
+
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
@@ -155,6 +179,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
 
     Api.createTrade(payload)
       .then(_ => {
+        trackElonPlaceBet({ amount: payload.amount, crashFactor: crashFactor });
         dispatch(RosiGameActions.setUserBet(payload));
       })
       .catch(_ => {
@@ -172,6 +197,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     setCanBet(false);
     Api.cancelBet()
       .then(() => {
+        trackElonCancelBet({ amount });
         dispatch(RosiGameActions.cancelBet({ userId: user.userId }));
       })
       .catch(() => {
@@ -197,6 +223,12 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
       username: 'Guest',
       userId: 'Guest',
     };
+
+    trackElonPlaceBetGuest({
+      amount: payload.amount,
+      multiplier: payload.crashFactor,
+    });
+
     dispatch(RosiGameActions.setUserBet(payload));
     dispatch(RosiGameActions.addInGameBet(payload));
 
@@ -210,6 +242,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     dispatch(RosiGameActions.cashOut());
     Api.cashOut()
       .then(response => {
+        trackElonCashout({ amount });
         setAnimate(true);
         onCashout();
         AlertActions.showSuccess(JSON.stringify(response));
@@ -488,6 +521,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
                 type={'number'}
                 value={crashFactor}
                 onChange={onCrashFactorChange}
+                onBlur={onCrashFactorLostFocus}
                 step={0.01}
                 min="1"
                 disabled={!user.isLoggedIn}
