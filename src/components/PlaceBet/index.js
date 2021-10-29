@@ -31,6 +31,7 @@ import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
+import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/utils';
 
 const PlaceBet = ({ connected, onBet, onCashout }) => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const isBetInQueue = useSelector(betInQueue);
   const userCashedOut = useSelector(isCashedOut);
   const [amount, setAmount] = useState(sliderMinAmount);
-  const [crashFactor, setCrashFactor] = useState(999);
+  const [crashFactor, setCrashFactor] = useState('25.00');
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -122,13 +123,34 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     setAnimate(false);
   }, [isGameRunning]);
 
+  useEffect(() => {
+    const intervalTime = 4;
+    let intervalId;
+    const tick = () => {
+      let now = Date.now();
+      const diff = now - gameStartedTime;
+      const autoCashoutAt = parseFloat(crashFactor);
+      const factor = calcCrashFactorFromElapsedTime(diff < 1 ? 1 : diff);
+      if (factor >= autoCashoutAt) {
+        cashOut();
+        clearInterval(intervalId);
+      }
+    };
+
+    if (!userPlacedABet || !isGameRunning) return;
+    if (userPlacedABet && isGameRunning) {
+      intervalId = setInterval(tick, intervalTime);
+      return () => clearInterval(intervalId);
+    }
+  }, [isGameRunning, crashFactor]);
+
   const placeABet = () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
     onBet();
     const payload = {
       amount,
-      crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,
+      crashFactor: 999,
     };
 
     Api.createTrade(payload)
@@ -464,7 +486,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
               <Input
                 className={styles.input}
                 type={'number'}
-                value={!crashFactorDirty ? '1.00' : crashFactor}
+                value={crashFactor}
                 onChange={onCrashFactorChange}
                 step={0.01}
                 min="1"

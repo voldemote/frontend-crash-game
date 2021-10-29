@@ -5,7 +5,7 @@
   background: #fff;
   border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 10px;
-  padding: 25px 20px 20px 20px;
+  padding: 10px 20px 20px 20px;
   margin-bottom: 14px;
 
   @media screen and (max-width: $screen-md) {
@@ -44,6 +44,9 @@
 .sliderContainer {
   position: relative;
   bottom: -10px;
+  div{
+    margin-bottom: 0;
+  }
 }
 .profit {
   position: relative;
@@ -51,6 +54,7 @@
   @media screen and (max-width: $screen-sm) {
     bottom: -10px;
   }
+  margin: 15px auto;
   font-size: 18pt;
   color: $colorGreen;
   display: flex;
@@ -82,6 +86,8 @@
   @media screen and (max-width: $screen-sm) {
     bottom: -10px;
   }
+  margin: 15px auto;
+
   font-size: 18pt;
   color: $colorWhite;
   display: flex;
@@ -259,7 +265,7 @@
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
   justify-content: flex-end;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   @media (min-width: $screen-lg) {
     padding: 1rem 120px 1rem 1rem;
   }
