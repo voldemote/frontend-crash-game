@@ -116,7 +116,8 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
       </div>
       <div className={styles.content}>
         <div>
-          <b>Crash factor:</b> <span>{roundToTwo(match?.crashfactor)}</span>
+          <b>Crash factor:</b>{' '}
+          <span>{roundToTwo(match?.crashfactor).toFixed(2)}</span>
         </div>
         <div>
           <b>Game ID:</b> <span>{match?.id}</span>
