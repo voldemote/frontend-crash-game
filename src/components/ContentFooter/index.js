@@ -38,10 +38,6 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 Documentation
               </a>
 
-              <Link data-tracking-id="footer-blog" to={Routes.blog}>
-                Blog
-              </Link>
-
               <button
                 data-tracking-id="footer-leaderboard"
                 onClick={openLeaderboard}
