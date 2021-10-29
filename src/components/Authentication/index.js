@@ -257,7 +257,9 @@ const Authentication = ({
           withoutBackground={true}
           highlightType={HighlightType.highlightAuthButton}
           className={styles.submitButton}
-          disabled={submitInProgress || (!forgotPassword && !ageOver18)}
+          disabled={
+            submitInProgress || (isSignUp() && !forgotPassword && !ageOver18)
+          }
           disabledWithOverlay={true}
         >
           <span>{forgotPassword ? 'Send' : action}</span>
