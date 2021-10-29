@@ -102,6 +102,15 @@ function createSocketChannel(socket) {
       emit(message);
     };
 
+    const casinoBetCanceledHandler = data => {
+      const message = {
+        ...data,
+        type: ChatMessageType.casinoCancel,
+      };
+
+      emit(message);
+    };
+
     const betStartedHandler = data => {
       const message = {
         ...data,
@@ -133,6 +142,7 @@ function createSocketChannel(socket) {
     socket.on('CASINO_TRADE', casinoTradeHandler);
     socket.on('CASINO_REWARD', casinoRewardHandler);
     socket.on('EVENT_BET_STARTED', betStartedHandler);
+    socket.on('CASINO_CANCEL', casinoBetCanceledHandler);
     socket.onAny(onAnyListener);
 
     const unsubscribe = () => {
@@ -146,6 +156,7 @@ function createSocketChannel(socket) {
       socket.off('CASINO_TRADE', casinoTradeHandler);
       socket.off('CASINO_REWARD', casinoRewardHandler);
       socket.off('EVENT_BET_STARTED', betStartedHandler);
+      socket.off('CASINO_CANCEL', casinoBetCanceledHandler);
       socket.offAny(onAnyListener);
     };
 
@@ -172,7 +183,7 @@ export function* init() {
       try {
         const payload = yield take(socketChannel);
         const type = _.get(payload, 'type');
-
+        let uid;
         switch (type) {
           case 'connect':
             if (socket && socket.connected) {
@@ -213,9 +224,15 @@ export function* init() {
             );
             break;
           case ChatMessageType.casinoReward:
-            const ui = yield select(state => state.authentication.userId);
+            uid = yield select(state => state.authentication.userId);
             yield put(
-              RosiGameActions.addReward({ ...payload, clientUserId: ui })
+              RosiGameActions.addReward({ ...payload, clientUserId: uid })
+            );
+            break;
+          case ChatMessageType.casinoCancel:
+            uid = yield select(state => state.authentication.userId);
+            yield put(
+              RosiGameActions.handleCancelBet({ ...payload, clientUserId: uid })
             );
             break;
           case ChatMessageType.pulloutBet:
