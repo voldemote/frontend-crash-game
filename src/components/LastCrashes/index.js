@@ -13,7 +13,7 @@ const LastCrashes = ({ lastCrashes, showPopup }) => {
     });
     const details = response?.data || null;
 
-    if (details) {
+    if (details?.match) {
       showPopup(PopupTheme.lastGamesDetail, {
         maxWidth: true,
         data: {
