@@ -31,8 +31,10 @@ const Authentication = ({
     useState(false);
   const [error, setError] = useState(null);
   const [forgotPassword, setForgotPassword] = useState(false);
+  const [ageOver18, setAgeOver18] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState(false);
   const [submitInProgress, setSubmitInProgress] = useState(false);
+  const [focusTrap, setFocusTrap] = useState([]);
   const { executeRecaptcha } = useGoogleReCaptcha();
   const totalUsers = useSelector(selectTotalUsers);
 
@@ -42,10 +44,18 @@ const Authentication = ({
   let pwConfirmRef = useRef(null);
   let acceptRef = useRef(null);
   let genericRef = useRef(null);
+  let ageRef = useRef(null);
 
   const isSignUp = () => authenticationType === AuthenticationType.register;
 
   const action = isSignUp() ? 'Sign Up' : 'Login';
+
+  useEffect(() => {
+    const focusTrapElements = document.querySelectorAll(
+      "input[type='email'], input[type='password']"
+    );
+    setFocusTrap([...focusTrapElements]);
+  }, []);
 
   useEffect(() => {
     setInputEmail('');
@@ -86,12 +96,16 @@ const Authentication = ({
     return passwordConfirmation && password === passwordConfirmation;
   };
 
-  const validateInput = () => {
+  const validateInput = options => {
     let error;
 
     if (isSignUp() && !forgotPassword && !legalAuthorizationAgreed) {
       error = 'Confirm that you agree with Terms and Conditions';
       fooRef = acceptRef;
+    }
+    if (isSignUp() && !forgotPassword && !ageOver18) {
+      error = 'You need to be at least 18 years old to use the platform';
+      fooRef = ageRef;
     }
     if (isSignUp() && !forgotPassword && !passwordsMatch()) {
       error = 'Passwords do not match';
@@ -104,6 +118,10 @@ const Authentication = ({
     if (!emailIsValid()) {
       error = 'Not a valid email address';
       fooRef = emailRef;
+    }
+    if (emailIsValid() && options && options.emailOnly) {
+      error = undefined;
+      ReactTooltip.hide(emailRef);
     }
 
     setError(error);
@@ -151,6 +169,25 @@ const Authentication = ({
     }
   };
 
+  const handleFocusTrap = e => {
+    if (e.key !== 'Tab') {
+      return;
+    }
+
+    e.preventDefault();
+
+    const indexOfFocusedElement = focusTrap.indexOf(document.activeElement);
+    let nextPosition = indexOfFocusedElement + 1;
+
+    if (nextPosition === focusTrap.length) {
+      nextPosition = 0;
+    }
+
+    if (focusTrap[nextPosition]) {
+      focusTrap[nextPosition].focus();
+    }
+  };
+
   const renderInputBoxes = () => {
     return (
       <form
@@ -187,6 +224,7 @@ const Authentication = ({
         >
           <InputLabel className={styles.inputLabel}>E-Mail address</InputLabel>
           <InputBox
+            type="email"
             className={styles.inputBox}
             placeholder="john.doe@gmail.com"
             value={email}
@@ -195,6 +233,8 @@ const Authentication = ({
               setInputEmail(e.trim().toLowerCase());
             }}
             onConfirm={onConfirm}
+            onBlur={() => validateInput({ emailOnly: true })}
+            onKeyDown={handleFocusTrap}
           />
         </FormGroup>
 
@@ -216,6 +256,7 @@ const Authentication = ({
               setValue={setPassword}
               disabled={submitInProgress}
               onConfirm={onConfirm}
+              onKeyDown={handleFocusTrap}
             />
           </FormGroup>
         )}
@@ -239,10 +280,11 @@ const Authentication = ({
               setValue={setPasswordConfirmation}
               disabled={submitInProgress}
               onConfirm={onConfirm}
+              onKeyDown={handleFocusTrap}
             />
           </FormGroup>
         )}
-
+        {isSignUp() && renderLegalAuthorizationAgeVerification()}
         {isSignUp() && renderLegalAuthorizationAgreementCheckBox()}
         {!isSignUp() && renderForgotPasswordLink()}
 
@@ -251,7 +293,9 @@ const Authentication = ({
           withoutBackground={true}
           highlightType={HighlightType.highlightAuthButton}
           className={styles.submitButton}
-          disabled={submitInProgress}
+          disabled={
+            submitInProgress || (isSignUp() && !forgotPassword && !ageOver18)
+          }
           disabledWithOverlay={true}
         >
           <span>{forgotPassword ? 'Send' : action}</span>
@@ -260,6 +304,29 @@ const Authentication = ({
     );
   };
 
+  const renderLegalAuthorizationAgeVerification = () => {
+    return (
+      <div ref={ref => (ageRef = ref)} className={styles.formGroup}>
+        <InputLabel className={styles.inputLabel}>
+          Please verify your age together
+        </InputLabel>
+        <div className={styles.ageVerificationForm}>
+          <span
+            onClick={() => setAgeOver18(true)}
+            className={ageOver18 ? styles.solidButton : styles.outlinedButton}
+          >
+            <span>I am over 18</span>
+          </span>
+          <span
+            onClick={() => setAgeOver18(false)}
+            className={ageOver18 ? styles.outlinedButton : styles.solidButton}
+          >
+            <span>I am under 18</span>
+          </span>
+        </div>
+      </div>
+    );
+  };
   const renderLegalAuthorizationAgreementCheckBox = () => {
     const legalAuthorizationAgreementText = (
       <p
@@ -280,7 +347,11 @@ const Authentication = ({
       </p>
     );
 
-    return (
+    return !ageOver18 ? (
+      <span className={styles.errorText}>
+        You need to be above 18 years old in order to use this system
+      </span>
+    ) : (
       <CheckBox
         className={styles.authenticationLegalAuthorizationAgreementCheckBox}
         checked={legalAuthorizationAgreed}
@@ -309,7 +380,7 @@ const Authentication = ({
       </h2>
       {isSignUp() && (
         <h3 className={styles.totalCount}>
-          {totalUsers}/700 slots available
+          {totalUsers}/5000 slots available
           <span className={styles.underline}></span>
         </h3>
       )}
