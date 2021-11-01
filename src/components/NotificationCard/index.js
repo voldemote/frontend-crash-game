@@ -4,7 +4,7 @@ import style from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import { UserNotificationTypes } from '../../store/actions/alert';
-import { listenerCount } from 'process';
+import medalSilver from '../../data/icons/medal-second.png';
 
 const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
   const markNotificationRead = () => {
@@ -58,7 +58,7 @@ const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
 
   let imageUrl = notification.payload?.imageUrl;
   if (notification.type === UserNotificationTypes.USER_AWARD) {
-    imageUrl = 'static/media/medal-second.96a51a45.png';
+    imageUrl = medalSilver;
   }
 
   return (
