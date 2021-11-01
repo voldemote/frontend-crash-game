@@ -405,6 +405,12 @@ const Navbar = ({
           )}
           {renderNavbarLink(`/events`, 'Events', null, 'menu-events')}
           {renderNavbarLink(`/games`, 'Games', null, 'menu-games')}
+          {renderNavbarLink(
+            `/activities`,
+            'Activities',
+            null,
+            'menu-activities'
+          )}
           {/* {isLoggedIn() && renderNavbarLink(`/rewards`, 'Earn', null, 'menu-earn')} */}
         </div>
       </div>
