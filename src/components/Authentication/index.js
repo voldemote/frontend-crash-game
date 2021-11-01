@@ -380,7 +380,7 @@ const Authentication = ({
       </h2>
       {isSignUp() && (
         <h3 className={styles.totalCount}>
-          {totalUsers}/700 slots available
+          {totalUsers}/5000 slots available
           <span className={styles.underline}></span>
         </h3>
       )}
