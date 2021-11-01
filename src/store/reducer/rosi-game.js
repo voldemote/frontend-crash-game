@@ -93,6 +93,11 @@ const setUserBet = (action, state) => {
 };
 
 const addLastCrash = (action, state) => {
+  const lastCrash = {
+    crashFactor: action.payload.crashFactor,
+    gameHash: action.payload.gameHash,
+  };
+
   return {
     ...state,
     hasStarted: false,
@@ -103,15 +108,17 @@ const addLastCrash = (action, state) => {
       }
       return bet.userId === action.payload.userId;
     }),
-    lastCrashes: [action.payload.crashFactor, ...state.lastCrashes],
+    lastCrashes: [lastCrash, ...state.lastCrashes],
     isCashedOut: false,
   };
 };
 
 const addInGameBet = (action, state) => {
+  const { clientUserId, userId } = action.payload;
   if (state.hasStarted || state.isEndgame) {
     return {
       ...state,
+      placedBetInQueue: state.placedBetInQueue || clientUserId === userId,
       betQueue: [
         {
           ...action.payload,
@@ -121,8 +128,16 @@ const addInGameBet = (action, state) => {
       ],
     };
   }
+  let userBet = null;
+  if (state.userBet) {
+    userBet = state.userBet;
+  } else if (clientUserId === userId) {
+    userBet = action.payload;
+  }
+
   return {
     ...state,
+    userBet: userBet,
     inGameBets: [
       {
         ...action.payload,
@@ -180,6 +195,7 @@ const cashedOutGuest = (action, state) => {
 };
 
 const addReward = (action, state) => {
+  const { clientUserId, userId } = action.payload;
   const correspondingBet = state.inGameBets.find(
     bet => action.payload.userId.toString() === bet.userId
   );
@@ -192,9 +208,36 @@ const addReward = (action, state) => {
   return {
     ...state,
     cashedOut: [bet, ...state.cashedOut],
+    isCashedOut: state.isCashedOut || clientUserId === userId,
+    userBet: clientUserId === userId ? null : state.userBet,
     inGameBets: correspondingBet
       ? state.inGameBets.filter(bet => bet.userId !== correspondingBet.userId)
       : state.inGameBets,
+  };
+};
+
+const removeCanceledBet = (action, state) => {
+  const { clientUserId, userId } = action.payload;
+  let betQueue = state.betQueue;
+  let inGameBets = state.inGameBets;
+
+  if (!state.hasStarted && !state.isEndgame) {
+    inGameBets = (action, state) =>
+      state.betQueue.filter(bet => bet?.userId !== action.payload.userId);
+  } else {
+    betQueue = state.betQueue.filter(
+      bet => bet?.userId !== action.payload.userId
+    );
+  }
+
+  let userBet = inGameBets.find(b => b.userId === clientUserId);
+
+  return {
+    ...state,
+    placedBetInQueue: !!betQueue.find(b => b.userId === clientUserId),
+    userBet: userBet ? userBet : null,
+    betQueue: betQueue,
+    inGameBets: inGameBets,
   };
 };
 
@@ -241,7 +284,38 @@ function clearGuestData(action, state) {
     placedBetInQueue: false,
     isCashedOut: false,
     userBet: null,
+    betQueue: state.betQueue.filter(bet => bet?.userId !== 'Guest'),
+    inGameBets: state.inGameBets.filter(bet => bet?.userId !== 'Guest'),
   };
+}
+
+function cancelBet(action, state) {
+  let inGameBets = state.inGameBets;
+  let betQueue = state.betQueue;
+
+  if (!state.hasStarted && !state.isEndgame) {
+    inGameBets = state.inGameBets.filter(
+      bet => bet?.userId !== action.payload.userId
+    );
+    return {
+      ...state,
+      placedBetInQueue: false,
+      isCashedOut: false,
+      userBet: null,
+      inGameBets: inGameBets,
+    };
+  } else {
+    betQueue = state.betQueue.filter(
+      bet => bet?.userId !== action.payload.userId
+    );
+    return {
+      ...state,
+      placedBetInQueue: false,
+      isCashedOut: false,
+      userBet: null,
+      betQueue: betQueue,
+    };
+  }
 }
 
 export default function (state = initialState, action) {
@@ -278,6 +352,10 @@ export default function (state = initialState, action) {
       return onStartEndgamePeriod(action, state);
     case RosiGameTypes.CLEAR_GUEST_DATA:
       return clearGuestData(action, state);
+    case RosiGameTypes.CANCEL_BET:
+      return cancelBet(action, state);
+    case RosiGameTypes.HANDLE_CANCEL_BET:
+      return removeCanceledBet(action, state);
     default:
       return state;
   }

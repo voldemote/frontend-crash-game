@@ -81,23 +81,47 @@
     overflow-y: auto;
   }
 
-  .emptyList {
-    margin: 0 auto;
-    .emptyListIcon {
-      margin: 4px 0 20px 0;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      outline: 3px dashed rgba(172, 196, 255, 0.1);
-      padding: 30px;
-      fill: white;
-    }
+  .emptyListWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 
-    .emptyListLabel {
-      font-size: 12px;
-      opacity: 0.4;
-      text-align: center;
-      color: $colorWhite;
+    .emptyListPicture {
+      display: flex;
+      flex-direction: column;
+
+      .emptyListPictureContainer {
+        margin-bottom: 20px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px dashed rgba(172, 196, 255, 0.1);
+        cursor: pointer;
+        display: flex;
+
+        .iconContainer {
+          width: 35px;
+          height: 35px;
+          margin: auto;
+
+          svg {
+            width: 35px;
+            height: 35px;
+          }
+
+          > .emptyListIcon {
+            fill: white;
+          }
+        }
+      }
+
+      .emptyListLabel {
+        font-size: 12px;
+        opacity: 0.4;
+        text-align: center;
+        color: $colorWhite;
+      }
     }
   }
 }

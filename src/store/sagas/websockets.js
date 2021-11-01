@@ -103,6 +103,15 @@ function createSocketChannel(socket) {
       emit(message);
     };
 
+    const casinoBetCanceledHandler = data => {
+      const message = {
+        ...data,
+        type: ChatMessageType.casinoCancel,
+      };
+
+      emit(message);
+    };
+
     const betStartedHandler = data => {
       const message = {
         ...data,
@@ -133,6 +142,7 @@ function createSocketChannel(socket) {
     socket.on('CASINO_END', casinoEndHandler);
     socket.on('CASINO_TRADE', casinoTradeHandler);
     socket.on('CASINO_REWARD', casinoRewardHandler);
+    socket.on('CASINO_CANCEL', casinoBetCanceledHandler);
     socket.on('BET_STARTED', betStartedHandler);
     socket.onAny(onAnyListener);
 
@@ -146,6 +156,7 @@ function createSocketChannel(socket) {
       socket.off('CASINO_END', casinoEndHandler);
       socket.off('CASINO_TRADE', casinoTradeHandler);
       socket.off('CASINO_REWARD', casinoRewardHandler);
+      socket.off('CASINO_CANCEL', casinoBetCanceledHandler);
       socket.off('BET_STARTED', betStartedHandler);
       socket.offAny(onAnyListener);
     };
@@ -166,7 +177,7 @@ export function* init() {
       try {
         const payload = yield take(socketChannel);
         const type = _.get(payload, 'type');
-        console.log('websocket with', payload);
+        let uid;
         switch (type) {
           case 'connect':
             if (socket && socket.connected) {
@@ -196,15 +207,28 @@ export function* init() {
               RosiGameActions.addLastCrash({
                 nextGameAt: payload.nextGameAt,
                 crashFactor: payload.crashFactor,
+                gameHash: payload.gameId,
                 userId,
               })
             );
             break;
           case ChatMessageType.casinoTrade:
-            yield put(RosiGameActions.addInGameBet(payload));
+            const u = yield select(state => state.authentication.userId);
+            yield put(
+              RosiGameActions.addInGameBet({ ...payload, clientUserId: u })
+            );
             break;
           case ChatMessageType.casinoReward:
-            yield put(RosiGameActions.addReward(payload));
+            uid = yield select(state => state.authentication.userId);
+            yield put(
+              RosiGameActions.addReward({ ...payload, clientUserId: uid })
+            );
+            break;
+          case ChatMessageType.casinoCancel:
+            uid = yield select(state => state.authentication.userId);
+            yield put(
+              RosiGameActions.handleCancelBet({ ...payload, clientUserId: uid })
+            );
             break;
           case ChatMessageType.pulloutBet:
           case ChatMessageType.createBet:

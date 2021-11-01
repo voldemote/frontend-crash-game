@@ -58,4 +58,90 @@ export const trackApproveCashout = dataLayerProps => {
   TagManager.dataLayer(tagManagerArgs);
 };
 
+export const trackSignup = ({ method, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      method,
+      event: 'signUp',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackElonChangeAutoCashout = ({
+  multiplier,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      multiplier,
+      event: 'elongameChangeAutoCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackElonPlaceBet = ({
+  amount,
+  multiplier,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      event: 'elongamePlaceBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackElonPlaceBetGuest = ({
+  amount,
+  multiplier,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      event: 'elongamePlaceBetGuest',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackElonCashout = ({ amount, multiplier, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      event: 'elongameCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackElonCancelBet = ({ amount, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      event: 'elongameCancelBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
 export default TagManager;
