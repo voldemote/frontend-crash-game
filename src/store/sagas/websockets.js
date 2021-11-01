@@ -241,7 +241,7 @@ export function* init() {
           case UserNotificationTypes.EVENT_CANCEL:
           case UserNotificationTypes.EVENT_RESOLVE:
           case UserNotificationTypes.EVENT_START:
-          case UserNotificationTypes.EVENT_USER_AWARD:
+          case UserNotificationTypes.USER_AWARD:
             yield put(
               AlertActions.showNotification({
                 notification: payload,

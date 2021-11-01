@@ -57,7 +57,7 @@ const NotificationsItem = ({ notification, onMarkAsRead, events }) => {
   };
 
   let imageUrl = notification.payload?.imageUrl;
-  if (notification.type === UserNotificationTypes.EVENT_USER_AWARD) {
+  if (notification.type === UserNotificationTypes.USER_AWARD) {
     imageUrl = 'static/media/medal-second.96a51a45.png';
   }
 

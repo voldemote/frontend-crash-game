@@ -13,7 +13,7 @@ export const UserNotificationTypes = {
   EVENT_RESOLVE: 'Notification/EVENT_RESOLVE',
   EVENT_CANCEL: 'Notification/EVENT_CANCEL',
   BET_STARTED: 'Notification/EVENT_BET_STARTED',
-  EVENT_USER_AWARD: 'Notification/EVENT_USER_AWARD',
+  USER_AWARD: 'Notification/USER_AWARD',
 };
 
 const removeAlert = makeActionCreator(AlertTypes.REMOVE, {
