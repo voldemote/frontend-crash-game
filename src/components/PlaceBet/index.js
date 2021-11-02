@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import { RosiGameActions } from 'store/actions/rosi-game';
-import { AlertActions } from 'store/actions/alert';
 import {
   selectUserBet,
   selectHasStarted,
@@ -31,21 +30,15 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/utils';
-import { getMaxListeners } from 'process';
 import {
   trackElonChangeAutoCashout,
-  trackElonPlaceBet,
-  trackElonCashout,
   trackElonPlaceBetGuest,
-  trackElonCancelBet,
 } from '../../config/gtm';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../config/games';
-import { useParams } from 'react-router-dom';
 
-const PlaceBet = ({ connected, onBet, onCashout }) => {
+const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
-  const { slug } = useParams();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
   const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
@@ -64,8 +57,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const gameOffline = useSelector(selectGameOffline);
-  const game = Object.values(GAMES).find(g => g.slug === slug);
-  const Api = new GameApi(game.url);
+
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
     Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
@@ -174,42 +166,18 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const placeABet = () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
-    onBet();
     const payload = {
       amount,
       crashFactor: 999,
     };
-
-    Api.createTrade(payload)
-      .then(_ => {
-        trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-        dispatch(RosiGameActions.setUserBet(payload));
-      })
-      .catch(_ => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Place Bet failed',
-          })
-        );
-      });
+    onBet(payload, crashFactor);
   };
 
   const cancelBet = e => {
     e.preventDefault();
     e.stopPropagation();
     setCanBet(false);
-    Api.cancelBet()
-      .then(() => {
-        trackElonCancelBet({ amount });
-        dispatch(RosiGameActions.cancelBet({ userId: user.userId }));
-      })
-      .catch(() => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Cancel Bet failed',
-          })
-        );
-      });
+    onCancel(user.userId, amount);
   };
 
   const placeGuestBet = () => {
@@ -240,32 +208,15 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
     }
   };
 
-  const cashOut = () => {
+  const cashOut = async () => {
     setCanBet(false);
     dispatch(RosiGameActions.cashOut());
-    Api.cashOut()
-      .then(response => {
-        const { crashFactor: crashFactorCashout, reward } = response.data;
-
-        trackElonCashout({
-          amount: reward,
-          multiplier: parseFloat(crashFactorCashout),
-        });
-        setAnimate(true);
-        onCashout();
-        AlertActions.showSuccess(JSON.stringify(response));
-      })
-      .catch(_ => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Cashout failed',
-          })
-        );
-      });
+    const response = await onCashout();
+    setAnimate(true);
   };
 
   const cashOutGuest = () => {
-    onCashout();
+    onCashout(true);
     setCanBet(false);
     dispatch(RosiGameActions.cashOutGuest());
     setAnimate(true);

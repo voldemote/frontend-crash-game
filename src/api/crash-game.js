@@ -14,11 +14,13 @@ const createInstance = (host, apiPath) => {
 };
 
 class GameApi {
-  constructor(host) {
+  constructor(host, token) {
     this.host = host;
     this.api = createInstance(host, '/');
+    this.setToken(token);
   }
   setToken = token => {
+    if (!token) return;
     const authentication = 'Bearer ' + token;
 
     this.api.defaults.headers.common['Authorization'] = authentication;

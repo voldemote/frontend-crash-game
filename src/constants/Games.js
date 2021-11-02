@@ -17,7 +17,7 @@ export const CASINO_GAMES = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: Routes.rosiGame,
+    linkTo: Routes.elonGame,
     infoIcon: {
       iconType: IconType.info,
       content: (

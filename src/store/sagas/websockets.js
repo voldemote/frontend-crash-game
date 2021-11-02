@@ -11,7 +11,6 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
-import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 import { GAMES } from '../../config/games';
