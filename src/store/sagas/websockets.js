@@ -174,12 +174,10 @@ const notificationTypes = {
 
 export function* init() {
   const token = yield select(state => state.authentication.token);
-
   try {
     const socket = yield call(createSocket, token);
     const socketChannel = yield call(createSocketChannel, socket);
     yield put(WebsocketsActions.initSucceeded());
-
     while (true) {
       try {
         const payload = yield take(socketChannel);
@@ -269,9 +267,10 @@ export function* init() {
             );
             break;
           case 'notification':
-          case notificationTypes.EVENT_CANCEL:
-          case notificationTypes.EVENT_USER_REWARD:
-          case notificationTypes.EVENT_START:
+          case UserNotificationTypes.BET_RESOLVED:
+          case UserNotificationTypes.EVENT_BET_CANCELLED:
+          case UserNotificationTypes.EVENT_RESOLVE:
+          case UserNotificationTypes.EVENT_USER_REWARD:
           case UserNotificationTypes.USER_AWARD:
             yield put(
               AlertActions.showNotification({

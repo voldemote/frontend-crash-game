@@ -9,10 +9,10 @@ export const AlertTypes = {
 };
 
 export const UserNotificationTypes = {
-  EVENT_START: 'Notification/EVENT_START',
+  BET_RESOLVED: 'Notification/EVENT_BET_RESOLVED',
   EVENT_RESOLVE: 'Notification/EVENT_RESOLVE',
-  EVENT_CANCEL: 'Notification/EVENT_CANCEL',
-  BET_STARTED: 'Notification/EVENT_BET_STARTED',
+  EVENT_BET_CANCELLED: 'Notification/EVENT_BET_CANCELED',
+  EVENT_USER_REWARD: 'Notification/EVENT_USER_REWARD',
   USER_AWARD: 'Notification/USER_AWARD',
 };
 
