@@ -14,6 +14,7 @@ import { matchPath } from 'react-router';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
+import { GAMES } from '../../config/games';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -322,8 +323,11 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
       e => e.slug === (!!currentAction[1] ? currentAction[1] : eventSlug)
     );
     if (event) newRoomToJoin = event._id;
-  } else if (currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game') {
-    newRoomToJoin = ROSI_GAME_EVENT_ID;
+  } else if (currentAction[0] === 'games' || pathSlugs[0] === 'games') {
+    const game = Object.values(GAMES).find(g => g.slug === pathSlugs[1]);
+    if (game) {
+      newRoomToJoin = game.id;
+    }
   }
 
   if (newRoomToJoin) {

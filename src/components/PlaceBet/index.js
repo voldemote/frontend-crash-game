@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
-import * as Api from 'api/crash-game';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import { AlertActions } from 'store/actions/alert';
 import {
@@ -40,9 +39,13 @@ import {
   trackElonPlaceBetGuest,
   trackElonCancelBet,
 } from '../../config/gtm';
+import { GameApi } from '../../api/crash-game';
+import { GAMES } from '../../config/games';
+import { useParams } from 'react-router-dom';
 
 const PlaceBet = ({ connected, onBet, onCashout }) => {
   const dispatch = useDispatch();
+  const { slug } = useParams();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
   const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
@@ -61,6 +64,8 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const gameOffline = useSelector(selectGameOffline);
+  const game = Object.values(GAMES).find(g => g.slug === slug);
+  const Api = new GameApi(game.url);
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
     Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
@@ -136,6 +141,7 @@ const PlaceBet = ({ connected, onBet, onCashout }) => {
   useEffect(() => {
     ReactTooltip.rebuild();
   }, [showCashoutWarning]);
+
   useEffect(() => {
     setAnimate(false);
   }, [isGameRunning]);

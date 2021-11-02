@@ -28,7 +28,7 @@ import { PopupActions } from 'store/actions/popup';
 import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 
-const RosiGame = ({ showPopup, connected, userId }) => {
+const RosiGame = ({ showPopup, connected, userId, path }) => {
   const dispatch = useDispatch();
   const { lastCrashes, inGameBets, cashedOut, hasStarted, isEndgame } =
     useRosiData();
@@ -212,6 +212,7 @@ const RosiGame = ({ showPopup, connected, userId }) => {
                   onCashout={() => {
                     audio.playWinSound();
                   }}
+                  gameId={path}
                 />
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
@@ -235,6 +236,7 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
+    path: state.router.location.pathname,
   };
 };
 
