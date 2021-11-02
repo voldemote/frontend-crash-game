@@ -2,15 +2,11 @@ import { take, put, call, select, delay } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { RosiGameActions } from '../actions/rosi-game';
 import { NotificationActions } from '../actions/notification';
-import { AlertActions } from '../actions/alert';
+import { AlertActions, UserNotificationTypes } from '../actions/alert';
 import _ from 'lodash';
 import ChatMessageType from '../../components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from '../actions/chat';
-import {
-  WebsocketsActions,
-  WebsocketsTypes,
-  UserMessageRoomId,
-} from '../actions/websockets';
+import { WebsocketsActions, UserMessageRoomId } from '../actions/websockets';
 import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
@@ -119,7 +115,7 @@ function createSocketChannel(socket) {
     const betStartedHandler = data => {
       const message = {
         ...data,
-        type: notificationTypes.BET_STARTED,
+        type: UserNotificationTypes.BET_STARTED,
       };
 
       emit(message);
@@ -276,6 +272,7 @@ export function* init() {
           case notificationTypes.EVENT_CANCEL:
           case notificationTypes.EVENT_USER_REWARD:
           case notificationTypes.EVENT_START:
+          case UserNotificationTypes.USER_AWARD:
             yield put(
               AlertActions.showNotification({
                 notification: payload,
