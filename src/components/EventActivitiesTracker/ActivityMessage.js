@@ -8,6 +8,7 @@ import { formatToFixed, toNumericString } from 'helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
 import { calculateGain } from '../../helper/Calculation';
 import medalCoin from '../../data/icons/medal-coin.png';
+import { roundToTwo } from '../../helper/FormatNumbers';
 
 const ActivityMessage = ({ activity, date, users, events }) => {
   const getUserProfileUrl = data => {
@@ -39,7 +40,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
         href={`${window.location.origin}/user/${userId}`}
         rel="noreferrer"
       >
-        {userName || 'Unknown user'}
+        {userName || 'User'}
       </a>
     );
   };
@@ -97,6 +98,43 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             </Grid>
           </Grid>
         );
+      case 'Casino/EVENT_CASINO_LOST': {
+        const stakedAmount = toNumericString(data?.stakedAmount);
+        const crashFactor = roundToTwo(_.get(data, 'crashFactor'));
+        return (
+          <Grid container>
+            <Grid item xs>
+              <div className={styles.messageLeft}>
+                <p>{'Elon Game'}</p>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <div className={styles.messageCenter}>
+                <p>{usrname}</p>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <div className={classNames(styles.messageRight)}>
+                {stakedAmount} {TOKEN_NAME}
+                <img src={medalCoin} alt="medal" />
+              </div>
+            </Grid>
+            <Grid item xs>
+              <div className={styles.messageCenter}>
+                <p className={styles.rewardMulti}>{crashFactor}x</p>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <div className={styles.messageLast}>
+                <p className={'global-cashout-loss'}>
+                  -{stakedAmount} {TOKEN_NAME}
+                </p>
+                <img src={medalCoin} alt="medal" />
+              </div>
+            </Grid>
+          </Grid>
+        );
+      }
       default:
         return null;
     }
