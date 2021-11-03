@@ -13,7 +13,6 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
-import { RosiGameActions } from '../../store/actions/rosi-game';
 import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
@@ -41,7 +40,7 @@ const RosiGame = ({
   refreshHighData,
   refreshLuckyData,
   path,
-  token
+  token,
 }) => {
   const dispatch = useDispatch();
   const {
@@ -53,7 +52,7 @@ const RosiGame = ({
     highData,
     luckyData,
   } = useRosiData();
-    const { slug } = useParams();
+  const { slug } = useParams();
   const [audio, setAudio] = useState(null);
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
