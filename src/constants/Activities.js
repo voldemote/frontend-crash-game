@@ -41,6 +41,10 @@ export const ACTIVITIES_TO_TRACK = [
     value: 'elongame',
     category: 'Elon game',
     image: VegasIcon,
-    eventsCats: ['Casino/CASINO_PLACE_BET', 'Casino/CASINO_CASHOUT'],
+    eventsCats: [
+      'Casino/CASINO_PLACE_BET',
+      'Casino/CASINO_CASHOUT',
+      'Casino/EVENT_CASINO_LOST',
+    ],
   },
 ];
