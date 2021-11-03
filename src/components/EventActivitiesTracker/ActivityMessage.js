@@ -54,49 +54,24 @@ const ActivityMessage = ({ activity, users }) => {
     switch (activity.type) {
       case 'Casino/CASINO_CASHOUT':
         const stakedAmount = toNumericString(data?.stakedAmount);
+        const crashFactor = roundToTwo(_.get(data, 'crashFactor'));
         const rowData = {
           userId: userName,
           rewardAmount,
           stakedAmount,
-          crashFactor: data?.crashFactor,
+          crashFactor,
         };
-        return <ActivityTableRow data={rowData} />;
+        return <ActivityTableRow data={rowData} type={'cashout'} />;
       case 'Casino/EVENT_CASINO_LOST': {
         const stakedAmount = toNumericString(data?.stakedAmount);
         const crashFactor = roundToTwo(_.get(data, 'crashFactor'));
-        return (
-          <Grid container>
-            <Grid item xs>
-              <div className={styles.messageLeft}>
-                <p>{'Elon Game'}</p>
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className={styles.messageCenter}>
-                <p>{usrname}</p>
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className={classNames(styles.messageRight)}>
-                {stakedAmount} {TOKEN_NAME}
-                <img src={medalCoin} alt="medal" />
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className={styles.messageCenter}>
-                <p className={styles.rewardMulti}>{crashFactor}x</p>
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className={styles.messageLast}>
-                <p className={'global-cashout-loss'}>
-                  -{stakedAmount} {TOKEN_NAME}
-                </p>
-                <img src={medalCoin} alt="medal" />
-              </div>
-            </Grid>
-          </Grid>
-        );
+        const rowData = {
+          userId: userName,
+          rewardAmount,
+          stakedAmount,
+          crashFactor,
+        };
+        return <ActivityTableRow data={rowData} type={'lost'} />;
       }
       default:
         return null;
