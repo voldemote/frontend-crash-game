@@ -8,6 +8,14 @@ export const AlertTypes = {
   SHOW_NOTIFICATION: 'Alert/SHOW_NOTIFICATION',
 };
 
+export const UserNotificationTypes = {
+  BET_RESOLVED: 'Notification/EVENT_BET_RESOLVED',
+  EVENT_RESOLVE: 'Notification/EVENT_RESOLVE',
+  EVENT_BET_CANCELLED: 'Notification/EVENT_BET_CANCELED',
+  EVENT_USER_REWARD: 'Notification/EVENT_USER_REWARD',
+  USER_AWARD: 'Notification/USER_AWARD',
+};
+
 const removeAlert = makeActionCreator(AlertTypes.REMOVE, {
   id: null,
 });
