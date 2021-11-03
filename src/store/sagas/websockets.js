@@ -323,8 +323,13 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     );
     if (event) newRoomToJoin = event._id;
   }
-  if ((currentAction[0] === 'games' || pathSlugs[0] === 'games') && (pathSlugs.lenght > 1)) {
-    const game = Object.values(GAMES).find(g => g.slug === pathSlugs[1]);
+  if (
+    (currentAction[0] === 'games' || pathSlugs[0] === 'games') &&
+    (pathSlugs.length > 1 || currentAction.length > 1)
+  ) {
+    const game = Object.values(GAMES).find(
+      g => g.slug === (pathSlugs[1] || currentAction[1])
+    );
     if (game) {
       newRoomToJoin = game.id;
     }
