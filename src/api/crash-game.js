@@ -60,12 +60,12 @@ const getGameDetailById = (gameId, type) => {
 const transformUser = user => ({
   crashFactor: user.crashfactor,
   createdAt: user.createdAt,
-  gameMatch: user.gameMatch,
+  gameMatch: user.gamematch,
   gameHash: user.gameHash,
-  id: user.id,
-  stakedAmount: user.stakedAmount,
+  stakedAmount: user.stakedamount,
   state: 2,
   userId: user.id,
+  rewardAmount: user.crashfactor * user.stakedamount,
 });
 
 const getLuckyUsers = () => {
