@@ -286,7 +286,7 @@ export function* init() {
             if (trackedActivities.indexOf(payload.eventName) > -1) {
               yield put(
                 NotificationActions.addActivity({
-                  activity: payload.data.data,
+                  activity: payload.data,
                   eventName: payload.eventName,
                 })
               );
