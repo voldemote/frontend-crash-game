@@ -34,8 +34,6 @@ import {
   trackElonChangeAutoCashout,
   trackElonPlaceBetGuest,
 } from '../../config/gtm';
-import { GameApi } from '../../api/crash-game';
-import { GAMES } from '../../config/games';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();

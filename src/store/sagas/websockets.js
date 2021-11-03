@@ -13,7 +13,7 @@ import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
-import { GAMES } from '../../config/games';
+import { GAMES } from '../../constants/Games';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {

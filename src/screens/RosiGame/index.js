@@ -30,8 +30,8 @@ import {
   trackElonPlaceBet,
 } from '../../config/gtm';
 import { useParams } from 'react-router-dom';
-import { GAMES } from '../../config/games';
 import { GameApi } from '../../api/crash-game';
+import { GAMES } from '../../constants/Games';
 
 const RosiGame = ({ showPopup, connected, userId, path, token }) => {
   const dispatch = useDispatch();

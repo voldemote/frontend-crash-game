@@ -127,3 +127,15 @@ export const SPORTS_BETTING_GAMES = [
     linkTo: '',
   },
 ];
+export const GAMES = {
+  gameTwo: {
+    id: '61817de6a9695acd029ffef3',
+    slug: 'pump-dump',
+    url: process.env.REACT_APP_PUMP_DUMP_GAME_BACKEND_URL,
+  },
+  elonGame: {
+    id: '614381d74f78686665a5bb76',
+    slug: 'elon-game',
+    url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
+  },
+};
