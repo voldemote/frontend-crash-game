@@ -61,6 +61,29 @@ class GameApi {
       console.log('[API Error] called: getGameDetailById', error);
     });
   };
+
+  transformUser = user => ({
+    crashFactor: user.crashfactor,
+    createdAt: user.createdAt,
+    gameMatch: user.gamematch,
+    gameHash: user.gameHash,
+    stakedAmount: user.stakedamount,
+    state: 2,
+    userId: user.id,
+    rewardAmount: user.crashfactor * user.stakedamount,
+  });
+
+  getLuckyUsers = () => {
+    return Api.get(ApiUrls.API_TRADES_LUCKY).then(response => ({
+      data: response.data.map(transformUser),
+    }));
+  };
+
+  getHighUsers = () => {
+    return Api.get(ApiUrls.API_TRADES_HIGH).then(response => ({
+      data: response.data.map(transformUser),
+    }));
+  };
 }
 
 const Api = createInstance(ApiUrls.CRASH_GAME_BACKEND_URL, '/');
