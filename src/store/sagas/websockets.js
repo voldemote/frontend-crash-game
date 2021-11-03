@@ -322,22 +322,24 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
       e => e.slug === (!!currentAction[1] ? currentAction[1] : eventSlug)
     );
     if (event) newRoomToJoin = event._id;
-  } else if (currentAction[0] === 'games' || pathSlugs[0] === 'games') {
+  }
+  if ((currentAction[0] === 'games' || pathSlugs[0] === 'games') && (pathSlugs.lenght > 1)) {
     const game = Object.values(GAMES).find(g => g.slug === pathSlugs[1]);
     if (game) {
       newRoomToJoin = game.id;
     }
   }
 
+  if (currentRoom && currentRoom !== UserMessageRoomId) {
+    yield put(
+      WebsocketsActions.leaveRoom({
+        userId,
+        roomId: currentRoom,
+      })
+    );
+  }
+
   if (newRoomToJoin) {
-    if (currentRoom !== UserMessageRoomId) {
-      yield put(
-        WebsocketsActions.leaveRoom({
-          userId,
-          roomId: currentRoom,
-        })
-      );
-    }
     yield put(
       WebsocketsActions.joinRoom({
         userId,

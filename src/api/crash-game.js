@@ -107,6 +107,29 @@ const getGameDetailById = (gameId, type) => {
   });
 };
 
+const transformUser = user => ({
+  crashFactor: user.crashfactor,
+  createdAt: user.createdAt,
+  gameMatch: user.gameMatch,
+  gameHash: user.gameHash,
+  id: user.id,
+  stakedAmount: user.stakedAmount,
+  state: 2,
+  userId: user.id,
+});
+
+const getLuckyUsers = () => {
+  return Api.get(ApiUrls.API_TRADES_LUCKY).then(response => ({
+    data: response.data.map(transformUser),
+  }));
+};
+
+const getHighUsers = () => {
+  return Api.get(ApiUrls.API_TRADES_HIGH).then(response => ({
+    data: response.data.map(transformUser),
+  }));
+};
+
 export {
   GameApi,
   Api,
@@ -116,4 +139,6 @@ export {
   cashOut,
   cancelBet,
   getGameDetailById,
+  getLuckyUsers,
+  getHighUsers,
 };
