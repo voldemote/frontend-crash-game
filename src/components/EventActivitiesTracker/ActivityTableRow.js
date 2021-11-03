@@ -3,9 +3,17 @@ import Grid from '@material-ui/core/Grid';
 import styles from './styles.module.scss';
 import { TOKEN_NAME } from '../../constants/Token';
 import medalCoin from '../../data/icons/medal-coin.png';
+import { toNumericString } from 'helper/FormatNumbers';
 
 const ActivityTableRow = ({ data }) => {
-  const { userId, stakedAmount, rewardAmount, crashFactor } = data;
+  const {
+    userId,
+    stakedAmount: stakedAmountRaw,
+    rewardAmount: rewardAmountRaw,
+    crashFactor,
+  } = data;
+  const stakedAmount = Number.parseInt(stakedAmountRaw);
+  const rewardAmount = Number.parseInt(rewardAmountRaw);
   return (
     <div className={styles.messageItem}>
       <Grid container>
@@ -21,7 +29,7 @@ const ActivityTableRow = ({ data }) => {
         </Grid>
         <Grid item xs>
           <div className={styles.messageRight}>
-            {stakedAmount} {TOKEN_NAME}
+            {toNumericString(stakedAmount)} {TOKEN_NAME}
             <img src={medalCoin} alt="medal" />
           </div>
         </Grid>
@@ -33,7 +41,7 @@ const ActivityTableRow = ({ data }) => {
         <Grid item xs>
           <div className={styles.messageLast}>
             <p className={styles.reward}>
-              {rewardAmount} {TOKEN_NAME}
+              {toNumericString(rewardAmount)} {TOKEN_NAME}
             </p>
             <img src={medalCoin} alt="medal" />
           </div>
