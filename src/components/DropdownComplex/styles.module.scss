@@ -32,6 +32,14 @@
     }
 }
 */
+.mobileselect{
+  min-height:38px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.2px solid #b0b0b0;
+  background: none;
+  border-radius: 10px !important;
+}
 .dropdownContainer
 {
     display:        flex;

@@ -4,6 +4,7 @@ import Select from 'react-select';
 import styles from './styles.module.scss';
 import 'react-dropdown/style.css';
 import { COUNTRIES } from 'constants/Countries';
+import { isMobile } from 'react-device-detect';
 
 const DropdownComplex = ({
   options,
@@ -18,12 +19,29 @@ const DropdownComplex = ({
   };
 
   useEffect(() => {
+    console.log('navigator.language', navigator.language);
     const defaultValue = COUNTRIES.filter(
       c => navigator.language.slice(-2) === c.value
     )[0];
     if (setValue) setValue(defaultValue);
   }, []);
-
+  //  <select>{props.options.map(...)}</select>
+  console.log('option.value', options[0].value, value.value);
+  if (isMobile) {
+    return (
+      <select className={styles.mobileselect}>
+        {options.map(option => (
+          <option
+            selected={option.value === value.value ? true : false}
+            onClick={onChange}
+            value={option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  }
   return (
     <>
       <div className={styles.dropdownContainer}>
