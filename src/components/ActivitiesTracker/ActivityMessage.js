@@ -240,12 +240,37 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             .
           </div>
         );
-      case 'Notification/EVENT_BET_RESOLVED':
+      case 'Notification/EVENT_BET_RESOLVED': {
+        const event = _.get(data, 'event');
+        const eventSlug = _.get(event, 'slug');
+        const bet = _.get(data, 'bet', []);
+        const outcomeIndex = _.get(bet, 'finalOutcome');
+        const outcomesName = _.get(bet, `outcomes[${outcomeIndex}].name`);
+
+        const ResolveLink = () => (
+          <a
+            className={'global-link-style'}
+            target={'_blank'}
+            href={`${window.location.origin}/trade/${eventSlug}/${_.get(
+              bet,
+              'slug'
+            )}`}
+            rel="noreferrer"
+          >
+            {_.get(bet, 'marketQuestion')}
+          </a>
+        );
+
         return (
           <div>
-            Bet <b>{getEventUrl(data)}</b> has been resolved.
+            Bet{' '}
+            <b>
+              <ResolveLink />
+            </b>{' '}
+            has been resolved with <b>{outcomesName}</b>.
           </div>
         );
+      }
       case 'Notification/EVENT_BET_EVALUATED':
         return (
           <div>
