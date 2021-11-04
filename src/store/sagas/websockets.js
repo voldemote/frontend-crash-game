@@ -269,6 +269,7 @@ export function* init() {
           case 'notification':
           case UserNotificationTypes.BET_RESOLVED:
           case UserNotificationTypes.EVENT_BET_CANCELLED:
+          case UserNotificationTypes.EVENT_CANCEL:
           case UserNotificationTypes.EVENT_RESOLVE:
           case UserNotificationTypes.EVENT_USER_REWARD:
           case UserNotificationTypes.USER_AWARD:
