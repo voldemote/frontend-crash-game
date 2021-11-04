@@ -41,7 +41,6 @@ initTagManager();
 
 const App = () => {
   const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
-
   return (
     <div id={"main-scroll-container"} onScroll={onScroll}>
       <Provider store={store}>
@@ -122,7 +121,6 @@ const App = () => {
 // Recalculating after resizing screen
 window.addEventListener('resize', () => {
   let vh = window.innerHeight * 0.01;
-
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
