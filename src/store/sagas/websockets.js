@@ -311,6 +311,8 @@ const isActivitiesPage = (currentAction, pathSlugs) =>
   currentAction[0] === 'activities' || pathSlugs[0] === 'activities';
 const isHomePage = (currentAction, pathSlugs) =>
   currentAction[0] === '' || pathSlugs[0] === '';
+const isElonGamePage = (currentAction, pathSlugs) =>
+  currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game';
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -336,12 +338,13 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     );
     if (event) newRoomToJoin = event._id;
   }
-  if (currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game') {
+  if (isElonGamePage(currentAction, pathSlugs)) {
     newRoomToJoin = ROSI_GAME_EVENT_ID;
   }
   if (
     isActivitiesPage(currentAction, pathSlugs) ||
-    isHomePage(currentAction, pathSlugs)
+    isHomePage(currentAction, pathSlugs) ||
+    isElonGamePage(currentAction, pathSlugs)
   ) {
     newRoomToJoin = UNIVERSAL_EVENTS_ROOM_ID;
   }
