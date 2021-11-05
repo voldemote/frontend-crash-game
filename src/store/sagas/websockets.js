@@ -324,11 +324,11 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   }
 
   const userId = yield select(state => state.authentication.userId);
-  const currentRoom = yield select(state => state.websockets.room);
+  const currentRooms = yield select(state => state.websockets.rooms) || [];
   const pathname = yield select(state => state.router.location.pathname);
   const currentAction = action.payload.location.pathname.slice(1).split('/');
   const pathSlugs = pathname.slice(1).split('/');
-  let newRoomToJoin;
+  let newRoomsToJoin = [];
 
   if (currentAction[0] === 'trade' || pathSlugs[0] === 'trade') {
     const eventSlug = pathSlugs[1];
@@ -336,39 +336,44 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     const event = events.find(
       e => e.slug === (!!currentAction[1] ? currentAction[1] : eventSlug)
     );
-    if (event) newRoomToJoin = event._id;
+    if (event) newRoomsToJoin.push(event._id);
   }
   if (isElonGamePage(currentAction, pathSlugs)) {
-    newRoomToJoin = ROSI_GAME_EVENT_ID;
+    newRoomsToJoin.push(ROSI_GAME_EVENT_ID);
   }
   if (
     isActivitiesPage(currentAction, pathSlugs) ||
     isHomePage(currentAction, pathSlugs) ||
     isElonGamePage(currentAction, pathSlugs)
   ) {
-    newRoomToJoin = UNIVERSAL_EVENTS_ROOM_ID;
+    newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
 
-  if (
-    currentRoom &&
-    currentRoom !== UserMessageRoomId &&
-    newRoomToJoin !== currentRoom
-  ) {
-    yield put(
-      WebsocketsActions.leaveRoom({
-        userId,
-        roomId: currentRoom,
-      })
-    );
+  // leave all non active rooms except UserMessageRoomId
+  for (let roomIdToLeave of currentRooms) {
+    if (
+      roomIdToLeave !== UserMessageRoomId &&
+      !newRoomsToJoin.includes(roomIdToLeave)
+    ) {
+      yield put(
+        WebsocketsActions.leaveRoom({
+          userId,
+          roomId: roomIdToLeave,
+        })
+      );
+    }
   }
 
-  if (newRoomToJoin && newRoomToJoin !== currentRoom) {
-    yield put(
-      WebsocketsActions.joinRoom({
-        userId,
-        roomId: newRoomToJoin,
-      })
-    );
+  // join all non already active rooms
+  for (let roomId of newRoomsToJoin) {
+    if (!currentRooms.includes(roomId)) {
+      yield put(
+        WebsocketsActions.joinRoom({
+          userId,
+          roomId: roomId,
+        })
+      );
+    }
   }
 }
 
