@@ -12,6 +12,7 @@ import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
+import { UNIVERSAL_EVENTS_ROOM_ID } from 'constants/Activities';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 
@@ -306,6 +307,11 @@ export function* init() {
   }
 }
 
+const isActivitiesPage = (currentAction, pathSlugs) =>
+  currentAction[0] === 'activities' || pathSlugs[0] === 'activities';
+const isHomePage = (currentAction, pathSlugs) =>
+  currentAction[0] === '' || pathSlugs[0] === '';
+
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
   const connected = yield select(state => state.websockets.connected);
@@ -333,8 +339,18 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   if (currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game') {
     newRoomToJoin = ROSI_GAME_EVENT_ID;
   }
+  if (
+    isActivitiesPage(currentAction, pathSlugs) ||
+    isHomePage(currentAction, pathSlugs)
+  ) {
+    newRoomToJoin = UNIVERSAL_EVENTS_ROOM_ID;
+  }
 
-  if (currentRoom && currentRoom !== UserMessageRoomId) {
+  if (
+    currentRoom &&
+    currentRoom !== UserMessageRoomId &&
+    newRoomToJoin !== currentRoom
+  ) {
     yield put(
       WebsocketsActions.leaveRoom({
         userId,
@@ -343,7 +359,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     );
   }
 
-  if (newRoomToJoin) {
+  if (newRoomToJoin && newRoomToJoin !== currentRoom) {
     yield put(
       WebsocketsActions.joinRoom({
         userId,
