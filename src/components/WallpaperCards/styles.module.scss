@@ -74,20 +74,8 @@
     flex-basis: 20%;
     padding: 20px;
 
-    &:first-child {
-      flex-basis: 20%;
-    }
-
-    &:nth-child(2) {
-      flex-basis: 20%;
-    }
-
     @media (max-width: $screen-md) {
       padding: 20px 0;
-    }
-
-    &:last-child {
-      padding-right: 0;
     }
 
     .cardItem {
