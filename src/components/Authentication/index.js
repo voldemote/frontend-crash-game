@@ -121,7 +121,9 @@ const Authentication = ({
 
   const validateInput = options => {
     let error;
-
+    const notAllowed = NOT_ALLOWED_COUNTRIES.findIndex(
+      c => c.value === country?.value || c.value === country
+    );
     if (isSignUp() && !forgotPassword && !legalAuthorizationAgreed) {
       error = 'Confirm that you agree with Terms and Conditions';
       fooRef = acceptRef;
@@ -133,6 +135,14 @@ const Authentication = ({
     if (isSignUp() && !forgotPassword && !passwordsMatch()) {
       error = 'Passwords do not match';
       fooRef = pwConfirmRef;
+    }
+    if (isSignUp() && !forgotPassword && notAllowed) {
+      error = 'Country is needed';
+      fooRef = countryRef;
+    }
+    if (isSignUp() && !forgotPassword && notAllowed) {
+      error = 'Country not allowed';
+      fooRef = countryRef;
     }
     if (!passwordIsValid() && !forgotPassword) {
       error = 'Your password needs to be 8 characters long';
@@ -184,7 +194,7 @@ const Authentication = ({
             password,
             passwordConfirm: passwordConfirmation,
             birth: birthDate,
-            country: country.value ? country.value : country,
+            country: country?.value ? country.value : country,
             ref: refLocalStorage,
             recaptchaToken,
           })
@@ -412,7 +422,6 @@ const Authentication = ({
     const notAllowed = NOT_ALLOWED_COUNTRIES.findIndex(
       c => c.value === country?.value || c.value === country
     );
-    console.log('notAllowed', notAllowed);
     return !birthdayIsValid() ? (
       <span className={styles.errorText}>
         You need to be above 18 years old in order to use this system

@@ -15,13 +15,14 @@ const DropdownComplex = ({
   ...rest
 }) => {
   const onChange = event => {
-    if (setValue) setValue(event?.target?.value);
+    if (setValue) setValue(event?.target?.value ? event.target.value : event);
   };
 
   useEffect(() => {
     const defaultValue = COUNTRIES.filter(
       c => navigator.language.slice(-2) === c.value
     )[0];
+    console.log('defaultValue', defaultValue);
     if (setValue) setValue(defaultValue);
   }, []);
 
