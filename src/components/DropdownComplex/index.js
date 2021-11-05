@@ -15,7 +15,7 @@ const DropdownComplex = ({
   ...rest
 }) => {
   const onChange = event => {
-    if (setValue) setValue(event.target.value);
+    if (setValue) setValue(event?.target?.value);
   };
 
   useEffect(() => {
