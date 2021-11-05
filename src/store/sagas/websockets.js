@@ -12,6 +12,7 @@ import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
 import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
+import { UNIVERSAL_EVENTS_ROOM_ID } from 'constants/Activities';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 
@@ -332,6 +333,9 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   }
   if (currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game') {
     newRoomToJoin = ROSI_GAME_EVENT_ID;
+  }
+  if (currentAction[0] === 'activities' || pathSlugs[0] === 'activities') {
+    newRoomToJoin = UNIVERSAL_EVENTS_ROOM_ID;
   }
 
   if (currentRoom && currentRoom !== UserMessageRoomId) {

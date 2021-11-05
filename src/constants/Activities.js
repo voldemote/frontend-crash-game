@@ -1,6 +1,9 @@
 import AllIcon from '../data/icons/events-all-icon.svg';
 import VegasIcon from '../data/icons/vegas.svg';
 
+export const UNIVERSAL_EVENTS_ROOM_ID =
+  process.env.UNIVERSAL_EVENTS_ROOM_ID || 'UNIVERSAL_EVENTS_ROOM_ID';
+
 export const ACTIVITIES_TO_TRACK = [
   {
     value: 'all',
