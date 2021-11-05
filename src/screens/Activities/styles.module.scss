@@ -35,11 +35,19 @@
     .statItem {
       background-color: #100D27;
       border-radius: 20px;
-      width: 32%;
+      width: 16%;
       padding: 15px 10px;
       margin-bottom: 10px;
 
+      @media (max-width: $screen-lg) {
+        width: 33%;
+      }
+
       @media (max-width: $screen-md) {
+        width: 50%;
+      }
+
+      @media (max-width: $screen-xs) {
         width: 100%;
       }
 
