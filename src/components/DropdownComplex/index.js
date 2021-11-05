@@ -19,14 +19,12 @@ const DropdownComplex = ({
   };
 
   useEffect(() => {
-    console.log('navigator.language', navigator.language);
     const defaultValue = COUNTRIES.filter(
       c => navigator.language.slice(-2) === c.value
     )[0];
     if (setValue) setValue(defaultValue);
   }, []);
   //  <select>{props.options.map(...)}</select>
-  console.log('option.value', options[0].value, value.value);
   if (isMobile) {
     return (
       <select className={styles.mobileselect}>

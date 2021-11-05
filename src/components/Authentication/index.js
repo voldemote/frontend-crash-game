@@ -35,7 +35,7 @@ const Authentication = ({
   const [birthDay, setBirthDay] = useState('');
   const [birthMonth, setBirthMonth] = useState('');
   const [birthYear, setBirthYear] = useState('');
-  const [country, setCountry] = useState('US');
+  const [country, setCountry] = useState();
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
