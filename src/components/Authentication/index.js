@@ -185,7 +185,7 @@ const Authentication = ({
             password,
             passwordConfirm: passwordConfirmation,
             birth: birthDate,
-            country,
+            country: country,
             ref: refLocalStorage,
             recaptchaToken,
           })

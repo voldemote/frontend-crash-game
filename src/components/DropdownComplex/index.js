@@ -19,14 +19,12 @@ const DropdownComplex = ({
   };
 
   useEffect(() => {
-    console.log('navigator.language', navigator.language);
     const defaultValue = COUNTRIES.filter(
       c => navigator.language.slice(-2) === c.value
     )[0];
     if (setValue) setValue(defaultValue);
   }, []);
-  //  <select>{props.options.map(...)}</select>
-  console.log('option.value', options[0].value, value.value);
+
   if (isMobile) {
     return (
       <select className={styles.mobileselect}>
@@ -42,6 +40,7 @@ const DropdownComplex = ({
       </select>
     );
   }
+
   return (
     <>
       <div className={styles.dropdownContainer}>
@@ -72,12 +71,12 @@ const customStyles = {
   }),
   control: base => ({
     ...base,
-    border: '1px solid #ccc',
-    borderRadius: 2,
+    border: '1.2px solid #b0b0b0',
+    borderRadius: 10,
     boxShadow: 'none',
     '&:hover': {
-      border: '1px solid #ccc',
-      borderRadius: 2,
+      border: '1.2px solid #b0b0b0',
+      borderRadius: 10,
       boxShadow: 'none',
     },
   }),
