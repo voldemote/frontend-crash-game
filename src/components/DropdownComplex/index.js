@@ -14,8 +14,8 @@ const DropdownComplex = ({
   placeholder,
   ...rest
 }) => {
-  const onChange = value => {
-    if (setValue) setValue(value);
+  const onChange = event => {
+    if (setValue) setValue(event.target.value);
   };
 
   useEffect(() => {
@@ -27,11 +27,11 @@ const DropdownComplex = ({
 
   if (isMobile) {
     return (
-      <select className={styles.mobileselect}>
+      <select onChange={onChange} className={styles.mobileselect}>
         {options.map(option => (
           <option
+            key={option.value}
             selected={option.value === value.value ? true : false}
-            onClick={onChange}
             value={option.value}
           >
             {option.label}

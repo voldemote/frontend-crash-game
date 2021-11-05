@@ -176,16 +176,15 @@ const Authentication = ({
     if (forgotPassword) {
       initForgotPassword(email);
     } else {
-      const birthDate = moment(`${birthDay}/${birthMonth}/${birthYear}`).unix();
+      const birthDate = `${birthMonth}/${birthDay}/${birthYear}`;
       const refLocalStorage = localStorage.getItem('urlParam_ref');
-
       isSignUp()
         ? signUp({
             email,
             password,
             passwordConfirm: passwordConfirmation,
             birth: birthDate,
-            country: country,
+            country: country.value ? country.value : country,
             ref: refLocalStorage,
             recaptchaToken,
           })
@@ -411,8 +410,9 @@ const Authentication = ({
       </p>
     );
     const notAllowed = NOT_ALLOWED_COUNTRIES.findIndex(
-      c => c.value === country?.value
+      c => c.value === country?.value || c.value === country
     );
+    console.log('notAllowed', notAllowed);
     return !birthdayIsValid() ? (
       <span className={styles.errorText}>
         You need to be above 18 years old in order to use this system
@@ -470,6 +470,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     signUp: payload => {
+      console.log('payload', payload);
       dispatch(AuthenticationActions.signUp(payload));
     },
     login: payload => {
