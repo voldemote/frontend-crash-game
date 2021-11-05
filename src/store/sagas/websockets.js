@@ -189,15 +189,16 @@ export function* init() {
             if (socket && socket.connected) {
               yield put(WebsocketsActions.connected());
               const userId = yield select(state => state.authentication.userId);
-              const room = yield select(state => state.websockets.room);
-
-              if (room) {
-                yield put(
-                  WebsocketsActions.joinRoom({
-                    userId,
-                    roomId: room,
-                  })
-                );
+              const rooms = yield select(state => state.websockets.rooms);
+              if (rooms) {
+                for (let roomId of rooms) {
+                  yield put(
+                    WebsocketsActions.joinRoom({
+                      userId,
+                      roomId: roomId,
+                    })
+                  );
+                }
               }
             } else {
               yield put(WebsocketsActions.disconnected());
