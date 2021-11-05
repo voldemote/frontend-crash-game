@@ -13,7 +13,7 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper1.png',
   },
   {
     background: Second,
@@ -21,7 +21,7 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper2.png',
   },
   {
     background: Third,
@@ -29,7 +29,7 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper3.png',
   },
   {
     background: Fourth,
@@ -37,7 +37,7 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper4.png',
   },
   {
     background: Fifth,
@@ -45,7 +45,7 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper5.png',
   },
   {
     background: Sixth,
@@ -53,7 +53,7 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper6.png',
   },
   {
     background: Seventh,
@@ -61,6 +61,6 @@ export const ELON_WALLPAPERS = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: '',
+    linkTo: '/images/wallpapers/wallpaper7.png',
   },
 ];

@@ -200,11 +200,7 @@ const RosiGame = ({
 
   const renderWallpaperBanner = () => {
     return (
-      <Link
-        data-tracking-id="elon-wallpaper"
-        to={Routes.elonWallpaper}
-        target="_blank"
-      >
+      <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
         <div className={styles.banner}></div>
       </Link>
     );
