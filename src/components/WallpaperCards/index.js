@@ -35,6 +35,7 @@ const WallpaperCards = ({ wallpapers, category, showHowtoLink, showPopup }) => {
                   styles.cardLink,
                   !card.active ? styles.cardLinkInactive : null
                 )}
+                target="_blank"
               >
                 <div
                   key={index}
