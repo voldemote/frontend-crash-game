@@ -25,7 +25,6 @@ const DropdownComplex = ({
     console.log('defaultValue', defaultValue);
     if (setValue) setValue(defaultValue);
   }, []);
-
   if (isMobile) {
     return (
       <select onChange={onChange} className={styles.mobileselect}>
