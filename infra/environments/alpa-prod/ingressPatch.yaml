@@ -5,10 +5,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - alpa.casino
+    - alpacasino.io
     secretName: frontend-cert-secret
   rules:
-  - host: alpa.casino
+  - host: alpacasino.io
     http:
       paths:
         - path: /
