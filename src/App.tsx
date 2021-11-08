@@ -19,7 +19,7 @@ import NavbarFooter from 'components/NavbarFooter';
 import NavbarFooterAction from 'components/NavbarFooterAction';
 import IconType from 'components/Icon/IconType';
 import Events from './screens/Events';
-import LiveEvents from './screens/LiveEvents';
+// import LiveEvents from './screens/LiveEvents';
 import RosiGame from './screens/RosiGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
@@ -34,6 +34,7 @@ import PageTracker from 'components/PageTracker';
 import useHideMobileScrollingMenu from 'hooks/useHideMobileScrollingMenu';
 import EventRouter from 'components/Events/EventRouter';
 import TypeformController from 'components/TypeformController';
+import ElonWallPaper from 'screens/ElonWallPaper';
 
 const { store, persistor } = configStore();
 
@@ -70,9 +71,10 @@ const App = () => {
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
               <Route exact path={Routes.bet} component={EventRouter} />
               <Route exact path={Routes.betApproveDirect} component={Home} />
-              <Route exact path={Routes.liveEvents} component={LiveEvents} />
+              {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
               <Route exact path={Routes.events} component={Events} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
+              <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
               <Route path={Routes.games} component={Games} />
@@ -92,10 +94,16 @@ const App = () => {
                 trackingId="mobile-menu-home"
               />
               <NavbarFooterAction
-                route={`/live-events`}
-                iconType={IconType.camera}
-                text="Live Stream"
-                trackingId="mobile-menu-live-events"
+                route={Routes.games}
+                iconType={IconType.shuttle}
+                text="Games"
+                trackingId="mobile-menu-games"
+              />
+              <NavbarFooterAction
+                route={Routes.activities}
+                iconType={IconType.newsIcon}
+                text="Activities"
+                trackingId="mobile-menu-activities"
               />
               <NavbarFooterAction
                 route={`/events`}
@@ -103,12 +111,12 @@ const App = () => {
                 text="Events"
                 trackingId="mobile-menu-events"
               />
-              <NavbarFooterAction
-                route={Routes.games}
-                iconType={IconType.shuttle}
-                text="Games"
-                trackingId="mobile-menu-games"
-              />
+              {/*<NavbarFooterAction*/}
+              {/*  route={`/live-events`}*/}
+              {/*  iconType={IconType.camera}*/}
+              {/*  text="Live Stream"*/}
+              {/*  trackingId="mobile-menu-live-events"*/}
+              {/*/>*/}
             </NavbarFooter>
             <ScrollToTop />
           </ConnectedRouter>
