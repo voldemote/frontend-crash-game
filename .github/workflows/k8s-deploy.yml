@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - production
+      - alpa-prod
       - development
       - feature/elon-games
 
@@ -35,6 +36,10 @@ jobs:
         if: github.ref == 'refs/heads/production'
         run: |
           cp public/robots_production.txt public/robots.txt
+      - name: Set robots.txt (alpa-production)
+        if: github.ref == 'refs/heads/alpa-prod'
+        run: |
+          cp public/robots_production.txt public/robots.txt
       - name: Build the docker image (staging)
         if: github.ref == 'refs/heads/main'
         run: |
@@ -52,6 +57,11 @@ jobs:
           docker push registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
       - name: Build the docker image (production)
         if: github.ref == 'refs/heads/production'
+        run: |
+          docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://production-elon-api.wallfair.io/" --build-arg REACT_APP_BACKEND_URL="https://production-api.wallfair.io/" --build-arg REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }} --build-arg REACT_APP_RECAPTCHA_KEY=${{ secrets.REACT_APP_RECAPTCHA_KEY }} --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_PROD_GTM_ID }} --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false -t registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
+          docker push registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
+      - name: Build the docker image (alpa production)
+        if: github.ref == 'refs/heads/alpa-prod'
         run: |
           docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://production-elon-api.wallfair.io/" --build-arg REACT_APP_BACKEND_URL="https://production-api.wallfair.io/" --build-arg REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }} --build-arg REACT_APP_RECAPTCHA_KEY=${{ secrets.REACT_APP_RECAPTCHA_KEY }} --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_PROD_GTM_ID }} --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false -t registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
