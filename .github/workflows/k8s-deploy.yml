@@ -141,5 +141,11 @@ jobs:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
           args: apply -k infra/environments/production
+      - uses: actions-hub/kubectl@master
+        if: github.ref == 'refs/heads/alpa-prod'
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: apply -k infra/environments/alpa-prod
       
   
