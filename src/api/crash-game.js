@@ -1,6 +1,7 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
+import { CRASH_GAME_GET_VOLUME_BETS } from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -132,12 +133,13 @@ const getGameDetailById = (gameId, type) => {
 
 const transformUser = user => ({
   crashFactor: user.crashfactor,
-  createdAt: user.createdAt,
-  gameMatch: user.gamematch,
-  gameHash: user.gameHash,
+  createdAt: user.created_at,
+  gameMatch: user.game_match,
+  gameHash: user.gamehash,
   stakedAmount: user.stakedamount,
   state: 2,
-  userId: user.id,
+  userId: user.userid,
+  username: user.username,
   rewardAmount: user.crashfactor * user.stakedamount,
 });
 
@@ -153,6 +155,11 @@ const getHighUsers = () => {
   }));
 };
 
+const getTotalBetsVolumeByRange = (range = '24h') => {
+  const url = ApiUrls.CRASH_GAME_GET_VOLUME_BETS.replace(':range', range);
+  return Api.get(url);
+};
+
 export {
   GameApi,
   Api,
@@ -164,4 +171,5 @@ export {
   getGameDetailById,
   getLuckyUsers,
   getHighUsers,
+  getTotalBetsVolumeByRange,
 };

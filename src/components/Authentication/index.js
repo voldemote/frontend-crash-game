@@ -1,9 +1,13 @@
 import InputBox from '../InputBox';
+import BirthdayField from '../BirthdayField';
+import DropdownComplex from '../DropdownComplex';
+import Dropdown from '../Dropdown';
 import styles from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect, useSelector } from 'react-redux';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import moment from 'moment';
 import CheckBox from '../CheckBox';
 import ReactTooltip from 'react-tooltip';
 import { FormGroup, InputLabel } from '@material-ui/core';
@@ -12,6 +16,7 @@ import HighlightType from 'components/Highlight/HighlightType';
 import AuthenticationType from './AuthenticationType';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { selectTotalUsers } from '../../store/selectors/leaderboard';
+import { COUNTRIES, NOT_ALLOWED_COUNTRIES } from 'constants/Countries';
 
 const Authentication = ({
   loading,
@@ -27,6 +32,10 @@ const Authentication = ({
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthYear, setBirthYear] = useState('');
+  const [country, setCountry] = useState();
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
@@ -44,7 +53,8 @@ const Authentication = ({
   let pwConfirmRef = useRef(null);
   let acceptRef = useRef(null);
   let genericRef = useRef(null);
-  let ageRef = useRef(null);
+  let birthRef = useRef(null);
+  let countryRef = useRef(null);
 
   const isSignUp = () => authenticationType === AuthenticationType.register;
 
@@ -96,16 +106,28 @@ const Authentication = ({
     return passwordConfirmation && password === passwordConfirmation;
   };
 
+  const birthdayIsValid = () => {
+    const currentYear = new Date().getFullYear();
+    const isOver18 =
+      currentYear - birthYear > 17 && currentYear - birthYear < 100;
+    return (
+      birthDay >= 1 &&
+      birthDay <= 31 &&
+      birthMonth >= 1 &&
+      birthMonth <= 12 &&
+      isOver18
+    );
+  };
+
   const validateInput = options => {
     let error;
-
     if (isSignUp() && !forgotPassword && !legalAuthorizationAgreed) {
       error = 'Confirm that you agree with Terms and Conditions';
       fooRef = acceptRef;
     }
-    if (isSignUp() && !forgotPassword && !ageOver18) {
+    if (isSignUp() && !forgotPassword && !birthdayIsValid()) {
       error = 'You need to be at least 18 years old to use the platform';
-      fooRef = ageRef;
+      fooRef = birthRef;
     }
     if (isSignUp() && !forgotPassword && !passwordsMatch()) {
       error = 'Passwords do not match';
@@ -115,6 +137,8 @@ const Authentication = ({
       error = 'Your password needs to be 8 characters long';
       fooRef = pwRef;
     }
+    console.log('DALE');
+
     if (!emailIsValid()) {
       error = 'Not a valid email address';
       fooRef = emailRef;
@@ -148,19 +172,20 @@ const Authentication = ({
   const onConfirm = () => {
     const error = validateInput();
     if (error) return;
-
     setSubmitInProgress(true);
 
     if (forgotPassword) {
       initForgotPassword(email);
     } else {
+      const birthDate = `${birthMonth}/${birthDay}/${birthYear}`;
       const refLocalStorage = localStorage.getItem('urlParam_ref');
-
       isSignUp()
         ? signUp({
             email,
             password,
             passwordConfirm: passwordConfirmation,
+            birth: birthDate,
+            country: country?.value ? country.value : country,
             ref: refLocalStorage,
             recaptchaToken,
           })
@@ -286,7 +311,8 @@ const Authentication = ({
             />
           </FormGroup>
         )}
-        {isSignUp() && renderLegalAuthorizationAgeVerification()}
+        {isSignUp() && renderBirthdayInputFields()}
+        {isSignUp() && renderCountryInputField()}
         {isSignUp() && renderLegalAuthorizationAgreementCheckBox()}
         {!isSignUp() && renderForgotPasswordLink()}
 
@@ -296,7 +322,8 @@ const Authentication = ({
           highlightType={HighlightType.highlightAuthButton}
           className={styles.submitButton}
           disabled={
-            submitInProgress || (isSignUp() && !forgotPassword && !ageOver18)
+            submitInProgress ||
+            (isSignUp() && !forgotPassword && !legalAuthorizationAgreed)
           }
           disabledWithOverlay={true}
         >
@@ -306,29 +333,64 @@ const Authentication = ({
     );
   };
 
-  const renderLegalAuthorizationAgeVerification = () => {
+  const renderBirthdayInputFields = () => {
     return (
-      <div ref={ref => (ageRef = ref)} className={styles.formGroup}>
+      <FormGroup
+        className={styles.formGroup}
+        data-tip
+        ref={ref => (birthRef = ref)}
+        data-event="none"
+        data-event-off="dblclick"
+      >
         <InputLabel className={styles.inputLabel}>
-          Please verify your age together
+          Please enter your date of birth:
         </InputLabel>
-        <div className={styles.ageVerificationForm}>
-          <span
-            onClick={() => setAgeOver18(true)}
-            className={ageOver18 ? styles.solidButton : styles.outlinedButton}
-          >
-            <span>I am over 18</span>
-          </span>
-          <span
-            onClick={() => setAgeOver18(false)}
-            className={ageOver18 ? styles.outlinedButton : styles.solidButton}
-          >
-            <span>I am under 18</span>
-          </span>
+        <div className={styles.inputForm}>
+          <BirthdayField
+            className={styles.birthInputBox}
+            placeholder="DD"
+            maxValue={31}
+            value={birthDay}
+            setValue={setBirthDay}
+          />
+          <BirthdayField
+            className={styles.birthInputBox}
+            placeholder="MM"
+            maxValue={12}
+            value={birthMonth}
+            setValue={setBirthMonth}
+          />
+          <BirthdayField
+            className={styles.birthInputBox}
+            placeholder="YYYY"
+            maxValue={2050}
+            value={birthYear}
+            setValue={setBirthYear}
+          />
+        </div>
+      </FormGroup>
+    );
+  };
+
+  const renderCountryInputField = () => {
+    return (
+      <div ref={ref => (countryRef = ref)} className={styles.formGroup}>
+        <InputLabel className={styles.inputLabel}>
+          Select your country
+        </InputLabel>
+        <div className={styles.inputForm}>
+          <DropdownComplex
+            options={COUNTRIES}
+            placeholder={''}
+            setValue={setCountry}
+            value={country}
+            className={styles.select}
+          />
         </div>
       </div>
     );
   };
+
   const renderLegalAuthorizationAgreementCheckBox = () => {
     const legalAuthorizationAgreementText = (
       <p
@@ -348,10 +410,16 @@ const Authentication = ({
         </a>
       </p>
     );
-
-    return !ageOver18 ? (
+    const notAllowed = NOT_ALLOWED_COUNTRIES.findIndex(
+      c => c.value === country?.value || c.value === country
+    );
+    return !birthdayIsValid() ? (
       <span className={styles.errorText}>
         You need to be above 18 years old in order to use this system
+      </span>
+    ) : notAllowed >= 0 ? (
+      <span className={styles.errorText}>
+        Users in this country are currently unable to access Wallfair services.
       </span>
     ) : (
       <CheckBox

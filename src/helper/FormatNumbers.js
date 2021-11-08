@@ -18,3 +18,14 @@ export const toNumericString = number => {
     ? ''
     : Number(number).toLocaleString('en-US');
 };
+
+export const roundToTwo = (value, decimalPlaces = 2) => {
+  return Number(
+    Math.round(parseFloat(value + 'e' + decimalPlaces)) + 'e-' + decimalPlaces
+  ).toFixed(decimalPlaces);
+};
+
+export const getReadableAmount = amount => {
+  const one = 10000;
+  return roundToTwo(+amount / one);
+};

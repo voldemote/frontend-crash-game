@@ -381,14 +381,14 @@ const updateUserData = function* (action) {
 const signUp = function* (action) {
   const payload = {
     email: action.email,
+    country: action.country,
+    birth: action.birth,
     password: action.password,
     passwordConfirm: action.passwordConfirm,
     ref: action.ref,
     recaptchaToken: action.recaptchaToken,
   };
-
   const { response, error } = yield call(Api.signUp, payload);
-
   if (response) {
     const initialReward = response?.data?.initialReward;
     yield put(

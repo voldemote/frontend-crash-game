@@ -38,6 +38,7 @@ export default {
   privacyPolicy: '/privacy-policy',
   rosiGame: '/games/:slug',
   elonGame: '/games/elon-game',
+  elonWallpaper: '/games/elon-wallpaper',
   termsAndConditions: '/terms-and-conditions',
   verify: '/verify',
   chart: 'event/bet/:betId/history/chart',
