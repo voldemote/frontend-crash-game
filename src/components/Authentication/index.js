@@ -121,9 +121,10 @@ const Authentication = ({
 
   const validateInput = options => {
     let error;
-    const notAllowed = NOT_ALLOWED_COUNTRIES.findIndex(
-      c => c.value === country?.value || c.value === country
-    );
+    const notAllowed =
+      NOT_ALLOWED_COUNTRIES.findIndex(
+        c => c.value === country?.value || c.value === country
+      ) > 0;
     if (isSignUp() && !forgotPassword && !legalAuthorizationAgreed) {
       error = 'Confirm that you agree with Terms and Conditions';
       fooRef = acceptRef;
