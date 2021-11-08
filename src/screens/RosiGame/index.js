@@ -260,7 +260,7 @@ const RosiGame = ({
               {renderActivities()}
             </div>
           ) : null}
-          {isMiddleOrLargeDevice && renderWallpaperBanner()}
+          {renderWallpaperBanner()}
           <ContentFooter className={styles.betFooter} />
         </div>
       </div>
