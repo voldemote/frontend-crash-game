@@ -258,7 +258,7 @@ const PlinkoGame = ({
               </div>
             </div>
           </div>
-          {isMiddleOrLargeDevice ? null : renderBets()}
+          {/*isMiddleOrLargeDevice ? null : renderBets()*/}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
