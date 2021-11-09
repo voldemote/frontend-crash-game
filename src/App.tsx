@@ -21,6 +21,7 @@ import IconType from 'components/Icon/IconType';
 import Events from './screens/Events';
 // import LiveEvents from './screens/LiveEvents';
 import RosiGame from './screens/RosiGame';
+import RouletteGame from './screens/RouletteGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
 import Activities from './screens/Activities';
@@ -74,6 +75,7 @@ const App = () => {
               {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
               <Route exact path={Routes.events} component={Events} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
+              <Route exact path={Routes.rouletteGame} component={RouletteGame} />
               <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
