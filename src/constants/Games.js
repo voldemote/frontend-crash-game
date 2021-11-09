@@ -54,7 +54,7 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
-    linkTo: 'games/alpaca-roulette',
+    linkTo: '/games/alpaca-roulette',
   },
   {
     background: Third,
@@ -63,7 +63,7 @@ export const NEW_SLOTS_GAMES = [
     description:
       'Jump and run on each price tick, are you heading north, south or staying put?',
     active: true,
-    linkTo: 'games/plinko',
+    linkTo: '/games/plinko',
   } /*,
   {
     background: Fourth,
