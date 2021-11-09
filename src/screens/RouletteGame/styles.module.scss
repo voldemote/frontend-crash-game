@@ -77,7 +77,7 @@
     @media (max-width: $screen-md) {
       flex-direction: column;
     }
-    .leftContainer {      
+    .leftContainer {
       width: calc(100% - 370px);
       @media (max-width: $screen-md) {
         width: 100%;
@@ -94,17 +94,16 @@
       .placeContainer {
         display: flex;
         flex-direction: column;
-        height: 596px;        
         @media (max-width: $screen-md) {          
           height: 100%;
         }
       }
-    }    
+    }
   }
 
   .banner {
     margin-top: 50px;
-    background-image: url('../../data/backgrounds/games/wallpaper-banner.png');    
+    background-image: url('../../data/backgrounds/games/wallpaper-banner.png');
     min-height: 208px;
     width: 100%;
     background-repeat: no-repeat;
@@ -146,7 +145,7 @@
 
 .bottomWrapper {
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
 }
 .chatWrapper {
   margin-top: 32px;
@@ -176,7 +175,7 @@
 .activityWrapper {
   margin-top: 32px;
   padding-left: 7px;
-  
+
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
   }
@@ -198,7 +197,7 @@
 
     .inactivePlaceholder {
       position: absolute;
-      top: 45%;      
+      top: 45%;
       left: 50%;
       transform: translate(-50%, -50%);
       display: flex;

@@ -8,11 +8,11 @@ import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
 import PlaceBetRoulette from 'components/PlaceBetRoulette';
 import BackLink from 'components/BackLink';
-import LastCrashes from 'components/LastCrashes';
+import Spins from 'components/Spins';
 import GameAnimation from 'components/RouletteGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
+import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
@@ -49,6 +49,8 @@ const RouletteGame = ({
     luckyData,
   } = useRosiData();
   const [audio, setAudio] = useState(null);
+  const [spins, setSpins] = useState([]);
+
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
@@ -75,7 +77,7 @@ const RouletteGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-    dispatch(ChatActions.fetchByRoom({ roomId: ROSI_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
   }, [dispatch, connected]);
@@ -173,7 +175,7 @@ const RouletteGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROSI_GAME_EVENT_ID}
+          roomId={ROULETTE_GAME_EVENT_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -206,6 +208,7 @@ const RouletteGame = ({
       </Link>
     );
   };
+  console.log('spins', spins);
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -232,8 +235,9 @@ const RouletteGame = ({
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes text="My Spins" lastCrashes={lastCrashes} />
+              <Spins text="My Spins" spins={spins} />
               <GameAnimation
+                setSpins={newspin => setSpins(spins.concat(newspin))}
                 inGameBets={inGameBets}
                 onInit={audio => setAudio(audio)}
               />

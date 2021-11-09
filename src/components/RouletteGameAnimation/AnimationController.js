@@ -1,4 +1,4 @@
-const innerWidth = 340;
+const innerWidth = 140;
 let sections = [
   '£25',
   '£15',
@@ -19,6 +19,9 @@ let colors = ['#F84', '#8F4', '#48F', '#F8F'];
 class AnimationController {
   init(canvas, options) {
     this.canvas = canvas;
+    this.canvas.width = options.width;
+    this.canvas.height = options.height;
+    //console.log("this.canvas", this.canvas.clientWidth, this.canvas.clientHeight)
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
     this.angle = 0;
@@ -105,8 +108,6 @@ class AnimationController {
 
   repaint(angle) {
     this.angle = angle;
-    //this.canvas.width = innerWidth;
-    //this.canvas.height = innerWidth;
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
     let ctx = this.canvas.getContext('2d');
@@ -131,25 +132,24 @@ class AnimationController {
   }
 
   spinTo(winner = (Math.random() * sections.length) | 0, duration = 5000) {
-    console.log(winner);
-    let final_angle = -0.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
-    let start_angle =
-      this.angle -
-      Math.floor(this.angle / (2 * Math.PI)) * 2 * Math.PI -
-      5 * 2 * Math.PI;
-    let start = performance.now();
-    function frame() {
-      let now = performance.now();
-      let t = Math.min(1, (now - start) / duration);
-      t = 3 * t * t - 2 * t * t * t; // ease in out
-      console.log('this.angle', start_angle + t * (final_angle - start_angle));
-      this.angle = start_angle + t * (final_angle - start_angle);
-      this.repaint(this.angle);
-      if (t < 1) requestAnimationFrame(frame.bind(this));
-      else console.log(false); //setRunning(false);
-    }
-    requestAnimationFrame(frame.bind(this));
-    console.log(true);
+    return new Promise(resolve => {
+      let final_angle = -0.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
+      let start_angle =
+        this.angle -
+        Math.floor(this.angle / (2 * Math.PI)) * 2 * Math.PI -
+        5 * 2 * Math.PI;
+      let start = performance.now();
+      function frame() {
+        let now = performance.now();
+        let t = Math.min(1, (now - start) / duration);
+        t = 3 * t * t - 2 * t * t * t; // ease in out
+        this.angle = start_angle + t * (final_angle - start_angle);
+        this.repaint(this.angle);
+        if (t < 1) requestAnimationFrame(frame.bind(this));
+        else resolve(sections[winner]); //console.log(false); //setRunning(false);
+      }
+      requestAnimationFrame(frame.bind(this));
+    });
   }
 }
 
