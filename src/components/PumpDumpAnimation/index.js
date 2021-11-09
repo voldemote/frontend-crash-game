@@ -24,8 +24,6 @@ const PumpDumpAnimation = () => {
   const [isAnimationReady, setAnimationReady] = useState(false);
   const canvasRef = useRef(null);
 
-  if (!isConnected) return <GameOffline />;
-
   return (
     <div className={styles.animation}>
       <div>Pump Dump Animation Placeholder</div>
@@ -34,6 +32,7 @@ const PumpDumpAnimation = () => {
         id="pump-dump-game-animation"
         ref={canvasRef}
       />
+      {isConnected || <GameOffline />}
     </div>
   );
 };

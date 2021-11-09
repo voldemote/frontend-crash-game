@@ -1,4 +1,4 @@
-import styles from '../RosiGameAnimation/styles.module.scss';
+import styles from './styles.module.scss';
 
 const GameOffline = () => (
   <div className={styles.preparingRound}>
