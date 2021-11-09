@@ -17,6 +17,7 @@ import RosiGameAnimationController from './canvas/RosiGameAnimationController';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
 import GameAudioControls from '../GameAudioControls';
+import GameOffline from '../GameOffline';
 
 const PreparingRound = ({ nextGameAt }) => (
   <div className={styles.preparingRound}>
@@ -26,17 +27,6 @@ const PreparingRound = ({ nextGameAt }) => (
         <span>
           Starting in <Counter className={styles.counter} from={nextGameAt} />
         </span>
-      </div>
-    </div>
-  </div>
-);
-
-const GameOffline = () => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Connecting to the game engine</h2>
-      <div className={styles.description}>
-        If this takes too long, try reloading the page
       </div>
     </div>
   </div>
