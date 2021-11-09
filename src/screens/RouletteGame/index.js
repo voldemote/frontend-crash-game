@@ -208,7 +208,6 @@ const RouletteGame = ({
       </Link>
     );
   };
-  console.log('spins', spins);
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -224,6 +223,7 @@ const RouletteGame = ({
               width={25}
               onClick={handleHelpClick}
             />
+            {/*}
             <span
               onClick={handleHelpClick}
               className={styles.howtoLink}
@@ -231,6 +231,7 @@ const RouletteGame = ({
             >
               How does it work?
             </span>
+            */}
           </div>
 
           <div className={styles.mainContainer}>
