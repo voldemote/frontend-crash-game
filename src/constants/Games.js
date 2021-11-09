@@ -17,7 +17,7 @@ export const CASINO_GAMES = [
     subtitle: '',
     description: '',
     active: true,
-    linkTo: Routes.rosiGame,
+    linkTo: Routes.elonGame,
     infoIcon: {
       iconType: IconType.info,
       content: (
@@ -173,3 +173,17 @@ export const SPORTS_BETTING_GAMES = [
     linkTo: '',
   },
 ];
+export const GAMES = {
+  gameTwo: {
+    id: '61817de6a9695acd029ffef3',
+    slug: 'pump-dump',
+    name: `Pump and Dump`,
+    url: process.env.REACT_APP_PUMP_DUMP_GAME_BACKEND_URL,
+  },
+  elonGame: {
+    id: '614381d74f78686665a5bb76',
+    slug: 'elon-game',
+    name: `Elon Game`,
+    url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
+  },
+};

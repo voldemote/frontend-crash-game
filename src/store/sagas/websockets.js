@@ -11,9 +11,9 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
-import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
+import { GAMES } from '../../constants/Games';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -323,8 +323,16 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     );
     if (event) newRoomToJoin = event._id;
   }
-  if (currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game') {
-    newRoomToJoin = ROSI_GAME_EVENT_ID;
+  if (
+    (currentAction[0] === 'games' || pathSlugs[0] === 'games') &&
+    (pathSlugs.length > 1 || currentAction.length > 1)
+  ) {
+    const game = Object.values(GAMES).find(
+      g => g.slug === (pathSlugs[1] || currentAction[1])
+    );
+    if (game) {
+      newRoomToJoin = game.id;
+    }
   }
 
   if (currentRoom && currentRoom !== UserMessageRoomId) {

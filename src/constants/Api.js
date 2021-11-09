@@ -5,6 +5,9 @@ export const BACKEND_URL =
 export const BACKEND_SOCKET_URL = BACKEND_URL;
 export const CRASH_GAME_BACKEND_URL =
   process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8001/';
+export const SECOND_CRASH_GAME_BACKEND_URL =
+  process.env.REACT_APP_SECOND_CRASH_GAME_BACKEND_URL ||
+  'http://localhost:8002/';
 
 export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;

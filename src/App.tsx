@@ -77,6 +77,7 @@ const App = () => {
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.rouletteGame} component={RouletteGame} />
               <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
+              <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
               <Route path={Routes.games} component={Games} />

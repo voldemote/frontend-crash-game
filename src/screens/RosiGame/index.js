@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import * as Api from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -11,11 +10,10 @@ import LastCrashes from 'components/LastCrashes';
 import GameAnimation from 'components/RosiGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
+import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
-import { RosiGameActions } from '../../store/actions/rosi-game';
 import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
@@ -28,6 +26,14 @@ import { PopupActions } from 'store/actions/popup';
 import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
+import {
+  trackElonCancelBet,
+  trackElonCashout,
+  trackElonPlaceBet,
+} from '../../config/gtm';
+import { useParams } from 'react-router-dom';
+import { GameApi } from '../../api/crash-game';
+import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
 
 const RosiGame = ({
@@ -36,6 +42,8 @@ const RosiGame = ({
   userId,
   refreshHighData,
   refreshLuckyData,
+  path,
+  token,
 }) => {
   const dispatch = useDispatch();
   const {
@@ -47,6 +55,7 @@ const RosiGame = ({
     highData,
     luckyData,
   } = useRosiData();
+  const { slug } = useParams();
   const [audio, setAudio] = useState(null);
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -60,7 +69,9 @@ const RosiGame = ({
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
-
+  const game = Object.values(GAMES).find(g => g.slug === slug);
+  const ROSI_GAME_EVENT_ID = game.id;
+  const Api = new GameApi(game.url, token);
   useEffect(() => {
     Api.getCurrentGameInfo()
       .then(response => {
@@ -118,6 +129,61 @@ const RosiGame = ({
     }
     setActivityTabIndex(index);
   };
+
+  async function handleBet(payload, crashFactor) {
+    audio.playBetSound();
+    if (!payload) return;
+    try {
+      const result = await Api.createTrade(payload);
+      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+      dispatch(RosiGameActions.setUserBet(payload));
+      return result;
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: 'Elon Game: Place Bet failed',
+        })
+      );
+    }
+  }
+
+  function handleBetCancel(userId, amount) {
+    Api.cancelBet()
+      .then(() => {
+        trackElonCancelBet({ amount });
+        dispatch(RosiGameActions.cancelBet({ userId }));
+      })
+      .catch(() => {
+        dispatch(
+          AlertActions.showError({
+            message: 'Elon Game: Cancel Bet failed',
+          })
+        );
+      });
+  }
+
+  async function handleCashout(isGuest) {
+    audio.playWinSound();
+    if (isGuest) return;
+    try {
+      const response = await Api.cashOut();
+      const { crashFactor: crashFactorCashout, reward } = response.data;
+
+      trackElonCashout({
+        amount: reward,
+        multiplier: parseFloat(crashFactorCashout),
+      });
+      AlertActions.showSuccess(JSON.stringify(response));
+
+      return response;
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: 'Elon Game: Cashout failed',
+        })
+      );
+    }
+  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -242,12 +308,10 @@ const RosiGame = ({
               <div className={styles.placeContainer}>
                 <PlaceBet
                   connected={connected}
-                  onBet={() => {
-                    audio.playBetSound();
-                  }}
-                  onCashout={() => {
-                    audio.playWinSound();
-                  }}
+                  onBet={handleBet}
+                  onCashout={handleCashout}
+                  onCancel={handleBetCancel}
+                  gameId={path}
                 />
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
@@ -260,7 +324,7 @@ const RosiGame = ({
               {renderActivities()}
             </div>
           ) : null}
-          {isMiddleOrLargeDevice && renderWallpaperBanner()}
+          {renderWallpaperBanner()}
           <ContentFooter className={styles.betFooter} />
         </div>
       </div>
@@ -272,6 +336,8 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
+    path: state.router.location.pathname,
+    token: state.authentication.token,
   };
 };
 
