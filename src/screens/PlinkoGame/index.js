@@ -241,12 +241,11 @@ const PlinkoGame = ({
                 inGameBets={inGameBets}
                 onInit={audio => setAudio(audio)}
               />
-              {/*<Spins text="My Spins" spins={spins} />*/}
+              <Spins text="My Results" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                {/*
-                <PlaceBetRoulette
+                <PlaceBet
                   connected={connected}
                   onBet={() => {
                     audio.playBetSound();
@@ -255,7 +254,6 @@ const PlinkoGame = ({
                     audio.playWinSound();
                   }}
                 />
-                */}
                 {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
