@@ -84,6 +84,7 @@ const App = () => {
               <Route exact path={Routes.user} component={UserProfile} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Redirect to={Routes.home} />
+              
             </Switch>
             <NavbarFooter
               hideVisibility={hideNavbar}

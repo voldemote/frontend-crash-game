@@ -208,7 +208,6 @@ const RouletteGame = ({
       </Link>
     );
   };
-  console.log('spins', spins);
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
