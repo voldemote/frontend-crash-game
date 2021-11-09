@@ -114,7 +114,7 @@ jobs:
         with:
           kustomize: 4.2.0
           command: |
-            cd infra/environments/production
+            cd infra/environments/alpa-prod
             kustomize edit set image registry.digitalocean.com/wallfair/frontend_k8s=registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
             kustomize build .
       - uses: actions-hub/kubectl@master
