@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -371,4 +371,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RosiGame);
+const Connected = connect(mapStateToProps, mapDispatchToProps)(RosiGame);
+export default memo(Connected);
