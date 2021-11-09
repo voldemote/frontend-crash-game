@@ -17,6 +17,7 @@ import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
 //import GameAudioControls from '../GameAudioControls';
 import AnimationController from './AnimationController';
+import { isMobile } from 'react-device-detect';
 
 /*
 const PreparingRound = ({ nextGameAt }) => (
@@ -55,6 +56,7 @@ const RouletteGameAnimation = ({
   musicIndex,
   animationIndex,
   onInit,
+  risk,
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -71,16 +73,33 @@ const RouletteGameAnimation = ({
     AnimationController.init(canvasRef.current, {
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
+      risk,
     });
     AnimationController.repaint(0);
   }, []);
+  useEffect(() => {
+    /**/
+  }, [risk]);
 
   const spin = async () => {
+    if (running) return;
+    else setRunning(true);
     const newspin = await AnimationController.spinTo();
     setSpins(newspin);
+    setRunning(false);
   };
+
+  //max-height: 268px;
+  //min-height: 253px;
+
   return (
-    <div ref={backgroundRef} className={styles.animation}>
+    <div
+      ref={backgroundRef}
+      className={classNames(
+        styles.animation,
+        isMobile && styles.animationMobile
+      )}
+    >
       <canvas className={styles.canvas} onClick={spin} ref={canvasRef}></canvas>
     </div>
   );

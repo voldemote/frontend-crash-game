@@ -1,3 +1,6 @@
+import { options } from 'components/EmailNotifications/options';
+import { init } from 'store/sagas/websockets';
+
 const innerWidth = 140;
 let sections = [
   '£25',
@@ -14,11 +17,12 @@ let sections = [
   '£500',
 ];
 
-let colors = ['#F84', '#8F4', '#48F', '#F8F'];
+let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
 
 class AnimationController {
   init(canvas, options) {
     this.canvas = canvas;
+    console.log('Risk', options.risk);
     this.canvas.width = options.width;
     this.canvas.height = options.height;
     //console.log("this.canvas", this.canvas.clientWidth, this.canvas.clientHeight)
@@ -31,9 +35,9 @@ class AnimationController {
       let ctx = c.getContext('2d'),
         cx = 5 + this.r,
         cy = 5 + this.r;
-      this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
-      this.g.addColorStop(0, 'rgba(0,0,0,0)');
-      this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
+      // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
+      // this.g.addColorStop(0, 'rgba(0,0,0,0)');
+      // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
       for (let i = 0; i < sections.length; i++) {
         let a0 = (2 * Math.PI * i) / sections.length;
         let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
@@ -43,8 +47,8 @@ class AnimationController {
         ctx.arc(cx, cy, this.r, a0, a1, false);
         ctx.fillStyle = colors[i % 4];
         ctx.fill();
-        ctx.fillStyle = this.g;
-        ctx.fill();
+        // ctx.fillStyle = this.g;
+        // ctx.fill();
         ctx.save();
         if (i == selected) {
           ctx.fillStyle = '#FFF';
@@ -55,7 +59,7 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
-        ctx.font = 'bold ' + (this.r / sections.length) * 1.6 + 'px serif';
+        ctx.font = (this.r / sections.length) * 1.6 + 'px serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
@@ -93,6 +97,7 @@ class AnimationController {
     this.g.addColorStop(0.2, '#F44');
     this.g.addColorStop(1, '#811');
     ctx.fillStyle = this.g;
+
     ctx.beginPath();
     ctx.arc(cx, cy, this.r / 3.5, 0, 2 * Math.PI, false);
     ctx.fill();
@@ -103,6 +108,14 @@ class AnimationController {
     ctx.lineTo(-this.r * 0.9, 0);
     ctx.lineTo(-this.r * 1.1, this.r * 0.05);
     ctx.fillStyle = '#F44';
+    ctx.fill();
+    ctx.clip();
+    var img = new Image();
+    img.src = '/images/roulette-game/1.svg';
+    img.onload = function () {
+      ctx.drawImage(img, cx, cy, 1000, 1000);
+    };
+
     ctx.fill();
   }
 

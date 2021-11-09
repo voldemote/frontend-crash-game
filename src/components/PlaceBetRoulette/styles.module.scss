@@ -3,8 +3,14 @@
 .riskSelection{
   display: flex;
   width: 100%;
-  div{
+
+  button{
     width: calc(20% - 4px);
+    height: 45px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1.2px solid rgba(14, 9, 39, 0.3);
+    background: white;
     margin-right: 2px;
     text-align: center;
     &:last-child{
