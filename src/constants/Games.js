@@ -62,7 +62,7 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     description:
       'Jump and run on each price tick, are you heading north, south or staying put?',
-    active: true,
+    active: false,
     linkTo: '/games/plinko',
   } /*,
   {
