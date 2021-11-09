@@ -76,8 +76,11 @@ const RouletteGameAnimation = ({
   }, []);
 
   const spin = async () => {
+    if (running) return;
+    else setRunning(true);
     const newspin = await AnimationController.spinTo();
     setSpins(newspin);
+    setRunning(false);
   };
   return (
     <div ref={backgroundRef} className={styles.animation}>
