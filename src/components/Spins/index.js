@@ -5,7 +5,7 @@ import PopupTheme from '../Popup/PopupTheme';
 import { getGameDetailById } from '../../api/crash-game';
 import _ from 'lodash';
 
-const LastCrashes = ({ lastCrashes, showPopup, text }) => {
+const Spins = ({ spins, showPopup, text }) => {
   const handleCrashFactorClick = async (crash, e) => {
     const gameHash = crash?.gameHash;
     const response = await getGameDetailById(gameHash).catch(err => {
@@ -22,20 +22,15 @@ const LastCrashes = ({ lastCrashes, showPopup, text }) => {
       });
     }
   };
-
+  //  onClick={e => handleCrashFactorClick(crash, e)}
   return (
     <div className={styles.container}>
       <span className={styles.title}>{text ? text : 'Last Crashes'}</span>
       <div className={styles.crashes}>
         <div className={styles.overlay}></div>
-        {lastCrashes.map((crash, i) => (
-          /* Crash factors are not guaranteed to be unique, so create a unique key - crash + index */
-          <span
-            onClick={e => handleCrashFactorClick(crash, e)}
-            key={`${crash?.crashFactor}${i}`}
-            className={styles.crash}
-          >
-            {crash?.crashFactor?.toFixed(2)}
+        {spins.map((spin, i) => (
+          <span key={`${spin}${i}`} className={styles.crash}>
+            {spin}
           </span>
         ))}
       </div>
@@ -56,4 +51,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(LastCrashes);
+export default connect(null, mapDispatchToProps)(Spins);

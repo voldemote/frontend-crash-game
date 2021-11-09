@@ -47,6 +47,52 @@ export const CASINO_GAMES = [
   },
 ];
 
+export const NEW_SLOTS_GAMES = [
+  {
+    background: Second,
+    title: 'Alpaca Roulette',
+    subtitle: '',
+    description: 'Market top and flop jackpot tournament',
+    active: true,
+    linkTo: '/games/alpaca-roulette',
+  },
+  {
+    background: Third,
+    title: 'Plinko',
+    subtitle: '',
+    description:
+      'Jump and run on each price tick, are you heading north, south or staying put?',
+    active: true,
+    linkTo: '/games/plinko',
+  } /*,
+  {
+    background: Fourth,
+    title: 'Financial Poker',
+    subtitle: '',
+    description:
+      'Bring your poker face and portfolio management skills to live financial poker',
+    active: false,
+    linkTo: '',
+  },
+  {
+    background: Fifth,
+    title: 'Candle Stick',
+    subtitle: '',
+    description:
+      'Game and learn candlestick trading strategy in this jackpot tournament',
+    active: false,
+    linkTo: '',
+  },
+  {
+    background: First,
+    title: 'Midas Trader',
+    subtitle: '',
+    description: 'Market 1X2 – you know where the prices are going? Prove it!',
+    active: false,
+    linkTo: '',
+  },*/,
+];
+
 export const SLOTS_GAMES = [
   {
     background: Second,

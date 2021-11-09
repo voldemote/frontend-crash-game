@@ -36,6 +36,7 @@ export default {
   newLiveEvent: '/live-events/new',
   logout: '/logout',
   privacyPolicy: '/privacy-policy',
+  rouletteGame: '/games/alpaca-roulette',
   rosiGame: '/games/:slug',
   elonGame: '/games/elon-game',
   elonWallpaper: '/games/elon-wallpaper',
