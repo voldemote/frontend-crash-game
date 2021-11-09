@@ -50,6 +50,7 @@ const RouletteGame = ({
   } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
+  const [risk, setRisk] = useState(1);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -208,6 +209,7 @@ const RouletteGame = ({
       </Link>
     );
   };
+  console.log('NEW RISK', risk);
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -239,6 +241,7 @@ const RouletteGame = ({
               <GameAnimation
                 setSpins={newspin => setSpins(spins.concat(newspin))}
                 inGameBets={inGameBets}
+                risk={risk}
                 onInit={audio => setAudio(audio)}
               />
               <Spins text="My Spins" spins={spins} />
@@ -247,6 +250,8 @@ const RouletteGame = ({
               <div className={styles.placeContainer}>
                 <PlaceBetRoulette
                   connected={connected}
+                  risk={risk}
+                  setRisk={setRisk}
                   onBet={() => {
                     audio.playBetSound();
                   }}

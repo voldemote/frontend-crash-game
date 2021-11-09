@@ -41,7 +41,7 @@ import {
   trackElonCancelBet,
 } from '../../config/gtm';
 
-const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
+const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
@@ -55,6 +55,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
   const isBetInQueue = useSelector(betInQueue);
   const userCashedOut = useSelector(isCashedOut);
   const [amount, setAmount] = useState(sliderMinAmount);
+  const [nspin, setNspin] = useState(1);
   const [crashFactor, setCrashFactor] = useState('25.00');
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
@@ -120,6 +121,11 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
     setAmount(amount <= 10000 ? amount : 10000);
+  };
+  const onGuestNspinChange = event => {
+    let value = _.get(event, 'target.value', 0);
+    const amount = round(value, 0);
+    setNspin(amount);
   };
 
   const onBetAmountChanged = multiplier => {
@@ -422,7 +428,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
           <h2 className={styles.placebidTitle}>Place Bet</h2>
-          <InfoBox iconType={IconType.info} position={`bottomLeft`}>
+          {/*<InfoBox iconType={IconType.info} position={`bottomLeft`}>
             <p>
               <strong>How to place a bet at Elon Game?</strong>
             </p>
@@ -452,6 +458,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
               previous crash numbers.
             </p>
           </InfoBox>
+          */}
         </div>
         <div className={styles.sliderContainer}>
           <label className={styles.label}>Bet Amount</label>
@@ -519,42 +526,101 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
                 showCashoutWarning ? styles.warning : null
               )}
             >
-              Attempt Auto Cashout at
+              Choose Risk Level
             </label>
             <div className={styles.riskSelection}>
-              <div>Risk1</div>
-              <div>Risk2</div>
-              <div>Risk3</div>
-              <div>Risk4</div>
-              <div>Risk5</div>
+              <button
+                style={{ background: risk === 1 && '#80808070' }}
+                onClick={() => setRisk(1)}
+              >
+                1
+              </button>
+              <button
+                style={{ background: risk === 2 && '#80808070' }}
+                onClick={() => setRisk(2)}
+              >
+                2
+              </button>
+              <button
+                style={{ background: risk === 3 && '#80808070' }}
+                onClick={() => setRisk(3)}
+              >
+                3
+              </button>
+              <button
+                style={{ background: risk === 4 && '#80808070' }}
+                onClick={() => setRisk(4)}
+              >
+                4
+              </button>
+              <button
+                style={{ background: risk === 5 && '#80808070' }}
+                onClick={() => setRisk(5)}
+              >
+                5
+              </button>
+              <button
+                style={{ background: risk === 6 && '#80808070' }}
+                onClick={() => setRisk(6)}
+              >
+                6
+              </button>
+              <button
+                style={{ background: risk === 7 && '#80808070' }}
+                onClick={() => setRisk(7)}
+              >
+                7
+              </button>
             </div>
-
-            {/*
-              <div
+          </div>
+          <div className={styles.inputContainer}>
+            <label
               className={classNames(
-                styles.cashedOutInputContainer,
+                styles.label,
                 showCashoutWarning ? styles.warning : null
               )}
             >
-            <div>Risk1</div>
-            <div>Risk2</div>
-            <div>Risk3</div>
-            <div>Risk4</div>
-            <div>Risk5</div>
+              Number of Spins
+            </label>
+            <div
+              className={classNames(
+                styles.cashedOutInputContainer,
+                styles.demoInput
+              )}
+            >
               <Input
-                className={styles.input}
-                type={'text'}
-                value={crashFactor}
-                onChange={onCrashFactorChange}
-                onBlur={onCrashFactorLostFocus}
+                className={classNames(styles.input)}
+                type={'number'}
+                value={nspin}
+                onChange={onGuestNspinChange}
+                step={1}
                 min="1"
-                pattern={/^[^0-9.]+/}
+                max={'100'}
               />
               <span className={styles.eventTokenLabel}>
-                <span>×</span>
+                <span>Spins</span>
               </span>
+              <div className={styles.buttonWrapper}>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setNspin(nspin - 1)}
+                >
+                  -
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setNspin(nspin + 1)}
+                >
+                  +
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setNspin(10)}
+                >
+                  10
+                </span>
+              </div>
             </div>
-            */}
           </div>
         </div>
       </div>

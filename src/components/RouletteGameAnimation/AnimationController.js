@@ -22,6 +22,7 @@ let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
 class AnimationController {
   init(canvas, options) {
     this.canvas = canvas;
+    console.log('Risk', options.risk);
     this.canvas.width = options.width;
     this.canvas.height = options.height;
     //console.log("this.canvas", this.canvas.clientWidth, this.canvas.clientHeight)
