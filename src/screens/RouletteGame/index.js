@@ -235,12 +235,12 @@ const RouletteGame = ({
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <Spins text="My Spins" spins={spins} />
               <GameAnimation
                 setSpins={newspin => setSpins(spins.concat(newspin))}
                 inGameBets={inGameBets}
                 onInit={audio => setAudio(audio)}
               />
+              <Spins text="My Spins" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
