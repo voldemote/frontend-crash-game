@@ -1,7 +1,7 @@
 @import '../../styles/all';
 
 .canvas{
-  width: auto!important;
+  width: 100%;
   height: 100%;
 }
 .animation {
@@ -10,7 +10,7 @@
   justify-content: space-around;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.17);
-  height: 392px;
+  height: fit-content;
   position: relative;
   background-image: url('../../data/backgrounds/games/Background_wheel_opt.png');
   background-size: 100%;
