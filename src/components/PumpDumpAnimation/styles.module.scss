@@ -9,7 +9,7 @@
   border: 1px solid rgba(255, 255, 255, 0.17);
   height: 543px;
   position: relative;
-
+  color: white;
   @media (max-width: $screen-xs-max) {
     height: 244px;
   }
@@ -77,19 +77,5 @@
   }
 }
 
-.audioControls{
-  position: absolute;
-  z-index: 999;
-  left: 20px;
-  top: 10px;
-  svg{
-    fill: #f2ff53 !important;
-  }
-  @media (max-width: $screen-xs-max) {
 
-  }
-  @media screen and (max-width: 768px){
-    top: 60px;
-    left: 5px !important;
-  }
-}
+

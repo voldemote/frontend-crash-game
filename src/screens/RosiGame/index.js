@@ -35,6 +35,7 @@ import { useParams } from 'react-router-dom';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
+import PumpDumpAnimation from '../../components/PumpDumpAnimation';
 
 const RosiGame = ({
   showPopup,
@@ -264,6 +265,20 @@ const RosiGame = ({
     />
   );
 
+  const renderAnimation = () => {
+    if (slug === GAMES['elonGame'].slug) {
+      return (
+        <GameAnimation
+          inGameBets={inGameBets}
+          onInit={audio => setAudio(audio)}
+        />
+      );
+    }
+    if (slug === GAMES['pumpDump'].slug) {
+      return <PumpDumpAnimation />;
+    }
+  };
+
   const renderWallpaperBanner = () => {
     return (
       <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
@@ -299,10 +314,7 @@ const RosiGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <LastCrashes lastCrashes={lastCrashes} />
-              <GameAnimation
-                inGameBets={inGameBets}
-                onInit={audio => setAudio(audio)}
-              />
+              {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>

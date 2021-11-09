@@ -64,7 +64,15 @@ export const NEW_SLOTS_GAMES = [
       'Jump and run on each price tick, are you heading north, south or staying put?',
     active: true,
     linkTo: '/games/plinko',
-  } /*,
+  },
+  {
+    background: Fifth,
+    title: `Pump and dump`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/pump-dump',
+  },
+  /*,
   {
     background: Fourth,
     title: 'Financial Poker',
@@ -90,7 +98,7 @@ export const NEW_SLOTS_GAMES = [
     description: 'Market 1X2 – you know where the prices are going? Prove it!',
     active: false,
     linkTo: '',
-  },*/,
+  },*/
 ];
 
 export const SLOTS_GAMES = [
@@ -174,7 +182,7 @@ export const SPORTS_BETTING_GAMES = [
   },
 ];
 export const GAMES = {
-  gameTwo: {
+  pumpDump: {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
