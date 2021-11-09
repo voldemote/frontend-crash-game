@@ -11,10 +11,10 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
-import { ROSI_GAME_EVENT_ID } from 'constants/RosiGame';
 import { UNIVERSAL_EVENTS_ROOM_ID } from 'constants/Activities';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
+import { GAMES } from '../../constants/Games';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -312,8 +312,9 @@ const isActivitiesPage = (currentAction, pathSlugs) =>
   currentAction[0] === 'activities' || pathSlugs[0] === 'activities';
 const isHomePage = (currentAction, pathSlugs) =>
   currentAction[0] === '' || pathSlugs[0] === '';
-const isElonGamePage = (currentAction, pathSlugs) =>
-  currentAction[1] === 'elon-game' || pathSlugs[1] === 'elon-game';
+const isGamePage = (currentAction, pathSlugs) =>
+  (currentAction[0] === 'games' || pathSlugs[0] === 'games') &&
+  (pathSlugs.length > 1 || currentAction.length > 1);
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -339,15 +340,22 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     );
     if (event) newRoomsToJoin.push(event._id);
   }
-  if (isElonGamePage(currentAction, pathSlugs)) {
-    newRoomsToJoin.push(ROSI_GAME_EVENT_ID);
-  }
+
   if (
     isActivitiesPage(currentAction, pathSlugs) ||
-    isHomePage(currentAction, pathSlugs) ||
-    isElonGamePage(currentAction, pathSlugs)
+    isHomePage(currentAction, pathSlugs)
   ) {
     newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
+  }
+
+  if (isGamePage(currentAction, pathSlugs)) {
+    const game = Object.values(GAMES).find(
+      g => g.slug === (pathSlugs[1] || currentAction[1])
+    );
+    if (game) {
+      newRoomsToJoin.push(game.id);
+      newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
+    }
   }
 
   // leave all non active rooms except UserMessageRoomId

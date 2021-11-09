@@ -1,19 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
+import * as Api from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
+import PlaceBetRoulette from 'components/PlaceBetRoulette';
 import BackLink from 'components/BackLink';
-import LastCrashes from 'components/LastCrashes';
-import GameAnimation from 'components/RosiGameAnimation';
+import Spins from 'components/Spins';
+import GameAnimation from 'components/RouletteGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { RosiGameActions } from 'store/actions/rosi-game';
+import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
+import { RosiGameActions } from '../../store/actions/rosi-game';
 import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
@@ -26,24 +29,14 @@ import { PopupActions } from 'store/actions/popup';
 import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
-import {
-  trackElonCancelBet,
-  trackElonCashout,
-  trackElonPlaceBet,
-} from '../../config/gtm';
-import { useParams } from 'react-router-dom';
-import { GameApi } from '../../api/crash-game';
-import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
 
-const RosiGame = ({
+const RouletteGame = ({
   showPopup,
   connected,
   userId,
   refreshHighData,
   refreshLuckyData,
-  path,
-  token,
 }) => {
   const dispatch = useDispatch();
   const {
@@ -55,8 +48,9 @@ const RosiGame = ({
     highData,
     luckyData,
   } = useRosiData();
-  const { slug } = useParams();
   const [audio, setAudio] = useState(null);
+  const [spins, setSpins] = useState([]);
+
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
@@ -69,9 +63,7 @@ const RosiGame = ({
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
-  const game = Object.values(GAMES).find(g => g.slug === slug);
-  const ROSI_GAME_EVENT_ID = game.id;
-  const Api = new GameApi(game.url, token);
+
   useEffect(() => {
     Api.getCurrentGameInfo()
       .then(response => {
@@ -85,7 +77,7 @@ const RosiGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-    dispatch(ChatActions.fetchByRoom({ roomId: ROSI_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
   }, [dispatch, connected]);
@@ -129,61 +121,6 @@ const RosiGame = ({
     }
     setActivityTabIndex(index);
   };
-
-  async function handleBet(payload, crashFactor) {
-    audio.playBetSound();
-    if (!payload) return;
-    try {
-      const result = await Api.createTrade(payload);
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-      dispatch(RosiGameActions.setUserBet(payload));
-      return result;
-    } catch (e) {
-      dispatch(
-        AlertActions.showError({
-          message: 'Elon Game: Place Bet failed',
-        })
-      );
-    }
-  }
-
-  function handleBetCancel(userId, amount) {
-    Api.cancelBet()
-      .then(() => {
-        trackElonCancelBet({ amount });
-        dispatch(RosiGameActions.cancelBet({ userId }));
-      })
-      .catch(() => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Cancel Bet failed',
-          })
-        );
-      });
-  }
-
-  async function handleCashout(isGuest) {
-    audio.playWinSound();
-    if (isGuest) return;
-    try {
-      const response = await Api.cashOut();
-      const { crashFactor: crashFactorCashout, reward } = response.data;
-
-      trackElonCashout({
-        amount: reward,
-        multiplier: parseFloat(crashFactorCashout),
-      });
-      AlertActions.showSuccess(JSON.stringify(response));
-
-      return response;
-    } catch (e) {
-      dispatch(
-        AlertActions.showError({
-          message: 'Elon Game: Cashout failed',
-        })
-      );
-    }
-  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -238,7 +175,7 @@ const RosiGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROSI_GAME_EVENT_ID}
+          roomId={ROULETTE_GAME_EVENT_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -271,13 +208,12 @@ const RosiGame = ({
       </Link>
     );
   };
-
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Elon Game" />
+            <BackLink to="/games" text="Roulette Game" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -287,6 +223,7 @@ const RosiGame = ({
               width={25}
               onClick={handleHelpClick}
             />
+            {/*}
             <span
               onClick={handleHelpClick}
               className={styles.howtoLink}
@@ -294,26 +231,30 @@ const RosiGame = ({
             >
               How does it work?
             </span>
+            */}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes lastCrashes={lastCrashes} />
               <GameAnimation
+                setSpins={newspin => setSpins(spins.concat(newspin))}
                 inGameBets={inGameBets}
                 onInit={audio => setAudio(audio)}
               />
+              <Spins text="My Spins" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBet
+                <PlaceBetRoulette
                   connected={connected}
-                  onBet={handleBet}
-                  onCashout={handleCashout}
-                  onCancel={handleBetCancel}
-                  gameId={path}
+                  onBet={() => {
+                    audio.playBetSound();
+                  }}
+                  onCashout={() => {
+                    audio.playWinSound();
+                  }}
                 />
-                {isMiddleOrLargeDevice ? renderBets() : null}
+                {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
           </div>
@@ -324,7 +265,7 @@ const RosiGame = ({
               {renderActivities()}
             </div>
           ) : null}
-          {renderWallpaperBanner()}
+          {isMiddleOrLargeDevice && renderWallpaperBanner()}
           <ContentFooter className={styles.betFooter} />
         </div>
       </div>
@@ -336,8 +277,6 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
-    path: state.router.location.pathname,
-    token: state.authentication.token,
   };
 };
 
@@ -359,4 +298,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RosiGame);
+export default connect(mapStateToProps, mapDispatchToProps)(RouletteGame);

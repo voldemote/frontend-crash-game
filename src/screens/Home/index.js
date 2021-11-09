@@ -122,7 +122,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
 
   const renderRosiBanner = () => {
     return (
-      <Link data-tracking-id="home-play-elon" to={Routes.rosiGame}>
+      <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
         <div className={styles.banner}>
           <div className={styles.title}>
             Play the

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import * as Api from 'api/crash-game';
 import { RosiGameActions } from 'store/actions/rosi-game';
+import { AlertActions } from 'store/actions/alert';
 import {
   selectUserBet,
   selectHasStarted,
@@ -30,12 +32,16 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/utils';
+import { getMaxListeners } from 'process';
 import {
   trackElonChangeAutoCashout,
+  trackElonPlaceBet,
+  trackElonCashout,
   trackElonPlaceBetGuest,
+  trackElonCancelBet,
 } from '../../config/gtm';
 
-const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
+const PlaceBetRoulette = ({ connected, onBet, onCashout }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
@@ -55,7 +61,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const gameOffline = useSelector(selectGameOffline);
-
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
     Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
@@ -131,7 +136,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   useEffect(() => {
     ReactTooltip.rebuild();
   }, [showCashoutWarning]);
-
   useEffect(() => {
     setAnimate(false);
   }, [isGameRunning]);
@@ -164,18 +168,45 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const placeABet = () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
+    //onBet();
+
     const payload = {
       amount,
       crashFactor: 999,
     };
-    onBet(payload, crashFactor);
+    console.log('Apuesto: ', amount);
+    /*
+    Api.createTrade(payload)
+      .then(_ => {
+        trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+        dispatch(RosiGameActions.setUserBet(payload));
+      })
+      .catch(_ => {
+        dispatch(
+          AlertActions.showError({
+            message: 'Elon Game: Place Bet failed',
+          })
+        );
+      });
+      */
   };
 
   const cancelBet = e => {
     e.preventDefault();
     e.stopPropagation();
     setCanBet(false);
-    onCancel(user.userId, amount);
+    Api.cancelBet()
+      .then(() => {
+        trackElonCancelBet({ amount });
+        dispatch(RosiGameActions.cancelBet({ userId: user.userId }));
+      })
+      .catch(() => {
+        dispatch(
+          AlertActions.showError({
+            message: 'Elon Game: Cancel Bet failed',
+          })
+        );
+      });
   };
 
   const placeGuestBet = () => {
@@ -206,15 +237,32 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     }
   };
 
-  const cashOut = async () => {
+  const cashOut = () => {
     setCanBet(false);
     dispatch(RosiGameActions.cashOut());
-    const response = await onCashout();
-    setAnimate(true);
+    Api.cashOut()
+      .then(response => {
+        const { crashFactor: crashFactorCashout, reward } = response.data;
+
+        trackElonCashout({
+          amount: reward,
+          multiplier: parseFloat(crashFactorCashout),
+        });
+        setAnimate(true);
+        onCashout();
+        AlertActions.showSuccess(JSON.stringify(response));
+      })
+      .catch(_ => {
+        dispatch(
+          AlertActions.showError({
+            message: 'Elon Game: Cashout failed',
+          })
+        );
+      });
   };
 
   const cashOutGuest = () => {
-    onCashout(true);
+    onCashout();
     setCanBet(false);
     dispatch(RosiGameActions.cashOutGuest());
     setAnimate(true);
@@ -473,12 +521,26 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             >
               Attempt Auto Cashout at
             </label>
-            <div
+            <div className={styles.riskSelection}>
+              <div>Risk1</div>
+              <div>Risk2</div>
+              <div>Risk3</div>
+              <div>Risk4</div>
+              <div>Risk5</div>
+            </div>
+
+            {/*
+              <div
               className={classNames(
                 styles.cashedOutInputContainer,
                 showCashoutWarning ? styles.warning : null
               )}
             >
+            <div>Risk1</div>
+            <div>Risk2</div>
+            <div>Risk3</div>
+            <div>Risk4</div>
+            <div>Risk5</div>
               <Input
                 className={styles.input}
                 type={'text'}
@@ -492,6 +554,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 <span>×</span>
               </span>
             </div>
+            */}
           </div>
         </div>
       </div>
@@ -524,4 +587,4 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   );
 };
 
-export default PlaceBet;
+export default PlaceBetRoulette;
