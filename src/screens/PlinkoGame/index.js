@@ -9,10 +9,10 @@ import PlaceBet from 'components/PlaceBet';
 import PlaceBetRoulette from 'components/PlaceBetRoulette';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
-import GameAnimation from 'components/RouletteGameAnimation';
+import GameAnimation from 'components/PlinkoGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
+import { PLINKO_GAME_EVENT_ID } from 'constants/RosiGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
@@ -31,7 +31,7 @@ import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
 
-const RouletteGame = ({
+const PlinkoGame = ({
   showPopup,
   connected,
   userId,
@@ -77,7 +77,7 @@ const RouletteGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-    dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({ roomId: PLINKO_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
   }, [dispatch, connected]);
@@ -175,7 +175,7 @@ const RouletteGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROULETTE_GAME_EVENT_ID}
+          roomId={PLINKO_GAME_EVENT_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -213,7 +213,7 @@ const RouletteGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Roulette Game" />
+            <BackLink to="/games" text="Plinko Game" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -241,10 +241,11 @@ const RouletteGame = ({
                 inGameBets={inGameBets}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              {/*<Spins text="My Spins" spins={spins} />*/}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
+                {/*
                 <PlaceBetRoulette
                   connected={connected}
                   onBet={() => {
@@ -254,6 +255,7 @@ const RouletteGame = ({
                     audio.playWinSound();
                   }}
                 />
+                */}
                 {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
@@ -298,4 +300,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RouletteGame);
+export default connect(mapStateToProps, mapDispatchToProps)(PlinkoGame);
