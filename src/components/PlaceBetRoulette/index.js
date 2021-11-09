@@ -603,13 +603,13 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
-                  onClick={() => setNspin(nspin - 1)}
+                  onClick={() => nspin > 0 && setNspin(nspin - 1)}
                 >
                   -
                 </span>
                 <span
                   className={styles.buttonItem}
-                  onClick={() => setNspin(nspin + 1)}
+                  onClick={() => nspin < 100 && setNspin(nspin + 1)}
                 >
                   +
                 </span>
