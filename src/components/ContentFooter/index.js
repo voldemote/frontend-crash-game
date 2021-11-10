@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.scss';
-import LogoDemo from '../../data/images/logo-demo.svg';
+import LogoDemo from '../../data/images/alpaca-logo.png';
 import GitHubLogo from '../../data/icons/github.svg';
 import FairTradeIcon from '../../data/icons/fair-trade.svg';
 import BlockchainIcon from '../../data/icons/blockchain.svg';

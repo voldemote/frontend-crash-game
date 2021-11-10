@@ -1,36 +1,36 @@
 @import '../../styles/all.scss';
 
 .container {
-    background: #1F1D38;
-    border: 1px solid rgba(255, 255, 255, 0.17);
-    border-radius: 10px;
-    overflow: auto;
-    flex: 1;
+  background: $colorWhite;
+  border: 1px solid $colorLightGray;
+  border-radius: 10px;
+  overflow: auto;
+  flex: 1;
 
-    .title {
-      padding: 20px;
-      color: $colorWhite;
+  .title {
+    padding: 20px;
+    color: $colorWhite;
+  }
+
+  .total {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: $colorLightGray1;
+    .label {
+      color: $colorPrimary;
+      opacity: 0.5;
     }
 
-    .total {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 20px;
-      background: rgba(18, 14, 39, 0.5);
-
-      .label {
-        color: $colorWhite;
-        opacity: 0.5;
-      }
-
-      .value {
-        color: $colorWhite;
-        transition: color 0.2s ease-in;
-      }
-      .value.positive{
-        color: $colorGreen;
-      }
+    .value {
+      color: $colorPrimary;
+      transition: color 0.2s ease-in;
+      font-family: $fontBold;
     }
+    .value.positive {
+      color: $colorGreen;
+    }
+  }
 }
 
 .bets {
@@ -53,22 +53,22 @@
     transition: color 0.2s ease-in-out;
   }
 
-  .bet.flash{
+  .bet.flash {
     animation-name: flash;
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
   }
 
-  .bet.flashGreen{
+  .bet.flashGreen {
     animation-name: flash-green;
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
   }
 
-  .bet.endGame{
+  .bet.endGame {
     opacity: 0.5;
   }
-  .bet.cashed.endGame{
+  .bet.cashed.endGame {
     opacity: 0.8;
   }
 
@@ -104,79 +104,77 @@
   /* Spinner Slices */
   .sp.spSlices {
     border-radius: 50%;
-    border-top: $spSize rgba($spCol,0.75) solid;
-    border-left: $spSize rgba($spCol,0.25) solid;
-    border-bottom: $spSize rgba($spCol,0.25) solid;
-    border-right: $spSize rgba($spCol,0.25) solid;
+    border-top: $spSize rgba($spCol, 0.75) solid;
+    border-left: $spSize rgba($spCol, 0.25) solid;
+    border-bottom: $spSize rgba($spCol, 0.25) solid;
+    border-right: $spSize rgba($spCol, 0.25) solid;
     -webkit-animation: spSlicesWKF 1s infinite linear;
     animation: spSlicesKF 1s infinite linear;
   }
   @-webkit-keyframes spSlicesWKF {
     0% {
-      border-top: $spSize rgba($spCol,0.75) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.75) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
     25% {
-      border-top: $spSize rgba($spCol,0.25) solid;
-      border-right: $spSize rgba($spCol,0.75) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.25) solid;
+      border-right: $spSize rgba($spCol, 0.75) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
     50% {
-      border-top: $spSize rgba($spCol,0.25) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.75) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.25) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.75) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
     75% {
-      border-top: $spSize rgba($spCol,0.25) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.75) solid;
+      border-top: $spSize rgba($spCol, 0.25) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.75) solid;
     }
     100% {
-      border-top: $spSize rgba($spCol,0.75) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.75) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
   }
   @keyframes spSlicesKF {
     0% {
-      border-top: $spSize rgba($spCol,0.75) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.75) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
     25% {
-      border-top: $spSize rgba($spCol,0.25) solid;
-      border-right: $spSize rgba($spCol,0.75) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.25) solid;
+      border-right: $spSize rgba($spCol, 0.75) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
     50% {
-      border-top: $spSize rgba($spCol,0.25) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.75) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.25) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.75) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
     75% {
-      border-top: $spSize rgba($spCol,0.25) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.75) solid;
+      border-top: $spSize rgba($spCol, 0.25) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.75) solid;
     }
     100% {
-      border-top: $spSize rgba($spCol,0.75) solid;
-      border-right: $spSize rgba($spCol,0.25) solid;
-      border-bottom: $spSize rgba($spCol,0.25) solid;
-      border-left: $spSize rgba($spCol,0.25) solid;
+      border-top: $spSize rgba($spCol, 0.75) solid;
+      border-right: $spSize rgba($spCol, 0.25) solid;
+      border-bottom: $spSize rgba($spCol, 0.25) solid;
+      border-left: $spSize rgba($spCol, 0.25) solid;
     }
   }
-
-
 
   .user {
     display: flex;
@@ -211,16 +209,16 @@
   opacity: 1;
 }
 
-.coin{
+.coin {
   min-width: 15px;
   min-height: 15px;
   width: 15px;
   height: 15px;
   margin-left: 1rem;
-  background: url("../../data/icons/medal-coin.png");
+  background: url('../../data/icons/medal-coin.png');
   background-size: cover;
 }
 
-.rightColumn{
+.rightColumn {
   display: flex;
 }

@@ -141,7 +141,6 @@ $border: 1px solid $colorWhite30;
 }
 
 .main-page-background {
-  background: $colorPrimaryDark;
   z-index: -1;
   position: fixed;
   top: 0;
@@ -180,7 +179,7 @@ $border: 1px solid $colorWhite30;
     position: absolute;
     // max-height: 700px;
     background-size: cover;
-    background-image: url('../data/backgrounds/alpaca-main-bg.png');
+    background-image: url('../data/backgrounds/lama_bg.png');
     background-repeat: no-repeat;
     background-position: top;
   }

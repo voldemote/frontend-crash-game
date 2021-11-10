@@ -3,16 +3,14 @@
 .activitiesTrackerContainer {
   display: flex;
   flex-direction: column;
-  padding-top: 0;
-  height: 100%;
   position: relative;
-  // margin-top:     -20vh;
   .header {
-    height: 52px;
+    height: 39px;
     display: flex;
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
+    background: $colorLightGray1;
   }
   .title {
     text-align: center;
@@ -34,8 +32,8 @@
 
   .messageItem {
     position: relative;
-    padding: 0.4rem 20px;
-    border-bottom: 1px solid $colorWhite10;
+    padding: 0.2rem 20px;
+    border-bottom: 0.5px solid $colorLightGray2;
     display: inline-flex;
     display: -ms-inline-flexbox;
     display: -webkit-box;
@@ -197,7 +195,7 @@
     position: relative;
     //height: 260px;
     height: 100%;
-    margin-top: 10px;
+    padding: 10px;
 
     &::-webkit-scrollbar {
       width: 0;

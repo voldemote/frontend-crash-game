@@ -31,13 +31,13 @@
 
   .singleMessageTime {
     margin-right: 10px;
-    color: $colorGrayLight8;
+    color: $colorLightGray2;
     font-size: 12px;
     min-width: 36px;
   }
   .singleMessageUser {
     font-family: $fontBold;
-    color: $colorYellow;
+    color: $colorPinkDark;
     text-decoration: underline;
     font-size: 12px;
 
@@ -47,8 +47,9 @@
   }
   .singleMessage {
     margin-left: 5px;
-    color: $colorWhite70;
+    color: $colorBlack;
     font-size: 12px;
+    font-family: $fontBold;
   }
 
   // span {
