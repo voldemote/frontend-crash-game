@@ -133,12 +133,12 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   }
-
+  console.log("spins", spins)
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
     try {
-      if(payload.demo) setBet(payload);
+      if(payload.demo) setBet({...payload })
       else{
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});

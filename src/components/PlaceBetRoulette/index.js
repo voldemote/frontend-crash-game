@@ -94,37 +94,6 @@ const PlaceBetRoulette = ({
     // debouncedSetCommitment(number, currency);
   };
 
-  const processAutoCashoutValue = value => {
-    const regex = new RegExp('^[0w]+(?!$)', 'g');
-    let v = value.replaceAll(regex, '');
-    v = v.replaceAll(',', '.');
-    v = v.replaceAll(/[^0-9.]+/g, '');
-    return v;
-  };
-
-  const onCrashFactorChange = event => {
-    setCrashFactorDirty(true);
-    let value = _.get(event, 'target.value', 0);
-    const v = processAutoCashoutValue(value);
-    event.target.value = v;
-
-    setCrashFactor(v);
-    let result = parseFloat(v);
-    if (result > 0 && result < 1) {
-      setShowCashoutWarning(true);
-    } else {
-      setShowCashoutWarning(false);
-    }
-  };
-
-  const onCrashFactorLostFocus = event => {
-    let value = _.get(event, 'target.value', 0);
-    const v = processAutoCashoutValue(value);
-    let result = parseFloat(v);
-
-    trackElonChangeAutoCashout({ multiplier: result });
-  };
-
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
@@ -161,6 +130,28 @@ const PlaceBetRoulette = ({
     const bet = await onBet(payload)
   };
 
+  const placeGuestBet = () => {
+    if (numberOfDemoPlays === 3) {
+      showLoginPopup();
+      return;
+    }
+
+    if (userUnableToBet) return;
+    const payload = {
+      amount,
+      demo: true,
+      nspin: nspin-1,
+      riskFactor: risk,
+      winIndex:  Math.floor((Math.random() * 12) | 0)
+    };
+    onBet(payload)
+    setNuspin(payload)
+
+    if (numberOfDemoPlays < 3) {
+      localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
+    }
+  };
+
   useEffect(async () => {
     console.log("sother", bet)
     if(bet?.pending && nuspin !== 0) {
@@ -176,59 +167,7 @@ const PlaceBetRoulette = ({
 
   };
 
-  const placeGuestBet = () => {
-    if (numberOfDemoPlays === 3) {
-      showLoginPopup();
-      return;
-    }
 
-    if (userUnableToBet) return;
-    const payload = {
-      amount,
-      demo: true,
-      nspin: nspin-1,
-      riskFactor: risk
-    };
-    onBet(payload)
-    setNuspin(payload)
-
-    /*
-    trackElonPlaceBetGuest({
-      amount: payload.amount,
-      multiplier: payload.crashFactor,
-    });
-
-    dispatch(RosiGameActions.setUserBet(payload));
-    dispatch(RosiGameActions.addInGameBet(payload));
-    */
-    if (numberOfDemoPlays < 3) {
-      localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
-    }
-
-  };
-
-  const cashOut = () => {
-    dispatch(RosiGameActions.cashOut());
-    Api.cashOut()
-      .then(response => {
-        const { crashFactor: crashFactorCashout, reward } = response.data;
-
-        trackElonCashout({
-          amount: reward,
-          multiplier: parseFloat(crashFactorCashout),
-        });
-        setAnimate(true);
-        onCashout();
-        AlertActions.showSuccess(JSON.stringify(response));
-      })
-      .catch(_ => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Cashout failed',
-          })
-        );
-      })
-  };
 
   const cancelGuestBet = () => {
     setCanBet(false);
@@ -275,7 +214,7 @@ const PlaceBetRoulette = ({
             role="button"
             tabIndex="0"
             className={classNames(styles.button, styles.cancel)}
-            onClick={user.isLoggedIn ? cancelBet : cancelGuestBet}
+            onClick={cancelBet}
             data-tracking-id={
               user.isLoggedIn ? null : 'elongame-showloginpopup'
             }
