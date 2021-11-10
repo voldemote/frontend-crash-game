@@ -15,7 +15,7 @@ import {
 import styles from './styles.module.scss';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-//import GameAudioControls from '../GameAudioControls';
+import GameAudioControls from '../GameAudioControls';
 import AnimationController from './AnimationController';
 import { isMobile } from 'react-device-detect';
 
@@ -73,11 +73,12 @@ const RouletteGameAnimation = ({
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
-    AnimationController.init(canvasRef.current, {
+    const { audio } = AnimationController.init(canvasRef.current, {
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
       risk,
     });
+    setAudio(audio);
     AnimationController.repaint(0);
   }, []);
 
@@ -121,6 +122,11 @@ const RouletteGameAnimation = ({
         isMobile && styles.animationMobile
       )}
     >
+      <div className={styles.audioControls}>
+        {audio && (
+          <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
+        )}
+      </div>
       <canvas className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
