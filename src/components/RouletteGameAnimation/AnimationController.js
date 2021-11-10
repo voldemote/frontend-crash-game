@@ -230,7 +230,7 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 20;
         } else {
-          ctx.fillStyle = '#000FF';
+          ctx.fillStyle = '#000FFF';
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
@@ -286,11 +286,7 @@ class AnimationController {
     ctx.fillStyle = '#F44';
     ctx.fill();
     ctx.clip();
-    var img = new Image();
-    img.src = '/images/roulette-game/1.svg';
-    img.onload = function () {
-      ctx.drawImage(img, cx, cy, 1000, 1000);
-    };
+
 
     ctx.fill();
     return {
