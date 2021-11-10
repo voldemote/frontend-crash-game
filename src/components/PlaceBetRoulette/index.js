@@ -120,7 +120,6 @@ const PlaceBetRoulette = ({
   const placeABet = async () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
-
     const payload = {
       amount,
       nspin: nspin-1,
@@ -153,7 +152,7 @@ const PlaceBetRoulette = ({
   };
 
   useEffect(async () => {
-    if(bet?.pending && nuspin !== 0) {
+    if(bet?.pending && nuspin.nspin > 0) {
       setNuspin({...nuspin, nspin: nuspin.nspin -1})
       const bet = await onBet({...nuspin, nspin: nuspin.nspin -1});
     }
