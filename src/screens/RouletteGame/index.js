@@ -133,24 +133,20 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   };
-
+  console.log("BEET", bet)
   async function handleBet(payload) {
     audio.playBetSound();
-    console.log("handleBet", payload)
     if (!payload) return;
     try {
-      const result = await Api.createTrade(payload);
-      console.log(result)
-      /*
-
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-      dispatch(RosiGameActions.setUserBet(payload));
-      return result;
-      */
+      const { data } = await Api.createTrade(payload);
+      setBet({...payload, ...data});
+      //trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+      //dispatch(RosiGameActions.setUserBet(payload));
+      return data;
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Elon Game: Place Bet failed',
+          message: 'Alpaca Wheel: Place Bet failed',
         })
       );
     }
@@ -287,7 +283,6 @@ const RouletteGame = ({
                 <PlaceBetRoulette
                   connected={connected}
                   risk={risk}
-                  setBet={setBet}
                   setAmount2={(amount)=>setAmount(amount)}
                   setRisk={setRisk}
                   onBet={handleBet}
