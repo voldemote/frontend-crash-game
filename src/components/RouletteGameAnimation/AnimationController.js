@@ -25,6 +25,7 @@ let riskImages = [
   '/images/roulette-game/7.svg',
 ];
 let updateValues = [];
+let numberSelected = 0;
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
@@ -68,6 +69,10 @@ class AudioController {
         },
         placebet: {
           url: '/sounds/elon/sfx_placebet.mp3',
+          loop: false,
+        },
+        tick: {
+          url: '/sounds/roulette/sfx_tick.mp3',
           loop: false,
         }
       },
@@ -131,6 +136,7 @@ class AudioController {
   }
 
   startBgm() {
+    return;
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
@@ -144,6 +150,9 @@ class AudioController {
   stopBgm() {
     this.stopSound('bgm');
     this.stopSound('flying');
+  }
+  playTick() {
+    this.playSound('tick');
   }
 
   playGameOverSound() {
@@ -405,7 +414,8 @@ class AnimationController {
     };
   }
   //when calling repaint pass to the method the new index image from riskImages
-  repaint(angle) {
+  repaint(angle,play) {
+    console.log(play);
     let sections = sectionsArray[this.risk-1]
     this.angle = angle;
     let cx = this.canvas.width / 2,
@@ -414,7 +424,13 @@ class AnimationController {
     let selected =
       Math.floor(((-0.2 - angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
-    // PUT THE SOUND TICK HERE
+    // PUT THE SOUND TICK HERE 
+    
+    if (selected != numberSelected) {
+      if (play) this.audio.playTick();
+      numberSelected = selected;
+    }
+    console.log(selected);
     if (selected < 0) selected += sections.length;
     ctx.save();
     ctx.translate(cx, cy);
@@ -461,7 +477,7 @@ class AnimationController {
         t = 3 * t * t - 2 * t * t * t; // ease in out
         this.angle = start_angle + t * (final_angle - start_angle);
         if (idle) this.angle =Math.abs(this.angle);
-        this.repaint(this.angle);
+        this.repaint(this.angle,true);
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else resolve(sections[winnerIndex] * this.amount); //console.log(false); //setRunning(false);
       }

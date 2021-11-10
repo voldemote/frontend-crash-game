@@ -84,7 +84,7 @@ const RouletteGameAnimation = ({
     setAudio(audio);
     audioInstance = audio;
     onInit(audio);
-    AnimationController.repaint(0, risk);
+    AnimationController.repaint(0, false);
     return () => audioInstance.stopBgm();
   }, []);
 
@@ -101,7 +101,7 @@ const RouletteGameAnimation = ({
         risk,
         amount: amount!==undefined? amount: 50
       }, risk);
-      AnimationController.repaint(0, risk);
+      AnimationController.repaint(0, false);
     }
   }, [risk, amount]);
 
