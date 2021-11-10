@@ -133,7 +133,6 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   }
-  console.log("spins", spins)
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
@@ -144,8 +143,6 @@ const RouletteGame = ({
         setBet({...payload, ...data});
         return data;
       }
-      //trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-      //dispatch(RosiGameActions.setUserBet(payload));
     } catch (e) {
       dispatch(
         AlertActions.showError({
@@ -279,7 +276,7 @@ const RouletteGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              {false && <Spins text="My Spins" spins={spins} />}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>

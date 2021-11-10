@@ -124,7 +124,7 @@ const PlaceBetRoulette = ({
     const payload = {
       amount,
       nspin: nspin-1,
-      riskFactor: risk
+      riskFactor: risk+1
     };
     setNuspin(payload)
     const bet = await onBet(payload)
@@ -153,7 +153,6 @@ const PlaceBetRoulette = ({
   };
 
   useEffect(async () => {
-    console.log("sother", bet)
     if(bet?.pending && nuspin !== 0) {
       setNuspin({...nuspin, nspin: nuspin.nspin -1})
       const bet = await onBet({...nuspin, nspin: nuspin.nspin -1});
@@ -373,44 +372,44 @@ const PlaceBetRoulette = ({
             </label>
             <div className={styles.riskSelection}>
               <button
-                style={{ background: risk === 0 && '#80808070' }}
-                onClick={() => setRisk(0)}
-              >
-                1
-              </button>
-              <button
                 style={{ background: risk === 1 && '#80808070' }}
                 onClick={() => setRisk(1)}
               >
-                2
+                1
               </button>
               <button
                 style={{ background: risk === 2 && '#80808070' }}
                 onClick={() => setRisk(2)}
               >
-                3
+                2
               </button>
               <button
                 style={{ background: risk === 3 && '#80808070' }}
                 onClick={() => setRisk(3)}
               >
-                4
+                3
               </button>
               <button
                 style={{ background: risk === 4 && '#80808070' }}
                 onClick={() => setRisk(4)}
               >
-                5
+                4
               </button>
               <button
                 style={{ background: risk === 5 && '#80808070' }}
                 onClick={() => setRisk(5)}
               >
-                6
+                5
               </button>
               <button
                 style={{ background: risk === 6 && '#80808070' }}
                 onClick={() => setRisk(6)}
+              >
+                6
+              </button>
+              <button
+                style={{ background: risk === 7 && '#80808070' }}
+                onClick={() => setRisk(7)}
               >
                 7
               </button>
