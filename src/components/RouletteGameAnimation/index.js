@@ -110,10 +110,12 @@ const RouletteGameAnimation = ({
   const spin = async () => {
     if (running) return;
     else setRunning(true);
-    const newspin = await AnimationController.spinTo();
+    const newspin = await AnimationController.spinTo(bet.winIndex);
     setSpins(newspin);
     setRunning(false);
-  };
+    setBet(null);
+  }
+
   const multipleSpin = async bet => {
     let i = bet.nspin,
       newpsins = [];
@@ -126,7 +128,7 @@ const RouletteGameAnimation = ({
     } while (i !== 0);
     setBet(null);
     setRunning(false);
-  };
+  }
 
   return (
     <div

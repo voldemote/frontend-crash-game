@@ -48,7 +48,6 @@ const PlaceBetRoulette = ({
   onCashout,
   setRisk,
   risk,
-  setBet,
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -129,7 +128,6 @@ const PlaceBetRoulette = ({
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
-    console.log("setAmount2", amount)
     setAmount2(amount <= 10000 ? amount : 10000)
     setAmount(amount <= 10000 ? amount : 10000);
   };
@@ -182,7 +180,7 @@ const PlaceBetRoulette = ({
     }
   }, [isGameRunning, crashFactor, userCashedOut]);
 
-  const placeABet = () => {
+  const placeABet = async () => {
     //if (userUnableToBet) return;
     //if (amount > userBalance) return;
 
@@ -192,22 +190,8 @@ const PlaceBetRoulette = ({
       riskFactor: risk
     };
     console.log('Apuesto: ', payload);
-    onBet(payload);
-    setBet(payload);
-    /*
-    Api.createTrade(payload)
-      .then(_ => {
-        trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-        dispatch(RosiGameActions.setUserBet(payload));
-      })
-      .catch(_ => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Place Bet failed',
-          })
-        );
-      });
-      */
+    const bet = await onBet(payload);
+    console.log("BET", bet)
   };
 
   const cancelBet = e => {
