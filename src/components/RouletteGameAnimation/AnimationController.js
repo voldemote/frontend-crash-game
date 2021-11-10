@@ -6,19 +6,15 @@ import '@pixi/sound';
 import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
-let sections = [
-  '£25',
-  '£15',
-  '£50',
-  '£1000',
-  '£25',
-  '£500',
-  '£15',
-  '£100',
-  '£1000',
-  '£15',
-  '£100',
-  '£500',
+let sections = [0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95];
+let riskImages = [
+  '/images/roulette-game/1.svg',
+  '/images/roulette-game/2.svg',
+  '/images/roulette-game/3.svg',
+  '/images/roulette-game/4.svg',
+  '/images/roulette-game/5.svg',
+  '/images/roulette-game/6.svg',
+  '/images/roulette-game/7.svg',
 ];
 
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
@@ -231,14 +227,14 @@ class AnimationController {
         ctx.save();
         if (i == selected) {
           ctx.fillStyle = '#FFF';
-          ctx.shadowColor = '#FFF';
+          ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 20;
         } else {
-          ctx.fillStyle = '#AAA';
+          ctx.fillStyle = '#000FF';
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
-        ctx.font = (this.r / sections.length) * 1.6 + 'px serif';
+        ctx.font = (this.r / sections.length) * 1.6 + 'px PlusJakarta-Regular';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
@@ -256,7 +252,7 @@ class AnimationController {
     ctx.shadowOffsetX = this.r / 80;
     ctx.shadowOffsetY = this.r / 80;
     ctx.shadowBlur = this.r / 40;
-    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    //ctx.shadowColor = 'rgba(0,0,0,0.5)';
     ctx.beginPath();
     ctx.arc(cx, cy, this.r * 1.025, 0, 2 * Math.PI, true);
     ctx.arc(cx, cy, this.r * 0.975, 0, 2 * Math.PI, false);
@@ -264,6 +260,7 @@ class AnimationController {
     ctx.fill();
     ctx.shadowOffsetX = this.r / 40;
     ctx.shadowOffsetY = this.r / 40;
+    
     this.g = ctx.createRadialGradient(
       cx - this.r / 7,
       cy - this.r / 7,
@@ -289,6 +286,7 @@ class AnimationController {
     ctx.fillStyle = '#F44';
     ctx.fill();
     ctx.clip();
+<<<<<<< HEAD
     var img = new Image();
     img.src = '/images/roulette-game/1.svg';
     img.onload = function () {
@@ -299,8 +297,10 @@ class AnimationController {
     return {
       audio: this.audio,
     };
+=======
+>>>>>>> 0747b6e75b66e798addd9000105c2a915e132663
   }
-
+  //when calling repaint pass to the method the new index image from riskImages
   repaint(angle) {
     this.angle = angle;
     let cx = this.canvas.width / 2,
@@ -324,6 +324,12 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
+    var img = new Image();
+    img.src = '/images/roulette-game/7.svg';
+    //check if image is loaded, if yes drawit
+    //img.onload = function () {
+    ctx.drawImage(img, 369, 120, 150, 150);
+    //};
   }
 
   spinTo(winner = (Math.random() * sections.length) | 0, duration = 5000) {
