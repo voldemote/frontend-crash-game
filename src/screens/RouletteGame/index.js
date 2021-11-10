@@ -31,9 +31,9 @@ import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
-import { GameApi } from '../../api/casino-games';
+import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
-
+import { GameApi } from '../../api/casino-games';
 
 const RouletteGame = ({
   showPopup,
@@ -74,6 +74,8 @@ const RouletteGame = ({
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
+
+  const GAME_TYPE_ID = GAMES.alpacaWheel.id;
 
   useEffect(() => {
     ApiUser.getCurrentGameInfo()
@@ -174,12 +176,14 @@ const RouletteGame = ({
             <EventActivitiesTracker
               activitiesLimit={50}
               className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'elongame'}
+              preselectedCategory={'game'}
+              gameId={GAME_TYPE_ID}
             />
           )}
           {activityTabIndex !== 0 && (
             <ActivityTable
               rowData={activityTabIndex === 1 ? highData : luckyData}
+              gameLabel={getGameById(GAME_TYPE_ID)?.name || 'Game'}
             />
           )}
         </div>

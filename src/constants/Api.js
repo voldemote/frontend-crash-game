@@ -73,10 +73,12 @@ export const API_TRADE_CREATE = 'api/trade';
 export const API_WHEEL_BET = 'api/trade/wheel';
 export const API_CASH_OUT = 'api/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
-export const API_TRADES_LUCKY = 'api/trades/lucky';
-export const API_TRADES_HIGH = 'api/trades/high';
+export const API_TRADES_LUCKY = 'api/trades/lucky/:gameId';
+export const API_TRADES_HIGH = 'api/trades/high/:gameId';
 export const API_GET_NOTIFICATION_EVENTS =
   'api/notification-events/list?limit=:limit&cat=:category';
+export const API_GET_NOTIFICATION_EVENTS_BY_GAME =
+  'api/notification-events/list?limit=:limit&cat=:category&gameId=:gameId';
 export const API_GET_NOTIFICATION_EVENTS_BY_BET =
   'api/notification-events/list/bets/:betId?limit=:limit';
 export const API_GET_NOTIFICATION_EVENTS_BY_USER =

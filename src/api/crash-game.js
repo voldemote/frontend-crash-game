@@ -68,22 +68,27 @@ class GameApi {
     createdAt: user.createdAt,
     gameMatch: user.gamematch,
     gameHash: user.gameHash,
+    gameId: user.gameid,
     stakedAmount: user.stakedamount,
     state: 2,
     userId: user.id,
     rewardAmount: user.crashfactor * user.stakedamount,
   });
 
-  getLuckyUsers = () => {
-    return Api.get(ApiUrls.API_TRADES_LUCKY).then(response => ({
-      data: response.data.map(transformUser),
-    }));
+  getLuckyUsers = gameId => {
+    return Api.get(ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId)).then(
+      response => ({
+        data: response.data.map(transformUser),
+      })
+    );
   };
 
-  getHighUsers = () => {
-    return Api.get(ApiUrls.API_TRADES_HIGH).then(response => ({
-      data: response.data.map(transformUser),
-    }));
+  getHighUsers = gameId => {
+    return Api.get(ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId)).then(
+      response => ({
+        data: response.data.map(transformUser),
+      })
+    );
   };
 }
 
@@ -136,6 +141,7 @@ const transformUser = user => ({
   createdAt: user.created_at,
   gameMatch: user.game_match,
   gameHash: user.gamehash,
+  gameId: user.gameid,
   stakedAmount: user.stakedamount,
   state: 2,
   userId: user.userid,
@@ -143,16 +149,24 @@ const transformUser = user => ({
   rewardAmount: user.crashfactor * user.stakedamount,
 });
 
-const getLuckyUsers = () => {
-  return Api.get(ApiUrls.API_TRADES_LUCKY).then(response => ({
-    data: response.data.map(transformUser),
-  }));
+const getLuckyUsers = data => {
+  const { gameId } = data;
+
+  return Api.get(ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId)).then(
+    response => ({
+      data: response.data.map(transformUser),
+    })
+  );
 };
 
-const getHighUsers = () => {
-  return Api.get(ApiUrls.API_TRADES_HIGH).then(response => ({
-    data: response.data.map(transformUser),
-  }));
+const getHighUsers = data => {
+  const { gameId } = data;
+
+  return Api.get(ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId)).then(
+    response => ({
+      data: response.data.map(transformUser),
+    })
+  );
 };
 
 const getTotalBetsVolumeByRange = (range = '24h') => {
