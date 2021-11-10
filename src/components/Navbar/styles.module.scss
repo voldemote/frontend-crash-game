@@ -12,6 +12,7 @@
   align-items: center;
   padding: 50px 24px;
   z-index: $zIndexNavbar;
+  background-color: $colorWhite;
 
   @media (max-width: $screen-sm) {
     padding: 36px 24px;
@@ -75,14 +76,18 @@
       }
     }
     .signUpButton {
-      background-color: $colorWhite;
+      background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%) !important;
       width: 11rem;
-      height: 55px;
-      border-radius: 4px;
-      font-size: 16px;
+      height: 43px;
+      border-radius: 30px;
+      font-size: 15px;
+      line-height: 20px;
       margin-left: 0;
       background-image: url('../../data/images/signup-background-one.svg');
       background-position: center;
+      color: #ffffff;
+      text-transform: uppercase;
+      font-family: $fontRegular;
 
       @media (max-width: $screen-sm) {
         width: 8rem;
@@ -92,10 +97,12 @@
     }
 
     .loginButton {
-      background-color: transparent;
+      background: linear-gradient(180deg, #21155c 0%, #0e0927 100%) !important;
       color: $colorWhite;
+      border-radius: 30px;
+      text-transform: uppercase;
       width: 11rem;
-      height: 55px;
+      height: 43px;
       font-size: 16px;
       border: 1px solid $colorWhite;
       font-family: $fontRegular;
@@ -109,7 +116,7 @@
     }
 
     a {
-      color: $colorWhite;
+      color: $colorPrimary;
       opacity: 0.5;
       text-decoration: none;
       margin: 0 15px;
@@ -144,14 +151,15 @@
       display: flex;
       align-items: center;
       white-space: nowrap;
-      padding: 8px 15px;
-      background-color: rgba(172, 196, 255, 0.1);
+      padding: 8px;
+      background: $colorPinkDark;
       font-size: 12px;
-      border-radius: 22px;
+      border-radius: 20px;
       font-family: $fontRegular;
       cursor: pointer;
       margin-right: 10px;
       height: 35px;
+      width: 8.4rem;
 
       img,
       svg {
@@ -248,7 +256,7 @@
       &:after {
         content: '';
         position: absolute;
-        background-color: #e2ff54;
+        background-color: $colorPinkDark;
         bottom: -5px;
         left: 50%;
         width: 80%;
@@ -386,9 +394,7 @@
             flex-direction: column;
           }
         }
-
       }
-
 
       @media (max-width: $screen-sm) {
         margin: 15px 0;
@@ -410,8 +416,6 @@
     }
 
     .leaderboardTimerComponent {
-
-
       span {
         font-size: 16px;
       }

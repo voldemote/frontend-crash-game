@@ -30,6 +30,8 @@ import AuthenticationType from '../Authentication/AuthenticationType';
 import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
+import IconHeaderLogo from '../../data/images/alpaca-logo.png';
+
 import moment from 'moment';
 
 const Navbar = ({
@@ -399,7 +401,11 @@ const Navbar = ({
       <div className={classNames(style.navbarItems, style.hideOnMobile)}>
         {renderNavbarLink(
           Routes.home,
-          <img src={LogoDemo} width={200} alt={'Wallfair'} />,
+          <img
+            src={IconHeaderLogo}
+            alt="Header Logo"
+            className={style.medal}
+          />,
           true
         )}
 

@@ -1,8 +1,8 @@
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px #f1f2f6 inset !important;
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #f1f2f6 inset !important;
 }
 
 .floatingCloseButton {
@@ -34,8 +34,6 @@ input:-webkit-autofill:active{
     width: 500px;
   }
 }
-
-
 
 .drawerHidden {
   right: -105%;
@@ -78,7 +76,7 @@ $border: 1px solid $colorWhite30;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: #F2FF53;
+  background-color: #f2ff53;
   color: black;
   font-size: 16px;
   border-radius: 25px;
@@ -126,7 +124,8 @@ $border: 1px solid $colorWhite30;
   display: inline-block;
 }
 
-.global-cashout-profit, .global-cashout-loss {
+.global-cashout-profit,
+.global-cashout-loss {
   color: $colorGreen;
   font-weight: bold;
   display: inline-block;
@@ -155,14 +154,17 @@ $border: 1px solid $colorWhite30;
     left: 0;
     right: 0;
     bottom: 0;
-    content: "";
+    content: '';
     opacity: 1;
     z-index: -2;
     position: absolute;
-    background: linear-gradient(
-        180deg, rgba(2, 0, 36, 0) 18%, rgb(18, 14, 39) 100%), linear-gradient(
-        360deg, rgba(2, 0, 36, 0) 10%, rgb(18, 14, 39) 100%);
-    max-height: 700px;
+    // background: linear-gradient(
+    //     180deg,
+    //     rgba(2, 0, 36, 0) 18%,
+    //     rgb(18, 14, 39) 100%
+    //   ),
+    //   linear-gradient(360deg, rgba(2, 0, 36, 0) 10%, rgb(18, 14, 39) 100%);
+    // max-height: 700px;
     background-repeat: no-repeat;
     background-position: top;
   }
@@ -172,15 +174,14 @@ $border: 1px solid $colorWhite30;
     left: 0;
     right: 0;
     bottom: 0;
-    content: "";
+    content: '';
     opacity: 1;
     z-index: -3;
     position: absolute;
-    max-height: 700px;
+    // max-height: 700px;
     background-size: cover;
-    background-image: url('../data/backgrounds/main-page-bg.png');
+    background-image: url('../data/backgrounds/alpaca-main-bg.png');
     background-repeat: no-repeat;
     background-position: top;
   }
-
 }
