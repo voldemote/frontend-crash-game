@@ -260,7 +260,7 @@ class AnimationController {
     ctx.fill();
     ctx.shadowOffsetX = this.r / 40;
     ctx.shadowOffsetY = this.r / 40;
-    
+
     this.g = ctx.createRadialGradient(
       cx - this.r / 7,
       cy - this.r / 7,
@@ -286,7 +286,6 @@ class AnimationController {
     ctx.fillStyle = '#F44';
     ctx.fill();
     ctx.clip();
-<<<<<<< HEAD
     var img = new Image();
     img.src = '/images/roulette-game/1.svg';
     img.onload = function () {
@@ -297,8 +296,6 @@ class AnimationController {
     return {
       audio: this.audio,
     };
-=======
->>>>>>> 0747b6e75b66e798addd9000105c2a915e132663
   }
   //when calling repaint pass to the method the new index image from riskImages
   repaint(angle) {
