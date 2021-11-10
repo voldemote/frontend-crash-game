@@ -27,8 +27,12 @@ const ActivityTable = ({ rowData, gameLabel }) => {
         </Grid>
       </div>
       <div className={styles.messageContainer}>
-        {rowData.map(r => (
-          <ActivityTableRow data={r} gameLabel={gameLabel} />
+        {rowData.map((r, i) => (
+          <ActivityTableRow
+            key={r.gameHash + i}
+            data={r}
+            gameLabel={gameLabel}
+          />
         ))}
       </div>
     </div>
