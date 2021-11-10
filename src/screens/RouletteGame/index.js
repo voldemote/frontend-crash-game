@@ -51,6 +51,7 @@ const RouletteGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
+  const [bet, setBet] = useState(null);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -209,7 +210,6 @@ const RouletteGame = ({
       </Link>
     );
   };
-  console.log('NEW RISK', risk);
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -239,9 +239,12 @@ const RouletteGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={newspin => setSpins(spins.concat(newspin))}
+                setSpins={newspin => setSpins([newspin, ...spins])}
+                spins={spins}
                 inGameBets={inGameBets}
                 risk={risk}
+                bet={bet}
+                setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
               <Spins text="My Spins" spins={spins} />
@@ -251,6 +254,7 @@ const RouletteGame = ({
                 <PlaceBetRoulette
                   connected={connected}
                   risk={risk}
+                  setBet={setBet}
                   setRisk={setRisk}
                   onBet={() => {
                     audio.playBetSound();

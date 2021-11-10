@@ -41,7 +41,14 @@ import {
   trackElonCancelBet,
 } from '../../config/gtm';
 
-const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
+const PlaceBetRoulette = ({
+  connected,
+  onBet,
+  onCashout,
+  setRisk,
+  risk,
+  setBet,
+}) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
@@ -178,9 +185,10 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
 
     const payload = {
       amount,
-      crashFactor: 999,
+      nspin: nspin,
     };
-    console.log('Apuesto: ', amount);
+    console.log('Apuesto: ', payload);
+    setBet(payload);
     /*
     Api.createTrade(payload)
       .then(_ => {

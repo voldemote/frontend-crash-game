@@ -49,6 +49,7 @@ const RouletteGameAnimation = ({
   connected,
   muteButtonClick,
   isMute,
+  spins,
   setSpins,
   isSynced,
   isLosing,
@@ -57,16 +58,18 @@ const RouletteGameAnimation = ({
   animationIndex,
   onInit,
   risk,
+  setBet,
+  bet,
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
-  const lastCrashValue = useSelector(selectLastCrash);
+  //const lastCrashValue = useSelector(selectLastCrash);
   const cashedOut = useSelector(selectCashedOut);
-  const nextGameAtTimeStamp = useSelector(selectNextGameAt);
+  //const nextGameAtTimeStamp = useSelector(selectNextGameAt);
 
   const [running, setRunning] = useState(false);
-  const [isAnimationReady, setAnimationReady] = useState(false);
+  //const [isAnimationReady, setAnimationReady] = useState(false);
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
@@ -77,8 +80,16 @@ const RouletteGameAnimation = ({
     });
     AnimationController.repaint(0);
   }, []);
+
   useEffect(() => {
-    /**/
+    if (bet?.nspin > 1 && !running) multipleSpin(bet);
+    else if (bet?.nspin === 1 && !running) spin(bet);
+  }, [bet]);
+
+  useEffect(() => {
+    if (risk) {
+      console.log('risk', risk);
+    }
   }, [risk]);
 
   const spin = async () => {
@@ -88,9 +99,19 @@ const RouletteGameAnimation = ({
     setSpins(newspin);
     setRunning(false);
   };
-
-  //max-height: 268px;
-  //min-height: 253px;
+  const multipleSpin = async bet => {
+    let i = bet.nspin,
+      newpsins = [];
+    do {
+      setRunning(true);
+      const newspin = await AnimationController.spinTo();
+      //newpsins.push(newspin)
+      setSpins(newspin);
+      i--;
+    } while (i !== 0);
+    setBet(null);
+    setRunning(false);
+  };
 
   return (
     <div
@@ -100,7 +121,7 @@ const RouletteGameAnimation = ({
         isMobile && styles.animationMobile
       )}
     >
-      <canvas className={styles.canvas} onClick={spin} ref={canvasRef}></canvas>
+      <canvas className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };
