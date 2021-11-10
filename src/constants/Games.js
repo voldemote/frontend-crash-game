@@ -57,7 +57,7 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
-    linkTo: '/games/alpaca-roulette',
+    linkTo: '/games/alpaca-wheel',
   },
   {
     background: Plinko,
@@ -190,6 +190,12 @@ export const GAMES = {
     slug: 'pump-dump',
     name: `Pump and Dump`,
     url: process.env.REACT_APP_PUMP_DUMP_GAME_BACKEND_URL,
+  },
+  alpacaWheel: {
+    id: '61817de6a9695acd029ffef3',
+    slug: 'alpaca-wheel',
+    name: `Alpaca Wheel`,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
   },
   elonGame: {
     id: '614381d74f78686665a5bb76',

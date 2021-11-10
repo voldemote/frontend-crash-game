@@ -15,7 +15,7 @@ import {
 import styles from './styles.module.scss';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-//import GameAudioControls from '../GameAudioControls';
+import GameAudioControls from '../GameAudioControls';
 import AnimationController from './AnimationController';
 import { isMobile } from 'react-device-detect';
 
@@ -49,7 +49,9 @@ const RouletteGameAnimation = ({
   connected,
   muteButtonClick,
   isMute,
+  spins,
   setSpins,
+  amount,
   isSynced,
   isLosing,
   volumeLevel,
@@ -57,40 +59,74 @@ const RouletteGameAnimation = ({
   animationIndex,
   onInit,
   risk,
+  setBet,
+  bet,
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
-  const lastCrashValue = useSelector(selectLastCrash);
+  //const lastCrashValue = useSelector(selectLastCrash);
   const cashedOut = useSelector(selectCashedOut);
-  const nextGameAtTimeStamp = useSelector(selectNextGameAt);
+  //const nextGameAtTimeStamp = useSelector(selectNextGameAt);
 
   const [running, setRunning] = useState(false);
-  const [isAnimationReady, setAnimationReady] = useState(false);
+  //const [isAnimationReady, setAnimationReady] = useState(false);
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
-    AnimationController.init(canvasRef.current, {
+    let audioInstance = null;
+    const { audio } = AnimationController.init(canvasRef.current, {
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
       risk,
+      amount
     });
-    AnimationController.repaint(0);
+    setAudio(audio);
+    audioInstance = audio;
+    onInit(audio);
+    AnimationController.repaint(0, risk);
+    return () => audioInstance.stopBgm();
   }, []);
+
   useEffect(() => {
-    /**/
-  }, [risk]);
+    if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
+  }, [bet]);
+
+  useEffect(() => {
+    if (risk && amount) {
+      AnimationController.changeValues();
+      AnimationController.reinit(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        amount: amount!==undefined? amount: 50
+      }, risk);
+      AnimationController.repaint(0, risk);
+    }
+  }, [risk, amount]);
 
   const spin = async () => {
     if (running) return;
     else setRunning(true);
-    const newspin = await AnimationController.spinTo();
+    const newspin = await AnimationController.spinTo(bet.winIndex);
     setSpins(newspin);
     setRunning(false);
-  };
-
-  //max-height: 268px;
-  //min-height: 253px;
+    setBet({pending: true});
+  }
+/*
+  const multipleSpin = async bet => {
+    let i = bet.nspin,
+      newpsins = [];
+    do {
+      setRunning(true);
+      const newspin = await AnimationController.spinTo();
+      //newpsins.push(newspin)
+      setSpins(newspin);
+      i--;
+    } while (i !== 0);
+    setBet(null);
+    setRunning(false);
+  }*/
 
   return (
     <div
@@ -100,7 +136,12 @@ const RouletteGameAnimation = ({
         isMobile && styles.animationMobile
       )}
     >
-      <canvas className={styles.canvas} onClick={spin} ref={canvasRef}></canvas>
+      <div className={styles.audioControls}>
+        {audio && (
+          <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
+        )}
+      </div>
+      <canvas id = "canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };
@@ -120,7 +161,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     muteButtonClick: () => {
-      dispatch(RouletteGameAnimation.muteButtonClick());
+      dispatch(RosiGameActions.muteButtonClick());
     },
   };
 };
