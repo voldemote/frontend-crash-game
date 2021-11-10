@@ -197,4 +197,9 @@ export const GAMES = {
     name: `Elon Game`,
     url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
   },
+  alpacaWheel: {
+    id: 'a81ded90fd22298859bc4',
+    slug: 'alpaca-wheel-game',
+    name: `Alpaca Wheel`,
+  },
 };
