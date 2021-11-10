@@ -29,7 +29,7 @@ const PreparingRound = ({ nextGameAt }) => (
       </div>
     </div>
   </div>
-);
+)
 
 const GameOffline = () => (
   <div className={styles.preparingRound}>
@@ -171,7 +171,7 @@ const RosiGameAnimation = ({
       {isAnimationReady && isSynced ? render() : <GameOffline />}
     </div>
   );
-};
+}
 
 const mapStateToProps = state => {
   return {

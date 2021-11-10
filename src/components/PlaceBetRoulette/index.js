@@ -181,13 +181,14 @@ const PlaceBetRoulette = ({
   const placeABet = () => {
     //if (userUnableToBet) return;
     //if (amount > userBalance) return;
-    //onBet();
 
     const payload = {
       amount,
       nspin: nspin,
+      riskFactor: risk
     };
     console.log('Apuesto: ', payload);
+    onBet(payload);
     setBet(payload);
     /*
     Api.createTrade(payload)

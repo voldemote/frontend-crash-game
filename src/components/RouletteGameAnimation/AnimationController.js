@@ -19,6 +19,8 @@ let riskImages = [
 ];
 
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
+// hide PIXI welcome messege in console
+PIXI.utils.skipHello();
 
 class AudioController {
   constructor(bgmIndex = 0) {
@@ -60,7 +62,7 @@ class AudioController {
         placebet: {
           url: '/sounds/elon/sfx_placebet.mp3',
           loop: false,
-        },
+        }
       },
       {
         loaded: (err, data) => {
@@ -197,10 +199,9 @@ class AnimationController {
     this.canvas = canvas;
     this.canvas.width = options.width;
     this.canvas.height = options.height;
-    this.audio = new AudioController();
-    this.audio.setBgmIndex();
+    this.audio = new AudioController(0);
+    this.audio.startBgm();
 
-    //console.log("this.canvas", this.canvas.clientWidth, this.canvas.clientHeight)
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
     this.angle = 0;

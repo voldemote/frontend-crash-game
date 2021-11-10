@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import * as Api from 'api/crash-game';
+//import * as Api from 'api/casino-games';
+import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -30,14 +31,21 @@ import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
+import { GameApi } from '../../api/casino-games';
+import { GAMES } from '../../constants/Games';
+
 
 const RouletteGame = ({
   showPopup,
   connected,
   userId,
+  token,
   refreshHighData,
   refreshLuckyData,
 }) => {
+  const game = GAMES.alpacaWheel
+  const ROSI_GAME_EVENT_ID = game.id;
+  const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
   const {
     lastCrashes,
@@ -67,7 +75,7 @@ const RouletteGame = ({
   }, []);
 
   useEffect(() => {
-    Api.getCurrentGameInfo()
+    ApiUser.getCurrentGameInfo()
       .then(response => {
         dispatch(
           RosiGameActions.initializeState({
@@ -82,6 +90,7 @@ const RouletteGame = ({
     dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
+
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -123,6 +132,28 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   };
+
+  async function handleBet(payload) {
+    audio.playBetSound();
+    console.log("handleBet", payload)
+    if (!payload) return;
+    try {
+      const result = await Api.createTrade(payload);
+      console.log(result)
+      /*
+
+      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+      dispatch(RosiGameActions.setUserBet(payload));
+      return result;
+      */
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: 'Elon Game: Place Bet failed',
+        })
+      );
+    }
+  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -256,9 +287,7 @@ const RouletteGame = ({
                   risk={risk}
                   setBet={setBet}
                   setRisk={setRisk}
-                  onBet={() => {
-                    audio.playBetSound();
-                  }}
+                  onBet={handleBet}
                   onCashout={() => {
                     audio.playWinSound();
                   }}
@@ -286,6 +315,7 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
+    token: state.authentication.token,
   };
 };
 

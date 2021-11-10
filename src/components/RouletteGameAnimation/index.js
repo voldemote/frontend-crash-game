@@ -73,6 +73,7 @@ const RouletteGameAnimation = ({
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
+    let audioInstance = null;
     const { audio } = AnimationController.init(canvasRef.current, {
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
@@ -80,9 +81,13 @@ const RouletteGameAnimation = ({
       bet
     });
     setAudio(audio);
+    audioInstance = audio;
+    onInit(audio);
     AnimationController.repaint(0);
+    return () => audioInstance.stopBgm();
   }, []);
   console.log("risk,bet",risk,bet)
+
   useEffect(() => {
     if (bet?.nspin > 1 && !running) multipleSpin(bet);
     else if (bet?.nspin === 1 && !running) spin(bet);
@@ -124,7 +129,7 @@ const RouletteGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {false && audio && (
+        {audio && (
           <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
         )}
       </div>
@@ -148,7 +153,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     muteButtonClick: () => {
-      dispatch(RouletteGameAnimation.muteButtonClick());
+      dispatch(RosiGameActions.muteButtonClick());
     },
   };
 };

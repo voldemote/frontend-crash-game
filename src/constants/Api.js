@@ -5,6 +5,8 @@ export const BACKEND_URL =
 export const BACKEND_SOCKET_URL = BACKEND_URL;
 export const CRASH_GAME_BACKEND_URL =
   process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8001/';
+export const CRASH_GAMES_BACKEND_URL =
+    process.env.REACT_APP_CASINO_GAMES_BACKEND_URL || 'http://localhost:8003/';
 export const SECOND_CRASH_GAME_BACKEND_URL =
   process.env.REACT_APP_SECOND_CRASH_GAME_BACKEND_URL ||
   'http://localhost:8002/';
@@ -67,6 +69,7 @@ export const API_BET_RESOLVE = 'api/event/bet/:id/resolve';
 export const API_BET_CANCEL = 'api/event/bet/:id/cancel';
 export const API_BET_DELETE = 'api/event/bet/:id/delete';
 export const API_TRADE_CREATE = 'api/trade';
+export const API_WHEEL_BET = 'api/trade/wheel';
 export const API_CASH_OUT = 'api/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_TRADES_LUCKY = 'api/trades/lucky';
