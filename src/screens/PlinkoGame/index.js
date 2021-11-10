@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-//import * as Api from 'api/casino-games';
-import * as ApiUser from 'api/crash-game';
+import * as Api from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -10,10 +9,10 @@ import PlaceBet from 'components/PlaceBet';
 import PlaceBetRoulette from 'components/PlaceBetRoulette';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
-import GameAnimation from 'components/RouletteGameAnimation';
+import GameAnimation from 'components/PlinkoGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
+import { PLINKO_GAME_EVENT_ID } from 'constants/RosiGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
@@ -31,21 +30,14 @@ import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
-import { GameApi } from '../../api/casino-games';
-import { GAMES } from '../../constants/Games';
 
-
-const RouletteGame = ({
+const PlinkoGame = ({
   showPopup,
   connected,
   userId,
-  token,
   refreshHighData,
   refreshLuckyData,
 }) => {
-  const game = GAMES.alpacaWheel
-  const ROSI_GAME_EVENT_ID = game.id;
-  const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
   const {
     lastCrashes,
@@ -58,9 +50,6 @@ const RouletteGame = ({
   } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
-  const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState(null);
-  const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -76,7 +65,7 @@ const RouletteGame = ({
   }, []);
 
   useEffect(() => {
-    ApiUser.getCurrentGameInfo()
+    Api.getCurrentGameInfo()
       .then(response => {
         dispatch(
           RosiGameActions.initializeState({
@@ -88,10 +77,9 @@ const RouletteGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-    dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({ roomId: PLINKO_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
-
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -133,28 +121,6 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   };
-
-  async function handleBet(payload) {
-    audio.playBetSound();
-    console.log("handleBet", payload)
-    if (!payload) return;
-    try {
-      const result = await Api.createTrade(payload);
-      console.log(result)
-      /*
-
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-      dispatch(RosiGameActions.setUserBet(payload));
-      return result;
-      */
-    } catch (e) {
-      dispatch(
-        AlertActions.showError({
-          message: 'Elon Game: Place Bet failed',
-        })
-      );
-    }
-  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -209,7 +175,7 @@ const RouletteGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROULETTE_GAME_EVENT_ID}
+          roomId={PLINKO_GAME_EVENT_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -247,7 +213,7 @@ const RouletteGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Roulette Game" />
+            <BackLink to="/games" text="Plinko Game" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -271,26 +237,19 @@ const RouletteGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={newspin => setSpins([newspin, ...spins])}
-                spins={spins}
+                setSpins={newspin => setSpins(spins.concat(newspin))}
                 inGameBets={inGameBets}
-                risk={risk}
-                bet={bet}
-                amount={amount}
-                setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              <Spins text="My Results" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBetRoulette
+                <PlaceBet
                   connected={connected}
-                  risk={risk}
-                  setBet={setBet}
-                  setAmount2={(amount)=>setAmount(amount)}
-                  setRisk={setRisk}
-                  onBet={handleBet}
+                  onBet={() => {
+                    audio.playBetSound();
+                  }}
                   onCashout={() => {
                     audio.playWinSound();
                   }}
@@ -318,7 +277,6 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
-    token: state.authentication.token,
   };
 };
 
@@ -340,4 +298,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RouletteGame);
+export default connect(mapStateToProps, mapDispatchToProps)(PlinkoGame);

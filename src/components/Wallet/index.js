@@ -1,9 +1,9 @@
+import { useEffect, useState, memo } from 'react';
 import classNames from 'classnames';
 import Icon from '../Icon';
 import { connect, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import MenuItem from '../MenuItem';
-import { useEffect, useState } from 'react';
 import WalletBalance from '../WalletBalance';
 import useTransactions from 'hooks/useTransactions';
 import { selectUser } from 'store/selectors/authentication';
@@ -173,4 +173,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Wallet);
+const Connected = connect(null, mapDispatchToProps)(Wallet);
+export default memo(Connected);

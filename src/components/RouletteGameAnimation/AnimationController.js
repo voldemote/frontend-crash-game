@@ -6,6 +6,7 @@ import '@pixi/sound';
 import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
+
 let sectionsArray = [[0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95],
                 [1.5, 0.2, 1, 0.4, 0.3, 3, 0.4, 0.2, 0.49, 1, 0.4, 3],
                 [1.5, 0, 1.3, 0.4, 0.4, 3, 0.4, 0.4, 0.49, 1, 0, 3],
@@ -13,8 +14,6 @@ let sectionsArray = [[0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95],
                 [0, 0, 1, 0, 0, 3.952, 0, 0, 1, 0, 0, 5.94],
                 [0, 0, 0, 0, 0, 5.94, 0, 0, 0, 0, 0, 5.94],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.89]]
-
-
 let riskImages = [
   '/images/roulette-game/1.svg',
   '/images/roulette-game/2.svg',
@@ -302,8 +301,6 @@ class AnimationController {
     ctx.fillStyle = '#F44';
     ctx.fill();
     ctx.clip();
-
-
     ctx.fill();
     return {
       audio: this.audio,
@@ -334,7 +331,6 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-
 
     var img = new Image();
     img.src = '/images/roulette-game/'+this.risk+'.svg';

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
@@ -524,4 +524,4 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   );
 };
 
-export default PlaceBet;
+export default memo(PlaceBet);
