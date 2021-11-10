@@ -230,7 +230,7 @@ const PlaceBetRoulette = ({
     }
 
     if (userUnableToBet) return;
-    onBet();
+    //onBet();
     const payload = {
       amount,
       crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,

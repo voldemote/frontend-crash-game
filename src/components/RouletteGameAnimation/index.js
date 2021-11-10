@@ -123,7 +123,7 @@ const RouletteGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {audio && (
+        {false && audio && (
           <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
         )}
       </div>
