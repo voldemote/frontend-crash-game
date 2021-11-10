@@ -109,7 +109,6 @@ const RouletteGameAnimation = ({
     if (running) return;
     else setRunning(true);
     const newspin = await AnimationController.spinTo(bet.winIndex);
-    console.log("bet.winIndex", newspin, bet.winIndex)
     setSpins(newspin);
     setRunning(false);
     setBet({pending: true});

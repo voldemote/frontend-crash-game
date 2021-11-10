@@ -313,7 +313,6 @@ class AnimationController {
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
-    console.log("this.risk", this.risk)
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
     this.angle = 0;
@@ -451,7 +450,6 @@ class AnimationController {
     //const winner = (Math.random() * sectionsArray[0].length) | 0
     const duration = 5000
     let sections = sectionsArray[this.risk-1]
-    console.log("sections", sections)
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winnerIndex) * 2 * Math.PI) / sections.length;
       let start_angle =
