@@ -208,7 +208,8 @@ const RosiGame = ({
             <EventActivitiesTracker
               activitiesLimit={50}
               className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'elongame'}
+              preselectedCategory={'game'}
+              gameId={GAMES.elonGame.id}
             />
           )}
           {activityTabIndex !== 0 && (

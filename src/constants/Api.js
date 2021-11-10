@@ -74,6 +74,8 @@ export const API_TRADES_LUCKY = 'api/trades/lucky';
 export const API_TRADES_HIGH = 'api/trades/high';
 export const API_GET_NOTIFICATION_EVENTS =
   'api/notification-events/list?limit=:limit&cat=:category';
+export const API_GET_NOTIFICATION_EVENTS_BY_GAME =
+  'api/notification-events/list?limit=:limit&cat=:category&gameId=:gameId';
 export const API_GET_NOTIFICATION_EVENTS_BY_BET =
   'api/notification-events/list/bets/:betId?limit=:limit';
 export const API_GET_NOTIFICATION_EVENTS_BY_USER =
