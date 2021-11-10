@@ -90,7 +90,15 @@ const RouletteGameAnimation = ({
 
   useEffect(() => {
     if (risk) {
-      console.log('risk', risk);
+      console.log('risk:', risk);
+      AnimationController.changeValues();
+      AnimationController.init(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        bet
+      }, risk);
+      AnimationController.repaint(0, [risk]);
     }
   }, [risk]);
 
@@ -128,7 +136,7 @@ const RouletteGameAnimation = ({
           <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
         )}
       </div>
-      <canvas className={styles.canvas} ref={canvasRef}></canvas>
+      <canvas id = "canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };

@@ -7,6 +7,8 @@ import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
 let sections = [0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95];
+let sections2 = [1.5, 0.2, 1, 0.4, 0.3, 3, 0.4, 0.2, 0.49, 1, 0.4, 3];
+
 
 let riskImages = [
   '/images/roulette-game/1.svg',
@@ -17,9 +19,9 @@ let riskImages = [
   '/images/roulette-game/6.svg',
   '/images/roulette-game/7.svg',
 ];
-
+let updateValues = [];
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
-
+let canvas = null;
 class AudioController {
   constructor(bgmIndex = 0) {
     let volume = 0;
@@ -193,7 +195,7 @@ function loadAssets(loader) {
 }
 */
 class AnimationController {
-  init(canvas, options) {
+  init(canvas, options,typeSel) {
     this.canvas = canvas;
     this.canvas.width = options.width;
     this.canvas.height = options.height;
@@ -206,6 +208,7 @@ class AnimationController {
     this.angle = 0;
     for (let selected = 0; selected < sections.length; selected++) {
       let c = document.createElement('canvas');
+      c.id = selected;
       c.width = c.height = 2 * this.r + 10;
       let ctx = c.getContext('2d'),
         cx = 5 + this.r,
@@ -213,10 +216,15 @@ class AnimationController {
       // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
       // this.g.addColorStop(0, 'rgba(0,0,0,0)');
       // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
-      for (let i = 0; i < sections.length; i++) {
-        let a0 = (2 * Math.PI * i) / sections.length;
-        let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
-        let a = (2 * Math.PI * (i + 0.5)) / sections.length;
+      if(typeSel==2) {
+        var sectiontouse = sections2;
+      } else {
+        var sectiontouse = sections;
+      }
+      for (let i = 0; i < sectiontouse.length; i++) {
+        let a0 = (2 * Math.PI * i) / sectiontouse.length;
+        let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sectiontouse.length);
+        let a = (2 * Math.PI * (i + 0.5)) / sectiontouse.length;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.arc(cx, cy, this.r, a0, a1, false);
@@ -234,16 +242,18 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
-        ctx.font = (this.r / sections.length) * 1.6 + 'px PlusJakarta-Regular';
+        ctx.font = (this.r / sectiontouse.length) * 1.6 + 'px PlusJakarta-Regular';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(sections[i], this.r * 0.62, 0);
+        ctx.fillText(sectiontouse[i], this.r * 0.62, 0);
         ctx.restore();
       }
+
       this.wheels.push(c);
     }
+    console.log(this.wheels);
     this.frame = document.createElement('canvas');
     this.frame.width = this.frame.height = (10 + 2 * this.r * 1.25) | 0;
     let ctx = this.frame.getContext('2d'),
@@ -294,7 +304,7 @@ class AnimationController {
     };
   }
   //when calling repaint pass to the method the new index image from riskImages
-  repaint(angle) {
+  repaint(angle,risk) {
     this.angle = angle;
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
@@ -317,14 +327,20 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
+   
+    
     var img = new Image();
-    img.src = '/images/roulette-game/7.svg';
+    img.src = '/images/roulette-game/'+risk+'.svg';
     //check if image is loaded, if yes drawit
-    //img.onload = function () {
+    img.onload = function () {
     ctx.drawImage(img, 369, 120, 150, 150);
-    //};
+    }
   }
-
+ changeValues() {   
+   var canvas = document.getElementById("canvas");
+   var context = canvas.getContext('2d');
+   context.clearRect(0, 0, canvas.width, canvas.height); 
+ }
   spinTo(winner = (Math.random() * sections.length) | 0, duration = 5000) {
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
