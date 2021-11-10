@@ -208,7 +208,7 @@ class AnimationController {
     this.canvas.width = options.width;
     this.canvas.height = options.height;
     this.audio = new AudioController(0);
-    this.audio.startBgm();
+    //this.audio.startBgm();
 
     this.risk = options.risk
     let sections = sectionsArray[options.risk]
@@ -348,10 +348,10 @@ class AnimationController {
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
-  spinTo(winner = (Math.random() * sectionsArray[0].length) | 0, duration = 5000) {
+  spinTo(winner = (Math.random() * sectionsArray[0].length) | 0, duration = 5000, idle = false) {
     let sections = sectionsArray[this.risk]
     return new Promise(resolve => {
-      let final_angle = -0.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
+      let final_angle = -4.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
       let start_angle =
         this.angle -
         Math.floor(this.angle / (2 * Math.PI)) * 2 * Math.PI -
@@ -362,6 +362,7 @@ class AnimationController {
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
         this.angle = start_angle + t * (final_angle - start_angle);
+        if (idle) this.angle =Math.abs(this.angle);
         this.repaint(this.angle);
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else resolve(sections[winner]); //console.log(false); //setRunning(false);
