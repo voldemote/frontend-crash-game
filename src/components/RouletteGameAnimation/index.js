@@ -51,6 +51,7 @@ const RouletteGameAnimation = ({
   isMute,
   spins,
   setSpins,
+  amount,
   isSynced,
   isLosing,
   volumeLevel,
@@ -78,15 +79,14 @@ const RouletteGameAnimation = ({
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
       risk,
-      bet
+      amount
     });
     setAudio(audio);
     audioInstance = audio;
     onInit(audio);
-    AnimationController.repaint(0);
+    AnimationController.repaint(0, risk);
     return () => audioInstance.stopBgm();
   }, []);
-  console.log("risk,bet",risk,bet)
 
   useEffect(() => {
     if (bet?.nspin > 1 && !running) multipleSpin(bet);
@@ -94,18 +94,18 @@ const RouletteGameAnimation = ({
   }, [bet]);
 
   useEffect(() => {
-    if (risk) {
-      console.log('risk:', risk);
+    if (risk && amount) {
+      console.log('risk:', risk, amount);
       AnimationController.changeValues();
       AnimationController.init(canvasRef.current, {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
         risk,
-        bet
+        amount: amount!==undefined? amount: 50
       }, risk);
-      AnimationController.repaint(0, [risk]);
+      AnimationController.repaint(0, risk);
     }
-  }, [risk]);
+  }, [risk, amount]);
 
   const spin = async () => {
     if (running) return;

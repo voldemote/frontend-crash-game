@@ -6,8 +6,13 @@ import '@pixi/sound';
 import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
-let sections = [0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95];
-let sections2 = [1.5, 0.2, 1, 0.4, 0.3, 3, 0.4, 0.2, 0.49, 1, 0.4, 3];
+let sectionsArray = [[0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95],
+                [1.5, 0.2, 1, 0.4, 0.3, 3, 0.4, 0.2, 0.49, 1, 0.4, 3],
+                [1.5, 0, 1.3, 0.4, 0.4, 3, 0.4, 0.4, 0.49, 1, 0, 3],
+                [0, 0.3, 1, 0.5, 0, 3.28, 0, 0.4, 0, 1, 0.4, 5],
+                [0, 0, 1, 0, 0, 3.952, 0, 0, 1, 0, 0, 5.94],
+                [0, 0, 0, 0, 0, 5.94, 0, 0, 0, 0, 0, 5.94],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.89]]
 
 
 let riskImages = [
@@ -21,13 +26,9 @@ let riskImages = [
 ];
 let updateValues = [];
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
-<<<<<<< HEAD
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
-
-=======
 let canvas = null;
->>>>>>> 041e683cdfa7a929192001a15629a8418e5fa3f6
 class AudioController {
   constructor(bgmIndex = 0) {
     let volume = 0;
@@ -200,13 +201,17 @@ function loadAssets(loader) {
   });
 }
 */
+
 class AnimationController {
-  init(canvas, options,typeSel) {
+  init(canvas, options, typeSel) {
     this.canvas = canvas;
     this.canvas.width = options.width;
     this.canvas.height = options.height;
     this.audio = new AudioController(0);
     this.audio.startBgm();
+
+    this.risk = options.risk
+    let sections = sectionsArray[options.risk]
 
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
@@ -221,15 +226,10 @@ class AnimationController {
       // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
       // this.g.addColorStop(0, 'rgba(0,0,0,0)');
       // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
-      if(typeSel==2) {
-        var sectiontouse = sections2;
-      } else {
-        var sectiontouse = sections;
-      }
-      for (let i = 0; i < sectiontouse.length; i++) {
-        let a0 = (2 * Math.PI * i) / sectiontouse.length;
-        let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sectiontouse.length);
-        let a = (2 * Math.PI * (i + 0.5)) / sectiontouse.length;
+      for (let i = 0; i < sections.length; i++) {
+        let a0 = (2 * Math.PI * i) / sections.length;
+        let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
+        let a = (2 * Math.PI * (i + 0.5)) / sections.length;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.arc(cx, cy, this.r, a0, a1, false);
@@ -247,12 +247,13 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
-        ctx.font = (this.r / sectiontouse.length) * 1.6 + 'px PlusJakarta-Regular';
+        ctx.font = (this.r / sections.length) * 1.6 + 'px PlusJakarta-Regular';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(sectiontouse[i], this.r * 0.62, 0);
+        console.log("Print", sections[i], options.amount)
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
         ctx.restore();
       }
 
@@ -309,7 +310,8 @@ class AnimationController {
     };
   }
   //when calling repaint pass to the method the new index image from riskImages
-  repaint(angle,risk) {
+  repaint(angle) {
+    let sections = sectionsArray[this.risk]
     this.angle = angle;
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
@@ -332,21 +334,22 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-   
-    
+
+
     var img = new Image();
-    img.src = '/images/roulette-game/'+risk+'.svg';
+    img.src = '/images/roulette-game/'+this.risk+'.svg';
     //check if image is loaded, if yes drawit
     img.onload = function () {
     ctx.drawImage(img, 369, 120, 150, 150);
     }
   }
- changeValues() {   
+ changeValues() {
    var canvas = document.getElementById("canvas");
    var context = canvas.getContext('2d');
-   context.clearRect(0, 0, canvas.width, canvas.height); 
+   context.clearRect(0, 0, canvas.width, canvas.height);
  }
-  spinTo(winner = (Math.random() * sections.length) | 0, duration = 5000) {
+  spinTo(winner = (Math.random() * sectionsArray[0].length) | 0, duration = 5000) {
+    let sections = sectionsArray[this.risk]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
       let start_angle =

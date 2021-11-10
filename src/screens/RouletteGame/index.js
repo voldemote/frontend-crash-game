@@ -60,6 +60,7 @@ const RouletteGame = ({
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState(null);
+  const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -275,6 +276,7 @@ const RouletteGame = ({
                 inGameBets={inGameBets}
                 risk={risk}
                 bet={bet}
+                amount={amount}
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
@@ -286,6 +288,7 @@ const RouletteGame = ({
                   connected={connected}
                   risk={risk}
                   setBet={setBet}
+                  setAmount2={(amount)=>setAmount(amount)}
                   setRisk={setRisk}
                   onBet={handleBet}
                   onCashout={() => {

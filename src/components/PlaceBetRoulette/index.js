@@ -44,6 +44,7 @@ import {
 const PlaceBetRoulette = ({
   connected,
   onBet,
+  setAmount2,
   onCashout,
   setRisk,
   risk,
@@ -90,6 +91,7 @@ const PlaceBetRoulette = ({
 
   const onTokenNumberChange = number => {
     setAmount(number);
+    setAmount2(number)
     // debouncedSetCommitment(number, currency);
   };
 
@@ -127,6 +129,8 @@ const PlaceBetRoulette = ({
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
+    console.log("setAmount2", amount)
+    setAmount2(amount <= 10000 ? amount : 10000)
     setAmount(amount <= 10000 ? amount : 10000);
   };
   const onGuestNspinChange = event => {
