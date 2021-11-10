@@ -89,15 +89,13 @@ const RouletteGameAnimation = ({
   }, []);
 
   useEffect(() => {
-    if (bet?.nspin > 1 && !running) multipleSpin(bet);
-    else if (bet?.nspin === 1 && !running) spin(bet);
+    if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
   }, [bet]);
 
   useEffect(() => {
     if (risk && amount) {
-      console.log('risk:', risk, amount);
       AnimationController.changeValues();
-      AnimationController.init(canvasRef.current, {
+      AnimationController.reinit(canvasRef.current, {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
         risk,
@@ -110,10 +108,12 @@ const RouletteGameAnimation = ({
   const spin = async () => {
     if (running) return;
     else setRunning(true);
-    const newspin = await AnimationController.spinTo();
+    const newspin = await AnimationController.spinTo(bet.winIndex);
     setSpins(newspin);
     setRunning(false);
-  };
+    setBet({pending: true});
+  }
+/*
   const multipleSpin = async bet => {
     let i = bet.nspin,
       newpsins = [];
@@ -126,7 +126,7 @@ const RouletteGameAnimation = ({
     } while (i !== 0);
     setBet(null);
     setRunning(false);
-  };
+  }*/
 
   return (
     <div

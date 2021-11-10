@@ -13,7 +13,7 @@ export const selectTokensRequestedAt = state => {
   const id = selectUserId(state);
   return state.user.users[id] && state.user.users[id].tokensRequestedAt
     ? state.user.users[id].tokensRequestedAt
-    : null;
+    : new Date(Date.now() - (3600 * 1010)).toISOString();
 };
 
 export const selectUser = state => {
