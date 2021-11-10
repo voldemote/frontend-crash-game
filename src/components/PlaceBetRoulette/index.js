@@ -44,6 +44,7 @@ import {
 const PlaceBetRoulette = ({
   connected,
   onBet,
+  bet,
   setAmount2,
   onCashout,
   setRisk,
@@ -68,6 +69,7 @@ const PlaceBetRoulette = ({
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
+  const [nuspin, setNuspin] = useState({nspins: 0});
   const gameOffline = useSelector(selectGameOffline);
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
@@ -186,13 +188,21 @@ const PlaceBetRoulette = ({
 
     const payload = {
       amount,
-      nspin: nspin,
+      nspin: nspin-1,
       riskFactor: risk
     };
-    console.log('Apuesto: ', payload);
+    setNuspin(payload)
     const bet = await onBet(payload);
-    console.log("BET", bet)
   };
+
+  useEffect(async () => {
+    console.log("sother", bet)
+    if(bet?.pending && nuspin !== 0) {
+
+      setNuspin({...nuspin, nspin: nuspin.nspin -1})
+      const bet = await onBet({...nuspin, nspin: nuspin.nspin -1});
+    }
+  }, [bet])
 
   const cancelBet = e => {
     e.preventDefault();
@@ -528,44 +538,44 @@ const PlaceBetRoulette = ({
             </label>
             <div className={styles.riskSelection}>
               <button
+                style={{ background: risk === 0 && '#80808070' }}
+                onClick={() => setRisk(0)}
+              >
+                1
+              </button>
+              <button
                 style={{ background: risk === 1 && '#80808070' }}
                 onClick={() => setRisk(1)}
               >
-                1
+                2
               </button>
               <button
                 style={{ background: risk === 2 && '#80808070' }}
                 onClick={() => setRisk(2)}
               >
-                2
+                3
               </button>
               <button
                 style={{ background: risk === 3 && '#80808070' }}
                 onClick={() => setRisk(3)}
               >
-                3
+                4
               </button>
               <button
                 style={{ background: risk === 4 && '#80808070' }}
                 onClick={() => setRisk(4)}
               >
-                4
+                5
               </button>
               <button
                 style={{ background: risk === 5 && '#80808070' }}
                 onClick={() => setRisk(5)}
               >
-                5
+                6
               </button>
               <button
                 style={{ background: risk === 6 && '#80808070' }}
                 onClick={() => setRisk(6)}
-              >
-                6
-              </button>
-              <button
-                style={{ background: risk === 7 && '#80808070' }}
-                onClick={() => setRisk(7)}
               >
                 7
               </button>
@@ -619,6 +629,11 @@ const PlaceBetRoulette = ({
                 </span>
               </div>
             </div>
+            {nuspin.nspin > 0 &&
+              <div className={styles.spinsleft}>
+                {nuspin.nspin} spins left
+              </div>
+            }
           </div>
         </div>
       </div>

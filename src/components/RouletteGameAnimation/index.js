@@ -89,8 +89,8 @@ const RouletteGameAnimation = ({
   }, []);
 
   useEffect(() => {
-    if (bet?.nspin > 1 && !running) multipleSpin(bet);
-    else if (bet?.nspin === 1 && !running) spin(bet);
+    console.log("In animation go",bet)
+    if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
   }, [bet]);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const RouletteGameAnimation = ({
     const newspin = await AnimationController.spinTo(bet.winIndex);
     setSpins(newspin);
     setRunning(false);
-    setBet(null);
+    setBet({pending: true});
   }
 
   const multipleSpin = async bet => {

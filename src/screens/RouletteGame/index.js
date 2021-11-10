@@ -132,8 +132,8 @@ const RouletteGame = ({
         break;
     }
     setActivityTabIndex(index);
-  };
-  console.log("BEET", bet)
+  }
+
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
@@ -283,6 +283,7 @@ const RouletteGame = ({
                 <PlaceBetRoulette
                   connected={connected}
                   risk={risk}
+                  bet={bet}
                   setAmount2={(amount)=>setAmount(amount)}
                   setRisk={setRisk}
                   onBet={handleBet}

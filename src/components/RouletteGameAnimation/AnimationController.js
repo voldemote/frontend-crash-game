@@ -337,7 +337,7 @@ class AnimationController {
 
 
     var img = new Image();
-    img.src = '/images/roulette-game/'+this.risk+'.svg';
+    img.src = '/images/roulette-game/'+ (this.risk+1) +'.svg';
     //check if image is loaded, if yes drawit
     img.onload = function () {
     ctx.drawImage(img, 369, 120, 150, 150);
@@ -348,7 +348,7 @@ class AnimationController {
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
-spinTo(winnerIndex) {
+  spinTo(winnerIndex) {
     //const winner = (Math.random() * sectionsArray[0].length) | 0
     const duration = 5000
     let sections = sectionsArray[this.risk]
