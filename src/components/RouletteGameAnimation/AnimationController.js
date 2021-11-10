@@ -208,7 +208,7 @@ class AnimationController {
     this.canvas.width = options.width;
     this.canvas.height = options.height;
     this.audio = new AudioController(0);
-    //this.audio.startBgm();
+    this.audio.startBgm();
 
     this.risk = options.risk
     this.amount = options.amount
@@ -435,7 +435,7 @@ class AnimationController {
     img.src = '/images/roulette-game/'+ (this.risk) +'.svg';
     //check if image is loaded, if yes drawit
     img.onload = function () {
-      ctx.drawImage(img, cx - 180 / 2, cy - 180 / 2, 180, 180);
+      ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
   }
  changeValues() {
