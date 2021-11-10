@@ -191,12 +191,6 @@ export const GAMES = {
     name: `Pump and Dump`,
     url: process.env.REACT_APP_PUMP_DUMP_GAME_BACKEND_URL,
   },
-  alpacaWheel: {
-    id: '61817de6a9695acd029ffef3',
-    slug: 'alpaca-wheel',
-    name: `Alpaca Wheel`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
-  },
   elonGame: {
     id: '614381d74f78686665a5bb76',
     slug: 'elon-game',
@@ -205,8 +199,9 @@ export const GAMES = {
   },
   alpacaWheel: {
     id: 'a81ded90fd22298859bc4',
-    slug: 'alpaca-wheel-game',
+    slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
   plinko: {
     id: 'a821bd90fd22298859bc5',
