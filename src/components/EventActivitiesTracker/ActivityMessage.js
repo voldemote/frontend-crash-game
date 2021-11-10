@@ -51,6 +51,11 @@ const ActivityMessage = ({ activity, users }) => {
     const userName = getUserProfileUrl(data);
     const rewardAmountFormatted = formatToFixed(data?.reward, 0, false);
     const rewardAmount = toNumericString(rewardAmountFormatted);
+    const gameName = data?.gameName;
+    const gameLabel = gameName || 'Game';
+
+    console.log('data', data);
+
     switch (activity.type) {
       case 'Casino/CASINO_CASHOUT':
         const stakedAmount = data?.stakedAmount;
@@ -60,6 +65,7 @@ const ActivityMessage = ({ activity, users }) => {
           rewardAmount,
           stakedAmount,
           crashFactor,
+          gameLabel,
         };
         return <ActivityTableRow data={rowData} type={'cashout'} />;
       case 'Casino/EVENT_CASINO_LOST': {
@@ -70,6 +76,7 @@ const ActivityMessage = ({ activity, users }) => {
           rewardAmount,
           stakedAmount,
           crashFactor,
+          gameLabel,
         };
         return <ActivityTableRow data={rowData} type={'lost'} />;
       }
