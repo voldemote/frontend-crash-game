@@ -123,7 +123,7 @@ const PlaceBetRoulette = ({
     const payload = {
       amount,
       nspin: nspin-1,
-      riskFactor: risk+1
+      riskFactor: risk
     };
     setNuspin(payload)
     const bet = await onBet(payload)
