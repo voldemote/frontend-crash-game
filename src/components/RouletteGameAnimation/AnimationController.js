@@ -6,6 +6,7 @@ import '@pixi/sound';
 import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
+
 let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 1.22],
 [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
 [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
@@ -13,8 +14,6 @@ let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 
 [0, 1.22, 0, 0, 4, 0.22, 0, 3, 2, 0.22, 0, 1.22],
 [0, 0.22, 0, 0, 5, 0, 0, 3, 2, 0.44, 0, 1.22],
 [0, 0.22, 0, 0, 7, 0, 0, 2, 2, 0.44, 0, 0.22]]
-
-
 
 let riskImages = [
   '/images/roulette-game/1.svg',
@@ -400,8 +399,6 @@ class AnimationController {
     ctx.fillStyle = '#F44';
     ctx.fill();
     ctx.clip();
-
-
     ctx.fill();
     return {
       audio: this.audio,
@@ -434,7 +431,6 @@ class AnimationController {
       cy - this.frame.height / 2
     );
 
-      console.log(cx - 300 / 2);
     var img = new Image();
     img.src = '/images/roulette-game/'+ (this.risk) +'.svg';
     //check if image is loaded, if yes drawit

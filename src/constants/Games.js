@@ -8,6 +8,9 @@ import Fifth from '../data/backgrounds/games/game5-bg.png';
 import Sixth from '../data/backgrounds/games/game6-bg.png';
 import Seventh from '../data/backgrounds/games/game7-bg.png';
 import Eight from '../data/backgrounds/games/game8-bg.png';
+import AlpacaWheel from '../data/backgrounds/games/game-alpacawheel.png';
+import Plinko from '../data/backgrounds/games/game-plinko.png';
+import PumpDump from '../data/backgrounds/games/game-pump-dump.png';
 import Routes from './Routes';
 
 export const CASINO_GAMES = [
@@ -49,22 +52,30 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
-    background: Second,
-    title: 'Alpaca Wheel',
+    background: AlpacaWheel,
+    title: 'Alpaca Roulette',
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
     linkTo: '/games/alpaca-wheel',
   },
   {
-    background: Third,
+    background: Plinko,
     title: 'Plinko',
     subtitle: '',
     description:
       'Jump and run on each price tick, are you heading north, south or staying put?',
-    active: false,
+    active: true,
     linkTo: '/games/plinko',
-  } /*,
+  },
+  {
+    background: PumpDump,
+    title: `Pump and dump`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/pump-dump',
+  },
+  /*,
   {
     background: Fourth,
     title: 'Financial Poker',
@@ -90,7 +101,7 @@ export const NEW_SLOTS_GAMES = [
     description: 'Market 1X2 – you know where the prices are going? Prove it!',
     active: false,
     linkTo: '',
-  },*/,
+  },*/
 ];
 
 export const SLOTS_GAMES = [
@@ -174,7 +185,7 @@ export const SPORTS_BETTING_GAMES = [
   },
 ];
 export const GAMES = {
-  gameTwo: {
+  pumpDump: {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
