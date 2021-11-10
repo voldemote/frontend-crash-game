@@ -202,4 +202,9 @@ export const GAMES = {
     slug: 'alpaca-wheel-game',
     name: `Alpaca Wheel`,
   },
+  plinko: {
+    id: 'a821bd90fd22298859bc5',
+    slug: 'plinko',
+    name: `Plinko`,
+  },
 };

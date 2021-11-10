@@ -30,6 +30,8 @@ import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
+import { getGameById } from '../../helper/Games';
+import { GAMES } from '../../constants/Games';
 
 const PlinkoGame = ({
   showPopup,
@@ -63,6 +65,8 @@ const PlinkoGame = ({
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
+
+  const GAME_TYPE_ID = GAMES.plinko.id;
 
   useEffect(() => {
     Api.getCurrentGameInfo()
@@ -144,12 +148,14 @@ const PlinkoGame = ({
             <EventActivitiesTracker
               activitiesLimit={50}
               className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'elongame'}
+              preselectedCategory={'game'}
+              gameId={GAME_TYPE_ID}
             />
           )}
           {activityTabIndex !== 0 && (
             <ActivityTable
               rowData={activityTabIndex === 1 ? highData : luckyData}
+              gameLabel={getGameById(GAME_TYPE_ID)?.name || 'Game'}
             />
           )}
         </div>
