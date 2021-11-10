@@ -179,8 +179,8 @@ const PlaceBetRoulette = ({
   }, [isGameRunning, crashFactor, userCashedOut]);
 
   const placeABet = () => {
-    if (userUnableToBet) return;
-    if (amount > userBalance) return;
+    //if (userUnableToBet) return;
+    //if (amount > userBalance) return;
     //onBet();
 
     const payload = {
@@ -301,6 +301,7 @@ const PlaceBetRoulette = ({
 
   const renderButton = () => {
     if (displayBetButton) {
+      //user.isLoggedIn ? placeABet :
       return (
         <span
           role="button"
@@ -313,7 +314,7 @@ const PlaceBetRoulette = ({
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
-          onClick={user.isLoggedIn ? placeABet : placeGuestBet}
+          onClick={placeABet}
           data-tracking-id={
             user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
           }
