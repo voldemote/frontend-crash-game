@@ -32,7 +32,7 @@ class GameApi {
       console.log('[API Error] called: createTrade', error);
       throw error;
     });
-  };
+  }
 /*
   cancelBet = () =>
     this.api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {

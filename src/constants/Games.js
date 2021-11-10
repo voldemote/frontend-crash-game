@@ -57,7 +57,7 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
-    linkTo: '/games/alpaca-roulette',
+    linkTo: '/games/alpaca-wheel',
   },
   {
     background: Plinko,
