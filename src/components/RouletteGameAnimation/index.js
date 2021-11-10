@@ -77,11 +77,12 @@ const RouletteGameAnimation = ({
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
       risk,
+      bet
     });
     setAudio(audio);
     AnimationController.repaint(0);
   }, []);
-
+  console.log("risk,bet",risk,bet)
   useEffect(() => {
     if (bet?.nspin > 1 && !running) multipleSpin(bet);
     else if (bet?.nspin === 1 && !running) spin(bet);

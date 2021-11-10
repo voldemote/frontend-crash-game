@@ -7,6 +7,7 @@ import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
 let sections = [0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95];
+
 let riskImages = [
   '/images/roulette-game/1.svg',
   '/images/roulette-game/2.svg',
@@ -194,7 +195,6 @@ function loadAssets(loader) {
 class AnimationController {
   init(canvas, options) {
     this.canvas = canvas;
-    console.log('Risk', options.risk);
     this.canvas.width = options.width;
     this.canvas.height = options.height;
     this.audio = new AudioController();
