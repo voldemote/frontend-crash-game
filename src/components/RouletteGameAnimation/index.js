@@ -94,9 +94,8 @@ const RouletteGameAnimation = ({
 
   useEffect(() => {
     if (risk && amount) {
-      console.log('risk:', risk, amount);
       AnimationController.changeValues();
-      AnimationController.init(canvasRef.current, {
+      AnimationController.reinit(canvasRef.current, {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
         risk,

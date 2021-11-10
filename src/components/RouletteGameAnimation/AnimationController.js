@@ -213,7 +213,7 @@ class AnimationController {
 
     this.risk = options.risk
     this.amount = options.amount
-    let sections = sectionsArray[options.risk]
+    let sections = sectionsArray[this.risk-1]
 
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
@@ -254,14 +254,110 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        console.log("Print", sections[i], options.amount)
         ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
         ctx.restore();
       }
 
       this.wheels.push(c);
     }
-    console.log(this.wheels);
+    this.frame = document.createElement('canvas');
+    this.frame.width = this.frame.height = (10 + 2 * this.r * 1.25) | 0;
+    let ctx = this.frame.getContext('2d'),
+      cx = this.frame.width / 2,
+      cy = this.frame.height / 2;
+    ctx.shadowOffsetX = this.r / 80;
+    ctx.shadowOffsetY = this.r / 80;
+    ctx.shadowBlur = this.r / 40;
+    //ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.beginPath();
+    ctx.arc(cx, cy, this.r * 1.025, 0, 2 * Math.PI, true);
+    ctx.arc(cx, cy, this.r * 0.975, 0, 2 * Math.PI, false);
+    ctx.fillStyle = '#444';
+    ctx.fill();
+    ctx.shadowOffsetX = this.r / 40;
+    ctx.shadowOffsetY = this.r / 40;
+
+    this.g = ctx.createRadialGradient(
+      cx - this.r / 7,
+      cy - this.r / 7,
+      0,
+      cx,
+      cy,
+      this.r / 3
+    );
+    this.g.addColorStop(0, '#FFF');
+    this.g.addColorStop(0.2, '#F44');
+    this.g.addColorStop(1, '#811');
+    ctx.fillStyle = this.g;
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, this.r / 3.5, 0, 2 * Math.PI, false);
+    ctx.fill();
+    ctx.translate(cx, cy);
+    ctx.rotate(Math.PI - 0.2);
+    ctx.beginPath();
+    ctx.moveTo(-this.r * 1.1, -this.r * 0.05);
+    ctx.lineTo(-this.r * 0.9, 0);
+    ctx.lineTo(-this.r * 1.1, this.r * 0.05);
+    ctx.fillStyle = '#F44';
+    ctx.fill();
+    ctx.clip();
+
+
+    ctx.fill();
+    return {
+      audio: this.audio,
+    };
+  }
+  reinit(canvas, options, typeSel) {
+    this.risk = options.risk
+    this.amount = options.amount
+    let sections = sectionsArray[this.risk-1]
+    this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
+    this.wheels = [];
+    this.angle = 0;
+    for (let selected = 0; selected < sections.length; selected++) {
+      let c = document.createElement('canvas');
+      c.id = selected;
+      c.width = c.height = 2 * this.r + 10;
+      let ctx = c.getContext('2d'),
+        cx = 5 + this.r,
+        cy = 5 + this.r;
+      // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
+      // this.g.addColorStop(0, 'rgba(0,0,0,0)');
+      // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
+      for (let i = 0; i < sections.length; i++) {
+        let a0 = (2 * Math.PI * i) / sections.length;
+        let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
+        let a = (2 * Math.PI * (i + 0.5)) / sections.length;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, this.r, a0, a1, false);
+        ctx.fillStyle = colors[i % 4];
+        ctx.fill();
+        // ctx.fillStyle = this.g;
+        // ctx.fill();
+        ctx.save();
+        if (i == selected) {
+          ctx.fillStyle = '#FFF';
+          ctx.shadowColor = '#000';
+          ctx.shadowBlur = this.r / 20;
+        } else {
+          ctx.fillStyle = '#000FFF';
+          ctx.shadowColor = '#000';
+          ctx.shadowBlur = this.r / 100;
+        }
+        ctx.font = (this.r / sections.length) * 1.6 + 'px PlusJakarta-Regular';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.translate(cx, cy);
+        ctx.rotate(a);
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
+        ctx.restore();
+      }
+
+      this.wheels.push(c);
+    }
     this.frame = document.createElement('canvas');
     this.frame.width = this.frame.height = (10 + 2 * this.r * 1.25) | 0;
     let ctx = this.frame.getContext('2d'),
@@ -313,7 +409,7 @@ class AnimationController {
   }
   //when calling repaint pass to the method the new index image from riskImages
   repaint(angle) {
-    let sections = sectionsArray[this.risk]
+    let sections = sectionsArray[this.risk-1]
     this.angle = angle;
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
@@ -340,7 +436,7 @@ class AnimationController {
 
       console.log(cx - 300 / 2);
     var img = new Image();
-    img.src = '/images/roulette-game/'+ (this.risk+1) +'.svg';
+    img.src = '/images/roulette-game/'+ (this.risk) +'.svg';
     //check if image is loaded, if yes drawit
     img.onload = function () {
       ctx.drawImage(img, cx - 180 / 2, cy - 180 / 2, 180, 180);
@@ -353,8 +449,8 @@ class AnimationController {
  }
   spinTo(winnerIndex, duration = 500000, idle = false) {
     //const winner = (Math.random() * sectionsArray[0].length) | 0
-    //const duration = 5000
-    let sections = sectionsArray[this.risk]
+    const duration = 5000
+    let sections = sectionsArray[this.risk-1]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winnerIndex) * 2 * Math.PI) / sections.length;
       let start_angle =

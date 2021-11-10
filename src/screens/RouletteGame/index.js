@@ -133,7 +133,6 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   }
-  console.log("spins", spins)
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
@@ -144,8 +143,6 @@ const RouletteGame = ({
         setBet({...payload, ...data});
         return data;
       }
-      //trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
-      //dispatch(RosiGameActions.setUserBet(payload));
     } catch (e) {
       dispatch(
         AlertActions.showError({
