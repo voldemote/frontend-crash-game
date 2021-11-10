@@ -450,7 +450,7 @@ class AnimationController {
  // SEND DURATION AND IDLE TRUE TO INVERT THE ANIMATIION DURING IDLE
   spinTo(winnerIndex, duration = 5000, idle = false) {
     //const winner = (Math.random() * sectionsArray[0].length) | 0
-    const duration = 5000
+    //const duration = 5000
     let sections = sectionsArray[this.risk-1]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winnerIndex) * 2 * Math.PI) / sections.length;
