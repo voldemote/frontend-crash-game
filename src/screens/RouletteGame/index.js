@@ -276,7 +276,7 @@ const RouletteGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              {false && <Spins text="My Spins" spins={spins} />}
+              <Spins text="My Spins" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
