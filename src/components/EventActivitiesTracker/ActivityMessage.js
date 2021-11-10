@@ -68,7 +68,13 @@ const ActivityMessage = ({ activity, users }) => {
           crashFactor,
           gameLabel,
         };
-        return <ActivityTableRow data={rowData} type={'cashout'} />;
+        return (
+          <ActivityTableRow
+            data={rowData}
+            type={'cashout'}
+            gameLabel={gameLabel}
+          />
+        );
       case 'Casino/EVENT_CASINO_LOST': {
         const stakedAmount = data?.stakedAmount;
         const crashFactor = roundToTwo(multiplier);
@@ -79,7 +85,13 @@ const ActivityMessage = ({ activity, users }) => {
           crashFactor,
           gameLabel,
         };
-        return <ActivityTableRow data={rowData} type={'lost'} />;
+        return (
+          <ActivityTableRow
+            data={rowData}
+            type={'lost'}
+            gameLabel={gameLabel}
+          />
+        );
       }
       default:
         return null;

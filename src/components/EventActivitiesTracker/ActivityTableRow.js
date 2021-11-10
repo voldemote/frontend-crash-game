@@ -20,14 +20,13 @@ const UserLink = props => {
   );
 };
 
-const ActivityTableRow = ({ data, type }) => {
+const ActivityTableRow = ({ data, type, gameLabel }) => {
   const {
     userId,
     username,
     stakedAmount: stakedAmountRaw,
     rewardAmount: rewardAmountRaw,
     crashFactor,
-    gameLabel,
   } = data;
   const stakedAmount = Number.parseInt(stakedAmountRaw);
   const rewardAmount = Number.parseInt(rewardAmountRaw);
