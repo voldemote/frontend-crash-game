@@ -138,11 +138,14 @@ const RouletteGame = ({
     audio.playBetSound();
     if (!payload) return;
     try {
-      const { data } = await Api.createTrade(payload);
-      setBet({...payload, ...data});
+      if(payload.demo) setBet(payload);
+      else{
+        const { data } = await Api.createTrade(payload);
+        setBet({...payload, ...data});
+        return data;
+      }
       //trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
       //dispatch(RosiGameActions.setUserBet(payload));
-      return data;
     } catch (e) {
       dispatch(
         AlertActions.showError({

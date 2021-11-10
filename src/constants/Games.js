@@ -50,11 +50,11 @@ export const CASINO_GAMES = [
 export const NEW_SLOTS_GAMES = [
   {
     background: Second,
-    title: 'Alpaca Roulette',
+    title: 'Alpaca Wheel',
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
-    linkTo: '/games/alpaca-roulette',
+    linkTo: '/games/alpaca-wheel',
   },
   {
     background: Third,
