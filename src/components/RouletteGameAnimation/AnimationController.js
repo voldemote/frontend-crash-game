@@ -30,6 +30,8 @@ let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
 // hide PIXI welcome messege in console
 PIXI.utils.skipHello();
 let canvas = null;
+let img = new Image();
+
 class AudioController {
   constructor(bgmIndex = 0) {
     let volume = 0;
@@ -121,6 +123,7 @@ class AudioController {
   playSound(name, loop = false) {
     try {
       if (this.ready) {
+        if(name === 'bgm') this.volume=0.1;
         Sound.sound.volume(name, this.volume);
         Sound.sound.play(name, {
           loop: loop,
@@ -139,6 +142,8 @@ class AudioController {
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
+      
+
     }
     /*
     if (this.bgmIndex === 1) {
@@ -333,6 +338,7 @@ class AnimationController {
       // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
       // this.g.addColorStop(0, 'rgba(0,0,0,0)');
       // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
+      
       for (let i = 0; i < sections.length; i++) {
         let a0 = (2 * Math.PI * i) / sections.length;
         let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
@@ -439,19 +445,28 @@ class AnimationController {
       -this.wheels[selected].height / 2
     );
     ctx.drawImage(this.wheels[selected], 0, 0);
+    
     ctx.restore();
     ctx.drawImage(
       this.frame,
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-
-    var img = new Image();
-    img.src = '/images/roulette-game/'+ (this.risk) +'.svg';
+    img.src = '../images/roulette-game/' + (this.risk) + '.svg';
     //check if image is loaded, if yes drawit
-    img.onload = function () {
+    
+    if(!play) {
+      console.log("img");
+      img.onload = function () {
+        
+        ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
+      }
+    } else {
       ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
+    
+
+    
   }
  changeValues() {
    var canvas = document.getElementById("canvas");
