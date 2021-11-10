@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import * as Api from 'api/crash-game';
+//import * as Api from 'api/casino-games';
+import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -30,14 +31,21 @@ import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
+import { GameApi } from '../../api/casino-games';
+import { GAMES } from '../../constants/Games';
+
 
 const RouletteGame = ({
   showPopup,
   connected,
   userId,
+  token,
   refreshHighData,
   refreshLuckyData,
 }) => {
+  const game = GAMES.alpacaWheel
+  const ROSI_GAME_EVENT_ID = game.id;
+  const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
   const {
     lastCrashes,
@@ -51,6 +59,8 @@ const RouletteGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
+  const [bet, setBet] = useState(null);
+  const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -66,7 +76,7 @@ const RouletteGame = ({
   }, []);
 
   useEffect(() => {
-    Api.getCurrentGameInfo()
+    ApiUser.getCurrentGameInfo()
       .then(response => {
         dispatch(
           RosiGameActions.initializeState({
@@ -81,6 +91,7 @@ const RouletteGame = ({
     dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
+
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -122,6 +133,28 @@ const RouletteGame = ({
     }
     setActivityTabIndex(index);
   };
+
+  async function handleBet(payload) {
+    audio.playBetSound();
+    console.log("handleBet", payload)
+    if (!payload) return;
+    try {
+      const result = await Api.createTrade(payload);
+      console.log(result)
+      /*
+
+      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+      dispatch(RosiGameActions.setUserBet(payload));
+      return result;
+      */
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: 'Elon Game: Place Bet failed',
+        })
+      );
+    }
+  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -209,7 +242,6 @@ const RouletteGame = ({
       </Link>
     );
   };
-  console.log('NEW RISK', risk);
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -239,9 +271,13 @@ const RouletteGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={newspin => setSpins(spins.concat(newspin))}
+                setSpins={newspin => setSpins([newspin, ...spins])}
+                spins={spins}
                 inGameBets={inGameBets}
                 risk={risk}
+                bet={bet}
+                amount={amount}
+                setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
               <Spins text="My Spins" spins={spins} />
@@ -251,10 +287,10 @@ const RouletteGame = ({
                 <PlaceBetRoulette
                   connected={connected}
                   risk={risk}
+                  setBet={setBet}
+                  setAmount2={(amount)=>setAmount(amount)}
                   setRisk={setRisk}
-                  onBet={() => {
-                    audio.playBetSound();
-                  }}
+                  onBet={handleBet}
                   onCashout={() => {
                     audio.playWinSound();
                   }}
@@ -282,6 +318,7 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
+    token: state.authentication.token,
   };
 };
 

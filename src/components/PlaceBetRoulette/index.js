@@ -41,7 +41,15 @@ import {
   trackElonCancelBet,
 } from '../../config/gtm';
 
-const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
+const PlaceBetRoulette = ({
+  connected,
+  onBet,
+  setAmount2,
+  onCashout,
+  setRisk,
+  risk,
+  setBet,
+}) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
@@ -83,6 +91,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
 
   const onTokenNumberChange = number => {
     setAmount(number);
+    setAmount2(number)
     // debouncedSetCommitment(number, currency);
   };
 
@@ -120,6 +129,8 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
+    console.log("setAmount2", amount)
+    setAmount2(amount <= 10000 ? amount : 10000)
     setAmount(amount <= 10000 ? amount : 10000);
   };
   const onGuestNspinChange = event => {
@@ -172,15 +183,17 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
   }, [isGameRunning, crashFactor, userCashedOut]);
 
   const placeABet = () => {
-    if (userUnableToBet) return;
-    if (amount > userBalance) return;
-    //onBet();
+    //if (userUnableToBet) return;
+    //if (amount > userBalance) return;
 
     const payload = {
       amount,
-      crashFactor: 999,
+      nspin: nspin,
+      riskFactor: risk
     };
-    console.log('Apuesto: ', amount);
+    console.log('Apuesto: ', payload);
+    onBet(payload);
+    setBet(payload);
     /*
     Api.createTrade(payload)
       .then(_ => {
@@ -222,7 +235,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
     }
 
     if (userUnableToBet) return;
-    onBet();
+    //onBet();
     const payload = {
       amount,
       crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,
@@ -293,6 +306,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
 
   const renderButton = () => {
     if (displayBetButton) {
+      //user.isLoggedIn ? placeABet :
       return (
         <span
           role="button"
@@ -305,7 +319,7 @@ const PlaceBetRoulette = ({ connected, onBet, onCashout, setRisk, risk }) => {
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
-          onClick={user.isLoggedIn ? placeABet : placeGuestBet}
+          onClick={placeABet}
           data-tracking-id={
             user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
           }

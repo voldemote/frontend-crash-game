@@ -1,8 +1,19 @@
 import { options } from 'components/EmailNotifications/options';
 import { init } from 'store/sagas/websockets';
+import * as PIXI from 'pixi.js';
+import '@pixi/math-extras';
+import '@pixi/sound';
+import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
-let sections = [0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95];
+
+let sectionsArray = [[0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95],
+                [1.5, 0.2, 1, 0.4, 0.3, 3, 0.4, 0.2, 0.49, 1, 0.4, 3],
+                [1.5, 0, 1.3, 0.4, 0.4, 3, 0.4, 0.4, 0.49, 1, 0, 3],
+                [0, 0.3, 1, 0.5, 0, 3.28, 0, 0.4, 0, 1, 0.4, 5],
+                [0, 0, 1, 0, 0, 3.952, 0, 0, 1, 0, 0, 5.94],
+                [0, 0, 0, 0, 0, 5.94, 0, 0, 0, 0, 0, 5.94],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.89]]
 let riskImages = [
   '/images/roulette-game/1.svg',
   '/images/roulette-game/2.svg',
@@ -12,20 +23,201 @@ let riskImages = [
   '/images/roulette-game/6.svg',
   '/images/roulette-game/7.svg',
 ];
-
+let updateValues = [];
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
+// hide PIXI welcome messege in console
+PIXI.utils.skipHello();
+let canvas = null;
+class AudioController {
+  constructor(bgmIndex = 0) {
+    let volume = 0;
+    try {
+      const savedVolume = localStorage.getItem('gameVolume');
+      this.volume = savedVolume ? parseFloat(savedVolume) : volume;
+    } catch (e) {
+      this.volume = 0;
+      console.error(e);
+    }
+    this.errors = [];
+    this.bgmIndex = bgmIndex;
+    this.elapsed = 0;
+    this.ready = true;
+
+    Sound.sound.add(
+      {
+        bgm: {
+          url: '/sounds/roulette/wheel_bg.mp3',
+          loop: true,
+        },
+        flying: {
+          url: '/sounds/elon/flying.mp3',
+          loop: true,
+        },
+        gameover: {
+          url: '/sounds/elon/sfx_gameover.mp3',
+          loop: false,
+        },
+        lose: {
+          url: '/sounds/elon/sfx_lose.mp3',
+          loop: false,
+        },
+        cashout: {
+          url: '/sounds/elon/sfx_cashout3.mp3',
+          loop: false,
+        },
+        placebet: {
+          url: '/sounds/elon/sfx_placebet.mp3',
+          loop: false,
+        }
+      },
+      {
+        loaded: (err, data) => {
+          if (err) {
+            this.errors = [...this.errors, err];
+          }
+        },
+        preload: true,
+      }
+    );
+  }
+
+  setVolume(volume = 1.0) {
+    try {
+      if (volume === 1 || volume === '1') {
+        this.volume = 1.0;
+      } else if (!volume) {
+        this.volume = 0.0;
+      } else {
+        this.volume = volume;
+      }
+
+      localStorage.setItem('gameVolume', `${volume}`);
+
+      Sound.sound.volume('bgm', this.volume);
+      //Sound.sound.volume('flying', this.volume);
+    } catch (e) {
+      console.error('Audio output error');
+    }
+  }
+
+  mute() {
+    this.setVolume(0.0);
+  }
+
+  setElapsed(elapsed) {
+    this.elapsed = elapsed;
+  }
+
+  setBgmIndex(idx = 0) {
+    this.bgmIndex = idx;
+  }
+
+  playSound(name, loop = false) {
+    try {
+      if (this.ready) {
+        Sound.sound.volume(name, this.volume);
+        Sound.sound.play(name, {
+          loop: loop,
+        });
+      }
+    } catch (e) {
+      console.error('Audio output error');
+    }
+  }
+
+  stopSound(name) {
+    Sound.sound.stop(name);
+  }
+
+  startBgm() {
+    const diff = this.elapsed / 1000;
+    if (this.bgmIndex === 0) {
+      this.playSound('bgm', true);
+    }
+    /*
+    if (this.bgmIndex === 1) {
+      this.playSound('flying', true);
+    }*/
+  }
+
+  stopBgm() {
+    this.stopSound('bgm');
+    this.stopSound('flying');
+  }
+
+  playGameOverSound() {
+    this.playSound('gameover');
+  }
+
+  playLoseSound() {
+    this.playSound('lose');
+  }
+
+  playWinSound() {
+    this.playSound('cashout');
+  }
+
+  playBetSound() {
+    this.playSound('placebet');
+  }
+}
+/*
+function loadAssets(loader) {
+  const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
+  const resolution = deviceType === 'mobile' ? 2 : 1;
+
+  const constructPath = asset =>
+    `/images/rosi-game/${deviceType}/@${resolution}x/${asset}`;
+
+  loader
+    .add('coin', constructPath('coin.png'))
+    .add('elonmusk', constructPath('elonmusk.png'))
+    .add('redPlanet', constructPath('redPlanet.png'))
+    .add('purplePlanet', constructPath('purplePlanet.png'))
+    .add('planet1', constructPath('planet1.png'))
+    .add('planet2', constructPath('planet2.png'))
+    .add('planet3', constructPath('planet3.png'))
+    .add('planet4', constructPath('planet4.png'))
+    .add('star1', constructPath('star1.png'))
+    .add('star2', constructPath('star2.png'))
+    .add('starship', constructPath('starship.png'))
+    .add('particle', constructPath('particle.png'))
+    .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
+    .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
+    .add(
+      'preparing-round-anim-car',
+      constructPath('preparing-round-anim-car.json')
+    )
+    .add(
+      'preparing-round-anim-running',
+      constructPath('preparing-round-anim-running.json')
+    );
+
+  loader.load();
+
+  return new Promise(resolve => {
+    loader.onComplete.add(resolve);
+  });
+}
+*/
 
 class AnimationController {
-  init(canvas, options) {
+  init(canvas, options, typeSel) {
     this.canvas = canvas;
     this.canvas.width = options.width;
     this.canvas.height = options.height;
-    //console.log("this.canvas", this.canvas.clientWidth, this.canvas.clientHeight)
+    this.audio = new AudioController(0);
+    this.audio.startBgm();
+
+    this.risk = options.risk
+    let sections = sectionsArray[options.risk]
+
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
     this.angle = 0;
     for (let selected = 0; selected < sections.length; selected++) {
       let c = document.createElement('canvas');
+      c.id = selected;
       c.width = c.height = 2 * this.r + 10;
       let ctx = c.getContext('2d'),
         cx = 5 + this.r,
@@ -50,8 +242,8 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 20;
         } else {
-          ctx.fillStyle = '#0000FF';
-          //ctx.shadowColor = '#000';
+          ctx.fillStyle = '#000FFF';
+          ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
         ctx.font = (this.r / sections.length) * 1.6 + 'px PlusJakarta-Regular';
@@ -59,11 +251,14 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(sections[i], this.r * 0.62, 0);
+        console.log("Print", sections[i], options.amount)
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
         ctx.restore();
       }
+
       this.wheels.push(c);
     }
+    console.log(this.wheels);
     this.frame = document.createElement('canvas');
     this.frame.width = this.frame.height = (10 + 2 * this.r * 1.25) | 0;
     let ctx = this.frame.getContext('2d'),
@@ -80,6 +275,7 @@ class AnimationController {
     ctx.fill();
     ctx.shadowOffsetX = this.r / 40;
     ctx.shadowOffsetY = this.r / 40;
+
     this.g = ctx.createRadialGradient(
       cx - this.r / 7,
       cy - this.r / 7,
@@ -105,11 +301,14 @@ class AnimationController {
     ctx.fillStyle = '#F44';
     ctx.fill();
     ctx.clip();
-
     ctx.fill();
+    return {
+      audio: this.audio,
+    };
   }
   //when calling repaint pass to the method the new index image from riskImages
   repaint(angle) {
+    let sections = sectionsArray[this.risk]
     this.angle = angle;
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
@@ -132,14 +331,21 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-    var img = new Image();
-    img.src = '/images/roulette-game/7.svg';
-    //img.onload = function () {
-    ctx.drawImage(img, 369, 120, 150, 150);
-    //};
-  }
 
-  spinTo(winner = (Math.random() * sections.length) | 0, duration = 5000) {
+    var img = new Image();
+    img.src = '/images/roulette-game/'+this.risk+'.svg';
+    //check if image is loaded, if yes drawit
+    img.onload = function () {
+    ctx.drawImage(img, 369, 120, 150, 150);
+    }
+  }
+ changeValues() {
+   var canvas = document.getElementById("canvas");
+   var context = canvas.getContext('2d');
+   context.clearRect(0, 0, canvas.width, canvas.height);
+ }
+  spinTo(winner = (Math.random() * sectionsArray[0].length) | 0, duration = 5000) {
+    let sections = sectionsArray[this.risk]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winner) * 2 * Math.PI) / sections.length;
       let start_angle =

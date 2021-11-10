@@ -5,8 +5,9 @@
   //height: 100%;
 }
 .animationMobile{
-  max-height: 268px!important;
-  min-height: 268px!important;
+  max-height: 250px!important;
+  min-height: 250px!important;
+  background-image: url('../../data/backgrounds/games/Background_wheel_mob.png')!important;
 }
 .animation {
   display: flex;
@@ -20,7 +21,7 @@
 
   position: relative;
   background-image: url('../../data/backgrounds/games/Background_wheel_opt.png');
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   //background: #1f1d38;
   /*
