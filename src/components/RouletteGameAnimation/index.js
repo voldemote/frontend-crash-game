@@ -89,7 +89,6 @@ const RouletteGameAnimation = ({
   }, []);
 
   useEffect(() => {
-    console.log("In animation go",bet)
     if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
   }, [bet]);
 
@@ -115,7 +114,7 @@ const RouletteGameAnimation = ({
     setRunning(false);
     setBet({pending: true});
   }
-
+/*
   const multipleSpin = async bet => {
     let i = bet.nspin,
       newpsins = [];
@@ -128,7 +127,7 @@ const RouletteGameAnimation = ({
     } while (i !== 0);
     setBet(null);
     setRunning(false);
-  }
+  }*/
 
   return (
     <div

@@ -6,13 +6,14 @@ import '@pixi/sound';
 import * as Sound from '@pixi/sound';
 
 const innerWidth = 140;
-let sectionsArray = [[0.68, 0.3, 1, 2, 0.68, 0.3, 1, 2, 0.68, 0.3, 1, 1.95],
-                [1.5, 0.2, 1, 0.4, 0.3, 3, 0.4, 0.2, 0.49, 1, 0.4, 3],
-                [1.5, 0, 1.3, 0.4, 0.4, 3, 0.4, 0.4, 0.49, 1, 0, 3],
-                [0, 0.3, 1, 0.5, 0, 3.28, 0, 0.4, 0, 1, 0.4, 5],
-                [0, 0, 1, 0, 0, 3.952, 0, 0, 1, 0, 0, 5.94],
-                [0, 0, 0, 0, 0, 5.94, 0, 0, 0, 0, 0, 5.94],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.89]]
+let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 1.22],
+[0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
+[0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
+[0, 1.22, 0.75, 0, 3, 0.22, 0, 3, 1.75, 0.22, 0.5, 1.22],
+[0, 1.22, 0, 0, 4, 0.22, 0, 3, 2, 0.22, 0, 1.22],
+[0, 0.22, 0, 0, 5, 0, 0, 3, 2, 0.44, 0, 1.22],
+[0, 0.22, 0, 0, 7, 0, 0, 2, 2, 0.44, 0, 0.22]]
+
 
 
 let riskImages = [
@@ -211,6 +212,7 @@ class AnimationController {
     //this.audio.startBgm();
 
     this.risk = options.risk
+    this.amount = options.amount
     let sections = sectionsArray[options.risk]
 
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
@@ -319,6 +321,7 @@ class AnimationController {
     let selected =
       Math.floor(((-0.2 - angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
+    // PUT THE SOUND TICK HERE
     if (selected < 0) selected += sections.length;
     ctx.save();
     ctx.translate(cx, cy);
@@ -366,9 +369,8 @@ class AnimationController {
         this.angle = start_angle + t * (final_angle - start_angle);
         if (idle) this.angle =Math.abs(this.angle);
         this.repaint(this.angle);
-        console.log(this.angle)
         if (t < 1) requestAnimationFrame(frame.bind(this));
-        else resolve(sections[winnerIndex]); //console.log(false); //setRunning(false);
+        else resolve(sections[winnerIndex] * this.amount); //console.log(false); //setRunning(false);
       }
       requestAnimationFrame(frame.bind(this));
     });

@@ -20,8 +20,6 @@ import Input from '../Input';
 import { round } from 'lodash/math';
 import _ from 'lodash';
 import {
-  betInQueue,
-  isCashedOut,
   selectDisplayBetButton,
   selectTimeStarted,
 } from '../../store/selectors/rosi-game';
@@ -60,8 +58,6 @@ const PlaceBetRoulette = ({
   const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
   const userPlacedABet = useSelector(selectUserBet);
   const displayBetButton = useSelector(selectDisplayBetButton);
-  const isBetInQueue = useSelector(betInQueue);
-  const userCashedOut = useSelector(isCashedOut);
   const [amount, setAmount] = useState(sliderMinAmount);
   const [nspin, setNspin] = useState(1);
   const [crashFactor, setCrashFactor] = useState('25.00');
@@ -69,9 +65,11 @@ const PlaceBetRoulette = ({
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
-  const [nuspin, setNuspin] = useState({nspins: 0});
+  const [nuspin, setNuspin] = useState({nspin: 0});
   const gameOffline = useSelector(selectGameOffline);
+
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
+
   const numberOfDemoPlays =
     Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
 
@@ -94,37 +92,6 @@ const PlaceBetRoulette = ({
     setAmount(number);
     setAmount2(number)
     // debouncedSetCommitment(number, currency);
-  };
-
-  const processAutoCashoutValue = value => {
-    const regex = new RegExp('^[0w]+(?!$)', 'g');
-    let v = value.replaceAll(regex, '');
-    v = v.replaceAll(',', '.');
-    v = v.replaceAll(/[^0-9.]+/g, '');
-    return v;
-  };
-
-  const onCrashFactorChange = event => {
-    setCrashFactorDirty(true);
-    let value = _.get(event, 'target.value', 0);
-    const v = processAutoCashoutValue(value);
-    event.target.value = v;
-
-    setCrashFactor(v);
-    let result = parseFloat(v);
-    if (result > 0 && result < 1) {
-      setShowCashoutWarning(true);
-    } else {
-      setShowCashoutWarning(false);
-    }
-  };
-
-  const onCrashFactorLostFocus = event => {
-    let value = _.get(event, 'target.value', 0);
-    const v = processAutoCashoutValue(value);
-    let result = parseFloat(v);
-
-    trackElonChangeAutoCashout({ multiplier: result });
   };
 
   const onGuestAmountChange = event => {
@@ -150,41 +117,9 @@ const PlaceBetRoulette = ({
     }
   };
 
-  useEffect(() => {
-    ReactTooltip.rebuild();
-  }, [showCashoutWarning]);
-  useEffect(() => {
-    setAnimate(false);
-  }, [isGameRunning]);
-
-  useEffect(() => {
-    const intervalTime = 4;
-    let intervalId;
-    const tick = () => {
-      let now = Date.now();
-      const diff = now - gameStartedTime;
-      const autoCashoutAt = parseFloat(crashFactor);
-      const factor = calcCrashFactorFromElapsedTime(diff < 1 ? 1 : diff);
-      if (factor >= autoCashoutAt) {
-        if (user.isLoggedIn) {
-          cashOut();
-        } else {
-          cashOutGuest();
-        }
-        clearInterval(intervalId);
-      }
-    };
-
-    if (!userPlacedABet || !isGameRunning || userCashedOut) return;
-    if (userPlacedABet && isGameRunning) {
-      intervalId = setInterval(tick, intervalTime);
-      return () => clearInterval(intervalId);
-    }
-  }, [isGameRunning, crashFactor, userCashedOut]);
-
   const placeABet = async () => {
-    //if (userUnableToBet) return;
-    //if (amount > userBalance) return;
+    if (userUnableToBet) return;
+    if (amount > userBalance) return;
 
     const payload = {
       amount,
@@ -192,34 +127,7 @@ const PlaceBetRoulette = ({
       riskFactor: risk
     };
     setNuspin(payload)
-    const bet = await onBet(payload);
-  };
-
-  useEffect(async () => {
-    console.log("sother", bet)
-    if(bet?.pending && nuspin !== 0) {
-
-      setNuspin({...nuspin, nspin: nuspin.nspin -1})
-      const bet = await onBet({...nuspin, nspin: nuspin.nspin -1});
-    }
-  }, [bet])
-
-  const cancelBet = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCanBet(false);
-    Api.cancelBet()
-      .then(() => {
-        trackElonCancelBet({ amount });
-        dispatch(RosiGameActions.cancelBet({ userId: user.userId }));
-      })
-      .catch(() => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Cancel Bet failed',
-          })
-        );
-      });
+    const bet = await onBet(payload)
   };
 
   const placeGuestBet = () => {
@@ -229,57 +137,37 @@ const PlaceBetRoulette = ({
     }
 
     if (userUnableToBet) return;
-    //onBet();
     const payload = {
       amount,
-      crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,
-      username: 'Guest',
-      userId: 'Guest',
+      demo: true,
+      nspin: nspin-1,
+      riskFactor: risk,
+      winIndex:  Math.floor((Math.random() * 12) | 0)
     };
-
-    trackElonPlaceBetGuest({
-      amount: payload.amount,
-      multiplier: payload.crashFactor,
-    });
-
-    dispatch(RosiGameActions.setUserBet(payload));
-    dispatch(RosiGameActions.addInGameBet(payload));
+    onBet(payload)
+    setNuspin(payload)
 
     if (numberOfDemoPlays < 3) {
       localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
     }
   };
 
-  const cashOut = () => {
-    setCanBet(false);
-    dispatch(RosiGameActions.cashOut());
-    Api.cashOut()
-      .then(response => {
-        const { crashFactor: crashFactorCashout, reward } = response.data;
+  useEffect(async () => {
+    console.log("sother", bet)
+    if(bet?.pending && nuspin !== 0) {
+      setNuspin({...nuspin, nspin: nuspin.nspin -1})
+      const bet = await onBet({...nuspin, nspin: nuspin.nspin -1});
+    }
+  }, [bet])
 
-        trackElonCashout({
-          amount: reward,
-          multiplier: parseFloat(crashFactorCashout),
-        });
-        setAnimate(true);
-        onCashout();
-        AlertActions.showSuccess(JSON.stringify(response));
-      })
-      .catch(_ => {
-        dispatch(
-          AlertActions.showError({
-            message: 'Elon Game: Cashout failed',
-          })
-        );
-      });
+  const cancelBet = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    setNuspin({nspin: 0})
+
   };
 
-  const cashOutGuest = () => {
-    onCashout();
-    setCanBet(false);
-    dispatch(RosiGameActions.cashOutGuest());
-    setAnimate(true);
-  };
+
 
   const cancelGuestBet = () => {
     setCanBet(false);
@@ -299,8 +187,7 @@ const PlaceBetRoulette = ({
   };
 
   const renderButton = () => {
-    if (displayBetButton) {
-      //user.isLoggedIn ? placeABet :
+    if (nuspin?.nspin <= 0) {
       return (
         <span
           role="button"
@@ -309,11 +196,10 @@ const PlaceBetRoulette = ({
             [styles.buttonDisabled]:
               !connected ||
               userUnableToBet ||
-              isBetInQueue ||
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
-          onClick={placeABet}
+          onClick={user.isLoggedIn ? placeABet : placeGuestBet }
           data-tracking-id={
             user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
           }
@@ -321,42 +207,22 @@ const PlaceBetRoulette = ({
           {user.isLoggedIn ? 'Place Bet' : 'Play Demo'}
         </span>
       );
-    } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
+    } else {
       return (
         <>
           <span
             role="button"
             tabIndex="0"
             className={classNames(styles.button, styles.cancel)}
-            onClick={user.isLoggedIn ? cancelBet : cancelGuestBet}
+            onClick={cancelBet}
             data-tracking-id={
               user.isLoggedIn ? null : 'elongame-showloginpopup'
             }
           >
-            {user.isLoggedIn ? 'Cancel Bet' : 'Cancel Bet'}
+            Cancel Bet
           </span>
         </>
-      );
-    } else {
-      return (
-        <span
-          role="button"
-          tabIndex="0"
-          className={classNames(styles.button, {
-            [styles.buttonDisabled]:
-              !connected ||
-              (!userPlacedABet && isGameRunning) ||
-              !isGameRunning,
-            [styles.notConnected]: !connected,
-          })}
-          onClick={user.isLoggedIn ? cashOut : cashOutGuest}
-          data-tracking-id={
-            user.isLoggedIn ? 'elongame-cashout' : 'elongame-cashout-guest'
-          }
-        >
-          {user.isLoggedIn ? 'Cash Out' : 'Cash Out'}
-        </span>
-      );
+      )
     }
   };
 
@@ -373,7 +239,7 @@ const PlaceBetRoulette = ({
         </div>
       );
     }
-    if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
+    if ((userPlacedABet && !isGameRunning)) {
       return (
         <div
           className={classNames([
@@ -436,37 +302,6 @@ const PlaceBetRoulette = ({
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
           <h2 className={styles.placebidTitle}>Place Bet</h2>
-          {/*<InfoBox iconType={IconType.info} position={`bottomLeft`}>
-            <p>
-              <strong>How to place a bet at Elon Game?</strong>
-            </p>
-            <p>&nbsp;</p>
-            <p>
-              At the top of the betting box, you see „Bet Amount“ that you can
-              change as you wish.
-            </p>
-            <p>
-              After you click the yellow button „Place Bet“ you will join the
-              game.
-            </p>
-            <p>
-              After you join the game you need to click the „Cash out“ button
-              before the coin explodes.
-            </p>
-            <p>
-              Please note that when you place a bet in a running game, your bet
-              will wait for the next game start.
-            </p>
-            <p>
-              You can place a bet for the next game or you can do this when the
-              round is preparing.
-            </p>
-            <p>
-              At the top of the page, you can see green numbers which show the
-              previous crash numbers.
-            </p>
-          </InfoBox>
-          */}
         </div>
         <div className={styles.sliderContainer}>
           <label className={styles.label}>Bet Amount</label>
