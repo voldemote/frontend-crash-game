@@ -447,7 +447,8 @@ class AnimationController {
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
-  spinTo(winnerIndex, duration = 500000, idle = false) {
+ // SEND DURATION AND IDLE TRUE TO INVERT THE ANIMATIION DURING IDLE
+  spinTo(winnerIndex, duration = 5000, idle = false) {
     //const winner = (Math.random() * sectionsArray[0].length) | 0
     const duration = 5000
     let sections = sectionsArray[this.risk-1]
