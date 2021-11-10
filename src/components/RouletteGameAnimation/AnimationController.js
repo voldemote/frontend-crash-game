@@ -335,12 +335,12 @@ class AnimationController {
       cy - this.frame.height / 2
     );
 
-
+      console.log(cx - 300 / 2);
     var img = new Image();
     img.src = '/images/roulette-game/'+ (this.risk+1) +'.svg';
     //check if image is loaded, if yes drawit
     img.onload = function () {
-    ctx.drawImage(img, 369, 120, 150, 150);
+      ctx.drawImage(img, cx - 180 / 2, cy - 180 / 2, 180, 180);
     }
   }
  changeValues() {
@@ -348,9 +348,9 @@ class AnimationController {
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
-  spinTo(winnerIndex) {
+  spinTo(winnerIndex, duration = 500000, idle = false) {
     //const winner = (Math.random() * sectionsArray[0].length) | 0
-    const duration = 5000
+    //const duration = 5000
     let sections = sectionsArray[this.risk]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winnerIndex) * 2 * Math.PI) / sections.length;
@@ -364,8 +364,9 @@ class AnimationController {
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
         this.angle = start_angle + t * (final_angle - start_angle);
-        //if (idle) this.angle =Math.abs(this.angle);
+        if (idle) this.angle =Math.abs(this.angle);
         this.repaint(this.angle);
+        console.log(this.angle)
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else resolve(sections[winnerIndex]); //console.log(false); //setRunning(false);
       }
