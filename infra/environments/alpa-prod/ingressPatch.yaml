@@ -65,7 +65,7 @@ metadata:
   name: geoblock-routing
 route:
   headers:
-    HTTP_CF_IPCOUNTRY:
+    Cf-Ipcountry:
       - US
       - AS
       - GU
