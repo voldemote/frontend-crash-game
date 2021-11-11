@@ -17,8 +17,8 @@ const AuthenticationPopup = ({ authenticationType }) => {
   const [showCriteria, setShowCriteria] = useState(!isMobile);
 
   const promoDeadline =
-    process.env.REACT_APP_SIGNUP_PROMO_DEADLINE_DATETIME ||
-    '2021-10-31T12:00:00';
+    // process.env.REACT_APP_SIGNUP_PROMO_DEADLINE_DATETIME ||
+    '2021-11-31T12:00:00';
   const isPromoWindow =
     AuthenticationType.register === authenticationType &&
     !!promoDeadline &&
