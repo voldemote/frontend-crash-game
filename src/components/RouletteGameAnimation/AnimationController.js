@@ -4,6 +4,7 @@ import * as PIXI from 'pixi.js';
 import '@pixi/math-extras';
 import '@pixi/sound';
 import * as Sound from '@pixi/sound';
+import { isMobile } from 'react-device-detect';
 
 const innerWidth = 140;
 
@@ -142,7 +143,7 @@ class AudioController {
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
-      
+
 
     }
     /*
@@ -266,7 +267,7 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
 
@@ -338,7 +339,7 @@ class AnimationController {
       // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
       // this.g.addColorStop(0, 'rgba(0,0,0,0)');
       // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
-      
+
       for (let i = 0; i < sections.length; i++) {
         let a0 = (2 * Math.PI * i) / sections.length;
         let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
@@ -365,7 +366,7 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
 
@@ -429,8 +430,8 @@ class AnimationController {
     let selected =
       Math.floor(((-0.2 - angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
-    // PUT THE SOUND TICK HERE 
-    
+    // PUT THE SOUND TICK HERE
+
     if (selected != numberSelected) {
       if (play) this.audio.playTick();
       numberSelected = selected;
@@ -445,7 +446,7 @@ class AnimationController {
       -this.wheels[selected].height / 2
     );
     ctx.drawImage(this.wheels[selected], 0, 0);
-    
+
     ctx.restore();
     ctx.drawImage(
       this.frame,
@@ -454,19 +455,19 @@ class AnimationController {
     );
     img.src = '../images/roulette-game/' + (this.risk) + '.svg';
     //check if image is loaded, if yes drawit
-    
+
     if(!play) {
       console.log("img");
       img.onload = function () {
-        
+
         ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
       }
     } else {
       ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
-    
 
-    
+
+
   }
  changeValues() {
    var canvas = document.getElementById("canvas");
