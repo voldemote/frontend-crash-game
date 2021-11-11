@@ -52,7 +52,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
           </Grid>
           <Grid item xs>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>0.00x</p>
+              <p className={styles.rewardMulti}>{crashFactor}x</p>
             </div>
           </Grid>
           <Grid item xs>
