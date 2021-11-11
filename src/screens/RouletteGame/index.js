@@ -84,6 +84,7 @@ const RouletteGame = ({
   const GAME_TYPE_ID = GAMES.alpacaWheel.id;
 
   useEffect(() => {
+    /*
     getSpinsAlpacaWheel()
       .then(response => {
         console.log("Spins Alca")
@@ -92,7 +93,7 @@ const RouletteGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-
+      */
   }, [])
 
   useEffect(() => {
