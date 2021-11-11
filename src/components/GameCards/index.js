@@ -45,7 +45,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
                 </InfoBox>
               )} */}
               <Link
-                to={game.linkTo}
+                to={game.active ? game.linkTo : ''}
                 className={classNames(
                   styles.gameLink,
                   !game.active ? styles.gameLinkInactive : null
