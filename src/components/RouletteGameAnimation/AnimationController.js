@@ -442,7 +442,8 @@ class AnimationController {
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else {
           resolve(sections[winnerIndex] * this.amount);
-          sections[winnerIndex] > 1 && this.audio.playWinSound()
+          sections[winnerIndex] > 1 && this.audio.playWinSound();
+          sections[winnerIndex] < 1 && this.audio.playLoseSound();
           this.spinTo(0, 200000, true);
         }
       }

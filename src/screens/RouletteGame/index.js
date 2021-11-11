@@ -36,7 +36,7 @@ import { GAMES } from '../../constants/Games';
 import {
   trackAlpacaWheelPlaceBetGuest,
   trackAlpacaWheelPlaceBet,
-  trackElonPlaceBet,
+  trackAlpacaWheelCashout,
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 
@@ -165,8 +165,9 @@ const RouletteGame = ({
       } else {
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});
-        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
         updateUserBalance(userId);
+        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
+        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
         return data;
       }
     } catch (e) {
