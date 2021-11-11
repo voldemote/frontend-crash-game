@@ -20,14 +20,14 @@
   }
 }
 
-.sectionHeading{
+.sectionHeading {
   display: flex;
   align-items: center;
-  img{
-    margin-right:15px;
+  img {
+    margin-right: 15px;
   }
-  h3{
-    padding-bottom:10px;
+  h3 {
+    padding-bottom: 10px;
   }
 }
 
@@ -245,4 +245,111 @@
   font-family: $fontLight;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.howTokenWorks {
+  padding: 20px 0;
+  .title {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 700;
+    justify-content: flex-start;
+    img {
+      margin-right: 10px;
+      width: 80px;
+    }
+  }
+  .tokenDetail {
+    background: #ff0095;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 15px 0;
+    .token {
+      padding-right: 10px;
+      display: flex;
+      .thumbnail {
+        padding-right: 10px;
+        img {
+          width: 90px;
+        }
+      }
+      .detail {
+        padding-top: 30px;
+        color: #fff;
+        h3 {
+          font-weight: bolder;
+          font-size: 22px;
+          margin-bottom: 6px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+.whoWeAre {
+  padding: 20px 0;
+  .title {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    justify-content: flex-start;
+    img {
+      margin-right: 40px;
+      // width: 80px;
+    }
+    h2 {
+      img {
+        margin-left: 5px;
+      }
+    }
+  }
+  .cardBox {
+    padding-top: 70px;
+    .card {
+      background: #ffffff;
+      border: 1px solid #ededed;
+      width: 96%;
+      margin: auto;
+      padding-bottom: 30px;
+      box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
+        0px 2px 2px rgba(159, 162, 191, 0.32);
+      border-radius: 12px;
+      height: 100%;
+      @media screen and (max-width: 763px) {
+        margin-top: 20px;
+        height: auto;
+      }
+      .thumbnail {
+        text-align: center;
+        margin-top: -50px;
+        @media screen and (max-width: 763px) {
+          margin-top: 10px !important;
+        }
+      }
+      .detail {
+        text-align: center;
+        padding-top: 30px;
+        h3 {
+          font-size: 24px;
+          color: #0e0927;
+          margin-bottom: 6px;
+          img {
+            max-width: 160px;
+            margin-left: 5px;
+          }
+        }
+        p {
+          font-weight: 700;
+          width: 90%;
+          margin: auto;
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }

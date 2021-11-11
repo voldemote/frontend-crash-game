@@ -2,6 +2,7 @@ import { useEffect, memo } from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
@@ -19,12 +20,19 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 import SocialIcons from 'components/SocialIcons';
 import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
-import {
-  NEW_SLOTS_GAMES
-} from '../../constants/Games';
+import { NEW_SLOTS_GAMES } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
 import SlotGameIconBg from '../../data/images/slot-game-icon-bg.png';
-
+import howTokenWorkTitle from '../../data/images/token/title.png';
+import howTokenWorkPToken from '../../data/images/token/PToken.png';
+import howTokenWorkWToken from '../../data/images/token/WToken.png';
+import whoWeAreTitle from '../../data/images/who-are-wallfair/title.png';
+import whoWeAreLogo from '../../data/images/who-are-wallfair/logo.png';
+import whoWeAreAlphaLogo from '../../data/images/who-are-wallfair/alpha-logo.png';
+import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.png';
+import whoWeAreCard2 from '../../data/images/who-are-wallfair/what-is-alpha.png';
+import whoWeAreCard3 from '../../data/images/who-are-wallfair/competetive.png';
+import whoWeAreCard4 from '../../data/images/who-are-wallfair/rewards.png';
 
 const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
   const isMount = useIsMount();
@@ -130,7 +138,153 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
       </Link>
     );
   };
-
+  const renderHowTokenWorks = () => {
+    return (
+      <div className={styles.howTokenWorks}>
+        <div className={styles.title}>
+          <img src={howTokenWorkTitle} alt="" />
+          How Our Tokens work?
+        </div>
+        <div className={styles.tokenDetail}>
+          <Grid container>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkPToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>$PFAIR Token?</h3>
+                  <p>
+                    PFAIR are WALLFAIRS FREE to play tokens. The tokens can be
+                    used in our WALLFAIR ALPHA playgound for risk and care free
+                    betting fun
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkWToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>$WFAIR Token?</h3>
+                  <p>
+                    WFAIR tokens are your betting cryptocurrency, these are can
+                    transfered at anytime for real world cash
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkWToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Exchange PFAIR = WFAIR</h3>
+                  <p>
+                    If you rise to the top 10 of our leaderboard every week. You
+                    can exchange your PFAIR winnings for WFAIR and have the
+                    chance to win £20,000!
+                  </p>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  };
+  const renderWhoWeAre = () => {
+    return (
+      <div className={styles.whoWeAre}>
+        <div className={styles.title}>
+          <img src={whoWeAreTitle} alt="" />
+          <h2>
+            Who are
+            <img src={whoWeAreLogo} alt="" />
+          </h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item md={3} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnail}>
+                  <img src={whoWeAreCard1} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>
+                    Who is
+                    <img src={whoWeAreLogo} alt="" />
+                  </h3>
+                  <p>
+                    Wallfair is a new type of crypocurrency betting platform
+                    which is more entertaining and easier than any other
+                    platform out there!
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={3} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnail}
+                  style={{ marginBottom: '-25px' }}
+                >
+                  <img src={whoWeAreCard2} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>
+                    What Is
+                    <img src={whoWeAreAlphaLogo} alt="" />
+                  </h3>
+                  <p>
+                    Wallfair Alpha is your safe betting playground, bet without
+                    the worry of losing. We’re giving 5000 $PFAIR Tokens for
+                    exclusive access to risk free fun.
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={3} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnail}>
+                  <img src={whoWeAreCard3} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Competive Edge</h3>
+                  <p>
+                    More you win the higher you climb the monthly community
+                    leaderboards. We’ve added some secret challenges to reward
+                    you even more $PFAIR Tokens ...
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={3} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnail}
+                  style={{ marginBottom: '-70px', marginTop: '-100px' }}
+                >
+                  <img src={whoWeAreCard4} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Real Rewards</h3>
+                  <p>
+                    More you win the higher you climb the monthly community
+                    leaderboards. We’ve added some secret challenges to reward
+                    you even more $PFAIR Tokens ...
+                  </p>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  };
   const renderUniswap = () => {
     return (
       <div className={styles.lightboxWrapper}>
@@ -175,7 +329,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
     );
   };
 
-  const renderGamesCards= () => {
+  const renderGamesCards = () => {
     return (
       <div className={styles.bottomWrapper}>
         <div className={styles.categories}>
@@ -183,12 +337,16 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
             games={NEW_SLOTS_GAMES}
             category={
               <div className={styles.sectionHeading}>
-                <img src={SlotGameIconBg} width={150} alt={'Visit slot games'} />
+                <img
+                  src={SlotGameIconBg}
+                  width={150}
+                  alt={'Visit slot games'}
+                />
                 <h3>House Games</h3>
-              </div>}
+              </div>
+            }
           />
         </div>
-
       </div>
     );
   };
@@ -205,9 +363,10 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
           <EventsCarouselContainer eventType="non-streamed" />
           {/*<EventsCarouselContainer eventType="streamed" />*/}
           {renderGamesCards()}
+          {renderHowTokenWorks()}
+          {renderWhoWeAre()}
           {renderCategoriesAndLeaderboard()}
           {renderUniswap()}
-
         </div>
       </div>
     </BaseContainerWithNavbar>
