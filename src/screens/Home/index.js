@@ -23,6 +23,8 @@ import {
   NEW_SLOTS_GAMES
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
+import SlotGameIconBg from '../../data/images/slot-game-icon-bg.png';
+
 
 const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
   const isMount = useIsMount();
@@ -179,7 +181,11 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
         <div className={styles.categories}>
           <GameCards
             games={NEW_SLOTS_GAMES}
-            category="Slot Games"
+            category={
+              <div className={styles.sectionHeading}>
+                <img src={SlotGameIconBg} width={150} alt={'Visit slot games'} />
+                <h3>House Games</h3>
+              </div>}
           />
         </div>
 
