@@ -14,10 +14,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - alpacasino.io
+        - play.alpacasino.io
       secretName: frontend-cert-secret
   rules:
-    - host: alpacasino.io
+    - host: play.alpacasino.io
       http:
         paths:
           - path: /
@@ -45,10 +45,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - alpacasino.io
+        - play.alpacasino.io
       secretName: frontend-cert-secret
   rules:
-    - host: alpacasino.io
+    - host: play.alpacasino.io
       http:
         paths:
           - path: /
