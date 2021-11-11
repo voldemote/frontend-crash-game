@@ -148,6 +148,13 @@ const EventActivitiesTracker = ({
         return true;
       }
 
+      if(gameId) {
+        return (gameId === item.data.gameTypeId) && (
+          item.type === 'Casino/CASINO_CASHOUT' ||
+          item.type === 'Casino/EVENT_CASINO_LOST'
+        )
+      }
+
       return (
         item.type === 'Casino/CASINO_CASHOUT' ||
         item.type === 'Casino/EVENT_CASINO_LOST'
