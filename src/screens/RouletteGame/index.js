@@ -41,6 +41,7 @@ const RouletteGame = ({
   token,
   refreshHighData,
   refreshLuckyData,
+  updateUserBalance
 }) => {
   const game = GAMES.alpacaWheel
   const ROSI_GAME_EVENT_ID = game.id;
@@ -139,10 +140,14 @@ const RouletteGame = ({
     audio.playBetSound();
     if (!payload) return;
     try {
-      if(payload.demo) setBet({...payload })
-      else{
+      if(payload.demo) {
+        setBet({...payload })
+        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+      } else {
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});
+        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
+        updateUserBalance(userId);
         return data;
       }
     } catch (e) {
@@ -237,7 +242,7 @@ const RouletteGame = ({
 
   const renderWallpaperBanner = () => {
     return (
-      <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
+      <Link data-tracking-id="alpacawheel-wallpaper" to={Routes.elonWallpaper}>
         <div className={styles.banner}></div>
       </Link>
     );
@@ -261,7 +266,7 @@ const RouletteGame = ({
             <span
               onClick={handleHelpClick}
               className={styles.howtoLink}
-              data-tracking-id="elongame-how-does-it-work"
+              data-tracking-id="alpacawheel-how-does-it-work"
             >
               How does it work?
             </span>
@@ -333,6 +338,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    updateUserBalance: (userId) => {
+      dispatch(UserActions.fetch({ userId, forceFetch: true }));
     },
   };
 };

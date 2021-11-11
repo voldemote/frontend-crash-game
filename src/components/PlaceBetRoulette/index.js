@@ -25,13 +25,6 @@ import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
-import {
-  trackElonChangeAutoCashout,
-  trackElonPlaceBet,
-  trackElonCashout,
-  trackElonPlaceBetGuest,
-  trackElonCancelBet,
-} from '../../config/gtm';
 
 const PlaceBetRoulette = ({
   connected,
@@ -78,6 +71,7 @@ const PlaceBetRoulette = ({
   const onTokenNumberChange = number => {
     setAmount(number);
     // debouncedSetCommitment(number, currency);
+    
   };
 
   const onGuestAmountChange = event => {
@@ -175,7 +169,7 @@ const PlaceBetRoulette = ({
           })}
           onClick={!bet?.pending? null : user.isLoggedIn ? placeABet : placeGuestBet }
           data-tracking-id={
-            user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
+            user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
           {user.isLoggedIn ? 'Place Bet' : 'Play Demo'}
@@ -190,7 +184,7 @@ const PlaceBetRoulette = ({
             className={classNames(styles.button, styles.cancel)}
             onClick={cancelBet}
             data-tracking-id={
-              user.isLoggedIn ? null : 'elongame-showloginpopup'
+              user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
             }
           >
             Cancel Bet
@@ -258,9 +252,9 @@ const PlaceBetRoulette = ({
                 user.balance > 10000 ? 10000 : user.balance
               )}
               dataTrackingIds={{
-                inputFieldHalf: 'elongame-input-field-half',
-                inputFieldDouble: 'elongame-event-input-field-double',
-                inputFieldAllIn: 'elongame-event-input-field-allin',
+                inputFieldHalf: 'alpacawheel-input-field-half',
+                inputFieldDouble: 'alpacawheel-input-field-double',
+                inputFieldAllIn: 'alpacawheel-input-field-allin',
               }}
             />
           ) : (
@@ -285,18 +279,21 @@ const PlaceBetRoulette = ({
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-half"
                   onClick={() => onBetAmountChanged(0.5)}
                 >
                   ½
                 </span>
                 <span
                   className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-double"
                   onClick={() => onBetAmountChanged(2)}
                 >
                   2x
                 </span>
                 <span
                   className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-allin"
                   onClick={() => setAmount(10000)}
                 >
                   Max
@@ -314,42 +311,49 @@ const PlaceBetRoulette = ({
             </label>
             <div className={styles.riskSelection}>
               <button
+                data-tracking-id="alpacawheel-change-risk-1"
                 style={{ background: risk === 1 && '#80808070' }}
                 onClick={() => setRisk(1)}
               >
                 1
               </button>
               <button
+                data-tracking-id="alpacawheel-change-risk-2"
                 style={{ background: risk === 2 && '#80808070' }}
                 onClick={() => setRisk(2)}
               >
                 2
               </button>
               <button
+                data-tracking-id="alpacawheel-change-risk-3"
                 style={{ background: risk === 3 && '#80808070' }}
                 onClick={() => setRisk(3)}
               >
                 3
               </button>
               <button
+                data-tracking-id="alpacawheel-change-risk-4"
                 style={{ background: risk === 4 && '#80808070' }}
                 onClick={() => setRisk(4)}
               >
                 4
               </button>
               <button
+                data-tracking-id="alpacawheel-change-risk-5"
                 style={{ background: risk === 5 && '#80808070' }}
                 onClick={() => setRisk(5)}
               >
                 5
               </button>
               <button
+                data-tracking-id="alpacawheel-change-risk-6"
                 style={{ background: risk === 6 && '#80808070' }}
                 onClick={() => setRisk(6)}
               >
                 6
               </button>
               <button
+                data-tracking-id="alpacawheel-change-risk-7"
                 style={{ background: risk === 7 && '#80808070' }}
                 onClick={() => setRisk(7)}
               >
@@ -386,18 +390,21 @@ const PlaceBetRoulette = ({
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-change-spins-minus"
                   onClick={() => nspin > 0 && setNspin(nspin - 1)}
                 >
                   -
                 </span>
                 <span
                   className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-change-spins-plus"
                   onClick={() => nspin < 100 && setNspin(nspin + 1)}
                 >
                   +
                 </span>
                 <span
                   className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-change-spins-max"
                   onClick={() => setNspin(10)}
                 >
                   10
