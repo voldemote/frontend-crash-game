@@ -1,7 +1,7 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { CRASH_GAME_GET_VOLUME_BETS } from '../constants/Api';
+import {API_CURRENT_BY_GAME_TYPE, CRASH_GAME_GET_VOLUME_BETS} from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -90,8 +90,10 @@ class GameApi {
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');
 
-const getSpinsAlpacaWheel = () => {
-  return Api.get(ApiUrls.API_CURRENT).catch(error => {
+const getSpinsAlpacaWheel = (gameTypeId) => {
+  const callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE.replace(':gameTypeId', gameTypeId);
+
+  return Api.get(callThis).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
