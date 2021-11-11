@@ -15,15 +15,17 @@
   .total {
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px;
+    padding: 15px 20px 10px 20px;
     background: $colorLightGray1;
     .label {
       color: $colorPrimary;
-      opacity: 0.5;
+      font-family: $fontBold;
+      line-height: 13.76px;
+      // opacity: 0.5;
     }
 
     .value {
-      color: $colorPrimary;
+      color: $colorLightGreen;
       transition: color 0.2s ease-in;
       font-family: $fontBold;
     }

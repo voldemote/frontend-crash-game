@@ -187,13 +187,7 @@
   }
   .activityContainer {
     position: relative;
-    height: 312px;
-    background: $colorWhite;
-    // border: 1px solid $colorLightGray;
-    // border-radius: 10px;
-    margin: 0px;
-    // padding: 10px;
-    // margin-top: 12px;
+    height: 324px;
 
     .chatMessageContainer {
       @media (max-width: $screen-sm) {
