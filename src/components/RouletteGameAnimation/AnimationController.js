@@ -424,12 +424,8 @@ class AnimationController {
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
- // SEND DURATION AND IDLE TRUE TO INVERT THE ANIMATIION DURING IDLE
-  spinTo(winnerIndex, duration = 5000, idle = false) {
-
+  spinTo(winnerIndex, duration = 5000, idle = false, final_angle) {
     this.idle = idle
-    //const winner = (Math.random() * sectionsArray[0].length) | 0
-    //const duration = 5000
     let sections = sectionsArray[this.risk-1]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winnerIndex) * 2 * Math.PI) / sections.length;
@@ -442,15 +438,13 @@ class AnimationController {
         let now = performance.now();
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
-        this.angle = start_angle + t * (final_angle - start_angle);
-        if (idle) this.angle = Math.abs(this.angle);
-        this.repaint(this.angle, true);
-        if(!this.idle && idle) {
-          resolve(null); 
-          return
-        }
+        let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
+        if(this.idle && idle || !this.idle && !idle) this.repaint(angle, true);
         if (t < 1) requestAnimationFrame(frame.bind(this));
-        else resolve(sections[winnerIndex] * this.amount); //console.log(false); //setRunning(false);
+        else {
+          resolve(sections[winnerIndex] * this.amount);
+          this.spinTo(0, 200000, true);
+        }
       }
       requestAnimationFrame(frame.bind(this));
     });
