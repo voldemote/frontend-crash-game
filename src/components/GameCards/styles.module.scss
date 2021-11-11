@@ -89,7 +89,7 @@
       &.inactive {
         img,
         .gameInfo {
-          filter: opacity(0.6);
+          filter: opacity(0.4) blur(2px);
         }
       }
 
@@ -128,7 +128,7 @@
         .inactivePlaceholder {
           min-width: 150px;
           min-height: 45px;
-          font-size: 14px;
+          font-size: 32px;
         }
       }
 

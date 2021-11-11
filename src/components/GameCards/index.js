@@ -66,12 +66,12 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
                     )}
                     <div className={styles.title}>{game.title}</div>
                     <div className={styles.description}>{game.description}</div>
-                  </div>
+                  </div> */}
                   {!game.active && (
                     <div className={styles.inactivePlaceholder}>
-                      Coming Soon
+                      <span className={styles.text}>Development in progress.<br/><br/>Stay tuned.</span>
                     </div>
-                  )} */}
+                  )}
                 </div>
               </Link>
             </div>
