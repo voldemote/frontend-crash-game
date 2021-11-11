@@ -33,6 +33,12 @@ import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
+import {
+  trackAlpacaWheelPlaceBetGuest,
+  trackAlpacaWheelPlaceBet,
+  trackElonPlaceBet,
+} from '../../config/gtm';
+import { UserActions } from 'store/actions/user';
 
 const RouletteGame = ({
   showPopup,

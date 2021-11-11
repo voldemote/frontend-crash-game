@@ -71,7 +71,7 @@ const PlaceBetRoulette = ({
   const onTokenNumberChange = number => {
     setAmount(number);
     // debouncedSetCommitment(number, currency);
-    
+
   };
 
   const onGuestAmountChange = event => {
@@ -164,8 +164,9 @@ const PlaceBetRoulette = ({
             [styles.buttonDisabled]:
               !connected ||
               userUnableToBet ||
+              !bet?.pending ||
               (amount > userBalance && user.isLoggedIn),
-            [styles.notConnected]: !connected || !bet?.pending,
+            [styles.notConnected]: !connected,
           })}
           onClick={!bet?.pending? null : user.isLoggedIn ? placeABet : placeGuestBet }
           data-tracking-id={
