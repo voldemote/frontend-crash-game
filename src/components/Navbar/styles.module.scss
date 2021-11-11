@@ -151,7 +151,7 @@
       display: flex;
       align-items: center;
       white-space: nowrap;
-      padding: 8px;
+      padding: 15px;
       background: $colorPinkDark;
       font-size: 12px;
       border-radius: 20px;
@@ -283,7 +283,8 @@
 
     .linkWrapper {
       display: flex;
-      margin-left: 2rem;
+      margin-left: 1rem;
+      margin-top: 4rem;
     }
 
     .homeIcon {

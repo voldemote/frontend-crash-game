@@ -113,13 +113,14 @@ $border: 1px solid $colorWhite30;
 }
 
 .global-token-currency {
-  color: $colorYellow;
+  color: $colorPinkDark;
   font-weight: bold;
+  font-family: $fontBold;
   display: inline-block;
 }
 
 .global-game-crashfactor {
-  color: $colorYellow;
+  color: $colorPinkDark;
   font-weight: bold;
   display: inline-block;
 }
