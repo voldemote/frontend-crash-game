@@ -8,6 +8,9 @@ import Fifth from '../data/backgrounds/games/game5-bg.png';
 import Sixth from '../data/backgrounds/games/game6-bg.png';
 import Seventh from '../data/backgrounds/games/game7-bg.png';
 import Eight from '../data/backgrounds/games/game8-bg.png';
+import AlpacaWheel from '../data/backgrounds/games/game-alpacawheel.png';
+import Plinko from '../data/backgrounds/games/game-plinko.png';
+import PumpDump from '../data/backgrounds/games/game-pump-dump.png';
 import Routes from './Routes';
 
 export const CASINO_GAMES = [
@@ -49,15 +52,15 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
-    background: Second,
+    background: AlpacaWheel,
     title: 'Alpaca Roulette',
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
-    linkTo: '/games/alpaca-roulette',
+    linkTo: '/games/alpaca-wheel',
   },
   {
-    background: Third,
+    background: Plinko,
     title: 'Plinko',
     subtitle: '',
     description:
@@ -66,7 +69,7 @@ export const NEW_SLOTS_GAMES = [
     linkTo: '/games/plinko',
   },
   {
-    background: Fifth,
+    background: PumpDump,
     title: `Pump and dump`,
     subtitle: '',
     active: true,
@@ -193,5 +196,16 @@ export const GAMES = {
     slug: 'elon-game',
     name: `Elon Game`,
     url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
+  },
+  alpacaWheel: {
+    id: 'a81ded90fd22298859bc4',
+    slug: 'alpaca-wheel',
+    name: `Alpaca Wheel`,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+  },
+  plinko: {
+    id: 'a821bd90fd22298859bc5',
+    slug: 'plinko',
+    name: `Plinko`,
   },
 };

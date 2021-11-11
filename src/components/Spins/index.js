@@ -28,7 +28,7 @@ const Spins = ({ spins, showPopup, text }) => {
       <span className={styles.title}>{text ? text : 'Last Crashes'}</span>
       <div className={styles.crashes}>
         <div className={styles.overlay}></div>
-        {spins.map((spin, i) => (
+        {spins?.map((spin, i) => (
           <span key={`${spin}${i}`} className={styles.crash}>
             {spin}
           </span>

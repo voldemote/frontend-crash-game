@@ -1,12 +1,12 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import Link from 'components/Link';
-import InfoBox from 'components/InfoBox';
-import Icon from 'components/Icon';
-import IconType from 'components/Icon/IconType';
-import IconTheme from 'components/Icon/IconTheme';
-import PopupTheme from 'components/Popup/PopupTheme';
-import { useCallback } from 'react';
+// import InfoBox from 'components/InfoBox';
+// import Icon from 'components/Icon';
+// import IconType from 'components/Icon/IconType';
+// import IconTheme from 'components/Icon/IconTheme';
+// import PopupTheme from 'components/Popup/PopupTheme';
+// import { useCallback } from 'react';
 import { PopupActions } from 'store/actions/popup';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -35,7 +35,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
               className={styles.wrapper}
               key={`gamecard-${_.get(game, 'title')}-${index}-`}
             >
-              {game?.infoIcon && (
+              {/* {game?.infoIcon && (
                 <InfoBox
                   iconType={game.infoIcon.iconType}
                   position={`bottomLeft`}
@@ -43,7 +43,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
                 >
                   {game.infoIcon.content}
                 </InfoBox>
-              )}
+              )} */}
               <Link
                 to={game.linkTo}
                 className={classNames(
@@ -60,7 +60,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
                   )}
                 >
                   <img src={game.background} />
-                  <div className={styles.gameInfo}>
+                  {/* <div className={styles.gameInfo}>
                     {game.subtitle && (
                       <div className={styles.subtitle}>{game.subtitle}</div>
                     )}
@@ -71,7 +71,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
                     <div className={styles.inactivePlaceholder}>
                       Coming Soon
                     </div>
-                  )}
+                  )} */}
                 </div>
               </Link>
             </div>

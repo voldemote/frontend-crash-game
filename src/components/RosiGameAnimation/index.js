@@ -30,7 +30,7 @@ const PreparingRound = ({ nextGameAt }) => (
       </div>
     </div>
   </div>
-);
+)
 
 const RosiGameAnimation = ({
   connected,
@@ -159,7 +159,7 @@ const RosiGameAnimation = ({
       {isAnimationReady && isSynced ? render() : <GameOffline />}
     </div>
   );
-};
+}
 
 const mapStateToProps = state => {
   return {
