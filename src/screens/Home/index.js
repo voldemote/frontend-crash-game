@@ -19,6 +19,10 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 import SocialIcons from 'components/SocialIcons';
 import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
+import {
+  NEW_SLOTS_GAMES
+} from '../../constants/Games';
+import GameCards from '../../components/GameCards';
 
 const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
   const isMount = useIsMount();
@@ -169,6 +173,20 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
     );
   };
 
+  const renderGamesCards= () => {
+    return (
+      <div className={styles.bottomWrapper}>
+        <div className={styles.categories}>
+          <GameCards
+            games={NEW_SLOTS_GAMES}
+            category="Slot Games"
+          />
+        </div>
+
+      </div>
+    );
+  };
+
   //if (!userLoggedIn) return <LandingPage />;
 
   return (
@@ -180,9 +198,10 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
           {renderRosiBanner()}
           <EventsCarouselContainer eventType="non-streamed" />
           {/*<EventsCarouselContainer eventType="streamed" />*/}
+          {renderGamesCards()}
           {renderCategoriesAndLeaderboard()}
           {renderUniswap()}
-          
+
         </div>
       </div>
     </BaseContainerWithNavbar>
