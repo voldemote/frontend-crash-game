@@ -39,6 +39,7 @@ import {
   trackAlpacaWheelCashout,
   trackAlpacaWheelPlaceBetGuest,
 } from '../../config/gtm';
+import {UserActions} from "../../store/actions/user";
 
 
 const RouletteGame = ({
@@ -48,6 +49,7 @@ const RouletteGame = ({
   token,
   refreshHighData,
   refreshLuckyData,
+  updateUserBalance
 }) => {
   const game = GAMES.alpacaWheel
   const ROSI_GAME_EVENT_ID = game.id;
@@ -152,6 +154,7 @@ const RouletteGame = ({
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});
         trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
+        updateUserBalance(userId);
         return data;
       }
     } catch (e) {
@@ -345,6 +348,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    updateUserBalance: (userId) => {
+      dispatch(UserActions.fetch({ userId, forceFetch: true }));
     },
   };
 };
