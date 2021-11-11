@@ -90,6 +90,12 @@ class GameApi {
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');
 
+const getSpinsAlpacaWheel = () => {
+  return Api.get(ApiUrls.API_CURRENT).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
+
 const setToken = token => {
   const authentication = 'Bearer ' + token;
   Api.defaults.headers.common['Authorization'] = authentication;
@@ -98,24 +104,6 @@ const setToken = token => {
 const createTrade = payload => {
   return Api.post(ApiUrls.API_WHEEL_BET, payload).catch(error => {
     console.log('[API Error] called: createTrade', error);
-    throw error;
-  });
-};
-
-const cancelBet = () =>
-  Api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {
-    throw error;
-  });
-
-const getCurrentGameInfo = () => {
-  return Api.get(ApiUrls.API_CURRENT).catch(error => {
-    console.log('[API Error] called: getCurrentGameInfo', error);
-  });
-};
-
-const cashOut = () => {
-  return Api.post(ApiUrls.API_CASH_OUT, {}).catch(error => {
-    console.log('[API Error] called: Cash Out', error);
     throw error;
   });
 };
@@ -165,9 +153,7 @@ export {
   Api,
   setToken,
   createTrade,
-  getCurrentGameInfo,
-  cashOut,
-  cancelBet,
+  getSpinsAlpacaWheel,
   getGameDetailById,
   getLuckyUsers,
   getHighUsers,

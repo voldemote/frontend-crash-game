@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
-import * as Api from 'api/crash-game';
-import { RosiGameActions } from 'store/actions/rosi-game';
 import { AlertActions } from 'store/actions/alert';
 import {
-  selectUserBet,
   selectHasStarted,
   selectGameOffline,
 } from 'store/selectors/rosi-game';
@@ -19,53 +16,42 @@ import PopupTheme from '../Popup/PopupTheme';
 import Input from '../Input';
 import { round } from 'lodash/math';
 import _ from 'lodash';
-import {
+/*import {
   selectDisplayBetButton,
-  selectTimeStarted,
-} from '../../store/selectors/rosi-game';
+} from '../../store/selectors/rosi-game';*/
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import InfoBox from 'components/InfoBox';
 import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
-import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/utils';
-import { getMaxListeners } from 'process';
 
 const PlaceBetRoulette = ({
   connected,
   onBet,
   bet,
-  setAmount2,
-  onCashout,
+  setAmount,
+  amount,
   setRisk,
   risk,
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
-  // const sliderMaxAmount = Math.min(500, userBalance);
-  const isGameRunning = useSelector(selectHasStarted);
-  const gameStartedTimeStamp = useSelector(selectTimeStarted);
-  const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
-  const userPlacedABet = useSelector(selectUserBet);
-  const displayBetButton = useSelector(selectDisplayBetButton);
-  const [amount, setAmount] = useState(sliderMinAmount);
+
   const [nspin, setNspin] = useState(1);
   const [crashFactor, setCrashFactor] = useState('25.00');
-  const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const [nuspin, setNuspin] = useState({nspin: 0});
-  const gameOffline = useSelector(selectGameOffline);
+  const gameOffline = false//useSelector(selectGameOffline);
 
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
 
   const numberOfDemoPlays =
     Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
-
+    /*
   useEffect(() => {
     const handler = setTimeout(() => {
       setCanBet(true);
@@ -74,16 +60,16 @@ const PlaceBetRoulette = ({
       clearTimeout(handler);
     };
   }, [canBet]);
-
+  */
+/*
   useEffect(() => {
     if (user.isLoggedIn && userBalance < amount) {
       setAmount(userBalance);
     }
   }, [user]);
-
+*/
   const onTokenNumberChange = number => {
     setAmount(number);
-    setAmount2(number)
     // debouncedSetCommitment(number, currency);
     
   };
@@ -91,7 +77,6 @@ const PlaceBetRoulette = ({
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
-    setAmount2(amount <= 10000 ? amount : 10000)
     setAmount(amount <= 10000 ? amount : 10000);
   };
   const onGuestNspinChange = event => {
@@ -144,7 +129,6 @@ const PlaceBetRoulette = ({
       localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
     }
   };
-
   useEffect(async () => {
     if(bet?.pending && nuspin.nspin > 0) {
       setNuspin({...nuspin, nspin: nuspin.nspin -1})
@@ -156,14 +140,6 @@ const PlaceBetRoulette = ({
     e.preventDefault();
     e.stopPropagation();
     setNuspin({nspin: 0})
-
-  };
-
-
-
-  const cancelGuestBet = () => {
-    setCanBet(false);
-    dispatch(RosiGameActions.clearGuestData());
   };
 
   const showLoginPopup = () => {
@@ -189,9 +165,9 @@ const PlaceBetRoulette = ({
               !connected ||
               userUnableToBet ||
               (amount > userBalance && user.isLoggedIn),
-            [styles.notConnected]: !connected,
+            [styles.notConnected]: !connected || !bet?.pending,
           })}
-          onClick={user.isLoggedIn ? placeABet : placeGuestBet }
+          onClick={!bet?.pending? null : user.isLoggedIn ? placeABet : placeGuestBet }
           data-tracking-id={
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
@@ -217,7 +193,6 @@ const PlaceBetRoulette = ({
       )
     }
   };
-
   const renderMessage = () => {
     if (gameOffline) {
       return (
@@ -231,18 +206,6 @@ const PlaceBetRoulette = ({
         </div>
       );
     }
-    if ((userPlacedABet && !isGameRunning)) {
-      return (
-        <div
-          className={classNames([
-            styles.betInfo,
-            !user.isLoggedIn ? styles.guestInfo : [],
-          ])}
-        >
-          Waiting for the next round to start
-        </div>
-      );
-    }
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
@@ -252,25 +215,6 @@ const PlaceBetRoulette = ({
     }
   };
 
-  const renderProfit = () => {
-    if (userPlacedABet && isGameRunning) {
-      return (
-        <div className={styles.profit}>
-          <Timer
-            showIncome
-            pause={!isGameRunning}
-            startTimeMs={gameStartedTime}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div className={styles.profitPlaceholder}>
-          <span>+0 {TOKEN_NAME}</span>
-        </div>
-      );
-    }
-  };
 
   const canvasStyles = {
     position: 'fixed',
@@ -361,7 +305,6 @@ const PlaceBetRoulette = ({
             <label
               className={classNames(
                 styles.label,
-                showCashoutWarning ? styles.warning : null
               )}
             >
               Choose Risk Level
@@ -422,7 +365,6 @@ const PlaceBetRoulette = ({
             <label
               className={classNames(
                 styles.label,
-                showCashoutWarning ? styles.warning : null
               )}
             >
               Number of Spins
@@ -477,7 +419,7 @@ const PlaceBetRoulette = ({
           </div>
         </div>
       </div>
-      {showCashoutWarning ? (
+      {/*showCashoutWarning ? (
         <div className={styles.error}>
           <span>Betting less than 1 is not recommended. </span>
           <span
@@ -490,7 +432,7 @@ const PlaceBetRoulette = ({
             Understand why.
           </span>
         </div>
-      ) : null}
+      ) : null*/}
       <ReactTooltip
         id={'rt'}
         place="top"
@@ -499,7 +441,6 @@ const PlaceBetRoulette = ({
         multiline
         className={styles.tooltip}
       />
-      {renderProfit()}
       {renderButton()}
       {renderMessage()}
     </div>

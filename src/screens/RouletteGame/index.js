@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-//import * as Api from 'api/casino-games';
-import * as ApiUser from 'api/crash-game';
+import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
+//import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -33,14 +33,6 @@ import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
-import { GameApi } from '../../api/casino-games';
-import {
-  trackAlpacaWheelPlaceBet,
-  trackAlpacaWheelCashout,
-  trackAlpacaWheelPlaceBetGuest,
-} from '../../config/gtm';
-import {UserActions} from "../../store/actions/user";
-
 
 const RouletteGame = ({
   showPopup,
@@ -67,7 +59,7 @@ const RouletteGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState(null);
+  const [bet, setBet] = useState({pending: true});
   const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -86,18 +78,18 @@ const RouletteGame = ({
   const GAME_TYPE_ID = GAMES.alpacaWheel.id;
 
   useEffect(() => {
-    ApiUser.getCurrentGameInfo()
+    getSpinsAlpacaWheel()
       .then(response => {
-        dispatch(
-          RosiGameActions.initializeState({
-            ...response.data,
-            userId,
-          })
-        );
+        console.log("Spins Alca")
+
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+
+  }, [])
+
+  useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
@@ -105,11 +97,12 @@ const RouletteGame = ({
   }, [dispatch, connected]);
 
   //Bets state update interval
+  /*
   useEffect(() => {
     const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
     return () => clearInterval(interval);
   }, []);
-
+*/
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (hasAcceptedTerms() && !isPopupDisplayed()) {
@@ -284,7 +277,6 @@ const RouletteGame = ({
             <div className={styles.leftContainer}>
               <GameAnimation
                 setSpins={newspin => setSpins([newspin, ...spins])}
-                spins={spins}
                 inGameBets={inGameBets}
                 risk={risk}
                 bet={bet}
@@ -298,14 +290,12 @@ const RouletteGame = ({
               <div className={styles.placeContainer}>
                 <PlaceBetRoulette
                   connected={connected}
-                  risk={risk}
-                  bet={bet}
-                  setAmount2={(amount)=>setAmount(amount)}
+                  setAmount={setAmount}
+                  amount={amount}
                   setRisk={setRisk}
+                  risk={risk}
                   onBet={handleBet}
-                  onCashout={() => {
-                    audio.playWinSound();
-                  }}
+                  bet={bet}
                 />
                 {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
