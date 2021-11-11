@@ -84,16 +84,28 @@ const RouletteGame = ({
   const GAME_TYPE_ID = GAMES.alpacaWheel.id;
 
   useEffect(() => {
-    /*
-    getSpinsAlpacaWheel()
+    getSpinsAlpacaWheel(GAME_TYPE_ID)
       .then(response => {
-        console.log("Spins Alca")
+        const lastSpins = response?.data.lastCrashes;
+        setSpins(lastSpins.map((spin)=> {
+          if(spin.profit > 0) {
+            return {
+              type: 'win',
+              value: '+' + spin.profit
+            };
+          } else {
+            return {
+              type: 'loss',
+              value: spin.profit
+            };
+          }
+        }))
 
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-      */
+
   }, [])
 
   useEffect(() => {
@@ -255,6 +267,11 @@ const RouletteGame = ({
       </Link>
     );
   };
+
+
+  const handleNewSpin = (newSpin)=> {
+    setSpins([newSpin, ...spins])
+  }
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -284,7 +301,7 @@ const RouletteGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={newspin => setSpins([newspin, ...spins])}
+                setSpins={handleNewSpin}
                 inGameBets={inGameBets}
                 risk={risk}
                 bet={bet}

@@ -72,7 +72,22 @@ const RouletteGameAnimation = ({
     else setRunning(true);
     const newspin = await AnimationController.spinTo(bet.winIndex);
     //AnimationController.spinTo(null, 500000, true);
-    setSpins(newspin);
+
+    let prepareObj = {};
+
+    if(bet.profit > 0) {
+      prepareObj = {
+        type: 'win',
+        value: '+' + bet.profit
+      };
+    } else {
+      prepareObj = {
+        type: 'loss',
+        value: bet.profit
+      };
+    }
+
+    setSpins(prepareObj);
     setRunning(false);
     setBet({pending: true});
   }
