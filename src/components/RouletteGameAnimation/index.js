@@ -46,8 +46,7 @@ const RouletteGameAnimation = ({
     setAudio(audio);
     audioInstance = audio;
     onInit(audio);
-    AnimationController.repaint(0, risk);
-    AnimationController.spinTo(0, 500000, true);
+    AnimationController.spinTo(0, 200000, true);
     return () => audioInstance.stopBgm();
   }, []);
 
@@ -72,6 +71,7 @@ const RouletteGameAnimation = ({
     if (running) return;
     else setRunning(true);
     const newspin = await AnimationController.spinTo(bet.winIndex);
+    //AnimationController.spinTo(null, 500000, true);
     setSpins(newspin);
     setRunning(false);
     setBet({pending: true});
