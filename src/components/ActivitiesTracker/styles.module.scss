@@ -92,7 +92,7 @@
     top: 0;
     width: 100%;
     margin: auto;
-
+    margin-top: -30px;
     //> :not(:last-child) {
     //  margin-right: 15px;
     //}
@@ -133,7 +133,7 @@
       }
 
       .label {
-        opacity: initial;
+        background-image: url('../../data/backgrounds/highlight-activities-labels-active.svg');
         color: $colorWhite;
       }
     }
@@ -153,24 +153,20 @@
     line-height: 1;
     letter-spacing: normal;
     text-align: center;
-    color: $colorPrimary;
-    opacity: 0.5;
+    color: rgba(14, 9, 39, 0.37);
     margin-top: 10px;
     transition: opacity 0.2s ease-in;
+    background-image: url('../../data/backgrounds/highlight-activities-labels.svg');
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 15px;
+    background-position: center;
+    text-transform: uppercase;
+    font-family: $fontBold;
 
     &.active {
       opacity: initial;
-    }
-    &::before {
-      position: absolute;
-      content: '';
-      background-image: url('../../data/images/signup-background-one.svg');
-
-      width: 100%;
-      height: 42px;
-      bottom: -20px;
-      right: 40px;
-      z-index: -1;
     }
   }
 
@@ -201,7 +197,7 @@
     height: 500px;
     margin-top: 0;
 
-    :nth-child(even) {
+    > :nth-child(even) {
       background-color: $colorWhite;
     }
 
@@ -220,6 +216,7 @@
     width: 100%;
     height: 100%;
     border-bottom: 1px solid $colorLightGray;
+    bottom: -15px;
 
     .activitiesSwiperButtonNext,
     .activitiesSwiperButtonPrev {
