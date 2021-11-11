@@ -63,7 +63,7 @@ const RouletteGameAnimation = ({
         risk,
         amount
       });
-      AnimationController.repaint(0, risk);
+      AnimationController.repaint(0);
     }
   }, [risk, amount]);
 

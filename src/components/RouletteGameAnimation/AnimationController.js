@@ -177,6 +177,8 @@ class AnimationController {
     this.canvas.height = options.height;
     this.audio = new AudioController(0);
     this.audio.startBgm();
+    this.gameStartTime = 0;
+
     this.idle = false
     this.risk = options.risk
     this.amount = options.amount
@@ -374,20 +376,19 @@ class AnimationController {
     };
   }
   //when calling repaint pass to the method the new index image from riskImages
-  repaint(angle,play) {
+  repaint(angle, play, idle) {
     let sections = sectionsArray[this.risk-1]
     this.angle = angle
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
     let ctx = this.canvas.getContext('2d');
     let selected =
-      Math.floor(((-0.2 - angle) * sections.length) / (2 * Math.PI)) %
+      Math.floor(((-0.2 - this.angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
-    // PUT THE SOUND TICK HERE
 
-    if (selected != numberSelected) {
-      if (play) this.audio.playTick();
+    if (!idle && selected !== numberSelected) {
       numberSelected = selected;
+      if (play) this.audio.playTick();
     }
     if (selected < 0) selected += sections.length;
     ctx.save();
@@ -408,23 +409,19 @@ class AnimationController {
     img.src = '../images/roulette-game/' + (this.risk) + '.svg';
 
     if(!play) {
-      console.log("img");
       img.onload = function () {
         ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
       }
     } else {
       ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
-
-
-
   }
  changeValues() {
    var canvas = document.getElementById("canvas");
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
-  spinTo(winnerIndex, duration = 5000, idle = false, final_angle) {
+  spinTo(winnerIndex, duration = 5000, idle = false) {
     this.idle = idle
     let sections = sectionsArray[this.risk-1]
     return new Promise(resolve => {
@@ -439,10 +436,13 @@ class AnimationController {
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
         let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
-        if(this.idle && idle || !this.idle && !idle) this.repaint(angle, true);
+        if(this.idle && idle || !this.idle && !idle) {
+          this.repaint(angle, true, idle);
+        }
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else {
           resolve(sections[winnerIndex] * this.amount);
+          sections[winnerIndex] > 1 && this.audio.playWinSound()
           this.spinTo(0, 200000, true);
         }
       }
