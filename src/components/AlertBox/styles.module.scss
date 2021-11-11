@@ -19,8 +19,8 @@
   }
 
   .alertContainer {
-    color: $colorPrimary;
-    background: $colorYellow;
+    color: $colorWhite;
+    background: $colorLightPink;
     border-radius: 10px;
     align-items: center;
   }
@@ -57,7 +57,8 @@
         margin-right: 0;
 
         * {
-          stroke: none;
+          stroke: $colorWhite;
+          fill: $colorWhite;
         }
       }
 

@@ -128,7 +128,6 @@ const Activities = () => {
               ' activities-tracker-swiper'
             }
           />
-          <ContentFooter />
         </div>
       )}
     </BaseContainerWithNavbar>

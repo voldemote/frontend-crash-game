@@ -94,7 +94,7 @@
       .placeContainer {
         display: flex;
         flex-direction: column;
-        @media (max-width: $screen-md) {          
+        @media (max-width: $screen-md) {
           height: 100%;
         }
       }
@@ -103,7 +103,7 @@
 
   .banner {
     margin-top: 50px;
-    background-image: url('../../data/backgrounds/games/wallpaper-banner.png');
+    background-image: url('../../data/backgrounds/games/alpaca-wallpaper-banner.png');
     min-height: 208px;
     width: 100%;
     background-repeat: no-repeat;
@@ -122,7 +122,7 @@
     }
 
     @media (max-width: $screen-sm) {
-      background-image: url('../../data/backgrounds/games/wallpaper-banner.png');
+      background-image: url('../../data/backgrounds/games/alpaca-wallpaper-banner.png');
       height: 100%;
       background-position: center;
       padding: 80px;
@@ -131,7 +131,6 @@
     @media (max-width: $screen-xs) {
       padding: 40px;
     }
-
   }
 }
 
@@ -205,7 +204,7 @@
       justify-content: center;
       font-size: 24px;
       font-family: $fontMedium;
-      color: #F2FF53;
+      color: #f2ff53;
       font-weight: 700;
     }
   }
@@ -216,35 +215,35 @@
 }
 
 .tabLayout {
-    display: flex;
-    align-items: flex-end;
-    color: $colorWhite;
-    font-family: $fontRegular;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 18px;
-    padding-top: 24px;
-    margin-left: 16px;
-    @media (max-width: $screen-sm) {
-      margin-left: 0px;
-      justify-content: space-between;
-      font-size: 11px;
-      line-height: 14px;
-    }
-
-    .tabItem {
-      text-align: center;
-      padding-bottom: 12px;
-      opacity: 0.3;
-      cursor: pointer;
-    }
-
-    .tabItemSelected {
-      text-align: center;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #F1FF54;
-      opacity: 1;
-      cursor: pointer;
-    }
+  display: flex;
+  align-items: flex-end;
+  color: $colorWhite;
+  font-family: $fontRegular;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 24px;
+  margin-left: 16px;
+  @media (max-width: $screen-sm) {
+    margin-left: 0px;
+    justify-content: space-between;
+    font-size: 11px;
+    line-height: 14px;
   }
+
+  .tabItem {
+    text-align: center;
+    padding-bottom: 12px;
+    opacity: 0.3;
+    cursor: pointer;
+  }
+
+  .tabItemSelected {
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1ff54;
+    opacity: 1;
+    cursor: pointer;
+  }
+}

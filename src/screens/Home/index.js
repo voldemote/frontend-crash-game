@@ -182,7 +182,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
           {/*<EventsCarouselContainer eventType="streamed" />*/}
           {renderCategoriesAndLeaderboard()}
           {renderUniswap()}
-          <ContentFooter />
+          
         </div>
       </div>
     </BaseContainerWithNavbar>

@@ -307,7 +307,7 @@ const RouletteGame = ({
             </div>
           ) : null}
           {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-          <ContentFooter className={styles.betFooter} />
+          
         </div>
       </div>
     </BaseContainerWithNavbar>
