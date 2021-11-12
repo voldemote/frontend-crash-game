@@ -88,7 +88,7 @@ class AudioController {
     );
   }
 
-  setVolume(volume = 1.0) {
+  setVolume(volume = 1) {
     try {
       if (volume === 1 || volume === '1') {
         this.volume = 1.0;
@@ -98,8 +98,7 @@ class AudioController {
         this.volume = volume;
       }
       localStorage.setItem('gameVolume', `${volume}`);
-
-      Sound.sound.volume('bgm', this.volume);
+      Sound.sound.volume('bgm', volume);
       //Sound.sound.volume('flying', this.volume);
     } catch (e) {
       console.error('Audio output error');
@@ -107,8 +106,8 @@ class AudioController {
   }
 
   mute() {
-    localStorage.setItem('gameVolume', 0.0);
-    this.setVolume(0.0);
+    localStorage.setItem('gameVolume', 0);
+    this.setVolume(0);
   }
 
   setElapsed(elapsed) {
@@ -122,9 +121,9 @@ class AudioController {
   playSound(name, loop = false, volume) {
     try {
       if (this.ready) {
+        Sound.sound.volume(name, volume && this.volume !== 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
         Sound.sound.play(name, {
-          loop: loop,
-          volume: volume && this.volume !== 0 ? volume : this.volume
+          loop: loop
         });
       }
     } catch (e) {
@@ -137,7 +136,7 @@ class AudioController {
   }
 
   startBgm() {
-    //const diff = this.elapsed / 1000;
+    const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
     }
@@ -272,6 +271,7 @@ class AnimationController {
 
 
     ctx.fill();
+    this.spinTo(0, 200000, true);
     return {
       audio: this.audio,
     };

@@ -45,7 +45,6 @@ const RouletteGameAnimation = ({
     setAudio(audio);
     audioInstance = audio;
     onInit(audio);
-    AnimationController.spinTo(0, 200000, true);
     return () => audioInstance.stopBgm();
   }, []);
 
@@ -55,13 +54,14 @@ const RouletteGameAnimation = ({
 
   useEffect(() => {
     if (risk && amount) {
+      console.log("risk", risk)
       AnimationController.reinit(canvasRef.current, {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
         risk,
         amount
       })
-      AnimationController.repaint();
+      //AnimationController.repaint();
     }
   }, [risk, amount]);
 
