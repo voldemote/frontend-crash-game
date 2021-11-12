@@ -106,7 +106,7 @@
 
 .banner {
   margin-top: 50px;
-  background-image: url('../../data/backgrounds/games/rosi-games-banner-lg.jpg');
+  background-image: url('../../data/backgrounds/games/elon-game-banner-lg.png');
   border-radius: 12px;
   min-height: 252px;
   width: 100%;
@@ -131,7 +131,7 @@
   }
 
   @media (max-width: $screen-sm) {
-    background-image: url('../../data/backgrounds/games/rosi-games-banner-mobile.png');
+    background-image: url('../../data/backgrounds/games/elon-game-banner-mobile.png');
     height: 100%;
     background-position: center;
     padding: 80px;
@@ -142,6 +142,7 @@
   }
 
   .title {
+    opacity: 0;
     font-family: $fontBold;
     font-size: 30px;
     color: $colorWhite;
@@ -161,6 +162,7 @@
   }
 
   .button {
+    opacity: 0;
     margin-top: 10px;
     background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%);
     border-radius: 30px;

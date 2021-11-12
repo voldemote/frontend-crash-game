@@ -1,5 +1,5 @@
 import IconType from '../components/Icon/IconType';
-import RosiImg from '../data/backgrounds/games/rosi-games-banner.png';
+import RosiImg from '../data/backgrounds/games/elon-game-banner.png';
 import First from '../data/backgrounds/games/game1-bg.png';
 import Second from '../data/backgrounds/games/game2-bg.png';
 import Third from '../data/backgrounds/games/game3-bg.png';
