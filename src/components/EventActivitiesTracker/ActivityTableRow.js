@@ -35,7 +35,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
       {type === 'lost' ? (
         <Grid container>
           <Grid item xs>
-            <div className={styles.messageLeft}>
+            <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
@@ -45,7 +45,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
             </div>
           </Grid>
           <Grid item xs>
-            <div className={classNames(styles.messageRight)}>
+            <div className={classNames(styles.messageCenter)}>
               {toNumericString(stakedAmount)} {TOKEN_NAME}
               <img src={medalCoin} alt="medal" />
             </div>
@@ -56,7 +56,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
             </div>
           </Grid>
           <Grid item xs>
-            <div className={styles.messageLast}>
+            <div className={classNames(styles.messageLast, styles.messageRight)}>
               <p className={'global-cashout-loss'}>
                 -{toNumericString(stakedAmount)} {TOKEN_NAME}
               </p>
@@ -67,7 +67,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
       ) : (
         <Grid container>
           <Grid item xs>
-            <div className={styles.messageLeft}>
+            <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
@@ -83,7 +83,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
             </div>
           </Grid>
           <Grid item xs>
-            <div className={styles.messageRight}>
+            <div className={styles.messageCenter}>
               {toNumericString(stakedAmount)} {TOKEN_NAME}
               <img src={medalCoin} alt="medal" />
             </div>
@@ -94,7 +94,7 @@ const ActivityTableRow = ({ data, type, gameLabel }) => {
             </div>
           </Grid>
           <Grid item xs>
-            <div className={styles.messageLast}>
+            <div className={classNames(styles.messageLast, styles.messageRight)}>
               <p className={styles.reward}>
                 {toNumericString(rewardAmount)} {TOKEN_NAME}
               </p>
