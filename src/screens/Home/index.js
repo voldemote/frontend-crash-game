@@ -44,7 +44,7 @@ import gameCard2 from '../../data/images/house-games/card-2.png';
 import gameCard3 from '../../data/images/house-games/card-3.png';
 import gameCard4 from '../../data/images/house-games/card-4.png';
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighData, refreshLuckyData, connected, userId }) => {
+const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighData, refreshLuckyData, connected, userId, refreshMyBetsData}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
@@ -54,6 +54,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
   const {
     highData,
     luckyData,
+    myBetsData,
   } = useRosiData();
   const [activityTabIndex, setActivityTabIndex] = useState(0);
   let activityTabOptions = [
@@ -72,13 +73,27 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
       case 2: // lucky wins
         refreshLuckyData();
         break;
+      case 3:
+        refreshMyBetsData({userId:'6152b82b2a1ac4fa41b4c663'});
+        break;
     }
     setActivityTabIndex(index);
   };
+  const getActivityTableData = () => {
+    switch (activityTabIndex) {
+      case 1:
+        return highData || [];
+      case 2:
+        return luckyData || [];
+      case 3:
+        return myBetsData || [];
+    }
+  }
 
   useEffect(() => {
     refreshHighData();
     refreshLuckyData();
+    refreshMyBetsData({userId:'6152b82b2a1ac4fa41b4c663'});
   }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
@@ -368,13 +383,13 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   className={styles.activitiesTrackerGamesBlock}
                   preselectedCategory={'game'}
                   gameId={'614381d74f78686665a5bb76'}
+                  hideSecondaryColumns={true}
                 />
               )}
               {activityTabIndex !== 0 && (
                 <ActivityTable
-                  rowData={activityTabIndex === 1 ? highData : luckyData}
-                  gameLabel={'Game'}
-                  gameId={'614381d74f78686665a5bb76'}
+                  hideSecondaryColumns={true}
+                  rowData={getActivityTableData()}
                 />
               )}
             </div>
@@ -444,6 +459,7 @@ const mapDispatchToProps = dispatch => {
   return {
     refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
     refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
+    refreshMyBetsData: (data) => dispatch(RosiGameActions.fetchMyBetsData(data)),
     setOpenDrawer: drawerName => {
       dispatch(GeneralActions.setDrawer(drawerName));
     },
