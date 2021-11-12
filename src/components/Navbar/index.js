@@ -294,7 +294,6 @@ const Navbar = ({
           <div className={style.leaderboardHeadingWrapper}>
             <p className={style.leaderboardHeading}>
               Community
-              <br />
               Leaderboard
             </p>
             {isLoggedIn() && (

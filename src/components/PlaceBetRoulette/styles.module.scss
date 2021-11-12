@@ -18,7 +18,7 @@
     }
   }
 }
-.spinsleft{
+.spinsleft {
   margin: 5px;
   text-align: center;
 }
@@ -251,7 +251,9 @@
     cursor: wait;
   }
 }
-
+.notConnected {
+  opacity: 0.5;
+}
 .buttonDisabled.notConnected {
   @media screen and (max-width: $screen-xs) {
     opacity: 1;
@@ -278,7 +280,7 @@
 }
 .sliderContainer {
   position: relative;
-  margin-bottom: -20px;
+  margin-bottom: 20px;
 }
 
 .cashedOutInputContainer {

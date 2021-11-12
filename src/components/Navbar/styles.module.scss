@@ -302,7 +302,7 @@
   }
 
   .leaderboard {
-    background-color: rgba(14, 9, 39, 1);
+    background-color: pink;
     display: flex;
     flex-flow: column nowrap;
     z-index: 5;
@@ -323,11 +323,11 @@
 
     .leaderboardHeading {
       padding: 20px 30px;
-      font-size: 20px;
-      line-height: 1.2;
-      letter-spacing: 0.75px;
-      color: #ffffff;
+      color: $colorPrimary;
       width: 100%;
+      font-family: $fontBold;
+      font-size: 24px;
+      line-height: 30px;
 
       @media screen and (min-width: $screen-xs) {
         font-size: 24px;
@@ -341,6 +341,7 @@
       color: $colorWhite;
       padding: 20px 30px;
       min-width: 90px;
+      display: none;
     }
 
     .leaderboardHeadingRankText {
@@ -361,6 +362,7 @@
       height: 90px;
       width: 100%;
       margin-bottom: 20px;
+      display: none;
 
       @media (max-width: $screen-sm) {
         flex-direction: column;
@@ -376,6 +378,11 @@
       width: 100%;
       justify-content: center;
       margin-bottom: 15px;
+      width: 460px;
+      height: 44px;
+
+      background: $colorLightGray1;
+      border-radius: 12px;
 
       @media (max-width: $screen-sm) {
         padding: 0 15px;

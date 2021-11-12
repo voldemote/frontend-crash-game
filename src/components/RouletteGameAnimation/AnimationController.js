@@ -4,16 +4,15 @@ import * as PIXI from 'pixi.js';
 import '@pixi/math-extras';
 import '@pixi/sound';
 import * as Sound from '@pixi/sound';
-
-const innerWidth = 140;
+import { isMobile } from 'react-device-detect';
 
 let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 1.22],
-[0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
-[0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
-[0, 1.22, 0.75, 0, 3, 0.22, 0, 3, 1.75, 0.22, 0.5, 1.22],
-[0, 1.22, 0, 0, 4, 0.22, 0, 3, 2, 0.22, 0, 1.22],
-[0, 0.22, 0, 0, 5, 0, 0, 3, 2, 0.44, 0, 1.22],
-[0, 0.22, 0, 0, 7, 0, 0, 2, 2, 0.44, 0, 0.22]]
+  [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
+  [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
+  [0, 1.22, 0.75, 0, 3, 0.22, 0, 3, 1.75, 0.22, 0.5, 1.22],
+  [0, 1.22, 0, 0, 4, 0.22, 0, 3, 2, 0.22, 0, 1.22],
+  [0, 0.22, 0, 0, 5, 0, 0, 3, 2, 0.44, 0, 1.22],
+  [0, 0.22, 0, 0, 7, 0, 0, 2, 2, 0.44, 0, 0.22]]
 
 let riskImages = [
   '/images/roulette-game/1.svg',
@@ -27,7 +26,7 @@ let riskImages = [
 let updateValues = [];
 let numberSelected = 0;
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
-// hide PIXI welcome messege in console
+
 PIXI.utils.skipHello();
 let canvas = null;
 let img = new Image();
@@ -109,6 +108,7 @@ class AudioController {
   }
 
   mute() {
+    localStorage.setItem('gameVolume', 0.0);
     this.setVolume(0.0);
   }
 
@@ -142,13 +142,7 @@ class AudioController {
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
-      
-
     }
-    /*
-    if (this.bgmIndex === 1) {
-      this.playSound('flying', true);
-    }*/
   }
 
   stopBgm() {
@@ -175,45 +169,6 @@ class AudioController {
     this.playSound('placebet');
   }
 }
-/*
-function loadAssets(loader) {
-  const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
-  const resolution = deviceType === 'mobile' ? 2 : 1;
-
-  const constructPath = asset =>
-    `/images/rosi-game/${deviceType}/@${resolution}x/${asset}`;
-
-  loader
-    .add('coin', constructPath('coin.png'))
-    .add('elonmusk', constructPath('elonmusk.png'))
-    .add('redPlanet', constructPath('redPlanet.png'))
-    .add('purplePlanet', constructPath('purplePlanet.png'))
-    .add('planet1', constructPath('planet1.png'))
-    .add('planet2', constructPath('planet2.png'))
-    .add('planet3', constructPath('planet3.png'))
-    .add('planet4', constructPath('planet4.png'))
-    .add('star1', constructPath('star1.png'))
-    .add('star2', constructPath('star2.png'))
-    .add('starship', constructPath('starship.png'))
-    .add('particle', constructPath('particle.png'))
-    .add('preparing-round-anim', constructPath('preparing-round-anim.json'))
-    .add('elon-coin-animation', constructPath('elon-coin-animation.json'))
-    .add(
-      'preparing-round-anim-car',
-      constructPath('preparing-round-anim-car.json')
-    )
-    .add(
-      'preparing-round-anim-running',
-      constructPath('preparing-round-anim-running.json')
-    );
-
-  loader.load();
-
-  return new Promise(resolve => {
-    loader.onComplete.add(resolve);
-  });
-}
-*/
 
 class AnimationController {
   init(canvas, options, typeSel) {
@@ -222,7 +177,9 @@ class AnimationController {
     this.canvas.height = options.height;
     this.audio = new AudioController(0);
     this.audio.startBgm();
+    this.gameStartTime = 0;
 
+    this.idle = false
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
@@ -266,7 +223,7 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
 
@@ -321,7 +278,7 @@ class AnimationController {
       audio: this.audio,
     };
   }
-  reinit(canvas, options, typeSel) {
+  reinit(canvas, options) {
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
@@ -338,7 +295,7 @@ class AnimationController {
       // this.g = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.r);
       // this.g.addColorStop(0, 'rgba(0,0,0,0)');
       // this.g.addColorStop(1, 'rgba(0,0,0,0.5)');
-      
+
       for (let i = 0; i < sections.length; i++) {
         let a0 = (2 * Math.PI * i) / sections.length;
         let a1 = a0 + (2 * Math.PI) / (i == 0 ? 1 : sections.length);
@@ -365,7 +322,7 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * 0.62, 0);
+        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
 
@@ -419,23 +376,20 @@ class AnimationController {
     };
   }
   //when calling repaint pass to the method the new index image from riskImages
-  repaint(angle,play) {
-    console.log(play);
+  repaint(angle, play, idle) {
     let sections = sectionsArray[this.risk-1]
-    this.angle = angle;
+    this.angle = angle
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
     let ctx = this.canvas.getContext('2d');
     let selected =
-      Math.floor(((-0.2 - angle) * sections.length) / (2 * Math.PI)) %
+      Math.floor(((-0.2 - this.angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
-    // PUT THE SOUND TICK HERE 
-    
-    if (selected != numberSelected) {
-      if (play) this.audio.playTick();
+
+    if (!idle && selected !== numberSelected) {
       numberSelected = selected;
+      if (play) this.audio.playTick();
     }
-    console.log(selected);
     if (selected < 0) selected += sections.length;
     ctx.save();
     ctx.translate(cx, cy);
@@ -445,7 +399,7 @@ class AnimationController {
       -this.wheels[selected].height / 2
     );
     ctx.drawImage(this.wheels[selected], 0, 0);
-    
+
     ctx.restore();
     ctx.drawImage(
       this.frame,
@@ -453,30 +407,22 @@ class AnimationController {
       cy - this.frame.height / 2
     );
     img.src = '../images/roulette-game/' + (this.risk) + '.svg';
-    //check if image is loaded, if yes drawit
-    
+
     if(!play) {
-      console.log("img");
       img.onload = function () {
-        
         ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
       }
     } else {
       ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
-    
-
-    
   }
  changeValues() {
    var canvas = document.getElementById("canvas");
    var context = canvas.getContext('2d');
    context.clearRect(0, 0, canvas.width, canvas.height);
  }
- // SEND DURATION AND IDLE TRUE TO INVERT THE ANIMATIION DURING IDLE
   spinTo(winnerIndex, duration = 5000, idle = false) {
-    //const winner = (Math.random() * sectionsArray[0].length) | 0
-    //const duration = 5000
+    this.idle = idle
     let sections = sectionsArray[this.risk-1]
     return new Promise(resolve => {
       let final_angle = -0.2 - ((0.5 + winnerIndex) * 2 * Math.PI) / sections.length;
@@ -489,11 +435,17 @@ class AnimationController {
         let now = performance.now();
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
-        this.angle = start_angle + t * (final_angle - start_angle);
-        if (idle) this.angle =Math.abs(this.angle);
-        this.repaint(this.angle,true);
+        let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
+        if(this.idle && idle || !this.idle && !idle) {
+          this.repaint(angle, true, idle);
+        }
         if (t < 1) requestAnimationFrame(frame.bind(this));
-        else resolve(sections[winnerIndex] * this.amount); //console.log(false); //setRunning(false);
+        else {
+          resolve(sections[winnerIndex] * this.amount);
+          sections[winnerIndex] > 1 && this.audio.playWinSound();
+          sections[winnerIndex] < 1 && this.audio.playLoseSound();
+          this.spinTo(0, 200000, true);
+        }
       }
       requestAnimationFrame(frame.bind(this));
     });

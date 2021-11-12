@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-//import * as Api from 'api/casino-games';
-import * as ApiUser from 'api/crash-game';
+import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
+//import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -33,7 +33,12 @@ import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
-import { GameApi } from '../../api/casino-games';
+import {
+  trackAlpacaWheelPlaceBetGuest,
+  trackAlpacaWheelPlaceBet,
+  trackAlpacaWheelCashout,
+} from '../../config/gtm';
+import { UserActions } from 'store/actions/user';
 
 const RouletteGame = ({
   showPopup,
@@ -42,6 +47,7 @@ const RouletteGame = ({
   token,
   refreshHighData,
   refreshLuckyData,
+  updateUserBalance
 }) => {
   const game = GAMES.alpacaWheel
   const ROSI_GAME_EVENT_ID = game.id;
@@ -59,7 +65,7 @@ const RouletteGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState(null);
+  const [bet, setBet] = useState({pending: true});
   const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -78,18 +84,31 @@ const RouletteGame = ({
   const GAME_TYPE_ID = GAMES.alpacaWheel.id;
 
   useEffect(() => {
-    ApiUser.getCurrentGameInfo()
+    getSpinsAlpacaWheel(GAME_TYPE_ID)
       .then(response => {
-        dispatch(
-          RosiGameActions.initializeState({
-            ...response.data,
-            userId,
-          })
-        );
+        const lastSpins = response?.data.lastCrashes;
+        setSpins(lastSpins.map((spin)=> {
+          if(spin.profit > 0) {
+            return {
+              type: 'win',
+              value: '+' + spin.profit
+            };
+          } else {
+            return {
+              type: 'loss',
+              value: spin.profit
+            };
+          }
+        }))
+
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+
+  }, [])
+
+  useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
     refreshHighData();
     refreshLuckyData();
@@ -97,11 +116,12 @@ const RouletteGame = ({
   }, [dispatch, connected]);
 
   //Bets state update interval
+  /*
   useEffect(() => {
     const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
     return () => clearInterval(interval);
   }, []);
-
+*/
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (hasAcceptedTerms() && !isPopupDisplayed()) {
@@ -139,10 +159,15 @@ const RouletteGame = ({
     audio.playBetSound();
     if (!payload) return;
     try {
-      if(payload.demo) setBet({...payload })
-      else{
+      if(payload.demo) {
+        setBet({...payload })
+        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+      } else {
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});
+        updateUserBalance(userId);
+        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
+        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
         return data;
       }
     } catch (e) {
@@ -237,17 +262,22 @@ const RouletteGame = ({
 
   const renderWallpaperBanner = () => {
     return (
-      <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
+      <Link data-tracking-id="alpacawheel-wallpaper" to={Routes.elonWallpaper}>
         <div className={styles.banner}></div>
       </Link>
     );
   };
+
+
+  const handleNewSpin = (newSpin)=> {
+    setSpins([newSpin, ...spins])
+  }
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Roulette Game" />
+            <BackLink to="/games" text="Alpaca Wheel" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -261,7 +291,7 @@ const RouletteGame = ({
             <span
               onClick={handleHelpClick}
               className={styles.howtoLink}
-              data-tracking-id="elongame-how-does-it-work"
+              data-tracking-id="alpacawheel-how-does-it-work"
             >
               How does it work?
             </span>
@@ -271,8 +301,7 @@ const RouletteGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={newspin => setSpins([newspin, ...spins])}
-                spins={spins}
+                setSpins={handleNewSpin}
                 inGameBets={inGameBets}
                 risk={risk}
                 bet={bet}
@@ -286,14 +315,12 @@ const RouletteGame = ({
               <div className={styles.placeContainer}>
                 <PlaceBetRoulette
                   connected={connected}
-                  risk={risk}
-                  bet={bet}
-                  setAmount2={(amount)=>setAmount(amount)}
+                  setAmount={setAmount}
+                  amount={amount}
                   setRisk={setRisk}
+                  risk={risk}
                   onBet={handleBet}
-                  onCashout={() => {
-                    audio.playWinSound();
-                  }}
+                  bet={bet}
                 />
                 {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
@@ -336,6 +363,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    updateUserBalance: (userId) => {
+      dispatch(UserActions.fetch({ userId, forceFetch: true }));
     },
   };
 };
