@@ -26,14 +26,14 @@ let riskImages = [
 let updateValues = [];
 let numberSelected = 0;
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
-
+let idle2=true
 PIXI.utils.skipHello();
 let canvas = null;
 let img = new Image();
 
 class AudioController {
   constructor(bgmIndex = 0) {
-    let volume = 0;
+    let volume = 0.1;
     try {
       const savedVolume = localStorage.getItem('gameVolume');
       this.volume = savedVolume ? parseFloat(savedVolume) : volume;
@@ -123,10 +123,10 @@ class AudioController {
   playSound(name, loop = false) {
     try {
       if (this.ready) {
-        if(name === 'bgm') this.volume=0.1;
         Sound.sound.volume(name, this.volume);
         Sound.sound.play(name, {
           loop: loop,
+          start: 1
         });
       }
     } catch (e) {
@@ -139,7 +139,7 @@ class AudioController {
   }
 
   startBgm() {
-    const diff = this.elapsed / 1000;
+    //const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
     }
@@ -178,12 +178,12 @@ class AnimationController {
     this.audio = new AudioController(0);
     this.audio.startBgm();
     this.gameStartTime = 0;
+    this.gameStartTime = new Date();
 
-    this.idle = false
+    this.idle = true
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
-
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
     this.angle = 0;
@@ -278,7 +278,15 @@ class AnimationController {
       audio: this.audio,
     };
   }
+
+  changeValues() {
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
   reinit(canvas, options) {
+    this.changeValues()
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
@@ -378,6 +386,10 @@ class AnimationController {
   //when calling repaint pass to the method the new index image from riskImages
   repaint(angle, play, idle) {
     let sections = sectionsArray[this.risk-1]
+    const elapsed = Date.now() - this.gameStartTime;
+    if (this.audio) {
+      this.audio.setElapsed(elapsed);
+    }
     this.angle = angle
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
@@ -416,11 +428,6 @@ class AnimationController {
       ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
   }
- changeValues() {
-   var canvas = document.getElementById("canvas");
-   var context = canvas.getContext('2d');
-   context.clearRect(0, 0, canvas.width, canvas.height);
- }
   spinTo(winnerIndex, duration = 5000, idle = false) {
     this.idle = idle
     let sections = sectionsArray[this.risk-1]
@@ -436,9 +443,9 @@ class AnimationController {
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
         let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
-        if(this.idle && idle || !this.idle && !idle) {
-          this.repaint(angle, true, idle);
-        }
+        console.log("SPIN: ", idle)
+        if(!this.idle && idle) {resolve(null);return}
+        this.repaint(angle, true, idle);
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else {
           resolve(sections[winnerIndex] * this.amount);
