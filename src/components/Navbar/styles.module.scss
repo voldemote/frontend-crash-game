@@ -302,10 +302,14 @@
   }
 
   .leaderboard {
-    background-color: pink;
+    background-color: $colorWhite;
+
     display: flex;
     flex-flow: column nowrap;
     z-index: 5;
+    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
+      0px 2px 2px rgba(159, 162, 191, 0.32);
+    border-radius: 0px 0px 12px 0px;
 
     .closeLeaderboard {
       @extend .floatingCloseButton;
@@ -319,6 +323,25 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        background: url('../../data/images/side-panel-alpaca.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        right: 17px;
+        top: 10px;
+        width: 100px;
+        height: 70px;
+        z-index: -1;
+
+        // @media (min-width: $screen-sm) {
+        //   display: none;
+        // }
+      }
     }
 
     .leaderboardHeading {
@@ -373,16 +396,13 @@
 
     .leaderboardCountdownBlock {
       display: flex;
-      color: $colorWhite;
       align-items: center;
-      width: 100%;
       justify-content: center;
+      margin: 0 auto;
       margin-bottom: 15px;
-      width: 460px;
+      width: 100%;
       height: 44px;
-
-      background: $colorLightGray1;
-      border-radius: 12px;
+      z-index: -3;
 
       @media (max-width: $screen-sm) {
         padding: 0 15px;
@@ -393,6 +413,7 @@
         justify-content: space-between;
         flex-direction: row;
         width: 88%;
+        align-items: center;
 
         &:last-child {
           margin-right: 0;
@@ -416,21 +437,29 @@
 
       .timerSide {
         font-weight: bold;
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
+        font-family: $fontRegular;
+        align-items: center;
       }
 
       .linkSide {
-        font-size: 15px;
-        text-decoration: underline;
-        color: $colorYellow;
+        font-family: $fontBold;
+        color: $colorPinkDark;
         cursor: pointer;
+        font-size: 14px;
+        line-height: 18px;
+        text-decoration-line: underline;
       }
     }
 
     .leaderboardTimerComponent {
       span {
-        font-size: 16px;
+        font-size: 18px;
+        font-family: $fontBold;
+        color: $colorPrimary;
+        opacity: 1;
+        padding: 0;
       }
     }
 
@@ -439,15 +468,17 @@
     }
 
     .leaderboardInfoItem {
-      background-color: #24203d;
+      background-color: $colorLightGray1;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      justify-content: center;
       width: 100%;
       padding: 20px;
-      border-radius: 5px;
-      color: $colorWhite;
+      border-radius: 12px;
+      color: $colorPrimary;
       height: 100%;
+      font-family: $fontRegular;
 
       &:first-child {
         margin: 0 5px 0 30px;

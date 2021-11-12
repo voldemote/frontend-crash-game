@@ -8,6 +8,9 @@ import { LOGGED_IN } from 'constants/AuthState';
 import { selectLeaderboard } from 'store/selectors/leaderboard';
 import { selectUser } from 'store/selectors/authentication';
 import classNames from 'classnames';
+import Icon from 'components/Icon';
+import IconTheme from 'components/Icon/IconTheme';
+import IconType from 'components/Icon/IconType';
 
 const Leaderboard = ({
   fetchLeaderboard,
@@ -98,9 +101,27 @@ const Leaderboard = ({
   return (
     <div className={style.leaderboardTable}>
       <div className={classNames(style.tableHeadings, headingClass)}>
-        <p className={style.rankingHeading}>RANKING</p>
-        <p className={style.userHeading}>USER</p>
-        <p className={style.tokenHeading}>TOKENS WON</p>
+        <p className={style.rankingHeading}>
+          <Icon
+            iconType={IconType.leaderboardRanking}
+            iconTheme={IconTheme.primary}
+          />
+          RANKING
+        </p>
+        <p className={style.userHeading}>
+          <Icon
+            iconType={IconType.leaderboardUser}
+            iconTheme={IconTheme.primary}
+          />
+          USER
+        </p>
+        <p className={style.tokenHeading}>
+          <Icon
+            iconType={IconType.leaderboardToken}
+            iconTheme={IconTheme.primary}
+          />
+          TOKENS WON
+        </p>
       </div>
       <div className={style.leaderboardRanking}>
         {!userRef &&
