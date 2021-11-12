@@ -1,17 +1,20 @@
 @import '../../styles/all';
 
 .container {
-  background: #1f1d38;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: $colorWhite;
+  border: 1px solid $colorPinkDark;
   border-radius: 10px;
   margin-bottom: 14px;
   padding: 7px 20px;
   margin-top: 0px;
+  background: $colorWhite;
 
   .title {
     display: inline-block;
-    color: $colorWhite;
+    color: $colorBlack;
     width: 30%;
+    font-size: 12px;
+    line-height: 20px;
 
     @media screen and (max-width: $screen-sm) {
       width: 30%;
@@ -49,7 +52,7 @@
   }
 
   .crash {
-    color: $colorYellow;
+    color: $colorPinkDark;
     margin-right: 25px;
 
     &:hover {

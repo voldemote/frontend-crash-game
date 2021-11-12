@@ -353,7 +353,7 @@ const TermsAndConditions = () => {
             </ol>
           </section>
         </LegalText>
-        <ContentFooter />
+        
       </BaseContainerWithNavbar>
     </div>
   );

@@ -1,15 +1,16 @@
 @import '../../styles/all';
 
 .container {
-  background: #1f1d38;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: $colorWhite;
+  border: 1px solid $colorLightGray;
+
   border-radius: 10px;
   margin-bottom: 14px;
   padding: 7px 20px;
   margin-top: 14px;
   .title {
     display: inline-block;
-    color: $colorWhite;
+    color: #000;
     width: 30%;
 
     @media screen and (max-width: $screen-sm) {

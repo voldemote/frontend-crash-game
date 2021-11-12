@@ -1,7 +1,8 @@
-import { useEffect, memo } from 'react';
+import { useEffect, memo, useState} from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
@@ -19,12 +20,66 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 import SocialIcons from 'components/SocialIcons';
 import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
+import { NEW_SLOTS_GAMES } from '../../constants/Games';
+import GameCards from '../../components/GameCards';
+import SlotGameIconBg from '../../data/images/house-games/title.png';
+import howTokenWorkTitle from '../../data/images/token/title.png';
+import howTokenWorkPToken from '../../data/images/token/PToken.png';
+import howTokenWorkWToken from '../../data/images/token/WToken.png';
+import alpacaActivities from '../../data/images/alpaca-activities.svg';
+import whoWeAreTitle from '../../data/images/who-are-wallfair/title.png';
+import whoWeAreLogo from '../../data/images/who-are-wallfair/logo.png';
+import whoWeAreAlphaLogo from '../../data/images/who-are-wallfair/alpha-logo.png';
+import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.png';
+import whoWeAreCard2 from '../../data/images/who-are-wallfair/what-is-alpha.png';
+import whoWeAreCard3 from '../../data/images/who-are-wallfair/competetive.png';
+import whoWeAreCard4 from '../../data/images/who-are-wallfair/rewards.png';
+import EventActivitiesTracker from '../../components/EventActivitiesTracker';
+import TabOptions from 'components/TabOptions';
+import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
+import { RosiGameActions } from 'store/actions/rosi-game';
+import useRosiData from 'hooks/useRosiData';
+import gameCard1 from '../../data/images/house-games/card-1.png';
+import gameCard2 from '../../data/images/house-games/card-2.png';
+import gameCard3 from '../../data/images/house-games/card-3.png';
+import gameCard4 from '../../data/images/house-games/card-4.png';
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
+const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighData, refreshLuckyData, connected, userId }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
+
+  const dispatch = useDispatch();
+  const {
+    highData,
+    luckyData,
+  } = useRosiData();
+  const [activityTabIndex, setActivityTabIndex] = useState(0);
+  let activityTabOptions = [
+    { name: 'ALL', index: 0 },
+    { name: 'HIGH WINS', index: 1 },
+    { name: 'LUCKY WINS', index: 2 },
+  ];
+
+  if(userId) activityTabOptions.push({name: 'MY BETS', index: 3});
+
+  const handleActivitySwitchTab = ({ index }) => {
+    switch (index) {
+      case 1: // high wins
+        refreshHighData();
+        break;
+      case 2: // lucky wins
+        refreshLuckyData();
+        break;
+    }
+    setActivityTabIndex(index);
+  };
+
+  useEffect(() => {
+    refreshHighData();
+    refreshLuckyData();
+  }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -124,7 +179,153 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
       </Link>
     );
   };
-
+  const renderHowTokenWorks = () => {
+    return (
+      <div className={styles.howTokenWorks}>
+        <div className={styles.title}>
+          <img src={howTokenWorkTitle} alt="" />
+          How Our Tokens work?
+        </div>
+        <div className={styles.tokenDetail}>
+          <Grid container>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkPToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>$PFAIR Token?</h3>
+                  <p>
+                    PFAIR are WALLFAIRS FREE to play tokens. The tokens can be
+                    used in our WALLFAIR ALPHA playgound for risk and care free
+                    betting fun
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkWToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>$WFAIR Token?</h3>
+                  <p>
+                    WFAIR tokens are your betting cryptocurrency, these are can
+                    transfered at anytime for real world cash
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkWToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Exchange PFAIR = WFAIR</h3>
+                  <p>
+                    If you rise to the top 10 of our leaderboard every week. You
+                    can exchange your PFAIR winnings for WFAIR and have the
+                    chance to win £20,000!
+                  </p>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  };
+  const renderWhoWeAre = () => {
+    return (
+      <div className={styles.whoWeAre}>
+        <div className={styles.title}>
+          <img src={whoWeAreTitle} alt="" />
+          <h2>
+            Who are
+            <img src={whoWeAreLogo} alt="" />
+          </h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnail}>
+                  <img src={whoWeAreCard1} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>
+                    Who is
+                    <img src={whoWeAreLogo} alt="" />
+                  </h3>
+                  <p>
+                    Wallfair is a new type of crypocurrency betting platform
+                    which is more entertaining and easier than any other
+                    platform out there!
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnail}
+                  style={{ marginBottom: '-25px' }}
+                >
+                  <img src={whoWeAreCard2} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>
+                    What Is
+                    <img src={whoWeAreAlphaLogo} alt="" />
+                  </h3>
+                  <p>
+                    Wallfair Alpha is your safe betting playground, bet without
+                    the worry of losing. We’re giving 5000 $PFAIR Tokens for
+                    exclusive access to risk free fun.
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnail}>
+                  <img src={whoWeAreCard3} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Competive Edge</h3>
+                  <p>
+                    More you win the higher you climb the monthly community
+                    leaderboards. We’ve added some secret challenges to reward
+                    you even more $PFAIR Tokens ...
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnail}
+                  style={{ marginBottom: '-70px', marginTop: '-100px' }}
+                >
+                  <img src={whoWeAreCard4} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Real Rewards</h3>
+                  <p>
+                    More you win the higher you climb the monthly community
+                    leaderboards. We’ve added some secret challenges to reward
+                    you even more $PFAIR Tokens ...
+                  </p>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  };
   const renderUniswap = () => {
     return (
       <div className={styles.lightboxWrapper}>
@@ -137,52 +338,93 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
 
   const renderCategoriesAndLeaderboard = () => {
     return (
-      <div className={styles.bottomWrapper}>
-        <div className={styles.categories}>
-          <div className={styles.headline}>
-            Activities{' '}
-            <Link
-              data-tracking-id="activities-see-all"
-              className={styles.seeAllActivities}
-              to={Routes.activities}
-            >
-              See all
-            </Link>
-          </div>
-          <ActivitiesTracker />
-          {/*<CategoryList categories={EVENT_CATEGORIES} />*/}
+      <div className={styles.activities}>
+        <div className={styles.title}>
+            <img src={alpacaActivities} alt="" />
+            <h2>
+              Activities
+            </h2>
         </div>
-        <div className={styles.leaderboard}>
-          <div className={styles.headline}>
-            Community Leaderboard
-            <div
-              className={styles.leaderboardLink}
-              onClick={onSeeLeaderboard}
-              data-tracking-id="leaderboard-see-leaderboard"
-            >
-              See Leaderboard
+        <Grid item xs={12} >
+          <div className={styles.activityWrapper}>
+            <TabOptions options={activityTabOptions} className={styles.tabLayout}>
+              {option => (
+                <div
+                  className={
+                    option.index === activityTabIndex
+                      ? styles.tabItemSelected
+                      : styles.tabItem
+                  }
+                  onClick={() => handleActivitySwitchTab(option)}
+                >
+                  {option.name}
+                </div>
+              )}
+            </TabOptions>
+            <div className={styles.activityContainer}>
+              {activityTabIndex === 0 && (
+                <EventActivitiesTracker
+                  activitiesLimit={50}
+                  className={styles.activitiesTrackerGamesBlock}
+                  preselectedCategory={'game'}
+                  gameId={'614381d74f78686665a5bb76'}
+                />
+              )}
+              {activityTabIndex !== 0 && (
+                <ActivityTable
+                  rowData={activityTabIndex === 1 ? highData : luckyData}
+                  gameLabel={'Game'}
+                  gameId={'614381d74f78686665a5bb76'}
+                />
+              )}
             </div>
           </div>
-          <Leaderboard fetch={true} small={true} />
+        </Grid>
+      </div>
+      );
+  };
+
+  const renderGamesCards = () => {
+    return (
+      <div className={styles.gameCards}>
+        <div className={styles.title}>
+          <img src={SlotGameIconBg} alt={'Visit slot games'} />
+          <h2>House Games</h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard4} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard1} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard3} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard2} alt="" />
+            </Grid>
+          </Grid>
         </div>
       </div>
     );
   };
 
-  //if (!userLoggedIn) return <LandingPage />;
-
   return (
     <BaseContainerWithNavbar>
-      {renderHeadline()}
+      {/* {renderHeadline()} */}
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {renderRosiBanner()}
-          <EventsCarouselContainer eventType="non-streamed" />
+          {/* <EventsCarouselContainer eventType="non-streamed" /> */}
           {/*<EventsCarouselContainer eventType="streamed" />*/}
+          {renderGamesCards()}
+          {renderHowTokenWorks()}
+          {renderWhoWeAre()}
           {renderCategoriesAndLeaderboard()}
           {renderUniswap()}
-          <ContentFooter />
         </div>
       </div>
     </BaseContainerWithNavbar>
@@ -193,11 +435,15 @@ const mapStateToProps = state => {
   return {
     tags: state.event.tags,
     events: state.event.events,
+    connected: state.websockets.connected,
+    userId: state.authentication.userId,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
+    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
     setOpenDrawer: drawerName => {
       dispatch(GeneralActions.setDrawer(drawerName));
     },

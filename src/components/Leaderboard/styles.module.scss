@@ -1,68 +1,80 @@
-@import "../../styles/all";
+@import '../../styles/all';
 
-.leaderboardTable
-{
-    display:        flex;
-    flex-direction: column;
-    width:          100%;
-    flex:           auto;
-    overflow-y:     auto;
+.leaderboardTable {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: auto;
+  overflow-y: auto;
+  background-color: $colorWhite;
 
-    .tableHeadings
-    {
-        display:       flex;
-        width:         100%;
-        padding:       16px 24px;
-        background-color: rgba(14, 9, 39, 1);
-        position: sticky;
-        top: 0;
-        z-index: 1;
+  .tableHeadings {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 24px;
+    background-color: $colorWhite;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-top: 0.5px solid $colorLightGray;
+    border-bottom: 0.5px solid $colorLightGray;
 
-        @media (max-width: $screen-md)
-        {
-            padding: 16px;
-        }
-
-        .rankingHeading
-        {
-            width:          60px;
-            margin-right:   77px;
-            font-weight:    normal;
-            font-size:      11px;
-            line-height:    14px;
-            letter-spacing: 1.64375px;
-            color:          #ffffff;
-            mix-blend-mode: normal;
-            opacity:        0.45;
-
-            @media (max-width: $screen-md)
-            {
-                margin-right: 30px;
-            }
-        }
-
-        .userHeading
-        {
-            font-weight:    normal;
-            font-size:      11px;
-            line-height:    14px;
-            letter-spacing: 1.64375px;
-            color:          #ffffff;
-            mix-blend-mode: normal;
-            opacity:        0.45;
-        }
-
-        .tokenHeading
-        {
-            width:          100%;
-            text-align:     end;
-            font-weight:    normal;
-            font-size:      11px;
-            line-height:    14px;
-            letter-spacing: 1.64375px;
-            color:          #ffffff;
-            mix-blend-mode: normal;
-            opacity:        0.45;
-        }
+    @media (max-width: $screen-md) {
+      padding: 16px;
     }
+
+    .rankingHeading {
+      width: 60px;
+      margin-right: 77px;
+      font-family: $fontBold;
+      color: $colorPrimary;
+      font-size: 14px;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      span {
+        margin-right: 5px;
+      }
+
+      @media (max-width: $screen-md) {
+        margin-right: 30px;
+      }
+    }
+
+    .userHeading {
+      font-family: $fontBold;
+      font-size: 14px;
+      line-height: 18px;
+      color: $colorPrimary;
+      display: flex;
+      align-items: center;
+      span {
+        margin-right: 5px;
+      }
+    }
+
+    .tokenHeading {
+      font-family: $fontBold;
+      font-size: 14px;
+      line-height: 18px;
+      color: $colorPrimary;
+      display: flex;
+      align-items: center;
+      span {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.leaderboardRanking {
+  > div {
+    &:nth-child(odd) {
+      background: $colorLightGray1;
+    }
+    &:nth-child(even) {
+      background: $colorWhite;
+    }
+  }
 }

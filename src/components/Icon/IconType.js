@@ -61,4 +61,8 @@ export default {
   shareLink: 'shareLink',
   star: 'star',
   starFull: 'starFull',
+  pToken: 'pToken',
+  leaderboardRanking: 'leaderboardRanking',
+  leaderboardUser: 'leaderboardUser',
+  leaderboardToken: 'leaderboardToken'
 };

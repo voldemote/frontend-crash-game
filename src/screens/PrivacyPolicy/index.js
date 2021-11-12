@@ -832,7 +832,7 @@ const PrivacyPolicy = () => {
             decision-making or profiling.
           </p>
         </LegalText>
-        <ContentFooter />
+        
       </BaseContainerWithNavbar>
     </div>
   );

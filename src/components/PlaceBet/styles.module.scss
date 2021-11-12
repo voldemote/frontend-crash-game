@@ -3,9 +3,8 @@
 .container {
   position: relative;
   background: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  border: 1px solid $colorLightGray;
   border-radius: 10px;
-  padding: 10px 20px 20px 20px;
   margin-bottom: 14px;
 
   @media screen and (max-width: $screen-md) {
@@ -43,18 +42,17 @@
 }
 .sliderContainer {
   position: relative;
-  bottom: -10px;
-  div{
+  // bottom: -10px;
+  padding: 10px;
+  div {
     margin-bottom: 0;
     @media screen and (max-width: $screen-sm) {
       margin-bottom: 1rem;
     }
-    div{
+    div {
       margin-bottom: 0;
-
     }
   }
-
 }
 .profit {
   position: relative;
@@ -84,8 +82,6 @@
   .negative {
     color: $colorRed;
   }
-
-
 }
 
 .profitPlaceholder {
@@ -97,7 +93,7 @@
   margin: 15px auto;
 
   font-size: 18pt;
-  color: $colorWhite;
+  color: $colorBlack;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,17 +154,22 @@
   }
 }
 
-
-
 .inputContainer {
   position: relative;
   .placeBetContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    padding: 10px;
+
+    // justify-content: center;
+    border-bottom: 1px solid $colorLightGray2;
     .placebidTitle {
       padding: 0;
+      font-size: 14px;
+      line-height: 18px;
+      font-family: $fontBold;
+      text-transform: uppercase;
     }
     @media screen and (max-width: 800px) {
       display: none;
@@ -213,30 +214,32 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-image: url('../../data/backgrounds/games/bet-button.svg');
+  background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%);
+  border-radius: 30px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  color: $colorWhite;
 
   &:hover {
     cursor: pointer;
   }
 }
 
-.button.cancel{
+.button.cancel {
   background-image: url('../../data/backgrounds/games/cancel-button.svg');
   color: white;
 }
 
 .buttonDisabled {
-  opacity: 0.5;
+  // opacity: 0.5;
 
   &:hover {
     cursor: wait;
   }
 }
 
-.buttonDisabled.notConnected{
+.buttonDisabled.notConnected {
   @media screen and (max-width: $screen-xs) {
     opacity: 1;
   }
@@ -310,7 +313,6 @@
     border: 2px solid $colorRed;
   }
 
-
   .eventTokenLabel {
     color: $colorGrayLight1;
     font-family: $fontRegular;
@@ -320,42 +322,39 @@
     line-height: 24px;
     letter-spacing: 0px;
     text-align: left;
-    span{
+    span {
       font-size: 30px;
     }
   }
 
-  .buttonWrapper
-  {
-      margin-left:    0px;
-      @media (min-width: $screen-lg)
-      {
-          margin-left:    30px;
-      }
-      :first-child {
-          font-size:      20px;
-      }
+  .buttonWrapper {
+    margin-left: 0px;
+    @media (min-width: $screen-lg) {
+      margin-left: 30px;
+    }
+    :first-child {
+      font-size: 20px;
+    }
 
-      :nth-child(2) {
-          font-size:      16px;
-      }
+    :nth-child(2) {
+      font-size: 16px;
+    }
 
-      :last-child {
-          font-size:      14px;
-      }
-      .buttonItem
-      {
-          margin-left:    12px;
-          font-family:    $fontMedium;
-          cursor:         pointer;
-      }
+    :last-child {
+      font-size: 14px;
+    }
+    .buttonItem {
+      margin-left: 12px;
+      font-family: $fontMedium;
+      cursor: pointer;
+    }
   }
 }
 
-.cashedOutInputContainer.demoInput{
+.cashedOutInputContainer.demoInput {
   padding-right: 1rem;
   .eventTokenLabel {
-    span{
+    span {
       font-size: 20px;
     }
   }
@@ -377,19 +376,18 @@
   text-align: left !important;
 }
 
-.betInfo{
+.betInfo {
   font-size: 14px;
   color: $colorGray;
   margin: 0 auto;
   text-align: center;
-  overflow-wrap:  anywhere;
+  overflow-wrap: anywhere;
 }
 
-.betInfo.guestInfo{
+.betInfo.guestInfo {
   padding-top: 10px;
   @media screen and (max-width: $screen-xs) {
     font-size: 12px;
     padding-top: 5px;
   }
 }
-

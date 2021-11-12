@@ -348,7 +348,7 @@ const RosiGame = ({
             </div>
           ) : null}
           {renderWallpaperBanner()}
-          <ContentFooter className={styles.betFooter} />
+          
         </div>
       </div>
     </BaseContainerWithNavbar>
