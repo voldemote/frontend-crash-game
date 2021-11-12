@@ -1,4 +1,4 @@
-@import "../../styles/all";
+@import '../../styles/all';
 
 .placeSeperate {
   width: 90%;
@@ -6,6 +6,7 @@
   margin: -1px 5% -1px 5%;
   background-color: #434466;
   z-index: 5;
+  display: none;
 }
 
 .tableFirst,
@@ -21,7 +22,6 @@
   width: 100%;
   height: 60px;
   padding: 0 50px 0 50px;
-  background-color: #343353;
 
   @media (max-width: $screen-md) {
     padding: 0 20px 0 20px;
@@ -36,7 +36,7 @@
     font-size: 16px;
     line-height: 44px;
     letter-spacing: 0.5px;
-    color: #b6b3b3;
+    color: $colorPrimary;
     opacity: 1;
 
     @media (max-width: $screen-md) {
@@ -48,6 +48,7 @@
     img {
       height: 44px;
       margin-left: 16px;
+      display: none;
 
       @media (max-width: $screen-md) {
         height: 38px;
@@ -56,11 +57,11 @@
   }
 
   .firstName {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
-    color: #ffffff;
+    font-family: $fontRegular;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: $colorPrimary;
 
     @media (max-width: $screen-md) {
       font-size: 14px;
@@ -71,12 +72,11 @@
   .firstBalance {
     position: absolute;
     right: 50px;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 24px;
     text-align: end;
-    letter-spacing: 0.625px;
-    color: #ffffff;
+    color: $colorPinkDark;
+    font-family: $fontBold;
+    font-size: 14px;
+    line-height: 18px;
 
     @media (max-width: $screen-md) {
       right: 20px;
@@ -92,7 +92,6 @@
   width: 100%;
   height: 60px;
   padding: 0 50px 0 50px;
-  background-color: #24203d;
 
   @media (max-width: $screen-md) {
     padding: 0 20px 0 20px;
@@ -107,7 +106,7 @@
     font-size: 16px;
     line-height: 44px;
     letter-spacing: 0.5px;
-    color: #b6b3b3;
+    color: $colorPrimary;
     opacity: 1;
 
     @media (max-width: $screen-md) {
@@ -119,6 +118,7 @@
     img {
       height: 44px;
       margin-left: 14px;
+      display: none;
 
       @media (max-width: $screen-md) {
         height: 38px;
@@ -127,11 +127,11 @@
   }
 
   .secondName {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
-    color: #ffffff;
+    font-family: $fontRegular;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: $colorPrimary;
 
     @media (max-width: $screen-md) {
       font-size: 14px;
@@ -142,12 +142,11 @@
   .secondBalance {
     position: absolute;
     right: 50px;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 24px;
     text-align: end;
-    letter-spacing: 0.625px;
-    color: #ffffff;
+    color: $colorPinkDark;
+    font-family: $fontBold;
+    font-size: 14px;
+    line-height: 18px;
 
     @media (max-width: $screen-md) {
       right: 20px;
@@ -163,7 +162,6 @@
   width: 100%;
   height: 60px;
   padding: 0 50px 0 50px;
-  background-color: #1a1534;
 
   @media (max-width: $screen-md) {
     padding: 0 20px 0 20px;
@@ -178,7 +176,7 @@
     font-size: 16px;
     line-height: 44px;
     letter-spacing: 0.5px;
-    color: #b6b3b3;
+    color: $colorPrimary;
     opacity: 1;
 
     @media (max-width: $screen-md) {
@@ -190,7 +188,8 @@
     img {
       height: 44px;
       margin-left: 14px;
-      
+      display: none;
+
       @media (max-width: $screen-md) {
         height: 38px;
       }
@@ -198,11 +197,11 @@
   }
 
   .thirdName {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
-    color: #ffffff;
+    font-family: $fontRegular;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: $colorPrimary;
 
     @media (max-width: $screen-md) {
       font-size: 14px;
@@ -213,12 +212,11 @@
   .thirdBalance {
     position: absolute;
     right: 50px;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 24px;
     text-align: end;
-    letter-spacing: 0.625px;
-    color: #ffffff;
+    color: $colorPinkDark;
+    font-family: $fontBold;
+    font-size: 14px;
+    line-height: 18px;
 
     @media (max-width: $screen-md) {
       right: 20px;
@@ -236,7 +234,7 @@
     font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.5px;
-    color: #b6b3b3;
+    color: $colorPrimary;
     opacity: 1;
 
     @media (max-width: $screen-md) {
@@ -248,7 +246,8 @@
     img {
       height: 20px;
       margin-left: 26px;
-      
+      display: none;
+
       @media (max-width: $screen-md) {
         height: 17px;
       }
@@ -277,7 +276,7 @@
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.5px;
-    color: #b6b3b3;
+    color: $colorPrimary;
     opacity: 1;
 
     @media (max-width: $screen-md) {
@@ -299,11 +298,11 @@
   }
 
   .entryName {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
-    color: #ffffff;
+    font-family: $fontRegular;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: $colorPrimary;
 
     @media (max-width: $screen-md) {
       font-size: 14px;
@@ -314,12 +313,11 @@
   .entryBalance {
     position: absolute;
     right: 50px;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 24px;
     text-align: end;
-    letter-spacing: 0.625px;
-    color: #ffffff;
+    color: $colorPinkDark;
+    font-family: $fontBold;
+    font-size: 14px;
+    line-height: 18px;
 
     @media (max-width: $screen-md) {
       right: 20px;
@@ -329,31 +327,25 @@
   }
 
   .loadButton {
-    width: 135px;
     margin: 0 auto;
-    background-color: #24203d;
+    background: url('../../data/backgrounds/highlight-activities-labels-active.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
     border-radius: 5px;
-    padding: 10px 25px 10px 0;
-    height: 30px;
+    padding: 55px;
     text-align: right;
     color: white;
     line-height: 1;
     font-size: 12px;
     position: relative;
     cursor: pointer;
-
-    &:hover {
-      background-color: #343353;
-    }
+    text-transform: uppercase;
 
     &::before {
       content: '...';
-      position: absolute;
-      bottom: 37%;
-      left: 20px;
-      font-size: 32px;
-      letter-spacing: -2px;
+      font-size: 12px;
       height: 100%;
+      margin-right: 5px;
     }
   }
 }
