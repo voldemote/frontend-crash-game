@@ -331,7 +331,6 @@ class AnimationController {
         ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
-
       this.wheels.push(c);
     }
     this.frame = document.createElement('canvas');
@@ -384,10 +383,10 @@ class AnimationController {
   //when calling repaint pass to the method the new index image from riskImages
   repaint(angle, play, idle) {
     let sections = sectionsArray[this.risk-1]
-    const elapsed = Date.now() - this.gameStartTime;
+    /*const elapsed = Date.now() - this.gameStartTime;
     if (this.audio) {
       this.audio.setElapsed(elapsed);
-    }
+    }*/
     this.angle = angle
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
