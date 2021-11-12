@@ -22,7 +22,7 @@ import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
 import { NEW_SLOTS_GAMES } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
-import SlotGameIconBg from '../../data/images/slot-game-icon-bg.png';
+import SlotGameIconBg from '../../data/images/house-games/title.png';
 import howTokenWorkTitle from '../../data/images/token/title.png';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
@@ -33,6 +33,10 @@ import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.pn
 import whoWeAreCard2 from '../../data/images/who-are-wallfair/what-is-alpha.png';
 import whoWeAreCard3 from '../../data/images/who-are-wallfair/competetive.png';
 import whoWeAreCard4 from '../../data/images/who-are-wallfair/rewards.png';
+import gameCard1 from '../../data/images/house-games/card-1.png';
+import gameCard2 from '../../data/images/house-games/card-2.png';
+import gameCard3 from '../../data/images/house-games/card-3.png';
+import gameCard4 from '../../data/images/house-games/card-4.png';
 
 const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
   const isMount = useIsMount();
@@ -208,7 +212,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
         </div>
         <div className={styles.cardBox}>
           <Grid container>
-            <Grid item md={3} xs={12}>
+            <Grid item lg={3} md={6} xs={12}>
               <div className={styles.card}>
                 <div className={styles.thumbnail}>
                   <img src={whoWeAreCard1} alt="" />
@@ -226,7 +230,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
                 </div>
               </div>
             </Grid>
-            <Grid item md={3} xs={12}>
+            <Grid item lg={3} md={6} xs={12}>
               <div className={styles.card}>
                 <div
                   className={styles.thumbnail}
@@ -247,7 +251,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
                 </div>
               </div>
             </Grid>
-            <Grid item md={3} xs={12}>
+            <Grid item lg={3} md={6} xs={12}>
               <div className={styles.card}>
                 <div className={styles.thumbnail}>
                   <img src={whoWeAreCard3} alt="" />
@@ -262,7 +266,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
                 </div>
               </div>
             </Grid>
-            <Grid item md={3} xs={12}>
+            <Grid item lg={3} md={6} xs={12}>
               <div className={styles.card}>
                 <div
                   className={styles.thumbnail}
@@ -331,21 +335,26 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
 
   const renderGamesCards = () => {
     return (
-      <div className={styles.bottomWrapper}>
-        <div className={styles.categories}>
-          <GameCards
-            games={NEW_SLOTS_GAMES}
-            category={
-              <div className={styles.sectionHeading}>
-                <img
-                  src={SlotGameIconBg}
-                  width={150}
-                  alt={'Visit slot games'}
-                />
-                <h3>House Games</h3>
-              </div>
-            }
-          />
+      <div className={styles.gameCards}>
+        <div className={styles.title}>
+          <img src={SlotGameIconBg} alt={'Visit slot games'} />
+          <h2>House Games</h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard4} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard1} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard3} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard2} alt="" />
+            </Grid>
+          </Grid>
         </div>
       </div>
     );
@@ -355,17 +364,17 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
 
   return (
     <BaseContainerWithNavbar>
-      {renderHeadline()}
+      {/* {renderHeadline()} */}
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {renderRosiBanner()}
-          <EventsCarouselContainer eventType="non-streamed" />
+          {/* <EventsCarouselContainer eventType="non-streamed" /> */}
           {/*<EventsCarouselContainer eventType="streamed" />*/}
           {renderGamesCards()}
           {renderHowTokenWorks()}
           {renderWhoWeAre()}
-          {renderCategoriesAndLeaderboard()}
+          {/* {renderCategoriesAndLeaderboard()} */}
           {renderUniswap()}
         </div>
       </div>

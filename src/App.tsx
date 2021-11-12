@@ -1,7 +1,7 @@
 import './styles.module.scss';
 import AlertBox from './components/AlertBox';
 import Bet from './screens/Bet';
-import BetVTwo from './screens/BetVTwo'
+import BetVTwo from './screens/BetVTwo';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
 import Popup from './components/Popup';
@@ -45,7 +45,7 @@ initTagManager();
 const App = () => {
   const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
   return (
-    <div id={"main-scroll-container"} onScroll={onScroll}>
+    <div id={'main-scroll-container'} onScroll={onScroll}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ConnectedRouter history={history}>
@@ -75,10 +75,18 @@ const App = () => {
               <Route exact path={Routes.betApproveDirect} component={Home} />
               {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
               <Route exact path={Routes.events} component={Events} />
-              <Route exact path={Routes.rouletteGame} component={RouletteGame} />
+              <Route
+                exact
+                path={Routes.rouletteGame}
+                component={RouletteGame}
+              />
               <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
-              <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
+              <Route
+                exact
+                path={Routes.elonWallpaper}
+                component={ElonWallPaper}
+              />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
               <Route path={Routes.games} component={Games} />
@@ -86,7 +94,6 @@ const App = () => {
               <Route exact path={Routes.user} component={UserProfile} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Redirect to={Routes.home} />
-
             </Switch>
             <NavbarFooter
               hideVisibility={hideNavbar}
