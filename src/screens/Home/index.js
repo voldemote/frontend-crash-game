@@ -40,7 +40,7 @@ import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
 import gameCard1 from '../../data/images/house-games/card-1.png';
-import gameCard2 from '../../data/images/house-games/card-2.png';
+import gameCard5 from '../../data/images/house-games/card-5.png';
 import gameCard3 from '../../data/images/house-games/card-3.png';
 import gameCard4 from '../../data/images/house-games/card-4.png';
 
@@ -409,7 +409,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
               </Link>
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard2} alt="" />
+              <img src={gameCard5} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard3} alt="" />
