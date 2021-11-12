@@ -26,14 +26,14 @@ let riskImages = [
 let updateValues = [];
 let numberSelected = 0;
 let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
-
+let idle2=true
 PIXI.utils.skipHello();
 let canvas = null;
 let img = new Image();
 
 class AudioController {
   constructor(bgmIndex = 0) {
-    let volume = 0;
+    let volume = 0.1;
     try {
       const savedVolume = localStorage.getItem('gameVolume');
       this.volume = savedVolume ? parseFloat(savedVolume) : volume;
@@ -88,7 +88,7 @@ class AudioController {
     );
   }
 
-  setVolume(volume = 1.0) {
+  setVolume(volume = 1) {
     try {
       if (volume === 1 || volume === '1') {
         this.volume = 1.0;
@@ -97,19 +97,16 @@ class AudioController {
       } else {
         this.volume = volume;
       }
-
       localStorage.setItem('gameVolume', `${volume}`);
-
-      Sound.sound.volume('bgm', this.volume);
-      //Sound.sound.volume('flying', this.volume);
+      Sound.sound.volume('bgm', volume);
     } catch (e) {
       console.error('Audio output error');
     }
   }
 
   mute() {
-    localStorage.setItem('gameVolume', 0.0);
-    this.setVolume(0.0);
+    localStorage.setItem('gameVolume', 0);
+    this.setVolume(0);
   }
 
   setElapsed(elapsed) {
@@ -120,13 +117,12 @@ class AudioController {
     this.bgmIndex = idx;
   }
 
-  playSound(name, loop = false) {
+  playSound(name, loop = false, volume) {
     try {
       if (this.ready) {
-        if(name === 'bgm') this.volume=0.1;
-        Sound.sound.volume(name, this.volume);
+        Sound.sound.volume(name, volume && this.volume != 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
         Sound.sound.play(name, {
-          loop: loop,
+          loop: loop
         });
       }
     } catch (e) {
@@ -150,7 +146,7 @@ class AudioController {
     this.stopSound('flying');
   }
   playTick() {
-    this.playSound('tick');
+    this.playSound('tick', false, 1);
   }
 
   playGameOverSound() {
@@ -158,11 +154,12 @@ class AudioController {
   }
 
   playLoseSound() {
-    this.playSound('lose');
+    this.playSound('lose', false, 1);
   }
 
   playWinSound() {
-    this.playSound('cashout');
+    this.playSound('cashout', false, 1);
+
   }
 
   playBetSound() {
@@ -178,12 +175,12 @@ class AnimationController {
     this.audio = new AudioController(0);
     this.audio.startBgm();
     this.gameStartTime = 0;
+    this.gameStartTime = new Date();
 
-    this.idle = false
+    this.idle = true
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
-
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
     this.angle = 0;
@@ -237,7 +234,6 @@ class AnimationController {
     ctx.shadowOffsetX = this.r / 80;
     ctx.shadowOffsetY = this.r / 80;
     ctx.shadowBlur = this.r / 40;
-    //ctx.shadowColor = 'rgba(0,0,0,0.5)';
     ctx.beginPath();
     ctx.arc(cx, cy, this.r * 1.025, 0, 2 * Math.PI, true);
     ctx.arc(cx, cy, this.r * 0.975, 0, 2 * Math.PI, false);
@@ -274,17 +270,25 @@ class AnimationController {
 
 
     ctx.fill();
+    this.spinTo(0, 200000, true);
     return {
       audio: this.audio,
     };
   }
+
+  changeValues() {
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
   reinit(canvas, options) {
+    this.changeValues()
     this.risk = options.risk
     this.amount = options.amount
     let sections = sectionsArray[this.risk-1]
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
-    this.angle = 0;
     for (let selected = 0; selected < sections.length; selected++) {
       let c = document.createElement('canvas');
       c.id = selected;
@@ -325,7 +329,6 @@ class AnimationController {
         ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
-
       this.wheels.push(c);
     }
     this.frame = document.createElement('canvas');
@@ -378,7 +381,12 @@ class AnimationController {
   //when calling repaint pass to the method the new index image from riskImages
   repaint(angle, play, idle) {
     let sections = sectionsArray[this.risk-1]
-    this.angle = angle
+    /*const elapsed = Date.now() - this.gameStartTime;
+    if (this.audio) {
+      this.audio.setElapsed(elapsed);
+    }*/
+    this.angle = angle ? angle : this.angle
+
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
     let ctx = this.canvas.getContext('2d');
@@ -386,9 +394,9 @@ class AnimationController {
       Math.floor(((-0.2 - this.angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
 
-    if (!idle && selected !== numberSelected) {
-      numberSelected = selected;
+    if (selected !== numberSelected) {
       if (play) this.audio.playTick();
+      numberSelected = selected;
     }
     if (selected < 0) selected += sections.length;
     ctx.save();
@@ -416,11 +424,6 @@ class AnimationController {
       ctx.drawImage(img, cx - 210 / 2, cy - 210 / 2, 210, 210);
     }
   }
- changeValues() {
-   var canvas = document.getElementById("canvas");
-   var context = canvas.getContext('2d');
-   context.clearRect(0, 0, canvas.width, canvas.height);
- }
   spinTo(winnerIndex, duration = 5000, idle = false) {
     this.idle = idle
     let sections = sectionsArray[this.risk-1]
@@ -435,10 +438,9 @@ class AnimationController {
         let now = performance.now();
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
-        let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
-        if(this.idle && idle || !this.idle && !idle) {
-          this.repaint(angle, true, idle);
-        }
+        let angle = idle ? this.angle - 0.001 : (start_angle + t * (final_angle - start_angle));
+        if(!this.idle && idle) {resolve(null);return}
+        this.repaint(angle, true, idle);
         if (t < 1) requestAnimationFrame(frame.bind(this));
         else {
           resolve(sections[winnerIndex] * this.amount);
