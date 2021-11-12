@@ -36,7 +36,6 @@ class AudioController {
     let volume = 0.1;
     try {
       const savedVolume = localStorage.getItem('gameVolume');
-      console.log("savedVolume", savedVolume)
       this.volume = savedVolume ? parseFloat(savedVolume) : volume;
     } catch (e) {
       this.volume = 0;
@@ -98,7 +97,6 @@ class AudioController {
       } else {
         this.volume = volume;
       }
-      console.log("new volume", volume)
       localStorage.setItem('gameVolume', `${volume}`);
 
       Sound.sound.volume('bgm', this.volume);
@@ -238,7 +236,6 @@ class AnimationController {
     ctx.shadowOffsetX = this.r / 80;
     ctx.shadowOffsetY = this.r / 80;
     ctx.shadowBlur = this.r / 40;
-    //ctx.shadowColor = 'rgba(0,0,0,0.5)';
     ctx.beginPath();
     ctx.arc(cx, cy, this.r * 1.025, 0, 2 * Math.PI, true);
     ctx.arc(cx, cy, this.r * 0.975, 0, 2 * Math.PI, false);
@@ -444,7 +441,6 @@ class AnimationController {
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
         let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
-        console.log("SPIN: ", idle)
         if(!this.idle && idle) {resolve(null);return}
         this.repaint(angle, true, idle);
         if (t < 1) requestAnimationFrame(frame.bind(this));

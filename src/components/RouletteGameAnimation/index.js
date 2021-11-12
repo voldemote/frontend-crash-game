@@ -19,7 +19,6 @@ import { isMobile } from 'react-device-detect';
 
 const RouletteGameAnimation = ({
   connected,
-  muteButtonClick,
   setSpins,
   amount,
   onInit,
@@ -113,11 +112,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    muteButtonClick: () => {
-      dispatch(RosiGameActions.muteButtonClick());
-    },
-  };
+  return {  };
 };
 
 export default connect(
