@@ -18,7 +18,7 @@ const LeaderboardItem = ({
   const renderLoadButton = () => {
     return (
       <>
-        <div className={style.placeSeperate} />
+        {/* <div className={style.placeSeperate} /> */}
         <div className={style.tableEntryHolder}>
           <div className={style.loadButton} onClick={onLoad}>
             Load more
@@ -64,7 +64,7 @@ const LeaderboardItem = ({
         </>
       ) : user.rank === 2 ? (
         <>
-          <div className={style.placeSeperate} />
+          {/* <div className={style.placeSeperate} /> */}
           <div
             className={classNames(
               style.tableSecond,
@@ -84,7 +84,7 @@ const LeaderboardItem = ({
         </>
       ) : user.rank === 3 ? (
         <>
-          <div className={style.placeSeperate} />
+          {/* <div className={style.placeSeperate} /> */}
           <div
             className={classNames(
               style.tableThird,
@@ -104,7 +104,7 @@ const LeaderboardItem = ({
         </>
       ) : user.rank <= 9 ? (
         <>
-          <div className={style.placeSeperate} />
+          {/* <div className={style.placeSeperate} /> */}
           <div
             className={classNames(
               style.tableThird,
@@ -125,7 +125,7 @@ const LeaderboardItem = ({
         </>
       ) : (
         <>
-          <div className={style.placeSeperate} />
+          {/* <div className={style.placeSeperate} /> */}
           <div
             className={classNames(
               style.tableEntryHolder,
