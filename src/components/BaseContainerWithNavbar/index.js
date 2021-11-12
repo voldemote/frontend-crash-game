@@ -22,9 +22,9 @@ const BaseContainerWithNavbar = ({
       )}
     >
       {children}
-      <div className={'main-page-background'}></div>
-    </div>
-    <ContentFooter className={styles.betFooter} />
+      <div className={styles.bottomBg}></div>
+      <ContentFooter className={styles.betFooter} />
+    </div>    
     </>
   );
 };

@@ -399,7 +399,7 @@
   padding-bottom: 12px;
   opacity: 1;
   cursor: pointer;
-  border-bottom:3px solid $mainAction;
+  border-bottom: 3px solid $mainAction;
 }
 .tabLayout {
   display: flex;
@@ -419,10 +419,9 @@
     font-size: 11px;
     line-height: 14px;
   }
-
 }
-.tabOptionsContainer{
-  @media (max-width: $screen-md){
+.tabOptionsContainer {
+  @media (max-width: $screen-md) {
     margin-left: 0px;
     justify-content: space-between;
     font-size: 11px;
@@ -430,13 +429,13 @@
   }
 }
 /* ACTIVITY TRACKER */
-.activities{
-  margin-top:40px;
-  .title{
+.activities {
+  margin-top: 40px;
+  .title {
     display: flex;
     align-items: center;
 
-    img{
+    img {
       margin-right: 30px;
     }
   }

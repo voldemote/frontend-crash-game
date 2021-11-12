@@ -1,6 +1,7 @@
 @import '../../styles/all';
 
 .baseContainer {
+  position: relative;
   min-height: 100%;
   padding-bottom: 50px;
   overflow: hidden;
@@ -27,5 +28,16 @@
 
   &.baseContainerWithPaddingBottomZero {
     padding-bottom: 0;
+  }
+  .bottomBg {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 1000px;
+    bottom: 0;
+    background: url('../../data/backgrounds/footer-bg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
   }
 }
