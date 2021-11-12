@@ -36,6 +36,7 @@ class AudioController {
     let volume = 0.1;
     try {
       const savedVolume = localStorage.getItem('gameVolume');
+      console.log("savedVolume", savedVolume)
       this.volume = savedVolume ? parseFloat(savedVolume) : volume;
     } catch (e) {
       this.volume = 0;
@@ -97,7 +98,7 @@ class AudioController {
       } else {
         this.volume = volume;
       }
-
+      console.log("new volume", volume)
       localStorage.setItem('gameVolume', `${volume}`);
 
       Sound.sound.volume('bgm', this.volume);

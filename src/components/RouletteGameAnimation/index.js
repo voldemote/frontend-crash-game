@@ -13,7 +13,7 @@ import {
 import styles from './styles.module.scss';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-import GameAudioControls from '../GameAudioControls';
+import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import AnimationController from './AnimationController';
 import { isMobile } from 'react-device-detect';
 
@@ -70,7 +70,6 @@ const RouletteGameAnimation = ({
     if (running) return;
     else setRunning(true);
     const newspin = await AnimationController.spinTo(bet.winIndex);
-    //AnimationController.spinTo(null, 500000, true);
 
     let prepareObj = {};
 
@@ -100,9 +99,7 @@ const RouletteGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {audio && (
-          <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
-        )}
+        {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
       <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
