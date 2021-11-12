@@ -58,7 +58,7 @@ const App = () => {
             <TypeformController />
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
-              <Route
+              {/* <Route
                 exact
                 path={Routes.termsAndConditions}
                 component={TermsAndConditions}
@@ -67,7 +67,7 @@ const App = () => {
                 exact
                 path={Routes.privacyPolicy}
                 component={PrivacyPolicy}
-              />
+              /> */}
               <Route exact path={Routes.home} component={Home} />
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}

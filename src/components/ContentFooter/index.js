@@ -7,7 +7,6 @@ import FairTradeIcon from '../../data/icons/fair-trade.svg';
 import BlockchainIcon from '../../data/icons/blockchain.svg';
 import NoMiddleMan from '../../data/icons/no-middle-man.svg';
 import OpenSourceIcon from '../../data/icons/open-source.svg';
-import PrivacyDoc from '../../data/docs/wallfair-privacy.pdf';
 
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -39,7 +38,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
               </button>
 
               <a
-                href="https://wallfair.io/career"
+                href="https://wallfair.io/about-us"
                 target="_blank"
                 rel="noreferrer"
                 data-tracking-id="footer-career"
@@ -70,24 +69,27 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
             </div>
 
             <div className={styles.secondRow}>
-              <Link data-tracking-id="footer-imprint" to={'/privacy-policy'}>
+              {/* <Link data-tracking-id="footer-imprint" to={'/privacy-policy'}>
                 Imprint
-              </Link>
+              </Link> */}
 
-              <Link
+              <a
                 data-tracking-id="footer-terms"
-                to={'/terms-and-conditions'}
+                href="https://files.wallfair.io/docs/alpacasino_tc_new.pdf"
+                target="_blank"
+                rel="noreferrer"
               >
                 {'Terms & Conditions'}
-              </Link>
+              </a>
 
-              <Link
+              <a
                 data-tracking-id="footer-privacy"
-                to={PrivacyDoc}
+                href="https://files.wallfair.io/docs/privacy_policy_alpacasino.pdf"
                 target="_blank"
+                rel="noreferrer"
               >
                 {'Privacy Policy'}
-              </Link>
+              </a>
             </div>
           </div>
         </div>
