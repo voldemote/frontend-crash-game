@@ -385,26 +385,6 @@
   .activityContainer {
     position: relative;
     height: 324px;
-
-    .chatMessageContainer {
-      @media (max-width: $screen-sm) {
-        margin-bottom: 0;
-      }
-    }
-
-    .inactivePlaceholder {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-family: $fontMedium;
-      color: #f2ff53;
-      font-weight: 700;
-    }
   }
 }
 .tabItem {
@@ -420,6 +400,34 @@
   opacity: 1;
   cursor: pointer;
   border-bottom:3px solid $mainAction;
+}
+.tabLayout {
+  display: flex;
+  align-items: flex-end;
+  color: $colorWhite;
+  font-family: $fontRegular;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 24px;
+  margin-left: 16px;
+
+  @media (max-width: $screen-md) {
+    margin-left: 0px;
+    justify-content: space-between;
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+}
+.tabOptionsContainer{
+  @media (max-width: $screen-md){
+    margin-left: 0px;
+    justify-content: space-between;
+    font-size: 11px;
+    line-height: 14px;
+  }
 }
 /* ACTIVITY TRACKER */
 .activities{

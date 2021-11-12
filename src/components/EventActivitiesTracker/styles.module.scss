@@ -258,3 +258,10 @@
     }
   }
 }
+
+.hideSecondaryColumns {
+  display:none;
+  @media (min-width: $screen-md) {
+    display: block;
+  }
+}
