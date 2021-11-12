@@ -13,13 +13,12 @@ import {
 import styles from './styles.module.scss';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-import GameAudioControls from '../GameAudioControls';
+import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import AnimationController from './AnimationController';
 import { isMobile } from 'react-device-detect';
 
 const RouletteGameAnimation = ({
   connected,
-  muteButtonClick,
   setSpins,
   amount,
   onInit,
@@ -46,7 +45,6 @@ const RouletteGameAnimation = ({
     setAudio(audio);
     audioInstance = audio;
     onInit(audio);
-    AnimationController.spinTo(0, 200000, true);
     return () => audioInstance.stopBgm();
   }, []);
 
@@ -56,14 +54,12 @@ const RouletteGameAnimation = ({
 
   useEffect(() => {
     if (risk && amount) {
-      AnimationController.changeValues();
       AnimationController.reinit(canvasRef.current, {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
         risk,
         amount
-      });
-      AnimationController.repaint(0);
+      })
     }
   }, [risk, amount]);
 
@@ -71,7 +67,6 @@ const RouletteGameAnimation = ({
     if (running) return;
     else setRunning(true);
     const newspin = await AnimationController.spinTo(bet.winIndex);
-    //AnimationController.spinTo(null, 500000, true);
 
     let prepareObj = {};
 
@@ -101,9 +96,7 @@ const RouletteGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {audio && (
-          <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
-        )}
+        {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
       <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
@@ -117,11 +110,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    muteButtonClick: () => {
-      dispatch(RosiGameActions.muteButtonClick());
-    },
-  };
+  return {  };
 };
 
 export default connect(
