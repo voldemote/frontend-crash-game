@@ -19,7 +19,7 @@ function GameAudioControlLocals({ audio }) {
           [styles.low]: audio.volume < 0.5 && audio.volume > 0,
         })}
         onClick={() => {
-          audio.volume === 0.0 ? onChangeVolume(null, 100) : onChangeVolume(null, 0)
+          audio.volume == 0.0 ? onChangeVolume(null, 100) : onChangeVolume(null, 0)
         }}
       />
     </div>

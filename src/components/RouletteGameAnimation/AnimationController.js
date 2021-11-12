@@ -99,7 +99,6 @@ class AudioController {
       }
       localStorage.setItem('gameVolume', `${volume}`);
       Sound.sound.volume('bgm', volume);
-      //Sound.sound.volume('flying', this.volume);
     } catch (e) {
       console.error('Audio output error');
     }
@@ -121,7 +120,7 @@ class AudioController {
   playSound(name, loop = false, volume) {
     try {
       if (this.ready) {
-        Sound.sound.volume(name, volume && this.volume !== 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
+        Sound.sound.volume(name, volume && this.volume != 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
         Sound.sound.play(name, {
           loop: loop
         });
