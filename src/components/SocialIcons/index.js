@@ -17,7 +17,7 @@ const SocialIcons = ({ className, dataTrackingIds }) => {
         data-tracking-id={dataTrackingIds.telegram}
       >
         <div className={styles.iconWrapper}>
-          <SocialFollowerBadge className={styles.badge} followers="90K" />
+          {/* <SocialFollowerBadge className={styles.badge} followers="90K" /> */}
           <TelegramIcon />
         </div>
       </a>
@@ -29,7 +29,7 @@ const SocialIcons = ({ className, dataTrackingIds }) => {
         data-tracking-id={dataTrackingIds.instagram}
       >
         <div className={styles.iconWrapper}>
-          <SocialFollowerBadge className={styles.badge} followers="1,6K" />
+          {/* <SocialFollowerBadge className={styles.badge} followers="1,6K" /> */}
           <img src={DiscordIcon} alt="" />
         </div>
       </a>

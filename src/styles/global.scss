@@ -176,13 +176,17 @@ $border: 1px solid $colorWhite30;
     right: 0;
     bottom: 0;
     content: '';
-    opacity: 1;
     z-index: -3;
     position: absolute;
     // max-height: 700px;
     background-size: cover;
-    background-image: url('../data/backgrounds/lama_bg.png');
-    background-repeat: no-repeat;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.2)
+      ),
+      url('../data/backgrounds/lama_bg.png');
+    opacity: 0.8;
     background-position: top;
   }
 }
