@@ -61,4 +61,5 @@ export default {
   shareLink: 'shareLink',
   star: 'star',
   starFull: 'starFull',
+  pToken: 'pToken'
 };

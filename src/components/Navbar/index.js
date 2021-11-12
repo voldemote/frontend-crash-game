@@ -191,12 +191,13 @@ const Navbar = ({
         className={classNames(
           style.balanceOverview,
           style.pillButton,
+          style.leaderboardValues,
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
         onClick={() => toggleOpenDrawer(drawers.wallet)}
         data-tracking-id="menu-wallet-icon"
       >
-        <Icon iconType={'wallet'} />
+        <Icon iconType={'pToken'} />
         {formatToFixed(balance, 0, true)} {currency}
       </div>
     );

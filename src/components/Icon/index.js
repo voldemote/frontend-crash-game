@@ -64,6 +64,7 @@ import { ReactComponent as ShareIcon } from '../../data/icons/share-solid-fa.svg
 import { ReactComponent as IconTrash } from '../../data/icons/trash.svg';
 import { ReactComponent as IconStar } from '../../data/icons/star-1.svg';
 import { ReactComponent as IconStarFull } from '../../data/icons/star-2.svg';
+import { ReactComponent as IconPToken } from '../../data/icons/p-token-icon.svg';
 
 const Icon = ({
   className,
@@ -142,6 +143,8 @@ const Icon = ({
       [IconType.trash]: <IconTrash />,
       [IconType.star]: <IconStar />,
       [IconType.starFull]: <IconStarFull />,
+      [IconType.pToken]: <IconPToken />
+
     });
   };
 
