@@ -378,7 +378,6 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   activitiesLimit={50}
                   className={styles.activitiesTrackerGamesBlock}
                   preselectedCategory={'game'}
-                  gameId={'614381d74f78686665a5bb76'}
                   hideSecondaryColumns={true}
                 />
               )}

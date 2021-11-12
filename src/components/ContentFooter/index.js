@@ -104,7 +104,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
         />
       </div>
 
-      <div className={classNames(styles.iconsContainer, className)}>
+      {/* <div className={classNames(styles.iconsContainer, className)}>
         <div className={styles.icon}>
           <img src={FairTradeIcon} alt="Fair trade icon" />
           <span>100% fair</span>
@@ -121,7 +121,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           <img src={NoMiddleMan} alt="No middle man icon" />
           <span>No middle man</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
