@@ -269,7 +269,7 @@
     padding:4px 40px;
     overflow-x: hidden;
 
-    @media (max-width: $screen-md) {
-      padding:4px 80px;
+    @media (max-width: $screen-xs) {
+      padding:4px 0px;
     }
   }
