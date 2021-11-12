@@ -405,16 +405,16 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard4} alt="" />
+              <img src={gameCard1} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard1} alt="" />
+              <img src={gameCard2} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard3} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard2} alt="" />
+              <img src={gameCard4} alt="" />
             </Grid>
           </Grid>
         </div>
