@@ -30,7 +30,7 @@ import AuthenticationType from '../Authentication/AuthenticationType';
 import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
-import IconHeaderLogo from '../../data/images/alpaca-logo.png';
+import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
 
 import moment from 'moment';
 
