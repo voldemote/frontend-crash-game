@@ -423,7 +423,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
           {renderGamesCards()}
           {renderHowTokenWorks()}
           {renderWhoWeAre()}
-          {/* {renderCategoriesAndLeaderboard()} */}
+          {renderCategoriesAndLeaderboard()}
           {renderUniswap()}
         </div>
       </div>
