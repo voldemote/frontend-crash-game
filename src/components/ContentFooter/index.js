@@ -26,6 +26,15 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
       <div className={classNames(styles.footer, className)}>
         <img src={LogoDemo} width={150} alt={'Alpacasino'} />
 
+        <SocialIcons
+          className={styles.socialIcons}
+          dataTrackingIds={{
+            telegram: 'footer-telegram-click',
+            instagram: 'footer-instagram-click',
+            // twitter: 'footer-twitter-click',
+          }}
+        />
+        
         <div className={styles.links}>
           <div className={styles.column}>
             <div className={styles.firstRow}>
@@ -34,7 +43,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 onClick={openLeaderboard}
                 href="#"
               >
-                Leaderboard
+                <p>Leaderboard</p>
               </button>
 
               {/* <a
@@ -54,7 +63,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 rel="noreferrer"
                 data-tracking-id="footer-buy-wfair"
               >
-                Buy WFAIR real tokens
+                <p>Buy WFAIR real tokens</p>
               </a>
 
               <a
@@ -64,7 +73,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 data-tracking-id="footer-source-code"
               >
                 <img src={GitHubLogo} width={18} alt={'Github Logo'} />
-                Source Code
+                <p>Source Code</p>
               </a>
             </div>
 
@@ -79,7 +88,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                {'Terms & Conditions'}
+                <p>{'Terms & Conditions'}</p>
               </a>
 
               <a
@@ -88,20 +97,11 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                {'Privacy Policy'}
+                <p>{'Privacy Policy'}</p>
               </a>
             </div>
           </div>
         </div>
-
-        <SocialIcons
-          className={styles.socialIcons}
-          dataTrackingIds={{
-            telegram: 'footer-telegram-click',
-            instagram: 'footer-instagram-click',
-            // twitter: 'footer-twitter-click',
-          }}
-        />
       </div>
 
       {/* <div className={classNames(styles.iconsContainer, className)}>
