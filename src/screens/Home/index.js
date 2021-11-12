@@ -132,12 +132,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
     return (
       <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
         <div className={styles.banner}>
-          <div className={styles.title}>
-            Play the
-            <br />
-            Elon Game
-          </div>
-          <YellowButton className={styles.button}>Play now</YellowButton>
+          <div className={styles.title}>Play the Elon Game</div>
+          <button className={styles.button}>SIGN UP!</button>
         </div>
       </Link>
     );

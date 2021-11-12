@@ -110,7 +110,11 @@
   border-radius: 12px;
   min-height: 252px;
   width: 100%;
-  padding: 50px 30px 20px 30px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
   background-repeat: no-repeat;
   background-size: contain;
 
@@ -158,6 +162,17 @@
 
   .button {
     margin-top: 10px;
+    background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%);
+    border-radius: 30px;
+    width: 340px;
+    border: none;
+    max-width: 95%;
+    box-sizing: border-box;
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 }
 
