@@ -41,7 +41,7 @@
 
   &.iconWhite {
     > svg {
-      @include svgColorStroke($colorWhite);
+      @include svgColorStroke($colorPrimary);
     }
   }
   &.notificationCheckbox {
