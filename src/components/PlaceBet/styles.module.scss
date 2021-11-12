@@ -93,7 +93,7 @@
   margin: 15px auto;
 
   font-size: 18pt;
-  color: $colorBlack;
+  color: $colorWhite;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -199,8 +199,7 @@
   bottom: 6px;
   left: -50%;
   right: -50%;
-  margin: 0px auto;
-  margin-top: 20px;
+  margin: 0px auto 20px;
   outline: 0;
   @media screen and (max-width: $screen-xs) {
     margin-top: 10px;
@@ -214,7 +213,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%);
+  background: url('../../data/backgrounds/highlight-activities-labels-active.svg');
   border-radius: 30px;
   background-repeat: no-repeat;
   background-size: contain;

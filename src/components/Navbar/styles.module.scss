@@ -151,7 +151,7 @@
       display: flex;
       align-items: center;
       white-space: nowrap;
-      padding: 15px;
+      padding: 10px;
       background: $colorPinkDark;
       font-size: 12px;
       border-radius: 20px;
@@ -274,10 +274,11 @@
 
     .logoLink {
       opacity: 1;
-      margin: 0;
+      margin: 4rem 0 0;
 
       & > img {
         margin: 0;
+        width: 450px;
       }
 
       &:after {

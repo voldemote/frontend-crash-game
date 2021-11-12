@@ -243,6 +243,7 @@ class RosiAnimationController {
     const currentIntervalIndex = intervals.indexOf(currentInterval);
 
     if (this.audio) {
+      console.log("elapsed", this.gameStartTime, elapsed)
       this.audio.setElapsed(elapsed);
     }
 

@@ -5,10 +5,8 @@ import BetVTwo from './screens/BetVTwo';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
 import Popup from './components/Popup';
-import PrivacyPolicy from './screens/PrivacyPolicy';
 import Routes from './constants/Routes';
 import configStore from './store';
-import TermsAndConditions from './screens/TermsAndConditions';
 import EmailVerification from './screens/EmailVerification';
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from './store';
@@ -58,16 +56,6 @@ const App = () => {
             <TypeformController />
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
-              <Route
-                exact
-                path={Routes.termsAndConditions}
-                component={TermsAndConditions}
-              />
-              <Route
-                exact
-                path={Routes.privacyPolicy}
-                component={PrivacyPolicy}
-              />
               <Route exact path={Routes.home} component={Home} />
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}

@@ -189,6 +189,10 @@ const root = function* () {
       [RosiGameTypes.FETCH_LUCKY_DATA_STARTED],
       RosiGameSagas.fetchLuckyData
     ),
+    takeLatest(
+      [RosiGameTypes.FETCH_MY_BETS_DATA_STARTED],
+      RosiGameSagas.fetchMyBetsData
+    ),
     // @formatter:on
   ]);
 };

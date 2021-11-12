@@ -76,7 +76,8 @@ class GameApi {
   });
 
   getLuckyUsers = gameId => {
-    return Api.get(ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId)).then(
+    const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
+    return Api.get(url).then(
       response => ({
         data: response.data.map(transformUser),
       })
@@ -84,7 +85,8 @@ class GameApi {
   };
 
   getHighUsers = gameId => {
-    return Api.get(ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId)).then(
+    const url = gameId ? ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId) : ApiUrls.API_TRADES_HIGH.replace('/:gameId', '');
+    return Api.get(url).then(
       response => ({
         data: response.data.map(transformUser),
       })
@@ -150,9 +152,9 @@ const transformUser = user => ({
 });
 
 const getLuckyUsers = data => {
-  const { gameId } = data;
-
-  return Api.get(ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId)).then(
+  const { gameId } = data || {};
+  const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
+  return Api.get(url).then(
     response => ({
       data: response.data.map(transformUser),
     })
@@ -160,9 +162,18 @@ const getLuckyUsers = data => {
 };
 
 const getHighUsers = data => {
-  const { gameId } = data;
+  const { gameId } = data || {};
+  const url = gameId ? ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId) : ApiUrls.API_TRADES_HIGH.replace('/:gameId', '');
+  return Api.get(url).then(
+    response => ({
+      data: response.data.map(transformUser),
+    })
+  );
+};
 
-  return Api.get(ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId)).then(
+const getUserBets = data => {
+  const { userId } = data || {};
+  return Api.get(ApiUrls.API_TRADES_PER_USER.replace(':userId', userId)).then(
     response => ({
       data: response.data.map(transformUser),
     })
@@ -186,4 +197,5 @@ export {
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
+  getUserBets,
 };
