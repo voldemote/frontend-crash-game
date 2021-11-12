@@ -119,13 +119,12 @@ class AudioController {
     this.bgmIndex = idx;
   }
 
-  playSound(name, loop = false) {
+  playSound(name, loop = false, volume) {
     try {
       if (this.ready) {
-        Sound.sound.volume(name, this.volume);
         Sound.sound.play(name, {
           loop: loop,
-          start: 1
+          volume: volume && this.volume !== 0 ? volume : this.volume
         });
       }
     } catch (e) {
@@ -149,7 +148,7 @@ class AudioController {
     this.stopSound('flying');
   }
   playTick() {
-    this.playSound('tick');
+    this.playSound('tick', false, 1);
   }
 
   playGameOverSound() {
@@ -157,11 +156,12 @@ class AudioController {
   }
 
   playLoseSound() {
-    this.playSound('lose');
+    this.playSound('lose', false, 1);
   }
 
   playWinSound() {
-    this.playSound('cashout');
+    this.playSound('cashout', false, 1);
+
   }
 
   playBetSound() {
@@ -290,7 +290,6 @@ class AnimationController {
     let sections = sectionsArray[this.risk-1]
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
-    this.angle = 0;
     for (let selected = 0; selected < sections.length; selected++) {
       let c = document.createElement('canvas');
       c.id = selected;
@@ -387,7 +386,8 @@ class AnimationController {
     if (this.audio) {
       this.audio.setElapsed(elapsed);
     }*/
-    this.angle = angle
+    this.angle = angle ? angle : this.angle
+
     let cx = this.canvas.width / 2,
       cy = this.canvas.height / 2;
     let ctx = this.canvas.getContext('2d');
@@ -395,9 +395,9 @@ class AnimationController {
       Math.floor(((-0.2 - this.angle) * sections.length) / (2 * Math.PI)) %
       sections.length;
 
-    if (!idle && selected !== numberSelected) {
-      numberSelected = selected;
+    if (selected !== numberSelected) {
       if (play) this.audio.playTick();
+      numberSelected = selected;
     }
     if (selected < 0) selected += sections.length;
     ctx.save();
@@ -439,7 +439,7 @@ class AnimationController {
         let now = performance.now();
         let t = Math.min(1, (now - start) / duration);
         t = 3 * t * t - 2 * t * t * t; // ease in out
-        let angle = idle ? (start_angle - t * (final_angle - start_angle)) : (start_angle + t * (final_angle - start_angle));
+        let angle = idle ? this.angle - 0.001 : (start_angle + t * (final_angle - start_angle));
         if(!this.idle && idle) {resolve(null);return}
         this.repaint(angle, true, idle);
         if (t < 1) requestAnimationFrame(frame.bind(this));
