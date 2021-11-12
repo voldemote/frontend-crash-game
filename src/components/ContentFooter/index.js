@@ -97,7 +97,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           dataTrackingIds={{
             telegram: 'footer-telegram-click',
             instagram: 'footer-instagram-click',
-            twitter: 'footer-twitter-click',
+            // twitter: 'footer-twitter-click',
           }}
         />
       </div>

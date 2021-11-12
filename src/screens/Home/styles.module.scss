@@ -110,7 +110,11 @@
   border-radius: 12px;
   min-height: 252px;
   width: 100%;
-  padding: 50px 30px 20px 30px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
   background-repeat: no-repeat;
   background-size: contain;
 
@@ -158,6 +162,17 @@
 
   .button {
     margin-top: 10px;
+    background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%);
+    border-radius: 30px;
+    width: 340px;
+    border: none;
+    max-width: 95%;
+    box-sizing: border-box;
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 }
 
@@ -350,6 +365,79 @@
           font-size: 14px;
         }
       }
+    }
+  }
+}
+
+/* ACTIVITY TRACKER */
+.activityWrapper {
+  margin-top: 32px;
+  background: $colorWhite;
+  border: 1px solid $colorLightGray;
+
+  box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
+    0px 2px 2px rgba(159, 162, 191, 0.32);
+  border-radius: 12px;
+
+  @media screen and (max-width: $screen-xs) {
+    margin-bottom: 20px;
+  }
+  .activityContainer {
+    position: relative;
+    height: 324px;
+  }
+}
+.tabItem {
+  text-align: center;
+  padding-bottom: 12px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.tabItemSelected {
+  text-align: center;
+  padding-bottom: 12px;
+  opacity: 1;
+  cursor: pointer;
+  border-bottom:3px solid $mainAction;
+}
+.tabLayout {
+  display: flex;
+  align-items: flex-end;
+  color: $colorWhite;
+  font-family: $fontRegular;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 24px;
+  margin-left: 16px;
+
+  @media (max-width: $screen-md) {
+    margin-left: 0px;
+    justify-content: space-between;
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+}
+.tabOptionsContainer{
+  @media (max-width: $screen-md){
+    margin-left: 0px;
+    justify-content: space-between;
+    font-size: 11px;
+    line-height: 14px;
+  }
+}
+/* ACTIVITY TRACKER */
+.activities{
+  margin-top:40px;
+  .title{
+    display: flex;
+    align-items: center;
+
+    img{
+      margin-right: 30px;
     }
   }
 }

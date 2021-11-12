@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  height: 100%;
   .header {
     height: 39px;
     display: flex;
@@ -32,7 +33,7 @@
 
   .messageItem {
     position: relative;
-    padding: 0.2rem 20px;
+    padding: 0.2rem 0px;
     border-bottom: 0.5px solid $colorLightGray;
     display: inline-flex;
     display: -ms-inline-flexbox;
@@ -46,6 +47,9 @@
 
     .messageFirst {
       display: flex;
+      &.messageLeft {
+        margin-left: 24px;
+      }
     }
     .messageCenter {
       display: flex;
@@ -64,6 +68,9 @@
       flex-direction: row;
       align-items: center;
       justify-content: right;
+      &.messageRight {
+        margin-right: 24px;
+      }
     }
     &.isVisible {
       opacity: 0.3;
@@ -99,11 +106,11 @@
     }
 
     .reward {
-      color: $colorGreen;
+      color: $mainAction;
     }
 
     .rewardMulti {
-      color: $colorLightGray2;
+      color: $mainAction;
     }
   }
 
@@ -249,5 +256,12 @@
         content: 'prev';
       }
     }
+  }
+}
+
+.hideSecondaryColumns {
+  display:none;
+  @media (min-width: $screen-md) {
+    display: block;
   }
 }

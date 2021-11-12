@@ -1,7 +1,7 @@
-import { useEffect, memo } from 'react';
+import { useEffect, memo, useState} from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
@@ -26,6 +26,7 @@ import SlotGameIconBg from '../../data/images/house-games/title.png';
 import howTokenWorkTitle from '../../data/images/token/title.png';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
+import alpacaActivities from '../../data/images/alpaca-activities.svg';
 import whoWeAreTitle from '../../data/images/who-are-wallfair/title.png';
 import whoWeAreLogo from '../../data/images/who-are-wallfair/logo.png';
 import whoWeAreAlphaLogo from '../../data/images/who-are-wallfair/alpha-logo.png';
@@ -33,16 +34,67 @@ import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.pn
 import whoWeAreCard2 from '../../data/images/who-are-wallfair/what-is-alpha.png';
 import whoWeAreCard3 from '../../data/images/who-are-wallfair/competetive.png';
 import whoWeAreCard4 from '../../data/images/who-are-wallfair/rewards.png';
+import EventActivitiesTracker from '../../components/EventActivitiesTracker';
+import TabOptions from 'components/TabOptions';
+import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
+import { RosiGameActions } from 'store/actions/rosi-game';
+import useRosiData from 'hooks/useRosiData';
 import gameCard1 from '../../data/images/house-games/card-1.png';
 import gameCard2 from '../../data/images/house-games/card-2.png';
 import gameCard3 from '../../data/images/house-games/card-3.png';
 import gameCard4 from '../../data/images/house-games/card-4.png';
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
+const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighData, refreshLuckyData, connected, userId, refreshMyBetsData}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
+
+  const dispatch = useDispatch();
+  const {
+    highData,
+    luckyData,
+    myBetsData,
+  } = useRosiData();
+  const [activityTabIndex, setActivityTabIndex] = useState(0);
+  let activityTabOptions = [
+    { name: 'ALL', index: 0 },
+    { name: 'HIGH WINS', index: 1 },
+    { name: 'LUCKY WINS', index: 2 },
+  ];
+
+  if(userId) activityTabOptions.push({name: 'MY BETS', index: 3});
+
+  const handleActivitySwitchTab = ({ index }) => {
+    switch (index) {
+      case 1: // high wins
+        refreshHighData();
+        break;
+      case 2: // lucky wins
+        refreshLuckyData();
+        break;
+      case 3:
+        refreshMyBetsData({userId:'6152b82b2a1ac4fa41b4c663'});
+        break;
+    }
+    setActivityTabIndex(index);
+  };
+  const getActivityTableData = () => {
+    switch (activityTabIndex) {
+      case 1:
+        return highData || [];
+      case 2:
+        return luckyData || [];
+      case 3:
+        return myBetsData || [];
+    }
+  }
+
+  useEffect(() => {
+    refreshHighData();
+    refreshLuckyData();
+    refreshMyBetsData({userId:'6152b82b2a1ac4fa41b4c663'});
+  }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -132,12 +184,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
     return (
       <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
         <div className={styles.banner}>
-          <div className={styles.title}>
-            Play the
-            <br />
-            Elon Game
-          </div>
-          <YellowButton className={styles.button}>Play now</YellowButton>
+          <div className={styles.title}>Play the Elon Game</div>
+          <button className={styles.button}>SIGN UP!</button>
         </div>
       </Link>
     );
@@ -301,36 +349,50 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
 
   const renderCategoriesAndLeaderboard = () => {
     return (
-      <div className={styles.bottomWrapper}>
-        <div className={styles.categories}>
-          <div className={styles.headline}>
-            Activities{' '}
-            <Link
-              data-tracking-id="activities-see-all"
-              className={styles.seeAllActivities}
-              to={Routes.activities}
-            >
-              See all
-            </Link>
-          </div>
-          <ActivitiesTracker />
-          {/*<CategoryList categories={EVENT_CATEGORIES} />*/}
+      <div className={styles.activities}>
+        <div className={styles.title}>
+            <img src={alpacaActivities} alt="" />
+            <h2>
+              Activities
+            </h2>
         </div>
-        <div className={styles.leaderboard}>
-          <div className={styles.headline}>
-            Community Leaderboard
-            <div
-              className={styles.leaderboardLink}
-              onClick={onSeeLeaderboard}
-              data-tracking-id="leaderboard-see-leaderboard"
-            >
-              See Leaderboard
+        <Grid item xs={12} >
+          <div className={styles.activityWrapper}>
+            <TabOptions options={activityTabOptions} className={styles.tabLayout}>
+              {option => (
+                <div
+                  className={
+                    option.index === activityTabIndex
+                      ? styles.tabItemSelected
+                      : styles.tabItem
+                  }
+                  onClick={() => handleActivitySwitchTab(option)}
+                >
+                  {option.name}
+                </div>
+              )}
+            </TabOptions>
+            <div className={styles.activityContainer}>
+              {activityTabIndex === 0 && (
+                <EventActivitiesTracker
+                  activitiesLimit={50}
+                  className={styles.activitiesTrackerGamesBlock}
+                  preselectedCategory={'game'}
+                  gameId={'614381d74f78686665a5bb76'}
+                  hideSecondaryColumns={true}
+                />
+              )}
+              {activityTabIndex !== 0 && (
+                <ActivityTable
+                  hideSecondaryColumns={true}
+                  rowData={getActivityTableData()}
+                />
+              )}
             </div>
           </div>
-          <Leaderboard fetch={true} small={true} />
-        </div>
+        </Grid>
       </div>
-    );
+      );
   };
 
   const renderGamesCards = () => {
@@ -360,8 +422,6 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
     );
   };
 
-  //if (!userLoggedIn) return <LandingPage />;
-
   return (
     <BaseContainerWithNavbar>
       {/* {renderHeadline()} */}
@@ -374,7 +434,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
           {renderGamesCards()}
           {renderHowTokenWorks()}
           {renderWhoWeAre()}
-          {/* {renderCategoriesAndLeaderboard()} */}
+          {renderCategoriesAndLeaderboard()}
           {renderUniswap()}
         </div>
       </div>
@@ -386,11 +446,16 @@ const mapStateToProps = state => {
   return {
     tags: state.event.tags,
     events: state.event.events,
+    connected: state.websockets.connected,
+    userId: state.authentication.userId,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
+    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
+    refreshMyBetsData: (data) => dispatch(RosiGameActions.fetchMyBetsData(data)),
     setOpenDrawer: drawerName => {
       dispatch(GeneralActions.setDrawer(drawerName));
     },
