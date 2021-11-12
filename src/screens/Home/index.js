@@ -22,7 +22,7 @@ import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
 import { NEW_SLOTS_GAMES } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
-import SlotGameIconBg from '../../data/images/slot-game-icon-bg.png';
+import SlotGameIconBg from '../../data/images/house-games/title.png';
 import howTokenWorkTitle from '../../data/images/token/title.png';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
@@ -337,22 +337,22 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events }) => {
     return (
       <div className={styles.gameCards}>
         <div className={styles.title}>
-          <img src={SlotGameIconBg} width={120} alt={'Visit slot games'} />
+          <img src={SlotGameIconBg} alt={'Visit slot games'} />
           <h2>House Games</h2>
         </div>
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard1} alt="" />
+              <img src={gameCard4} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard2} alt="" />
+              <img src={gameCard1} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard3} alt="" />
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard4} alt="" />
+              <img src={gameCard2} alt="" />
             </Grid>
           </Grid>
         </div>
