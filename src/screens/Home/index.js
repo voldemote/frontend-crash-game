@@ -405,7 +405,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard1} alt="" />
+              <Link to={'/games/alpaca-wheel'}>
+                <img src={gameCard1} alt="" />
+              </Link>
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard2} alt="" />
