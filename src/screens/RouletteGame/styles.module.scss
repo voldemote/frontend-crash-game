@@ -40,9 +40,7 @@
       }
     }
     .shareButton {
-      position: absolute;
-      width: 100%;
-      text-align: center;
+      padding-right: 10px;
     }
 
     .questionIcon {
@@ -61,7 +59,7 @@
       }
 
       @media (max-width: $screen-xs) {
-        display: block;
+        display: none;
       }
     }
   }
