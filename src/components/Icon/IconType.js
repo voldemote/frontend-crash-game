@@ -34,6 +34,7 @@ export default {
   hourglass: 'hourglass',
   info: 'info',
   infoReverse: 'infoReverse',
+  leaderboard: 'leaderboard',
   logoSmall: 'logoSmall',
   logout: 'logout',
   mailAddress: 'mailAddress',
