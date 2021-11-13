@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import Link from 'components/Link';
-import AlpacaIcon from '../../data/images/house-games/title.png';
+import AlpacaIcon from '../../data/images/house-games/title.svg';
 // import InfoBox from 'components/InfoBox';
 // import Icon from 'components/Icon';
 // import IconType from 'components/Icon/IconType';

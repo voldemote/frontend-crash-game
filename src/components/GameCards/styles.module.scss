@@ -26,6 +26,14 @@
   font-weight: 700;
   padding-bottom: 20px;
 
+  h2 {
+    font-size: 33px;
+
+    @media (max-width: $screen-xs) {
+      font-size: 28px;
+    }
+  }
+
   .howtoLink {
     cursor: pointer;
     font-size: 11px;

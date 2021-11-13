@@ -147,6 +147,14 @@
     font-size: 30px;
     color: $colorWhite;
 
+    h2 {
+      font-size: 33px;
+
+      @media (max-width: $screen-xs) {
+        font-size: 28px;
+      }
+    }
+
     @media (max-width: $screen-md) {
       font-size: 22px;
     }
@@ -273,6 +281,15 @@
     font-size: 30px;
     font-weight: 700;
     justify-content: flex-start;
+
+    h2 {
+      font-size: 33px;
+
+      @media (max-width: $screen-xs) {
+        font-size: 28px;
+      }
+    }
+
     img {
       margin-right: 10px;
       width: 80px;
@@ -312,7 +329,7 @@
   .title {
     display: flex;
     align-items: center;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 700;
     justify-content: flex-start;
     img {
@@ -320,6 +337,12 @@
       // width: 80px;
     }
     h2 {
+      font-size: 33px;
+
+      @media (max-width: $screen-xs) {
+        font-size: 28px;
+      }
+
       img {
         margin-left: 5px;
       }
@@ -437,6 +460,14 @@
     display: flex;
     align-items: center;
 
+    h2 {
+      font-size: 33px;
+
+      @media (max-width: $screen-xs) {
+        font-size: 28px;
+      }
+    }
+
     img {
       margin-right: 30px;
     }
@@ -450,6 +481,15 @@
     font-size: 22px;
     font-weight: 700;
     justify-content: flex-start;
+
+    h2 {
+      font-size: 33px;
+
+      @media (max-width: $screen-xs) {
+        font-size: 28px;
+      }
+    }
+
     img {
       margin-right: 5px;
     }

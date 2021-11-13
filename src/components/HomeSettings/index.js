@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
-import DefaultProfilePicture from 'data/images/logo.png';
+import DefaultProfilePicture from 'data/images/alpaca-logo-mini.svg';
 import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
 
