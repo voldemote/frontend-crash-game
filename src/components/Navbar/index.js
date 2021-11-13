@@ -417,7 +417,7 @@ const Navbar = ({
             null,
             'menu-activities'
           )}
-          {renderNavbarLink(`/events`, 'Events', null, 'menu-events')}
+          {/* {renderNavbarLink(`/events`, 'Events', null, 'menu-events')} */}
           {/*{renderNavbarLink(*/}
           {/*  `/live-events/all`,*/}
           {/*  'Live Events',*/}
