@@ -159,7 +159,7 @@ const Navbar = ({
         className={classNames(
           style.ranking,
           style.pillButton,
-          !isLoggedIn() ? style.hiddenMobile : null,
+          style.hiddenMobile,
           isOpen(drawers.leaderboard) ? style.pillButtonActive : null
         )}
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
