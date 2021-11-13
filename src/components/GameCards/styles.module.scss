@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: $sectionHeaderColor;
+  color: $colorBlack;
   font-family: $fontRegular;
   font-size: 24px;
   font-weight: 700;
@@ -86,12 +86,12 @@
     .gameItem {
       height: 100%;
 
-      &.inactive {
-        img,
-        .gameInfo {
-          filter: opacity(0.4) blur(2px);
-        }
-      }
+      // &.inactive {
+      //   img,
+      //   .gameInfo {
+      //     filter: opacity(0.4) blur(2px);
+      //   }
+      // }
 
       &.gameItemLg {
         .gameInfo {
@@ -161,7 +161,7 @@
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 20px;
         border: 2px solid rgba(255, 255, 255, 0.1);
       }

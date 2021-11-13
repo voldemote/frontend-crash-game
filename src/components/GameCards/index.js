@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import Link from 'components/Link';
+import AlpacaIcon from '../../data/images/house-games/title.png';
 // import InfoBox from 'components/InfoBox';
 // import Icon from 'components/Icon';
 // import IconType from 'components/Icon/IconType';
@@ -26,7 +27,8 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
   return (
     <div className={styles.gamesContainer}>
       <div className={styles.gamesCategory}>
-        <span>{category}</span>
+        <img src={AlpacaIcon} alt={'Alpaca Icon'} />
+        <h2>{category}</h2>
       </div>
       <div className={styles.games}>
         {games.map((game, index) => {
@@ -67,11 +69,11 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
                     <div className={styles.title}>{game.title}</div>
                     <div className={styles.description}>{game.description}</div>
                   </div> */}
-                  {!game.active && (
+                  {/* {!game.active && (
                     <div className={styles.inactivePlaceholder}>
                       <span className={styles.text}>Development in progress.<br/><br/>Stay tuned.</span>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </Link>
             </div>

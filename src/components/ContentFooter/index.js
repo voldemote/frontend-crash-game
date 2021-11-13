@@ -24,7 +24,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   return (
     <div className={styles.container}>
       <div className={classNames(styles.footer, className)}>
-        <img src={LogoDemo} width={150} alt={'Wallfair'} />
+        <img src={LogoDemo} width={150} alt={'Alpacasino'} />
 
         <SocialIcons
           className={styles.socialIcons}
@@ -46,14 +46,14 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 <p>Leaderboard</p>
               </button>
 
-              <a
+              {/* <a
                 href="https://wallfair.io/about-us"
                 target="_blank"
                 rel="noreferrer"
                 data-tracking-id="footer-career"
               >
-                <p>Career</p>
-              </a>
+                Career
+              </a> */}
             </div>
 
             <div className={styles.firstRow}>
