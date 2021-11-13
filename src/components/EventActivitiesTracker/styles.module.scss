@@ -29,8 +29,6 @@
     color: #878593;
   }
 
-
-
   .messageItem {
     position: relative;
     border-bottom: 0.5px solid $colorLightGray;
@@ -99,7 +97,7 @@
     }
 
     .reward {
-      color: $mainAction;
+      color: $colorGreen;
     }
 
     .rewardMulti {
@@ -253,23 +251,23 @@
 }
 
 .hideSecondaryColumns {
-  display:none;
+  display: none;
   @media (min-width: $screen-md) {
     display: block;
   }
 }
 
-  .messageFirst,
-  .messageCenter,
-  .messageRight,
-  .title,
-  .titleFirst,
-  .titleLast{
-    white-space: nowrap;
-    padding:4px 40px;
-    overflow-x: hidden;
+.messageFirst,
+.messageCenter,
+.messageRight,
+.title,
+.titleFirst,
+.titleLast {
+  white-space: nowrap;
+  padding: 4px 40px;
+  overflow-x: hidden;
 
-    @media (max-width: $screen-xs) {
-      padding:4px 0px;
-    }
+  @media (max-width: $screen-xs) {
+    padding: 4px 0px;
   }
+}
