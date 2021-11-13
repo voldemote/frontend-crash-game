@@ -22,12 +22,12 @@ import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
 import { NEW_SLOTS_GAMES } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
-import SlotGameIconBg from '../../data/images/house-games/title.png';
-import howTokenWorkTitle from '../../data/images/token/title.png';
+import SlotGameIconBg from '../../data/images/house-games/title.svg';
+import howTokenWorkTitle from '../../data/images/token/title.svg';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import alpacaActivities from '../../data/images/alpaca-activities.svg';
-import whoWeAreTitle from '../../data/images/who-are-wallfair/title.png';
+import whoWeAreTitle from '../../data/images/who-are-wallfair/title.svg';
 import whoWeAreLogo from '../../data/images/who-are-wallfair/logo.png';
 import whoWeAreAlphaLogo from '../../data/images/who-are-wallfair/alpha-logo.png';
 import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.png';
@@ -195,7 +195,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
       <div className={styles.howTokenWorks}>
         <div className={styles.title}>
           <img src={howTokenWorkTitle} alt="" />
-          How Our Tokens work?
+          <h2>
+          How our tokens work?
+          </h2>
         </div>
         <div className={styles.tokenDetail}>
           <Grid container>
@@ -207,8 +209,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                 <div className={styles.detail}>
                   <h3>$PFAIR Token?</h3>
                   <p>
-                    PFAIR are WALLFAIRS FREE to play tokens. The tokens can be
-                    used in our WALLFAIR ALPHA playgound for risk and care free
+                    PFAIR is Wallfair's FREE-TO-PLAY token. The tokens can be
+                    used in the ALPACASINO playground for risk and care free
                     betting fun
                   </p>
                 </div>
@@ -234,11 +236,11 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   <img src={howTokenWorkWToken} alt="" />
                 </div>
                 <div className={styles.detail}>
-                  <h3>Exchange PFAIR = WFAIR</h3>
+                  <h3>WEEKLY Awards</h3>
                   <p>
-                    If you rise to the top 10 of our leaderboard every week. You
-                    can exchange your PFAIR winnings for WFAIR and have the
-                    chance to win £20,000!
+                    Keep playing and rise to the top of the leaderboard every week 
+                    and increase the chances of winning real WFAIR tokens.
+                    Winners will be announced every Sunday!
                   </p>
                 </div>
               </div>
@@ -254,8 +256,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
         <div className={styles.title}>
           <img src={whoWeAreTitle} alt="" />
           <h2>
-            Who are
-            <img src={whoWeAreLogo} alt="" />
+            About Alpacasino
+            {/* <img src={whoWeAreLogo} alt="" /> */}
           </h2>
         </div>
         <div className={styles.cardBox}>
@@ -267,11 +269,10 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                 </div>
                 <div className={styles.detail}>
                   <h3>
-                    Who is
-                    <img src={whoWeAreLogo} alt="" />
+                    Who is Alpacasino
                   </h3>
                   <p>
-                    Wallfair is a new type of crypocurrency betting platform
+                    Alpacasino is a new type of crypocurrency betting platform
                     which is more entertaining and easier than any other
                     platform out there!
                   </p>
@@ -292,8 +293,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                     <img src={whoWeAreAlphaLogo} alt="" />
                   </h3>
                   <p>
-                    Wallfair Alpha is your safe betting playground, bet without
-                    the worry of losing. We’re giving 5000 $PFAIR Tokens for
+                    Alpacasino Alpha is your safe betting playground, bet without
+                    the worry of losing. We’re giving 5,000 $PFAIR Tokens for
                     exclusive access to risk free fun.
                   </p>
                 </div>
