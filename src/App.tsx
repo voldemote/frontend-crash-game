@@ -26,6 +26,7 @@ import Games from './screens/Games';
 import Activities from './screens/Activities';
 import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
+import LeaderboardPage from 'screens/LeaderboardPage';
 import { initTagManager } from './config/gtm';
 import AudioContent from './components/AudioContent';
 import ScrollToTop from 'utils/ScrollToTop';
@@ -80,6 +81,7 @@ const App = () => {
               <Route path={Routes.games} component={Games} />
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
+              <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Redirect to={Routes.home} />
             </Switch>
@@ -106,10 +108,10 @@ const App = () => {
                 trackingId="mobile-menu-activities"
               />
               <NavbarFooterAction
-                route={`/events`}
-                iconType={IconType.bet2}
-                text="Events"
-                trackingId="mobile-menu-events"
+                route={Routes.leaderboard}
+                iconType={IconType.leaderboard}
+                text="Leaderboard"
+                trackingId="mobile-menu-leaderboard"
               />
               {/*<NavbarFooterAction*/}
               {/*  route={`/live-events`}*/}

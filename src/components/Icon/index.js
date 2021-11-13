@@ -65,6 +65,7 @@ import { ReactComponent as IconTrash } from '../../data/icons/trash.svg';
 import { ReactComponent as IconStar } from '../../data/icons/star-1.svg';
 import { ReactComponent as IconStarFull } from '../../data/icons/star-2.svg';
 import { ReactComponent as IconPToken } from '../../data/icons/p-token-icon.svg';
+import { ReactComponent as IconLeaderBoard } from '../../data/icons/leaderboard.svg';
 import { ReactComponent as IconLeaderBoardRanking } from '../../data/icons/leaderboard-ranking.svg';
 import { ReactComponent as IconLeaderBoardUser } from '../../data/icons/leaderboard-user.svg';
 import { ReactComponent as IconLeaderBoardToken } from '../../data/icons/leaderboard-token.svg';
@@ -147,6 +148,7 @@ const Icon = ({
       [IconType.star]: <IconStar />,
       [IconType.starFull]: <IconStarFull />,
       [IconType.pToken]: <IconPToken />,
+      [IconType.leaderboard]: <IconLeaderBoard />,
       [IconType.leaderboardRanking] : <IconLeaderBoardRanking />,
       [IconType.leaderboardUser] : <IconLeaderBoardUser />,
       [IconType.leaderboardToken] : <IconLeaderBoardToken />

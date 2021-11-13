@@ -34,6 +34,7 @@ export default {
   home: '/',
   liveEvents: '/live-events/:category?',
   newLiveEvent: '/live-events/new',
+  leaderboard: '/leaderboard',
   logout: '/logout',
   rosiGame: '/games/:slug',
   plinkoGame: '/games/plinko',
