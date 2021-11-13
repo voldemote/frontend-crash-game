@@ -5,7 +5,7 @@ export const BACKEND_URL =
 export const BACKEND_SOCKET_URL =
   process.env.REACT_APP_SOCKET_URL || 'https://comm-dev-api.wallfair.io/';
 export const CRASH_GAME_BACKEND_URL =
-  process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8001/';
+  process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8003/';
 export const CRASH_GAMES_BACKEND_URL =
     process.env.REACT_APP_CASINO_GAMES_BACKEND_URL || 'http://localhost:8003/';
 export const SECOND_CRASH_GAME_BACKEND_URL =
