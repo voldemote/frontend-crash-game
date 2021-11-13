@@ -1,14 +1,10 @@
 @import '../../styles/all';
 
 .elonGameWrapper {
-  padding: 30px;
+  padding: 30px 0;
 
-  @media (max-width: $screen-md) {
-    padding: 0 150px 15px;
-  }
-
-  @media (max-width: $screen-sm) {
-    padding: 0 100px 15px;
+  @media (max-width: $screen-lg) {
+    padding: 0 20px;
   }
 
   @media (max-width: $screen-xs) {
@@ -16,24 +12,29 @@
   }
 
   .headerTitle {
-    color: $colorWhite;
+    color: $colorBlack;
     font-family: $fontRegular;
-    font-size: 24px;
+    font-size: 33px;
     font-weight: 700;
     padding-bottom: 20px;
+
+    @media (max-width: $screen-xs) {
+      font-size: 28px;
+    }
   }
 
   .elonGameContainer {
     border-radius: 20px;
     border: 2px solid rgba(255, 255, 255, 0.1);
     display: flex;
-    height: 304px;
+    height: 312px;
     // background: #14152e;
     background-image: url('../../data/backgrounds/games/elon-game-desktop-howto.jpg');
     background-repeat: no-repeat;
     background-size: contain;
 
     @media (max-width: $screen-md) {
+      background-position-x: center;
       background-image: url('../../data/backgrounds/games/elon-game-banner.png');
     }
   }
