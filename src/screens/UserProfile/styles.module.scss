@@ -39,9 +39,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background-color: #21203C;
-      color: $colorWhite;
-      padding-top: 20px;      
+      background-color: $colorWhite;
+      color: $colorBlack;
+      padding-top: 20px;
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
       @media (max-width: $screen-sm) {
@@ -83,7 +83,7 @@
         @media (max-width: $screen-sm) {
           flex-direction: column;
         }
-        .profileSection {          
+        .profileSection {
           padding-left: 250px;
           @media (max-width: $screen-sm) {
             padding-top: 56px;
@@ -130,7 +130,7 @@
     .tabLayout {
       display: flex;
       align-items: flex-end;
-      color: $colorWhite;
+      color: $colorBlack;
       font-family: $fontRegular;
       font-style: normal;
       font-weight: bold;
@@ -155,7 +155,7 @@
       .tabItemSelected {
         text-align: center;
         padding-bottom: 12px;
-        border-bottom: 2px solid #F1FF54;
+        border-bottom: 2px solid $mainAction;
         opacity: 1;
         cursor: pointer;
       }
@@ -173,15 +173,17 @@
 
       .templateImage {
         width: 100%;
-        filter: blur(2px);
+        // filter: blur(2px);
+        filter: brightness(100);
+        border-radius: 12px;
       }
 
       .activityWrapper {
-        width: 75%
+        width: 75%;
       }
 
       .statistics {
-        width: 25%
+        width: 25%;
       }
 
       .inactivePlaceholder {
@@ -194,29 +196,33 @@
         justify-content: center;
         font-size: 24px;
         font-family: $fontMedium;
-        color: #F2FF53;
+        color: $colorPinkDark;
         font-weight: 700;
       }
     }
 
     .activities {
       width: 100%;
-      background-color: #21203C;
+      background-color: $colorWhite;
       border-radius: 10px;
       padding: 20px;
     }
 
     .leaderboard {
       width: 100%;
-      background-color: #21203C;
+      background-color: $colorWhite;
       border-radius: 10px;
+      padding: 12px 0;
 
       .heading {
         background-color: transparent;
       }
+
+      .leaderboardTable {
+        overflow-y: hidden;
+      }
     }
   }
-
 
   .contentBlock {
     display: flex;
@@ -237,9 +243,9 @@
 
     .sideContent {
       border-radius: 10px;
-      background-color: #21203C;
+      background-color: $colorWhite;
       width: 300px;
-      color: white;
+      color: $colorBlack;
       padding: 15px;
 
       @media (max-width: $screen-sm) {
@@ -259,7 +265,7 @@
         justify-content: space-between;
 
         .statItem {
-          background-color: #100D27;
+          background-color: #ededed;
           border-radius: 20px;
           width: 95px;
           padding: 15px 10px;
@@ -280,16 +286,16 @@
 
             span {
               font-size: 16px;
-              color: $colorYellow;
+              color: $mainAction;
             }
           }
 
           .statItemHint {
             margin-top: 5px;
             font-size: 10px;
-            line-height: 1.10;
+            line-height: 1.1;
             text-align: center;
-            color: #5C5C6D;
+            color: #5c5c6d;
           }
         }
       }

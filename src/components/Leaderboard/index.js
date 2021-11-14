@@ -20,6 +20,7 @@ const Leaderboard = ({
   small = false,
   headingClass,
   userRef,
+  className,
 }) => {
   const LIMIT = small ? 5 : 10;
   const SKIP_FOR_CURRENT = small ? 1 : 3;
@@ -99,7 +100,7 @@ const Leaderboard = ({
   };
 
   return (
-    <div className={style.leaderboardTable}>
+    <div className={classNames(style.leaderboardTable, className)}>
       <div className={classNames(style.tableHeadings, headingClass)}>
         <p className={style.rankingHeading}>
           <Icon

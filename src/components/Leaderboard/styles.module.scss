@@ -13,7 +13,7 @@
     justify-content: space-between;
     width: 100%;
     padding: 16px 24px;
-    background-color: $colorWhite;
+    background-color: $colorWhite !important;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -37,8 +37,12 @@
         margin-right: 5px;
       }
 
-      @media (max-width: $screen-md) {
+      @media (max-width: $screen-xs) {
         margin-right: 30px;
+
+        svg {
+          display: none;
+        }
       }
     }
 
@@ -52,6 +56,12 @@
       span {
         margin-right: 5px;
       }
+
+      @media (max-width: $screen-xs) {
+        svg {
+          display: none;
+        }
+      }
     }
 
     .tokenHeading {
@@ -63,6 +73,12 @@
       align-items: center;
       span {
         margin-right: 5px;
+      }
+
+      @media (max-width: $screen-xs) {
+        svg {
+          display: none;
+        }
       }
     }
   }
