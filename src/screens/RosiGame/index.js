@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -31,7 +32,6 @@ import {
   trackElonCashout,
   trackElonPlaceBet,
 } from '../../config/gtm';
-import { useParams } from 'react-router-dom';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
@@ -57,6 +57,7 @@ const RosiGame = ({
     highData,
     luckyData,
   } = useRosiData();
+  const { pathname } = useLocation();
   const { slug } = useParams();
   const [audio, setAudio] = useState(null);
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -104,13 +105,13 @@ const RosiGame = ({
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      if (hasAcceptedTerms() && !isPopupDisplayed()) {
+      if (hasAcceptedTerms() && !isPopupDisplayed() && isElonGame()) {
         showPopup(PopupTheme.explanation);
         localStorage.setItem('gameHowDoesItWorkTip', true);
       }
     }, 1000);
     return () => clearTimeout(timerId);
-  }, []);
+  }, [pathname]);
 
   const hasAcceptedTerms = () => {
     return localStorage.getItem('acceptedTerms') || false;
@@ -119,6 +120,10 @@ const RosiGame = ({
   const isPopupDisplayed = () => {
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
+
+  const isElonGame = () => {
+    return pathname.indexOf('/games/elon-game') !== -1;
+  }
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
