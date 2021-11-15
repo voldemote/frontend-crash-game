@@ -4,26 +4,25 @@ import styles from './styles.module.scss';
 import Grid from '@material-ui/core/Grid';
 import ActivityTableRow from './ActivityTableRow';
 
-const ActivityTable = ({ rowData, gameLabel, hideSecondaryColumns = false, layout='compact' }) => {
-  const layoutCss = layout === 'compact' ? styles.compact : null;
+const ActivityTable = ({ rowData, gameLabel, hideSecondaryColumns = false }) => {
   return (
     <div className={styles.activitiesTrackerContainer}>
-      <div className={classNames(styles.header,layoutCss)}>
-        <Grid container className={styles.flexContainer}>
+      <div className={styles.header}>
+        <Grid container>
           <Grid item xs>
-            <p className={styles.titleLeft}>GAME</p>
+            <p className={styles.titleFirst}>GAME</p>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <p className={styles.titleLeft}>USER</p>
+            <p className={styles.title}>USER</p>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <p className={styles.titleRight}>TRADE</p>
+            <p className={styles.title}>TRADE</p>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <p className={styles.title}>MULT</p>
           </Grid>
           <Grid item xs >
-            <p className={styles.titleRight}>CASHOUT</p>
+            <p className={styles.titleLast}>CASHOUT</p>
           </Grid>
         </Grid>
       </div>
@@ -35,7 +34,6 @@ const ActivityTable = ({ rowData, gameLabel, hideSecondaryColumns = false, layou
             data={r}
             gameLabel={gameLabel}
             hideSecondaryColumns={hideSecondaryColumns}
-            layout={layout}
           />
         ))}
       </div>

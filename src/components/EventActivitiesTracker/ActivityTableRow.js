@@ -21,8 +21,7 @@ const UserLink = props => {
   );
 };
 
-const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false, layout = 'compact'}) => {
-  const layoutCss = layout === 'compact' ? styles.compact : null;
+const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false }) => {
   gameLabel = gameLabel ?? (Object.values(GAMES).find(g => g.id.indexOf(data.gameId) > -1))?.name ?? "Game";
   const {
     userId,
@@ -34,22 +33,22 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
   const stakedAmount = Number.parseInt(stakedAmountRaw);
   const rewardAmount = Number.parseInt(rewardAmountRaw);
   return (
-    <div className={classNames(styles.messageItem, layoutCss)}>
+    <div className={styles.messageItem}>
       {type === 'lost' ? (
-        <Grid container className={styles.flexContainer}>
+        <Grid container>
           <Grid item xs>
             <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageLeft}>
+            <div className={styles.messageCenter}>
               <p>{userId}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={classNames(styles.messageRight)}>
-              <p>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
+            <div className={classNames(styles.messageCenter)}>
+              {toNumericString(stakedAmount)} {TOKEN_NAME}
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
@@ -68,14 +67,14 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
           </Grid>
         </Grid>
       ) : (
-        <Grid container className={styles.flexContainer}>
+        <Grid container>
           <Grid item xs>
             <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageLeft}>
+            <div className={styles.messageCenter}>
               <p>
                 {username ? (
                   <UserLink userId={userId} username={username} />
@@ -86,8 +85,8 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageRight}>
-              <p>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
+            <div className={styles.messageCenter}>
+              {toNumericString(stakedAmount)} {TOKEN_NAME}
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
