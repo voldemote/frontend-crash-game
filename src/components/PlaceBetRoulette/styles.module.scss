@@ -1,12 +1,54 @@
 @import '../../styles/all';
 
+.selector{
+  width: 100%;//314px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background: rgba(128, 128, 128, 0.24);
+  border-radius: 10px;
+  justify-content: flex-start;
+  position: relative;
+  .top{
+    width: 50%;//155px;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 10px;
+    background: #fff;
+    height: 80%;
+    top: 10%;
+    left: 5px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+  }
+  .tab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    width: 50%;//208px;
+    img{
+      margin-right: 18px;
+    }
+    span{
+      font-weight: 600;
+      font-style: normal;
+      font-size: 16px;
+      color: #120e27;
+      letter-spacing: 0;
+      z-index: 10;
+    }
+  }
+}
+
 .riskSelection{
   display: flex;
   width: 100%;
 
   button{
     width: calc(20% - 4px);
-    height: 45px;
+    height: 35px;
     border-radius: 10px;
     cursor: pointer;
     border: 1.2px solid rgba(14, 9, 39, 0.3);
@@ -27,12 +69,12 @@
   background: #fff;
   border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 10px;
-  padding: 10px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
   margin-bottom: 14px;
 
   @media screen and (max-width: $screen-md) {
     margin-top: 7px;
-    padding: 5px 20px;
+    padding: 10px;
   }
 }
 
@@ -134,7 +176,7 @@
   width: 100%;
   align-items: center;
   padding: 10.5px 25px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -288,13 +330,46 @@
   position: relative;
   margin-bottom: 20px;
 }
-
+.toggleButton{
+  position: absolute;
+  left: 2px;
+  width: 120px;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .buttonItem{
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 57px;
+    font-size: 14px;
+    color: #120e27;
+    padding: 5px;
+    z-index: 10;
+    &:hover{
+      font-weight: bold;
+    }
+  }
+  .toggleLabel{
+    width: 72px;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 10px;
+    height: 72%;
+    top: 14%;
+    left: 0px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+    background: rgba(128, 128, 128, 0.24);
+  }
+}
 .cashedOutInputContainer {
   display: flex;
   width: 100%;
   align-items: center;
   padding: 10.5px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -307,7 +382,9 @@
   @media (max-width: $screen-sm) {
     padding-right: 120px;
   }
-
+  .increase{
+    width: 45px!important;
+  }
   .input {
     flex: none;
     text-align: right;
@@ -351,6 +428,7 @@
 
   .buttonWrapper
   {
+      min-width: fit-content;
       margin-left:    0px;
       @media (min-width: $screen-lg)
       {
@@ -366,6 +444,9 @@
 
       :last-child {
           font-size:      14px;
+      }
+      .toggleButton{
+
       }
       .buttonItem
       {

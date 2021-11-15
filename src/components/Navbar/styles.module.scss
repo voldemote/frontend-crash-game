@@ -125,6 +125,9 @@
 
     .ranking {
       z-index: 5;
+      @media (max-width: $screen-xs) {
+        display: none!important;
+      }
 
       &.hiddenMobile {
         @media (max-width: $screen-xs) {
@@ -137,6 +140,10 @@
       border: none;
       opacity: 1;
       z-index: 5;
+      @media (max-width: 360px) {
+        display: none!important;
+      }
+
     }
 
     .pillButton {
