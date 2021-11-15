@@ -156,6 +156,7 @@ function loadAssets(loader) {
     `/images/rosi-game/${deviceType}/@${resolution}x/${asset}`;
 
   loader
+    .add('background', constructPath('rosi-games-background.png'))
     .add('coin', constructPath('coin.png'))
     .add('elonmusk', constructPath('elonmusk.png'))
     .add('redPlanet', constructPath('redPlanet.png'))
