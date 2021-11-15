@@ -385,7 +385,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
               )}
               {activityTabIndex !== 0 && (
                 <ActivityTable
-                  hideSecondaryColumns={false}
+                  hideSecondaryColumns={true}
                   rowData={getActivityTableData()}
                   layout='wide'
                 />

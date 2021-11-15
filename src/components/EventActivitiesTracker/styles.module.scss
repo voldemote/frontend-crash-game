@@ -270,12 +270,8 @@
   padding:5px 15px;
   overflow-x: hidden;
 
-  @media (max-width: $screen-md) {
-    img {display:none;}
-  }
   @media (max-width: $screen-xs) {
-
-    padding: 2px 15px;
+  padding: 2px 15px;
   }
 
   p{
