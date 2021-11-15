@@ -83,11 +83,8 @@ const EventActivitiesTracker = ({
   userId,
   preselectedCategory,
   gameId,
-  hideSecondaryColumns = false,
-  layout='compact'
+  hideSecondaryColumns = false
 }) => {
-  const layoutCss = layout === 'compact' ? styles.compact : null;
-
   const messageListRef = useRef();
 
   const preselectCategory = preselectedCategory
@@ -188,7 +185,7 @@ const EventActivitiesTracker = ({
       }
 
       return (
-        <ActivityMessage key={index} activity={activityMessage} date={date} hideSecondaryColumns={hideSecondaryColumns} layout={layout}/>
+        <ActivityMessage key={index} activity={activityMessage} date={date} hideSecondaryColumns={hideSecondaryColumns}/>
       );
     });
   };
@@ -212,21 +209,21 @@ const EventActivitiesTracker = ({
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
       <div className={styles.header}>
-        <Grid container className={layoutCss}>
+        <Grid container>
           <Grid item xs>
-            <p className={styles.titleLeft}>GAME</p>
+            <p className={styles.titleFirst}>GAME</p>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <p className={styles.titleLeft}>USER</p>
+            <p className={styles.title}>USER</p>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <p className={styles.titleRight}>TRADE</p>
+            <p className={styles.title}>TRADE</p>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <p className={styles.title}>MULT</p>
           </Grid>
           <Grid item xs>
-            <p className={styles.titleRight}>CASHOUT</p>
+            <p className={styles.titleLast}>CASHOUT</p>
           </Grid>
         </Grid>
       </div>
