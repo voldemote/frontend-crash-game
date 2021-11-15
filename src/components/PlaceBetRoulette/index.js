@@ -99,7 +99,6 @@ const PlaceBetRoulette = ({
   const placeAutoBet = async () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
-
     const payload = {
       amount,
       autobet: true,
@@ -111,7 +110,6 @@ const PlaceBetRoulette = ({
       riskFactor: risk
     };
     setAccumulated(0)
-    console.log("Autobet: ", payload)
     setNuspin(payload)
     const bet = await onBet(payload)
   };
@@ -145,14 +143,13 @@ const PlaceBetRoulette = ({
     }else if(bet?.pending && nuspin.autobet){
       const acc = bet.profit + accumulated
       setAccumulated(acc)
-      console.log("nuspin", nuspin)
       if(nuspin.nspin === 0){
-        const newamount = bet.profit > 0 ? Math.floor(nuspin.amount*(1+nuspin.wincrease)) : Math.floor(nuspin.amount*(1+nuspin.lincrease))
+        const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : nuspin.amount*(1+nuspin.wincrease)) : Math.floor(lossbutton ? amount : nuspin.amount*(1+nuspin.lincrease))
         setNuspin({nspin: 0, amount: newamount})
         return;
       }
       if(nuspin.profit > 0 && nuspin.profit > acc && nuspin.loss > 0 && nuspin.loss > -acc){
-        const newamount = bet.profit > 0 ? Math.floor(nuspin.amount*(1+nuspin.wincrease)) : Math.floor(nuspin.amount*(1+nuspin.lincrease))
+        const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : nuspin.amount*(1+nuspin.wincrease)) : Math.floor(lossbutton ? amount : nuspin.amount*(1+nuspin.lincrease))
         setNuspin({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin})
         await onBet({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin});
       }
@@ -199,7 +196,7 @@ const PlaceBetRoulette = ({
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
-          {user.isLoggedIn ? 'Place Bet' : 'Play Demo'}
+          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
         </span>
       );
     } else {
@@ -584,6 +581,7 @@ const PlaceBetRoulette = ({
                 </button>
               </div>
             </div>
+            {/*
             <div className={styles.inputContainer}>
             <label
               className={classNames(
@@ -648,7 +646,8 @@ const PlaceBetRoulette = ({
                   10
                 </span>
               </div>
-            </div>
+            </div>*/}
+            <div className={styles.inputContainer}>
             <label
               className={classNames(
                 styles.label,
@@ -674,6 +673,7 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>PFAIR</span>
               </span>
+              {/*
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
@@ -697,6 +697,7 @@ const PlaceBetRoulette = ({
                   Max
                 </span>
               </div>
+              */}
             </div>
             <label
               className={classNames(
@@ -723,6 +724,7 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>PFAIR</span>
               </span>
+              {/*
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
@@ -746,6 +748,7 @@ const PlaceBetRoulette = ({
                   Max
                 </span>
               </div>
+              */}
             </div>
             <label
               className={classNames(
@@ -787,6 +790,7 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>%</span>
               </span>
+              {/*
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
@@ -810,6 +814,7 @@ const PlaceBetRoulette = ({
                   10%
                 </span>
               </div>
+              */}
             </div>
             <label
               className={classNames(
@@ -851,6 +856,7 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>%</span>
               </span>
+              {/*
               <div className={styles.buttonWrapper}>
                 <span
                   className={styles.buttonItem}
@@ -874,6 +880,7 @@ const PlaceBetRoulette = ({
                   10%
                 </span>
               </div>
+              */}
             </div>
               {nuspin.autobet &&
                 <div className={styles.spinsleft}>
