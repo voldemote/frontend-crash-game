@@ -58,7 +58,7 @@ export const API_USER_TRADE_HISTORY = 'api/user/trade-history';
 export const API_USER_REFERRAL_LIST = 'api/user/refList';
 export const API_TAGS_LIST = 'api/event/tags';
 export const API_CURRENT_ELON = 'api/elon-game/current';
-export const API_CURRENT_BY_GAME_TYPE = 'api/current/:gameTypeId';
+export const API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES = 'api/simple-games/current/:gameTypeId';
 export const API_CHART_DATA = 'api/event/bet/:betId/history';
 export const API_CHAT_MESSAGES =
   'api/chat/chat-messages/:roomId?skip=:skip&limit=:limit';
