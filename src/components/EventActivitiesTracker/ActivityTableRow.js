@@ -46,7 +46,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
               <p>{userId}</p>
             </div>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={classNames(styles.messageCenter)}>
               {toNumericString(stakedAmount)} {TOKEN_NAME}
               <img src={medalCoin} alt="medal" />
@@ -57,7 +57,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
               <p className={styles.rewardMulti}>{crashFactor}x</p>
             </div>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs >
             <div className={classNames(styles.messageLast, styles.messageRight)}>
               <p className={'global-cashout-loss'}>
                 -{toNumericString(stakedAmount)} {TOKEN_NAME}
