@@ -48,7 +48,7 @@
 
   button{
     width: calc(20% - 4px);
-    height: 45px;
+    height: 35px;
     border-radius: 10px;
     cursor: pointer;
     border: 1.2px solid rgba(14, 9, 39, 0.3);
@@ -176,7 +176,7 @@
   width: 100%;
   align-items: center;
   padding: 10.5px 25px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -330,13 +330,43 @@
   position: relative;
   margin-bottom: 20px;
 }
-
+.toggleButton{
+  position: absolute;
+  left: 7px;
+  width: 120px;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .buttonItem{
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 57px;
+    font-size: 14px;
+    &:hover{
+      font-weight: bold;
+    }
+  }
+  .toggleLabel{
+    width: 72px;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 10px;
+    height: 72%;
+    top: 14%;
+    left: 0px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+    background: rgba(128, 128, 128, 0.24);
+  }
+}
 .cashedOutInputContainer {
   display: flex;
   width: 100%;
   align-items: center;
   padding: 10.5px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -349,7 +379,9 @@
   @media (max-width: $screen-sm) {
     padding-right: 120px;
   }
-
+  .increase{
+    width: 45px!important;
+  }
   .input {
     flex: none;
     text-align: right;
@@ -408,6 +440,9 @@
 
       :last-child {
           font-size:      14px;
+      }
+      .toggleButton{
+
       }
       .buttonItem
       {

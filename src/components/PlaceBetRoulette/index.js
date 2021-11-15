@@ -48,6 +48,12 @@ const PlaceBetRoulette = ({
   const [canBet, setCanBet] = useState(true);
   const [nuspin, setNuspin] = useState({nspin: 0});
   const gameOffline = false//useSelector(selectGameOffline);
+  const [wincrease, setWincrease] = useState(0)
+  const [lincrease, setLincrease] = useState(0)
+  const [lossbutton, setLossbutton] = useState(false)
+  const [winbutton, setWinbutton] = useState(false)
+  const [spinlimit, setSpinlimit] = useState(false)
+  const [accumulated, setAccumulated] = useState(0)
 
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
 
@@ -83,12 +89,34 @@ const PlaceBetRoulette = ({
     if (amount > userBalance) return;
     const payload = {
       amount,
-      nspin: nspin-1,
+      nspin: nspin - 1,
+      riskFactor: risk
+    }
+    setNuspin(payload)
+    const bet = await onBet(payload)
+  }
+
+  const placeAutoBet = async () => {
+    if (userUnableToBet) return;
+    if (amount > userBalance) return;
+
+    const payload = {
+      amount,
+      autobet: true,
+      profit: Number(profit),
+      loss: Number(loss),
+      wincrease: winbutton?0:Number(wincrease)/100,
+      lincrease: lossbutton?0:Number(lincrease)/100,
+      nspin: spinlimit?Number(nspin-1):null,
       riskFactor: risk
     };
+    setAccumulated(0)
+    console.log("Autobet: ", payload)
     setNuspin(payload)
     const bet = await onBet(payload)
   };
+
+
 
   const placeGuestBet = () => {
     if (numberOfDemoPlays === 3) {
@@ -106,7 +134,6 @@ const PlaceBetRoulette = ({
     };
     onBet(payload)
     setNuspin(payload)
-
     if (numberOfDemoPlays < 3) {
       localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
     }
@@ -114,7 +141,24 @@ const PlaceBetRoulette = ({
   useEffect(async () => {
     if(bet?.pending && nuspin.nspin > 0) {
       setNuspin({...nuspin, nspin: nuspin.nspin -1})
-      const bet = await onBet({...nuspin, nspin: nuspin.nspin -1});
+      await onBet({...nuspin, nspin: nuspin.nspin -1});
+    }else if(bet?.pending && nuspin.autobet){
+      const acc = bet.profit + accumulated
+      setAccumulated(acc)
+      console.log("nuspin", nuspin)
+      if(nuspin.nspin === 0){
+        const newamount = bet.profit > 0 ? Math.floor(nuspin.amount*(1+nuspin.wincrease)) : Math.floor(nuspin.amount*(1+nuspin.lincrease))
+        setNuspin({nspin: 0, amount: newamount})
+        return;
+      }
+      if(nuspin.profit > 0 && nuspin.profit > acc && nuspin.loss > 0 && nuspin.loss > -acc){
+        const newamount = bet.profit > 0 ? Math.floor(nuspin.amount*(1+nuspin.wincrease)) : Math.floor(nuspin.amount*(1+nuspin.lincrease))
+        setNuspin({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin})
+        await onBet({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin});
+      }
+      else{
+        setNuspin({nspin: 0});
+      }
     }
   }, [bet])
 
@@ -137,7 +181,7 @@ const PlaceBetRoulette = ({
   };
 
   const renderButton = () => {
-    if (nuspin?.nspin <= 0) {
+    if (!nuspin.autobet && nuspin?.nspin <= 0) {
       return (
         <span
           role="button"
@@ -150,7 +194,7 @@ const PlaceBetRoulette = ({
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
-          onClick={!bet?.pending? null : user.isLoggedIn ? placeABet : placeGuestBet }
+          onClick={!bet?.pending? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
           data-tracking-id={
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
@@ -200,13 +244,13 @@ const PlaceBetRoulette = ({
   const [selector, setSelector] = useState('manual')
 
   const switchButton = () => {
-    return(
+    return (
       <div className={styles.selector}>
         <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : 150 }}></span>
         <div className={classNames(styles.tab, styles.selected)} onClick={() => setSelector('manual')} >
           <span>Manual Bet</span>
         </div>
-        <div className={classNames(styles.tab)} onClick={()=>setSelector('auto')} >
+        <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
           <span>Auto Bet</span>
         </div>
       </div>
@@ -554,8 +598,23 @@ const PlaceBetRoulette = ({
                 styles.demoInput
               )}
             >
+              <div className={styles.toggleButton}>
+                <span className={styles.toggleLabel} style={{marginLeft: !spinlimit?0:59, width: !spinlimit?63:63}}></span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setSpinlimit(false)}
+                >
+                  Disable
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setSpinlimit(true)}
+                >
+                  Enable
+                </span>
+              </div>
               <Input
-                className={classNames(styles.input)}
+                className={classNames(styles.input, styles.increase)}
                 type={'number'}
                 value={nspin}
                 onChange={onGuestNspinChange}
@@ -606,8 +665,8 @@ const PlaceBetRoulette = ({
               <Input
                 className={classNames(styles.input)}
                 type={'number'}
-                value={nspin}
-                onChange={onGuestNspinChange}
+                value={profit}
+                onChange={(e) => setProfit(e.target.value)}
                 step={1}
                 min="1"
                 max={'100'}
@@ -655,8 +714,8 @@ const PlaceBetRoulette = ({
               <Input
                 className={classNames(styles.input)}
                 type={'number'}
-                value={nspin}
-                onChange={onGuestNspinChange}
+                value={loss}
+                onChange={(e) => setLoss(e.target.value)}
                 step={1}
                 min="1"
                 max={'100'}
@@ -688,7 +747,144 @@ const PlaceBetRoulette = ({
                 </span>
               </div>
             </div>
-
+            <label
+              className={classNames(
+                styles.label,
+              )}
+            >
+              On Win
+            </label>
+            <div
+              className={classNames(
+                styles.cashedOutInputContainer,
+                styles.demoInput
+              )}
+            >
+              <div className={styles.toggleButton}>
+                <span className={styles.toggleLabel} style={{marginLeft: winbutton?4:53, width: winbutton?53:72}}></span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setWinbutton(true)}
+                >
+                  Reset
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  onClick={() => setWinbutton(false)}
+                >
+                  Increase
+                </span>
+              </div>
+              <Input
+                className={classNames(styles.input, styles.increase)}
+                type={'number'}
+                value={wincrease}
+                onChange={(e) => setWincrease(e.target.value)}
+                step={1}
+                min="0"
+                max={'100'}
+              />
+              <span className={styles.eventTokenLabel}>
+                <span>%</span>
+              </span>
+              <div className={styles.buttonWrapper}>
+                <span
+                  className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-half"
+                  onClick={() => setWincrease(wincrease-1)}
+                >
+                  -
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-double"
+                  onClick={() => setWincrease(wincrease+1)}
+                >
+                  +
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-allin"
+                  onClick={() => setWincrease(10)}
+                >
+                  10%
+                </span>
+              </div>
+            </div>
+            <label
+              className={classNames(
+                styles.label,
+              )}
+            >
+              On Loss
+            </label>
+            <div
+              className={classNames(
+                styles.cashedOutInputContainer,
+                styles.demoInput
+              )}
+            >
+            <div className={styles.toggleButton}>
+            <span className={styles.toggleLabel} style={{marginLeft: lossbutton?4:53, width: lossbutton?53:72}}></span>
+              <span
+                className={styles.buttonItem}
+                onClick={() => setLossbutton(true)}
+              >
+                Reset
+              </span>
+              <span
+                className={styles.buttonItem}
+                onClick={() => setLossbutton(false)}
+              >
+                Increase
+              </span>
+            </div>
+              <Input
+                className={classNames(styles.input, styles.increase)}
+                type={'number'}
+                value={lincrease}
+                onChange={(e) => setLincrease(e.target.value)}
+                step={1}
+                min="0"
+                max={'100'}
+              />
+              <span className={styles.eventTokenLabel}>
+                <span>%</span>
+              </span>
+              <div className={styles.buttonWrapper}>
+                <span
+                  className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-half"
+                  onClick={() => setLincrease(lincrease-1)}
+                >
+                  -
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-double"
+                  onClick={() => setLincrease(lincrease+1)}
+                >
+                  +
+                </span>
+                <span
+                  className={styles.buttonItem}
+                  data-tracking-id="alpacawheel-input-field-allin"
+                  onClick={() => setLincrease(10)}
+                >
+                  10%
+                </span>
+              </div>
+            </div>
+              {nuspin.autobet &&
+                <div className={styles.spinsleft}>
+                  {Math.floor(accumulated)} PFAIR Accumulated
+                </div>
+              }
+              {nuspin.autobet && nuspin.amount &&
+                <div className={styles.spinsleft}>
+                  Bet {Math.floor(nuspin.amount)} PFAIR
+                </div>
+              }
               {nuspin.nspin > 0 &&
                 <div className={styles.spinsleft}>
                   {nuspin.nspin} spins left

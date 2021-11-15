@@ -33,7 +33,7 @@ const Spins = ({spins, showPopup, text}) => {
 
           return (
             <span key={`${spin.value}${i}`} className={styles.crash}>
-              <span className={spinType === 'win' ? styles.reward : styles.lost}>{spin.value}</span>
+              <span className={spinType === 'win' ? styles.reward : styles.lost}>{Math.floor(spin.value)}</span>
           </span>
           )
         })}

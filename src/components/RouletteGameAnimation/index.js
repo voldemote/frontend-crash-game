@@ -84,7 +84,7 @@ const RouletteGameAnimation = ({
 
     setSpins(prepareObj);
     setRunning(false);
-    setBet({pending: true});
+    setBet({pending: true, profit: bet.profit});
   }
 
   return (
