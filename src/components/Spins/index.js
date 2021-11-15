@@ -23,6 +23,10 @@ const Spins = ({spins, showPopup, text}) => {
     }
   };
   //  onClick={e => handleCrashFactorClick(crash, e)}
+  const displaySignedFormat = (value) => {
+    const val = Math.floor(value);
+    return val > 0 ? `+${val}` : val
+  }
   return (
     <div className={styles.container}>
       <span className={styles.title}>{text ? text : 'Last Crashes'}</span>
@@ -33,7 +37,7 @@ const Spins = ({spins, showPopup, text}) => {
 
           return (
             <span key={`${spin.value}${i}`} className={styles.crash}>
-              <span className={spinType === 'win' ? styles.reward : styles.lost}>{Math.floor(spin.value)}</span>
+              <span className={spinType === 'win' ? styles.reward : styles.lost}>{displaySignedFormat(spin.value)}</span>
           </span>
           )
         })}
