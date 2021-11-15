@@ -7,10 +7,22 @@ import { selectTotalUsers } from '../../../store/selectors/leaderboard';
 import EmailSignUp from './EmailSignUp';
 import { useSocialLogins } from './useSocialLogins';
 
+const LoginButton = ({ children, onClick, styles }) => (
+  <Button
+    onClick={onClick}
+    withoutBackground={true}
+    highlightType={HighlightType.highlightAuthButton}
+    className={styles.submitButton}
+    disabledWithOverlay={true}
+  >
+    {children}
+  </Button>
+);
+
 const Register = ({ styles }) => {
   // const totalUsers = useSelector(selectTotalUsers);
 
-  const { initGoogleLogin } = useSocialLogins();
+  const { initGoogleLogin, initFacebookLogin } = useSocialLogins();
 
   const [showEmailSignUp, setShowEmailSignup] = useState(false);
   
@@ -33,24 +45,15 @@ const Register = ({ styles }) => {
         </>
       ) : (
         <div className={styles.signUpOptions}>
-          <Button
-            onClick={() => setShowEmailSignup(true)}
-            withoutBackground={true}
-            highlightType={HighlightType.highlightAuthButton}
-            className={styles.submitButton}
-            disabledWithOverlay={true}
-          >
-            Sign up with email
-          </Button>
-          <Button
-            onClick={initGoogleLogin}
-            withoutBackground={true}
-            highlightType={HighlightType.highlightAuthButton}
-            className={styles.submitButton}
-            disabledWithOverlay={true}
-          >
+          <LoginButton styles={styles} onClick={() => setShowEmailSignup(true)}>
+            Sign up with e-mail
+          </LoginButton>
+          <LoginButton styles={styles} onClick={initGoogleLogin}>
             Sign in with Google
-          </Button>
+          </LoginButton>
+          <LoginButton styles={styles} onClick={initFacebookLogin}>
+            Sign in with Facebook
+          </LoginButton>
         </div>
       )}
     </>

@@ -4,7 +4,10 @@ import { useParams, useLocation } from "react-router-dom";
 import { AuthenticationActions } from "store/actions/authentication";
 
 const providerActionMap = {
-  google: ({ code }) => AuthenticationActions.loginWithGoogle({ code }),
+  google: ({ code }) =>
+    AuthenticationActions.loginExternal({ provider: 'google', code }),
+  facebook: ({ code }) =>
+    AuthenticationActions.loginExternal({ provider: 'facebook', code }),
 };
 
 const useOAuthCallback = () => {

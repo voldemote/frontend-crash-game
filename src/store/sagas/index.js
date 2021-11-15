@@ -69,7 +69,7 @@ const root = function* () {
       AuthenticationSagas.authenticationSucceeded
     ),
     takeLatest([AuthenticationTypes.SIGN_UP], AuthenticationSagas.signUp),
-    takeLatest([AuthenticationTypes.LOGIN_GOOGLE], AuthenticationSagas.loginGoogle),
+    takeLatest([AuthenticationTypes.LOGIN_EXTERNAL], AuthenticationSagas.loginExternal),
     takeLatest([AuthenticationTypes.LOGIN], AuthenticationSagas.login),
     takeLatest(
       [AuthenticationTypes.FORGOT_PASSWORD],
@@ -86,7 +86,7 @@ const root = function* () {
     takeEvery(
       [
         AuthenticationTypes.FETCH_REFERRALS_FAILED,
-        AuthenticationTypes.LOGIN_GOOGLE_FAIL,
+        AuthenticationTypes.LOGIN_EXTERNAL_FAIL,
         EventTypes.CREATE_EVENT_FAILED,
         EventTypes.EDIT_EVENT_FAILED,
         EventTypes.FETCH_ALL_FAILED,

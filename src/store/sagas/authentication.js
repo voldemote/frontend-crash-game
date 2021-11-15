@@ -409,9 +409,9 @@ const signUp = function* (action) {
   }
 };
 
-const loginGoogle = function* ({ code }) {
+const loginExternal = function* ({ code, provider }) {
   yield put(push('/'));
-  const { response, error } = yield call(Api.loginExternal, { provider: 'google', body: { code } });
+  const { response, error } = yield call(Api.loginExternal, { provider, body: { code } });
   if (response) {
     const data = response?.data;
 
@@ -428,7 +428,7 @@ const loginGoogle = function* ({ code }) {
     );
   } else {
     yield put(
-      AuthenticationActions.loginWithGoogleFail({
+      AuthenticationActions.loginExternalFail({
         message: error.message,
       })
     );
@@ -551,7 +551,7 @@ export default {
   firstSignUpPopup,
   updateUserData,
   signUp,
-  loginGoogle,
+  loginExternal,
   login,
   forgotPassword,
   resetPassword,
