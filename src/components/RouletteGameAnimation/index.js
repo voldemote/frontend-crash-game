@@ -58,10 +58,29 @@ const RouletteGameAnimation = ({
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
         risk,
-        amount
+        amount: amount
       })
     }
   }, [risk, amount]);
+
+  useEffect(() => {
+    console.log("bet", bet.amount)
+    if (bet.amount) {
+      AnimationController.reinit(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        amount: bet.amount
+      })
+    }else{
+      AnimationController.reinit(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        amount: amount
+      })
+    }
+  }, [bet.amount]);
 
   const spin = async () => {
     if (running) return;
@@ -69,7 +88,6 @@ const RouletteGameAnimation = ({
     const newspin = await AnimationController.spinTo(bet.winIndex);
 
     let prepareObj = {};
-
     if(bet.profit > 0) {
       prepareObj = {
         type: 'win',
@@ -81,10 +99,9 @@ const RouletteGameAnimation = ({
         value: bet.profit
       };
     }
-
     setSpins(prepareObj);
     setRunning(false);
-    setBet({pending: true, profit: bet.profit});
+    setBet({pending: true, amount: bet.amount, profit: bet.profit});
   }
 
   return (
