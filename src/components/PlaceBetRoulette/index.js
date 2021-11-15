@@ -148,7 +148,7 @@ const PlaceBetRoulette = ({
         setNuspin({nspin: 0, amount: newamount})
         return;
       }
-      if(nuspin.profit > 0 && nuspin.profit > acc && nuspin.loss > 0 && nuspin.loss > -acc){
+      if(nuspin.profit >= 0 && nuspin.profit > acc && nuspin.loss >= 0 && nuspin.loss > -acc){
         const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : nuspin.amount*(1+nuspin.wincrease)) : Math.floor(lossbutton ? amount : nuspin.amount*(1+nuspin.lincrease))
         setNuspin({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin})
         await onBet({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin});
@@ -243,7 +243,7 @@ const PlaceBetRoulette = ({
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : 150 }}></span>
+        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '46%' }}></span>
         <div className={classNames(styles.tab, styles.selected)} onClick={() => setSelector('manual')} >
           <span>Manual Bet</span>
         </div>
@@ -764,22 +764,24 @@ const PlaceBetRoulette = ({
               )}
             >
               <div className={styles.toggleButton}>
-                <span className={styles.toggleLabel} style={{marginLeft: winbutton?4:53, width: winbutton?53:72}}></span>
+                <span className={styles.toggleLabel} style={{ color: winbutton?'white':'#120e27', marginLeft: winbutton?4:53, width: winbutton?53:72}}></span>
                 <span
                   className={styles.buttonItem}
+                  style={{fontWeight: winbutton?'bold':'normal'}}
                   onClick={() => setWinbutton(true)}
                 >
                   Reset
                 </span>
                 <span
                   className={styles.buttonItem}
+                  style={{fontWeight: !winbutton?'bold':'normal'}}
                   onClick={() => setWinbutton(false)}
                 >
                   Increase
                 </span>
               </div>
               <Input
-                className={classNames(styles.input, styles.increase)}
+                className={classNames(styles.input)}
                 type={'number'}
                 value={wincrease}
                 onChange={(e) => setWincrease(e.target.value)}
@@ -832,12 +834,14 @@ const PlaceBetRoulette = ({
             <div className={styles.toggleButton}>
             <span className={styles.toggleLabel} style={{marginLeft: lossbutton?4:53, width: lossbutton?53:72}}></span>
               <span
+                style={{fontWeight: lossbutton?'bold':'normal'}}
                 className={styles.buttonItem}
                 onClick={() => setLossbutton(true)}
               >
                 Reset
               </span>
               <span
+                style={{fontWeight: !lossbutton?'bold':'normal'}}
                 className={styles.buttonItem}
                 onClick={() => setLossbutton(false)}
               >
@@ -845,7 +849,7 @@ const PlaceBetRoulette = ({
               </span>
             </div>
               <Input
-                className={classNames(styles.input, styles.increase)}
+                className={classNames(styles.input)}
                 type={'number'}
                 value={lincrease}
                 onChange={(e) => setLincrease(e.target.value)}
@@ -889,7 +893,7 @@ const PlaceBetRoulette = ({
               }
               {nuspin.autobet && nuspin.amount &&
                 <div className={styles.spinsleft}>
-                  Bet {Math.floor(nuspin.amount)} PFAIR
+                  Bet Amount {Math.floor(nuspin.amount)} PFAIR
                 </div>
               }
               {nuspin.nspin > 0 &&

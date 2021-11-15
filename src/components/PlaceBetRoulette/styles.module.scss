@@ -1,7 +1,7 @@
 @import '../../styles/all';
 
 .selector{
-  width: 314px;
+  width: 100%;//314px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   justify-content: flex-start;
   position: relative;
   .top{
-    width: 155px;
+    width: 50%;//155px;
     box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
     border-radius: 10px;
     background: #fff;
@@ -27,7 +27,7 @@
     align-items: center;
     cursor: pointer;
     height: 100%;
-    width: 208px;
+    width: 50%;//208px;
     img{
       margin-right: 18px;
     }
@@ -74,7 +74,7 @@
 
   @media screen and (max-width: $screen-md) {
     margin-top: 7px;
-    padding: 5px 20px;
+    padding: 10px;
   }
 }
 
@@ -332,7 +332,7 @@
 }
 .toggleButton{
   position: absolute;
-  left: 7px;
+  left: 2px;
   width: 120px;
   height: inherit;
   display: flex;
@@ -344,6 +344,9 @@
     cursor: pointer;
     min-width: 57px;
     font-size: 14px;
+    color: #120e27;
+    padding: 5px;
+    z-index: 10;
     &:hover{
       font-weight: bold;
     }
@@ -425,6 +428,7 @@
 
   .buttonWrapper
   {
+      min-width: fit-content;
       margin-left:    0px;
       @media (min-width: $screen-lg)
       {
