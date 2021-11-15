@@ -96,7 +96,7 @@ jobs:
       - name: Build the docker image (alpa production)
         if: github.ref == 'refs/heads/alpa-prod'
         run: |
-          docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://elon-api.alpacasino.io/"\
+          docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://casino-api.alpacasino.io/"\
                             --build-arg REACT_APP_BACKEND_URL="https://api.alpacasino.io/"\
                             --build-arg REACT_APP_PUMP_DUMP_GAME_BACKEND_URL="https://pump-dump-api.alpacasino.io/"\
                             --build-arg REACT_APP_SOCKET_URL="https://comm-api.alpacasino.io/"\
