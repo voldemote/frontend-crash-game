@@ -20,6 +20,9 @@ const getFailMessage = action => {
     case AuthenticationTypes.FETCH_REFERRALS_FAILED:
       return 'An error occurred fetching referral list. Please try again!';
 
+    case AuthenticationTypes.LOGIN_GOOGLE_FAIL:
+      return action.message;
+
     case EventTypes.FETCH_ALL_FAILED:
       return 'An error occurred fetching all events.';
 

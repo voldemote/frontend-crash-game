@@ -1,7 +1,5 @@
 import './styles.module.scss';
 import AlertBox from './components/AlertBox';
-import Bet from './screens/Bet';
-import BetVTwo from './screens/BetVTwo';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
 import Popup from './components/Popup';
@@ -90,6 +88,7 @@ const App = () => {
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
+              <Route exact path={Routes.oauth} component={Home} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Route exact path={Routes.provablyfair} component={Fair} />
               <Route exact path={Routes.terms} component={TermsConditions} />

@@ -466,6 +466,12 @@ const signUp = payload => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const loginExternal = ({ provider, body }) => {
+  return Api.post(ApiUrls.API_AUTH_LOGIN_EXTERNAL.replace(':provider', provider), body)
+    .then((response) => ({ response }))
+    .catch((error) => ({ error: error.response.data }));
+};
+
 const login = payload => {
   return Api.post(ApiUrls.API_AUTH_LOGIN, payload)
     .then(response => ({ response }))
@@ -551,6 +557,7 @@ export {
   deleteBet,
   login,
   signUp,
+  loginExternal,
   forgotPassword,
   resetPassword,
   shortenerTinyUrl,

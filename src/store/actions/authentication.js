@@ -40,6 +40,8 @@ export const AuthenticationTypes = {
   RESET_PASSWORD: 'Authentication/RESET_PASSWORD',
   RESET_PASSWORD_FAIL: 'Authentication/RESET_PASSWORD_FAIL',
   UPDATE_STATUS: 'Authentication/UPDATE_STATUS',
+  LOGIN_GOOGLE: 'Authentication/LOGIN_GOOGLE',
+  LOGIN_GOOGLE_FAIL: 'Authentication/LOGIN_GOOGLE_FAIL',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -241,6 +243,18 @@ const updateStatus = makeActionCreator(AuthenticationTypes.UPDATE_STATUS, {
   status: null,
 });
 
+const loginWithGoogle = makeActionCreator(AuthenticationTypes.LOGIN_GOOGLE, {
+  code: null,
+});
+
+
+const loginWithGoogleFail = makeActionCreator(
+  AuthenticationTypes.LOGIN_GOOGLE_FAIL,
+  {
+    message: null,
+  }
+);
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -280,4 +294,6 @@ export const AuthenticationActions = {
   resetPassword,
   resetPasswordFail,
   updateStatus,
+  loginWithGoogle,
+  loginWithGoogleFail,
 };

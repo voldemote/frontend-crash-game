@@ -409,6 +409,32 @@ const signUp = function* (action) {
   }
 };
 
+const loginGoogle = function* ({ code }) {
+  yield put(push('/'));
+  const { response, error } = yield call(Api.loginExternal, { provider: 'google', body: { code } });
+  if (response) {
+    const data = response?.data;
+
+    Api.setToken(data.session);
+    crashGameApi.setToken(data.session);
+
+    yield put(
+      AuthenticationActions.loginSuccess({
+        userId: data.userId,
+        session: data.session,
+        newUser: data.newUser,
+        initialReward: data?.initialReward,
+      })
+    );
+  } else {
+    yield put(
+      AuthenticationActions.loginWithGoogleFail({
+        message: error.message,
+      })
+    );
+  }
+};
+
 const login = function* (action) {
   const payload = {
     userIdentifier: action.email,
@@ -525,6 +551,7 @@ export default {
   firstSignUpPopup,
   updateUserData,
   signUp,
+  loginGoogle,
   login,
   forgotPassword,
   resetPassword,
