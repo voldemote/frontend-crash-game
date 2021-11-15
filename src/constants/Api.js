@@ -76,6 +76,7 @@ export const API_CASH_OUT_ELON = 'api/elon-game/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_TRADES_LUCKY = 'api/trades/lucky/:gameId';
 export const API_TRADES_HIGH = 'api/trades/high/:gameId';
+export const API_TRADES_PER_USER = 'api/trades/user/:userId';
 export const API_GET_NOTIFICATION_EVENTS =
   'api/notification-events/list?limit=:limit&cat=:category';
 export const API_GET_NOTIFICATION_EVENTS_BY_GAME =

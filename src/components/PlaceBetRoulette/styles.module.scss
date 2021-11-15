@@ -46,7 +46,7 @@
   display: flex;
   width: 100%;
 
-  button{
+  button {
     width: calc(20% - 4px);
     height: 35px;
     border-radius: 10px;
@@ -55,13 +55,13 @@
     background: white;
     margin-right: 2px;
     text-align: center;
-    &:last-child{
+    &:last-child {
       margin-right: 0px;
     }
   }
 }
-.spinsleft{
-  margin-top: 12px;
+.spinsleft {
+  margin: 5px;
   text-align: center;
   .reward {
     margin: 3px;
@@ -122,17 +122,15 @@
 .sliderContainer {
   position: relative;
   bottom: -10px;
-  div{
+  div {
     margin-bottom: 0;
     @media screen and (max-width: $screen-sm) {
       margin-bottom: 1rem;
     }
-    div{
+    div {
       margin-bottom: 0;
-
     }
   }
-
 }
 .profit {
   position: relative;
@@ -162,8 +160,6 @@
   .negative {
     color: $colorRed;
   }
-
-
 }
 
 .profitPlaceholder {
@@ -236,8 +232,6 @@
   }
 }
 
-
-
 .inputContainer {
   position: relative;
   .placeBetContainer {
@@ -276,8 +270,7 @@
   bottom: 6px;
   left: -50%;
   right: -50%;
-  margin: 0px auto;
-  margin-top: 20px;
+  margin: 0px auto 20px;
   outline: 0;
   @media screen and (max-width: $screen-xs) {
     margin-top: 10px;
@@ -301,7 +294,7 @@
   }
 }
 
-.button.cancel{
+.button.cancel {
   background-image: url('../../data/backgrounds/games/cancel-button.svg');
   color: white;
 }
@@ -313,10 +306,10 @@
     cursor: wait;
   }
 }
-.notConnected{
+.notConnected {
   opacity: 0.5;
 }
-.buttonDisabled.notConnected{
+.buttonDisabled.notConnected {
   @media screen and (max-width: $screen-xs) {
     opacity: 1;
   }
@@ -425,7 +418,6 @@
     border: 2px solid $colorRed;
   }
 
-
   .eventTokenLabel {
     color: $colorGrayLight1;
     font-family: $fontRegular;
@@ -435,46 +427,39 @@
     line-height: 24px;
     letter-spacing: 0px;
     text-align: left;
-    span{
+    span {
       font-size: 30px;
     }
   }
 
-  .buttonWrapper
-  {
-      min-width: fit-content;
-      margin-left:    0px;
-      @media (min-width: $screen-lg)
-      {
-          margin-left:    30px;
-      }
-      :first-child {
-          font-size:      20px;
-      }
 
-      :nth-child(2) {
-          font-size:      16px;
-      }
+  .buttonWrapper {
+    margin-left: 0px;
+    @media (min-width: $screen-lg) {
+      margin-left: 30px;
+    }
+    :first-child {
+      font-size: 20px;
+    }
+    :nth-child(2) {
+      font-size: 16px;
+    }
 
-      :last-child {
-          font-size:      14px;
-      }
-      .toggleButton{
-
-      }
-      .buttonItem
-      {
-          margin-left:    12px;
-          font-family:    $fontMedium;
-          cursor:         pointer;
-      }
+    :last-child {
+      font-size: 14px;
+    }
+    .buttonItem {
+      margin-left: 12px;
+      font-family: $fontMedium;
+      cursor: pointer;
+    }
   }
 }
 
-.cashedOutInputContainer.demoInput{
+.cashedOutInputContainer.demoInput {
   padding-right: 1rem;
   .eventTokenLabel {
-    span{
+    span {
       font-size: 20px;
     }
   }
@@ -496,15 +481,15 @@
   text-align: left !important;
 }
 
-.betInfo{
+.betInfo {
   font-size: 14px;
   color: $colorGray;
   margin: 0 auto;
   text-align: center;
-  overflow-wrap:  anywhere;
+  overflow-wrap: anywhere;
 }
 
-.betInfo.guestInfo{
+.betInfo.guestInfo {
   padding-top: 10px;
   @media screen and (max-width: $screen-xs) {
     font-size: 12px;

@@ -27,7 +27,8 @@
     }
   }
 
-  .explanationImageContainer, .explanationTextContainer {
+  .explanationImageContainer,
+  .explanationTextContainer {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -52,7 +53,7 @@
         left: 0;
         top: 40px;
         width: 100%;
-        border-bottom: 9px solid $colorYellowLight;
+        border-bottom: 9px solid $colorLightPink;
         z-index: -1;
       }
     }
@@ -96,7 +97,8 @@
     }
   }
 
-  .swiper-pagination-progressbar, .swiper-pagination-progressbar-fill {
+  .swiper-pagination-progressbar,
+  .swiper-pagination-progressbar-fill {
     background-color: red;
   }
 
@@ -124,7 +126,6 @@
           margin-bottom: -55px;
         }
       }
-
     }
 
     @media (max-width: $screen-md) {

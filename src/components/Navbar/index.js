@@ -30,6 +30,8 @@ import AuthenticationType from '../Authentication/AuthenticationType';
 import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
+import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
+
 import moment from 'moment';
 
 const Navbar = ({
@@ -157,7 +159,7 @@ const Navbar = ({
         className={classNames(
           style.ranking,
           style.pillButton,
-          !isLoggedIn() ? style.hiddenMobile : null,
+          style.hiddenMobile,
           isOpen(drawers.leaderboard) ? style.pillButtonActive : null
         )}
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
@@ -189,12 +191,13 @@ const Navbar = ({
         className={classNames(
           style.balanceOverview,
           style.pillButton,
+          style.leaderboardValues,
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
         onClick={() => toggleOpenDrawer(drawers.wallet)}
         data-tracking-id="menu-wallet-icon"
       >
-        <Icon iconType={'wallet'} />
+        <Icon iconType={'pToken'} />
         {formatToFixed(balance, 0, true)} {currency}
       </div>
     );
@@ -291,7 +294,6 @@ const Navbar = ({
           <div className={style.leaderboardHeadingWrapper}>
             <p className={style.leaderboardHeading}>
               Community
-              <br />
               Leaderboard
             </p>
             {isLoggedIn() && (
@@ -399,7 +401,11 @@ const Navbar = ({
       <div className={classNames(style.navbarItems, style.hideOnMobile)}>
         {renderNavbarLink(
           Routes.home,
-          <img src={LogoDemo} width={200} alt={'Wallfair'} />,
+          <img
+            src={IconHeaderLogo}
+            alt="Header Logo"
+            className={style.medal}
+          />,
           true
         )}
 
@@ -411,7 +417,7 @@ const Navbar = ({
             null,
             'menu-activities'
           )}
-          {renderNavbarLink(`/events`, 'Events', null, 'menu-events')}
+          {/* {renderNavbarLink(`/events`, 'Events', null, 'menu-events')} */}
           {/*{renderNavbarLink(*/}
           {/*  `/live-events/all`,*/}
           {/*  'Live Events',*/}

@@ -109,9 +109,6 @@
       align-items: center;
       .button {
         outline: 0;
-        @media screen and (max-width: $screen-xs) {
-          margin-top: 10px;
-        }
         color: $colorBlack;
         width: 10em;
         height: 50px;
@@ -126,6 +123,10 @@
         background-repeat: no-repeat;
         background-size: contain;
         cursor: pointer;
+        @media screen and (max-width: $screen-xs) {
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
       }
     }
   }

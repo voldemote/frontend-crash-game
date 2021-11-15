@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import ContentFooter from 'components/ContentFooter';
 
 const BaseContainerWithNavbar = ({
   children,
@@ -11,6 +12,7 @@ const BaseContainerWithNavbar = ({
   user,
 }) => {
   return (
+    <>
     <div
       className={classNames(
         styles.baseContainer,
@@ -20,8 +22,11 @@ const BaseContainerWithNavbar = ({
       )}
     >
       {children}
-      <div className={'main-page-background'}></div>
-    </div>
+      <div className='main-page-background'></div>
+      <div className={styles.bottomBg}></div>
+      <ContentFooter className={styles.betFooter} />
+    </div>    
+    </>
   );
 };
 

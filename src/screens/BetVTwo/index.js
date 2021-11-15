@@ -616,7 +616,7 @@ const BetVTwo = ({
             </div>
           </div>
         )}
-        <ContentFooter className={styles.betFooter} />
+        
       </div>
     </BaseContainerWithNavbar>
   );

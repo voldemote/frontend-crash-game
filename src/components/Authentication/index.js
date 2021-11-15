@@ -418,7 +418,7 @@ const Authentication = ({
       </span>
     ) : notAllowed >= 0 ? (
       <span className={styles.errorText}>
-        Users in this country are currently unable to access Wallfair services.
+        Users in this country are currently unable to access Alpacasino services.
       </span>
     ) : (
       <CheckBox
@@ -447,12 +447,12 @@ const Authentication = ({
       <h2 className={styles.title}>
         {forgotPassword ? 'Password Reset' : action}
       </h2>
-      {isSignUp() && (
+      {/* {isSignUp() && (
         <h3 className={styles.totalCount}>
           {totalUsers}/5000 slots available
           <span className={styles.underline}></span>
         </h3>
-      )}
+      )} */}
       {renderInputBoxes()}
     </div>
   );

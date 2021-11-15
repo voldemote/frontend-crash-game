@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
-import DefaultProfilePicture from 'data/images/logo.png';
+import DefaultProfilePicture from 'data/images/alpaca-logo-mini.svg';
 import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
 
@@ -42,7 +42,7 @@ const HomeSettings = ({
           )}
           onClick={() => onReferralsClick()}
         >
-          <Icon className={styles.referralIcon} iconType={'chat'} />
+          <Icon className={styles.referralIcon} iconType={'chat'} iconTheme={`primary`}/>
           <p className={styles.settingTitle}>Referrals</p>
           <Icon
             width={15}
@@ -80,6 +80,7 @@ const HomeSettings = ({
           <Icon
             width={15}
             iconType={IconType.logout}
+            iconTheme={`primary`}
             className={classNames(styles.settingIcon)}
             style={{ width: '22px', marginLeft: '4px' }}
           />

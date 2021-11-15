@@ -1,5 +1,5 @@
 import IconType from '../components/Icon/IconType';
-import RosiImg from '../data/backgrounds/games/rosi-games-banner.png';
+import RosiImg from '../data/backgrounds/games/elon-game-banner.png';
 import First from '../data/backgrounds/games/game1-bg.png';
 import Second from '../data/backgrounds/games/game2-bg.png';
 import Third from '../data/backgrounds/games/game3-bg.png';
@@ -12,6 +12,11 @@ import AlpacaWheel from '../data/backgrounds/games/game-alpacawheel.png';
 import Plinko from '../data/backgrounds/games/game-plinko.png';
 import PumpDump from '../data/backgrounds/games/game-pump-dump.png';
 import Routes from './Routes';
+
+import gameCard1 from '../data/images/house-games/card-1.png';
+import gameCard5 from '../data/images/house-games/card-5.png';
+import gameCard3 from '../data/images/house-games/card-3.png';
+import gameCard4 from '../data/images/house-games/card-4.png';
 
 export const CASINO_GAMES = [
   {
@@ -52,7 +57,7 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
-    background: AlpacaWheel,
+    background: gameCard1,
     title: 'Alpaca Roulette',
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
@@ -60,20 +65,27 @@ export const NEW_SLOTS_GAMES = [
     linkTo: '/games/alpaca-wheel',
   },
   {
-    background: Plinko,
+    background: gameCard5,
+    title: `Oil Rush`,
+    subtitle: '',
+    active: false,
+    linkTo: '/games/oilrush',
+  },
+  {
+    background: gameCard3,
+    title: `Pump and dump`,
+    subtitle: '',
+    active: false,
+    linkTo: '/games/pump-dump',
+  },
+  {
+    background: gameCard4,
     title: 'Plinko',
     subtitle: '',
     description:
       'Jump and run on each price tick, are you heading north, south or staying put?',
     active: false,
     linkTo: '/games/plinko',
-  },
-  {
-    background: PumpDump,
-    title: `Pump and dump`,
-    subtitle: '',
-    active: false,
-    linkTo: '/games/pump-dump',
   },
   /*,
   {

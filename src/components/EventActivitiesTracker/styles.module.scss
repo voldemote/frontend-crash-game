@@ -3,16 +3,15 @@
 .activitiesTrackerContainer {
   display: flex;
   flex-direction: column;
-  padding-top: 0;
-  height: 100%;
   position: relative;
-  // margin-top:     -20vh;
+  height: 100%;
   .header {
-    height: 52px;    
+    height: 39px;
     display: flex;
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
+    background: $colorLightGray1;
   }
   .title {
     text-align: center;
@@ -21,22 +20,18 @@
   }
   .titleFirst {
     text-align: left;
-    margin-left: 24px;
     font-size: 12px;
     color: #878593;
   }
   .titleLast {
     text-align: right;
-    margin-right: 24px;
     font-size: 12px;
     color: #878593;
   }
 
   .messageItem {
     position: relative;
-    color: $colorWhite;
-    padding: 0.4rem 20px;
-    border-bottom: 1px solid $colorWhite10;
+    border-bottom: 0.5px solid $colorLightGray;
     display: inline-flex;
     display: -ms-inline-flexbox;
     display: -webkit-box;
@@ -48,7 +43,7 @@
     width: 100%;
 
     .messageFirst {
-      display: flex;      
+      display: flex;
     }
     .messageCenter {
       display: flex;
@@ -104,11 +99,10 @@
     .reward {
       color: $colorGreen;
     }
-    
-    .rewardMulti {
-      color: $colorYellow;
-    }
 
+    .rewardMulti {
+      color: $mainAction;
+    }
   }
 
   .box {
@@ -199,7 +193,7 @@
     position: relative;
     //height: 260px;
     height: 100%;
-    margin-top: 10px;
+    padding: 10px;
 
     &::-webkit-scrollbar {
       width: 0;
@@ -216,7 +210,8 @@
     width: 100%;
     height: 100%;
 
-    .activitiesSwiperButtonNext, .activitiesSwiperButtonPrev {
+    .activitiesSwiperButtonNext,
+    .activitiesSwiperButtonPrev {
       position: absolute;
       top: -5px;
       bottom: 0;
@@ -226,7 +221,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #E6FE00;
+      color: #e6fe00;
       width: 5%;
 
       &:after {
@@ -242,15 +237,37 @@
     .activitiesSwiperButtonNext {
       right: 0px;
       &:after {
-        content: "next";
+        content: 'next';
       }
     }
 
     .activitiesSwiperButtonPrev {
       left: 0;
       &:after {
-        content: "prev";
+        content: 'prev';
       }
     }
+  }
+}
+
+.hideSecondaryColumns {
+  display: none;
+  @media (min-width: $screen-md) {
+    display: block;
+  }
+}
+
+.messageFirst,
+.messageCenter,
+.messageRight,
+.title,
+.titleFirst,
+.titleLast {
+  white-space: nowrap;
+  padding: 4px 10px;
+  overflow-x: hidden;
+
+  @media (max-width: $screen-xs) {
+    padding: 4px 0px;
   }
 }

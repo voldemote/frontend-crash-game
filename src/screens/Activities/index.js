@@ -13,6 +13,8 @@ import { getTotalBetsVolumeByRange } from '../../api/crash-game';
 import { TOKEN_NAME } from '../../constants/Token';
 
 import './swiper.scss';
+import { Link } from 'react-router-dom';
+import Routes from 'constants/Routes';
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -59,6 +61,14 @@ const Activities = () => {
         })
       );
     }
+  };
+
+  const renderWallpaperBanner = () => {
+    return (
+      <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
+        <div className={styles.banner}></div>
+      </Link>
+    );
   };
 
   return (
@@ -128,7 +138,7 @@ const Activities = () => {
               ' activities-tracker-swiper'
             }
           />
-          <ContentFooter />
+          {renderWallpaperBanner()}
         </div>
       )}
     </BaseContainerWithNavbar>

@@ -13,7 +13,9 @@
   }
 }
 .tab {
-  border-bottom: 1px solid rgba(239, 239, 241, 0.4);
+  // border-bottom: 1px solid rgba(239, 239, 241, 0.4);
+  color: $colorPrimary;
+
   > :first-child {
     text-transform: capitalize;
     cursor: pointer;
@@ -23,6 +25,22 @@
     }
   }
 }
+
+.tabBackgroundActive {
+  > :first-child {
+    background: linear-gradient(
+      180deg,
+      #e82e89 0%,
+      rgba(133, 28, 79, 0.79) 100%
+    );
+    border-radius: 4px 4px 0px 0px;
+
+    @media (max-width: $screen-md) {
+      padding: 8px 20px;
+    }
+  }
+}
+
 .tabActive {
   > :first-child {
     border-bottom: 2px solid #f1ff54;

@@ -122,23 +122,6 @@ const RouletteGame = ({
     return () => clearInterval(interval);
   }, []);
 */
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (hasAcceptedTerms() && !isPopupDisplayed()) {
-        showPopup(PopupTheme.explanation);
-        localStorage.setItem('gameHowDoesItWorkTip', true);
-      }
-    }, 1000);
-    return () => clearTimeout(timerId);
-  }, []);
-
-  const hasAcceptedTerms = () => {
-    return localStorage.getItem('acceptedTerms') || false;
-  };
-
-  const isPopupDisplayed = () => {
-    return localStorage.getItem('gameHowDoesItWorkTip') || false;
-  };
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
@@ -334,7 +317,7 @@ const RouletteGame = ({
             </div>
           ) : null}
           {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-          <ContentFooter className={styles.betFooter} />
+          
         </div>
       </div>
     </BaseContainerWithNavbar>
