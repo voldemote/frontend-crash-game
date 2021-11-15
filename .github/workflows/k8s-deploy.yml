@@ -103,7 +103,7 @@ jobs:
                             --build-arg REACT_APP_CASINO_GAMES_BACKEND_URL="https://casino-api.alpacasino.io/"\
                             --build-arg REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }}\
                             --build-arg REACT_APP_RECAPTCHA_KEY=${{ secrets.REACT_APP_RECAPTCHA_KEY }}\
-                            --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_PROD_GTM_ID }}\
+                            --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_ALPA_PROD_GTM_ID }}\
                             --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_alpa_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_alpa_prod:${GITHUB_SHA::6}
