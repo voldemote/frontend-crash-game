@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -31,7 +31,6 @@ import {
   trackElonCashout,
   trackElonPlaceBet,
 } from '../../config/gtm';
-import { useParams } from 'react-router-dom';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
