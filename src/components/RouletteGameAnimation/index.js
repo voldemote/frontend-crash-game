@@ -64,7 +64,6 @@ const RouletteGameAnimation = ({
   }, [risk, amount]);
 
   useEffect(() => {
-    console.log("bet", bet.amount)
     if (bet.amount) {
       AnimationController.reinit(canvasRef.current, {
         width: backgroundRef.current.clientWidth,
