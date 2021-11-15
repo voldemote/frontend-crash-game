@@ -61,8 +61,22 @@
   }
 }
 .spinsleft{
-  margin: 5px;
+  margin-top: 12px;
   text-align: center;
+  .reward {
+    margin: 3px;
+    color: $colorGreen;
+    font-weight: bold;
+  }
+  .neutral {
+    margin: 3px;
+    font-weight: bold;
+  }
+  .lost {
+    margin: 3px;
+    color: $colorRed;
+    font-weight: bold;
+  }
 }
 .container {
   position: relative;

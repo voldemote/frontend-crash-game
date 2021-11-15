@@ -888,12 +888,18 @@ const PlaceBetRoulette = ({
             </div>
               {nuspin.autobet &&
                 <div className={styles.spinsleft}>
-                  {Math.floor(accumulated)} PFAIR Accumulated
+                  <span className={accumulated > 0 ? styles.reward : styles.lost}>
+                  {Math.floor(accumulated)} PFAIR
+                  </span>
+                  accumulated
                 </div>
               }
               {nuspin.autobet && nuspin.amount &&
                 <div className={styles.spinsleft}>
-                  Bet Amount {Math.floor(nuspin.amount)} PFAIR
+                  Current bet:
+                  <span className={styles.neutral}>
+                  {Math.floor(nuspin.amount)} PFAIR
+                  </span>
                 </div>
               }
               {nuspin.nspin > 0 &&
