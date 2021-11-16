@@ -74,7 +74,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
         refreshLuckyData();
         break;
       case 3:
-        if(userId) refreshMyBetsData({userId});
+        if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
         break;
     }
     setActivityTabIndex(index);
@@ -93,7 +93,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
   useEffect(() => {
     refreshHighData();
     refreshLuckyData();
-    if(userId) refreshMyBetsData({userId});
+    if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
   }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
@@ -380,12 +380,14 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   className={styles.activitiesTrackerGamesBlock}
                   preselectedCategory={'game'}
                   hideSecondaryColumns={true}
+                  layout='wide'
                 />
               )}
               {activityTabIndex !== 0 && (
                 <ActivityTable
                   hideSecondaryColumns={true}
                   rowData={getActivityTableData()}
+                  layout='wide'
                 />
               )}
             </div>
