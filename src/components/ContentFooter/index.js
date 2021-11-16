@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.scss';
-import LogoDemo from '../../data/images/logo-demo.svg';
+import LogoDemo from '../../data/images/alpaca-logo.svg';
 import GitHubLogo from '../../data/icons/github.svg';
 import FairTradeIcon from '../../data/icons/fair-trade.svg';
 import BlockchainIcon from '../../data/icons/blockchain.svg';
 import NoMiddleMan from '../../data/icons/no-middle-man.svg';
 import OpenSourceIcon from '../../data/icons/open-source.svg';
-import PrivacyDoc from '../../data/docs/wallfair-privacy.pdf';
 
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -25,8 +24,17 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   return (
     <div className={styles.container}>
       <div className={classNames(styles.footer, className)}>
-        <img src={LogoDemo} width={150} alt={'Wallfair'} />
+        <img src={LogoDemo} width={150} alt={'Alpacasino'} />
 
+        <SocialIcons
+          className={styles.socialIcons}
+          dataTrackingIds={{
+            telegram: 'footer-telegram-click',
+            instagram: 'footer-instagram-click',
+            // twitter: 'footer-twitter-click',
+          }}
+        />
+        
         <div className={styles.links}>
           <div className={styles.column}>
             <div className={styles.firstRow}>
@@ -35,17 +43,17 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 onClick={openLeaderboard}
                 href="#"
               >
-                Leaderboard
+                <p>Leaderboard</p>
               </button>
 
-              <a
-                href="https://wallfair.io/career"
+              {/* <a
+                href="https://wallfair.io/about-us"
                 target="_blank"
                 rel="noreferrer"
                 data-tracking-id="footer-career"
               >
                 Career
-              </a>
+              </a> */}
             </div>
 
             <div className={styles.firstRow}>
@@ -55,7 +63,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 rel="noreferrer"
                 data-tracking-id="footer-buy-wfair"
               >
-                Buy WFAIR real tokens
+                <p>Buy WFAIR real tokens</p>
               </a>
 
               <a
@@ -65,44 +73,38 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 data-tracking-id="footer-source-code"
               >
                 <img src={GitHubLogo} width={18} alt={'Github Logo'} />
-                Source Code
+                <p>Source Code</p>
               </a>
             </div>
 
             <div className={styles.secondRow}>
-              <Link data-tracking-id="footer-imprint" to={'/privacy-policy'}>
+              {/* <Link data-tracking-id="footer-imprint" to={'/privacy-policy'}>
                 Imprint
-              </Link>
+              </Link> */}
 
-              <Link
+              <a
                 data-tracking-id="footer-terms"
-                to={'/terms-and-conditions'}
-              >
-                {'Terms & Conditions'}
-              </Link>
-
-              <Link
-                data-tracking-id="footer-privacy"
-                to={PrivacyDoc}
+                href="https://files.wallfair.io/docs/alpacasino_tc_new.pdf"
                 target="_blank"
+                rel="noreferrer"
               >
-                {'Privacy Policy'}
-              </Link>
+                <p>{'Terms & Conditions'}</p>
+              </a>
+
+              <a
+                data-tracking-id="footer-privacy"
+                href="https://files.wallfair.io/docs/privacy_policy_alpacasino.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <p>{'Privacy Policy'}</p>
+              </a>
             </div>
           </div>
         </div>
-
-        <SocialIcons
-          className={styles.socialIcons}
-          dataTrackingIds={{
-            telegram: 'footer-telegram-click',
-            instagram: 'footer-instagram-click',
-            twitter: 'footer-twitter-click',
-          }}
-        />
       </div>
 
-      <div className={classNames(styles.iconsContainer, className)}>
+      {/* <div className={classNames(styles.iconsContainer, className)}>
         <div className={styles.icon}>
           <img src={FairTradeIcon} alt="Fair trade icon" />
           <span>100% fair</span>
@@ -119,7 +121,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           <img src={NoMiddleMan} alt="No middle man icon" />
           <span>No middle man</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

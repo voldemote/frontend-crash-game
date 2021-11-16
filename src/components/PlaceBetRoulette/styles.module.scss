@@ -1,38 +1,94 @@
 @import '../../styles/all';
 
+.selector{
+  width: 100%;//314px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background: rgba(128, 128, 128, 0.24);
+  border-radius: 10px;
+  justify-content: flex-start;
+  position: relative;
+  .top{
+    width: 50%;//155px;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 10px;
+    background: #fff;
+    height: 80%;
+    top: 10%;
+    left: 5px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+  }
+  .tab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    width: 50%;//208px;
+    img{
+      margin-right: 18px;
+    }
+    span{
+      font-weight: 600;
+      font-style: normal;
+      font-size: 16px;
+      color: #120e27;
+      letter-spacing: 0;
+      z-index: 10;
+    }
+  }
+}
+
 .riskSelection{
   display: flex;
   width: 100%;
 
-  button{
+  button {
     width: calc(20% - 4px);
-    height: 45px;
+    height: 35px;
     border-radius: 10px;
     cursor: pointer;
     border: 1.2px solid rgba(14, 9, 39, 0.3);
     background: white;
     margin-right: 2px;
     text-align: center;
-    &:last-child{
+    &:last-child {
       margin-right: 0px;
     }
   }
 }
-.spinsleft{
+.spinsleft {
   margin: 5px;
   text-align: center;
+  .reward {
+    margin: 3px;
+    color: $colorGreen;
+    font-weight: bold;
+  }
+  .neutral {
+    margin: 3px;
+    font-weight: bold;
+  }
+  .lost {
+    margin: 3px;
+    color: $colorRed;
+    font-weight: bold;
+  }
 }
 .container {
   position: relative;
   background: #fff;
   border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 10px;
-  padding: 10px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
   margin-bottom: 14px;
 
   @media screen and (max-width: $screen-md) {
     margin-top: 7px;
-    padding: 5px 20px;
+    padding: 10px;
   }
 }
 
@@ -66,17 +122,15 @@
 .sliderContainer {
   position: relative;
   bottom: -10px;
-  div{
+  div {
     margin-bottom: 0;
     @media screen and (max-width: $screen-sm) {
       margin-bottom: 1rem;
     }
-    div{
+    div {
       margin-bottom: 0;
-
     }
   }
-
 }
 .profit {
   position: relative;
@@ -106,8 +160,6 @@
   .negative {
     color: $colorRed;
   }
-
-
 }
 
 .profitPlaceholder {
@@ -134,7 +186,7 @@
   width: 100%;
   align-items: center;
   padding: 10.5px 25px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -180,8 +232,6 @@
   }
 }
 
-
-
 .inputContainer {
   position: relative;
   .placeBetContainer {
@@ -220,8 +270,7 @@
   bottom: 6px;
   left: -50%;
   right: -50%;
-  margin: 0px auto;
-  margin-top: 20px;
+  margin: 0px auto 20px;
   outline: 0;
   @media screen and (max-width: $screen-xs) {
     margin-top: 10px;
@@ -245,7 +294,7 @@
   }
 }
 
-.button.cancel{
+.button.cancel {
   background-image: url('../../data/backgrounds/games/cancel-button.svg');
   color: white;
 }
@@ -257,8 +306,10 @@
     cursor: wait;
   }
 }
-
-.buttonDisabled.notConnected{
+.notConnected {
+  opacity: 0.5;
+}
+.buttonDisabled.notConnected {
   @media screen and (max-width: $screen-xs) {
     opacity: 1;
   }
@@ -284,15 +335,48 @@
 }
 .sliderContainer {
   position: relative;
-  margin-bottom: -20px;
+  margin-bottom: 20px;
 }
-
+.toggleButton{
+  position: absolute;
+  left: 2px;
+  width: 120px;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .buttonItem{
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 57px;
+    font-size: 14px;
+    color: #120e27;
+    padding: 5px;
+    z-index: 10;
+    &:hover{
+      font-weight: bold;
+    }
+  }
+  .toggleLabel{
+    width: 72px;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 10px;
+    height: 72%;
+    top: 14%;
+    left: 0px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+    background: rgba(128, 128, 128, 0.24);
+  }
+}
 .cashedOutInputContainer {
   display: flex;
   width: 100%;
   align-items: center;
   padding: 10.5px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -305,7 +389,9 @@
   @media (max-width: $screen-sm) {
     padding-right: 120px;
   }
-
+  .increase{
+    width: 45px!important;
+  }
   .input {
     flex: none;
     text-align: right;
@@ -332,7 +418,6 @@
     border: 2px solid $colorRed;
   }
 
-
   .eventTokenLabel {
     color: $colorGrayLight1;
     font-family: $fontRegular;
@@ -342,42 +427,39 @@
     line-height: 24px;
     letter-spacing: 0px;
     text-align: left;
-    span{
+    span {
       font-size: 30px;
     }
   }
 
-  .buttonWrapper
-  {
-      margin-left:    0px;
-      @media (min-width: $screen-lg)
-      {
-          margin-left:    30px;
-      }
-      :first-child {
-          font-size:      20px;
-      }
 
-      :nth-child(2) {
-          font-size:      16px;
-      }
+  .buttonWrapper {
+    margin-left: 0px;
+    @media (min-width: $screen-lg) {
+      margin-left: 30px;
+    }
+    :first-child {
+      font-size: 20px;
+    }
+    :nth-child(2) {
+      font-size: 16px;
+    }
 
-      :last-child {
-          font-size:      14px;
-      }
-      .buttonItem
-      {
-          margin-left:    12px;
-          font-family:    $fontMedium;
-          cursor:         pointer;
-      }
+    :last-child {
+      font-size: 14px;
+    }
+    .buttonItem {
+      margin-left: 12px;
+      font-family: $fontMedium;
+      cursor: pointer;
+    }
   }
 }
 
-.cashedOutInputContainer.demoInput{
+.cashedOutInputContainer.demoInput {
   padding-right: 1rem;
   .eventTokenLabel {
-    span{
+    span {
       font-size: 20px;
     }
   }
@@ -399,15 +481,15 @@
   text-align: left !important;
 }
 
-.betInfo{
+.betInfo {
   font-size: 14px;
   color: $colorGray;
   margin: 0 auto;
   text-align: center;
-  overflow-wrap:  anywhere;
+  overflow-wrap: anywhere;
 }
 
-.betInfo.guestInfo{
+.betInfo.guestInfo {
   padding-top: 10px;
   @media screen and (max-width: $screen-xs) {
     font-size: 12px;

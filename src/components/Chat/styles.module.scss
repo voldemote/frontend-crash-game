@@ -44,14 +44,32 @@
     }
   }
 
-  .messageInput {
+  .messageInputWrapper {
+    position: relative;
+    z-index: 1;
     background-color: $colorWhite;
+
+    &::before {
+      position: absolute;
+      content: '';
+      background-image: url('../../data/images/alpaca-icon-chat.svg');
+      width: 120px;
+      height: 160px;
+      bottom: -12px;
+      right: -37px;
+      z-index: -1;
+    }
+  }
+  .messageInput {
+    background-color: $colorLightGray3;
     color: $colorPrimaryDark;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 10px;
+    position: relative;
+    // z-index: 1;
 
     @media (max-width: $screen-sm) {
       position: fixed;
@@ -73,7 +91,6 @@
 
     &.disabled {
       pointer-events: none;
-      opacity: 0.8;
     }
 
     input {
@@ -83,7 +100,7 @@
       font-size: 12px;
 
       @media (max-width: $screen-sm) {
-        background-color: $colorGrayLight5;
+        background-color: transparent;
         min-height: 45px;
         padding-left: 10px;
         border-radius: 5px;

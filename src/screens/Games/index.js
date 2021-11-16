@@ -26,7 +26,7 @@ const Games = () => {
           games={showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES}
           category="House Games"
         />
-        <ContentFooter />
+        
       </div>
     </BaseContainerWithNavbar>
   );

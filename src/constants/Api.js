@@ -5,7 +5,7 @@ export const BACKEND_URL =
 export const BACKEND_SOCKET_URL =
   process.env.REACT_APP_SOCKET_URL || 'https://comm-dev-api.wallfair.io/';
 export const CRASH_GAME_BACKEND_URL =
-  process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8001/';
+  process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8003/';
 export const CRASH_GAMES_BACKEND_URL =
     process.env.REACT_APP_CASINO_GAMES_BACKEND_URL || 'http://localhost:8003/';
 export const SECOND_CRASH_GAME_BACKEND_URL =
@@ -57,7 +57,8 @@ export const API_USER_OPEN_BETS = 'api/user/open-bets';
 export const API_USER_TRADE_HISTORY = 'api/user/trade-history';
 export const API_USER_REFERRAL_LIST = 'api/user/refList';
 export const API_TAGS_LIST = 'api/event/tags';
-export const API_CURRENT = 'api/current';
+export const API_CURRENT_ELON = 'api/elon-game/current';
+export const API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES = 'api/simple-games/current/:gameTypeId';
 export const API_CHART_DATA = 'api/event/bet/:betId/history';
 export const API_CHAT_MESSAGES =
   'api/chat/chat-messages/:roomId?skip=:skip&limit=:limit';
@@ -69,12 +70,13 @@ export const API_EVENT_GET_COVER_STREAM = 'api/event/cover/streamed';
 export const API_BET_RESOLVE = 'api/event/bet/:id/resolve';
 export const API_BET_CANCEL = 'api/event/bet/:id/cancel';
 export const API_BET_DELETE = 'api/event/bet/:id/delete';
-export const API_TRADE_CREATE = 'api/trade';
-export const API_WHEEL_BET = 'api/trade/wheel';
-export const API_CASH_OUT = 'api/cashout';
+export const API_TRADE_CREATE_ELON = 'api/elon-game/trade';
+export const API_WHEEL_BET = 'api/simple-games/trade/wheel';
+export const API_CASH_OUT_ELON = 'api/elon-game/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_TRADES_LUCKY = 'api/trades/lucky/:gameId';
 export const API_TRADES_HIGH = 'api/trades/high/:gameId';
+export const API_TRADES_PER_USER = 'api/trades/user/:userId';
 export const API_GET_NOTIFICATION_EVENTS =
   'api/notification-events/list?limit=:limit&cat=:category';
 export const API_GET_NOTIFICATION_EVENTS_BY_GAME =
@@ -89,5 +91,5 @@ export const API_AUTH_FORGOT_PASSWORD = 'api/auth/forgot-password';
 export const API_AUTH_RESET_PASSWORD = 'api/auth/reset-password';
 //3rd parties
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
-export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/matches/:gameId';
+export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/matches/:gameId';
 export const CRASH_GAME_GET_VOLUME_BETS = 'api/globalstats/:range';

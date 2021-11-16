@@ -1,7 +1,7 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import { CRASH_GAME_GET_VOLUME_BETS } from '../constants/Api';
+import {API_CURRENT_ELON, CRASH_GAME_GET_VOLUME_BETS} from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -28,25 +28,25 @@ class GameApi {
   };
 
   createTrade = payload => {
-    return this.api.post(ApiUrls.API_TRADE_CREATE, payload).catch(error => {
+    return this.api.post(ApiUrls.API_TRADE_CREATE_ELON, payload).catch(error => {
       console.log('[API Error] called: createTrade', error);
       throw error;
     });
   };
 
   cancelBet = () =>
-    this.api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {
+    this.api.delete(ApiUrls.API_TRADE_CREATE_ELON).catch(error => {
       throw error;
     });
 
   getCurrentGameInfo = () => {
-    return this.api.get(ApiUrls.API_CURRENT).catch(error => {
+    return this.api.get(ApiUrls.API_CURRENT_ELON).catch(error => {
       console.log('[API Error] called: getCurrentGameInfo', error);
     });
   };
 
   cashOut = () => {
-    return this.api.post(ApiUrls.API_CASH_OUT, {}).catch(error => {
+    return this.api.post(ApiUrls.API_CASH_OUT_ELON, {}).catch(error => {
       console.log('[API Error] called: Cash Out', error);
       throw error;
     });
@@ -76,7 +76,8 @@ class GameApi {
   });
 
   getLuckyUsers = gameId => {
-    return Api.get(ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId)).then(
+    const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
+    return Api.get(url).then(
       response => ({
         data: response.data.map(transformUser),
       })
@@ -84,7 +85,8 @@ class GameApi {
   };
 
   getHighUsers = gameId => {
-    return Api.get(ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId)).then(
+    const url = gameId ? ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId) : ApiUrls.API_TRADES_HIGH.replace('/:gameId', '');
+    return Api.get(url).then(
       response => ({
         data: response.data.map(transformUser),
       })
@@ -101,25 +103,25 @@ const setToken = token => {
 };
 
 const createTrade = payload => {
-  return Api.post(ApiUrls.API_TRADE_CREATE, payload).catch(error => {
+  return Api.post(ApiUrls.API_TRADE_CREATE_ELON, payload).catch(error => {
     console.log('[API Error] called: createTrade', error);
     throw error;
   });
 };
 
 const cancelBet = () =>
-  Api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {
+  Api.delete(ApiUrls.API_TRADE_CREATE_ELON).catch(error => {
     throw error;
   });
 
 const getCurrentGameInfo = () => {
-  return Api.get(ApiUrls.API_CURRENT).catch(error => {
+  return Api.get(ApiUrls.API_CURRENT_ELON).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
 
 const cashOut = () => {
-  return Api.post(ApiUrls.API_CASH_OUT, {}).catch(error => {
+  return Api.post(ApiUrls.API_CASH_OUT_ELON, {}).catch(error => {
     console.log('[API Error] called: Cash Out', error);
     throw error;
   });
@@ -150,9 +152,9 @@ const transformUser = user => ({
 });
 
 const getLuckyUsers = data => {
-  const { gameId } = data;
-
-  return Api.get(ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId)).then(
+  const { gameId } = data || {};
+  const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
+  return Api.get(url).then(
     response => ({
       data: response.data.map(transformUser),
     })
@@ -160,9 +162,18 @@ const getLuckyUsers = data => {
 };
 
 const getHighUsers = data => {
-  const { gameId } = data;
+  const { gameId } = data || {};
+  const url = gameId ? ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId) : ApiUrls.API_TRADES_HIGH.replace('/:gameId', '');
+  return Api.get(url).then(
+    response => ({
+      data: response.data.map(transformUser),
+    })
+  );
+};
 
-  return Api.get(ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId)).then(
+const getUserBets = data => {
+  const { userId } = data || {};
+  return Api.get(ApiUrls.API_TRADES_PER_USER.replace(':userId', userId)).then(
     response => ({
       data: response.data.map(transformUser),
     })
@@ -186,4 +197,5 @@ export {
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
+  getUserBets,
 };

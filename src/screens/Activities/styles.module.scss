@@ -12,6 +12,10 @@
 
   .activitiesTrackerContainerFull {
     height: auto;
+    border: 1px solid $colorGrayLight;
+    border-radius: 12px;
+    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
+      0px 2px 2px rgba(159, 162, 191, 0.32);
   }
 
   .globalStats {
@@ -33,11 +37,14 @@
     width: 100%;
 
     .statItem {
-      background-color: #100D27;
-      border-radius: 20px;
+      background-color: $colorWhite;
+      border-radius: 50px;
+      border: 1px solid $colorLightGray;
       width: 16%;
       padding: 15px 10px;
       margin-bottom: 10px;
+      box-shadow: 0px 2px 3px rgba(159, 162, 191, 0.18),
+        0px 1px 1px rgba(159, 162, 191, 0.32);
 
       @media (max-width: $screen-lg) {
         width: 33%;
@@ -55,24 +62,51 @@
         font-weight: bold;
         display: flex;
         align-items: center;
-        font-size: 14px;
+        font-family: $fontRegular;
+        font-size: 16px;
         justify-content: center;
         flex-wrap: wrap;
         flex-direction: column;
+        color: $colorPrimary;
 
         span {
           font-size: 16px;
-          color: $colorYellow;
+          color: $colorPinkDark;
+          font-family: $fontBold;
         }
       }
 
       .statItemHint {
         margin-top: 5px;
         font-size: 12px;
-        line-height: 1.10;
+        line-height: 1.1;
         text-align: center;
-        color: #5C5C6D;
+        color: #5c5c6d;
       }
     }
+  }
+}
+.banner {
+  margin-top: 50px;
+  background-image: url('../../data/backgrounds/games/alpaca-wallpaper-banner.png');
+  min-height: 208px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: '';
+    background-image: url('../../data/images/alpaca-logo-banner.png');
+    width: 145px;
+    height: 165px;
+    bottom: -15px;
+    right: -60px;
+  }
+
+  @media (max-width: $screen-md) {
+    background-image: url('../../data/backgrounds/games/wallpaper-banner-mobile.png');
+    height: 100%;
+    background-position: center;
   }
 }

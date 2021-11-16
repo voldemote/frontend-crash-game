@@ -34,6 +34,7 @@ export default {
   hourglass: 'hourglass',
   info: 'info',
   infoReverse: 'infoReverse',
+  leaderboard: 'leaderboard',
   logoSmall: 'logoSmall',
   logout: 'logout',
   mailAddress: 'mailAddress',
@@ -61,4 +62,8 @@ export default {
   shareLink: 'shareLink',
   star: 'star',
   starFull: 'starFull',
+  pToken: 'pToken',
+  leaderboardRanking: 'leaderboardRanking',
+  leaderboardUser: 'leaderboardUser',
+  leaderboardToken: 'leaderboardToken'
 };

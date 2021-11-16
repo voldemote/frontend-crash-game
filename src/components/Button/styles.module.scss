@@ -1,83 +1,69 @@
 @import '../../styles/all';
 
-.button
-{
-    display:          flex;
-    position:         relative;
-    align-items:      center;
-    justify-content:  center;
-    height:           60px;
-    border-radius:    10px;
-    background-color: $colorYellow;
-    color:            $colorPrimary;
-    font-size:        20px;
-    font-family:      $fontBold;
-    letter-spacing:   0;
-    user-select:      none;
+.button {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  border-radius: 10px;
+  background-color: $colorYellow;
+  color: $colorPrimary;
+  font-size: 20px;
+  font-family: $fontBold;
+  letter-spacing: 0;
+  user-select: none;
 
-    &:hover
-    {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 
-    &.buttonFixed
-    {
-        position: fixed;
-        bottom:   0;
-    }
+  &.buttonFixed {
+    position: fixed;
+    bottom: 0;
+  }
 
-    &.withoutBackground
-    {
-        background-color: transparent;
-    }
+  &.withoutBackground {
+    background-color: transparent;
+  }
 
-    &.disabled
-    {
-        cursor: default;
-    }
+  &.disabled {
+    cursor: default;
+  }
 
-    &.authenticationScreenButton
-    {
-        padding:       0 2rem;
-        width:         100%;
-        border-radius: 0;
-    }
+  &.authenticationScreenButton {
+    padding: 0 2rem;
+    width: 100%;
+    border-radius: 0;
+  }
 
-    &.welcomeScreenButton
-    {
-        width:      100%;
-        margin-top: auto;
+  &.welcomeScreenButton {
+    width: 100%;
+    margin-top: auto;
 
-        @media (min-width: $screen-sm)
-        {
-            display: none;
-        }
+    @media (min-width: $screen-sm) {
+      display: none;
     }
+  }
 
-    .buttonDisabledOverlay
-    {
-        position:         absolute;
-        background-color: $colorPrimary66;
-        border-radius:    10px;
-        left:             0;
-        width:            100%;
-        height:           100%;
-        cursor:           not-allowed !important;
-    }
+  .buttonDisabledOverlay {
+    position: absolute;
+    // background-color: $colorPrimary66;
+    border-radius: 10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed !important;
+  }
 
-    > *
-    {
-        &:not(.buttonDisabledOverlay):not(.highlight)
-        {
-            z-index: 1;
-        }
+  > * {
+    &:not(.buttonDisabledOverlay):not(.highlight) {
+      z-index: 1;
     }
-    .buttonText{
-      &:not(.buttonDisabledOverlay):not(.highlight)
-      {
-        z-index: 2;
-      }
+  }
+  .buttonText {
+    &:not(.buttonDisabledOverlay):not(.highlight) {
+      z-index: 2;
     }
+  }
 }
-
-

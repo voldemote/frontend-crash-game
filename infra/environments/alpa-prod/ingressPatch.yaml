@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-frontend
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/protocols: "https"
+    kubernetes.io/tls-acme: "true"
+    konghq.com/https-redirect-status-code: "301"
+    # reference production issuer
+    cert-manager.io/cluster-issuer: "letsencrypt-issuer-kong"
+
+spec:
+  tls:
+    - hosts:
+        - play.alpacasino.io
+      secretName: frontend-cert-secret
+  rules:
+    - host: play.alpacasino.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-main
+                port:
+                  number: 80

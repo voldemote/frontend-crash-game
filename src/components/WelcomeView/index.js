@@ -40,7 +40,7 @@ const WelcomeView = ({ hidePopup, visible, initialReward }) => {
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
         <span className={styles.welcomeHeadline}>
-          to get you started on the full Wallfair experience!
+          to get you started on the full Alpacasino experience!
         </span>
         <span className={styles.welcomeTextText}>
           Refer a friend and get additional 500 {TOKEN_NAME}.
@@ -55,7 +55,7 @@ const WelcomeView = ({ hidePopup, visible, initialReward }) => {
         <span className={styles.disclaimer}>
           * Please be aware that the platform you are currently using is based
           on the virtual {TOKEN_NAME} tokens that have been implemented with the
-          purpose to provide a full impression of the Wallfair gaming
+          purpose to provide a full impression of the Alpacasino gaming
           experience.{' '}
           {!readMore && (
             <span className={styles.readmore} onClick={handleClickReadMore}>

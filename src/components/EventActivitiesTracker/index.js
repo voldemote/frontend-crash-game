@@ -83,6 +83,7 @@ const EventActivitiesTracker = ({
   userId,
   preselectedCategory,
   gameId,
+  hideSecondaryColumns = false
 }) => {
   const messageListRef = useRef();
 
@@ -148,6 +149,13 @@ const EventActivitiesTracker = ({
         return true;
       }
 
+      if(gameId) {
+        return (gameId === item.data.gameTypeId) && (
+          item.type === 'Casino/CASINO_CASHOUT' ||
+          item.type === 'Casino/EVENT_CASINO_LOST'
+        )
+      }
+
       return (
         item.type === 'Casino/CASINO_CASHOUT' ||
         item.type === 'Casino/EVENT_CASINO_LOST'
@@ -177,7 +185,7 @@ const EventActivitiesTracker = ({
       }
 
       return (
-        <ActivityMessage key={index} activity={activityMessage} date={date} />
+        <ActivityMessage key={index} activity={activityMessage} date={date} hideSecondaryColumns={hideSecondaryColumns}/>
       );
     });
   };
@@ -205,13 +213,13 @@ const EventActivitiesTracker = ({
           <Grid item xs>
             <p className={styles.titleFirst}>GAME</p>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <p className={styles.title}>USER</p>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <p className={styles.title}>TRADE</p>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <p className={styles.title}>MULT</p>
           </Grid>
           <Grid item xs>

@@ -104,6 +104,7 @@ const UserProfile = () => {
               fetch={true}
               headingClass={styles.heading}
               userRef={user}
+              className={styles.leaderboardTable}
             />
           </div>
         );
