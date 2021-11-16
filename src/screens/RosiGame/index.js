@@ -144,6 +144,7 @@ const RosiGame = ({
     if (!payload) return;
     try {
       const result = await Api.createTrade(payload);
+      console.log("result", result)
       trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
       dispatch(RosiGameActions.setUserBet(payload));
       return result;
@@ -347,7 +348,7 @@ const RosiGame = ({
             </div>
           ) : null}
           {renderWallpaperBanner()}
-          
+
         </div>
       </div>
     </BaseContainerWithNavbar>

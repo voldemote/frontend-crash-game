@@ -17,7 +17,7 @@ import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
 //import GameAudioControls from '../GameAudioControls';
 import AnimationController from './AnimationController';
-
+import Stage from './plinko'
 /*
 const PreparingRound = ({ nextGameAt }) => (
   <div className={styles.preparingRound}>
@@ -66,6 +66,8 @@ const RouletteGameAnimation = ({
   const [running, setRunning] = useState(false);
   const [isAnimationReady, setAnimationReady] = useState(false);
   const [audio, setAudio] = useState(null);
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
   /*
   useEffect(() => {
     AnimationController.init(canvasRef.current, {
@@ -75,14 +77,22 @@ const RouletteGameAnimation = ({
     AnimationController.repaint(0);
   }, []);
 */
+useEffect(()=>{
+  if(backgroundRef){
+    console.log("cc",backgroundRef.current)
+    setWidth(backgroundRef.current.clientWidth)
+    setHeight(backgroundRef.current.clientHeight)
+  }
+
+},[])
   const spin = async () => {
     const newspin = await AnimationController.spinTo();
     setSpins(newspin);
   };
   return (
+
     <div ref={backgroundRef} className={styles.animation}>
-      {/*<canvas className={styles.canvas} onClick={spin} ref={canvasRef}></canvas>
-       */}
+      {width && height && <Stage width={width} height={height}></Stage>}
     </div>
   );
 };
