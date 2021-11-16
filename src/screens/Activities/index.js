@@ -16,7 +16,7 @@ import './swiper.scss';
 import { Link } from 'react-router-dom';
 import Routes from 'constants/Routes';
 
-const Activities = () => {
+const Activities = ({showBets = false}) => {
   const dispatch = useDispatch();
 
   const [data24h, setData24h] = useState();
@@ -77,27 +77,31 @@ const Activities = () => {
         <div className={styles.container}>
           <div className={styles.globalStats}>
             <div className={styles.statsBlock}>
-              <div className={styles.statItem}>
-                <div className={styles.statItemHead}>
-                  <span>{toNumericString(data24h?.trades)}</span> 24h # of bets
+              {showBets && (
+                <>
+                <div className={styles.statItem}>
+                  <div className={styles.statItemHead}>
+                    <span>{toNumericString(data24h?.trades)}</span> 24h # of bets
+                  </div>
+                  {/*<div className={styles.statItemHint}>last 24 hours</div>*/}
                 </div>
-                {/*<div className={styles.statItemHint}>last 24 hours</div>*/}
-              </div>
-              <div className={styles.statItem}>
-                <div className={styles.statItemHead}>
-                  <span>{toNumericString(dataLastWeek?.trades)}</span> 7d # of
-                  bets
+                <div className={styles.statItem}>
+                  <div className={styles.statItemHead}>
+                    <span>{toNumericString(dataLastWeek?.trades)}</span> 7d # of
+                    bets
+                  </div>
+                  {/*<div className={styles.statItemHint}>last week</div>*/}
                 </div>
-                {/*<div className={styles.statItemHint}>last week</div>*/}
-              </div>
 
-              <div className={styles.statItem}>
-                <div className={styles.statItemHead}>
-                  <span>{toNumericString(dataAllTime?.trades)}</span> Total # of
-                  bets
+                <div className={styles.statItem}>
+                  <div className={styles.statItemHead}>
+                    <span>{toNumericString(dataAllTime?.trades)}</span> Total # of
+                    bets
+                  </div>
+                  {/*<div className={styles.statItemHint}>all time</div>*/}
                 </div>
-                {/*<div className={styles.statItemHint}>all time</div>*/}
-              </div>
+                </>
+              )}
 
               <div className={styles.statItem}>
                 <div className={styles.statItemHead}>
@@ -137,6 +141,7 @@ const Activities = () => {
               styles.activitiesTrackerContainerFull +
               ' activities-tracker-swiper'
             }
+            showBets={showBets}
           />
           {renderWallpaperBanner()}
         </div>

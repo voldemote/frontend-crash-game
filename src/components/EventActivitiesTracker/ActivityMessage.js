@@ -12,7 +12,7 @@ import ActivityTableRow from './ActivityTableRow';
 import { roundToTwo } from '../../helper/FormatNumbers';
 import { getGameById } from '../../helper/Games';
 
-const ActivityMessage = ({ activity, users, hideSecondaryColumns }) => {
+const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
   const getUserProfileUrl = data => {
     let user = _.get(data, 'user');
     let userId = _.get(user, '_id');
@@ -74,6 +74,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns }) => {
             type={'cashout'}
             gameLabel={gameLabel}
             hideSecondaryColumns={hideSecondaryColumns}
+            layout={layout}
           />
         );
       case 'Casino/EVENT_CASINO_LOST': {
@@ -89,9 +90,10 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns }) => {
         return (
           <ActivityTableRow
             data={rowData}
-            type={'lost'}
+            type={'cashout'}
             gameLabel={gameLabel}
             hideSecondaryColumns={hideSecondaryColumns}
+            layout={layout}
           />
         );
       }
