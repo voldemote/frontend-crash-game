@@ -6,11 +6,50 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import GameAudioControls from 'components/GameAudioControls';
 import { RosiGameActions } from 'store/actions/rosi-game';
-import { GameAudioManager } from './GameAudioManager';
-import { GameScene } from './game/scenes/GameScene';
+import { GameAudioManager } from './utils/GameAudioManager';
 import { PumpDumpGameMananger } from './game/PumpDumpGameManager';
+import Counter from 'components/RosiGameAnimation/Counter';
+import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
+import Timer from 'components/RosiGameAnimation/Timer';
+import { ASSET_LIST } from './config';
 
-const PumpDumpAnimation = ({ muteButtonClick }) => {
+const PreparingRound = ({ nextGameAt }) => (
+  <div className={styles.preparingRound}>
+    <div>
+      <h2 className={styles.title}>Launching new ICO</h2>
+      <div className={styles.description}>
+        <span>
+          Starting in <Counter className={styles.counter} from={nextGameAt} />
+        </span>
+      </div>
+    </div>
+  </div>
+)
+
+const GameMount = (setAudio, setGameLoaded, nextGameAtTimeStamp, canvasRef) => {
+  const audioManager = new GameAudioManager();
+  if (canvasRef.current) {
+    setAudio(audioManager);
+    PumpDumpGameMananger.initialize(0x12132e, canvasRef.current);
+    PumpDumpGameMananger.load(ASSET_LIST, () => {
+      if (!PumpDumpGameMananger.isGameRunning) {
+        PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
+      }
+      setGameLoaded(true);
+    });
+  }
+  return () => audioManager.stopBgm();
+}
+
+const CashOut = (cashedOut) => {
+  if (cashedOut.length > 0) {
+    for (const cashOut of cashedOut) {
+      PumpDumpGameMananger.doCashedOutAnimation(cashOut);
+    }
+  }
+}
+
+const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
   const {
     isConnected,
     isMute,
@@ -26,23 +65,78 @@ const PumpDumpAnimation = ({ muteButtonClick }) => {
     nextGameAtTimeStamp,
     gameStartedTimeStamp,
   } = useRosiData();
-  const [isPreparingRound, setIsPreparingRound] = useState(!hasStarted);
-  const [isAnimationReady, setAnimationReady] = useState(false);
+  const [hasGameLoaded, setGameLoaded] = useState(false);
+  const [hasGameEnded, setGameEnded] = useState(false);
+  const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
   const canvasRef = useRef(null);
 
   const [audio, setAudio] = useState(null);
 
   // OnMount / OnDismount
   useEffect(() => {
-    const audioManager = new GameAudioManager();
-    setAudio(audioManager);
-    if (canvasRef.current) {
-      const gameScene = new GameScene();
-      PumpDumpGameMananger.initialize(0x12132e, canvasRef.current);
-      PumpDumpGameMananger.changeScene(gameScene);
-    }
+    return GameMount(setAudio, setGameLoaded, nextGameAtTimeStamp, canvasRef);
   }, []);
 
+  // Once gameHasLoaded or game hasStarted(rosi)
+  useEffect(() => {
+    if (!hasGameLoaded) {
+      return;
+    }
+
+    // Start Game
+    if (hasStarted) {
+      console.warn('hasStarted');
+      PumpDumpGameMananger.startGame(gameStartedTime);
+      CashOut(cashedOut);
+      return;
+    }
+
+    // End Game and Show Preparation Scene
+    if (!hasStarted && PumpDumpGameMananger.isGameRunning) {
+      PumpDumpGameMananger.endGame(isLosing);
+      // leave some time for player to see crash value
+      setTimeout(() => {
+        PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
+      }, ROSI_GAME_AFTER_CRASH_DELAY);
+    }
+  }, [hasStarted, hasGameLoaded]); // eslint-disable-line
+
+  // When there is fresh cash out
+  useEffect(() => {
+    if (!hasGameLoaded || !hasStarted) {
+      return;
+    }
+    const freshCashOuts = cashedOut.filter(({ isFresh }) => isFresh === true);
+    CashOut(freshCashOuts);
+  }, [cashedOut]); // eslint-disable-line
+
+  function render() {
+    if (!isConnected) return <GameOffline />;
+
+    if (!PumpDumpGameMananger.isGameRunning) {
+      return <PreparingRound nextGameAt={nextGameAtTimeStamp} />;
+    }
+
+    return (
+      <div
+        className={classNames(styles.timer, { [styles.flashAnimation]: !hasStarted })}
+      >
+        {hasStarted && (
+          <>
+            <Timer pause={!hasStarted} startTimeMs={gameStartedTime} />
+            <span>x</span>
+          </>
+        )}
+        {!hasStarted && !!lastCrashValue && (
+          <>
+            <span>{lastCrashValue?.crashFactor?.toFixed(2)}</span>
+            <span>x</span>
+          </>
+        )}
+      </div>
+    );
+  }
+  
   return (
     <div className={styles.animation}>
       <div className={styles.audioControls}>
@@ -55,9 +149,15 @@ const PumpDumpAnimation = ({ muteButtonClick }) => {
         id="pump-dump-game-animation"
         ref={canvasRef}
       />
-      {isConnected || <GameOffline />}
+      {hasGameLoaded && isSynced ? render() : <GameOffline />}
     </div>
   );
+};
+
+const mapStateToProps = state => {
+  return {
+    isLosing: state.rosiGame.userBet && !state.rosiGame.isCashedOut,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -69,7 +169,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const Connected = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PumpDumpAnimation);
 export default memo(Connected);
