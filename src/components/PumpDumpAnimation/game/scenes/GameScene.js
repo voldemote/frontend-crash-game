@@ -9,10 +9,8 @@ export class GameScene extends Container {
 
     constructor(gameTime) {
         super();
-        // Add assets etc.
         this.horizontalAxis = new HorizontalAxis();
         this.addChild(this.horizontalAxis);
-        // this.horizontalAxis.start(new Date().getTime());
 
         this.verticalAxis = new VerticalAxis();
         this.addChild(this.verticalAxis);
@@ -26,7 +24,6 @@ export class GameScene extends Container {
     }
 
     update(delta) {
-        // alter assets
         this.horizontalAxis.update(delta);
         this.verticalAxis.update(delta);
 

@@ -19,8 +19,6 @@ const AXIS_COUNT = 20;
 const AXIS_START_POS_Y = 0.93;
 const AXIS_RIGHT_GAP = 50;
 
-const REDUCTION_RATE = 0.2;
-
 export class VerticalAxis extends Container {
     axisLines = [];  // Graphic Lines
     multiplierLabels = []; // Text to indicate multipliers

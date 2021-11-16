@@ -11,7 +11,6 @@ export class LaunchScene extends Container {
 
     constructor(launchTime) {
         super();
-        // Add assets etc.
         const resources = PumpDumpGameMananger.app.loader.resources;
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
@@ -154,6 +153,5 @@ export class LaunchScene extends Container {
     // }
 
     update(delta) {
-        // alter assets
     }
 }
