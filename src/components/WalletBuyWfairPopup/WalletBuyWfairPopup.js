@@ -7,6 +7,10 @@ import ClickEvent from '../../helper/ClickEvent';
 import { UserActions } from '../../store/actions/user';
 import TabOptions from 'components/TabOptions';
 import Grid from '@material-ui/core/Grid';
+import QrcodeImage from '../../data/images/qrcode-image.svg';
+import CopyIcon from '../../data/icons/copy-icon.svg';
+import EthereumLogo from '../../data/images/ethereum_logo.svg';
+import PolygonLogo from '../../data/images/polygon-logo.svg';
 
 const BuyWithFiatTab = () => {
   let transak = {
@@ -43,12 +47,16 @@ const BuyWithFiatTab = () => {
 };
 const DepositTab = () => {
   return <div className={styles.depositTabContainer}>
+      <div className={styles.depositHeader}>
+        <img src={PolygonLogo} alt="Polygon-logo"/>
+        <img src={EthereumLogo} alt="Ethereum-logo"/>
+      </div>
       <div className={styles.copyhash}>
         <p className={styles.copyhashText}>fsdkjhskdjhkjhkjhsdkfjhsdkjfhsdkfjhkjhkjhkj</p>
-        <img src='' alt="Clip-Icon"/>
+        <img src={CopyIcon} alt="Clip-Icon"/>
       </div>
       <div className={styles.qrCodeImg}>
-          <img src="" alt="QrCode" />
+          <img src={QrcodeImage} alt="QrCode" />
       </div>
       <p className={styles.firstDiscription}>Only send BTC to this address, 1 confirmation(s) required. We do not accept BEP20 from Binance.</p>
       <p className={styles.secondDiscription}>Improve your account security with Two-Factor Authentication</p>
