@@ -36,10 +36,10 @@ const Register = ({ styles, openLoginPopup, preloadEmailSignUp = false }) => {
                   <>
                     <Icon
                       iconType={IconType.email}
-                      iconTheme={IconTheme.black}
+                      iconTheme={IconTheme.white}
                       className={styles.buttonIcon}
                     />
-                    Sign up with email
+                    <span>Sign up with email</span>
                   </>
                 ),
                 onClick: () => setShowEmailSignup(true),

@@ -187,9 +187,7 @@
   align-items: center;
   justify-content: center;
   flex: auto;
-  @media screen and (max-width: 992px) {
-    padding-top: 40px;
-  }
+  padding-top: 20px;
 }
 
 .submitButton,
@@ -201,6 +199,7 @@
   width: 100%;
   cursor: pointer;
   color: $colorWhite;
+  text-transform: uppercase;
   @media (max-width: $screen-sm) {
     height: 50px;
     margin: 10px 0 0;
@@ -237,6 +236,8 @@
       width: 20px;
       svg * {
         stroke-width: 17px;
+        fill: $colorWhite;
+        stroke: $colorWhite;
       }
     }
   }
@@ -269,6 +270,7 @@
 .dontHaveAnAccount {
   margin-top: 25px;
   font-size: 14px;
+  text-align: center;
   button {
     @extend .unstyledButton;
     text-decoration: underline;

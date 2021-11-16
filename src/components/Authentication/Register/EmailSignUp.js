@@ -11,6 +11,7 @@ import HighlightType from '../../Highlight/HighlightType';
 import { COUNTRIES, NOT_ALLOWED_COUNTRIES } from 'constants/Countries';
 import ReactTooltip from 'react-tooltip';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import HighlightTheme from 'components/Highlight/HighlightTheme';
 
 const EmailSignUp = ({ styles, signUp, errorState }) => {
 
@@ -334,6 +335,7 @@ const EmailSignUp = ({ styles, signUp, errorState }) => {
         onClick={onConfirm}
         withoutBackground={true}
         highlightType={HighlightType.highlightModalButton}
+        highlightTheme={HighlightTheme.fillPink}
         className={styles.submitButton}
         disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
