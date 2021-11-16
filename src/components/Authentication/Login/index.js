@@ -6,8 +6,18 @@ import InputBox from 'components/InputBox';
 import Button from '../../Button';
 import HighlightType from '../../Highlight/HighlightType';
 import ReactTooltip from 'react-tooltip';
+import SocialLogin from '../SocialLogin';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
+import AuthenticationType from '../AuthenticationType';
 
-const Login = ({ errorState, initForgotPassword, login, styles }) => {
+const Login = ({
+  errorState,
+  initForgotPassword,
+  login,
+  styles,
+  openSignUpPopup,
+}) => {
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -81,7 +91,7 @@ const Login = ({ errorState, initForgotPassword, login, styles }) => {
       });
     }
   };
-  
+
   const renderForgotPasswordLink = () => {
     return (
       <div
@@ -95,109 +105,130 @@ const Login = ({ errorState, initForgotPassword, login, styles }) => {
   };
 
   return (
-    <form
-      className={styles.authenticationInputBoxContainer}
-      onSubmit={onConfirm}
-    >
-      {errorState && (
-        <div
-          ref={(ref) => (genericRef = ref)}
-          data-tip
-          data-event="none"
-          data-event-off="dblclick"
-          className={styles.errorBox}
-        >
-          {errorState}
-        </div>
-      )}
-
-      <ReactTooltip
-        getContent={() => error}
-        place="bottom"
-        effect="solid"
-        type="error"
-        backgroundColor={'#ff0000'}
-        className={styles.stepsTooltipError}
-      />
-
-      <FormGroup
-        className={styles.formGroup}
-        data-tip
-        ref={(ref) => (emailRef = ref)}
-        data-event="none"
-        data-event-off="dblclick"
+    <>
+      <form
+        className={styles.authenticationInputBoxContainer}
+        onSubmit={onConfirm}
       >
-        <InputLabel className={styles.inputLabel}>E-Mail address</InputLabel>
-        <InputBox
-          type="email"
-          className={styles.inputBox}
-          placeholder="john.doe@gmail.com"
-          value={email}
-          disabled={submitInProgress}
-          setValue={(e) => {
-            setInputEmail(e.trim().toLowerCase());
-          }}
-          onConfirm={onConfirm}
-          onBlur={() => validateInput({ emailOnly: true })}
-        />
-      </FormGroup>
+        {errorState && (
+          <div
+            ref={(ref) => (genericRef = ref)}
+            data-tip
+            data-event="none"
+            data-event-off="dblclick"
+            className={styles.errorBox}
+          >
+            {errorState}
+          </div>
+        )}
 
-      {!forgotPassword && (
+        <ReactTooltip
+          getContent={() => error}
+          place="bottom"
+          effect="solid"
+          type="error"
+          backgroundColor={'#ff0000'}
+          className={styles.stepsTooltipError}
+        />
+
         <FormGroup
           className={styles.formGroup}
           data-tip
-          ref={(ref) => (pwRef = ref)}
+          ref={(ref) => (emailRef = ref)}
           data-event="none"
           data-event-off="dblclick"
-          hidden={forgotPassword}
         >
-          <InputLabel className={styles.inputLabel}>Password</InputLabel>
+          <InputLabel className={styles.inputLabel}>E-Mail address</InputLabel>
           <InputBox
-            type="password"
+            type="email"
             className={styles.inputBox}
-            placeholder="***********"
-            value={password}
-            setValue={setPassword}
+            placeholder="john.doe@gmail.com"
+            value={email}
             disabled={submitInProgress}
+            setValue={(e) => {
+              setInputEmail(e.trim().toLowerCase());
+            }}
             onConfirm={onConfirm}
+            onBlur={() => validateInput({ emailOnly: true })}
           />
         </FormGroup>
+
+        {!forgotPassword && (
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            ref={(ref) => (pwRef = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+            hidden={forgotPassword}
+          >
+            <InputLabel className={styles.inputLabel}>Password</InputLabel>
+            <InputBox
+              type="password"
+              className={styles.inputBox}
+              placeholder="***********"
+              value={password}
+              setValue={setPassword}
+              disabled={submitInProgress}
+              onConfirm={onConfirm}
+            />
+          </FormGroup>
+        )}
+
+        {renderForgotPasswordLink()}
+
+        <Button
+          onClick={onConfirm}
+          withoutBackground={true}
+          highlightType={HighlightType.highlightModalButton2}
+          className={styles.submitButton}
+          disabled={submitInProgress}
+          disabledWithOverlay={true}
+        >
+          <span>{forgotPassword ? 'Send' : 'Login'}</span>
+        </Button>
+      </form>
+      {!forgotPassword && (
+        <div className={styles.dontHaveAnAccount}>
+          <p>
+            Don't have an account?{' '}
+            <button type="button" onClick={openSignUpPopup}>
+              Create a new account
+            </button>{' '}
+            or use your social login.
+          </p>
+          <SocialLogin styles={styles} />
+        </div>
       )}
-
-      {renderForgotPasswordLink()}
-
-      <Button
-        onClick={onConfirm}
-        withoutBackground={true}
-        highlightType={HighlightType.highlightAuthButton}
-        className={styles.submitButton}
-        disabled={submitInProgress}
-        disabledWithOverlay={true}
-      >
-        <span>{forgotPassword ? 'Send' : 'Login'}</span>
-      </Button>
-    </form>
+    </>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.authentication.loading,
     errorState: state.authentication.error,
-    popupVisible: state.popup.visible,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signUp: (payload) => {
-      dispatch(AuthenticationActions.signUp(payload));
-    },
     login: (payload) => {
       dispatch(AuthenticationActions.login(payload));
     },
     initForgotPassword: (email) => {
       dispatch(AuthenticationActions.forgotPassword({ email }));
+    },
+    openSignUpPopup: () => {
+      dispatch(
+        PopupActions.show({
+          popupType: PopupTheme.auth,
+          options: {
+            authenticationType: AuthenticationType.register,
+            preloadEmailSignUp: true,
+            small: false,
+          },
+        })
+      );
     },
   };
 };

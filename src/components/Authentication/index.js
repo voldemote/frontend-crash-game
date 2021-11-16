@@ -5,10 +5,11 @@ import Login from './Login';
 
 const Authentication = ({
   authenticationType,
+  preloadEmailSignUp
 }) => {
   return {
     [AuthenticationType.register]: 
-      <Register styles={styles} />,
+      <Register styles={styles} preloadEmailSignUp={preloadEmailSignUp} />,
     [AuthenticationType.login]: 
       <Login styles={styles} />
   }[authenticationType] || ''

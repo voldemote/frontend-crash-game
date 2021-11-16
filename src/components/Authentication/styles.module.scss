@@ -93,7 +93,7 @@
 
   .forgotPasswordLink {
     align-self: flex-end;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     text-decoration: underline;
     cursor: pointer;
 
@@ -187,6 +187,9 @@
   align-items: center;
   justify-content: center;
   flex: auto;
+  @media screen and (max-width: 992px) {
+    padding-top: 40px;
+  }
 }
 
 .submitButton,
@@ -262,13 +265,19 @@
   }
 }
 
-.alreadyHaveAnAccount {
-  margin-top: 20px;
+.alreadyHaveAnAccount,
+.dontHaveAnAccount {
+  margin-top: 25px;
   font-size: 14px;
   button {
     @extend .unstyledButton;
     text-decoration: underline;
     font-size: 14px;
     color: $colorPrimary;
+  }
+}
+.dontHaveAnAccount {
+  p {
+    margin-bottom: 20px;
   }
 }

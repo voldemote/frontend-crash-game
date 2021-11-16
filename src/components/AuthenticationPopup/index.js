@@ -13,7 +13,7 @@ import iPhoneImg from '../../data/images/signup-content/iphone13Pro.jpg';
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-const AuthenticationPopup = ({ authenticationType }) => {
+const AuthenticationPopup = ({ authenticationType, preloadEmailSignUp }) => {
   const [showCriteria, setShowCriteria] = useState(!isMobile);
 
   const promoDeadline =
@@ -123,7 +123,10 @@ const AuthenticationPopup = ({ authenticationType }) => {
             async: true,
           }}
         >
-          <Authentication authenticationType={authenticationType} />
+          <Authentication
+            authenticationType={authenticationType}
+            preloadEmailSignUp={preloadEmailSignUp}
+          />
         </GoogleReCaptchaProvider>
       </div>
     </div>
