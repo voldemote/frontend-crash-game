@@ -6,6 +6,7 @@ import medalCoin from '../../data/icons/medal-coin.png';
 import { toNumericString } from 'helper/FormatNumbers';
 import classNames from 'classnames';
 import { GAMES } from 'constants/Games';
+import { roundToTwo } from '../../helper/FormatNumbers';
 
 const UserLink = props => {
   const { userId, username } = props;
@@ -21,7 +22,8 @@ const UserLink = props => {
   );
 };
 
-const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false }) => {
+const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false, layout = 'compact'}) => {
+  const layoutCss = layout === 'compact' ? styles.compact : null;
   gameLabel = gameLabel ?? (Object.values(GAMES).find(g => g.id.indexOf(data.gameId) > -1))?.name ?? "Game";
   const {
     userId,
@@ -33,28 +35,28 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
   const stakedAmount = Number.parseInt(stakedAmountRaw);
   const rewardAmount = Number.parseInt(rewardAmountRaw);
   return (
-    <div className={styles.messageItem}>
+    <div className={classNames(styles.messageItem, layoutCss)}>
       {type === 'lost' ? (
-        <Grid container>
+        <Grid container className={styles.flexContainer}>
           <Grid item xs>
             <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
+            <div className={styles.messageLeft}>
               <p>{userId}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={classNames(styles.messageCenter)}>
-              {toNumericString(stakedAmount)} {TOKEN_NAME}
+            <div className={classNames(styles.messageRight)}>
+              <p>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
             </div>
           </Grid>
           <Grid item xs >
@@ -67,14 +69,14 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
           </Grid>
         </Grid>
       ) : (
-        <Grid container>
+        <Grid container className={styles.flexContainer}>
           <Grid item xs>
             <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
+            <div className={styles.messageLeft}>
               <p>
                 {username ? (
                   <UserLink userId={userId} username={username} />
@@ -85,14 +87,14 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
-              {toNumericString(stakedAmount)} {TOKEN_NAME}
+            <div className={styles.messageRight}>
+              <p>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
             </div>
           </Grid>
           <Grid item xs>

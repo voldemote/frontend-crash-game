@@ -74,7 +74,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
         refreshLuckyData();
         break;
       case 3:
-        refreshMyBetsData({userId:'6152b82b2a1ac4fa41b4c663'});
+        if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
         break;
     }
     setActivityTabIndex(index);
@@ -93,7 +93,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
   useEffect(() => {
     refreshHighData();
     refreshLuckyData();
-    refreshMyBetsData({userId:'6152b82b2a1ac4fa41b4c663'});
+    if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
   }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
@@ -207,7 +207,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   <img src={howTokenWorkPToken} alt="" />
                 </div>
                 <div className={styles.detail}>
-                  <h3>$PFAIR Token?</h3>
+                  <h3>PFAIR Token?</h3>
                   <p>
                     PFAIR is Wallfair's FREE-TO-PLAY token. The tokens can be
                     used in the ALPACASINO playground for risk and care free
@@ -222,9 +222,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   <img src={howTokenWorkWToken} alt="" />
                 </div>
                 <div className={styles.detail}>
-                  <h3>$WFAIR Token?</h3>
+                  <h3>WFAIR Token?</h3>
                   <p>
-                    WFAIR tokens are your betting cryptocurrency, these are can
+                    WFAIR tokens are your betting cryptocurrency, these can be
                     transfered at anytime for real world cash
                   </p>
                 </div>
@@ -238,7 +238,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                 <div className={styles.detail}>
                   <h3>WEEKLY Awards</h3>
                   <p>
-                    Keep playing and rise to the top of the leaderboard every week 
+                    Keep playing and rise to the top of the leaderboard every week
                     and increase the chances of winning real WFAIR tokens.
                     Winners will be announced every Sunday!
                   </p>
@@ -272,7 +272,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                     Who is Alpacasino
                   </h3>
                   <p>
-                    Alpacasino is a new type of crypocurrency betting platform
+                    Alpacasino is a new type of cryptocurrency betting platform
                     which is more entertaining and easier than any other
                     platform out there!
                   </p>
@@ -306,9 +306,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   <img src={whoWeAreCard3} alt="" />
                 </div>
                 <div className={styles.detail}>
-                  <h3>Competive Edge</h3>
+                  <h3>Competitive Edge</h3>
                   <p>
-                    More you win the higher you climb the monthly community
+                    The more you win the higher you climb the monthly community
                     leaderboards. We’ve added some secret challenges to reward
                     you even more $PFAIR Tokens ...
                   </p>
@@ -380,12 +380,14 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
                   className={styles.activitiesTrackerGamesBlock}
                   preselectedCategory={'game'}
                   hideSecondaryColumns={true}
+                  layout='wide'
                 />
               )}
               {activityTabIndex !== 0 && (
                 <ActivityTable
                   hideSecondaryColumns={true}
                   rowData={getActivityTableData()}
+                  layout='wide'
                 />
               )}
             </div>

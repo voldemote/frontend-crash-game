@@ -46,7 +46,7 @@ initTagManager();
 const App = () => {
   const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
   return (
-    <div id={'main-scroll-container'} onScroll={onScroll} style={{ overflow: 'scroll' }}>
+    <div id={'main-scroll-container'} onScroll={onScroll} style={{ overflow: 'auto' }}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ConnectedRouter history={history}>
