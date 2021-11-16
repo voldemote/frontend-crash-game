@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import classNames from 'classnames';
 
-function GameAudioControlLocals({ audio }) {
-  const [aud, setAud] = useState(audio.volume)
+function GameAudioControlLocals({ audio, muteButtonClick }) {
+  const [aud, setAud] = useState(audio.volume);
+
   const onChangeVolume = (event, value) => {
     setAud(value / 100)
-    audio.setVolume((value / 100).toFixed(1));
+    audio.setVolume((value / 100).toFixed(1));    
   }
   return (
     <div className={styles.container}>
@@ -19,7 +20,8 @@ function GameAudioControlLocals({ audio }) {
           [styles.low]: audio.volume < 0.5 && audio.volume > 0,
         })}
         onClick={() => {
-          audio.volume == 0.0 ? onChangeVolume(null, 100) : onChangeVolume(null, 0)
+          muteButtonClick();
+          audio.volume === 0.0 ? onChangeVolume(null, 100) : onChangeVolume(null, 0)
         }}
       />
     </div>

@@ -33,7 +33,7 @@ let img = new Image();
 
 class AudioController {
   constructor(bgmIndex = 0) {
-    let volume = 0.1;
+    let volume = 0.0;
     try {
       const savedVolume = localStorage.getItem('gameVolume');
       this.volume = savedVolume ? parseFloat(savedVolume) : volume;
@@ -118,7 +118,7 @@ class AudioController {
   }
 
   playSound(name, loop = false, volume) {
-    try {
+    try {      
       if (this.ready) {
         Sound.sound.volume(name, volume && this.volume != 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
         Sound.sound.play(name, {
@@ -143,9 +143,9 @@ class AudioController {
 
   stopBgm() {
     this.stopSound('bgm');
-    this.stopSound('flying');
+    this.stopSound('flying');    
   }
-  playTick() {
+  playTick() {    
     this.playSound('tick', false, 1);
   }
 
@@ -273,7 +273,12 @@ class AnimationController {
     this.spinTo(0, 200000, true);
     return {
       audio: this.audio,
+      handle: this,
     };
+  }
+
+  destroy() {
+    this.idle = false;
   }
 
   changeValues() {
@@ -376,6 +381,7 @@ class AnimationController {
     ctx.fill();
     return {
       audio: this.audio,
+      handle: this,
     };
   }
   //when calling repaint pass to the method the new index image from riskImages
