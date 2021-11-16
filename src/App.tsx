@@ -23,6 +23,7 @@ import PlinkoGame from './screens/PlinkoGame';
 import RouletteGame from './screens/RouletteGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
+import UserWallet from './screens/UserWallet'
 import Activities from './screens/Activities';
 import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
@@ -36,6 +37,7 @@ import useHideMobileScrollingMenu from 'hooks/useHideMobileScrollingMenu';
 import EventRouter from 'components/Events/EventRouter';
 import TypeformController from 'components/TypeformController';
 import ElonWallPaper from 'screens/ElonWallPaper';
+import PrivateRoute from 'components/PrivateRoute';
 
 const { store, persistor } = configStore();
 
@@ -44,7 +46,7 @@ initTagManager();
 const App = () => {
   const { onScroll, hideNavbar } = useHideMobileScrollingMenu();
   return (
-    <div id={'main-scroll-container'} onScroll={onScroll} style={{overflow:'scroll'}}>
+    <div id={'main-scroll-container'} onScroll={onScroll} style={{ overflow: 'scroll' }}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ConnectedRouter history={history}>
@@ -82,7 +84,7 @@ const App = () => {
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
-              {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
+              <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
               <Redirect to={Routes.home} />
             </Switch>
             <NavbarFooter

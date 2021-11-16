@@ -526,9 +526,9 @@
       background-repeat: no-repeat;
       width: 100%;
       height: 100%;
-      top: 169px;
-      left: -140px;
-      z-index: -1;
+      top: 22px;
+      left: -145px;
+      background-position: bottom left;
     }
 
     @media (max-width: $screen-xs) {
@@ -540,9 +540,9 @@
         width: 100px;
         height: 100px;
         background-size: contain;
-        top: 200px;
+        top: 180px;
         left: -80px;
-        z-index: -1;
+        background-position: bottom left;
       }
     }
 
@@ -593,6 +593,7 @@
       font-family: $fontRegular;
       border: 1px solid $colorhomeBackground;
       color: $colorWhite;
+      cursor: pointer;
     }
   }
 }

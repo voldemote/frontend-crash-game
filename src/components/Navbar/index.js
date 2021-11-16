@@ -33,6 +33,7 @@ import { ChatActions } from 'store/actions/chat';
 import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
 
 import moment from 'moment';
+import Link from 'components/Link';
 
 const Navbar = ({
   user,
@@ -187,19 +188,19 @@ const Navbar = ({
     );
 
     const walletBtn = (
-      <div
+      <Link
         className={classNames(
           style.balanceOverview,
           style.pillButton,
           style.leaderboardValues,
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
-        onClick={() => toggleOpenDrawer(drawers.wallet)}
+        to={Routes.wallet}
         data-tracking-id="menu-wallet-icon"
       >
         <Icon iconType={'pToken'} />
         {formatToFixed(balance, 0, true)} {currency}
-      </div>
+      </Link>
     );
 
     const profileBtn = (

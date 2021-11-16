@@ -424,23 +424,72 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
     );
   };
 
-  return (
-    <BaseContainerWithNavbar>
-      {/* {renderHeadline()} */}
-      {/* <Header /> */}
-      <div className={styles.containerWrapper}>
-        <div className={styles.container}>
-          {renderRosiBanner()}
-          {/* <EventsCarouselContainer eventType="non-streamed" /> */}
-          {/*<EventsCarouselContainer eventType="streamed" />*/}
-          {renderGamesCards()}
-          {renderHowTokenWorks()}
-          {renderWhoWeAre()}
-          {renderCategoriesAndLeaderboard()}
-          {renderUniswap()}
-        </div>
+
+  const renderCurrentBalanceSection = () => {
+
+    return (
+      <div className={styles.currentBalanceSection}>
+        <Grid container alignContent="center">
+          <Grid container justifyContent="flex-end" item lg={6} md={6} xs={12}>
+            <div className={styles.currentBlanceCard}>
+              <p className={styles.currentbalanceHeading}>Current balance</p>
+              <p className={styles.currentbalanceWFair}>
+                4365 
+                WFAIR
+              </p>
+            </div>
+          </Grid>
+
+          <Grid container justifyContent="flex-start" item lg={6} md={6} xs={12}>
+          <div className={styles.currentBlanceDiscription}>
+            <p className={styles.noWFairNoProblem}>
+              No WFAIR? No problem!
+            </p>
+            <button className={styles.buyWFairButton}>
+              Buy WFAIR!
+            </button>
+          </div>
+          
+          </Grid>
+        </Grid>
       </div>
-    </BaseContainerWithNavbar>
+    );
+  }
+
+  const renderStatusTableSection = () => {
+
+  }
+
+  return (
+  <BaseContainerWithNavbar>
+    {/* {renderHeadline()} */}
+    {/* <Header /> */}
+    <div className={styles.containerWrapper}>
+      <div className={styles.container}>
+        {renderRosiBanner()}
+        {/* <EventsCarouselContainer eventType="non-streamed" /> */}
+        {/*<EventsCarouselContainer eventType="streamed" />*/}
+        {renderGamesCards()}
+        {renderHowTokenWorks()}
+        {renderWhoWeAre()}
+        {renderCategoriesAndLeaderboard()}
+        {renderUniswap()}
+      </div>
+    </div>
+  </BaseContainerWithNavbar>
+
+    // <BaseContainerWithNavbar>
+    //   {/* {renderHeadline()} */}
+    //   {/* <Header /> */}
+    //   <div className={styles.containerWrapper}>
+    //     <div className={styles.container}>
+    //       {renderCurrentBalanceSection()}
+    //       {renderStatusTableSection()}
+    //       {renderCategoriesAndLeaderboard()}
+    //     </div>
+    //   </div>
+
+    // </BaseContainerWithNavbar>
   );
 };
 
@@ -477,3 +526,4 @@ const mapDispatchToProps = dispatch => {
 
 const Connected = connect(mapStateToProps, mapDispatchToProps)(Home);
 export default memo(Connected);
+
