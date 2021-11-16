@@ -81,14 +81,14 @@ const WelcomeView = ({ hidePopup, visible, initialReward }) => {
     );
   };
 
-  const renderStartTradingButton = () => {
+  const renderStartPlayingButton = () => {
     return (
       <Button
         withoutBackground={true}
         onClick={hidePopup}
         className={styles.startTradingButton}
       >
-        Start trading!
+        Start playing!
       </Button>
     );
   };
@@ -103,7 +103,7 @@ const WelcomeView = ({ hidePopup, visible, initialReward }) => {
       </span>
       {renderHeadline()}
       {renderWelcomeText()}
-      {renderStartTradingButton()}
+      {renderStartPlayingButton()}
       {renderAlphaDisclaimer()}
       <ReactCanvasConfetti
         refConfetti={getAnimationInstance}
