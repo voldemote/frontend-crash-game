@@ -6,6 +6,7 @@ import medalCoin from '../../data/icons/medal-coin.png';
 import { toNumericString } from 'helper/FormatNumbers';
 import classNames from 'classnames';
 import { GAMES } from 'constants/Games';
+import { roundToTwo } from '../../helper/FormatNumbers';
 
 const UserLink = props => {
   const { userId, username } = props;
@@ -54,7 +55,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
             </div>
           </Grid>
           <Grid item xs >
@@ -92,7 +93,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
             </div>
           </Grid>
           <Grid item xs>
