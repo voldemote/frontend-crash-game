@@ -74,7 +74,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
         refreshLuckyData();
         break;
       case 3:
-        if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
+        if(userId) refreshMyBetsData({userId});
         break;
     }
     setActivityTabIndex(index);
@@ -93,7 +93,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
   useEffect(() => {
     refreshHighData();
     refreshLuckyData();
-    if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
+    if(userId) refreshMyBetsData({userId});
   }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
