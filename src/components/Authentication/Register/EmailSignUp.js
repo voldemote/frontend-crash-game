@@ -333,10 +333,10 @@ const EmailSignUp = ({ styles, signUp, errorState }) => {
       <Button
         onClick={onConfirm}
         withoutBackground={true}
-        highlightType={HighlightType.highlightAuthButton}
+        highlightType={HighlightType.highlightModalButton}
         className={styles.submitButton}
         disabled={submitInProgress || !legalAuthorizationAgreed}
-        disabledWithOverlay={true}
+        disabledWithOverlay={false}
       >
         <span>Sign Up</span>
       </Button>
