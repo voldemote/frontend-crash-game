@@ -1,7 +1,11 @@
-REACT_APP_CRASH_GAME_BACKEND_URL=https://staging-elon-api.wallfair.io/
-REACT_APP_BACKEND_URL=https://staging-api.wallfair.io/
+REACT_APP_BACKEND_URL=https://staging-api.alpacasino.io/
+REACT_APP_CRASH_GAME_BACKEND_URL=https://staging-casino-api.alpacasino.io/
+REACT_APP_SOCKET_URL=https://comm-staging-api.alpacasino.io/
+REACT_APP_CASINO_GAMES_BACKEND_URL=https://staging-casino-api.alpacasino.io/
+REACT_APP_PUMP_DUMP_GAME_BACKEND_URL=https://staging-casino-api.alpacasino.io/
+
 REACT_APP_NEWS_API_SSL_MODE=true
 REACT_APP_SHOW_UPCOMING_FEATURES=true
-REACT_APP_URL=https://main.wallfair.io
+REACT_APP_URL=https://main.alpacasino.io
 ENABLE_SITE_MAP=false
-REACT_APP_SOCKET_URL=https://comm-staging-api.wallfair.io
+REACT_APP_SOCKET_URL=https://comm-staging-api.alpacasino.io
