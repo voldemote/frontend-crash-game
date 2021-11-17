@@ -243,12 +243,12 @@ const PlaceBetRoulette = ({
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '46%' }}></span>
-        <div className={classNames(styles.tab, styles.selected)} onClick={() => setSelector('manual')} >
-          <span>Manual Bet</span>
+        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '48.3%' }}></span>
+        <div className={classNames(styles.tab)} onClick={() => setSelector('manual')} >
+          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
         </div>
         <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
-          <span>Auto Bet</span>
+          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
         </div>
       </div>
     )
@@ -274,9 +274,6 @@ const PlaceBetRoulette = ({
         origin={{ x: 0.4, y: 0.45 }}
       />
       <div className={styles.inputContainer}>
-        {/*<div className={styles.placeBetContainer}>
-          <h2 className={styles.placebidTitle}>Place Bet</h2>
-        </div>*/}
         {switchButton(styles)}
         {selector === 'manual' ?
           <div className={styles.sliderContainer}>
@@ -352,49 +349,49 @@ const PlaceBetRoulette = ({
               <div className={styles.riskSelection}>
                 <button
                   data-tracking-id="alpacawheel-change-risk-1"
-                  style={{ background: risk === 1 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 1 && styles.selected}
                   onClick={() => setRisk(1)}
                 >
                   1
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-2"
-                  style={{ background: risk === 2 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 2 && styles.selected}
                   onClick={() => setRisk(2)}
                 >
                   2
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-3"
-                  style={{ background: risk === 3 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 3 && styles.selected}
                   onClick={() => setRisk(3)}
                 >
                   3
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-4"
-                  style={{ background: risk === 4 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 4 && styles.selected}
                   onClick={() => setRisk(4)}
                 >
                   4
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-5"
-                  style={{ background: risk === 5 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 5 && styles.selected}
                   onClick={() => setRisk(5)}
                 >
                   5
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-6"
-                  style={{ background: risk === 6 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 6 && styles.selected}
                   onClick={() => setRisk(6)}
                 >
                   6
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-7"
-                  style={{ background: risk === 7 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 7 && styles.selected}
                   onClick={() => setRisk(7)}
                 >
                   7
@@ -532,121 +529,55 @@ const PlaceBetRoulette = ({
               <div className={styles.riskSelection}>
                 <button
                   data-tracking-id="alpacawheel-change-risk-1"
-                  style={{ background: risk === 1 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 1 && styles.selected}
                   onClick={() => setRisk(1)}
                 >
                   1
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-2"
-                  style={{ background: risk === 2 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 2 && styles.selected}
                   onClick={() => setRisk(2)}
                 >
                   2
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-3"
-                  style={{ background: risk === 3 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 3 && styles.selected}
                   onClick={() => setRisk(3)}
                 >
                   3
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-4"
-                  style={{ background: risk === 4 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 4 && styles.selected}
                   onClick={() => setRisk(4)}
                 >
                   4
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-5"
-                  style={{ background: risk === 5 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 5 && styles.selected}
                   onClick={() => setRisk(5)}
                 >
                   5
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-6"
-                  style={{ background: risk === 6 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 6 && styles.selected}
                   onClick={() => setRisk(6)}
                 >
                   6
                 </button>
                 <button
                   data-tracking-id="alpacawheel-change-risk-7"
-                  style={{ background: risk === 7 && 'rgba(128, 128, 128, 0.14)' }}
+                  className={risk === 7 && styles.selected}
                   onClick={() => setRisk(7)}
                 >
                   7
                 </button>
               </div>
             </div>
-            {/*
-            <div className={styles.inputContainer}>
-            <label
-              className={classNames(
-                styles.label,
-              )}
-            >
-              Stop on Spins
-            </label>
-            <div
-              className={classNames(
-                styles.cashedOutInputContainer,
-                styles.demoInput
-              )}
-            >
-              <div className={styles.toggleButton}>
-                <span className={styles.toggleLabel} style={{marginLeft: !spinlimit?0:59, width: !spinlimit?63:63}}></span>
-                <span
-                  className={styles.buttonItem}
-                  onClick={() => setSpinlimit(false)}
-                >
-                  Disable
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  onClick={() => setSpinlimit(true)}
-                >
-                  Enable
-                </span>
-              </div>
-              <Input
-                className={classNames(styles.input, styles.increase)}
-                type={'number'}
-                value={nspin}
-                onChange={onGuestNspinChange}
-                step={1}
-                min="1"
-                max={'100'}
-              />
-              <span className={styles.eventTokenLabel}>
-                <span>Spins</span>
-              </span>
-              <div className={styles.buttonWrapper}>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-change-spins-minus"
-                  onClick={() => nspin > 0 && setNspin(nspin - 1)}
-                >
-                  -
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-change-spins-plus"
-                  onClick={() => nspin < 100 && setNspin(nspin + 1)}
-                >
-                  +
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-change-spins-max"
-                  onClick={() => setNspin(10)}
-                >
-                  10
-                </span>
-              </div>
-            </div>*/}
             <div className={styles.inputContainer}>
             <label
               className={classNames(
@@ -673,31 +604,6 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>PFAIR</span>
               </span>
-              {/*
-              <div className={styles.buttonWrapper}>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-half"
-                  onClick={() => setProfit(profit*0.5)}
-                >
-                  ½
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-double"
-                  onClick={() => setProfit(profit*2)}
-                >
-                  2x
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-allin"
-                  onClick={() => setProfit(10000)}
-                >
-                  Max
-                </span>
-              </div>
-              */}
             </div>
             <label
               className={classNames(
@@ -724,31 +630,6 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>PFAIR</span>
               </span>
-              {/*
-              <div className={styles.buttonWrapper}>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-half"
-                  onClick={() => setLoss(loss*0.5)}
-                >
-                  ½
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-double"
-                  onClick={() => setLoss(loss*2)}
-                >
-                  2x
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-allin"
-                  onClick={() => setProfit(10000)}
-                >
-                  Max
-                </span>
-              </div>
-              */}
             </div>
             <label
               className={classNames(
@@ -764,19 +645,15 @@ const PlaceBetRoulette = ({
               )}
             >
               <div className={styles.toggleButton}>
-                <span className={styles.toggleLabel} style={{ color: winbutton?'white':'#120e27', marginLeft: winbutton?4:53, width: winbutton?53:72}}></span>
+                <span className={styles.toggleLabel} style={{ marginLeft: winbutton ? 1 : '44.2%', width: !winbutton && '55%'}}></span>
                 <span
-                  className={styles.buttonItem}
-                  style={{fontWeight: winbutton?'bold':'normal'}}
-                  onClick={() => setWinbutton(true)}
-                >
+                  className={classNames(styles.buttonItem, winbutton && styles.selected)}
+                  onClick={() => setWinbutton(true)}>
                   Reset
                 </span>
                 <span
-                  className={styles.buttonItem}
-                  style={{fontWeight: !winbutton?'bold':'normal'}}
-                  onClick={() => setWinbutton(false)}
-                >
+                  className={classNames(styles.buttonItem, !winbutton && styles.selected)}
+                  onClick={() => setWinbutton(false)}>
                   Increase
                 </span>
               </div>
@@ -792,62 +669,31 @@ const PlaceBetRoulette = ({
               <span className={styles.eventTokenLabel}>
                 <span>%</span>
               </span>
-              {/*
-              <div className={styles.buttonWrapper}>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-half"
-                  onClick={() => setWincrease(wincrease-1)}
-                >
-                  -
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-double"
-                  onClick={() => setWincrease(wincrease+1)}
-                >
-                  +
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-allin"
-                  onClick={() => setWincrease(10)}
-                >
-                  10%
-                </span>
-              </div>
-              */}
             </div>
             <label
               className={classNames(
                 styles.label,
-              )}
-            >
+              )}>
               On Loss
             </label>
             <div
               className={classNames(
                 styles.cashedOutInputContainer,
                 styles.demoInput
-              )}
-            >
-            <div className={styles.toggleButton}>
-            <span className={styles.toggleLabel} style={{marginLeft: lossbutton?4:53, width: lossbutton?53:72}}></span>
-              <span
-                style={{fontWeight: lossbutton?'bold':'normal'}}
-                className={styles.buttonItem}
-                onClick={() => setLossbutton(true)}
-              >
-                Reset
-              </span>
-              <span
-                style={{fontWeight: !lossbutton?'bold':'normal'}}
-                className={styles.buttonItem}
-                onClick={() => setLossbutton(false)}
-              >
-                Increase
-              </span>
-            </div>
+              )}>
+              <div className={styles.toggleButton}>
+                <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
+                <span                  
+                  className={classNames(styles.buttonItem, lossbutton && styles.selected)}
+                  onClick={() => setLossbutton(true)}>
+                  Reset
+                </span>
+                <span                  
+                  className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
+                  onClick={() => setLossbutton(false)}>
+                  Increase
+                </span>
+              </div>
               <Input
                 className={classNames(styles.input)}
                 type={'number'}
@@ -855,36 +701,10 @@ const PlaceBetRoulette = ({
                 onChange={(e) => setLincrease(e.target.value)}
                 step={1}
                 min="0"
-                max={'100'}
-              />
+                max={'100'}/>
               <span className={styles.eventTokenLabel}>
                 <span>%</span>
               </span>
-              {/*
-              <div className={styles.buttonWrapper}>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-half"
-                  onClick={() => setLincrease(lincrease-1)}
-                >
-                  -
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-double"
-                  onClick={() => setLincrease(lincrease+1)}
-                >
-                  +
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  data-tracking-id="alpacawheel-input-field-allin"
-                  onClick={() => setLincrease(10)}
-                >
-                  10%
-                </span>
-              </div>
-              */}
             </div>
               {nuspin.autobet &&
                 <div className={styles.spinsleft}>
@@ -911,20 +731,6 @@ const PlaceBetRoulette = ({
           </div>
         }
       </div>
-      {/*showCashoutWarning ? (
-        <div className={styles.error}>
-          <span>Betting less than 1 is not recommended. </span>
-          <span
-            data-for="rt"
-            className={styles.why}
-            data-tip="The multiplying factor defines your final reward.<br/>
-             A multiplier of 2x means twice the reward, when the game ends.<br/>
-              If the game ends before your multiplier,<br/> your amount invested is lost.<br/>"
-          >
-            Understand why.
-          </span>
-        </div>
-      ) : null*/}
       <ReactTooltip
         id={'rt'}
         place="top"
