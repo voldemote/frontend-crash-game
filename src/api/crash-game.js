@@ -172,8 +172,10 @@ const getHighUsers = data => {
 };
 
 const getUserBets = data => {
-  const { userId } = data || {};
-  return Api.get(ApiUrls.API_TRADES_PER_USER.replace(':userId', userId)).then(
+  const { userId, gameId } = data || {};
+  let url = ApiUrls.API_TRADES_PER_USER.replace(':userId', userId);
+  if(gameId) url += `?gameId=${gameId}`;
+  return Api.get(url).then(
     response => ({
       data: response.data.map(transformUser),
     })

@@ -1,100 +1,42 @@
-import { useEffect, memo, useState} from 'react';
+import { useEffect, memo} from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import EventsCarouselContainer from '../../components/EventsCarouselContainer';
-import Leaderboard from '../../components/Leaderboard';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import Routes from 'constants/Routes';
-import ContentFooter from '../../components/ContentFooter';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
 import { getTradeById } from '../../api';
-import ActivitiesTracker from '../../components/ActivitiesTracker';
 import SocialIcons from 'components/SocialIcons';
-import YellowButton from 'components/YellowButton';
 import { GeneralActions } from '../../store/actions/general';
-import { NEW_SLOTS_GAMES } from '../../constants/Games';
-import GameCards from '../../components/GameCards';
 import SlotGameIconBg from '../../data/images/house-games/title.svg';
 import howTokenWorkTitle from '../../data/images/token/title.svg';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import alpacaActivities from '../../data/images/alpaca-activities.svg';
 import whoWeAreTitle from '../../data/images/who-are-wallfair/title.svg';
-import whoWeAreLogo from '../../data/images/who-are-wallfair/logo.png';
 import whoWeAreAlphaLogo from '../../data/images/who-are-wallfair/alpha-logo.png';
 import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.png';
 import whoWeAreCard2 from '../../data/images/who-are-wallfair/what-is-alpha.png';
 import whoWeAreCard3 from '../../data/images/who-are-wallfair/competetive.png';
 import whoWeAreCard4 from '../../data/images/who-are-wallfair/rewards.png';
-import EventActivitiesTracker from '../../components/EventActivitiesTracker';
-import TabOptions from 'components/TabOptions';
-import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
-import { RosiGameActions } from 'store/actions/rosi-game';
-import useRosiData from 'hooks/useRosiData';
 import gameCard1 from '../../data/images/house-games/card-1.png';
 import gameCard5 from '../../data/images/house-games/card-5.png';
 import gameCard3 from '../../data/images/house-games/card-3.png';
 import gameCard4 from '../../data/images/house-games/card-4.png';
+import EventActivitiesTab from 'components/EventActivitiesTabs'
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighData, refreshLuckyData, connected, userId, refreshMyBetsData}) => {
+const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
-
-  const dispatch = useDispatch();
-  const {
-    highData,
-    luckyData,
-    myBetsData,
-  } = useRosiData();
-  const [activityTabIndex, setActivityTabIndex] = useState(0);
-  let activityTabOptions = [
-    { name: 'ALL', index: 0 },
-    { name: 'HIGH WINS', index: 1 },
-    { name: 'LUCKY WINS', index: 2 },
-  ];
-
-  if(userId) activityTabOptions.push({name: 'MY BETS', index: 3});
-
-  const handleActivitySwitchTab = ({ index }) => {
-    switch (index) {
-      case 1: // high wins
-        refreshHighData();
-        break;
-      case 2: // lucky wins
-        refreshLuckyData();
-        break;
-      case 3:
-        if(userId) refreshMyBetsData({userId});
-        break;
-    }
-    setActivityTabIndex(index);
-  };
-  const getActivityTableData = () => {
-    switch (activityTabIndex) {
-      case 1:
-        return highData || [];
-      case 2:
-        return luckyData || [];
-      case 3:
-        return myBetsData || [];
-    }
-  }
-
-  useEffect(() => {
-    refreshHighData();
-    refreshLuckyData();
-    if(userId) refreshMyBetsData({userId});
-  }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -358,40 +300,12 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighDa
             </h2>
         </div>
         <Grid item xs={12} >
-          <div className={styles.activityWrapper}>
-            <TabOptions options={activityTabOptions} className={styles.tabLayout}>
-              {option => (
-                <div
-                  className={
-                    option.index === activityTabIndex
-                      ? styles.tabItemSelected
-                      : styles.tabItem
-                  }
-                  onClick={() => handleActivitySwitchTab(option)}
-                >
-                  {option.name}
-                </div>
-              )}
-            </TabOptions>
-            <div className={styles.activityContainer}>
-              {activityTabIndex === 0 && (
-                <EventActivitiesTracker
-                  activitiesLimit={50}
-                  className={styles.activitiesTrackerGamesBlock}
-                  preselectedCategory={'game'}
-                  hideSecondaryColumns={true}
-                  layout='wide'
-                />
-              )}
-              {activityTabIndex !== 0 && (
-                <ActivityTable
-                  hideSecondaryColumns={true}
-                  rowData={getActivityTableData()}
-                  layout='wide'
-                />
-              )}
-            </div>
-          </div>
+          <EventActivitiesTab
+            activitiesLimit={50}
+            className={styles.activitiesTrackerGamesBlock}
+            preselectedCategory={'game'}
+            hideSecondaryColumns={true}
+            layout='wide'></EventActivitiesTab>
         </Grid>
       </div>
       );
@@ -450,16 +364,11 @@ const mapStateToProps = state => {
   return {
     tags: state.event.tags,
     events: state.event.events,
-    connected: state.websockets.connected,
-    userId: state.authentication.userId,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
-    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
-    refreshMyBetsData: (data) => dispatch(RosiGameActions.fetchMyBetsData(data)),
     setOpenDrawer: drawerName => {
       dispatch(GeneralActions.setDrawer(drawerName));
     },
