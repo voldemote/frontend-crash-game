@@ -186,3 +186,15 @@
   max-width: 390px;
   text-align: center;
 }
+
+.warningInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+
+  @media (max-width: $screen-sm) {
+    gap: 4px;
+  }
+}
