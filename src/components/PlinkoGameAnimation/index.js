@@ -18,40 +18,38 @@ import VolumeSlider from '../VolumeSlider';
 //import GameAudioControls from '../GameAudioControls';
 import AnimationController from './AnimationController';
 import Stage from './plinko'
+import { Plinko } from './plinkoBasic'
 
-const BackgroundPlinko = ({ reference, children }) => (
-  <div className={styles.animation} ref={reference}>
-  	<div className={styles.sector} style={{transform: 'rotate(75deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(105deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(135deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(165deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(195deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(225deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(255deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(285deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(315deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(345deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(375deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(405deg) skew(60deg)'}}></div>
-    <div className={styles.sector} style={{transform: 'rotate(435deg) skew(60deg)'}}></div>
-    {children}
-  </div>
-);
+const BackgroundPlinko = ({size, state}) => {
+  const colors = ["#d7393f", "#dd8549", "#e6e76a"]
+  return(
+    <svg className={styles.background} height={size} width={size}>
+      <circle r={size/2} cx={size/2} cy={size/2} fill={colors[state % 3]} />
+      <circle
+        r={size/4}
+        cx={size/2}
+        cy={size/2}
+        fill="transparent"
+        stroke={colors[(state+1) % 3]}
+        strokeWidth={size/2}
+        strokeDasharray="50 100"
+      />
+      <circle
+        r={size/4}
+        cx={size/2}
+        cy={size/2}
+        fill="transparent"
+        stroke={colors[(state+2) % 3]}
+        strokeWidth={size/2}
+        strokeDashoffset={50}
+        strokeDasharray="50 100"
+      />
+    </svg>
+  )
+};
 
-/*
-const GameOffline = () => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Connecting to the game engine</h2>
-      <div className={styles.description}>
-        If this takes too long, try reloading the page
-      </div>
-    </div>
-  </div>
-);
-*/
 
-const RouletteGameAnimation = ({
+const PlinkoGameAnimation = ({
   connected,
   muteButtonClick,
   isMute,
@@ -76,7 +74,11 @@ const RouletteGameAnimation = ({
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
+  const [backg, setBackg] = useState(0);
+  const [start, setStart] = useState(false);
 
+  const backgRef = useRef(backg);
+  backgRef.current = backg
   useEffect(()=>{
     if(backgroundRef) {
       setWidth(backgroundRef.current.clientWidth)
@@ -85,14 +87,28 @@ const RouletteGameAnimation = ({
 
   },[])
 
+  const changeBackground = (count) => {
+    setTimeout(() => {
+      setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
+      count < 30 && changeBackground(count + 1)
+    }, 100)
+  }
+
+  const handleWin = () => {
+    setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
+    changeBackground(0)
+  }
+
   const spin = async () => {
     const newspin = await AnimationController.spinTo();
     setSpins(newspin);
   };
   return (
-    <BackgroundPlinko reference={backgroundRef}>
-      {width && height && <Stage width={width} height={height}></Stage>}
-    </BackgroundPlinko>
+    <div ref={backgroundRef} className={styles.animation}>
+      <button onClick={() => setStart(true)} className={styles.button}>Start</button>
+      <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
+      {width && height && <Plinko start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+    </div>
   );
 };
 
@@ -111,7 +127,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     muteButtonClick: () => {
-      dispatch(RouletteGameAnimation.muteButtonClick());
+    //  dispatch(RouletteGameAnimation.muteButtonClick());
     },
   };
 };
@@ -119,4 +135,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RouletteGameAnimation);
+)(PlinkoGameAnimation);
