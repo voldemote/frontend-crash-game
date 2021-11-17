@@ -27,9 +27,7 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
-import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
-import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
@@ -39,6 +37,7 @@ import {
   trackAlpacaWheelCashout,
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
+import EventActivitiesTabs from 'components/EventActivitiesTabs'
 
 const RouletteGame = ({
   showPopup,
@@ -59,8 +58,6 @@ const RouletteGame = ({
     cashedOut,
     hasStarted,
     isEndgame,
-    highData,
-    luckyData,
   } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
@@ -71,12 +68,7 @@ const RouletteGame = ({
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
-  const [activityTabIndex, setActivityTabIndex] = useState(0);
-  const activityTabOptions = [
-    { name: 'ACTIVITIES', index: 0 },
-    { name: 'HIGH WINS', index: 1 },
-    { name: 'LUCKY WINS', index: 2 },
-  ];
+
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
@@ -110,9 +102,6 @@ const RouletteGame = ({
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
-    refreshHighData();
-    refreshLuckyData();
-
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -127,17 +116,6 @@ const RouletteGame = ({
     setChatTabIndex(option.index);
   };
 
-  const handleActivitySwitchTab = ({ index }) => {
-    switch (index) {
-      case 1: // high wins
-        refreshHighData();
-        break;
-      case 2: // lucky wins
-        refreshLuckyData();
-        break;
-    }
-    setActivityTabIndex(index);
-  }
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
@@ -164,38 +142,11 @@ const RouletteGame = ({
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
-      <div className={styles.activityWrapper}>
-        <TabOptions options={activityTabOptions} className={styles.tabLayout}>
-          {option => (
-            <div
-              className={
-                option.index === activityTabIndex
-                  ? styles.tabItemSelected
-                  : styles.tabItem
-              }
-              onClick={() => handleActivitySwitchTab(option)}
-            >
-              {option.name}
-            </div>
-          )}
-        </TabOptions>
-        <div className={styles.activityContainer}>
-          {activityTabIndex === 0 && (
-            <EventActivitiesTracker
-              activitiesLimit={50}
-              className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'game'}
-              gameId={GAME_TYPE_ID}
-            />
-          )}
-          {activityTabIndex !== 0 && (
-            <ActivityTable
-              rowData={activityTabIndex === 1 ? highData : luckyData}
-              gameLabel={getGameById(GAME_TYPE_ID)?.name || 'Game'}
-            />
-          )}
-        </div>
-      </div>
+      <EventActivitiesTabs
+        activitiesLimit={50}
+        className={styles.activitiesTrackerGamesBlock}
+        preselectedCategory={'game'}
+        gameId={GAME_TYPE_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -317,7 +268,7 @@ const RouletteGame = ({
             </div>
           ) : null}
           {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-          
+
         </div>
       </div>
     </BaseContainerWithNavbar>
