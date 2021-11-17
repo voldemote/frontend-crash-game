@@ -198,7 +198,7 @@ const Navbar = ({
         data-tracking-id="menu-wallet-icon"
       >
         <Icon iconType={'pToken'} />
-        {formatToFixed(balance, 0, true)} {currency}
+        <p>{formatToFixed(balance, 0, true)} {currency}</p>
       </div>
     );
 
