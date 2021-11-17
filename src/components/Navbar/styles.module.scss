@@ -133,7 +133,7 @@
     .ranking {
       z-index: 5;
       @media (max-width: $screen-xs) {
-        display: none!important;
+        display: none !important;
       }
 
       &.hiddenMobile {
@@ -148,9 +148,8 @@
       opacity: 1;
       z-index: 5;
       @media (max-width: 360px) {
-        display: none!important;
+        display: none !important;
       }
-
     }
 
     .pillButton {
@@ -159,6 +158,7 @@
       align-items: center;
       white-space: nowrap;
       padding: 10px;
+      padding-right: 16px;
       background: $colorPinkDark;
       font-size: 12px;
       border-radius: 20px;
@@ -166,12 +166,16 @@
       cursor: pointer;
       margin-right: 10px;
       height: 35px;
-      width: 8.4rem;
+      min-width: 80px;
 
       img,
       svg {
         margin-right: 10px;
         max-height: 21px;
+      }
+
+      p {
+        font-size: 13px;
       }
 
       @media screen and (min-width: $screen-sm) {
