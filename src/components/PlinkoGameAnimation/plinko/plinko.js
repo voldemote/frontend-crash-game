@@ -1,17 +1,15 @@
 import Matter from "matter-js";
 
 export default class Plinko {
-    constructor(width, height, pos) {
-        this.spacing = (width - 150) / 14;
-        this.rowSpacing = (height - 120) / 14;
-        this.midPoint = width / 2;
+    constructor(pos,r) {
         this.pos = pos;
         this.plinkos = [];
+        this.r = r;
     }
 
     createPlinko(x, y) {
-        return Matter.Bodies.circle(x, y, 4, {
-            restitution: 0.7,
+        return Matter.Bodies.circle(x, y, this.r, {
+            restitution: 0.2,
             isStatic: true,
             label: "plinko",
             render: {

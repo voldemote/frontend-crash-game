@@ -18,20 +18,27 @@ import VolumeSlider from '../VolumeSlider';
 //import GameAudioControls from '../GameAudioControls';
 import AnimationController from './AnimationController';
 import Stage from './plinko'
-/*
-const PreparingRound = ({ nextGameAt }) => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Preparing Round</h2>
-      <div className={styles.description}>
-        <span>
-          Starting in <Counter className={styles.counter} from={nextGameAt} />
-        </span>
-      </div>
-    </div>
+
+const BackgroundPlinko = ({ reference, children }) => (
+  <div className={styles.animation} ref={reference}>
+  	<div className={styles.sector} style={{transform: 'rotate(75deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(105deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(135deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(165deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(195deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(225deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(255deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(285deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(315deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(345deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(375deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(405deg) skew(60deg)'}}></div>
+    <div className={styles.sector} style={{transform: 'rotate(435deg) skew(60deg)'}}></div>
+    {children}
   </div>
 );
 
+/*
 const GameOffline = () => (
   <div className={styles.preparingRound}>
     <div>
@@ -56,6 +63,7 @@ const RouletteGameAnimation = ({
   animationIndex,
   onInit,
 }) => {
+
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
@@ -68,32 +76,23 @@ const RouletteGameAnimation = ({
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
-  /*
-  useEffect(() => {
-    AnimationController.init(canvasRef.current, {
-      width: backgroundRef.current.clientWidth,
-      height: backgroundRef.current.clientHeight,
-    });
-    AnimationController.repaint(0);
-  }, []);
-*/
-useEffect(()=>{
-  if(backgroundRef){
-    console.log("cc",backgroundRef.current)
-    setWidth(backgroundRef.current.clientWidth)
-    setHeight(backgroundRef.current.clientHeight)
-  }
 
-},[])
+  useEffect(()=>{
+    if(backgroundRef) {
+      setWidth(backgroundRef.current.clientWidth)
+      setHeight(backgroundRef.current.clientHeight)
+    }
+
+  },[])
+
   const spin = async () => {
     const newspin = await AnimationController.spinTo();
     setSpins(newspin);
   };
   return (
-
-    <div ref={backgroundRef} className={styles.animation}>
+    <BackgroundPlinko reference={backgroundRef}>
       {width && height && <Stage width={width} height={height}></Stage>}
-    </div>
+    </BackgroundPlinko>
   );
 };
 
