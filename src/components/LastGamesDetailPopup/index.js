@@ -5,6 +5,7 @@ import { PopupActions } from 'store/actions/popup';
 import moment from 'moment';
 import { getGameDetailById } from '../../api/crash-game';
 import PopupTheme from '../Popup/PopupTheme';
+import classNames from 'classnames';
 
 const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
@@ -115,6 +116,7 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
         <span>{date}</span>
       </div>
       <div className={styles.content}>
+        <div className={classNames("global-link-style", styles.verificationTool)}><a href={"https://jsfiddle.net/fx1dev/ezx8vp6a/show"} target={"_blank"} rel="noreferrer"><b>Hash Verification Tool</b></a></div>
         <div>
           <b>Crash factor:</b>{' '}
           <span>{roundToTwo(match?.crashfactor).toFixed(2)}</span>
