@@ -1,13 +1,11 @@
 import InputBox from '../InputBox';
 import BirthdayField from '../BirthdayField';
 import DropdownComplex from '../DropdownComplex';
-import Dropdown from '../Dropdown';
 import styles from './styles.module.scss';
 import { AuthenticationActions } from '../../store/actions/authentication';
 import { connect, useSelector } from 'react-redux';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import moment from 'moment';
 import CheckBox from '../CheckBox';
 import ReactTooltip from 'react-tooltip';
 import { FormGroup, InputLabel } from '@material-ui/core';
@@ -17,6 +15,7 @@ import AuthenticationType from './AuthenticationType';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { selectTotalUsers } from '../../store/selectors/leaderboard';
 import { COUNTRIES, NOT_ALLOWED_COUNTRIES } from 'constants/Countries';
+import CountryWarningImg from '../../data/images/signup-warning-country.png';
 
 const Authentication = ({
   loading,
@@ -427,9 +426,12 @@ const Authentication = ({
         You need to be above 18 years old in order to use this system
       </span>
     ) : notAllowed >= 0 ? (
-      <span className={styles.errorText}>
-        Users in this country are currently unable to access Alpacasino services.
-      </span>
+      <div className={styles.warningInfoContainer}>
+        <img src={CountryWarningImg} alt='warning-country'/>
+        <span className={styles.errorText}>
+          THE PLATFORM IS NOT<br/>AVAILABLE IN YOUR REGION
+        </span>
+      </div>
     ) : (
       <CheckBox
         className={styles.authenticationLegalAuthorizationAgreementCheckBox}
