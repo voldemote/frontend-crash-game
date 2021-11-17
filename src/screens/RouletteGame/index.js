@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
-//import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -317,7 +316,7 @@ const RouletteGame = ({
             </div>
           ) : null}
           {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-          
+
         </div>
       </div>
     </BaseContainerWithNavbar>

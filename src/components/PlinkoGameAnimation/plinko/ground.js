@@ -1,9 +1,9 @@
 import Matter from "matter-js";
 
 export default class Ground{
-    createGround(x,y){
+    createGround(x,y,width,height){
 
-       return Matter.Bodies.rectangle(400, 590, 800, 10, {
+       return Matter.Bodies.rectangle(x, y,width, height, {
             isStatic: true, //An immovable object
             label:"ground",
             render: {
