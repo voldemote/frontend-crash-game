@@ -31,6 +31,7 @@ import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
 import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
+import AlpacaBuilder from 'components/AlpacaBuilder';
 
 import moment from 'moment';
 
@@ -93,9 +94,11 @@ const Navbar = ({
     profile: 'profile',
     wallet: 'wallet',
     emailNotifications: 'emailNotifications',
+    alpacaBuilder: 'albacaBuilder'
   };
 
   const toggleOpenDrawer = drawerName => {
+    console.log(drawerName, drawers)
     if (!drawers.hasOwnProperty(drawerName)) {
       return;
     }
@@ -245,9 +248,19 @@ const Navbar = ({
       </div>
     );
 
+    const alpacaBuilderBtn = (
+      <div
+        className={style.notificationOverview}
+        onClick={() => toggleOpenDrawer(drawers.alpacaBuilder)}
+      >
+        <Icon iconType={IconType.star} className={style.notificationIcon} />
+      </div>
+    );
+
     if (isLoggedIn()) {
       return (
         <div className={style.navbarItems}>
+          {alpacaBuilderBtn}
           {leaderboardBtn}
           {walletBtn}
           {notificationsBtn}
@@ -257,6 +270,7 @@ const Navbar = ({
     } else {
       return (
         <div className={style.navbarItems}>
+          {alpacaBuilderBtn}
           {leaderboardBtn}
           {joinBtn}
         </div>
@@ -377,6 +391,10 @@ const Navbar = ({
     return <Wallet show={isOpen(drawers.wallet)} close={closeDrawers} />;
   };
 
+  const renderAlpacaBuilderDrawer = () => {
+    return <AlpacaBuilder show={isOpen(drawers.alpacaBuilder)} close={closeDrawers} />;
+  };
+
   const renderEmailNotificationDrawer = () => {
     return (
       <MainMenu
@@ -431,6 +449,7 @@ const Navbar = ({
       <div ref={drawerWrapper} className={style.drawerWrapper}>
         {renderNavButtons()}
         {renderLeaderboardDrawer()}
+        {renderAlpacaBuilderDrawer()}
         {isLoggedIn() && (
           <>
             {renderNotificationsDrawer()}
