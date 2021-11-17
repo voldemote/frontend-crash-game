@@ -68,7 +68,7 @@ export default class Stage extends React.Component {
             options: {
                 width: this.width,
                 height: this.height,
-                background: "#000000",
+                background: "transparent",
                 wireframes: false,
                 showAngleIndicator: false,
             },
