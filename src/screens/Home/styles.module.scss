@@ -105,7 +105,7 @@
 }
 
 .banner {
-  margin-top: 50px;
+  margin-top: 20px;
   background-image: url('../../data/backgrounds/games/elon-game-banner-lg.png');
   border-radius: 12px;
   min-height: 252px;
@@ -384,11 +384,11 @@
   }
   .cardBox {
     padding-top: 30px;
+
     .card {
       display: flex;
       background: #ffffff;
       border: 1px solid #ededed;
-      width: 96%;
       margin: 20px auto;
       padding-right: 20px;
       box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
@@ -532,7 +532,7 @@
   }
 }
 .gameCards {
-  margin: 20px 0;
+  margin-top: 70px;
   .title {
     display: flex;
     align-items: center;

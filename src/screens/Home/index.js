@@ -255,7 +255,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
           </h2>
         </div>
         <div className={styles.cardBox}>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item lg={4} md={6} xs={12}>
               <div className={styles.card}>
                 <div className={styles.thumbnail}>
@@ -337,8 +337,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          {renderRosiBanner()}
           {renderGamesCards()}
+          {renderRosiBanner()}
           {renderActivities()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}
