@@ -16,7 +16,6 @@ import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
 import { GeneralActions } from '../../store/actions/general';
 import SlotGameIconBg from '../../data/images/house-games/title.svg';
-import howTokenWorkTitle from '../../data/images/token/title.svg';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import EloneWithPhone from '../../data/images/elon-with-phone.png';
@@ -31,6 +30,16 @@ import GemsImg from '../../data/images/alpaca-verse/gems.png';
 import FairImg from '../../data/images/alpaca-verse/fair-img.png';
 import StarImg from '../../data/images/alpaca-verse/star.png';
 import DecentralImg from '../../data/images/alpaca-verse/decentral-img.png';
+import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
+import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
+import MagentaThumbnail from '../../data/images/alpaca-dopter/magenta-thumbnail.png';
+import BlueAlpaca from '../../data/images/alpaca-dopter/blue-alpaca.png';
+import BlueChip from '../../data/images/alpaca-dopter/blue-chip.png';
+import BlueThumbnail from '../../data/images/alpaca-dopter/blue-thumbnail.png';
+import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
+import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
+import YellowThumbnail from '../../data/images/alpaca-dopter/yellow-thumbnail.png';
+import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
 
@@ -126,12 +135,18 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
 
   const renderRosiBanner = () => {
     return (
-      <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
-        <div className={styles.banner}>
-          <div className={styles.title}>Play the Elon Game</div>
-          <button className={styles.button}>SIGN UP!</button>
+      <div className={styles.elonGame}>
+        <div className={styles.title}>
+          <img src={SlotGameIconBg} alt={'Visit slot games'} />
+          <h2>House Games</h2>
         </div>
-      </Link>
+        <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
+          <div className={styles.banner}>
+            <div className={styles.title}>Play the Elon Game</div>
+            <button className={styles.button}>SIGN UP!</button>
+          </div>
+        </Link>
+      </div>
     );
   };
   const renderHowTokenWorks = () => {
@@ -220,10 +235,6 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const renderGamesCards = () => {
     return (
       <div className={styles.gameCards}>
-        <div className={styles.title}>
-          <img src={SlotGameIconBg} alt={'Visit slot games'} />
-          <h2>House Games</h2>
-        </div>
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
@@ -246,6 +257,106 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
     );
   };
 
+  const renderAlpacaDopter = () => {
+    return (
+      <div className={styles.alpacadopter}>
+        <div className={styles.title}>
+          <h2>
+            Become an Early <span class={styles.pink}>ALPACA</span>DOPTER
+          </h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item lg={4} md={6} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnailMagenta}>
+                  <img src={MagentaAlpaca} alt="" />
+                  <img src={MagentaChip} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <div>
+                    <h3>
+                      Choose your Alpaca
+                    </h3>
+                    <p>
+                      Choose your Alpacavatar and name 
+                      to join the gang. Play fun games, 
+                      interact, follow, chat to grow your 
+                      Alpaca to win the leaderboard and 
+                      unlock cool NFT and crypto prices.
+                    </p>
+                  </div>
+                  <div className={styles.thumbnail}>
+                    <img src={MagentaThumbnail} alt="" />
+                  </div>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={4} md={6} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnailBlue}>
+                  <img src={BlueAlpaca} alt="" />
+                  <img src={BlueChip} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <div>
+                    <h3>
+                      Grow your Alpaca
+                    </h3>
+                    <p>
+                      You can earn PFAIR tokens in multiple 
+                      ways: You can play our house games (we 
+                      are going to launch new games weekly), 
+                      invite other alpacas, provide feedback 
+                      and (soon) battle other alpacas(or bet 
+                      on other alpaca fights) and send tokens 
+                      among each other.
+                    </p>
+                  </div>
+                  <div className={styles.thumbnail}>
+                    <img src={BlueThumbnail} alt="" />
+                  </div>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={4} md={6} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnailYellow}>
+                  <img src={YellowAlpaca} alt="" />
+                  <img src={YellowChip} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <div>
+                    <div className={styles.title}>
+                      <h3>What Is</h3><img src={AlphaLogo} alt="" />                    
+                    </div>
+                    <p>
+                      Alpacasino is a play-money testing 
+                      platform for the developers behind 
+                      Wallfair. We’re using play-money 
+                      (“PFAIR”) which is completely
+                      virtual and you do not need to 
+                      invest, risk or even lose any real 
+                      money or cryptocurrencies.
+                    </p>
+                  </div>
+                  <div className={styles.thumbnail}>
+                    <img src={YellowThumbnail} alt="" />
+                  </div>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+        <div className={styles.bottomContainer}>
+          <div className={styles.bottomBox}>
+            <p>CREATE YOUR OWN <span className={styles.pink}>ALPACA</span> NOW!</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
   const renderAlpacaVerse = () => {
     return (
       <div className={styles.alpacaverse}>
@@ -282,8 +393,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
             <Grid item lg={4} md={6} xs={12}>
               <div className={styles.card}>
                 <div
-                  className={styles.thumbnail}
-                  style={{ marginBottom: '-25px' }}>
+                  className={styles.thumbnail}>
                   <img src={GemsImg} alt="" />
                 </div>
                 <div className={styles.detail}>
@@ -337,9 +447,10 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          {renderGamesCards()}
           {renderRosiBanner()}
+          {renderGamesCards()}
           {renderActivities()}
+          {renderAlpacaDopter()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}
         </div>
