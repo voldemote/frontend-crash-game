@@ -187,7 +187,7 @@ const PlaceBetCasino = ({
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
-          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
+          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
         </span>
       );
     } else {
@@ -234,12 +234,12 @@ const PlaceBetCasino = ({
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '46%' }}></span>
-        <div className={classNames(styles.tab, styles.selected)} onClick={() => setSelector('manual')} >
-          <span>Manual Bet</span>
+        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '48.3%' }}></span>
+        <div className={classNames(styles.tab)} onClick={() => setSelector('manual')} >
+          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
         </div>
         <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
-          <span>Auto Bet</span>
+          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
         </div>
       </div>
     )
