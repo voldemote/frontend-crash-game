@@ -307,8 +307,8 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                     <p>
                       You can earn PFAIR tokens in multiple 
                       ways: You can play our house games (we 
-                      are going to launch new games weekly), i
-                      nvite other alpacas, provide feedback 
+                      are going to launch new games weekly), 
+                      invite other alpacas, provide feedback 
                       and (soon) battle other alpacas(or bet 
                       on other alpaca fights) and send tokens 
                       among each other.
