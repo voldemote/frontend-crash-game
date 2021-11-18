@@ -53,7 +53,7 @@ const PlaceBetCasino = ({
   const [winbutton, setWinbutton] = useState(false)
   const [spinlimit, setSpinlimit] = useState(false)
   const [accumulated, setAccumulated] = useState(0)
-
+  const [plinko, setPlinko] = useState(0)
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
 
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
@@ -83,7 +83,6 @@ const PlaceBetCasino = ({
       ngame: ngame - 1,
       riskFactor: risk
     }
-    setGame(payload)
     const bet = await onBet(payload)
   }
 

@@ -41,6 +41,7 @@ const PlinkoGameAnimation = ({
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
   const [start, setStart] = useState(false);
+  const [path, setPath] = useState(null);
 
   const backgRef = useRef(backg);
   backgRef.current = backg
@@ -61,8 +62,7 @@ const PlinkoGameAnimation = ({
   },[])
 
   useEffect(() => {
-    console.log("Start")
-    if(bet && !bet.pending && bet.ngame >= 0 && !running) spin(bet);
+    if(bet && !bet.pending && bet.path && !running) spin(bet);
   }, [bet]);
 
   const spin = async () => {
@@ -71,18 +71,7 @@ const PlinkoGameAnimation = ({
     //console.log("newspin1", bet.winIndex)
     setStart(true)
     console.log("newbet", bet)
-    let prepareObj = {};
-    if(bet.profit > 0) {
-      prepareObj = {
-        type: 'win',
-        value: '+' + bet.profit
-      };
-    } else {
-      prepareObj = {
-        type: 'loss',
-        value: bet.profit
-      };
-    }
+    setPath(bet.path)
     //setSpins(prepareObj);
     setRunning(false);
     setBet({pending: true, amount: bet.amount, profit: bet.profit});
@@ -104,7 +93,7 @@ const PlinkoGameAnimation = ({
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <AnimationController audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController risk={bet.riskFactor} path={path} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };

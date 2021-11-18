@@ -1,25 +1,29 @@
 import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'react';
 
-const rows = 12, ball = 20, row = 30, peg = 10, separation = 30;
-const risks = [44.4, 11, 5, 3, 1.2, 1.01, 0.6, 0.25, 0.6, 1.01, 1.2, 3, 5, 11, 44.4]
-const outcomesByRisk = {
-      1: [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10],
-      2: [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
-      3: [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
-    }
+const rows = 10, ball = 20, row = 30, peg = 10, separation = 30;
 
-export const AnimationController = ({width, height, onWin, start, setStart, audio}) => {
+const outcomesByRisk = [
+  [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10],
+  [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
+  [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
+]
+
+export const AnimationController = ({risk = 1, path, width, height, onWin, start, setStart, audio}) => {
   // console.log("size", width, height)
+  const [nball, setNball] = useState(0);
+  const boardref = useRef(null);
+
   useEffect(() => {
     if(start) {
-      setBall('110011011000', onWin)
+      setBall(path, onWin, nball, boardref)
+      setNball(nball+1)
       setStart(false)
     }
   }, [start])
 
   return (
-    <div className={styles.board}>
+    <div className={styles.board} ref={boardref}>
       <div id="ball" className={styles.ball}></div>
       {Array.from({length: rows}).map((row, index) =>
         <div className={styles.row}>
@@ -27,52 +31,58 @@ export const AnimationController = ({width, height, onWin, start, setStart, audi
         </div>
       )}
       <div className={styles.boxes}>
-        {risks.map((box) => <div className={styles.box}>{box}</div>)}
+        {outcomesByRisk[risk-1].map((box) => <div className={styles.box}>{box}</div>)}
       </div>
     </div>
   )
 }
 
-const setBall = (path, onBuscket) => {
-  document.getElementById("ball").style.transform = `translate(0px, 0px)`;
+const setBall = (path, onBuscket, nball, boardref) => {
+  let ball1 = document.createElement('div')
+  ball1.setAttribute("id", `ball-${nball}`);
+  ball1.setAttribute("class", styles.ball)
+  boardref.current.appendChild(ball1)
+  ball1.style.transform = `translate(0px, 0px)`;
   setTimeout(()=>{
-    document.getElementById("ball").style.transform = `translate(0px, ${ball-2}px)`;
-    for(let [index, direction] of path.split('').entries()){
+    ball1.style.transform = `translate(0px, ${ball-2}px)`;
+    let index = 0
+    for(let direction of path){
       setTimeout(() => {
-        moveBall(direction)
+        moveBall(direction, `ball-${nball}`)
       }, (index*350))
+      index++
     }
     setTimeout(() => {
-      fallToBuscket(onBuscket)
-    }, (path.split('').length*350+1))
+      fallToBuscket(onBuscket, `ball-${nball}`)
+    }, (path.length*350+1))
   }, 250)
 }
 
-const getXBall = () => parseInt( document.getElementById("ball").style.transform.split("(")[1].split(", ")[0].replace("px",""))
-const getYBall = () => parseInt(document.getElementById("ball").style.transform.split("(")[1].split(", ")[1].replace("px",""))
+const getXBall = (ball) => parseInt( document.getElementById(ball).style.transform.split("(")[1].split(", ")[0].replace("px",""))
+const getYBall = (ball) => parseInt(document.getElementById(ball).style.transform.split("(")[1].split(", ")[1].replace("px",""))
 
-function moveBall(direction) {
+function moveBall(direction, ball) {
   setTimeout(() => {
-    const x = getXBall(), y = getYBall()
-    const rotate = direction === '1' ? '0deg' : '0deg'
-    const newX = direction === '1' ? x + separation/2 : x - separation/2
-    document.getElementById("ball").style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
+    const x = getXBall(ball), y = getYBall(ball)
+    const rotate = direction === 1 ? '0deg' : '0deg'
+    const newX = direction === 1 ? x + separation/2 : x - separation/2
+    document.getElementById(ball).style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
   }, 0)
   setTimeout(() => {
-    const x = getXBall(), y = getYBall()
-    const newX = direction === '1' ? x+peg/2 : x-peg/2
-    const rotate = direction === '1' ? '180deg' : '-180deg'
-    document.getElementById("ball").style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
+    const x = getXBall(ball), y = getYBall(ball)
+    const newX = direction === 1 ? x+peg/2 : x-peg/2
+    const rotate = direction === 1 ? '180deg' : '-180deg'
+    document.getElementById(ball).style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
     }, 100)
   setTimeout(() => {
-    const x = getXBall(), y = getYBall()
-    const rotate = direction === '1' ? '360deg' : '-360deg'
-    document.getElementById("ball").style.transform = `translate(${x}px, ${y+row/2}px) rotate(${rotate})`;
+    const x = getXBall(ball), y = getYBall(ball)
+    const rotate = direction === 1 ? '360deg' : '-360deg'
+    document.getElementById(ball).style.transform = `translate(${x}px, ${y+row/2}px) rotate(${rotate})`;
    }, 175)
 }
-function fallToBuscket(onBuscket) {
-  const x = getXBall(), y = getYBall()
-  document.getElementById("ball").style.transform = `translate(${x}px, ${y+34}px) rotate(0)`;
+function fallToBuscket(onBuscket, ball) {
+  const x = getXBall(ball), y = getYBall(ball)
+  document.getElementById(ball).style.transform = `translate(${x}px, ${y+34}px) rotate(0)`;
   setTimeout(() => onBuscket(), 150)
 
 }

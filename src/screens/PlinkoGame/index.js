@@ -129,7 +129,6 @@ const PlinkoGame = ({
   };
 
   async function handleBet(payload) {
-    console.log("auduio", audio)
     audio.playBetSound();
     console.log("Bet: ", payload)
     if (!payload) return;
@@ -139,7 +138,8 @@ const PlinkoGame = ({
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
-        setBet({...payload, ...data});
+        console.log("data", data)
+        setBet({...payload, path: data.path});
         //updateUserBalance(userId);
         //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
         //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
