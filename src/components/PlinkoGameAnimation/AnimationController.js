@@ -3,6 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 
 const rows = 12, ball = 20, row = 30, peg = 10, separation = 30;
 const risks = [44.4, 11, 5, 3, 1.2, 1.01, 0.6, 0.25, 0.6, 1.01, 1.2, 3, 5, 11, 44.4]
+const outcomesByRisk = {
+      1: [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10],
+      2: [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
+      3: [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
+    }
 
 export const AnimationController = ({width, height, onWin, start, setStart, audio}) => {
   // console.log("size", width, height)

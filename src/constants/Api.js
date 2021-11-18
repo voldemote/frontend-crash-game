@@ -72,6 +72,7 @@ export const API_BET_CANCEL = 'api/event/bet/:id/cancel';
 export const API_BET_DELETE = 'api/event/bet/:id/delete';
 export const API_TRADE_CREATE_ELON = 'api/elon-game/trade';
 export const API_WHEEL_BET = 'api/simple-games/trade/wheel';
+export const API_PLINKO_BET = '/api/simple-games/trade/plinko';
 export const API_CASH_OUT_ELON = 'api/elon-game/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_TRADES_LUCKY = 'api/trades/lucky/:gameId';
