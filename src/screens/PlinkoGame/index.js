@@ -126,10 +126,11 @@ const PlinkoGame = ({
     try {
       if(payload.demo) {
         const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
+      /*
         let winMultiplier = 6
         for(let number of array){
           number === 1 ? winMultiplier -1 : winMultiplier + 1
-        }
+        }*/
         setBet({...payload, path: array })
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
