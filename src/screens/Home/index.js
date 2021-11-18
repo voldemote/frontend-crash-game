@@ -352,8 +352,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
           {renderGamesCards()}
           {renderHowTokenWorks()}
           {renderWhoWeAre()}
-          {renderCategoriesAndLeaderboard()}
-          {renderUniswap()}
+          {renderCategoriesAndLeaderboard()}          
         </div>
       </div>
     </BaseContainerWithNavbar>

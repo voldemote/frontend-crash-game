@@ -53,7 +53,7 @@ const PlaceBetCasino = ({
   const [winbutton, setWinbutton] = useState(false)
   const [spinlimit, setSpinlimit] = useState(false)
   const [accumulated, setAccumulated] = useState(0)
-
+  const [plinko, setPlinko] = useState(0)
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
 
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
@@ -83,7 +83,6 @@ const PlaceBetCasino = ({
       ngame: ngame - 1,
       riskFactor: risk
     }
-    setGame(payload)
     const bet = await onBet(payload)
   }
 
@@ -187,7 +186,7 @@ const PlaceBetCasino = ({
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
-          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
+          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
         </span>
       );
     } else {
@@ -234,12 +233,12 @@ const PlaceBetCasino = ({
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '46%' }}></span>
-        <div className={classNames(styles.tab, styles.selected)} onClick={() => setSelector('manual')} >
-          <span>Manual Bet</span>
+        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '48.3%' }}></span>
+        <div className={classNames(styles.tab)} onClick={() => setSelector('manual')} >
+          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
         </div>
         <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
-          <span>Auto Bet</span>
+          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
         </div>
       </div>
     )
@@ -330,7 +329,7 @@ const PlaceBetCasino = ({
               </div>
             )}
             <RiskInput number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
-            <NgamesInput text={gameName==='plinko'?'Number of Games':'Number of Spins'} ngame={ngame} setNgame={setNgame} game={game} />
+            {gameName!=='plinko' &&<NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={game} />}
           </div>
           :
           <div className={styles.sliderContainer}>

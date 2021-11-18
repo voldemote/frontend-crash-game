@@ -27,9 +27,8 @@
   }
   .ball{
     z-index: 15;
-    border: 1px solid black;
     background: white;
-    background-image: url('https://main.alpacasino.io/favicon.ico');
+    background-image: url('../../data/icons/medal-coin.png');
     background-size: 100%;    position: absolute;
     margin: auto;
     left: 0;
@@ -39,7 +38,7 @@
     height: 20px;
     border-radius: 15px;
     transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
-    box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
+    //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
   }
   .row{
     display: flex;
@@ -70,7 +69,7 @@
 
     bottom: -35px;
     .box{
-      margin: 0 5px 5px 5px;
+      margin: 0 8px 5px 8px;
       width: 24px;
       height: 20px;
       background: #dd8549;
@@ -81,6 +80,24 @@
       display: flex;
       text-align: center;
     }
+    .bright{
+      background: #d7393f;
+      border: 1px solid #e6e76a;
+      animation: shake 0.5s infinite;
+      &.red{
+        border: 1px solid #e6e76a;
+
+      }
+    }
+  }
+  @keyframes shake {
+  	0% { transform: rotate(0deg); }
+    17% { transform: rotate(5deg); }
+    34% { transform: rotate(0deg); }
+    50% { transform: rotate(-5deg); }
+    67% { transform: rotate(0deg); }
+    84% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
   }
 
 }
