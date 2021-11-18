@@ -233,6 +233,10 @@ const authenticationSucceeded = function* (action) {
       })
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
+    
+    if (action.user) {
+      yield put(AuthenticationActions.updateData(action.user));
+    }
 
     if (action.newUser) {
       yield put(
@@ -424,12 +428,13 @@ const loginExternal = function* ({ code, provider }) {
         session: data.session,
         newUser: data.newUser,
         initialReward: data?.initialReward,
+        user: data?.user,
       })
     );
   } else {
     yield put(
       AuthenticationActions.loginExternalFail({
-        message: error.message,
+        errorCode: error.errorCode,
       })
     );
   }
