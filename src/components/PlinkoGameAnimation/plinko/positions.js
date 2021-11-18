@@ -1,15 +1,12 @@
 export default class Positions {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
+    constructor(colSpace,midPoint,rowSpace) {
 
-        this.spacing = (this.width - 150) / 14;
-        this.rowSpacing = (this.height - 120) / 14;
-        this.midPoint = this.width / 2;
+        this.spacing = colSpace;
+        this.rowSpacing = rowSpace;
+        this.midPoint = midPoint;
 
         this.positions = [];
 
-        // this.createPositions();
     }
 
     potCenters() {

@@ -77,31 +77,27 @@ const Activities = ({showBets = false}) => {
         <div className={styles.container}>
           <div className={styles.globalStats}>
             <div className={styles.statsBlock}>
-              {showBets && (
-                <>
-                <div className={styles.statItem}>
-                  <div className={styles.statItemHead}>
-                    <span>{toNumericString(data24h?.trades)}</span> 24h # of bets
-                  </div>
-                  {/*<div className={styles.statItemHint}>last 24 hours</div>*/}
+              <div className={styles.statItem}>
+                <div className={styles.statItemHead}>
+                  <span>{toNumericString(data24h?.trades)}</span> 24h # of bets
                 </div>
-                <div className={styles.statItem}>
-                  <div className={styles.statItemHead}>
-                    <span>{toNumericString(dataLastWeek?.trades)}</span> 7d # of
-                    bets
-                  </div>
-                  {/*<div className={styles.statItemHint}>last week</div>*/}
+                {/*<div className={styles.statItemHint}>last 24 hours</div>*/}
+              </div>
+              <div className={styles.statItem}>
+                <div className={styles.statItemHead}>
+                  <span>{toNumericString(dataLastWeek?.trades)}</span> 7d # of
+                  bets
                 </div>
+                {/*<div className={styles.statItemHint}>last week</div>*/}
+              </div>
 
-                <div className={styles.statItem}>
-                  <div className={styles.statItemHead}>
-                    <span>{toNumericString(dataAllTime?.trades)}</span> Total # of
-                    bets
-                  </div>
-                  {/*<div className={styles.statItemHint}>all time</div>*/}
+              <div className={styles.statItem}>
+                <div className={styles.statItemHead}>
+                  <span>{toNumericString(dataAllTime?.trades)}</span> Total # of
+                  bets
                 </div>
-                </>
-              )}
+                {/*<div className={styles.statItemHint}>all time</div>*/}
+              </div>
 
               <div className={styles.statItem}>
                 <div className={styles.statItemHead}>

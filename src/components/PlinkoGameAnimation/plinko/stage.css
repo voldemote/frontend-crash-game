@@ -1,3 +1,6 @@
+.plinko_stage{
+  z-index: 10;
+}
 .plinko_stage input{
     position: absolute;
     left:10px;
