@@ -21,6 +21,7 @@ import Events from './screens/Events';
 import RosiGame from './screens/RosiGame';
 import PlinkoGame from './screens/PlinkoGame';
 import RouletteGame from './screens/RouletteGame';
+import MinesGame from './screens/MinesGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
 import Activities from './screens/Activities';
@@ -74,6 +75,7 @@ const App = () => {
                 path={Routes.rouletteGame}
                 component={RouletteGame}
               />
+              <Route exact path={Routes.minesGame} component={MinesGame} />
               <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />

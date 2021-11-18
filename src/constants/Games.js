@@ -219,5 +219,10 @@ export const GAMES = {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
+  },
+  mines: {
+    id: '618a821bd90fd22298859sg1',
+    slug: 'mines',
+    name: `Mines`,
   }
 };
