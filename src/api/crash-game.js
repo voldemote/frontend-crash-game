@@ -148,8 +148,8 @@ const transformUser = user => ({
   state: 2,
   userId: user.userid,
   username: user.username,
-  rewardAmount: user.profit ? user.profit + parseFloat(user.stakedamount) : user.crashfactor * user.stakedamount,
-  });
+  rewardAmount: user.profit ?? user.crashfactor * user.stakedamount,
+});
 
 const getLuckyUsers = data => {
   const { gameId } = data || {};

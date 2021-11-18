@@ -3,15 +3,15 @@ import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import classNames from 'classnames';
 
-function GameAudioControlLocals({ audio, muteButtonClick, game }) {
+function GameAudioControlLocals({ audio, muteButtonClick }) {
   const [aud, setAud] = useState(audio.volume);
 
   const onChangeVolume = (event, value) => {
     setAud(value / 100)
-    audio.setVolume((value / 100).toFixed(1));
+    audio.setVolume((value / 100).toFixed(1));    
   }
   return (
-    <div className={classNames(styles.container, game==='plinko' && styles.plinko)}>
+    <div className={styles.container}>
       <VolumeSlider level={aud} handleChange={onChangeVolume} />
       <div
         className={classNames({

@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 import { getRandomInRange } from './utils';
 
 const NUM_OF_PARTICLES = 100;

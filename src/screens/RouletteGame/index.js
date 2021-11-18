@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
+//import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
-import PlaceBetCasino from 'components/PlaceBetCasino';
+import PlaceBetRoulette from 'components/PlaceBetRoulette';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/RouletteGameAnimation';
@@ -205,7 +206,6 @@ const RouletteGame = ({
   const handleNewSpin = (newSpin)=> {
     setSpins([newSpin, ...spins])
   }
-  console.log("bet", bet)
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -247,7 +247,7 @@ const RouletteGame = ({
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBetCasino
+                <PlaceBetRoulette
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}

@@ -1,126 +1,88 @@
 @import '../../styles/all';
 
-.button{
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  border-radius: 15px;
-  z-index: 10;
-  padding: 5px 20px;
-  cursor: pointer;
-}
-.board{
-  position: relative;
-  width: fit-content;
-
-  &:after{
-    content: '';
-    border-bottom: 380px solid #ffffff;
-    border-left: 260px solid transparent;
-    border-right: 260px solid transparent;
-    height: 0;
-    width: 40px;
-    position: absolute;
-    left: -40px;
-    top: -50px;
-    padding: 20px 40px;
-  }
-  .ball{
-    z-index: 15;
-    background: white;
-    background-image: url('../../data/icons/medal-coin.png');
-    background-size: 100%;    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: -30px;
-    width: 20px;
-    height: 20px;
-    border-radius: 15px;
-    transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
-    //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
-  }
-  .row{
-    display: flex;
-    height: 30px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    .peg{
-      z-index: 12;
-      display: flex;
-      width: 10px;
-      height: 10px;
-      background: #d7393f;
-      box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
-      border-radius: 100%;
-      margin-left: 15px;
-      margin-right: 15px;
-    }
-  }
-  .boxes{
-    display: flex;
-    justify-content: center;
-    background: white;
-    align-items: center;
-    width: calc(100% + 80px);
-    position: absolute;
-    margin-left: -40px;
-
-    bottom: -35px;
-    .box{
-      margin: 0 8px 5px 8px;
-      width: 24px;
-      height: 20px;
-      background: #dd8549;
-      color: white;
-      font-size: 10px;
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      text-align: center;
-    }
-    .bright{
-      background: #d7393f;
-      border: 1px solid #e6e76a;
-      animation: shake 0.5s infinite;
-      &.red{
-        border: 1px solid #e6e76a;
-
-      }
-    }
-  }
-  @keyframes shake {
-  	0% { transform: rotate(0deg); }
-    17% { transform: rotate(5deg); }
-    34% { transform: rotate(0deg); }
-    50% { transform: rotate(-5deg); }
-    67% { transform: rotate(0deg); }
-    84% { transform: rotate(5deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-}
-.background{
-  position: absolute;
-  margin: auto;
-   max-width: fit-content;
-  svg{
-    max-width: auto!important;
-  }
+.canvas{
+  //width: 100%;
+  //height: 100%;
 }
 .animation {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  overflow: hidden;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.17);
   /*height: fit-content;*/
-  max-height: 450px;
-  min-height: 450px;
+  max-height: 392px;
+  min-height: 392px;
   position: relative;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  //background: #1f1d38;
+  /*
+  @media (max-width: $screen-xs-max) {
+    height: 244px;
+  }
+//backgroundImage: '/images/roulette-game/Background_wheel_opt.png'
+  .gameOffline {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+  }
 
+  .timer {
+    $timerShadowColor: #859acf;
+
+    display: inline-block;
+    width: 3ch;
+    position: absolute;
+    font-size: 110px;
+    font-weight: bold;
+    text-shadow: 4px 2px 2px $timerShadowColor;
+    color: $colorWhite;
+
+    @media (max-width: $screen-xs-max) {
+      top: 16px;
+      left: 20px;
+      font-size: 36px;
+    }
+
+    &.flashAnimation {
+      animation: color-change 0.3s ease-out forwards, scale 0.4s ease-out;
+    }
+
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.6);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes color-change {
+      from {
+        color: $colorWhite;
+        text-shadow: 4px 2px 2px $timerShadowColor;
+      }
+
+      to {
+        color: $colorRed;
+        text-shadow: 4px 2px 2px $colorRedDark;
+      }
+    }
+  }
+
+  .canvas {
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+  }*/
 }
 
 .preparingRound {
