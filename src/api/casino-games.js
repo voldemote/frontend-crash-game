@@ -36,6 +36,13 @@ class GameApi {
       throw error;
     });
   }
+
+  createTradePlinko = payload => {
+    return this.api.post(ApiUrls.API_PLINKO_BET, payload).catch(error => {
+      console.log('[API Error] called: createTrade', error);
+      throw error;
+    });
+  }
 /*
   cancelBet = () =>
     this.api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {

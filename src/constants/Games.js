@@ -219,5 +219,7 @@ export const GAMES = {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+,
   }
 };

@@ -20,14 +20,12 @@ import GameAudioControlsLocal from '../GameAudioControlsLocal';
 const PlinkoGameAnimation = ({
   connected,
   muteButtonClick,
-  isMute,
   setSpins,
-  isSynced,
-  isLosing,
-  volumeLevel,
-  musicIndex,
-  animationIndex,
-  onInit
+  amount,
+  onInit,
+  risk,
+  setBet,
+  bet
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -43,6 +41,7 @@ const PlinkoGameAnimation = ({
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
   const [start, setStart] = useState(false);
+  const [ball, setBall] = useState(null);
 
   const backgRef = useRef(backg);
   backgRef.current = backg
@@ -62,6 +61,22 @@ const PlinkoGameAnimation = ({
 
   },[])
 
+  useEffect(() => {
+    if(bet && !bet.pending && bet.path && !running) spin(bet);
+  }, [bet]);
+
+  const spin = async () => {
+    if (running) return;
+    else setRunning(true);
+    //console.log("newspin1", bet.winIndex)
+    setStart(true)
+    console.log("newbet", bet)
+    setBall({path: bet.path, winMultiplier: bet.winMultiplier })
+    //setSpins(prepareObj);
+    setRunning(false);
+    setBet({pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward});
+  }
+
   const changeBackground = (count) => {
     setTimeout(() => {
       setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
@@ -77,9 +92,8 @@ const PlinkoGameAnimation = ({
   return (
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
-      <button onClick={() => setStart(true)} className={styles.button}>Start</button>
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <AnimationController audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };
