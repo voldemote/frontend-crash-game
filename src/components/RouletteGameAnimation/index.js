@@ -48,14 +48,14 @@ const RouletteGameAnimation = ({
     audioInstance = audio;
     instance = handle;
     onInit(audio);
-    return () => { 
+    return () => {
       audioInstance.stopBgm();
       instance.destroy();
     }
   }, []);
 
   useEffect(() => {
-    if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
+    if(bet && !bet.pending && bet.ngame >= 0 && !running) spin(bet);
   }, [bet]);
 
   useEffect(() => {
@@ -90,8 +90,9 @@ const RouletteGameAnimation = ({
   const spin = async () => {
     if (running) return;
     else setRunning(true);
+    console.log("newspin1", bet.winIndex)
     const newspin = await AnimationController.spinTo(bet.winIndex);
-
+    console.log("newspin", newspin)
     let prepareObj = {};
     if(bet.profit > 0) {
       prepareObj = {

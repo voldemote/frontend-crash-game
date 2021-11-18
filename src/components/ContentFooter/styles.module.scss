@@ -3,88 +3,65 @@
 .container {
   width: 100%;
   flex-direction: column;
-  padding: 40px 0 0;
+  margin-top: 40px;
+  padding: 40px 20px 60px 20px;
+  background-color: #0e0927;
 }
 
 .footer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   font-size: 12px;
   color: $colorPrimary;
   margin: 0 auto;
   justify-content: space-between;
 
   @media (max-width: $screen-sm) {
-    font-size: 11px;
+    flex-direction: column;
     padding: 0 20px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 
   img {
-    margin-bottom: 0px;
+    margin-bottom: 20px;
   }
 
   .links {
     display: flex;
-    justify-content: space-around;
-    width: 100%;
     margin: 10px 0;
-    // max-width: 600px;
-    //opacity: 0.45;
+    gap: 12px;
+    color: white;
 
     @media (max-width: $screen-sm) {
       display: flex;
       flex-direction: column;
+      align-items: center;
       margin: 0 auto;
-      row-gap: 10px;
+      row-gap: 16px;
     }
 
-    .column {
-      // width: 100%;
+    a,
+    button {
+      font-family: $fontRegular;
+      font-size: 10px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      row-gap: 20px;
+      align-items: center;
+      text-decoration: none;
 
-      .firstRow,
-      .secondRow {
-        // max-width: 250px;
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        column-gap: 40px;
-        justify-content: center;
-
-        @media (max-width: $screen-sm) {
-          column-gap: 20px;
-        }
-
-        a,
-        button {
-          font-family: $fontRegular;
-          font-size: 12px;
-          display: flex;
-          align-items: center;
-          text-decoration: none;
-          column-gap: 5px;
-
-          &:hover {
-            opacity: 1;
-          }
-
-          img {
-            margin-bottom: 0;
-          }
-        }
-
-        button {
-          background: transparent;
-          border: 0;
-          color: $colorPrimary;
-          cursor: pointer;
-        }
+      &:hover {
+        opacity: 1;
       }
+
+      img {
+        margin-bottom: 0;
+      }
+    }
+
+    button {
+      background: transparent;
+      border: 0;
+      color: white;
+      cursor: pointer;
     }
   }
 
@@ -102,7 +79,11 @@
     }
   }
   p {
-    font-size: 14px;
+    font-size: 10px;
+
+    @media (max-width: $screen-sm) {
+      font-size: 12px;
+    }
   }
 }
 
