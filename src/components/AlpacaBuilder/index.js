@@ -1,205 +1,112 @@
 import { useEffect, useState, memo } from 'react';
 import classNames from 'classnames';
-import Icon from '../Icon';
-import { connect, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
-import MenuItem from '../MenuItem';
-import WalletBalance from '../WalletBalance';
-import useTransactions from 'hooks/useTransactions';
-import { selectUser } from 'store/selectors/authentication';
-import { BetActions } from 'store/actions/bet';
-import { TransactionActions } from 'store/actions/transaction';
-import MyTrades from 'components/MyTrades';
-import navbarStyle from '../Navbar/styles.module.scss';
-import TransactionHistory from '../TransactionHistory';
-import PartyIcon from '../../data/icons/party.svg';
-import { PopupActions } from '../../store/actions/popup';
-import PopupTheme from '../Popup/PopupTheme';
-import ReactTooltip from 'react-tooltip';
-import { calculateTimeLeft } from '../../helper/Time';
+import AbViewCategories from './abViewCategories';
+import AbViewIntro from './abViewIntro';
+import AbViewStyles from './abViewStyles';
+import {AB_VIEWS, CATEGORIES} from './data';
 
-const Wallet = ({
-  show,
-  close,
-  fetchOpenBets,
-  fetchTradeHistory,
-  fetchTransactions,
-  showRequestTokenPopup,
+const AlpacaBuilder = ({
+  visible,
 }) => {
-  const menus = {
-    alpacaBuilder: 'alpacaBuilder',
-    transactionHistory: 'transactionHistory',
-    referrals: 'referrals',
-  };
 
-  const closeDrawer = () => {
-    setOpenMenu(menus.alpacaBuilder);
-    close();
-  };
-
-  const [openMenu, setOpenMenu] = useState(menus.alpacaBuilder);
-  const [displayRequestTokens, setDisplayRequestTokens] = useState(false);
-
-  const { currency, balance, tokensRequestedAt } = useSelector(selectUser);
-  const { transactions, transactionCount } = useTransactions();
-  const tokensRequestedAtMs = new Date(tokensRequestedAt).getTime();
-  const now = Date.now();
-  const tokenTimeDiff = now - tokensRequestedAtMs;
-  const canRequestTokens = tokenTimeDiff >= 3600 * 1000;
-  const timeLeft = calculateTimeLeft(tokensRequestedAtMs + 3600 * 1000);
-  const isOpen = page => openMenu === page;
+  const [activeViews, setActiveViews] = useState([]);
+  const [hidingView, setHidingView] = useState();
+  const [showingView, setShowingView] = useState();
+  const [svgProperties, setSvgProperties] = useState();
+  const [currentCategory, setCurrentCategory] = useState();
 
   useEffect(() => {
-    if (show) {
-      fetchOpenBets();
-      fetchTradeHistory();
-      fetchTransactions();
-    } else {
-      setOpenMenu(menus.alpacaBuilder);
+    console.log('[alpacabuilder] show', visible)
+    setActiveViews([])
+    resetSvg();
+    //setHidingView();
+    if (visible) {
+      pushView(AB_VIEWS.intro);
+      //setShowingView(AB_VIEWS.intro);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show]);
+  }, [visible]);
 
-  useEffect(() => {
-    setDisplayRequestTokens(balance < 5000);
-  }, [balance]);
+  const resetSvg = () => {
+    let p = {};
+    for(let c of CATEGORIES){
+      p[c.name] = {style:null, colors:null};
+    }
+    setSvgProperties(p);
+  }
 
-  const backButton = () => (
-    <Icon
-      className={styles.backButton}
-      iconType={'arrowTopRight'}
-      onClick={() => setOpenMenu(menus.alpacaBuilder)}
-    />
-  );
 
-  const walletContainerWrapper = (
-    open,
-    heading,
-    contents,
-    isFirstPanel = false
-  ) => {
-    return (
-      <div
-        className={classNames(
-          styles.panel,
-          !open && styles.panelHidden,
-          isFirstPanel && styles.firstPanel
-        )}
-      >
-        <h2 className={styles.walletHeading}>
-          {heading}
-          {displayRequestTokens && (
-            <>
-              {canRequestTokens ? (
-                <div
-                  className={styles.requestTokens}
-                  onClick={showRequestTokenPopup}
-                >
-                  <span>Request Tokens</span>
-                </div>
-              ) : (
-                <div
-                  data-for="rt-tokens"
-                  data-tip={`Available in ${timeLeft.minutes}m ${timeLeft.seconds}s`}
-                  className={classNames({
-                    [styles.requestTokens]: true,
-                    [styles.disabled]: !canRequestTokens,
-                  })}
-                >
-                  <span>Request Tokens</span>
-                </div>
-              )}
-              <ReactTooltip
-                id={'rt-tokens'}
-                place="bottom"
-                effect="solid"
-                offset={{ bottom: 10 }}
-                multiline
-                className={styles.tooltip}
-              />
-            </>
-          )}
-        </h2>
-        <div className={styles.walletContents}>{contents}</div>
-      </div>
-    );
-  };
+  const pushView = (newView, props) =>{
+    if(!newView) return;
+    setShowingView(newView);
+    setActiveViews([...activeViews, newView]);
+    setTimeout(() => {
+      setShowingView();
+    }, 400);
+  }
 
-  const onTransactionsClick = () => {
-    setOpenMenu(menus.transactionHistory);
-  };
+  const pullView = (newView) =>{
+    if(activeViews.length <= 1) return;
+    setHidingView(newView);
+    setActiveViews(activeViews.filter(v => v !==  newView));
+    setTimeout(() => {
+      setHidingView();
+    }, 400);
+  }
+
+  const getCssClass = (viewName) => {
+    let classes = [styles.abView];
+    if(activeViews.includes(viewName)) classes.push(styles.active);
+    if(hidingView === viewName) classes.push(styles.hiding);
+    if(showingView === viewName) classes.push(styles.showing);
+    return classes;
+  }
+
+  const renderBackButton = () => {
+    return (<a
+      className={styles.backBtn}
+      href="#/"
+      onClick={() => pullView(activeViews[activeViews.length-1])}>Back</a>);
+  }
+
+  const selectCategory = (cat) => {
+    setCurrentCategory(cat);
+    pushView(AB_VIEWS.styles);
+  }
+
+  const applyStyle = (style) => {
+    let p = {...svgProperties};
+    p[currentCategory.name] = style;
+    setSvgProperties(p);
+  }
 
   return (
     <div
       className={classNames(
-        styles.wallet,
-        styles.drawer,
-        !show && styles.drawerHidden
-      )}
-    >
-      <div className={classNames(navbarStyle.drawerContent)}>
-        <div className={styles.menuContainer}>
-          {walletContainerWrapper(
-            isOpen(menus.alpacaBuilder),
-            'Alpacabuilder',
-            <>
-              <WalletBalance />
-
-              <MenuItem
-                classes={[styles.transactionHistory]}
-                label={`Transaction History (${transactionCount})`}
-                icon={
-                  <Icon className={styles.optionIcon} iconType={'activities'} />
-                }
-                onClick={() => onTransactionsClick()}
-              />
-
-              <div className={styles.myTradesContainer}>
-                <MyTrades close={closeDrawer} />
-              </div>
-            </>,
-            true
-          )}
-
-          {walletContainerWrapper(
-            isOpen(menus.transactionHistory),
-            <>
-              {backButton()}
-              Transaction History
-            </>,
-            <TransactionHistory
-              transactions={transactions}
-              currency={currency}
-            />
-          )}
-        </div>
-        <Icon
-          iconType={'cross'}
-          onClick={closeDrawer}
-          className={styles.closeButton}
-        />
+        styles.alpacaBuilder
+      )}>
+      <div className={styles.head}>
+        <h2>Alpacabuilder</h2>
+        {activeViews.length > 1 && (renderBackButton())}
+        <div className={styles.svg}><pre>{JSON.stringify(svgProperties,null, 2)}</pre></div>
       </div>
-      <div className={navbarStyle.drawerBackdropBg}></div>
+      <div className={styles.viewsContainer}>
+        <AbViewIntro
+          cssClassNames={classNames(getCssClass(AB_VIEWS.intro))}
+          onPushView={pushView}></AbViewIntro>
+        <AbViewCategories
+          cssClassNames={classNames(getCssClass(AB_VIEWS.categories))}
+          onCategorySelected={selectCategory}></AbViewCategories>
+        <AbViewStyles
+          cssClassNames={classNames(getCssClass(AB_VIEWS.styles))}
+          category={currentCategory}
+          onStyleClick={applyStyle}
+          current={currentCategory && svgProperties[currentCategory.name]}
+          ></AbViewStyles>
+      </div>
     </div>
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchOpenBets: () => {
-      dispatch(BetActions.fetchOpenBets());
-    },
-    fetchTransactions: () => {
-      dispatch(TransactionActions.fetchAll());
-    },
-    fetchTradeHistory: () => {
-      dispatch(BetActions.fetchTradeHistory());
-    },
-    showRequestTokenPopup: () => {
-      dispatch(PopupActions.show({ popupType: PopupTheme.requestTokens }));
-    },
-  };
-};
-
-const Connected = connect(null, mapDispatchToProps)(Wallet);
-export default memo(Connected);
+export default memo(AlpacaBuilder);

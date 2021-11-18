@@ -32,6 +32,7 @@ import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
 import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
 import AlpacaBuilder from 'components/AlpacaBuilder';
+import NavBarDrawer from 'components/NavBarDrawer';
 
 import moment from 'moment';
 
@@ -94,11 +95,11 @@ const Navbar = ({
     profile: 'profile',
     wallet: 'wallet',
     emailNotifications: 'emailNotifications',
-    alpacaBuilder: 'albacaBuilder'
+    alpacaBuilder: 'alpacaBuilder'
   };
 
   const toggleOpenDrawer = drawerName => {
-    console.log(drawerName, drawers)
+
     if (!drawers.hasOwnProperty(drawerName)) {
       return;
     }
@@ -392,7 +393,10 @@ const Navbar = ({
   };
 
   const renderAlpacaBuilderDrawer = () => {
-    return <AlpacaBuilder show={isOpen(drawers.alpacaBuilder)} close={closeDrawers} />;
+    return (
+      <NavBarDrawer visible={isOpen(drawers.alpacaBuilder)} onClose={closeDrawers}>
+        <AlpacaBuilder visible={isOpen(drawers.alpacaBuilder)} onClose={closeDrawers}/>
+      </NavBarDrawer>)
   };
 
   const renderEmailNotificationDrawer = () => {

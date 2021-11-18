@@ -1,158 +1,113 @@
-@import '../../styles/all';
+@import './frontend-styles.module';
 
-.wallet {
-  color: $colorPrimary;
-  padding: 90px 24px 0;
+.alpacaBuilder {
   height: 100vh;
+  overflow: hidden;
   display: flex;
-  flex-flow: nowrap column;
+  flex-direction: column;
 
-  .walletHeading {
-    font-size: 24px;
-    margin: 0 0 50px;
-    display: flex;
-    justify-content: space-between;
-    min-height: 41px;
-    .requestTokens {
-      font-weight: bolder;
-      position: relative;
-      background: url('../../data/backgrounds/highlight-request-tokens.svg')
-        no-repeat;
-      background-size: contain;
-      min-width: 203px;
-      color: $colorBlack;
-      display: flex;
-      justify-content: start;
-      align-items: center;
-      cursor: pointer;
-      .party {
-        background-size: cover;
-        z-index: 3;
-        color: black;
-        min-width: 25px;
-        min-height: 25px;
-        width: 25px;
-        height: 25px;
-        padding-left: 25px;
-        display: none;
-      }
-      span {
-        font-family: $fontBold;
-        font-weight: bold;
-        font-size: 12px;
-        padding-left: 40px;
-        padding-bottom: 0;
-      }
+  .head{
+    background-color: lightblue;
+    pre{font-size:8pt;}
+    .backBtn{
+      position:absolute;
+      right:100px;
     }
-    .requestTokens.disabled {
-      background: url('../../data/backgrounds/highlight-request-tokens-disabled.svg')
-        no-repeat;
-      color: rgba(0, 0, 0, 0.5);
-      cursor: wait;
-    }
-  }
-  .walletContents {
-    overflow-y: auto;
-    padding-bottom: 30px;
-  }
 
-  .referrals {
-    .optionIcon {
-      transform: scale(0.8);
-    }
-  }
-  .transactionHistory {
-    .optionIcon {
-      svg rect {
-        fill: transparent;
-      }
+    .svg{
+      width: 100%;
+      height: 100%;
+      background-color: aliceblue;
     }
   }
 
-  .arrowIcon {
-    margin-left: auto;
-    width: auto;
-  }
-  .closeButton {
-    @extend .floatingCloseButton;
-    @media screen and (min-width: $screen-sm) {
-      display: none;
-    }
+  a{
+    text-decoration: underline;
   }
 
-  .buy {
-    color: #ff5858;
-    letter-spacing: 0.35px;
-    &::before {
-      content: '- ';
-    }
-  }
-  .payout,
-  .refund,
-  .sell {
-    color: #acffce;
-    letter-spacing: 0.35px;
-    &::before {
-      content: '+ ';
-    }
-  }
-
-  .referralLink {
-    background-color: rgba(172, 196, 255, 0.1) !important;
-    margin-bottom: 24px;
-  }
-
-  .menuContainer {
+  .viewsContainer{
+    background-color: #F5FCFF;
     position: relative;
-    overflow: hidden;
-    height: 100%;
+    flex:1;
   }
 
-  .panel {
-    transition: 0.5s ease-in-out;
-    transition-property: transform, opacity;
+  .abView {
     position: absolute;
+    top: 0;
+    background-color: lightgray;
+    height: 100vh;
     width: 100%;
-    opacity: 1;
-    height: calc(100vh - 90px);
-    display: flex;
-    flex-flow: column;
-
-    @supports (-webkit-touch-callout: none) {
-      height: calc(100vh - 150px);
-    }
-  }
-  .panelHidden {
+    right: -500px;
     opacity: 0;
-    transform: translateX(110%);
-  }
-  .firstPanel {
-    &.panelHidden {
-      transform: translateX(-110%);
+
+    .tiles{
+      display: flex;
+      flex-flow: row wrap;
+
+      .tile{
+        background-color: white;
+        margin: 10px;
+        height: 100px;
+        width: calc( (100% / 3) - 20px );
+        padding: 10px;
+      }
+      .tileSelected{
+        background-color: aquamarine;
+      }
+    }
+
+    .colors{
+      display: flex;
+      overflow-x: auto;
+
+      .color{
+        background-color: white;
+        margin: 10px;
+        padding: 10px;
+      }
+      .colorSelected{
+        background-color: aquamarine;
+      }
     }
   }
-
-  .switchablePayment {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    padding: 0px 80px;
-    margin-top: 40px;
-
-    @media (max-width: $screen-sm) {
-      padding: 0;
-    }
+  .showing{
+    animation: movein 0.3s ease-out forwards;
+  }
+  .hiding{
+    animation: moveout 0.4s ease-in forwards;
+  }
+  .active{
+    right: 0;
+    opacity: 1;
   }
 
-  .myTradesContainer {
-    margin-top: 40px;
-    padding-bottom: 80px;
+}
+
+
+@keyframes movein {
+  0% {
+    right: -500px;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    right: 0px;
+    opacity: 1;
   }
 }
 
-.tooltip {
-  font-family: $fontBold;
-  background-color: $colorPrimary !important;
-  text-align: left !important;
-  z-index: 999;
+@keyframes moveout {
+  0% {
+    right: 0px;
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+  100% {
+    right: -500px;
+  }
 }
