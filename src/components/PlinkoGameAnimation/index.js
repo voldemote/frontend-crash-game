@@ -41,7 +41,7 @@ const PlinkoGameAnimation = ({
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
   const [start, setStart] = useState(false);
-  const [path, setPath] = useState(null);
+  const [ball, setBall] = useState(null);
 
   const backgRef = useRef(backg);
   backgRef.current = backg
@@ -71,10 +71,10 @@ const PlinkoGameAnimation = ({
     //console.log("newspin1", bet.winIndex)
     setStart(true)
     console.log("newbet", bet)
-    setPath(bet.path)
+    setBall({path: bet.path, winMultiplier: bet.winMultiplier })
     //setSpins(prepareObj);
     setRunning(false);
-    setBet({pending: true, amount: bet.amount, profit: bet.profit});
+    setBet({pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward});
   }
 
   const changeBackground = (count) => {
@@ -93,7 +93,7 @@ const PlinkoGameAnimation = ({
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <AnimationController risk={bet.riskFactor} path={path} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController risk={risk} ballValue={ball} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };

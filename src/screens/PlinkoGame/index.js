@@ -139,7 +139,7 @@ const PlinkoGame = ({
       } else {
         const { data } = await Api.createTradePlinko(payload);
         console.log("data", data)
-        setBet({...payload, path: data.path});
+        setBet({...payload, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier});
         //updateUserBalance(userId);
         //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
         //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
@@ -148,7 +148,7 @@ const PlinkoGame = ({
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Alpaca Wheel: Place Bet failed',
+          message: 'Plinko: Place Bet failed',
         })
       );
     }
@@ -225,7 +225,7 @@ const PlinkoGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Alpaca Wheel" />
+            <BackLink to="/games" text="Plinko" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}

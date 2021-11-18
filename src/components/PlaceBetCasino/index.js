@@ -329,7 +329,7 @@ const PlaceBetCasino = ({
               </div>
             )}
             <RiskInput number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
-            <NgamesInput text={gameName==='plinko'?'Number of Games':'Number of Spins'} ngame={ngame} setNgame={setNgame} game={game} />
+            {gameName!=='plinko' &&<NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={game} />}
           </div>
           :
           <div className={styles.sliderContainer}>
