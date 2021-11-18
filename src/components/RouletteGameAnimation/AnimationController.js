@@ -1,6 +1,6 @@
 import { options } from 'components/EmailNotifications/options';
 import { init } from 'store/sagas/websockets';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 import '@pixi/math-extras';
 import '@pixi/sound';
 import * as Sound from '@pixi/sound';

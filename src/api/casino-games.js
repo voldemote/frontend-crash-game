@@ -2,9 +2,10 @@ import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import {
-  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES,
+  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES, API_MINES_BET, API_MINES_START,
   CRASH_GAME_GET_VOLUME_BETS
 } from '../constants/Api';
+import {promises} from "stream";
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -23,6 +24,7 @@ class GameApi {
     this.api = createInstance(host, '/');
     this.setToken(token);
   }
+
   setToken = token => {
     if (!token) return;
     const authentication = 'Bearer ' + token;
@@ -37,65 +39,32 @@ class GameApi {
     });
   }
 
+  createTradeMines = payload => {
+    console.log('PAYLOAD', payload);
+    console.log('URL', ApiUrls.API_MINES_START);
+
+    return new Promise((resolve, reject) => {
+      const dummyData = {
+        data: {
+          test: 'test'
+        }
+      }
+      resolve(dummyData)
+    })
+
+    // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
+    //   console.log('[API Error] called: createMinesTrade', error);
+    //   throw error;
+    // });
+  }
+
   createTradePlinko = payload => {
     return this.api.post(ApiUrls.API_PLINKO_BET, payload).catch(error => {
       console.log('[API Error] called: createTrade', error);
       throw error;
     });
   }
-/*
-  cancelBet = () =>
-    this.api.delete(ApiUrls.API_TRADE_CREATE).catch(error => {
-      throw error;
-    });
 
-  getCurrentGameInfo = () => {
-    return this.api.get(ApiUrls.API_CURRENT).catch(error => {
-      console.log('[API Error] called: getCurrentGameInfo', error);
-    });
-  };
-
-  cashOut = () => {
-    return this.api.post(ApiUrls.API_CASH_OUT, {}).catch(error => {
-      console.log('[API Error] called: Cash Out', error);
-      throw error;
-    });
-  };
-
-  getGameDetailById = (gameId, type) => {
-    const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
-      ':gameId',
-      gameId
-    );
-
-    return this.api.get(gameUrl + (type ? `/${type}` : '')).catch(error => {
-      console.log('[API Error] called: getGameDetailById', error);
-    });
-  };
-
-  transformUser = user => ({
-    crashFactor: user.crashfactor,
-    createdAt: user.createdAt,
-    gameMatch: user.gamematch,
-    gameHash: user.gameHash,
-    stakedAmount: user.stakedamount,
-    state: 2,
-    userId: user.id,
-    rewardAmount: user.crashfactor * user.stakedamount,
-  });
-
-  getLuckyUsers = () => {
-    return Api.get(ApiUrls.API_TRADES_LUCKY).then(response => ({
-      data: response.data.map(transformUser),
-    }));
-  };
-
-  getHighUsers = () => {
-    return Api.get(ApiUrls.API_TRADES_HIGH).then(response => ({
-      data: response.data.map(transformUser),
-    }));
-  };
-  */
 }
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');
