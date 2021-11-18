@@ -33,6 +33,8 @@ import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/util
 import {
   trackElonChangeAutoCashout,
   trackElonPlaceBetGuest,
+  trackElonStartAutobet,
+  trackElonStopAutobet,
 } from '../../config/gtm';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
@@ -191,6 +193,19 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   }, [isGameRunning, betted, autobet]);
   console.log("isGameRunning")
   const stopAutobet = () => {
+
+    const payload = {
+      amount,
+      autobet: 1,
+      profit: Number(profit),
+      loss: Number(loss),
+      wincrease: winbutton?0:Number(wincrease)/100,
+      lincrease: lossbutton?0:Number(lincrease)/100,
+      multiplier: crashFactor,
+      accumulated: autobet.accumulated
+    };
+
+    trackElonStopAutobet({...payload});
     setAutobet(null)
   };
 
@@ -217,6 +232,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       lincrease: lossbutton?0:Number(lincrease)/100,
       crashFactor: 999,
     };
+
+    trackElonStartAutobet({
+      ...payload,
+      autobet: 1,
+      multiplier: crashFactor, 
+    });
     console.log("placeAutoBet")
     setAutobet(payload)
     setBetted(true)
@@ -262,7 +283,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const cashOut = async () => {
     setCanBet(false);
     dispatch(RosiGameActions.cashOut());
-    const response = await onCashout();
+    const response = await onCashout(false, autobet);
     autobet && setAutobet({...autobet, accumulated: autobet.accumulated + response.data.reward, win: true})
     setAnimate(true);
   };

@@ -110,7 +110,7 @@ const RosiGame = ({
     try {
       const result = await Api.createTrade(payload);
       console.log("result", result)
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
       dispatch(RosiGameActions.setUserBet(payload));
       return result;
     } catch (e) {
@@ -137,7 +137,7 @@ const RosiGame = ({
       });
   }
 
-  async function handleCashout(isGuest) {
+  async function handleCashout(isGuest, autobet) {
     audio.playWinSound();
     if (isGuest) return;
     try {
@@ -147,6 +147,8 @@ const RosiGame = ({
       trackElonCashout({
         amount: reward,
         multiplier: parseFloat(crashFactorCashout),
+        autobet: autobet != null ? 1 : 0,
+        accumulated: autobet?.accumulated,
       });
       AlertActions.showSuccess(JSON.stringify(response));
 
