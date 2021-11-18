@@ -45,7 +45,7 @@ const PlaceBetMines = ({
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [nspin, setNspin] = useState(1);
+  const [mines, setMines] = useState(1);
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
   const [crashFactor, setCrashFactor] = useState('25.00');
@@ -73,10 +73,9 @@ const PlaceBetMines = ({
     const amount = round(value, 0);
     setAmount(amount <= 10000 ? amount : 10000);
   };
-  const onGuestNspinChange = event => {
-    let value = _.get(event, 'target.value', 0);
-    const amount = round(value, 0);
-    setNspin(amount);
+  const onSelectMines = event => {
+    let value = parseInt(_.get(event, 'target.value', 1));
+    setMines(value);
   };
 
   const onBetAmountChanged = multiplier => {
@@ -95,10 +94,12 @@ const PlaceBetMines = ({
     if (amount > userBalance) return;
     const payload = {
       amount,
-      nspin: nspin - 1,
-      riskFactor: risk
+      mines: mines
     }
-    setNuspin(payload)
+
+    console.log('###payload', payload);
+
+    // setNuspin(payload)
     const bet = await onBet(payload)
   }
 
@@ -111,9 +112,7 @@ const PlaceBetMines = ({
       profit: Number(profit),
       loss: Number(loss),
       wincrease: winbutton?0:Number(wincrease)/100,
-      lincrease: lossbutton?0:Number(lincrease)/100,
-      nspin: spinlimit?Number(nspin-1):null,
-      riskFactor: risk
+      lincrease: lossbutton?0:Number(lincrease)/100
     };
     setAccumulated(0)
     setNuspin(payload)
@@ -131,12 +130,10 @@ const PlaceBetMines = ({
     const payload = {
       amount,
       demo: true,
-      nspin: nspin-1,
-      riskFactor: risk,
       winIndex:  Math.floor((Math.random() * 12) | 0)
     };
     onBet(payload)
-    setNuspin(payload)
+    // setNuspin(payload)
     if (numberOfDemoPlays < 3) {
       localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
     }
@@ -167,7 +164,7 @@ const PlaceBetMines = ({
   const cancelBet = e => {
     e.preventDefault();
     e.stopPropagation();
-    setNuspin({nspin: 0})
+    // setNuspin({nspin: 0})
   };
 
   const showLoginPopup = () => {
@@ -357,7 +354,7 @@ const PlaceBetMines = ({
                   <select
                     className={classNames(styles.selectMines)}
                     placeholder={'Select'}
-                    // handleSelect={}
+                    onChange={onSelectMines}
                   >
                     {_.times(24, (index)=> {
                     const item = index+1;
