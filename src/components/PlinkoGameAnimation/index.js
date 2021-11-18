@@ -10,44 +10,12 @@ import {
   selectCashedOut,
   selectNextGameAt,
 } from 'store/selectors/rosi-game';
-//import Timer from './Timer';
-//import Counter from './Counter';
 import styles from './styles.module.scss';
-import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-//import GameAudioControls from '../GameAudioControls';
-import AnimationController from './AnimationController';
+import { AudioController } from '../RouletteGameAnimation/AnimationController';
 import Stage from './plinko'
-import { Plinko } from './plinkoBasic'
-
-const BackgroundPlinko = ({size, state}) => {
-  const colors = ["#d7393f", "#dd8549", "#e6e76a"]
-  return(
-    <svg className={styles.background} height={size} width={size}>
-      <circle r={size/2} cx={size/2} cy={size/2} fill={colors[state % 3]} />
-      <circle
-        r={size/4}
-        cx={size/2}
-        cy={size/2}
-        fill="transparent"
-        stroke={colors[(state+1) % 3]}
-        strokeWidth={size/2}
-        strokeDasharray="50 100"
-      />
-      <circle
-        r={size/4}
-        cx={size/2}
-        cy={size/2}
-        fill="transparent"
-        stroke={colors[(state+2) % 3]}
-        strokeWidth={size/2}
-        strokeDashoffset={50}
-        strokeDasharray="50 100"
-      />
-    </svg>
-  )
-};
-
+import { AnimationController, BackgroundPlinko } from './AnimationController'
+import GameAudioControlsLocal from '../GameAudioControlsLocal';
 
 const PlinkoGameAnimation = ({
   connected,
@@ -59,9 +27,8 @@ const PlinkoGameAnimation = ({
   volumeLevel,
   musicIndex,
   animationIndex,
-  onInit,
+  onInit
 }) => {
-
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
@@ -79,10 +46,18 @@ const PlinkoGameAnimation = ({
 
   const backgRef = useRef(backg);
   backgRef.current = backg
-  useEffect(()=>{
+
+  useEffect(() => {
     if(backgroundRef) {
       setWidth(backgroundRef.current.clientWidth)
       setHeight(backgroundRef.current.clientHeight)
+    }
+    const aud = new AudioController(0)
+    setAudio(aud)
+    aud.startBgm();
+    onInit(aud)
+    return () => {
+      aud.stopBgm();
     }
 
   },[])
@@ -99,15 +74,12 @@ const PlinkoGameAnimation = ({
     changeBackground(0)
   }
 
-  const spin = async () => {
-    const newspin = await AnimationController.spinTo();
-    setSpins(newspin);
-  };
   return (
     <div ref={backgroundRef} className={styles.animation}>
+      {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
       <button onClick={() => setStart(true)} className={styles.button}>Start</button>
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <Plinko start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };

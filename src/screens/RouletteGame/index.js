@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
-import PlaceBetRoulette from 'components/PlaceBetRoulette';
+import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/RouletteGameAnimation';
@@ -205,6 +205,7 @@ const RouletteGame = ({
   const handleNewSpin = (newSpin)=> {
     setSpins([newSpin, ...spins])
   }
+  console.log("bet", bet)
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -246,7 +247,7 @@ const RouletteGame = ({
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBetRoulette
+                <PlaceBetCasino
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}

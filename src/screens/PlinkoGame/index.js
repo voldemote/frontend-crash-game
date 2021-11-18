@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
-import PlaceBetRoulette from 'components/PlaceBetRoulette';
+import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/PlinkoGameAnimation';
@@ -132,19 +132,22 @@ const PlinkoGame = ({
     setActivityTabIndex(index);
   }
   async function handleBet(payload) {
+    console.log("auduio", audio)
     audio.playBetSound();
+
     if (!payload) return;
     try {
       if(payload.demo) {
-        setBet({...payload })
-        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        console.log("Bet: ", payload)
+        //setBet({...payload })
+        //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        const { data } = await Api.createTrade(payload);
-        setBet({...payload, ...data});
-        updateUserBalance(userId);
-        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
-        return data;
+        //const { data } = await Api.createTrade(payload);
+        //setBet({...payload, ...data});
+        //updateUserBalance(userId);
+        //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
+        //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        //return data;
       }
     } catch (e) {
       dispatch(
@@ -262,7 +265,8 @@ const PlinkoGame = ({
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBetRoulette
+                <PlaceBetCasino
+                  gameName={'plinko'}
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}
