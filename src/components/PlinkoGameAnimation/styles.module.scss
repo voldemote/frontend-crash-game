@@ -84,6 +84,10 @@
       background: #d7393f;
       border: 1px solid #e6e76a;
       animation: shake 0.5s infinite;
+      &.red{
+        border: 1px solid #e6e76a;
+
+      }
     }
   }
   @keyframes shake {

@@ -10,10 +10,10 @@ const outcomesByRisk = [
   [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
 ]
 
-export const AnimationController = ({risk = 1, ballValue, width, height, onWin, start, setStart, audio}) => {
+export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, start, setStart, audio}) => {
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
-    return outs.concat({value: out, bright: false})
+    return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
   }, [])
   const [outcomes, setOutcomes] = useState(prevOutcomes);
   const [nball, setNball] = useState(0);
@@ -25,7 +25,12 @@ export const AnimationController = ({risk = 1, ballValue, width, height, onWin, 
     const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
     if(index > 0){
       setBox(index)
-      winMultiplier > 1 && onWin()
+      if(winMultiplier > 1){
+        audio.playWinSound();
+        onWin()
+      }else{
+        audio.playLoseSound();
+      }
     }
   }
 
@@ -47,11 +52,11 @@ export const AnimationController = ({risk = 1, ballValue, width, height, onWin, 
   useEffect(() => {
     if(risk){
       const prevOutcomes = outcomesByRisk[risk-1].reduce((outs, out, i) => {
-        return outs.concat({value: out, bright: outcomes[i].bright})
+        return outs.concat({value: out, amount: Math.floor(amount*out), bright: outcomes[i].bright})
       }, [])
       setOutcomes(prevOutcomes)
     }
-  }, [risk])
+  }, [risk, amount])
 
   return (
     <div className={styles.board} ref={boardref}>
@@ -62,7 +67,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, onWin, 
         </div>
       )}
       <div className={styles.boxes}>
-        {outcomes.map((box, index) => <div className={classNames(styles.box, box.bright && styles.bright)}>{box.value}</div>)}
+        {outcomes.map((box, index) => <div className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
       </div>
     </div>
   )

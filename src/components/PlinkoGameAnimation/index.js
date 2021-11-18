@@ -93,7 +93,7 @@ const PlinkoGameAnimation = ({
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <AnimationController risk={risk} ballValue={ball} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };
