@@ -31,7 +31,7 @@ PIXI.utils.skipHello();
 let canvas = null;
 let img = new Image();
 
-class AudioController {
+export class AudioController {
   constructor(bgmIndex = 0) {
     let volume = 0.0;
     try {
@@ -118,7 +118,7 @@ class AudioController {
   }
 
   playSound(name, loop = false, volume) {
-    try {      
+    try {
       if (this.ready) {
         Sound.sound.volume(name, volume && this.volume != 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
         Sound.sound.play(name, {
@@ -143,9 +143,9 @@ class AudioController {
 
   stopBgm() {
     this.stopSound('bgm');
-    this.stopSound('flying');    
+    this.stopSound('flying');
   }
-  playTick() {    
+  playTick() {
     this.playSound('tick', false, 1);
   }
 
