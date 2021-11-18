@@ -24,7 +24,7 @@ const AbViewStyles = ({
   }
 
   const onColorChanged = (colorIndex) =>{
-    const style = selectedStyle ?? `${category.name}_${1}`;
+    const style = selectedStyle ?? `${category.name}_1`;
     const colors = category.colors[colorIndex];
     setSelectedStyle(style);
     setSelectedColors(colors);
