@@ -117,7 +117,6 @@ export const StandardInput = ({setValue, value, title}) => {
 }
 
 export const ToggleInput = ({setValue, value, setToggle, toggle, title}) => {
-  console.log("value", value)
   return(
     <div className={styles.inputContainer}>
       <label
@@ -134,17 +133,17 @@ export const ToggleInput = ({setValue, value, setToggle, toggle, title}) => {
         )}
       >
         <div className={styles.toggleButton}>
-          <span className={styles.toggleLabel} style={{ color: toggle?'white':'#120e27', marginLeft: toggle?4:53, width: toggle?53:72}}></span>
+          <span className={styles.toggleLabel} style={{ color: toggle?'white':'#120e27', marginLeft: toggle?4:53, width: toggle?53:65}}></span>
           <span
             className={styles.buttonItem}
-            style={{fontWeight: toggle?'bold':'normal'}}
+            style={{fontWeight: toggle?'bold':'normal', color: toggle?'black':'white'}}
             onClick={() => setToggle(true)}
           >
             Reset
           </span>
           <span
             className={styles.buttonItem}
-            style={{fontWeight: !toggle?'bold':'normal'}}
+            style={{fontWeight: !toggle?'bold':'normal', color: !toggle?'black':'white'}}
             onClick={() => setToggle(false)}
           >
             Increase
