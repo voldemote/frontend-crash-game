@@ -20,7 +20,7 @@ export default class Popup extends Factory.Container {
     const { popupBackground, popupStyles } = common;
     const { text, position, buttons } = rest;
     const popup = new Popup({ popupBackground, popupStyles, text, position });
-
+    popup.scale.set(0.4);
     buttons.forEach(({ text, styles, event, ...button }) => {
       const btn = Factory.createFromGraphics(button);
       const txt = Factory.createTextFromConfig(text, styles);
