@@ -113,7 +113,7 @@ function moveBall(direction, ball) {
 }
 function fallToBuscket(onBuscket, ball, winMultiplier) {
   const x = getXBall(ball), y = getYBall(ball)
-  document.getElementById(ball).style.transform = `translate(${x}px, ${y+34}px) rotate(0)`;
+  document.getElementById(ball).style.transform = `translate(${x}px, ${y+22}px) rotate(0)`;
   setTimeout(() => onBuscket(winMultiplier), 150)
   setTimeout(() => document.getElementById(ball).style.opacity = 0, 300)
   setTimeout(() => document.getElementById(ball).remove(), 500)
