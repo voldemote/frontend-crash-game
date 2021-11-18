@@ -1,3 +1,4 @@
+import * as PIXI from 'pixi.js-legacy';
 import { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 //import * as ApiUser from 'api/crash-game';

@@ -1,8 +1,7 @@
-import cn from 'classnames';
+import * as PIXI from 'pixi.js-legacy';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
 import {
   selectHasStarted,
   selectTimeStarted,
@@ -14,8 +13,11 @@ import styles from './styles.module.scss';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
-import AnimationController from './AnimationController';
 import { isMobile } from 'react-device-detect';
+import { gameConfig, layoutManagerConfig, applicationConfig, resourcesConfig, gameViewConfig } from "./configs/index.js";
+import { LayoutManager, ResourceLoader } from "./sources/libs/index.js";
+import { Application } from "./sources/extensions/index.js";
+import Game from "./game/index.js";
 
 const RouletteGameAnimation = ({
   connected,
@@ -36,79 +38,83 @@ const RouletteGameAnimation = ({
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
-    let audioInstance = null;
-    let instance = null;
-    const { audio, handle } = AnimationController.init(canvasRef.current, {
+    console.log('init game');
+    /* Create an instance of game, initialize it and set game config */
+    const game = new Game();
+    game.initialize();
+    game.useConfig({gameConfig, gameViewConfig});
+
+    console.log('backgroundRef.current.clientWidth', backgroundRef.current.clientWidth);
+
+    const initialAppCfg = {
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
-      risk,
-      amount
+      "antialias": false,
+      "backgroundColor": 0xffffff,
+      view: canvasRef.current
+    }
+
+    /* Create an instance of PIXI.Application. Use the game application config for it */
+    const app = new Application(initialAppCfg);
+
+    let texture = PIXI.Texture.from('./assets/bg.png');
+    let sprite1 = new PIXI.Sprite(texture);
+    sprite1.scale.x = 0.7;
+    sprite1.scale.y=0.47;
+    app.stage.addChild(sprite1);
+    app.stage.addChild(game.controller.view);
+
+    app.ticker.add(game.update, game);
+
+    // document.body.appendChild(app.view);
+
+    const updateCanvasSizes = ({ width, height }) => {
+      app.view.style.width = `${width}px`;
+      app.view.style.height = `${height}px`;
+    };
+
+    const updateRenderSizes = ({ width, height }) => {
+      app.renderer.resize(width, height);
+    };
+
+    /* Use the layout manager config to set base sizes for the game and PIXI.Renderer canvas
+       Subscribe on resize event */
+    const layoutManager = new LayoutManager(layoutManagerConfig);
+    layoutManager.on("resize", ({ globalSizes, recalculatedSizes }) => {
+      // updateCanvasSizes(globalSizes);
+      updateRenderSizes(recalculatedSizes);
+      game.resize(recalculatedSizes);
     });
-    setAudio(audio);
-    audioInstance = audio;
-    instance = handle;
-    onInit(audio);
-    return () => {
-      audioInstance.stopBgm();
-      instance.destroy();
+
+    /* just for development mode */
+    if(gameConfig.debuggerMode){
+      window.game = {
+        controller: game.controller,
+        pixiStage: app.stage,
+        layoutManager
+      };
     }
+
+    /* Use the resources config to add all assets data to a loader. */
+    const loader = new ResourceLoader();
+    loader.resPackages = resourcesConfig;
+
+    /* Run loader and after it has loaded all assets, run the game */
+    loader.runLoader(
+      () => {
+        game.run();
+        const sizes = {
+          width: initialAppCfg.width,
+          height: initialAppCfg.height
+        };
+        updateRenderSizes(sizes)
+      },
+      (resPack) => {
+        game.setResources(resPack);
+      }
+    );
+
   }, []);
-
-  useEffect(() => {
-    if(bet && !bet.pending && bet.ngame >= 0 && !running) spin(bet);
-  }, [bet]);
-
-  useEffect(() => {
-    if (risk && amount) {
-      AnimationController.reinit(canvasRef.current, {
-        width: backgroundRef.current.clientWidth,
-        height: backgroundRef.current.clientHeight,
-        risk,
-        amount: amount
-      })
-    }
-  }, [risk, amount]);
-
-  useEffect(() => {
-    if (bet.amount) {
-      AnimationController.reinit(canvasRef.current, {
-        width: backgroundRef.current.clientWidth,
-        height: backgroundRef.current.clientHeight,
-        risk,
-        amount: bet.amount
-      })
-    }else{
-      AnimationController.reinit(canvasRef.current, {
-        width: backgroundRef.current.clientWidth,
-        height: backgroundRef.current.clientHeight,
-        risk,
-        amount: amount
-      })
-    }
-  }, [bet.amount]);
-
-  const spin = async () => {
-    if (running) return;
-    else setRunning(true);
-    console.log("newspin1", bet.winIndex)
-    const newspin = await AnimationController.spinTo(bet.winIndex);
-    console.log("newspin", newspin)
-    let prepareObj = {};
-    if(bet.profit > 0) {
-      prepareObj = {
-        type: 'win',
-        value: '+' + bet.profit
-      };
-    } else {
-      prepareObj = {
-        type: 'loss',
-        value: bet.profit
-      };
-    }
-    setSpins(prepareObj);
-    setRunning(false);
-    setBet({pending: true, amount: bet.amount, profit: bet.profit});
-  }
 
   return (
     <div
@@ -122,8 +128,7 @@ const RouletteGameAnimation = ({
       {/*  {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}*/}
       {/*</div>*/}
 
-      <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
-
+      <canvas id="mines-game" className={styles.canvas} ref={canvasRef}></canvas>
 
     </div>
   );
