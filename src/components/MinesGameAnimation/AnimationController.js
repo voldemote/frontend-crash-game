@@ -54,7 +54,7 @@ export class AudioController {
     Sound.sound.add(
       {
         bgm: {
-          url: '/sounds/roulette/wheel_bg.mp3',
+          url: '/sounds/mines/bgm.mp3',
           loop: true,
         },
         flying: {
