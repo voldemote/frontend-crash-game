@@ -7,6 +7,15 @@ import flag from '../assets/flag.png';
 import mine from '../assets/mine.png';
 import zero from '../assets/zero.png';
 import one from '../assets/one.png';
+import two from '../assets/two.png';
+import three from '../assets/three.png';
+import four from '../assets/four.png';
+import five from '../assets/five.png';
+import six from '../assets/six.png';
+import seven from '../assets/seven.png';
+import eight from '../assets/eight.png';
+import nine from '../assets/nine.png';
+import alpaca_win from '../assets/alpaca_win.png';
 
 export default [
   {
@@ -38,35 +47,35 @@ export default [
       },
       {
         "name": "two",
-        "url": "./assets/two.png"
+        "url": two
       },
       {
         "name": "three",
-        "url": "./assets/three.png"
+        "url": three
       },
       {
         "name": "four",
-        "url": "./assets/four.png"
+        "url": four
       },
       {
         "name": "five",
-        "url": "./assets/five.png"
+        "url": five
       },
       {
         "name": "six",
-        "url": "./assets/six.png"
+        "url": six
       },
       {
         "name": "seven",
-        "url": "./assets/seven.png"
+        "url": seven
       },
       {
         "name": "eight",
-        "url": "./assets/eight.png"
+        "url": eight
       },
       {
         "name": "nine",
-        "url": "./assets/nine.png"
+        "url": nine
       },
       {
         "name": "background",
@@ -74,7 +83,7 @@ export default [
       },
       {
         "name": "coin",
-        "url": "./assets/alpaca_win.png",
+        "url": alpaca_win,
         "json": "./assets/alpaca_win.json"
       }
 
