@@ -24,6 +24,7 @@ class GameApi {
     this.api = createInstance(host, '/');
     this.setToken(token);
   }
+
   setToken = token => {
     if (!token) return;
     const authentication = 'Bearer ' + token;
@@ -43,12 +44,12 @@ class GameApi {
     console.log('URL', ApiUrls.API_MINES_START);
 
     return new Promise((resolve, reject) => {
-        const dummyData = {
-          data: {
-            test: 'test'
-          }
+      const dummyData = {
+        data: {
+          test: 'test'
         }
-        resolve(dummyData)
+      }
+      resolve(dummyData)
     })
 
     // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
@@ -56,6 +57,14 @@ class GameApi {
     //   throw error;
     // });
   }
+
+  createTradePlinko = payload => {
+    return this.api.post(ApiUrls.API_PLINKO_BET, payload).catch(error => {
+      console.log('[API Error] called: createTrade', error);
+      throw error;
+    });
+  }
+
 }
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');

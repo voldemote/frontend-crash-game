@@ -15,7 +15,7 @@ export const RiskInput = ({risk, setRisk, number}) => {
         {Array.from({length: number}).map((level, index) =>
           <button
             data-tracking-id={`alpacawheel-change-risk-${index+1}`}
-            style={{ background: risk === (index+1) && 'rgba(128, 128, 128, 0.14)' }}
+            className={risk === (index + 1) && styles.selected}
             onClick={() => setRisk(index+1)}
           >
             {index+1}
@@ -133,17 +133,15 @@ export const ToggleInput = ({setValue, value, setToggle, toggle, title}) => {
         )}
       >
         <div className={styles.toggleButton}>
-          <span className={styles.toggleLabel} style={{ color: toggle?'white':'#120e27', marginLeft: toggle?4:53, width: toggle?53:65}}></span>
+          <span className={styles.toggleLabel} style={{ marginLeft: toggle ? 1 : '44.2%', width: !toggle && '55%'}}></span>
           <span
-            className={styles.buttonItem}
-            style={{fontWeight: toggle?'bold':'normal', color: toggle?'black':'white'}}
+            className={classNames(styles.buttonItem, toggle && styles.selected)}
             onClick={() => setToggle(true)}
           >
             Reset
           </span>
           <span
-            className={styles.buttonItem}
-            style={{fontWeight: !toggle?'bold':'normal', color: !toggle?'black':'white'}}
+            className={classNames(styles.buttonItem, !toggle && styles.selected)}
             onClick={() => setToggle(false)}
           >
             Increase

@@ -30,7 +30,6 @@ import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
-
 import {
   trackAlpacaWheelPlaceBetGuest,
   trackAlpacaWheelPlaceBet,
@@ -48,8 +47,7 @@ const PlinkoGame = ({
   refreshHighData,
   updateUserBalance
 }) => {
-  //const game = GAMES.alpacaWheel
-  const ROSI_GAME_EVENT_ID = GAMES.plinko.id;
+
   const Api = new GameApi(GAMES.plinko.url, token);
   const dispatch = useDispatch();
   const {
@@ -74,11 +72,12 @@ const PlinkoGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
-  const GAME_TYPE_ID = GAMES.alpacaWheel.id;
+  const GAME_TYPE_ID = GAMES.plinko.id;
 
   useEffect(() => {
     getSpinsAlpacaWheel(PLINKO_GAME_EVENT_ID)
       .then(response => {
+        console.log("response", response)
         const lastSpins = response?.data.lastCrashes;
         setSpins(lastSpins.map((spin)=> {
           if(spin.profit > 0) {
@@ -108,14 +107,6 @@ const PlinkoGame = ({
 
   }, [dispatch, connected]);
 
-  //Bets state update interval
-  /*
-  useEffect(() => {
-    const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-*/
-
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
   };
@@ -129,27 +120,32 @@ const PlinkoGame = ({
   };
 
   async function handleBet(payload) {
-    console.log("auduio", audio)
     audio.playBetSound();
-
+    console.log("Bet: ", payload)
     if (!payload) return;
     try {
       if(payload.demo) {
-        console.log("Bet: ", payload)
-        //setBet({...payload })
+        const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
+      /*
+        let winMultiplier = 6
+        for(let number of array){
+          number === 1 ? winMultiplier -1 : winMultiplier + 1
+        }*/
+        setBet({...payload, path: array })
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        //const { data } = await Api.createTrade(payload);
-        //setBet({...payload, ...data});
-        //updateUserBalance(userId);
+        const { data } = await Api.createTradePlinko(payload);
+        console.log("data", data)
+        setBet({...payload, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier});
+        updateUserBalance(userId);
         //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
         //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
-        //return data;
+        return data;
       }
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Alpaca Wheel: Place Bet failed',
+          message: 'Plinko: Place Bet failed',
         })
       );
     }
@@ -226,7 +222,7 @@ const PlinkoGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Alpaca Wheel" />
+            <BackLink to="/games" text="Plinko" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
