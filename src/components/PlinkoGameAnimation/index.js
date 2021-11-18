@@ -10,41 +10,14 @@ import {
   selectCashedOut,
   selectNextGameAt,
 } from 'store/selectors/rosi-game';
-//import Timer from './Timer';
-//import Counter from './Counter';
 import styles from './styles.module.scss';
-import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-//import GameAudioControls from '../GameAudioControls';
-import AnimationController from './AnimationController';
+import { AudioController } from '../RouletteGameAnimation/AnimationController';
 import Stage from './plinko'
-/*
-const PreparingRound = ({ nextGameAt }) => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Preparing Round</h2>
-      <div className={styles.description}>
-        <span>
-          Starting in <Counter className={styles.counter} from={nextGameAt} />
-        </span>
-      </div>
-    </div>
-  </div>
-);
+import { AnimationController, BackgroundPlinko } from './AnimationController'
+import GameAudioControlsLocal from '../GameAudioControlsLocal';
 
-const GameOffline = () => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Connecting to the game engine</h2>
-      <div className={styles.description}>
-        If this takes too long, try reloading the page
-      </div>
-    </div>
-  </div>
-);
-*/
-
-const RouletteGameAnimation = ({
+const PlinkoGameAnimation = ({
   connected,
   muteButtonClick,
   isMute,
@@ -54,7 +27,7 @@ const RouletteGameAnimation = ({
   volumeLevel,
   musicIndex,
   animationIndex,
-  onInit,
+  onInit
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -68,31 +41,45 @@ const RouletteGameAnimation = ({
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
-  /*
+  const [backg, setBackg] = useState(0);
+  const [start, setStart] = useState(false);
+
+  const backgRef = useRef(backg);
+  backgRef.current = backg
+
   useEffect(() => {
-    AnimationController.init(canvasRef.current, {
-      width: backgroundRef.current.clientWidth,
-      height: backgroundRef.current.clientHeight,
-    });
-    AnimationController.repaint(0);
-  }, []);
-*/
-useEffect(()=>{
-  if(backgroundRef){
-    console.log("cc",backgroundRef.current)
-    setWidth(backgroundRef.current.clientWidth)
-    setHeight(backgroundRef.current.clientHeight)
+    if(backgroundRef) {
+      setWidth(backgroundRef.current.clientWidth)
+      setHeight(backgroundRef.current.clientHeight)
+    }
+    const aud = new AudioController(0)
+    setAudio(aud)
+    aud.startBgm();
+    onInit(aud)
+    return () => {
+      aud.stopBgm();
+    }
+
+  },[])
+
+  const changeBackground = (count) => {
+    setTimeout(() => {
+      setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
+      count < 30 && changeBackground(count + 1)
+    }, 100)
   }
 
-},[])
-  const spin = async () => {
-    const newspin = await AnimationController.spinTo();
-    setSpins(newspin);
-  };
-  return (
+  const handleWin = () => {
+    setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
+    changeBackground(0)
+  }
 
+  return (
     <div ref={backgroundRef} className={styles.animation}>
-      {width && height && <Stage width={width} height={height}></Stage>}
+      {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
+      <button onClick={() => setStart(true)} className={styles.button}>Start</button>
+      <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
+      {width && height && <AnimationController audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };
@@ -112,7 +99,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     muteButtonClick: () => {
-      dispatch(RouletteGameAnimation.muteButtonClick());
+    //  dispatch(RouletteGameAnimation.muteButtonClick());
     },
   };
 };
@@ -120,4 +107,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RouletteGameAnimation);
+)(PlinkoGameAnimation);

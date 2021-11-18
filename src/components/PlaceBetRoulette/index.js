@@ -683,12 +683,12 @@ const PlaceBetRoulette = ({
               )}>
               <div className={styles.toggleButton}>
                 <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
-                <span                  
+                <span
                   className={classNames(styles.buttonItem, lossbutton && styles.selected)}
                   onClick={() => setLossbutton(true)}>
                   Reset
                 </span>
-                <span                  
+                <span
                   className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
                   onClick={() => setLossbutton(false)}>
                   Increase
