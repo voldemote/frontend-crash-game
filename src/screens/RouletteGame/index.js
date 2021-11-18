@@ -121,13 +121,13 @@ const RouletteGame = ({
     try {
       if(payload.demo) {
         setBet({...payload })
-        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
       } else {
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});
         updateUserBalance(userId);
-        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
+        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
         return data;
       }
     } catch (e) {
