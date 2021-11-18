@@ -24,20 +24,19 @@ const AbViewStyles = ({
   }
 
   const onColorChanged = (colorIndex) =>{
+    const style = selectedStyle ?? `${category.name}_${1}`;
     const colors = category.colors[colorIndex];
-    if(!selectedStyle || selectedStyle === null || selectedStyle === undefined) {
-      setSelectedStyle(1);
-    }
+    setSelectedStyle(style);
     setSelectedColors(colors);
     onStyleClick({
-      style:`${category.name}_${selectedStyle}`,
-      colors
+      style,
+      colors,
     })
   }
 
   useEffect(() => {
-    setSelectedColors(current?.colors);
     setSelectedStyle(current?.style);
+    setSelectedColors(current?.colors);
   }, [current]);
 
   const renderStyleBtn = (index) => {
