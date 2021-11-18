@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 import { isMobileRosiGame } from './utils';
 import {
   ROSI_GAME_PLAYGROUND_ROCKET,

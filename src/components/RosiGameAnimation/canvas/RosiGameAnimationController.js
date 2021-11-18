@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 import '@pixi/math-extras';
 import '@pixi/sound';
 import * as Sound from '@pixi/sound';

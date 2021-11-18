@@ -151,6 +151,7 @@ $border: 1px solid $colorWhite30;
   height: 100%;
 
   &:before {
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -166,19 +167,26 @@ $border: 1px solid $colorWhite30;
     //   linear-gradient(360deg, rgba(2, 0, 36, 0) 10%, rgb(18, 14, 39) 100%);
     // max-height: 700px;
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-position: top;
   }
 
   &:after {
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     content: '';
     z-index: -3;
     position: absolute;
-    // min-height: 700px;
-    background-repeat: no-repeat;
-    background-image: url('../data/backgrounds/alpaca-main-bg.png');
-    background-position: bottom;
+    // max-height: 700px;
+    background-size: cover;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.2)
+      ),
+      url('../data/backgrounds/lama_bg.png');
+    opacity: 0.8;
+    background-position: top;
   }
 }

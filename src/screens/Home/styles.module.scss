@@ -17,7 +17,7 @@
   width: 100%;
 
   @media (min-width: $screen-lg) {
-    max-width: 1440px;
+    max-width: 1300px;
   }
 }
 
@@ -275,7 +275,7 @@
 }
 
 .howTokenWorks {
-  padding: 20px 0 0;
+  padding: 20px 0;
   .title {
     display: flex;
     align-items: center;
@@ -297,41 +297,21 @@
     }
   }
   .tokenDetail {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.2fr 0.2fr;
     background: #ff0095;
     border-radius: 12px;
-    padding: 0 10px 0px 20px;
-    margin: 15px 0 0;
-    @media (max-width: $screen-md) {
-      grid-template-columns: auto;
-    }
+    padding: 25px;
+    margin: 15px 0;
     .token {
-      padding: 20px 8px 0;
+      padding-right: 10px;
       display: flex;
-      @media (max-width: $screen-md) {
-        flex-direction: column;
-        align-items: center;
-      }
       .thumbnail {
         padding-right: 10px;
         img {
           width: 90px;
         }
       }
-      .thumbnails {
-        display: flex;
-        padding-right: 10px;
-        .second {
-          margin: 18px 0 0 -34px;
-        }
-        img {
-          width: 90px;
-          height: 90px;
-        }
-      }
       .detail {
-        padding-top: 20px;
+        padding-top: 30px;
         color: #fff;
         h3 {
           font-weight: bolder;
@@ -341,25 +321,15 @@
         p {
           font-size: 14px;
         }
-        @media (max-width: $screen-md) {
-          text-align: center;
-        }
       }
-    }
-    .elonImg {
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
   }
 }
 
-.alpacaverse {
-  margin: 40px 0 20px;
+.whoWeAre {
   .title {
     display: flex;
     align-items: center;
-    font-family: $fontMedium;
     font-size: 30px;
     font-weight: 700;
     justify-content: flex-start;
@@ -368,63 +338,46 @@
       // width: 80px;
     }
     h2 {
-      font-size: 30px;
+      font-size: 33px;
+
       @media (max-width: $screen-xs) {
         font-size: 28px;
-        text-align: center;
       }
 
       img {
         margin-left: 5px;
       }
     }
-    .pink {
-      color: #e82e89;
-    }
   }
   .cardBox {
-    padding-top: 30px;
+    padding-top: 70px;
     .card {
-      display: flex;
       background: #ffffff;
       border: 1px solid #ededed;
       width: 96%;
       margin: 20px auto;
-      padding-right: 20px;
+      padding-bottom: 30px;
       box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
         0px 2px 2px rgba(159, 162, 191, 0.32);
       border-radius: 12px;
       height: 100%;
-      @media screen and (max-width: $screen-md) {
-        flex-direction: column;
-        padding-right: 0;
-      }
       @media screen and (max-width: 763px) {
         margin-top: 20px;
         height: auto;
       }
       .thumbnail {
         text-align: center;
-        margin-top: -20px;
-        @media screen and (max-width: 763px) {
-          margin-top: 10px !important;
-        }
-      }
-      .thumbnailLast {
-        margin: auto;
+        margin-top: -50px;
         @media screen and (max-width: 763px) {
           margin-top: 10px !important;
         }
       }
       .detail {
-        padding: 30px 0 0 12px;
-        @media screen and (max-width: $screen-md) {
-          text-align: center;
-        }
+        text-align: center;
+        padding-top: 30px;
         h3 {
-          font-family: $fontMedium;
-          font-size: 22px;
-          color: #e82e89;
+          font-size: 24px;
+          color: #0e0927;
           margin-bottom: 6px;
           img {
             max-width: 160px;
@@ -432,20 +385,10 @@
           }
         }
         p {
-          font-weight: 400;
-          line-height: 20px;
+          font-weight: 700;
           width: 90%;
+          margin: auto;
           font-size: 14px;
-          color: #0e0927;
-        }
-        button {
-          margin-top: 16px;
-          background: transparent;
-          border: 0;
-          font-family: $fontMedium;
-          font-size: 14px;
-          color: #e82e89;
-          cursor: pointer;
         }
       }
     }
