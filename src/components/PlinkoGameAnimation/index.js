@@ -58,7 +58,6 @@ const PlinkoGameAnimation = ({
     return () => {
       aud.stopBgm();
     }
-
   },[])
 
   useEffect(() => {
@@ -68,13 +67,10 @@ const PlinkoGameAnimation = ({
   const spin = async () => {
     if (running) return;
     else setRunning(true);
-    //console.log("newspin1", bet.winIndex)
     setStart(true)
-    console.log("newbet", bet)
     setBall({path: bet.path, winMultiplier: bet.winMultiplier })
-    //setSpins(prepareObj);
     setRunning(false);
-    setBet({pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward});
+    !bet.autobet && setBet({pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward});
   }
 
   const changeBackground = (count) => {
@@ -84,8 +80,12 @@ const PlinkoGameAnimation = ({
     }, 100)
   }
 
+  const handleLose = () => {
+    bet.autobet && setBet({pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward});
+  }
   const handleWin = () => {
     setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
+    bet.autobet && setBet({pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward});
     changeBackground(0)
   }
 
@@ -93,7 +93,7 @@ const PlinkoGameAnimation = ({
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} muteButtonClick={muteButtonClick}/>}
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} start={start} setStart={setStart} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} start={start} setStart={setStart} onLose={handleLose} onWin={handleWin} width={width} height={height} />}
     </div>
   );
 };

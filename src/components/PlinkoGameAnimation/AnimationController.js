@@ -10,7 +10,7 @@ const outcomesByRisk = [
   [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
 ]
 
-export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, start, setStart, audio}) => {
+export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, onLose, start, setStart, audio}) => {
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
     return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
@@ -29,6 +29,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
         audio.playWinSound();
         onWin()
       }else{
+        onLose()
         audio.playLoseSound();
       }
     }
