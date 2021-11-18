@@ -25,7 +25,7 @@ let riskImages = [
 ];
 let updateValues = [];
 let numberSelected = 0;
-let colors = ['#0bf', '#fb0', '#bf0', '#b0f'];
+let colors = ['#734b95', '#db4a8c', '#6ca9da', '#f5e272'];
 let idle2=true
 PIXI.utils.skipHello();
 let canvas = null;
@@ -211,7 +211,7 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 20;
         } else {
-          ctx.fillStyle = '#000FFF';
+          ctx.fillStyle = '#FFF';
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
@@ -237,7 +237,7 @@ class AnimationController {
     ctx.beginPath();
     ctx.arc(cx, cy, this.r * 1.025, 0, 2 * Math.PI, true);
     ctx.arc(cx, cy, this.r * 0.975, 0, 2 * Math.PI, false);
-    ctx.fillStyle = '#444';
+    ctx.fillStyle = '#4b519f';
     ctx.fill();
     ctx.shadowOffsetX = this.r / 40;
     ctx.shadowOffsetY = this.r / 40;
@@ -264,7 +264,7 @@ class AnimationController {
     ctx.moveTo(-this.r * 1.1, -this.r * 0.05);
     ctx.lineTo(-this.r * 0.9, 0);
     ctx.lineTo(-this.r * 1.1, this.r * 0.05);
-    ctx.fillStyle = '#F44';
+    ctx.fillStyle = '#b04b4c';
     ctx.fill();
     ctx.clip();
 
@@ -322,7 +322,7 @@ class AnimationController {
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 20;
         } else {
-          ctx.fillStyle = '#000FFF';
+          ctx.fillStyle = '#FFF';
           ctx.shadowColor = '#000';
           ctx.shadowBlur = this.r / 100;
         }
@@ -348,7 +348,7 @@ class AnimationController {
     ctx.beginPath();
     ctx.arc(cx, cy, this.r * 1.025, 0, 2 * Math.PI, true);
     ctx.arc(cx, cy, this.r * 0.975, 0, 2 * Math.PI, false);
-    ctx.fillStyle = '#444';
+    ctx.fillStyle = '#4b519f';
     ctx.fill();
     ctx.shadowOffsetX = this.r / 40;
     ctx.shadowOffsetY = this.r / 40;
@@ -361,7 +361,7 @@ class AnimationController {
       cy,
       this.r / 3
     );
-    this.g.addColorStop(0, '#FFF');
+    this.g.addColorStop(0, '#000');
     this.g.addColorStop(0.2, '#F44');
     this.g.addColorStop(1, '#811');
     ctx.fillStyle = this.g;
@@ -375,7 +375,7 @@ class AnimationController {
     ctx.moveTo(-this.r * 1.1, -this.r * 0.05);
     ctx.lineTo(-this.r * 0.9, 0);
     ctx.lineTo(-this.r * 1.1, this.r * 0.05);
-    ctx.fillStyle = '#F44';
+    ctx.fillStyle = '#b04b4c';
     ctx.fill();
     ctx.clip();
     ctx.fill();

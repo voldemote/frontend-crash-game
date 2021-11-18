@@ -129,14 +129,14 @@
   position: absolute;
   z-index: 999;
   left: 20px;
-  top: 10px;
+  top: 30px;
   svg {
     fill: #f2ff53 !important;
   }
   @media (max-width: $screen-xs-max) {
   }
   @media screen and (max-width: 768px) {
-    top: 15px;
+    top: 20px;
     left: 5px !important;
   }
 }
