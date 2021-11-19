@@ -2,6 +2,7 @@ import { Factory } from "../../sources/libs/index.js";
 import Cell from "./Cell.js";
 import Popup from "./Popup.js";
 import Header from "./Header.js";
+import { isMobile } from 'react-device-detect';
 
 /**
  * @class View
@@ -142,7 +143,8 @@ export default class View extends Factory.Container {
     const { width, height } = texture;
     const gridWidth = ( ( columns * width ) - width );
     const gridHeight = ( ( rows * height ) - height );
-
+    console.log(isMobile);
+    if(isMobile) gridSize = 190;
     this.grid.scale.set(gridSize / gridWidth);
     this.addChild(this.grid);
 
@@ -163,25 +165,6 @@ export default class View extends Factory.Container {
     this.grid.cells.forEach(row => {
       row.forEach(cell => this.grid.addChild(cell));
     });
-
-    this.grid.cells = collection.map((row, i) => {
-      return row.map((cellModel, j) => {
-        const x = -( gridWidth / 2 ) + ( width * j );
-        const y = -( gridHeight / 2 ) + ( height * i );
-        const cell = new Cell(texture, cellModel);
-        cell.position.set(x, y);
-        cell.position.set(x, y);
-        cell.on("mouseover", this.onMouseOver, this);
-        cell.on("mouseout", this.onMouseOut, this);
-        cell.interactive=true;
-        return cell;
-      });
-    });
-
-    this.grid.cells.forEach(row => {
-      row.forEach(cell => this.grid.addChild(cell));
-    });
-
 
 
   }
