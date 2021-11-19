@@ -145,17 +145,19 @@ const createTradeMines = payload => {
 
 const checkCellMines = payload => {
   console.log('URL', ApiUrls.API_MINES_CHECK);
+  console.log('payload', payload);
 
   return new Promise((resolve, reject) => {
     const dummyData = {
       data: {
-        test: 'test'
+        result: 0, // 0 - no mine, 1 - mine
+        clientBoard: []// length = 25 0 - no mine, 1 - mine, 2 -
       }
     }
     resolve(dummyData)
   })
-
-  // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
+  //
+  // return this.api.post(ApiUrls.API_MINES_CHECK, payload).catch(error => {
   //   console.log('[API Error] called: createMinesTrade', error);
   //   throw error;
   // });
@@ -173,8 +175,8 @@ const cashoutMines = payload => {
     resolve(dummyData)
   })
 
-  // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
-  //   console.log('[API Error] called: createMinesTrade', error);
+  // return this.api.post(ApiUrls.API_MINES_CASHOUT).catch(error => {
+  //   console.log('[API Error] called: cashoutMines', error);
   //   throw error;
   // });
 }
