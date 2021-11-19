@@ -7,6 +7,29 @@ import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
 import { AnimationController, BackgroundPlinko } from './AnimationController'
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
+import { isMobile } from 'react-device-detect';
+
+const colors = ["#d7393f", "#dd8549", "#e6e76a"]
+const backgroundString = (backg) =>`conic-gradient(from 90deg at 50% 50%, ${colors[backg]} 0%,
+  ${colors[backg]} 10%, ${colors[backg+1]} 10%,
+  ${colors[backg+1]} 15%, ${colors[backg+2]} 15%,
+  ${colors[backg+2]} 20%, ${colors[backg]} 20%,
+  ${colors[backg]} 25%, ${colors[backg+1]} 25%,
+  ${colors[backg+1]} 30%, ${colors[backg+2]} 30%,
+  ${colors[backg+2]} 35%, ${colors[backg]} 35%,
+  ${colors[backg]} 40%, ${colors[backg+1]} 40%,
+  ${colors[backg+1]} 45%, ${colors[backg+2]} 45%,
+  ${colors[backg+2]} 50%, ${colors[backg]} 50%,
+  ${colors[backg]} 55%, ${colors[backg+1]} 55%,
+  ${colors[backg+1]} 60%, ${colors[backg+2]} 60%,
+  ${colors[backg+2]} 65%, ${colors[backg]} 65%,
+  ${colors[backg]} 70%, ${colors[backg+1]} 70%,
+  ${colors[backg+1]} 75%, ${colors[backg+2]} 75%,
+  ${colors[backg+2]} 80%, ${colors[backg]} 80%,
+  ${colors[backg]} 85%, ${colors[backg+1]} 85%,
+  ${colors[backg+1]} 90%, ${colors[backg+2]} 90%,
+  ${colors[backg+2]} 95%, ${colors[backg]} 95%,
+  ${colors[backg]} 100%, ${colors[backg+1]} 100%)`
 
 const PlinkoGameAnimation = ({
   connected,
@@ -24,6 +47,7 @@ const PlinkoGameAnimation = ({
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
+  const [backgr, setBackgr] = useState(backgroundString(0));
   const [flag, setFlag] = useState(false);
   const [ball, setBall] = useState(null);
 
@@ -40,6 +64,9 @@ const PlinkoGameAnimation = ({
       aud.stopBgm();
     }
   },[])
+  useEffect(() => {
+    setBackgr(backgroundString(backg))
+  },[backg])
 
   useEffect(() => {
     if(bet && !bet.pending && bet.path) spin(bet);
@@ -74,11 +101,10 @@ const PlinkoGameAnimation = ({
      setBet((bet) => {return{ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
      setBet((bet) => {return{...bet, ball: bet.ball-1}})
   }
-
   return (
-    <div ref={backgroundRef} className={styles.animation}>
+    <div ref={backgroundRef} style={{background: isMobile && backgr}} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-      <BackgroundPlinko state={backg} size={Math.sqrt(width*width+height*height)} />
+      {!isMobile && <BackgroundPlinko state={backg} size={Math.sqrt(width*width+height*height)*1.1} />}
       {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} />}
     </div>
   );
