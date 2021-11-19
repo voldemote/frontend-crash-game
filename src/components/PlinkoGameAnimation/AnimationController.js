@@ -9,46 +9,40 @@ const outcomesByRisk = [
   [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
   [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
 ]
+const formatk = (num) => {
+  return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+}
 
-export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, onLose, start, setStart, audio}) => {
+export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio}) => {
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
     return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
   }, [])
   const [outcomes, setOutcomes] = useState(prevOutcomes);
   const [nball, setNball] = useState(0);
-
   const boardref = useRef(null);
-
   const brightBasket = (winMultiplier) => {
     const right = ballValue.path.filter(n=>n==1).length >= ballValue.path.length/2
     const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
     if(index > 0){
       setBox(index)
-      if(winMultiplier > 1){
-        audio.playWinSound();
-        onWin()
-      }else{
-        onLose()
-        audio.playLoseSound();
-      }
+      onEnd(winMultiplier > 1)
     }
   }
-
   const setBox = (index) => {
-    setOutcomes(outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: true}:out)}, []))
+    setOutcomes((outcomes) => outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: true}:out)}, []))
     setTimeout(() => {
-      setOutcomes(outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: false}:out)}, []))
+      setOutcomes((outcomes) => outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: false}:out)}, []))
     }, 2000)
   }
 
   useEffect(() => {
-    if(start) {
-      setBall(ballValue, brightBasket, nball, boardref)
+    if(ballValue) {
+      launchBall(ballValue, brightBasket, nball, boardref, audio)
       setNball(nball+1)
-      setStart(false)
+      setBall(null)
     }
-  }, [start])
+  }, [ballValue])
 
   useEffect(() => {
     if(risk){
@@ -68,13 +62,13 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
         </div>
       )}
       <div className={styles.boxes}>
-        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
+        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{formatk(box.amount)}</div>)}
       </div>
     </div>
   )
 }
 
-const setBall = (ballValue, onBuscket, nball, boardref) => {
+const launchBall = (ballValue, onBuscket, nball, boardref, audio) => {
   let ball1 = document.createElement('div')
   ball1.setAttribute("id", `ball-${nball}`);
   ball1.setAttribute("class", styles.ball)
@@ -85,7 +79,7 @@ const setBall = (ballValue, onBuscket, nball, boardref) => {
     let index = 0
     for(let direction of ballValue.path){
       setTimeout(() => {
-        moveBall(direction, `ball-${nball}`)
+        moveBall(direction, `ball-${nball}`, audio)
       }, (index*350))
       index++
     }
@@ -98,7 +92,7 @@ const setBall = (ballValue, onBuscket, nball, boardref) => {
 const getXBall = (ball) => parseInt( document.getElementById(ball).style.transform.split("(")[1].split(", ")[0].replace("px",""))
 const getYBall = (ball) => parseInt(document.getElementById(ball).style.transform.split("(")[1].split(", ")[1].replace("px",""))
 
-function moveBall(direction, ball) {
+function moveBall(direction, ball, audio) {
   setTimeout(() => {
     const x = getXBall(ball), y = getYBall(ball)
     const rotate = direction === 1 ? '0deg' : '0deg'
@@ -112,6 +106,8 @@ function moveBall(direction, ball) {
     document.getElementById(ball).style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
     }, 100)
   setTimeout(() => {
+    console.log("tick")
+    audio.playTick()
     const x = getXBall(ball), y = getYBall(ball)
     const rotate = direction === 1 ? '360deg' : '-360deg'
     document.getElementById(ball).style.transform = `translate(${x}px, ${y+row/2+1}px) rotate(${rotate})`;

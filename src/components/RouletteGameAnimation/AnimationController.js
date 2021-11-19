@@ -1,10 +1,11 @@
 import { options } from 'components/EmailNotifications/options';
 import { init } from 'store/sagas/websockets';
-import * as PIXI from 'pixi.js-legacy';
-import '@pixi/math-extras';
-import '@pixi/sound';
-import * as Sound from '@pixi/sound';
+//import * as PIXI from 'pixi.js-legacy';
+//import '@pixi/math-extras';
+//import '@pixi/sound';
+//import * as Sound from '@pixi/sound';
 import { isMobile } from 'react-device-detect';
+import { AudioController } from '../AudioController';
 
 let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 1.22],
   [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
@@ -27,151 +28,8 @@ let updateValues = [];
 let numberSelected = 0;
 let colors = ['#734b95', '#db4a8c', '#6ca9da', '#f5e272'];
 let idle2=true
-PIXI.utils.skipHello();
 let canvas = null;
 let img = new Image();
-
-export class AudioController {
-  constructor(bgmIndex = 0) {
-    let volume = 0.0;
-    try {
-      const savedVolume = localStorage.getItem('gameVolume');
-      this.volume = savedVolume ? parseFloat(savedVolume) : volume;
-    } catch (e) {
-      this.volume = 0;
-      console.error(e);
-    }
-    this.errors = [];
-    this.bgmIndex = bgmIndex;
-    this.elapsed = 0;
-    this.ready = true;
-
-    Sound.sound.add(
-      {
-        bgm: {
-          url: '/sounds/roulette/wheel_bg.mp3',
-          loop: true,
-        },
-        bgm1: {
-          url: '/sounds/plinko/plinko_bgm.mp3',
-          loop: true,
-        },
-        flying: {
-          url: '/sounds/elon/flying.mp3',
-          loop: true,
-        },
-        gameover: {
-          url: '/sounds/elon/sfx_gameover.mp3',
-          loop: false,
-        },
-        lose: {
-          url: '/sounds/elon/sfx_lose.mp3',
-          loop: false,
-        },
-        cashout: {
-          url: '/sounds/elon/sfx_cashout3.mp3',
-          loop: false,
-        },
-        placebet: {
-          url: '/sounds/elon/sfx_placebet.mp3',
-          loop: false,
-        },
-        tick: {
-          url: '/sounds/roulette/sfx_tick.mp3',
-          loop: false,
-        }
-      },
-      {
-        loaded: (err, data) => {
-          if (err) {
-            this.errors = [...this.errors, err];
-          }
-        },
-        preload: true,
-      }
-    );
-  }
-
-  setVolume(volume = 1) {
-    try {
-      if (volume === 1 || volume === '1') {
-        this.volume = 1.0;
-      } else if (!volume) {
-        this.volume = 0.0;
-      } else {
-        this.volume = volume;
-      }
-      localStorage.setItem('gameVolume', `${volume}`);
-      Sound.sound.volume('bgm', volume);
-    } catch (e) {
-      console.error('Audio output error');
-    }
-  }
-
-  mute() {
-    localStorage.setItem('gameVolume', 0);
-    this.setVolume(0);
-  }
-
-  setElapsed(elapsed) {
-    this.elapsed = elapsed;
-  }
-
-  setBgmIndex(idx = 0) {
-    this.bgmIndex = idx;
-  }
-
-  playSound(name, loop = false, volume) {
-    try {
-      if (this.ready) {
-        Sound.sound.volume(name, volume && this.volume != 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
-        Sound.sound.play(name, {
-          loop: loop
-        });
-      }
-    } catch (e) {
-      console.error('Audio output error');
-    }
-  }
-
-  stopSound(name) {
-    Sound.sound.stop(name);
-  }
-
-  startBgm() {
-    const diff = this.elapsed / 1000;
-    if (this.bgmIndex === 0) {
-      this.playSound('bgm', true);
-    }else if (this.bgmIndex === 1) {
-      this.playSound('bgm1', true);
-    }
-  }
-
-  stopBgm() {
-    this.stopSound('bgm');
-    this.stopSound('flying');
-  }
-  playTick() {
-    this.playSound('tick', false, 1);
-  }
-
-  playGameOverSound() {
-    this.playSound('gameover');
-  }
-
-  playLoseSound() {
-    this.playSound('lose', false, 1);
-  }
-
-  playWinSound() {
-    this.playSound('cashout', false, 1);
-
-  }
-
-  playBetSound() {
-    this.playSound('placebet');
-  }
-}
 
 class AnimationController {
   init(canvas, options, typeSel) {
