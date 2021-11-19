@@ -181,48 +181,48 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">images/lose/loose_0001.png</key>
-            <key type="filename">images/lose/loose_0002.png</key>
-            <key type="filename">images/lose/loose_0003.png</key>
-            <key type="filename">images/lose/loose_0004.png</key>
-            <key type="filename">images/lose/loose_0005.png</key>
-            <key type="filename">images/lose/loose_0006.png</key>
-            <key type="filename">images/lose/loose_0007.png</key>
-            <key type="filename">images/lose/loose_0008.png</key>
-            <key type="filename">images/lose/loose_0009.png</key>
-            <key type="filename">images/lose/loose_0010.png</key>
-            <key type="filename">images/lose/loose_0011.png</key>
-            <key type="filename">images/lose/loose_0012.png</key>
-            <key type="filename">images/lose/loose_0013.png</key>
-            <key type="filename">images/lose/loose_0014.png</key>
-            <key type="filename">images/unturned/unturned_0001.png</key>
-            <key type="filename">images/unturned/unturned_0002.png</key>
-            <key type="filename">images/unturned/unturned_0003.png</key>
-            <key type="filename">images/unturned/unturned_0004.png</key>
-            <key type="filename">images/unturned/unturned_0005.png</key>
-            <key type="filename">images/unturned/unturned_0006.png</key>
-            <key type="filename">images/unturned/unturned_0007.png</key>
-            <key type="filename">images/unturned/unturned_0008.png</key>
-            <key type="filename">images/unturned/unturned_0009.png</key>
-            <key type="filename">images/unturned/unturned_0010.png</key>
-            <key type="filename">images/unturned/unturned_0011.png</key>
-            <key type="filename">images/unturned/unturned_0012.png</key>
-            <key type="filename">images/unturned/unturned_0013.png</key>
-            <key type="filename">images/unturned/unturned_0014.png</key>
-            <key type="filename">images/win/win_0001.png</key>
-            <key type="filename">images/win/win_0002.png</key>
-            <key type="filename">images/win/win_0003.png</key>
-            <key type="filename">images/win/win_0004.png</key>
-            <key type="filename">images/win/win_0005.png</key>
-            <key type="filename">images/win/win_0006.png</key>
-            <key type="filename">images/win/win_0007.png</key>
-            <key type="filename">images/win/win_0008.png</key>
-            <key type="filename">images/win/win_0009.png</key>
-            <key type="filename">images/win/win_0010.png</key>
-            <key type="filename">images/win/win_0011.png</key>
-            <key type="filename">images/win/win_0012.png</key>
-            <key type="filename">images/win/win_0013.png</key>
-            <key type="filename">images/win/win_0014.png</key>
+            <key type="filename">../images/mines/lose/loose_0001.png</key>
+            <key type="filename">../images/mines/lose/loose_0002.png</key>
+            <key type="filename">../images/mines/lose/loose_0003.png</key>
+            <key type="filename">../images/mines/lose/loose_0004.png</key>
+            <key type="filename">../images/mines/lose/loose_0005.png</key>
+            <key type="filename">../images/mines/lose/loose_0006.png</key>
+            <key type="filename">../images/mines/lose/loose_0007.png</key>
+            <key type="filename">../images/mines/lose/loose_0008.png</key>
+            <key type="filename">../images/mines/lose/loose_0009.png</key>
+            <key type="filename">../images/mines/lose/loose_0010.png</key>
+            <key type="filename">../images/mines/lose/loose_0011.png</key>
+            <key type="filename">../images/mines/lose/loose_0012.png</key>
+            <key type="filename">../images/mines/lose/loose_0013.png</key>
+            <key type="filename">../images/mines/lose/loose_0014.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0001.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0002.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0003.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0004.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0005.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0006.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0007.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0008.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0009.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0010.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0011.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0012.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0013.png</key>
+            <key type="filename">../images/mines/unturned/unturned_0014.png</key>
+            <key type="filename">../images/mines/win/win_0001.png</key>
+            <key type="filename">../images/mines/win/win_0002.png</key>
+            <key type="filename">../images/mines/win/win_0003.png</key>
+            <key type="filename">../images/mines/win/win_0004.png</key>
+            <key type="filename">../images/mines/win/win_0005.png</key>
+            <key type="filename">../images/mines/win/win_0006.png</key>
+            <key type="filename">../images/mines/win/win_0007.png</key>
+            <key type="filename">../images/mines/win/win_0008.png</key>
+            <key type="filename">../images/mines/win/win_0009.png</key>
+            <key type="filename">../images/mines/win/win_0010.png</key>
+            <key type="filename">../images/mines/win/win_0011.png</key>
+            <key type="filename">../images/mines/win/win_0012.png</key>
+            <key type="filename">../images/mines/win/win_0013.png</key>
+            <key type="filename">../images/mines/win/win_0014.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -240,48 +240,48 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>images/lose/loose_0001.png</filename>
-            <filename>images/lose/loose_0002.png</filename>
-            <filename>images/lose/loose_0003.png</filename>
-            <filename>images/lose/loose_0004.png</filename>
-            <filename>images/lose/loose_0005.png</filename>
-            <filename>images/lose/loose_0006.png</filename>
-            <filename>images/lose/loose_0007.png</filename>
-            <filename>images/lose/loose_0008.png</filename>
-            <filename>images/lose/loose_0009.png</filename>
-            <filename>images/lose/loose_0010.png</filename>
-            <filename>images/lose/loose_0011.png</filename>
-            <filename>images/lose/loose_0012.png</filename>
-            <filename>images/lose/loose_0013.png</filename>
-            <filename>images/lose/loose_0014.png</filename>
-            <filename>images/unturned/unturned_0001.png</filename>
-            <filename>images/unturned/unturned_0002.png</filename>
-            <filename>images/unturned/unturned_0003.png</filename>
-            <filename>images/unturned/unturned_0004.png</filename>
-            <filename>images/unturned/unturned_0005.png</filename>
-            <filename>images/unturned/unturned_0006.png</filename>
-            <filename>images/unturned/unturned_0007.png</filename>
-            <filename>images/unturned/unturned_0008.png</filename>
-            <filename>images/unturned/unturned_0009.png</filename>
-            <filename>images/unturned/unturned_0010.png</filename>
-            <filename>images/unturned/unturned_0011.png</filename>
-            <filename>images/unturned/unturned_0012.png</filename>
-            <filename>images/unturned/unturned_0013.png</filename>
-            <filename>images/unturned/unturned_0014.png</filename>
-            <filename>images/win/win_0001.png</filename>
-            <filename>images/win/win_0002.png</filename>
-            <filename>images/win/win_0003.png</filename>
-            <filename>images/win/win_0004.png</filename>
-            <filename>images/win/win_0005.png</filename>
-            <filename>images/win/win_0006.png</filename>
-            <filename>images/win/win_0007.png</filename>
-            <filename>images/win/win_0008.png</filename>
-            <filename>images/win/win_0009.png</filename>
-            <filename>images/win/win_0010.png</filename>
-            <filename>images/win/win_0011.png</filename>
-            <filename>images/win/win_0012.png</filename>
-            <filename>images/win/win_0013.png</filename>
-            <filename>images/win/win_0014.png</filename>
+            <filename>../images/mines/lose/loose_0001.png</filename>
+            <filename>../images/mines/lose/loose_0002.png</filename>
+            <filename>../images/mines/lose/loose_0003.png</filename>
+            <filename>../images/mines/lose/loose_0004.png</filename>
+            <filename>../images/mines/lose/loose_0005.png</filename>
+            <filename>../images/mines/lose/loose_0006.png</filename>
+            <filename>../images/mines/lose/loose_0007.png</filename>
+            <filename>../images/mines/lose/loose_0008.png</filename>
+            <filename>../images/mines/lose/loose_0009.png</filename>
+            <filename>../images/mines/lose/loose_0010.png</filename>
+            <filename>../images/mines/lose/loose_0011.png</filename>
+            <filename>../images/mines/lose/loose_0012.png</filename>
+            <filename>../images/mines/lose/loose_0013.png</filename>
+            <filename>../images/mines/lose/loose_0014.png</filename>
+            <filename>../images/mines/unturned/unturned_0001.png</filename>
+            <filename>../images/mines/unturned/unturned_0002.png</filename>
+            <filename>../images/mines/unturned/unturned_0003.png</filename>
+            <filename>../images/mines/unturned/unturned_0004.png</filename>
+            <filename>../images/mines/unturned/unturned_0005.png</filename>
+            <filename>../images/mines/unturned/unturned_0006.png</filename>
+            <filename>../images/mines/unturned/unturned_0007.png</filename>
+            <filename>../images/mines/unturned/unturned_0008.png</filename>
+            <filename>../images/mines/unturned/unturned_0009.png</filename>
+            <filename>../images/mines/unturned/unturned_0010.png</filename>
+            <filename>../images/mines/unturned/unturned_0011.png</filename>
+            <filename>../images/mines/unturned/unturned_0012.png</filename>
+            <filename>../images/mines/unturned/unturned_0013.png</filename>
+            <filename>../images/mines/unturned/unturned_0014.png</filename>
+            <filename>../images/mines/win/win_0001.png</filename>
+            <filename>../images/mines/win/win_0002.png</filename>
+            <filename>../images/mines/win/win_0003.png</filename>
+            <filename>../images/mines/win/win_0004.png</filename>
+            <filename>../images/mines/win/win_0005.png</filename>
+            <filename>../images/mines/win/win_0006.png</filename>
+            <filename>../images/mines/win/win_0007.png</filename>
+            <filename>../images/mines/win/win_0008.png</filename>
+            <filename>../images/mines/win/win_0009.png</filename>
+            <filename>../images/mines/win/win_0010.png</filename>
+            <filename>../images/mines/win/win_0011.png</filename>
+            <filename>../images/mines/win/win_0012.png</filename>
+            <filename>../images/mines/win/win_0013.png</filename>
+            <filename>../images/mines/win/win_0014.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
