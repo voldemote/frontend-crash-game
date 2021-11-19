@@ -159,8 +159,8 @@ export default class View extends Factory.Container {
         const cell = new Cell(texture, cellModel);
         cell.position.set(x, y);
         cell.position.set(x, y);
-        cell.on("mouseover", this.onMouseOver, this);
-        cell.on("mouseout", this.onMouseOut, this);
+        //cell.on("mouseover", this.onMouseOver, this);
+        //cell.on("mouseout", this.onMouseOut, this);
         cell.interactive=true;
         return cell;
       });
