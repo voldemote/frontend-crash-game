@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
-import { AudioController } from '../RouletteGameAnimation/AnimationController';
+import { AudioController } from '../AudioController';
 import { AnimationController, BackgroundPlinko } from './AnimationController'
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 
@@ -14,6 +14,7 @@ const PlinkoGameAnimation = ({
   onInit,
   risk,
   setBet,
+  setSpins,
   bet
 }) => {
   const dispatch = useDispatch();
@@ -64,6 +65,10 @@ const PlinkoGameAnimation = ({
       audio.playWinSound()
       changeBackground(0)
     } else audio.playLoseSound();
+    const spin = bet.profit > 0 ?
+      { type: 'win', value: '+' + bet.profit }:
+      { type: 'loss', value: bet.profit}
+    setSpins((spins) => [spin].concat(spins))
     bet.autobet ?
      setBet((bet) => {return{ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
      setBet((bet) => {return{...bet, ball: bet.ball-1}})
