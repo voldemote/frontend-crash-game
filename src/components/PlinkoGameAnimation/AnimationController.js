@@ -63,12 +63,12 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
     <div className={styles.board} ref={boardref}>
       {false && <div id="ball" className={styles.ball}></div>}
       {Array.from({length: rows}).map((row, index) =>
-        <div className={styles.row}>
-          {Array.from({length: index+3}).map((peg) => <div className={styles.peg}></div> )}
+        <div key={index} className={styles.row}>
+          {Array.from({length: index+3}).map((peg, index) => <div key={index} className={styles.peg}></div> )}
         </div>
       )}
       <div className={styles.boxes}>
-        {outcomes.map((box, index) => <div className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
+        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
       </div>
     </div>
   )

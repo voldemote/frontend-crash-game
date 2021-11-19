@@ -52,6 +52,10 @@ export class AudioController {
           url: '/sounds/roulette/wheel_bg.mp3',
           loop: true,
         },
+        bgm1: {
+          url: '/sounds/plinko/plinko_bgm.mp3',
+          loop: true,
+        },
         flying: {
           url: '/sounds/elon/flying.mp3',
           loop: true,
@@ -138,6 +142,8 @@ export class AudioController {
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
+    }else if (this.bgmIndex === 1) {
+      this.playSound('bgm1', true);
     }
   }
 
