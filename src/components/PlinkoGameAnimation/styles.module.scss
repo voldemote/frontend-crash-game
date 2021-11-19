@@ -68,7 +68,7 @@
     justify-content: center;
     align-items: center;
     .peg{
-      z-index: 12;
+      z-index: 5;
       display: flex;
       min-width: 10px;
       width: 10px;
@@ -132,6 +132,8 @@
 .background{
   position: absolute;
   margin: auto;
+  max-width: fit-content;
+
 
    //max-width: fit-content;
   /*svg{
@@ -156,6 +158,16 @@
 
 }*/
 .animation {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid hsla(0,0%,100%,.17);
+    max-height: 470px;
+    min-height: 470px;
+    position: relative;
+  /*
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -163,16 +175,9 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.17);
   /*height: fit-content;*/
-  max-height: 470px;
-  min-height: 470px;
-  position: relative;
-  @media (max-width: 650px) {
-    svg{
-      display: none;
-    }
-    background: #dd8549;
-  }
-
+//  max-height: 470px;
+//  min-height: 470px;
+//  position: relative;
   @media (max-width: 580px) {
     max-height: 320px;
     min-height: 320px;
