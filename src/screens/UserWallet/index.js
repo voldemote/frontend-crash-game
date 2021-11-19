@@ -7,8 +7,12 @@ import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import { useLocation, useParams } from 'react-router-dom';
 import { useIsMount } from 'components/hoc/useIsMount';
 import { connect, useSelector } from 'react-redux';
+import { selectUser } from 'store/selectors/authentication';
+import { formatToFixed } from 'helper/FormatNumbers';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../../components//Popup/PopupTheme';
+import { RosiGameActions } from 'store/actions/rosi-game';
+
 
 
 
@@ -39,18 +43,20 @@ const UserWallet = ({
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
 
+  const { balance, currency, toNextRank } = useSelector(selectUser);
+
+
   const dispatch = useDispatch();
   const { highData, luckyData, myBetsData } = useRosiData();
   const [activityTab, setActivityTab] = useState({ name: 'DEPOSITS', index: 0,  });
   const activityTabOptions = [
   { name: 'DEPOSITS', index: 0,  },
   { name: 'WITHDRAWALS', index: 1,  },
-  { name: 'BETS', index: 2 , }
-]
-
+  // { name: 'BETS', index: 2 , }
+];
   
 
-  if (userId) activityTabOptions.push({ name: 'MY BETS', index: 3 });
+  if (userId) activityTabOptions.push({ name: 'BETS', index: 2 });
 
 
   const handleActivitySwitchTab = ({ index }) => {
@@ -60,7 +66,7 @@ const UserWallet = ({
   useEffect(() => {
     // refreshHighData();
     // refreshLuckyData();
-    // refreshMyBetsData({ userId: '6152b82b2a1ac4fa41b4c663' });
+    // refreshMyBetsData({ userId: userId || '6152b82b2a1ac4fa41b4c663' });
   }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
@@ -152,7 +158,9 @@ const UserWallet = ({
           <Grid container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
               <p className={styles.currentbalanceHeading}>Current balance</p>
-              <p className={styles.currentbalanceWFair}>4365 WFAIR</p>
+              <p className={styles.currentbalanceWFair}>
+                {formatToFixed(balance, 0, true)} {currency}
+              </p>
             </div>
           </Grid>
 
@@ -189,8 +197,19 @@ const UserWallet = ({
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    tags: state.event.tags,
+    events: state.event.events,
+    connected: state.websockets.connected,
+    userId: state.authentication.userId,
+  };
+};
+
+
 const mapDispatchToProps = dispatch => {
   return {
+    refreshMyBetsData: (data) => dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
@@ -198,4 +217,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(null, mapDispatchToProps)(UserWallet);
+export default connect(mapStateToProps, mapDispatchToProps)(UserWallet);

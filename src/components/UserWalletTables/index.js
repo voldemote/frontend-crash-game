@@ -9,9 +9,9 @@ import WithDrawalsTable from "./tables/WithDrawalsTable";
 
 const UserWalletTables = ({className, type='DEPOSITS'}) => {
     const rowData = {
-        DEPOSITS: [ {wFair : "deposits wFair", network: "deposit network", address: "deposit Adress", date: new Date().toDateString(), txHash: "deposit txhash"}],
-        WITHDRAWALS: [ {wfair: 'withdrawal wfaire', fee: 'fee', network: "network", startDate: new Date().toDateString(), status: "Review",txHash: "deposit txhash"} ],
-        BETS: [{game:"game", user: "user", trade: "trade", mult: '3.00x', cashout: '30 PFair'}]
+        DEPOSITS: true? []: [ {wFair : "deposits wFair", network: "deposit network", address: "deposit Adress", date: new Date().toDateString(), txHash: "deposit txhash"}],
+        WITHDRAWALS: true? []: [ {wfair: 'withdrawal wfaire', fee: 'fee', network: "network", startDate: new Date().toDateString(), status: "Review",txHash: "deposit txhash"} ],
+        BETS:true? []: [{game:"game", user: "user", trade: "trade", mult: '3.00x', cashout: '30 PFair'}]
     };
 
     const renderDepositTableRows = (depositTableRows) => {

@@ -508,16 +508,25 @@
   margin-top: 100px;
   margin-bottom: 85px;
 
+  @media (max-width: $screen-xs) {
+    & > div > div {
+      justify-content: center;
+    }
+  }
+
   .currentBlanceCard {
     width: 319px;
     height: 271px;
-    padding: 56px 78px 57px;
     box-shadow: 0px 0px 5px 5px $colorLightGray;
     border-radius: 11.5px;
     border: solid 1px $colorLightGray;
     background-color: $colorWhite;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     &::before {
       position: absolute;
@@ -533,21 +542,12 @@
 
     @media (max-width: $screen-xs) {
       &::before {
-        position: absolute;
-        content: '';
-        background-image: url('../../data/backgrounds/home-icons.svg');
-        background-repeat: no-repeat;
-        width: 100px;
-        height: 100px;
-        background-size: contain;
-        top: 180px;
-        left: -80px;
-        background-position: bottom left;
+        display: none;
       }
     }
 
     .currentbalanceHeading {
-      margin: 0 18px 11px 19px;
+      margin: 56px 18px 11px 19px;
       font-family: $fontMedium;
       font-size: 16px;
       font-weight: 800;
@@ -555,7 +555,6 @@
     }
 
     .currentbalanceWFair {
-      width: 163px;
       height: 126px;
       margin: 11px 0 0;
       font-family: $fontBold;
@@ -563,14 +562,16 @@
       font-weight: 800;
       text-align: center;
       color: $colorBlack;
+      overflow-wrap: break-word;
     }
   }
 
   .currentBlanceDiscription {
     width: 319px;
-    height: 271px;
-    padding: 56px 78px 57px;
+    // height: 271px;
     border-radius: 11.5px;
+    margin-top: 110px;
+    margin-left: 57px;
 
     .noWFairNoProblem {
       width: 288px;
