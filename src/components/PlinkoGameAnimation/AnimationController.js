@@ -120,6 +120,13 @@ function fallToBuscket(onBuscket, ball, winMultiplier) {
   setTimeout(() => document.getElementById(ball).style.opacity = 0, 300)
   setTimeout(() => document.getElementById(ball).remove(), 500)
 }
+/*
+export const BackgroundPlinko = ({size, state}) => {
+  return(
+    <div className={styles.background} style={{background:back }}><div/>
+  )
+}
+*/
 
 export const BackgroundPlinko = ({size, state}) => {
   const colors = ["#d7393f", "#dd8549", "#e6e76a"]
