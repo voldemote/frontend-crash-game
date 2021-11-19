@@ -47,6 +47,7 @@ const PlaceBetMines = ({
   const userBalance = parseInt(user?.balance || 0, 10);
 
   const [mines, setMines] = useState(1);
+  const [gameInProgress, setGameInProgress] = useState(false);
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
   const [crashFactor, setCrashFactor] = useState('25.00');
@@ -100,7 +101,7 @@ const PlaceBetMines = ({
 
     console.log('###payload', payload);
 
-    // setNuspin(payload)
+    setGameInProgress(true)
     const bet = await onBet(payload)
   }
 
@@ -162,10 +163,12 @@ const PlaceBetMines = ({
     // }
   }, [bet])
 
-  const cancelBet = e => {
+  const handleCashout = e => {
     e.preventDefault();
     e.stopPropagation();
-    // setNuspin({nspin: 0})
+
+    console.log('cashout now');
+    setGameInProgress(false);
   };
 
   const showLoginPopup = () => {
@@ -181,7 +184,7 @@ const PlaceBetMines = ({
   };
 
   const renderButton = () => {
-    if (!nuspin.autobet && nuspin?.nspin <= 0) {
+    if (!gameInProgress) {
       return (
         <span
           role="button"
@@ -209,13 +212,10 @@ const PlaceBetMines = ({
           <span
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, styles.cancel)}
-            onClick={cancelBet}
-            data-tracking-id={
-              user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
-            }
+            className={classNames(styles.button, styles.cashoutButton)}
+            onClick={handleCashout}
           >
-            Cancel Bet
+            Cashout
           </span>
         </>
       )
@@ -370,7 +370,7 @@ const PlaceBetMines = ({
             </div>
           </div>
           :
-          <div className={styles.sliderContainer}>
+          <div className={classNames(styles.sliderContainer, styles.autoBetContainer)}>
             Coming Soon
           </div>
         }

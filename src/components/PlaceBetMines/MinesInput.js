@@ -2,14 +2,9 @@ import styles from "./styles.module.scss";
 import classNames from "classnames";
 import Input from "../Input";
 
-export const MinesInput = ({mines, setMines, game, text}) => {
+export const MinesInput = ({mines, setMines, game}) => {
   return(
     <div className={classNames(styles.inputContainer)}>
-      <label
-        className={styles.label}
-      >
-        {text}
-      </label>
       <div
         className={classNames(
           styles.cashedOutInputContainer,
