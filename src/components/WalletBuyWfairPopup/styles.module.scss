@@ -93,10 +93,9 @@
 }
 
 .depositTabContainer {
-  margin-top: 10px;
+  padding: 50px 0;
   display: flex;
   flex-direction: column;
-  height: 700px;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -104,9 +103,6 @@
   .depositHeader {
     display: flex;
     align-items: center;
-    img {
-      margin-left: 10px;
-    }
   }
 
   .copyhash {
