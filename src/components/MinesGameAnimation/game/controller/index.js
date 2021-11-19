@@ -90,12 +90,10 @@ export default class Controller extends Emitter {
 
   /** To react on user interactivity and use engine to calculate game's data,
    *  update model and view */
-  async onClickOnCell({ row, col }) {
+  onClickOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
+
     const result = Engine.checkSelectedCell(collection, row, col);
-
-    this.handlers.checkSelectedCell(collection, row, col);
-
     this.model.updateCellsData(result);
 
     if (result === Engine.MINE) {
@@ -110,6 +108,12 @@ export default class Controller extends Emitter {
       this.view.revealCells(result);
       console.log(result);
     }
+
+    const checkCell = this.handlers.checkSelectedCell({row, col}).then((responseResult)=> {
+      console.log('###responseResult', responseResult);
+      // this.handlers.checkSelectedCell({collection, row, col});
+
+    });
   }
   overOnCell({ row, col }) {
     const { grid: { collection } } = this.model;

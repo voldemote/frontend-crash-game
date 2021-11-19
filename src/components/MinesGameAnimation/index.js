@@ -16,7 +16,7 @@ import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 import { layoutManagerConfig, resourcesConfig, gameViewConfig } from "./configs/index.js";
 import AnimationController from "../MinesGameAnimation/AnimationController";
-import {getCurrentMines} from "../../api/casino-games";
+import {getCurrentMines, checkCellMines} from "../../api/casino-games";
 import {AlertActions} from "../../store/actions/alert";
 
 const gameConfigBase = {
@@ -70,17 +70,34 @@ const RouletteGameAnimation = ({
     console.log('##ON CLICK CELL HANDLER', data);
   }
 
-  const checkSelectedCell = (data) => {
-    console.log('check selected cell', data);
+  //get position in proper notation 5*5
+  const getCellPosition = (row,col) => {
+    return ((row * 5) + col) + 1;
+  }
+
+  const checkSelectedCell = async (props) => {
+    const {row, col} = props;
+    console.log('[MINES] CHECK SELECTED CELL', {row, col});
+
+    const queryPayload = {
+      position: getCellPosition(row, col) //0-24
+    }
+
+    const checkMine = await checkCellMines(queryPayload).catch((err)=> {
+      dispatch(AlertActions.showError(err.message));
+    });
+
+
+    return checkMine.data.result;
+
   }
 
   useEffect(() => {
-    console.log('[MINES] GET LAST CASHOUTS');
+    console.log('[MINES] GET CURRENT GAME STATE');
     getCurrentMines()
       .then(response => {
         const {data} = response;
         const configBase = _.cloneDeep(gameConfigBase);
-
 
         console.log('##data', data);
         if(data?.gameState === 1) {
@@ -151,7 +168,7 @@ const RouletteGameAnimation = ({
         {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}
       </div>
 
-      <canvas id="mines-game" className={styles.canvas} styles={bet.pending && {pointerEvents: 'none'}} ref={canvasRef}></canvas>
+      <canvas id="mines-game" className={styles.canvas} ref={canvasRef}></canvas>
 
     </div>
   );
