@@ -101,14 +101,6 @@ const Game = ({
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
   }, [dispatch, connected]);
 
-  //Bets state update interval
-  /*
-  useEffect(() => {
-    const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-*/
-
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
   };
@@ -167,7 +159,7 @@ const Game = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROULETTE_GAME_EVENT_ID}
+          roomId={GAME_TYPE_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
