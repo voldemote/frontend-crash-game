@@ -71,12 +71,17 @@ const PlinkoGame = ({
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
         setSpins(lastSpins.map((spin) => {
-          if(spin.profit >= 0) {
+          if(spin.profit > 0) {
             return {
               type: 'win',
               value: '+' + spin.profit
             }
-          } else {
+          } else if(spin.profit === 0){
+            return {
+              type: 'even',
+              value: '' + spin.profit
+            }
+          }else {
             return {
               type: 'loss',
               value: spin.profit
