@@ -242,7 +242,7 @@ const Game = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              <Spins text="My Cashouts" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>

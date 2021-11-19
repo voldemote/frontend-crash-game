@@ -222,7 +222,7 @@ export const GAMES = {
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
   mines: {
-    id: '618a821bd90fd22298859sg1',
+    id: '618a821bd90fd22298859bc6',
     slug: 'mines',
     name: `Mines`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
