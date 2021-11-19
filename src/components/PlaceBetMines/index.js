@@ -102,7 +102,7 @@ const PlaceBetMines = ({
     console.log('###payload', payload);
 
     setGameInProgress(true)
-    const bet = await onBet(payload)
+    const bet = await onBet(payload);
   }
 
   const placeAutoBet = async () => {

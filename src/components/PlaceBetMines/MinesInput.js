@@ -26,19 +26,19 @@ export const MinesInput = ({mines, setMines, game}) => {
         </span>
         <div className={styles.buttonWrapper}>
           <span
-            className={styles.buttonItem}
+            className={classNames(styles.buttonItem, styles.noselect)}
             onClick={() => mines > 1 && setMines(mines - 1)}
           >
             -
           </span>
           <span
-            className={styles.buttonItem}
+            className={classNames(styles.buttonItem, styles.noselect)}
             onClick={() => mines < 24 && setMines(mines + 1)}
           >
             +
           </span>
           <span
-            className={styles.buttonItem}
+            className={classNames(styles.buttonItem, styles.noselect)}
             onClick={() => setMines(24)}
           >24</span>
         </div>

@@ -284,7 +284,6 @@ export default class View extends Factory.Container {
   /** To reveal all cells which were collected by engine
    * @param {Array} cells */
   revealCells(cells) {
-    console.log("dssddsds");
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
       cell.reveal(this.resPack, this.viewConfig.styles);
