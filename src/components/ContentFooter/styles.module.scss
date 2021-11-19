@@ -19,10 +19,11 @@
     flex-direction: column;
     padding: 0 20px;
     margin-bottom: 40px;
+    align-items: center;
   }
 
-  img {
-    margin-bottom: 20px;
+  img.footerLogo {
+    max-width: 300px;
   }
 
   .links {
