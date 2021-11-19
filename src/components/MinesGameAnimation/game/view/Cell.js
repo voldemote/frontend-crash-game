@@ -32,7 +32,8 @@ export default class Cell extends Factory.Sprite {
       imageExt: 'png',
       animationSpeed: 0.6,
       autoplay: false,
-      loop: false
+      loop: false,
+      basePath: '../images/mines/unturned/'
     })
     this.revealAnimation.visible = false
     this.revealAnimation.anchor.set(0.5)
@@ -43,7 +44,8 @@ export default class Cell extends Factory.Sprite {
       imageExt: 'png',
       animationSpeed: 0.6,
       autoplay: false,
-      loop: false
+      loop: false,
+      basePath: '../images/mines/win/'
     })
     this.winAnimation.visible = false
     this.winAnimation.anchor.set(0.5)
@@ -54,11 +56,12 @@ export default class Cell extends Factory.Sprite {
       imageExt: 'png',
       animationSpeed: 0.6,
       autoplay: false,
-      loop: false
+      loop: false,
+      basePath: '../images/mines/lose/'
     })
     this.loseAnimation.visible = false
     this.loseAnimation.anchor.set(0.5)
-    
+
   }
 
   reveal(textures, styles) {
