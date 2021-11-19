@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import PopupTheme from '../Popup/PopupTheme';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import ClickEvent from '../../helper/ClickEvent';
 import { UserActions } from '../../store/actions/user';
@@ -13,17 +13,19 @@ import EthereumLogo from '../../data/images/ethereum_logo.svg';
 import PolygonLogo from '../../data/images/polygon-logo.svg';
 
 const BuyWithFiatTab = () => {
+  const { email } = useSelector(state => state.authentication);
   let transak = {
     apiKey: '82fbd931-e077-46d2-87aa-272b72d4962c', // Your API Key
     environment: 'STAGING', // STAGING/PRODUCTION
-    defaultCryptoCurrency: 'DAI',
-    cryptoCurrencyCode: 'DAI',
+    defaultCryptoCurrency: 'MATIC',
+    cryptoCurrencyCode: 'MATIC',
     walletAddress: '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8', // Our backend wallet (should not be changeable)
     disableWalletAddressForm: true,
     networks: 'ethereum,mainnet,polygon',
     themeColor: '7879f1', // App theme color
     countryCode: 'DE', // INR/GBP
-    email: '', // Your customer's email address
+    email, // Your customer's email address
+    hideMenu: true,
     // redirectURL: window.location.origin,
     // hostURL: window.location.origin,
     partnerCustomerId: '615bf607f04fbb15aa5dd367', // Internal user id (mongo db)
