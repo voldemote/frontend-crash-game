@@ -241,11 +241,7 @@ export default class View extends Factory.Container {
     const { x, y } = data.getLocalPosition(this.grid);
     const { row, col } = this.convertLocToIndex(x, y);
 
-    if ( this.isFlagRequested ) {
-      this.emit("flagRequested", { row, col });
-    } else {
       this.emit("clickOnCell", { row, col });
-    }
   }
 
   /** For mouse left click on PC
