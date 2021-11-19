@@ -76,7 +76,12 @@ const PlinkoGame = ({
               type: 'win',
               value: '+' + spin.profit
             }
-          } else {
+          } else if(spin.profit === 0){
+            return {
+              type: 'even',
+              value: '' + spin.profit
+            }
+          }else {
             return {
               type: 'loss',
               value: spin.profit
@@ -108,7 +113,7 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
-
+  console.log("spins", spins)
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;

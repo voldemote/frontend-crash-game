@@ -44,6 +44,7 @@ const PlaceBetCasino = ({
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const [game, setGame] = useState({ngame: 0});
+  const [flag, setFlag] = useState(false);
   const [wincrease, setWincrease] = useState(0)
   const [lincrease, setLincrease] = useState(0)
   const [lossbutton, setLossbutton] = useState(false)
@@ -73,6 +74,11 @@ const PlaceBetCasino = ({
   };
 
   const placeABet = async () => {
+    if(flag) return
+    setFlag(true)
+    setTimeout(() => {
+      setFlag(false)
+    }, 250)
     if (userUnableToBet) return;
     if (amount > userBalance) return;
     const payload = {
