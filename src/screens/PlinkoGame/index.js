@@ -143,7 +143,7 @@ const PlinkoGame = ({
           activitiesLimit={50}
           className={styles.activitiesTrackerGamesBlock}
           preselectedCategory={'game'}
-          gameId={GAME_TYPE_ID}></EventActivitiesTabs>
+          gameId={PLINKO_GAME_EVENT_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -173,10 +173,6 @@ const PlinkoGame = ({
     </Grid>
   );
 
-
-  const handleNewSpin = (newSpin)=> {
-    setSpins([newSpin, ...spins])
-  }
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -197,7 +193,6 @@ const PlinkoGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={handleNewSpin}
                 risk={risk}
                 amount={amount}
                 bet={bet}

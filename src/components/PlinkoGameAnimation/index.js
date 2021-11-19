@@ -10,7 +10,6 @@ import GameAudioControlsLocal from '../GameAudioControlsLocal';
 
 const PlinkoGameAnimation = ({
   connected,
-  setSpins,
   amount,
   onInit,
   risk,

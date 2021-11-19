@@ -44,15 +44,14 @@ const PlaceBetCasino = ({
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const [game, setGame] = useState({ngame: 0});
-  const gameOffline = false//useSelector(selectGameOffline);
   const [wincrease, setWincrease] = useState(0)
   const [lincrease, setLincrease] = useState(0)
   const [lossbutton, setLossbutton] = useState(false)
   const [winbutton, setWinbutton] = useState(false)
   const [spinlimit, setSpinlimit] = useState(false)
   const [accumulated, setAccumulated] = useState(0)
-  const [plinko, setPlinko] = useState(0)
-  const userUnableToBet = amount < 1 || !canBet || gameOffline;
+  const [selector, setSelector] = useState('manual')
+  const userUnableToBet = amount < 1 || !canBet;
 
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
 
@@ -94,7 +93,7 @@ const PlaceBetCasino = ({
       loss: Number(loss),
       wincrease: winbutton?0:Number(wincrease)/100,
       lincrease: lossbutton?0:Number(lincrease)/100,
-      ngame: spinlimit?Number(ngame-1):null,
+      ngame: null,
       riskFactor: risk,
       accumulated
     };
@@ -146,11 +145,6 @@ const PlaceBetCasino = ({
       }
     }
   }, [bet])
-  const cancelBet = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setGame({ngame: 0})
-  };
 
   const showLoginPopup = () => {
     dispatch(
@@ -193,30 +187,18 @@ const PlaceBetCasino = ({
             role="button"
             tabIndex="0"
             className={classNames(styles.button, styles.cancel)}
-            onClick={cancelBet}
+            onClick={() => game.autobet ? setGame({...game, autobet: false}) : setGame({ngame: 0})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
             }
           >
-            Cancel Bet
+            {game.autobet ? 'Stop Autobet' :  'Cancel Bet'}
           </span>
         </>
       )
     }
   };
   const renderMessage = () => {
-    if (gameOffline) {
-      return (
-        <div
-          className={classNames([
-            styles.betInfo,
-            !user.isLoggedIn ? styles.guestInfo : [],
-          ])}
-        >
-          Waiting for connection...
-        </div>
-      );
-    }
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
@@ -225,7 +207,7 @@ const PlaceBetCasino = ({
       );
     }
   };
-  const [selector, setSelector] = useState('manual')
+
 
   const switchButton = () => {
     return (
@@ -250,7 +232,7 @@ const PlaceBetCasino = ({
     left: 0,
     zIndex: 999,
   };
-  console.log("bet", bet)
+
   return (
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti
