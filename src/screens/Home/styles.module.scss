@@ -361,6 +361,10 @@
         }
         p {
           font-size: 14px;
+
+          a {
+            text-decoration: underline;
+          }
         }
         @media (max-width: $screen-md) {
           text-align: center;
