@@ -24,12 +24,6 @@ export class PumpDumpGameMananger {
         return this._height;
     }
 
-    static _isGameRunning = false;
-
-    static get isGameRunning() {
-        return this._isGameRunning;
-    }
-
     // Use this function ONCE to start the entire game
     static initialize(backgroundColor, viewCanvas) {
 
@@ -40,14 +34,21 @@ export class PumpDumpGameMananger {
             resizeTo: viewCanvas.parentElement,
             // autoDensity: true,
             antialias: true,
-            backgroundColor,
+            transparent: true,
         });
 
         this._width = this.app.renderer.width;
         this._height = this.app.renderer.height;
 
-        // Add the ticker
-        this.app.ticker.add(this.update, this)
+        this.addTicker();
+    }
+
+    static addTicker() {
+        this.app.ticker.add(this.update, this);
+    }
+
+    static removeTicker() {
+        this.app.ticker.remove(this.update, this);
     }
 
     static load(assetList, onLoad) {
@@ -74,28 +75,26 @@ export class PumpDumpGameMananger {
     }
 
     static startGame(gameTime) {
+        if (!this.app) {
+            return;
+        }
         const gameScene = new GameScene(gameTime);
         this.changeScene(gameScene);
-        this._isGameRunning = true;
     }
 
-    static endGame() {
-        // remove this once end functionality added
+    static endGame(isLosing) {
         if (this.currentScene) {
-            this.app.stage.removeChild(this.currentScene);
-            this.currentScene.destroy();
+            this.currentScene.stop();
+            this.currentScene.handleEndGame();
         }
-        // Add endgame functionality
-        // Show red bar
-        // pause scales
     }
 
     static launchCoin(launchTime) {
         // Preparation Scene
-        if (launchTime <= 0) {
+        console.warn('launch scene', launchTime);
+        if (!this.app || launchTime <= 0) {
             return;
         }
-        this._isGameRunning = false;
         const launchScene = new LaunchScene(launchTime);
         this.changeScene(launchScene);
     }
@@ -111,5 +110,14 @@ export class PumpDumpGameMananger {
 
     static doCashedOutAnimation() {
 
+    }
+
+    static destroy() {
+        if (this.currentScene) {
+            this.app.stage.removeChild(this.currentScene);
+            this.currentScene.destroy();
+        }
+        this.removeTicker();
+        this.app.destroy();
     }
 }

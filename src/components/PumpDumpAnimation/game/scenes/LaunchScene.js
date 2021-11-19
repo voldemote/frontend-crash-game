@@ -36,8 +36,12 @@ export class LaunchScene extends Container {
 
     }
 
-    getTweetAnimDuration() {
+    stop() {
 
+    }
+
+    handleEndGame() {
+        
     }
 
     getPossibleTweetCount(width) {

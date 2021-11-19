@@ -4,8 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: $colorWhite;
+  background: #101737;
   border: 1px solid $colorPinkDark;
+
+  // background: url('../../data/backgrounds/games/pump-dump-bg.png') center $colorWhite;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   border-radius: 12px;
   height: 543px;
@@ -13,6 +17,7 @@
 
   @media (max-width: $screen-xs-max) {
     height: 244px;
+    // background: url('../../data/backgrounds/games/pump-dump-mobile-bg.png') center $colorWhite;
   }
 
   .gameOffline {

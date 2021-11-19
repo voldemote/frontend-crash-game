@@ -26,19 +26,22 @@ const PreparingRound = ({ nextGameAt }) => (
   </div>
 )
 
-const GameMount = (setAudio, setGameLoaded, nextGameAtTimeStamp, canvasRef) => {
+const GameMount = (setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStamp, canvasRef) => {
   const audioManager = new GameAudioManager();
   if (canvasRef.current) {
     setAudio(audioManager);
     PumpDumpGameMananger.initialize(0x12132e, canvasRef.current);
     PumpDumpGameMananger.load(ASSET_LIST, () => {
-      if (!PumpDumpGameMananger.isGameRunning) {
+      if (isPreparingRound) {
         PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
       }
       setGameLoaded(true);
     });
   }
-  return () => audioManager.stopBgm();
+  return () => {
+    audioManager.stopBgm();
+    PumpDumpGameMananger.destroy();
+  };
 }
 
 const CashOut = (cashedOut) => {
@@ -67,6 +70,7 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
   } = useRosiData();
   const [hasGameLoaded, setGameLoaded] = useState(false);
   const [hasGameEnded, setGameEnded] = useState(false);
+  const [isPreparingRound, setIsPreparingRound] = useState(!hasStarted);
   const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
   const canvasRef = useRef(null);
 
@@ -74,7 +78,7 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
 
   // OnMount / OnDismount
   useEffect(() => {
-    return GameMount(setAudio, setGameLoaded, nextGameAtTimeStamp, canvasRef);
+    return GameMount(setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStamp, canvasRef);
   }, []);
 
   // Once gameHasLoaded or game hasStarted(rosi)
@@ -86,17 +90,19 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
     // Start Game
     if (hasStarted) {
       console.warn('hasStarted');
+      setIsPreparingRound(false);
       PumpDumpGameMananger.startGame(gameStartedTime);
       CashOut(cashedOut);
       return;
     }
 
     // End Game and Show Preparation Scene
-    if (!hasStarted && PumpDumpGameMananger.isGameRunning) {
+    if (!hasStarted && !isPreparingRound) {
       PumpDumpGameMananger.endGame(isLosing);
       // leave some time for player to see crash value
       setTimeout(() => {
         PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
+        setIsPreparingRound(true);
       }, ROSI_GAME_AFTER_CRASH_DELAY);
     }
   }, [hasStarted, hasGameLoaded]); // eslint-disable-line
@@ -113,7 +119,7 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
   function render() {
     if (!isConnected) return <GameOffline />;
 
-    if (!PumpDumpGameMananger.isGameRunning) {
+    if (isPreparingRound) {
       return <PreparingRound nextGameAt={nextGameAtTimeStamp} />;
     }
 
