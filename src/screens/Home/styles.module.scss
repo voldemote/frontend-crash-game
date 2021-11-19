@@ -651,6 +651,12 @@
         .thumbnail {
           display: flex;
           margin: 0 auto 14px;
+
+          &.cactusJack {
+            @media screen and (max-width: $screen-md) {
+              display: none;
+            }
+          }
         }
       }
     }

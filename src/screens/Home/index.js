@@ -50,6 +50,7 @@ import YellowThumbnail from '../../data/images/alpaca-dopter/yellow-thumbnail.pn
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
+import classNames from 'classnames';
 
 const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
@@ -287,7 +288,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <h2>WELCOME TO THE <br/><span class={styles.pink}>ALPACA</span>SINO</h2>
               </div>              
             </div>
-            <p className={styles.description}>All games are provably fair. Playing and betting will soon allow you to unlock special items for the Alpacavatar. Winners on the leaderboard can earn even more NFT items and loot. </p>
+            <p className={styles.description}>Hello Human, welcome to the Alpacasino. Sign up now and test our upcoming WFAIR-powered casino absolutely for free with play-money. Help our alpacas build the perfect fun, transparent and decentralized casino. </p>
             <div className={styles.categorySection}>
               <div className={styles.categoryItem}>
                 <img src={ChipOne} alt="chip-one"/>
@@ -349,7 +350,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                       unlock cool NFT and crypto prices.
                     </p>
                   </div>
-                  <div className={styles.thumbnail}>
+                  <div className={classNames(styles.thumbnail, styles.cactusJack)}>
                     <img src={MagentaThumbnail} alt="" />
                   </div>
                 </div>
