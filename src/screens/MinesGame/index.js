@@ -68,28 +68,27 @@ const Game = ({
 
 
   useEffect(() => {
-    console.log('[MINES] GET LAST CASHOUTS');
-    // getLastCashoutsMines(GAME_TYPE_ID)
-    //   .then(response => {
-    //     const lastCashouts = response?.data.lastCrashes;
-    //     setCashouts(lastCashouts.map((spin)=> {
-    //       if(spin.profit > 0) {
-    //         return {
-    //           type: 'win',
-    //           value: '+' + spin.profit
-    //         };
-    //       } else {
-    //         return {
-    //           type: 'loss',
-    //           value: spin.profit
-    //         };
-    //       }
-    //     }))
-    //
-    //   })
-    //   .catch(error => {
-    //     dispatch(AlertActions.showError(error.message));
-    //   });
+    getLastCashoutsMines()
+      .then(response => {
+        const lastCashouts = response?.data.lastCashouts;
+        setCashouts(lastCashouts.map((entry)=> {
+          if(entry.cashout > 0) {
+            return {
+              type: 'win',
+              value: '+' + entry.cashout
+            };
+          } else {
+            return {
+              type: 'loss',
+              value: entry.cashout
+            };
+          }
+        }))
+
+      })
+      .catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
 
   }, [])
 
@@ -193,6 +192,7 @@ const Game = ({
   const handleNewGameHistory = (cashout)=> {
     setCashouts([cashout, ...cashouts])
   }
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -233,7 +233,7 @@ const Game = ({
                 gameInProgress={gameInProgress}
                 setGameInProgress={setGameInProgress}
               />
-              <Spins text="My Cashouts" cashouts={cashouts} />
+              <Spins text="My Cashouts" spins={cashouts} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>

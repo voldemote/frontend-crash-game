@@ -179,30 +179,70 @@ const cashoutMines = payload => {
   // });
 }
 
-const getCurrentMines = payload => {
-  console.log('URL', ApiUrls.API_MINES_CURRENT);
-
+const getCurrentMines = () => {
   return new Promise((resolve, reject) => {
     const dummyData = {
       data: {
-        test: 'test'
+        gameTypeId: 'STRING',
+        gameName: 'STRING',
+        stakedAmount: 100,
+        userId: 'STRING',
+        minesCount: 10,
+        gameHash: 'STRING',
+        gameState: 0,
+        matchId: 11,
+        tradeId: 22,
+        outcomes: [], // length = minesCount
+        clientBoard: [], // length = 25 0 - no mine, 1 - mine,2 -hidden
+        turn: 1
       }
     }
     resolve(dummyData)
   })
 
-  // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
-  //   console.log('[API Error] called: createMinesTrade', error);
+  // return this.api.get(ApiUrls.API_MINES_CURRENT).catch(error => {
+  //   console.log('[API Error] called: getCurrentMines', error);
   //   throw error;
   // });
 }
 
 const getLastCashoutsMines = (gameTypeId) => {
-  const callThis = ApiUrls.API_MINES_LAST_CASHOUTS.replace(':gameTypeId', gameTypeId);
 
-  return Api.get(callThis).catch(error => {
-    console.log('[API Error] called: getCurrentGameInfo', error);
-  });
+  return new Promise((resolve, reject) => {
+    const dummyData = {
+      data: {
+        lastCashouts: [
+          {
+            gameHash: 'HASH',
+            cashout: -20
+          },
+          {
+            gameHash: 'HASH',
+            cashout: 35
+          },
+          {
+            gameHash: 'HASH',
+            cashout: 35
+          },
+          {
+            gameHash: 'HASH',
+            cashout: -50
+          },
+          {
+            gameHash: 'HASH',
+            cashout: 100
+          },
+        ]
+      }
+    }
+    resolve(dummyData)
+  })
+  //
+  // const callThis = ApiUrls.API_MINES_LAST_CASHOUTS.replace(':gameTypeId', gameTypeId);
+  //
+  // return Api.get(callThis).catch(error => {
+  //   console.log('[API Error] called: getCurrentGameInfo', error);
+  // });
 };
 
 export {
