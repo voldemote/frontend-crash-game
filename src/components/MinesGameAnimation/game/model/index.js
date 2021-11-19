@@ -86,7 +86,7 @@ export default class Model {
   /** To get all cells which is not opened yet
    * @return {Array<CellModel>} */
   get cellsToRevealed() {
-    console.log(this.getCellsByRule((cell) => !cell.isRevealed));
+    // console.log(this.getCellsByRule((cell) => !cell.isRevealed));
     return this.getCellsByRule((cell) => !cell.isRevealed);
   }
 

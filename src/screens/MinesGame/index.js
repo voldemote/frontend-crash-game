@@ -30,7 +30,7 @@ import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
-import {getLastCashoutsMines} from "../../api/casino-games";
+import {getCurrentMines, getLastCashoutsMines} from "../../api/casino-games";
 
 const Game = ({
   showPopup,
@@ -53,7 +53,8 @@ const Game = ({
   } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [cashouts, setCashouts] = useState([]);
-  const [risk, setRisk] = useState(1);
+  const [gameInProgress, setGameInProgress] = useState(false);
+  const [mines, setMines] = useState(1);
   const [bet, setBet] = useState({pending: true});
   const [amount, setAmount] = useState(50);
 
@@ -223,11 +224,14 @@ const Game = ({
               <GameAnimation
                 setCashouts={handleNewGameHistory}
                 inGameBets={inGameBets}
-                risk={risk}
                 bet={bet}
                 amount={amount}
                 setBet={setBet}
+                mines={mines}
+                setMines={setMines}
                 onInit={audio => setAudio(audio)}
+                gameInProgress={gameInProgress}
+                setGameInProgress={setGameInProgress}
               />
               <Spins text="My Cashouts" cashouts={cashouts} />
             </div>
@@ -237,10 +241,12 @@ const Game = ({
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}
-                  setRisk={setRisk}
-                  risk={risk}
                   onBet={handleBet}
                   bet={bet}
+                  setMines={setMines}
+                  mines={mines}
+                  gameInProgress={gameInProgress}
+                  setGameInProgress={setGameInProgress}
                 />
               </div>
             </div>

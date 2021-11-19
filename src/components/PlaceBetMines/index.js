@@ -39,22 +39,21 @@ const PlaceBetMines = ({
   bet,
   setAmount,
   amount,
-  setRisk,
-  risk,
+  setMines,
+  mines,
+  gameInProgress,
+  setGameInProgress
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [mines, setMines] = useState(1);
-  const [gameInProgress, setGameInProgress] = useState(false);
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
   const [crashFactor, setCrashFactor] = useState('25.00');
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
-  const [nuspin, setNuspin] = useState({nspin: 0});
   const gameOffline = false//useSelector(selectGameOffline);
   const [wincrease, setWincrease] = useState(0)
   const [lincrease, setLincrease] = useState(0)
@@ -74,10 +73,6 @@ const PlaceBetMines = ({
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
     setAmount(amount <= 10000 ? amount : 10000);
-  };
-  const onSelectMines = event => {
-    let value = parseInt(_.get(event, 'target.value', 1));
-    setMines(value);
   };
 
   const onBetAmountChanged = multiplier => {
