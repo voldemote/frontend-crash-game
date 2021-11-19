@@ -104,7 +104,7 @@ const PlinkoGameAnimation = ({
   return (
     <div ref={backgroundRef} style={{background: isMobile && backgr}} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-      {!isMobile && <BackgroundPlinko state={backg} size={Math.sqrt(width*width+height*height)} />}
+      {!isMobile && <BackgroundPlinko state={backg} size={Math.sqrt(width*width+height*height)*1.1} />}
       {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} />}
     </div>
   );

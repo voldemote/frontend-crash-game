@@ -132,6 +132,7 @@
 .background{
   position: absolute;
   margin: auto;
+  max-width: fit-content;
 
 
    //max-width: fit-content;
@@ -177,13 +178,6 @@
 //  max-height: 470px;
 //  min-height: 470px;
 //  position: relative;
-  @media (max-width: 650px) {
-    svg{
-      display: none;
-    }
-    //background: #dd8549;
-  }
-
   @media (max-width: 580px) {
     max-height: 320px;
     min-height: 320px;

@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import { isMobile } from 'react-device-detect';
 
 const rows = 12, ball = 20, row = 30, peg = 10, separation = 30;
 
@@ -54,7 +55,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   }, [risk, amount])
 
   return (
-    <div className={styles.board} ref={boardref}>
+    <div className={styles.board} style={{backgroundSize: isMobile ? '115%' : '100%'}} ref={boardref}>
       {false && <div id="ball" className={styles.ball}></div>}
       {Array.from({length: rows}).map((row, index) =>
         <div key={index} className={styles.row}>
