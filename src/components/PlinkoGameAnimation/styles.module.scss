@@ -132,9 +132,9 @@
 .background{
   position: absolute;
   margin: auto;
-  //max-width: fit-content;
-
-
+  max-width: fit-content;
+  left: -500px;
+  right: -500px;
    //max-width: fit-content;
   /*svg{
     max-width: auto!important;
