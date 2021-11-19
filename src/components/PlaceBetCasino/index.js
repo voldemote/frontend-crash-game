@@ -94,7 +94,9 @@ const PlaceBetCasino = ({
       loss: Number(loss),
       wincrease: winbutton?0:Number(wincrease)/100,
       lincrease: lossbutton?0:Number(lincrease)/100,
-      riskFactor: risk
+      ngame: spinlimit?Number(ngame-1):null,
+      riskFactor: risk,
+      accumulated
     };
     setAccumulated(0)
     setGame(payload)

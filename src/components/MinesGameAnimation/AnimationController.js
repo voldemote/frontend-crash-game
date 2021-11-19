@@ -54,7 +54,7 @@ export class AudioController {
     Sound.sound.add(
       {
         bgm: {
-          url: '/sounds/roulette/wheel_bg.mp3',
+          url: '/sounds/mines/bgm.mp3',
           loop: true,
         },
         flying: {
@@ -196,8 +196,8 @@ class AnimationController {
 
     let texture = PIXI.Texture.from(require('./assets/bg.png').default);
     let sprite1 = new PIXI.Sprite(texture);
-    sprite1.scale.x = 0.7;
-    sprite1.scale.y = 0.47;
+    sprite1.scale.x = 0.3;
+    sprite1.scale.y = 0.24;
     app.stage.addChild(sprite1);
     app.stage.addChild(game.controller.view);
 
