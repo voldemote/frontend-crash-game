@@ -3,8 +3,8 @@
 .baseContainer {
   position: relative;
   min-height: 100%;
-  padding-bottom: 50px;
   overflow: hidden;
+  padding-bottom: 40px;
 
   &.baseContainerWithPaddingTop {
     padding-top: 150px;
@@ -29,15 +29,16 @@
   &.baseContainerWithPaddingBottomZero {
     padding-bottom: 0;
   }
-  .bottomBg {
-    z-index: -1;
-    position: absolute;
-    width: 100%;
-    height: 1000px;
+  .background {
+    left: 0;
+    right: 0;
     bottom: 0;
-    background: url('../../data/backgrounds/footer-bg.png');
+    z-index: -3;
+    position: absolute;
+    min-height: 100%;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
+    background-image: url('../../data/backgrounds/alpaca-main-bg.png');
   }
 }

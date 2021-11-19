@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
-//import * as ApiUser from 'api/crash-game';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
-import PlaceBetRoulette from 'components/PlaceBetRoulette';
+import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/RouletteGameAnimation';
@@ -27,9 +26,7 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
-import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from '../../components/TabOptions';
-import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
@@ -39,6 +36,7 @@ import {
   trackAlpacaWheelCashout,
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
+import EventActivitiesTabs from 'components/EventActivitiesTabs'
 
 const RouletteGame = ({
   showPopup,
@@ -59,8 +57,6 @@ const RouletteGame = ({
     cashedOut,
     hasStarted,
     isEndgame,
-    highData,
-    luckyData,
   } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
@@ -71,12 +67,7 @@ const RouletteGame = ({
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
-  const [activityTabIndex, setActivityTabIndex] = useState(0);
-  const activityTabOptions = [
-    { name: 'ACTIVITIES', index: 0 },
-    { name: 'HIGH WINS', index: 1 },
-    { name: 'LUCKY WINS', index: 2 },
-  ];
+
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
@@ -110,9 +101,6 @@ const RouletteGame = ({
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
-    refreshHighData();
-    refreshLuckyData();
-
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -127,30 +115,19 @@ const RouletteGame = ({
     setChatTabIndex(option.index);
   };
 
-  const handleActivitySwitchTab = ({ index }) => {
-    switch (index) {
-      case 1: // high wins
-        refreshHighData();
-        break;
-      case 2: // lucky wins
-        refreshLuckyData();
-        break;
-    }
-    setActivityTabIndex(index);
-  }
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
         setBet({...payload })
-        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
       } else {
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data});
         updateUserBalance(userId);
-        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
+        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
         return data;
       }
     } catch (e) {
@@ -164,38 +141,11 @@ const RouletteGame = ({
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
-      <div className={styles.activityWrapper}>
-        <TabOptions options={activityTabOptions} className={styles.tabLayout}>
-          {option => (
-            <div
-              className={
-                option.index === activityTabIndex
-                  ? styles.tabItemSelected
-                  : styles.tabItem
-              }
-              onClick={() => handleActivitySwitchTab(option)}
-            >
-              {option.name}
-            </div>
-          )}
-        </TabOptions>
-        <div className={styles.activityContainer}>
-          {activityTabIndex === 0 && (
-            <EventActivitiesTracker
-              activitiesLimit={50}
-              className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'game'}
-              gameId={GAME_TYPE_ID}
-            />
-          )}
-          {activityTabIndex !== 0 && (
-            <ActivityTable
-              rowData={activityTabIndex === 1 ? highData : luckyData}
-              gameLabel={getGameById(GAME_TYPE_ID)?.name || 'Game'}
-            />
-          )}
-        </div>
-      </div>
+      <EventActivitiesTabs
+        activitiesLimit={50}
+        className={styles.activitiesTrackerGamesBlock}
+        preselectedCategory={'game'}
+        gameId={GAME_TYPE_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -255,6 +205,7 @@ const RouletteGame = ({
   const handleNewSpin = (newSpin)=> {
     setSpins([newSpin, ...spins])
   }
+  console.log("bet", bet)
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -296,7 +247,7 @@ const RouletteGame = ({
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBetRoulette
+                <PlaceBetCasino
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}
@@ -317,7 +268,7 @@ const RouletteGame = ({
             </div>
           ) : null}
           {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-          
+
         </div>
       </div>
     </BaseContainerWithNavbar>

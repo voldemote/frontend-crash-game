@@ -55,7 +55,7 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
   };
 
   return (
-    <div className={styles.welcomeContainer}>
+    <div className={styles.welcomeContainer} onClick={goToJoinPage}>
       <span className={styles.welcomeConfettiRight}>
         <Icon iconType={IconType.confettiRight} iconTheme={null} />
       </span>

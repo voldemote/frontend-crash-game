@@ -103,7 +103,8 @@
       .placeContainer {
         display: flex;
         flex-direction: column;
-        height: 596px;
+        /*height: 596px;*/
+        height: fit-content;
         @media (max-width: $screen-md) {
           height: 100%;
         }

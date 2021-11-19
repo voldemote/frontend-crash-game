@@ -6,6 +6,7 @@ import medalCoin from '../../data/icons/medal-coin.png';
 import { toNumericString } from 'helper/FormatNumbers';
 import classNames from 'classnames';
 import { GAMES } from 'constants/Games';
+import { roundToTwo } from '../../helper/FormatNumbers';
 
 const UserLink = props => {
   const { userId, username } = props;
@@ -21,60 +22,42 @@ const UserLink = props => {
   );
 };
 
-const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false }) => {
+const extractNumber = (data) => {
+  if(!data || Number.isNaN(data)) return 0;
+  if(typeof data == "string") {
+    data = data.indexOf(',') > -1 ?  data.replace(',','') : data;
+    return Number.parseFloat(data);
+  } else return data;
+}
+
+const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false, layout = 'compact'}) => {
+  const layoutCss = layout === 'compact' ? styles.compact : null;
   gameLabel = gameLabel ?? (Object.values(GAMES).find(g => g.id.indexOf(data.gameId) > -1))?.name ?? "Game";
   const {
     userId,
     username,
-    stakedAmount: stakedAmountRaw,
-    rewardAmount: rewardAmountRaw,
+    stakedAmount,
+    rewardAmount,
     crashFactor,
   } = data;
-  const stakedAmount = Number.parseInt(stakedAmountRaw);
-  const rewardAmount = Number.parseInt(rewardAmountRaw);
+  const stakedAmountNum = Math.round(extractNumber(stakedAmount));
+  const rewardAmountNum = Math.round(extractNumber(rewardAmount));
+  const crashFactorStr = roundToTwo(extractNumber(crashFactor));
+  const stakedAmountStr = toNumericString(stakedAmountNum);
+  const rewardAmountStr = toNumericString(rewardAmountNum);
+  const lostAmountStr = toNumericString(stakedAmountNum - rewardAmountNum);
+  if(rewardAmountNum<stakedAmountNum) type = 'lost'
+  else type = 'win';
   return (
-    <div className={styles.messageItem}>
-      {type === 'lost' ? (
-        <Grid container>
+    <div className={classNames(styles.messageItem, layoutCss)}>
+        <Grid container className={styles.flexContainer}>
           <Grid item xs>
             <div className={classNames(styles.messageFirst, styles.messageLeft)}>
               <p>{gameLabel}</p>
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
-              <p>{userId}</p>
-            </div>
-          </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={classNames(styles.messageCenter)}>
-              {toNumericString(stakedAmount)} {TOKEN_NAME}
-              <img src={medalCoin} alt="medal" />
-            </div>
-          </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
-            </div>
-          </Grid>
-          <Grid item xs >
-            <div className={classNames(styles.messageLast, styles.messageRight)}>
-              <p className={'global-cashout-loss'}>
-                -{toNumericString(stakedAmount)} {TOKEN_NAME}
-              </p>
-              <img src={medalCoin} alt="medal" />
-            </div>
-          </Grid>
-        </Grid>
-      ) : (
-        <Grid container>
-          <Grid item xs>
-            <div className={classNames(styles.messageFirst, styles.messageLeft)}>
-              <p>{gameLabel}</p>
-            </div>
-          </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
+            <div className={styles.messageLeft}>
               <p>
                 {username ? (
                   <UserLink userId={userId} username={username} />
@@ -85,26 +68,27 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false 
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
-            <div className={styles.messageCenter}>
-              {toNumericString(stakedAmount)} {TOKEN_NAME}
+            <div className={styles.messageRight}>
+              <p>{stakedAmountStr} {TOKEN_NAME}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{crashFactorStr}x</p>
             </div>
           </Grid>
           <Grid item xs>
             <div className={classNames(styles.messageLast, styles.messageRight)}>
-              <p className={styles.reward}>
-                {toNumericString(rewardAmount)} {TOKEN_NAME}
-              </p>
+              {type==='lost' ? (
+                  <p className={'global-cashout-loss'}>-{lostAmountStr} {TOKEN_NAME}</p>
+                ):(
+                  <p className={styles.reward}>{rewardAmountStr} {TOKEN_NAME}</p>
+                )}
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
         </Grid>
-      )}
     </div>
   );
 };

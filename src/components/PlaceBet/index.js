@@ -33,6 +33,8 @@ import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/util
 import {
   trackElonChangeAutoCashout,
   trackElonPlaceBetGuest,
+  trackElonStartAutobet,
+  trackElonStopAutobet,
 } from '../../config/gtm';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
@@ -55,6 +57,14 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const gameOffline = useSelector(selectGameOffline);
+  const [profit, setProfit] = useState(0);
+  const [loss, setLoss] = useState(0);
+  const [wincrease, setWincrease] = useState(0)
+  const [lincrease, setLincrease] = useState(0)
+  const [lossbutton, setLossbutton] = useState(false)
+  const [winbutton, setWinbutton] = useState(false)
+  const [autobet, setAutobet] = useState(null)
+  const [betted, setBetted] = useState(false)
 
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
@@ -134,6 +144,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
   useEffect(() => {
     setAnimate(false);
+    if(isGameRunning) setBetted(false)
   }, [isGameRunning]);
 
   useEffect(() => {
@@ -153,7 +164,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         clearInterval(intervalId);
       }
     };
-
+    //multiple
     if (!userPlacedABet || !isGameRunning || userCashedOut) return;
     if (userPlacedABet && isGameRunning) {
       intervalId = setInterval(tick, intervalTime);
@@ -161,15 +172,78 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     }
   }, [isGameRunning, crashFactor, userCashedOut]);
 
+  useEffect(() => {
+    if(!isGameRunning && autobet && !betted){
+      const newautobet = {
+        ...autobet,
+        amount: parseInt(autobet.amount*(autobet.win ? 1+autobet.wincrease : 1+autobet.lincrease))
+      }
+      console.log("newautobet", newautobet)
+      if(newautobet.profit > newautobet.accumulated && newautobet.loss > -newautobet.accumulated){
+        console.log("1")
+        setBetted(true)
+        setAutobet({...newautobet, accumulated: autobet.accumulated - newautobet.amount })
+        onBet(newautobet, newautobet.crashFactor);
+      }else{
+        console.log("2")
+        setAutobet(null)
+      }
+
+    }
+  }, [isGameRunning, betted, autobet]);
+  console.log("isGameRunning")
+  const stopAutobet = () => {
+
+    const payload = {
+      amount,
+      autobet: 1,
+      profit: Number(profit),
+      loss: Number(loss),
+      wincrease: winbutton?0:Number(wincrease)/100,
+      lincrease: lossbutton?0:Number(lincrease)/100,
+      multiplier: crashFactor,
+      accumulated: autobet.accumulated
+    };
+
+    trackElonStopAutobet({...payload});
+    setAutobet(null)
+  };
+
   const placeABet = () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
+
     const payload = {
       amount,
       crashFactor: 999,
     };
     onBet(payload, crashFactor);
   };
+  const placeAutoBet = async () => {
+    if (userUnableToBet) return;
+    if (amount > userBalance) return;
+    const payload = {
+      amount,
+      accumulated: -amount,
+      autobet: true,
+      profit: Number(profit),
+      loss: Number(loss),
+      wincrease: winbutton?0:Number(wincrease)/100,
+      lincrease: lossbutton?0:Number(lincrease)/100,
+      crashFactor: 999,
+    };
+
+    trackElonStartAutobet({
+      ...payload,
+      autobet: 1,
+      multiplier: crashFactor, 
+    });
+    console.log("placeAutoBet")
+    setAutobet(payload)
+    setBetted(true)
+    onBet(payload, payload.crashFactor);
+  };
+
 
   const cancelBet = e => {
     e.preventDefault();
@@ -209,7 +283,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const cashOut = async () => {
     setCanBet(false);
     dispatch(RosiGameActions.cashOut());
-    const response = await onCashout();
+    const response = await onCashout(false, autobet);
+    autobet && setAutobet({...autobet, accumulated: autobet.accumulated + response.data.reward, win: true})
     setAnimate(true);
   };
 
@@ -238,27 +313,45 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   };
 
   const renderButton = () => {
-    if (displayBetButton) {
+    if(autobet){
       return (
-        <span
-          role="button"
-          tabIndex="0"
-          className={classNames(styles.button, {
-            [styles.buttonDisabled]:
-              !connected ||
-              userUnableToBet ||
-              isBetInQueue ||
-              (amount > userBalance && user.isLoggedIn),
-            [styles.notConnected]: !connected,
-          })}
-          onClick={user.isLoggedIn ? placeABet : placeGuestBet}
-          data-tracking-id={
-            user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
-          }
-        >
-          {user.isLoggedIn ? 'Place Bet' : 'Play Demo'}
-        </span>
+        <>
+          <span
+            role="button"
+            tabIndex="0"
+            className={classNames(styles.button, styles.cancel)}
+            onClick={stopAutobet}
+            data-tracking-id={
+              user.isLoggedIn ? null : 'elongame-showloginpopup'
+            }
+          >
+            {user.isLoggedIn ? 'Stop Auto Bet' : 'Stop Auto Bet'}
+          </span>
+        </>
       );
+    }else if (displayBetButton) {
+    //  else{
+        return (
+          <span
+            role="button"
+            tabIndex="0"
+            className={classNames(styles.button, {
+              [styles.buttonDisabled]:
+                !connected ||
+                userUnableToBet ||
+                isBetInQueue ||
+                (amount > userBalance && user.isLoggedIn),
+              [styles.notConnected]: !connected,
+            })}
+            onClick={user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet}
+            data-tracking-id={
+              user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
+            }
+          >
+            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
+          </span>
+        );
+    //  }
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
       return (
         <>
@@ -335,7 +428,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const renderProfit = () => {
     if (userPlacedABet && isGameRunning) {
       return (
-        <div className={styles.profit}>
+        <div className={styles.profit} style={{bottom: 0}}>
           <Timer
             showIncome
             pause={!isGameRunning}
@@ -351,6 +444,22 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       );
     }
   };
+
+  const [selector, setSelector] = useState('manual')
+
+  const switchButton = () => {
+    return (
+      <div className={styles.selector}>
+        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '48.3%' }}></span>
+        <div className={classNames(styles.tab)} onClick={() => {setSelector('manual'); setAutobet(null)}} >
+          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
+        </div>
+        <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
+          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
+        </div>
+      </div>
+    )
+  }
 
   const canvasStyles = {
     position: 'fixed',
@@ -373,7 +482,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       />
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
-          <h2 className={styles.placebidTitle}>Place Bet</h2>
+          {switchButton(styles)}
           <InfoBox iconType={IconType.info} position={`bottomLeft`}>
             <p>
               <strong>How to place a bet at Elon Game?</strong>
@@ -405,31 +514,122 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             </p>
           </InfoBox>
         </div>
-        <div className={styles.sliderContainer}>
-          <label className={styles.label}>Bet Amount</label>
-          {user?.isLoggedIn ? (
-            <TokenNumberInput
-              value={amount}
-              currency={user?.currency}
-              setValue={onTokenNumberChange}
-              minValue={1}
-              decimalPlaces={0}
-              maxValue={formatToFixed(
-                user.balance > 10000 ? 10000 : user.balance
-              )}
-              dataTrackingIds={{
-                inputFieldHalf: 'elongame-input-field-half',
-                inputFieldDouble: 'elongame-event-input-field-double',
-                inputFieldAllIn: 'elongame-event-input-field-allin',
-              }}
-            />
-          ) : (
-            <div
-              className={classNames(
-                styles.cashedOutInputContainer,
-                styles.demoInput
-              )}
-            >
+        {selector === 'manual' ?
+          <div className={styles.sliderContainer}>
+            <label className={styles.label}>Bet Amount</label>
+            {user?.isLoggedIn ? (
+              <TokenNumberInput
+                value={amount}
+                currency={user?.currency}
+                setValue={onTokenNumberChange}
+                minValue={1}
+                decimalPlaces={0}
+                maxValue={formatToFixed(
+                  user.balance > 10000 ? 10000 : user.balance
+                )}
+                dataTrackingIds={{
+                  inputFieldHalf: 'elongame-input-field-half',
+                  inputFieldDouble: 'elongame-event-input-field-double',
+                  inputFieldAllIn: 'elongame-event-input-field-allin',
+                }}
+              />
+            ) : (
+              <div
+                className={classNames(
+                  styles.cashedOutInputContainer,
+                  styles.demoInput
+                )}
+              >
+                <Input
+                  className={classNames(styles.input)}
+                  type={'number'}
+                  value={amount}
+                  onChange={onGuestAmountChange}
+                  step={0.01}
+                  min="1"
+                  max={'10000'}
+                />
+                <span className={styles.eventTokenLabel}>
+                  <span>{TOKEN_NAME}</span>
+                </span>
+                <div className={styles.buttonWrapper}>
+                  <span
+                    className={styles.buttonItem}
+                    onClick={() => onBetAmountChanged(0.5)}
+                  >
+                    ½
+                  </span>
+                  <span
+                    className={styles.buttonItem}
+                    onClick={() => onBetAmountChanged(2)}
+                  >
+                    2x
+                  </span>
+                  <span
+                    className={styles.buttonItem}
+                    onClick={() => setAmount(10000)}
+                  >
+                    Max
+                  </span>
+                </div>
+              </div>
+            )}
+            <div className={styles.inputContainer}>
+              <label
+                className={classNames(
+                  styles.label,
+                  showCashoutWarning ? styles.warning : null
+                )}
+              >
+                Attempt Auto Cashout at
+              </label>
+              <div
+                className={classNames(
+                  styles.cashedOutInputContainer,
+                  showCashoutWarning ? styles.warning : null
+                )}
+              >
+                <Input
+                  className={styles.input}
+                  type={'text'}
+                  value={crashFactor}
+                  onChange={onCrashFactorChange}
+                  onBlur={onCrashFactorLostFocus}
+                  min="1"
+                  pattern={/^[^0-9.]+/}
+                />
+                <span className={styles.eventTokenLabel}>
+                  <span>×</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        :
+          <div className={styles.sliderContainer}>
+            <label className={styles.label}>Bet Amount</label>
+            {user?.isLoggedIn ? (
+              <TokenNumberInput
+                value={amount}
+                currency={user?.currency}
+                setValue={onTokenNumberChange}
+                minValue={1}
+                decimalPlaces={0}
+                maxValue={formatToFixed(
+                  user.balance > 10000 ? 10000 : user.balance
+                )}
+                dataTrackingIds={{
+                  inputFieldHalf: 'elongame-input-field-half',
+                  inputFieldDouble: 'elongame-event-input-field-double',
+                  inputFieldAllIn: 'elongame-event-input-field-allin',
+                }}
+              />
+            ) : (
+              <div
+                className={classNames(
+                  styles.cashedOutInputContainer,
+                  styles.demoInput
+                )}
+              >
               <Input
                 className={classNames(styles.input)}
                 type={'number'}
@@ -462,38 +662,175 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                   Max
                 </span>
               </div>
+
+
+              </div>
+            )}
+            <div className={styles.inputContainer}>
+              <label
+                className={classNames(
+                  styles.label,
+                  showCashoutWarning ? styles.warning : null
+                )}
+              >
+                Attempt Auto Cashout at
+              </label>
+              <div
+                className={classNames(
+                  styles.cashedOutInputContainer,
+                  showCashoutWarning ? styles.warning : null
+                )}
+              >
+                <Input
+                  className={styles.input}
+                  type={'text'}
+                  value={crashFactor}
+                  onChange={onCrashFactorChange}
+                  onBlur={onCrashFactorLostFocus}
+                  min="1"
+                  pattern={/^[^0-9.]+/}
+                />
+                <span className={styles.eventTokenLabel}>
+                  <span>×</span>
+                </span>
+              </div>
             </div>
-          )}
-          <div className={styles.inputContainer}>
+            <div className={styles.inputContainer}>
+              <label
+                className={classNames(
+                  styles.label,
+                )}
+              >
+                Stop on Profit
+              </label>
+              <div
+                className={classNames(
+                  styles.cashedOutInputContainer,
+                  styles.demoInput
+                )}
+              >
+                <Input
+                  className={classNames(styles.input)}
+                  type={'number'}
+                  value={profit}
+                  onChange={(e) => setProfit(e.target.value)}
+                  step={1}
+                  min="1"
+                  max={'100'}
+                />
+                <span className={styles.eventTokenLabel}>
+                  <span>PFAIR</span>
+                </span>
+
+              </div>
+            </div>
             <label
               className={classNames(
                 styles.label,
-                showCashoutWarning ? styles.warning : null
               )}
             >
-              Attempt Auto Cashout at
+              Stop on Loss
             </label>
             <div
               className={classNames(
                 styles.cashedOutInputContainer,
-                showCashoutWarning ? styles.warning : null
+                styles.demoInput
               )}
             >
               <Input
-                className={styles.input}
-                type={'text'}
-                value={crashFactor}
-                onChange={onCrashFactorChange}
-                onBlur={onCrashFactorLostFocus}
+                className={classNames(styles.input)}
+                type={'number'}
+                value={loss}
+                onChange={(e) => setLoss(e.target.value)}
+                step={1}
                 min="1"
-                pattern={/^[^0-9.]+/}
+                max={'100'}
               />
               <span className={styles.eventTokenLabel}>
-                <span>×</span>
+                <span>PFAIR</span>
+              </span>
+            </div>
+            <label
+              className={classNames(
+                styles.label,
+              )}
+            >
+              On Win
+            </label>
+            <div
+              className={classNames(
+                styles.cashedOutInputContainer,
+                styles.demoInput
+              )}
+            >
+              <div className={styles.toggleButton}>
+                <span className={styles.toggleLabel} style={{ marginLeft: winbutton ? 1 : '44.2%', width: !winbutton && '55%'}}></span>
+                <span
+                  className={classNames(styles.buttonItem, winbutton && styles.selected)}
+                  onClick={() => setWinbutton(true)}>
+                  Reset
+                </span>
+                <span
+                  className={classNames(styles.buttonItem, !winbutton && styles.selected)}
+                  onClick={() => setWinbutton(false)}>
+                  Increase
+                </span>
+              </div>
+              <Input
+                className={classNames(styles.input)}
+                type={'number'}
+                value={wincrease}
+                onChange={(e) => setWincrease(e.target.value)}
+                step={1}
+                min="0"
+                max={'100'}
+              />
+              <span className={styles.eventTokenLabel}>
+                <span>%</span>
+              </span>
+
+            </div>
+            <label
+              className={classNames(
+                styles.label,
+              )}
+            >
+              On Loss
+            </label>
+            <div
+              className={classNames(
+                styles.cashedOutInputContainer,
+                styles.demoInput
+              )}
+            >
+            <div className={styles.toggleButton}>
+            <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
+              <span                  
+                className={classNames(styles.buttonItem, lossbutton && styles.selected)}
+                onClick={() => setLossbutton(true)}>
+                Reset
+              </span>
+              <span                  
+                className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
+                onClick={() => setLossbutton(false)}>
+                Increase
+              </span>
+            </div>
+              <Input
+                className={classNames(styles.input)}
+                type={'number'}
+                value={lincrease}
+                onChange={(e) => setLincrease(e.target.value)}
+                step={1}
+                min="0"
+                max={'100'}
+              />
+              <span className={styles.eventTokenLabel}>
+                <span>%</span>
               </span>
             </div>
           </div>
-        </div>
+        }
       </div>
       {showCashoutWarning ? (
         <div className={styles.error}>
@@ -517,6 +854,23 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         multiline
         className={styles.tooltip}
       />
+      {autobet &&
+        <>
+          <div className={styles.spinsleft} style={{marginTop: 18}}>
+            <span className={autobet.accumulated > 0 ? styles.reward : styles.lost}>
+            {Math.floor(autobet.accumulated)} PFAIR
+            </span>
+            accumulated
+          </div>
+          <div className={styles.spinsleft}>
+            Current bet:
+            <span className={styles.neutral}>
+            {Math.floor(autobet.amount)} PFAIR
+            </span>
+          </div>
+        </>
+      }
+
       {renderProfit()}
       {renderButton()}
       {renderMessage()}

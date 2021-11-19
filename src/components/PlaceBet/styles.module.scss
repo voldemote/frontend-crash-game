@@ -1,4 +1,93 @@
 @import '../../styles/all';
+.selector {
+  width: 100%; //314px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background: #e72d89;
+  border-radius: 20px;
+  justify-content: flex-start;
+  position: relative;
+  .top {
+    width: 50%; //155px;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 18px;
+    background: #fff;
+    height: 90%;
+    top: 5%;
+    left: 3px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+  }
+  .tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    width: 50%; //208px;
+    img {
+      margin-right: 18px;
+    }
+    span {
+      font-weight: 600;
+      font-style: normal;
+      font-size: 16px;
+      color: #120e27;
+      letter-spacing: 0;
+      z-index: 10;
+    }
+    .selected {
+      color: #000;
+      font-family: $fontBold;
+    }
+    .deselected {
+      color: #fff;
+      font-family: $fontRegular;
+    }
+  }
+}
+.toggleButton {
+  position: absolute;
+  left: 2px;
+  width: 120px;
+  height: 90%;
+  border-radius: 17px;
+  display: flex;
+  background: #e72d89;
+  justify-content: center;
+  align-items: center;
+  .buttonItem {
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 57px;
+    font-size: 12px;
+    color: white;
+    padding: 5px;
+    z-index: 10;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+  .toggleLabel {
+    width: 50%;
+    box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
+    border-radius: 16px;
+    height: 90%;
+    top: 5%;
+    left: 0px;
+    position: absolute;
+    bottom: 0;
+    transition: all 0.5s ease;
+    background: #fff;
+  }
+  .selected {
+    color: #000;
+    font-family: $fontMedium;
+  }
+}
 
 .container {
   position: relative;
@@ -17,7 +106,8 @@
   display: inline-block;
   color: #1f1d38;
   opacity: 0.8;
-  font-size: 14px;
+  font-family: $fontMedium;
+  font-size: 12px;
   letter-spacing: 0;
   text-align: left;
   line-height: 12px;
@@ -127,7 +217,7 @@
     font-family: $fontBold;
     font-style: normal;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 21px;
     line-height: 24px;
     input {
       flex: none;
@@ -141,7 +231,7 @@
       font-family: $fontBold;
       font-style: normal;
       font-weight: bold;
-      font-size: 24px;
+      font-size: 21px;
       line-height: 24px;
 
       &::-webkit-inner-spin-button {
@@ -172,7 +262,7 @@
       text-transform: uppercase;
     }
     @media screen and (max-width: 800px) {
-      display: none;
+      /*display: none;*/
     }
   }
 }
@@ -266,13 +356,32 @@
   position: relative;
   margin-bottom: -20px;
 }
+.spinsleft {
+  margin: 5px;
+  text-align: center;
+  .reward {
+    margin: 3px;
+    color: $colorGreen;
+    font-weight: bold;
+  }
+  .neutral {
+    margin: 3px;
+    font-weight: bold;
+  }
+  .lost {
+    margin: 3px;
+    color: $colorRed;
+    font-weight: bold;
+  }
+}
 
 .cashedOutInputContainer {
   display: flex;
+  position: relative;
   width: 100%;
   align-items: center;
   padding: 10.5px;
-  height: 45px;
+  height: 35px;
   border-radius: 10px;
   border: 1.2px solid rgba(14, 9, 39, 0.3);
   background: none;
@@ -298,7 +407,7 @@
     font-family: $fontBold;
     font-style: normal;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 21px;
     line-height: 24px;
 
     &::-webkit-inner-spin-button {
@@ -313,9 +422,9 @@
   }
 
   .eventTokenLabel {
-    color: $colorGrayLight1;
+    color: #000;
     font-family: $fontRegular;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
@@ -354,7 +463,7 @@
   padding-right: 1rem;
   .eventTokenLabel {
     span {
-      font-size: 20px;
+      font-size: 16px;
     }
   }
 }

@@ -14,7 +14,6 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
-import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 import Share from '../../components/Share';
@@ -23,9 +22,6 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
-import EventActivitiesTracker from '../../components/EventActivitiesTracker';
-import TabOptions from '../../components/TabOptions';
-import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import {
   trackElonCancelBet,
   trackElonCashout,
@@ -35,14 +31,13 @@ import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
 import PumpDumpAnimation from '../../components/PumpDumpAnimation';
-import { getGameById } from '../../helper/Games';
+import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import TabOptions from 'components/TabOptions';
 
 const RosiGame = ({
   showPopup,
   connected,
   userId,
-  refreshHighData,
-  refreshLuckyData,
   path,
   token,
 }) => {
@@ -53,20 +48,12 @@ const RosiGame = ({
     cashedOut,
     hasStarted,
     isEndgame,
-    highData,
-    luckyData,
   } = useRosiData();
   const { slug } = useParams();
   const [audio, setAudio] = useState(null);
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
-  const [activityTabIndex, setActivityTabIndex] = useState(0);
-  const activityTabOptions = [
-    { name: 'ACTIVITIES', index: 0 },
-    { name: 'HIGH WINS', index: 1 },
-    { name: 'LUCKY WINS', index: 2 },
-  ];
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
@@ -87,12 +74,6 @@ const RosiGame = ({
         dispatch(AlertActions.showError(error.message));
       });
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
-    refreshHighData({
-      gameId: GAME_TYPE_ID,
-    });
-    refreshLuckyData({
-      gameId: GAME_TYPE_ID,
-    });
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -123,28 +104,13 @@ const RosiGame = ({
     setChatTabIndex(option.index);
   };
 
-  const handleActivitySwitchTab = ({ index }) => {
-    switch (index) {
-      case 1: // high wins
-        refreshHighData({
-          gameId: GAME_TYPE_ID,
-        });
-        break;
-      case 2: // lucky wins
-        refreshLuckyData({
-          gameId: GAME_TYPE_ID,
-        });
-        break;
-    }
-    setActivityTabIndex(index);
-  };
-
   async function handleBet(payload, crashFactor) {
     audio.playBetSound();
     if (!payload) return;
     try {
       const result = await Api.createTrade(payload);
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
+      console.log("result", result)
+      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
       dispatch(RosiGameActions.setUserBet(payload));
       return result;
     } catch (e) {
@@ -171,7 +137,7 @@ const RosiGame = ({
       });
   }
 
-  async function handleCashout(isGuest) {
+  async function handleCashout(isGuest, autobet) {
     audio.playWinSound();
     if (isGuest) return;
     try {
@@ -181,6 +147,8 @@ const RosiGame = ({
       trackElonCashout({
         amount: reward,
         multiplier: parseFloat(crashFactorCashout),
+        autobet: autobet != null ? 1 : 0,
+        accumulated: autobet?.accumulated,
       });
       AlertActions.showSuccess(JSON.stringify(response));
 
@@ -196,38 +164,11 @@ const RosiGame = ({
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
-      <div className={styles.activityWrapper}>
-        <TabOptions options={activityTabOptions} className={styles.tabLayout}>
-          {option => (
-            <div
-              className={
-                option.index === activityTabIndex
-                  ? styles.tabItemSelected
-                  : styles.tabItem
-              }
-              onClick={() => handleActivitySwitchTab(option)}
-            >
-              {option.name}
-            </div>
-          )}
-        </TabOptions>
-        <div className={styles.activityContainer}>
-          {activityTabIndex === 0 && (
-            <EventActivitiesTracker
+      <EventActivitiesTabs
               activitiesLimit={50}
               className={styles.activitiesTrackerGamesBlock}
               preselectedCategory={'game'}
-              gameId={GAME_TYPE_ID}
-            />
-          )}
-          {activityTabIndex !== 0 && (
-            <ActivityTable
-              rowData={activityTabIndex === 1 ? highData : luckyData}
-              gameLabel={getGameById(GAME_TYPE_ID)?.name || 'Game'}
-            />
-          )}
-        </div>
-      </div>
+              gameId={GAME_TYPE_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -347,7 +288,7 @@ const RosiGame = ({
             </div>
           ) : null}
           {renderWallpaperBanner()}
-          
+
         </div>
       </div>
     </BaseContainerWithNavbar>
@@ -365,8 +306,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    refreshHighData: data => dispatch(RosiGameActions.fetchHighData(data)),
-    refreshLuckyData: data => dispatch(RosiGameActions.fetchLuckyData(data)),
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },
