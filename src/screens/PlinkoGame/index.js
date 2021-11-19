@@ -67,30 +67,26 @@ const PlinkoGame = ({
 
 
   useEffect(() => {
-    /*
     getSpinsAlpacaWheel(PLINKO_GAME_EVENT_ID)
       .then(response => {
-        console.log("response", response)
         const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin)=> {
+        setSpins(lastSpins.map((spin) => {
           if(spin.profit > 0) {
             return {
               type: 'win',
               value: '+' + spin.profit
-            };
+            }
           } else {
             return {
               type: 'loss',
               value: spin.profit
-            };
+            }
           }
         }))
-
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-      */
 
   }, [])
 
@@ -112,6 +108,7 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
+
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
@@ -122,6 +119,10 @@ const PlinkoGame = ({
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
+        const spin = data.profit > 0 ?
+          { type: 'win', value: '+' + data.profit }:
+          { type: 'loss', value: data.profit}
+        setSpins((spins) => [spin].concat(spins))
         setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
         updateUserBalance(userId);
         //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
@@ -199,7 +200,7 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              {false && <Spins text="My Spins" spins={spins} />}
+              <Spins text="My Games" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>

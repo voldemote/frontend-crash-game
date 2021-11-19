@@ -38,7 +38,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
 
   useEffect(() => {
     if(ballValue) {
-      launchBall(ballValue, brightBasket, nball, boardref)
+      launchBall(ballValue, brightBasket, nball, boardref, audio)
       setNball(nball+1)
       setBall(null)
     }
@@ -68,7 +68,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   )
 }
 
-const launchBall = (ballValue, onBuscket, nball, boardref) => {
+const launchBall = (ballValue, onBuscket, nball, boardref, audio) => {
   let ball1 = document.createElement('div')
   ball1.setAttribute("id", `ball-${nball}`);
   ball1.setAttribute("class", styles.ball)
@@ -79,7 +79,7 @@ const launchBall = (ballValue, onBuscket, nball, boardref) => {
     let index = 0
     for(let direction of ballValue.path){
       setTimeout(() => {
-        moveBall(direction, `ball-${nball}`)
+        moveBall(direction, `ball-${nball}`, audio)
       }, (index*350))
       index++
     }
@@ -92,7 +92,7 @@ const launchBall = (ballValue, onBuscket, nball, boardref) => {
 const getXBall = (ball) => parseInt( document.getElementById(ball).style.transform.split("(")[1].split(", ")[0].replace("px",""))
 const getYBall = (ball) => parseInt(document.getElementById(ball).style.transform.split("(")[1].split(", ")[1].replace("px",""))
 
-function moveBall(direction, ball) {
+function moveBall(direction, ball, audio) {
   setTimeout(() => {
     const x = getXBall(ball), y = getYBall(ball)
     const rotate = direction === 1 ? '0deg' : '0deg'
@@ -106,6 +106,8 @@ function moveBall(direction, ball) {
     document.getElementById(ball).style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
     }, 100)
   setTimeout(() => {
+    console.log("tick")
+    audio.playTick()
     const x = getXBall(ball), y = getYBall(ball)
     const rotate = direction === 1 ? '360deg' : '-360deg'
     document.getElementById(ball).style.transform = `translate(${x}px, ${y+row/2+1}px) rotate(${rotate})`;
