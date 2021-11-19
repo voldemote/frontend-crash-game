@@ -13,7 +13,6 @@ import Spins from 'components/Spins';
 import GameAnimation from 'components/MinesGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
@@ -29,13 +28,9 @@ import TabOptions from '../../components/TabOptions';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
-import {
-  trackAlpacaWheelPlaceBetGuest,
-  trackAlpacaWheelPlaceBet,
-  trackAlpacaWheelCashout,
-} from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import {getLastCashoutsMines} from "../../api/casino-games";
 
 const Game = ({
   showPopup,
@@ -57,7 +52,7 @@ const Game = ({
     isEndgame,
   } = useRosiData();
   const [audio, setAudio] = useState(null);
-  const [spins, setSpins] = useState([]);
+  const [cashouts, setCashouts] = useState([]);
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({pending: true});
   const [amount, setAmount] = useState(50);
@@ -71,29 +66,29 @@ const Game = ({
   }, []);
 
 
-
   useEffect(() => {
-    getSpinsAlpacaWheel(GAME_TYPE_ID)
-      .then(response => {
-        const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin)=> {
-          if(spin.profit > 0) {
-            return {
-              type: 'win',
-              value: '+' + spin.profit
-            };
-          } else {
-            return {
-              type: 'loss',
-              value: spin.profit
-            };
-          }
-        }))
-
-      })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
-      });
+    console.log('[MINES] GET LAST CASHOUTS');
+    // getLastCashoutsMines(GAME_TYPE_ID)
+    //   .then(response => {
+    //     const lastCashouts = response?.data.lastCrashes;
+    //     setCashouts(lastCashouts.map((spin)=> {
+    //       if(spin.profit > 0) {
+    //         return {
+    //           type: 'win',
+    //           value: '+' + spin.profit
+    //         };
+    //       } else {
+    //         return {
+    //           type: 'loss',
+    //           value: spin.profit
+    //         };
+    //       }
+    //     }))
+    //
+    //   })
+    //   .catch(error => {
+    //     dispatch(AlertActions.showError(error.message));
+    //   });
 
   }, [])
 
@@ -114,7 +109,7 @@ const Game = ({
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradeMines(payload);
-        console.log('data', data);
+        console.log('[MINES handleBet] data', data);
 
         // setBet({...payload, ...data});
         // updateUserBalance(userId);
@@ -194,8 +189,8 @@ const Game = ({
   };
 
 
-  const handleNewSpin = (newSpin)=> {
-    setSpins([newSpin, ...spins])
+  const handleNewGameHistory = (cashout)=> {
+    setCashouts([cashout, ...cashouts])
   }
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -226,7 +221,7 @@ const Game = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={handleNewSpin}
+                setCashouts={handleNewGameHistory}
                 inGameBets={inGameBets}
                 risk={risk}
                 bet={bet}
@@ -234,7 +229,7 @@ const Game = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Cashouts" spins={spins} />
+              <Spins text="My Cashouts" cashouts={cashouts} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
