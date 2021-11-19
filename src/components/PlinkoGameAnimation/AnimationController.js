@@ -9,6 +9,9 @@ const outcomesByRisk = [
   [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
   [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
 ]
+const formatk = (num) => {
+  return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+}
 
 export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, onLose, start, setStart, audio}) => {
 
@@ -17,9 +20,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
   }, [])
   const [outcomes, setOutcomes] = useState(prevOutcomes);
   const [nball, setNball] = useState(0);
-
   const boardref = useRef(null);
-
   const brightBasket = (winMultiplier) => {
     const right = ballValue.path.filter(n=>n==1).length >= ballValue.path.length/2
     const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
@@ -34,11 +35,10 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
       }
     }
   }
-
   const setBox = (index) => {
-    setOutcomes(outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: true}:out)}, []))
+    setOutcomes((outcomes) => outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: true}:out)}, []))
     setTimeout(() => {
-      setOutcomes(outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: false}:out)}, []))
+      setOutcomes((outcomes) => outcomes.reduce((outs, out, i) => {return outs.concat(index===i ? {...out, bright: false}:out)}, []))
     }, 2000)
   }
 
@@ -68,7 +68,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
         </div>
       )}
       <div className={styles.boxes}>
-        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
+        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{formatk(box.amount)}</div>)}
       </div>
     </div>
   )

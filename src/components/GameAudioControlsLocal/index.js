@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import classNames from 'classnames';
 
-function GameAudioControlLocals({ audio, muteButtonClick, game }) {
+function GameAudioControlLocals({ audio, game }) {
   const [aud, setAud] = useState(audio.volume);
 
   const onChangeVolume = (event, value) => {
@@ -20,8 +20,7 @@ function GameAudioControlLocals({ audio, muteButtonClick, game }) {
           [styles.low]: audio.volume < 0.5 && audio.volume > 0,
         })}
         onClick={() => {
-          muteButtonClick();
-          audio.volume === 0.0 ? onChangeVolume(null, 100) : onChangeVolume(null, 0)
+          audio.volume == 0.0 ? onChangeVolume(null, 100) : onChangeVolume(null, 0)
         }}
       />
     </div>

@@ -102,7 +102,6 @@ const PlaceBetCasino = ({
     setGame(payload)
     const bet = await onBet(payload)
   };
-  console.log("bet", bet)
 
 
   const placeGuestBet = () => {
@@ -147,7 +146,6 @@ const PlaceBetCasino = ({
       }
     }
   }, [bet])
-
   const cancelBet = e => {
     e.preventDefault();
     e.stopPropagation();
@@ -252,7 +250,7 @@ const PlaceBetCasino = ({
     left: 0,
     zIndex: 999,
   };
-
+  console.log("bet", bet)
   return (
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti
@@ -327,7 +325,7 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
+            <RiskInput disable={bet?.ball>0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
             {gameName!=='plinko' &&<NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={game} />}
           </div>
           :
@@ -395,7 +393,7 @@ const PlaceBetCasino = ({
             )}
             <RiskInput number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
             <StandardInput title={'Stop on Profit'} setValue={setProfit} value={profit} />
-            <StandardInput title={'Stop on Profit'} setValue={setLoss} value={loss} />
+            <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
             <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />
             <ToggleInput title={'On Loss'} setValue={setLincrease} value={lincrease} setToggle={setLossbutton} toggle={lossbutton} />
             {game.autobet &&

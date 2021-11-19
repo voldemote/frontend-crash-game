@@ -90,9 +90,7 @@ const RouletteGameAnimation = ({
   const spin = async () => {
     if (running) return;
     else setRunning(true);
-    console.log("newspin1", bet.winIndex)
     const newspin = await AnimationController.spinTo(bet.winIndex);
-    console.log("newspin", newspin)
     let prepareObj = {};
     if(bet.profit > 0) {
       prepareObj = {
@@ -119,7 +117,7 @@ const RouletteGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}
+        {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
       <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
@@ -135,7 +133,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     muteButtonClick: () => {
-      dispatch(RosiGameActions.muteButtonClick());
     },
   };
 };

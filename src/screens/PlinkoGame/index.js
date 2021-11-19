@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -60,7 +60,7 @@ const PlinkoGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true});
+  const [bet, setBet] = useState({pending: true, ball: 0});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
@@ -75,6 +75,7 @@ const PlinkoGame = ({
   const GAME_TYPE_ID = GAMES.plinko.id;
 
   useEffect(() => {
+    /*
     getSpinsAlpacaWheel(PLINKO_GAME_EVENT_ID)
       .then(response => {
         console.log("response", response)
@@ -97,6 +98,7 @@ const PlinkoGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+      */
 
   }, [])
 
@@ -118,25 +120,23 @@ const PlinkoGame = ({
   const isPopupDisplayed = () => {
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
-
   async function handleBet(payload) {
     audio.playBetSound();
-    console.log("Bet: ", payload)
     if (!payload) return;
     try {
       if(payload.demo) {
         const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
-      /*
+        /*
         let winMultiplier = 6
         for(let number of array){
           number === 1 ? winMultiplier -1 : winMultiplier + 1
-        }*/
-        setBet({...payload, path: array })
+        }
+        */
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
-        console.log("data", data)
-        setBet({...payload, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier});
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
         updateUserBalance(userId);
         //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
         //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
@@ -254,7 +254,7 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              {false && <Spins text="My Spins" spins={spins} />}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
