@@ -352,11 +352,11 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
             </Grid>
           </Grid>
         </div>
-        <div className={styles.bottomContainer}>
+        {/* <div className={styles.bottomContainer}>
           <div className={styles.bottomBox}>
             <p>CREATE YOUR OWN <span className={styles.pink}>ALPACA</span> NOW!</p>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
