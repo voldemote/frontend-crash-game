@@ -188,7 +188,10 @@ class AnimationController {
     // let sections = sectionsArray[this.risk-1];
     /* Create an instance of game, initialize it and set game config */
     const game = new Game();
-    game.initialize();
+    game.initialize({
+      cellClickHandler: options.cellClickHandler,
+      checkSelectedCell: options.checkSelectedCell
+    });
     game.useConfig({gameConfig, gameViewConfig});
 
     /* Create an instance of PIXI.Application. Use the game application config for it */

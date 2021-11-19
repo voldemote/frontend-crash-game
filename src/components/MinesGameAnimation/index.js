@@ -34,6 +34,13 @@ const RouletteGameAnimation = ({
   const [running, setRunning] = useState(false);
   const [audio, setAudio] = useState(null);
 
+  const cellClickHandler = (data) => {
+    console.log('##ON CLICK CELL HANDLER', data);
+  }
+
+  const checkSelectedCell = (data) => {
+    console.log('check selected cell', data);
+  }
 
   useEffect(()=> {
     let audioInstance = null;
@@ -53,8 +60,9 @@ const RouletteGameAnimation = ({
       applicationConfig,
       resourcesConfig,
       gameViewConfig,
-      risk,
-      amount
+      amount,
+      cellClickHandler,
+      checkSelectedCell
     });
     setAudio(audio);
     audioInstance = audio;

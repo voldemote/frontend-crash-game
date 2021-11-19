@@ -9,9 +9,10 @@ export default class Controller extends Emitter {
     this.view = null;
   }
 
-  initialize(model, view) {
+  initialize(model, view, handlers) {
     this.model = model;
     this.view = view;
+    this.handlers = handlers;
   }
 
   useConfig({ gameConfig, gameViewConfig }) {
@@ -56,10 +57,13 @@ export default class Controller extends Emitter {
     this.view.once("restartGame", this.onRestartGame, this);
 
     //this.view.createHeader();
-    this.view.createPopup("start", () => {
-      this.view.resume();
-      this.view.removePopup();
-    });
+    // this.view.createPopup("start", () => {
+    //   this.view.resume();
+    //   this.view.removePopup();
+    // });
+
+    this.view.resume();
+    this.view.removePopup();
   }
 
   onRestartGame() {
@@ -86,9 +90,11 @@ export default class Controller extends Emitter {
 
   /** To react on user interactivity and use engine to calculate game's data,
    *  update model and view */
-  onClickOnCell({ row, col }) {
+  async onClickOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
     const result = Engine.checkSelectedCell(collection, row, col);
+
+    this.handlers.checkSelectedCell(collection, row, col);
 
     this.model.updateCellsData(result);
 

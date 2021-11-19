@@ -13,9 +13,9 @@ export default class Game {
     this.viewResources = null;
   }
 
-  initialize() {
+  initialize(handlers) {
     this.controller = new Controller();
-    this.controller.initialize(new Model(), new View());
+    this.controller.initialize(new Model(), new View(), handlers);
     this.controller.on("restartGame", this.restartGame, this);
   }
 
