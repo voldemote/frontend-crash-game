@@ -82,7 +82,7 @@ export default class Cell extends Factory.Sprite {
     );
     this.revealAnimation.onComplete = () => {
       this.isRevealed = true
-      this.revealAnimation.visible = false
+      //this.revealAnimation.visible = false
       if (this.isMine) {
         this.loseAnimation.visible = true
         this.loseAnimation.x = this.x
@@ -102,7 +102,7 @@ export default class Cell extends Factory.Sprite {
     this.revealAnimation.x = this.x
     this.revealAnimation.y = this.y
     this.parent.addChild(this.revealAnimation)
-    this.revealAnimation.gotoAndPlay(0)
+    this.revealAnimation.gotoAndPlay(10)
   }
 
   toggleFlag(textures) {
