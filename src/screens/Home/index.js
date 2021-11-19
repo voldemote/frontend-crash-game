@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -15,6 +16,13 @@ import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
 import { GeneralActions } from '../../store/actions/general';
+import AuthenticationType from '../../components/Authentication/AuthenticationType';
+import PopupTheme from '../../components/Popup/PopupTheme';
+import WelceomBg from '../../data/images/home/welcome-bg.png';
+import ChipOne from '../../data/images/home/chip-one.png';
+import ChipTwo from '../../data/images/home/chip-two.png';
+import ChipThree from '../../data/images/home/chip-three.png';
+import medalCoin from '../../data/icons/medal-coin.png';
 import SlotGameIconBg from '../../data/images/house-games/title.svg';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
@@ -43,7 +51,7 @@ import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
+const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
@@ -51,6 +59,10 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const [expandFair, setExpandFair] = useState(false);
   const [expandDecentral, setExpandDecentral] = useState(false);
   let urlParams = new URLSearchParams(location.search);
+
+  const isLoggedIn = () => {
+    return authState === LOGGED_IN;
+  };
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -260,6 +272,54 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
     );
   };
 
+  const renderWelcome = () => {
+    const showPopupForUnauthenticated = authenticationType => {
+      if (!isLoggedIn()) {
+        showPopup(PopupTheme.auth, { small: true, authenticationType });
+      }
+    };
+    return (
+      <div className={styles.welcomeContainer}>
+        <div className={styles.cardBox}>
+          <div className={styles.leftSection}>
+            <div className={styles.title}>
+              <div className={styles.leftSection}>
+                <h2>WELCOME TO THE <br/><span class={styles.pink}>ALPACA</span>SINO</h2>
+              </div>              
+            </div>
+            <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <div className={styles.categorySection}>
+              <div className={styles.categoryItem}>
+                <img src={ChipOne} alt="chip-one"/>
+                <span>FAIR</span>
+              </div>
+              <div className={styles.categoryItem}>
+                <img src={ChipTwo} alt="chip-two"/>
+                <span>SOCIAL</span>
+              </div>
+              <div className={styles.categoryItem}>
+                <img src={ChipThree} alt="chip-three"/>
+                <span>DECENTRALISED</span>
+              </div>
+            </div>
+            <div
+              className={styles.pillButton}
+              onClick={() =>
+                showPopupForUnauthenticated(AuthenticationType.register)
+              }>
+              <img src={medalCoin} alt="medal" className={styles.medal} />
+              <p className={styles.rankingText}>
+                TRY NOW
+              </p>
+            </div>
+          </div>
+          <div className={styles.rightSection}>
+            <img src={WelceomBg} alt="" />
+          </div>
+        </div>
+      </div>
+    )
+  }
   const renderAlpacaDopter = () => {
     return (
       <div className={styles.alpacadopter}>
@@ -507,8 +567,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          {renderRosiBanner()}
-          {renderGamesCards()}
+          {!isLoggedIn() && renderWelcome()}
+          {isLoggedIn() && renderRosiBanner()}
+          {isLoggedIn() && renderGamesCards()}
           {renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
@@ -521,6 +582,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
 
 const mapStateToProps = state => {
   return {
+    authState: state.authentication.authState,
     tags: state.event.tags,
     events: state.event.events,
   };
