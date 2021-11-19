@@ -2,14 +2,6 @@ import cn from 'classnames';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
-import {
-  selectHasStarted,
-  selectTimeStarted,
-  selectLastCrash,
-  selectCashedOut,
-  selectNextGameAt,
-} from 'store/selectors/rosi-game';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../RouletteGameAnimation/AnimationController';
@@ -18,7 +10,6 @@ import GameAudioControlsLocal from '../GameAudioControlsLocal';
 
 const PlinkoGameAnimation = ({
   connected,
-  muteButtonClick,
   setSpins,
   amount,
   onInit,
@@ -27,23 +18,14 @@ const PlinkoGameAnimation = ({
   bet
 }) => {
   const dispatch = useDispatch();
-  const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
-  const lastCrashValue = useSelector(selectLastCrash);
-  const cashedOut = useSelector(selectCashedOut);
-  const nextGameAtTimeStamp = useSelector(selectNextGameAt);
 
-  const [running, setRunning] = useState(false);
-  const [isAnimationReady, setAnimationReady] = useState(false);
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
-  const [start, setStart] = useState(false);
+  const [flag, setFlag] = useState(false);
   const [ball, setBall] = useState(null);
-
-  const backgRef = useRef(backg);
-  backgRef.current = backg
 
   useEffect(() => {
     if(backgroundRef) {
@@ -60,40 +42,39 @@ const PlinkoGameAnimation = ({
   },[])
 
   useEffect(() => {
-    if(bet && !bet.pending && bet.path && !running) spin(bet);
+    if(bet && !bet.pending && bet.path) spin(bet);
   }, [bet]);
 
   const spin = async () => {
-    if (running) return;
-    else setRunning(true);
-    setStart(true)
     setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-    setRunning(false);
     !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
   }
 
   const changeBackground = (count) => {
+    if(flag) return
+    else setFlag(true)
+    setBackg((backg) => backg === 2 ? 0 : backg + 1)
     setTimeout(() => {
-      setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
-      count < 30 && changeBackground(count + 1)
+      setBackg((backg) => backg === 2 ? 0 : backg + 1)
+      count < 30 ? changeBackground(count + 1) : setFlag(false)
     }, 100)
   }
 
-  const handleLose = () => {
-    !bet.autobet && setBet((bet)=>{return{...bet, ball: bet.ball-1}})
-    bet.autobet && setBet((bet)=>{return{ball: bet.ball - 1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
+  const handleEnd = (win) => {
+    if(win) {
+      audio.playWinSound()
+      changeBackground(0)
+    } else audio.playLoseSound();
+    bet.autobet ?
+     setBet((bet) => {return{ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
+     setBet((bet) => {return{...bet, ball: bet.ball-1}})
   }
-  const handleWin = () => {
-    setBackg(backgRef.current === 2 ? 0 : backgRef.current + 1)
-    !bet.autobet && setBet((bet)=>{return{...bet, ball: bet.ball-1}})
-    bet.autobet && setBet((bet)=>{return{ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
-    changeBackground(0)
-  }
+
   return (
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
       <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
-      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} start={start} setStart={setStart} onLose={handleLose} onWin={handleWin} width={width} height={height} />}
+      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} />}
     </div>
   );
 };
@@ -104,15 +85,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    muteButtonClick: () => {
-    //  dispatch(RouletteGameAnimation.muteButtonClick());
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlinkoGameAnimation);
+export default connect(mapStateToProps)(PlinkoGameAnimation);

@@ -12,7 +12,6 @@ import Spins from 'components/Spins';
 import GameAnimation from 'components/RouletteGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
@@ -48,16 +47,10 @@ const RouletteGame = ({
   updateUserBalance
 }) => {
   const game = GAMES.alpacaWheel
-  const ROSI_GAME_EVENT_ID = game.id;
+  const ALPACA_WHEEL_GAME_EVENT_ID = game.id;
+
   const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
-  const {
-    lastCrashes,
-    inGameBets,
-    cashedOut,
-    hasStarted,
-    isEndgame,
-  } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
@@ -72,10 +65,9 @@ const RouletteGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
-  const GAME_TYPE_ID = GAMES.alpacaWheel.id;
 
   useEffect(() => {
-    getSpinsAlpacaWheel(GAME_TYPE_ID)
+    getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
         setSpins(lastSpins.map((spin)=> {
@@ -100,16 +92,9 @@ const RouletteGame = ({
   }, [])
 
   useEffect(() => {
-    dispatch(ChatActions.fetchByRoom({ roomId: ROULETTE_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({ roomId: ALPACA_WHEEL_GAME_EVENT_ID }));
   }, [dispatch, connected]);
 
-  //Bets state update interval
-  /*
-  useEffect(() => {
-    const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-*/
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
@@ -145,7 +130,7 @@ const RouletteGame = ({
         activitiesLimit={50}
         className={styles.activitiesTrackerGamesBlock}
         preselectedCategory={'game'}
-        gameId={GAME_TYPE_ID}></EventActivitiesTabs>
+        gameId={ALPACA_WHEEL_GAME_EVENT_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -167,7 +152,7 @@ const RouletteGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROULETTE_GAME_EVENT_ID}
+          roomId={ALPACA_WHEEL_GAME_EVENT_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -175,37 +160,10 @@ const RouletteGame = ({
     </Grid>
   );
 
-  const renderBets = () => (
-    <GameBets
-      label="Cashed Out"
-      bets={[
-        ...inGameBets.map(b => ({
-          ...b,
-          cashedOut: false,
-        })),
-        ...cashedOut.map(b => ({
-          ...b,
-          cashedOut: true,
-        })),
-      ]}
-      gameRunning={hasStarted}
-      endGame={isEndgame}
-    />
-  );
-
-  const renderWallpaperBanner = () => {
-    return (
-      <Link data-tracking-id="alpacawheel-wallpaper" to={Routes.elonWallpaper}>
-        <div className={styles.banner}></div>
-      </Link>
-    );
-  };
-
-
   const handleNewSpin = (newSpin)=> {
     setSpins([newSpin, ...spins])
   }
-  console.log("bet", bet)
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -221,22 +179,12 @@ const RouletteGame = ({
               width={25}
               onClick={handleHelpClick}
             />
-            {/*}
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="alpacawheel-how-does-it-work"
-            >
-              How does it work?
-            </span>
-            */}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
                 setSpins={handleNewSpin}
-                inGameBets={inGameBets}
                 risk={risk}
                 bet={bet}
                 amount={amount}
@@ -256,18 +204,15 @@ const RouletteGame = ({
                   onBet={handleBet}
                   bet={bet}
                 />
-                {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
           </div>
-          {/*isMiddleOrLargeDevice ? null : renderBets()*/}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
               {renderActivities()}
             </div>
           ) : null}
-          {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
 
         </div>
       </div>

@@ -12,7 +12,6 @@ import Spins from 'components/Spins';
 import GameAnimation from 'components/PlinkoGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import { RosiGameActions } from '../../store/actions/rosi-game';
@@ -45,18 +44,12 @@ const PlinkoGame = ({
   userId,
   token,
   refreshHighData,
+  refreshLuckyData,
   updateUserBalance
 }) => {
 
   const Api = new GameApi(GAMES.plinko.url, token);
   const dispatch = useDispatch();
-  const {
-    lastCrashes,
-    inGameBets,
-    cashedOut,
-    hasStarted,
-    isEndgame,
-  } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
@@ -72,7 +65,6 @@ const PlinkoGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
-  const GAME_TYPE_ID = GAMES.plinko.id;
 
   useEffect(() => {
     /*
@@ -104,9 +96,8 @@ const PlinkoGame = ({
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: PLINKO_GAME_EVENT_ID }));
-    //refreshHighData();
-    //refreshLuckyData();
-
+    refreshHighData();
+    refreshLuckyData();
   }, [dispatch, connected]);
 
   const handleChatSwitchTab = option => {
@@ -120,18 +111,13 @@ const PlinkoGame = ({
   const isPopupDisplayed = () => {
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
+
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
         const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
-        /*
-        let winMultiplier = 6
-        for(let number of array){
-          number === 1 ? winMultiplier -1 : winMultiplier + 1
-        }
-        */
         setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
@@ -187,32 +173,6 @@ const PlinkoGame = ({
     </Grid>
   );
 
-  const renderBets = () => (
-    <GameBets
-      label="Cashed Out"
-      bets={[
-        ...inGameBets.map(b => ({
-          ...b,
-          cashedOut: false,
-        })),
-        ...cashedOut.map(b => ({
-          ...b,
-          cashedOut: true,
-        })),
-      ]}
-      gameRunning={hasStarted}
-      endGame={isEndgame}
-    />
-  );
-
-  const renderWallpaperBanner = () => {
-    return (
-      <Link data-tracking-id="alpacawheel-wallpaper" to={Routes.elonWallpaper}>
-        <div className={styles.banner}></div>
-      </Link>
-    );
-  };
-
 
   const handleNewSpin = (newSpin)=> {
     setSpins([newSpin, ...spins])
@@ -232,25 +192,15 @@ const PlinkoGame = ({
               width={25}
               onClick={handleHelpClick}
             />
-            {/*}
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="alpacawheel-how-does-it-work"
-            >
-              How does it work?
-            </span>
-            */}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
                 setSpins={handleNewSpin}
-                inGameBets={inGameBets}
                 risk={risk}
-                bet={bet}
                 amount={amount}
+                bet={bet}
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
@@ -268,19 +218,15 @@ const PlinkoGame = ({
                   onBet={handleBet}
                   bet={bet}
                 />
-                {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
           </div>
-          {/*isMiddleOrLargeDevice ? null : renderBets()*/}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
               {renderActivities()}
             </div>
           ) : null}
-          {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-
         </div>
       </div>
     </BaseContainerWithNavbar>
@@ -297,6 +243,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
+    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },

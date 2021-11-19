@@ -13,7 +13,7 @@ const formatk = (num) => {
   return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
-export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, onLose, start, setStart, audio}) => {
+export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio}) => {
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
     return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
@@ -26,13 +26,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
     const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
     if(index > 0){
       setBox(index)
-      if(winMultiplier > 1){
-        audio.playWinSound();
-        onWin()
-      }else{
-        onLose()
-        audio.playLoseSound();
-      }
+      onEnd(winMultiplier > 1)
     }
   }
   const setBox = (index) => {
@@ -43,12 +37,12 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
   }
 
   useEffect(() => {
-    if(start) {
-      setBall(ballValue, brightBasket, nball, boardref)
+    if(ballValue) {
+      launchBall(ballValue, brightBasket, nball, boardref)
       setNball(nball+1)
-      setStart(false)
+      setBall(null)
     }
-  }, [start])
+  }, [ballValue])
 
   useEffect(() => {
     if(risk){
@@ -74,7 +68,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
   )
 }
 
-const setBall = (ballValue, onBuscket, nball, boardref) => {
+const launchBall = (ballValue, onBuscket, nball, boardref) => {
   let ball1 = document.createElement('div')
   ball1.setAttribute("id", `ball-${nball}`);
   ball1.setAttribute("class", styles.ball)
