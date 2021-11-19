@@ -161,7 +161,8 @@ const RouletteGameAnimation = ({
       ref={backgroundRef}
       className={classNames(
         styles.animation,
-        isMobile && styles.animationMobile
+        isMobile && styles.animationMobile,
+        !bet.done && styles.notClickable
       )}
     >
       <div className={styles.audioControls}>

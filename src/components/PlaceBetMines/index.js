@@ -42,7 +42,8 @@ const PlaceBetMines = ({
   setMines,
   mines,
   gameInProgress,
-  setGameInProgress
+  setGameInProgress,
+  setBet
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -95,9 +96,13 @@ const PlaceBetMines = ({
     }
 
     console.log('###payload', payload);
+    await onBet(payload);
 
     setGameInProgress(true)
-    const bet = await onBet(payload);
+    setBet({
+      ...bet,
+      done: true
+    })
   }
 
   const placeAutoBet = async () => {

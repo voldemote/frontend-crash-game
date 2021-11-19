@@ -55,7 +55,10 @@ const Game = ({
   const [cashouts, setCashouts] = useState([]);
   const [gameInProgress, setGameInProgress] = useState(false);
   const [mines, setMines] = useState(1);
-  const [bet, setBet] = useState({pending: true});
+  const [bet, setBet] = useState({
+    pending: true,
+    done: false
+  });
   const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -243,6 +246,7 @@ const Game = ({
                   amount={amount}
                   onBet={handleBet}
                   bet={bet}
+                  setBet={setBet}
                   setMines={setMines}
                   mines={mines}
                   gameInProgress={gameInProgress}
