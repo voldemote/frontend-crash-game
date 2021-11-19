@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './styles.module.scss';
 import PopupTheme from '../Popup/PopupTheme';
 import { connect, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import QrcodeImage from '../../data/images/qrcode-image.svg';
 import CopyIcon from '../../data/icons/copy-icon.svg';
 import EthereumLogo from '../../data/images/ethereum_logo.svg';
 import PolygonLogo from '../../data/images/polygon-logo.svg';
+import TextUtil from 'helper/Text';
 
 const BuyWithFiatTab = () => {
   const { email } = useSelector(state => state.authentication);
@@ -36,37 +37,51 @@ const BuyWithFiatTab = () => {
   return (
     <div className={styles.buyWithFiatTabContainer}>
       <iframe
-        // height="600"
         title="Transak On/Off Ramp Widget (Website)"
         src={`https://staging-global.transak.com?${transakQueryParams}`}
-        frameborder="no"
+        frameBorder="no"
         allowtransparency="true"
-        allowfullscreen=""
+        allowFullScreen=""
         className={styles.buyWithFiatTabIframe}
       ></iframe>
     </div>
   );
 };
 const DepositTab = () => {
-  return <div className={styles.depositTabContainer}>
+
+  const walletAddress = '0xAef38fBFBF932D1AeF3B808Bc8fBd8Cd8E1f8BC5';
+  const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
+
+  const copy = useCallback(() => {
+    TextUtil.toClipboard(walletAddress).then(() => {
+      setHasCopiedSuccessfully(true);
+      setTimeout(setHasCopiedSuccessfully, 2000, false);
+    });
+  }, [walletAddress]);
+
+  return (
+    <div className={styles.depositTabContainer}>
       <div className={styles.depositHeader}>
-        <img src={PolygonLogo} alt="Polygon-logo"/>
-        <img src={EthereumLogo} alt="Ethereum-logo"/>
+        <img src={PolygonLogo} alt="Polygon-logo" />
+        <img src={EthereumLogo} alt="Ethereum-logo" />
       </div>
       <div className={styles.copyhash}>
-        <p className={styles.copyhashText}>fsdkjhskdjhkjhkjhsdkfjhsdkjfhsdkfjhkjhkjhkj</p>
-        <img src={CopyIcon} alt="Clip-Icon"/>
+        <p className={styles.copyhashText}>{walletAddress}</p>
+        <button type="button" onClick={copy} className={styles.copyButton} title="Copy address to clipboard">
+          <img src={CopyIcon} alt="Clipboard Icon" />
+          {hasCopiedSuccessfully && (
+            <span className={styles.confirmation}>
+              Copied to clipboard.
+            </span>
+          )}
+        </button>
       </div>
       <div className={styles.qrCodeImg}>
-          <img src={QrcodeImage} alt="QrCode" />
+        <img src={QrcodeImage} alt="QrCode" />
       </div>
-      <p className={styles.firstDiscription}>Only send BTC to this address, 1 confirmation(s) required. We do not accept BEP20 from Binance.</p>
-      <p className={styles.secondDiscription}>Improve your account security with Two-Factor Authentication</p>
-
-      <button className={styles.depositButton}>
-          Enable 2FA
-      </button>
+      <p className={styles.firstDiscription}>Only send MATIC to this address, 1 confirmation(s) required. We do not accept BEP20 from Binance.</p>
   </div>
+  );
 };
 
 const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
