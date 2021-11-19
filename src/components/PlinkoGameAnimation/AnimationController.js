@@ -10,7 +10,7 @@ const outcomesByRisk = [
   [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
 ]
 
-export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, start, setStart, audio}) => {
+export const AnimationController = ({risk = 1, ballValue, width, height, amount, onWin, onLose, start, setStart, audio}) => {
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
     return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
@@ -29,6 +29,7 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
         audio.playWinSound();
         onWin()
       }else{
+        onLose()
         audio.playLoseSound();
       }
     }
@@ -62,12 +63,12 @@ export const AnimationController = ({risk = 1, ballValue, width, height, amount,
     <div className={styles.board} ref={boardref}>
       {false && <div id="ball" className={styles.ball}></div>}
       {Array.from({length: rows}).map((row, index) =>
-        <div className={styles.row}>
-          {Array.from({length: index+3}).map((peg) => <div className={styles.peg}></div> )}
+        <div key={index} className={styles.row}>
+          {Array.from({length: index+3}).map((peg, index) => <div key={index} className={styles.peg}></div> )}
         </div>
       )}
       <div className={styles.boxes}>
-        {outcomes.map((box, index) => <div className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
+        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{box.amount}</div>)}
       </div>
     </div>
   )

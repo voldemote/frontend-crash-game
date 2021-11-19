@@ -18,7 +18,7 @@ export const RiskInput = ({risk, setRisk, number}) => {
             className={risk === (index + 1) && styles.selected}
             onClick={() => setRisk(index+1)}
           >
-            {index+1}
+            <span>{index+1}</span>
           </button>
         )}
       </div>

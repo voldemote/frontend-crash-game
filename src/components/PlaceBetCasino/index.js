@@ -41,8 +41,6 @@ const PlaceBetCasino = ({
   const [ngame, setNgame] = useState(1);
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
-  const [crashFactor, setCrashFactor] = useState('25.00');
-  const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
   const [game, setGame] = useState({ngame: 0});
@@ -104,7 +102,7 @@ const PlaceBetCasino = ({
     setGame(payload)
     const bet = await onBet(payload)
   };
-
+  console.log("bet", bet)
 
 
   const placeGuestBet = () => {
@@ -187,7 +185,7 @@ const PlaceBetCasino = ({
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
-          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
+          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
         </span>
       );
     } else {
@@ -234,12 +232,12 @@ const PlaceBetCasino = ({
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '48.3%' }}></span>
-        <div className={classNames(styles.tab)} onClick={() => setSelector('manual')} >
-          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
+        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : 152 }}></span>
+        <div className={classNames(styles.tab, selector === 'manual' ? styles.selected:styles.deselected)} onClick={() => setSelector('manual')} >
+          <span>Manual Bet</span>
         </div>
-        <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
-          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
+        <div className={classNames(styles.tab, selector === 'auto' ? styles.selected:styles.deselected)} onClick={() => setSelector('auto')} >
+          <span>Auto Bet</span>
         </div>
       </div>
     )

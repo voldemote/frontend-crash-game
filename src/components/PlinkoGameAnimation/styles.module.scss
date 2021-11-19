@@ -12,7 +12,6 @@
 .board{
   position: relative;
   width: fit-content;
-
   &:after{
     content: '';
     border-bottom: 380px solid #ffffff;
