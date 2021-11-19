@@ -570,7 +570,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
           {!isLoggedIn() && renderWelcome()}
           {isLoggedIn() && renderRosiBanner()}
           {isLoggedIn() && renderGamesCards()}
-          {renderActivities()}
+          {isLoggedIn() && renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}
