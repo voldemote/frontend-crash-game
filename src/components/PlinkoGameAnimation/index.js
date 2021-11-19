@@ -13,7 +13,6 @@ import {
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../RouletteGameAnimation/AnimationController';
-import Stage from './plinko'
 import { AnimationController, BackgroundPlinko } from './AnimationController'
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 
