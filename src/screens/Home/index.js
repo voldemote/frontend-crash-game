@@ -1,8 +1,9 @@
-import { useEffect, memo} from 'react';
+import { useEffect, useState, memo} from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -15,6 +16,13 @@ import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
 import { GeneralActions } from '../../store/actions/general';
+import AuthenticationType from '../../components/Authentication/AuthenticationType';
+import PopupTheme from '../../components/Popup/PopupTheme';
+import WelceomBg from '../../data/images/home/welcome-bg.png';
+import ChipOne from '../../data/images/home/chip-one.png';
+import ChipTwo from '../../data/images/home/chip-two.png';
+import ChipThree from '../../data/images/home/chip-three.png';
+import medalCoin from '../../data/icons/medal-coin.png';
 import SlotGameIconBg from '../../data/images/house-games/title.svg';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
@@ -43,11 +51,18 @@ import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
+const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
+  const [expandSocial, setExpandSocial] = useState(false);
+  const [expandFair, setExpandFair] = useState(false);
+  const [expandDecentral, setExpandDecentral] = useState(false);
   let urlParams = new URLSearchParams(location.search);
+
+  const isLoggedIn = () => {
+    return authState === LOGGED_IN;
+  };
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -257,6 +272,54 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
     );
   };
 
+  const renderWelcome = () => {
+    const showPopupForUnauthenticated = authenticationType => {
+      if (!isLoggedIn()) {
+        showPopup(PopupTheme.auth, { small: true, authenticationType });
+      }
+    };
+    return (
+      <div className={styles.welcomeContainer}>
+        <div className={styles.cardBox}>
+          <div className={styles.leftSection}>
+            <div className={styles.title}>
+              <div className={styles.leftSection}>
+                <h2>WELCOME TO THE <br/><span class={styles.pink}>ALPACA</span>SINO</h2>
+              </div>              
+            </div>
+            <p className={styles.description}>All games are provably fair. Playing and betting will soon allow you to unlock special items for the Alpacavatar. Winners on the leaderboard can earn even more NFT items and loot. </p>
+            <div className={styles.categorySection}>
+              <div className={styles.categoryItem}>
+                <img src={ChipOne} alt="chip-one"/>
+                <span>FAIR</span>
+              </div>
+              <div className={styles.categoryItem}>
+                <img src={ChipTwo} alt="chip-two"/>
+                <span>SOCIAL</span>
+              </div>
+              <div className={styles.categoryItem}>
+                <img src={ChipThree} alt="chip-three"/>
+                <span>DECENTRALISED</span>
+              </div>
+            </div>
+            <div
+              className={styles.pillButton}
+              onClick={() =>
+                showPopupForUnauthenticated(AuthenticationType.register)
+              }>
+              <img src={medalCoin} alt="medal" className={styles.medal} />
+              <p className={styles.rankingText}>
+                TRY NOW
+              </p>
+            </div>
+          </div>
+          <div className={styles.rightSection}>
+            <img src={WelceomBg} alt="" />
+          </div>
+        </div>
+      </div>
+    )
+  }
   const renderAlpacaDopter = () => {
     return (
       <div className={styles.alpacadopter}>
@@ -349,15 +412,24 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
             </Grid>
           </Grid>
         </div>
-        <div className={styles.bottomContainer}>
+        {/* <div className={styles.bottomContainer}>
           <div className={styles.bottomBox}>
             <p>CREATE YOUR OWN <span className={styles.pink}>ALPACA</span> NOW!</p>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
   const renderAlpacaVerse = () => {
+    const handleExpandSocial = () => {
+      setExpandSocial(!expandSocial);
+    }
+    const handleExpandFair = () => {
+      setExpandFair(!expandFair);
+    }
+    const handleExpandDecentral = () => {
+      setExpandDecentral(!expandDecentral);
+    }
     return (
       <div className={styles.alpacaverse}>
         <div className={styles.title}>
@@ -376,13 +448,27 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                   <h3>
                     SOCIAL
                   </h3>
+                  {!expandSocial ? 
                   <p>
                     It’s simple: Alpacas are social animals 
                     = Alpacasino is a social Betwork. 
                     Alpacas from all over the world meet to chat ...
+                  </p> :
+                  <p>
+                    It’s simple: Alpacas are social animals 
+                    = Alpacasino is a social Betwork. 
+                    Alpacas from all over the world meet to chat, follow, 
+                    interact and game together. 
+                    You can customize and upgrade your Alpaca or check out 
+                    any Alpacas activity history and copy bets, see other 
+                    Alpacas activity in real time and chat / follow. 
+                    Your alpaca grows with tokens owned and you will 
+                    be able to battle or gang up with other alpacas in the future. 
+                    Some cool NFT applications and skins might be on their way too ;)
                   </p>
-                  <button>
-                    READ MORE
+                  }
+                  <button onClick={handleExpandSocial}>
+                    {!expandSocial ? 'READ MORE' : 'LESS'}
                   </button>
                 </div>
                 <div className={styles.thumbnailLast}>
@@ -399,14 +485,28 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                 <div className={styles.detail}>
                   <h3>
                     FAIR
-                  </h3>
-                  <p>
-                    Alpacas are sometimes funny
-                    and misbehaving but always fair.
-                    We believe in a maximum of transparency ...
-                  </p>
-                  <button>
-                    READ MORE
+                  </h3>                  
+                  {!expandFair ? 
+                    <p>
+                      Alpacas are sometimes funny
+                      and misbehaving but always fair.
+                      We believe in a maximum of transparency ...
+                    </p> :
+                    <p>
+                      Alpacas are sometimes funny 
+                      and misbehaving but always fair. 
+                      We believe in a maximum of transparency and 
+                      blockchain allows for a technical implementation. 
+                      This way every algorithm and maths behind the games 
+                      and market makers are transparent from s
+                      ource code to unlimited history of outcomes. 
+                      Every activity of every user and game is transparent. 
+                      This is a much better approach than unknown and 
+                      secret algorithms or “random” picks in traditional worlds.
+                    </p>
+                  }
+                  <button onClick={handleExpandFair}>
+                    {!expandFair ? 'READ MORE' : 'LESS'}
                   </button>
                 </div>
                 <div className={styles.thumbnailLast}>
@@ -420,14 +520,34 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                   <img src={StarImg} alt="" />
                 </div>
                 <div className={styles.detail}>
-                  <h3>DECENTRAL</h3>
-                  <p>
-                    Alpacas are self governing animals. 
-                    Wallfair is a combination of smart contracts running 
-                    on decentralized Polygon blockchain ...
-                  </p>
-                  <button>
-                    READ MORE
+                  <h3>DECENTRAL</h3>                  
+                  {!expandDecentral ? 
+                    <p>
+                      Alpacas are self governing animals. 
+                      Wallfair is a combination of smart contracts running 
+                      on decentralized Polygon blockchain ...
+                    </p> :
+                    <p>
+                      Alpacas are self governing animals. 
+                      Wallfair is a combination of smart contracts running 
+                      on decentralized Polygon blockchain
+                      as well an ERC 20 utility token. 
+                      It’s a decentralized technology that 
+                      allows any game provider to upload games, 
+                      any user to create new games, events or battles 
+                      and licensed casino operators to use this open-source, 
+                      non profit technology. Wallfair is striving to 
+                      become a fully decentralized autonomous 
+                      organation (DAO) that is fully governed 
+                      by the voting of every WFAIR token holder.<br/><br/> 
+                      Every WFAIR holder participates in the growth of 
+                      the network as WFAIR is the currency used 
+                      for any interaction, e.g. users signin up / 
+                      depositing / betting in external applications.
+                    </p>
+                  }
+                  <button onClick={handleExpandDecentral}>
+                    {!expandDecentral ? 'READ MORE' : 'LESS'}
                   </button>
                 </div>
                 <div className={styles.thumbnailLast}>
@@ -447,8 +567,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
-          {renderRosiBanner()}
-          {renderGamesCards()}
+          {!isLoggedIn() && renderWelcome()}
+          {isLoggedIn() && renderRosiBanner()}
+          {isLoggedIn() && renderGamesCards()}
           {renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
@@ -461,6 +582,7 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
 
 const mapStateToProps = state => {
   return {
+    authState: state.authentication.authState,
     tags: state.event.tags,
     events: state.event.events,
   };
