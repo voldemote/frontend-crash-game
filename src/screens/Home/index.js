@@ -176,9 +176,9 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
               <div className={styles.detail}>
                 <h3>$PFAIR Token?</h3>
                 <p>
-                  PFAIR are WALLFAIRS FREE to play tokens. 
-                  The  tokens can be used in our WALLFAIR ALPHA playgound for 
-                  risk and care free betting fun
+                  PFAIR is Wallfair's FREE-TO-PLAY token. The tokens can be
+                  used in the ALPACASINO playground for risk and care free
+                  betting fun
                 </p>
               </div>
             </div>
@@ -191,7 +191,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <p>
                   WFAIR is the protocol token used on 
                   smart contracts. Alpacasino is a play-money simulation (“PFAIR”)  of WFAIR use cases. 
-                  You can buy and trade WFAIR here→ WALLFAIR/BUY
+                  You can buy and trade WFAIR <a href="https://wallfair.io/buy-wfair" target="_blank" rel="noreferrer">here</a>
                 </p>
               </div>
             </div>
@@ -205,7 +205,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <p>
                   Keep playing and rise to the top of the leaderboard every week
                   and increase the chances of winning real WFAIR tokens.
-                  Winners will be announced every Sunday!
+                  Winners will be announced every Monday!
                 </p>
               </div>
             </div>
