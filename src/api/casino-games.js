@@ -51,6 +51,35 @@ class GameApi {
     });
   }
 
+
+  createTradeMines = payload => {
+    // console.log('PAYLOAD', payload);
+    // console.log('URL', ApiUrls.API_MINES_BET);
+
+    return new Promise((resolve, reject) => {
+      const dummyData = {
+        data: {
+          gameTypeId: 'String',
+          gameName: 'String',
+          stakedAmount: 50,
+          userId: 'String',
+          minesCount: 20,
+          gameHash: 'String',
+          gameState: 0, //0 - started, 1 - ended
+          matchId: 'String',
+          tradeId: 'String',
+          outcomes: 10 // length = minesCount
+        }
+      }
+      resolve(dummyData)
+    })
+
+    // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
+    //   console.log('[API Error] called: createMinesTrade', error);
+    //   throw error;
+    // });
+  }
+
 }
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');
@@ -115,33 +144,6 @@ const getTotalBetsVolumeByRange = (range = '24h') => {
   return Api.get(url);
 };
 
-const createTradeMines = payload => {
-  // console.log('PAYLOAD', payload);
-  // console.log('URL', ApiUrls.API_MINES_BET);
-
-  return new Promise((resolve, reject) => {
-    const dummyData = {
-      data: {
-        gameTypeId: 'String',
-        gameName: 'String',
-        stakedAmount: 50,
-        userId: 'String',
-        minesCount: 20,
-        gameHash: 'String',
-        gameState: 0, //0 - started, 1 - ended
-        matchId: 'String',
-        tradeId: 'String',
-        outcomes: 10 // length = minesCount
-      }
-    }
-    resolve(dummyData)
-  })
-
-  // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
-  //   console.log('[API Error] called: createMinesTrade', error);
-  //   throw error;
-  // });
-}
 
 const checkCellMines = payload => {
   console.log('URL', ApiUrls.API_MINES_CHECK);
@@ -257,7 +259,6 @@ export {
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
-  createTradeMines,
   getLastCashoutsMines,
   getCurrentMines,
   cashoutMines,

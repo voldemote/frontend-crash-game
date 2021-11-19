@@ -162,7 +162,7 @@ const PlaceBetMines = ({
     e.preventDefault();
     e.stopPropagation();
 
-    console.log('cashout now');
+    console.log('[MINES] cashout now');
     setGameInProgress(false);
   };
 
