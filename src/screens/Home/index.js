@@ -1,4 +1,4 @@
-import { useEffect, memo} from 'react';
+import { useEffect, useState, memo} from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -47,6 +47,9 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
+  const [expandSocial, setExpandSocial] = useState(false);
+  const [expandFair, setExpandFair] = useState(false);
+  const [expandDecentral, setExpandDecentral] = useState(false);
   let urlParams = new URLSearchParams(location.search);
 
   const renderBetApprovePopup = async () => {
@@ -358,6 +361,15 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
     )
   }
   const renderAlpacaVerse = () => {
+    const handleExpandSocial = () => {
+      setExpandSocial(!expandSocial);
+    }
+    const handleExpandFair = () => {
+      setExpandFair(!expandFair);
+    }
+    const handleExpandDecentral = () => {
+      setExpandDecentral(!expandDecentral);
+    }
     return (
       <div className={styles.alpacaverse}>
         <div className={styles.title}>
@@ -376,13 +388,27 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                   <h3>
                     SOCIAL
                   </h3>
+                  {!expandSocial ? 
                   <p>
                     It’s simple: Alpacas are social animals 
                     = Alpacasino is a social Betwork. 
                     Alpacas from all over the world meet to chat ...
+                  </p> :
+                  <p>
+                    It’s simple: Alpacas are social animals 
+                    = Alpacasino is a social Betwork. 
+                    Alpacas from all over the world meet to chat, follow, 
+                    interact and game together. 
+                    You can customize and upgrade your Alpaca or check out 
+                    any Alpacas activity history and copy bets, see other 
+                    Alpacas activity in real time and chat / follow. 
+                    Your alpaca grows with tokens owned and you will 
+                    be able to battle or gang up with other alpacas in the future. 
+                    Some cool NFT applications and skins might be on their way too ;)
                   </p>
-                  <button>
-                    READ MORE
+                  }
+                  <button onClick={handleExpandSocial}>
+                    {!expandSocial ? 'READ MORE' : 'LESS'}
                   </button>
                 </div>
                 <div className={styles.thumbnailLast}>
@@ -399,14 +425,28 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                 <div className={styles.detail}>
                   <h3>
                     FAIR
-                  </h3>
-                  <p>
-                    Alpacas are sometimes funny
-                    and misbehaving but always fair.
-                    We believe in a maximum of transparency ...
-                  </p>
-                  <button>
-                    READ MORE
+                  </h3>                  
+                  {!expandFair ? 
+                    <p>
+                      Alpacas are sometimes funny
+                      and misbehaving but always fair.
+                      We believe in a maximum of transparency ...
+                    </p> :
+                    <p>
+                      Alpacas are sometimes funny 
+                      and misbehaving but always fair. 
+                      We believe in a maximum of transparency and 
+                      blockchain allows for a technical implementation. 
+                      This way every algorithm and maths behind the games 
+                      and market makers are transparent from s
+                      ource code to unlimited history of outcomes. 
+                      Every activity of every user and game is transparent. 
+                      This is a much better approach than unknown and 
+                      secret algorithms or “random” picks in traditional worlds.
+                    </p>
+                  }
+                  <button onClick={handleExpandFair}>
+                    {!expandFair ? 'READ MORE' : 'LESS'}
                   </button>
                 </div>
                 <div className={styles.thumbnailLast}>
@@ -420,14 +460,34 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events}) => {
                   <img src={StarImg} alt="" />
                 </div>
                 <div className={styles.detail}>
-                  <h3>DECENTRAL</h3>
-                  <p>
-                    Alpacas are self governing animals. 
-                    Wallfair is a combination of smart contracts running 
-                    on decentralized Polygon blockchain ...
-                  </p>
-                  <button>
-                    READ MORE
+                  <h3>DECENTRAL</h3>                  
+                  {!expandDecentral ? 
+                    <p>
+                      Alpacas are self governing animals. 
+                      Wallfair is a combination of smart contracts running 
+                      on decentralized Polygon blockchain ...
+                    </p> :
+                    <p>
+                      Alpacas are self governing animals. 
+                      Wallfair is a combination of smart contracts running 
+                      on decentralized Polygon blockchain
+                      as well an ERC 20 utility token. 
+                      It’s a decentralized technology that 
+                      allows any game provider to upload games, 
+                      any user to create new games, events or battles 
+                      and licensed casino operators to use this open-source, 
+                      non profit technology. Wallfair is striving to 
+                      become a fully decentralized autonomous 
+                      organation (DAO) that is fully governed 
+                      by the voting of every WFAIR token holder.<br/><br/> 
+                      Every WFAIR holder participates in the growth of 
+                      the network as WFAIR is the currency used 
+                      for any interaction, e.g. users signin up / 
+                      depositing / betting in external applications.
+                    </p>
+                  }
+                  <button onClick={handleExpandDecentral}>
+                    {!expandDecentral ? 'READ MORE' : 'LESS'}
                   </button>
                 </div>
                 <div className={styles.thumbnailLast}>
