@@ -28,6 +28,7 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
           {/* <li>Only {totalUsers}/5000 slots available</li> */}
           <li>PFAIR = WFAIR playmoney</li>
           <li>No risk of losing any real money</li>
+          <li>100% free</li>
         </ul>
       </div>
     );

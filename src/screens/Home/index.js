@@ -50,6 +50,7 @@ import YellowThumbnail from '../../data/images/alpaca-dopter/yellow-thumbnail.pn
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
+import classNames from 'classnames';
 
 const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
@@ -349,7 +350,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                       unlock cool NFT and crypto prices.
                     </p>
                   </div>
-                  <div className={styles.thumbnail}>
+                  <div className={classNames(styles.thumbnail, styles.cactusJack)}>
                     <img src={MagentaThumbnail} alt="" />
                   </div>
                 </div>

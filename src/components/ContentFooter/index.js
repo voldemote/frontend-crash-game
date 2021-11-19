@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.scss';
-import LogoFooter from '../../data/icons/wallfair-alpha.svg';
+import LogoFooter from '../../data/images/alpaca-logo-footer.svg';
 
 import classNames from 'classnames';
 import { LeaderboardActions } from 'store/actions/leaderboard';
@@ -17,7 +17,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   return (
     <div className={styles.container}>
       <div className={classNames(styles.footer, className)}>
-        <img src={LogoFooter} alt={'wallfair-alpha'} />
+        <img src={LogoFooter} alt={'wallfair-alpha'} className={styles.footerLogo}/>
         <div className={styles.links}>
           <a
             href="https://wallfair.medium.com"
