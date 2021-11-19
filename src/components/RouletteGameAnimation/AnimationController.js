@@ -48,7 +48,7 @@ export class AudioController {
 
     Sound.sound.add(
       {
-        bgm: {
+        bgm0: {
           url: '/sounds/roulette/wheel_bg.mp3',
           loop: true,
         },
@@ -93,6 +93,7 @@ export class AudioController {
   }
 
   setVolume(volume = 1) {
+    console.log("volume")
     try {
       if (volume === 1 || volume === '1') {
         this.volume = 1.0;
@@ -102,7 +103,7 @@ export class AudioController {
         this.volume = volume;
       }
       localStorage.setItem('gameVolume', `${volume}`);
-      Sound.sound.volume('bgm', volume);
+      Sound.sound.volume(`bgm${this.bgmIndex}`, volume);
     } catch (e) {
       console.error('Audio output error');
     }
@@ -141,14 +142,14 @@ export class AudioController {
   startBgm() {
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
-      this.playSound('bgm', true);
+      this.playSound('bgm0', true);
     }else if (this.bgmIndex === 1) {
       this.playSound('bgm1', true);
     }
   }
 
   stopBgm() {
-    this.stopSound('bgm');
+    this.stopSound(`bgm${this.bgmIndex}`);
     this.stopSound('flying');
   }
   playTick() {
