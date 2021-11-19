@@ -13,9 +13,6 @@ import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../../components//Popup/PopupTheme';
 import { RosiGameActions } from 'store/actions/rosi-game';
 
-
-
-
 import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import alpacaActivities from '../../data/images/alpaca-activities.svg';
@@ -24,6 +21,7 @@ import TabOptions from 'components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import useRosiData from 'hooks/useRosiData';
 import UserWalletTables from 'components/UserWalletTables';
+import classNames from 'classnames';
 
 const UserWallet = ({
   tags,
@@ -36,7 +34,7 @@ const UserWallet = ({
   connected,
   userId,
   refreshMyBetsData,
-  showWalletBuyWfairPopup
+  showWalletBuyWfairPopup,
 }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
@@ -45,66 +43,38 @@ const UserWallet = ({
 
   const { balance, currency, toNextRank } = useSelector(selectUser);
 
-
   const dispatch = useDispatch();
   const { highData, luckyData, myBetsData } = useRosiData();
-  const [activityTab, setActivityTab] = useState({ name: 'DEPOSITS', index: 0,  });
-  const activityTabOptions = [
-  { name: 'DEPOSITS', index: 0,  },
-  { name: 'WITHDRAWALS', index: 1,  },
-  // { name: 'BETS', index: 2 , }
-];
-  
 
-  if (userId) activityTabOptions.push({ name: 'BETS', index: 2 });
+  const activityData = {
+    DEPOSITS: [],
+    WITHDRAWALS: [],
+    BETS: myBetsData ? myBetsData : [],
+  };
 
+  const [activityTab, setActivityTab] = useState({
+    name: 'DEPOSITS',
+    index: 0,
+  });
+  const [activityTabOptions, setActivityTabOptions] = useState([
+    { name: 'DEPOSITS', index: 0 },
+    { name: 'WITHDRAWALS', index: 1 },
+  ]);
 
   const handleActivitySwitchTab = ({ index }) => {
     setActivityTab(activityTabOptions[index]);
   };
 
   useEffect(() => {
-    // refreshHighData();
-    // refreshLuckyData();
-    // refreshMyBetsData({ userId: userId || '6152b82b2a1ac4fa41b4c663' });
-  }, [dispatch, connected]);
-
-  const renderBetApprovePopup = async () => {
-    if (isMount) {
-      if (eventId && betId && tradeId) {
-        const event = State.getEventByTrade(betId, events);
-        const bet = State.getTradeByEvent(betId, event);
-        const tradeResponse = await getTradeById(tradeId).catch(err => {
-          console.error("Can't get trade by id:", err);
-        });
-
-        const trade = _.get(tradeResponse, 'data', null);
-
-        const options = {
-          eventId: eventId,
-          betId: betId,
-          tradeId: tradeId,
-          data: {
-            bet: bet,
-            trade: trade,
-          },
-          hideShare: true,
-        };
-
-        if (betId && tradeId && eventId) {
-          showPopup('betApprove', options);
-        }
-      }
+    refreshMyBetsData({ userId: userId || '6152b82b2a1ac4fa41b4c663' });
+    if (userId) {
+      setActivityTabOptions([
+        { name: 'DEPOSITS', index: 0 },
+        { name: 'WITHDRAWALS', index: 1 },
+        { name: 'BETS', index: 2 },
+      ]);
     }
-  };
-
-  const handleRefPersistent = () => {
-    const ref = urlParams.get('ref');
-
-    if (ref) {
-      localStorage.setItem('urlParam_ref', ref);
-    }
-  };
+  }, [dispatch, connected, refreshMyBetsData, userId]);
 
   useEffect(() => {
     // if (isMount) {
@@ -114,16 +84,14 @@ const UserWallet = ({
     // }
   }, []);
 
-
   const renderCategoriesAndLeaderboard = () => {
     return (
       <div className={styles.activities}>
         <Grid item xs={12}>
           <div className={styles.activityWrapper}>
             <TabOptions
-              options={activityTabOptions}
+              options={activityTabOptions ? activityTabOptions : []}
               className={styles.tabLayout}
-              
             >
               {option => (
                 <div
@@ -139,11 +107,10 @@ const UserWallet = ({
               )}
             </TabOptions>
             <div className={styles.activityContainer}>
-              
-                <UserWalletTables
-                  type={activityTab.name}
-                />
-                
+              <UserWalletTables
+                type={activityTab.name}
+                rowData={activityData}
+              />
             </div>
           </div>
         </Grid>
@@ -152,14 +119,27 @@ const UserWallet = ({
   };
 
   const renderCurrentBalanceSection = () => {
+    const balanceFixed = formatToFixed(balance, 0, true);
+    let fontStyling = styles.font50;
+
+    if (balanceFixed.length > 18) {
+      fontStyling = styles.font20;
+    } else if (balanceFixed.length > 13) {
+      fontStyling = styles.font30;
+    }
     return (
       <div className={styles.currentBalanceSection}>
         <Grid container alignContent="center">
           <Grid container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
               <p className={styles.currentbalanceHeading}>Current balance</p>
-              <p className={styles.currentbalanceWFair}>
-                {formatToFixed(balance, 0, true)} {currency}
+              <p
+                className={classNames(styles.currentbalanceWFair, fontStyling)}
+              >
+                {balanceFixed}
+              </p>
+              <p className={classNames(styles.currentbalanceWFair)}>
+                {currency}
               </p>
             </div>
           </Grid>
@@ -174,7 +154,12 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <p className={styles.noWFairNoProblem}>No WFAIR? No problem!</p>
-              <button className={styles.buyWFairButton} onClick={showWalletBuyWfairPopup}>Buy WFAIR!</button>
+              <button
+                className={styles.buyWFairButton}
+                onClick={showWalletBuyWfairPopup}
+              >
+                Buy WFAIR!
+              </button>
             </div>
           </Grid>
         </Grid>
@@ -206,15 +191,13 @@ const mapStateToProps = state => {
   };
 };
 
-
 const mapDispatchToProps = dispatch => {
   return {
-    refreshMyBetsData: (data) => dispatch(RosiGameActions.fetchMyBetsData(data)),
+    refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserWallet);

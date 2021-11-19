@@ -2,15 +2,28 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from '../styles.module.scss';
 import classNames from 'classnames';
+import { roundToTwo } from '../../../helper/FormatNumbers';
+import { toNumericString } from 'helper/FormatNumbers';
+import { TOKEN_NAME } from '../../../constants/Token';
+import { GAMES } from 'constants/Games';
 
-const DepositRow = ({ data, hideSecondaryColumns = false }) => {
-  const { game, user, trade, mult, cashout } = data;
+
+
+
+
+const DepositRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
+  const { gameId,username, crashFactor, stakedAmount } = data;
+  gameLabel =
+  gameLabel ??
+  Object.values(GAMES).find(g => g.id.indexOf(gameId) > -1)?.name ??
+  'Game';
+
   return (
     <div className={styles.messageItem}>
       <Grid container>
         <Grid item xs>
           <div className={classNames(styles.messageFirst, styles.messageLeft)}>
-            <p>{game}</p>
+            <p>{gameLabel}</p>
           </div>
         </Grid>
         <Grid
@@ -19,7 +32,7 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
           <div className={styles.messageCenter}>
-            <p>{user}</p>
+            <p>{username}</p>
           </div>
         </Grid>
         <Grid
@@ -27,7 +40,9 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           xs
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
-          <div className={styles.messageCenter}>{trade}</div>
+          <div className={styles.messageCenter}>
+            {toNumericString(stakedAmount)} {TOKEN_NAME}
+            </div>
         </Grid>
         <Grid
           item
@@ -35,12 +50,12 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
           <div className={styles.messageCenter}>
-            <p className={styles.rewardMulti}>{mult}</p>
+            <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
           </div>
         </Grid>
         <Grid item xs>
           <div className={classNames(styles.messageLast, styles.messageRight)}>
-            <p className={styles.reward}>{cashout}</p>
+            <p className={styles.reward}>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
           </div>
         </Grid>
       </Grid>
