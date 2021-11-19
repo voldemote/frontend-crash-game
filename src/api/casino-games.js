@@ -152,7 +152,7 @@ const checkCellMines = payload => {
   return new Promise((resolve, reject) => {
     const dummyData = {
       data: {
-        result: 0, // 0 - no mine, 1 - mine
+        result: Math.round(Math.random()), // 0 - no mine, 1 - mine
         clientBoard: []// length = 25 0 - no mine, 1 - mine, 2 -
       }
     }

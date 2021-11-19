@@ -22,7 +22,7 @@ import {AlertActions} from "../../store/actions/alert";
 const gameConfigBase = {
   "name": "Minesweeper",
   "debuggerMode": true,
-  "setGridManually": true,
+  "setGridManually": false,
   // basically it is a with of a square
   "gridSize": 380,
   "defaultGrid": {
@@ -31,11 +31,11 @@ const gameConfigBase = {
     "rows": 5
   },
   "grid": [
-    [ 1, 1, 1, 1,1 ],
-    [ 1, 1, -1, 1,1 ],
-    [ -1, 1, 1, 1,-1 ],
     [ -1, -1, 1, 1,1 ],
-    [ -1, 1, 1, 1,1 ]
+    [ 1, 1, 1, 1,1 ],
+    [ 1, 1, 1, 1,1 ],
+    [ 1, 1, 1, 1,1 ],
+    [ 1, 1, 1, 1,1 ]
   ],
   // applicable only for mobile devices, time in `ms`
   "timing": {
@@ -87,8 +87,19 @@ const RouletteGameAnimation = ({
       dispatch(AlertActions.showError(err.message));
     });
 
+    const isMine = checkMine.data.result === 0 ? false : true;
 
-    return checkMine.data.result;
+    return !isMine ? [
+      {
+        col,
+        row,
+        isEmpty: true,
+        isFlagged: false,
+        isMine,
+        isRevealed: true,
+        text: ""
+      }
+    ] : 'MINE';
 
   }
 
@@ -98,8 +109,6 @@ const RouletteGameAnimation = ({
       .then(response => {
         const {data} = response;
         const configBase = _.cloneDeep(gameConfigBase);
-
-        console.log('##data', data);
         if(data?.gameState === 1) {
           setGameInProgress(true);
           setMines(data?.minesCount);

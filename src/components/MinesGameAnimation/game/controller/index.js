@@ -93,25 +93,26 @@ export default class Controller extends Emitter {
   onClickOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
 
-    const result = Engine.checkSelectedCell(collection, row, col);
-    this.model.updateCellsData(result);
+    const gameEngineResult = Engine.checkSelectedCell(collection, row, col);
 
-    if (result === Engine.MINE) {
-      this.view.gameOver("lose");
-      this.view.revealCells(this.model.allMines.flat());
-    } else if (this.model.isGameWon) {
-      this.view.revealCells(result);
-      this.view.gameOver("win");
-      this.view.flagMines(this.model.totFlaggedCells.flat());
-    } else {
-      console.log("wwww");
-      this.view.revealCells(result);
-      console.log(result);
-    }
+    const checkCell = this.handlers.checkSelectedCell({row, col}).then((result)=> {
+      this.model.updateCellsData(gameEngineResult);
 
-    const checkCell = this.handlers.checkSelectedCell({row, col}).then((responseResult)=> {
-      console.log('###responseResult', responseResult);
-      // this.handlers.checkSelectedCell({collection, row, col});
+      if (gameEngineResult === Engine.MINE) {
+        this.view.gameOver("lose");
+        this.view.revealCells(this.model.allMines.flat());
+        console.log('GAME LOST', gameEngineResult);
+      } else if (this.model.isGameWon) {
+        console.log('GAME WON', gameEngineResult);
+        this.view.revealCells(gameEngineResult);
+        this.view.gameOver("win");
+        this.view.flagMines(this.model.totFlaggedCells.flat());
+      } else {
+        console.log("GAME OTHER", gameEngineResult);
+        this.view.revealCells(gameEngineResult);
+        console.log(gameEngineResult);
+        console.log(this.cellsToRevealed);
+      }
 
     });
   }
