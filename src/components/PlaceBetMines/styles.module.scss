@@ -72,17 +72,6 @@
   }
 }
 
-.selectMines {
-  height: 45px;
-  width: 100%;
-  border-radius: 10px;
-  border: 1.2px solid rgba(14, 9, 39, 0.3);
-  background-color: white;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 24px;
-  text-align: center;
-}
 .spinsleft {
   margin: 5px;
   text-align: center;
@@ -259,6 +248,7 @@
 
 .inputContainer {
   position: relative;
+  width: 100%;
   .placeBetContainer {
     display: flex;
     flex-direction: row;
@@ -527,4 +517,15 @@
     font-size: 12px;
     padding-top: 5px;
   }
+}
+
+.selectMines {
+  height: 45px;
+  width: 100%;
+
+  background-color: white;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
 }

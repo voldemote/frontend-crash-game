@@ -25,6 +25,7 @@ import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
+import {MinesInput} from "./MinesInput";
 
 import {
   FormGroup,
@@ -104,18 +105,18 @@ const PlaceBetMines = ({
   }
 
   const placeAutoBet = async () => {
-    if (userUnableToBet) return;
-    if (amount > userBalance) return;
-    const payload = {
-      amount,
-      autobet: true,
-      profit: Number(profit),
-      loss: Number(loss),
-      wincrease: winbutton?0:Number(wincrease)/100,
-      lincrease: lossbutton?0:Number(lincrease)/100
-    };
-    setAccumulated(0)
-    setNuspin(payload)
+    // if (userUnableToBet) return;
+    // if (amount > userBalance) return;
+    // const payload = {
+    //   amount,
+    //   autobet: true,
+    //   profit: Number(profit),
+    //   loss: Number(loss),
+    //   wincrease: winbutton?0:Number(wincrease)/100,
+    //   lincrease: lossbutton?0:Number(lincrease)/100
+    // };
+    // setAccumulated(0)
+    // setNuspin(payload)
   };
 
 
@@ -193,10 +194,11 @@ const PlaceBetMines = ({
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
+          disabled={false}
           onClick={!bet?.pending? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
-          data-tracking-id={
-            user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
-          }
+          // data-tracking-id={
+          //   user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
+          // }
         >
           {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
         </span>
@@ -351,22 +353,25 @@ const PlaceBetMines = ({
                 Mines
               </label>
               <div className={styles.riskSelection}>
-                  <select
-                    className={classNames(styles.selectMines)}
-                    placeholder={'Select'}
-                    onChange={onSelectMines}
-                  >
-                    {_.times(24, (index)=> {
-                    const item = index+1;
-                    return <option value={item}>{item}</option>;
-                    })}
-                  </select>
+
+                <MinesInput mines={mines} setMines={setMines}/>
+
+                  {/*<select*/}
+                  {/*  className={classNames(styles.selectMines)}*/}
+                  {/*  placeholder={'Select'}*/}
+                  {/*  onChange={onSelectMines}*/}
+                  {/*>*/}
+                  {/*  {_.times(24, (index)=> {*/}
+                  {/*  const item = index+1;*/}
+                  {/*  return <option value={item}>{item}</option>;*/}
+                  {/*  })}*/}
+                  {/*</select>*/}
               </div>
             </div>
           </div>
           :
           <div className={styles.sliderContainer}>
-            Not available yet
+            Coming Soon
           </div>
         }
       </div>
