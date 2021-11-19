@@ -16,6 +16,12 @@
   flex-direction: column;
   align-items: center;
   min-width: fit-content;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: -20px -30px -40px -30px;
+  padding: 20px 30px 40px 30px;
+  background-position: center;
+  background-image: url('../../data/backgrounds/Trapezoid.png');
   @media (max-width: 650px) {
     transform: scale(0.8);
   }
@@ -25,10 +31,10 @@
   @media (max-width: 350px) {
     transform: scale(0.55);
   }
-
+/*
   &:after{
     content: '';
-    border-bottom: 380px solid #ffffff;
+    border-bottom: 380px solid transparent;
     border-left: 260px solid transparent;
     border-right: 260px solid transparent;
     height: 0;
@@ -38,6 +44,7 @@
     top: -50px;
     padding: 20px 40px;
   }
+  */
   .ball{
     z-index: 15;
     background: white;
@@ -46,7 +53,7 @@
     margin: auto;
     left: 0;
     right: 0;
-    top: -30px;
+    top: -10px;
     width: 20px;
     height: 20px;
     border-radius: 15px;
@@ -76,7 +83,7 @@
   .boxes{
     display: flex;
     justify-content: center;
-    background: white;
+    //background: white;
     align-items: center;
     min-width: calc(100% + 80px);
     width: calc(100% + 80px);
@@ -84,7 +91,7 @@
     left: -200px;
     right: -200px;
     margin: auto;
-    bottom: -44px;
+    bottom: 5px;
     .box{
       border-radius: 2px 2px 10px 10px;
       -webkit-box-shadow: inset 0 0 4px 2px #d7393f;
@@ -125,11 +132,29 @@
 .background{
   position: absolute;
   margin: auto;
-   max-width: fit-content;
-  svg{
+
+   //max-width: fit-content;
+  /*svg{
     max-width: auto!important;
-  }
+  }*/
 }
+/*
+.trapezoid{
+  z-index: 1;
+  position: absolute;
+  top: 50px;
+  @media (max-width: 650px) {
+    transform: scale(0.8);
+    z-index: 0;
+  }
+  @media (max-width: 580px) {
+    transform: scale(0.6);
+  }
+  @media (max-width: 350px) {
+    transform: scale(0.55);
+  }
+
+}*/
 .animation {
   display: flex;
   align-items: center;
@@ -141,6 +166,13 @@
   max-height: 470px;
   min-height: 470px;
   position: relative;
+  @media (max-width: 650px) {
+    svg{
+      display: none;
+    }
+    background: #dd8549;
+  }
+
   @media (max-width: 580px) {
     max-height: 320px;
     min-height: 320px;

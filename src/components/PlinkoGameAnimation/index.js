@@ -66,7 +66,8 @@ const PlinkoGameAnimation = ({
       changeBackground(0)
     } else audio.playLoseSound();
     const spin = bet.profit > 0 ?
-      { type: 'win', value: '+' + bet.profit }:
+      { type: 'win', value: '+' + bet.profit } :
+      bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
       { type: 'loss', value: bet.profit}
     setSpins((spins) => [spin].concat(spins))
     bet.autobet ?
@@ -77,7 +78,7 @@ const PlinkoGameAnimation = ({
   return (
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-      <BackgroundPlinko state={backg} size={Math.min(width, height)*4} />
+      <BackgroundPlinko state={backg} size={Math.sqrt(width*width+height*height)} />
       {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} />}
     </div>
   );
