@@ -119,10 +119,6 @@ const PlinkoGame = ({
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
-        const spin = data.profit > 0 ?
-          { type: 'win', value: '+' + data.profit }:
-          { type: 'loss', value: data.profit}
-        setSpins((spins) => [spin].concat(spins))
         setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
         updateUserBalance(userId);
         //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
@@ -197,6 +193,7 @@ const PlinkoGame = ({
                 risk={risk}
                 amount={amount}
                 bet={bet}
+                setSpins={setSpins}
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
