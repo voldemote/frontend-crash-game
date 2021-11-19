@@ -129,33 +129,30 @@ export const BackgroundPlinko = ({size, state}) => {
 }
 */
 
-export const BackgroundPlinko = ({size, state}) => {
+export const BackgroundPlinko = ({size, state, width, height}) => {
   const colors = ["#d7393f", "#dd8549", "#e6e76a"]
   return(
-    <>
-      <svg className={styles.background} height={size} width={size}>
-        <circle r={size/2} cx={size/2} cy={size/2} fill={colors[state % 3]} />
-        <circle
-          r={size/4}
-          cx={size/2}
-          cy={size/2}
-          fill="transparent"
-          stroke={colors[(state+1) % 3]}
-          strokeWidth={size/2}
-          strokeDasharray="50 100"
-        />
-        <circle
-          r={size/4}
-          cx={size/2}
-          cy={size/2}
-          fill="transparent"
-          stroke={colors[(state+2) % 3]}
-          strokeWidth={size/2}
-          strokeDashoffset={50}
-          strokeDasharray="50 100"
-        />
-      </svg>
-    {/*  <img className={styles.trapezoid} src="/images/casino-games/Trapezoid.png" alt="" />*/}
-    </>
+    <svg className={styles.background} height={height} width={width}>
+      <circle r={size/2} cx={width/2} cy={height/2} fill={colors[state % 3]} />
+      <circle
+        r={size/4}
+        cx={width/2}
+        cy={height/2}
+        fill="transparent"
+        stroke={colors[(state+1) % 3]}
+        strokeWidth={size/2}
+        strokeDasharray="50 100"
+      />
+      <circle
+        r={size/4}
+        cx={width/2}
+        cy={height/2}
+        fill="transparent"
+        stroke={colors[(state+2) % 3]}
+        strokeWidth={size/2}
+        strokeDashoffset={50}
+        strokeDasharray="50 100"
+      />
+    </svg>
   )
 };

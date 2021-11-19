@@ -9,19 +9,13 @@
   padding: 5px 20px;
   cursor: pointer;
 }
-.board{
-  position: relative;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: fit-content;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  margin: -20px -30px -40px -30px;
-  padding: 20px 30px 40px 30px;
-  background-position: center;
-  background-image: url('../../data/backgrounds/Trapezoid.png');
+.trape{
+  position: absolute;
+  min-width: 660px;
+  max-width: 660px;
+  height: auto;
+  z-index: 2;
+  margin-top: 15px;
   @media (max-width: 650px) {
     transform: scale(0.8);
   }
@@ -31,6 +25,31 @@
   @media (max-width: 350px) {
     transform: scale(0.55);
   }
+}
+.board{
+  position: relative;
+  width: fit-content;
+  display: flex;
+  z-index: 3;
+  flex-direction: column;
+  align-items: center;
+  min-width: fit-content;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: -20px -30px -40px -30px;
+  padding: 20px 30px 40px 30px;
+  background-position: center;
+  //background-image: url('../../data/backgrounds/Trapezoid.png');
+  @media (max-width: 650px) {
+    transform: scale(0.8);
+  }
+  @media (max-width: 580px) {
+    transform: scale(0.6);
+  }
+  @media (max-width: 350px) {
+    transform: scale(0.55);
+  }
+
 /*
   &:after{
     content: '';
@@ -131,32 +150,7 @@
 }
 .background{
   position: absolute;
-  margin: auto;
-  max-width: fit-content;
-  left: -500px;
-  right: -500px;
-   //max-width: fit-content;
-  /*svg{
-    max-width: auto!important;
-  }*/
 }
-/*
-.trapezoid{
-  z-index: 1;
-  position: absolute;
-  top: 50px;
-  @media (max-width: 650px) {
-    transform: scale(0.8);
-    z-index: 0;
-  }
-  @media (max-width: 580px) {
-    transform: scale(0.6);
-  }
-  @media (max-width: 350px) {
-    transform: scale(0.55);
-  }
-
-}*/
 .animation {
     display: flex;
     align-items: center;
@@ -167,17 +161,6 @@
     max-height: 470px;
     min-height: 470px;
     position: relative;
-  /*
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  /*height: fit-content;*/
-//  max-height: 470px;
-//  min-height: 470px;
-//  position: relative;
   @media (max-width: 580px) {
     max-height: 320px;
     min-height: 320px;
