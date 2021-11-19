@@ -71,7 +71,7 @@ const PlinkoGame = ({
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
         setSpins(lastSpins.map((spin) => {
-          if(spin.profit > 0) {
+          if(spin.profit >= 0) {
             return {
               type: 'win',
               value: '+' + spin.profit
@@ -108,7 +108,7 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
-
+  console.log("spins", spins)
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
