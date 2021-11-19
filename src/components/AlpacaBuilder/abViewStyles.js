@@ -41,12 +41,12 @@ const AbViewStyles = ({
     })
   }
 
-  useEffect(() => {
-    if(current?.style && !selectedStyle) setSelectedStyle(current.style);
-    if(current?.colors && !selectedColors) setSelectedColors(current.colors);
-    if(category && !selectedCategory) setSelectedCategory(category);
-    console.log('[abviewstyles] onload?', current, category)
-  }, [category, selectedCategory, setSelectedCategory, setSelectedStyle, setSelectedColors, current, selectedColors, selectedStyle]);
+  // useEffect(() => {
+  //   if(current?.style && !selectedStyle) setSelectedStyle(current.style);
+  //   if(current?.colors && !selectedColors) setSelectedColors(current.colors);
+  //   if(category && !selectedCategory) setSelectedCategory(category);
+  //   console.log('[abviewstyles] onload?', current, category)
+  // }, [category, selectedCategory, setSelectedCategory, setSelectedStyle, setSelectedColors, current, selectedColors, selectedStyle]);
 
   const renderColorBtn = (index) => {
     const currentColors = selectedCategory.colors[index];

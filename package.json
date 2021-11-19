@@ -25,6 +25,7 @@
     "connected-react-router": "^6.9.1",
     "dateformat": "^5.0.1",
     "express": "^4.17.1",
+    "external-svg-loader": "1.4.0",
     "github-markdown-css": "^4.0.0",
     "graphql": "^15.6.1",
     "graphql-request": "^3.6.0",

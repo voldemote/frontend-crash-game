@@ -14,16 +14,17 @@
 
     .svg{
       margin: auto;
-      width: 100%;
+      width: 200px;
       height: 200px;
-      position:relative;
+      //position:relative;
 
-      img{
-        position: absolute;
-        top:20px;
-        left:100px;
-        width: 200px;
-        height: 200px;
+      image, use, svg, g{
+        //position: absolute;
+        // top:20px;
+        // left:100px;
+        // width: 200px;
+        // height: 200px;
+        //opacity: .5;
       }
     }
   }
@@ -58,9 +59,10 @@
         width: calc( (100% / 3) - 20px );
         padding: 10px;
 
-        img{
+        svg{
           width: 100%;
           height: auto;
+
         }
       }
       .tileSelected{

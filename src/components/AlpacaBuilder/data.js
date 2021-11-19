@@ -8,29 +8,36 @@ export const BASE_BODY_URL = '/images/alpaca-builder/base body.svg';
 
 export const CATEGORIES = [{
     name: 'chips',
-    path: '/images/alpaca-builder/chips/',
-    styles: ['chip_1', 'chip_2', 'chip_3', 'chip_4', 'chip_5'],
+    path: '/images/alpaca-builder/Chips/',
+    styles: ['Chip_1', 'Chip_2', 'Chip_3', 'Chip_4', 'Chip_5'],
+    colors:[
+      ['#472D38','#D6D9BA'],['#E6AF83','#D16C5C'],['#72AD97','#E6AF83']
+    ]
+  },{
+    name: 'body',
+    path: '/images/alpaca-builder/Body/',
+    styles: ['Body1'],
     colors:[
       ['#472D38','#D6D9BA'],['#E6AF83','#D16C5C'],['#72AD97','#E6AF83']
     ]
   },{
     name: 'hairs',
-    path: '/images/alpaca-builder/hair/',
-    styles: ['hair_1', 'hair_2', 'hair_3', 'hair_4', 'hair_5', 'hair_6', 'hair_7', 'hair_8', 'hair_9'],
+    path: '/images/alpaca-builder/Hair/',
+    styles: ['Hair_1', 'Hair_2', 'Hair_3', 'Hair_4', 'Hair_5', 'Hair_6', 'Hair_7', 'Hair_8', 'Hair_9'],
     colors:[
       ['#472D38','#D6D9BA'],['#E6AF83','#D16C5C'],['#72AD97','#E6AF83']
     ]
   },{
     name: 'eyes',
-    styles: ['eyes_1', 'eyes_2', 'eyes_3', 'eyes_4', 'eyes_5', 'eyes_6', 'eyes_7', 'eyes_8'],
-    path: '/images/alpaca-builder/eyes/',
+    styles: ['Eyes_1', 'Eyes_2', 'Eyes_3', 'Eyes_4', 'Eyes_5', 'Eyes_6', 'Eyes_7', 'Eyes_8', 'Eyes_9'],
+    path: '/images/alpaca-builder/Eyes/',
     colors:[
       ['#472D38','#D6D9BA'],['#E6AF83','#D16C5C'],['#72AD97','#E6AF83']
     ]
   },{
     name: 'mouths',
-    path: '/images/alpaca-builder/mouths/',
-    styles: ['mouth_1', 'mouth_2', 'mouth_3', 'mouth_4', 'mouth_5', 'mouth_6', 'mouth_7', 'mouth_8', 'mouth_9'],
+    path: '/images/alpaca-builder/Mouth/',
+    styles: ['Mouth_1', 'Mouth_2', 'Mouth_3', 'Mouth_4', 'Mouth_5', 'Mouth_6', 'Mouth_7', 'Mouth_8'],
     colors:[
       ['#472D38','#D6D9BA'],['#E6AF83','#D16C5C'],['#72AD97','#E6AF83']
     ]
