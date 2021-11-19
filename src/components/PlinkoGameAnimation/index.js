@@ -84,7 +84,7 @@ const PlinkoGameAnimation = ({
     setTimeout(() => {
       setBackg((backg) => backg === 2 ? 0 : backg + 1)
       count < 30 ? changeBackground(count + 1) : setFlag(false)
-    }, 1000)
+    }, 100)
   }
 
   const handleEnd = (win) => {
