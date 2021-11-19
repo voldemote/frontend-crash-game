@@ -287,7 +287,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <h2>WELCOME TO THE <br/><span class={styles.pink}>ALPACA</span>SINO</h2>
               </div>              
             </div>
-            <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <p className={styles.description}>All games are provably fair. Playing and betting will soon allow you to unlock special items for the Alpacavatar. Winners on the leaderboard can earn even more NFT items and loot. </p>
             <div className={styles.categorySection}>
               <div className={styles.categoryItem}>
                 <img src={ChipOne} alt="chip-one"/>
