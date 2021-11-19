@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import AbViewCategories from './abViewCategories';
 import AbViewIntro from './abViewIntro';
 import AbViewStyles from './abViewStyles';
-import {AB_VIEWS, CATEGORIES} from './data';
+import {AB_VIEWS, BASE_BODY_URL, CATEGORIES, buildImagePath} from './data';
 
 const AlpacaBuilder = ({
   visible,
@@ -17,27 +17,26 @@ const AlpacaBuilder = ({
   const [currentCategory, setCurrentCategory] = useState();
 
   useEffect(() => {
-    console.log('[alpacabuilder] show', visible)
     setActiveViews([])
-    resetSvg();
-    //setHidingView();
+    resetSvg(true);
     if (visible) {
-      pushView(AB_VIEWS.intro);
-      //setShowingView(AB_VIEWS.intro);
+      pushView(AB_VIEWS.styles);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
-  const resetSvg = () => {
+  const resetSvg = (randomize) => {
     let p = {};
     for(let c of CATEGORIES){
-      p[c.name] = {style:null, colors:null};
+      const style = randomize ? c.styles[Math.floor(Math.random() * c.styles.length)] : null;
+      const colors = randomize ? c.colors[Math.floor(Math.random() * c.colors.length)] : null;
+      p[c.name] = {style, colors};
     }
     setSvgProperties(p);
   }
 
 
-  const pushView = (newView, props) =>{
+  const pushView = (newView) =>{
     if(!newView) return;
     setShowingView(newView);
     setActiveViews([...activeViews, newView]);
@@ -46,7 +45,7 @@ const AlpacaBuilder = ({
     }, 400);
   }
 
-  const pullView = (newView) =>{
+  const popView = (newView) =>{
     if(activeViews.length <= 1) return;
     setHidingView(newView);
     setActiveViews(activeViews.filter(v => v !==  newView));
@@ -67,7 +66,7 @@ const AlpacaBuilder = ({
     return (<a
       className={styles.backBtn}
       href="#/"
-      onClick={() => pullView(activeViews[activeViews.length-1])}>Back</a>);
+      onClick={() => popView(activeViews[activeViews.length-1])}>Back</a>);
   }
 
   const selectCategory = (cat) => {
@@ -75,11 +74,22 @@ const AlpacaBuilder = ({
     pushView(AB_VIEWS.styles);
   }
 
-  const applyStyle = (style) => {
+  const applyStyle = (categoryName, style) => {
     let p = {...svgProperties};
-    p[currentCategory.name] = style;
+    p[categoryName] = style;
     setSvgProperties(p);
+    console.log(JSON.stringify(svgProperties,null, 2));
   }
+
+  const renderSvg = (filterCat = () => true) =>
+    svgProperties && Object.keys(svgProperties)
+    .filter(filterCat)
+    .map((catName, index) => {
+       const current = svgProperties[catName];
+       const svgPath = buildImagePath(catName, current?.style)
+       return current.style && (<img key={`svg_abuilder_${index}`} alt='alpaca features' src={svgPath}/>);
+    });
+
 
   return (
     <div
@@ -87,9 +97,17 @@ const AlpacaBuilder = ({
         styles.alpacaBuilder
       )}>
       <div className={styles.head}>
-        <h2>Alpacabuilder</h2>
+        <h2>Alpacabuilder
+          <a
+            href="#/"
+            onClick={() => resetSvg(true)}> <em>Randomize</em></a>
+        </h2>
         {activeViews.length > 1 && (renderBackButton())}
-        <div className={styles.svg}><pre>{JSON.stringify(svgProperties,null, 2)}</pre></div>
+        <div className={styles.svg}>
+          {renderSvg(c => c === "chips")}
+          <img src={BASE_BODY_URL} alt="your alpacavatar"/>
+          {renderSvg(c => c !== "chips")}
+        </div>
       </div>
       <div className={styles.viewsContainer}>
         <AbViewIntro
@@ -105,6 +123,7 @@ const AlpacaBuilder = ({
           current={currentCategory && svgProperties[currentCategory.name]}
           ></AbViewStyles>
       </div>
+
     </div>
   );
 };

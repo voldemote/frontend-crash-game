@@ -22,9 +22,8 @@ const AbViewCategories = ({
   }
 
   const renderCategoryBtn = (cat, index) => {
-    let x = `abcat_${index}`;
     return (
-      <a className={styles.tile} href="#/" onClick={()=> {onCategoryClick(cat)}}>{cat.name} {x}</a>
+      <a key={`abcat_${index}`} className={styles.tile} href="#/" onClick={()=> {onCategoryClick(cat)}}>{cat.name}</a>
     );
   }
 
