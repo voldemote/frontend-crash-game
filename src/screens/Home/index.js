@@ -201,11 +201,11 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <img className={styles.second} src={howTokenWorkWToken} alt="" />
               </div>
               <div className={styles.detail}>
-                <h3>Exchange PFAIR = WFAIR</h3>
+                <h3>WEEKLY Awards</h3>
                 <p>
-                  If you rise to the top 10 of our leaderboard every week. 
-                  You can exchange your PFAIR winnings for WFAIR and 
-                  have the chance to win £20,000!
+                  Keep playing and rise to the top of the leaderboard every week
+                  and increase the chances of winning real WFAIR tokens.
+                  Winners will be announced every Sunday!
                 </p>
               </div>
             </div>
