@@ -9,7 +9,7 @@ import { AnimationController, BackgroundPlinko } from './AnimationController'
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 
-const colors = ["#d7393f", "#dd8549", "#e6e76a"]
+/*const colors = ["#d7393f", "#dd8549", "#e6e76a"]
 const backgroundString = (backg) =>`conic-gradient(from 90deg at 50% 50%, ${colors[backg]} 0%,
   ${colors[backg]} 10%, ${colors[backg+1]} 10%,
   ${colors[backg+1]} 15%, ${colors[backg+2]} 15%,
@@ -30,7 +30,7 @@ const backgroundString = (backg) =>`conic-gradient(from 90deg at 50% 50%, ${colo
   ${colors[backg+1]} 90%, ${colors[backg+2]} 90%,
   ${colors[backg+2]} 95%, ${colors[backg]} 95%,
   ${colors[backg]} 100%, ${colors[backg+1]} 100%)`
-
+*/
 const PlinkoGameAnimation = ({
   connected,
   amount,
@@ -47,7 +47,7 @@ const PlinkoGameAnimation = ({
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
-  const [backgr, setBackgr] = useState(backgroundString(0));
+  //const [backgr, setBackgr] = useState(backgroundString(0));
   const [flag, setFlag] = useState(false);
   const [ball, setBall] = useState(null);
 
@@ -64,10 +64,11 @@ const PlinkoGameAnimation = ({
       aud.stopBgm();
     }
   },[])
+  /*
   useEffect(() => {
     setBackgr(backgroundString(backg))
   },[backg])
-
+*/
   useEffect(() => {
     if(bet && !bet.pending && bet.path) spin(bet);
   }, [bet]);
@@ -98,13 +99,14 @@ const PlinkoGameAnimation = ({
       { type: 'loss', value: bet.profit}
     setSpins((spins) => [spin].concat(spins))
     bet.autobet ?
-     setBet((bet) => {return{ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
-     setBet((bet) => {return{...bet, ball: bet.ball-1}})
+     setBet((bet) => {return {ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
+     setBet((bet) => {return {...bet, ball: bet.ball-1}})
   }
   return (
-    <div ref={backgroundRef} style={{background: isMobile && backgr}} className={styles.animation}>
+    <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-      {!isMobile && <BackgroundPlinko state={backg} size={Math.sqrt(width*width+height*height)*1.1} />}
+      <img className={styles.trape} src="/images/casino-games/Trapezoid.png" alt="" />
+      <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />
       {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} />}
     </div>
   );
