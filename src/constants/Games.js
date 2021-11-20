@@ -58,6 +58,14 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
+    background: gameCard4,
+    title: 'Plinko',
+    subtitle: '',
+    description: '',
+    active: true,
+    linkTo: '/games/plinko',
+  },
+  {
     background: gameCard1,
     title: 'Alpaca Roulette',
     subtitle: '',
@@ -85,16 +93,7 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     active: false,
     linkTo: '/games/pump-dump',
-  },
-  {
-    background: gameCard4,
-    title: 'Plinko',
-    subtitle: '',
-    description:
-      'Jump and run on each price tick, are you heading north, south or staying put?',
-    active: false,
-    linkTo: '/games/plinko',
-  },
+  }
   /*,
   {
     background: Fourth,

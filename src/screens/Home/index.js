@@ -50,6 +50,7 @@ import YellowThumbnail from '../../data/images/alpaca-dopter/yellow-thumbnail.pn
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
+import classNames from 'classnames';
 
 const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
@@ -175,9 +176,9 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
               <div className={styles.detail}>
                 <h3>$PFAIR Token?</h3>
                 <p>
-                  PFAIR are WALLFAIRS FREE to play tokens. 
-                  The  tokens can be used in our WALLFAIR ALPHA playgound for 
-                  risk and care free betting fun
+                  PFAIR is Wallfair's FREE-TO-PLAY token. The tokens can be
+                  used in the ALPACASINO playground for risk and care free
+                  betting fun
                 </p>
               </div>
             </div>
@@ -190,7 +191,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <p>
                   WFAIR is the protocol token used on 
                   smart contracts. Alpacasino is a play-money simulation (“PFAIR”)  of WFAIR use cases. 
-                  You can buy and trade WFAIR here→ WALLFAIR/BUY
+                  You can buy and trade WFAIR <a href="https://wallfair.io/buy-wfair" target="_blank" rel="noreferrer">here</a>
                 </p>
               </div>
             </div>
@@ -200,11 +201,11 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <img className={styles.second} src={howTokenWorkWToken} alt="" />
               </div>
               <div className={styles.detail}>
-                <h3>Exchange PFAIR = WFAIR</h3>
+                <h3>WEEKLY Awards</h3>
                 <p>
-                  If you rise to the top 10 of our leaderboard every week. 
-                  You can exchange your PFAIR winnings for WFAIR and 
-                  have the chance to win £20,000!
+                  Keep playing and rise to the top of the leaderboard every week
+                  and increase the chances of winning real WFAIR tokens.
+                  Winners will be announced every Monday!
                 </p>
               </div>
             </div>
@@ -253,6 +254,11 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
+              <Link to={'/games/plinko'}>
+                <img src={gameCard4} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/alpaca-wheel'}>
                 <img src={gameCard1} alt="" />
               </Link>
@@ -262,9 +268,6 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard3} alt="" />
-            </Grid>
-            <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard4} alt="" />
             </Grid>
           </Grid>
         </div>
@@ -287,7 +290,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <h2>WELCOME TO THE <br/><span class={styles.pink}>ALPACA</span>SINO</h2>
               </div>              
             </div>
-            <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <p className={styles.description}>Hello Human, welcome to the Alpacasino. Sign up now and test our upcoming WFAIR-powered casino absolutely for free with play-money. Help our alpacas build the perfect fun, transparent and decentralized casino. </p>
             <div className={styles.categorySection}>
               <div className={styles.categoryItem}>
                 <img src={ChipOne} alt="chip-one"/>
@@ -349,7 +352,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                       unlock cool NFT and crypto prices.
                     </p>
                   </div>
-                  <div className={styles.thumbnail}>
+                  <div className={classNames(styles.thumbnail, styles.cactusJack)}>
                     <img src={MagentaThumbnail} alt="" />
                   </div>
                 </div>
@@ -570,7 +573,7 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
           {!isLoggedIn() && renderWelcome()}
           {isLoggedIn() && renderRosiBanner()}
           {isLoggedIn() && renderGamesCards()}
-          {renderActivities()}
+          {isLoggedIn() && renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}

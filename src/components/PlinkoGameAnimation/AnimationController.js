@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import { isMobile } from 'react-device-detect';
 
 const rows = 12, ball = 20, row = 30, peg = 10, separation = 30;
 
@@ -54,7 +55,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   }, [risk, amount])
 
   return (
-    <div className={styles.board} ref={boardref}>
+    <div className={styles.board} style={{backgroundSize: isMobile ? '115%' : '100%'}} ref={boardref}>
       {false && <div id="ball" className={styles.ball}></div>}
       {Array.from({length: rows}).map((row, index) =>
         <div key={index} className={styles.row}>
@@ -120,16 +121,23 @@ function fallToBuscket(onBuscket, ball, winMultiplier) {
   setTimeout(() => document.getElementById(ball).style.opacity = 0, 300)
   setTimeout(() => document.getElementById(ball).remove(), 500)
 }
-
+/*
 export const BackgroundPlinko = ({size, state}) => {
+  return(
+    <div className={styles.background} style={{background:back }}><div/>
+  )
+}
+*/
+
+export const BackgroundPlinko = ({size, state, width, height}) => {
   const colors = ["#d7393f", "#dd8549", "#e6e76a"]
   return(
-    <svg className={styles.background} height={size} width={size}>
-      <circle r={size/2} cx={size/2} cy={size/2} fill={colors[state % 3]} />
+    <svg className={styles.background} height={height} width={width}>
+      <circle r={size/2} cx={width/2} cy={height/2} fill={colors[state % 3]} />
       <circle
         r={size/4}
-        cx={size/2}
-        cy={size/2}
+        cx={width/2}
+        cy={height/2}
         fill="transparent"
         stroke={colors[(state+1) % 3]}
         strokeWidth={size/2}
@@ -137,8 +145,8 @@ export const BackgroundPlinko = ({size, state}) => {
       />
       <circle
         r={size/4}
-        cx={size/2}
-        cy={size/2}
+        cx={width/2}
+        cy={height/2}
         fill="transparent"
         stroke={colors[(state+2) % 3]}
         strokeWidth={size/2}

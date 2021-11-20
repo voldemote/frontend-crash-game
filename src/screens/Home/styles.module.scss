@@ -361,6 +361,10 @@
         }
         p {
           font-size: 14px;
+
+          a {
+            text-decoration: underline;
+          }
         }
         @media (max-width: $screen-md) {
           text-align: center;
@@ -651,6 +655,12 @@
         .thumbnail {
           display: flex;
           margin: 0 auto 14px;
+
+          &.cactusJack {
+            @media screen and (max-width: $screen-md) {
+              display: none;
+            }
+          }
         }
       }
     }

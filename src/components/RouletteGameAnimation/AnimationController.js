@@ -217,19 +217,6 @@ class AnimationController {
     ctx.shadowOffsetX = this.r / 40;
     ctx.shadowOffsetY = this.r / 40;
 
-    this.g = ctx.createRadialGradient(
-      cx - this.r / 7,
-      cy - this.r / 7,
-      0,
-      cx,
-      cy,
-      this.r / 3
-    );
-    this.g.addColorStop(0, '#000');
-    this.g.addColorStop(0.2, '#F44');
-    this.g.addColorStop(1, '#811');
-    ctx.fillStyle = this.g;
-
     ctx.beginPath();
     ctx.arc(cx, cy, this.r / 3.5, 0, 2 * Math.PI, false);
     ctx.fill();
@@ -284,7 +271,7 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-    img.src = '../images/roulette-game/' + (this.risk) + '.svg';
+    img.src = '../images/roulette-game/alpaca-' + (this.risk) + '.svg';
 
     if(!play) {
       img.onload = function () {
