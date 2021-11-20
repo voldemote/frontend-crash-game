@@ -173,6 +173,11 @@ export default class View extends Factory.Container {
 
   }
 
+  updateGrid(that) {
+    const { grid } = that.model;
+    this.creteGrid(grid);
+  }
+
   /** To pause the game. It removes all interactivity and stops the counter */
   pause() {
     this.isPause = true;
@@ -286,7 +291,7 @@ export default class View extends Factory.Container {
   revealCells(cells) {
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
-      cell.reveal(this.resPack, this.viewConfig.styles);
+      cell.reveal(this.resPack, this.viewConfig.styles, cell.isMine);
     });
   }
   /** To reveal all cells which were collected by engine

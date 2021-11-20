@@ -22,7 +22,7 @@ import {AlertActions} from "../../store/actions/alert";
 const gameConfigBase = {
   "name": "Minesweeper",
   "debuggerMode": true,
-  "setGridManually": false,
+  "setGridManually": true,
   // basically it is a with of a square
   "gridSize": 380,
   "defaultGrid": {
@@ -31,7 +31,7 @@ const gameConfigBase = {
     "rows": 5
   },
   "grid": [
-    [ -1, -1, 1, 1,1 ],
+    [ 1, 1, 1, 1,1 ],
     [ 1, 1, 1, 1,1 ],
     [ 1, 1, 1, 1,1 ],
     [ 1, 1, 1, 1,1 ],
@@ -41,8 +41,11 @@ const gameConfigBase = {
   "timing": {
     "flagRequestTimeout": 10,
     "popupTimeout": 1000
-  }
+  },
+  initialReveal: []
 };
+
+let GAME = null;
 
 const RouletteGameAnimation = ({
   connected,
@@ -55,8 +58,10 @@ const RouletteGameAnimation = ({
   setAmount,
   amount,
   gameInProgress,
-  setGameInProgress
+  setGameInProgress,
+  gameApi
 }) => {
+
 
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -65,6 +70,30 @@ const RouletteGameAnimation = ({
 
   const [gameConfig, setGameConfig] = useState({});
   const [audio, setAudio] = useState(null);
+
+  const getTranslatedReveal = (clientBoard) => {
+      let col = 0;
+      let row = 0;
+      const reveal = clientBoard?.map((entry, index)=> {
+        if(index % 5 === 0) {
+          col++;
+          row = 0;
+        }
+        row++;
+
+        return {
+          row: row-1,
+          col: col-1,
+          isMine: false,
+          isRevealed: true,
+          isEmpty: true,
+          isFlagged: false,
+          text: ""
+        };
+      })
+
+    return reveal;
+  }
 
   const cellClickHandler = (data) => {
     console.log('##ON CLICK CELL HANDLER', data);
@@ -89,8 +118,7 @@ const RouletteGameAnimation = ({
 
     const isMine = checkMine.data.result === 0 ? false : true;
 
-    return !isMine ? [
-      {
+    return {
         col,
         row,
         isEmpty: true,
@@ -99,28 +127,34 @@ const RouletteGameAnimation = ({
         isRevealed: true,
         text: ""
       }
-    ] : 'MINE';
-
   }
 
   useEffect(() => {
     console.log('[MINES] GET CURRENT GAME STATE');
-    getCurrentMines()
+    gameApi.getCurrentMines()
       .then(response => {
         const {data} = response;
         const configBase = _.cloneDeep(gameConfigBase);
+
+        console.log('[MINES] gameState', data);
+
         if(data?.gameState === 1) {
           setGameInProgress(true);
           setMines(data?.minesCount);
           setAmount(data?.stakedAmount);
-          setBet({pending: true});
+          setBet({
+            pending: false,
+            done: true
+          });
+          _.set(configBase, 'initialReveal', data.clientBoard);
         } else {
           setGameInProgress(false);
+          _.set(configBase, 'initialReveal', data.clientBoard);
           // setBet({pending: false});
         }
 
         setGameConfig({
-          ...gameConfigBase
+          ...configBase
         })
       }).catch(error => {
       dispatch(AlertActions.showError(error.message));
@@ -140,7 +174,7 @@ const RouletteGameAnimation = ({
         "backgroundColor": 0xffffff,
         view: canvasRef.current
       }
-      const { audio, handle } = AnimationController.init(canvasRef.current, {
+      const { audio, that } = AnimationController.init(canvasRef.current, {
         width: applicationConfig.width,
         height: applicationConfig.height,
         gameConfig,
@@ -149,17 +183,18 @@ const RouletteGameAnimation = ({
         resourcesConfig,
         gameViewConfig,
         amount,
+        initialReveal: getTranslatedReveal(gameConfig?.initialReveal),
         cellClickHandler,
         checkSelectedCell
       });
+      GAME = that.game;
       setAudio(audio);
       audioInstance = audio;
-      instance = handle;
       onInit(audio);
 
       return () => {
         audioInstance.stopBgm();
-        instance.destroy();
+        that.destroy();
       }
     }
 

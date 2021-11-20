@@ -12,29 +12,7 @@ import {Application} from "./sources/extensions/index.js";
 import {LayoutManager, ResourceLoader} from "./sources/libs/index.js";
 import {applicationConfig} from "./configs";
 
-let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 1.22],
-  [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
-  [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
-  [0, 1.22, 0.75, 0, 3, 0.22, 0, 3, 1.75, 0.22, 0.5, 1.22],
-  [0, 1.22, 0, 0, 4, 0.22, 0, 3, 2, 0.22, 0, 1.22],
-  [0, 0.22, 0, 0, 5, 0, 0, 3, 2, 0.44, 0, 1.22],
-  [0, 0.22, 0, 0, 7, 0, 0, 2, 2, 0.44, 0, 0.22]]
-
-let riskImages = [
-  '/images/roulette-game/1.svg',
-  '/images/roulette-game/2.svg',
-  '/images/roulette-game/3.svg',
-  '/images/roulette-game/4.svg',
-  '/images/roulette-game/5.svg',
-  '/images/roulette-game/6.svg',
-  '/images/roulette-game/7.svg',
-];
-let updateValues = [];
-let numberSelected = 0;
-let colors = ['#734b95', '#db4a8c', '#6ca9da', '#f5e272'];
-let idle2 = true
 PIXI.utils.skipHello();
-
 
 export class AudioController {
   constructor(bgmIndex = 0) {
@@ -175,7 +153,8 @@ export class AudioController {
 
 class AnimationController {
   init(canvas, options) {
-    const {gameConfig, layoutManagerConfig, applicationConfig, resourcesConfig, gameViewConfig} = options;
+    const {gameConfig, layoutManagerConfig, applicationConfig, resourcesConfig, gameViewConfig, initialReveal} = options;
+    this.game = new Game();
     this.canvas = canvas;
     this.canvas.width = options.width;
     this.canvas.height = options.height;
@@ -187,12 +166,12 @@ class AnimationController {
     this.amount = options.amount
     // let sections = sectionsArray[this.risk-1];
     /* Create an instance of game, initialize it and set game config */
-    const game = new Game();
-    game.initialize({
+
+    this.game.initialize({
       cellClickHandler: options.cellClickHandler,
       checkSelectedCell: options.checkSelectedCell
     });
-    game.useConfig({gameConfig, gameViewConfig});
+    this.game.useConfig({gameConfig, gameViewConfig});
 
     /* Create an instance of PIXI.Application. Use the game application config for it */
     const app = new Application(applicationConfig);
@@ -202,9 +181,9 @@ class AnimationController {
     sprite1.scale.x = 0.3;
     sprite1.scale.y = 0.24;
     app.stage.addChild(sprite1);
-    app.stage.addChild(game.controller.view);
+    app.stage.addChild(this.game.controller.view);
 
-    app.ticker.add(game.update, game);
+    app.ticker.add(this.game.update, this.game);
 
     const updateCanvasSizes = ({width, height}) => {
       app.view.style.width = `${width}px`;
@@ -227,7 +206,7 @@ class AnimationController {
     /* just for development mode */
     if (gameConfig.debuggerMode) {
       window.game = {
-        controller: game.controller,
+        controller: this.game.controller,
         pixiStage: app.stage,
         layoutManager
       };
@@ -240,7 +219,7 @@ class AnimationController {
     /* Run loader and after it has loaded all assets, run the game */
     loader.runLoader(
       () => {
-        game.run();
+        this.game.run();
         const sizes = {
           width: this.canvas.width,
           height: this.canvas.height
@@ -248,22 +227,32 @@ class AnimationController {
 
         updateRenderSizes(sizes);
         updateCanvasSizes(sizes);
-        game.resize(sizes);
+        this.game.resize(sizes);
+
+        if(initialReveal && initialReveal.length) {
+          this.game.controller.view.revealCells(initialReveal);
+          this.game.controller.model.updateCellsData(initialReveal);
+        }
+
       },
       (resPack) => {
-        game.setResources(resPack);
+        this.game.setResources(resPack);
       }
     );
 
 
     return {
       audio: this.audio,
-      handle: this,
+      that: this
     };
   }
 
   destroy() {
     this.idle = false;
+  }
+
+  restart() {
+    this.game.restartGame();
   }
 
   changeValues() {

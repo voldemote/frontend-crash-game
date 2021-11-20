@@ -92,10 +92,10 @@ const PlaceBetMines = ({
     if (amount > userBalance) return;
     const payload = {
       amount,
-      mines: mines
+      minesCount: mines
     }
 
-    console.log('###payload', payload);
+    // console.log('###payload', payload);
     await onBet(payload);
 
     setGameInProgress(true)

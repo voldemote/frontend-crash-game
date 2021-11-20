@@ -42,7 +42,7 @@ const Game = ({
   const gameCfg = GAMES.mines;
   const GAME_TYPE_ID = gameCfg.id;
   const GAME_NAME = gameCfg.name;
-  const Api = new GameApi(gameCfg.url, token);
+  const gameApi = new GameApi(gameCfg.url, token);
   const dispatch = useDispatch();
   const {
     lastCrashes,
@@ -104,14 +104,14 @@ const Game = ({
   };
 
   async function handleBet(payload) {
-    audio.playBetSound();
+    // audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
         // setBet({...payload })
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        const { data } = await Api.createTradeMines(payload);
+        const { data } = await gameApi.createTradeMines(payload);
         console.log('[MINES handleBet] data', data);
 
         // setBet({...payload, ...data});
@@ -235,6 +235,7 @@ const Game = ({
                 onInit={audio => setAudio(audio)}
                 gameInProgress={gameInProgress}
                 setGameInProgress={setGameInProgress}
+                gameApi={gameApi}
               />
               <Spins text="My Cashouts" spins={cashouts} />
             </div>

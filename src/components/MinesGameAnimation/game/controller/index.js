@@ -96,22 +96,41 @@ export default class Controller extends Emitter {
     const gameEngineResult = Engine.checkSelectedCell(collection, row, col);
 
     const checkCell = this.handlers.checkSelectedCell({row, col}).then((result)=> {
-      this.model.updateCellsData(gameEngineResult);
 
-      if (gameEngineResult === Engine.MINE) {
+      // console.log('result', result);
+      // console.log('result.row', result.row);
+      // console.log('result.col', result.col);
+
+      const thisCell = collection[result.row][result.col]
+      thisCell.isMine = result.isMine;
+      thisCell.isRevealed = result.isRevealed;
+
+      this.view.updateGrid(this);
+
+      const revealArray = [
+        thisCell
+      ];
+
+      this.model.updateCellsData(revealArray);
+      this.view.revealCells(revealArray);
+
+      //reveal all
+      // this.view.revealCells(this.model.cellsToRevealed.flat());
+
+      if (thisCell.isMine) {
         this.view.gameOver("lose");
         this.view.revealCells(this.model.allMines.flat());
-        console.log('GAME LOST', gameEngineResult);
+        console.log('this.model.cellsToRevealed()', this.model.cellsToRevealed.flat());
+        // this.view.revealCells(this.model.cellsToRevealed.flat());
+        console.log('GAME LOST', revealArray);
       } else if (this.model.isGameWon) {
-        console.log('GAME WON', gameEngineResult);
-        this.view.revealCells(gameEngineResult);
+        console.log('GAME WON', revealArray);
+       // this.view.revealCells(result);
         this.view.gameOver("win");
         this.view.flagMines(this.model.totFlaggedCells.flat());
       } else {
-        console.log("GAME OTHER", gameEngineResult);
-        this.view.revealCells(gameEngineResult);
-        console.log(gameEngineResult);
-        console.log(this.cellsToRevealed);
+        console.log("GAME OTHER", revealArray);
+    //    this.view.revealCells(result);
       }
 
     });
