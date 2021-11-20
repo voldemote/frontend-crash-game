@@ -30,9 +30,8 @@ import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {
-  trackAlpacaWheelPlaceBetGuest,
-  trackAlpacaWheelPlaceBet,
-  trackAlpacaWheelCashout,
+  trackPlinkoCashout,
+  trackPlinkoPlaceBet
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 
@@ -126,8 +125,8 @@ const PlinkoGame = ({
         const { data } = await Api.createTradePlinko(payload);
         setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
         updateUserBalance(userId);
-        //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
+        trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
         return data;
       }
     } catch (e) {
