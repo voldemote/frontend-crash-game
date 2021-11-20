@@ -254,6 +254,11 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
+              <Link to={'/games/plinko'}>
+                <img src={gameCard4} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/alpaca-wheel'}>
                 <img src={gameCard1} alt="" />
               </Link>
@@ -263,9 +268,6 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard3} alt="" />
-            </Grid>
-            <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard4} alt="" />
             </Grid>
           </Grid>
         </div>
