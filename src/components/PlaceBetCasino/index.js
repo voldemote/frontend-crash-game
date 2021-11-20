@@ -218,7 +218,7 @@ const PlaceBetCasino = ({
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : 152 }}></span>
+        <span className={styles.top} style={{ left: selector === 'manual' ? 2 : '49.4%' }}></span>
         <div className={classNames(styles.tab, selector === 'manual' ? styles.selected:styles.deselected)} onClick={() => setSelector('manual')} >
           <span>Manual Bet</span>
         </div>

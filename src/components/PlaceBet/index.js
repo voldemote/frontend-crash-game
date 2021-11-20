@@ -450,7 +450,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '48.3%' }}></span>
+        <span className={styles.top} style={{ left: selector === 'manual' ? 2 : '49.4%' }}></span>
         <div className={classNames(styles.tab)} onClick={() => {setSelector('manual'); setAutobet(null)}} >
           <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
         </div>
