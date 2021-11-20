@@ -56,55 +56,93 @@ class GameApi {
     // console.log('PAYLOAD', payload);
     // console.log('URL', ApiUrls.API_MINES_BET);
 
-    return new Promise((resolve, reject) => {
-      const dummyData = {
-        data: {
-          gameTypeId: 'String',
-          gameName: 'String',
-          stakedAmount: 50,
-          userId: 'String',
-          minesCount: 20,
-          gameHash: 'String',
-          gameState: 0, //0 - started, 1 - ended
-          matchId: 'String',
-          tradeId: 'String',
-          outcomes: 10 // length = minesCount
-        }
-      }
-      resolve(dummyData)
-    })
+    // return new Promise((resolve, reject) => {
+    //   const dummyData = {
+    //     data: {
+    //       gameTypeId: 'String',
+    //       gameName: 'String',
+    //       stakedAmount: 50,
+    //       userId: 'String',
+    //       minesCount: 20,
+    //       gameHash: 'String',
+    //       gameState: 0, //0 - started, 1 - ended
+    //       matchId: 'String',
+    //       tradeId: 'String',
+    //       outcomes: 10 // length = minesCount
+    //     }
+    //   }
+    //   resolve(dummyData)
+    // })
 
-    // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
-    //   console.log('[API Error] called: createMinesTrade', error);
-    //   throw error;
-    // });
+    return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
+      console.log('[API Error] called: createMinesTrade', error);
+      throw error;
+    });
   }
 
   getCurrentMines = () => {
-    return new Promise((resolve, reject) => {
-      const dummyData = {
-        data: {
-          gameTypeId: 'STRING',
-          gameName: 'STRING',
-          stakedAmount: 100,
-          userId: 'STRING',
-          minesCount: 10,
-          gameHash: 'STRING',
-          gameState: 0,
-          matchId: 11,
-          tradeId: 22,
-          outcomes: [], // length = minesCount
-          clientBoard: [0,0,0,2,0,2,2,2,2], // length = 25 0 - no mine, 1 - mine,2 -hidden
-          turn: 1
-        }
-      }
-      resolve(dummyData)
-    })
+    // return new Promise((resolve, reject) => {
+    //   const dummyData = {
+    //     data: {
+    //       gameTypeId: 'STRING',
+    //       gameName: 'STRING',
+    //       stakedAmount: 100,
+    //       userId: 'STRING',
+    //       minesCount: 10,
+    //       gameHash: 'STRING',
+    //       gameState: 0,
+    //       matchId: 11,
+    //       tradeId: 22,
+    //       outcomes: [], // length = minesCount
+    //       clientBoard: [0,0,0,2,0,2,2,2,2], // length = 25 0 - no mine, 1 - mine,2 -hidden
+    //       turn: 1
+    //     }
+    //   }
+    //   resolve(dummyData)
+    // })
 
-    // return this.api.get(ApiUrls.API_MINES_CURRENT).catch(error => {
-    //   console.log('[API Error] called: getCurrentMines', error);
-    //   throw error;
-    // });
+    return this.api.get(ApiUrls.API_MINES_CURRENT).catch(error => {
+      console.log('[API Error] called: getCurrentMines', error);
+      throw error;
+    });
+  }
+
+  checkCellMines = payload => {
+    console.log('URL', ApiUrls.API_MINES_CHECK);
+    console.log('payload', payload);
+
+    // return new Promise((resolve, reject) => {
+    //   const dummyData = {
+    //     data: {
+    //       result: Math.round(Math.random()), // 0 - no mine, 1 - mine
+    //       clientBoard: []// length = 25 0 - no mine, 1 - mine, 2 -
+    //     }
+    //   }
+    //   resolve(dummyData)
+    // })
+    //
+    return this.api.post(ApiUrls.API_MINES_CHECK, payload).catch(error => {
+      console.log('[API Error] called: checkCellMines', error);
+      throw error;
+    });
+  }
+
+  cashoutMines = payload => {
+    console.log('URL', ApiUrls.API_MINES_CASHOUT);
+
+    // return new Promise((resolve, reject) => {
+    //   const dummyData = {
+    //     data: {
+    //       test: 'test'
+    //     }
+    //   }
+    //   resolve(dummyData)
+    // })
+
+    return this.api.post(ApiUrls.API_MINES_CASHOUT).catch(error => {
+      console.log('[API Error] called: cashoutMines', error);
+      throw error;
+    });
   }
 
 }
@@ -172,44 +210,6 @@ const getTotalBetsVolumeByRange = (range = '24h') => {
 };
 
 
-const checkCellMines = payload => {
-  console.log('URL', ApiUrls.API_MINES_CHECK);
-  console.log('payload', payload);
-
-  // return new Promise((resolve, reject) => {
-  //   const dummyData = {
-  //     data: {
-  //       result: Math.round(Math.random()), // 0 - no mine, 1 - mine
-  //       clientBoard: []// length = 25 0 - no mine, 1 - mine, 2 -
-  //     }
-  //   }
-  //   resolve(dummyData)
-  // })
-  //
-  return Api.post(ApiUrls.API_MINES_CHECK, payload).catch(error => {
-    console.log('[API Error] called: checkCellMines', error);
-    throw error;
-  });
-}
-
-const cashoutMines = payload => {
-  console.log('URL', ApiUrls.API_MINES_CASHOUT);
-
-  return new Promise((resolve, reject) => {
-    const dummyData = {
-      data: {
-        test: 'test'
-      }
-    }
-    resolve(dummyData)
-  })
-
-  // return this.api.post(ApiUrls.API_MINES_CASHOUT).catch(error => {
-  //   console.log('[API Error] called: cashoutMines', error);
-  //   throw error;
-  // });
-}
-
 const getLastCashoutsMines = (gameTypeId) => {
 
   return new Promise((resolve, reject) => {
@@ -259,7 +259,5 @@ export {
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
-  getLastCashoutsMines,
-  cashoutMines,
-  checkCellMines
+  getLastCashoutsMines
 };

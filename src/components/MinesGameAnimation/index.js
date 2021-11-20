@@ -16,7 +16,6 @@ import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 import { layoutManagerConfig, resourcesConfig, gameViewConfig } from "./configs/index.js";
 import AnimationController from "../MinesGameAnimation/AnimationController";
-import {getCurrentMines, checkCellMines} from "../../api/casino-games";
 import {AlertActions} from "../../store/actions/alert";
 
 const gameConfigBase = {
@@ -112,7 +111,7 @@ const RouletteGameAnimation = ({
       position: getCellPosition(row, col) //0-24
     }
 
-    const checkMine = await checkCellMines(queryPayload).catch((err)=> {
+    const checkMine = await gameApi.checkCellMines(queryPayload).catch((err)=> {
       dispatch(AlertActions.showError(err.message));
     });
 
