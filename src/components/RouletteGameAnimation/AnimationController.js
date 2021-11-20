@@ -271,7 +271,7 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-    img.src = '../images/roulette-game/' + (this.risk) + '.svg';
+    img.src = '../images/roulette-game/alpaca-' + (this.risk) + '.svg';
 
     if(!play) {
       img.onload = function () {
