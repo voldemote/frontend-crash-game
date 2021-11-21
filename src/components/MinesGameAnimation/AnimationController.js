@@ -229,11 +229,10 @@ class AnimationController {
         updateCanvasSizes(sizes);
         this.game.resize(sizes);
 
-        if(initialReveal && initialReveal.length) {
-          this.game.controller.view.revealCells(initialReveal);
-          this.game.controller.model.updateCellsData(initialReveal);
+        if(gameConfig.initialReveal && gameConfig.initialReveal.length) {
+          this.game.controller.view.revealCells(gameConfig.initialReveal);
+          this.game.controller.model.updateCellsData(gameConfig.initialReveal);
         }
-
       },
       (resPack) => {
         this.game.setResources(resPack);

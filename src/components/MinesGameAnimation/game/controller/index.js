@@ -7,6 +7,7 @@ export default class Controller extends Emitter {
 
     this.model = null;
     this.view = null;
+    this.gameConfig = null;
   }
 
   initialize(model, view, handlers) {
@@ -19,6 +20,7 @@ export default class Controller extends Emitter {
     const initializedMap = Engine.initializeMap(gameConfig);
     this.model.addData(gameConfig, initializedMap);
 
+    this.gameConfig = gameConfig;
     const { flagsLeft } = this.model;
     const { timing } = gameConfig;
 
@@ -92,48 +94,49 @@ export default class Controller extends Emitter {
    *  update model and view */
   onClickOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
+    const isLoggedIn = this.gameConfig?.isLoggedIn;
 
-    const gameEngineResult = Engine.checkSelectedCell(collection, row, col);
+    if(isLoggedIn) {
+      this.handlers.checkSelectedCell({row, col}).then((result)=> {
+        this.model.updateCellsData([result]);
+        this.view.updateGrid(col,row, result.isMine);
 
-    const checkCell = this.handlers.checkSelectedCell({row, col}).then((result)=> {
+        console.log(' this.model.grid',  this.model.grid);
+        this.view.revealCells([result]);
 
-      // console.log('result', result);
-      // console.log('result.row', result.row);
-      // console.log('result.col', result.col);
+        //reveal all
+        // this.view.revealCells(this.model.cellsToRevealed.flat());
+        //
+        if (result.isMine) {
+          this.view.gameOver("lose");
+          this.view.revealCells(this.model.allMines.flat());
+          console.log('this.model.cellsToRevealed()', this.model.cellsToRevealed.flat());
+        } else if (this.model.isGameWon) {
+          // this.view.revealCells(result);
+          this.view.gameOver("win");
+          this.view.flagMines(this.model.totFlaggedCells.flat());
+        }
+      });
+      // this.handlers.cellClickHandler({ row, col });
+    } else {
+      //handle demo
+      const result = Engine.checkSelectedCell(collection, row, col);
 
-      const thisCell = collection[result.row][result.col]
-      thisCell.isMine = result.isMine;
-      thisCell.isRevealed = result.isRevealed;
+      this.model.updateCellsData(result);
 
-      this.view.updateGrid(this);
-
-      const revealArray = [
-        thisCell
-      ];
-
-      this.model.updateCellsData(revealArray);
-      this.view.revealCells(revealArray);
-
-      //reveal all
-      // this.view.revealCells(this.model.cellsToRevealed.flat());
-
-      if (thisCell.isMine) {
+      if (result === Engine.MINE) {
         this.view.gameOver("lose");
         this.view.revealCells(this.model.allMines.flat());
-        console.log('this.model.cellsToRevealed()', this.model.cellsToRevealed.flat());
-        // this.view.revealCells(this.model.cellsToRevealed.flat());
-        console.log('GAME LOST', revealArray);
       } else if (this.model.isGameWon) {
-        console.log('GAME WON', revealArray);
-       // this.view.revealCells(result);
+        this.view.revealCells(result);
         this.view.gameOver("win");
         this.view.flagMines(this.model.totFlaggedCells.flat());
       } else {
-        console.log("GAME OTHER", revealArray);
-    //    this.view.revealCells(result);
+        console.log("wwww");
+        this.view.revealCells(result);
+        console.log(result);
       }
-
-    });
+    }
   }
   overOnCell({ row, col }) {
     const { grid: { collection } } = this.model;

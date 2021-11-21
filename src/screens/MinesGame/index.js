@@ -55,10 +55,12 @@ const Game = ({
   const [cashouts, setCashouts] = useState([]);
   const [gameInProgress, setGameInProgress] = useState(false);
   const [mines, setMines] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const [bet, setBet] = useState({
-    pending: true,
+    pending: false,
     done: false
   });
+  const [gameOver, setGameOver] = useState(false);
   const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -69,6 +71,21 @@ const Game = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
+  const getLastCashout = (profit) => {
+    let prepareObj = {};
+    if(profit > 0) {
+      prepareObj = {
+        type: 'win',
+        value: '+' + profit
+      };
+    } else {
+      prepareObj = {
+        type: 'loss',
+        value: profit
+      };
+    }
+    setCashouts([prepareObj, ...cashouts])
+  }
 
   useEffect(() => {
     getLastCashoutsMines()
@@ -112,18 +129,29 @@ const Game = ({
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await gameApi.createTradeMines(payload);
-        console.log('[MINES handleBet] data', data);
-
-        // setBet({...payload, ...data});
-        // updateUserBalance(userId);
-        // trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        // trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        setBet({...payload, ...data});
+        updateUserBalance(userId);
         return data;
       }
     } catch (e) {
       dispatch(
         AlertActions.showError({
           message: `${GAME_NAME}: Place Bet failed`,
+        })
+      );
+    }
+  }
+
+  async function handleCashout(payload) {
+    // audio.playBetSound();
+    try {
+      const { data } = await gameApi.cashoutMines(payload);
+      getLastCashout(data.profit);
+      setGameOver(true);
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: `${GAME_NAME}: Cashout failed`,
         })
       );
     }
@@ -191,11 +219,6 @@ const Game = ({
     );
   };
 
-
-  const handleNewGameHistory = (cashout)=> {
-    setCashouts([cashout, ...cashouts])
-  }
-
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -225,7 +248,8 @@ const Game = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setCashouts={handleNewGameHistory}
+                cashouts={cashouts}
+                setCashouts={setCashouts}
                 inGameBets={inGameBets}
                 bet={bet}
                 amount={amount}
@@ -236,6 +260,9 @@ const Game = ({
                 gameInProgress={gameInProgress}
                 setGameInProgress={setGameInProgress}
                 gameApi={gameApi}
+                setCurrentStep={setCurrentStep}
+                gameOver={gameOver}
+                setGameOver={setGameOver}
               />
               <Spins text="My Cashouts" spins={cashouts} />
             </div>
@@ -246,12 +273,15 @@ const Game = ({
                   setAmount={setAmount}
                   amount={amount}
                   onBet={handleBet}
+                  onCashout={handleCashout}
                   bet={bet}
                   setBet={setBet}
                   setMines={setMines}
                   mines={mines}
                   gameInProgress={gameInProgress}
                   setGameInProgress={setGameInProgress}
+                  currentStep={currentStep}
+                  setCurrentStep={setCurrentStep}
                 />
               </div>
             </div>

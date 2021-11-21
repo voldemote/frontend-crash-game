@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js-legacy';
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import _ from 'lodash';
 import {
@@ -17,6 +17,7 @@ import { isMobile } from 'react-device-detect';
 import { layoutManagerConfig, resourcesConfig, gameViewConfig } from "./configs/index.js";
 import AnimationController from "../MinesGameAnimation/AnimationController";
 import {AlertActions} from "../../store/actions/alert";
+import { selectUser } from '../../store/selectors/authentication';
 
 const gameConfigBase = {
   "name": "Minesweeper",
@@ -25,7 +26,7 @@ const gameConfigBase = {
   // basically it is a with of a square
   "gridSize": 380,
   "defaultGrid": {
-    "minesAmount": 10,
+    "minesAmount": 5,
     "columns": 5,
     "rows": 5
   },
@@ -46,26 +47,33 @@ const gameConfigBase = {
 
 let GAME = null;
 
-const RouletteGameAnimation = ({
+const MinesGameAnimation = ({
   connected,
   muteButtonClick,
   setMines,
   mines,
   onInit,
+  onEnd,
   setBet,
   bet,
   setAmount,
   amount,
   gameInProgress,
   setGameInProgress,
-  gameApi
+  gameApi,
+  setCurrentStep,
+  setCashouts,
+  cashouts,
+  currentStep,
+  gameOver,
+  setGameOver
 }) => {
 
 
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
-  const cashedOut = useSelector(selectCashedOut);
+  const user = useSelector(selectUser);
 
   const [gameConfig, setGameConfig] = useState({});
   const [audio, setAudio] = useState(null);
@@ -73,51 +81,62 @@ const RouletteGameAnimation = ({
   const getTranslatedReveal = (clientBoard) => {
       let col = 0;
       let row = 0;
-      const reveal = clientBoard?.map((entry, index)=> {
-        if(index % 5 === 0) {
-          col++;
-          row = 0;
-        }
-        row++;
 
-        return {
+      const toReveal = clientBoard?.map((entry, index)=> {
+        if(index % 5 === 0) {
+          row++;
+          col = 0;
+        }
+
+        const item = {
           row: row-1,
-          col: col-1,
+          col: col,
           isMine: false,
-          isRevealed: true,
+          isRevealed: entry === 0 ? true : false,
           isEmpty: true,
           isFlagged: false,
           text: ""
         };
-      })
+        col++;
 
-    return reveal;
+        return item;
+      }).filter((entry)=> {
+        return entry.isRevealed;
+      });
+
+    return toReveal;
   }
 
   const cellClickHandler = (data) => {
-    console.log('##ON CLICK CELL HANDLER', data);
+    setCurrentStep((current)=> {
+      return current+1;
+    })
   }
 
   //get position in proper notation 5*5
   const getCellPosition = (row,col) => {
-    return ((row * 5) + col) + 1;
+    return ((row * 5) + col);
   }
 
   const checkSelectedCell = async (props) => {
     const {row, col} = props;
-    console.log('[MINES] CHECK SELECTED CELL', {row, col});
 
     const queryPayload = {
       position: getCellPosition(row, col) //0-24
     }
 
-    const checkMine = await gameApi.checkCellMines(queryPayload).catch((err)=> {
-      dispatch(AlertActions.showError(err.message));
-    });
+    if(user.isLoggedIn) {
+      const checkMine = await gameApi.checkCellMines(queryPayload).catch((err)=> {
+        dispatch(AlertActions.showError(err.message));
+      });
 
-    const isMine = checkMine.data.result === 0 ? false : true;
+      const isMine = checkMine.data.result === 0 ? false : true;
 
-    return {
+      if(isMine) {
+        handleLost()
+      }
+
+      return {
         col,
         row,
         isEmpty: true,
@@ -126,44 +145,72 @@ const RouletteGameAnimation = ({
         isRevealed: true,
         text: ""
       }
+    } else {
+      //handle demo
+      return null;
+    }
+  }
+
+  const handleLost = () => {
+    setCashouts([{
+      type: 'loss',
+      value: '-' + amount
+    }, ...cashouts]);
+    setGameInProgress(false);
+    setBet({
+      pending: false,
+      done: false
+    });
+    setCurrentStep(0);
   }
 
   useEffect(() => {
-    console.log('[MINES] GET CURRENT GAME STATE');
-    gameApi.getCurrentMines()
-      .then(response => {
-        const {data} = response;
-        const configBase = _.cloneDeep(gameConfigBase);
+    const configBase = _.cloneDeep(gameConfigBase);
+    configBase.isLoggedIn = user.isLoggedIn;
 
-        console.log('[MINES] gameState', data);
+    if(user.isLoggedIn) {
+      gameApi.getCurrentMines()
+        .then(response => {
+          const {data} = response;
+          const {game_payload} = data;
 
-        if(data?.gameState === 1) {
-          setGameInProgress(true);
-          setMines(data?.minesCount);
-          setAmount(data?.stakedAmount);
-          setBet({
-            pending: false,
-            done: true
-          });
-          _.set(configBase, 'initialReveal', data.clientBoard);
-        } else {
-          setGameInProgress(false);
-          _.set(configBase, 'initialReveal', data.clientBoard);
-          // setBet({pending: false});
-        }
+          if(data?._inProgress) {
+            setGameInProgress(true);
+            setBet({
+              pending: false,
+              done: true
+            });
+            _.set(configBase, 'initialReveal', getTranslatedReveal(game_payload.clientBoard));
+          } else {
+            setGameInProgress(false);
+          }
 
-        setGameConfig({
-          ...configBase
-        })
-      }).catch(error => {
-      dispatch(AlertActions.showError(error.message));
-    });
+          setGameConfig({
+            ...configBase
+          })
+        }).catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
+    } else {
+      //init demo rounds
+
+      configBase.setGridManually = false;
+
+      setGameConfig({
+        ...configBase
+      })
+
+      setBet({
+        pending: false,
+        done: true
+      });
+    }
+
 
   }, [])
 
   useEffect(()=> {
     let audioInstance = null;
-    let instance = null;
 
     if(!_.isEmpty(gameConfig)) {
       const applicationConfig = {
@@ -182,7 +229,6 @@ const RouletteGameAnimation = ({
         resourcesConfig,
         gameViewConfig,
         amount,
-        initialReveal: getTranslatedReveal(gameConfig?.initialReveal),
         cellClickHandler,
         checkSelectedCell
       });
@@ -199,6 +245,14 @@ const RouletteGameAnimation = ({
 
   },[gameConfig])
 
+
+  useEffect(()=> {
+    if(gameOver) {
+      GAME.controller.view.gameOver("win");
+      setGameOver(false);
+    }
+  },[gameOver])
+
   return (
     <div
       ref={backgroundRef}
@@ -212,7 +266,7 @@ const RouletteGameAnimation = ({
         {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}
       </div>
 
-      <canvas id="mines-game" className={styles.canvas} ref={canvasRef}></canvas>
+      <canvas className={styles.canvas} ref={canvasRef}></canvas>
 
     </div>
   );
@@ -235,4 +289,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RouletteGameAnimation);
+)(React.memo(MinesGameAnimation));

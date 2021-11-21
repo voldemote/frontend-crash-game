@@ -173,9 +173,9 @@ export default class View extends Factory.Container {
 
   }
 
-  updateGrid(that) {
-    const { grid } = that.model;
-    this.creteGrid(grid);
+  updateGrid(row, col, isMine) {
+    this.grid.cells[col][row].isMine = isMine;
+    this.grid.cells[col][row].isRevealed = true;
   }
 
   /** To pause the game. It removes all interactivity and stops the counter */
