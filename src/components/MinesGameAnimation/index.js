@@ -108,9 +108,9 @@ const MinesGameAnimation = ({
   }
 
   const cellClickHandler = (data) => {
-    setCurrentStep((current)=> {
-      return current+1;
-    })
+    // setCurrentStep((current)=> {
+    //   return current+1;
+    // })
   }
 
   //get position in proper notation 5*5
@@ -120,6 +120,8 @@ const MinesGameAnimation = ({
 
   const checkSelectedCell = async (props) => {
     const {row, col} = props;
+
+    setCurrentStep((step) => step+1);
 
     const queryPayload = {
       position: getCellPosition(row, col) //0-24
@@ -152,16 +154,18 @@ const MinesGameAnimation = ({
   }
 
   const handleLost = () => {
-    setCashouts([{
-      type: 'loss',
-      value: '-' + amount
-    }, ...cashouts]);
     setGameInProgress(false);
     setBet({
       pending: false,
       done: false
     });
     setCurrentStep(0);
+
+    const prepareObj = {
+      type: 'loss',
+      value: '-' + amount
+    };
+    setCashouts((cashouts) => [prepareObj, ...cashouts]);
   }
 
   useEffect(() => {
@@ -175,6 +179,7 @@ const MinesGameAnimation = ({
           const {game_payload} = data;
 
           if(data?._inProgress) {
+            setCurrentStep((step) => step+1);
             setGameInProgress(true);
             setBet({
               pending: false,

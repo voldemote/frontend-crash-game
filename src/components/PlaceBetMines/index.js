@@ -163,13 +163,18 @@ const PlaceBetMines = ({
         </span>
       );
     } else {
+
       return (
         <>
           <span
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, styles.cashoutButton)}
-            onClick={handleCashout}
+            className={classNames(
+              styles.button,
+              styles.cashoutButton, {
+              [styles.buttonDisabled]: currentStep === 0})
+            }
+            onClick={currentStep === 0 ? ()=>{} : handleCashout }
           >
             Cashout
           </span>

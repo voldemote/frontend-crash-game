@@ -30,7 +30,7 @@ import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
-import {getCurrentMines, getLastCashoutsMines} from "../../api/casino-games";
+import {getLastCashoutsMines} from "../../api/casino-games";
 
 const Game = ({
   showPopup,
@@ -88,19 +88,19 @@ const Game = ({
   }
 
   useEffect(() => {
-    getLastCashoutsMines()
+    getLastCashoutsMines(GAME_TYPE_ID)
       .then(response => {
-        const lastCashouts = response?.data.lastCashouts;
+        const lastCashouts = response?.data.lastCrashes;
         setCashouts(lastCashouts.map((entry)=> {
-          if(entry.cashout > 0) {
+          if(entry.profit > 0) {
             return {
               type: 'win',
-              value: '+' + entry.cashout
+              value: '+' + entry.profit
             };
           } else {
             return {
               type: 'loss',
-              value: entry.cashout
+              value: entry.profit
             };
           }
         }))

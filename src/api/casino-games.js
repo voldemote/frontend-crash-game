@@ -144,44 +144,12 @@ const getTotalBetsVolumeByRange = (range = '24h') => {
   return Api.get(url);
 };
 
-
 const getLastCashoutsMines = (gameTypeId) => {
+  const callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
 
-  return new Promise((resolve, reject) => {
-    const dummyData = {
-      data: {
-        lastCashouts: [
-          {
-            gameHash: 'HASH',
-            cashout: -20
-          },
-          {
-            gameHash: 'HASH',
-            cashout: 35
-          },
-          {
-            gameHash: 'HASH',
-            cashout: 35
-          },
-          {
-            gameHash: 'HASH',
-            cashout: -50
-          },
-          {
-            gameHash: 'HASH',
-            cashout: 100
-          },
-        ]
-      }
-    }
-    resolve(dummyData)
-  })
-  //
-  // const callThis = ApiUrls.API_MINES_LAST_CASHOUTS.replace(':gameTypeId', gameTypeId);
-  //
-  // return Api.get(callThis).catch(error => {
-  //   console.log('[API Error] called: getCurrentGameInfo', error);
-  // });
+  return Api.get(callThis).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
 };
 
 export {
