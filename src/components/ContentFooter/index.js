@@ -53,11 +53,29 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
 
           <a
             data-tracking-id="footer-terms"
-            href="https://files.wallfair.io/docs/alpacasino_tc_new.pdf"
+            href="https://files.wallfair.io/docs/terms-and-conditions.pdf"
             target="_blank"
             rel="noreferrer"
           >
             <p>{'Terms & Conditions'}</p>
+          </a>
+
+          <a
+            data-tracking-id="footer-terms"
+            href="https://files.wallfair.io/docs/kyc-policy.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p>{'KYC Policy'}</p>
+          </a>
+
+          <a
+            data-tracking-id="footer-terms"
+            href="https://files.wallfair.io/docs/responsible-gambling.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p>{'Responsible Gambling'}</p>
           </a>
 
           <a
