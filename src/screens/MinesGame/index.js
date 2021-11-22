@@ -67,6 +67,7 @@ const Game = ({
   const [multiplier, setMultiplier] = useState('0.00');
   const [profit, setProfit] = useState();
   const [gameInstance, setGameInstance] = useState();
+  const [confetti, setConfetti] = useState();
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -167,13 +168,22 @@ const Game = ({
     }
   }
 
-  async function handleCashout(payload) {
-    audio.playWinSound();
+  async function handleCashout() {
+    setGameInProgress(false);
+    setCurrentStep(0);
+
     try {
-      const { data } = await gameApi.cashoutMines(payload);
+      const { data } = await gameApi.cashoutMines();
       getLastCashout(data.profit);
       setGameOver(true);
       updateUserBalance(userId);
+      setConfetti(true);
+      setBet({
+        pending:false,
+        done: false
+      });
+
+      audio.playWinSound();
     } catch (e) {
       dispatch(
         AlertActions.showError({
@@ -286,6 +296,7 @@ const Game = ({
                 demoCount={demoCount}
                 gameInstance={gameInstance}
                 setGameInstance={setGameInstance}
+                onCashout={handleCashout}
               />
               <LastCashouts text="My Cashouts" spins={cashouts} />
             </div>
@@ -310,6 +321,8 @@ const Game = ({
                   outcomes={outcomes}
                   demoCount={demoCount}
                   setDemoCount={setDemoCount}
+                  confetti={confetti}
+                  setConfetti={setConfetti}
                 />
               </div>
             </div>

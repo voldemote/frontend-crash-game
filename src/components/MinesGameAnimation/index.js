@@ -70,7 +70,8 @@ const MinesGameAnimation = ({
   demoCount,
   setDemoCount,
   gameInstance,
-  setGameInstance
+  setGameInstance,
+  onCashout
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -138,6 +139,17 @@ const MinesGameAnimation = ({
 
       if(isMine) {
         handleLost()
+      }
+
+      const hiddenFields = checkMine?.data.clientBoard.filter((item)=> {
+        return item === 2;
+      }).length;
+
+      if(hiddenFields === mines) {
+        //wait for animation
+        setTimeout(()=> {
+          document.getElementById('mines-cashout-btn').click();
+        }, 500)
       }
 
       return {
@@ -217,9 +229,10 @@ const MinesGameAnimation = ({
     let audioInstance = null;
 
     if(!_.isEmpty(gameConfig)) {
-
-
-      console.log('gameConfig', gameConfig);
+      //avoid attaching multiple click events, when re-init
+      if(gameInstance) {
+        gameInstance.game.controller.removeListeners();
+      }
 
       const applicationConfig = {
         width: backgroundRef.current.clientWidth,
@@ -288,7 +301,7 @@ const MinesGameAnimation = ({
       </div>
 
       <div>
-        <canvas className={classNames(styles.canvas, {
+        <canvas id="mines-canvas" className={classNames(styles.canvas, {
           [styles.notClickable]: !bet.done
         })} ref={canvasRef}></canvas>
       </div>

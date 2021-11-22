@@ -50,13 +50,14 @@ const PlaceBetMines = ({
   multiplier,
   profit,
   demoCount,
-  setDemoCount
+  setDemoCount,
+  confetti,
+  setConfetti
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [confetti, setConfetti] = useState(false);
   const gameOffline = false//useSelector(selectGameOffline);
 
   const userUnableToBet = amount < 1 || gameOffline;
@@ -134,15 +135,7 @@ const PlaceBetMines = ({
   const handleCashout = e => {
     e.preventDefault();
     e.stopPropagation();
-
-    setGameInProgress(false);
-    setCurrentStep(0);
     onCashout();
-    setConfetti(true);
-    setBet({
-      pending:false,
-      done: false
-    });
   };
 
   const showLoginPopup = () => {
@@ -184,6 +177,7 @@ const PlaceBetMines = ({
           <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
 
           <div
+            id={"mines-cashout-btn"}
             role="button"
             tabIndex="0"
             className={classNames(
