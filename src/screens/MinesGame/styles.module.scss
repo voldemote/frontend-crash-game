@@ -78,9 +78,12 @@
       flex-direction: column;
     }
     .leftContainer {
+      display: flex;
+      flex-direction: column;
       width: calc(100% - 370px);
       @media (max-width: $screen-md) {
         width: 100%;
+        flex-direction: column-reverse;
       }
     }
     .rightContainer {
