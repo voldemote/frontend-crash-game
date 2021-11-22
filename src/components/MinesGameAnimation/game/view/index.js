@@ -61,9 +61,9 @@ export default class View extends Factory.Container {
     }
 
     if ( this.isGameOver ) {
-      this.pause();
-      // this.resume();
-      this.emit("restartGame");
+        this.pause();
+        // this.resume();
+        this.emit("restartGame");
     }
 
     //this.header.update(delta);

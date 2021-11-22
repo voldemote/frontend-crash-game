@@ -148,8 +148,9 @@ const Game = ({
     if (!payload) return;
     try {
       if(payload.demo) {
-        // setBet({...payload })
-        // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        setDemoCount((count) => {
+          return count+1;
+        })
       } else {
         const { data } = await gameApi.createTradeMines(payload);
         setOutcomes(data?.outcomes)
@@ -307,6 +308,8 @@ const Game = ({
                   multiplier={multiplier}
                   profit={profit}
                   outcomes={outcomes}
+                  demoCount={demoCount}
+                  setDemoCount={setDemoCount}
                 />
               </div>
             </div>

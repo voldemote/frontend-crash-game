@@ -134,7 +134,7 @@ const MinesGameAnimation = ({
         dispatch(AlertActions.showError(err.message));
       });
 
-      const isMine = checkMine.data.result === 0 ? false : true;
+      const isMine = checkMine?.data?.result === 0 ? false : true;
 
       if(isMine) {
         handleLost()
@@ -202,19 +202,12 @@ const MinesGameAnimation = ({
         dispatch(AlertActions.showError(error.message));
       });
     } else {
-      //init demo rounds
-
+      //init demo rounds / show grid
       configBase.setGridManually = false;
-      // configBase.defaultGrid.mines = mines;
 
       setGameConfig({
         ...configBase
       })
-
-      setBet({
-        pending: false,
-        done: true
-      });
     }
 
 
@@ -224,6 +217,10 @@ const MinesGameAnimation = ({
     let audioInstance = null;
 
     if(!_.isEmpty(gameConfig)) {
+
+
+      console.log('gameConfig', gameConfig);
+
       const applicationConfig = {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
@@ -261,11 +258,22 @@ const MinesGameAnimation = ({
     if(gameOver) {
       gameInstance.game.controller.view.gameOver("win");
       setGameOver(false);
-      setDemoCount((count) => {
-        return count+1;
-      })
     }
   },[gameOver])
+
+
+  useEffect(()=> {
+    if(demoCount > 0) {
+      const gameConfigDemo = _.cloneDeep(gameConfigBase);
+      gameConfigDemo.setGridManually = false;
+      gameConfigDemo.grid = [];
+      gameConfigDemo.defaultGrid.minesAmount = mines;
+
+      setGameConfig({
+          ...gameConfigDemo
+      })
+    }
+  },[demoCount])
 
   return (
     <div

@@ -48,7 +48,9 @@ const PlaceBetMines = ({
   setCurrentStep,
   onCashout,
   multiplier,
-  profit
+  profit,
+  demoCount,
+  setDemoCount
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -59,7 +61,6 @@ const PlaceBetMines = ({
 
   const userUnableToBet = amount < 1 || gameOffline;
 
-  const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
   const onTokenNumberChange = number => {
     setAmount(number);
   };
@@ -106,8 +107,28 @@ const PlaceBetMines = ({
   }
 
 
-  const placeGuestBet = () => {
-    showLoginPopup();
+  const placeGuestBet = async () => {
+    const payload = {
+      demo: true,
+      amount,
+      minesCount: mines
+    }
+
+    if(demoCount >= 3) {
+      showLoginPopup();
+      setBet({
+        ...bet,
+        done: false
+      })
+      return;
+    }
+
+    await onBet(payload);
+
+    setBet({
+      ...bet,
+      done: true
+    })
   };
 
   const handleCashout = e => {
@@ -118,6 +139,10 @@ const PlaceBetMines = ({
     setCurrentStep(0);
     onCashout();
     setConfetti(true);
+    setBet({
+      pending:false,
+      done: false
+    });
   };
 
   const showLoginPopup = () => {
@@ -220,8 +245,6 @@ const PlaceBetMines = ({
     left: 0,
     zIndex: 999,
   };
-
-  const minesArray = _.times(24, (index)=> (index+1));
 
   return (
     <div className={classNames(styles.container)}>
