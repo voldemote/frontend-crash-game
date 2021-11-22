@@ -110,8 +110,8 @@ export default class Controller extends Emitter {
           // this.view.revealCells(this.model.cellsToRevealed.flat());
           //
           if (result.isMine) {
-            this.view.gameOver("lose");
-            this.view.revealCells(this.model.allMines.flat());
+            // this.view.gameOver("lose");
+            // this.view.revealCells(this.model.allMines.flat());
           } else if (this.model.isGameWon) {
             // this.view.revealCells(result);
             this.view.gameOver("win");
