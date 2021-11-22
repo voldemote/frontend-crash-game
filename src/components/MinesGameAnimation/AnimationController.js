@@ -143,7 +143,6 @@ export class AudioController {
 
   playWinSound() {
     this.playSound('cashout', false, 1);
-
   }
 
   playBetSound() {

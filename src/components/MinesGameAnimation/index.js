@@ -68,8 +68,6 @@ const MinesGameAnimation = ({
   gameOver,
   setGameOver
 }) => {
-
-
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);

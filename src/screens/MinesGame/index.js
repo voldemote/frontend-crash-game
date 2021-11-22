@@ -143,11 +143,12 @@ const Game = ({
   }
 
   async function handleCashout(payload) {
-    // audio.playBetSound();
+    audio.playWinSound();
     try {
       const { data } = await gameApi.cashoutMines(payload);
       getLastCashout(data.profit);
       setGameOver(true);
+      updateUserBalance(userId);
     } catch (e) {
       dispatch(
         AlertActions.showError({
@@ -234,15 +235,6 @@ const Game = ({
               width={25}
               onClick={handleHelpClick}
             />
-            {/*}
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="alpacawheel-how-does-it-work"
-            >
-              How does it work?
-            </span>
-            */}
           </div>
 
           <div className={styles.mainContainer}>
