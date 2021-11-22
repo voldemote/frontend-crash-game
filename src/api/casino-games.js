@@ -2,7 +2,12 @@ import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import {
-  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES, API_MINES_BET, API_MINES_START,
+  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES,
+  API_MINES_BET,
+  API_MINES_CASHOUT,
+  API_MINES_CHECK,
+  API_MINES_CURRENT, API_MINES_LAST_CASHOUTS,
+  API_MINES_START,
   CRASH_GAME_GET_VOLUME_BETS
 } from '../constants/Api';
 import {promises} from "stream";
@@ -39,28 +44,38 @@ class GameApi {
     });
   }
 
-  createTradeMines = payload => {
-    console.log('PAYLOAD', payload);
-    console.log('URL', ApiUrls.API_MINES_START);
-
-    return new Promise((resolve, reject) => {
-      const dummyData = {
-        data: {
-          test: 'test'
-        }
-      }
-      resolve(dummyData)
-    })
-
-    // return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
-    //   console.log('[API Error] called: createMinesTrade', error);
-    //   throw error;
-    // });
-  }
-
   createTradePlinko = payload => {
     return this.api.post(ApiUrls.API_PLINKO_BET, payload).catch(error => {
       console.log('[API Error] called: createTrade', error);
+      throw error;
+    });
+  }
+
+
+  createTradeMines = payload => {
+    return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
+      console.log('[API Error] called: createMinesTrade', error);
+      throw error;
+    });
+  }
+
+  getCurrentMines = () => {
+    return this.api.get(ApiUrls.API_MINES_CURRENT).catch(error => {
+      console.log('[API Error] called: getCurrentMines', error);
+      throw error;
+    });
+  }
+
+  checkCellMines = payload => {
+    return this.api.post(ApiUrls.API_MINES_CHECK, payload).catch(error => {
+      console.log('[API Error] called: checkCellMines', error);
+      throw error;
+    });
+  }
+
+  cashoutMines = payload => {
+    return this.api.post(ApiUrls.API_MINES_CASHOUT).catch(error => {
+      console.log('[API Error] called: cashoutMines', error);
       throw error;
     });
   }
@@ -129,6 +144,14 @@ const getTotalBetsVolumeByRange = (range = '24h') => {
   return Api.get(url);
 };
 
+const getLastCashoutsMines = (gameTypeId) => {
+  const callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+
+  return Api.get(callThis).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
+
 export {
   GameApi,
   Api,
@@ -139,4 +162,5 @@ export {
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
+  getLastCashoutsMines
 };

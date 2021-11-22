@@ -7,17 +7,20 @@ export default class Controller extends Emitter {
 
     this.model = null;
     this.view = null;
+    this.gameConfig = null;
   }
 
-  initialize(model, view) {
+  initialize(model, view, handlers) {
     this.model = model;
     this.view = view;
+    this.handlers = handlers;
   }
 
   useConfig({ gameConfig, gameViewConfig }) {
     const initializedMap = Engine.initializeMap(gameConfig);
     this.model.addData(gameConfig, initializedMap);
 
+    this.gameConfig = gameConfig;
     const { flagsLeft } = this.model;
     const { timing } = gameConfig;
 
@@ -56,10 +59,13 @@ export default class Controller extends Emitter {
     this.view.once("restartGame", this.onRestartGame, this);
 
     //this.view.createHeader();
-    this.view.createPopup("start", () => {
-      this.view.resume();
-      this.view.removePopup();
-    });
+    // this.view.createPopup("start", () => {
+    //   this.view.resume();
+    //   this.view.removePopup();
+    // });
+
+    this.view.resume();
+    this.view.removePopup();
   }
 
   onRestartGame() {
@@ -88,21 +94,48 @@ export default class Controller extends Emitter {
    *  update model and view */
   onClickOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
-    const result = Engine.checkSelectedCell(collection, row, col);
+    const isLoggedIn = this.gameConfig?.isLoggedIn;
 
-    this.model.updateCellsData(result);
+    if(isLoggedIn) {
+      this.handlers.checkSelectedCell({row, col}).then((result)=> {
+        this.model.updateCellsData([result]);
+        this.view.updateGrid(col,row, result.isMine);
 
-    if (result === Engine.MINE) {
-      this.view.gameOver("lose");
-      this.view.revealCells(this.model.allMines.flat());
-    } else if (this.model.isGameWon) {
-      this.view.revealCells(result);
-      this.view.gameOver("win");
-      this.view.flagMines(this.model.totFlaggedCells.flat());
+        console.log(' this.model.grid',  this.model.grid);
+        this.view.revealCells([result]);
+
+        //reveal all
+        // this.view.revealCells(this.model.cellsToRevealed.flat());
+        //
+        if (result.isMine) {
+          this.view.gameOver("lose");
+          this.view.revealCells(this.model.allMines.flat());
+          console.log('this.model.cellsToRevealed()', this.model.cellsToRevealed.flat());
+        } else if (this.model.isGameWon) {
+          // this.view.revealCells(result);
+          this.view.gameOver("win");
+          this.view.flagMines(this.model.totFlaggedCells.flat());
+        }
+      });
+      // this.handlers.cellClickHandler({ row, col });
     } else {
-      console.log("wwww");
-      this.view.revealCells(result);
-      console.log(result);
+      //handle demo
+      const result = Engine.checkSelectedCell(collection, row, col);
+
+      this.model.updateCellsData(result);
+
+      if (result === Engine.MINE) {
+        this.view.gameOver("lose");
+        this.view.revealCells(this.model.allMines.flat());
+      } else if (this.model.isGameWon) {
+        this.view.revealCells(result);
+        this.view.gameOver("win");
+        this.view.flagMines(this.model.totFlaggedCells.flat());
+      } else {
+        console.log("wwww");
+        this.view.revealCells(result);
+        console.log(result);
+      }
     }
   }
   overOnCell({ row, col }) {

@@ -17,6 +17,7 @@ import gameCard1 from '../data/images/house-games/card-1.png';
 import gameCard5 from '../data/images/house-games/card-5.png';
 import gameCard3 from '../data/images/house-games/card-3.png';
 import gameCard4 from '../data/images/house-games/card-4.png';
+import gameCardMines from '../data/images/house-games/card-mines.png';
 
 export const CASINO_GAMES = [
   {
@@ -71,6 +72,13 @@ export const NEW_SLOTS_GAMES = [
     description: 'Market top and flop jackpot tournament',
     active: true,
     linkTo: '/games/alpaca-wheel',
+  },
+  {
+    background: gameCardMines,
+    title: `Mines`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/mines',
   },
   {
     background: gameCard5,
@@ -221,7 +229,7 @@ export const GAMES = {
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
   mines: {
-    id: '618a821bd90fd22298859sg1',
+    id: '618a821bd90fd22298859bc6',
     slug: 'mines',
     name: `Mines`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL

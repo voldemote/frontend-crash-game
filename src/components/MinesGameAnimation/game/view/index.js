@@ -63,7 +63,11 @@ export default class View extends Factory.Container {
     if ( this.isGameOver ) {
       this.popupTimout -= delta * 16.777;
       if ( this.popupTimout <= 0 ) {
-        this.showPopUp();
+        // this.showPopUp();
+        this.pause();
+        // this.resume();
+        console.log('GAME OVER');
+        this.emit("restartGame");
       }
     }
 
@@ -155,8 +159,8 @@ export default class View extends Factory.Container {
         const cell = new Cell(texture, cellModel);
         cell.position.set(x, y);
         cell.position.set(x, y);
-        cell.on("mouseover", this.onMouseOver, this);
-        cell.on("mouseout", this.onMouseOut, this);
+        //cell.on("mouseover", this.onMouseOver, this);
+        //cell.on("mouseout", this.onMouseOut, this);
         cell.interactive=true;
         return cell;
       });
@@ -167,6 +171,11 @@ export default class View extends Factory.Container {
     });
 
 
+  }
+
+  updateGrid(row, col, isMine) {
+    this.grid.cells[col][row].isMine = isMine;
+    this.grid.cells[col][row].isRevealed = true;
   }
 
   /** To pause the game. It removes all interactivity and stops the counter */
@@ -280,10 +289,9 @@ export default class View extends Factory.Container {
   /** To reveal all cells which were collected by engine
    * @param {Array} cells */
   revealCells(cells) {
-    console.log("dssddsds");
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
-      cell.reveal(this.resPack, this.viewConfig.styles);
+      cell.reveal(this.resPack, this.viewConfig.styles, cell.isMine);
     });
   }
   /** To reveal all cells which were collected by engine

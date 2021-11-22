@@ -25,6 +25,7 @@ import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
+import {MinesInput} from "./MinesInput";
 
 import {
   FormGroup,
@@ -38,21 +39,25 @@ const PlaceBetMines = ({
   bet,
   setAmount,
   amount,
-  setRisk,
-  risk,
+  setMines,
+  mines,
+  gameInProgress,
+  setGameInProgress,
+  setBet,
+  currentStep,
+  setCurrentStep,
+  onCashout
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [mines, setMines] = useState(1);
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
   const [crashFactor, setCrashFactor] = useState('25.00');
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [canBet, setCanBet] = useState(true);
-  const [nuspin, setNuspin] = useState({nspin: 0});
   const gameOffline = false//useSelector(selectGameOffline);
   const [wincrease, setWincrease] = useState(0)
   const [lincrease, setLincrease] = useState(0)
@@ -73,10 +78,6 @@ const PlaceBetMines = ({
     const amount = round(value, 0);
     setAmount(amount <= 10000 ? amount : 10000);
   };
-  const onSelectMines = event => {
-    let value = parseInt(_.get(event, 'target.value', 1));
-    setMines(value);
-  };
 
   const onBetAmountChanged = multiplier => {
     const changedValue = _.floor(amount * multiplier, 0);
@@ -94,30 +95,23 @@ const PlaceBetMines = ({
     if (amount > userBalance) return;
     const payload = {
       amount,
-      mines: mines
+      minesCount: mines
     }
 
-    console.log('###payload', payload);
+    // console.log('###payload', payload);
+    await onBet(payload);
 
-    // setNuspin(payload)
-    const bet = await onBet(payload)
+    setGameInProgress(true);
+    setCurrentStep(0);
+    setBet({
+      ...bet,
+      done: true
+    })
   }
 
   const placeAutoBet = async () => {
-    if (userUnableToBet) return;
-    if (amount > userBalance) return;
-    const payload = {
-      amount,
-      autobet: true,
-      profit: Number(profit),
-      loss: Number(loss),
-      wincrease: winbutton?0:Number(wincrease)/100,
-      lincrease: lossbutton?0:Number(lincrease)/100
-    };
-    setAccumulated(0)
-    setNuspin(payload)
-  };
-
+    return;
+  }
 
 
   const placeGuestBet = () => {
@@ -125,46 +119,15 @@ const PlaceBetMines = ({
       showLoginPopup();
       return;
     }
-
-    if (userUnableToBet) return;
-    const payload = {
-      amount,
-      demo: true,
-      winIndex:  Math.floor((Math.random() * 12) | 0)
-    };
-    onBet(payload)
-    // setNuspin(payload)
-    if (numberOfDemoPlays < 3) {
-      localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
-    }
   };
-  useEffect(async () => {
-    // if(bet?.pending && nuspin.nspin > 0) {
-    //   setNuspin({...nuspin, nspin: nuspin.nspin -1})
-    //   await onBet({...nuspin, nspin: nuspin.nspin -1});
-    // }else if(bet?.pending && nuspin.autobet){
-    //   const acc = bet.profit + accumulated
-    //   setAccumulated(acc)
-    //   if(nuspin.nspin === 0){
-    //     const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : nuspin.amount*(1+nuspin.wincrease)) : Math.floor(lossbutton ? amount : nuspin.amount*(1+nuspin.lincrease))
-    //     setNuspin({nspin: 0, amount: newamount})
-    //     return;
-    //   }
-    //   if(nuspin.profit >= 0 && nuspin.profit > acc && nuspin.loss >= 0 && nuspin.loss > -acc){
-    //     const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : nuspin.amount*(1+nuspin.wincrease)) : Math.floor(lossbutton ? amount : nuspin.amount*(1+nuspin.lincrease))
-    //     setNuspin({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin})
-    //     await onBet({...nuspin, amount: newamount, nspin: nuspin.nspin ? nuspin.nspin -1 : nuspin.nspin});
-    //   }
-    //   else{
-    //     setNuspin({nspin: 0});
-    //   }
-    // }
-  }, [bet])
 
-  const cancelBet = e => {
+  const handleCashout = e => {
     e.preventDefault();
     e.stopPropagation();
-    // setNuspin({nspin: 0})
+
+    setGameInProgress(false);
+    setCurrentStep(0);
+    onCashout();
   };
 
   const showLoginPopup = () => {
@@ -180,7 +143,7 @@ const PlaceBetMines = ({
   };
 
   const renderButton = () => {
-    if (!nuspin.autobet && nuspin?.nspin <= 0) {
+    if (!gameInProgress) {
       return (
         <span
           role="button"
@@ -189,31 +152,31 @@ const PlaceBetMines = ({
             [styles.buttonDisabled]:
               !connected ||
               userUnableToBet ||
-              !bet?.pending ||
+              bet?.pending ||
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
-          onClick={!bet?.pending? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
-          data-tracking-id={
-            user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
-          }
+          disabled={false}
+          onClick={bet?.pending ? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
         >
           {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
         </span>
       );
     } else {
+
       return (
         <>
           <span
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, styles.cancel)}
-            onClick={cancelBet}
-            data-tracking-id={
-              user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
+            className={classNames(
+              styles.button,
+              styles.cashoutButton, {
+              [styles.buttonDisabled]: currentStep === 0})
             }
+            onClick={currentStep === 0 ? ()=>{} : handleCashout }
           >
-            Cancel Bet
+            Cashout
           </span>
         </>
       )
@@ -351,22 +314,13 @@ const PlaceBetMines = ({
                 Mines
               </label>
               <div className={styles.riskSelection}>
-                  <select
-                    className={classNames(styles.selectMines)}
-                    placeholder={'Select'}
-                    onChange={onSelectMines}
-                  >
-                    {_.times(24, (index)=> {
-                    const item = index+1;
-                    return <option value={item}>{item}</option>;
-                    })}
-                  </select>
+                <MinesInput mines={mines} setMines={setMines}/>
               </div>
             </div>
           </div>
           :
-          <div className={styles.sliderContainer}>
-            Not available yet
+          <div className={classNames(styles.sliderContainer, styles.autoBetContainer)}>
+            Coming Soon
           </div>
         }
       </div>
