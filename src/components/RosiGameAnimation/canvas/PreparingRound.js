@@ -110,7 +110,7 @@ class PreparingRound {
     this.backdrop.endFill();
   }
 
-  show(animationIndex) {
+  show(animationIndex = 0) {
     this.animationIndex = animationIndex;
     this.initAnimation(animationIndex);
     this.container.visible = true;
