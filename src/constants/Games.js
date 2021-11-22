@@ -73,13 +73,13 @@ export const NEW_SLOTS_GAMES = [
     active: true,
     linkTo: '/games/alpaca-wheel',
   },
-  {
-    background: gameCardMines,
-    title: `Mines`,
-    subtitle: '',
-    active: true,
-    linkTo: '/games/mines',
-  },
+  // {
+  //   background: gameCardMines,
+  //   title: `Mines`,
+  //   subtitle: '',
+  //   active: true,
+  //   linkTo: '/games/mines',
+  // },
   {
     background: gameCard5,
     title: `Oil Rush`,
