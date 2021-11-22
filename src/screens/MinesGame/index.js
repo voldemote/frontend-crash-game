@@ -66,6 +66,7 @@ const Game = ({
   const [amount, setAmount] = useState(50);
   const [multiplier, setMultiplier] = useState('0.00');
   const [profit, setProfit] = useState();
+  const [gameInstance, setGameInstance] = useState();
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -143,7 +144,7 @@ const Game = ({
   };
 
   async function handleBet(payload) {
-    // audio.playBetSound();
+    audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
@@ -153,6 +154,7 @@ const Game = ({
         const { data } = await gameApi.createTradeMines(payload);
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
+        gameInstance.game.controller.view.gameOver("lose");
         return data;
       }
     } catch (e) {
@@ -281,6 +283,8 @@ const Game = ({
                 setOutcomes={setOutcomes}
                 setDemoCount={setDemoCount}
                 demoCount={demoCount}
+                gameInstance={gameInstance}
+                setGameInstance={setGameInstance}
               />
               <LastCashouts text="My Cashouts" spins={cashouts} />
             </div>

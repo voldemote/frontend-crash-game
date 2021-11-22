@@ -45,8 +45,6 @@ const gameConfigBase = {
   initialReveal: []
 };
 
-let GAME = null;
-
 const MinesGameAnimation = ({
   connected,
   muteButtonClick,
@@ -70,7 +68,9 @@ const MinesGameAnimation = ({
   outcomes,
   setOutcomes,
   demoCount,
-  setDemoCount
+  setDemoCount,
+  gameInstance,
+  setGameInstance
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -243,7 +243,7 @@ const MinesGameAnimation = ({
         cellClickHandler,
         checkSelectedCell
       });
-      GAME = that.game;
+      setGameInstance(that);
       setAudio(audio);
       audioInstance = audio;
       onInit(audio);
@@ -259,7 +259,7 @@ const MinesGameAnimation = ({
 
   useEffect(()=> {
     if(gameOver) {
-      GAME.controller.view.gameOver("win");
+      gameInstance.game.controller.view.gameOver("win");
       setGameOver(false);
       setDemoCount((count) => {
         return count+1;
