@@ -41,7 +41,6 @@ export default class Controller extends Emitter {
     this.view.position.set(width / 2, height / 2);
     //isLandscape=false;
     //this.view.rotation = isLandscape ? -Math.PI / 2 : 0;
-    console.log(isLandscape);
     this.view.resize({ width, height });
   }
 
@@ -101,7 +100,6 @@ export default class Controller extends Emitter {
         this.model.updateCellsData([result]);
         this.view.updateGrid(col,row, result.isMine);
 
-        console.log(' this.model.grid',  this.model.grid);
         this.view.revealCells([result]);
 
         //reveal all
@@ -110,7 +108,6 @@ export default class Controller extends Emitter {
         if (result.isMine) {
           this.view.gameOver("lose");
           this.view.revealCells(this.model.allMines.flat());
-          console.log('this.model.cellsToRevealed()', this.model.cellsToRevealed.flat());
         } else if (this.model.isGameWon) {
           // this.view.revealCells(result);
           this.view.gameOver("win");
@@ -132,28 +129,19 @@ export default class Controller extends Emitter {
         this.view.gameOver("win");
         this.view.flagMines(this.model.totFlaggedCells.flat());
       } else {
-        console.log("wwww");
         this.view.revealCells(result);
-        console.log(result);
       }
     }
   }
   overOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
     const result = Engine.checkSelectedCell(collection, row, col);
-    console.log(row +"---"+col);
-    console.log(result);
-    //this.model.updateCellsData(result);
      this.view.overCell(result);
-    // console.log(result);
   }
   outOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
     const result = Engine.checkSelectedCell(collection, row, col);
-    console.log(row +"---"+col);
-    console.log(result);
     //this.model.updateCellsData(result);
      this.view.outCell(result);
-    // console.log(result);
   }
 }

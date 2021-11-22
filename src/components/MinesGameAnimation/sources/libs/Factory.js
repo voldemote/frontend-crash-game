@@ -44,7 +44,6 @@ export default class Factory {
   }
 
   static fromRectGraphics({ width, height, radius, color, position: { x, y } = {} } = {}){
-    console.log("fromRectGraphics");
     const texture = new this.Graphics()
       .beginFill(color)
       .drawRoundedRect(0, 0, width, height, radius)
