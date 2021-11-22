@@ -41,12 +41,12 @@ const Fair = () => {
           <p>0xea674fdde714fd979de3edf0f56aa9716b898ec8</p>
 
           <h3>Verification Tool</h3>
-          <p><a target="_blank" rel="noreferrer" href="https://jsfiddle.net/fx1dev/ezx8vp6a/show">https://jsfiddle.net/fx1dev/ezx8vp6a/show</a></p>
+          <p><a target="_blank" rel="noreferrer" href="https://jsfiddle.net/alpacasino/bf0vgm9e/show">https://jsfiddle.net/alpacasino/bf0vgm9e/show</a></p>
 
           <p>We take a Server Seed and hash it (SHA256), creating a new Server Seed. Then we take that Server Seed and hash that too. We repeat this process until we have 10 million hashes -- 10 million server seeds. The very first game of crash uses the 10 millionth server seed (fb9837dc8f32b9f2ce42442ae10f68424d836e34f0632b0c4b8b28097eb7560f), and each game after that works backwards down the list of server seeds. Second game uses the 9,999,999th hash and so on and so forth.</p>
 
           <h3>Source code:</h3>
-          <iframe title="provably fair source code" width="100%" height="500" src="//jsfiddle.net/fx1dev/ezx8vp6a/embedded/js/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+          <iframe title="provably-fair" width="100%" height="500" src="//jsfiddle.net/alpacasino/bf0vgm9e/embedded/js/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 
       </div>
