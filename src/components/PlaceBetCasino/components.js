@@ -14,9 +14,10 @@ export const RiskInput = ({risk, setRisk, number, disable}) => {
       <div className={styles.riskSelection}>
         {Array.from({length: number}).map((level, index) =>
           <button
+            key={index}
             style={{opacity: disable && 0.5, cursor: disable && 'not-allowed'}}
             data-tracking-id={`alpacawheel-change-risk-${index+1}`}
-            className={risk === (index + 1) && styles.selected}
+            className={risk === (index + 1) ? styles.selected : undefined}
             onClick={() => !disable && setRisk(index+1)}
           >
             <span>{index+1}</span>
