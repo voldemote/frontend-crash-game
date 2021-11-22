@@ -38,6 +38,7 @@ export default {
   logout: '/logout',
   rosiGame: '/games/:slug',
   plinkoGame: '/games/plinko',
+  alpacannonGame: '/games/alpacannon',
   elonGame: '/games/elon-game',
   rouletteGame: '/games/alpaca-wheel',
   elonWallpaper: '/games/elon-wallpaper',
