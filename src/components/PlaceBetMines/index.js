@@ -55,10 +55,9 @@ const PlaceBetMines = ({
   const userBalance = parseInt(user?.balance || 0, 10);
 
   const [animate, setAnimate] = useState(false);
-  const [canBet, setCanBet] = useState(true);
   const gameOffline = false//useSelector(selectGameOffline);
 
-  const userUnableToBet = amount < 1 || !canBet || gameOffline;
+  const userUnableToBet = amount < 1 || gameOffline;
 
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
   const onTokenNumberChange = number => {
@@ -107,10 +106,7 @@ const PlaceBetMines = ({
 
 
   const placeGuestBet = () => {
-    if (numberOfDemoPlays === 3) {
-      showLoginPopup();
-      return;
-    }
+    showLoginPopup();
   };
 
   const handleCashout = e => {

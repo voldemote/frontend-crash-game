@@ -68,7 +68,9 @@ const MinesGameAnimation = ({
   setGameOver,
   currentStep,
   outcomes,
-  setOutcomes
+  setOutcomes,
+  demoCount,
+  setDemoCount
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -203,6 +205,7 @@ const MinesGameAnimation = ({
       //init demo rounds
 
       configBase.setGridManually = false;
+      // configBase.defaultGrid.mines = mines;
 
       setGameConfig({
         ...configBase
@@ -258,6 +261,9 @@ const MinesGameAnimation = ({
     if(gameOver) {
       GAME.controller.view.gameOver("win");
       setGameOver(false);
+      setDemoCount((count) => {
+        return count+1;
+      })
     }
   },[gameOver])
 

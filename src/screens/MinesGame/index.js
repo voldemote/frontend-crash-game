@@ -70,6 +70,7 @@ const Game = ({
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
+  const [demoCount, setDemoCount] = useState(0);
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
@@ -278,6 +279,8 @@ const Game = ({
                 gameOver={gameOver}
                 setGameOver={setGameOver}
                 setOutcomes={setOutcomes}
+                setDemoCount={setDemoCount}
+                demoCount={demoCount}
               />
               <LastCashouts text="My Cashouts" spins={cashouts} />
             </div>
