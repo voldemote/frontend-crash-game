@@ -24,6 +24,10 @@
 
   img.footerLogo {
     max-width: 300px;
+
+    @media (max-width: $screen-sm) {
+      margin-bottom: 20px;
+    }
   }
 
   .links {
@@ -43,7 +47,7 @@
     a,
     button {
       font-family: $fontRegular;
-      font-size: 10px;
+      font-size: 12px;
       display: flex;
       align-items: center;
       text-decoration: none;
@@ -54,6 +58,10 @@
 
       img {
         margin-bottom: 0;
+      }
+
+      p {
+        font-size: 12px;
       }
     }
 

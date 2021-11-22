@@ -25,9 +25,15 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           rel="noreferrer"
           data-tracking-id="footer-wfair-logo"
         >
-          <img src={LogoFooter} alt={'wallfair-alpha'} />
+          <img src={LogoFooter} className={styles.footerLogo} alt={'Powered-by-Wallfair'} />
         </a>
         <div className={styles.links}>
+          <Link
+            data-tracking-id="footer-provablyfair"
+            to={Routes.provablyfair}
+          >
+            <p>{'Provably Fair'}</p>
+          </Link>
           <a
             href="https://wallfair.medium.com"
             target="_blank"
@@ -42,7 +48,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
             rel="noreferrer"
             data-tracking-id="footer-career"
           >
-            Career
+            <p>Career</p>
           </a>
           <a
             href="https://github.com/wallfair-organization"
@@ -88,13 +94,6 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           >
             <p>Imprint</p>
           </a>
-
-          <Link
-            data-tracking-id="footer-provablyfair"
-            to={Routes.provablyfair}
-          >
-            <p>{'Provably Fair'}</p>
-          </Link>
         </div>
       </div>
     </div>
