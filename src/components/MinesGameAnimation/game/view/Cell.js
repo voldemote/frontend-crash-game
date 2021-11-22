@@ -64,22 +64,13 @@ export default class Cell extends Factory.Sprite {
 
   }
 
-  reveal(textures, styles) {
+  reveal(textures, styles, handlers) {
     this.visible = false
     window.kor = this
     this.revealAnimation.visible = true
-    Sound.sound.add(
-      {
-        coin: {
-          url: '/sounds/mines/sfx-coin.mp3',
-          loop: false,
-        },
-        poop: {
-          url: '/sounds/mines/sfx-poop.mp3',
-          loop: false,
-        }
-      }
-    );
+
+    const audioController = handlers.audio;
+
     this.revealAnimation.onComplete = () => {
       this.isRevealed = true
       //this.revealAnimation.visible = false
@@ -89,14 +80,16 @@ export default class Cell extends Factory.Sprite {
         this.loseAnimation.y = this.y
         this.parent.addChild(this.loseAnimation)
         this.loseAnimation.gotoAndPlay(0)
-        Sound.sound.play('poop')
+        audioController.playPoopSfx();
+        // Sound.sound.play('poop')
       } else {
         this.winAnimation.visible = true
         this.winAnimation.x = this.x
         this.winAnimation.y = this.y
         this.parent.addChild(this.winAnimation)
         this.winAnimation.gotoAndPlay(0)
-        Sound.sound.play('coin')
+        audioController.playCoinSfx();
+        // Sound.sound.play('coin')
       }
     }
     this.revealAnimation.x = this.x

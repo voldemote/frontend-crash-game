@@ -27,7 +27,9 @@ export default class Controller extends Emitter {
     this.view.setViewData({
       ...gameViewConfig,
       flags: flagsLeft,
-      timing
+      timing,
+      handlers: this.handlers,
+      gameConfig: this.gameConfig
     });
   }
 
@@ -37,7 +39,6 @@ export default class Controller extends Emitter {
 
   resize({ width, height }) {
     const isLandscape = width > height;
-
     this.view.position.set(width / 2, height / 2);
     //isLandscape=false;
     //this.view.rotation = isLandscape ? -Math.PI / 2 : 0;
@@ -96,24 +97,28 @@ export default class Controller extends Emitter {
     const isLoggedIn = this.gameConfig?.isLoggedIn;
 
     if(isLoggedIn) {
-      this.handlers.checkSelectedCell({row, col}).then((result)=> {
-        this.model.updateCellsData([result]);
-        this.view.updateGrid(col,row, result.isMine);
+      const cell = this.view.grid.cells[ row ][ col ];
 
-        this.view.revealCells([result]);
+      if(!cell.isRevealed) {
+        this.handlers.checkSelectedCell({row, col}).then((result)=> {
+          this.model.updateCellsData([result]);
+          this.view.updateGrid(col,row, result.isMine);
 
-        //reveal all
-        // this.view.revealCells(this.model.cellsToRevealed.flat());
-        //
-        if (result.isMine) {
-          this.view.gameOver("lose");
-          this.view.revealCells(this.model.allMines.flat());
-        } else if (this.model.isGameWon) {
-          // this.view.revealCells(result);
-          this.view.gameOver("win");
-          this.view.flagMines(this.model.totFlaggedCells.flat());
-        }
-      });
+          this.view.revealCells([result]);
+
+          //reveal all
+          // this.view.revealCells(this.model.cellsToRevealed.flat());
+          //
+          if (result.isMine) {
+            this.view.gameOver("lose");
+            this.view.revealCells(this.model.allMines.flat());
+          } else if (this.model.isGameWon) {
+            // this.view.revealCells(result);
+            this.view.gameOver("win");
+            this.view.flagMines(this.model.totFlaggedCells.flat());
+          }
+        });
+      }
       // this.handlers.cellClickHandler({ row, col });
     } else {
       //handle demo

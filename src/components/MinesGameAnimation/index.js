@@ -64,9 +64,13 @@ const MinesGameAnimation = ({
   setCurrentStep,
   setCashouts,
   cashouts,
-  currentStep,
   gameOver,
-  setGameOver
+  setGameOver,
+  currentStep,
+  outcomes,
+  setOutcomes,
+  demoCount,
+  setDemoCount
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -183,9 +187,10 @@ const MinesGameAnimation = ({
               done: true
             });
             _.set(configBase, 'initialReveal', getTranslatedReveal(game_payload.clientBoard));
-            if(configBase?.initialReveal.length) {
-              setCurrentStep((step) => step+1);
-            }
+
+            const tries = data._tries;
+            setOutcomes(data?._outcomes);
+            setCurrentStep(tries);
           } else {
             setGameInProgress(false);
           }
@@ -200,6 +205,7 @@ const MinesGameAnimation = ({
       //init demo rounds
 
       configBase.setGridManually = false;
+      // configBase.defaultGrid.mines = mines;
 
       setGameConfig({
         ...configBase
@@ -255,6 +261,9 @@ const MinesGameAnimation = ({
     if(gameOver) {
       GAME.controller.view.gameOver("win");
       setGameOver(false);
+      setDemoCount((count) => {
+        return count+1;
+      })
     }
   },[gameOver])
 
@@ -263,15 +272,19 @@ const MinesGameAnimation = ({
       ref={backgroundRef}
       className={classNames(
         styles.animation,
-        isMobile && styles.animationMobile,
-        !bet.done && styles.notClickable
+        isMobile && styles.animationMobile
       )}
     >
       <div className={styles.audioControls}>
         {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}
       </div>
 
-      <canvas className={styles.canvas} ref={canvasRef}></canvas>
+      <div>
+        <canvas className={classNames(styles.canvas, {
+          [styles.notClickable]: !bet.done
+        })} ref={canvasRef}></canvas>
+      </div>
+
 
     </div>
   );

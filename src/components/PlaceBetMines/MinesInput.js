@@ -16,7 +16,13 @@ export const MinesInput = ({mines, setMines, game}) => {
           className={classNames(styles.input)}
           type={'number'}
           value={mines}
-          onChange={(e) => setMines(Math.floor(e.target.value))}
+          onChange={(e) => {
+            if(e.target.value < 25 && e.target.value > 0) {
+              setMines(Math.floor(e.target.value))
+            } else {
+              setMines(1)
+            }
+          }}
           step={1}
           min={1}
           max={24}
@@ -43,11 +49,6 @@ export const MinesInput = ({mines, setMines, game}) => {
           >24</span>
         </div>
       </div>
-      {/*{game.ngame > 0 &&*/}
-      {/*  <div className={styles.spinsleft}>*/}
-      {/*    {game.ngame} spins left*/}
-      {/*  </div>*/}
-      {/*}*/}
     </div>
   )
 }

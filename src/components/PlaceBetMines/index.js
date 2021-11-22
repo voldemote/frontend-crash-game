@@ -8,7 +8,7 @@ import {
   selectGameOffline,
 } from 'store/selectors/rosi-game';
 import styles from './styles.module.scss';
-import { formatToFixed } from '../../helper/FormatNumbers';
+import {formatToFixed, roundToTwo} from '../../helper/FormatNumbers';
 import { selectUser } from 'store/selectors/authentication';
 import { PopupActions } from 'store/actions/popup';
 import TokenNumberInput from 'components/TokenNumberInput';
@@ -46,27 +46,18 @@ const PlaceBetMines = ({
   setBet,
   currentStep,
   setCurrentStep,
-  onCashout
+  onCashout,
+  multiplier,
+  profit
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [profit, setProfit] = useState(0);
-  const [loss, setLoss] = useState(0);
-  const [crashFactor, setCrashFactor] = useState('25.00');
-  const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
-  const [canBet, setCanBet] = useState(true);
   const gameOffline = false//useSelector(selectGameOffline);
-  const [wincrease, setWincrease] = useState(0)
-  const [lincrease, setLincrease] = useState(0)
-  const [lossbutton, setLossbutton] = useState(false)
-  const [winbutton, setWinbutton] = useState(false)
-  const [spinlimit, setSpinlimit] = useState(false)
-  const [accumulated, setAccumulated] = useState(0)
 
-  const userUnableToBet = amount < 1 || !canBet || gameOffline;
+  const userUnableToBet = amount < 1 || gameOffline;
 
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
   const onTokenNumberChange = number => {
@@ -115,10 +106,7 @@ const PlaceBetMines = ({
 
 
   const placeGuestBet = () => {
-    if (numberOfDemoPlays === 3) {
-      showLoginPopup();
-      return;
-    }
+    showLoginPopup();
   };
 
   const handleCashout = e => {
@@ -163,10 +151,12 @@ const PlaceBetMines = ({
         </span>
       );
     } else {
-
       return (
         <>
-          <span
+          <div className={styles.currentMultiplier}>Multiplier: <span className={classNames('global-cashout-profit')}>{!multiplier ? "-" : 'x' + multiplier}</span></div>
+          <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
+
+          <div
             role="button"
             tabIndex="0"
             className={classNames(
@@ -177,7 +167,7 @@ const PlaceBetMines = ({
             onClick={currentStep === 0 ? ()=>{} : handleCashout }
           >
             Cashout
-          </span>
+          </div>
         </>
       )
     }
