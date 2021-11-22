@@ -27,7 +27,9 @@ export default class Controller extends Emitter {
     this.view.setViewData({
       ...gameViewConfig,
       flags: flagsLeft,
-      timing
+      timing,
+      handlers: this.handlers,
+      gameConfig: this.gameConfig
     });
   }
 
@@ -37,7 +39,6 @@ export default class Controller extends Emitter {
 
   resize({ width, height }) {
     const isLandscape = width > height;
-
     this.view.position.set(width / 2, height / 2);
     //isLandscape=false;
     //this.view.rotation = isLandscape ? -Math.PI / 2 : 0;

@@ -289,7 +289,7 @@ export default class View extends Factory.Container {
   revealCells(cells) {
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
-      cell.reveal(this.resPack, this.viewConfig.styles, cell.isMine);
+      cell.reveal(this.resPack, this.viewConfig.styles, this.viewConfig.handlers);
     });
   }
   /** To reveal all cells which were collected by engine

@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBetMines from 'components/PlaceBetMines';
 import BackLink from 'components/BackLink';
-import Spins from 'components/Spins';
+import LastCashouts from 'components/LastCashouts';
 import GameAnimation from 'components/MinesGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
@@ -31,6 +31,7 @@ import { GAMES } from '../../constants/Games';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {getLastCashoutsMines} from "../../api/casino-games";
+import {roundToTwo} from "../../helper/FormatNumbers";
 
 const Game = ({
   showPopup,
@@ -60,8 +61,11 @@ const Game = ({
     pending: false,
     done: false
   });
+  const [outcomes, setOutcomes] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [amount, setAmount] = useState(50);
+  const [multiplier, setMultiplier] = useState('0.00');
+  const [profit, setProfit] = useState();
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -116,6 +120,23 @@ const Game = ({
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
   }, [dispatch, connected]);
 
+
+  useEffect(() => {
+    if(currentStep === 0) {
+      if(currentStep === 0) {
+        setMultiplier();
+        setProfit();
+      }
+    } else {
+      setMultiplier((multi)=> {
+        const currentMulti = outcomes[currentStep-1];
+        const calculateProfit = (amount * currentMulti) - amount;
+        setProfit(calculateProfit);
+        return currentMulti;
+      });
+    }
+  }, [currentStep]);
+
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
   };
@@ -129,7 +150,7 @@ const Game = ({
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await gameApi.createTradeMines(payload);
-        setBet({...payload, ...data});
+        setOutcomes(data?.outcomes)
         updateUserBalance(userId);
         return data;
       }
@@ -252,11 +273,13 @@ const Game = ({
                 gameInProgress={gameInProgress}
                 setGameInProgress={setGameInProgress}
                 gameApi={gameApi}
+                currentStep={currentStep}
                 setCurrentStep={setCurrentStep}
                 gameOver={gameOver}
                 setGameOver={setGameOver}
+                setOutcomes={setOutcomes}
               />
-              <Spins text="My Cashouts" spins={cashouts} />
+              <LastCashouts text="My Cashouts" spins={cashouts} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -274,6 +297,9 @@ const Game = ({
                   setGameInProgress={setGameInProgress}
                   currentStep={currentStep}
                   setCurrentStep={setCurrentStep}
+                  multiplier={multiplier}
+                  profit={profit}
+                  outcomes={outcomes}
                 />
               </div>
             </div>

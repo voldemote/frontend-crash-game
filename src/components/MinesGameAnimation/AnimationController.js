@@ -35,14 +35,6 @@ export class AudioController {
           url: '/sounds/mines/bgm.mp3',
           loop: true,
         },
-        flying: {
-          url: '/sounds/elon/flying.mp3',
-          loop: true,
-        },
-        gameover: {
-          url: '/sounds/elon/sfx_gameover.mp3',
-          loop: false,
-        },
         lose: {
           url: '/sounds/elon/sfx_lose.mp3',
           loop: false,
@@ -55,8 +47,12 @@ export class AudioController {
           url: '/sounds/elon/sfx_placebet.mp3',
           loop: false,
         },
-        tick: {
-          url: '/sounds/roulette/sfx_tick.mp3',
+        coin: {
+          url: '/sounds/mines/sfx-coin.mp3',
+          loop: false,
+        },
+        poop: {
+          url: '/sounds/mines/sfx-poop.mp3',
           loop: false,
         }
       },
@@ -126,7 +122,6 @@ export class AudioController {
 
   stopBgm() {
     this.stopSound('bgm');
-    this.stopSound('flying');
   }
 
   playTick() {
@@ -148,11 +143,19 @@ export class AudioController {
   playBetSound() {
     this.playSound('placebet');
   }
+
+  playCoinSfx() {
+    this.playSound('coin');
+  }
+
+  playPoopSfx() {
+    this.playSound('poop');
+  }
 }
 
 class AnimationController {
   init(canvas, options) {
-    const {gameConfig, layoutManagerConfig, applicationConfig, resourcesConfig, gameViewConfig, initialReveal} = options;
+    const {gameConfig, layoutManagerConfig, applicationConfig, resourcesConfig, gameViewConfig} = options;
     this.game = new Game();
     this.canvas = canvas;
     this.canvas.width = options.width;
@@ -168,7 +171,8 @@ class AnimationController {
 
     this.game.initialize({
       cellClickHandler: options.cellClickHandler,
-      checkSelectedCell: options.checkSelectedCell
+      checkSelectedCell: options.checkSelectedCell,
+      audio: this.audio
     });
     this.game.useConfig({gameConfig, gameViewConfig});
 

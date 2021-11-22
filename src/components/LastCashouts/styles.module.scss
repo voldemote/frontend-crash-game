@@ -1,0 +1,74 @@
+@import '../../styles/all';
+
+.container {
+  background: $colorWhite;
+  border: 1px solid $colorLightGray;
+
+  border-radius: 10px;
+  margin-bottom: 14px;
+  padding: 7px 20px;
+  margin-top: 14px;
+  .title {
+    display: inline-block;
+    color: #000;
+    width: 30%;
+
+    @media screen and (max-width: $screen-sm) {
+      width: 30%;
+    }
+
+    @media screen and (max-width: $screen-xs) {
+      width: 50%;
+    }
+  }
+
+  .crashes {
+    display: inline-flex;
+    align-items: center;
+    overflow-x: hidden;
+    width: 70%;
+    position: relative;
+    @media screen and (max-width: $screen-sm) {
+      width: 70%;
+      overflow-x: hidden;
+    }
+
+    @media screen and (max-width: $screen-xs) {
+      width: 50%;
+    }
+  }
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(270deg, #fff 0%, rgba(255, 255, 255, 0) 40%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .crash {
+    color: $colorYellow;
+    margin-right: 25px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: $screen-sm) {
+      margin-right: 25px;
+    }
+  }
+  .reward {
+    color: $colorGreen;
+  }
+  .even {
+    color: gray;
+  }
+
+  .lost {
+    color: $colorRed;
+  }
+}
