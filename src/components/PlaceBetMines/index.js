@@ -54,7 +54,7 @@ const PlaceBetMines = ({
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [animate, setAnimate] = useState(false);
+  const [confetti, setConfetti] = useState(false);
   const gameOffline = false//useSelector(selectGameOffline);
 
   const userUnableToBet = amount < 1 || gameOffline;
@@ -84,6 +84,7 @@ const PlaceBetMines = ({
   const placeABet = async () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
+    setConfetti(false);
     const payload = {
       amount,
       minesCount: mines
@@ -116,6 +117,7 @@ const PlaceBetMines = ({
     setGameInProgress(false);
     setCurrentStep(0);
     onCashout();
+    setConfetti(true);
   };
 
   const showLoginPopup = () => {
@@ -225,7 +227,7 @@ const PlaceBetMines = ({
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti
         style={canvasStyles}
-        fire={animate}
+        fire={confetti}
         particleCount={300}
         spread={360}
         origin={{ x: 0.4, y: 0.45 }}
