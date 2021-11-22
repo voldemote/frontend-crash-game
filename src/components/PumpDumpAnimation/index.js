@@ -30,7 +30,7 @@ const GameMount = (setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStam
   const audioManager = new GameAudioManager();
   if (canvasRef.current) {
     setAudio(audioManager);
-    PumpDumpGameMananger.initialize(0x12132e, canvasRef.current);
+    PumpDumpGameMananger.initialize(0x12132e, canvasRef.current, audioManager);
     PumpDumpGameMananger.load(ASSET_LIST, () => {
       if (isPreparingRound) {
         PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());

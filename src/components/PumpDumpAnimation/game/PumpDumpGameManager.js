@@ -2,6 +2,7 @@ import { Application } from "@pixi/app";
 import { GameScene } from "./scenes/GameScene";
 import { LaunchScene } from "./scenes/LaunchScene";
 import TWEEN from '@tweenjs/tween.js';
+import { isMobile } from "react-device-detect";
 
 
 /*this class is purely static. Don't new this class*/
@@ -24,21 +25,24 @@ export class PumpDumpGameMananger {
         return this._height;
     }
 
+    static _audioManager;
+
     // Use this function ONCE to start the entire game
-    static initialize(backgroundColor, viewCanvas) {
+    static initialize(backgroundColor, viewCanvas, audioManager) {
 
         // Create our pixi app
         this.app = new Application({
             view: viewCanvas,
             resolution: 1,
             resizeTo: viewCanvas.parentElement,
-            // autoDensity: true,
             antialias: true,
-            transparent: true,
+            backgroundAlpha: 0,
         });
 
         this._width = this.app.renderer.width;
         this._height = this.app.renderer.height;
+
+        this._audioManager = audioManager;
 
         this.addTicker();
     }
@@ -78,7 +82,7 @@ export class PumpDumpGameMananger {
         if (!this.app) {
             return;
         }
-        const gameScene = new GameScene(gameTime);
+        const gameScene = new GameScene(gameTime, this._audioManager);
         this.changeScene(gameScene);
     }
 
@@ -95,7 +99,7 @@ export class PumpDumpGameMananger {
         if (!this.app || launchTime <= 0) {
             return;
         }
-        const launchScene = new LaunchScene(launchTime);
+        const launchScene = new LaunchScene(launchTime, this._audioManager);
         this.changeScene(launchScene);
     }
 

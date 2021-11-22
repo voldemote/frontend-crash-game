@@ -12,7 +12,7 @@ export class EndGameContainer extends Container {
         "CRASH_1",
     ]
 
-    showCrash() {
+    showCrash(crashBar) {
         const resources = PumpDumpGameMananger.app.loader.resources;
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
@@ -30,6 +30,17 @@ export class EndGameContainer extends Container {
                 crashImage.scale.set(scaleData.val);
             })
             .easing(TWEEN.Easing.Back.Out)
+            .start();
+
+        let barAnimData = { scale: crashBar.scale.x, x: crashBar.x, y: crashBar.y };
+        this.addChild(crashBar);
+        new TWEEN.Tween(barAnimData)
+            .to({ scale: 2, x: width * 0.5, y: height * 0.6 }, 800)
+            .onUpdate(() => {
+                crashBar.position.set(barAnimData.x, barAnimData.y);
+                crashBar.scale.set(barAnimData.scale);
+            })
+            .easing(TWEEN.Easing.Quintic.Out)
             .start();
 
     }

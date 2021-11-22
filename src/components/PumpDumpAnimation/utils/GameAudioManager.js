@@ -1,7 +1,8 @@
 import * as Sound from '@pixi/sound';
+import { AUDIO_LIST } from '../config';
 
 export class GameAudioManager {
-    constructor(bgmIndex = 0) {
+    constructor() {
         let volume = 0;
         try {
             const savedVolume = localStorage.getItem('gameVolume');
@@ -11,41 +12,24 @@ export class GameAudioManager {
             console.error(e);
         }
         this.errors = [];
-        this.bgmIndex = bgmIndex;
-        this.elapsed = 0;
-        this.ready = true;
+        this.ready = false;
+
+        this.isRequestingBGM = false;
+
+        let count = Object.keys(AUDIO_LIST).length;
 
         Sound.sound.add(
-            {
-                bgm: {
-                    url: '/sounds/elon/elon_bgm.mp3',
-                    loop: true,
-                },
-                flying: {
-                    url: '/sounds/elon/flying.mp3',
-                    loop: true,
-                },
-                gameover: {
-                    url: '/sounds/elon/sfx_gameover.mp3',
-                    loop: false,
-                },
-                lose: {
-                    url: '/sounds/elon/sfx_lose.mp3',
-                    loop: false,
-                },
-                cashout: {
-                    url: '/sounds/elon/sfx_cashout3.mp3',
-                    loop: false,
-                },
-                placebet: {
-                    url: '/sounds/elon/sfx_placebet.mp3',
-                    loop: false,
-                },
-            },
+            AUDIO_LIST,
             {
                 loaded: (err, data) => {
                     if (err) {
                         this.errors = [...this.errors, err];
+                    }
+                    --count;
+                    if (count === 0) {
+                        console.warn('audio loaded');
+                        this.ready = true;
+                        this.isRequestingBGM && this.startBgm();
                     }
                 },
                 preload: true,
@@ -63,10 +47,9 @@ export class GameAudioManager {
                 this.volume = volume;
             }
 
-            localStorage.setItem('gameVolume', `${volume}`);
-
+            localStorage.setItem('gameVolume', `${this.volume}`);
             Sound.sound.volume('bgm', this.volume);
-            Sound.sound.volume('flying', this.volume);
+            Sound.sound.setVolume(this.volume);
         } catch (e) {
             console.error('Audio output error');
         }
@@ -74,10 +57,6 @@ export class GameAudioManager {
 
     mute() {
         this.setVolume(0.0);
-    }
-
-    setElapsed(elapsed) {
-        this.elapsed = elapsed;
     }
 
     setBgmIndex(idx = 0) {
@@ -91,6 +70,10 @@ export class GameAudioManager {
                 Sound.sound.play(name, {
                     loop: loop,
                 });
+            } else {
+                if (name === 'bgm') {
+                    this.isRequestingBGM = true;
+                }
             }
         } catch (e) {
             console.error('Audio output error');
@@ -102,33 +85,31 @@ export class GameAudioManager {
     }
 
     startBgm() {
-        const diff = this.elapsed / 1000;
-        if (this.bgmIndex === 0) {
-            this.playSound('bgm', true);
-        }
-        if (this.bgmIndex === 1) {
-            this.playSound('flying', true);
-        }
+        this.playSound('bgm', true);
     }
 
     stopBgm() {
         this.stopSound('bgm');
-        this.stopSound('flying');
+        this.isRequestingBGM = false;
     }
 
-    playGameOverSound() {
-        this.playSound('gameover');
+    playSfx(name) {
+        this.playSound(name);
     }
 
-    playLoseSound() {
-        this.playSound('lose');
-    }
+    // playGameOverSound() {
+    //     this.playSound('gameover');
+    // }
 
-    playWinSound() {
-        this.playSound('cashout');
-    }
+    // playLoseSound() {
+    //     this.playSound('lose');
+    // }
 
-    playBetSound() {
-        this.playSound('placebet');
-    }
+    // playWinSound() {
+    //     this.playSound('cashout');
+    // }
+
+    // playBetSound() {
+    //     this.playSound('placebet');
+    // }
 }

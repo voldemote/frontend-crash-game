@@ -9,7 +9,7 @@ export class LaunchScene extends Container {
     gap = 0;
     count = 0;
 
-    constructor(launchTime) {
+    constructor(launchTime, audioManager) {
         super();
         const resources = PumpDumpGameMananger.app.loader.resources;
         const width = PumpDumpGameMananger.width;

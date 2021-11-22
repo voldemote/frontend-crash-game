@@ -6,7 +6,8 @@ import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 
 
 const AXIS_LABEL_FONT_FAMILY = 'PlusJakarta-Bold';
-const AXIS_LABEL_COLOR = 0x605c8d;
+// const AXIS_LABEL_COLOR = 0x605c8d;
+const AXIS_LABEL_COLOR = 0x999999;
 const AXIS_LABEL_FONT_SIZE = 10;
 const AXIS_LABEL_MINI_FONT_SIZE = 8;
 const AXIS_LABEL_GAP = 7.5;
@@ -159,6 +160,31 @@ export class VerticalAxis extends Container {
         this.shouldRunUpdate = true;
     }
 
+    handleNonFreshStart(timeElapsed) {
+        const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
+        for (let i = this.attribs.length - 1; i >= 0; --i) {
+            if (crashFactor > this.attribs[i].stickPointCrashFactor) {
+                this.multiFactor = this.attribs[i].multiFactor;
+                this.axisGap = INITIAL_AXIS_GAP;
+                this.stickPointCrashFactor = this.attribs[i].stickPointCrashFactor;
+                this.unitThreshold = HALF_AXIS_THRESHOLD;
+                break;
+            }
+        }
+        const diff = crashFactor - this.stickPointCrashFactor;
+        if (diff > 0) {
+            const diffInUnits = diff / this.multiFactor;
+            const stickPoint = INIT_STICK_UNITS * INITIAL_AXIS_GAP;
+            const reduction = stickPoint / (diffInUnits + stickPoint);
+            this.axisGap = INITIAL_AXIS_GAP * reduction;
+            if (this.axisGap - HALF_AXIS_THRESHOLD <= 0) {
+                this.isHalfAxis = true;
+            }
+        }
+        this.upgradeAxisToNextSet();
+        this.repositionLabels();
+    }
+
     stop() {
         this.shouldRunUpdate = false;
     }
@@ -209,6 +235,10 @@ export class VerticalAxis extends Container {
             }
         }
 
+        this.repositionLabels();
+    }
+
+    repositionLabels() {
         for (let i = 0; i < AXIS_COUNT; ++i) {
             if (this.isHalfAxis) {
                 this.generateHalfAxisPiece(this.axisLines[i]);
@@ -219,6 +249,5 @@ export class VerticalAxis extends Container {
             this.multiplierLabels[i].position.y = this.axisLines[i].y;
             this.miniMultiplierLabels[i].position.y = this.axisLines[i].y - this.axisGap * 0.5;
         }
-
     }
 }
