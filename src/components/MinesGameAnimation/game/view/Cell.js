@@ -81,7 +81,6 @@ export default class Cell extends Factory.Sprite {
         this.parent.addChild(this.loseAnimation)
         this.loseAnimation.gotoAndPlay(0)
         audioController.playPoopSfx();
-        // Sound.sound.play('poop')
       } else {
         this.winAnimation.visible = true
         this.winAnimation.x = this.x
@@ -89,7 +88,6 @@ export default class Cell extends Factory.Sprite {
         this.parent.addChild(this.winAnimation)
         this.winAnimation.gotoAndPlay(0)
         audioController.playCoinSfx();
-        // Sound.sound.play('coin')
       }
     }
     this.revealAnimation.x = this.x
