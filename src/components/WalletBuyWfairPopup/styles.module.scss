@@ -99,6 +99,7 @@
   width: 100%;
   justify-content: center;
   align-items: center;
+  height: 700px;
 
   .depositHeader {
     display: flex;
@@ -167,6 +168,23 @@
         left: 50%;
         transform: translateX(-50%);
       }
+    }
+  }
+
+  .connectWalletContainer {
+    height: 100px;
+    margin-top: 40px;
+
+    .connectWalletButton {
+      border-radius: 30px;
+      border: 1px solid $colorWhite;
+      background-color: $colorPinkDark;
+      font-size: 20px;
+      width: 300px;
+      color: $colorWhite;
+      padding: 10px;
+      cursor: pointer;
+      font-family: $fontRegular;
     }
   }
 }
