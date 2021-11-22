@@ -34,9 +34,11 @@ const backgroundString = (backg) =>`conic-gradient(from 90deg at 50% 50%, ${colo
 const PlinkoGameAnimation = ({
   connected,
   amount,
+  activities,
   onInit,
   risk,
   setBet,
+  userId,
   setSpins,
   bet
 }) => {
@@ -47,9 +49,19 @@ const PlinkoGameAnimation = ({
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
   const [backg, setBackg] = useState(0);
+  const [lastgame, setLastgame] = useState(null);
+  const [shadow, setShadow] = useState(null);
   //const [backgr, setBackgr] = useState(backgroundString(0));
   const [flag, setFlag] = useState(false);
   const [ball, setBall] = useState(null);
+
+  useEffect(() => {
+    const lastnewgame = activities[activities.length-1]?.data
+    if(activities?.length > 0 && lastgame != lastnewgame.gameHash && lastnewgame.gameName == "GAME_PLINKO" && lastnewgame.userId != userId){
+      lastgame && setShadow(lastnewgame.path)
+      setLastgame(lastnewgame.gameHash)
+    }
+  }, [activities])
 
   useEffect(() => {
     if(backgroundRef) {
@@ -107,14 +119,16 @@ const PlinkoGameAnimation = ({
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
       <img className={styles.trape} src="/images/casino-games/Trapezoid.png" alt="" />
       <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />
-      {width && height && <AnimationController risk={risk} amount={amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} />}
+      {width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    connected: state.websockets.connected,
+    userId: state.authentication.userId,
+    activities: state.notification.activities,
+    connected: state.websockets.connected
   };
 };
 

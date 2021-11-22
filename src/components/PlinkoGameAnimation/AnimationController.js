@@ -14,15 +14,20 @@ const formatk = (num) => {
   return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
-export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio}) => {
+export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio, shadow, setShadow}) => {
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
     return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
   }, [])
   const [outcomes, setOutcomes] = useState(prevOutcomes);
   const [nball, setNball] = useState(0);
+  const [nshadow, setNshadow] = useState(0);
   const boardref = useRef(null);
-  const brightBasket = (winMultiplier) => {
+  const brightBasket = (winMultiplier, shadow) => {
+    if(shadow){
+      setNshadow((nshadow)=>nshadow-1)
+      return
+    }
     const right = ballValue.path.filter(n=>n==1).length >= ballValue.path.length/2
     const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
     if(index > 0){
@@ -39,11 +44,20 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
 
   useEffect(() => {
     if(ballValue) {
-      launchBall(ballValue, brightBasket, nball, boardref, audio)
-      setNball(nball+1)
+      launchBall(ballValue, brightBasket, nball, boardref, audio, false)
+      setNball((nball)=>nball+1)
       setBall(null)
     }
   }, [ballValue])
+
+  useEffect(() => {
+    if(nshadow < 6 && shadow) {
+      launchBall({path: shadow}, brightBasket, nball, boardref, audio, true)
+      setNball((nball)=>nball+1)
+      setNshadow((nshadow)=>nshadow+1)
+      setShadow(null)
+    }
+  }, [shadow])
 
   useEffect(() => {
     if(risk){
@@ -69,10 +83,10 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   )
 }
 
-const launchBall = (ballValue, onBuscket, nball, boardref, audio) => {
+const launchBall = (ballValue, onBuscket, nball, boardref, audio, shadow) => {
   let ball1 = document.createElement('div')
   ball1.setAttribute("id", `ball-${nball}`);
-  ball1.setAttribute("class", styles.ball)
+  ball1.setAttribute("class", shadow ? styles.ballshadow : styles.ball)
   boardref.current.appendChild(ball1)
   ball1.style.transform = `translate(0px, 0px)`;
   setTimeout(()=>{
@@ -85,7 +99,7 @@ const launchBall = (ballValue, onBuscket, nball, boardref, audio) => {
       index++
     }
     setTimeout(() => {
-      fallToBuscket(onBuscket, `ball-${nball}`, ballValue.winMultiplier)
+      fallToBuscket(onBuscket, `ball-${nball}`, ballValue.winMultiplier, shadow)
     }, (ballValue.path.length*350+1))
   }, 250)
 }
@@ -107,17 +121,16 @@ function moveBall(direction, ball, audio) {
     document.getElementById(ball).style.transform = `translate(${newX}px, ${y+row/4}px) rotate(${rotate})`;
     }, 100)
   setTimeout(() => {
-    console.log("tick")
     audio.playTick()
     const x = getXBall(ball), y = getYBall(ball)
     const rotate = direction === 1 ? '360deg' : '-360deg'
     document.getElementById(ball).style.transform = `translate(${x}px, ${y+row/2+1}px) rotate(${rotate})`;
    }, 175)
 }
-function fallToBuscket(onBuscket, ball, winMultiplier) {
+function fallToBuscket(onBuscket, ball, winMultiplier, shadow) {
   const x = getXBall(ball), y = getYBall(ball)
   document.getElementById(ball).style.transform = `translate(${x}px, ${y+22}px) rotate(0)`;
-  setTimeout(() => onBuscket(winMultiplier), 150)
+  setTimeout(() => onBuscket(winMultiplier, shadow), 150)
   setTimeout(() => document.getElementById(ball).style.opacity = 0, 300)
   setTimeout(() => document.getElementById(ball).remove(), 500)
 }
