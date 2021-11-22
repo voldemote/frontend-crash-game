@@ -253,7 +253,9 @@ const PlaceBetCasino = ({
         origin={{ x: 0.4, y: 0.45 }}
       />
       <div className={styles.inputContainer}>
-        {switchButton(styles)}
+        <div className={styles.placeBetContainer}>
+          {switchButton(styles)}
+        </div>
         {selector === 'manual' ?
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
