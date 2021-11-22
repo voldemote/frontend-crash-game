@@ -66,7 +66,6 @@ export default class View extends Factory.Container {
         // this.showPopUp();
         this.pause();
         // this.resume();
-        console.log('GAME OVER');
         this.emit("restartGame");
       }
     }
@@ -147,7 +146,6 @@ export default class View extends Factory.Container {
     const { width, height } = texture;
     const gridWidth = ( ( columns * width ) - width );
     const gridHeight = ( ( rows * height ) - height );
-    console.log(isMobile);
     if(isMobile) gridSize = 190;
     this.grid.scale.set(gridSize / gridWidth);
     this.addChild(this.grid);
@@ -297,7 +295,6 @@ export default class View extends Factory.Container {
   /** To reveal all cells which were collected by engine
    * @param {Array} cells */
    overCell(cells) {
-     console.log("over");
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
       cell.scale.set(1.1);
@@ -306,7 +303,6 @@ export default class View extends Factory.Container {
 /** To reveal all cells which were collected by engine
    * @param {Array} cells */
  outCell(cells) {
-  console.log("out");
   cells.forEach(({ row, col }) => {
     const cell = this.grid.cells[ row ][ col ];
     cell.scale.set(1);

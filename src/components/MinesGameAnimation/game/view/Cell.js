@@ -71,11 +71,11 @@ export default class Cell extends Factory.Sprite {
     Sound.sound.add(
       {
         coin: {
-          url: '/sounds/mines/coin.mp3',
+          url: '/sounds/mines/sfx-coin.mp3',
           loop: false,
         },
         poop: {
-          url: '/sounds/mines/poop.mp3',
+          url: '/sounds/mines/sfx-poop.mp3',
           loop: false,
         }
       }
