@@ -67,26 +67,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    &:hover{
+    &:hover {
       background: #e72d8910;
     }
     &:last-child {
       margin-right: 0px;
     }
     &:before {
-      content: '';                 /* needed for rendering */
+      content: ''; /* needed for rendering */
       position: absolute;
-      display: block;              /* so we can set width and height */
+      display: block; /* so we can set width and height */
       border-radius: 50%;
       height: 0%;
       width: 0%;
-      margin: auto;                /* center horizontally */
+      margin: auto; /* center horizontally */
       background: #e72d89;
-      top: 50%;                    /* center vertically */
+      top: 50%; /* center vertically */
       transform: translateY(-50%); /* center vertically */
       transition: 0.3s;
     }
-    span{
+    span {
       position: absolute;
       z-index: 14;
     }
@@ -99,7 +99,6 @@
       width: 100%;
     }
   }
-
 }
 .spinsleft {
   margin: 5px;
@@ -122,14 +121,12 @@
 .container {
   position: relative;
   background: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  border: 1px solid $colorLightGray;
   border-radius: 10px;
-  padding: 20px 20px 20px 20px;
   margin-bottom: 14px;
 
   @media screen and (max-width: $screen-md) {
     margin-top: 7px;
-    padding: 10px;
   }
 }
 
@@ -164,7 +161,8 @@
 }
 .sliderContainer {
   position: relative;
-  bottom: -10px;
+  //bottom: -10px;
+  padding: 10px;
   div {
     margin-bottom: 0;
     @media screen and (max-width: $screen-sm) {
@@ -281,12 +279,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    padding: 10px;
+    //justify-content: center;
+    border-bottom: 1px solid $colorLightGray2;
     .placebidTitle {
       padding: 0;
     }
     @media screen and (max-width: 800px) {
-      display: none;
+      // display: none;
     }
   }
 }
