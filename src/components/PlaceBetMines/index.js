@@ -48,18 +48,20 @@ const PlaceBetMines = ({
   setCurrentStep,
   onCashout,
   multiplier,
-  profit
+  profit,
+  demoCount,
+  setDemoCount,
+  confetti,
+  setConfetti
 }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
-  const [animate, setAnimate] = useState(false);
   const gameOffline = false//useSelector(selectGameOffline);
 
   const userUnableToBet = amount < 1 || gameOffline;
 
-  const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
   const onTokenNumberChange = number => {
     setAmount(number);
   };
@@ -84,6 +86,7 @@ const PlaceBetMines = ({
   const placeABet = async () => {
     if (userUnableToBet) return;
     if (amount > userBalance) return;
+    setConfetti(false);
     const payload = {
       amount,
       minesCount: mines
@@ -105,16 +108,33 @@ const PlaceBetMines = ({
   }
 
 
-  const placeGuestBet = () => {
-    showLoginPopup();
+  const placeGuestBet = async () => {
+    const payload = {
+      demo: true,
+      amount,
+      minesCount: mines
+    }
+
+    if(demoCount >= 3) {
+      showLoginPopup();
+      setBet({
+        ...bet,
+        done: false
+      })
+      return;
+    }
+
+    await onBet(payload);
+
+    setBet({
+      ...bet,
+      done: true
+    })
   };
 
   const handleCashout = e => {
     e.preventDefault();
     e.stopPropagation();
-
-    setGameInProgress(false);
-    setCurrentStep(0);
     onCashout();
   };
 
@@ -157,6 +177,7 @@ const PlaceBetMines = ({
           <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
 
           <div
+            id={"mines-cashout-btn"}
             role="button"
             tabIndex="0"
             className={classNames(
@@ -219,13 +240,11 @@ const PlaceBetMines = ({
     zIndex: 999,
   };
 
-  const minesArray = _.times(24, (index)=> (index+1));
-
   return (
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti
         style={canvasStyles}
-        fire={animate}
+        fire={confetti}
         particleCount={300}
         spread={360}
         origin={{ x: 0.4, y: 0.45 }}

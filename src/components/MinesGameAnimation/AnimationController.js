@@ -207,13 +207,13 @@ class AnimationController {
     });
 
     /* just for development mode */
-    if (gameConfig.debuggerMode) {
-      window.game = {
-        controller: this.game.controller,
-        pixiStage: app.stage,
-        layoutManager
-      };
-    }
+    // if (gameConfig.debuggerMode) {
+    //   window.game = {
+    //     controller: this.game.controller,
+    //     pixiStage: app.stage,
+    //     layoutManager
+    //   };
+    // }
 
     /* Use the resources config to add all assets data to a loader. */
     const loader = new ResourceLoader();
@@ -255,27 +255,6 @@ class AnimationController {
 
   restart() {
     this.game.restartGame();
-  }
-
-  changeValues() {
-    // var canvas = document.getElementById("canvas");
-    // var context = canvas.getContext('2d');
-    // context.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
-  reinit(canvas, options) {
-    // this.changeValues()
-    this.risk = options.risk
-
-    return {
-      audio: this.audio,
-      handle: this,
-    };
-  }
-
-  //when calling repaint pass to the method the new index image from riskImages
-  repaint(angle, play, idle) {
-    // let sections = sectionsArray[this.risk-1]
   }
 }
 

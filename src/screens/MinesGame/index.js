@@ -66,6 +66,8 @@ const Game = ({
   const [amount, setAmount] = useState(50);
   const [multiplier, setMultiplier] = useState('0.00');
   const [profit, setProfit] = useState();
+  const [gameInstance, setGameInstance] = useState();
+  const [confetti, setConfetti] = useState();
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -143,16 +145,18 @@ const Game = ({
   };
 
   async function handleBet(payload) {
-    // audio.playBetSound();
+    audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
-        // setBet({...payload })
-        // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        setDemoCount((count) => {
+          return count+1;
+        })
       } else {
         const { data } = await gameApi.createTradeMines(payload);
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
+        gameInstance.game.controller.view.gameOver("lose");
         return data;
       }
     } catch (e) {
@@ -164,13 +168,22 @@ const Game = ({
     }
   }
 
-  async function handleCashout(payload) {
-    audio.playWinSound();
+  async function handleCashout() {
+    setGameInProgress(false);
+    setCurrentStep(0);
+
     try {
-      const { data } = await gameApi.cashoutMines(payload);
+      const { data } = await gameApi.cashoutMines();
       getLastCashout(data.profit);
       setGameOver(true);
       updateUserBalance(userId);
+      setConfetti(true);
+      setBet({
+        pending:false,
+        done: false
+      });
+
+      audio.playWinSound();
     } catch (e) {
       dispatch(
         AlertActions.showError({
@@ -281,6 +294,9 @@ const Game = ({
                 setOutcomes={setOutcomes}
                 setDemoCount={setDemoCount}
                 demoCount={demoCount}
+                gameInstance={gameInstance}
+                setGameInstance={setGameInstance}
+                onCashout={handleCashout}
               />
               <LastCashouts text="My Cashouts" spins={cashouts} />
             </div>
@@ -303,6 +319,10 @@ const Game = ({
                   multiplier={multiplier}
                   profit={profit}
                   outcomes={outcomes}
+                  demoCount={demoCount}
+                  setDemoCount={setDemoCount}
+                  confetti={confetti}
+                  setConfetti={setConfetti}
                 />
               </div>
             </div>

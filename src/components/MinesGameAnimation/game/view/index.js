@@ -61,13 +61,9 @@ export default class View extends Factory.Container {
     }
 
     if ( this.isGameOver ) {
-      this.popupTimout -= delta * 16.777;
-      if ( this.popupTimout <= 0 ) {
-        // this.showPopUp();
         this.pause();
         // this.resume();
         this.emit("restartGame");
-      }
     }
 
     //this.header.update(delta);

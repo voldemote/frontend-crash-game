@@ -45,8 +45,6 @@ const gameConfigBase = {
   initialReveal: []
 };
 
-let GAME = null;
-
 const MinesGameAnimation = ({
   connected,
   muteButtonClick,
@@ -70,7 +68,10 @@ const MinesGameAnimation = ({
   outcomes,
   setOutcomes,
   demoCount,
-  setDemoCount
+  setDemoCount,
+  gameInstance,
+  setGameInstance,
+  onCashout
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
@@ -134,10 +135,21 @@ const MinesGameAnimation = ({
         dispatch(AlertActions.showError(err.message));
       });
 
-      const isMine = checkMine.data.result === 0 ? false : true;
+      const isMine = checkMine?.data?.result === 0 ? false : true;
 
       if(isMine) {
         handleLost()
+      }
+
+      const hiddenFields = checkMine?.data.clientBoard.filter((item)=> {
+        return item === 2;
+      }).length;
+
+      if(hiddenFields === mines) {
+        //wait for animation
+        setTimeout(()=> {
+          document.getElementById('mines-cashout-btn').click();
+        }, 500)
       }
 
       return {
@@ -202,19 +214,12 @@ const MinesGameAnimation = ({
         dispatch(AlertActions.showError(error.message));
       });
     } else {
-      //init demo rounds
-
+      //init demo rounds / show grid
       configBase.setGridManually = false;
-      // configBase.defaultGrid.mines = mines;
 
       setGameConfig({
         ...configBase
       })
-
-      setBet({
-        pending: false,
-        done: true
-      });
     }
 
 
@@ -224,6 +229,11 @@ const MinesGameAnimation = ({
     let audioInstance = null;
 
     if(!_.isEmpty(gameConfig)) {
+      //avoid attaching multiple click events, when re-init
+      if(gameInstance) {
+        gameInstance.game.controller.removeListeners();
+      }
+
       const applicationConfig = {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
@@ -243,7 +253,7 @@ const MinesGameAnimation = ({
         cellClickHandler,
         checkSelectedCell
       });
-      GAME = that.game;
+      setGameInstance(that);
       setAudio(audio);
       audioInstance = audio;
       onInit(audio);
@@ -259,13 +269,24 @@ const MinesGameAnimation = ({
 
   useEffect(()=> {
     if(gameOver) {
-      GAME.controller.view.gameOver("win");
+      gameInstance.game.controller.view.gameOver("win");
       setGameOver(false);
-      setDemoCount((count) => {
-        return count+1;
-      })
     }
   },[gameOver])
+
+
+  useEffect(()=> {
+    if(demoCount > 0) {
+      const gameConfigDemo = _.cloneDeep(gameConfigBase);
+      gameConfigDemo.setGridManually = false;
+      gameConfigDemo.grid = [];
+      gameConfigDemo.defaultGrid.minesAmount = mines;
+
+      setGameConfig({
+          ...gameConfigDemo
+      })
+    }
+  },[demoCount])
 
   return (
     <div
@@ -280,7 +301,7 @@ const MinesGameAnimation = ({
       </div>
 
       <div>
-        <canvas className={classNames(styles.canvas, {
+        <canvas id="mines-canvas" className={classNames(styles.canvas, {
           [styles.notClickable]: !bet.done
         })} ref={canvasRef}></canvas>
       </div>

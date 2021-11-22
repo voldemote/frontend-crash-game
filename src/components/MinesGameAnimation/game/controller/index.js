@@ -68,6 +68,12 @@ export default class Controller extends Emitter {
     this.view.removePopup();
   }
 
+  removeListeners() {
+    this.view.off('clickOnCell');
+    this.view.off('restartGame');
+    this.view.off('flagRequested');
+  }
+
   onRestartGame() {
     this.view.cleanView();
     this.model.cleanModel();
@@ -96,6 +102,8 @@ export default class Controller extends Emitter {
     const { grid: { collection } } = this.model;
     const isLoggedIn = this.gameConfig?.isLoggedIn;
 
+    console.log('ON CLICK CELL');
+
     if(isLoggedIn) {
       const cell = this.view.grid.cells[ row ][ col ];
 
@@ -108,15 +116,11 @@ export default class Controller extends Emitter {
 
           //reveal all
           // this.view.revealCells(this.model.cellsToRevealed.flat());
-          //
           if (result.isMine) {
-            this.view.gameOver("lose");
-            this.view.revealCells(this.model.allMines.flat());
-          } else if (this.model.isGameWon) {
-            // this.view.revealCells(result);
-            this.view.gameOver("win");
-            this.view.flagMines(this.model.totFlaggedCells.flat());
+            // this.view.gameOver("lose");
+            // this.view.revealCells(this.model.allMines.flat());
           }
+
         });
       }
       // this.handlers.cellClickHandler({ row, col });
@@ -126,13 +130,17 @@ export default class Controller extends Emitter {
 
       this.model.updateCellsData(result);
 
+      const cell = this.view.grid.cells[ row ][ col ];
+
       if (result === Engine.MINE) {
-        this.view.gameOver("lose");
-        this.view.revealCells(this.model.allMines.flat());
+        // this.view.gameOver("lose");
+        this.view.revealCells([cell]);
+        this.view.pause();
       } else if (this.model.isGameWon) {
         this.view.revealCells(result);
-        this.view.gameOver("win");
-        this.view.flagMines(this.model.totFlaggedCells.flat());
+        // this.view.gameOver("win");
+        // this.view.flagMines(this.model.totFlaggedCells.flat());
+        this.view.pause();
       } else {
         this.view.revealCells(result);
       }
