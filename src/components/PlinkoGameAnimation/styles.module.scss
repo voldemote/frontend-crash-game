@@ -79,6 +79,22 @@
     transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
     //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
   }
+  .ballshadow{
+    z-index: 15;
+    background: white;
+    background-image: url('../../data/icons/medal-coin.png');
+    background-size: 100%;    position: absolute;
+    margin: auto;
+    opacity: 0.4;
+    left: 0;
+    right: 0;
+    top: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
+    //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
+  }
   .row{
     display: flex;
     min-width: fit-content;

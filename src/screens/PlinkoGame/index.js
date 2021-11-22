@@ -112,7 +112,7 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
-  console.log("spins", spins)
+
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
@@ -234,7 +234,7 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
-    token: state.authentication.token,
+    token: state.authentication.token
   };
 };
 
