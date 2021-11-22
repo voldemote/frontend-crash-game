@@ -177,13 +177,15 @@ const MinesGameAnimation = ({
           const {game_payload} = data;
 
           if(data?._inProgress) {
-            setCurrentStep((step) => step+1);
             setGameInProgress(true);
             setBet({
               pending: false,
               done: true
             });
             _.set(configBase, 'initialReveal', getTranslatedReveal(game_payload.clientBoard));
+            if(configBase?.initialReveal.length) {
+              setCurrentStep((step) => step+1);
+            }
           } else {
             setGameInProgress(false);
           }
