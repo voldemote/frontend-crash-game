@@ -91,6 +91,11 @@
   justify-content: center;
   align-items: center;
 
+  @media (max-width: $screen-xs-max) {
+    align-items: flex-start;
+    padding-top: 100px;
+  }
+
   .title {
     font-size: 46px;
     font-weight: bold;
