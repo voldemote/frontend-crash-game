@@ -32,6 +32,7 @@ import gameCard1 from '../../data/images/house-games/card-1.png';
 import gameCard5 from '../../data/images/house-games/card-5.png';
 import gameCard3 from '../../data/images/house-games/card-3.png';
 import gameCard4 from '../../data/images/house-games/card-4.png';
+import gameCardMines from '../../data/images/house-games/card-mines.png';
 import IceCreamImg from '../../data/images/alpaca-verse/ice-cream.png';
 import SocialImg from '../../data/images/alpaca-verse/social-img.png';
 import GemsImg from '../../data/images/alpaca-verse/gems.png';
@@ -254,6 +255,11 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
+              <Link to={'/games/mines'}>
+                <img src={gameCardMines} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/plinko'}>
                 <img src={gameCard4} alt="" />
               </Link>
@@ -263,9 +269,9 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
                 <img src={gameCard1} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={6} xs={12}>
+            {/* <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard5} alt="" />
-            </Grid>
+            </Grid> */}
             <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard3} alt="" />
             </Grid>
