@@ -24,6 +24,7 @@ import RouletteGame from './screens/RouletteGame';
 import MinesGame from './screens/MinesGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
+import UserWallet from './screens/UserWallet'
 import Activities from './screens/Activities';
 import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
@@ -38,6 +39,7 @@ import EventRouter from 'components/Events/EventRouter';
 import TypeformController from 'components/TypeformController';
 import ElonWallPaper from 'screens/ElonWallPaper';
 import Fair from 'screens/Fair';
+import PrivateRoute from 'components/PrivateRoute';
 
 const { store, persistor } = configStore();
 
@@ -76,7 +78,7 @@ const App = () => {
                 path={Routes.rouletteGame}
                 component={RouletteGame}
               />
-               <Route exact path={Routes.minesGame} component={MinesGame} />
+              <Route exact path={Routes.minesGame} component={MinesGame} />
               <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
@@ -87,6 +89,7 @@ const App = () => {
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Route exact path={Routes.provablyfair} component={Fair} />
+              <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
               <Redirect to={Routes.home} />
             </Switch>
             <NavbarFooter

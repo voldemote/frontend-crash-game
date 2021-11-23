@@ -49,6 +49,12 @@ class Text {
 
     return template;
   }
+  /**
+   * @param {string} text 
+   */
+  static toClipboard(text) {
+    return navigator.clipboard.writeText(text);
+  }
 }
 
 export default Text;
