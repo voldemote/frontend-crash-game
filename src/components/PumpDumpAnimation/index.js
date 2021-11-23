@@ -26,10 +26,11 @@ const PreparingRound = ({ nextGameAt }) => (
   </div>
 )
 
-const GameMount = (setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStamp, canvasRef) => {
+const GameMount = (setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStamp, canvasRef, onInit) => {
   const audioManager = new GameAudioManager();
   if (canvasRef.current) {
     setAudio(audioManager);
+    onInit(audioManager);
     PumpDumpGameMananger.initialize(0x12132e, canvasRef.current, audioManager);
     PumpDumpGameMananger.load(ASSET_LIST, () => {
       if (isPreparingRound) {
@@ -52,7 +53,7 @@ const CashOut = (cashedOut) => {
   }
 }
 
-const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
+const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
   const {
     isConnected,
     isMute,
@@ -78,7 +79,7 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick }) => {
 
   // OnMount / OnDismount
   useEffect(() => {
-    return GameMount(setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStamp, canvasRef);
+    return GameMount(setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStamp, canvasRef, onInit);
   }, []);
 
   // Once gameHasLoaded or game hasStarted(rosi)

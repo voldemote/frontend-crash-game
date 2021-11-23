@@ -2,6 +2,7 @@ import { handleVisibilityChange } from "components/PumpDumpAnimation/utils/Visib
 import { Container } from "pixi.js";
 import { isMobile } from "react-device-detect";
 import { BarChartContainer } from "../game-objects/BarChartContainer";
+import { CashOut } from "../game-objects/CashOut";
 import { EndGameContainer } from "../game-objects/EndGameContainer";
 import { HorizontalAxis } from "../game-objects/HorizontalAxis";
 import { MemeContainer } from "../game-objects/MemeContainer";
@@ -42,6 +43,10 @@ export class GameScene extends Container {
 
         this.endGameContainer = new EndGameContainer();
         this.addChild(this.endGameContainer);
+
+        // let cashOut = new CashOut(5, 2.36);
+        // cashOut.position.set(400, 400);
+        // this.addChild(cashOut);
 
         this.start(gameStartTime);
 

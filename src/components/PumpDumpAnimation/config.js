@@ -27,7 +27,7 @@ export const AUDIO_LIST = {
     bar: {
         url: '/sounds/pump-dump/bar_sfx.mp3',
         loop: false,
-    }
+    },
     // gameover: {
     //     url: '/sounds/pump-dump/sfx_gameover.mp3',
     //     loop: false,
@@ -40,8 +40,8 @@ export const AUDIO_LIST = {
     //     url: '/sounds/elon/sfx_cashout3.mp3',
     //     loop: false,
     // },
-    // placebet: {
-    //     url: '/sounds/elon/sfx_placebet.mp3',
-    //     loop: false,
-    // },
+    placebet: {
+        url: '/sounds/elon/sfx_placebet.mp3',
+        loop: false,
+    },
 }

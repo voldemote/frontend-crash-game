@@ -112,8 +112,8 @@ export class PumpDumpGameMananger {
         TWEEN.update(this.app.ticker.lastTime);
     }
 
-    static doCashedOutAnimation() {
-
+    static doCashedOutAnimation(cashOut) {
+        console.warn('cashout', cashOut);
     }
 
     static destroy() {

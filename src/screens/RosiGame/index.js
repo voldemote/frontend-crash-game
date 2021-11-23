@@ -226,7 +226,12 @@ const RosiGame = ({
       );
     }
     if (slug === GAMES['pumpDump'].slug) {
-      return <PumpDumpAnimation />;
+      return (
+        <PumpDumpAnimation 
+          inGameBets={inGameBets}
+          onInit={audio => setAudio(audio)}
+        />
+      );
     }
   };
 

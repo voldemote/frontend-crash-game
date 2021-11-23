@@ -109,7 +109,7 @@ export class GameAudioManager {
     //     this.playSound('cashout');
     // }
 
-    // playBetSound() {
-    //     this.playSound('placebet');
-    // }
+    playBetSound() {
+        this.playSound('placebet');
+    }
 }

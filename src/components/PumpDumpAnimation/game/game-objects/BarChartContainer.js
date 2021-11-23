@@ -250,19 +250,6 @@ export class BarChartContainer extends Container {
             .start();
     }
 
-    growNewBarTween(newBar) {
-        let scaleData = { x: 0, y: 0 };
-        let toScaleData = { x: this.barScale.x, y: this.barScale.y };
-
-        new TWEEN.Tween(scaleData)
-            .to(toScaleData, (INIT_CREATE_THRESHOLD * this.createThresholdMult))
-            .onUpdate(() => {
-                newBar.scale.set(scaleData.x, scaleData.y);
-            })
-            .easing(TWEEN.Easing.Exponential.Out)
-            .start();
-    }
-
     createCrashBar(timeElapsed) {
 
         const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
