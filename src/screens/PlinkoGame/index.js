@@ -52,7 +52,7 @@ const PlinkoGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true, ball: 0});
+  const [bet, setBet] = useState({ready: true, ball: 0});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
@@ -112,6 +112,11 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
+  useEffect(() => {
+    if(userId && bet?.ready && bet.ball===0) {
+       updateUserBalance(userId);
+    }
+  }, [bet])
 
   async function handleBet(payload) {
     audio.playBetSound();
@@ -119,12 +124,12 @@ const PlinkoGame = ({
     try {
       if(payload.demo) {
         const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array, ready: false }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
-        updateUserBalance(userId);
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier, ready: false}});
+        //updateUserBalance(userId);
         trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
         trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
         return data;
@@ -209,6 +214,7 @@ const PlinkoGame = ({
                   gameName={'plinko'}
                   connected={connected}
                   setAmount={setAmount}
+                  setBet={setBet}
                   amount={amount}
                   setRisk={setRisk}
                   risk={risk}
