@@ -119,6 +119,16 @@ export default class Controller extends Emitter {
           if (result.isMine) {
             // this.view.gameOver("lose");
             // this.view.revealCells(this.model.allMines.flat());
+
+            //show all mines position at the end, when user lost
+            if(result.allMinesPos) {
+              result.allMinesPos.forEach((mine)=> {
+                mine.isMine = true;
+                this.model.updateCellsData([mine]);
+                this.view.updateGrid(mine.col,mine.row, true);
+                this.view.revealCells([mine]);
+              })
+            }
           }
 
         });
