@@ -56,19 +56,7 @@ const AlertBox = ({ alerts, removeAlert, setMessageRead }) => {
 
   return (
     <div className={styles.alertBoxContainer}>
-      {/*
-
-
-      UNCOMMENT THIS !!!!!!!!!!!!!!!!!!!!!
-      *
-      *
-      *
-      *
-      *
-      *
-      *
-
-      {alerts && alerts.map(renderAlert)} */}
+      {alerts && alerts.map(renderAlert)}
     </div>
   );
 };

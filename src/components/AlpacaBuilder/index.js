@@ -34,8 +34,11 @@ const AlpacaBuilder = ({
   const resetSvg = (randomize) => {
     let p = {};
     for(let c of CATEGORIES){
-      const style = randomize ? c.styles[Math.floor(Math.random() * c.styles.length)] : null;
+      let style = randomize ? c.styles[Math.floor(Math.random() * c.styles.length)] : null;
       const colors = c.colors && (randomize ? c.colors[Math.floor(Math.random() * c.colors.length)] : null);
+      if(c.optional){
+        style = Math.random() < 0.5 ? style : null;
+      }
       p[c.name] = {style, colors};
     }
     setSvgProperties(p);

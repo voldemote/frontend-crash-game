@@ -85,6 +85,17 @@ const AbViewStyles = ({
     );
   }
 
+  const renderClearBtn = () => {
+    //const svgPath = buildImagePath(selectedCategory.name, style);
+    return (
+      <a
+        key={`ab_cat_remove`}
+        className={classNames(styles.tile, isStyleSelected(null) ? styles.tileSelected : null)}
+        href="#/"
+        onClick={()=> {onStyleChanged(null)}}>Clear</a>
+    );
+  }
+
   return (
 
     <div className={cssClassNames}>
@@ -95,6 +106,7 @@ const AbViewStyles = ({
       )}
       <div className={styles.tiles}>
         {selectedCategory.styles?.map((style,index) => renderStyleBtn(style))}
+        {selectedCategory.optional && renderClearBtn()}
       </div>
       <div className={styles.colors}>
         {selectedCategory.colors?.map((c,index) => renderColorBtn(index))}

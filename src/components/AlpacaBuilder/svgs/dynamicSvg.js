@@ -36,12 +36,21 @@ import {ReactComponent as Eyes8} from './Eyes/Eyes8.svg' ;
 import {ReactComponent as Eyes9} from './Eyes/Eyes9.svg' ;
 import {ReactComponent as Eyes10} from './Eyes/Eyes10.svg' ;
 
+import {ReactComponent as Glasses1} from './Glasses/Glasses1.svg' ;
+import {ReactComponent as Glasses2} from './Glasses/Glasses2.svg' ;
+import {ReactComponent as Glasses3} from './Glasses/Glasses3.svg' ;
+import {ReactComponent as Glasses4} from './Glasses/Glasses4.svg' ;
+import {ReactComponent as Glasses5} from './Glasses/Glasses5.svg' ;
+import {ReactComponent as Glasses6} from './Glasses/Glasses6.svg' ;
+import {ReactComponent as Glasses7} from './Glasses/Glasses7.svg' ;
+
 const allComponents = {
   Chip1, Chip2, Chip3, Chip4, Chip5,
   Body1,
   Mouth1,Mouth2,Mouth3,Mouth4,Mouth5,Mouth6,Mouth7,Mouth8,
   Hair1,Hair2,Hair3,Hair4,Hair5,Hair6,Hair7,Hair8,Hair9,
   Eyes1,Eyes2,Eyes3,Eyes4,Eyes5,Eyes6,Eyes7,Eyes8,Eyes9,Eyes10,
+  Glasses1,Glasses2,Glasses3,Glasses4,Glasses5,Glasses6,Glasses7
  };
 
 const DynamicSvg = ({ id, current, ...rest }) => {

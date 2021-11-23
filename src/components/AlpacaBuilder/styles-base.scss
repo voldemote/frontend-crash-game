@@ -8,6 +8,8 @@
   .head{
     height: 40%;
     border-bottom: 1px solid $separatorColor;
+    display: flex;
+    flex-direction: column;
 
     h2{
       margin-bottom:20px;
@@ -29,9 +31,10 @@
     }
 
     .svg{
+      flex:1;
       margin: auto;
-      width: 100%;
-      height: calc(100% - 90px);
+      //width: 100%;
+      //height: calc(100% - 90px);
     }
   }
 
@@ -69,6 +72,7 @@
         background-color: $unselectedBg;
         text-align: center;
         display: flex;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
 
         img, svg{
           max-width: 100%;
@@ -80,6 +84,7 @@
       .tileSelected{
         border: 1px solid $selectedBorderColor;
         background-color: $selectedBg;
+        box-shadow:0 1px 3px rgba(0,0,0,0.12);
       }
     }
 
@@ -95,9 +100,12 @@
         height: 0px;
         width: 0px;
         font-size:0px;
+        outline: 1px solid $separatorColor;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
       }
       .colorSelected{
         outline: 1px solid $selectedBorderColor;
+        box-shadow:0 1px 3px rgba(0,0,0,0.12);
       }
     }
 
@@ -106,9 +114,9 @@
       overflow-x: auto;
 
       .category{
+        margin: 10px;
         background-color: $unselectedBg;
         outline: 1px solid $unselectedBorderColor;
-        margin: 10px;
         border-radius: 50%;
         height: 50px;
         width: 50px;
@@ -116,10 +124,12 @@
         text-align: center;
         line-height: 50px;
         text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
       }
       .categorySelected{
         outline: 1px solid $selectedBorderColor;
         background-color: $selectedBg;
+        box-shadow:0 1px 3px rgba(0,0,0,0.12);
       }
     }
   }
