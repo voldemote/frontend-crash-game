@@ -88,9 +88,6 @@ const DepositTab = props => {
             </button>
           </div>
         )}
-        {/* <div className={styles.qrCodeImg}>
-          <img src={QrcodeImage} alt="QrCode" />
-        </div> */}
         {!!visibleWalletForm && <ConnectWallet />}
         <p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not
