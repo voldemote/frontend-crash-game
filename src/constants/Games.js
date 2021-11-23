@@ -208,30 +208,30 @@ export const GAMES = {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
-    url: process.env.REACT_APP_PUMP_DUMP_GAME_BACKEND_URL,
+    url: process.env.REACT_APP_CASINO_BACKEND_URL
   },
   elonGame: {
     id: '614381d74f78686665a5bb76',
     slug: 'elon-game',
     name: `Elon Game`,
-    url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
+    url: process.env.REACT_APP_CASINO_BACKEND_URL
   },
   alpacaWheel: {
     id: '618a81ded90fd22298859bc4',
     slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_BACKEND_URL
   },
   plinko: {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_BACKEND_URL
   },
   mines: {
     id: '618a821bd90fd22298859bc6',
     slug: 'mines',
     name: `Mines`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_BACKEND_URL
   }
 };
