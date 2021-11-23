@@ -205,6 +205,10 @@ const MinesGameAnimation = ({
             setCurrentStep(tries);
           } else {
             setGameInProgress(false);
+            setBet({
+              pending: false,
+              done: false
+            });
           }
 
           setGameConfig({
@@ -223,7 +227,7 @@ const MinesGameAnimation = ({
     }
 
 
-  }, [])
+  }, [user.isLoggedIn])
 
   useEffect(()=> {
     let audioInstance = null;
