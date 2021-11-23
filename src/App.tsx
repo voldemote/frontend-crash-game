@@ -55,7 +55,36 @@ const App = () => {
             <AudioContent />
             <DisclaimerPopupContainer />
             <TypeformController />
-
+            <Switch>
+              <Route exact path={Routes.logout} component={Logout} />
+              <Route exact path={Routes.home} component={Home} />
+              {/* <Route exact path={Routes.bet} component={Bet} /> */}
+              {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
+              <Route exact path={Routes.bet} component={EventRouter} />
+              <Route exact path={Routes.betApproveDirect} component={Home} />
+              {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
+              <Route exact path={Routes.events} component={Events} />
+              <Route
+                exact
+                path={Routes.elonWallpaper}
+                component={ElonWallPaper}
+              />
+              <Route
+                exact
+                path={Routes.rouletteGame}
+                component={RouletteGame}
+              />
+              <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
+              <Route exact path={Routes.rosiGame} component={RosiGame} />
+              <Route exact path={Routes.activities} component={Activities} />
+              <Route path={Routes.verify} component={EmailVerification} />
+              <Route path={Routes.games} component={Games} />
+              <Route path={Routes.resetPassword} component={ResetPassword} />
+              <Route exact path={Routes.user} component={UserProfile} />
+              <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
+              {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
+              <Redirect to={Routes.home} />
+            </Switch>
             <NavbarFooter
               hideVisibility={hideNavbar}
               skipRoutes={[Routes.bet, Routes.verify]}
