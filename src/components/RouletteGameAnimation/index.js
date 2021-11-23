@@ -10,100 +10,123 @@ import {
   selectCashedOut,
   selectNextGameAt,
 } from 'store/selectors/rosi-game';
-//import Timer from './Timer';
-//import Counter from './Counter';
 import styles from './styles.module.scss';
 import { RosiGameActions } from '../../store/actions/rosi-game';
 import VolumeSlider from '../VolumeSlider';
-//import GameAudioControls from '../GameAudioControls';
+import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import AnimationController from './AnimationController';
-
-/*
-const PreparingRound = ({ nextGameAt }) => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Preparing Round</h2>
-      <div className={styles.description}>
-        <span>
-          Starting in <Counter className={styles.counter} from={nextGameAt} />
-        </span>
-      </div>
-    </div>
-  </div>
-);
-
-const GameOffline = () => (
-  <div className={styles.preparingRound}>
-    <div>
-      <h2 className={styles.title}>Connecting to the game engine</h2>
-      <div className={styles.description}>
-        If this takes too long, try reloading the page
-      </div>
-    </div>
-  </div>
-);
-*/
+import { isMobile } from 'react-device-detect';
 
 const RouletteGameAnimation = ({
   connected,
-  muteButtonClick,
-  isMute,
   setSpins,
-  isSynced,
-  isLosing,
-  volumeLevel,
-  musicIndex,
-  animationIndex,
+  amount,
   onInit,
+  risk,
+  setBet,
+  bet
 }) => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const backgroundRef = useRef(null);
-  const lastCrashValue = useSelector(selectLastCrash);
   const cashedOut = useSelector(selectCashedOut);
-  const nextGameAtTimeStamp = useSelector(selectNextGameAt);
 
   const [running, setRunning] = useState(false);
-  const [isAnimationReady, setAnimationReady] = useState(false);
   const [audio, setAudio] = useState(null);
 
   useEffect(() => {
-    AnimationController.init(canvasRef.current, {
+    let audioInstance = null;
+    const { audio } = AnimationController.init(canvasRef.current, {
       width: backgroundRef.current.clientWidth,
       height: backgroundRef.current.clientHeight,
+      risk,
+      amount
     });
-    AnimationController.repaint(0);
+    setAudio(audio);
+    audioInstance = audio;
+    onInit(audio);
+    return () => audioInstance.stopBgm();
   }, []);
 
+  useEffect(() => {
+    if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
+  }, [bet]);
+
+  useEffect(() => {
+    if (risk && amount) {
+      AnimationController.reinit(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        amount: amount
+      })
+    }
+  }, [risk, amount]);
+
+  useEffect(() => {
+    if (bet.amount) {
+      AnimationController.reinit(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        amount: bet.amount
+      })
+    }else{
+      AnimationController.reinit(canvasRef.current, {
+        width: backgroundRef.current.clientWidth,
+        height: backgroundRef.current.clientHeight,
+        risk,
+        amount: amount
+      })
+    }
+  }, [bet.amount]);
+
   const spin = async () => {
-    const newspin = await AnimationController.spinTo();
-    setSpins(newspin);
-  };
+    if (running) return;
+    else setRunning(true);
+    const newspin = await AnimationController.spinTo(bet.winIndex);
+
+    let prepareObj = {};
+    if(bet.profit > 0) {
+      prepareObj = {
+        type: 'win',
+        value: '+' + bet.profit
+      };
+    } else {
+      prepareObj = {
+        type: 'loss',
+        value: bet.profit
+      };
+    }
+    setSpins(prepareObj);
+    setRunning(false);
+    setBet({pending: true, amount: bet.amount, profit: bet.profit});
+  }
+
   return (
-    <div ref={backgroundRef} className={styles.animation}>
-      <canvas className={styles.canvas} onClick={spin} ref={canvasRef}></canvas>
+    <div
+      ref={backgroundRef}
+      className={classNames(
+        styles.animation,
+        isMobile && styles.animationMobile
+      )}
+    >
+      <div className={styles.audioControls}>
+        {audio && <GameAudioControlsLocal audio={audio} />}
+      </div>
+      <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    connected: state.websockets.connected,
-    isMute: state.rosiGame.volumeLevel == 0,
-    volumeLevel: state.rosiGame.volumeLevel,
-    musicIndex: state.rosiGame.musicIndex,
-    isSynced: state.rosiGame.timeStarted || state.rosiGame.nextGameAt,
-    animationIndex: state.rosiGame.animationIndex,
-    isLosing: state.rosiGame.userBet && !state.rosiGame.isCashedOut,
+    connected: state.websockets.connected
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    muteButtonClick: () => {
-      dispatch(RouletteGameAnimation.muteButtonClick());
-    },
-  };
+  return {  };
 };
 
 export default connect(

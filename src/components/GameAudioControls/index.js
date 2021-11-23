@@ -6,7 +6,7 @@ import classNames from 'classnames';
 function GameAudioControls({ audio, muteButtonClick }) {
   const onChangeVolume = (event, value) => {
     audio.setVolume((value / 100).toFixed(1));
-  };
+  }
   return (
     <div className={styles.container}>
       <VolumeSlider level={audio.volume} handleChange={onChangeVolume} />
@@ -18,7 +18,7 @@ function GameAudioControls({ audio, muteButtonClick }) {
         })}
         onClick={() => {
           muteButtonClick();
-          audio.volume === 0.0 ? audio.setVolume(1.0) : audio.mute();
+          audio.volume === 0 ? audio.setVolume(1) : audio.mute();
         }}
       />
     </div>

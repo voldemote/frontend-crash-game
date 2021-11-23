@@ -1,40 +1,100 @@
+import { useEffect, memo, useState} from 'react';
 import styles from './styles.module.scss';
 import _ from 'lodash';
-import { connect, useSelector } from 'react-redux';
-import { isMobile } from 'react-device-detect';
+import { connect, useDispatch } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import EventsCarouselContainer from '../../components/EventsCarouselContainer';
 import Leaderboard from '../../components/Leaderboard';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
-import { useEffect } from 'react';
 import Routes from 'constants/Routes';
 import ContentFooter from '../../components/ContentFooter';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
-import LandingPage from 'screens/LandingPage';
-import classNames from 'classnames';
 import SocialIcons from 'components/SocialIcons';
 import YellowButton from 'components/YellowButton';
-import AlphaPlatformCards from 'components/AlphaPlatformCards';
-import { ALPHA_PLATFORMS } from 'constants/AlphaPlatform';
 import { GeneralActions } from '../../store/actions/general';
+import { NEW_SLOTS_GAMES } from '../../constants/Games';
+import GameCards from '../../components/GameCards';
+import SlotGameIconBg from '../../data/images/house-games/title.svg';
+import howTokenWorkTitle from '../../data/images/token/title.svg';
+import howTokenWorkPToken from '../../data/images/token/PToken.png';
+import howTokenWorkWToken from '../../data/images/token/WToken.png';
+import alpacaActivities from '../../data/images/alpaca-activities.svg';
+import whoWeAreTitle from '../../data/images/who-are-wallfair/title.svg';
+import whoWeAreLogo from '../../data/images/who-are-wallfair/logo.png';
+import whoWeAreAlphaLogo from '../../data/images/who-are-wallfair/alpha-logo.png';
+import whoWeAreCard1 from '../../data/images/who-are-wallfair/who-is-wallfair.png';
+import whoWeAreCard2 from '../../data/images/who-are-wallfair/what-is-alpha.png';
+import whoWeAreCard3 from '../../data/images/who-are-wallfair/competetive.png';
+import whoWeAreCard4 from '../../data/images/who-are-wallfair/rewards.png';
+import EventActivitiesTracker from '../../components/EventActivitiesTracker';
+import TabOptions from 'components/TabOptions';
+import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
+import { RosiGameActions } from 'store/actions/rosi-game';
+import useRosiData from 'hooks/useRosiData';
+import gameCard1 from '../../data/images/house-games/card-1.png';
+import gameCard5 from '../../data/images/house-games/card-5.png';
+import gameCard3 from '../../data/images/house-games/card-3.png';
+import gameCard4 from '../../data/images/house-games/card-4.png';
 
-const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
+const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, refreshHighData, refreshLuckyData, connected, userId, refreshMyBetsData}) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
 
-  const userLoggedIn = useSelector(
-    state => state.authentication.authState === 'LOGGED_IN'
-  );
+  const dispatch = useDispatch();
+  const {
+    highData,
+    luckyData,
+    myBetsData,
+  } = useRosiData();
+  const [activityTabIndex, setActivityTabIndex] = useState(0);
+  let activityTabOptions = [
+    { name: 'ALL', index: 0 },
+    { name: 'HIGH WINS', index: 1 },
+    { name: 'LUCKY WINS', index: 2 },
+  ];
+
+  if(userId) activityTabOptions.push({name: 'MY BETS', index: 3});
+
+  const handleActivitySwitchTab = ({ index }) => {
+    switch (index) {
+      case 1: // high wins
+        refreshHighData();
+        break;
+      case 2: // lucky wins
+        refreshLuckyData();
+        break;
+      case 3:
+        if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
+        break;
+    }
+    setActivityTabIndex(index);
+  };
+  const getActivityTableData = () => {
+    switch (activityTabIndex) {
+      case 1:
+        return highData || [];
+      case 2:
+        return luckyData || [];
+      case 3:
+        return myBetsData || [];
+    }
+  }
+
+  useEffect(() => {
+    refreshHighData();
+    refreshLuckyData();
+    if(userId) refreshMyBetsData({userId: '6152b82b2a1ac4fa41b4c663'});
+  }, [dispatch, connected]);
 
   const renderBetApprovePopup = async () => {
     if (isMount) {
@@ -124,17 +184,160 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
     return (
       <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
         <div className={styles.banner}>
-          <div className={styles.title}>
-            Play the
-            <br />
-            Elon Game
-          </div>
-          <YellowButton className={styles.button}>Play now</YellowButton>
+          <div className={styles.title}>Play the Elon Game</div>
+          <button className={styles.button}>SIGN UP!</button>
         </div>
       </Link>
     );
   };
-
+  const renderHowTokenWorks = () => {
+    return (
+      <div className={styles.howTokenWorks}>
+        <div className={styles.title}>
+          <img src={howTokenWorkTitle} alt="" />
+          <h2>
+          How our tokens work?
+          </h2>
+        </div>
+        <div className={styles.tokenDetail}>
+          <Grid container>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkPToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>PFAIR Token?</h3>
+                  <p>
+                    PFAIR is Wallfair's FREE-TO-PLAY token. The tokens can be
+                    used in the ALPACASINO playground for risk and care free
+                    betting fun
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkWToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>WFAIR Token?</h3>
+                  <p>
+                    WFAIR tokens are your betting cryptocurrency, these can be
+                    transfered at anytime for real world cash
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <div className={styles.token}>
+                <div className={styles.thumbnail}>
+                  <img src={howTokenWorkWToken} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>WEEKLY Awards</h3>
+                  <p>
+                    Keep playing and rise to the top of the leaderboard every week
+                    and increase the chances of winning real WFAIR tokens.
+                    Winners will be announced every Sunday!
+                  </p>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  };
+  const renderWhoWeAre = () => {
+    return (
+      <div className={styles.whoWeAre}>
+        <div className={styles.title}>
+          <img src={whoWeAreTitle} alt="" />
+          <h2>
+            About Alpacasino
+            {/* <img src={whoWeAreLogo} alt="" /> */}
+          </h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnail}>
+                  <img src={whoWeAreCard1} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>
+                    Who is Alpacasino
+                  </h3>
+                  <p>
+                    Alpacasino is a new type of cryptocurrency betting platform
+                    which is more entertaining and easier than any other
+                    platform out there!
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnail}
+                  style={{ marginBottom: '-25px' }}
+                >
+                  <img src={whoWeAreCard2} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>
+                    What Is
+                    <img src={whoWeAreAlphaLogo} alt="" />
+                  </h3>
+                  <p>
+                    Alpacasino Alpha is your safe betting playground, bet without
+                    the worry of losing. We’re giving 5,000 $PFAIR Tokens for
+                    exclusive access to risk free fun.
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div className={styles.thumbnail}>
+                  <img src={whoWeAreCard3} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Competitive Edge</h3>
+                  <p>
+                    The more you win the higher you climb the monthly community
+                    leaderboards. We’ve added some secret challenges to reward
+                    you even more $PFAIR Tokens ...
+                  </p>
+                </div>
+              </div>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <div className={styles.card}>
+                <div
+                  className={styles.thumbnail}
+                  style={{ marginBottom: '-70px', marginTop: '-100px' }}
+                >
+                  <img src={whoWeAreCard4} alt="" />
+                </div>
+                <div className={styles.detail}>
+                  <h3>Real Rewards</h3>
+                  <p>
+                    More you win the higher you climb the monthly community
+                    leaderboards. We’ve added some secret challenges to reward
+                    you even more $PFAIR Tokens ...
+                  </p>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  };
   const renderUniswap = () => {
     return (
       <div className={styles.lightboxWrapper}>
@@ -147,55 +350,148 @@ const Home = ({ tags, setOpenDrawer, fetchTags, showPopup, events, users }) => {
 
   const renderCategoriesAndLeaderboard = () => {
     return (
-      <div className={styles.bottomWrapper}>
-        <div className={styles.categories}>
-          <div className={styles.headline}>
-            Activities{' '}
-            <Link
-              data-tracking-id="activities-see-all"
-              className={styles.seeAllActivities}
-              to={Routes.activities}
-            >
-              See all
-            </Link>
-          </div>
-          <ActivitiesTracker />
-          {/*<CategoryList categories={EVENT_CATEGORIES} />*/}
+      <div className={styles.activities}>
+        <div className={styles.title}>
+            <img src={alpacaActivities} alt="" />
+            <h2>
+              Activities
+            </h2>
         </div>
-        <div className={styles.leaderboard}>
-          <div className={styles.headline}>
-            Community Leaderboard
-            <div
-              className={styles.leaderboardLink}
-              onClick={onSeeLeaderboard}
-              data-tracking-id="leaderboard-see-leaderboard"
-            >
-              See Leaderboard
+        <Grid item xs={12} >
+          <div className={styles.activityWrapper}>
+            <TabOptions options={activityTabOptions} className={styles.tabLayout}>
+              {option => (
+                <div
+                  className={
+                    option.index === activityTabIndex
+                      ? styles.tabItemSelected
+                      : styles.tabItem
+                  }
+                  onClick={() => handleActivitySwitchTab(option)}
+                >
+                  {option.name}
+                </div>
+              )}
+            </TabOptions>
+            <div className={styles.activityContainer}>
+              {activityTabIndex === 0 && (
+                <EventActivitiesTracker
+                  activitiesLimit={50}
+                  className={styles.activitiesTrackerGamesBlock}
+                  preselectedCategory={'game'}
+                  hideSecondaryColumns={true}
+                  layout='wide'
+                />
+              )}
+              {activityTabIndex !== 0 && (
+                <ActivityTable
+                  hideSecondaryColumns={true}
+                  rowData={getActivityTableData()}
+                  layout='wide'
+                />
+              )}
             </div>
           </div>
-          <Leaderboard fetch={true} small={true} />
+        </Grid>
+      </div>
+      );
+  };
+
+  const renderGamesCards = () => {
+    return (
+      <div className={styles.gameCards}>
+        <div className={styles.title}>
+          <img src={SlotGameIconBg} alt={'Visit slot games'} />
+          <h2>House Games</h2>
+        </div>
+        <div className={styles.cardBox}>
+          <Grid container>
+            <Grid item lg={3} md={6} xs={12}>
+              <Link to={'/games/alpaca-wheel'}>
+                <img src={gameCard1} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard5} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard3} alt="" />
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <img src={gameCard4} alt="" />
+            </Grid>
+          </Grid>
         </div>
       </div>
     );
   };
 
-  //if (!userLoggedIn) return <LandingPage />;
+
+  const renderCurrentBalanceSection = () => {
+
+    return (
+      <div className={styles.currentBalanceSection}>
+        <Grid container alignContent="center">
+          <Grid container justifyContent="flex-end" item lg={6} md={6} xs={12}>
+            <div className={styles.currentBlanceCard}>
+              <p className={styles.currentbalanceHeading}>Current balance</p>
+              <p className={styles.currentbalanceWFair}>
+                4365 
+                WFAIR
+              </p>
+            </div>
+          </Grid>
+
+          <Grid container justifyContent="flex-start" item lg={6} md={6} xs={12}>
+          <div className={styles.currentBlanceDiscription}>
+            <p className={styles.noWFairNoProblem}>
+              No WFAIR? No problem!
+            </p>
+            <button className={styles.buyWFairButton}>
+              Buy WFAIR!
+            </button>
+          </div>
+          
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+
+  const renderStatusTableSection = () => {
+
+  }
 
   return (
-    <BaseContainerWithNavbar>
-      {renderHeadline()}
-      {/* <Header /> */}
-      <div className={styles.containerWrapper}>
-        <div className={styles.container}>
-          {renderRosiBanner()}
-          <EventsCarouselContainer eventType="non-streamed" />
-          {/*<EventsCarouselContainer eventType="streamed" />*/}
-          {renderCategoriesAndLeaderboard()}
-          {renderUniswap()}
-          <ContentFooter />
-        </div>
+  <BaseContainerWithNavbar>
+    {/* {renderHeadline()} */}
+    {/* <Header /> */}
+    <div className={styles.containerWrapper}>
+      <div className={styles.container}>
+        {renderRosiBanner()}
+        {/* <EventsCarouselContainer eventType="non-streamed" /> */}
+        {/*<EventsCarouselContainer eventType="streamed" />*/}
+        {renderGamesCards()}
+        {renderHowTokenWorks()}
+        {renderWhoWeAre()}
+        {renderCategoriesAndLeaderboard()}
+        {renderUniswap()}
       </div>
-    </BaseContainerWithNavbar>
+    </div>
+  </BaseContainerWithNavbar>
+
+    // <BaseContainerWithNavbar>
+    //   {/* {renderHeadline()} */}
+    //   {/* <Header /> */}
+    //   <div className={styles.containerWrapper}>
+    //     <div className={styles.container}>
+    //       {renderCurrentBalanceSection()}
+    //       {renderStatusTableSection()}
+    //       {renderCategoriesAndLeaderboard()}
+    //     </div>
+    //   </div>
+
+    // </BaseContainerWithNavbar>
   );
 };
 
@@ -203,11 +499,16 @@ const mapStateToProps = state => {
   return {
     tags: state.event.tags,
     events: state.event.events,
+    connected: state.websockets.connected,
+    userId: state.authentication.userId,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
+    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
+    refreshMyBetsData: (data) => dispatch(RosiGameActions.fetchMyBetsData(data)),
     setOpenDrawer: drawerName => {
       dispatch(GeneralActions.setDrawer(drawerName));
     },
@@ -225,4 +526,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const Connected = connect(mapStateToProps, mapDispatchToProps)(Home);
+export default memo(Connected);
+

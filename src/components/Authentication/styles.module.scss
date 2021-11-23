@@ -11,13 +11,13 @@
     position: absolute;
     bottom: 10px;
     left: 0;
-    top: 10px;
+    top: 12px;
     width: 100%;
-    border-bottom: 9px solid $colorYellowLight;
+    border-bottom: 9px solid $colorLightPink;
     z-index: -1;
   }
 }
-.stepsTooltipError{
+.stepsTooltipError {
   position: absolute;
 }
 .authentication {
@@ -49,6 +49,8 @@
   align-items: center;
   justify-content: center;
   margin-top: 20px;
+  font-family: $fontBold;
+  text-transform: uppercase;
 
   .formGroup {
     position: relative;
@@ -80,9 +82,8 @@
   .birthInputBox {
     position: relative;
     margin-right: 12px;
-    &:last-child{
+    &:last-child {
       margin-right: 0px;
-
     }
 
     @media (max-width: $screen-sm) {
@@ -97,6 +98,7 @@
     margin: 20px 0 0;
     width: 100%;
     cursor: pointer;
+    color: $colorWhite;
     @media (max-width: $screen-sm) {
       height: 50px;
       margin: 10px 0 0;

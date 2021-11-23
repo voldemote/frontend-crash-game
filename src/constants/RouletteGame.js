@@ -1,1 +1,3 @@
-export const ROULETTE_GAME_EVENT_ID = '614381d74f78686665a5bb89';
+import { GAMES } from './Games';
+
+export const ROULETTE_GAME_EVENT_ID = GAMES.alpacaWheel.id;

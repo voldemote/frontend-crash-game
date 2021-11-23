@@ -1,5 +1,5 @@
 import IconType from '../components/Icon/IconType';
-import RosiImg from '../data/backgrounds/games/rosi-games-banner.png';
+import RosiImg from '../data/backgrounds/games/elon-game-banner.png';
 import First from '../data/backgrounds/games/game1-bg.png';
 import Second from '../data/backgrounds/games/game2-bg.png';
 import Third from '../data/backgrounds/games/game3-bg.png';
@@ -8,7 +8,15 @@ import Fifth from '../data/backgrounds/games/game5-bg.png';
 import Sixth from '../data/backgrounds/games/game6-bg.png';
 import Seventh from '../data/backgrounds/games/game7-bg.png';
 import Eight from '../data/backgrounds/games/game8-bg.png';
+import AlpacaWheel from '../data/backgrounds/games/game-alpacawheel.png';
+import Plinko from '../data/backgrounds/games/game-plinko.png';
+import PumpDump from '../data/backgrounds/games/game-pump-dump.png';
 import Routes from './Routes';
+
+import gameCard1 from '../data/images/house-games/card-1.png';
+import gameCard5 from '../data/images/house-games/card-5.png';
+import gameCard3 from '../data/images/house-games/card-3.png';
+import gameCard4 from '../data/images/house-games/card-4.png';
 
 export const CASINO_GAMES = [
   {
@@ -49,22 +57,37 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
-    background: Second,
+    background: gameCard1,
     title: 'Alpaca Roulette',
     subtitle: '',
     description: 'Market top and flop jackpot tournament',
     active: true,
-    linkTo: '/games/alpaca-roulette',
+    linkTo: '/games/alpaca-wheel',
   },
   {
-    background: Third,
+    background: gameCard5,
+    title: `Oil Rush`,
+    subtitle: '',
+    active: false,
+    linkTo: '/games/oilrush',
+  },
+  {
+    background: gameCard3,
+    title: `Pump and dump`,
+    subtitle: '',
+    active: false,
+    linkTo: '/games/pump-dump',
+  },
+  {
+    background: gameCard4,
     title: 'Plinko',
     subtitle: '',
     description:
       'Jump and run on each price tick, are you heading north, south or staying put?',
     active: false,
     linkTo: '/games/plinko',
-  } /*,
+  },
+  /*,
   {
     background: Fourth,
     title: 'Financial Poker',
@@ -90,7 +113,7 @@ export const NEW_SLOTS_GAMES = [
     description: 'Market 1X2 – you know where the prices are going? Prove it!',
     active: false,
     linkTo: '',
-  },*/,
+  },*/
 ];
 
 export const SLOTS_GAMES = [
@@ -174,7 +197,7 @@ export const SPORTS_BETTING_GAMES = [
   },
 ];
 export const GAMES = {
-  gameTwo: {
+  pumpDump: {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
@@ -186,4 +209,15 @@ export const GAMES = {
     name: `Elon Game`,
     url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
   },
+  alpacaWheel: {
+    id: '618a81ded90fd22298859bc4',
+    slug: 'alpaca-wheel',
+    name: `Alpaca Wheel`,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+  },
+  plinko: {
+    id: '618a821bd90fd22298859bc5',
+    slug: 'plinko',
+    name: `Plinko`,
+  }
 };

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -31,10 +31,11 @@ import {
   trackElonCashout,
   trackElonPlaceBet,
 } from '../../config/gtm';
-import { useParams } from 'react-router-dom';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
 import Routes from 'constants/Routes';
+import PumpDumpAnimation from '../../components/PumpDumpAnimation';
+import { getGameById } from '../../helper/Games';
 
 const RosiGame = ({
   showPopup,
@@ -70,7 +71,7 @@ const RosiGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
   const game = Object.values(GAMES).find(g => g.slug === slug);
-  const ROSI_GAME_EVENT_ID = game.id;
+  const GAME_TYPE_ID = game.id;
   const Api = new GameApi(game.url, token);
   useEffect(() => {
     Api.getCurrentGameInfo()
@@ -85,9 +86,13 @@ const RosiGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-    dispatch(ChatActions.fetchByRoom({ roomId: ROSI_GAME_EVENT_ID }));
-    refreshHighData();
-    refreshLuckyData();
+    dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
+    refreshHighData({
+      gameId: GAME_TYPE_ID,
+    });
+    refreshLuckyData({
+      gameId: GAME_TYPE_ID,
+    });
   }, [dispatch, connected]);
 
   //Bets state update interval
@@ -121,10 +126,14 @@ const RosiGame = ({
   const handleActivitySwitchTab = ({ index }) => {
     switch (index) {
       case 1: // high wins
-        refreshHighData();
+        refreshHighData({
+          gameId: GAME_TYPE_ID,
+        });
         break;
       case 2: // lucky wins
-        refreshLuckyData();
+        refreshLuckyData({
+          gameId: GAME_TYPE_ID,
+        });
         break;
     }
     setActivityTabIndex(index);
@@ -135,6 +144,7 @@ const RosiGame = ({
     if (!payload) return;
     try {
       const result = await Api.createTrade(payload);
+      console.log("result", result)
       trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor });
       dispatch(RosiGameActions.setUserBet(payload));
       return result;
@@ -207,12 +217,14 @@ const RosiGame = ({
             <EventActivitiesTracker
               activitiesLimit={50}
               className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'elongame'}
+              preselectedCategory={'game'}
+              gameId={GAME_TYPE_ID}
             />
           )}
           {activityTabIndex !== 0 && (
             <ActivityTable
               rowData={activityTabIndex === 1 ? highData : luckyData}
+              gameLabel={getGameById(GAME_TYPE_ID)?.name || 'Game'}
             />
           )}
         </div>
@@ -238,7 +250,7 @@ const RosiGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROSI_GAME_EVENT_ID}
+          roomId={GAME_TYPE_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -263,6 +275,20 @@ const RosiGame = ({
       endGame={isEndgame}
     />
   );
+
+  const renderAnimation = () => {
+    if (slug === GAMES['elonGame'].slug) {
+      return (
+        <GameAnimation
+          inGameBets={inGameBets}
+          onInit={audio => setAudio(audio)}
+        />
+      );
+    }
+    if (slug === GAMES['pumpDump'].slug) {
+      return <PumpDumpAnimation />;
+    }
+  };
 
   const renderWallpaperBanner = () => {
     return (
@@ -299,10 +325,7 @@ const RosiGame = ({
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <LastCrashes lastCrashes={lastCrashes} />
-              <GameAnimation
-                inGameBets={inGameBets}
-                onInit={audio => setAudio(audio)}
-              />
+              {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -325,7 +348,7 @@ const RosiGame = ({
             </div>
           ) : null}
           {renderWallpaperBanner()}
-          <ContentFooter className={styles.betFooter} />
+
         </div>
       </div>
     </BaseContainerWithNavbar>
@@ -343,8 +366,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
-    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
+    refreshHighData: data => dispatch(RosiGameActions.fetchHighData(data)),
+    refreshLuckyData: data => dispatch(RosiGameActions.fetchLuckyData(data)),
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },
@@ -359,4 +382,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RosiGame);
+const Connected = connect(mapStateToProps, mapDispatchToProps)(RosiGame);
+export default memo(Connected);

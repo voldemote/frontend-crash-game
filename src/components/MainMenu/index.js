@@ -18,6 +18,8 @@ import Referrals from 'components/Referrals';
 import Textarea from 'components/Textarea';
 import { Link } from 'react-router-dom';
 import { checkUsername } from '../../api';
+import { AlertActions } from 'store/actions/alert';
+import { useDispatch } from 'react-redux';
 
 const MainMenu = ({
   opened,
@@ -37,6 +39,7 @@ const MainMenu = ({
   updateNotificationSettings,
   fetchReferrals,
 }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
@@ -120,11 +123,19 @@ const MainMenu = ({
   }, []);
 
   const handleUsername = e => {
-    setProfileSubmitActive(false);
-    setUsername(e.target.value);
+    if(e.target.value.length > 128) {
+      dispatch(
+        AlertActions.showError({
+          message: 'Username can have a maximum of 128 characteres.',
+        })
+      );
+    }
+    else {
+      setProfileSubmitActive(false);
+      setUsername(e.target.value);
+      handleUsernameDebounceAction(e.target.value);
+    }
 
-    //debounce 300ms, to avoid unnecessary multiple calls
-    handleUsernameDebounceAction(e.target.value);
   };
 
   const handleEmail = e => {

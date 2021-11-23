@@ -45,7 +45,7 @@ SwiperCore.use([Navigation, Pagination]);
  */
 
 const callByParams = async params => {
-  const { betId, userId, activitiesLimit, selectedCategory } = params;
+  const { betId, userId, activitiesLimit, selectedCategory, gameId } = params;
   if (betId) {
     return await getNotificationEventsByBet({
       limit: activitiesLimit || 10,
@@ -67,6 +67,7 @@ const callByParams = async params => {
   return getNotificationEvents({
     limit: activitiesLimit || 10,
     category: selectedCategory,
+    gameId: gameId,
   }).catch(err => {
     console.error("Can't getNotificationEvents", err);
   });
@@ -81,7 +82,12 @@ const EventActivitiesTracker = ({
   betId,
   userId,
   preselectedCategory,
+  gameId,
+  hideSecondaryColumns = false,
+  layout='compact'
 }) => {
+  const layoutCss = layout === 'compact' ? styles.compact : null;
+
   const messageListRef = useRef();
 
   const preselectCategory = preselectedCategory
@@ -105,6 +111,7 @@ const EventActivitiesTracker = ({
           userId,
           activitiesLimit,
           selectedCategory,
+          gameId,
         }).catch(err => {
           console.error("Can't callByParams", err);
         });
@@ -145,6 +152,13 @@ const EventActivitiesTracker = ({
         return true;
       }
 
+      if(gameId) {
+        return (gameId === item.data.gameTypeId) && (
+          item.type === 'Casino/CASINO_CASHOUT' ||
+          item.type === 'Casino/EVENT_CASINO_LOST'
+        )
+      }
+
       return (
         item.type === 'Casino/CASINO_CASHOUT' ||
         item.type === 'Casino/EVENT_CASINO_LOST'
@@ -174,7 +188,7 @@ const EventActivitiesTracker = ({
       }
 
       return (
-        <ActivityMessage key={index} activity={activityMessage} date={date} />
+        <ActivityMessage key={index} activity={activityMessage} date={date} hideSecondaryColumns={hideSecondaryColumns} layout={layout}/>
       );
     });
   };
@@ -198,21 +212,21 @@ const EventActivitiesTracker = ({
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
       <div className={styles.header}>
-        <Grid container>
+        <Grid container className={layoutCss}>
           <Grid item xs>
-            <p className={styles.titleFirst}>GAME</p>
+            <p className={styles.titleLeft}>GAME</p>
           </Grid>
-          <Grid item xs>
-            <p className={styles.title}>USER</p>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+            <p className={styles.titleLeft}>USER</p>
           </Grid>
-          <Grid item xs>
-            <p className={styles.title}>TRADE</p>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+            <p className={styles.titleRight}>TRADE</p>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <p className={styles.title}>MULT</p>
           </Grid>
           <Grid item xs>
-            <p className={styles.titleLast}>CASHOUT</p>
+            <p className={styles.titleRight}>CASHOUT</p>
           </Grid>
         </Grid>
       </div>

@@ -1,5 +1,5 @@
 import Icon from '../Icon';
-import LogoMini from '../../data/images/logo.png';
+import LogoMini from '../../data/images/alpaca-logo-mini.svg';
 import IconType from '../Icon/IconType';
 import React from 'react';
 import styles from './styles.module.scss';
@@ -25,7 +25,7 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
         <ul className={styles.featureList}>
-          <li>Only {totalUsers}/5000 slots available</li>
+          {/* <li>Only {totalUsers}/5000 slots available</li> */}
           <li>PFAIR = WFAIR playmoney</li>
           <li>No risk of losing any real money</li>
         </ul>
@@ -55,7 +55,7 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
   };
 
   return (
-    <div className={styles.welcomeContainer}>
+    <div className={styles.welcomeContainer} onClick={goToJoinPage}>
       <span className={styles.welcomeConfettiRight}>
         <Icon iconType={IconType.confettiRight} iconTheme={null} />
       </span>

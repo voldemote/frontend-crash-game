@@ -33,4 +33,5 @@ export default {
   username: 'username',
   requestTokens: 'requestTokens',
   lastGamesDetail: 'lastGamesDetail',
+  walletBuyWfair: 'walletBuyWfair',
 };

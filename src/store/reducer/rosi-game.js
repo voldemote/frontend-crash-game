@@ -321,7 +321,6 @@ function cancelBet(action, state) {
 }
 
 const fetchHighData = ({ data }, state) => {
-  console.log('fetch high data reducer');
   return {
     ...state,
     highData: data,
@@ -332,6 +331,13 @@ const fetchLuckyData = ({ data }, state) => ({
   ...state,
   luckyData: data,
 });
+
+const fetchMyBetsData = ({ data }, state) => {
+  return {
+    ...state,
+    myBetsData: data,
+  };
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -375,6 +381,8 @@ export default function (state = initialState, action) {
       return fetchHighData(action, state);
     case RosiGameTypes.FETCH_LUCKY_DATA_COMPLETE:
       return fetchLuckyData(action, state);
+    case RosiGameTypes.FETCH_MY_BETS_DATA_COMPLETE:
+      return fetchMyBetsData(action, state);
     default:
       return state;
   }

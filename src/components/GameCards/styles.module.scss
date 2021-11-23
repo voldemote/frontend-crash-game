@@ -1,15 +1,7 @@
 @import '../../styles/all';
 
 .gamesContainer {
-  padding: 30px;
-
-  @media (max-width: $screen-md) {
-    padding: 0 150px 15px;
-  }
-
-  @media (max-width: $screen-sm) {
-    padding: 0 100px 15px;
-  }
+  padding: 30px 0;
 
   @media (max-width: $screen-xs) {
     padding: 0 15px 15px;
@@ -20,11 +12,23 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: $colorWhite;
+  color: $colorBlack;
   font-family: $fontRegular;
   font-size: 24px;
   font-weight: 700;
   padding-bottom: 20px;
+
+  @media (max-width: $screen-lg) {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 33px;
+
+    @media (max-width: $screen-xs) {
+      font-size: 28px;
+    }
+  }
 
   .howtoLink {
     cursor: pointer;
@@ -46,7 +50,6 @@
     display: none;
 
     svg {
-
       g,
       path,
       circle {
@@ -63,43 +66,35 @@
 .games {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
 
-  @media (max-width: $screen-md) {
+  @media (max-width: $screen-lg) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: $screen-xs) {
     flex-direction: column;
+    row-gap: 20px;
   }
 
   .wrapper {
     position: relative;
-    height: 370px;
-    flex-basis: 20%;
-    padding: 10px;
+    height: 375px;
+    width: auto;
+    // margin-right: 10px;
+    margin-bottom: 20px;
 
-    &:first-child {
-      flex-basis: 20%;
+    @media (max-width: $screen-sm) {
+      margin: 0 auto;
     }
 
-    &:nth-child(2) {
-      flex-basis: 20%;
-    }
-
-    @media (max-width: $screen-md) {
-      padding: 20px 0;
-    }
-
-    &:last-child {
-      padding-right: 0;
+    @media (max-width: 320px) {
+      height: 300px;
     }
 
     .gameItem {
       height: 100%;
-
-      &.inactive {
-        img,
-        .gameInfo {
-          filter: opacity(0.6);
-        }
-      }
 
       &.gameItemLg {
         .gameInfo {
@@ -136,7 +131,7 @@
         .inactivePlaceholder {
           min-width: 150px;
           min-height: 45px;
-          font-size: 14px;
+          font-size: 32px;
         }
       }
 
@@ -167,11 +162,13 @@
       }
 
       img {
-        width: 100%;
+        width: auto;
         height: 100%;
-        object-fit: cover;
+        // object-fit: contain;
         border-radius: 20px;
         border: 2px solid rgba(255, 255, 255, 0.1);
+        filter: drop-shadow(0px 9px 16px rgba(159, 162, 191, 0.48))
+          drop-shadow(0px 2px 2px rgba(159, 162, 191, 0.62));
       }
 
       .gameInfo {
@@ -211,7 +208,7 @@
         justify-content: center;
         font-size: 24px;
         font-family: $fontMedium;
-        color: #F2FF53;
+        color: #f2ff53;
         text-align: center;
         font-weight: 700;
       }

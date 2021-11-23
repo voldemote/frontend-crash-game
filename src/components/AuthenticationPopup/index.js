@@ -96,7 +96,7 @@ const AuthenticationPopup = ({ authenticationType }) => {
             <li>You have tweeted or insta story tagging Wallfair</li>
             <li>
               You have at least <strong>1 WFAIR</strong> in your wallet at the
-              tine of drawing
+              time of drawing
             </li>
             <li>You have left feedback on what to improve / change</li>
           </ul>

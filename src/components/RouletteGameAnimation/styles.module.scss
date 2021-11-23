@@ -1,8 +1,13 @@
 @import '../../styles/all';
 
-.canvas{
+.canvas {
   //width: 100%;
   //height: 100%;
+}
+.animationMobile {
+  max-height: 300px !important;
+  min-height: 300px !important;
+  background-image: url('../../data/backgrounds/games/Background_wheel_mob2.png') !important;
 }
 .animation {
   display: flex;
@@ -11,11 +16,12 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.17);
   /*height: fit-content;*/
-  max-height: 392px;
-  min-height: 392px;
+  max-height: 492px;
+  min-height: 492px;
+
   position: relative;
-  background-image: url('../../data/backgrounds/games/Background_wheel_opt.png');
-  background-size: 100%;
+  background-image: url('../../data/backgrounds/games/Background_wheel_opt2.png');
+  background-size: cover;
   background-repeat: no-repeat;
   //background: #1f1d38;
   /*
@@ -119,19 +125,18 @@
   }
 }
 
-.audioControls{
+.audioControls {
   position: absolute;
   z-index: 999;
   left: 20px;
   top: 10px;
-  svg{
+  svg {
     fill: #f2ff53 !important;
   }
   @media (max-width: $screen-xs-max) {
-
   }
-  @media screen and (max-width: 768px){
-    top: 60px;
+  @media screen and (max-width: 768px) {
+    top: 15px;
     left: 5px !important;
   }
 }

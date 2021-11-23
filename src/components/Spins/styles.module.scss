@@ -1,15 +1,16 @@
 @import '../../styles/all';
 
 .container {
-  background: #1f1d38;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: $colorWhite;
+  border: 1px solid $colorLightGray;
+
   border-radius: 10px;
   margin-bottom: 14px;
   padding: 7px 20px;
   margin-top: 14px;
   .title {
     display: inline-block;
-    color: $colorWhite;
+    color: #000;
     width: 30%;
 
     @media screen and (max-width: $screen-sm) {
@@ -42,7 +43,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: linear-gradient(270deg, #1f1d38 0%, rgba(9, 9, 121, 0) 40%);
+    background: linear-gradient(270deg, #fff 0%, rgba(255, 255, 255, 0) 40%);
     z-index: 2;
     pointer-events: none;
   }
@@ -59,5 +60,13 @@
     @media screen and (max-width: $screen-sm) {
       margin-right: 25px;
     }
+  }
+
+  .reward {
+    color: $colorGreen;
+  }
+
+  .lost {
+    color: $colorRed;
   }
 }

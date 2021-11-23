@@ -5,6 +5,8 @@ import { TOKEN_NAME } from '../../constants/Token';
 import medalCoin from '../../data/icons/medal-coin.png';
 import { toNumericString } from 'helper/FormatNumbers';
 import classNames from 'classnames';
+import { GAMES } from 'constants/Games';
+import { roundToTwo } from '../../helper/FormatNumbers';
 
 const UserLink = props => {
   const { userId, username } = props;
@@ -20,7 +22,9 @@ const UserLink = props => {
   );
 };
 
-const ActivityTableRow = ({ data, type }) => {
+const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false, layout = 'compact'}) => {
+  const layoutCss = layout === 'compact' ? styles.compact : null;
+  gameLabel = gameLabel ?? (Object.values(GAMES).find(g => g.id.indexOf(data.gameId) > -1))?.name ?? "Game";
   const {
     userId,
     username,
@@ -30,34 +34,33 @@ const ActivityTableRow = ({ data, type }) => {
   } = data;
   const stakedAmount = Number.parseInt(stakedAmountRaw);
   const rewardAmount = Number.parseInt(rewardAmountRaw);
-  const gameName = 'Elon Game';
   return (
-    <div className={styles.messageItem}>
+    <div className={classNames(styles.messageItem, layoutCss)}>
       {type === 'lost' ? (
-        <Grid container>
+        <Grid container className={styles.flexContainer}>
           <Grid item xs>
-            <div className={styles.messageLeft}>
-              <p>{gameName}</p>
+            <div className={classNames(styles.messageFirst, styles.messageLeft)}>
+              <p>{gameLabel}</p>
             </div>
           </Grid>
-          <Grid item xs>
-            <div className={styles.messageCenter}>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+            <div className={styles.messageLeft}>
               <p>{userId}</p>
             </div>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={classNames(styles.messageRight)}>
-              {toNumericString(stakedAmount)} {TOKEN_NAME}
+              <p>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
             </div>
           </Grid>
-          <Grid item xs>
-            <div className={styles.messageLast}>
+          <Grid item xs >
+            <div className={classNames(styles.messageLast, styles.messageRight)}>
               <p className={'global-cashout-loss'}>
                 -{toNumericString(stakedAmount)} {TOKEN_NAME}
               </p>
@@ -66,14 +69,14 @@ const ActivityTableRow = ({ data, type }) => {
           </Grid>
         </Grid>
       ) : (
-        <Grid container>
+        <Grid container className={styles.flexContainer}>
           <Grid item xs>
-            <div className={styles.messageLeft}>
-              <p>{gameName}</p>
+            <div className={classNames(styles.messageFirst, styles.messageLeft)}>
+              <p>{gameLabel}</p>
             </div>
           </Grid>
-          <Grid item xs>
-            <div className={styles.messageCenter}>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+            <div className={styles.messageLeft}>
               <p>
                 {username ? (
                   <UserLink userId={userId} username={username} />
@@ -83,19 +86,19 @@ const ActivityTableRow = ({ data, type }) => {
               </p>
             </div>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageRight}>
-              {toNumericString(stakedAmount)} {TOKEN_NAME}
+              <p>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
             <div className={styles.messageCenter}>
-              <p className={styles.rewardMulti}>{crashFactor}x</p>
+              <p className={styles.rewardMulti}>{roundToTwo(crashFactor)}x</p>
             </div>
           </Grid>
           <Grid item xs>
-            <div className={styles.messageLast}>
+            <div className={classNames(styles.messageLast, styles.messageRight)}>
               <p className={styles.reward}>
                 {toNumericString(rewardAmount)} {TOKEN_NAME}
               </p>

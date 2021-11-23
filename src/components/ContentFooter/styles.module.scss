@@ -3,6 +3,7 @@
 .container {
   width: 100%;
   flex-direction: column;
+  padding: 40px 0 0;
 }
 
 .footer {
@@ -10,26 +11,27 @@
   flex-direction: column;
   align-items: center;
   font-size: 12px;
-  color: $colorWhite;
+  color: $colorPrimary;
   margin: 0 auto;
-  margin-top: 80px;
   justify-content: space-between;
 
   @media (max-width: $screen-sm) {
     font-size: 11px;
     padding: 0 20px;
+    margin-bottom: 60px;
   }
 
   img {
-    margin-bottom: 40px;
+    margin-bottom: 0px;
   }
 
   .links {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    margin: 10px 0;
     // max-width: 600px;
-    opacity: 0.45;
+    //opacity: 0.45;
 
     @media (max-width: $screen-sm) {
       display: flex;
@@ -79,7 +81,7 @@
         button {
           background: transparent;
           border: 0;
-          color: $colorWhite;
+          color: $colorPrimary;
           cursor: pointer;
         }
       }
@@ -87,8 +89,7 @@
   }
 
   .socialIcons {
-    opacity: 0.45;
-    margin-top: 28px;
+    margin-top: 20px;
 
     @media (max-width: $screen-sm) {
       padding: 0px;
@@ -100,14 +101,17 @@
       }
     }
   }
+  p {
+    font-size: 14px;
+  }
 }
 
 .iconsContainer {
   padding-top: 20px;
   width: 100%;
   display: flex;
-  color: #fff;
-  opacity: 0.45;
+  color: $colorPrimary;
+  //opacity: 0.45;
   margin: 0 auto;
   justify-content: space-between;
   max-width: 600px;

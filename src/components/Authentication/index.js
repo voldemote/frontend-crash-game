@@ -106,10 +106,20 @@ const Authentication = ({
     return passwordConfirmation && password === passwordConfirmation;
   };
 
+  const getAge = (birthDate) => {
+    if(!birthDate) return 0;
+    var today = new Date();
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
   const birthdayIsValid = () => {
-    const currentYear = new Date().getFullYear();
-    const isOver18 =
-      currentYear - birthYear > 17 && currentYear - birthYear < 100;
+    if(!birthDay || !birthMonth || !birthYear) return false;
+    const isOver18 = getAge(new Date(birthYear, birthMonth-1, birthDay)) >= 18;
     return (
       birthDay >= 1 &&
       birthDay <= 31 &&
@@ -137,7 +147,6 @@ const Authentication = ({
       error = 'Your password needs to be 8 characters long';
       fooRef = pwRef;
     }
-    console.log('DALE');
 
     if (!emailIsValid()) {
       error = 'Not a valid email address';
@@ -419,7 +428,7 @@ const Authentication = ({
       </span>
     ) : notAllowed >= 0 ? (
       <span className={styles.errorText}>
-        Users in this country are currently unable to access Wallfair services.
+        Users in this country are currently unable to access Alpacasino services.
       </span>
     ) : (
       <CheckBox
@@ -448,12 +457,12 @@ const Authentication = ({
       <h2 className={styles.title}>
         {forgotPassword ? 'Password Reset' : action}
       </h2>
-      {isSignUp() && (
+      {/* {isSignUp() && (
         <h3 className={styles.totalCount}>
           {totalUsers}/5000 slots available
           <span className={styles.underline}></span>
         </h3>
-      )}
+      )} */}
       {renderInputBoxes()}
     </div>
   );
