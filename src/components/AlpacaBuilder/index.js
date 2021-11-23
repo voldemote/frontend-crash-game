@@ -10,6 +10,8 @@ import DynamicSvg from './svgs/dynamicSvg';
 
 const AlpacaBuilder = ({
   visible = false,
+  showTitle = true,
+  onExport
 }) => {
 
   const [activeViews, setActiveViews] = useState([]);
@@ -95,10 +97,6 @@ const AlpacaBuilder = ({
       return (<DynamicSvg key={id} id={id} current={current}/>);
     });
 
-  function triggerDownload (imgURI) {
-
-  }
-
   const exportSvg = () => {
     try{
       var svg = svgRef.current;
@@ -111,6 +109,9 @@ const AlpacaBuilder = ({
       var img = new Image();
       var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
       var url = DOMURL.createObjectURL(svgBlob);
+      if(onExport){
+        onExport({blob:svgBlob});
+      }
       img.onload = function () {
         ctx.drawImage(img, 0, 0, EXPORT_SIZE, EXPORT_SIZE);
         DOMURL.revokeObjectURL(url);
@@ -143,7 +144,7 @@ const AlpacaBuilder = ({
         styles.alpacaBuilder
       )}>
       <div className={styles.head}>
-        <h2>Alpacabuilder</h2>
+        {showTitle && (<h2>Alpacabuilder</h2>)}
         <div className={styles.toolbar}>
           {/* {activeViews.length > 1 && (renderBackButton())} */}
           <a

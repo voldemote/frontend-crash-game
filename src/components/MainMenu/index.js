@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { checkUsername } from '../../api';
 import { AlertActions } from 'store/actions/alert';
 import { useDispatch } from 'react-redux';
+import AlpacaBuilder from 'components/AlpacaBuilder';
 
 const MainMenu = ({
   opened,
@@ -38,6 +39,8 @@ const MainMenu = ({
   close,
   updateNotificationSettings,
   fetchReferrals,
+  alpacaBuilderVisible = false,
+  handleAlpacaBuilderVisible
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(user.name);
@@ -96,6 +99,10 @@ const MainMenu = ({
     handleReferralsVisible(!referralsVisible);
   };
 
+  const onAlpacaBuilderClick = () => {
+    handleAlpacaBuilderVisible(!alpacaBuilderVisible);
+  };
+
   const handleName = e => {
     setName(e.target.value);
   };
@@ -148,17 +155,27 @@ const MainMenu = ({
     setEditVisible(false);
   };
 
-  const handleProfilePictureUpload = async e => {
-    if (!e.target.files.length) return;
-    const base64 = await convertToBase64(e.target.files[0]);
-    if (e.target.files[0].size / 1024 / 1024 > 1) {
+  const handleFileUpload = async blob => {
+    const base64 = await convertToBase64(blob);
+    if (blob.size / 1024 / 1024 > 1) {
       const newPicture = await resizePicture(base64);
       setProfilePic(newPicture);
-      setImageName(e.target.files[0].name);
+      setImageName(blob.name);
     } else {
       setProfilePic(base64);
-      setImageName(e.target.files[0].name);
+      setImageName(blob.name);
     }
+  }
+
+  const handleProfilePictureUpload = async e => {
+    if (!e.target.files.length) return;
+    await handleFileUpload(e.target.files[0]);
+  };
+
+  const handleAlpacaBuilderExport = async ({blob}) => {
+    if (!blob) return;
+    await handleFileUpload(blob);
+    handleAlpacaBuilderVisible(false);
   };
 
   const resizePicture = base64 =>
@@ -276,6 +293,29 @@ const MainMenu = ({
     );
   };
 
+  const renderAlpacaBuilderDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !alpacaBuilderVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
+          />
+          Alpacabuilder
+        </h2>
+        <div class={styles.alpacaBuilderWrapper}>
+          <AlpacaBuilder visible={alpacaBuilderVisible} showTitle={false} onExport={data => handleAlpacaBuilderExport(data)}/>
+        </div>
+      </div>
+    );
+  };
+
   const renderReferralsDrawer = () => {
     return (
       <div
@@ -343,6 +383,9 @@ const MainMenu = ({
                 />
               </div>
               <p className={styles.profilePictureUploadLabel}>Your avatar</p>
+              <div className={styles.profilePictureUploadLabel}>
+                <a href='#/' onClick={() => onAlpacaBuilderClick()}>Build your Aplacavatar</a>
+              </div>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
@@ -431,6 +474,7 @@ const MainMenu = ({
             onPreferencesClick={() => onPreferencesClick()}
             onLogoutClick={() => onClickGoToRoute(Routes.logout)}
             onCloseProfile={() => close()}
+            onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
           />
         </div>
       </div>
@@ -439,6 +483,7 @@ const MainMenu = ({
       {referralsVisible && renderReferralsDrawer()}
       {emailNotificationsVisible && renderEmailNotificationDrawer()}
       {preferencesVisible && renderPreferencesDrawer()}
+      {alpacaBuilderVisible && renderAlpacaBuilderDrawer()}
     </div>
   );
 };
@@ -451,6 +496,7 @@ const mapStateToProps = state => {
     emailNotificationsVisible: state.general.emailNotificationsVisible,
     preferencesVisible: state.general.preferencesVisible,
     referralsVisible: state.general.referralsVisible,
+    alpacaBuilderVisible: state.general.alpacaBuilderVisible,
   };
 };
 
@@ -487,6 +533,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchReferrals: () => {
       dispatch(AuthenticationActions.fetchReferrals());
+    },
+    handleAlpacaBuilderVisible: bool => {
+      dispatch(GeneralActions.setAlpacaBuilderVisible(bool));
     },
   };
 };
