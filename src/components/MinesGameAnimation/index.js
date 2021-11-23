@@ -297,10 +297,13 @@ const MinesGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}
+        {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick} color={'#e72d89'}/>}
       </div>
 
       <div>
+        {(!bet.done) && <div className={classNames(styles.notBetYetScreen)}>
+          <div className={classNames(styles.notBetYetText)}>Place a bet in order to start the game!</div>
+        </div>}
         <canvas id="mines-canvas" className={classNames(styles.canvas, {
           [styles.notClickable]: !bet.done
         })} ref={canvasRef}></canvas>
