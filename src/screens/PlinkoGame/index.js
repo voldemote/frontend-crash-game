@@ -1,19 +1,17 @@
-import { useCallback, useEffect, useState } from 'react';
-import * as Api from 'api/crash-game';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBet from 'components/PlaceBet';
-import PlaceBetRoulette from 'components/PlaceBetRoulette';
+import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/PlinkoGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { PLINKO_GAME_EVENT_ID } from 'constants/RosiGame';
-import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import { RosiGameActions } from '../../store/actions/rosi-game';
@@ -31,22 +29,32 @@ import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import {
+  trackPlinkoCashout,
+  trackPlinkoPlaceBet
+} from '../../config/gtm';
+import { UserActions } from 'store/actions/user';
+
+const PLINKO_GAME_EVENT_ID = GAMES.plinko.id
 
 const PlinkoGame = ({
   showPopup,
   connected,
   userId,
+  token,
+  refreshHighData,
+  refreshLuckyData,
+  updateUserBalance
 }) => {
+
+  const Api = new GameApi(GAMES.plinko.url, token);
   const dispatch = useDispatch();
-  const {
-    lastCrashes,
-    inGameBets,
-    cashedOut,
-    hasStarted,
-    isEndgame,
-  } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
+  const [risk, setRisk] = useState(1);
+  const [bet, setBet] = useState({ready: true, ball: 0});
+  const [amount, setAmount] = useState(50);
+  const [activityTabIndex, setActivityTabIndex] = useState(0);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -56,40 +64,45 @@ const PlinkoGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
-  const GAME_TYPE_ID = GAMES.plinko.id;
 
   useEffect(() => {
-    Api.getCurrentGameInfo()
+    getSpinsAlpacaWheel(PLINKO_GAME_EVENT_ID)
       .then(response => {
-        dispatch(
-          RosiGameActions.initializeState({
-            ...response.data,
-            userId,
-          })
-        );
+        const lastSpins = response?.data.lastCrashes;
+        setSpins(lastSpins.map((spin) => {
+          if(spin.profit > 0) {
+            return {
+              type: 'win',
+              value: '+' + spin.profit
+            }
+          } else if(spin.profit === 0){
+            return {
+              type: 'even',
+              value: '' + spin.profit
+            }
+          }else {
+            return {
+              type: 'loss',
+              value: spin.profit
+            }
+          }
+        }))
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-    dispatch(ChatActions.fetchByRoom({ roomId: PLINKO_GAME_EVENT_ID }));
 
+  }, [])
+
+  useEffect(() => {
+    dispatch(ChatActions.fetchByRoom({ roomId: PLINKO_GAME_EVENT_ID }));
+    refreshHighData();
+    refreshLuckyData();
   }, [dispatch, connected]);
 
-  //Bets state update interval
-  useEffect(() => {
-    const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (hasAcceptedTerms() && !isPopupDisplayed()) {
-        showPopup(PopupTheme.explanation);
-        localStorage.setItem('gameHowDoesItWorkTip', true);
-      }
-    }, 1000);
-    return () => clearTimeout(timerId);
-  }, []);
+  const handleChatSwitchTab = option => {
+    setChatTabIndex(option.index);
+  };
 
   const hasAcceptedTerms = () => {
     return localStorage.getItem('acceptedTerms') || false;
@@ -99,9 +112,36 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
-  const handleChatSwitchTab = option => {
-    setChatTabIndex(option.index);
-  };
+  useEffect(() => {
+    if(userId && bet?.ready && bet.ball===0) {
+       updateUserBalance(userId);
+    }
+  }, [bet])
+
+  async function handleBet(payload) {
+    audio.playBetSound();
+    if (!payload) return;
+    try {
+      if(payload.demo) {
+        const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array, ready: false }})
+        //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+      } else {
+        const { data } = await Api.createTradePlinko(payload);
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier, ready: false}});
+        //updateUserBalance(userId);
+        trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
+        trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
+        return data;
+      }
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: 'Plinko: Place Bet failed',
+        })
+      );
+    }
+  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -109,7 +149,7 @@ const PlinkoGame = ({
           activitiesLimit={50}
           className={styles.activitiesTrackerGamesBlock}
           preselectedCategory={'game'}
-          gameId={GAME_TYPE_ID}></EventActivitiesTabs>
+          gameId={PLINKO_GAME_EVENT_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -139,37 +179,12 @@ const PlinkoGame = ({
     </Grid>
   );
 
-  const renderBets = () => (
-    <GameBets
-      label="Cashed Out"
-      bets={[
-        ...inGameBets.map(b => ({
-          ...b,
-          cashedOut: false,
-        })),
-        ...cashedOut.map(b => ({
-          ...b,
-          cashedOut: true,
-        })),
-      ]}
-      gameRunning={hasStarted}
-      endGame={isEndgame}
-    />
-  );
-
-  const renderWallpaperBanner = () => {
-    return (
-      <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
-        <div className={styles.banner}></div>
-      </Link>
-    );
-  };
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Plinko Game" />
+            <BackLink to="/games" text="Plinko" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -179,50 +194,42 @@ const PlinkoGame = ({
               width={25}
               onClick={handleHelpClick}
             />
-            {/*}
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="elongame-how-does-it-work"
-            >
-              How does it work?
-            </span>
-            */}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={newspin => setSpins(spins.concat(newspin))}
-                inGameBets={inGameBets}
+                risk={risk}
+                amount={amount}
+                bet={bet}
+                setSpins={setSpins}
+                setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Results" spins={spins} />
+              <Spins text="My Games" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
-                <PlaceBet
+                <PlaceBetCasino
+                  gameName={'plinko'}
                   connected={connected}
-                  onBet={() => {
-                    audio.playBetSound();
-                  }}
-                  onCashout={() => {
-                    audio.playWinSound();
-                  }}
+                  setAmount={setAmount}
+                  setBet={setBet}
+                  amount={amount}
+                  setRisk={setRisk}
+                  risk={risk}
+                  onBet={handleBet}
+                  bet={bet}
                 />
-                {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
           </div>
-          {/*isMiddleOrLargeDevice ? null : renderBets()*/}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
               {renderActivities()}
             </div>
           ) : null}
-          {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-
         </div>
       </div>
     </BaseContainerWithNavbar>
@@ -233,11 +240,14 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
+    token: state.authentication.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
+    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },
@@ -248,6 +258,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    updateUserBalance: (userId) => {
+      dispatch(UserActions.fetch({ userId, forceFetch: true }));
     },
   };
 };

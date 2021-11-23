@@ -33,6 +33,8 @@ import { calcCrashFactorFromElapsedTime } from '../RosiGameAnimation/canvas/util
 import {
   trackElonChangeAutoCashout,
   trackElonPlaceBetGuest,
+  trackElonStartAutobet,
+  trackElonStopAutobet,
 } from '../../config/gtm';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
@@ -191,6 +193,19 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   }, [isGameRunning, betted, autobet]);
   console.log("isGameRunning")
   const stopAutobet = () => {
+
+    const payload = {
+      amount,
+      autobet: 1,
+      profit: Number(profit),
+      loss: Number(loss),
+      wincrease: winbutton?0:Number(wincrease)/100,
+      lincrease: lossbutton?0:Number(lincrease)/100,
+      multiplier: crashFactor,
+      accumulated: autobet.accumulated
+    };
+
+    trackElonStopAutobet({...payload});
     setAutobet(null)
   };
 
@@ -217,6 +232,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       lincrease: lossbutton?0:Number(lincrease)/100,
       crashFactor: 999,
     };
+
+    trackElonStartAutobet({
+      ...payload,
+      autobet: 1,
+      multiplier: crashFactor, 
+    });
     console.log("placeAutoBet")
     setAutobet(payload)
     setBetted(true)
@@ -262,7 +283,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const cashOut = async () => {
     setCanBet(false);
     dispatch(RosiGameActions.cashOut());
-    const response = await onCashout();
+    const response = await onCashout(false, autobet);
     autobet && setAutobet({...autobet, accumulated: autobet.accumulated + response.data.reward, win: true})
     setAnimate(true);
   };
@@ -304,7 +325,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               user.isLoggedIn ? null : 'elongame-showloginpopup'
             }
           >
-            {user.isLoggedIn ? 'Stop Autobet' : 'Stop Autobet'}
+            {user.isLoggedIn ? 'Stop Auto Bet' : 'Stop Auto Bet'}
           </span>
         </>
       );
@@ -327,7 +348,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
           >
-            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
+            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
           </span>
         );
     //  }
@@ -429,12 +450,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ marginLeft: selector === 'manual' ? 0 : '46%' }}></span>
-        <div className={classNames(styles.tab, styles.selected)} onClick={() => {setSelector('manual'); setAutobet(null)}} >
-          <span>Manual Bet</span>
+        <span className={styles.top} style={{ left: selector === 'manual' ? 2 : '49.4%' }}></span>
+        <div className={classNames(styles.tab)} onClick={() => {setSelector('manual'); setAutobet(null)}} >
+          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
         </div>
         <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
-          <span>Auto Bet</span>
+          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
         </div>
       </div>
     )
@@ -743,19 +764,15 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               )}
             >
               <div className={styles.toggleButton}>
-                <span className={styles.toggleLabel} style={{ color: winbutton?'white':'#120e27', marginLeft: winbutton?4:53, width: winbutton?53:72}}></span>
+                <span className={styles.toggleLabel} style={{ marginLeft: winbutton ? 1 : '44.2%', width: !winbutton && '55%'}}></span>
                 <span
-                  className={styles.buttonItem}
-                  style={{fontWeight: winbutton?'bold':'normal'}}
-                  onClick={() => setWinbutton(true)}
-                >
+                  className={classNames(styles.buttonItem, winbutton && styles.selected)}
+                  onClick={() => setWinbutton(true)}>
                   Reset
                 </span>
                 <span
-                  className={styles.buttonItem}
-                  style={{fontWeight: !winbutton?'bold':'normal'}}
-                  onClick={() => setWinbutton(false)}
-                >
+                  className={classNames(styles.buttonItem, !winbutton && styles.selected)}
+                  onClick={() => setWinbutton(false)}>
                   Increase
                 </span>
               </div>
@@ -787,19 +804,15 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               )}
             >
             <div className={styles.toggleButton}>
-            <span className={styles.toggleLabel} style={{marginLeft: lossbutton?4:53, width: lossbutton?53:72}}></span>
-              <span
-                style={{fontWeight: lossbutton?'bold':'normal'}}
-                className={styles.buttonItem}
-                onClick={() => setLossbutton(true)}
-              >
+            <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
+              <span                  
+                className={classNames(styles.buttonItem, lossbutton && styles.selected)}
+                onClick={() => setLossbutton(true)}>
                 Reset
               </span>
-              <span
-                style={{fontWeight: !lossbutton?'bold':'normal'}}
-                className={styles.buttonItem}
-                onClick={() => setLossbutton(false)}
-              >
+              <span                  
+                className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
+                onClick={() => setLossbutton(false)}>
                 Increase
               </span>
             </div>

@@ -48,14 +48,14 @@ const RouletteGameAnimation = ({
     audioInstance = audio;
     instance = handle;
     onInit(audio);
-    return () => { 
+    return () => {
       audioInstance.stopBgm();
       instance.destroy();
     }
   }, []);
 
   useEffect(() => {
-    if(bet && !bet.pending && bet.nspin >= 0 && !running) spin(bet);
+    if(bet && !bet.ready && bet.ngame >= 0 && !running) spin(bet);
   }, [bet]);
 
   useEffect(() => {
@@ -91,7 +91,6 @@ const RouletteGameAnimation = ({
     if (running) return;
     else setRunning(true);
     const newspin = await AnimationController.spinTo(bet.winIndex);
-
     let prepareObj = {};
     if(bet.profit > 0) {
       prepareObj = {
@@ -106,7 +105,7 @@ const RouletteGameAnimation = ({
     }
     setSpins(prepareObj);
     setRunning(false);
-    setBet({pending: true, amount: bet.amount, profit: bet.profit});
+    setBet((bet)=>{return{...bet, ready: true}});
   }
 
   return (
@@ -118,7 +117,7 @@ const RouletteGameAnimation = ({
       )}
     >
       <div className={styles.audioControls}>
-        {audio && <GameAudioControlsLocal audio={audio} muteButtonClick={muteButtonClick}/>}
+        {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
       <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
@@ -134,7 +133,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     muteButtonClick: () => {
-      dispatch(RosiGameActions.muteButtonClick());
     },
   };
 };

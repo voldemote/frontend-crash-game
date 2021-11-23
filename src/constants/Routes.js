@@ -46,4 +46,6 @@ export default {
   rewards: '/rewards',
   resetPassword: '/reset-password',
   user: '/user/:userId?',
+  minesGame: '/games/mines',
+  provablyfair: '/provablyfair',
 };

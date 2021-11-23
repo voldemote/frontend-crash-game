@@ -37,9 +37,9 @@
 
 .bets {
   overflow: auto;
-  color:black;
+  color: black;
   .bet:nth-child(even) {
-    background-color: $colorLightGray1;;
+    background-color: $colorLightGray1;
   }
 
   .bet {
@@ -194,11 +194,10 @@
 
 .crashFactor {
   margin-right: 20px;
-  color: $colorYellow;
+  color: $colorLightPink;
 }
 
 .amount {
-
   opacity: 1;
 }
 

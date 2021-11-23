@@ -37,7 +37,7 @@ const Spins = ({spins, showPopup, text}) => {
 
           return (
             <span key={`${spin.value}${i}`} className={styles.crash}>
-              <span className={spinType === 'win' ? styles.reward : styles.lost}>{displaySignedFormat(spin.value)}</span>
+              <span className={spinType === 'win' ? styles.reward :spinType === 'loss'? styles.lost : styles.even}>{displaySignedFormat(spin.value)}</span>
           </span>
           )
         })}

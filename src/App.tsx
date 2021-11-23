@@ -21,6 +21,7 @@ import Events from './screens/Events';
 import RosiGame from './screens/RosiGame';
 import PlinkoGame from './screens/PlinkoGame';
 import RouletteGame from './screens/RouletteGame';
+import MinesGame from './screens/MinesGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
 import Activities from './screens/Activities';
@@ -36,6 +37,7 @@ import useHideMobileScrollingMenu from 'hooks/useHideMobileScrollingMenu';
 import EventRouter from 'components/Events/EventRouter';
 import TypeformController from 'components/TypeformController';
 import ElonWallPaper from 'screens/ElonWallPaper';
+import Fair from 'screens/Fair';
 
 const { store, persistor } = configStore();
 
@@ -74,6 +76,7 @@ const App = () => {
                 path={Routes.rouletteGame}
                 component={RouletteGame}
               />
+               <Route exact path={Routes.minesGame} component={MinesGame} />
               <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
@@ -83,6 +86,7 @@ const App = () => {
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
+              <Route exact path={Routes.provablyfair} component={Fair} />
               <Redirect to={Routes.home} />
             </Switch>
             <NavbarFooter
