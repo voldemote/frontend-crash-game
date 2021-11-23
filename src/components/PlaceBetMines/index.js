@@ -153,7 +153,7 @@ const PlaceBetMines = ({
   const renderButton = () => {
     if (!gameInProgress) {
       return (
-        <span
+        (selector === 'manual') && (<span
           role="button"
           tabIndex="0"
           className={classNames(styles.button, {
@@ -168,7 +168,7 @@ const PlaceBetMines = ({
           onClick={bet?.pending ? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
         >
           {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
-        </span>
+        </span>)
       );
     } else {
       return (
