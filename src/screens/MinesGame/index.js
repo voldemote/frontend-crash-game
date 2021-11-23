@@ -57,7 +57,7 @@ const Game = ({
   const [audio, setAudio] = useState(null);
   const [cashouts, setCashouts] = useState([]);
   const [gameInProgress, setGameInProgress] = useState(false);
-  const [mines, setMines] = useState(1);
+  const [mines, setMines] = useState(5);
   const [currentStep, setCurrentStep] = useState(0);
   const [bet, setBet] = useState({
     pending: false,
@@ -159,12 +159,20 @@ const Game = ({
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
         gameInstance.game.controller.view.gameOver("lose");
+
+        setGameInProgress(true);
+        setCurrentStep(0);
+        setBet({
+          ...bet,
+          done: true
+        })
+
         return data;
       }
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: `${GAME_NAME}: Place Bet failed`,
+          message: `${GAME_NAME}: ${e.response.data || 'Place Bet failed'}`
         })
       );
     }
