@@ -2,12 +2,13 @@ import * as PIXI from 'pixi.js-legacy';
 import { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 //import * as ApiUser from 'api/crash-game';
-import { connect, useDispatch } from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBetMines from 'components/PlaceBetMines';
+import { selectUser } from 'store/selectors/authentication';
 import BackLink from 'components/BackLink';
 import LastCashouts from 'components/LastCashouts';
 import GameAnimation from 'components/MinesGameAnimation';
@@ -52,6 +53,7 @@ const Game = ({
     hasStarted,
     isEndgame,
   } = useRosiData();
+  const user = useSelector(selectUser);
   const [audio, setAudio] = useState(null);
   const [cashouts, setCashouts] = useState([]);
   const [gameInProgress, setGameInProgress] = useState(false);
@@ -117,7 +119,7 @@ const Game = ({
         dispatch(AlertActions.showError(error.message));
       });
 
-  }, [])
+  }, [user.isLoggedIn])
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
