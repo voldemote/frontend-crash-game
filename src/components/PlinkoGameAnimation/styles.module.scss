@@ -9,13 +9,51 @@
   padding: 5px 20px;
   cursor: pointer;
 }
+.trape{
+  position: absolute;
+  min-width: 660px;
+  max-width: 660px;
+  height: auto;
+  z-index: 2;
+  margin-top: 15px;
+  @media (max-width: 650px) {
+    transform: scale(0.8);
+  }
+  @media (max-width: 580px) {
+    transform: scale(0.6);
+  }
+  @media (max-width: 350px) {
+    transform: scale(0.55);
+  }
+}
 .board{
   position: relative;
   width: fit-content;
+  display: flex;
+  z-index: 3;
+  flex-direction: column;
+  align-items: center;
+  min-width: fit-content;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: -20px -30px -40px -30px;
+  padding: 20px 30px 40px 30px;
+  background-position: center;
+  //background-image: url('../../data/backgrounds/Trapezoid.png');
+  @media (max-width: 650px) {
+    transform: scale(0.8);
+  }
+  @media (max-width: 580px) {
+    transform: scale(0.6);
+  }
+  @media (max-width: 350px) {
+    transform: scale(0.55);
+  }
 
+/*
   &:after{
     content: '';
-    border-bottom: 380px solid #ffffff;
+    border-bottom: 380px solid transparent;
     border-left: 260px solid transparent;
     border-right: 260px solid transparent;
     height: 0;
@@ -25,6 +63,7 @@
     top: -50px;
     padding: 20px 40px;
   }
+  */
   .ball{
     z-index: 15;
     background: white;
@@ -33,7 +72,23 @@
     margin: auto;
     left: 0;
     right: 0;
-    top: -30px;
+    top: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
+    //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
+  }
+  .ballshadow{
+    z-index: 15;
+    background: white;
+    background-image: url('../../data/icons/medal-coin.png');
+    background-size: 100%;    position: absolute;
+    margin: auto;
+    opacity: 0.4;
+    left: 0;
+    right: 0;
+    top: -10px;
     width: 20px;
     height: 20px;
     border-radius: 15px;
@@ -42,13 +97,15 @@
   }
   .row{
     display: flex;
+    min-width: fit-content;
     height: 30px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     .peg{
-      z-index: 12;
+      z-index: 5;
       display: flex;
+      min-width: 10px;
       width: 10px;
       height: 10px;
       background: #d7393f;
@@ -61,20 +118,27 @@
   .boxes{
     display: flex;
     justify-content: center;
-    background: white;
+    //background: white;
     align-items: center;
+    min-width: calc(100% + 80px);
     width: calc(100% + 80px);
     position: absolute;
-    margin-left: -40px;
-
-    bottom: -35px;
+    left: -200px;
+    right: -200px;
+    margin: auto;
+    bottom: 5px;
     .box{
-      margin: 0 8px 5px 8px;
-      width: 24px;
-      height: 20px;
+      border-radius: 2px 2px 10px 10px;
+      -webkit-box-shadow: inset 0 0 4px 2px #d7393f;
+      box-shadow: inset 0 0 4px 2px #d7393f;
+      margin: 0 1px 5px 1px;
+      width: 38px;
+      height: 29px;
+      z-index: 20;
       background: #dd8549;
       color: white;
-      font-size: 10px;
+      font-size: 14px;
+      font-weight: bold;
       justify-content: center;
       align-items: center;
       display: flex;
@@ -86,7 +150,6 @@
       animation: shake 0.5s infinite;
       &.red{
         border: 1px solid #e6e76a;
-
       }
     }
   }
@@ -103,24 +166,25 @@
 }
 .background{
   position: absolute;
-  margin: auto;
-   max-width: fit-content;
-  svg{
-    max-width: auto!important;
-  }
 }
 .animation {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  /*height: fit-content;*/
-  max-height: 450px;
-  min-height: 450px;
-  position: relative;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid hsla(0,0%,100%,.17);
+    max-height: 470px;
+    min-height: 470px;
+    position: relative;
+  @media (max-width: 580px) {
+    max-height: 320px;
+    min-height: 320px;
+  }
+  @media (max-width: 350px) {
+    max-height: 300px;
+    min-height: 300px;
+  }
 }
 
 .preparingRound {

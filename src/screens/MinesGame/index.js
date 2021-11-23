@@ -9,11 +9,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import PlaceBetMines from 'components/PlaceBetMines';
 import BackLink from 'components/BackLink';
-import Spins from 'components/Spins';
+import LastCashouts from 'components/LastCashouts';
 import GameAnimation from 'components/MinesGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import { ROULETTE_GAME_EVENT_ID } from 'constants/RouletteGame';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
@@ -29,13 +28,10 @@ import TabOptions from '../../components/TabOptions';
 import Routes from 'constants/Routes';
 import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
-import {
-  trackAlpacaWheelPlaceBetGuest,
-  trackAlpacaWheelPlaceBet,
-  trackAlpacaWheelCashout,
-} from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import {getLastCashoutsMines} from "../../api/casino-games";
+import {roundToTwo} from "../../helper/FormatNumbers";
 
 const Game = ({
   showPopup,
@@ -47,7 +43,7 @@ const Game = ({
   const gameCfg = GAMES.mines;
   const GAME_TYPE_ID = gameCfg.id;
   const GAME_NAME = gameCfg.name;
-  const Api = new GameApi(gameCfg.url, token);
+  const gameApi = new GameApi(gameCfg.url, token);
   const dispatch = useDispatch();
   const {
     lastCrashes,
@@ -57,35 +53,61 @@ const Game = ({
     isEndgame,
   } = useRosiData();
   const [audio, setAudio] = useState(null);
-  const [spins, setSpins] = useState([]);
-  const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true});
+  const [cashouts, setCashouts] = useState([]);
+  const [gameInProgress, setGameInProgress] = useState(false);
+  const [mines, setMines] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [bet, setBet] = useState({
+    pending: false,
+    done: false
+  });
+  const [outcomes, setOutcomes] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
   const [amount, setAmount] = useState(50);
+  const [multiplier, setMultiplier] = useState('0.00');
+  const [profit, setProfit] = useState();
+  const [gameInstance, setGameInstance] = useState();
+  const [confetti, setConfetti] = useState();
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
+  const [demoCount, setDemoCount] = useState(0);
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
 
-
+  const getLastCashout = (profit) => {
+    let prepareObj = {};
+    if(profit > 0) {
+      prepareObj = {
+        type: 'win',
+        value: '+' + profit
+      };
+    } else {
+      prepareObj = {
+        type: 'loss',
+        value: profit
+      };
+    }
+    setCashouts([prepareObj, ...cashouts])
+  }
 
   useEffect(() => {
-    getSpinsAlpacaWheel(GAME_TYPE_ID)
+    getLastCashoutsMines(GAME_TYPE_ID)
       .then(response => {
-        const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin)=> {
-          if(spin.profit > 0) {
+        const lastCashouts = response?.data.lastCrashes;
+        setCashouts(lastCashouts.map((entry)=> {
+          if(entry.profit > 0) {
             return {
               type: 'win',
-              value: '+' + spin.profit
+              value: '+' + entry.profit
             };
           } else {
             return {
               type: 'loss',
-              value: spin.profit
+              value: entry.profit
             };
           }
         }))
@@ -101,13 +123,22 @@ const Game = ({
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
   }, [dispatch, connected]);
 
-  //Bets state update interval
-  /*
+
   useEffect(() => {
-    const interval = setInterval(() => dispatch(RosiGameActions.tick()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-*/
+    if(currentStep === 0) {
+      if(currentStep === 0) {
+        setMultiplier();
+        setProfit();
+      }
+    } else {
+      setMultiplier((multi)=> {
+        const currentMulti = outcomes[currentStep-1];
+        const calculateProfit = (amount * currentMulti) - amount;
+        setProfit(calculateProfit);
+        return currentMulti;
+      });
+    }
+  }, [currentStep]);
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
@@ -118,22 +149,45 @@ const Game = ({
     if (!payload) return;
     try {
       if(payload.demo) {
-        // setBet({...payload })
-        // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        setDemoCount((count) => {
+          return count+1;
+        })
       } else {
-        const { data } = await Api.createTradeMines(payload);
-        console.log('data', data);
-
-        // setBet({...payload, ...data});
-        // updateUserBalance(userId);
-        // trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        // trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        const { data } = await gameApi.createTradeMines(payload);
+        setOutcomes(data?.outcomes)
+        updateUserBalance(userId);
+        gameInstance.game.controller.view.gameOver("lose");
         return data;
       }
     } catch (e) {
       dispatch(
         AlertActions.showError({
           message: `${GAME_NAME}: Place Bet failed`,
+        })
+      );
+    }
+  }
+
+  async function handleCashout() {
+    setGameInProgress(false);
+    setCurrentStep(0);
+
+    try {
+      const { data } = await gameApi.cashoutMines();
+      getLastCashout(data.profit);
+      setGameOver(true);
+      updateUserBalance(userId);
+      setConfetti(true);
+      setBet({
+        pending:false,
+        done: false
+      });
+
+      audio.playWinSound();
+    } catch (e) {
+      dispatch(
+        AlertActions.showError({
+          message: `${GAME_NAME}: Cashout failed`,
         })
       );
     }
@@ -167,7 +221,7 @@ const Game = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ROULETTE_GAME_EVENT_ID}
+          roomId={GAME_TYPE_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -201,10 +255,6 @@ const Game = ({
     );
   };
 
-
-  const handleNewSpin = (newSpin)=> {
-    setSpins([newSpin, ...spins])
-  }
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -220,29 +270,35 @@ const Game = ({
               width={25}
               onClick={handleHelpClick}
             />
-            {/*}
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="alpacawheel-how-does-it-work"
-            >
-              How does it work?
-            </span>
-            */}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={handleNewSpin}
+                cashouts={cashouts}
+                setCashouts={setCashouts}
                 inGameBets={inGameBets}
-                risk={risk}
                 bet={bet}
                 amount={amount}
                 setBet={setBet}
+                mines={mines}
+                setMines={setMines}
                 onInit={audio => setAudio(audio)}
+                gameInProgress={gameInProgress}
+                setGameInProgress={setGameInProgress}
+                gameApi={gameApi}
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
+                gameOver={gameOver}
+                setGameOver={setGameOver}
+                setOutcomes={setOutcomes}
+                setDemoCount={setDemoCount}
+                demoCount={demoCount}
+                gameInstance={gameInstance}
+                setGameInstance={setGameInstance}
+                onCashout={handleCashout}
               />
-              <Spins text="My Spins" spins={spins} />
+              <LastCashouts text="My Cashouts" spins={cashouts} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -250,10 +306,23 @@ const Game = ({
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}
-                  setRisk={setRisk}
-                  risk={risk}
                   onBet={handleBet}
+                  onCashout={handleCashout}
                   bet={bet}
+                  setBet={setBet}
+                  setMines={setMines}
+                  mines={mines}
+                  gameInProgress={gameInProgress}
+                  setGameInProgress={setGameInProgress}
+                  currentStep={currentStep}
+                  setCurrentStep={setCurrentStep}
+                  multiplier={multiplier}
+                  profit={profit}
+                  outcomes={outcomes}
+                  demoCount={demoCount}
+                  setDemoCount={setDemoCount}
+                  confetti={confetti}
+                  setConfetti={setConfetti}
                 />
               </div>
             </div>

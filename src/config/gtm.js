@@ -278,4 +278,41 @@ export const trackAlpacaWheelStopAutobet = ({ amount, multiplier, autobet, profi
   TagManager.dataLayer(tagManagerArgs);
 };
 
+
+// PLINKO
+
+export const trackPlinkoPlaceBet = ({
+  amount,
+  multiplier,
+  autobet,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      event: 'plinkoPlaceBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPlinkoCashout = ({ amount, multiplier, accumulated, autobet, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      accumulated,
+      event: 'plinkoCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
 export default TagManager;

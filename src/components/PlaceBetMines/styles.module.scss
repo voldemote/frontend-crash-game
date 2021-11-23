@@ -72,17 +72,6 @@
   }
 }
 
-.selectMines {
-  height: 45px;
-  width: 100%;
-  border-radius: 10px;
-  border: 1.2px solid rgba(14, 9, 39, 0.3);
-  background-color: white;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 24px;
-  text-align: center;
-}
 .spinsleft {
   margin: 5px;
   text-align: center;
@@ -157,6 +146,11 @@
     }
   }
 }
+
+.autoBetContainer {
+  text-align: center;
+}
+
 .profit {
   position: relative;
   bottom: -18px;
@@ -259,6 +253,7 @@
 
 .inputContainer {
   position: relative;
+  width: 100%;
   .placeBetContainer {
     display: flex;
     flex-direction: row;
@@ -328,7 +323,7 @@
   opacity: 0.5;
 
   &:hover {
-    cursor: wait;
+    cursor: not-allowed;
   }
 }
 .notConnected {
@@ -527,4 +522,33 @@
     font-size: 12px;
     padding-top: 5px;
   }
+}
+
+.selectMines {
+  height: 45px;
+  width: 100%;
+
+  background-color: white;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.cashoutButton {
+  color: $colorYellow;
+}
+
+.currentMultiplier {
+  width: 100%;
+}
+
+.noselect {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

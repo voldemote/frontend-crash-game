@@ -61,10 +61,9 @@ export default class View extends Factory.Container {
     }
 
     if ( this.isGameOver ) {
-      this.popupTimout -= delta * 16.777;
-      if ( this.popupTimout <= 0 ) {
-        this.showPopUp();
-      }
+        this.pause();
+        // this.resume();
+        this.emit("restartGame");
     }
 
     //this.header.update(delta);
@@ -143,7 +142,6 @@ export default class View extends Factory.Container {
     const { width, height } = texture;
     const gridWidth = ( ( columns * width ) - width );
     const gridHeight = ( ( rows * height ) - height );
-    console.log(isMobile);
     if(isMobile) gridSize = 190;
     this.grid.scale.set(gridSize / gridWidth);
     this.addChild(this.grid);
@@ -155,8 +153,8 @@ export default class View extends Factory.Container {
         const cell = new Cell(texture, cellModel);
         cell.position.set(x, y);
         cell.position.set(x, y);
-        cell.on("mouseover", this.onMouseOver, this);
-        cell.on("mouseout", this.onMouseOut, this);
+        //cell.on("mouseover", this.onMouseOver, this);
+        //cell.on("mouseout", this.onMouseOut, this);
         cell.interactive=true;
         return cell;
       });
@@ -167,6 +165,11 @@ export default class View extends Factory.Container {
     });
 
 
+  }
+
+  updateGrid(row, col, isMine) {
+    this.grid.cells[col][row].isMine = isMine;
+    this.grid.cells[col][row].isRevealed = true;
   }
 
   /** To pause the game. It removes all interactivity and stops the counter */
@@ -280,16 +283,14 @@ export default class View extends Factory.Container {
   /** To reveal all cells which were collected by engine
    * @param {Array} cells */
   revealCells(cells) {
-    console.log("dssddsds");
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
-      cell.reveal(this.resPack, this.viewConfig.styles);
+      cell.reveal(this.resPack, this.viewConfig.styles, this.viewConfig.handlers);
     });
   }
   /** To reveal all cells which were collected by engine
    * @param {Array} cells */
    overCell(cells) {
-     console.log("over");
     cells.forEach(({ row, col }) => {
       const cell = this.grid.cells[ row ][ col ];
       cell.scale.set(1.1);
@@ -298,7 +299,6 @@ export default class View extends Factory.Container {
 /** To reveal all cells which were collected by engine
    * @param {Array} cells */
  outCell(cells) {
-  console.log("out");
   cells.forEach(({ row, col }) => {
     const cell = this.grid.cells[ row ][ col ];
     cell.scale.set(1);

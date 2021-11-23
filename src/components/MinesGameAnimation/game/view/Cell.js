@@ -2,6 +2,7 @@ import '@pixi/sound';
 import * as Sound from '@pixi/sound';
 import { some } from 'lodash';
 import { Factory } from "../../sources/libs/index.js";
+import MovieClip from "../MovieClip";
 
 /**
  * @class Cell
@@ -23,38 +24,76 @@ export default class Cell extends Factory.Sprite {
     this.isRevealed = isRevealed;
     this.isFlagged = isFlagged;
     this.isEmpty = isEmpty;
-    
+
+    // ANIMATIONS
+    this.revealAnimation = new MovieClip({
+      framesNum: 14,
+      imageName: 'unturned_00',
+      imageExt: 'png',
+      animationSpeed: 0.6,
+      autoplay: false,
+      loop: false,
+      basePath: '../images/mines/unturned/'
+    })
+    this.revealAnimation.visible = false
+    this.revealAnimation.anchor.set(0.5)
+
+    this.winAnimation = new MovieClip({
+      framesNum: 14,
+      imageName: 'win_00',
+      imageExt: 'png',
+      animationSpeed: 0.6,
+      autoplay: false,
+      loop: false,
+      basePath: '../images/mines/win/'
+    })
+    this.winAnimation.visible = false
+    this.winAnimation.anchor.set(0.5)
+
+    this.loseAnimation = new MovieClip({
+      framesNum: 14,
+      imageName: 'loose_00',
+      imageExt: 'png',
+      animationSpeed: 0.6,
+      autoplay: false,
+      loop: false,
+      basePath: '../images/mines/lose/'
+    })
+    this.loseAnimation.visible = false
+    this.loseAnimation.anchor.set(0.5)
+
   }
 
-  reveal(textures, styles) {
-    console.log(textures)
-    console.log("REVEAL");
-    this.isRevealed = true;
-    Sound.sound.add(
-      {
-        coin: {
-          url: '/sounds/mines/coin.mp3',
-          loop: false,
-        },
-        poop: {
-          url: '/sounds/mines/poop.mp3',
-          loop: false,
-        }
+  reveal(textures, styles, handlers) {
+    this.visible = false
+    window.kor = this
+    this.revealAnimation.visible = true
+
+    const audioController = handlers.audio;
+
+    this.revealAnimation.onComplete = () => {
+      this.isRevealed = true
+      //this.revealAnimation.visible = false
+      if (this.isMine) {
+        this.loseAnimation.visible = true
+        this.loseAnimation.x = this.x
+        this.loseAnimation.y = this.y
+        this.parent.addChild(this.loseAnimation)
+        this.loseAnimation.gotoAndPlay(0)
+        audioController.playPoopSfx();
+      } else {
+        this.winAnimation.visible = true
+        this.winAnimation.x = this.x
+        this.winAnimation.y = this.y
+        this.parent.addChild(this.winAnimation)
+        this.winAnimation.gotoAndPlay(0)
+        audioController.playCoinSfx();
       }
-    );
-   
-    if (this.isMine) {
-      this.texture = textures.get("mine");
-      Sound.sound.play('poop');
-      
-    } else {
-      textures.get("empty");
-      Sound.sound.play('coin');
     }
-   
-    this.texture = this.isMine ? textures.get("mine") : textures.get("empty");
-    // const style = { ...styles.common, ...styles[ this.text ] };
-    // this.addChild(new Factory.Text(this.text, style));
+    this.revealAnimation.x = this.x
+    this.revealAnimation.y = this.y
+    this.parent.addChild(this.revealAnimation)
+    this.revealAnimation.gotoAndPlay(10)
   }
 
   toggleFlag(textures) {

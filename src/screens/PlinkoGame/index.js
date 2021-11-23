@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,6 @@ import Spins from 'components/Spins';
 import GameAnimation from 'components/PlinkoGameAnimation';
 import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import { RosiGameActions } from '../../store/actions/rosi-game';
@@ -31,9 +30,8 @@ import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {
-  trackAlpacaWheelPlaceBetGuest,
-  trackAlpacaWheelPlaceBet,
-  trackAlpacaWheelCashout,
+  trackPlinkoCashout,
+  trackPlinkoPlaceBet
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 
@@ -45,22 +43,16 @@ const PlinkoGame = ({
   userId,
   token,
   refreshHighData,
+  refreshLuckyData,
   updateUserBalance
 }) => {
 
   const Api = new GameApi(GAMES.plinko.url, token);
   const dispatch = useDispatch();
-  const {
-    lastCrashes,
-    inGameBets,
-    cashedOut,
-    hasStarted,
-    isEndgame,
-  } = useRosiData();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true});
+  const [bet, setBet] = useState({pending: true, ball: 0});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
@@ -72,27 +64,29 @@ const PlinkoGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
-  const GAME_TYPE_ID = GAMES.plinko.id;
 
   useEffect(() => {
     getSpinsAlpacaWheel(PLINKO_GAME_EVENT_ID)
       .then(response => {
-        console.log("response", response)
         const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin)=> {
+        setSpins(lastSpins.map((spin) => {
           if(spin.profit > 0) {
             return {
               type: 'win',
               value: '+' + spin.profit
-            };
-          } else {
+            }
+          } else if(spin.profit === 0){
+            return {
+              type: 'even',
+              value: '' + spin.profit
+            }
+          }else {
             return {
               type: 'loss',
               value: spin.profit
-            };
+            }
           }
         }))
-
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
@@ -102,9 +96,8 @@ const PlinkoGame = ({
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: PLINKO_GAME_EVENT_ID }));
-    //refreshHighData();
-    //refreshLuckyData();
-
+    refreshHighData();
+    refreshLuckyData();
   }, [dispatch, connected]);
 
   const handleChatSwitchTab = option => {
@@ -119,27 +112,21 @@ const PlinkoGame = ({
     return localStorage.getItem('gameHowDoesItWorkTip') || false;
   };
 
+
   async function handleBet(payload) {
     audio.playBetSound();
-    console.log("Bet: ", payload)
     if (!payload) return;
     try {
       if(payload.demo) {
         const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
-      /*
-        let winMultiplier = 6
-        for(let number of array){
-          number === 1 ? winMultiplier -1 : winMultiplier + 1
-        }*/
-        setBet({...payload, path: array })
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
-        console.log("data", data)
-        setBet({...payload, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier});
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
         updateUserBalance(userId);
-        //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk });
-        //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult });
+        trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
+        trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
         return data;
       }
     } catch (e) {
@@ -157,7 +144,7 @@ const PlinkoGame = ({
           activitiesLimit={50}
           className={styles.activitiesTrackerGamesBlock}
           preselectedCategory={'game'}
-          gameId={GAME_TYPE_ID}></EventActivitiesTabs>
+          gameId={PLINKO_GAME_EVENT_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -187,36 +174,6 @@ const PlinkoGame = ({
     </Grid>
   );
 
-  const renderBets = () => (
-    <GameBets
-      label="Cashed Out"
-      bets={[
-        ...inGameBets.map(b => ({
-          ...b,
-          cashedOut: false,
-        })),
-        ...cashedOut.map(b => ({
-          ...b,
-          cashedOut: true,
-        })),
-      ]}
-      gameRunning={hasStarted}
-      endGame={isEndgame}
-    />
-  );
-
-  const renderWallpaperBanner = () => {
-    return (
-      <Link data-tracking-id="alpacawheel-wallpaper" to={Routes.elonWallpaper}>
-        <div className={styles.banner}></div>
-      </Link>
-    );
-  };
-
-
-  const handleNewSpin = (newSpin)=> {
-    setSpins([newSpin, ...spins])
-  }
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -232,29 +189,19 @@ const PlinkoGame = ({
               width={25}
               onClick={handleHelpClick}
             />
-            {/*}
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="alpacawheel-how-does-it-work"
-            >
-              How does it work?
-            </span>
-            */}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
               <GameAnimation
-                setSpins={handleNewSpin}
-                inGameBets={inGameBets}
                 risk={risk}
-                bet={bet}
                 amount={amount}
+                bet={bet}
+                setSpins={setSpins}
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              <Spins text="My Games" spins={spins} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -268,19 +215,15 @@ const PlinkoGame = ({
                   onBet={handleBet}
                   bet={bet}
                 />
-                {/*isMiddleOrLargeDevice ? renderBets() : null*/}
               </div>
             </div>
           </div>
-          {/*isMiddleOrLargeDevice ? null : renderBets()*/}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
               {renderActivities()}
             </div>
           ) : null}
-          {/*isMiddleOrLargeDevice && renderWallpaperBanner()*/}
-
         </div>
       </div>
     </BaseContainerWithNavbar>
@@ -291,12 +234,14 @@ const mapStateToProps = state => {
   return {
     connected: state.websockets.connected,
     userId: state.authentication.userId,
-    token: state.authentication.token,
+    token: state.authentication.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    refreshHighData: () => dispatch(RosiGameActions.fetchHighData()),
+    refreshLuckyData: () => dispatch(RosiGameActions.fetchLuckyData()),
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },

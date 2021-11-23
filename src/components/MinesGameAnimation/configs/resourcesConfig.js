@@ -16,11 +16,16 @@ import seven from '../assets/seven.png';
 import eight from '../assets/eight.png';
 import nine from '../assets/nine.png';
 import alpaca_win from '../assets/alpaca_win.png';
+import animations from '../assets/animations.json';
 
 export default [
   {
     "name": "Minesweeper",
     "resources": [
+      {
+        "name": "animations",
+        "url": "./assets/animations.json"
+      },
       {
         "name": "closed",
         "url": closed

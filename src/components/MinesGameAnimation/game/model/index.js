@@ -71,7 +71,6 @@ export default class Model {
    * @param {Function} callback
    * @return {Array<CellModel>} */
   getCellsByRule(callback){
-    console.log(this.grid.collection);
     return this.grid.collection.map((row) => {
       return row.filter(callback);
     });
@@ -86,7 +85,6 @@ export default class Model {
   /** To get all cells which is not opened yet
    * @return {Array<CellModel>} */
   get cellsToRevealed() {
-    console.log(this.getCellsByRule((cell) => !cell.isRevealed));
     return this.getCellsByRule((cell) => !cell.isRevealed);
   }
 

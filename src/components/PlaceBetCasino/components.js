@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Input from '../Input';
 
 
-export const RiskInput = ({risk, setRisk, number}) => {
+export const RiskInput = ({risk, setRisk, number, disable}) => {
   return(
     <div className={styles.inputContainer}>
       <label
@@ -14,11 +14,12 @@ export const RiskInput = ({risk, setRisk, number}) => {
       <div className={styles.riskSelection}>
         {Array.from({length: number}).map((level, index) =>
           <button
+            style={{opacity: disable && 0.5, cursor: disable && 'not-allowed'}}
             data-tracking-id={`alpacawheel-change-risk-${index+1}`}
             className={risk === (index + 1) && styles.selected}
-            onClick={() => setRisk(index+1)}
+            onClick={() => !disable && setRisk(index+1)}
           >
-            {index+1}
+            <span>{index+1}</span>
           </button>
         )}
       </div>

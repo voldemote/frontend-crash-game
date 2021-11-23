@@ -361,6 +361,10 @@
         }
         p {
           font-size: 14px;
+
+          a {
+            text-decoration: underline;
+          }
         }
         @media (max-width: $screen-md) {
           text-align: center;
@@ -371,6 +375,158 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+}
+
+.welcomeContainer {
+  margin-top: 70px;
+  @media screen and (max-width: $screen-md) {
+    margin-top: 84px;
+  }
+  .cardBox {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    background: white;
+    border: 1px solid #f2e5da;
+    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
+      0px 2px 2px rgba(159, 162, 191, 0.32);
+    border-radius: 12px;
+    @media screen and (max-width: $screen-md) {
+      grid-template-columns: auto;
+    }
+    .leftSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 0;
+      .description {
+        max-width: 400px;
+      }
+      .categorySection {
+        display: flex;
+        align-items: center;
+        margin-top: 18px;
+        @media screen and (max-width: $screen-md) {
+          flex-direction: column;
+        }
+        .categoryItem {
+          display: flex;
+          align-items: center;
+          img {
+            width: 30px;
+            height: 30px;
+          }
+          span {
+            color: #e82e89;
+            font-size: 22px;
+            font-family: $fontBold;
+            margin-left: 8px;
+            margin-right: 14px;
+            @media screen and (max-width: $screen-md) {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+      .pillButton {
+        position: relative;
+        color: $colorWhite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        padding: 10px;
+        background: $colorPinkDark;
+        font-size: 12px;
+        border-radius: 20px;
+        font-family: $fontRegular;
+        cursor: pointer;
+        height: 35px;
+        min-width: 250px;
+        margin-top: 30px;
+
+        img,
+        svg {
+          position: absolute;
+          left: 8px;
+          max-height: 21px;
+        }
+
+        .rankingText {
+          font-size: 18px;
+          align-self: center;
+          @media screen and (max-width: $screen-md) {
+            font-size: 14px;
+          }
+        }
+      }
+      p {
+        text-align: center;
+        font-size: 20px;
+        @media screen and (max-width: $screen-md) {
+          padding: 0 12px;
+          font-size: 16px;
+        }
+      }
+    }
+    .rightSection {
+      display: flex;
+      justify-content: flex-end;
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+    .title {
+      display: flex;
+      align-items: center;
+      font-family: $fontBold;
+      font-weight: bold;
+      justify-content: flex-start;
+      h2 {
+        text-align: center;
+        font-size: 50px;
+        line-height: 60px;
+        color: #0e0927;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        @media (max-width: $screen-xs) {
+          font-size: 28px;
+          text-align: center;
+          line-height: 40px;
+        }
+      }
+      .pink {
+        color: #e82e89;
+      }
+    }
+  }
+  .bottomContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .bottomBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0e0927;
+      border-radius: 0px 0px 12px 12px;
+      font-family: $fontMedium;
+      font-size: 24px;
+      padding: 12px 120px;
+      @media screen and (max-width: $screen-md) {
+        width: 100%;
+        padding: 8px 0;
+        font-size: 16px;
+      }
+      p {
+        color: #fff;
+        text-align: center;
+      }
+      .pink {
+        color: #e82e89;
+      }
     }
   }
 }
@@ -499,6 +655,12 @@
         .thumbnail {
           display: flex;
           margin: 0 auto 14px;
+
+          &.cactusJack {
+            @media screen and (max-width: $screen-md) {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -554,17 +716,17 @@
   }
   .cardBox {
     padding-top: 30px;
-
     .card {
       display: flex;
       background: #ffffff;
       border: 1px solid #ededed;
       margin: 20px auto;
       padding-right: 20px;
+      padding-bottom: 28px;
+      min-height: 208px;
       box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
         0px 2px 2px rgba(159, 162, 191, 0.32);
       border-radius: 12px;
-      height: 100%;
       @media screen and (max-width: $screen-md) {
         flex-direction: column;
         padding-right: 0;
