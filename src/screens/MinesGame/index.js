@@ -229,32 +229,6 @@ const Game = ({
     </Grid>
   );
 
-  const renderBets = () => (
-    <GameBets
-      label="Cashed Out"
-      bets={[
-        ...inGameBets.map(b => ({
-          ...b,
-          cashedOut: false,
-        })),
-        ...cashedOut.map(b => ({
-          ...b,
-          cashedOut: true,
-        })),
-      ]}
-      gameRunning={hasStarted}
-      endGame={isEndgame}
-    />
-  );
-
-  const renderWallpaperBanner = () => {
-    return (
-      <Link data-tracking-id="alpacawheel-wallpaper" to={Routes.elonWallpaper}>
-        <div className={styles.banner}></div>
-      </Link>
-    );
-  };
-
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
