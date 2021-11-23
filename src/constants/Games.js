@@ -77,7 +77,7 @@ export const NEW_SLOTS_GAMES = [
     background: gameCardMines,
     title: `Mines`,
     subtitle: '',
-    active: false,
+    active: true,
     linkTo: '/games/mines',
   },
   {

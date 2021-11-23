@@ -9,6 +9,7 @@
   border-radius: 20px;
   justify-content: flex-start;
   position: relative;
+
   .top {
     width: 50%; //155px;
     box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
@@ -93,14 +94,12 @@
 .container {
   position: relative;
   background: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  border: 1px solid $colorLightGray;
   border-radius: 10px;
-  padding: 20px 20px 20px 20px;
   margin-bottom: 14px;
 
   @media screen and (max-width: $screen-md) {
     margin-top: 7px;
-    padding: 10px;
   }
 }
 
@@ -136,6 +135,7 @@
 .sliderContainer {
   position: relative;
   bottom: -10px;
+  padding: 10px;
   div {
     margin-bottom: 0;
     @media screen and (max-width: $screen-sm) {
@@ -259,11 +259,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    padding: 10px;
+    border-bottom: 1px solid $colorLightGray2;
+
     .placebidTitle {
       padding: 0;
     }
     @media screen and (max-width: 800px) {
-      display: none;
+      // display: none;
     }
   }
 }
@@ -308,6 +311,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  color: white;
 
   &:hover {
     cursor: pointer;
@@ -541,6 +545,7 @@
 
 .currentMultiplier {
   width: 100%;
+  padding: 0 10px;
 }
 
 .noselect {
