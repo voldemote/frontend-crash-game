@@ -315,4 +315,59 @@ export const trackPlinkoCashout = ({ amount, multiplier, accumulated, autobet, .
   TagManager.dataLayer(tagManagerArgs);
 };
 
+// MINES
+
+export const trackMinesPlaceBet = ({
+  amount,
+  mines,
+  autobet,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      mines,
+      autobet,
+      event: 'minesPlaceBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackMinesPlaceBetGuest = ({
+  amount,
+  mines,
+  autobet,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      mines,
+      autobet,
+      event: 'minesPlaceBetGuest',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackMinesCashout = ({ amount, multiplier, accumulated, autobet, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      accumulated,
+      event: 'minesCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
 export default TagManager;
