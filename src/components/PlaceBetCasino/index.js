@@ -183,7 +183,7 @@ const PlaceBetCasino = ({
             role="button"
             tabIndex="0"
             className={classNames(styles.button, styles.cancel)}
-            onClick={() => bet.autobet ? setBet({...bet, autobet: false, ready: true}) : setBet({...bet, ngame: 0})}
+            onClick={() => bet.autobet ? setBet({...bet, autobet: false, ready: gameName === 'plinko' ? true: false}) : setBet({...bet, ngame: 0})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
             }
@@ -304,7 +304,7 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput disable={bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
+            <RiskInput disable={!bet.ready || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
             {gameName!=='plinko' && <NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={bet} />}
           </div>
           :
@@ -370,7 +370,7 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput disable={bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
+            <RiskInput disable={!bet.ready || bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
             <StandardInput title={'Stop on Profit'} setValue={setProfit} value={profit} />
             <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
             <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />
