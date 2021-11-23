@@ -80,11 +80,11 @@ const DynamicSvg = ({ id, current, ...rest }) => {
       }
     }
     return (
-      <svg id={id} key={id}>
+      <svg id={id} key={id} {...rest}>
         <style>
           {stringBuilder.join(' ')}
         </style>
-        <Component {...rest} />
+        <Component {...rest}/>
       </svg>
     );
 };

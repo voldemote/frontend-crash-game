@@ -2,6 +2,7 @@ import { useState, memo } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import {buildImagePath, CATEGORIES} from './data';
+import DynamicSvg from './svgs/dynamicSvg';
 
 const AbViewStyles = ({
   cssClassNames,
@@ -64,14 +65,16 @@ const AbViewStyles = ({
   }
 
   const renderStyleBtn = (style) => {
-    const svgPath = buildImagePath(selectedCategory.name, style);
-    return (
-      <a
-        key={`ab_cat_${style}`}
-        className={classNames(styles.tile, isStyleSelected(style) ? styles.tileSelected : null)}
-        href="#/"
-        onClick={()=> {onStyleChanged(style)}}><img src={svgPath} alt={`${style}`}/></a>
-    );
+    if(!style) return null;
+    if(selectedCategory.previewInTiles){
+      const id = `ab_cat_${style}`;
+      const cat = {...getCurrentCategory(), style};
+      return (<DynamicSvg key={id} id={id} current={cat} width="100%" height="100%"/>)
+    }
+    else{
+      const svgPath = buildImagePath(selectedCategory.name, style);
+      return (<img src={svgPath} alt={`${style}`}/>)
+    }
   }
 
   const renderCategoryBtn = (cat, index) => {
@@ -105,8 +108,17 @@ const AbViewStyles = ({
         </div>
       )}
       <div className={styles.tiles}>
-        {selectedCategory.styles?.map((style,index) => renderStyleBtn(style))}
         {selectedCategory.optional && renderClearBtn()}
+        {selectedCategory.styles
+          && selectedCategory.styles.length>1
+          && selectedCategory.styles?.map((style,index) =>
+            (<a
+              key={`ab_cat_${style}`}
+              className={classNames(styles.tile, isStyleSelected(style) ? styles.tileSelected : null)}
+              href="#/"
+              onClick={()=> {onStyleChanged(style)}}>
+                {renderStyleBtn(style)}
+            </a>))}
       </div>
       <div className={styles.colors}>
         {selectedCategory.colors?.map((c,index) => renderColorBtn(index))}

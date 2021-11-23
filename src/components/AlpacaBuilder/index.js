@@ -84,7 +84,6 @@ const AlpacaBuilder = ({
   }
 
   const applyStyle = (categoryName, style) => {
-    console.log('onStyleChanged', categoryName, style);
     let p = {...svgProperties};
     p[categoryName] = style;
     setSvgProperties(p);
@@ -96,6 +95,10 @@ const AlpacaBuilder = ({
     .map((catName, index) => {
       const current = svgProperties[catName];
       if(!current.style) return null;
+      const aliasColor = CATEGORIES.find(c => c.name === catName)?.useColorFrom;
+      if(aliasColor){
+        current.colors = svgProperties[aliasColor].colors;
+      }
       const id = `svg_abuilder_${catName}_${index}`;
       return (<DynamicSvg key={id} id={id} current={current}/>);
     });
@@ -115,9 +118,20 @@ const AlpacaBuilder = ({
       if(onExport){
         onExport({blob:svgBlob});
       }
+
+      canvas.toBlob(blob => {
+        console.log(blob);
+        if(onExport){
+          onExport({blob: blob});
+        }
+      });
+
+
       img.onload = function () {
         ctx.drawImage(img, 0, 0, EXPORT_SIZE, EXPORT_SIZE);
         DOMURL.revokeObjectURL(url);
+
+
         var imgURI = canvas
             .toDataURL('image/png')
             .replace('image/png', 'image/octet-stream');
@@ -179,7 +193,7 @@ const AlpacaBuilder = ({
       </div>
 
     </div>
-    <canvas ref={svgDownloader} style={{visibility:"hidden", height:0, backgroundColor:"white"}}></canvas>
+    <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>
     </>
   );
 };

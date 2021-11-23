@@ -173,6 +173,7 @@ const MainMenu = ({
   };
 
   const handleAlpacaBuilderExport = async ({blob}) => {
+    console.log(blob);
     if (!blob) return;
     await handleFileUpload(blob);
     handleAlpacaBuilderVisible(false);
@@ -503,6 +504,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateUser: (name, username, email, imageName, aboutMe, profilePic) => {
+      console.log('profilePic is ', profilePic)
       dispatch(
         AuthenticationActions.initiateUpdateUserData({
           user: { name, username, email, imageName, aboutMe, profilePic },
