@@ -38,6 +38,7 @@ import EventRouter from 'components/Events/EventRouter';
 import TypeformController from 'components/TypeformController';
 import ElonWallPaper from 'screens/ElonWallPaper';
 import PrivateRoute from 'components/PrivateRoute';
+import Web3ReactManager from "./components/Web3ReactManager";
 
 const { store, persistor } = configStore();
 
@@ -50,79 +51,82 @@ const App = () => {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ConnectedRouter history={history}>
-            <PageTracker />
-            <Navbar skipRoutes={[]} />
-            <AlertBox />
-            <Popup />
-            <AudioContent />
-            <DisclaimerPopupContainer />
-            <TypeformController />
-            <Switch>
-              <Route exact path={Routes.logout} component={Logout} />
-              <Route exact path={Routes.home} component={Home} />
-              {/* <Route exact path={Routes.bet} component={Bet} /> */}
-              {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
-              <Route exact path={Routes.bet} component={EventRouter} />
-              <Route exact path={Routes.betApproveDirect} component={Home} />
-              {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
-              <Route exact path={Routes.events} component={Events} />
-              <Route
-                exact
-                path={Routes.elonWallpaper}
-                component={ElonWallPaper}
-              />
-              <Route
-                exact
-                path={Routes.rouletteGame}
-                component={RouletteGame}
-              />
-              <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
-              <Route exact path={Routes.rosiGame} component={RosiGame} />
-              <Route exact path={Routes.activities} component={Activities} />
-              <Route path={Routes.verify} component={EmailVerification} />
-              <Route path={Routes.games} component={Games} />
-              <Route path={Routes.resetPassword} component={ResetPassword} />
-              <Route exact path={Routes.user} component={UserProfile} />
-              <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
-              <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
-              <Redirect to={Routes.home} />
-            </Switch>
-            <NavbarFooter
-              hideVisibility={hideNavbar}
-              skipRoutes={[Routes.bet, Routes.verify]}
-            >
-              <NavbarFooterAction
-                route={Routes.home}
-                iconType={IconType.home}
-                text="Home"
-                trackingId="mobile-menu-home"
-              />
-              <NavbarFooterAction
-                route={Routes.games}
-                iconType={IconType.shuttle}
-                text="Games"
-                trackingId="mobile-menu-games"
-              />
-              <NavbarFooterAction
-                route={Routes.activities}
-                iconType={IconType.newsIcon}
-                text="Activities"
-                trackingId="mobile-menu-activities"
-              />
-              <NavbarFooterAction
-                route={Routes.leaderboard}
-                iconType={IconType.leaderboard}
-                text="Leaderboard"
-                trackingId="mobile-menu-leaderboard"
-              />
-              {/*<NavbarFooterAction*/}
-              {/*  route={`/live-events`}*/}
-              {/*  iconType={IconType.camera}*/}
-              {/*  text="Live Stream"*/}
-              {/*  trackingId="mobile-menu-live-events"*/}
-              {/*/>*/}
-            </NavbarFooter>
-            <ScrollToTop />
+            <Web3ReactManager>
+
+              <PageTracker />
+              <Navbar skipRoutes={[]} />
+              <AlertBox />
+              <Popup />
+              <AudioContent />
+              <DisclaimerPopupContainer />
+              <TypeformController />
+              <Switch>
+                <Route exact path={Routes.logout} component={Logout} />
+                <Route exact path={Routes.home} component={Home} />
+                {/* <Route exact path={Routes.bet} component={Bet} /> */}
+                {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
+                <Route exact path={Routes.bet} component={EventRouter} />
+                <Route exact path={Routes.betApproveDirect} component={Home} />
+                {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
+                <Route exact path={Routes.events} component={Events} />
+                <Route
+                  exact
+                  path={Routes.elonWallpaper}
+                  component={ElonWallPaper}
+                />
+                <Route
+                  exact
+                  path={Routes.rouletteGame}
+                  component={RouletteGame}
+                />
+                <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
+                <Route exact path={Routes.rosiGame} component={RosiGame} />
+                <Route exact path={Routes.activities} component={Activities} />
+                <Route path={Routes.verify} component={EmailVerification} />
+                <Route path={Routes.games} component={Games} />
+                <Route path={Routes.resetPassword} component={ResetPassword} />
+                <Route exact path={Routes.user} component={UserProfile} />
+                <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
+                <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
+                <Redirect to={Routes.home} />
+              </Switch>
+              <NavbarFooter
+                hideVisibility={hideNavbar}
+                skipRoutes={[Routes.bet, Routes.verify]}
+              >
+                <NavbarFooterAction
+                  route={Routes.home}
+                  iconType={IconType.home}
+                  text="Home"
+                  trackingId="mobile-menu-home"
+                />
+                <NavbarFooterAction
+                  route={Routes.games}
+                  iconType={IconType.shuttle}
+                  text="Games"
+                  trackingId="mobile-menu-games"
+                />
+                <NavbarFooterAction
+                  route={Routes.activities}
+                  iconType={IconType.newsIcon}
+                  text="Activities"
+                  trackingId="mobile-menu-activities"
+                />
+                <NavbarFooterAction
+                  route={Routes.leaderboard}
+                  iconType={IconType.leaderboard}
+                  text="Leaderboard"
+                  trackingId="mobile-menu-leaderboard"
+                />
+                {/*<NavbarFooterAction*/}
+                {/*  route={`/live-events`}*/}
+                {/*  iconType={IconType.camera}*/}
+                {/*  text="Live Stream"*/}
+                {/*  trackingId="mobile-menu-live-events"*/}
+                {/*/>*/}
+              </NavbarFooter>
+              <ScrollToTop />
+            </Web3ReactManager>
           </ConnectedRouter>
         </PersistGate>
       </Provider>

@@ -25,7 +25,7 @@ const WALLET_VIEWS = {
   PENDING: 'PENDING',
 };
 
-function isUserRejected(error) {
+function isUserRejected (error) {
   return (
     error instanceof UserRejectedRequestErrorInjected ||
     error instanceof UserRejectedRequestErrorWalletConnect ||
@@ -33,7 +33,7 @@ function isUserRejected(error) {
   );
 }
 
-function getErrorMessage(error) {
+function getErrorMessage (error) {
   if (error instanceof NoEthereumProviderError) {
     return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.';
   } else if (error instanceof UnsupportedChainIdError) {
@@ -46,24 +46,31 @@ function getErrorMessage(error) {
   }
 }
 
-const ConnectWallet = (props) => {
+const ConnectWallet = props => {
   const [walletError, setWalletError] = useState('');
-  const { active, account, library, connector, activate, error } =
-    useWeb3React();
+  const {
+    active,
+    account,
+    library,
+    connector,
+    activate,
+    error,
+  } = useWeb3React();
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT);
   const [pendingError, setPendingError] = useState(false);
   const [wallet, setPendingWallet] = useState(undefined);
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
-    if(account && library) {
-      library.getBalance(account)
-        .then((bal) => new BigNumber(bal))
-        .then((bal) => setBalance(bal.toFormat(2)));
+    if (account && library) {
+      library
+        .getBalance(account)
+        .then(bal => new BigNumber(bal))
+        .then(bal => setBalance(bal.toFormat(2)));
     }
-  }, [account, library])
+  }, [account, library]);
 
-  const tryActivation = (newConnector) => {
+  const tryActivation = newConnector => {
     setWalletView(WALLET_VIEWS.PENDING);
     if (
       newConnector instanceof WalletConnectConnector &&
@@ -72,23 +79,25 @@ const ConnectWallet = (props) => {
       newConnector.walletConnectProvider = undefined;
     }
     newConnector &&
-      activate(newConnector, undefined, true).then(() => {
-        setPendingWallet(newConnector);
-        setWalletView(WALLET_VIEWS.ACCOUNT);
-      }).catch((error) => {
-        if (isUserRejected(error)) {
-          setPendingError(true);
-          setWalletError('');
-        } else {
-          const message = getErrorMessage(error);
-          setPendingError(true);
-          setWalletError(message);
-        }
-      });
+      activate(newConnector, undefined, true)
+        .then(() => {
+          setPendingWallet(newConnector);
+          setWalletView(WALLET_VIEWS.ACCOUNT);
+        })
+        .catch(error => {
+          if (isUserRejected(error)) {
+            setPendingError(true);
+            setWalletError('');
+          } else {
+            const message = getErrorMessage(error);
+            setPendingError(true);
+            setWalletError(message);
+          }
+        });
   };
 
   const getOptions = () => {
-    return Object.keys(SUPPORTED_WALLETS).map((key) => {
+    return Object.keys(SUPPORTED_WALLETS).map(key => {
       const option = SUPPORTED_WALLETS[key];
       if (isMobile) {
         if (option.mobile) {
@@ -154,7 +163,10 @@ const ConnectWallet = (props) => {
   };
 
   const getContentWithOptions = () => {
-    return <div className={styles.optionsWrap}>{getOptions()}</div>;
+    return <>
+      {getModalHeader()}
+      <div className={styles.optionsWrap}>{getOptions()}</div>
+    </>;
   };
 
   const getContentLoading = () => {
@@ -170,9 +182,14 @@ const ConnectWallet = (props) => {
       );
     }
 
-    if (pendingError) {
-      return getContentWithOptions();
-    }
+    const getContentWithOptions = () => {
+      return (
+        <>
+          {getModalHeader()}
+          <div className={styles.optionsWrap}>{getOptions()}</div>
+        </>
+      );
+    };
 
     return (
       <div className={styles.optionsWrap}>
@@ -206,7 +223,7 @@ const ConnectWallet = (props) => {
       return (
         <div className={styles.accountInfo}>
           <span>{account}</span>
-          <br/>
+          <br />
           <span>{balance}</span>
         </div>
       );
@@ -221,19 +238,14 @@ const ConnectWallet = (props) => {
     );
   };
 
-  return (
-    <div className={styles.walletsContainer}>
-      {getModalHeader()}
-      {getModalContent()}
-    </div>
-  );
+  return <div className={styles.walletsContainer}>{getModalContent()}</div>;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 

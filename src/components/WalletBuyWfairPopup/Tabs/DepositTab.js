@@ -9,14 +9,31 @@ import PolygonLogo from '../../../data/images/polygon-logo.svg';
 import QrcodeImage from '../../../data/images/qrcode-image.svg';
 import CopyIcon from '../../../data/icons/copy-icon.svg';
 import ConnectWallet from 'components/ConnectWallet/ConnectWallet';
+import TokenTransfer from 'components/TokenTransfer';
+import { Contract, ethers } from 'ethers';
+import {
+  WFAIRAddress,
+  lockAddresses,
+  currentChainId,
+  currentNetwork,
+} from '../../../config/config';
+import WFairABI from '../../../config/abi/WFAIRToken.json';
+
+import { resetState } from '../../../state/wallfair/slice';
 
 const DepositTab = props => {
-  const walletAddress = '0xAef38fBFBF932D1AeF3B808Bc8fBd8Cd8E1f8BC5';
+  const dispatch = useDispatch();
+  const [walletAddress, setWalletAddress] = useState(
+    '0x1154362C86e4352d018aDD5dF3E0E82E8e5e0ee6'
+  );
   const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
   const [walletType, setWalletType] = useState('polygon');
   const { active, library, account, chainId } = useWeb3React();
   const [visibleWalletForm, setVisibleWalletForm] = useState(false);
-  const dispatch = useDispatch();
+  const [tokenAreaOpen, setTokenAreaOpen] = useState(false);
+  const [hash, setHash] = useState('');
+  const [balance, setBalance] = useState(0);
+  const signer = library?.getSigner();
 
   const copy = useCallback(() => {
     TextUtil.toClipboard(walletAddress).then(() => {
@@ -26,8 +43,21 @@ const DepositTab = props => {
   }, [walletAddress]);
 
   useEffect(() => {
-    // dispatch(resetState());
+    dispatch(resetState());
+    if (active) {
+      setTokenAreaOpen(true);
+    }
   }, [account, active, dispatch]);
+
+  useEffect(() => {
+    if (chainId !== currentChainId) return;
+
+    signer?.getAddress().then(address => {
+      getBalanceWFAIR({ address: address, provider: library }).then(result => {
+        setBalance(result);
+      });
+    });
+  }, [account, library, signer, hash, chainId, setBalance]);
 
   return (
     <>
@@ -77,18 +107,34 @@ const DepositTab = props => {
             </button>
           </div>
         )}
-        {!visibleWalletForm && (
+        {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
             <button
               type="button"
               className={styles.connectWalletButton}
-              onClick={() => setVisibleWalletForm(true)}
+              onClick={() => {
+                setVisibleWalletForm(true);
+                setTokenAreaOpen(true);
+              }}
             >
               Connect Wallet
             </button>
           </div>
         )}
-        {!!visibleWalletForm && <ConnectWallet />}
+        {/* <div className={styles.qrCodeImg}>
+          <img src={QrcodeImage} alt="QrCode" />
+        </div> */}
+        {visibleWalletForm && !active && <ConnectWallet />}
+        {tokenAreaOpen && account && (
+          <TokenTransfer
+            provider={library}
+            hash={hash}
+            setter={setHash}
+            showCancel={false}
+            balance={balance}
+            tranferAddress={walletAddress}
+          />
+        )}
         <p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not
           accept BEP20 from Binance.
@@ -98,8 +144,11 @@ const DepositTab = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {};
+const getBalanceWFAIR = async ({ address, provider }) => {
+  const contract = new Contract(WFAIRAddress, WFairABI.abi, provider);
+  const balance = await contract.balanceOf(address);
+
+  return ethers.utils.formatEther(balance);
 };
 
-export default connect(null, mapDispatchToProps)(DepositTab);
+export default DepositTab;
