@@ -159,12 +159,20 @@ const Game = ({
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
         gameInstance.game.controller.view.gameOver("lose");
+
+        setGameInProgress(true);
+        setCurrentStep(0);
+        setBet({
+          ...bet,
+          done: true
+        })
+
         return data;
       }
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: `${GAME_NAME}: Place Bet failed`,
+          message: `${GAME_NAME}: ${e.response.data || 'Place Bet failed'}`
         })
       );
     }
