@@ -57,7 +57,7 @@ const Game = ({
   const [audio, setAudio] = useState(null);
   const [cashouts, setCashouts] = useState([]);
   const [gameInProgress, setGameInProgress] = useState(false);
-  const [mines, setMines] = useState(1);
+  const [mines, setMines] = useState(5);
   const [currentStep, setCurrentStep] = useState(0);
   const [bet, setBet] = useState({
     pending: false,
