@@ -97,17 +97,17 @@ export class GameAudioManager {
         this.playSound(name);
     }
 
-    // playGameOverSound() {
-    //     this.playSound('gameover');
-    // }
+    playGameOverSound() {
+        this.playSound('gameover');
+    }
 
-    // playLoseSound() {
-    //     this.playSound('lose');
-    // }
+    playLoseSound() {
+        this.playSound('lose');
+    }
 
-    // playWinSound() {
-    //     this.playSound('cashout');
-    // }
+    playWinSound() {
+        this.playSound('cashout');
+    }
 
     playBetSound() {
         this.playSound('placebet');
