@@ -45,7 +45,7 @@ export const NgamesInput = ({ngame, setNgame, game, text}) => {
           className={classNames(styles.input)}
           type={'number'}
           value={ngame}
-          onChange={(e) => setNgame(Math.floor(e.target.value))}
+          onChange={(e) => setNgame(Math.floor(e.target.value) > 0 ? Math.floor(e.target.value) : 1)}
           step={1}
           min="1"
           max={'100'}

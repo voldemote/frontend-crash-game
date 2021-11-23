@@ -55,7 +55,7 @@ const RouletteGameAnimation = ({
   }, []);
 
   useEffect(() => {
-    if(bet && !bet.pending && bet.ngame >= 0 && !running) spin(bet);
+    if(bet && !bet.ready && bet.ngame >= 0 && !running) spin(bet);
   }, [bet]);
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const RouletteGameAnimation = ({
     }
     setSpins(prepareObj);
     setRunning(false);
-    setBet({pending: true, amount: bet.amount, profit: bet.profit});
+    setBet((bet)=>{return{...bet, ready: true}});
   }
 
   return (
