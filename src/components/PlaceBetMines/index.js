@@ -26,6 +26,7 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import {MinesInput} from "./MinesInput";
+import { trackMinesPlaceBet, trackMinesPlaceBetGuest } from "../../config/gtm"
 
 import {
   FormGroup,
@@ -92,6 +93,7 @@ const PlaceBetMines = ({
       minesCount: mines
     }
 
+    trackMinesPlaceBet({ amount, mines });
     // console.log('###payload', payload);
     await onBet(payload);
   }
@@ -107,6 +109,8 @@ const PlaceBetMines = ({
       amount,
       minesCount: mines
     }
+
+    trackMinesPlaceBetGuest({ amount, mines });
 
     if(demoCount >= 3) {
       showLoginPopup();

@@ -34,6 +34,8 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {getLastCashoutsMines} from "../../api/casino-games";
 import {roundToTwo} from "../../helper/FormatNumbers";
 
+import {trackMinesCashout} from "../../config/gtm";
+
 const Game = ({
   showPopup,
   connected,
@@ -191,6 +193,12 @@ const Game = ({
       setBet({
         pending:false,
         done: false
+      });
+
+      trackMinesCashout({ 
+        amount: data.reward,
+        multiplier: data.crashFactor,
+        profit: data.profit,
       });
 
       audio.playWinSound();
