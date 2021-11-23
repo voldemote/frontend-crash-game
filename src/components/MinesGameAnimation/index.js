@@ -81,7 +81,7 @@ const MinesGameAnimation = ({
   const [gameConfig, setGameConfig] = useState({});
   const [audio, setAudio] = useState(null);
 
-  const getTranslatedReveal = (clientBoard) => {
+  const getTranslatedReveal = (clientBoard, result = 0) => {
       let col = 0;
       let row = 0;
 
@@ -95,7 +95,7 @@ const MinesGameAnimation = ({
           row: row-1,
           col: col,
           isMine: false,
-          isRevealed: entry === 0 ? true : false,
+          isRevealed: entry === result ? true : false,
           isEmpty: true,
           isFlagged: false,
           text: ""
@@ -123,6 +123,7 @@ const MinesGameAnimation = ({
 
   const checkSelectedCell = async (props) => {
     const {row, col} = props;
+    let allMinesPos = null;
 
     setCurrentStep((step) => step+1);
 
@@ -138,6 +139,7 @@ const MinesGameAnimation = ({
       const isMine = checkMine?.data?.result === 0 ? false : true;
 
       if(isMine) {
+        allMinesPos = getTranslatedReveal(checkMine?.data?.board, 1);
         handleLost()
       }
 
@@ -159,7 +161,8 @@ const MinesGameAnimation = ({
         isFlagged: false,
         isMine,
         isRevealed: true,
-        text: ""
+        text: "",
+        allMinesPos
       }
     } else {
       //handle demo
