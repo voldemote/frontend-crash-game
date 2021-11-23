@@ -172,10 +172,6 @@ const MinesGameAnimation = ({
 
   const handleLost = () => {
     setGameInProgress(false);
-    setBet({
-      pending: false,
-      done: false
-    });
     setCurrentStep(0);
 
     const prepareObj = {
@@ -183,6 +179,13 @@ const MinesGameAnimation = ({
       value: '-' + amount
     };
     setCashouts((cashouts) => [prepareObj, ...cashouts]);
+
+    setTimeout(()=> {
+      setBet({
+        pending: false,
+        done: false
+      });
+    }, 3000)
   }
 
   useEffect(() => {
