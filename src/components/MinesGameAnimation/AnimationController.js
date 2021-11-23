@@ -114,6 +114,7 @@ export class AudioController {
   }
 
   startBgm() {
+    return;
     const diff = this.elapsed / 1000;
     if (this.bgmIndex === 0) {
       this.playSound('bgm', true);
