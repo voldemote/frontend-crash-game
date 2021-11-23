@@ -137,12 +137,16 @@ export default class View extends Factory.Container {
    * @param {Object} model data for the grid */
   creteGrid({ collection, rows, columns, gridSize }) {
     this.grid = new Factory.Container();
+    
     const texture = this.resPack.get("closed");
 
     const { width, height } = texture;
     const gridWidth = ( ( columns * width ) - width );
     const gridHeight = ( ( rows * height ) - height );
-    if(isMobile) gridSize = 190;
+    if(isMobile) {
+      //this.grid.x = 8;
+      gridSize = 240;
+    }  
     this.grid.scale.set(gridSize / gridWidth);
     this.addChild(this.grid);
 

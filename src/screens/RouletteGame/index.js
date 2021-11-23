@@ -54,7 +54,7 @@ const RouletteGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true});
+  const [bet, setBet] = useState({ready: true});
   const [amount, setAmount] = useState(50);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -99,18 +99,23 @@ const RouletteGame = ({
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
   };
+  useEffect(() => {
+    if(userId && bet?.ready) {
+       updateUserBalance(userId);
+    }
+  }, [bet])
 
   async function handleBet(payload) {
     audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
-        setBet({...payload })
+        setBet({...payload, ready: false })
         trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
       } else {
         const { data } = await Api.createTrade(payload);
-        setBet({...payload, ...data});
-        updateUserBalance(userId);
+        setBet({...payload, ...data, ready: false});
+        //updateUserBalance(userId);
         trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
         trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
         return data;
@@ -198,6 +203,7 @@ const RouletteGame = ({
                 <PlaceBetCasino
                   connected={connected}
                   setAmount={setAmount}
+                  setBet={setBet}
                   amount={amount}
                   setRisk={setRisk}
                   risk={risk}
