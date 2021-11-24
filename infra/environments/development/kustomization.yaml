@@ -13,6 +13,3 @@ configMapGenerator:
     behavior: merge
     envs:
       - environment
-    
-patches:
-  - ingressPatch.yaml

@@ -1,7 +1,6 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import {API_CURRENT_ELON, CRASH_GAME_GET_VOLUME_BETS} from '../constants/Api';
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -15,10 +14,11 @@ const createInstance = (host, apiPath) => {
 };
 
 class GameApi {
-  constructor(host, token) {
+  constructor(host, token, gameId) {
     this.host = host;
     this.api = createInstance(host, '/');
     this.setToken(token);
+    this.gameId = gameId
   }
   setToken = token => {
     if (!token) return;
@@ -28,25 +28,25 @@ class GameApi {
   };
 
   createTrade = payload => {
-    return this.api.post(ApiUrls.API_TRADE_CREATE_ELON, payload).catch(error => {
+    return this.api.post(ApiUrls.API_TRADE_CREATE_ELON + `/${this.gameId}`, payload).catch(error => {
       console.log('[API Error] called: createTrade', error);
       throw error;
     });
   };
 
   cancelBet = () =>
-    this.api.delete(ApiUrls.API_TRADE_CREATE_ELON).catch(error => {
+    this.api.delete(ApiUrls.API_TRADE_CREATE_ELON + `/${this.gameId}`).catch(error => {
       throw error;
     });
 
   getCurrentGameInfo = () => {
-    return this.api.get(ApiUrls.API_CURRENT_ELON).catch(error => {
+    return this.api.get(ApiUrls.API_CURRENT_ELON + `/${this.gameId}`).catch(error => {
       console.log('[API Error] called: getCurrentGameInfo', error);
     });
   };
 
   cashOut = () => {
-    return this.api.post(ApiUrls.API_CASH_OUT_ELON, {}).catch(error => {
+    return this.api.post(ApiUrls.API_CASH_OUT_ELON + `/${this.gameId}`, {}).catch(error => {
       console.log('[API Error] called: Cash Out', error);
       throw error;
     });

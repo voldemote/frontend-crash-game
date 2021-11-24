@@ -1,7 +1,5 @@
 import './styles.module.scss';
 import AlertBox from './components/AlertBox';
-import Bet from './screens/Bet';
-import BetVTwo from './screens/BetVTwo';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
 import Popup from './components/Popup';
@@ -20,6 +18,7 @@ import Events from './screens/Events';
 // import LiveEvents from './screens/LiveEvents';
 import RosiGame from './screens/RosiGame';
 import PlinkoGame from './screens/PlinkoGame';
+import AlpacannonGame from './screens/AlpacannonGame';
 import RouletteGame from './screens/RouletteGame';
 import MinesGame from './screens/MinesGame';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -39,6 +38,11 @@ import EventRouter from 'components/Events/EventRouter';
 import TypeformController from 'components/TypeformController';
 import ElonWallPaper from 'screens/ElonWallPaper';
 import Fair from 'screens/Fair';
+import TermsConditions from 'screens/TermsConditions';
+import ResponsibleGambling from 'screens/ResponsibleGambling';
+import KYCPolicy from 'screens/KYCPolicy';
+import Imprint from 'screens/Imprint';
+import PrivacyPolicy from 'screens/PrivacyPolicy';
 import PrivateRoute from 'components/PrivateRoute';
 
 const { store, persistor } = configStore();
@@ -80,6 +84,7 @@ const App = () => {
               />
               <Route exact path={Routes.minesGame} component={MinesGame} />
               <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
+              <Route exact path={Routes.alpacannonGame} component={AlpacannonGame} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
@@ -87,8 +92,14 @@ const App = () => {
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
+              <Route exact path={Routes.oauth} component={Home} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Route exact path={Routes.provablyfair} component={Fair} />
+              <Route exact path={Routes.terms} component={TermsConditions} />
+              <Route exact path={Routes.responsibleGambling} component={ResponsibleGambling} />
+              <Route exact path={Routes.kyc} component={KYCPolicy} />
+              <Route exact path={Routes.imprint} component={Imprint} />
+              <Route exact path={Routes.privacy} component={PrivacyPolicy} />
               <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
               <Redirect to={Routes.home} />
             </Switch>

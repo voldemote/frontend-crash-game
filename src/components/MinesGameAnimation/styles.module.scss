@@ -60,6 +60,12 @@
   z-index: 999;
   left: 20px;
   top: 30px;
+
+
+  .muteButton {
+    background-color: red;
+  }
+
   svg {
     fill: #f2ff53 !important;
   }
@@ -69,6 +75,37 @@
     top: 20px;
     left: -28px !important;
   }
+}
+
+.notBetYetScreen {
+  position: absolute;
+  left: 0;
+  color: white;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .notBetYetText {
+    line-height: 1.2;
+    font-size: 46px;
+    width: 380px;
+    text-align: center;
+
+    @media (max-width: $screen-md) {
+      font-size: 32px;
+      width: 100%;
+      padding: 0 45px;
+      line-height: 1.1;
+    }
+  }
+
+
+
+
 }
 
 .notClickable {

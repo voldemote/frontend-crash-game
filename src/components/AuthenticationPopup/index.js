@@ -13,12 +13,12 @@ import iPhoneImg from '../../data/images/signup-content/iphone13Pro.jpg';
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-const AuthenticationPopup = ({ authenticationType }) => {
+const AuthenticationPopup = ({ authenticationType, preloadEmailSignUp }) => {
   const [showCriteria, setShowCriteria] = useState(!isMobile);
 
   const promoDeadline =
     process.env.REACT_APP_SIGNUP_PROMO_DEADLINE_DATETIME ||
-    '2021-10-31T12:00:00';
+    '2021-11-31T12:00:00';
   const isPromoWindow =
     AuthenticationType.register === authenticationType &&
     !!promoDeadline &&
@@ -123,7 +123,10 @@ const AuthenticationPopup = ({ authenticationType }) => {
             async: true,
           }}
         >
-          <Authentication authenticationType={authenticationType} />
+          <Authentication
+            authenticationType={authenticationType}
+            preloadEmailSignUp={preloadEmailSignUp}
+          />
         </GoogleReCaptchaProvider>
       </div>
     </div>

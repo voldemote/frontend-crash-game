@@ -39,6 +39,7 @@ export default {
   logout: '/logout',
   rosiGame: '/games/:slug',
   plinkoGame: '/games/plinko',
+  alpacannonGame: '/games/alpacannon',
   elonGame: '/games/elon-game',
   rouletteGame: '/games/alpaca-wheel',
   elonWallpaper: '/games/elon-wallpaper',
@@ -49,4 +50,10 @@ export default {
   user: '/user/:userId?',
   minesGame: '/games/mines',
   provablyfair: '/provablyfair',
+  terms: '/termsandconditions',
+  responsibleGambling: '/responsiblegambling',
+  kyc: '/kycpolicy',
+  privacy: '/privacypolicy',
+  imprint: '/imprint',
+  oauth: '/oauth/:provider',
 };
