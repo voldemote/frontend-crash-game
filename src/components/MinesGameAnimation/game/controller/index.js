@@ -98,53 +98,58 @@ export default class Controller extends Emitter {
 
   /** To react on user interactivity and use engine to calculate game's data,
    *  update model and view */
-  onClickOnCell({ row, col }) {
-    const { grid: { collection } } = this.model;
-    const isLoggedIn = this.gameConfig?.isLoggedIn;
+  async onClickOnCell({ row, col }) {
+    return new Promise((resolve, reject) => {
+      const { grid: { collection } } = this.model;
+      const isLoggedIn = this.gameConfig?.isLoggedIn;
 
-    console.log('ON CLICK CELL');
+      console.log('ON CLICK CELL');
 
-    if(isLoggedIn) {
-      const cell = this.view.grid.cells[ row ][ col ];
+      if(isLoggedIn) {
+        const cell = this.view.grid.cells[ row ][ col ];
 
-      if(!cell.isRevealed) {
-        this.handlers.checkSelectedCell({row, col}).then((result)=> {
-          this.model.updateCellsData([result]);
-          this.view.updateGrid(col,row, result.isMine);
+        if(!cell.isRevealed) {
+          this.handlers.checkSelectedCell({row, col}).then((result)=> {
+            this.model.updateCellsData([result]);
+            this.view.updateGrid(col,row, result.isMine);
 
-          this.view.revealCells([result]);
+            this.view.revealCells([result]);
 
-          //reveal all
-          // this.view.revealCells(this.model.cellsToRevealed.flat());
-          if (result.isMine) {
-            // this.view.gameOver("lose");
-            // this.view.revealCells(this.model.allMines.flat());
-          }
+            //reveal all
+            // this.view.revealCells(this.model.cellsToRevealed.flat());
+            if (result.isMine) {
+              // this.view.gameOver("lose");
+              resolve({ value: false })
+              // this.view.revealCells(this.model.allMines.flat());
+            }else{
+              resolve( { value: true })
+            }
+          });
 
-        });
-      }
-      // this.handlers.cellClickHandler({ row, col });
-    } else {
-      //handle demo
-      const result = Engine.checkSelectedCell(collection, row, col);
-
-      this.model.updateCellsData(result);
-
-      const cell = this.view.grid.cells[ row ][ col ];
-
-      if (result === Engine.MINE) {
-        // this.view.gameOver("lose");
-        this.view.revealCells([cell]);
-        this.view.pause();
-      } else if (this.model.isGameWon) {
-        this.view.revealCells(result);
-        // this.view.gameOver("win");
-        // this.view.flagMines(this.model.totFlaggedCells.flat());
-        this.view.pause();
+        }
+        // this.handlers.cellClickHandler({ row, col });
       } else {
-        this.view.revealCells(result);
+        //handle demo
+        const result = Engine.checkSelectedCell(collection, row, col);
+
+        this.model.updateCellsData(result);
+
+        const cell = this.view.grid.cells[ row ][ col ];
+
+        if (result === Engine.MINE) {
+          // this.view.gameOver("lose");
+          this.view.revealCells([cell]);
+          this.view.pause();
+        } else if (this.model.isGameWon) {
+          this.view.revealCells(result);
+          // this.view.gameOver("win");
+          // this.view.flagMines(this.model.totFlaggedCells.flat());
+          this.view.pause();
+        } else {
+          this.view.revealCells(result);
+        }
       }
-    }
+    })
   }
   overOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
