@@ -36,14 +36,6 @@ export class LaunchScene extends Container {
 
     }
 
-    stop() {
-
-    }
-
-    handleEndGame() {
-        
-    }
-
     getPossibleTweetCount(width) {
         const count = Math.floor(width / this.tweets[0].width);
         console.warn('count', count);

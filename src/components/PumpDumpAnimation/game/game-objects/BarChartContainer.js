@@ -1,7 +1,6 @@
 import { Container } from "@pixi/display";
 import { Graphics } from "@pixi/graphics";
 import { Sprite } from "@pixi/sprite";
-import { EventEmitter } from "eventemitter3";
 import { calcCrashFactorFromElapsedTime, isMobileRosiGame } from "components/RosiGameAnimation/canvas/utils";
 import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 import { AXIS_START_POS_X, INIT_MULTI_FACTOR, INIT_STICK_POINT_TIME } from "./HorizontalAxis";
@@ -10,7 +9,7 @@ import TWEEN from '@tweenjs/tween.js';
 
 
 // size of the stick visible at the top. Bot size will be same as the top
-const STICK_HEIGHT_OFFSET = isMobileRosiGame ? 5 : 10;
+export const STICK_HEIGHT_OFFSET = isMobileRosiGame ? 5 : 10;
 
 const STICK_WIDTH = isMobileRosiGame ? 2.5 : 5;
 const BAR_WIDTH = isMobileRosiGame ? 12.5 : 25;
@@ -21,9 +20,9 @@ const BAR_HEIGHT_INCREMENTS = isMobileRosiGame ? 5 : 10;
 
 const CONT_START_Y = -AXIS_START_POS_OFFSET_Y;
 
-const INIT_CREATE_THRESHOLD = isMobileRosiGame ? 500 : 300;   // Every 300ms generate a bar
+export const INIT_CREATE_THRESHOLD = isMobileRosiGame ? 500 : 300;   // Every 300ms generate a bar
 
-const MERGE_BAR_COUNT = 2;
+export const MERGE_BAR_COUNT = 2;
 
 const reducer = (accumlated, current) => {
     return {
@@ -34,8 +33,6 @@ const reducer = (accumlated, current) => {
 }
 
 export class BarChartContainer extends Container {
-    eventEmitter = null;
-
     greenBarTextures = [];
     redBarTextures = [];
 
@@ -64,7 +61,6 @@ export class BarChartContainer extends Container {
 
     constructor(audioManager) {
         super();
-        this.eventEmitter = new EventEmitter();
         this.audioManager = audioManager;
 
         const height = PumpDumpGameMananger.height;
@@ -75,6 +71,8 @@ export class BarChartContainer extends Container {
             this.greenBarTextures[i] = this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'green');
             this.redBarTextures[i] = this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'red');
         }
+        // First Bar
+        this.generateBar(0, 100);
 
         // const bar1 = new Sprite(this.greenBarTextures[0]);
         // bar1.pivot.y = STICK_HEIGHT_OFFSET;
@@ -129,6 +127,8 @@ export class BarChartContainer extends Container {
 
         let runningTime = INIT_CREATE_THRESHOLD * this.createThresholdMult;
 
+        // First Bar
+        this.generateBar(0, 100);
         while(runningTime < timeElapsed) {
             const runningCrashFactor = calcCrashFactorFromElapsedTime(runningTime < 1 ? 1 : runningTime) * 100;
             this.previousThreshold = runningTime;
@@ -157,8 +157,7 @@ export class BarChartContainer extends Container {
     }
 
     mergeBars() {
-
-        const bigBars = [];
+        const bigBarConfigs = [];
         const barsToMergeList = [];
         for (let index = this.generatedBars.length - 1; index >= 0; index -= MERGE_BAR_COUNT) {
             const barsToMerge = [];
@@ -177,7 +176,7 @@ export class BarChartContainer extends Container {
                 bigBarConfig.heightIndex = (1 + Math.floor(Math.random() * 3)) * (bigBarConfig.heightIndex < 0 ? -1 : 1 );
             }
 
-            bigBars.unshift(this.createEmergingBiggerBar(bigBarConfig));
+            bigBarConfigs.unshift(bigBarConfig);
             barsToMergeList.unshift({ bars: barsToMerge, bigBarConfig: bigBarConfig});
         }
 
@@ -186,7 +185,11 @@ export class BarChartContainer extends Container {
         })
 
         // Start tween on all big bars
-        bigBars.forEach((bigBar) => {
+        bigBarConfigs.forEach((bigBarConfig, index) => {
+            if (index < 3) {
+                bigBarConfig.heightIndex = Math.floor(Math.random() * 2) * (bigBarConfig.heightIndex < 0 ? -1 : 1)
+            }
+            const bigBar = this.createEmergingBiggerBar(bigBarConfig);
             this.generatedBars.push(bigBar);
             this.biggerBarEmergeTween(bigBar);
         });
@@ -262,7 +265,6 @@ export class BarChartContainer extends Container {
         };
         let bar = new Sprite(this.redBarTextures[(crashFactor < 150 ? 1 : 4)]);
         // crashBarPosition.y += this.getBarTopEdgeDistance(bar);
-        console.log('crash', crashBarPosition);
         bar.scale.set(0);
         bar.position.set(crashBarPosition.x, crashBarPosition.y);
         this.addChild(bar);
@@ -279,7 +281,7 @@ export class BarChartContainer extends Container {
                     this.removeChild(bar);
                     bar.position.set(globalPosition.x, globalPosition.y);
                     bar.scale.set(1);
-                    this.eventEmitter.emit('crash-bar-created', bar);
+                    this.emit('crash-bar-created', bar);
                 }
             })
             .easing(TWEEN.Easing.Back.Out)
@@ -290,7 +292,6 @@ export class BarChartContainer extends Container {
         let contScale = { x: 1, y: 1 };
         if (timeElapsed > INIT_STICK_POINT_TIME) {
             contScale.x = INIT_STICK_POINT_TIME / timeElapsed;
-            console.warn('timeElapsed', INIT_STICK_POINT_TIME, timeElapsed);
         }
         if (crashFactor >= INIT_STICK_POINT_CRASH_FACTOR) {
             // The scale start at 100 or 1.00. Hence we subtract crash factor by 100 to get the correct scale
@@ -307,6 +308,7 @@ export class BarChartContainer extends Container {
         const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
         this.handleContainerScale(timeElapsed, crashFactor);
         if (this.shouldBarsMerge()) {
+            this.emit('bars-merging');
             this.mergeBars();
         }
         this.setupBarChart(timeElapsed, crashFactor);
@@ -330,14 +332,11 @@ export class BarChartContainer extends Container {
         let randMax = this.greenBarTextures.length;
         let randMin = 0;
         // If less that 1.25x don't show tall bars
-        if (crashFactor < 150) {
-            randMax = 2;
-        } else if (crashFactor >= 150) {
-            randMin = 2;
+        if (this.generatedBars.length <= 3) {
+            randMax = 1;
+        } else {
+            randMin = 1;
         }
-
-        console.warn('timeElapsed', timeElapsed);
-
 
         // Divide by 100 to get the origCrashFactor 
         // Subtract by -1 since the scale starts with 1.
