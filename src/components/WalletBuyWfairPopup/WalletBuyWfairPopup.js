@@ -62,11 +62,11 @@ const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
 
 const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
-    name: 'BUYWITHFIAT',
+    name: 'BUY WITH FIAT',
     index: 0,
   });
   const tabOptions = [
-    { name: 'BUYWITHFIAT', index: 0 },
+    { name: 'BUY WITH FIAT', index: 0 },
     { name: 'DEPOSIT', index: 1 },
   ];
   const handleSwitchTab = ({ index }) => {

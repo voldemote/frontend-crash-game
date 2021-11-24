@@ -24,22 +24,13 @@ import { resetState } from '../../../state/wallfair/slice';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
 import { SWITCH_NETWORKS } from '../../../utils/constants';
 
-const initialWalletType = "Ethereum";
-
-const checkWalletType = () => {
-  const networkId = Object.keys(SWITCH_NETWORKS).find(sn => sn === window.ethereum.chainId);
-  console.log('------->SWITCH_NETWORKS[networkId]', SWITCH_NETWORKS[networkId])
-    return SWITCH_NETWORKS[networkId];
-}
-
-
 const DepositTab = props => {
   const dispatch = useDispatch();
   const [walletAddress, setWalletAddress] = useState(
     '0x1154362C86e4352d018aDD5dF3E0E82E8e5e0ee6'
   );
   const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
-  const [walletType, setWalletType] = useState(checkWalletType());
+  // const [walletType, setWalletType] = useState('');
   const { active, library, account, chainId } = useWeb3React();
   const [visibleWalletForm, setVisibleWalletForm] = useState(false);
   const [tokenAreaOpen, setTokenAreaOpen] = useState(false);
@@ -61,12 +52,6 @@ const DepositTab = props => {
     }
   }, [account, active, dispatch]);
 
-  useEffect(async () => {
-     const networkId = Object.keys(SWITCH_NETWORKS).find(sn => sn !== window.ethereum.chainId);
-      await switchMetaMaskNetwork(networkId);
-
-  }, [walletType]);
-
   useEffect(() => {
     if (chainId !== currentChainId) return;
 
@@ -77,7 +62,9 @@ const DepositTab = props => {
     });
   }, [account, library, signer, hash, chainId, setBalance]);
 
-  console.log('walletType =>', walletType);
+  const notSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
+    sn => sn !== window.ethereum.chainId
+  );
 
   return (
     <>
@@ -85,27 +72,54 @@ const DepositTab = props => {
         <div className={styles.depositHeader}>
           <div
             className={classNames(
-              walletType === 'Polygon'
-                ? styles.activeButton
-                : styles.inactiveButton
+              notSelectedNetworkId &&
+                'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
+                ? styles.inactiveButton
+                : styles.activeButton
             )}
-            onClick={() => {
-              setWalletType('Polygon');
+            onClick={async () => {
+              const networkId = notSelectedNetworkId;
+              if ('Polygon' === SWITCH_NETWORKS[networkId]) {
+                await switchMetaMaskNetwork(networkId);
+              }
             }}
           >
-            <img className={styles.imageSizePolygon} src={walletType === 'Polygon' ? PolygonLogoActive: PolygonLogo} alt="Polygon-logo" />
+            <img
+              className={styles.imageSizePolygon}
+              src={
+                notSelectedNetworkId &&
+                'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
+                  ? PolygonLogo
+                  : PolygonLogoActive
+              }
+              alt="Polygon-logo"
+            />
           </div>
           <div
             className={classNames(
-              walletType === 'Ethereum'
-                ? styles.activeButton
-                : styles.inactiveButton
+              notSelectedNetworkId &&
+                'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
+                ? styles.inactiveButton
+                : styles.activeButton
             )}
-            onClick={() => {
-              setWalletType('Ethereum');
+            onClick={async () => {
+              const networkId = notSelectedNetworkId;
+
+              if ('Ethereum' === SWITCH_NETWORKS[networkId]) {
+                await switchMetaMaskNetwork(networkId);
+              }
             }}
           >
-            <img className={styles.imageSizeEther} src={walletType === 'Ethereum' ? EthereumLogoActive: EthereumLogo} alt="Ethereum-logo" />
+            <img
+              className={styles.imageSizeEther}
+              src={
+                notSelectedNetworkId &&
+                'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
+                  ? EthereumLogo
+                  : EthereumLogoActive
+              }
+              alt="Ethereum-logo"
+            />
           </div>
         </div>
 
@@ -153,6 +167,7 @@ const DepositTab = props => {
             showCancel={false}
             balance={balance}
             tranferAddress={walletAddress}
+            account={account}
           />
         )}
         <p className={styles.firstDiscription}>

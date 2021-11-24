@@ -128,6 +128,7 @@
       border-radius: 50px;
       padding: 8px;
       display: flex;
+      cursor: not-allowed;
       // justify-content: center;
     }
     .inactiveButton {
@@ -137,6 +138,7 @@
       display: flex;
       padding: 10px;
       display: flex;
+      cursor: pointer;
       // justify-content: center;
     }
   }

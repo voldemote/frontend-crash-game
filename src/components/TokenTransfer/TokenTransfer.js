@@ -13,7 +13,8 @@ const TokenTransfer = ({
   hash,
   balance,
   showCancel = false,
-  tranferAddress
+  tranferAddress,
+  account,
 }) => {
   const [transferValue, setTransferValue] = useState('0');
   const [blocked, setBlocked] = useState(false);
@@ -33,12 +34,13 @@ const TokenTransfer = ({
       setTXSuccess(false);
     }
   }, [modalOpen]);
-
+  console.log('balance', balance)
   if (balance < 1) {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return isloading ?  <Loader /> : (<div className={styles.transfer}>Insufficient Balance for a Transfer</div>)
+    return isloading ? (
+      <Loader />
+    ) : (
+      <div className={styles.transfer}>Insufficient Balance for a Transfer</div>
+    );
   }
 
   const renderBody = () => (
@@ -67,58 +69,62 @@ const TokenTransfer = ({
           value={transferAddress}
           onChange={(e) => setTransferAddress(e.target.value)}
         /> */}
-        { balance > 1?
-        <>
-        <input
-          key="transferValue"
-          placeholder="WFAIR Amount"
-          value={transferValue}
-          onChange={e => {
-            if (e.target.value <= balance) {
-              setTransferValue(
-                e.target.value
-                  .replace(/[^0-9.,]/g, '')
-                  .replace(/(,)/g, '.')
-                  .replace(/(\..*?)\..*/g, '$1')
-              );
-            }
-          }}
-        />
-        <div className={styles.buttonWrapper}>
-          <button
-            className={styles.transferButton}
-            onClick={() => {
-              setBlocked(true);
-              setformError('');
-              WFAIRTransfer({
-                provider: provider,
-                setter: setter,
-                tokenAmount: transferValue,
-                to_address: tranferAddress,
-                setBlocked: setBlocked,
-                setModalOpen: setModalOpen,
-                setTXSuccess: setTXSuccess,
-                setformError: setformError,
-              });
-              setTransferValue('0');
-            }}
-          >
-            Send Transaction
-          </button>
-
-          {showCancel && (
-            <button
-              className={styles.cancelButton}
-              onClick={() => {
-                setformError('');
+        {balance > 1 ? (
+          <>
+            <input
+              key="transferValue"
+              placeholder="WFAIR Amount"
+              value={transferValue}
+              onChange={e => {
+                if (e.target.value <= balance) {
+                  setTransferValue(
+                    e.target.value
+                      .replace(/[^0-9.,]/g, '')
+                      .replace(/(,)/g, '.')
+                      .replace(/(\..*?)\..*/g, '$1')
+                  );
+                }
               }}
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-        </>
-        : <div className={styles.transfer}>Insufficient Balance for a Transfer</div> }
+            />
+            <div className={styles.buttonWrapper}>
+              <button
+                className={styles.transferButton}
+                onClick={() => {
+                  setBlocked(true);
+                  setformError('');
+                  WFAIRTransfer({
+                    provider: provider,
+                    setter: setter,
+                    tokenAmount: transferValue,
+                    to_address: tranferAddress,
+                    setBlocked: setBlocked,
+                    setModalOpen: setModalOpen,
+                    setTXSuccess: setTXSuccess,
+                    setformError: setformError,
+                  });
+                  setTransferValue('0');
+                }}
+              >
+                Send Transaction
+              </button>
+
+              {showCancel && (
+                <button
+                  className={styles.cancelButton}
+                  onClick={() => {
+                    setformError('');
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className={styles.transfer}>
+            Insufficient Balance for a Transfer
+          </div>
+        )}
       </div>
     </>
   );
