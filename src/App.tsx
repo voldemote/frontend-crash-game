@@ -44,6 +44,7 @@ import KYCPolicy from 'screens/KYCPolicy';
 import Imprint from 'screens/Imprint';
 import PrivacyPolicy from 'screens/PrivacyPolicy';
 import PrivateRoute from 'components/PrivateRoute';
+import Web3ReactManager from "./components/Web3ReactManager";
 
 const { store, persistor } = configStore();
 

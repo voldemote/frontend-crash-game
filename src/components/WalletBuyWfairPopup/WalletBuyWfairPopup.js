@@ -1,17 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import PopupTheme from '../Popup/PopupTheme';
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
-import ClickEvent from '../../helper/ClickEvent';
 import { UserActions } from '../../store/actions/user';
 import TabOptions from 'components/TabOptions';
 import Grid from '@material-ui/core/Grid';
-import QrcodeImage from '../../data/images/qrcode-image.svg';
-import CopyIcon from '../../data/icons/copy-icon.svg';
-import EthereumLogo from '../../data/images/ethereum_logo.svg';
-import PolygonLogo from '../../data/images/polygon-logo.svg';
-import TextUtil from 'helper/Text';
+import DepositTab from './Tabs/DepositTab';
 
 const BuyWithFiatTab = () => {
   const { email } = useSelector(state => state.authentication);
@@ -32,7 +27,9 @@ const BuyWithFiatTab = () => {
     partnerCustomerId: '615bf607f04fbb15aa5dd367', // Internal user id (mongo db)
   };
 
-  const transakQueryParams = Object.keys(transak).map(key => transak[key]&& `${key}=${transak[key]}`).join('&');
+  const transakQueryParams = Object.keys(transak)
+    .map(key => transak[key] && `${key}=${transak[key]}`)
+    .join('&');
 
   return (
     <div className={styles.buyWithFiatTabContainer}>
@@ -45,42 +42,6 @@ const BuyWithFiatTab = () => {
         className={styles.buyWithFiatTabIframe}
       ></iframe>
     </div>
-  );
-};
-const DepositTab = () => {
-
-  const walletAddress = '0xAef38fBFBF932D1AeF3B808Bc8fBd8Cd8E1f8BC5';
-  const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
-
-  const copy = useCallback(() => {
-    TextUtil.toClipboard(walletAddress).then(() => {
-      setHasCopiedSuccessfully(true);
-      setTimeout(setHasCopiedSuccessfully, 2000, false);
-    });
-  }, [walletAddress]);
-
-  return (
-    <div className={styles.depositTabContainer}>
-      <div className={styles.depositHeader}>
-        <img src={PolygonLogo} alt="Polygon-logo" />
-        <img src={EthereumLogo} alt="Ethereum-logo" />
-      </div>
-      <div className={styles.copyhash}>
-        <p className={styles.copyhashText}>{walletAddress}</p>
-        <button type="button" onClick={copy} className={styles.copyButton} title="Copy address to clipboard">
-          <img src={CopyIcon} alt="Clipboard Icon" />
-          {hasCopiedSuccessfully && (
-            <span className={styles.confirmation}>
-              Copied to clipboard.
-            </span>
-          )}
-        </button>
-      </div>
-      <div className={styles.qrCodeImg}>
-        <img src={QrcodeImage} alt="QrCode" />
-      </div>
-      <p className={styles.firstDiscription}>Only send MATIC to this address, 1 confirmation(s) required. We do not accept BEP20 from Binance.</p>
-  </div>
   );
 };
 
@@ -101,11 +62,11 @@ const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
 
 const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
-    name: 'BUYWITHFIAT',
+    name: 'BUY WITH FIAT',
     index: 0,
   });
   const tabOptions = [
-    { name: 'BUYWITHFIAT', index: 0 },
+    { name: 'BUY WITH FIAT', index: 0 },
     { name: 'DEPOSIT', index: 1 },
   ];
   const handleSwitchTab = ({ index }) => {
@@ -134,9 +95,9 @@ const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
           </div>
         </Grid>
       </div>
-    <div className={styles.activityContainer}>
+      <div className={styles.activityContainer}>
         <RenderTabs type={activeTab.name} />
-    </div>
+      </div>
     </div>
   );
 };
