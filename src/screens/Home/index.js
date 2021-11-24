@@ -52,6 +52,7 @@ import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs'
 import classNames from 'classnames';
+import useOAuthCallback from 'hooks/useOAuthCallback';
 
 const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) => {
   const isMount = useIsMount();
@@ -61,6 +62,8 @@ const Home = ({ authState, tags, setOpenDrawer, fetchTags, showPopup, events}) =
   const [expandFair, setExpandFair] = useState(false);
   const [expandDecentral, setExpandDecentral] = useState(false);
   let urlParams = new URLSearchParams(location.search);
+  
+  useOAuthCallback();
 
   const isLoggedIn = () => {
     return authState === LOGGED_IN;

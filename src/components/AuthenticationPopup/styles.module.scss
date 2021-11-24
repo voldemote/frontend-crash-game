@@ -125,6 +125,8 @@
     flex-basis: 50%;
     max-width: 100%;
     flex-grow: 1;
+    display: flex;
+    flex-flow: column;
   }
 }
 .promoMessage.raffle {

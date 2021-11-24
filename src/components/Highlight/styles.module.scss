@@ -31,4 +31,11 @@
       }
     }
   }
+  &.highlightFillPink {
+    > svg {
+      g {
+        fill: $colorLightPink;
+      }
+    }
+  }
 }

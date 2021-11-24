@@ -53,6 +53,7 @@ const Button = ({
           [ButtonTheme.welcomeScreenButton]: style.welcomeScreenButton,
         })
       )}
+      disabled={disabled}
       onClick={disabled ? null : onClick}
       data-tracking-id={dataTrackingId}
     >

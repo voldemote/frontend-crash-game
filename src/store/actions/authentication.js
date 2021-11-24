@@ -40,6 +40,8 @@ export const AuthenticationTypes = {
   RESET_PASSWORD: 'Authentication/RESET_PASSWORD',
   RESET_PASSWORD_FAIL: 'Authentication/RESET_PASSWORD_FAIL',
   UPDATE_STATUS: 'Authentication/UPDATE_STATUS',
+  LOGIN_EXTERNAL: 'Authentication/LOGIN_EXTERNAL',
+  LOGIN_EXTERNAL_FAIL: 'Authentication/LOGIN_EXTERNAL_FAIL',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -241,6 +243,19 @@ const updateStatus = makeActionCreator(AuthenticationTypes.UPDATE_STATUS, {
   status: null,
 });
 
+const loginExternal = makeActionCreator(AuthenticationTypes.LOGIN_EXTERNAL, {
+  code: null,
+  provider: null,
+});
+
+
+const loginExternalFail = makeActionCreator(
+  AuthenticationTypes.LOGIN_EXTERNAL_FAIL,
+  {
+    message: null,
+  }
+);
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -280,4 +295,6 @@ export const AuthenticationActions = {
   resetPassword,
   resetPasswordFail,
   updateStatus,
+  loginExternal,
+  loginExternalFail,
 };

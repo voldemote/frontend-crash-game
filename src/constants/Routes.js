@@ -53,4 +53,5 @@ export default {
   kyc: '/kycpolicy',
   privacy: '/privacypolicy',
   imprint: '/imprint',
+  oauth: '/oauth/:provider',
 };
