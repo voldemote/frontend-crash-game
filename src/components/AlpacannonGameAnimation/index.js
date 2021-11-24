@@ -22,7 +22,6 @@ const AlpacannonGameAnimation = ({
 }) => {
   const dispatch = useDispatch();
   const backgroundRef = useRef(null);
-  const canvasRef = useRef(null);
 
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);

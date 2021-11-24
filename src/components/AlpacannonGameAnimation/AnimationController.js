@@ -14,7 +14,6 @@ var bulletSpeed = 5;
 
 var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
 
-
 class AnimationController {
   init({ref}) {
     ref.current.appendChild(renderer.view);
@@ -34,6 +33,7 @@ class AnimationController {
 
     stage.addChild(bunny);
 
+    //TO DO: Audio init
     stage.interactive = true;
 
     stage.on("mousedown", function(e){

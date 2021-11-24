@@ -198,7 +198,7 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Games" spins={spins} />
+              {/*<Spins text="My Games" spins={spins} />*/}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
