@@ -56,7 +56,7 @@ const TokenTransfer = ({
       )}
       <div className={styles.transferWrapper}>
         <strong>{`You can maximally transfer ${numberWithCommas(
-          balance
+          balance > 2000 ? 2000 : balance
         )} WFAIR`}</strong>
         {formError && (
           <div className={styles.transferFormErrors}>
