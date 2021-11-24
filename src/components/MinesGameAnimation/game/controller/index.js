@@ -115,22 +115,33 @@ export default class Controller extends Emitter {
 
             this.view.revealCells([result]);
 
-            //reveal all
-            // this.view.revealCells(this.model.cellsToRevealed.flat());
-            if (result.isMine) {
-              // this.view.gameOver("lose");
-              resolve({ value: false })
-              // this.view.revealCells(this.model.allMines.flat());
-            }else{
-              resolve( { value: true })
-            }
-          });
+          //reveal all
+          // this.view.revealCells(this.model.cellsToRevealed.flat());
+          if (result.isMine) {
+            // this.view.gameOver("lose");
+            // this.view.revealCells(this.model.allMines.flat());
 
-        }
-        // this.handlers.cellClickHandler({ row, col });
-      } else {
-        //handle demo
-        const result = Engine.checkSelectedCell(collection, row, col);
+            //show all mines position at the end, when user lost
+            if(result.allMinesPos) {
+              result.allMinesPos.forEach((mine)=> {
+                mine.isMine = true;
+                this.model.updateCellsData([mine]);
+                this.view.updateGrid(mine.col,mine.row, true);
+                this.view.revealCells([mine]);
+              })
+            }
+
+            resolve({ value: false })
+          } else {
+            resolve( { value: true })
+          }
+
+        });
+      }
+      // this.handlers.cellClickHandler({ row, col });
+    } else {
+      //handle demo
+      const result = Engine.checkSelectedCell(collection, row, col);
 
         this.model.updateCellsData(result);
 

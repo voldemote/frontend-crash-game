@@ -27,6 +27,7 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import { MinesInput, ClearedInput} from "./MinesInput";
+import { trackMinesPlaceBet, trackMinesPlaceBetGuest } from "../../config/gtm"
 
 import {
   FormGroup,
@@ -101,15 +102,9 @@ const PlaceBetMines = ({
       minesCount: mines
     }
 
+    trackMinesPlaceBet({ amount, mines });
     // console.log('###payload', payload);
     await onBet(payload);
-
-    setGameInProgress(true);
-    setCurrentStep(0);
-    setBet({
-      ...bet,
-      done: true
-    })
   }
 
   const placeAutoBet = async () => {
@@ -166,6 +161,8 @@ const PlaceBetMines = ({
       amount,
       minesCount: mines
     }
+
+    trackMinesPlaceBetGuest({ amount, mines });
 
     if(demoCount >= 3) {
       showLoginPopup();
@@ -302,9 +299,14 @@ const PlaceBetMines = ({
         origin={{ x: 0.4, y: 0.45 }}
       />
       <div className={styles.inputContainer}>
-        {switchButton(styles)}
+        <div className={styles.placeBetContainer}>
+          {switchButton(styles)}
+        </div>
+
         {selector === 'manual' ?
-          <div className={styles.sliderContainer}>
+          <div className={classNames(styles.sliderContainer, {
+            [styles.hidden]: bet.done
+          })}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
               <TokenNumberInput
