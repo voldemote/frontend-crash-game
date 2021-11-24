@@ -252,7 +252,9 @@ const PlaceBetMines = ({
         </div>
 
         {selector === 'manual' ?
-          <div className={styles.sliderContainer}>
+          <div className={classNames(styles.sliderContainer, {
+            [styles.hidden]: bet.done
+          })}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
               <TokenNumberInput
