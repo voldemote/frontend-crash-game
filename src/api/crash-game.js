@@ -52,13 +52,13 @@ class GameApi {
     });
   };
 
-  getGameDetailById = (gameId, type) => {
+  getGameDetailById = (gameHash, gameTypeId, type) => {
     const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
-      ':gameId',
-      gameId
+      ':gameHash',
+      gameHash
     );
 
-    return this.api.get(gameUrl + (type ? `/${type}` : '')).catch(error => {
+    return Api.get(gameUrl + (type ? `/${type}` : '') + `?gameId=${gameTypeId}`).catch(error => {
       console.log('[API Error] called: getGameDetailById', error);
     });
   };
@@ -73,7 +73,7 @@ class GameApi {
     state: 2,
     userId: user.id,
     rewardAmount: user.crashfactor * user.stakedamount,
-  });
+  })
 
   getLuckyUsers = gameId => {
     const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
@@ -127,13 +127,13 @@ const cashOut = () => {
   });
 };
 
-const getGameDetailById = (gameId, type) => {
+const getGameDetailById = (gameHash, gameTypeId, type) => {
   const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
-    ':gameId',
-    gameId
+    ':gameHash',
+    gameHash
   );
 
-  return Api.get(gameUrl + (type ? `/${type}` : '')).catch(error => {
+  return Api.get(gameUrl + (type ? `/${type}` : '') + `?gameId=${gameTypeId}`).catch(error => {
     console.log('[API Error] called: getGameDetailById', error);
   });
 };
