@@ -131,10 +131,10 @@ export class GameScene extends Container {
         this.horizontalAxis.update(timeElapsed);
         this.verticalAxis.update(timeElapsed);
         this.barChartContainer.update(timeElapsed);
-        if (timeElapsed > this.memeThreshold) {
-            this.memeThreshold = timeElapsed + this.memeThreshold * 2;
-            this.memeContainer.generateNextMeme();
-        }
+        // if (timeElapsed > this.memeThreshold) {
+        //     this.memeThreshold = timeElapsed + this.memeThreshold * 2;
+        //     this.memeContainer.generateNextMeme();
+        // }
         this.cashOutContainer.update();
     }
 
