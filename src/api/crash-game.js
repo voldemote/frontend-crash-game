@@ -52,17 +52,6 @@ class GameApi {
     });
   };
 
-  getGameDetailById = (gameHash, gameTypeId, type) => {
-    const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
-      ':gameHash',
-      gameHash
-    );
-
-    return Api.get(gameUrl + (type ? `/${type}` : '') + `?gameId=${gameTypeId}`).catch(error => {
-      console.log('[API Error] called: getGameDetailById', error);
-    });
-  };
-
   transformUser = user => ({
     crashFactor: user.crashfactor,
     createdAt: user.createdAt,
