@@ -161,13 +161,12 @@ const Game = ({
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
         gameInstance.game.controller.view.gameOver("lose");
-
         setGameInProgress(true);
         setCurrentStep(0);
-        setBet({
+        setBet((bet) => {return{
           ...bet,
           done: true
-        })
+        }})
 
         return data;
       }
@@ -190,12 +189,15 @@ const Game = ({
       setGameOver(true);
       updateUserBalance(userId);
       setConfetti(true);
-      setBet({
-        pending:false,
-        done: false
-      });
+      if(!bet.autobet){
+        setBet((bet)=> {return{
+          ...bet,
+          pending: false,
+          done: false
+        }});
+      }
 
-      trackMinesCashout({ 
+      trackMinesCashout({
         amount: data.reward,
         multiplier: data.crashFactor,
         profit: data.profit,

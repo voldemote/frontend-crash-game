@@ -100,9 +100,9 @@ export class AudioController {
     try {
       if (this.ready) {
         Sound.sound.volume(name, volume && this.volume != 0 ? volume : this.volume === 0 ? '0.0' : this.volume);
-        Sound.sound.play(name, {
+        /*Sound.sound.play(name, {
           loop: loop
-        });
+        });*/
       }
     } catch (e) {
       console.error('Audio output error');

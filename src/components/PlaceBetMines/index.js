@@ -66,7 +66,7 @@ const PlaceBetMines = ({
   const [profit1, setProfit1] = useState(0);
   const [loss, setLoss] = useState(0);
   const [accumulated, setAccumulated] = useState(0)
-  const [cleared, setCleared] = useState(0)
+  const [cleared, setCleared] = useState(1)
 
   const gameOffline = false//useSelector(selectGameOffline);
 
@@ -124,33 +124,64 @@ const PlaceBetMines = ({
       accumulated
     };
     setAccumulated(0)
-    setBet({
+    setBet((bet) => {
+      return{
       ...bet,
       ...payload,
+      stopped: false,
       done: true
-    })
+    }})
     onBet(payload);
   }
+
   useEffect(() => {
     if(bet.autobet && !bet.done){
       let prof = 0
       if(bet.win) {
-        prof = profit
-        handleCashout()
-      }
-      //win handleCashout
-      const acc = prof + accumulated
-      console.log("acc", acc)
-      setAccumulated(acc)
-      if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
-        const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
-        if(newamount < 1) setBet({autobet: false, pending: false})
-        else onBet({...bet, amount: newamount, done: true})
-      }
-      else {
-        setBet({autobet: false, pending: false})
+        prof = profit + bet.amount
+        console.log("Win: ", prof)
+        setTimeout(()=> {
+          document.getElementById('mines-cashout-btn').click();
+          const acc = prof+ accumulated
+          setAccumulated((a)=> {return prof+ a})
+          if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+            const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+            console.log("bet2", newamount)
+            if(newamount < 1) setBet({autobet: false, pending: false})
+            else {
+              setAccumulated((a)=> {return a- newamount})
+              setBet((bet) => {return{...bet, amount: newamount }})
+              onBet({...bet, amount: newamount, done: true})
+            }
+          }
+          else {
+            setBet({autobet: false, pending: false})
+          }
+
+        }, 500)
+
+      }else{
+        const acc = accumulated - bet.amount
+        setAccumulated(acc)
+        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+          const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+          if(newamount < 1) setBet({autobet: false, pending: false})
+          else {
+            setBet((bet) => {return{...bet, amount: newamount }})
+            onBet({...bet, amount: newamount, done: true})
+          }
+        }
+        else {
+          setBet({autobet: false, pending: false})
+        }
+
+
       }
 
+    }else if(!bet.autobet && bet.stopped){
+      setTimeout(()=> {
+        document.getElementById('mines-cashout-btn')?.click();
+      }, 500)
 
     }
   }, [bet.autobet, bet.done])
@@ -200,7 +231,7 @@ const PlaceBetMines = ({
   };
 
   const renderButton = () => {
-    if (!gameInProgress) {
+    if (!gameInProgress && !bet.autobet) {
       return (
         <span
           role="button"
@@ -224,11 +255,24 @@ const PlaceBetMines = ({
         <>
           <div className={styles.currentMultiplier}>Multiplier: <span className={classNames('global-cashout-profit')}>{!multiplier ? "-" : 'x' + multiplier}</span></div>
           <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
+          <span
+            role="button"
+            tabIndex="0"
+            style={{display: bet.autobet ? 'auto':'none'}}
+            className={classNames(styles.button, styles.cancel)}
+            onClick={() => setBet({...bet, autobet: false, stopped: true})}
+            data-tracking-id={
+              user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
+            }
+          >
+            Stop Autobet
+          </span>
 
           <div
             id={"mines-cashout-btn"}
             role="button"
             tabIndex="0"
+            style={{display: !bet.autobet ? 'auto':'none'}}
             className={classNames(
               styles.button,
               styles.cashoutButton, {

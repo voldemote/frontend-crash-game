@@ -200,6 +200,7 @@ const MinesGameAnimation = ({
 
   const handleLost = () => {
     setGameInProgress(false);
+    console.log("lose")
 
     setTimeout(()=> {
       setBet((bet) => {
@@ -207,7 +208,8 @@ const MinesGameAnimation = ({
           return {
             ...bet,
             pending: false,
-            done: false
+            done: false,
+            win: false
           }
         } else{
           return {
@@ -228,30 +230,24 @@ const MinesGameAnimation = ({
     setCashouts((cashouts) => [prepareObj, ...cashouts]);
   }
 
-  async function nextMine(array, automine){
+  async function nextMine(array, automine, aux){
+    if(!running && !aux) return
     const {value} = await gameInstance.game.controller.onClickOnCell(array[automine]);
-
     if(!value) {
-      setRunning(false)
-      console.log("lose")
-      //handleLost()
-      //setBet((bet) => {console.log("FINAL");return {...bet, done: false}})
+      //setTimeout(() => {setBet((bet) => {console.log("lose");return {...bet, done: false}});}, 5000)
     }
     else if(automine >= bet.cleared-1){
-      //setBet((bet) => {console.log("FINAL BUENO");return {...bet, done: false, win: true}})
-      console.log("win")
-      setRunning(false)
+      setTimeout(() => {setBet((bet) => {console.log("Win");return {...bet, done: false, win: true}});}, 500)
     }
     else if(value) {
-      setTimeout(() => nextMine(array, automine + 1), 500)
+      setTimeout(() => nextMine(array, automine + 1, true), 500)
     }
   }
 
   useEffect(() => {
-    console.log("bet.autobet && bet.done && !running", bet.autobet,  bet.done, !running)
-    if(bet.autobet && bet.done && !running){
-      setRunning(true)
-      setTimeout(() => nextMine(shuffle(originalArray), 0), 300)
+    if(bet.autobet && bet.done){
+      console.log("start autobet nextmine")
+      setTimeout(() => nextMine(shuffle(originalArray), 0, true), 300)
     }
   }, [bet.autobet, bet.done, running])
 
@@ -267,10 +263,11 @@ const MinesGameAnimation = ({
 
           if(data?._inProgress) {
             setGameInProgress(true);
-            setBet({
+            setBet((bet)=>{return{
+              ...bet,
               pending: false,
               done: true
-            });
+            }});
             _.set(configBase, 'initialReveal', getTranslatedReveal(game_payload.clientBoard));
 
             const tries = data._tries;
@@ -278,10 +275,11 @@ const MinesGameAnimation = ({
             setCurrentStep(tries);
           } else {
             setGameInProgress(false);
-            setBet({
+            setBet((bet)=>{return{
+              ...bet,
               pending: false,
-              done: false
-            });
+              done: true
+            }});
           }
 
           setGameConfig({
