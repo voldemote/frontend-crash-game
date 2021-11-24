@@ -18,6 +18,8 @@ const Login = ({
   styles,
   openSignUpPopup,
 }) => {
+  const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
+
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -195,7 +197,7 @@ const Login = ({
             <button type="button" onClick={openSignUpPopup}>
               Create a new account
             </button>{' '}
-            or use your social login.
+            {showNewFeatures && <>or use your social login.</>}
           </p>
           <SocialLogin styles={styles} />
         </div>

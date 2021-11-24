@@ -25,6 +25,10 @@ const SocialLogin = ({ styles, prepend = [] }) => {
     className: styles.buttonIcon,
   };
 
+  if (process.env.REACT_APP_SHOW_UPCOMING_FEATURES !== 'true') {
+    return null;
+  }
+
   return (
     <>
       {

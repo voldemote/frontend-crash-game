@@ -22,6 +22,11 @@ const useOAuthCallback = () => {
     if(!provider) return;
     const code = params.get('code');
     const error = params.get('error');
+    
+    if(process.env.REACT_APP_SHOW_UPCOMING_FEATURES !== 'true') {
+      return history.push('/');
+    }
+
     if(error) {
       dispatch(AuthenticationActions.loginExternalFail({ message: 'Something went wrong.'}));
       history.push('/');

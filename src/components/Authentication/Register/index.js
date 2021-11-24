@@ -11,19 +11,26 @@ import SocialLogin from '../SocialLogin';
 
 const Register = ({ styles, openLoginPopup, preloadEmailSignUp = false }) => {
 
-  const [showEmailSignUp, setShowEmailSignup] = useState(preloadEmailSignUp);
+  const showNewFeatures =
+    process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
+
+
+  const [showEmailSignUp, setShowEmailSignup] = useState(
+    !showNewFeatures || preloadEmailSignUp
+  );
 
   return (
     <>
       <h2 className={styles.title}>Sign Up</h2>
       {showEmailSignUp ? (
         <>
-          <button
-            className={styles.backToSignupOptions}
-            onClick={() => setShowEmailSignup(false)}
-          >
-            Sign up using a different method
-          </button>
+          {showNewFeatures &&
+            <button
+              className={styles.backToSignupOptions}
+              onClick={() => setShowEmailSignup(false)}
+            >
+              Sign up using a different method
+            </button>}
           <EmailSignUp styles={styles} />
         </>
       ) : (
