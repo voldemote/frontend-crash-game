@@ -69,6 +69,9 @@ import { ReactComponent as IconLeaderBoard } from '../../data/icons/leaderboard.
 import { ReactComponent as IconLeaderBoardRanking } from '../../data/icons/leaderboard-ranking.svg';
 import { ReactComponent as IconLeaderBoardUser } from '../../data/icons/leaderboard-user.svg';
 import { ReactComponent as IconLeaderBoardToken } from '../../data/icons/leaderboard-token.svg';
+import { ReactComponent as IconFacebook } from '../../data/icons/facebook.svg';
+import { ReactComponent as IconGoogle } from '../../data/icons/google.svg';
+import { ReactComponent as IconEmail } from '../../data/icons/email.svg';
 
 const Icon = ({
   className,
@@ -151,7 +154,10 @@ const Icon = ({
       [IconType.leaderboard]: <IconLeaderBoard />,
       [IconType.leaderboardRanking] : <IconLeaderBoardRanking />,
       [IconType.leaderboardUser] : <IconLeaderBoardUser />,
-      [IconType.leaderboardToken] : <IconLeaderBoardToken />
+      [IconType.leaderboardToken] : <IconLeaderBoardToken />,
+      [IconType.facebook]: <IconFacebook />,
+      [IconType.google]: <IconGoogle />,
+      [IconType.email]: <IconEmail />,
     });
   };
 
@@ -182,6 +188,7 @@ const Icon = ({
       )}
       onClick={onClick}
       data-tracking-id={dataTrackingId}
+      data-icon-type={iconType}
     >
       {renderIcon()}
       {children}
