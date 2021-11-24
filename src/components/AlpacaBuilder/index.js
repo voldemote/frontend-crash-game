@@ -11,7 +11,8 @@ import DynamicSvg from './svgs/dynamicSvg';
 const AlpacaBuilder = ({
   visible = false,
   showTitle = true,
-  onExport
+  onExport,
+  downloadFileOnSave = false
 }) => {
 
   const [activeViews, setActiveViews] = useState([]);
@@ -107,6 +108,7 @@ const AlpacaBuilder = ({
     try{
       var svg = svgRef.current;
       var canvas = svgDownloader.current;
+      var fileName = `my_alpaca_${Math.floor(1000 + Math.random() * 9000)}.png`;
       canvas.width =EXPORT_SIZE;
       canvas.height=EXPORT_SIZE;
       var ctx = canvas.getContext('2d');
@@ -115,38 +117,33 @@ const AlpacaBuilder = ({
       var img = new Image();
       var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
       var url = DOMURL.createObjectURL(svgBlob);
-      if(onExport){
-        onExport({blob:svgBlob});
-      }
-
-      canvas.toBlob(blob => {
-        console.log(blob);
-        if(onExport){
-          onExport({blob: blob});
-        }
-      });
-
 
       img.onload = function () {
         ctx.drawImage(img, 0, 0, EXPORT_SIZE, EXPORT_SIZE);
-        DOMURL.revokeObjectURL(url);
-
-
-        var imgURI = canvas
-            .toDataURL('image/png')
-            .replace('image/png', 'image/octet-stream');
-
-        var evt = new MouseEvent('click', {
-          view: window,
-          bubbles: false,
-          cancelable: true
+        canvas.toBlob(blob => {
+          blob.name = fileName;
+          if(onExport){
+            onExport({blob: blob});
+          }
         });
 
-        var a = document.createElement('a');
-        a.setAttribute('download', 'my_alpaca.png');
-        a.setAttribute('href', imgURI);
-        a.setAttribute('target', '_blank');
-        a.dispatchEvent(evt);
+        if(downloadFileOnSave){
+          var imgURI = canvas
+              .toDataURL('image/png')
+              .replace('image/png', 'image/octet-stream');
+
+          DOMURL.revokeObjectURL(url);
+          var evt = new MouseEvent('click', {
+            view: window,
+            bubbles: false,
+            cancelable: true
+          });
+          var a = document.createElement('a');
+          a.setAttribute('download', fileName);
+          a.setAttribute('href', imgURI);
+          a.setAttribute('target', '_blank');
+          a.dispatchEvent(evt);
+        }
       };
       img.src = url;
     }catch(err){

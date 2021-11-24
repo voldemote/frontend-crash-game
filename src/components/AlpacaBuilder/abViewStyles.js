@@ -51,8 +51,8 @@ const AbViewStyles = ({
     const specificColorsCss = {
       borderRightColor: currentColors[0],
       borderBottomColor: currentColors[0],
-      borderTopColor: currentColors[1],
-      borderLeftColor: currentColors[1],
+      borderTopColor: currentColors[1] || currentColors[0],
+      borderLeftColor: currentColors[1] || currentColors[0],
     };
     return (
       <a

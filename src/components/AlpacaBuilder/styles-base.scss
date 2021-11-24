@@ -64,8 +64,8 @@
 
       .tile{
         margin: 10px;
-        height: 80px;
-        width: calc( (100% / 5) - 20px );
+        height: 100px;
+        width: calc( (100% / 4) - 20px );
         padding: 2px;
         border-radius: 20px;
         border: 1px solid $unselectedBorderColor;
@@ -91,6 +91,7 @@
     .colors{
       display: flex;
       overflow-x: auto;
+      padding:20px 0;
 
       .color{
         margin: 10px;
@@ -112,6 +113,8 @@
     .categoriesRow{
       display: flex;
       overflow-x: auto;
+      justify-content: center;
+      padding:10px 0;
 
       .category{
         margin: 10px;

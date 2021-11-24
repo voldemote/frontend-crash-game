@@ -72,7 +72,7 @@ const DynamicSvg = ({ id, current, ...rest }) => {
         stringBuilder[1]+= `#${id} #abColor_2${des}`;
         stringBuilder[2]+= `#${id} #abColor_3${des}`;
         const continuation1 = i === times ?  `{fill:${colors[0]}}`: ', ';
-        const continuation2 = i === times ?  `{fill:${colors[1]}}`: ', ';
+        const continuation2 = i === times ?  `{fill:${colors[1] || colors[0]}}`: ', ';
         const continuation3 = i === times ?  `{fill:${colors[0]}}`: ', ';
         stringBuilder[0]+= continuation1;
         stringBuilder[1]+= continuation2;

@@ -64,7 +64,8 @@ const MainMenu = ({
   }, [user, editVisible]);
 
   const clickUploadProfilePicture = () => {
-    profilePictureRefName.current?.click();
+    handleAlpacaBuilderVisible(!alpacaBuilderVisible);
+    //profilePictureRefName.current?.click();
   };
 
   const history = useHistory();
@@ -173,7 +174,7 @@ const MainMenu = ({
   };
 
   const handleAlpacaBuilderExport = async ({blob}) => {
-    console.log(blob);
+
     if (!blob) return;
     await handleFileUpload(blob);
     handleAlpacaBuilderVisible(false);
@@ -384,9 +385,6 @@ const MainMenu = ({
                 />
               </div>
               <p className={styles.profilePictureUploadLabel}>Your avatar</p>
-              <div className={styles.profilePictureUploadLabel}>
-                <a href='#/' onClick={() => onAlpacaBuilderClick()}>Build your Aplacavatar</a>
-              </div>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
