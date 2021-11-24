@@ -15,7 +15,6 @@ configMapGenerator:
   name: frontend-config
 
 patches:
-- ingressPatch.yaml
 - replicasPatch.yaml
 - resourcesPatch.yaml
 - prodConfigPatch.yaml

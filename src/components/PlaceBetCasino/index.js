@@ -28,6 +28,7 @@ const PlaceBetCasino = ({
   gameName,
   connected,
   onBet,
+  setBet,
   bet,
   setAmount,
   amount,
@@ -42,8 +43,6 @@ const PlaceBetCasino = ({
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
   const [animate, setAnimate] = useState(false);
-  const [canBet, setCanBet] = useState(true);
-  const [game, setGame] = useState({ngame: 0});
   const [flag, setFlag] = useState(false);
   const [wincrease, setWincrease] = useState(0)
   const [lincrease, setLincrease] = useState(0)
@@ -52,7 +51,7 @@ const PlaceBetCasino = ({
   const [spinlimit, setSpinlimit] = useState(false)
   const [accumulated, setAccumulated] = useState(0)
   const [selector, setSelector] = useState('manual')
-  const userUnableToBet = amount < 1 || !canBet;
+  const userUnableToBet = amount < 1;
 
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
 
@@ -95,8 +94,8 @@ const PlaceBetCasino = ({
     const payload = {
       amount,
       autobet: true,
-      profit: Number(profit),
-      loss: Number(loss),
+      profitStop: Number(profit),
+      lossStop: Number(loss),
       wincrease: winbutton?0:Number(wincrease)/100,
       lincrease: lossbutton?0:Number(lincrease)/100,
       ngame: null,
@@ -104,7 +103,6 @@ const PlaceBetCasino = ({
       accumulated
     };
     setAccumulated(0)
-    setGame(payload)
     const bet = await onBet(payload)
   };
 
@@ -124,38 +122,26 @@ const PlaceBetCasino = ({
       winIndex:  Math.floor((Math.random() * 12) | 0)
     };
     onBet(payload)
-    setGame(payload)
     if (numberOfDemoPlays < 3) {
       localStorage.setItem('numberOfElonGameDemoPlays', numberOfDemoPlays + 1);
     }
   };
-  useEffect(async () => {
-    if(bet?.pending && game.ngame > 0) {
-      setGame({...game, ngame: game.ngame -1})
-      await onBet({...game, ngame: game.ngame -1});
-    }else if(bet?.pending && game.autobet){
+  useEffect(() => {
+    if(bet.ready && bet.ngame > 0) { //Multiple Games/Spins
+      onBet({...bet, ngame: bet.ngame - 1});
+    }else if(bet?.ready && bet.autobet){ // Autobet
       const acc = bet.profit + accumulated
       setAccumulated(acc)
-      if(game.ngame === 0){
-        const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : game.amount*(1+game.wincrease)) : Math.floor(lossbutton ? amount : game.amount*(1+game.lincrease))
-        setGame({ngame: 0, amount: newamount})
-        return;
+      if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+        const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+        if(newamount < 1) setBet({autobet: false, ngame: 0, ready: true})
+        else onBet({...bet, amount: newamount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
       }
-      if(game.profit >= 0 && game.profit > acc && game.loss >= 0 && game.loss > -acc){
-        const newamount = bet.profit > 0 ? Math.floor(winbutton ? amount : game.amount*(1+game.wincrease)) : Math.floor(lossbutton ? amount : game.amount*(1+game.lincrease))
-        if(newamount < 1) {
-          setGame({ngame: 0})
-          return;
-        }
-        setGame({...game, amount: newamount, ngame: game.ngame ? game.ngame -1 : game.ngame})
-        await onBet({...game, amount: newamount, ngame: game.ngame ? game.ngame -1 : game.ngame});
-      }
-      else{
-        setGame({ngame: 0});
+      else {
+        setBet({autobet: false, ngame: 0, ready: true})
       }
     }
   }, [bet])
-
   const showLoginPopup = () => {
     dispatch(
       PopupActions.show({
@@ -169,7 +155,7 @@ const PlaceBetCasino = ({
   };
 
   const renderButton = () => {
-    if (!game.autobet && game?.ngame <= 0) {
+    if (!bet.autobet) {
       return (
         <span
           role="button"
@@ -178,11 +164,11 @@ const PlaceBetCasino = ({
             [styles.buttonDisabled]:
               !connected ||
               userUnableToBet ||
-              !bet?.pending ||
+              !bet?.ready ||
               (amount > userBalance && user.isLoggedIn),
             [styles.notConnected]: !connected,
           })}
-          onClick={!bet?.pending? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
+          onClick={!bet?.ready? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
           data-tracking-id={
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
@@ -197,17 +183,18 @@ const PlaceBetCasino = ({
             role="button"
             tabIndex="0"
             className={classNames(styles.button, styles.cancel)}
-            onClick={() => game.autobet ? setGame({...game, autobet: false}) : setGame({ngame: 0})}
+            onClick={() => bet.autobet ? setBet({...bet, autobet: false, ready: gameName === 'plinko' ? true: false}) : setBet({...bet, ngame: 0})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
             }
           >
-            {game.autobet ? 'Stop Autobet' :  'Cancel Bet'}
+            {bet.autobet ? 'Stop Autobet' :  'Cancel Bet'}
           </span>
         </>
       )
     }
   };
+
   const renderMessage = () => {
     if (!user.isLoggedIn) {
       return (
@@ -217,7 +204,6 @@ const PlaceBetCasino = ({
       );
     }
   };
-
 
   const switchButton = () => {
     return (
@@ -242,7 +228,6 @@ const PlaceBetCasino = ({
     left: 0,
     zIndex: 999,
   };
-
   return (
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti
@@ -319,8 +304,8 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput disable={bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
-            {gameName!=='plinko' &&<NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={game} />}
+            <RiskInput disable={!bet.ready || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
+            {gameName!=='plinko' && <NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={bet} />}
           </div>
           :
           <div className={styles.sliderContainer}>
@@ -385,12 +370,12 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput disable={bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
+            <RiskInput disable={!bet.ready || bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
             <StandardInput title={'Stop on Profit'} setValue={setProfit} value={profit} />
             <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
             <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />
             <ToggleInput title={'On Loss'} setValue={setLincrease} value={lincrease} setToggle={setLossbutton} toggle={lossbutton} />
-            {game.autobet &&
+            {bet.autobet &&
               <div className={styles.spinsleft}>
                 <span className={accumulated > 0 ? styles.reward : styles.lost}>
                 {Math.floor(accumulated)} PFAIR
@@ -398,36 +383,22 @@ const PlaceBetCasino = ({
                 accumulated
               </div>
             }
-            {game.autobet && game.amount &&
+            {bet.autobet && bet.amount &&
               <div className={styles.spinsleft}>
                 Current bet:
                 <span className={styles.neutral}>
-                {Math.floor(game.amount)} PFAIR
+                {Math.floor(bet.amount)} PFAIR
                 </span>
               </div>
             }
-            {game.ngame > 0 &&
+            {bet.ngame > 0 &&
               <div className={styles.spinsleft}>
-                {game.ngame} spins left
+                {bet.ngame} spins left
               </div>
             }
           </div>
         }
       </div>
-      {/*showCashoutWarning ? (
-        <div className={styles.error}>
-          <span>Betting less than 1 is not recommended. </span>
-          <span
-            data-for="rt"
-            className={styles.why}
-            data-tip="The multiplying factor defines your final reward.<br/>
-             A multiplier of 2x means twice the reward, when the game ends.<br/>
-              If the game ends before your multiplier,<br/> your amount invested is lost.<br/>"
-          >
-            Understand why.
-          </span>
-        </div>
-      ) : null*/}
       <ReactTooltip
         id={'rt'}
         place="top"

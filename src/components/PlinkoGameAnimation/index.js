@@ -76,18 +76,20 @@ const PlinkoGameAnimation = ({
       aud.stopBgm();
     }
   },[])
+
   /*
   useEffect(() => {
     setBackgr(backgroundString(backg))
   },[backg])
 */
+
   useEffect(() => {
-    if(bet && !bet.pending && bet.path) spin(bet);
+    if(bet && !bet.ready && bet.path) spin(bet);
   }, [bet]);
 
   const spin = async () => {
     setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-    !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
+    !bet.autobet && setBet((bet) => {return{ball: bet.ball, ready: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
   }
 
   const changeBackground = (count) => {
@@ -100,7 +102,11 @@ const PlinkoGameAnimation = ({
     }, 100)
   }
 
-  const handleEnd = (win) => {
+  const handleEnd = (win, demo) => {
+    if(demo) {
+      setBet((bet) => {return {...bet, ball: bet.ball-1}})
+      return
+    }
     if(win) {
       audio.playWinSound()
       changeBackground(0)
@@ -111,9 +117,10 @@ const PlinkoGameAnimation = ({
       { type: 'loss', value: bet.profit}
     setSpins((spins) => [spin].concat(spins))
     bet.autobet ?
-     setBet((bet) => {return {ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
+     setBet((bet) => {return {...bet, ball: bet.ball-1, ready: true}}) :
      setBet((bet) => {return {...bet, ball: bet.ball-1}})
   }
+
   return (
     <div ref={backgroundRef} className={styles.animation}>
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}

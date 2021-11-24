@@ -11,7 +11,7 @@ const outcomesByRisk = [
   [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
 ]
 const formatk = (num) => {
-  return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+  return Math.abs(num) > 999999 ? Math.sign(num)*((Math.abs(num)/1000000).toFixed(1)) + 'M' : Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
 export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio, shadow, setShadow}) => {
@@ -23,16 +23,20 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   const [nball, setNball] = useState(0);
   const [nshadow, setNshadow] = useState(0);
   const boardref = useRef(null);
-  const brightBasket = (winMultiplier, shadow) => {
-    if(shadow){
+  const brightBasket = (winMultiplier,) => {
+    /*if(shadow){
       setNshadow((nshadow)=>nshadow-1)
+      onEnd(null, true)
       return
-    }
+    }*/
+
     const right = ballValue.path.filter(n=>n==1).length >= ballValue.path.length/2
     const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
     if(index > 0){
       setBox(index)
       onEnd(winMultiplier > 1)
+    }else{
+      onEnd(winMultiplier > 1, true)
     }
   }
   const setBox = (index) => {
@@ -130,7 +134,7 @@ function moveBall(direction, ball, audio) {
 function fallToBuscket(onBuscket, ball, winMultiplier, shadow) {
   const x = getXBall(ball), y = getYBall(ball)
   document.getElementById(ball).style.transform = `translate(${x}px, ${y+22}px) rotate(0)`;
-  setTimeout(() => onBuscket(winMultiplier, shadow), 150)
+  setTimeout(() => onBuscket(winMultiplier), 150)
   setTimeout(() => document.getElementById(ball).style.opacity = 0, 300)
   setTimeout(() => document.getElementById(ball).remove(), 500)
 }
