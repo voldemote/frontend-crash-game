@@ -31,6 +31,7 @@ export default {
   newBet: '/trade/new',
   events: '/events/:category?',
   games: '/games',
+  wallet: '/wallet',
   home: '/',
   liveEvents: '/live-events/:category?',
   newLiveEvent: '/live-events/new',

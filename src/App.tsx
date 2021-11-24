@@ -23,6 +23,7 @@ import RouletteGame from './screens/RouletteGame';
 import MinesGame from './screens/MinesGame';
 import { PersistGate } from 'redux-persist/integration/react';
 import Games from './screens/Games';
+import UserWallet from './screens/UserWallet'
 import Activities from './screens/Activities';
 import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
@@ -42,6 +43,7 @@ import ResponsibleGambling from 'screens/ResponsibleGambling';
 import KYCPolicy from 'screens/KYCPolicy';
 import Imprint from 'screens/Imprint';
 import PrivacyPolicy from 'screens/PrivacyPolicy';
+import PrivateRoute from 'components/PrivateRoute';
 
 const { store, persistor } = configStore();
 
@@ -80,7 +82,7 @@ const App = () => {
                 path={Routes.rouletteGame}
                 component={RouletteGame}
               />
-               <Route exact path={Routes.minesGame} component={MinesGame} />
+              <Route exact path={Routes.minesGame} component={MinesGame} />
               <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
               <Route exact path={Routes.alpacannonGame} component={AlpacannonGame} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
@@ -98,6 +100,7 @@ const App = () => {
               <Route exact path={Routes.kyc} component={KYCPolicy} />
               <Route exact path={Routes.imprint} component={Imprint} />
               <Route exact path={Routes.privacy} component={PrivacyPolicy} />
+              <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
               <Redirect to={Routes.home} />
             </Switch>
             <NavbarFooter

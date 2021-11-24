@@ -41,6 +41,7 @@ import UsernamePopup from 'components/UsernamePopup';
 import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
+import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -224,6 +225,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <UsernamePopup initialReward={options.initialReward} />;
       case PopupTheme.requestTokens:
         return <RequestTokensPopup />;
+      case PopupTheme.walletBuyWfair:
+        return <WalletBuyWfairPopup />;
     }
 
     return null;
