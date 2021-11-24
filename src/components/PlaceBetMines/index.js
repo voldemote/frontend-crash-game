@@ -346,7 +346,7 @@ const PlaceBetMines = ({
 
         {selector === 'manual' ?
           <div className={classNames(styles.sliderContainer, {
-            [styles.hidden]: bet.done
+            [styles.hidden]: false && bet.done
           })}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
