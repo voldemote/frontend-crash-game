@@ -200,20 +200,24 @@ const MinesGameAnimation = ({
 
   const handleLost = () => {
     setGameInProgress(false);
-    setBet((bet) => {
-      if(bet.autobet){
-        return {
-          ...bet,
-          pending: false,
-          done: false
+
+    setTimeout(()=> {
+      setBet((bet) => {
+        if(bet.autobet){
+          return {
+            ...bet,
+            pending: false,
+            done: false
+          }
+        } else{
+          return {
+            pending: false,
+            done: false
+          }
         }
-      }else{
-        return {
-          pending: false,
-          done: false
-        }
-      }
-    });
+      });
+    }, 3000)
+
     setCurrentStep(0);
     setRunning(false)
 
@@ -222,13 +226,6 @@ const MinesGameAnimation = ({
       value: '-' + amount
     }
     setCashouts((cashouts) => [prepareObj, ...cashouts]);
-
-    setTimeout(()=> {
-      setBet({
-        pending: false,
-        done: false
-      });
-    }, 3000)
   }
 
   async function nextMine(array, automine){
