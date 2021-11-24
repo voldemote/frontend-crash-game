@@ -23,11 +23,13 @@ import WFairABI from '../../../config/abi/WFAIRToken.json';
 import { resetState } from '../../../state/wallfair/slice';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
 import { SWITCH_NETWORKS } from '../../../utils/constants';
+import QRCode from 'react-qr-code';
+
 
 const DepositTab = props => {
   const dispatch = useDispatch();
   const [walletAddress, setWalletAddress] = useState(
-    '0x1154362C86e4352d018aDD5dF3E0E82E8e5e0ee6'
+    '0xC6065B9fc8171Ad3D29bad510709249681758972'
   );
   const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
   // const [walletType, setWalletType] = useState('');
@@ -155,9 +157,9 @@ const DepositTab = props => {
             </button>
           </div>
         )}
-        {/* <div className={styles.qrCodeImg}>
-          <img src={QrcodeImage} alt="QrCode" />
-        </div> */}
+        <div className={styles.qrCodeImg}>
+          <QRCode value={walletAddress} size={120}/>
+        </div>
         {visibleWalletForm && !active && <ConnectWallet />}
         {tokenAreaOpen && account && (
           <TokenTransfer
