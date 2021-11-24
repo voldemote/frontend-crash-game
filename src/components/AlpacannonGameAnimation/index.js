@@ -9,7 +9,7 @@ import { BackgroundPlinko } from './AnimationController'//AnimationController
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 
-const PlinkoGameAnimation = ({
+const AlpacannonGameAnimation = ({
   connected,
   amount,
   activities,
@@ -22,6 +22,7 @@ const PlinkoGameAnimation = ({
 }) => {
   const dispatch = useDispatch();
   const backgroundRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);
@@ -112,12 +113,12 @@ const PlinkoGameAnimation = ({
   );
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     userId: state.authentication.userId,
-//     activities: state.notification.activities,
-//     connected: state.websockets.connected
-//   };
-// };
+ const mapStateToProps = state => {
+   return {
+     userId: state.authentication.userId,
+     activities: state.notification.activities,
+     connected: state.websockets.connected
+   };
+ };
 
-export default connect(mapStateToProps)(PlinkoGameAnimation);
+export default connect(mapStateToProps)(AlpacannonGameAnimation);

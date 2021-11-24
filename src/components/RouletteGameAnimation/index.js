@@ -119,7 +119,7 @@ const RouletteGameAnimation = ({
       <div className={styles.audioControls}>
         {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
-      < id="" className={styles.canvas} ref={canvasRef}></canvas>
+      <canvas id="canvas" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };
