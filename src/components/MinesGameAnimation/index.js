@@ -229,10 +229,8 @@ const MinesGameAnimation = ({
   }
 
   async function nextMine(array, automine){
-    console.log("nextMine")
-    const { value } = await checkSelectedCell(array[automine])
-    console.log("value", value)
-    /*
+    const {value} = await gameInstance.game.controller.onClickOnCell(array[automine]);
+
     if(!value) {
       setRunning(false)
       console.log("lose")
@@ -247,7 +245,6 @@ const MinesGameAnimation = ({
     else if(value) {
       setTimeout(() => nextMine(array, automine + 1), 500)
     }
-    */
   }
 
   useEffect(() => {
