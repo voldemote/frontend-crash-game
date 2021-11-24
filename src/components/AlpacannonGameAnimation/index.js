@@ -5,7 +5,7 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
-import { BackgroundPlinko } from './AnimationController'//AnimationController
+import AnimationController from './AnimationController'//AnimationController
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 
@@ -33,6 +33,9 @@ const AlpacannonGameAnimation = ({
   //const [backgr, setBackgr] = useState(backgroundString(0));
   const [flag, setFlag] = useState(false);
   const [ball, setBall] = useState(null);
+  useEffect(() =>{
+    AnimationController.init({ref: backgroundRef})
+  },[])
 /*
   useEffect(() => {
     const lastnewgame = activities[activities.length-1]?.data
@@ -108,7 +111,6 @@ const AlpacannonGameAnimation = ({
       <div className={styles.audioControls}>
         {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
-      <canvas id="" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };
