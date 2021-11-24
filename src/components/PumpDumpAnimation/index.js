@@ -45,11 +45,9 @@ const GameMount = (setAudio, isPreparingRound, setGameLoaded, nextGameAtTimeStam
   };
 }
 
-const CashOut = (cashedOut) => {
-  if (cashedOut.length > 0) {
-    for (const cashOut of cashedOut) {
-      PumpDumpGameMananger.doCashedOutAnimation(cashOut);
-    }
+const FreshCashOut = (cashOuts) => {
+  if (cashOuts.length > 0) {
+    PumpDumpGameMananger.handleFreshCashouts(cashOuts);
   }
 }
 
@@ -70,12 +68,18 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
     gameStartedTimeStamp,
   } = useRosiData();
   const [hasGameLoaded, setGameLoaded] = useState(false);
-  const [hasGameEnded, setGameEnded] = useState(false);
   const [isPreparingRound, setIsPreparingRound] = useState(!hasStarted);
   const gameStartedTime = new Date(gameStartedTimeStamp).getTime();
   const canvasRef = useRef(null);
-
   const [audio, setAudio] = useState(null);
+
+  const cashOutsRef = useRef([...cashedOut]);
+
+  function updateCashOutRef() {
+    // To avoid creating a new array thus losing ref passed to the game
+    cashOutsRef.current.length = 0;
+    cashOutsRef.current.push(...cashedOut);
+  }
 
   // OnMount / OnDismount
   useEffect(() => {
@@ -92,8 +96,8 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
     if (hasStarted) {
       console.warn('hasStarted');
       setIsPreparingRound(false);
-      PumpDumpGameMananger.startGame(gameStartedTime);
-      CashOut(cashedOut);
+      updateCashOutRef();
+      PumpDumpGameMananger.startGame(gameStartedTime, cashOutsRef.current);
       return;
     }
 
@@ -113,8 +117,10 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
     if (!hasGameLoaded || !hasStarted) {
       return;
     }
+
+    updateCashOutRef();
     const freshCashOuts = cashedOut.filter(({ isFresh }) => isFresh === true);
-    CashOut(freshCashOuts);
+    FreshCashOut(freshCashOuts);
   }, [cashedOut]); // eslint-disable-line
 
   function render() {

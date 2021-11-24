@@ -1,61 +1,140 @@
 import { Container } from "@pixi/display";
-import { Graphics } from "@pixi/graphics";
-import { Sprite } from "@pixi/sprite";
-import { EventEmitter } from "eventemitter3";
+import { CashOut } from "./CashOut";
+import { INIT_CREATE_THRESHOLD, MERGE_BAR_COUNT, STICK_HEIGHT_OFFSET } from "./BarChartContainer";
 import { calcCrashFactorFromElapsedTime } from "components/RosiGameAnimation/canvas/utils";
-import { PumpDumpGameMananger } from "../PumpDumpGameManager";
-import { INIT_STICK_POINT_TIME } from "./HorizontalAxis";
-import { AXIS_START_POS_OFFSET_Y, INITIAL_AXIS_GAP, INIT_STICK_POINT_CRASH_FACTOR } from "./VerticalAxis";
-import TWEEN from '@tweenjs/tween.js';
 
+const VERTICAL_GAP = 25;
 
-// size of the stick visible at the top. Bot size will be same as the top
-const STICK_HEIGHT_OFFSET = 10;
+export class CashOutContainer extends Container {
+    barContainer = null;
 
-const STICK_WIDTH = 5;
-const BAR_WIDTH = 25;
-const BAR_ROUNDNESS = 4;
+    cashOuts = new Map();
 
-const CONT_START_Y = -AXIS_START_POS_OFFSET_Y;
-
-const INIT_CREATE_THRESHOLD = 300;   // Every 300ms generate a bar
-
-const MERGE_BAR_COUNT = 2;
-
-const reducer = (accumlated, current) => {
-    return {
-        x: accumlated.x + current.x,
-        y: accumlated.y + current.y,
-        heightIndex: accumlated.heightIndex + current.heightIndex
-    };
-}
-
-export class BarChartContainer extends Container {
-    audioManager = null;
-
-    constructor(audioManager) {
+    constructor(barContainer) {
         super();
-        this.eventEmitter = new EventEmitter();
-        this.audioManager = audioManager;
+        this.barContainer = barContainer;
+        this.barContainer.on('bars-merging', this.mergeCashouts, this);
+    }
 
-        const height = PumpDumpGameMananger.height;
-        const width = PumpDumpGameMananger.width;
-        this.position.set(width * 0.2, height + CONT_START_Y);
+    updateCashoutOpacity(cashOuts) {
+        cashOuts.forEach((cashOut, index) =>{
+            cashOut.alpha = 1 - 0.25 * index;
+        })
+    }
 
+    purgeMoreThanThreeCashouts(cashOuts) {
+        const removedCashouts = cashOuts.splice(3);
+        removedCashouts.forEach((removedCashout) => {
+            this.removeChild(removedCashout);
+        });
+        this.updateCashoutOpacity(cashOuts);
+    }
+
+    showCashout(amount, crashFactor) {
+        let cashOut = new CashOut(amount, crashFactor);
+        this.addChild(cashOut);
+
+        if (this.barContainer.generatedBars.length) {
+            if (this.cashOuts.has(this.barContainer.generatedBars.length - 1)) {
+                const cashOuts = this.cashOuts.get(this.barContainer.generatedBars.length - 1);
+                cashOuts.unshift(cashOut);
+                if (cashOuts.length > 3) {
+                    this.purgeMoreThanThreeCashouts(cashOuts);
+                }
+                this.updateCashoutOpacity(cashOuts);
+            } else {
+                this.cashOuts.set(this.barContainer.generatedBars.length - 1, [cashOut]);
+            }
+        }
+    }
+
+    addCashoutsForBarIndex(cashOuts, barIndex) {
+        const newCashOuts = [];
+        this.cashOuts.set(barIndex, newCashOuts);
+        cashOuts.forEach((cashOutData, index) => {
+            let cashOut = new CashOut(cashOutData.amount, cashOutData.crashFactor);
+            cashOut.alpha = 1 - 0.25 * index;
+            this.addChild(cashOut);
+            newCashOuts.push(cashOut);
+        });
+    }
+
+    getCashOutsForCrashFactor(cashOuts, crashFactor) {
+        let cashOutsToAdd = [];
+        for (let i = cashOuts.length - 1; i >= 0; --i) {
+            if (cashOuts[i].crashFactor * 100 < crashFactor) {
+                cashOutsToAdd.push(cashOuts[i]);
+                cashOuts.splice(i, 1);
+            }
+        }
+        cashOutsToAdd.sort((a, b) => {
+            return (b.crashFactor * 100) - (a.crashFactor * 100);
+        })
+        if (cashOutsToAdd.length > 3) {
+            cashOutsToAdd.splice(3);
+        }
+        return cashOutsToAdd;
+    }
+
+    handleCashouts(cashOuts, timeElapsed) {
+        this.cashOuts = new Map();
+        this.removeChildren();
+
+        let runningTime = INIT_CREATE_THRESHOLD * this.barContainer.createThresholdMult;
+        let runningCrashFactor = calcCrashFactorFromElapsedTime(runningTime < 1 ? 1 : runningTime) * 100;
+        let barIndex = 0;
+        // First Bar
+        const cashOutsToAdd = this.getCashOutsForCrashFactor(cashOuts, runningCrashFactor);
+        this.addCashoutsForBarIndex(cashOutsToAdd, barIndex);
+
+        while (runningTime < timeElapsed) {
+            ++barIndex;
+            runningTime += INIT_CREATE_THRESHOLD * this.barContainer.createThresholdMult;
+            runningCrashFactor = calcCrashFactorFromElapsedTime(runningTime < 1 ? 1 : runningTime) * 100;
+            const cashOutsToAdd = this.getCashOutsForCrashFactor(cashOuts, runningCrashFactor);
+            this.addCashoutsForBarIndex(cashOutsToAdd, barIndex);
+        }
+    }
+
+    mergeCashouts() {
+        let cashOutsToMergeList = new Map();
+        let list = [];
+        for (let index = this.barContainer.generatedBars.length - 1; index >= 0; index -= MERGE_BAR_COUNT) {
+            const cashOutsToMerge = [];
+            let count = 0;
+            do {
+                if (this.cashOuts.has(index - count)) {
+                    cashOutsToMerge.push(...this.cashOuts.get(index - count));
+                }
+                ++count;
+            } while (count < MERGE_BAR_COUNT && this.barContainer.generatedBars[index - count])
+    
+            list.unshift(cashOutsToMerge);
+        }
+
+        list.forEach((cashOuts, index) => {
+            if (cashOuts.length) {
+                if (cashOuts.length > 3) {
+                    this.purgeMoreThanThreeCashouts(cashOuts);
+                }
+                this.updateCashoutOpacity(cashOuts);
+                cashOutsToMergeList.set(index, cashOuts);
+            }
+        });
+        this.cashOuts = cashOutsToMergeList;
     }
 
 
-    update(timeElapsed) {
-        if (!this.shouldRunUpdate) {
-            return;
+    update() {
+        if (this.barContainer.generatedBars && this.barContainer.generatedBars) {
+            this.barContainer.generatedBars.forEach((bars, index) => {
+                if (this.cashOuts.has(index)) {
+                    const rect = bars.getBounds(true);
+                    this.cashOuts.get(index).forEach((cashOut, index) => {
+                        cashOut.position.set(rect.x + rect.width * 0.5, rect.bottom + STICK_HEIGHT_OFFSET + index * VERTICAL_GAP);
+                    })
+                }
+            })
         }
-
-        const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
-        this.handleContainerScale(timeElapsed, crashFactor);
-        if (this.shouldBarsMerge()) {
-            this.mergeBars();
-        }
-        this.setupBarChart(timeElapsed, crashFactor);
-
     }
 }

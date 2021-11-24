@@ -2,8 +2,6 @@ import { Application } from "@pixi/app";
 import { GameScene } from "./scenes/GameScene";
 import { LaunchScene } from "./scenes/LaunchScene";
 import TWEEN from '@tweenjs/tween.js';
-import { isMobile } from "react-device-detect";
-
 
 /*this class is purely static. Don't new this class*/
 export class PumpDumpGameMananger {
@@ -78,11 +76,11 @@ export class PumpDumpGameMananger {
         this.app.stage.addChild(this.currentScene);
     }
 
-    static startGame(gameTime) {
+    static startGame(gameTime, cashOuts) {
         if (!this.app) {
             return;
         }
-        const gameScene = new GameScene(gameTime, this._audioManager);
+        const gameScene = new GameScene(gameTime, this._audioManager, cashOuts);
         this.changeScene(gameScene);
     }
 
@@ -112,8 +110,11 @@ export class PumpDumpGameMananger {
         TWEEN.update(this.app.ticker.lastTime);
     }
 
-    static doCashedOutAnimation(cashOut) {
-        console.warn('cashout', cashOut);
+    static handleFreshCashouts(cashOuts) {
+        console.warn('fresh cashouts', cashOuts);
+        if (this.currentScene) {
+            this.currentScene.handleFreshCashouts(cashOuts);
+        }
     }
 
     static destroy() {
