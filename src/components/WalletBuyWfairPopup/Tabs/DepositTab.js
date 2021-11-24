@@ -4,8 +4,10 @@ import { useWeb3React } from '@web3-react/core';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import TextUtil from 'helper/Text';
 import classNames from 'classnames';
-import EthereumLogo from '../../../data/images/ethereum_logo.svg';
-import PolygonLogo from '../../../data/images/polygon-logo.svg';
+import EthereumLogoActive from '../../../data/icons/ethereum-logo-icon-active.svg';
+import EthereumLogo from '../../../data/icons/ethereum-logo-icon.svg';
+import PolygonLogoActive from '../../../data/icons/polygon-logo-active.svg';
+import PolygonLogo from '../../../data/icons/polygon-logo.svg';
 import QrcodeImage from '../../../data/images/qrcode-image.svg';
 import CopyIcon from '../../../data/icons/copy-icon.svg';
 import ConnectWallet from 'components/ConnectWallet/ConnectWallet';
@@ -18,8 +20,18 @@ import {
   currentNetwork,
 } from '../../../config/config';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
-
 import { resetState } from '../../../state/wallfair/slice';
+import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
+import { SWITCH_NETWORKS } from '../../../utils/constants';
+
+const initialWalletType = "Ethereum";
+
+const checkWalletType = () => {
+  const networkId = Object.keys(SWITCH_NETWORKS).find(sn => sn === window.ethereum.chainId);
+  console.log('------->SWITCH_NETWORKS[networkId]', SWITCH_NETWORKS[networkId])
+    return SWITCH_NETWORKS[networkId];
+}
+
 
 const DepositTab = props => {
   const dispatch = useDispatch();
@@ -27,7 +39,7 @@ const DepositTab = props => {
     '0x1154362C86e4352d018aDD5dF3E0E82E8e5e0ee6'
   );
   const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
-  const [walletType, setWalletType] = useState('polygon');
+  const [walletType, setWalletType] = useState(checkWalletType());
   const { active, library, account, chainId } = useWeb3React();
   const [visibleWalletForm, setVisibleWalletForm] = useState(false);
   const [tokenAreaOpen, setTokenAreaOpen] = useState(false);
@@ -49,6 +61,12 @@ const DepositTab = props => {
     }
   }, [account, active, dispatch]);
 
+  useEffect(async () => {
+     const networkId = Object.keys(SWITCH_NETWORKS).find(sn => sn !== window.ethereum.chainId);
+      await switchMetaMaskNetwork(networkId);
+
+  }, [walletType]);
+
   useEffect(() => {
     if (chainId !== currentChainId) return;
 
@@ -59,33 +77,35 @@ const DepositTab = props => {
     });
   }, [account, library, signer, hash, chainId, setBalance]);
 
+  console.log('walletType =>', walletType);
+
   return (
     <>
       <div className={styles.depositTabContainer}>
         <div className={styles.depositHeader}>
           <div
             className={classNames(
-              walletType === 'polygon'
+              walletType === 'Polygon'
                 ? styles.activeButton
                 : styles.inactiveButton
             )}
             onClick={() => {
-              setWalletType('polygon');
+              setWalletType('Polygon');
             }}
           >
-            <img src={PolygonLogo} alt="Polygon-logo" />
+            <img className={styles.imageSizePolygon} src={walletType === 'Polygon' ? PolygonLogoActive: PolygonLogo} alt="Polygon-logo" />
           </div>
           <div
             className={classNames(
-              walletType === 'ether'
+              walletType === 'Ethereum'
                 ? styles.activeButton
                 : styles.inactiveButton
             )}
             onClick={() => {
-              setWalletType('ether');
+              setWalletType('Ethereum');
             }}
           >
-            <img src={EthereumLogo} alt="Ethereum-logo" />
+            <img className={styles.imageSizeEther} src={walletType === 'Ethereum' ? EthereumLogoActive: EthereumLogo} alt="Ethereum-logo" />
           </div>
         </div>
 

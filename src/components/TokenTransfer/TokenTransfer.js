@@ -35,9 +35,10 @@ const TokenTransfer = ({
   }, [modalOpen]);
 
   if (balance < 1) {
-    return (
-      <Loader />
-    );
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return isloading ?  <Loader /> : (<div className={styles.transfer}>Insufficient Balance for a Transfer</div>)
   }
 
   const renderBody = () => (

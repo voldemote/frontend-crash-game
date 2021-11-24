@@ -103,6 +103,42 @@
   .depositHeader {
     display: flex;
     align-items: center;
+    justify-content: center;
+    border: 1px solid $colorWhite;
+    background-color: $colorPinkDark;
+    border-radius: 50px;
+    padding: 2px;
+    width: 318px;
+    height: 64px;
+
+    .imageSizeEther {
+      height: 35px;
+    }
+    .imageSizePolygon {
+      height: 23px;
+    }
+
+    .activeButton {
+      border: 1px solid $colorWhite;
+      height: 50px;
+      width: 100%;
+      align-items: center;
+      display: flex;
+      background-color: $colorWhite;
+      border-radius: 50px;
+      padding: 8px;
+      display: flex;
+      // justify-content: center;
+    }
+    .inactiveButton {
+      height: 50px;
+      width: 100%;
+      align-items: center;
+      display: flex;
+      padding: 10px;
+      display: flex;
+      // justify-content: center;
+    }
   }
 
   .copyhash {
