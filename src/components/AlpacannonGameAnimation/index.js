@@ -59,10 +59,10 @@ const PlinkoGameAnimation = ({
   }, [bet]);
   */
 
-  const spin = async () => {
-    setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-    !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
-  }
+  // const spin = async () => {
+  //   setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
+  //   !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
+  // }
 /*
   const changeBackground = (count) => {
     if(flag) return
@@ -89,21 +89,35 @@ const PlinkoGameAnimation = ({
      setBet((bet) => {return {...bet, ball: bet.ball-1}})
   }
   */
+  // return (
+  //   <div ref={backgroundRef} className={styles.animation}>
+  //     {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
+  //     {false && <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />}
+  //     {/*false && width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />*/}
+  //   </div>
+  // );
   return (
-    <div ref={backgroundRef} className={styles.animation}>
-      {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-      {false && <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />}
-      {/*false && width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />*/}
+    <div
+      ref={backgroundRef}
+      className={classNames(
+        styles.animation,
+        isMobile && styles.animationMobile
+      )}
+    >
+      <div className={styles.audioControls}>
+        {audio && <GameAudioControlsLocal audio={audio} />}
+      </div>
+      <canvas id="" className={styles.canvas} ref={canvasRef}></canvas>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    userId: state.authentication.userId,
-    activities: state.notification.activities,
-    connected: state.websockets.connected
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     userId: state.authentication.userId,
+//     activities: state.notification.activities,
+//     connected: state.websockets.connected
+//   };
+// };
 
 export default connect(mapStateToProps)(PlinkoGameAnimation);
