@@ -139,14 +139,13 @@ const PlaceBetMines = ({
       let prof = 0
       if(bet.win) {
         prof = profit + bet.amount
-        console.log("Win: ", prof)
-        setTimeout(()=> {
-          document.getElementById('mines-cashout-btn').click();
+      //  setTimeout(()=> {
+          handleCashout()
+          //document.getElementById('mines-cashout-btn').click();
           const acc = prof+ accumulated
           setAccumulated((a)=> {return prof+ a})
           if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
             const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
-            console.log("bet2", newamount)
             if(newamount < 1) setBet({autobet: false, pending: false})
             else {
               setAccumulated((a)=> {return a- newamount})
@@ -158,7 +157,7 @@ const PlaceBetMines = ({
             setBet({autobet: false, pending: false})
           }
 
-        }, 500)
+      //  }, 500)
 
       }else{
         const acc = accumulated - bet.amount

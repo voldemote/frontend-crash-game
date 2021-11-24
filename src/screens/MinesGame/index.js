@@ -150,6 +150,7 @@ const Game = ({
 
   async function handleBet(payload) {
     audio.playBetSound();
+    setConfetti(false)
     if (!payload) return;
     try {
       if(payload.demo) {

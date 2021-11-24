@@ -237,7 +237,9 @@ const MinesGameAnimation = ({
       //setTimeout(() => {setBet((bet) => {console.log("lose");return {...bet, done: false}});}, 5000)
     }
     else if(automine >= bet.cleared-1){
-      setTimeout(() => {setBet((bet) => {console.log("Win");return {...bet, done: false, win: true}});}, 500)
+      setTimeout(() => {
+        setBet((bet) => {console.log("Win");return {...bet, done: false, win: true}});},
+      500)
     }
     else if(value) {
       setTimeout(() => nextMine(array, automine + 1, true), 500)
