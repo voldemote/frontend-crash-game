@@ -137,7 +137,7 @@ const PlaceBetMines = ({
       let prof = 0
       if(bet.win) {
         prof = profit + bet.amount
-      //  setTimeout(()=> {
+        setTimeout(()=> {
           handleCashout()
           //document.getElementById('mines-cashout-btn').click();
           const acc = prof+ accumulated
@@ -155,7 +155,7 @@ const PlaceBetMines = ({
             setBet({autobet: false, pending: false})
           }
 
-      //  }, 500)
+        }, 1000)
 
       }else{
         const acc = accumulated - bet.amount
