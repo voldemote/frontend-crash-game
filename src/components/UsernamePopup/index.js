@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { ReactComponent as ConfettiLeft } from '../../data/icons/confetti-left.svg';
 import { ReactComponent as ConfettiRight } from '../../data/icons/confetti-right.svg';
@@ -21,7 +21,7 @@ const UsernamePopup = ({
   user,
   initialReward,
 }) => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(user?.username || '');
   const [errorMessage, setErrorMessage] = useState();
   const [profileErrorMessage, setProfileErrorMessage] = useState();
 

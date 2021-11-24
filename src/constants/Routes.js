@@ -31,6 +31,7 @@ export default {
   newBet: '/trade/new',
   events: '/events/:category?',
   games: '/games',
+  wallet: '/wallet',
   home: '/',
   liveEvents: '/live-events/:category?',
   newLiveEvent: '/live-events/new',
@@ -38,6 +39,7 @@ export default {
   logout: '/logout',
   rosiGame: '/games/:slug',
   plinkoGame: '/games/plinko',
+  alpacannonGame: '/games/alpacannon',
   elonGame: '/games/elon-game',
   rouletteGame: '/games/alpaca-wheel',
   elonWallpaper: '/games/elon-wallpaper',
@@ -53,4 +55,5 @@ export default {
   kyc: '/kycpolicy',
   privacy: '/privacypolicy',
   imprint: '/imprint',
+  oauth: '/oauth/:provider',
 };
