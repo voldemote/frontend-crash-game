@@ -103,12 +103,10 @@ const PlaceBetMines = ({
     }
 
     trackMinesPlaceBet({ amount, mines });
-    // console.log('###payload', payload);
     await onBet(payload);
   }
 
   const placeAutoBet = async () => {
-    console.log("autobet")
     if (userUnableToBet) return;
     if (amount > userBalance) return;
     setConfetti(false);

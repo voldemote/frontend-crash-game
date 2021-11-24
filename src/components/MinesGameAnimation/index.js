@@ -151,7 +151,6 @@ const MinesGameAnimation = ({
   const checkSelectedCell = async (props) => {
     const {row, col} = props;
     let allMinesPos = null;
-    console.log("value1", row, col)
 
     setCurrentStep((step) => step+1);
 
@@ -200,7 +199,6 @@ const MinesGameAnimation = ({
 
   const handleLost = () => {
     setGameInProgress(false);
-    console.log("lose")
 
     setTimeout(()=> {
       setBet((bet) => {
@@ -238,8 +236,8 @@ const MinesGameAnimation = ({
     }
     else if(automine >= bet.cleared-1){
       setTimeout(() => {
-        setBet((bet) => {console.log("Win");return {...bet, done: false, win: true}});},
-      500)
+        setBet((bet) => {return {...bet, done: false, win: true}})},
+      2000)
     }
     else if(value) {
       setTimeout(() => nextMine(array, automine + 1, true), 500)
@@ -248,7 +246,6 @@ const MinesGameAnimation = ({
 
   useEffect(() => {
     if(bet.autobet && bet.done){
-      console.log("start autobet nextmine")
       setTimeout(() => nextMine(shuffle(originalArray), 0, true), 300)
     }
   }, [bet.autobet, bet.done, running])
