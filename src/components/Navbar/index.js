@@ -92,11 +92,10 @@ const Navbar = ({
     leaderboard: 'leaderboard',
     profile: 'profile',
     wallet: 'wallet',
-    emailNotifications: 'emailNotifications'
+    emailNotifications: 'emailNotifications',
   };
 
   const toggleOpenDrawer = drawerName => {
-
     if (!drawers.hasOwnProperty(drawerName)) {
       return;
     }
