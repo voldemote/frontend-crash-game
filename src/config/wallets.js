@@ -2,10 +2,10 @@ import {
   walletconnect,
   injected,
   gnosisSafe,
-  trezor,
+  // trezor,
   walletlink,
 } from './connectors';
-import TrezorIcon from '../data/icons/wallet/trezor.svg';
+// import TrezorIcon from '../data/icons/wallet/trezor.svg';
 import GnosisIcon from '../data/icons/wallet/gnosis.svg';
 import MetaMaskIcon from '../data/icons/wallet/metamask.svg';
 import CoinbaseIcon from '../data/icons/wallet/coinbase.svg';
@@ -35,14 +35,14 @@ export const SUPPORTED_WALLETS = {
     mobile: false,
     iconURL: WallectConnectIcon,
   },
-  WALLET_LINK: {
-    connector: walletlink,
-    name: 'Coinbase Link',
-    description: 'Connect to Coinbase or other Wallet Link wallets...',
-    href: null,
-    mobile: false,
-    iconURL: CoinbaseIcon,
-  },
+  // WALLET_LINK: {
+  //   connector: walletlink,
+  //   name: 'Coinbase Link',
+  //   description: 'Connect to Coinbase or other Wallet Link wallets...',
+  //   href: null,
+  //   mobile: false,
+  //   iconURL: CoinbaseIcon,
+  // },
   GNOSIS_SAFE: {
     connector: gnosisSafe,
     name: 'Gnosis Safe',
@@ -50,11 +50,11 @@ export const SUPPORTED_WALLETS = {
     href: null,
     iconURL: GnosisIcon,
   },
-  TREZOR: {
-    connector: trezor,
-    name: 'Trezor Wallet',
-    description: 'Trezor Hardware Wallet',
-    href: null,
-    iconURL: TrezorIcon,
-  },
+  // TREZOR: {
+  //   connector: trezor,
+  //   name: 'Trezor Wallet',
+  //   description: 'Trezor Hardware Wallet',
+  //   href: null,
+  //   iconURL: TrezorIcon,
+  // },
 };
