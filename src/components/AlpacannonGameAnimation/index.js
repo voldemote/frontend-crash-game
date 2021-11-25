@@ -5,7 +5,7 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
-import AnimationController from './AnimationController'//AnimationController
+//import AnimationController from './AnimationController'//AnimationController
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 const AlpacannonGameAnimation = ({
@@ -47,10 +47,11 @@ const AlpacannonGameAnimation = ({
 
   const spin = () => {
     console.log("Go!")
+    setBet({ ready: true, crash: Math.round(Math.random()*100) })
     setGame('shoot')
     setTimeout(() => {setGame('shoot')}, 400)
-    setTimeout(() => {setGame('ready')}, 4000)
-    setBet({ ready: true })
+    setTimeout(() => {setGame('crashed')}, 1400)
+    setTimeout(() => {setGame('ready')}, 3000)
   }
 
   useEffect(() => {
@@ -128,8 +129,8 @@ const AlpacannonGameAnimation = ({
     setSlider(e.target.value)
     setCannon(`rotate(${e.target.value}deg)`)
   }
-  
-  console.log("game: ", game==='ready')
+
+  console.log("bet: ", bet)
 
   return (
     <div
@@ -154,17 +155,17 @@ const AlpacannonGameAnimation = ({
       <div className={styles.chance}>
         <span>{interpolate(slider)}%</span>
       </div>
-
       <div className={styles.fullcannon} style={{transform: cannon}}>
         <img className={styles.cannon} src="/images/cannon-games/cannon.svg" alt="cannon" />
-        {game==='ready' && <img  className={styles.alpacaInCannon} src="/images/cannon-games/alpaca_in_cannon.svg" alt="alpaca in cannon" />}
-        {game==='shoot' && <img className={styles.explotion}  src="/images/cannon-games/explotion.svg" alt="explotion" />}
+        <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca_in_cannon.svg" alt="alpaca in cannon" />
+        <img className={styles.explotion} style={{opacity: game==='shoot'?1:0}} src="/images/cannon-games/explotion.svg" alt="explotion" />
       </div>
-
+      <img className={styles.alpacaFlying} style={{ opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_flying.svg" alt="alpaca flying" />
+      <img className={styles.alpacaCrash} style={{ opacity: game==='crashed'?1:0, right: (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_crash.svg" alt="alpaca crash" />
     </div>
   );
 };
-
+//crash
  const mapStateToProps = state => {
    return {
      userId: state.authentication.userId,

@@ -202,6 +202,7 @@
       z-index: 4;
 
     }
+
     .alpacaInCannon{
       width: 65px;
       top: -40px;
@@ -215,9 +216,30 @@
       position: absolute;
       left: 0px;
       z-index: 1;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -ms-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3 ease-in-out;
+
     }
 
   }
+  .alpacaCrash{
+    height: 65px;
+    position: absolute;
+    top: 180px;
+  }
+  .alpacaFlying {
+    width: 100px;
+    bottom: 50px;
+    right: 30px;
+    transition: right 1s ease-in-out, bottom 1s ease-in-out;
+    position: absolute;
+    right: 270px;
+    z-index: 1;
+  }
+
 /*
   .slider::-moz-range-thumb {
     width: 23px;
