@@ -5,10 +5,10 @@ import PopupTheme from '../Popup/PopupTheme';
 import { getGameDetailById } from '../../api/crash-game';
 import _ from 'lodash';
 
-const LastCrashes = ({ lastCrashes, showPopup, text }) => {
+const LastCrashes = ({ lastCrashes, showPopup, text, gameTypeId }) => {
   const handleCrashFactorClick = async (crash, e) => {
     const gameHash = crash?.gameHash;
-    const response = await getGameDetailById(gameHash).catch(err => {
+    const response = await getGameDetailById(gameHash, gameTypeId).catch(err => {
       console.error("Can't get user by id:", err);
     });
     const details = response?.data || null;

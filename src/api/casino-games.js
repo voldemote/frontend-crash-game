@@ -104,17 +104,6 @@ const createTrade = payload => {
   });
 };
 
-const getGameDetailById = (gameId, type) => {
-  const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
-    ':gameId',
-    gameId
-  );
-
-  return Api.get(gameUrl + (type ? `/${type}` : '')).catch(error => {
-    console.log('[API Error] called: getGameDetailById', error);
-  });
-};
-
 const transformUser = user => ({
   crashFactor: user.crashfactor,
   createdAt: user.created_at,
@@ -158,7 +147,6 @@ export {
   setToken,
   createTrade,
   getSpinsAlpacaWheel,
-  getGameDetailById,
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
