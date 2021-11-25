@@ -29,7 +29,7 @@ export const AUDIO_LIST = {
         loop: false,
     },
     gameover: {
-        url: '/sounds/pump-dump/sfx_gameover.mp3',
+        url: '/sounds/elon/sfx_gameover.mp3',
         loop: false,
     },
     lose: {
