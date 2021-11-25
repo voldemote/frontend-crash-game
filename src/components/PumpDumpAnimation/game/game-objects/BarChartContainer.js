@@ -233,25 +233,16 @@ export class BarChartContainer extends Container {
     }
 
     biggerBarEmergeTween(bigBar) {
-        let scaleData = { x: 0, y: 0 };
-
-        new TWEEN.Tween(scaleData)
+        new TWEEN.Tween(bigBar.scale)
             .to({ x: this.barScale.x, y: this.barScale.y }, 600)
-            .onUpdate(() => {
-                bigBar.scale.set(scaleData.x, scaleData.y);
-            })
             .easing(TWEEN.Easing.Elastic.Out)
             .start();
     }
 
     showNewBarTween(newBar) {
-        let scaleData = { x: 0, y: 0 };
         this.audioManager.playSfx('bar');
-        new TWEEN.Tween(scaleData)
+        new TWEEN.Tween(newBar.scale)
             .to({ x: this.barScale.x, y: this.barScale.y }, 300)
-            .onUpdate(() => {
-                newBar.scale.set(scaleData.x, scaleData.y);
-            })
             .easing(TWEEN.Easing.Back.Out)
             .start();
     }

@@ -84,6 +84,8 @@ export class LaunchScene extends Container {
             .to({ x: posX }, launchTime / ((count * 2) - 1))
             .onUpdate(() => {
                 this.tweets[current].x = moveData.x;
+            })
+            .onComplete(() => {
                 if (moveData.x === posX && current < count) {
                     if ((current === 0 && count !== 2) || (current > Math.floor(count / 2) && current < count - 1)) {
                         this.startAnimation(count, current + 1, launchTime);
@@ -92,7 +94,6 @@ export class LaunchScene extends Container {
                     } else {
                         this.secondMoveSequenceAnimation(count, current, launchTime);
                     }
-
                 }
             })
             .easing(TWEEN.Easing.Quintic.Out)
