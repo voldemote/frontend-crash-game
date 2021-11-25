@@ -65,15 +65,17 @@ class AnimationController {
         x: cannon.position.x,
         y: cannon.position.y-200
       });
+      console.log("shoot");
     })
     return true
   }
 }
 function shoot(rotation, startPosition){
   alpaCannon.visible = false;
-  //alpaExplosion.visible=true;
+  alpaExplosion.alpha = 1;
+  alpaExplosion.visible=true;
   new TWEEN.Tween(alpaExplosion)
-    .to({ alpha: 0 }, 300)
+    .to({ alpha: 0 }, 5000)
     .onUpdate(() => {
       // newBar.scale.set(scaleData.x, scaleData.y);
       console.warn('bar alpha update');
@@ -93,6 +95,7 @@ function shoot(rotation, startPosition){
 }
 
 function rotateToPoint(mx, my, px, py){
+  console.log(mx + "--" + my + "--" + px + "--" + py)
   var self = this;
   var dist_Y = my - py;
   var dist_X = mx - px;
@@ -109,7 +112,7 @@ function animate(time) {
   TWEEN.update(time);
 
   // just for fun, let's rotate mr rabbit a little
-  //cannon.rotation = rotateToPoint(renderer.plugins.interaction.mouse.global.x, renderer.plugins.interaction.mouse.global.y, cannon.position.x, cannon.position.y);
+  cannon.rotation = rotateToPoint(renderer.plugins.interaction.mouse.global.x, renderer.plugins.interaction.mouse.global.y, cannon.position.x, cannon.position.y);
 
   for(var b=bullets.length-1;b>=0;b--){
     bullets[b].position.x += Math.cos(bullets[b].rotation)*bulletSpeed;
