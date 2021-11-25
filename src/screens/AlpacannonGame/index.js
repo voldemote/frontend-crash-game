@@ -207,7 +207,7 @@ const PlinkoGame = ({
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
                 <PlaceBetCasino
-                  gameName={'plinko'}
+                  gameName={'cannon'}
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}

@@ -276,6 +276,21 @@
       font-size: 19px;
     }
   }
+  .interpolateMultiplier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 270px;
+    right: 130px;
+    width: 88px;
+    height: 22px;
+    span{
+      color: white;
+      font-weight: bold;
+      font-size: 19px;
+    }
+  }
   .slider {
     position: absolute;
     right: 58px;

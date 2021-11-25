@@ -32,10 +32,6 @@ const AlpacannonGameAnimation = ({
   const [shadow, setShadow] = useState(null);
 
   const [slider, setSlider] = useState(0);
-  const [cannon, setCannon] = useState(`rotate(0deg)`)
-
-  const [explotion, setExplotion] = useState('none');
-  const [alpacaInCannon, setAlpacaInCannon] = useState('auto');
 
   useEffect(() =>{
     //AnimationController.init({ref: backgroundRef})
@@ -54,10 +50,6 @@ const AlpacannonGameAnimation = ({
     setTimeout(() => {setGame('ready')}, 3000)
   }
 
-  useEffect(() => {
-    setExplotion(game=='shoot'?'auto':'none')
-    setAlpacaInCannon(game==='ready' ? 'auto' : 'none')
-  },[game])
 /*
   useEffect(() => {
     const lastnewgame = activities[activities.length-1]?.data
@@ -122,13 +114,11 @@ const AlpacannonGameAnimation = ({
   //     {/*false && width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />*/}
   //   </div>
   // );
-  const interpolate = (number) => {
-    return Math.floor((Number(number) + 40)*100/80)
-  }
-  const dragSlider = (e) => {
-    setSlider(e.target.value)
-    setCannon(`rotate(${e.target.value}deg)`)
-  }
+  const interpolate = (number) => Math.floor((Number(number) + 41)*98/80)
+
+  const interpolateMultiplier = (number) => 100/(100-((Number(number) + 41)*98/80))//Math.floor((Number(number) + 41)*98/80)
+
+  const dragSlider = (e) => setSlider(e.target.value)
 
   console.log("bet: ", bet)
 
@@ -153,9 +143,12 @@ const AlpacannonGameAnimation = ({
           min={-40}
           max={40} />
       <div className={styles.chance}>
-        <span>{interpolate(slider)}%</span>
+        <span>{100-interpolate(slider)}%</span>
       </div>
-      <div className={styles.fullcannon} style={{transform: cannon}}>
+      <div className={styles.interpolateMultiplier}>
+        <span>{interpolateMultiplier(slider).toFixed(2)}</span>
+      </div>
+      <div className={styles.fullcannon} style={{transform: `rotate(${slider}deg)`}}>
         <img className={styles.cannon} src="/images/cannon-games/cannon.svg" alt="cannon" />
         <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca_in_cannon.svg" alt="alpaca in cannon" />
         <img className={styles.explotion} style={{opacity: game==='shoot'?1:0}} src="/images/cannon-games/explotion.svg" alt="explotion" />
