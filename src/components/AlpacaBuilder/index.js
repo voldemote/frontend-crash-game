@@ -174,7 +174,7 @@ const AlpacaBuilder = ({
           {renderSvg()}
         </svg>
       </div>
-      <div className={styles.viewsContainer}>
+     <div className={styles.viewsContainer}>
         <AbViewIntro
           cssClassNames={classNames(getCssClass(AB_VIEWS.intro))}
           onPushView={pushView}></AbViewIntro>
@@ -188,7 +188,6 @@ const AlpacaBuilder = ({
           current={svgProperties}
           ></AbViewStyles>
       </div>
-
     </div>
     <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>
     </>

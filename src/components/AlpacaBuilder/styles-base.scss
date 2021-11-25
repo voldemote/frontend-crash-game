@@ -33,8 +33,6 @@
     .svg{
       flex:1;
       margin: auto;
-      //width: 100%;
-      //height: calc(100% - 90px);
     }
   }
 
@@ -61,6 +59,7 @@
     .tiles{
       display: flex;
       flex-flow: row wrap;
+      justify-content: center;
 
       .tile{
         margin: 10px;
@@ -90,8 +89,10 @@
 
     .colors{
       display: flex;
-      overflow-x: auto;
+      flex-direction: column;
       padding:20px 0;
+      flex-flow: row wrap;
+      justify-content: center;
 
       .color{
         margin: 10px;

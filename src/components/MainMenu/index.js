@@ -21,6 +21,8 @@ import { checkUsername } from '../../api';
 import { AlertActions } from 'store/actions/alert';
 import { useDispatch } from 'react-redux';
 import AlpacaBuilder from 'components/AlpacaBuilder';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from '../Popup/PopupTheme';
 
 const MainMenu = ({
   opened,
@@ -40,7 +42,8 @@ const MainMenu = ({
   updateNotificationSettings,
   fetchReferrals,
   alpacaBuilderVisible = false,
-  handleAlpacaBuilderVisible
+  handleAlpacaBuilderVisible,
+  showPopup,
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(user.name);
@@ -64,6 +67,7 @@ const MainMenu = ({
   }, [user, editVisible]);
 
   const clickUploadProfilePicture = () => {
+    //showPopup(PopupTheme.alpacaBuilder, { small: true });
     handleAlpacaBuilderVisible(!alpacaBuilderVisible);
     //profilePictureRefName.current?.click();
   };
@@ -101,7 +105,9 @@ const MainMenu = ({
   };
 
   const onAlpacaBuilderClick = () => {
-    handleAlpacaBuilderVisible(!alpacaBuilderVisible);
+    showPopup(PopupTheme.alpa, {  });
+
+    //handleAlpacaBuilderVisible(!alpacaBuilderVisible);
   };
 
   const handleName = e => {
@@ -535,6 +541,14 @@ const mapDispatchToProps = dispatch => {
     },
     handleAlpacaBuilderVisible: bool => {
       dispatch(GeneralActions.setAlpacaBuilderVisible(bool));
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
     },
   };
 };

@@ -22,21 +22,26 @@ export const CATEGORIES = [{
     path: '/images/alpaca-builder/Body/',
     styles: ['Body1'],
     colors:[
-      ['#FEFFCF','#999999'],['#ffffff','#999999'],['#FFCECE','#999999'],
-      ['#B5FFC9','#B5FFC9'],['#B5FFC9','#FF0101'],['#CECBCE','#423434'],
-      ['#70FF00','#7C7070'],['#00FFE0','#7C7070'],['#FAFF00','#7C7070'],
-      ['#ED7CFF','#7C7070'],['#FF7CD3','#7C7070'],['#00D1FF','#7C7070'],
-      ['#00D1FF','#F80D0D'],['#70FF00','#F80D0D'],['#B6B6B6','#0075FF'],
-      ['#555555','#DBFF00'],['#2BFFCC','#DBFF00'],
+      ['#FEFFAD','#FEFFCF'],['#FFFFFF','#F5F5F5'],['#FFCECE','#FFADAD'],
+      ['#B5FFC9','#99FFB4'],['#FFADAD','#FF8585'],['#CECBCE','#BAB5BA'],
+      ['#346553','#2A5142'],['#29313D','#181D25'],['#B43F3F','#973535'],
+      ['#EDCA5A','#E6B71A'],['#E2A350','#D78A23'],['#6A1060','#3D0937'],
+      ['#141414','#000000'],['#7067AC','#585091'],['#106A52','#093D2F'],
+      ['#C96EBF','#BD4CB0'],['#D78A23','#C17B1F'],['#3F89B4','#357397'],
+      ['#E6B71A','#CAA016'],
     ]
   },{
     name: 'hair',
     path: '/images/alpaca-builder/Hair/',
     styles: ['Hair1', 'Hair2', 'Hair3', 'Hair4', 'Hair5', 'Hair6', 'Hair7', 'Hair8', 'Hair9'],
     colors:[
-      ['#FEFFCF'],['#ffffff'],['#B5FFC9'],['#CECBCE'],['#70FF00'],
-      ['#00FFE0'],['#FAFF00'],['#ED7CFF'],['#FF7CD3'],['#00D1FF'],
-      ['#555555'],['#2BFFCC'],
+      ['#FEFFAD'],['#FFFFFF'],['#FFCECE'],
+      ['#B5FFC9'],['#FFADAD'],['#CECBCE'],
+      ['#346553'],['#29313D'],['#B43F3F'],
+      ['#EDCA5A'],['#E2A350'],['#6A1060'],
+      ['#141414'],['#7067AC'],['#106A52'],
+      ['#C96EBF'],['#D78A23'],['#3F89B4'],
+      ['#E6B71A'],
     ]
   },{
     name: 'eyes',
