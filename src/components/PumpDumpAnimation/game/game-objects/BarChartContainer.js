@@ -318,7 +318,7 @@ export class BarChartContainer extends Container {
     setupBarChart(timeElapsed, crashFactor) {
         if (timeElapsed - this.previousThreshold >= INIT_CREATE_THRESHOLD * this.createThresholdMult) {
             this.previousThreshold += INIT_CREATE_THRESHOLD * this.createThresholdMult;
-            this.generateBar(this.previousThreshold, crashFactor);
+            this.generateBar(this.previousThreshold, crashFactor, true);
         }
     }
 
@@ -328,7 +328,7 @@ export class BarChartContainer extends Container {
         return (barHeight * 0.5 * this.barScale.y);
     }
 
-    generateBar(timeElapsed, crashFactor) {
+    generateBar(timeElapsed, crashFactor, showTween = false) {
         let randMax = this.greenBarTextures.length;
         let randMin = 0;
         // If less that 1.25x don't show tall bars
@@ -361,7 +361,11 @@ export class BarChartContainer extends Container {
         bar.anchor.set(0.5);
         bar.position.set(positionX, positionY);
         this.addChild(bar);
-        this.showNewBarTween(bar);
+        if (showTween) {
+            this.showNewBarTween(bar);
+        } else {
+            bar.scale.set(this.barScale.x, this.barScale.y);
+        }
 
         this.generatedBars[this.generatedBars.length] = bar;
     }

@@ -17,10 +17,10 @@ export class GameAudioManager {
         this.isRequestingBGM = false;
 
         let count = Object.keys(AUDIO_LIST).length;
-
         Sound.sound.add(
             AUDIO_LIST,
             {
+                preload: true,
                 loaded: (err, data) => {
                     if (err) {
                         this.errors = [...this.errors, err];
@@ -29,10 +29,10 @@ export class GameAudioManager {
                     if (count === 0) {
                         console.warn('audio loaded');
                         this.ready = true;
+                        this.setVolume(this.volume);
                         this.isRequestingBGM && this.startBgm();
                     }
                 },
-                preload: true,
             }
         );
     }
@@ -48,10 +48,11 @@ export class GameAudioManager {
             }
 
             localStorage.setItem('gameVolume', `${this.volume}`);
-            Sound.sound.volume('bgm', this.volume);
-            Sound.sound.setVolume(this.volume);
+            if (this.ready) {
+                Sound.sound.volume('bgm', this.volume);
+            }
         } catch (e) {
-            console.error('Audio output error');
+            console.error('Audio output error', e);
         }
     }
 
@@ -81,7 +82,9 @@ export class GameAudioManager {
     }
 
     stopSound(name) {
-        Sound.sound.stop(name);
+        if (this.ready) {
+            Sound.sound.stop(name);
+        }
     }
 
     startBgm() {

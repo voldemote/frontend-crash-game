@@ -85,6 +85,7 @@ export class PumpDumpGameMananger {
     }
 
     static endGame(isLosing) {
+        isLosing ? this._audioManager.playLoseSound() : this._audioManager.playGameOverSound();
         if (this.currentScene) {
             this.currentScene.stop();
             this.currentScene.handleEndGame();
