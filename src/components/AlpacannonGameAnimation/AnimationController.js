@@ -104,8 +104,9 @@ function rotateToPoint(mx, my, px, py){
 // start animating
 animate();
 
-function animate() {
+function animate(time) {
   requestAnimationFrame(animate);
+  TWEEN.update(time);
 
   // just for fun, let's rotate mr rabbit a little
   //cannon.rotation = rotateToPoint(renderer.plugins.interaction.mouse.global.x, renderer.plugins.interaction.mouse.global.y, cannon.position.x, cannon.position.y);
