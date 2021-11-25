@@ -142,7 +142,7 @@ const PlaceBetMines = ({
         const acc = prof + accumulated
         setAccumulated((a)=> {return prof+ a})
         if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
-          const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+          const newamount = bet.profitStop > 0 && Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease))
           if(newamount < 1) setBet({autobet: false, pending: false})
           else {
             setTimeout(()=> {
@@ -155,13 +155,11 @@ const PlaceBetMines = ({
         else {
           setBet({autobet: false, pending: false})
         }
-
-
       }else{
         const acc = accumulated - bet.amount
         setAccumulated(acc)
         if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
-          const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+          const newamount = bet.lossStop >= 0 && Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
           if(newamount < 1) setBet({autobet: false, pending: false})
           else {
             setBet((bet) => {return{...bet, amount: newamount }})
@@ -171,10 +169,7 @@ const PlaceBetMines = ({
         else {
           setBet({autobet: false, pending: false})
         }
-
-
       }
-
     }else if(!bet.autobet && bet.stopped){
       setTimeout(()=> {
         document.getElementById('mines-cashout-btn')?.click();
@@ -376,6 +371,7 @@ const PlaceBetMines = ({
                   className={classNames(styles.input)}
                   type={'number'}
                   value={amount}
+                  disabled={bet.autobet ? true : false}
                   onChange={onGuestAmountChange}
                   step={0.01}
                   min="1"

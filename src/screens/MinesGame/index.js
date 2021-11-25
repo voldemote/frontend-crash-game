@@ -147,7 +147,7 @@ const Game = ({
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
-  };
+  }
 
   async function handleBet(payload) {
     audio.playBetSound();
