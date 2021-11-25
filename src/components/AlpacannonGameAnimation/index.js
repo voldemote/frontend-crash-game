@@ -120,8 +120,6 @@ const AlpacannonGameAnimation = ({
 
   const dragSlider = (e) => setSlider(e.target.value)
 
-  console.log("bet: ", bet)
-
   return (
     <div
       ref={backgroundRef}
