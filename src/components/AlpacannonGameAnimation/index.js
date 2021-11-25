@@ -22,6 +22,8 @@ const AlpacannonGameAnimation = ({
   const dispatch = useDispatch();
   const backgroundRef = useRef(null);
 
+  const [game, setGame] = useState('ready');
+
   const [audio, setAudio] = useState(null);
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
@@ -31,6 +33,9 @@ const AlpacannonGameAnimation = ({
 
   const [slider, setSlider] = useState(0);
   const [cannon, setCannon] = useState(`rotate(0deg)`)
+
+  const [explotion, setExplotion] = useState('none');
+  const [alpacaInCannon, setAlpacaInCannon] = useState('auto');
 
   useEffect(() =>{
     //AnimationController.init({ref: backgroundRef})
@@ -42,9 +47,16 @@ const AlpacannonGameAnimation = ({
 
   const spin = () => {
     console.log("Go!")
+    setGame('shoot')
+    setTimeout(() => {setGame('shoot')}, 400)
+    setTimeout(() => {setGame('ready')}, 4000)
     setBet({ ready: true })
   }
 
+  useEffect(() => {
+    setExplotion(game=='shoot'?'auto':'none')
+    setAlpacaInCannon(game==='ready' ? 'auto' : 'none')
+  },[game])
 /*
   useEffect(() => {
     const lastnewgame = activities[activities.length-1]?.data
@@ -116,7 +128,9 @@ const AlpacannonGameAnimation = ({
     setSlider(e.target.value)
     setCannon(`rotate(${e.target.value}deg)`)
   }
-  console.log("Multiplier: ", interpolate(slider))
+  
+  console.log("game: ", game==='ready')
+
   return (
     <div
       ref={backgroundRef}
@@ -137,11 +151,16 @@ const AlpacannonGameAnimation = ({
           step={1}
           min={-40}
           max={40} />
-          <div className={styles.chance}>
-            <span>{interpolate(slider)}%</span>
-          </div>
+      <div className={styles.chance}>
+        <span>{interpolate(slider)}%</span>
+      </div>
 
-      <img className={styles.cannon} style={{transform: cannon}} src="/images/cannon-games/cannon.svg" alt="cannon" />
+      <div className={styles.fullcannon} style={{transform: cannon}}>
+        <img className={styles.cannon} src="/images/cannon-games/cannon.svg" alt="cannon" />
+        {game==='ready' && <img  className={styles.alpacaInCannon} src="/images/cannon-games/alpaca_in_cannon.svg" alt="alpaca in cannon" />}
+        {game==='shoot' && <img className={styles.explotion}  src="/images/cannon-games/explotion.svg" alt="explotion" />}
+      </div>
+
     </div>
   );
 };

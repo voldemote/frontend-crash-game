@@ -189,12 +189,34 @@
     max-height: 300px;
     min-height: 300px;
   }
-  .cannon{
+  .fullcannon{
     height: 150px;
+    width: 100px;
     position: absolute;
     pointer-events: none;
     bottom: -70px;
     right: 266px;
+    .cannon{
+      width: 100%;
+      position: absolute;
+      z-index: 4;
+
+    }
+    .alpacaInCannon{
+      width: 65px;
+      top: -40px;
+      position: absolute;
+      left: 24px;
+      z-index: -1;
+    }
+    .explotion{
+      width: 108px;
+      top: -40px;
+      position: absolute;
+      left: 0px;
+      z-index: 1;
+    }
+
   }
 /*
   .slider::-moz-range-thumb {
