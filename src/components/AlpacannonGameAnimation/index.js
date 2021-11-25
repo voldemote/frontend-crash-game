@@ -160,7 +160,7 @@ const AlpacannonGameAnimation = ({
         <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca_in_cannon.svg" alt="alpaca in cannon" />
         <img className={styles.explotion} style={{opacity: game==='shoot'?1:0}} src="/images/cannon-games/explotion.svg" alt="explotion" />
       </div>
-      <img className={styles.alpacaFlying} style={{ opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_flying.svg" alt="alpaca flying" />
+      <img className={styles.alpacaFlying} style={{ display: game!=='shoot' && 'none', opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_flying.svg" alt="alpaca flying" />
       <img className={styles.alpacaCrash} style={{ opacity: game==='crashed'?1:0, right: (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_crash.svg" alt="alpaca crash" />
     </div>
   );
