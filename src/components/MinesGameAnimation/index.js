@@ -285,7 +285,7 @@ const MinesGameAnimation = ({
             setBet((bet)=>{return{
               ...bet,
               pending: false,
-              done: true
+              done: false
             }});
           }
 
