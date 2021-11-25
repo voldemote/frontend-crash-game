@@ -51,7 +51,7 @@ const PlinkoGame = ({
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true, ball: 0});
+  const [bet, setBet] = useState({ready: true});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
@@ -64,6 +64,7 @@ const PlinkoGame = ({
   }, []);
 
   useEffect(() => {
+    /*
     getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
@@ -89,6 +90,7 @@ const PlinkoGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+      */
 
   }, [])
 
@@ -112,20 +114,22 @@ const PlinkoGame = ({
 
 
   async function handleBet(payload) {
-    audio.playBetSound();
+    //audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
-        const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
+        //const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
+        //setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        const { data } = await Api.createTradePlinko(payload);
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
-        updateUserBalance(userId);
-        trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
-        trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
-        return data;
+        console.log("payload", payload)
+        setBet((bet)=>{return{...payload}})
+        //const { data } = await Api.createTradePlinko(payload);
+        //setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
+        //updateUserBalance(userId);
+        //trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
+        //trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
+      //  return data;
       }
     } catch (e) {
       dispatch(

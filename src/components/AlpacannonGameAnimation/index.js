@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
@@ -8,7 +8,6 @@ import { AudioController } from '../AudioController';
 import AnimationController from './AnimationController'//AnimationController
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
-
 const AlpacannonGameAnimation = ({
   connected,
   amount,
@@ -29,12 +28,23 @@ const AlpacannonGameAnimation = ({
   const [backg, setBackg] = useState(0);
   const [lastgame, setLastgame] = useState(null);
   const [shadow, setShadow] = useState(null);
-  //const [backgr, setBackgr] = useState(backgroundString(0));
-  const [flag, setFlag] = useState(false);
-  const [ball, setBall] = useState(null);
+
+  const [slider, setSlider] = useState(0);
+  const [cannon, setCannon] = useState(`rotate(0deg)`)
+
   useEffect(() =>{
-    AnimationController.init({ref: backgroundRef})
+    //AnimationController.init({ref: backgroundRef})
   },[])
+
+  useEffect(() => {
+    if(bet && !bet.ready && bet.amount) spin(bet);
+  }, [bet]);
+
+  const spin = () => {
+    console.log("Go!")
+    setBet({ ready: true })
+  }
+
 /*
   useEffect(() => {
     const lastnewgame = activities[activities.length-1]?.data
@@ -99,6 +109,14 @@ const AlpacannonGameAnimation = ({
   //     {/*false && width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />*/}
   //   </div>
   // );
+  const interpolate = (number) => {
+    return Math.floor((Number(number) + 40)*100/80)
+  }
+  const dragSlider = (e) => {
+    setSlider(e.target.value)
+    setCannon(`rotate(${e.target.value}deg)`)
+  }
+  console.log("Multiplier: ", interpolate(slider))
   return (
     <div
       ref={backgroundRef}
@@ -110,6 +128,20 @@ const AlpacannonGameAnimation = ({
       <div className={styles.audioControls}>
         {audio && <GameAudioControlsLocal audio={audio} />}
       </div>
+      <input
+          className={styles.slider}
+          value={slider}
+          onChange={dragSlider}
+          style={{background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
+          type="range"
+          step={1}
+          min={-40}
+          max={40} />
+          <div className={styles.chance}>
+            <span>{interpolate(slider)}%</span>
+          </div>
+
+      <img className={styles.cannon} style={{transform: cannon}} src="/images/cannon-games/cannon.svg" alt="cannon" />
     </div>
   );
 };
