@@ -200,6 +200,14 @@ const MinesGameAnimation = ({
   const handleLost = () => {
     setGameInProgress(false);
 
+    //disable place button before
+    setBet((bet) => {
+      return {
+        ...bet,
+        pending: true
+      }
+    })
+
     setTimeout(()=> {
       setBet((bet) => {
         if(bet.autobet){
@@ -378,7 +386,7 @@ const MinesGameAnimation = ({
           <div className={classNames(styles.notBetYetText)}>Place a bet in order to start the game!</div>
         </div>}
         <canvas id="mines-canvas" className={classNames(styles.canvas, {
-          [styles.notClickable]: !bet.done
+          [styles.notClickable]: !bet.done || bet.pending
         })} ref={canvasRef}></canvas>
       </div>
 
