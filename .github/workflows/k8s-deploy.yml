@@ -69,6 +69,7 @@ jobs:
                             --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_GTM_ID }}\
                             --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
+                            --build-arg REACT_APP_URL="https://dev.alpacasino.io"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
       - name: Build the docker image (production)
@@ -99,6 +100,7 @@ jobs:
                             --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
                             --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false\
+                            --build-arg REACT_APP_URL="https://play.alpacasino.io"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_alpa_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_alpa_prod:${GITHUB_SHA::6}
   deploy:
