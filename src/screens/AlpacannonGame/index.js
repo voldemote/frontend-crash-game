@@ -46,12 +46,12 @@ const PlinkoGame = ({
   refreshLuckyData,
   updateUserBalance
 }) => {
-  const Api = new GameApi(GAMES.plinko.url, token);
+  const Api = new GameApi(GAMES.cannon.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({ready: true});
+  const [bet, setBet] = useState({ready: true, rollover: 50});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
@@ -122,9 +122,9 @@ const PlinkoGame = ({
         //setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        console.log("payload", payload)
-        setBet((bet)=>{return{...payload}})
-        //const { data } = await Api.createTradePlinko(payload);
+        const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
+        console.log("data", payload)
+        setBet((bet) => { return {...bet, ...payload, ready: false} })
         //setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
         //updateUserBalance(userId);
         //trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
@@ -134,7 +134,7 @@ const PlinkoGame = ({
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Plinko: Place Bet failed',
+          message: 'Cannon: Place Bet failed',
         })
       );
     }

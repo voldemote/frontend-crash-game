@@ -38,12 +38,12 @@ const AlpacannonGameAnimation = ({
   },[])
 
   useEffect(() => {
-    if(bet && !bet.ready && bet.amount) spin(bet);
+    if(bet && !bet.ready && bet.amount) spin(bet)
   }, [bet]);
-
+  console.log("bet", bet)
   const spin = () => {
     console.log("Go!")
-    setBet({ ready: true, crash: Math.round(Math.random()*100) })
+    setBet((bet) => {return{...bet, ready: true, crash: Math.round(Math.random()*100) }})
     setGame('shoot')
     setTimeout(() => {setGame('shoot')}, 400)
     setTimeout(() => {setGame('crashed')}, 1400)
@@ -51,14 +51,6 @@ const AlpacannonGameAnimation = ({
   }
 
 /*
-  useEffect(() => {
-    const lastnewgame = activities[activities.length-1]?.data
-    if(activities?.length > 0 && lastgame != lastnewgame.gameHash && lastnewgame.gameName == "GAME_PLINKO" && lastnewgame.userId != userId){
-      lastgame && setShadow(lastnewgame.path)
-      setLastgame(lastnewgame.gameHash)
-    }
-  }, [activities])
-
   useEffect(() => {
     if(backgroundRef) {
       setWidth(backgroundRef.current.clientWidth)
@@ -72,25 +64,12 @@ const AlpacannonGameAnimation = ({
       aud.stopBgm();
     }
   },[])
-  useEffect(() => {
-    if(bet && !bet.pending && bet.path) spin(bet);
-  }, [bet]);
-  */
 
   // const spin = async () => {
   //   setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
   //   !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
   // }
 /*
-  const changeBackground = (count) => {
-    if(flag) return
-    else setFlag(true)
-    setBackg((backg) => backg === 2 ? 0 : backg + 1)
-    setTimeout(() => {
-      setBackg((backg) => backg === 2 ? 0 : backg + 1)
-      count < 30 ? changeBackground(count + 1) : setFlag(false)
-    }, 100)
-  }
 
   const handleEnd = (win) => {
     if(win) {
@@ -107,18 +86,15 @@ const AlpacannonGameAnimation = ({
      setBet((bet) => {return {...bet, ball: bet.ball-1}})
   }
   */
-  // return (
-  //   <div ref={backgroundRef} className={styles.animation}>
-  //     {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-  //     {false && <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />}
-  //     {/*false && width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />*/}
-  //   </div>
-  // );
-  const interpolate = (number) => Math.floor((Number(number) + 41)*98/80)
 
-  const interpolateMultiplier = (number) => 100/(100-((Number(number) + 41)*98/80))//Math.floor((Number(number) + 41)*98/80)
+  const interpolate = (number) => Math.floor((Number(number) + 42)*96/80)
 
-  const dragSlider = (e) => setSlider(e.target.value)
+  const interpolateMultiplier = (number) => 100/(100-((Number(number) + 42)*96/80))//Math.floor((Number(number) + 41)*98/80)
+
+  const onSlider = (e) => {
+    setBet((bet) => {return {...bet, rollover: interpolate(e.target.value)}})
+    setSlider(e.target.value)
+  }
 
   return (
     <div
@@ -128,13 +104,11 @@ const AlpacannonGameAnimation = ({
         isMobile && styles.animationMobile
       )}
     >
-      <div className={styles.audioControls}>
-        {audio && <GameAudioControlsLocal audio={audio} />}
-      </div>
+      {audio && <GameAudioControlsLocal game='cannon' audio={audio} />}
       <input
           className={styles.slider}
           value={slider}
-          onChange={dragSlider}
+          onChange={onSlider}
           style={{zIndex: game==='ready'&&4, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
           type="range"
           step={1}
@@ -154,15 +128,15 @@ const AlpacannonGameAnimation = ({
       <img className={styles.alpacaFlying} style={{ opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_flying.svg" alt="alpaca flying" />
       <img className={styles.alpacaCrash} style={{ opacity: game==='crashed'?1:0, right: (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca_crash.svg" alt="alpaca crash" />
     </div>
-  );
-};
-//crash
- const mapStateToProps = state => {
-   return {
-     userId: state.authentication.userId,
-     activities: state.notification.activities,
-     connected: state.websockets.connected
-   };
- };
+  )
+}
+
+const mapStateToProps = state => {
+  return {
+    userId: state.authentication.userId,
+    activities: state.notification.activities,
+    connected: state.websockets.connected
+  }
+}
 
 export default connect(mapStateToProps)(AlpacannonGameAnimation);

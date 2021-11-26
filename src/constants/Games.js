@@ -233,5 +233,12 @@ export const GAMES = {
     slug: 'mines',
     name: `Mines`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+  },
+  cannon: {
+    id: '61a09b35121e61d6f06338ca',
+    slug: 'cannon',
+    name: 'cannon',
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
+
 };

@@ -78,6 +78,7 @@ export const API_MINES_CASHOUT = '/api/mines-game/cashout';
 export const API_MINES_CURRENT = '/api/mines-game/current';
 export const API_MINES_LAST_CASHOUTS = '/api/mines-game/lastcashouts';
 export const API_PLINKO_BET = '/api/simple-games/trade/plinko';
+export const API_CANNON_BET = '/api/simple-games/trade/alpacannon';
 export const API_CASH_OUT_ELON = 'api/elon-game/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_TRADES_LUCKY = 'api/trades/lucky/:gameId';

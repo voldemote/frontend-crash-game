@@ -51,6 +51,12 @@ class GameApi {
     });
   }
 
+  createTradeCannon = payload => {
+    return this.api.post(ApiUrls.API_CANNON_BET, payload).catch(error => {
+      console.log('[API Error] called: createTrade', error);
+      throw error;
+    });
+  }
 
   createTradeMines = payload => {
     return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
