@@ -8,7 +8,7 @@ export const EXPORT_SIZE = 512;
 
 export const CATEGORIES = [{
     name: 'chip',
-    path: '/images/alpaca-builder/Chips/',
+    path: '/images/alpaca-builder/elements/',
     previewInTiles: true,
     styles: ['Chip1', 'Chip2', 'Chip3', 'Chip4', 'Chip5'],
     colors:[
@@ -19,7 +19,7 @@ export const CATEGORIES = [{
     ]
   },{
     name: 'body',
-    path: '/images/alpaca-builder/Body/',
+    path: '/images/alpaca-builder/elements/',
     styles: ['Body1'],
     colors:[
       ['#FEFFAD','#FEFFCF'],['#FFFFFF','#F5F5F5'],['#FFCECE','#FFADAD'],
@@ -32,8 +32,8 @@ export const CATEGORIES = [{
     ]
   },{
     name: 'hair',
-    path: '/images/alpaca-builder/Hair/',
-    styles: ['Hair1', 'Hair2', 'Hair3', 'Hair4', 'Hair5', 'Hair6', 'Hair7', 'Hair8', 'Hair9'],
+    path: '/images/alpaca-builder/elements/',
+    styles: ['Hair1', 'Hair2', 'Hair3', 'Hair4', 'Hair6', 'Hair7', 'Hair8', 'Hair9'],
     colors:[
       ['#FEFFAD'],['#FFFFFF'],['#FFCECE'],
       ['#B5FFC9'],['#FFADAD'],['#CECBCE'],
@@ -45,17 +45,17 @@ export const CATEGORIES = [{
     ]
   },{
     name: 'eyes',
-    styles: ['Eyes1', 'Eyes2', 'Eyes3', 'Eyes4', 'Eyes5', 'Eyes6', 'Eyes7', 'Eyes8', 'Eyes9', 'Eyes10'],
-    path: '/images/alpaca-builder/Eyes/',
+    styles: ['Eyes1', 'Eyes3', 'Eyes4', 'Eyes5', 'Eyes6', 'Eyes7', 'Eyes8', 'Eyes9'],
+    path: '/images/alpaca-builder/elements/',
   },{
     name: 'mouth',
     styles: ['Mouth1', 'Mouth2', 'Mouth3', 'Mouth4', 'Mouth5', 'Mouth6', 'Mouth7', 'Mouth8'],
-    path: '/images/alpaca-builder/Mouth/',
+    path: '/images/alpaca-builder/elements/',
     useColorFrom: 'body'
   },{
     name: 'glasses',
     styles: ['Glasses1', 'Glasses2', 'Glasses3', 'Glasses4', 'Glasses5', 'Glasses6', 'Glasses7'],
-    path: '/images/alpaca-builder/Glasses/',
+    path: '/images/alpaca-builder/elements/',
     optional: true,
   },
 ];

@@ -2,7 +2,10 @@ import { useState, memo } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import {buildImagePath, CATEGORIES} from './data';
-import DynamicSvg from './svgs/dynamicSvg';
+import DynamicSvg from './dynamicSvg';
+
+import Icon from '../Icon';
+import IconType from '../Icon/IconType';
 
 const AbViewStyles = ({
   cssClassNames,
@@ -95,7 +98,9 @@ const AbViewStyles = ({
         key={`ab_cat_remove`}
         className={classNames(styles.tile, isStyleSelected(null) ? styles.tileSelected : null)}
         href="#/"
-        onClick={()=> {onStyleChanged(null)}}>Clear</a>
+        onClick={()=> {onStyleChanged(null)}}>
+          <Icon iconType={IconType.cross} />
+        </a>
     );
   }
 

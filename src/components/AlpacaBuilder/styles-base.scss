@@ -3,10 +3,10 @@
 .alpacaBuilder {
   display: flex;
   flex-direction: column;
-  height: 100%;
+   height: calc(100% - 20px);
 
   .head{
-    height: 40%;
+    height: 35%;
     border-bottom: 1px solid $separatorColor;
     display: flex;
     flex-direction: column;
@@ -14,21 +14,7 @@
     h2{
       margin-bottom:20px;
     }
-    .toolbar{
-      display: flex;
-      justify-content: space-between;
-      z-index: 1;
-      margin:5px 0;
-      a{
-        border: 1px solid $toolbarBtnBg;
-        border-radius: 30px;
-        background-color: $toolbarBtnBg;
-        text-decoration: none;
-        padding: 10px 20px;
-        font-size: 10px;
-        color:$toolbarBtnColor;
-      }
-    }
+
 
     .svg{
       flex:1;
@@ -37,10 +23,9 @@
   }
 
   .viewsContainer{
-    margin:5px 0;
     height: 60%;
     position: relative;
-    flex: 1 1 auto;
+    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
@@ -146,6 +131,22 @@
   .active{
     right: 0;
     opacity: 1;
+  }
+
+  .toolbar{
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+    //margin:5px 0;
+    a{
+      border: 1px solid $toolbarBtnBg;
+      border-radius: 30px;
+      background-color: $toolbarBtnBg;
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 10px;
+      color:$toolbarBtnColor;
+    }
   }
 
 }

@@ -6,7 +6,7 @@ import AbViewCategories from './abViewCategories';
 import AbViewIntro from './abViewIntro';
 import AbViewStyles from './abViewStyles';
 import {AB_VIEWS, CATEGORIES, EXPORT_SIZE} from './data';
-import DynamicSvg from './svgs/dynamicSvg';
+import DynamicSvg from './dynamicSvg';
 
 const AlpacaBuilder = ({
   visible = false,
@@ -159,16 +159,7 @@ const AlpacaBuilder = ({
       )}>
       <div className={styles.head}>
         {showTitle && (<h2>Alpacabuilder</h2>)}
-        <div className={styles.toolbar}>
-          {/* {activeViews.length > 1 && (renderBackButton())} */}
-          <a
-            className={styles.saveBtn}
-            href="#/"
-            onClick={() => exportSvg()}>Save</a>
-          <a
-            href="#/"
-            onClick={() => resetSvg(true)}>Random</a>
-        </div>
+
         <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
           <rect width="100%" height="100%" fill="white" />
           {renderSvg()}
@@ -188,6 +179,16 @@ const AlpacaBuilder = ({
           current={svgProperties}
           ></AbViewStyles>
       </div>
+      <div className={styles.toolbar}>
+          {/* {activeViews.length > 1 && (renderBackButton())} */}
+          <a
+            className={styles.saveBtn}
+            href="#/"
+            onClick={() => exportSvg()}>Save</a>
+          <a
+            href="#/"
+            onClick={() => resetSvg(true)}>Random</a>
+        </div>
     </div>
     <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>
     </>
