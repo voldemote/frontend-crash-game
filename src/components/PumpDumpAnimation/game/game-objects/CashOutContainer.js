@@ -1,9 +1,10 @@
 import { Container } from "@pixi/display";
 import { CashOut } from "./CashOut";
-import { INIT_CREATE_THRESHOLD, MERGE_BAR_COUNT, STICK_HEIGHT_OFFSET } from "./BarChartContainer";
+import { INIT_CREATE_THRESHOLD, MERGE_BAR_COUNT } from "./BarChartContainer";
 import { calcCrashFactorFromElapsedTime } from "components/RosiGameAnimation/canvas/utils";
 
 const VERTICAL_GAP = 25;
+const GAP_FROM_BAR = 10;
 
 export class CashOutContainer extends Container {
     barContainer = null;
@@ -131,7 +132,7 @@ export class CashOutContainer extends Container {
                 if (this.cashOuts.has(index)) {
                     const rect = bars.getBounds(true);
                     this.cashOuts.get(index).forEach((cashOut, index) => {
-                        cashOut.position.set(rect.x + rect.width * 0.5, rect.bottom + STICK_HEIGHT_OFFSET + index * VERTICAL_GAP);
+                        cashOut.position.set(rect.x + rect.width * 0.5, rect.bottom + GAP_FROM_BAR + index * VERTICAL_GAP);
                     })
                 }
             })

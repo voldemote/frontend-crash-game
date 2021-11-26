@@ -9,9 +9,12 @@ import TWEEN from '@tweenjs/tween.js';
 
 
 // size of the stick visible at the top. Bot size will be same as the top
-export const STICK_HEIGHT_OFFSET = isMobileRosiGame ? 5 : 10;
+const STICK_HEIGHT_MIN_OFFSET = isMobileRosiGame ? 5 : 10;
+const STICK_HEIGHT_MAX_OFFSET = isMobileRosiGame ? 9 : 18;
 
-const STICK_WIDTH = isMobileRosiGame ? 2.5 : 5;
+const STICK_MIN_WIDTH = isMobileRosiGame ? 2.5 : 5;
+const STICK_MAX_WIDTH = isMobileRosiGame ? 3.5 : 7;
+
 const BAR_WIDTH = isMobileRosiGame ? 12.5 : 25;
 const BAR_ROUNDNESS = isMobileRosiGame ? 3 : 4;
 
@@ -19,6 +22,9 @@ const BAR_MIN_HEIGHT = isMobileRosiGame ? 10 : 20;
 const BAR_HEIGHT_INCREMENTS = isMobileRosiGame ? 5 : 10;
 
 const CONT_START_Y = -AXIS_START_POS_OFFSET_Y;
+
+const SAME_HEIGHT_BAR_RANGE = 5;
+const UNIQUE_BAR_HEIGHT_COUNT = 6;
 
 export const INIT_CREATE_THRESHOLD = isMobileRosiGame ? 500 : 300;   // Every 300ms generate a bar
 
@@ -49,15 +55,7 @@ export class BarChartContainer extends Container {
 
     audioManager;
 
-    attribs = [
-        { threshold: 0.5, done: false, createThresholdMult: 2 },
-        { threshold: 0.25, done: false, createThresholdMult: 4 },
-        { threshold: 0.125, done: false, createThresholdMult: 8 },
-        { threshold: 0.0625, done: false, createThresholdMult: 16 },
-        { threshold: 0.03125, done: false, createThresholdMult: 32 },
-        { threshold: 0.015625, done: false, createThresholdMult: 64 },
-        { threshold: 0.0078125, done: false, createThresholdMult: 128 },
-    ]
+    attribs = []
 
     constructor(audioManager) {
         super();
@@ -67,9 +65,11 @@ export class BarChartContainer extends Container {
         const width = PumpDumpGameMananger.width;
         this.position.set(width * AXIS_START_POS_X, height + CONT_START_Y);
 
-        for (let i = 0; i < 5; ++i) {
-            this.greenBarTextures[i] = this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'green');
-            this.redBarTextures[i] = this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'red');
+        for (let i = 0; i < UNIQUE_BAR_HEIGHT_COUNT; ++i) {
+            for (let j = 0; j < SAME_HEIGHT_BAR_RANGE; ++j) {
+                this.greenBarTextures.push(this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'green'));
+                this.redBarTextures.push(this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'red'));
+            }
         }
         // First Bar
         this.generateBar(0, 100);
@@ -90,7 +90,23 @@ export class BarChartContainer extends Container {
         // bar2.position.set(50, -150);
         // this.addChild(bar2);
 
+        this.updateAttribs();
+    }
 
+    updateAttribs() {
+        // attribs = [
+        //     { threshold: 0.5, done: false, createThresholdMult: 2 },
+        //     { threshold: 0.25, done: false, createThresholdMult: 4 },
+        //     { threshold: 0.125, done: false, createThresholdMult: 8 },
+        //     { threshold: 0.0625, done: false, createThresholdMult: 16 },
+        //     { threshold: 0.03125, done: false, createThresholdMult: 32 },
+        //     { threshold: 0.015625, done: false, createThresholdMult: 64 },
+        //     { threshold: 0.0078125, done: false, createThresholdMult: 128 },
+        // ]
+
+        for (let i = 0; i < 9; ++i) {
+            this.attribs.push({ threshold: 1 / (2 ** (i + 1)), done: false, createThresholdMult: 2 ** (i + 1) });
+        }
     }
 
     generateBarTexture(height, color = 'green') {
@@ -98,7 +114,9 @@ export class BarChartContainer extends Container {
         // Stick visible at the top and the bottom
         bar.beginFill(color === 'green' ? 0x1c5d1a : 0x6a0b3e);
         // Positioning the stick at the center of the bar
-        bar.drawRect((BAR_WIDTH - STICK_WIDTH) * 0.5, -STICK_HEIGHT_OFFSET, STICK_WIDTH, height + STICK_HEIGHT_OFFSET * 2);
+        let stickHeight = STICK_HEIGHT_MIN_OFFSET + Math.floor(Math.random() * (STICK_HEIGHT_MAX_OFFSET - STICK_HEIGHT_MIN_OFFSET));
+        let stickWidth = STICK_MIN_WIDTH + Math.floor(Math.random() * (STICK_MAX_WIDTH - STICK_MIN_WIDTH));
+        bar.drawRect((BAR_WIDTH - stickWidth) * 0.5, -stickHeight, stickWidth, height + stickHeight * 2);
         bar.endFill();
 
         // Bar
@@ -172,8 +190,8 @@ export class BarChartContainer extends Container {
             bigBarConfig.x = barsToMerge[barsToMerge.length - 1].x;
             bigBarConfig.y /= barsToMerge.length;
             bigBarConfig.heightIndex = Math.ceil(bigBarConfig.heightIndex / barsToMerge.length);
-            if (Math.abs(bigBarConfig.heightIndex) < 2) {
-                bigBarConfig.heightIndex = (1 + Math.floor(Math.random() * 3)) * (bigBarConfig.heightIndex < 0 ? -1 : 1 );
+            if (Math.abs(bigBarConfig.heightIndex) < SAME_HEIGHT_BAR_RANGE * 3) {
+                bigBarConfig.heightIndex = (SAME_HEIGHT_BAR_RANGE * 3 + Math.floor(Math.random() * SAME_HEIGHT_BAR_RANGE * (UNIQUE_BAR_HEIGHT_COUNT - 3))) * (bigBarConfig.heightIndex < 0 ? -1 : 1 );
             }
 
             bigBarConfigs.unshift(bigBarConfig);
@@ -187,7 +205,7 @@ export class BarChartContainer extends Container {
         // Start tween on all big bars
         bigBarConfigs.forEach((bigBarConfig, index) => {
             if (index < 3) {
-                bigBarConfig.heightIndex = Math.floor(Math.random() * 2) * (bigBarConfig.heightIndex < 0 ? -1 : 1)
+                bigBarConfig.heightIndex = Math.floor(Math.random() * SAME_HEIGHT_BAR_RANGE * 2) * (bigBarConfig.heightIndex < 0 ? -1 : 1)
             }
             const bigBar = this.createEmergingBiggerBar(bigBarConfig);
             this.generatedBars.push(bigBar);
@@ -203,7 +221,6 @@ export class BarChartContainer extends Container {
             texture = this.greenBarTextures[bigBarConfig.heightIndex];
         }
         const bar = new Sprite(texture);
-        bar.pivot.y = STICK_HEIGHT_OFFSET;
         bar.scale.set(0);
         bar.anchor.set(0.5);
         bar.position.set(bigBarConfig.x, bigBarConfig.y);
@@ -315,7 +332,7 @@ export class BarChartContainer extends Container {
 
     // Top edge of the bar from the center of the bar. Note: Not the top edge of the stick
     getBarTopEdgeDistance(bar) {
-        let barHeight = bar.height - (STICK_HEIGHT_OFFSET * 2);
+        let barHeight = bar.height - (STICK_HEIGHT_MAX_OFFSET * 2);
         return (barHeight * 0.5 * this.barScale.y);
     }
 
@@ -324,9 +341,12 @@ export class BarChartContainer extends Container {
         let randMin = 0;
         // If less that 1.25x don't show tall bars
         if (this.generatedBars.length <= 3) {
-            randMax = 1;
+            randMax = SAME_HEIGHT_BAR_RANGE * 2;
+        } else if (crashFactor <= 250) {
+            randMin = SAME_HEIGHT_BAR_RANGE * 2;
+            randMax = SAME_HEIGHT_BAR_RANGE * 5;
         } else {
-            randMin = 1;
+            randMin = SAME_HEIGHT_BAR_RANGE * 3;
         }
 
         // Divide by 100 to get the origCrashFactor 
