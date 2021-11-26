@@ -4,14 +4,15 @@ import HighlightType from 'components/Highlight/HighlightType';
 import Icon from 'components/Icon';
 import IconTheme from 'components/Icon/IconTheme';
 import IconType from 'components/Icon/IconType';
+import AuthenticationType from '../AuthenticationType';
 import { useSocialLogins } from './useSocialLogins';
 
 const LoginButton = ({ children, onClick, styles }) => (
   <Button
     onClick={onClick}
-    withoutBackground={true}
-    highlightType={HighlightType.highlightModalButton}
-    highlightTheme={HighlightTheme.fillPink}
+    // withoutBackground={true}
+    // highlightType={HighlightType.highlightModalButton}
+    // highlightTheme={HighlightTheme.fillPink}
     className={styles.signInButton}
     disabledWithOverlay={true}
   >
@@ -19,7 +20,7 @@ const LoginButton = ({ children, onClick, styles }) => (
   </Button>
 );
 
-const SocialLogin = ({ styles, prepend = [] }) => {
+const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
   const { initGoogleLogin, initFacebookLogin } = useSocialLogins();
   const iconProps = {
     className: styles.buttonIcon,
@@ -28,6 +29,8 @@ const SocialLogin = ({ styles, prepend = [] }) => {
   if (process.env.REACT_APP_SHOW_UPCOMING_FEATURES !== 'true') {
     return null;
   }
+
+  const prefixText = authenticationType === AuthenticationType.register ? "Sign up" : "Login";
 
   return (
     <>
@@ -40,12 +43,12 @@ const SocialLogin = ({ styles, prepend = [] }) => {
       }
       <LoginButton styles={styles} onClick={initGoogleLogin}>
         <Icon iconType={IconType.google} {...iconProps} />
-        <span>Sign in with Google</span>
+        <span>{prefixText} with Google</span>
       </LoginButton>
-      <LoginButton styles={styles} onClick={initFacebookLogin}>
+      {/* <LoginButton styles={styles} onClick={initFacebookLogin}>
         <Icon iconType={IconType.facebook} {...iconProps} />
-        <span>Sign in with Facebook</span>
-      </LoginButton>
+        <span>{prefixText} with Facebook</span>
+      </LoginButton> */}
     </>
   );
 };

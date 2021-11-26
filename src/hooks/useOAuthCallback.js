@@ -31,7 +31,8 @@ const useOAuthCallback = () => {
       dispatch(AuthenticationActions.loginExternalFail({ message: 'Something went wrong.'}));
       history.push('/');
     } else if(code) {
-      const payload = { code };
+      const refLocalStorage = localStorage.getItem('urlParam_ref');
+      const payload = { code, ref:refLocalStorage };
       dispatch(
         providerActionMap[provider](payload)
       );

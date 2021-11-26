@@ -413,9 +413,9 @@ const signUp = function* (action) {
   }
 };
 
-const loginExternal = function* ({ code, provider }) {
+const loginExternal = function* ({ code, provider, ref }) {
   yield put(push('/'));
-  const { response, error } = yield call(Api.loginExternal, { provider, body: { code } });
+  const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref } });
   if (response) {
     const data = response?.data;
 
@@ -431,6 +431,7 @@ const loginExternal = function* ({ code, provider }) {
         user: data?.user,
       })
     );
+    localStorage.removeItem('urlParam_ref');
   } else {
     yield put(
       AuthenticationActions.loginExternalFail({

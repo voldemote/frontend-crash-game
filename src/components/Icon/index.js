@@ -70,7 +70,7 @@ import { ReactComponent as IconLeaderBoardRanking } from '../../data/icons/leade
 import { ReactComponent as IconLeaderBoardUser } from '../../data/icons/leaderboard-user.svg';
 import { ReactComponent as IconLeaderBoardToken } from '../../data/icons/leaderboard-token.svg';
 import { ReactComponent as IconFacebook } from '../../data/icons/facebook.svg';
-import { ReactComponent as IconGoogle } from '../../data/icons/google.svg';
+import { ReactComponent as IconGoogle } from '../../data/icons/google-color-icon.svg';
 import { ReactComponent as IconEmail } from '../../data/icons/email.svg';
 
 const Icon = ({
