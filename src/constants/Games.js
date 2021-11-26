@@ -58,6 +58,13 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
+    background: gameCardMines,
+    title: `Mines`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/mines',
+  },
+  {
     background: gameCard4,
     title: 'Plinko',
     subtitle: '',
@@ -67,18 +74,18 @@ export const NEW_SLOTS_GAMES = [
   },
   {
     background: gameCard1,
-    title: 'Alpaca Roulette',
+    title: 'Alpaca Wheel',
     subtitle: '',
-    description: 'Market top and flop jackpot tournament',
+    description: '',
     active: true,
     linkTo: '/games/alpaca-wheel',
   },
   {
-    background: gameCardMines,
-    title: `Mines`,
+    background: gameCard3,
+    title: `Pump and Dump`,
     subtitle: '',
     active: false,
-    linkTo: '/games/mines',
+    linkTo: '/games/pump-dump',
   },
   {
     background: gameCard5,
@@ -87,13 +94,6 @@ export const NEW_SLOTS_GAMES = [
     active: false,
     linkTo: '/games/oilrush',
   },
-  {
-    background: gameCard3,
-    title: `Pump and dump`,
-    subtitle: '',
-    active: false,
-    linkTo: '/games/pump-dump',
-  }
   /*,
   {
     background: Fourth,
@@ -208,13 +208,13 @@ export const GAMES = {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
-    url: process.env.REACT_APP_PUMP_DUMP_GAME_BACKEND_URL,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
   elonGame: {
     id: '614381d74f78686665a5bb76',
     slug: 'elon-game',
     name: `Elon Game`,
-    url: process.env.REACT_APP_CRASH_GAME_BACKEND_URL,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
   alpacaWheel: {
     id: '618a81ded90fd22298859bc4',
@@ -229,7 +229,7 @@ export const GAMES = {
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
   mines: {
-    id: '618a821bd90fd22298859bc6',
+    id: '619cc432121e61d6f06338c9',
     slug: 'mines',
     name: `Mines`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL

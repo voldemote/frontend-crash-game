@@ -212,6 +212,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             authenticationType={
               options.authenticationType || AuthenticationType.register
             }
+            preloadEmailSignUp={options?.preloadEmailSignUp}
           />
         );
       case PopupTheme.explanation:

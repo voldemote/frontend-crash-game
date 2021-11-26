@@ -91,27 +91,9 @@
     }
   }
 
-  .submitButton {
-    overflow: hidden;
-    font-size: 16px;
-    border-radius: 10px;
-    margin: 20px 0 0;
-    width: 100%;
-    cursor: pointer;
-    color: $colorWhite;
-    @media (max-width: $screen-sm) {
-      height: 50px;
-      margin: 10px 0 0;
-    }
-
-    span > svg {
-      width: 100%;
-    }
-  }
-
   .forgotPasswordLink {
     align-self: flex-end;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     text-decoration: underline;
     cursor: pointer;
 
@@ -196,5 +178,108 @@
 
   @media (max-width: $screen-sm) {
     gap: 4px;
+  }
+}
+.signUpOptions {
+  height: auto;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  flex: auto;
+  padding-top: 20px;
+}
+
+.submitButton,
+.signInButton {
+  overflow: hidden;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 20px 0 0;
+  width: 100%;
+  cursor: pointer;
+  color: $colorWhite;
+  text-transform: uppercase;
+  @media (max-width: $screen-sm) {
+    height: 50px;
+    margin: 10px 0 0;
+  }
+
+  span > svg {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+.signInButton {
+  margin-top: 5px;
+  &:first-child {
+    margin-top: 0;
+  }
+  span svg {
+    overflow: visible;
+  }
+  .buttonIcon {
+    margin-right: 12px;
+
+    &:not([data-icon-type='email']) {
+      width: 24px;
+      svg * {
+        stroke-width: 0;
+      }
+    }
+    &[data-icon-type='email'] {
+      width: 20px;
+      svg * {
+        stroke-width: 17px;
+        fill: $colorWhite;
+        stroke: $colorWhite;
+      }
+    }
+  }
+}
+.unstyledButton {
+  background: transparent;
+  border: none;
+  font-family: $fontMedium;
+  cursor: pointer;
+  font-size: 16px;
+}
+.backToSignupOptions {
+  @extend .unstyledButton;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  &:before {
+    content: '';
+    height: 10px;
+    width: 10px;
+    border: 2px solid $colorBlack;
+    border-top: 0;
+    border-right: 0;
+    display: block;
+    transform: rotate(45deg);
+  }
+}
+
+.alreadyHaveAnAccount,
+.dontHaveAnAccount {
+  margin-top: 25px;
+  font-size: 14px;
+  text-align: center;
+  button {
+    @extend .unstyledButton;
+    text-decoration: underline;
+    font-size: 14px;
+    color: $colorPrimary;
+  }
+}
+.dontHaveAnAccount {
+  p {
+    margin-bottom: 20px;
   }
 }

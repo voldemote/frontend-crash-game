@@ -26,6 +26,7 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import {MinesInput} from "./MinesInput";
+import { trackMinesPlaceBet, trackMinesPlaceBetGuest } from "../../config/gtm"
 
 import {
   FormGroup,
@@ -92,15 +93,9 @@ const PlaceBetMines = ({
       minesCount: mines
     }
 
+    trackMinesPlaceBet({ amount, mines });
     // console.log('###payload', payload);
     await onBet(payload);
-
-    setGameInProgress(true);
-    setCurrentStep(0);
-    setBet({
-      ...bet,
-      done: true
-    })
   }
 
   const placeAutoBet = async () => {
@@ -114,6 +109,8 @@ const PlaceBetMines = ({
       amount,
       minesCount: mines
     }
+
+    trackMinesPlaceBetGuest({ amount, mines });
 
     if(demoCount >= 3) {
       showLoginPopup();
@@ -153,7 +150,7 @@ const PlaceBetMines = ({
   const renderButton = () => {
     if (!gameInProgress) {
       return (
-        <span
+        (selector === 'manual') && (<span
           role="button"
           tabIndex="0"
           className={classNames(styles.button, {
@@ -168,7 +165,7 @@ const PlaceBetMines = ({
           onClick={bet?.pending ? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
         >
           {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
-        </span>
+        </span>)
       );
     } else {
       return (
@@ -250,9 +247,14 @@ const PlaceBetMines = ({
         origin={{ x: 0.4, y: 0.45 }}
       />
       <div className={styles.inputContainer}>
-        {switchButton(styles)}
+        <div className={styles.placeBetContainer}>
+          {switchButton(styles)}
+        </div>
+
         {selector === 'manual' ?
-          <div className={styles.sliderContainer}>
+          <div className={classNames(styles.sliderContainer, {
+            [styles.hidden]: bet.done
+          })}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
               <TokenNumberInput
