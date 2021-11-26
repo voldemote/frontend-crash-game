@@ -35,6 +35,7 @@ const UserWallet = ({
   userId,
   refreshMyBetsData,
   showWalletBuyWfairPopup,
+  showRequestTokenPopup,
 }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
@@ -153,12 +154,18 @@ const UserWallet = ({
             xs={12}
           >
             <div className={styles.currentBlanceDiscription}>
-              <p className={styles.noWFairNoProblem}>No WFAIR? No problem!</p>
-              <button
+              <p className={styles.noWFairNoProblem}>No PFAIR? No problem!</p>
+              {/* <button
                 className={styles.buyWFairButton}
                 onClick={showWalletBuyWfairPopup}
               >
                 Buy WFAIR!
+              </button> */}
+              <button
+                  className={styles.buyWFairButton}
+                  onClick={showRequestTokenPopup}
+              >
+                <span>Request test tokens</span>
               </button>
             </div>
           </Grid>
@@ -196,6 +203,9 @@ const mapDispatchToProps = dispatch => {
     refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+    },
+    showRequestTokenPopup: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.requestTokens }));
     },
   };
 };
