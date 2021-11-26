@@ -1,4 +1,4 @@
-REACT_APP_BACKEND_URL=https://dev-api.wallfair.io/
-REACT_APP_URL=https://dev.wallfair.io
-REACT_APP_SOCKET_URL=https://comm-dev-api.wallfair.io/
-REACT_APP_CASINO_GAMES_BACKEND_URL=https://staging-casino-api.wallfair.io/
+REACT_APP_BACKEND_URL=https://dev-api.alpacasino.io/
+REACT_APP_URL=https://dev.alpacasino.io
+REACT_APP_SOCKET_URL=https://comm-dev-api.alpacasino.io/
+REACT_APP_CASINO_GAMES_BACKEND_URL=https://dev-casino-api.wallfair.io/
