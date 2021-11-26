@@ -1,6 +1,7 @@
 import { RosiGameTypes } from '../actions/rosi-game';
 import { round } from 'lodash';
 import { calcCrashFactorFromElapsedTime } from '../../components/RosiGameAnimation/canvas/utils';
+import {ceil} from 'lodash/math'
 
 const initialState = {
   hasStarted: false,
@@ -56,7 +57,10 @@ const initializeState = (action, state) => {
     lastCrashes: action.payload.lastCrashes,
     inGameBets: currentBets,
     betQueue: upcomingBets,
-    cashedOut: cashedOutBets,
+    cashedOut: cashedOutBets.map(b => ({
+      ...b,
+      amount: ceil(b.crashFactor * b.amount, 2)
+    })),
     userBet,
     animationIndex,
     musicIndex,
@@ -184,7 +188,7 @@ const cashedOutGuest = (action, state) => {
     amount: round(state.userBet.amount * factor, 0),
     username: 'Guest',
     userId: 'Guest',
-    crashFactor: factor,
+    crashFactor: +factor,
     isFresh: true,
   };
   return {

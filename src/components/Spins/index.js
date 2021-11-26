@@ -2,26 +2,9 @@ import styles from './styles.module.scss';
 import {PopupActions} from '../../store/actions/popup';
 import {connect} from 'react-redux';
 import PopupTheme from '../Popup/PopupTheme';
-import {getGameDetailById} from '../../api/crash-game';
 import _ from 'lodash';
 
 const Spins = ({spins, showPopup, text}) => {
-  const handleCrashFactorClick = async (crash, e) => {
-    const gameHash = crash?.gameHash;
-    const response = await getGameDetailById(gameHash).catch(err => {
-      console.error("Can't get user by id:", err);
-    });
-    const details = response?.data || null;
-
-    if (details?.match) {
-      showPopup(PopupTheme.lastGamesDetail, {
-        maxWidth: true,
-        data: {
-          details,
-        },
-      });
-    }
-  };
   //  onClick={e => handleCrashFactorClick(crash, e)}
   const displaySignedFormat = (value) => {
     const val = Math.floor(value);

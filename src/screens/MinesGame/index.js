@@ -62,6 +62,7 @@ const Game = ({
   const [mines, setMines] = useState(5);
   const [currentStep, setCurrentStep] = useState(0);
   const [bet, setBet] = useState({
+    autobet: false,
     pending: false,
     done: false
   });
@@ -146,7 +147,7 @@ const Game = ({
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
-  };
+  }
 
   async function handleBet(payload) {
     audio.playBetSound();
