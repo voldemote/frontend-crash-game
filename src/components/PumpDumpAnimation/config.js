@@ -21,7 +21,7 @@ export const ASSET_LIST = {
 
 export const AUDIO_LIST = {
     bgm: {
-        url: '/sounds/pump-dump/bg_music.mp3',
+        url: '/sounds/pump-dump/bg_music_1.mp3',
         loop: true,
     },
     bar: {
