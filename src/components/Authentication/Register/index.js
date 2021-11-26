@@ -24,13 +24,12 @@ const Register = ({ styles, openLoginPopup, preloadEmailSignUp = false }) => {
       <h2 className={styles.title}>Sign Up</h2>
       {showEmailSignUp ? (
         <>
-          {showNewFeatures &&
-            <button
-              className={styles.backToSignupOptions}
-              onClick={() => setShowEmailSignup(false)}
-            >
-              Sign up using a different method
-            </button>}
+          <button
+            className={styles.backToSignupOptions}
+            onClick={() => setShowEmailSignup(false)}
+          >
+            Sign up using a different method
+          </button>
           <EmailSignUp styles={styles} />
           <SocialLogin
             styles={styles}
