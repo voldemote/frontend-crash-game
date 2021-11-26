@@ -87,9 +87,9 @@ const DepositTab = () => {
 const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
   const selectTabsComponent = type => {
     switch (type) {
-      case 'BUYWITHFIAT':
+      case 0:
         return <BuyWithFiatTab />;
-      case 'DEPOSIT':
+      case 1:
         return <DepositTab />;
       default:
         return <BuyWithFiatTab />;
@@ -101,12 +101,12 @@ const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
 
 const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
-    name: 'BUYWITHFIAT',
+    name: 'Buy with fiat',
     index: 0,
   });
   const tabOptions = [
-    { name: 'BUYWITHFIAT', index: 0 },
-    { name: 'DEPOSIT', index: 1 },
+    { name: 'Buy with fiat', index: 0 },
+    { name: 'Deposit', index: 1 },
   ];
   const handleSwitchTab = ({ index }) => {
     setActiveTab(tabOptions[index]);
@@ -135,7 +135,7 @@ const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
         </Grid>
       </div>
     <div className={styles.activityContainer}>
-        <RenderTabs type={activeTab.name} />
+        <RenderTabs type={activeTab.index} />
     </div>
     </div>
   );
