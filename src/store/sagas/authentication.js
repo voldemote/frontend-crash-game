@@ -233,7 +233,7 @@ const authenticationSucceeded = function* (action) {
       })
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
-    
+
     if (action.user) {
       yield put(AuthenticationActions.updateData(action.user));
     }
@@ -354,7 +354,7 @@ const updateUserData = function* (action) {
 
       userFiltered = _.omit(userFiltered, ['imageName', 'profilePic']);
     }
-
+    console.log('sagas/authentication updateUserData', userFiltered);
     const response = yield call(Api.updateUser, userId, userFiltered);
     if (response) {
       const stateUser = yield select(state => state.authentication);

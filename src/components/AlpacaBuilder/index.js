@@ -2,33 +2,25 @@ import { useEffect, useState, memo, useRef, createElement } from 'react';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
-import AbViewCategories from './abViewCategories';
-import AbViewIntro from './abViewIntro';
 import AbViewStyles from './abViewStyles';
-import {AB_VIEWS, CATEGORIES, EXPORT_SIZE} from './data';
+import {CATEGORIES, EXPORT_SIZE} from './data';
 import DynamicSvg from './dynamicSvg';
 
 const AlpacaBuilder = ({
   visible = false,
-  showTitle = true,
   onExport,
-  downloadFileOnSave = false
+  onCancel,
+  downloadFileOnSave = false,
+  props
 }) => {
 
-  const [activeViews, setActiveViews] = useState([]);
-  const [hidingView, setHidingView] = useState();
-  const [showingView, setShowingView] = useState();
-  const [svgProperties, setSvgProperties] = useState();
-  const [currentCategory, setCurrentCategory] = useState();
+  const [svgProperties, setSvgProperties] = useState(props);
   const svgRef = useRef();
   const svgDownloader = useRef();
 
   useEffect(() => {
-    setActiveViews([])
-    resetSvg(true);
-    if (visible) {
-      pushView(AB_VIEWS.styles);
-    }
+    if(!props) resetSvg(true);
+    console.log('starting with ', props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
@@ -43,45 +35,6 @@ const AlpacaBuilder = ({
       p[c.name] = {style, colors};
     }
     setSvgProperties(p);
-  }
-
-
-  const pushView = (newView) =>{
-    if(!newView) return;
-    setShowingView(newView);
-    setActiveViews([...activeViews, newView]);
-    setTimeout(() => {
-      setShowingView();
-    }, 400);
-  }
-
-  const popView = (newView) =>{
-    if(activeViews.length <= 1) return;
-    setHidingView(newView);
-    setActiveViews(activeViews.filter(v => v !==  newView));
-    setTimeout(() => {
-      setHidingView();
-    }, 400);
-  }
-
-  const getCssClass = (viewName) => {
-    let classes = [styles.abView];
-    if(activeViews.includes(viewName)) classes.push(styles.active);
-    if(hidingView === viewName) classes.push(styles.hiding);
-    if(showingView === viewName) classes.push(styles.showing);
-    return classes;
-  }
-
-  const renderBackButton = () => {
-    return (<a
-      className={styles.backBtn}
-      href="#/"
-      onClick={() => popView(activeViews[activeViews.length-1])}>Back</a>);
-  }
-
-  const selectCategory = (cat) => {
-    setCurrentCategory(cat);
-    pushView(AB_VIEWS.styles);
   }
 
   const applyStyle = (categoryName, style) => {
@@ -123,7 +76,7 @@ const AlpacaBuilder = ({
         canvas.toBlob(blob => {
           blob.name = fileName;
           if(onExport){
-            onExport({blob: blob});
+            onExport({blob: blob, props: svgProperties});
           }
         });
 
@@ -158,29 +111,21 @@ const AlpacaBuilder = ({
         styles.alpacaBuilder
       )}>
       <div className={styles.head}>
-        {showTitle && (<h2>Alpacabuilder</h2>)}
-
         <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
           <rect width="100%" height="100%" fill="white" />
           {renderSvg()}
         </svg>
       </div>
-     <div className={styles.viewsContainer}>
-        <AbViewIntro
-          cssClassNames={classNames(getCssClass(AB_VIEWS.intro))}
-          onPushView={pushView}></AbViewIntro>
-        <AbViewCategories
-          cssClassNames={classNames(getCssClass(AB_VIEWS.categories))}
-          onCategorySelected={selectCategory}></AbViewCategories>
-        <AbViewStyles
-          cssClassNames={classNames(getCssClass(AB_VIEWS.styles))}
-          category={currentCategory}
-          onStyleClick={applyStyle}
-          current={svgProperties}
-          ></AbViewStyles>
-      </div>
+      <AbViewStyles
+        cssClassNames={styles.abView}
+        onStyleClick={applyStyle}
+        current={svgProperties}
+        ></AbViewStyles>
+
       <div className={styles.toolbar}>
-          {/* {activeViews.length > 1 && (renderBackButton())} */}
+          <a
+            href="#/"
+            onClick={() => {if(onCancel) onCancel();}}>Cancel</a>
           <a
             className={styles.saveBtn}
             href="#/"

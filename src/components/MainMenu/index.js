@@ -52,6 +52,7 @@ const MainMenu = ({
   const [profilePic, setProfilePic] = useState(user.profilePicture);
   const [imageName, setImageName] = useState(null);
   const [aboutMe, setAboutMe] = useState(user.aboutMe);
+  const [alpacaBuilderProps, setAlpacaBuilderProps] = useState(user.alpacaBuilderProps);
   const [profileSubmitActive, setProfileSubmitActive] = useState(true);
   const [profileErrorMessage, setProfileErrorMessage] = useState();
 
@@ -158,7 +159,7 @@ const MainMenu = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    updateUser(name, username, email, imageName, aboutMe, profilePic);
+    updateUser(name, username, email, imageName, aboutMe, profilePic, alpacaBuilderProps);
     setEditVisible(false);
   };
 
@@ -179,11 +180,12 @@ const MainMenu = ({
     await handleFileUpload(e.target.files[0]);
   };
 
-  const handleAlpacaBuilderExport = async ({blob}) => {
+  const handleAlpacaBuilderExport = async ({blob, props}) => {
 
     if (!blob) return;
     await handleFileUpload(blob);
     handleAlpacaBuilderVisible(false);
+    setAlpacaBuilderProps(props);
   };
 
   const resizePicture = base64 =>
@@ -318,7 +320,11 @@ const MainMenu = ({
           Alpacabuilder
         </h2>
         <div class={styles.alpacaBuilderWrapper}>
-          <AlpacaBuilder visible={alpacaBuilderVisible} showTitle={false} onExport={data => handleAlpacaBuilderExport(data)}/>
+          <AlpacaBuilder
+            visible={alpacaBuilderVisible}
+            onCancel={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
+            onExport={data => handleAlpacaBuilderExport(data)}
+            props={alpacaBuilderProps}/>
         </div>
       </div>
     );
@@ -507,10 +513,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateUser: (name, username, email, imageName, aboutMe, profilePic) => {
+    updateUser: (name, username, email, imageName, aboutMe, profilePic, alpacaBuilderProps) => {
       dispatch(
         AuthenticationActions.initiateUpdateUserData({
-          user: { name, username, email, imageName, aboutMe, profilePic },
+          user: { name, username, email, imageName, aboutMe, profilePic, alpacaBuilderProps },
         })
       );
     },
