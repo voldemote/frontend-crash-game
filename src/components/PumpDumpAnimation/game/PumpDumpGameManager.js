@@ -31,7 +31,7 @@ export class PumpDumpGameMananger {
         // Create our pixi app
         this.app = new Application({
             view: viewCanvas,
-            resolution: 1,
+            resolution: window.devicePixelRatio,
             autoDensity: true,
             resizeTo: viewCanvas.parentElement,
             antialias: true,
