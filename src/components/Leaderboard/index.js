@@ -38,7 +38,7 @@ const Leaderboard = ({
   const isLoggedIn = () => user.authState === LOGGED_IN;
 
   useEffect(() => {
-    if (fetch && !fetched && !userRef) {
+    if (fetch && !userRef) {
       fetchLeaderboard(
         0,
         LIMIT,
@@ -49,7 +49,9 @@ const Leaderboard = ({
       setMissingAmount(getMissingWinnerAmount());
       setFetched(true);
     }
-  }, [fetch, fetched]);
+  }, [fetch]);
+
+
 
   useEffect(() => {
     if (userRef) {

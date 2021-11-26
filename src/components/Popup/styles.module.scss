@@ -104,6 +104,18 @@
       }
     }
 
+    .alpacaBuilderPopup {
+      overflow: visible;
+      //max-width: max-content;
+      width: 600px;
+      height: 600px;
+      padding: 0 30px;
+
+      @media (max-width: $screen-sm) {
+        padding: 0 15px;
+      }
+    }
+
     @media (max-width: $screen-sm) {
       min-height: calc(100vh - 20px);
 
