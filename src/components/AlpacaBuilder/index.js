@@ -123,16 +123,13 @@ const AlpacaBuilder = ({
         ></AbViewStyles>
 
       <div className={styles.toolbar}>
-          <a
-            href="#/"
-            onClick={() => {if(onCancel) onCancel();}}>Cancel</a>
-          <a
-            className={styles.saveBtn}
-            href="#/"
-            onClick={() => exportSvg()}>Save</a>
-          <a
-            href="#/"
-            onClick={() => resetSvg(true)}>Random</a>
+          <span
+            onClick={() => {if(onCancel) onCancel();}}>Cancel</span>
+          <span            
+            onClick={() => resetSvg(true)}>Randomize</span>
+          <span
+            className={styles.saveBtn}            
+            onClick={() => exportSvg()}>Save</span>
         </div>
     </div>
     <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>

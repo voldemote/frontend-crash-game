@@ -378,7 +378,7 @@ const MainMenu = ({
                     <Icon
                       className={styles.uploadIcon}
                       iconTheme={IconTheme.white}
-                      iconType={IconType.avatarUpload}
+                      iconType={IconType.buildAlpaca}
                     />
                   </div>
                 ) : (
@@ -396,12 +396,12 @@ const MainMenu = ({
                   onChange={handleProfilePictureUpload}
                 />
               </div>
-              <p className={styles.profilePictureUploadLabel}>Your avatar</p>
+              <p className={styles.profilePictureUploadLabel}>Build your alpaca</p>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
             <div className={styles.profileContent}>
-              <div className={styles.profileInputGroup}>
+              {/* <div className={styles.profileInputGroup}>
                 <label className={styles.profileInputLabel}>
                   My full name is...
                 </label>
@@ -410,7 +410,7 @@ const MainMenu = ({
                   value={name}
                   onChange={handleName}
                 />
-              </div>
+              </div> */}
               <div className={styles.profileInputGroup}>
                 <label className={styles.profileInputLabel}>
                   My username is...

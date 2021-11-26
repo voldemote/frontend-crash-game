@@ -20,6 +20,7 @@ import { ReactComponent as IconAvatarUpload } from '../../data/icons/avatar-uplo
 import { ReactComponent as IconBell } from '../../data/icons/bell.svg';
 import { ReactComponent as IconBet } from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 } from '../../data/icons/bet-2.svg';
+import { ReactComponent as IconBuildAlpaca } from '../../data/icons/build-alpaca.svg';
 import { ReactComponent as IconCalendar } from '../../data/icons/calendar.svg';
 import { ReactComponent as IconCamera } from '../../data/icons/camera.svg';
 import { ReactComponent as IconChat } from '../../data/icons/chat.svg';
@@ -106,6 +107,7 @@ const Icon = ({
       [IconType.bell]: <IconBell />,
       [IconType.bet]: <IconBet />,
       [IconType.bet2]: <IconBet2 />,
+      [IconType.buildAlpaca] : <IconBuildAlpaca />,
       [IconType.calendar]: <IconCalendar />,
       [IconType.camera]: <IconCamera style={{ transform: 'rotate(-10deg)' }} />,
       [IconType.chat]: <IconChat />,
