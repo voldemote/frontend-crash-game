@@ -173,7 +173,7 @@
   justify-content: space-around;
   overflow: hidden;
   border-radius: 12px;
-  background: url('./assets/background.svg');
+  background: url('./assets/background.png');
   background-repeat: no-repeat;
   background-size: auto 100%;
   background-position: right;
@@ -235,10 +235,25 @@
     bottom: 50px;
     right: 30px;
     transition: right 1s ease-in-out, bottom 1s ease-in-out;
+    animation: zoom-in-zoom-out 3s ease infinite;
     position: absolute;
     right: 270px;
     z-index: 1;
   }
+  @keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(0.8, 0.8);
+  }
+  50% {
+    transform: scale(0.7, 0.7);
+  }
+  100% {
+    transform: scale(0.5, 0.5);
+  }
+}
 
 /*
   .slider::-moz-range-thumb {
