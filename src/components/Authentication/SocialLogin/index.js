@@ -22,13 +22,11 @@ const LoginButton = ({ children, onClick, styles }) => (
 
 const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
   const { initGoogleLogin, initFacebookLogin } = useSocialLogins();
+  const showNewFeatures =
+    process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const iconProps = {
     className: styles.buttonIcon,
   };
-
-  if (process.env.REACT_APP_SHOW_UPCOMING_FEATURES !== 'true') {
-    return null;
-  }
 
   const prefixText = authenticationType === AuthenticationType.register ? "Sign up" : "Login";
 
@@ -45,10 +43,13 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
         <Icon iconType={IconType.google} {...iconProps} />
         <span>{prefixText} with Google</span>
       </LoginButton>
-      {/* <LoginButton styles={styles} onClick={initFacebookLogin}>
+
+      {/*
+      showNewFeatures && <LoginButton styles={styles} onClick={initFacebookLogin}>
         <Icon iconType={IconType.facebook} {...iconProps} />
         <span>{prefixText} with Facebook</span>
-      </LoginButton> */}
+      </LoginButton>
+      */}
     </>
   );
 };

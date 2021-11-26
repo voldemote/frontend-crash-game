@@ -10,20 +10,16 @@ const Authentication = ({
   preloadEmailSignUp
 }) => {
 
-  const showNewFeatures =
-    process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
+  
 
   return {
     [AuthenticationType.register]: 
       <>
         <EmailSignUp styles={styles} />
-          
-        {showNewFeatures &&
           <div className={styles.dontHaveAnAccount}>
             <p>or use your social login</p>
             <SocialLogin styles={styles} authenticationType={AuthenticationType.register} />
           </div>
-        }
       </>
       ,
     [AuthenticationType.login]: 
