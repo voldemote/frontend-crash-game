@@ -1,0 +1,181 @@
+@import './styles-variables';
+
+.alpacaBuilder {
+  display: flex;
+  flex-direction: column;
+   height: calc(100% - 20px);
+
+  .head{
+    height: 35%;
+    border-bottom: 1px solid $separatorColor;
+    display: flex;
+    flex-direction: column;
+
+    h2{
+      margin-bottom:20px;
+    }
+
+
+    .svg{
+      flex:1;
+      margin: auto;
+    }
+  }
+
+  .viewsContainer{
+    height: 60%;
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+  }
+
+  .abView {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    right: -500px;
+    opacity: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0px;
+
+    .tiles{
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      .tile{
+        margin: 10px;
+        height: 100px;
+        width: calc( (100% / 4) - 20px );
+        padding: 2px;
+        border-radius: 20px;
+        border: 1px solid $unselectedBorderColor;
+        background-color: $unselectedBg;
+        text-align: center;
+        display: flex;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+
+        img, svg{
+          max-width: 100%;
+          max-height: 100%;
+          padding:3px;
+          flex:1;
+        }
+      }
+      .tileSelected{
+        border: 1px solid $selectedBorderColor;
+        background-color: $selectedBg;
+        box-shadow:0 1px 3px rgba(0,0,0,0.12);
+      }
+    }
+
+    .colors{
+      display: flex;
+      flex-direction: column;
+      padding:20px 0;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      .color{
+        margin: 10px;
+        border-radius: 20px;
+        border-width: 20px;
+        border-style: solid;
+        height: 0px;
+        width: 0px;
+        font-size:0px;
+        outline: 1px solid $separatorColor;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+      }
+      .colorSelected{
+        outline: 1px solid $selectedBorderColor;
+        box-shadow:0 1px 3px rgba(0,0,0,0.12);
+      }
+    }
+
+    .categoriesRow{
+      display: flex;
+      overflow-x: auto;
+      justify-content: center;
+      padding:10px 0;
+
+      .category{
+        margin: 10px;
+        background-color: $unselectedBg;
+        outline: 1px solid $unselectedBorderColor;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        font-size:10px;
+        text-align: center;
+        line-height: 50px;
+        text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+      }
+      .categorySelected{
+        outline: 1px solid $selectedBorderColor;
+        background-color: $selectedBg;
+        box-shadow:0 1px 3px rgba(0,0,0,0.12);
+      }
+    }
+  }
+  .showing{
+    animation: movein 0.2s ease-out forwards;
+  }
+  .hiding{
+    animation: moveout 0.2s ease-in forwards;
+  }
+  .active{
+    right: 0;
+    opacity: 1;
+  }
+
+  .toolbar{
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+    //margin:5px 0;
+    a{
+      border: 1px solid $toolbarBtnBg;
+      border-radius: 30px;
+      background-color: $toolbarBtnBg;
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 10px;
+      color:$toolbarBtnColor;
+    }
+  }
+
+}
+
+
+@keyframes movein {
+  0% {
+    right: -500px;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    right: 0px;
+    opacity: 1;
+  }
+}
+
+@keyframes moveout {
+  0% {
+    right: 0px;
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+  100% {
+    right: -500px;
+  }
+}
