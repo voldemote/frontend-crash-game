@@ -231,7 +231,6 @@ export class VerticalAxis extends Container {
 
     setupAxis(timeElapsed) {
         const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
-        // console.log('crashFactor', crashFactor);
 
         const diff = crashFactor - this.stickPointCrashFactor;
         if (diff > 0) {

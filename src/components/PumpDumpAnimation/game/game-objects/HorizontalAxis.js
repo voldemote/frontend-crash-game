@@ -133,7 +133,6 @@ export class HorizontalAxis extends Container {
     }
 
     setupAxis(timeElapsed) {
-        // console.log(timeElapsed);
         const diff = timeElapsed - this.stickPointTime;
         if (diff > 0) {
             const diffInUnits = diff / (this.multiFactor * (this.stickPointUnits / INIT_STICK_UNITS));
