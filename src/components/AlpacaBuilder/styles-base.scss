@@ -5,13 +5,13 @@
   flex-direction: column;
   //height: calc(100% - 40px);
 
-  .head{
+  .head {
     border-bottom: 1px solid $separatorColor;
     display: flex;
     flex-direction: column;
     //height: 34%;
 
-    .svg{
+    .svg {
       //flex:1;
       max-height: 250px;
       margin: auto;
@@ -19,123 +19,122 @@
   }
 
   .abView {
-
-    .tiles{
+    .tiles {
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
 
-      .tile{
+      .tile {
         margin: 10px;
         height: 100px;
-        width: calc( (100% / 4) - 20px );
+        width: calc((100% / 4) - 20px);
         padding: 2px;
         border-radius: 20px;
         border: 1px solid $unselectedBorderColor;
         background-color: $unselectedBg;
         text-align: center;
         display: flex;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
 
-        img, svg{
+        img,
+        svg {
           max-width: 100%;
           max-height: 100%;
-          padding:3px;
-          flex:1;
+          padding: 3px;
+          flex: 1;
         }
       }
-      .tileSelected{
+      .tileSelected {
         border: 1px solid $selectedBorderColor;
         background-color: $selectedBg;
-        box-shadow:0 1px 3px rgba(0,0,0,0.12);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
       }
     }
 
-    .colors{
+    .colors {
       display: flex;
       flex-direction: column;
-      padding:20px 0;
+      padding: 20px 0;
       flex-flow: row wrap;
       justify-content: center;
 
-      .color{
+      .color {
         margin: 10px;
         border-radius: 20px;
         border-width: 20px;
         border-style: solid;
         height: 0px;
         width: 0px;
-        font-size:0px;
+        font-size: 0px;
         outline: 1px solid $separatorColor;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
       }
-      .colorSelected{
+      .colorSelected {
         outline: 1px solid $selectedBorderColor;
-        box-shadow:0 1px 3px rgba(0,0,0,0.12);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
       }
     }
 
-    .categoriesRow{
+    .categoriesRow {
       display: flex;
       overflow-x: auto;
       justify-content: center;
-      padding:10px 0;
+      padding: 10px 0;
 
-      .category{
+      .category {
         margin: 10px;
         background-color: $unselectedBg;
         outline: 1px solid $unselectedBorderColor;
         border-radius: 20px;
         height: 50px;
         width: 50px;
-        font-size:10px;
+        font-size: 10px;
         text-align: center;
         line-height: 50px;
         text-decoration: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.35);
-
-
-
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
       }
-      .categorySelected{
+      .categorySelected {
         outline: 1px solid $selectedBorderColor;
         background-color: $selectedBg;
-        box-shadow:0 1px 3px rgba(0,0,0,0.12);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
       }
     }
   }
 
-  .toolbar{
-
+  .toolbar {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 
-    a{
-      border: 1px solid $toolbarBtnBg;
+    span {
+      width: 100px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-radius: 30px;
-      background-color: $toolbarBtnBg;
+      background-image: url('../../data/backgrounds/games/bet-button.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
       text-decoration: none;
-      padding: 10px 20px;
-      font-size: 10px;
-      color:$toolbarBtnColor;
+      font-size: 12px;
+      color: $toolbarBtnColor;
+      cursor: pointer;
     }
   }
-
 }
 
-
 @media (min-width: $screen-sm) {
-
-  .abView{
-    .categoriesRow{
-
-      .category{
+  .abView {
+    .categoriesRow {
+      .category {
         background-color: red;
         margin: 5px;
         height: 30px;
         width: 30px;
-        font-size:8px;
+        font-size: 8px;
       }
     }
   }

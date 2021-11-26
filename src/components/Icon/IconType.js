@@ -17,6 +17,7 @@ export default {
   bet2: 'bet2',
   bet: 'bet',
   bell: 'bell',
+  buildAlpaca: 'buildAlpaca',
   calendar: 'calendar',
   camera: 'camera',
   chat: 'chat',
