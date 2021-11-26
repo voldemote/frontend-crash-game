@@ -181,6 +181,11 @@
   max-height: 470px;
   min-height: 470px;
   position: relative;
+  .container{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
   @media (max-width: 580px) {
     max-height: 320px;
     min-height: 320px;
@@ -247,7 +252,7 @@
   25% {
     transform: scale(0.8, 0.8)
     perspective(200px)
-    //rotateX(-180deg) 
+    //rotateX(-180deg)
     rotateY(0deg);
   }
   50% {

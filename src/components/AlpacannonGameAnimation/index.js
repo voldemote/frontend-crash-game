@@ -1,13 +1,12 @@
-import cn from 'classnames';
 import classNames from 'classnames';
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, connect } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
-//import AnimationController from './AnimationController'//AnimationController
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
+
 const AlpacannonGameAnimation = ({
   connected,
   amount,
@@ -23,19 +22,18 @@ const AlpacannonGameAnimation = ({
   const backgroundRef = useRef(null);
 
   const [game, setGame] = useState('ready');
-
   const [audio, setAudio] = useState(null);
-  const [width, setWidth] = useState(null);
-  const [height, setHeight] = useState(null);
-  const [backg, setBackg] = useState(0);
-  const [lastgame, setLastgame] = useState(null);
-  const [shadow, setShadow] = useState(null);
-
   const [slider, setSlider] = useState(0);
 
   useEffect(() =>{
-    //AnimationController.init({ref: backgroundRef})
-  },[])
+    const aud = new AudioController(2)
+    setAudio(aud)
+    aud.startBgm()
+    onInit(aud)
+    return () => {
+      aud.stopBgm();
+    }
+  }, [])
 
   useEffect(() => {
     if(bet && !bet.ready && bet.amount && !bet.running) spin(bet)
@@ -48,46 +46,21 @@ const AlpacannonGameAnimation = ({
     setTimeout(() => {setGame('shoot')}, 400)
     setTimeout(() => {
       setGame('crashed')
+      if(bet.profit > 0){
+        audio.playWinSound()
+        /*
+        const spin = bet.profit > 0 ?
+          { type: 'win', value: '+' + bet.profit } :
+          bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
+          { type: 'loss', value: bet.profit}
+        setSpins((spins) => [spin].concat(spins))
+        */
+
+      }
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
     }, 1400)
     setTimeout(() => {setGame('ready')}, 3000)
   }
-/*
-  useEffect(() => {
-    if(backgroundRef) {
-      setWidth(backgroundRef.current.clientWidth)
-      setHeight(backgroundRef.current.clientHeight)
-    }
-    const aud = new AudioController(1)
-    setAudio(aud)
-    aud.startBgm();
-    onInit(aud)
-    return () => {
-      aud.stopBgm();
-    }
-  },[])
-
-  // const spin = async () => {
-  //   setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-  //   !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
-  // }
-/*
-
-  const handleEnd = (win) => {
-    if(win) {
-      audio.playWinSound()
-      changeBackground(0)
-    } else audio.playLoseSound();
-    const spin = bet.profit > 0 ?
-      { type: 'win', value: '+' + bet.profit } :
-      bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
-      { type: 'loss', value: bet.profit}
-    setSpins((spins) => [spin].concat(spins))
-    bet.autobet ?
-     setBet((bet) => {return {ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
-     setBet((bet) => {return {...bet, ball: bet.ball-1}})
-  }
-  */
 
   const interpolate = (number) => Math.floor((Number(number) + 42)*96/80)
 
@@ -127,8 +100,8 @@ const AlpacannonGameAnimation = ({
         <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca-in-cannon.png" alt="alpaca in cannon" />
         <img className={styles.explotion} style={{ opacity: game === 'shoot' ? 1 : 0 }} src="/images/cannon-games/explotion.svg" alt="explotion" />
       </div>
-      <img className={styles.alpacaFlying} style={{ opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && (bet.crash*5) + 20 }} src="/images/cannon-games/alpaca-flying.png" alt="alpaca flying" />
-      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: (bet.crash * 5) + 20 }} src="/images/cannon-games/alpaca-crash.png" alt="alpaca crash" />
+      <img className={styles.alpacaFlying} style={{ opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && ((bet.crash?bet.crash:50)*5) + 20 }} src="/images/cannon-games/alpaca-flying.png" alt="alpaca flying" />
+      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash?bet.crash:50) * 5) + 20 }} src="/images/cannon-games/alpaca-crash.png" alt="alpaca crash" />
     </div>
   )
 }
