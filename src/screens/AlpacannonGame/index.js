@@ -35,7 +35,7 @@ import {
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 
-const ALPACANNON_GAME_EVENT_ID = GAMES.plinko.id
+const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
 const PlinkoGame = ({
   showPopup,
@@ -64,7 +64,6 @@ const PlinkoGame = ({
   }, []);
 
   useEffect(() => {
-    /*
     getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
@@ -90,7 +89,6 @@ const PlinkoGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-      */
 
   }, [])
 
