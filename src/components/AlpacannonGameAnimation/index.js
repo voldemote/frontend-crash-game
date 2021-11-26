@@ -38,18 +38,20 @@ const AlpacannonGameAnimation = ({
   },[])
 
   useEffect(() => {
-    if(bet && !bet.ready && bet.amount) spin(bet)
+    if(bet && !bet.ready && bet.amount && !bet.running) spin(bet)
   }, [bet]);
-  console.log("bet", bet)
+
   const spin = () => {
     console.log("Go!")
-    setBet((bet) => {return{...bet, ready: true, crash: Math.round(Math.random()*100) }})
+    setBet((bet) => {return{...bet, running: true, crash: Math.round(Math.random()*100) }})
     setGame('shoot')
     setTimeout(() => {setGame('shoot')}, 400)
-    setTimeout(() => {setGame('crashed')}, 1400)
+    setTimeout(() => {
+      setGame('crashed')
+      setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
+    }, 1400)
     setTimeout(() => {setGame('ready')}, 3000)
   }
-
 /*
   useEffect(() => {
     if(backgroundRef) {
