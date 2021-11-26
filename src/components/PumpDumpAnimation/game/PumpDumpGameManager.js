@@ -32,6 +32,7 @@ export class PumpDumpGameMananger {
         this.app = new Application({
             view: viewCanvas,
             resolution: 1,
+            autoDensity: true,
             resizeTo: viewCanvas.parentElement,
             antialias: true,
             backgroundAlpha: 0,
