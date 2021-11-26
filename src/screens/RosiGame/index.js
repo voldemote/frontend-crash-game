@@ -116,7 +116,7 @@ const RosiGame = ({
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Elon Game: Place Bet failed',
+          message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Place Bet failed`,
         })
       );
     }
@@ -131,7 +131,7 @@ const RosiGame = ({
       .catch(() => {
         dispatch(
           AlertActions.showError({
-            message: 'Elon Game: Cancel Bet failed',
+            message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Cancel Bet failed`,
           })
         );
       });
@@ -156,7 +156,7 @@ const RosiGame = ({
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Elon Game: Cashout failed',
+          message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Cashout failed`,
         })
       );
     }
