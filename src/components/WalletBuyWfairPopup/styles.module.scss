@@ -1,0 +1,176 @@
+@import '../../styles/all';
+
+.container {
+  //   display: flex;
+  //   align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: $colorWhite;
+  color: $colorPrimaryDark;
+  border-radius: 10px;
+}
+
+.activities {
+  .title {
+    display: flex;
+    align-items: center;
+
+    h2 {
+      font-size: 20px;
+
+      @media (max-width: $screen-xs) {
+        font-size: 18px;
+      }
+    }
+
+    img {
+      margin-right: 30px;
+    }
+  }
+}
+.activityWrapper {
+  @media screen and (max-width: $screen-xs) {
+    margin-bottom: 20px;
+  }
+  .activityContainer {
+    margin-top: 10px;
+    position: relative;
+    height: 700px;
+    min-height: 700px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.tabLayout {
+  display: flex;
+  align-items: flex-end;
+  color: $colorWhite;
+  font-family: $fontRegular;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 24px;
+  margin-left: 16px;
+
+  @media (max-width: $screen-md) {
+    margin-left: 0px;
+    font-size: 11px;
+    line-height: 14px;
+  }
+}
+
+.tabItemSelected {
+  text-align: center;
+  padding-bottom: 12px;
+  opacity: 1;
+  cursor: pointer;
+  border-bottom: 3px solid $mainAction;
+}
+
+.tabItem {
+  text-align: center;
+  padding-bottom: 12px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.buyWithFiatTabContainer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  height: 700px;
+  width: 100%;
+}
+
+.buyWithFiatTabIframe {
+  display: block;
+  width: 100%;
+  max-height: 650px;
+  max-width: 450px;
+}
+
+.depositTabContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  .depositHeader {
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: 10px;
+    }
+  }
+
+  .copyhash {
+    width: 331px;
+    height: 34px;
+    padding: 10px 23px 8px 25px;
+    margin-top: 40px;
+    border-radius: 14.5px;
+    background-color: #e82e89;
+    display: flex;
+
+    .copyhashText {
+      width: 255px;
+      height: 16px;
+      margin: 0 14px 0 0;
+      font-family: $fontRegular;
+      font-size: 12.6px;
+      font-weight: 500;
+      color: $colorWhite;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+
+  .qrCodeImg {
+    margin-top: 40px;
+    border-radius: 35.4px;
+    background-color: #fff;
+  }
+
+  .firstDiscription {
+    width: 443.9px;
+    height: 32px;
+    margin-top: 40px;
+    font-family: $fontRegular;
+    font-size: 12.6px;
+    font-weight: 500;
+    text-align: center;
+    color: $colorBlack;
+  }
+
+  .copyButton {
+    border: none;
+    background: transparent;
+    padding: 0;
+    position: relative;
+    .confirmation {
+      position: absolute;
+      bottom: calc(100% + 15px);
+      right: -15px;
+      width: max-content;
+      border-radius: 6px;
+      background-color: rgba(232, 46, 137, 0.6);
+      color: $colorWhite;
+      padding: 6px;
+      @media screen and (min-width: $screen-xs) {
+        right: unset;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}

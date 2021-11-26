@@ -34,4 +34,5 @@ export default {
   requestTokens: 'requestTokens',
   lastGamesDetail: 'lastGamesDetail',
   alpacaBuilder: 'alpacaBuilder',
+  walletBuyWfair: 'walletBuyWfair',
 };

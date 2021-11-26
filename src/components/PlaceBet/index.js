@@ -191,7 +191,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
     }
   }, [isGameRunning, betted, autobet]);
-  console.log("isGameRunning")
   const stopAutobet = () => {
 
     const payload = {
@@ -236,7 +235,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     trackElonStartAutobet({
       ...payload,
       autobet: 1,
-      multiplier: crashFactor, 
+      multiplier: crashFactor,
     });
     console.log("placeAutoBet")
     setAutobet(payload)
@@ -348,7 +347,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
           >
-            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
+            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet (Next Round)' : 'Start Auto Bet') : 'Play Demo'}
           </span>
         );
     //  }
@@ -805,12 +804,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             >
             <div className={styles.toggleButton}>
             <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
-              <span                  
+              <span
                 className={classNames(styles.buttonItem, lossbutton && styles.selected)}
                 onClick={() => setLossbutton(true)}>
                 Reset
               </span>
-              <span                  
+              <span
                 className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
                 onClick={() => setLossbutton(false)}>
                 Increase

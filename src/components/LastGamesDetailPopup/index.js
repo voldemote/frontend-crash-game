@@ -66,13 +66,14 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
   const { match, bets } = details;
 
   const matchDate = match?.created_at;
+  const gameTypeId = match?.gameid;
 
   const date = matchDate
     ? moment(matchDate).format('HH:mm:ss | DD/MM/YYYY')
     : '---';
 
   const handleCrashFactorChange = async (gameHash, type) => {
-    const response = await getGameDetailById(gameHash, type).catch(err => {
+    const response = await getGameDetailById(gameHash, gameTypeId, type).catch(err => {
       console.error('getGameDetailById err', err);
     });
     const details = response?.data || null;

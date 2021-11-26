@@ -17,7 +17,7 @@
 
   @media (max-width: $screen-xs-max) {
     height: 244px;
-    // background: url('../../data/backgrounds/games/pump-dump-mobile-bg.png') center $colorWhite;
+    background: url('../../data/backgrounds/games/pump-dump-mobile-bg.png') center $colorWhite;
   }
 
   .gameOffline {
@@ -90,6 +90,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: $screen-xs-max) {
+    align-items: flex-start;
+    padding-top: 20%;
+  }
 
   .title {
     font-size: 46px;

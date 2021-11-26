@@ -42,6 +42,7 @@ import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
 import AlpacaBuilder from 'components/AlpacaBuilder';
+import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -212,6 +213,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             authenticationType={
               options.authenticationType || AuthenticationType.register
             }
+            preloadEmailSignUp={options?.preloadEmailSignUp}
           />
         );
       case PopupTheme.explanation:
@@ -231,6 +233,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             <AlpacaBuilder visible={visible} showTitle={false}/>
           </div>
         );
+      case PopupTheme.walletBuyWfair:
+        return <WalletBuyWfairPopup />;
     }
 
     return null;

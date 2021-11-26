@@ -15,13 +15,17 @@ const AXIS_LABEL_GAP = 5;
 const AXIS_LINE_HEIGHT = 15;
 
 const AXIS_COUNT = 20;
-const AXIS_START_POS_X = 0.2;
+export const AXIS_START_POS_X = isMobileRosiGame ? 0.1 : 0.2;
 const AXIS_BOTTOM_GAP = 7.5;
 
-const INIT_STICK_UNITS = 5;
-export const INIT_STICK_POINT_TIME = 2500; // 2500ms or 2.
+export const INIT_MULTI_FACTOR = isMobileRosiGame ? 20 : 5;
+export const AXIS_GAP = isMobileRosiGame ? 50 : 100;
 
-const AXIS_GAP = 100;
+const INIT_STICK_UNITS = isMobileRosiGame ? 4 : 5;
+
+export const INIT_STICK_POINT_TIME = INIT_MULTI_FACTOR * AXIS_GAP * INIT_STICK_UNITS; // 2500ms or 2.
+
+
 
 export class HorizontalAxis extends Container {
     axisLines = [];  // Graphic Lines Texture Sprites
@@ -29,7 +33,7 @@ export class HorizontalAxis extends Container {
 
     shouldRunUpdate = false;
 
-    multiFactor = 5;    // 1 Unit = 5ms
+    multiFactor = INIT_MULTI_FACTOR;    // 1 Unit = 5ms
     unitThreshold = AXIS_GAP * 0.5;     // If Below half AXIS_GAP Units upgrade to the next set
     initialAxisGap = AXIS_GAP;
     axisGap = 0;
@@ -40,13 +44,21 @@ export class HorizontalAxis extends Container {
 
     // Max Time is 200480 ms
 
+    // attribs = [
+    //     { multiFactor: 10, unitThreshold: AXIS_GAP * 0.5, axisGap: AXIS_GAP, stickPointTime: INIT_STICK_POINT_TIME * 2, stickPointUnits: INIT_STICK_UNITS },
+    //     { multiFactor: 20, unitThreshold: AXIS_GAP * 0.5, axisGap: AXIS_GAP, stickPointTime: INIT_STICK_POINT_TIME * 4, stickPointUnits: INIT_STICK_UNITS },
+    //     { multiFactor: 100, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 8, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+    //     { multiFactor: 200, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 16, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+    //     { multiFactor: 400, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 32, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+    //     { multiFactor: 800, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 64, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+    // ]
     attribs = [
-        { multiFactor: 10, unitThreshold: AXIS_GAP * 0.5, axisGap: AXIS_GAP, stickPointTime: 5000, stickPointUnits: 5 },
-        { multiFactor: 20, unitThreshold: AXIS_GAP * 0.5, axisGap: AXIS_GAP, stickPointTime: 10000, stickPointUnits: 5 },
-        { multiFactor: 100, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: 20000, stickPointUnits: 2 },
-        { multiFactor: 200, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: 40000, stickPointUnits: 2 },
-        { multiFactor: 400, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: 80000, stickPointUnits: 2 },
-        { multiFactor: 800, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: 160000, stickPointUnits: 2 },
+        { multiFactor: INIT_MULTI_FACTOR * 2, unitThreshold: AXIS_GAP * 0.5, axisGap: AXIS_GAP, stickPointTime: INIT_STICK_POINT_TIME * 2, stickPointUnits: INIT_STICK_UNITS },
+        { multiFactor: INIT_MULTI_FACTOR * 4, unitThreshold: AXIS_GAP * 0.5, axisGap: AXIS_GAP, stickPointTime: INIT_STICK_POINT_TIME * 4, stickPointUnits: INIT_STICK_UNITS },
+        { multiFactor: INIT_MULTI_FACTOR * 20, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 8, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+        { multiFactor: INIT_MULTI_FACTOR * 40, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 16, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+        { multiFactor: INIT_MULTI_FACTOR * 80, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 32, stickPointUnits: INIT_STICK_UNITS / 2.5 },
+        { multiFactor: INIT_MULTI_FACTOR * 160, unitThreshold: AXIS_GAP * 1.25, axisGap: AXIS_GAP * 2.5, stickPointTime: INIT_STICK_POINT_TIME * 64, stickPointUnits: INIT_STICK_UNITS / 2.5 },
     ]
 
     constructor() {
@@ -68,7 +80,7 @@ export class HorizontalAxis extends Container {
         this.addChild(...this.axisLines);
         
         for (let i = 0; i < AXIS_COUNT; ++i) {
-            this.timeLabels[i] = new Text(`${i * (this.multiFactor / 10)}s`, {
+            this.timeLabels[i] = new Text(`${i * (this.multiFactor * AXIS_GAP / 1000)}s`, {
                 fontFamily: AXIS_LABEL_FONT_FAMILY,
                 fontSize: AXIS_LABEL_FONT_SIZE,
                 fill: AXIS_LABEL_COLOR,
@@ -116,12 +128,11 @@ export class HorizontalAxis extends Container {
 
     upgradeAxisToNextSet() {
         for (let i = 0; i < AXIS_COUNT; ++i) {
-            this.timeLabels[i].text = `${i * (this.multiFactor / 10)}s`;
+            this.timeLabels[i].text = `${i * (this.multiFactor * AXIS_GAP / 1000)}s`;
         }
     }
 
     setupAxis(timeElapsed) {
-        // console.log(timeElapsed);
         const diff = timeElapsed - this.stickPointTime;
         if (diff > 0) {
             const diffInUnits = diff / (this.multiFactor * (this.stickPointUnits / INIT_STICK_UNITS));

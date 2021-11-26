@@ -233,6 +233,10 @@ const authenticationSucceeded = function* (action) {
       })
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
+    
+    if (action.user) {
+      yield put(AuthenticationActions.updateData(action.user));
+    }
 
     if (action.newUser) {
       yield put(
@@ -409,6 +413,33 @@ const signUp = function* (action) {
   }
 };
 
+const loginExternal = function* ({ code, provider }) {
+  yield put(push('/'));
+  const { response, error } = yield call(Api.loginExternal, { provider, body: { code } });
+  if (response) {
+    const data = response?.data;
+
+    Api.setToken(data.session);
+    crashGameApi.setToken(data.session);
+
+    yield put(
+      AuthenticationActions.loginSuccess({
+        userId: data.userId,
+        session: data.session,
+        newUser: data.newUser,
+        initialReward: data?.initialReward,
+        user: data?.user,
+      })
+    );
+  } else {
+    yield put(
+      AuthenticationActions.loginExternalFail({
+        errorCode: error.errorCode,
+      })
+    );
+  }
+};
+
 const login = function* (action) {
   const payload = {
     userIdentifier: action.email,
@@ -525,6 +556,7 @@ export default {
   firstSignUpPopup,
   updateUserData,
   signUp,
+  loginExternal,
   login,
   forgotPassword,
   resetPassword,

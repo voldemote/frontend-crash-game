@@ -17,20 +17,20 @@ export class EndGameContainer extends Container {
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
 
-        let crashImage = new Sprite(resources[ASSET_LIST[this.crashTextures[0]]].texture);
-        crashImage.scale.set(0);
-        crashImage.position.set(width * 0.75, height * 0.3);
-        crashImage.anchor.set(0.5);
-        this.addChild(crashImage);
+        // let crashImage = new Sprite(resources[ASSET_LIST[this.crashTextures[0]]].texture);
+        // crashImage.scale.set(0);
+        // crashImage.position.set(width * 0.75, height * 0.3);
+        // crashImage.anchor.set(0.5);
+        // this.addChild(crashImage);
 
-        let scaleData = { val: 0 };
-        new TWEEN.Tween(scaleData)
-            .to({ val: 1 }, 600)
-            .onUpdate(() => {
-                crashImage.scale.set(scaleData.val);
-            })
-            .easing(TWEEN.Easing.Back.Out)
-            .start();
+        // let scaleData = { val: 0 };
+        // new TWEEN.Tween(scaleData)
+        //     .to({ val: 1 }, 600)
+        //     .onUpdate(() => {
+        //         crashImage.scale.set(scaleData.val);
+        //     })
+        //     .easing(TWEEN.Easing.Back.Out)
+        //     .start();
 
         let barAnimData = { scale: crashBar.scale.x, x: crashBar.x, y: crashBar.y };
         this.addChild(crashBar);

@@ -1,6 +1,6 @@
 import { Graphics } from "@pixi/graphics";
 import { Text } from "@pixi/text";
-import { calcCrashFactorFromElapsedTime } from "components/RosiGameAnimation/canvas/utils";
+import { calcCrashFactorFromElapsedTime, isMobileRosiGame } from "components/RosiGameAnimation/canvas/utils";
 import { Container } from "pixi.js";
 import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 
@@ -20,36 +20,40 @@ const AXIS_COUNT = 20;
 export const AXIS_START_POS_OFFSET_Y = 40;
 const AXIS_RIGHT_GAP = 50;
 
-const INIT_STICK_UNITS = 5;
+const INIT_MULTI_FACTOR = 0.25;
+export const INIT_STICK_UNITS = isMobileRosiGame ? 2 : 5;
 export const INITIAL_AXIS_GAP = 80;
 const HALF_AXIS_THRESHOLD = INITIAL_AXIS_GAP * 0.75;
 const AXIS_INCREMENT_THRESHOLD = INITIAL_AXIS_GAP * 0.5;
-export const INIT_STICK_POINT_CRASH_FACTOR = 200;
+
+const STARTING_CRASH_FACTOR = 100;
+export const STICK_POINT_INCREMENTS = INIT_STICK_UNITS * INITIAL_AXIS_GAP * INIT_MULTI_FACTOR;
+export const INIT_STICK_POINT_CRASH_FACTOR = STARTING_CRASH_FACTOR + STICK_POINT_INCREMENTS;
 
 export class VerticalAxis extends Container {
     axisLines = [];  // Graphic Lines
     multiplierLabels = []; // Text to indicate multipliers
     miniMultiplierLabels = [];  // Text to indicate mini multipliers
 
-    multiFactor = 0.25;    // 1 Unit = 0.4
+    multiFactor = INIT_MULTI_FACTOR;
     unitThreshold = HALF_AXIS_THRESHOLD;     // If Below 50 Units upgrade to the next set
     axisGap = INITIAL_AXIS_GAP;
     axisStartPosY = 0;
 
     isHalfAxis = false;
-    stickPointCrashFactor = INIT_STICK_POINT_CRASH_FACTOR;    // 200 / 100 = 2.00 crashFactor. To avoid round off errors
+    stickPointCrashFactor = INIT_STICK_POINT_CRASH_FACTOR; 
     stickPointUnits = INIT_STICK_UNITS;
 
     // Max Crash factor 100x
     attribs = [
-        { multiFactor: 0.5, stickPointCrashFactor: 200 + 100 }, // 0.20 per piece of axis // stickPointCrashFactor is 200 initially.
-        { multiFactor: 1, stickPointCrashFactor: 300 + 200 }, // 0.4 per piece of axis  // Prev crashFactor + Increments
-        { multiFactor: 2, stickPointCrashFactor: 500 + 400 }, // 0.8 per piece of axis
-        { multiFactor: 4, stickPointCrashFactor: 900 + 800 }, // 1.6 per piece of axis
-        { multiFactor: 8, stickPointCrashFactor: 1700 + 1600 }, // 3.2 per piece of axis
-        { multiFactor: 16, stickPointCrashFactor: 3300 + 3200 }, // 6.4 per piece of axis
-        { multiFactor: 32, stickPointCrashFactor: 6500 + 6400 }, // 12.8 per piece of axis
-        { multiFactor: 64, stickPointCrashFactor: 12900 + 12800 }, // 25.6 per piece of axis
+        { multiFactor: INIT_MULTI_FACTOR * 2, stickPointCrashFactor: 0 }, // 0.20 per piece of axis // stickPointCrashFactor is 200 initially.
+        { multiFactor: INIT_MULTI_FACTOR * 4, stickPointCrashFactor: 0 }, // 0.4 per piece of axis  // Prev crashFactor + Increments
+        { multiFactor: INIT_MULTI_FACTOR * 8, stickPointCrashFactor: 0 }, // 0.8 per piece of axis
+        { multiFactor: INIT_MULTI_FACTOR * 16, stickPointCrashFactor: 0 }, // 1.6 per piece of axis
+        { multiFactor: INIT_MULTI_FACTOR * 32, stickPointCrashFactor: 0 }, // 3.2 per piece of axis
+        { multiFactor: INIT_MULTI_FACTOR * 64, stickPointCrashFactor: 0}, // 6.4 per piece of axis
+        { multiFactor: INIT_MULTI_FACTOR * 128, stickPointCrashFactor: 0 }, // 12.8 per piece of axis
+        { multiFactor: INIT_MULTI_FACTOR * 256, stickPointCrashFactor: 0 }, // 25.6 per piece of axis
     ]
 
     constructor() {
@@ -85,7 +89,28 @@ export class VerticalAxis extends Container {
         this.addChild(...this.multiplierLabels);
         this.addChild(...this.miniMultiplierLabels);
 
+        this.updateAttribs();
         this.upgradeAxisToNextSet();
+    }
+
+    updateAttribs() {
+        // attribs = [
+        //     { multiFactor: INIT_MULTI_FACTOR * 2, stickPointCrashFactor: 200 + 100 }, // 0.20 per piece of axis // stickPointCrashFactor is 200 initially.
+        //     { multiFactor: INIT_MULTI_FACTOR * 4, stickPointCrashFactor: 300 + 200 }, // 0.4 per piece of axis  // Prev crashFactor + Increments
+        //     { multiFactor: INIT_MULTI_FACTOR * 8, stickPointCrashFactor: 500 + 400 }, // 0.8 per piece of axis
+        //     { multiFactor: INIT_MULTI_FACTOR * 16, stickPointCrashFactor: 900 + 800 }, // 1.6 per piece of axis
+        //     { multiFactor: INIT_MULTI_FACTOR * 32, stickPointCrashFactor: 1700 + 1600 }, // 3.2 per piece of axis
+        //     { multiFactor: INIT_MULTI_FACTOR * 64, stickPointCrashFactor: 3300 + 3200 }, // 6.4 per piece of axis
+        //     { multiFactor: INIT_MULTI_FACTOR * 128, stickPointCrashFactor: 6500 + 6400 }, // 12.8 per piece of axis
+        //     { multiFactor: INIT_MULTI_FACTOR * 256, stickPointCrashFactor: 12900 + 12800 }, // 25.6 per piece of axis
+        // ]
+
+        this.attribs[0].multiFactor = INIT_MULTI_FACTOR * 2;
+        this.attribs[0].stickPointCrashFactor = INIT_STICK_POINT_CRASH_FACTOR + STICK_POINT_INCREMENTS;
+        for (let i = 1; i < this.attribs.length; ++i) {
+            this.attribs[i].multiFactor = INIT_MULTI_FACTOR * (2 ** (i + 1));
+            this.attribs[i].stickPointCrashFactor = this.attribs[i - 1].stickPointCrashFactor + (STICK_POINT_INCREMENTS * (2 ** i));
+        }
     }
 
     // Generate 1 piece of axis which includes 1 Big Line, 3 Small Lines, 1 Medium Line and again 3 Small Lines in order
@@ -206,7 +231,6 @@ export class VerticalAxis extends Container {
 
     setupAxis(timeElapsed) {
         const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
-        // console.log('crashFactor', crashFactor);
 
         const diff = crashFactor - this.stickPointCrashFactor;
         if (diff > 0) {

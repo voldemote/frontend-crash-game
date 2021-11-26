@@ -18,6 +18,30 @@ import { layoutManagerConfig, resourcesConfig, gameViewConfig } from "./configs/
 import AnimationController from "../MinesGameAnimation/AnimationController";
 import {AlertActions} from "../../store/actions/alert";
 import { selectUser } from '../../store/selectors/authentication';
+const originalArray = [{row: 0, col: 0}, {row: 0, col: 1}, {row: 0, col: 2}, {row: 0, col: 3}, {row: 0, col: 4},
+      {row: 1, col: 0}, {row: 1, col: 1}, {row: 1, col: 2}, {row: 1, col: 3}, {row: 1, col: 4},
+      {row: 2, col: 0}, {row: 2, col: 1}, {row: 2, col: 2}, {row: 2, col: 3}, {row: 2, col: 4},
+      {row: 3, col: 0}, {row: 3, col: 1}, {row: 3, col: 2}, {row: 3, col: 3}, {row: 3, col: 4},
+      {row: 4, col: 0}, {row: 4, col: 1}, {row: 4, col: 2}, {row: 4, col: 3}, {row: 4, col: 4}]
+
+function shuffle(array) {
+    var i = array.length,
+        j = 0,
+        temp;
+
+    while (i--) {
+
+        j = Math.floor(Math.random() * (i+1));
+
+        // swap randomly chosen element with current element
+        temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+
+    }
+
+    return array;
+}
 
 const gameConfigBase = {
   "name": "Minesweeper",
@@ -80,8 +104,11 @@ const MinesGameAnimation = ({
 
   const [gameConfig, setGameConfig] = useState({});
   const [audio, setAudio] = useState(null);
+  const [array, setArray] = useState([]);
+  const [automine, setAutomine] = useState(0);
+  const [running, setRunning] = useState(false);
 
-  const getTranslatedReveal = (clientBoard) => {
+  const getTranslatedReveal = (clientBoard, result = 0) => {
       let col = 0;
       let row = 0;
 
@@ -95,7 +122,7 @@ const MinesGameAnimation = ({
           row: row-1,
           col: col,
           isMine: false,
-          isRevealed: entry === 0 ? true : false,
+          isRevealed: entry === result ? true : false,
           isEmpty: true,
           isFlagged: false,
           text: ""
@@ -123,6 +150,7 @@ const MinesGameAnimation = ({
 
   const checkSelectedCell = async (props) => {
     const {row, col} = props;
+    let allMinesPos = null;
 
     setCurrentStep((step) => step+1);
 
@@ -138,6 +166,7 @@ const MinesGameAnimation = ({
       const isMine = checkMine?.data?.result === 0 ? false : true;
 
       if(isMine) {
+        allMinesPos = getTranslatedReveal(checkMine?.data?.board, 1);
         handleLost()
       }
 
@@ -159,7 +188,8 @@ const MinesGameAnimation = ({
         isFlagged: false,
         isMine,
         isRevealed: true,
-        text: ""
+        text: "",
+        allMinesPos
       }
     } else {
       //handle demo
@@ -169,18 +199,64 @@ const MinesGameAnimation = ({
 
   const handleLost = () => {
     setGameInProgress(false);
-    setBet({
-      pending: false,
-      done: false
-    });
+
+    //disable place button before
+    setBet((bet) => {
+      return {
+        ...bet,
+        pending: true
+      }
+    })
+
+    setTimeout(()=> {
+      setBet((bet) => {
+        if(bet.autobet){
+          return {
+            ...bet,
+            pending: false,
+            done: false,
+            win: false
+          }
+        } else{
+          return {
+            pending: false,
+            done: false
+          }
+        }
+      });
+    }, 3000)
+
     setCurrentStep(0);
+    setRunning(false)
 
     const prepareObj = {
       type: 'loss',
       value: '-' + amount
-    };
+    }
     setCashouts((cashouts) => [prepareObj, ...cashouts]);
   }
+
+  async function nextMine(array, automine, aux){
+    if(!running && !aux) return
+    const {value} = await gameInstance.game.controller.onClickOnCell(array[automine]);
+    if(!value) {
+      //setTimeout(() => {setBet((bet) => {console.log("lose");return {...bet, done: false}});}, 5000)
+    }
+    else if(automine >= bet.cleared-1){
+      setTimeout(() => {
+        setBet((bet) => {return {...bet, done: false, win: true}})},
+      2000)
+    }
+    else if(value) {
+      setTimeout(() => nextMine(array, automine + 1, true), 500)
+    }
+  }
+
+  useEffect(() => {
+    if(bet.autobet && bet.done){
+      setTimeout(() => nextMine(shuffle(originalArray), 0, true), 300)
+    }
+  }, [bet.autobet, bet.done, running])
 
   useEffect(() => {
     const configBase = _.cloneDeep(gameConfigBase);
@@ -194,10 +270,11 @@ const MinesGameAnimation = ({
 
           if(data?._inProgress) {
             setGameInProgress(true);
-            setBet({
+            setBet((bet)=>{return{
+              ...bet,
               pending: false,
               done: true
-            });
+            }});
             _.set(configBase, 'initialReveal', getTranslatedReveal(game_payload.clientBoard));
 
             const tries = data._tries;
@@ -205,10 +282,11 @@ const MinesGameAnimation = ({
             setCurrentStep(tries);
           } else {
             setGameInProgress(false);
-            setBet({
+            setBet((bet)=>{return{
+              ...bet,
               pending: false,
               done: false
-            });
+            }});
           }
 
           setGameConfig({
@@ -237,7 +315,6 @@ const MinesGameAnimation = ({
       if(gameInstance) {
         gameInstance.game.controller.removeListeners();
       }
-
       const applicationConfig = {
         width: backgroundRef.current.clientWidth,
         height: backgroundRef.current.clientHeight,
@@ -305,11 +382,11 @@ const MinesGameAnimation = ({
       </div>
 
       <div>
-        {(!bet.done) && <div className={classNames(styles.notBetYetScreen)}>
+        {(!bet.done && !bet.autobet) && <div className={classNames(styles.notBetYetScreen)}>
           <div className={classNames(styles.notBetYetText)}>Place a bet in order to start the game!</div>
         </div>}
         <canvas id="mines-canvas" className={classNames(styles.canvas, {
-          [styles.notClickable]: !bet.done
+          [styles.notClickable]: !bet.done || bet.pending
         })} ref={canvasRef}></canvas>
       </div>
 

@@ -1,26 +1,34 @@
 import { Container } from "@pixi/display";
 import { Graphics } from "@pixi/graphics";
 import { Sprite } from "@pixi/sprite";
-import { EventEmitter } from "eventemitter3";
-import { calcCrashFactorFromElapsedTime } from "components/RosiGameAnimation/canvas/utils";
+import { calcCrashFactorFromElapsedTime, isMobileRosiGame } from "components/RosiGameAnimation/canvas/utils";
 import { PumpDumpGameMananger } from "../PumpDumpGameManager";
-import { INIT_STICK_POINT_TIME } from "./HorizontalAxis";
-import { AXIS_START_POS_OFFSET_Y, INITIAL_AXIS_GAP, INIT_STICK_POINT_CRASH_FACTOR } from "./VerticalAxis";
+import { AXIS_START_POS_X, INIT_MULTI_FACTOR, INIT_STICK_POINT_TIME } from "./HorizontalAxis";
+import { AXIS_START_POS_OFFSET_Y, INITIAL_AXIS_GAP, INIT_STICK_POINT_CRASH_FACTOR, INIT_STICK_UNITS, STICK_POINT_INCREMENTS } from "./VerticalAxis";
 import TWEEN from '@tweenjs/tween.js';
 
 
 // size of the stick visible at the top. Bot size will be same as the top
-const STICK_HEIGHT_OFFSET = 10;
+const STICK_HEIGHT_MIN_OFFSET = isMobileRosiGame ? 5 : 10;
+const STICK_HEIGHT_MAX_OFFSET = isMobileRosiGame ? 9 : 18;
 
-const STICK_WIDTH = 5;
-const BAR_WIDTH = 25;
-const BAR_ROUNDNESS = 4;
+const STICK_MIN_WIDTH = isMobileRosiGame ? 2.5 : 5;
+const STICK_MAX_WIDTH = isMobileRosiGame ? 3.5 : 7;
+
+const BAR_WIDTH = isMobileRosiGame ? 12.5 : 25;
+const BAR_ROUNDNESS = isMobileRosiGame ? 3 : 4;
+
+const BAR_MIN_HEIGHT = isMobileRosiGame ? 10 : 20;
+const BAR_HEIGHT_INCREMENTS = isMobileRosiGame ? 5 : 10;
 
 const CONT_START_Y = -AXIS_START_POS_OFFSET_Y;
 
-const INIT_CREATE_THRESHOLD = 300;   // Every 300ms generate a bar
+const SAME_HEIGHT_BAR_RANGE = 5;
+const UNIQUE_BAR_HEIGHT_COUNT = 6;
 
-const MERGE_BAR_COUNT = 2;
+export const INIT_CREATE_THRESHOLD = isMobileRosiGame ? 500 : 300;   // Every 300ms generate a bar
+
+export const MERGE_BAR_COUNT = 2;
 
 const reducer = (accumlated, current) => {
     return {
@@ -31,8 +39,6 @@ const reducer = (accumlated, current) => {
 }
 
 export class BarChartContainer extends Container {
-    eventEmitter = null;
-
     greenBarTextures = [];
     redBarTextures = [];
 
@@ -40,7 +46,7 @@ export class BarChartContainer extends Container {
     
     previousThreshold = 0;
     
-    gapBetweenBars = 200 * (INIT_CREATE_THRESHOLD / 1000);    // 100 pixels units of length on horizontal axis = 500ms hence 200 length = 1000ms
+    gapBetweenBars = INIT_CREATE_THRESHOLD / INIT_MULTI_FACTOR;
     generatedBars = [];
 
     barScale = {x: 1, y: 1};
@@ -49,29 +55,24 @@ export class BarChartContainer extends Container {
 
     audioManager;
 
-    attribs = [
-        { threshold: 0.5, done: false, createThresholdMult: 2 },
-        { threshold: 0.25, done: false, createThresholdMult: 4 },
-        { threshold: 0.125, done: false, createThresholdMult: 8 },
-        { threshold: 0.0625, done: false, createThresholdMult: 16 },
-        { threshold: 0.03125, done: false, createThresholdMult: 32 },
-        { threshold: 0.015625, done: false, createThresholdMult: 64 },
-        { threshold: 0.0078125, done: false, createThresholdMult: 128 },
-    ]
+    attribs = []
 
     constructor(audioManager) {
         super();
-        this.eventEmitter = new EventEmitter();
         this.audioManager = audioManager;
 
         const height = PumpDumpGameMananger.height;
         const width = PumpDumpGameMananger.width;
-        this.position.set(width * 0.2, height + CONT_START_Y);
+        this.position.set(width * AXIS_START_POS_X, height + CONT_START_Y);
 
-        for (let i = 0; i < 5; ++i) {
-            this.greenBarTextures[i] = this.generateBarTexture(20 + 10 * i, 'green');
-            this.redBarTextures[i] = this.generateBarTexture(20 + 10 * i, 'red');
+        for (let i = 0; i < UNIQUE_BAR_HEIGHT_COUNT; ++i) {
+            for (let j = 0; j < SAME_HEIGHT_BAR_RANGE; ++j) {
+                this.greenBarTextures.push(this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'green'));
+                this.redBarTextures.push(this.generateBarTexture(BAR_MIN_HEIGHT + BAR_HEIGHT_INCREMENTS * i, 'red'));
+            }
         }
+        // First Bar
+        this.generateBar(0, 100);
 
         // const bar1 = new Sprite(this.greenBarTextures[0]);
         // bar1.pivot.y = STICK_HEIGHT_OFFSET;
@@ -89,7 +90,23 @@ export class BarChartContainer extends Container {
         // bar2.position.set(50, -150);
         // this.addChild(bar2);
 
+        this.updateAttribs();
+    }
 
+    updateAttribs() {
+        // attribs = [
+        //     { threshold: 0.5, done: false, createThresholdMult: 2 },
+        //     { threshold: 0.25, done: false, createThresholdMult: 4 },
+        //     { threshold: 0.125, done: false, createThresholdMult: 8 },
+        //     { threshold: 0.0625, done: false, createThresholdMult: 16 },
+        //     { threshold: 0.03125, done: false, createThresholdMult: 32 },
+        //     { threshold: 0.015625, done: false, createThresholdMult: 64 },
+        //     { threshold: 0.0078125, done: false, createThresholdMult: 128 },
+        // ]
+
+        for (let i = 0; i < 9; ++i) {
+            this.attribs.push({ threshold: 1 / (2 ** (i + 1)), done: false, createThresholdMult: 2 ** (i + 1) });
+        }
     }
 
     generateBarTexture(height, color = 'green') {
@@ -97,7 +114,9 @@ export class BarChartContainer extends Container {
         // Stick visible at the top and the bottom
         bar.beginFill(color === 'green' ? 0x1c5d1a : 0x6a0b3e);
         // Positioning the stick at the center of the bar
-        bar.drawRect((BAR_WIDTH - STICK_WIDTH) * 0.5, -STICK_HEIGHT_OFFSET, STICK_WIDTH, height + STICK_HEIGHT_OFFSET * 2);
+        let stickHeight = STICK_HEIGHT_MIN_OFFSET + Math.floor(Math.random() * (STICK_HEIGHT_MAX_OFFSET - STICK_HEIGHT_MIN_OFFSET));
+        let stickWidth = STICK_MIN_WIDTH + Math.floor(Math.random() * (STICK_MAX_WIDTH - STICK_MIN_WIDTH));
+        bar.drawRect((BAR_WIDTH - stickWidth) * 0.5, -stickHeight, stickWidth, height + stickHeight * 2);
         bar.endFill();
 
         // Bar
@@ -126,6 +145,8 @@ export class BarChartContainer extends Container {
 
         let runningTime = INIT_CREATE_THRESHOLD * this.createThresholdMult;
 
+        // First Bar
+        this.generateBar(0, 100);
         while(runningTime < timeElapsed) {
             const runningCrashFactor = calcCrashFactorFromElapsedTime(runningTime < 1 ? 1 : runningTime) * 100;
             this.previousThreshold = runningTime;
@@ -154,8 +175,7 @@ export class BarChartContainer extends Container {
     }
 
     mergeBars() {
-
-        const bigBars = [];
+        const bigBarConfigs = [];
         const barsToMergeList = [];
         for (let index = this.generatedBars.length - 1; index >= 0; index -= MERGE_BAR_COUNT) {
             const barsToMerge = [];
@@ -170,11 +190,11 @@ export class BarChartContainer extends Container {
             bigBarConfig.x = barsToMerge[barsToMerge.length - 1].x;
             bigBarConfig.y /= barsToMerge.length;
             bigBarConfig.heightIndex = Math.ceil(bigBarConfig.heightIndex / barsToMerge.length);
-            if (Math.abs(bigBarConfig.heightIndex) < 2) {
-                bigBarConfig.heightIndex = (1 + Math.floor(Math.random() * 3)) * (bigBarConfig.heightIndex < 0 ? -1 : 1 );
+            if (Math.abs(bigBarConfig.heightIndex) < SAME_HEIGHT_BAR_RANGE * 3) {
+                bigBarConfig.heightIndex = (SAME_HEIGHT_BAR_RANGE * 3 + Math.floor(Math.random() * SAME_HEIGHT_BAR_RANGE * (UNIQUE_BAR_HEIGHT_COUNT - 3))) * (bigBarConfig.heightIndex < 0 ? -1 : 1 );
             }
 
-            bigBars.unshift(this.createEmergingBiggerBar(bigBarConfig));
+            bigBarConfigs.unshift(bigBarConfig);
             barsToMergeList.unshift({ bars: barsToMerge, bigBarConfig: bigBarConfig});
         }
 
@@ -183,7 +203,11 @@ export class BarChartContainer extends Container {
         })
 
         // Start tween on all big bars
-        bigBars.forEach((bigBar) => {
+        bigBarConfigs.forEach((bigBarConfig, index) => {
+            if (index < 3) {
+                bigBarConfig.heightIndex = Math.floor(Math.random() * SAME_HEIGHT_BAR_RANGE * 2) * (bigBarConfig.heightIndex < 0 ? -1 : 1)
+            }
+            const bigBar = this.createEmergingBiggerBar(bigBarConfig);
             this.generatedBars.push(bigBar);
             this.biggerBarEmergeTween(bigBar);
         });
@@ -197,7 +221,6 @@ export class BarChartContainer extends Container {
             texture = this.greenBarTextures[bigBarConfig.heightIndex];
         }
         const bar = new Sprite(texture);
-        bar.pivot.y = STICK_HEIGHT_OFFSET;
         bar.scale.set(0);
         bar.anchor.set(0.5);
         bar.position.set(bigBarConfig.x, bigBarConfig.y);
@@ -227,25 +250,16 @@ export class BarChartContainer extends Container {
     }
 
     biggerBarEmergeTween(bigBar) {
-        let scaleData = { x: 0, y: 0 };
-
-        new TWEEN.Tween(scaleData)
+        new TWEEN.Tween(bigBar.scale)
             .to({ x: this.barScale.x, y: this.barScale.y }, 600)
-            .onUpdate(() => {
-                bigBar.scale.set(scaleData.x, scaleData.y);
-            })
             .easing(TWEEN.Easing.Elastic.Out)
             .start();
     }
 
     showNewBarTween(newBar) {
-        let scaleData = { x: 0, y: 0 };
         this.audioManager.playSfx('bar');
-        new TWEEN.Tween(scaleData)
+        new TWEEN.Tween(newBar.scale)
             .to({ x: this.barScale.x, y: this.barScale.y }, 300)
-            .onUpdate(() => {
-                newBar.scale.set(scaleData.x, scaleData.y);
-            })
             .easing(TWEEN.Easing.Back.Out)
             .start();
     }
@@ -253,10 +267,12 @@ export class BarChartContainer extends Container {
     createCrashBar(timeElapsed) {
 
         const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
-        let crashBarPosition = { x: ((this.previousThreshold + INIT_CREATE_THRESHOLD * this.createThresholdMult) / INIT_CREATE_THRESHOLD) * this.gapBetweenBars, y: -((crashFactor / 100) - 1) * INITIAL_AXIS_GAP * 5};
+        let crashBarPosition = { 
+            x: ((this.previousThreshold + INIT_CREATE_THRESHOLD * this.createThresholdMult) / INIT_CREATE_THRESHOLD) * this.gapBetweenBars, 
+            y: -((crashFactor / 100) - 1) * INITIAL_AXIS_GAP * INIT_STICK_UNITS
+        };
         let bar = new Sprite(this.redBarTextures[(crashFactor < 150 ? 1 : 4)]);
         // crashBarPosition.y += this.getBarTopEdgeDistance(bar);
-        console.log('crash', crashBarPosition);
         bar.scale.set(0);
         bar.position.set(crashBarPosition.x, crashBarPosition.y);
         this.addChild(bar);
@@ -273,7 +289,7 @@ export class BarChartContainer extends Container {
                     this.removeChild(bar);
                     bar.position.set(globalPosition.x, globalPosition.y);
                     bar.scale.set(1);
-                    this.eventEmitter.emit('crash-bar-created', bar);
+                    this.emit('crash-bar-created', bar);
                 }
             })
             .easing(TWEEN.Easing.Back.Out)
@@ -287,7 +303,7 @@ export class BarChartContainer extends Container {
         }
         if (crashFactor >= INIT_STICK_POINT_CRASH_FACTOR) {
             // The scale start at 100 or 1.00. Hence we subtract crash factor by 100 to get the correct scale
-            contScale.y = 100 / (crashFactor - 100);
+            contScale.y = 100 / (crashFactor - STICK_POINT_INCREMENTS);
         }
         this.scale.set(contScale.x, contScale.y);
     }
@@ -300,6 +316,7 @@ export class BarChartContainer extends Container {
         const crashFactor = calcCrashFactorFromElapsedTime(timeElapsed < 1 ? 1 : timeElapsed) * 100;
         this.handleContainerScale(timeElapsed, crashFactor);
         if (this.shouldBarsMerge()) {
+            this.emit('bars-merging');
             this.mergeBars();
         }
         this.setupBarChart(timeElapsed, crashFactor);
@@ -309,30 +326,33 @@ export class BarChartContainer extends Container {
     setupBarChart(timeElapsed, crashFactor) {
         if (timeElapsed - this.previousThreshold >= INIT_CREATE_THRESHOLD * this.createThresholdMult) {
             this.previousThreshold += INIT_CREATE_THRESHOLD * this.createThresholdMult;
-            this.generateBar(this.previousThreshold, crashFactor);
+            this.generateBar(this.previousThreshold, crashFactor, true);
         }
     }
 
     // Top edge of the bar from the center of the bar. Note: Not the top edge of the stick
     getBarTopEdgeDistance(bar) {
-        let barHeight = bar.height - (STICK_HEIGHT_OFFSET * 2);
+        let barHeight = bar.height - (STICK_HEIGHT_MAX_OFFSET * 2);
         return (barHeight * 0.5 * this.barScale.y);
     }
 
-    generateBar(timeElapsed, crashFactor) {
+    generateBar(timeElapsed, crashFactor, showTween = false) {
         let randMax = this.greenBarTextures.length;
         let randMin = 0;
         // If less that 1.25x don't show tall bars
-        if (crashFactor < 150) {
-            randMax = 2;
-        } else if (crashFactor >= 150) {
-            randMin = 2;
+        if (this.generatedBars.length <= 3) {
+            randMax = SAME_HEIGHT_BAR_RANGE * 2;
+        } else if (crashFactor <= 250) {
+            randMin = SAME_HEIGHT_BAR_RANGE * 2;
+            randMax = SAME_HEIGHT_BAR_RANGE * 5;
+        } else {
+            randMin = SAME_HEIGHT_BAR_RANGE * 3;
         }
 
         // Divide by 100 to get the origCrashFactor 
         // Subtract by -1 since the scale starts with 1.
         // Initially Verticle scale measures (INITIAL_AXIS_GAP) * 5 from 1.00x to 2.00x and are 5 Pieces of axis apart
-        let positionY = -((crashFactor / 100) - 1) * INITIAL_AXIS_GAP * 5;
+        let positionY = -((crashFactor / 100) - 1) * INITIAL_AXIS_GAP * INIT_STICK_UNITS;
         let positionX = (timeElapsed / INIT_CREATE_THRESHOLD) * this.gapBetweenBars;
         
         let bar;
@@ -352,7 +372,11 @@ export class BarChartContainer extends Container {
         bar.anchor.set(0.5);
         bar.position.set(positionX, positionY);
         this.addChild(bar);
-        this.showNewBarTween(bar);
+        if (showTween) {
+            this.showNewBarTween(bar);
+        } else {
+            bar.scale.set(this.barScale.x, this.barScale.y);
+        }
 
         this.generatedBars[this.generatedBars.length] = bar;
     }
