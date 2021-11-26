@@ -32,6 +32,9 @@ const Register = ({ styles, openLoginPopup, preloadEmailSignUp = false }) => {
               Sign up using a different method
             </button>}
           <EmailSignUp styles={styles} />
+          <SocialLogin
+            styles={styles}
+          />
         </>
       ) : (
         <div className={styles.signUpOptions}>
