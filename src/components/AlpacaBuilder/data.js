@@ -1,9 +1,3 @@
-export const AB_VIEWS = {
-  intro: 'intro',
-  categories: 'categories',
-  styles: 'styles',
-};
-
 export const EXPORT_SIZE = 512;
 
 export const CATEGORIES = [{
@@ -55,6 +49,11 @@ export const CATEGORIES = [{
   },{
     name: 'glasses',
     styles: ['Glasses1', 'Glasses2', 'Glasses3', 'Glasses4', 'Glasses5', 'Glasses6', 'Glasses7'],
+    path: '/images/alpaca-builder/elements/',
+    optional: true,
+  },{
+    name: 'clothes',
+    styles: ['Clothes1', 'Clothes2', 'Clothes3', 'Clothes4', 'Clothes5', 'Clothes6'],
     path: '/images/alpaca-builder/elements/',
     optional: true,
   },

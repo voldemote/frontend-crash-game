@@ -3,43 +3,22 @@
 .alpacaBuilder {
   display: flex;
   flex-direction: column;
-   height: calc(100% - 20px);
+  //height: calc(100% - 40px);
 
   .head{
-    height: 35%;
     border-bottom: 1px solid $separatorColor;
     display: flex;
     flex-direction: column;
-
-    h2{
-      margin-bottom:20px;
-    }
-
+    //height: 34%;
 
     .svg{
-      flex:1;
+      //flex:1;
+      max-height: 250px;
       margin: auto;
     }
   }
 
-  .viewsContainer{
-    height: 60%;
-    position: relative;
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    display: flex;
-  }
-
   .abView {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    right: -500px;
-    opacity: 0;
-    flex: 1 1 auto;
-    overflow-y: auto;
-    min-height: 0px;
 
     .tiles{
       display: flex;
@@ -106,7 +85,7 @@
         margin: 10px;
         background-color: $unselectedBg;
         outline: 1px solid $unselectedBorderColor;
-        border-radius: 50%;
+        border-radius: 20px;
         height: 50px;
         width: 50px;
         font-size:10px;
@@ -114,6 +93,9 @@
         line-height: 50px;
         text-decoration: none;
         box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+
+
+
       }
       .categorySelected{
         outline: 1px solid $selectedBorderColor;
@@ -122,22 +104,13 @@
       }
     }
   }
-  .showing{
-    animation: movein 0.2s ease-out forwards;
-  }
-  .hiding{
-    animation: moveout 0.2s ease-in forwards;
-  }
-  .active{
-    right: 0;
-    opacity: 1;
-  }
 
   .toolbar{
+
     display: flex;
     justify-content: space-between;
-    z-index: 1;
-    //margin:5px 0;
+    align-items: flex-start;
+
     a{
       border: 1px solid $toolbarBtnBg;
       border-radius: 30px;
@@ -152,30 +125,18 @@
 }
 
 
-@keyframes movein {
-  0% {
-    right: -500px;
-    opacity: 0;
-  }
-  40% {
-    opacity: 0;
-  }
-  100% {
-    right: 0px;
-    opacity: 1;
-  }
-}
+@media (min-width: $screen-sm) {
 
-@keyframes moveout {
-  0% {
-    right: 0px;
-    opacity: 1;
-  }
+  .abView{
+    .categoriesRow{
 
-  80% {
-    opacity: 0;
-  }
-  100% {
-    right: -500px;
+      .category{
+        background-color: red;
+        margin: 5px;
+        height: 30px;
+        width: 30px;
+        font-size:8px;
+      }
+    }
   }
 }
