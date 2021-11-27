@@ -7,7 +7,6 @@ import {CATEGORIES, EXPORT_SIZE} from './data';
 import DynamicSvg from './dynamicSvg';
 
 const AlpacaBuilder = ({
-  visible = false,
   onExport,
   onCancel,
   downloadFileOnSave = false,
@@ -20,9 +19,8 @@ const AlpacaBuilder = ({
 
   useEffect(() => {
     if(!props) resetSvg(true);
-    console.log('starting with ', props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, [props]);
 
   const resetSvg = (randomize) => {
     let p = {};

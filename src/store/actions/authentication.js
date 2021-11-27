@@ -124,6 +124,7 @@ const updateData = makeActionCreator(AuthenticationTypes.UPDATE_DATA, {
   toNextRank: null,
   preferences: null,
   aboutMe: null,
+  alpacaBuilderProps: null,
 });
 
 const verifySms = makeActionCreator(AuthenticationTypes.VERIFY_SMS, {

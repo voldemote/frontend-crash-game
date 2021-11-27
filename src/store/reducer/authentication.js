@@ -245,6 +245,9 @@ const updateData = (action, state) => {
     notificationSettings: {
       $set: action.notificationSettings,
     },
+    alpacaBuilderProps: {
+      $set: action.alpacaBuilderProps,
+    },
   });
 };
 
