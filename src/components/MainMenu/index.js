@@ -65,6 +65,7 @@ const MainMenu = ({
     setName(user.name);
     setEmail(user.email);
     setAboutMe(user.aboutMe);
+    setAlpacaBuilderProps(user.alpacaBuilderProps);
   }, [user, editVisible]);
 
   const clickUploadProfilePicture = () => {
@@ -321,7 +322,6 @@ const MainMenu = ({
         </h2>
         <div class={styles.alpacaBuilderWrapper}>
           <AlpacaBuilder
-            visible={alpacaBuilderVisible}
             onCancel={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
             onExport={data => handleAlpacaBuilderExport(data)}
             props={alpacaBuilderProps}/>
