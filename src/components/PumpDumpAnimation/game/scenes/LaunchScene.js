@@ -2,6 +2,7 @@ import { ASSET_LIST } from "components/PumpDumpAnimation/config";
 import { Container, Sprite } from "pixi.js";
 import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 import TWEEN from '@tweenjs/tween.js';
+import _ from 'lodash';
 
 export class LaunchScene extends Container {
     tweets = [];
@@ -19,12 +20,16 @@ export class LaunchScene extends Container {
 
         const tweetScale = 0.25;
 
-        for (let i = 0; i < 5; ++i) {
+        for (let i = 0; i < 7; ++i) {
             this.tweets[i] = new Sprite(resources[ASSET_LIST[`TWEET_${i + 1}`]].texture);
             this.tweets[i].scale.set(tweetScale);
             this.tweets[i].position.set(width * 1.5, height * 0.75);
             this.tweets[i].anchor.set(0.5, 0.5);
         }
+
+        this.tweets = _.shuffle(this.tweets);
+        this.tweets = _.slice(this.tweets, 0, 5);
+
         this.addChild(...this.tweets);
 
         const count = this.getPossibleTweetCount(width);
