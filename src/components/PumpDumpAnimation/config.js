@@ -15,6 +15,8 @@ export const ASSET_LIST = {
     TWEET_3: constructPath('3.png'),
     TWEET_4: constructPath('4.png'),
     TWEET_5: constructPath('5.png'),
+    TWEET_6: constructPath('6.png'),
+    TWEET_7: constructPath('7.png'),
     CRASH_1: constructPath('crash_1.png'),
     MEME_1: constructPath('meme_1.png'),
 }
