@@ -7,7 +7,8 @@
   background: #101737;
   border: 1px solid $colorPinkDark;
 
-  background: url('../../data/backgrounds/games/pump-dump-bg.png') center $colorWhite;
+  background: url('../../data/backgrounds/games/pump-dump-bg.png') center
+    $colorWhite;
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -17,7 +18,8 @@
 
   @media (max-width: $screen-xs-max) {
     height: 244px;
-    background: url('../../data/backgrounds/games/pump-dump-mobile-bg.png') center $colorWhite;
+    background: url('../../data/backgrounds/games/pump-dump-mobile-bg.png')
+      center $colorWhite;
   }
 
   .gameOffline {
@@ -38,6 +40,7 @@
     font-weight: bold;
     text-shadow: 4px 2px 2px $timerShadowColor;
     color: $colorWhite;
+    user-select: none;
 
     @media (max-width: $screen-xs-max) {
       top: 16px;
@@ -110,7 +113,7 @@
 
   .description {
     font-size: 16px;
-    color: $colorYellow;
+    color: $colorPinkDark;
     text-align: center;
   }
 
@@ -121,18 +124,17 @@
   }
 }
 
-.audioControls{
+.audioControls {
   position: absolute;
   z-index: 999;
   left: 20px;
   top: 10px;
-  svg{
+  svg {
     fill: #f2ff53 !important;
   }
   @media (max-width: $screen-xs-max) {
-
   }
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     top: 60px;
     left: 5px !important;
   }

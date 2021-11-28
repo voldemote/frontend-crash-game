@@ -10,6 +10,9 @@ export class LaunchScene extends Container {
     gap = 0;
     count = 0;
 
+    shownTweets = 3;
+    shownTweetsMobile = 2;
+
     isSingle = false;
 
     constructor(launchTime, audioManager) {
@@ -18,7 +21,7 @@ export class LaunchScene extends Container {
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
 
-        const tweetScale = 1;
+        const tweetScale = 0.5;
 
         for (let i = 0; i < 8; ++i) {
             this.tweets[i] = new Sprite(resources[ASSET_LIST[`TWEET_${i + 1}`]].texture);
@@ -29,7 +32,7 @@ export class LaunchScene extends Container {
         }
 
         this.tweets = _.shuffle(this.tweets);
-        this.tweets = _.slice(this.tweets, 0, 5);
+        this.tweets = _.slice(this.tweets, 0, this.shownTweets);
 
         this.addChild(...this.tweets);
 
@@ -46,9 +49,9 @@ export class LaunchScene extends Container {
         this.arrangeTweets(this.count, this.gap);
 
         if (this.isSingle) {
-            this.startMobileAnimation(5, 0, launchTime);
+            this.startMobileAnimation(this.shownTweetsMobile, 0, launchTime);
         } else {
-            this.startAnimation(5, 0, launchTime);
+            this.startAnimation(this.shownTweets, 0, launchTime);
         }
         console.warn('launchTime', launchTime);
 
@@ -69,7 +72,7 @@ export class LaunchScene extends Container {
     arrangeTweets(count, gap) {
         const width = PumpDumpGameMananger.width;
 
-        for (let i = 0; i < 5; ++i) {
+        for (let i = 0; i < this.shownTweets; ++i) {
             if (this.isSingle) {
                 this.tweets[i].x = width * 1.5 + this.tweets[i].width * 0.5;
             } else {

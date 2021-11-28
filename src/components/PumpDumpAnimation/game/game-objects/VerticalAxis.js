@@ -65,6 +65,7 @@ export class VerticalAxis extends Container {
         for (let i = 0; i < AXIS_COUNT; ++i) {
             this.axisLines[i] = normalAxisPiece.clone();
             this.axisLines[i].position.set(axisPosX, this.axisStartPosY - i * this.axisGap);
+            this.axisLines[i].roundPixels = true;
         }
         this.addChild(...this.axisLines);
 
@@ -76,6 +77,7 @@ export class VerticalAxis extends Container {
             });
             this.multiplierLabels[i].position.set(this.axisLines[i].x + AXIS_LABEL_GAP, this.axisLines[i].y);
             this.multiplierLabels[i].anchor.set(0, 0.5);
+            this.multiplierLabels[i].roundPixels = true;
 
             this.miniMultiplierLabels[i] = new Text('1.10x', {
                 fontFamily: AXIS_LABEL_FONT_FAMILY,
@@ -84,6 +86,7 @@ export class VerticalAxis extends Container {
             });
             this.miniMultiplierLabels[i].position.set(this.axisLines[i].x + AXIS_LABEL_GAP, this.axisLines[i].y - this.axisGap * 0.5);
             this.miniMultiplierLabels[i].anchor.set(0, 0.5);
+            // this.miniMultiplierLabels[i].roundPixels = true;
 
         }
         this.addChild(...this.multiplierLabels);

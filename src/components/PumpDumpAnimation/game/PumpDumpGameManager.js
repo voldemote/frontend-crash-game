@@ -25,21 +25,23 @@ export class PumpDumpGameMananger {
 
     static _audioManager;
 
+    static _resolution = 2;
+
     // Use this function ONCE to start the entire game
     static initialize(backgroundColor, viewCanvas, audioManager) {
 
         // Create our pixi app
         this.app = new Application({
             view: viewCanvas,
-            resolution: 1,
+            resolution: this._resolution,
             autoDensity: true,
             resizeTo: viewCanvas.parentElement,
             antialias: true,
             backgroundAlpha: 0,
         });
 
-        this._width = this.app.renderer.width;
-        this._height = this.app.renderer.height;
+        this._width = this.app.renderer.width / this._resolution;
+        this._height = this.app.renderer.height / this._resolution;
 
         this._audioManager = audioManager;
 

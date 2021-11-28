@@ -10,14 +10,14 @@ const constructPath = asset =>
 //     `/images/pump-dump-game/source/${asset}`;
 
 export const ASSET_LIST = {
-    TWEET_1: constructPath('1.png'),
-    TWEET_2: constructPath('2.png'),
-    TWEET_3: constructPath('3.png'),
-    TWEET_4: constructPath('4.png'),
-    TWEET_5: constructPath('5.png'),
-    TWEET_6: constructPath('6.png'),
-    TWEET_7: constructPath('7.png'),
-    TWEET_8: constructPath('8.png'),
+    TWEET_1: constructPath('tweet-1.png'),
+    TWEET_2: constructPath('tweet-2.png'),
+    TWEET_3: constructPath('tweet-3.png'),
+    TWEET_4: constructPath('tweet-4.png'),
+    TWEET_5: constructPath('tweet-5.png'),
+    TWEET_6: constructPath('tweet-6.png'),
+    TWEET_7: constructPath('tweet-7.png'),
+    TWEET_8: constructPath('tweet-8.png'),
     CRASH_1: constructPath('crash_1.png'),
     MEME_1: constructPath('meme_1.png'),
 }

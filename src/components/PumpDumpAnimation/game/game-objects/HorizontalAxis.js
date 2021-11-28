@@ -28,6 +28,7 @@ export const INIT_STICK_POINT_TIME = INIT_MULTI_FACTOR * AXIS_GAP * INIT_STICK_U
 
 
 export class HorizontalAxis extends Container {
+    
     axisLines = [];  // Graphic Lines Texture Sprites
     timeLabels = []; // Text to indicate seconds
 
@@ -76,6 +77,7 @@ export class HorizontalAxis extends Container {
             this.axisLines[i] = new Sprite(lineTexture);
             this.axisLines[i].position.set(this.axisStartPosX + i * this.axisGap, axisPosY);
             this.axisLines[i].anchor.set(0.5, 1);
+            this.axisLines[i].roundPixels = true;
         }
         this.addChild(...this.axisLines);
         
@@ -87,6 +89,7 @@ export class HorizontalAxis extends Container {
             });
             this.timeLabels[i].position.set(this.axisLines[i].x + AXIS_LABEL_GAP, this.axisLines[i].y);
             this.timeLabels[i].anchor.set(0, 1);
+            this.timeLabels[i].roundPixels = true;
 
         }
         this.addChild(...this.timeLabels);
