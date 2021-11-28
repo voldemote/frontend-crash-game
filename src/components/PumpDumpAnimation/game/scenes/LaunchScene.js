@@ -18,13 +18,14 @@ export class LaunchScene extends Container {
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
 
-        const tweetScale = 0.25;
+        const tweetScale = 1;
 
-        for (let i = 0; i < 7; ++i) {
+        for (let i = 0; i < 8; ++i) {
             this.tweets[i] = new Sprite(resources[ASSET_LIST[`TWEET_${i + 1}`]].texture);
             this.tweets[i].scale.set(tweetScale);
             this.tweets[i].position.set(width * 1.5, height * 0.75);
             this.tweets[i].anchor.set(0.5, 0.5);
+            this.tweets[i].roundPixels = true;
         }
 
         this.tweets = _.shuffle(this.tweets);
