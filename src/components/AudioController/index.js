@@ -29,6 +29,10 @@ export class AudioController {
           url: '/sounds/plinko/plinko_bgm.mp3',
           loop: true,
         },
+        bgm2: {
+          url: '/sounds/plinko/plinko_bgm.mp3',
+          loop: true,
+        },
         flying: {
           url: '/sounds/elon/flying.mp3',
           loop: true,
@@ -60,7 +64,7 @@ export class AudioController {
             this.errors = [...this.errors, err];
           }
         },
-        preload: true,
+        preload: false,
       }
     );
   }
@@ -117,6 +121,8 @@ export class AudioController {
       this.playSound('bgm0', true);
     }else if (this.bgmIndex === 1) {
       this.playSound('bgm1', true);
+    }else if (this.bgmIndex === 2) {
+      this.playSound('bgm2', true);
     }
   }
 

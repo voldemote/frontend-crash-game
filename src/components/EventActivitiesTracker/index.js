@@ -75,7 +75,7 @@ const callByParams = async params => {
 
 const EventActivitiesTracker = ({
   className,
-  messagesClassName,
+  messagesClassName = null,
   activities,
   addInitialActivities,
   activitiesLimit,
@@ -216,13 +216,13 @@ const EventActivitiesTracker = ({
           <Grid item xs>
             <p className={styles.titleLeft}>GAME</p>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <p className={styles.titleLeft}>USER</p>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <p className={styles.titleRight}>TRADE</p>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <p className={styles.title}>MULT</p>
           </Grid>
           <Grid item xs>
