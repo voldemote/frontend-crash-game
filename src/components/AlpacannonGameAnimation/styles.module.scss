@@ -173,7 +173,7 @@
   justify-content: space-around;
   overflow: hidden;
   border-radius: 12px;
-  background: url('./assets/background.png');
+  background: url('./assets/alpacannon_background_desktop.png');
   background-repeat: no-repeat;
   background-size: auto 100%;
   background-position: right;
@@ -233,7 +233,7 @@
   .alpacaCrash{
     height: 65px;
     position: absolute;
-    top: 180px;
+    top: 125px;
   }
   .alpacaFlying {
     width: 100px;
@@ -294,8 +294,8 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 270px;
-    right: 412px;
+    top: 228px;
+    right: 532px;
     width: 88px;
     height: 22px;
     span{
@@ -309,8 +309,8 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 270px;
-    right: 130px;
+    top: 228px;
+    right: 195px;
     width: 88px;
     height: 22px;
     span{
@@ -321,11 +321,11 @@
   }
   .slider {
     position: absolute;
-    right: 58px;
-    width: 509px;
-    top: 210px;
+    right: 93px;
+    width: 627px;
+    top: 150px;
     -webkit-appearance: none;
-    height: 6px;
+    height: 9px;
     border-radius: 5px;
     outline: none;
     -webkit-transition: .2s;
