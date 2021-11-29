@@ -51,6 +51,7 @@ const RosiGame = ({
   } = useRosiData();
   const { slug } = useParams();
   const [audio, setAudio] = useState(null);
+  const [flag, setFlag] = useState(false)
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
@@ -105,6 +106,8 @@ const RosiGame = ({
   };
 
   async function handleBet(payload, crashFactor) {
+    if(flag) return
+    setFlag(true)
     audio.playBetSound();
     if (!payload) return;
     try {
@@ -112,6 +115,7 @@ const RosiGame = ({
       console.log("result", result)
       trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
       dispatch(RosiGameActions.setUserBet(payload));
+      setFlag(false)
       return result;
     } catch (e) {
       dispatch(
@@ -123,10 +127,14 @@ const RosiGame = ({
   }
 
   function handleBetCancel(userId, amount) {
+    if(flag) return
+    setFlag(true)
     Api.cancelBet()
       .then(() => {
         trackElonCancelBet({ amount });
         dispatch(RosiGameActions.cancelBet({ userId }));
+        setFlag(false)
+        return true
       })
       .catch(() => {
         dispatch(
@@ -134,6 +142,8 @@ const RosiGame = ({
             message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Cancel Bet failed`,
           })
         );
+        setFlag(false)
+        return true
       });
   }
 
