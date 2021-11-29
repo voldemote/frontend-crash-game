@@ -188,6 +188,48 @@
     width: 100%;
     height: auto;
   }
+  .slider {
+    position: absolute;
+    right: 93px;
+    width: 627px;
+    top: 150px;
+    -webkit-appearance: none;
+    height: 9px;
+    border-radius: 5px;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  .chance{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 228px;
+    right: 532px;
+    width: 88px;
+    height: 22px;
+    span{
+      color: white;
+      font-weight: bold;
+      font-size: 19px;
+    }
+  }
+  .interpolateMultiplier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 228px;
+    right: 195px;
+    width: 88px;
+    height: 22px;
+    span{
+      color: white;
+      font-weight: bold;
+      font-size: 19px;
+    }
+  }
   .fullcannon{
     height: 150px;
     width: 100px;
@@ -201,7 +243,6 @@
       z-index: 4;
 
     }
-
     .alpacaInCannon{
       width: 65px;
       top: -40px;
@@ -209,21 +250,6 @@
       left: 24px;
       z-index: -1;
     }
-    .explotion{
-      width: 108px;
-      top: -40px;
-      position: absolute;
-      left: 0px;
-      z-index: 1;
-      -webkit-transition: opacity 0.3s ease-in-out;
-      -moz-transition: opacity 0.3s ease-in-out;
-      -ms-transition: opacity 0.3s ease-in-out;
-      -o-transition: opacity 0.3s ease-in-out;
-      transition: opacity 0.3 ease-in-out;
-
-    }
-
-  }
   .alpacaCrash{
     height: 65px;
     position: absolute;
@@ -239,50 +265,114 @@
     right: 270px;
     z-index: 1;
   }
-  @keyframes zoom-in-zoom-out {
-  0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(0.8, 0.8)
-    perspective(200px)
-    //rotateX(-180deg)
-    rotateY(0deg);
-  }
-  50% {
-    transform: scale(0.7, 0.7)
-    perspective(200px)
-    //rotateX(-180deg)
-    rotateY(-180deg);
-  }
-  100% {
-    transform: scale(0.5, 0.5)
-    perspective(200px)
-    //rotate(0deg);
+    .explotion{
+      width: 108px;
+      top: -40px;
+      position: absolute;
+      left: 0px;
+      z-index: 1;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -ms-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3 ease-in-out;
+
+    }
+
   }
 }
+  .animationMobile {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+  border-radius: 12px;
+  background: url('./assets/alpacannon_background_mobile.png');
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: right;
+  border: 1px solid hsla(0,0%,100%,.17);
+  max-height: 470px;
+  min-height: 470px;
+  position: relative;
+  .container{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+  @media (max-width: 580px) {
+    max-height: 320px;
+    min-height: 320px;
+  }
+  @media (max-width: 350px) {
+    max-height: 300px;
+    min-height: 300px;
+  }
+  .fullcannon{
+    height: 150px;
+    width: 100px;
+    position: absolute;
+    pointer-events: none;
+    bottom: -70px;
+    right: 111px;
+    .cannon{
+      width: 100%;
+      position: absolute;
+      z-index: 4;
 
-/*
-  .slider::-moz-range-thumb {
-    width: 23px;
-    height: 24px;
-    border: 0;
-    background: url('./assets/slider.svg');
-    cursor: pointer;
-  }
-  .slider{
-    background-color: #0f0;//#f00
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 23px;
-      height: 24px;
-      border: 0;
-      background: blue;//url('./assets/slider.svg');
-      cursor: pointer;
     }
+
+  .alpacaInCannon{
+      width: 65px;
+      top: -40px;
+      position: absolute;
+      left: 24px;
+      z-index: -1;
   }
-  */
+  .alpacaCrash{
+    height: 65px;
+    position: absolute;
+    top: 93px;
+  }
+  .alpacaFlying {
+    width: 100px;
+    bottom: 50px;
+    right: 30px;
+    transition: right 1s ease-in-out, bottom 1s ease-in-out;
+    animation: zoom-in-zoom-out 3s ease infinite;
+    position: absolute;
+    right: 104px;
+    z-index: 1;
+  }
+    .explotion{
+      width: 108px;
+      top: -40px;
+      position: absolute;
+      left: 0px;
+      z-index: 1;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -ms-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3 ease-in-out;
+
+    }
+
+  }
+
+  .slider {
+    position: absolute;
+    right: 11.5%;
+    width: 76.3%;
+    top: 32.3%;
+    -webkit-appearance: none;
+    height: 7px;
+    border-radius: 5px;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+
+  }
   .chance{
     display: flex;
     justify-content: center;
@@ -295,7 +385,7 @@
     span{
       color: white;
       font-weight: bold;
-      font-size: 19px;
+      font-size: 13px;
     }
   }
   .interpolateMultiplier{
@@ -310,22 +400,35 @@
     span{
       color: white;
       font-weight: bold;
-      font-size: 19px;
+      font-size: 13px;
     }
   }
-  .slider {
-    position: absolute;
 
-    right: 11.5%;
-    width: 76.3%;
-    top: 32.3%;
-    -webkit-appearance: none;
-    height: 7px;
-    border-radius: 5px;
-    outline: none;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-  }
+  @keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(1, 1);
+    }
+    25% {
+      transform: scale(0.8, 0.8)
+      perspective(200px)
+      //rotateX(-180deg)
+      rotateY(0deg);
+    }
+    50% {
+      transform: scale(0.7, 0.7)
+      perspective(200px)
+      //rotateX(-180deg)
+      rotateY(-180deg);
+    }
+    100% {
+      transform: scale(0.5, 0.5)
+      perspective(200px)
+      //rotate(0deg);
+    }
+}
+
+
+
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
