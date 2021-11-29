@@ -24,16 +24,22 @@ const AlpacannonGameAnimation = ({
   const [game, setGame] = useState('ready');
   const [audio, setAudio] = useState(null);
   const [slider, setSlider] = useState(0);
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
 
   useEffect(() =>{
     const aud = new AudioController(2)
     setAudio(aud)
     aud.startBgm()
     onInit(aud)
+    window.addEventListener('resize', updateSize);
+    updateSize()
     return () => {
       aud.stopBgm();
     }
   }, [])
+
+  const updateSize = () => setWidth(window.innerWidth)
 
   useEffect(() => {
     if(bet && !bet.ready && bet.amount && !bet.running) spin(bet)
@@ -77,10 +83,10 @@ const AlpacannonGameAnimation = ({
       ref={backgroundRef}
       className={classNames(
         styles.animation,
-        isMobile && styles.animationMobile
+        (width < 600 || isMobile) && styles.animationMobile
       )}
     >
-      <img className={styles.background} src={isMobile ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
+      <img className={styles.background} src={(width < 600 || isMobile) ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
       {audio && <GameAudioControlsLocal game='cannon' audio={audio} />}
       <input
           className={styles.slider}
