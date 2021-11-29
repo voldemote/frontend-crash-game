@@ -83,10 +83,11 @@ const AlpacannonGameAnimation = ({
       ref={backgroundRef}
       className={classNames(
         styles.animation,
-        (width < 600 || isMobile) && styles.animationMobile
+        (width < 600 || isMobile) && styles.animationMobile,
+        (height < width && isMobile) && styles.animationMobilePortrait
       )}
     >
-      <img className={styles.background} src={(width < 600 || isMobile) ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
+      <img className={styles.background} src={(height < width && isMobile) ? "/images/cannon-games/alpacannon-background-landscape.png" : (width < 600 || isMobile) ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
       {audio && <GameAudioControlsLocal game='cannon' audio={audio} />}
       <input
           className={styles.slider}
