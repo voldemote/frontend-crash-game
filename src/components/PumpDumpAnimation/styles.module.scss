@@ -41,6 +41,7 @@
     text-shadow: 4px 2px 2px $timerShadowColor;
     color: $colorWhite;
     user-select: none;
+    top: 40px;
 
     @media (max-width: $screen-xs-max) {
       top: 16px;

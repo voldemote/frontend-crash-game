@@ -1,12 +1,14 @@
 import { handleVisibilityChange } from "components/PumpDumpAnimation/utils/VisibilityCheck";
 import { Container } from "pixi.js";
+import { Graphics } from "@pixi/graphics";
 import { isMobile } from "react-device-detect";
 import { BarChartContainer } from "../game-objects/BarChartContainer";
 import { CashOutContainer } from "../game-objects/CashOutContainer";
 import { EndGameContainer } from "../game-objects/EndGameContainer";
 import { HorizontalAxis } from "../game-objects/HorizontalAxis";
 import { MemeContainer } from "../game-objects/MemeContainer";
-import { VerticalAxis } from "../game-objects/VerticalAxis";
+import { AXIS_START_POS_OFFSET_Y, VerticalAxis } from "../game-objects/VerticalAxis";
+import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 
 
 export class GameScene extends Container {
@@ -33,6 +35,16 @@ export class GameScene extends Container {
 
         this.barChartContainer = new BarChartContainer(this.audioManager);
         this.addChild(this.barChartContainer);
+
+        // Masking for the bar chart
+        const maskRect = new Graphics();
+        maskRect.x = 0;
+        maskRect.y = 0;
+        maskRect.drawRect(0, 0, PumpDumpGameMananger.width, PumpDumpGameMananger.height - AXIS_START_POS_OFFSET_Y);
+        maskRect.beginFill(0xffffff, 1);
+        maskRect.lineStyle(0);
+        this.addChild(maskRect);
+        this.barChartContainer.mask = maskRect;
 
         this.cashOutContainer = new CashOutContainer(this.barChartContainer);
         this.addChild(this.cashOutContainer);
@@ -77,8 +89,6 @@ export class GameScene extends Container {
         this.horizontalAxis.start();
         this.verticalAxis.start();
         this.barChartContainer.start();
-        
-        
         console.warn('isMobile', isMobile);
     }
 
@@ -131,18 +141,18 @@ export class GameScene extends Container {
         this.horizontalAxis.update(timeElapsed);
         this.verticalAxis.update(timeElapsed);
         this.barChartContainer.update(timeElapsed);
-        // if (timeElapsed > this.memeThreshold) {
-        //     this.memeThreshold = timeElapsed + this.memeThreshold * 2;
-        //     this.memeContainer.generateNextMeme();
-        // }
+        if (timeElapsed > this.memeThreshold) {
+            this.memeThreshold = timeElapsed + 10000;
+            this.memeContainer.generateNextMeme();
+        }
         this.cashOutContainer.update();
     }
 
     handleEndGame() {
         let timeElapsed = Date.now() - this.gameStartTime;
         this.barChartContainer.createCrashBar(timeElapsed)
-        this.barChartContainer.once('crash-bar-created', (bar) => {
-            this.endGameContainer.showCrash(bar);
+        this.barChartContainer.once('crash-bar-position', (rect) => {
+            this.endGameContainer.showCrash(rect);
         });
     }
 }

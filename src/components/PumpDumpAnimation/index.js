@@ -106,8 +106,10 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
       PumpDumpGameMananger.endGame(isLosing);
       // leave some time for player to see crash value
       setTimeout(() => {
-        PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
-        setIsPreparingRound(true);
+        if (!hasStarted) {
+          PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
+          setIsPreparingRound(true);
+        }
       }, ROSI_GAME_AFTER_CRASH_DELAY);
     }
   }, [hasStarted, hasGameLoaded]); // eslint-disable-line

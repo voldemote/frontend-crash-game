@@ -101,6 +101,8 @@ export class PumpDumpGameMananger {
         // Preparation Scene
         console.warn('launch scene', launchTime);
         if (!this.app || launchTime <= 0) {
+            console.warn('launch scene cancelled', launchTime);
+
             return;
         }
         const launchScene = new LaunchScene(launchTime, this._audioManager);
