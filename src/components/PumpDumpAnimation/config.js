@@ -18,8 +18,20 @@ export const ASSET_LIST = {
     TWEET_6: constructPath('tweet-6.png'),
     TWEET_7: constructPath('tweet-7.png'),
     TWEET_8: constructPath('tweet-8.png'),
-    CRASH_1: constructPath('crash_1.png'),
-    MEME_1: constructPath('meme_1.png'),
+    CRASH_1: constructPath('crash-1.png'),
+    CRASH_2: constructPath('crash-2.png'),
+    CRASH_3: constructPath('crash-3.png'),
+    CRASH_4: constructPath('crash-4.png'),
+    CRASH_5: constructPath('crash-5.png'),
+    CRASH_6: constructPath('crash-6.png'),
+    MEME_1: constructPath('meme-1.png'),
+    MEME_2: constructPath('meme-2.png'),
+    MEME_3: constructPath('meme-3.png'),
+    MEME_4: constructPath('meme-4.png'),
+    MEME_5: constructPath('meme-5.png'),
+    MEME_6: constructPath('meme-6.png'),
+    MEME_7: constructPath('meme-7.png'),
+    MEME_8: constructPath('meme-8.png'),
 }
 
 export const AUDIO_LIST = {
