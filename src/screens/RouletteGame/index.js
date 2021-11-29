@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -63,6 +64,10 @@ const RouletteGame = ({
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
+  }, []);
+
+  const handleFairnessPopup = useCallback(event => {
+    showPopup(PopupTheme.fairnessPopup, {maxWidth : true});
   }, []);
 
 
@@ -210,6 +215,16 @@ const RouletteGame = ({
                   onBet={handleBet}
                   bet={bet}
                 />
+              </div>
+
+              <div className={styles.fairnessContainer}>
+                <Icon
+                  className={styles.balanceIcon}
+                  iconType={IconType.balanceScaleSolid}
+                  iconTheme={IconTheme.black}
+                  height={18}
+                  width={18}
+                /> <span className={classNames('global-link-style', styles.fairnessOpenPopup)} onClick={handleFairnessPopup}>Fairness</span>
               </div>
             </div>
           </div>

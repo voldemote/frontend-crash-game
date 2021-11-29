@@ -43,6 +43,7 @@ import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
 import AlpacaBuilder from 'components/AlpacaBuilder';
 import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
+import FairnessPopup from "../FairnessPopup";
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -91,6 +92,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
     if (!visible) {
       return null;
     }
+
+    console.log('type', type);
     switch (type) {
       case PopupTheme.betApprove:
         return <BetApproveView options={options} />;
@@ -157,6 +160,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <ReportEventPopup />;
       case PopupTheme.lastGamesDetail:
         return <LastGamesDetailPopup data={options?.data} />;
+      case PopupTheme.fairnessPopup:
+        return <FairnessPopup data={options?.data} />;
       case PopupTheme.loginRegister:
         return <JoinPopup />;
 
