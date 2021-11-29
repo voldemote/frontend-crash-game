@@ -10,6 +10,7 @@ export class LaunchScene extends Container {
     gap = 0;
     count = 0;
 
+    totalTweets = 8;
     shownTweets = 3;
     shownTweetsMobile = 2;
 
@@ -23,7 +24,7 @@ export class LaunchScene extends Container {
 
         const tweetScale = 0.5;
 
-        for (let i = 0; i < 8; ++i) {
+        for (let i = 0; i < this.totalTweets; ++i) {
             this.tweets[i] = new Sprite(resources[ASSET_LIST[`TWEET_${i + 1}`]].texture);
             this.tweets[i].scale.set(tweetScale);
             this.tweets[i].position.set(width * 1.5, height * 0.75);

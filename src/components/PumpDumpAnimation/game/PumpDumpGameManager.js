@@ -30,6 +30,8 @@ export class PumpDumpGameMananger {
     // Use this function ONCE to start the entire game
     static initialize(backgroundColor, viewCanvas, audioManager) {
 
+        this._resolution = window.devicePixelRatio;
+        console.warn('dpr', this._resolution);
         // Create our pixi app
         this.app = new Application({
             view: viewCanvas,
@@ -127,6 +129,6 @@ export class PumpDumpGameMananger {
             this.currentScene.destroy();
         }
         this.removeTicker();
-        this.app.destroy();
+        this.app.destroy(true, true);
     }
 }
