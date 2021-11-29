@@ -12,7 +12,7 @@ import TWEEN from '@tweenjs/tween.js';
 const STICK_HEIGHT_MIN_OFFSET = isMobileRosiGame ? 5 : 10;
 const STICK_HEIGHT_MAX_OFFSET = isMobileRosiGame ? 30 : 60;
 
-const STICK_MIN_WIDTH = isMobileRosiGame ? 2.5 : 5;
+const STICK_MIN_WIDTH = isMobileRosiGame ? 2.5 : 3;
 
 const BAR_WIDTH = isMobileRosiGame ? 12.5 : 25;
 const BAR_ROUNDNESS = isMobileRosiGame ? 3 : 4;
@@ -115,11 +115,31 @@ export class BarChartContainer extends Container {
         // Positioning the stick at the center of the bar
         let stickHeight = STICK_HEIGHT_MIN_OFFSET + Math.floor(Math.random() * (STICK_HEIGHT_MAX_OFFSET - STICK_HEIGHT_MIN_OFFSET));
         let stickWidth = STICK_MIN_WIDTH;
-        bar.drawRect((BAR_WIDTH - stickWidth) * 0.5, -stickHeight, stickWidth, height + stickHeight * 2);
+
+        let candleInitialY = color === 'green' 
+            ? -stickHeight * ((Math.random() * 1) + 0) 
+            : -stickHeight * ((Math.random() * 1.5) + 1);
+
+        let candleFinalY = color === 'green' 
+            ? height + stickHeight * ((Math.random() * 2) + 1) 
+            : height + stickHeight * 2;
+
+        bar.drawRect((BAR_WIDTH - stickWidth) * 0.5, candleInitialY, stickWidth, candleFinalY);
         bar.endFill();
 
         // Bar
         bar.beginFill(color === 'green' ? 0x2beb33 : 0xff384b);
+        bar.drawRoundedRect(0, 0, BAR_WIDTH, height, BAR_ROUNDNESS);
+        bar.endFill();
+        
+        return PumpDumpGameMananger.app.renderer.generateTexture(bar);
+    }
+
+    generateBarCrashTexture(height) {
+        const bar = new Graphics();
+
+        // Bar
+        bar.beginFill(0xff384b);
         bar.drawRoundedRect(0, 0, BAR_WIDTH, height, BAR_ROUNDNESS);
         bar.endFill();
         
@@ -270,26 +290,25 @@ export class BarChartContainer extends Container {
             x: ((this.previousThreshold + INIT_CREATE_THRESHOLD * this.createThresholdMult) / INIT_CREATE_THRESHOLD) * this.gapBetweenBars, 
             y: -((crashFactor / 100) - 1) * INITIAL_AXIS_GAP * INIT_STICK_UNITS
         };
-        let bar = new Sprite(this.redBarTextures[(crashFactor < 150 ? 1 : 4)]);
-        // crashBarPosition.y += this.getBarTopEdgeDistance(bar);
+        let bar = new Sprite(this.generateBarCrashTexture(2000));
+        
         bar.scale.set(0);
         bar.position.set(crashBarPosition.x, crashBarPosition.y);
         this.addChild(bar);
-
-        // Add the bar to the container to get it's global position relative to the container
-        const globalPosition = bar.getGlobalPosition();
 
         const scaleData = { x: 0, y: 0 };
         new TWEEN.Tween(scaleData)
             .to({ x: this.barScale.x, y: this.barScale.y }, 600)
             .onUpdate(() => {
                 bar.scale.set(scaleData.x, scaleData.y);
-                if (scaleData.x === this.barScale.x) {
-                    this.removeChild(bar);
-                    bar.position.set(globalPosition.x, globalPosition.y);
-                    bar.scale.set(1);
-                    this.emit('crash-bar-created', bar);
-                }
+                bar.anchor.set(0.5, 0);
+                // bar.height = 1000;
+                // if (scaleData.x === this.barScale.x) {
+                //     this.removeChild(bar);
+                //     bar.position.set(globalPosition.x, globalPosition.y);
+                //     bar.scale.set(1);
+                //     this.emit('crash-bar-created', bar);
+                // }
             })
             .easing(TWEEN.Easing.Back.Out)
             .start();
@@ -339,7 +358,7 @@ export class BarChartContainer extends Container {
         let randMax = this.greenBarTextures.length;
         let randMin = 0;
         // If less that 1.25x don't show tall bars
-        if (this.generatedBars.length <= 3) {
+        if (this.generatedBars.length <= 5) {
             randMax = SAME_HEIGHT_BAR_COUNT * 2;
         } else if (crashFactor <= 250) {
             randMin = SAME_HEIGHT_BAR_COUNT * 2;
