@@ -27,6 +27,7 @@ import UserWallet from './screens/UserWallet'
 import Activities from './screens/Activities';
 import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
+import ExternalGames from './screens/ExternalGames';
 import LeaderboardPage from 'screens/LeaderboardPage';
 import { initTagManager } from './config/gtm';
 import AudioContent from './components/AudioContent';
@@ -93,6 +94,7 @@ const App = () => {
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
               <Route exact path={Routes.oauth} component={Home} />
+              <Route exact path={Routes.externalGames} component={ExternalGames} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Route exact path={Routes.provablyfair} component={Fair} />
               <Route exact path={Routes.terms} component={TermsConditions} />
