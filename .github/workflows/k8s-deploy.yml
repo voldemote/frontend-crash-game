@@ -8,7 +8,6 @@ on:
       - production
       - alpa-prod
       - development
-      - ui-changes-alpaca
 
 jobs:
   build_and_push:
@@ -62,7 +61,7 @@ jobs:
           docker build . -q --build-arg REACT_APP_CRASH_GAME_BACKEND_URL="https://dev-casino-api.wallfair.io/"\
                             --build-arg REACT_APP_BACKEND_URL="https://dev-api.wallfair.io/"\
                             --build-arg REACT_APP_CASINO_GAMES_BACKEND_URL="https://dev-casino-api.wallfair.io/"\
-                            --build-arg REACT_APP_SOCKET_URL="https://comm-dev-api.wallfair.io/"\
+                            --build-arg REACT_APP_SOCKET_URL="https://comm-dev-api.alpacisno.io/"\
                             --build-arg REACT_APP_PUMP_DUMP_GAME_BACKEND_URL="https://dev-pump-dump-api.wallfair.io/"\
                             --build-arg REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }}\
                             --build-arg REACT_APP_RECAPTCHA_KEY=${{ secrets.REACT_APP_RECAPTCHA_KEY }}\
