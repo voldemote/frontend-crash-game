@@ -19,7 +19,7 @@ export function getRandomItems(items, n) {
 export function calcCrashFactorFromElapsedTime(timeDiff = 1) {
   var offsetTime = 0;
   var offsetFactor = 0;
-  let speed = 0;
+  let speed = 190;
 
   if (timeDiff > 0  && timeDiff < 38000) {
     offsetTime = 0;
