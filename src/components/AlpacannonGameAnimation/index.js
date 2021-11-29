@@ -71,6 +71,7 @@ const AlpacannonGameAnimation = ({
     setSlider(e.target.value)
   }
 
+//1250 width
   return (
     <div
       ref={backgroundRef}
@@ -79,6 +80,7 @@ const AlpacannonGameAnimation = ({
         isMobile && styles.animationMobile
       )}
     >
+      <img className={styles.background} src={isMobile ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
       {audio && <GameAudioControlsLocal game='cannon' audio={audio} />}
       <input
           className={styles.slider}

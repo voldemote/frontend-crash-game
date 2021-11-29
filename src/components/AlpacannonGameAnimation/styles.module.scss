@@ -164,35 +164,29 @@
   }
 
 }
-.background{
-  position: absolute;
-}
 .animation {
   display: flex;
   align-items: center;
   justify-content: space-around;
   overflow: hidden;
   border-radius: 12px;
-  background: url('./assets/alpacannon_background_desktop.png');
-  background-repeat: no-repeat;
-  background-size: auto 100%;
-  background-position: right;
+  //background: url('./assets/alpacannon_background_desktop.png');
+  //background-repeat: no-repeat;
+  //background-size: auto 100%;
+  //background-position: right;
   border: 1px solid hsla(0,0%,100%,.17);
-  max-height: 470px;
-  min-height: 470px;
+  height: fit-content;
+  //max-height: 470px;
+  //min-height: 470px;
   position: relative;
   .container{
     position: absolute;
     left: 20px;
     top: 20px;
   }
-  @media (max-width: 580px) {
-    max-height: 320px;
-    min-height: 320px;
-  }
-  @media (max-width: 350px) {
-    max-height: 300px;
-    min-height: 300px;
+  .background{
+    width: 100%;
+    height: auto;
   }
   .fullcannon{
     height: 150px;
@@ -200,7 +194,7 @@
     position: absolute;
     pointer-events: none;
     bottom: -70px;
-    right: 266px;
+    right: calc(50% - 50px);
     .cannon{
       width: 100%;
       position: absolute;
@@ -294,10 +288,10 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 228px;
-    right: 532px;
-    width: 88px;
-    height: 22px;
+    top: 48.8%;
+    right: 66%;
+    width: 10.5%;
+    height: 5%;
     span{
       color: white;
       font-weight: bold;
@@ -309,10 +303,10 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 228px;
-    right: 195px;
-    width: 88px;
-    height: 22px;
+    top: 48.8%;
+    right: 24%;
+    width: 10.5%;
+    height: 5%;
     span{
       color: white;
       font-weight: bold;
@@ -321,11 +315,12 @@
   }
   .slider {
     position: absolute;
-    right: 93px;
-    width: 627px;
-    top: 150px;
+
+    right: 11.5%;
+    width: 76.3%;
+    top: 32.3%;
     -webkit-appearance: none;
-    height: 9px;
+    height: 7px;
     border-radius: 5px;
     outline: none;
     -webkit-transition: .2s;
