@@ -100,3 +100,5 @@ export const API_AUTH_RESET_PASSWORD = 'api/auth/reset-password';
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
 export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';
 export const CRASH_GAME_GET_VOLUME_BETS = 'api/globalstats/:range';
+export const API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
+export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';

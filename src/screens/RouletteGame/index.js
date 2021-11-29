@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
-import { connect, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, {useCallback, useEffect, useState} from 'react';
+import {getSpinsAlpacaWheel, GameApi} from 'api/casino-games';
+import {connect, useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -15,38 +15,38 @@ import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
-import { AlertActions } from '../../store/actions/alert';
-import { RosiGameActions } from '../../store/actions/rosi-game';
+import {AlertActions} from '../../store/actions/alert';
+import {RosiGameActions} from '../../store/actions/rosi-game';
 import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
-import { ChatActions } from 'store/actions/chat';
+import {ChatActions} from 'store/actions/chat';
 import Share from '../../components/Share';
 import PopupTheme from 'components/Popup/PopupTheme';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
-import { PopupActions } from 'store/actions/popup';
+import {PopupActions} from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
 import Routes from 'constants/Routes';
-import { getGameById } from '../../helper/Games';
-import { GAMES } from '../../constants/Games';
+import {getGameById} from '../../helper/Games';
+import {GAMES} from '../../constants/Games';
 import {
   trackAlpacaWheelPlaceBetGuest,
   trackAlpacaWheelPlaceBet,
   trackAlpacaWheelCashout,
 } from '../../config/gtm';
-import { UserActions } from 'store/actions/user';
+import {UserActions} from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 
 const RouletteGame = ({
-  showPopup,
-  connected,
-  userId,
-  token,
-  refreshHighData,
-  refreshLuckyData,
-  updateUserBalance
-}) => {
+                        showPopup,
+                        connected,
+                        userId,
+                        token,
+                        refreshHighData,
+                        refreshLuckyData,
+                        updateUserBalance
+                      }) => {
   const game = GAMES.alpacaWheel
   const ALPACA_WHEEL_GAME_EVENT_ID = game.id;
 
@@ -60,14 +60,19 @@ const RouletteGame = ({
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
-  const chatTabOptions = [{ name: 'CHAT', index: 0 }];
+  const chatTabOptions = [{name: 'CHAT', index: 0}];
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
   }, []);
 
   const handleFairnessPopup = useCallback(event => {
-    showPopup(PopupTheme.fairnessPopup, {maxWidth : true});
+    showPopup(PopupTheme.fairnessPopup, {
+      maxWidth: true, data: {
+        game,
+        token
+      }
+    });
   }, []);
 
 
@@ -75,8 +80,8 @@ const RouletteGame = ({
     getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin)=> {
-          if(spin.profit > 0) {
+        setSpins(lastSpins.map((spin) => {
+          if (spin.profit > 0) {
             return {
               type: 'win',
               value: '+' + spin.profit
@@ -97,7 +102,7 @@ const RouletteGame = ({
   }, [])
 
   useEffect(() => {
-    dispatch(ChatActions.fetchByRoom({ roomId: ALPACA_WHEEL_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({roomId: ALPACA_WHEEL_GAME_EVENT_ID}));
   }, [dispatch, connected]);
 
 
@@ -105,8 +110,8 @@ const RouletteGame = ({
     setChatTabIndex(option.index);
   };
   useEffect(() => {
-    if(userId && bet?.ready) {
-       updateUserBalance(userId);
+    if (userId && bet?.ready) {
+      updateUserBalance(userId);
     }
   }, [bet])
 
@@ -114,15 +119,21 @@ const RouletteGame = ({
     audio.playBetSound();
     if (!payload) return;
     try {
-      if(payload.demo) {
-        setBet({...payload, ready: false })
-        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
+      if (payload.demo) {
+        setBet({...payload, ready: false})
+        trackAlpacaWheelPlaceBetGuest({amount: payload.amount, multiplier: risk});
       } else {
-        const { data } = await Api.createTrade(payload);
+        const {data} = await Api.createTrade(payload);
         setBet({...payload, ...data, ready: false});
         //updateUserBalance(userId);
-        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
-        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
+        trackAlpacaWheelPlaceBet({amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0});
+        trackAlpacaWheelCashout({
+          amount: data.reward,
+          multiplier: data.winMultiplier,
+          result: data.gameResult,
+          accumulated: payload.accumulated,
+          autobet: payload.autobet != null ? 1 : 0
+        });
         return data;
       }
     } catch (e) {
@@ -170,7 +181,7 @@ const RouletteGame = ({
     </Grid>
   );
 
-  const handleNewSpin = (newSpin)=> {
+  const handleNewSpin = (newSpin) => {
     setSpins([newSpin, ...spins])
   }
 
@@ -179,8 +190,8 @@ const RouletteGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Alpaca Wheel" />
-            <Share popupPosition="right" className={styles.shareButton} />
+            <BackLink to="/games" text="Alpaca Wheel"/>
+            <Share popupPosition="right" className={styles.shareButton}/>
             <Icon
               className={styles.questionIcon}
               iconType={IconType.question}
@@ -201,7 +212,7 @@ const RouletteGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins} />
+              <Spins text="My Spins" spins={spins}/>
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -224,7 +235,8 @@ const RouletteGame = ({
                   iconTheme={IconTheme.black}
                   height={18}
                   width={18}
-                /> <span className={classNames('global-link-style', styles.fairnessOpenPopup)} onClick={handleFairnessPopup}>Fairness</span>
+                /> <span className={classNames('global-link-style', styles.fairnessOpenPopup)}
+                         onClick={handleFairnessPopup}>Fairness</span>
               </div>
             </div>
           </div>
@@ -265,7 +277,7 @@ const mapDispatchToProps = dispatch => {
       );
     },
     updateUserBalance: (userId) => {
-      dispatch(UserActions.fetch({ userId, forceFetch: true }));
+      dispatch(UserActions.fetch({userId, forceFetch: true}));
     },
   };
 };
