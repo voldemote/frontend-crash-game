@@ -10,8 +10,15 @@
     right: 30%!important;
   }
   .chance{
-    top: 49.2%!important;
-    right: 59.5%!important;
+    top: 48.2%!important;
+    right: 50.5%!important;
+  }
+  .score{
+    height: 70px!important;
+    top: 43px!important;
+  }
+  .alpaResult{
+    top: 60px!important;
   }
   .alpacaCrash{
     height: 65px!important;
@@ -21,20 +28,100 @@
   }
   .alpacaFlying {
     width: 100px!important;
-    bottom: 50px!important;
+    bottom: 77px!important;
     right: 30px!important;
-    transform: translate3d(0, 40%, 0) rotateX(70deg) rotateY(0deg) rotateZ(80deg)!important;
-    animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64)!important;
     position: absolute!important;
     right: 120px!important;
     z-index: 1;
   }
+  .fullcannon{
+    height: 100px!important;
+    width: 100px!important;
+    position: absolute!important;
+    pointer-events: none;
+    bottom: -20px!important;
+    right: calc(50% - 50px);
+    .cannon{
+      width: 100%!important;
+      position: absolute!important;
+      z-index: 4;
+
+    }
+  }  
+    .alpacaInCannon{
+      width: 83px!important;
+      top: -63px!important;
+      position: absolute;
+      left: 27px!important;
+      z-index: -1;
+    }
+    .explotion{
+      width: 120px!important;
+      top: -47px!important;
+      position: absolute!important;
+      left: -6px!important;
+      z-index: 1;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -ms-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3 ease-in-out;
+    }
 
 }
 .animationMobilePortrait {
   .background{
     width: 70%!important;
   }
+  .alpaResult{
+    
+    top: 24px!important;
+    //right: 249px!important;
+    span{
+      color: black;
+      font-weight: bold;
+      font-size: 15px!important;
+    }
+  }
+  .score{
+    height: 50px!important;
+    width: 50px!important;
+    position: absolute;
+    top: 18px!important;
+  }
+  .fullcannon{
+    height: 150px!important;
+    width: 150px!important;
+    position: absolute!important;
+    pointer-events: none;
+    bottom: -83px!important;
+    right: 200px!important;
+    .cannon{
+      width: 50%!important;
+      position: absolute!important;
+      z-index: 4;
+
+    }
+  }  
+    .alpacaInCannon{
+      width: 58px!important;
+      top: -37px!important;
+      position: absolute;
+      left: 19px!important;
+      z-index: -1;
+    }
+    .explotion{
+      width: 88px!important;
+      top: -34px!important;
+      position: absolute!important;
+      left: -4px!important;
+      z-index: 1;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -ms-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3 ease-in-out;
+    }
   .slider{
     right: 23%!important;
     width: 53.4%!important;
@@ -46,8 +133,8 @@
     right: 30%!important;
   }
   .chance{
-    top: 48.2%!important;
-    right: 59.5%!important;
+    top: 46.2%!important;
+    right: 57.5%!important;
   }
   .alpacaCrash{
     height: 51px!important;
@@ -57,12 +144,10 @@
   }
   .alpacaFlying {
     width: 100px!important;
-    bottom: 50px!important;
+    bottom: 58px!important;
     right: 30px!important;
-    transform: translate3d(0, 40%, 0) rotateX(70deg) rotateY(0deg) rotateZ(80deg)!important;
-    animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64)!important;
     position: absolute!important;
-    right: 120px!important;
+    right: 247px!important;
     z-index: 1;
   }
 
@@ -79,6 +164,53 @@
   .background{
     width: 100%;
     height: auto;
+  }
+  .chance{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 250px;
+    right: 590px;
+    width: 88px;
+    height: 22px;
+    span{
+      color: white;
+      font-weight: bold;
+      font-size: 19px;
+    }
+  }
+  .alpaResult{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 87px;
+    right: 590px;
+    width: 88px;
+    height: 22px;
+    z-index: 999;
+    span{
+      color: black;
+      font-weight: bold;
+      font-size: 19px;
+    }
+  }
+  .result{
+    display: flex;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 48.8%;
+    right: 66%;
+    width: 10.5%;
+    height: 5%;
+    span{
+      color: white;
+      font-weight: bold;
+      font-size: 19px;
+    }
   }
   .slider {
     position: absolute;
@@ -110,21 +242,7 @@
       cursor: pointer;
     }
   }
-  .chance{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 48.8%;
-    right: 66%;
-    width: 10.5%;
-    height: 5%;
-    span{
-      color: white;
-      font-weight: bold;
-      font-size: 19px;
-    }
-  }
+
   .interpolateMultiplier{
     display: flex;
     justify-content: center;
@@ -141,8 +259,8 @@
     }
   }
   .fullcannon{
-    height: 150px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
     position: absolute;
     pointer-events: none;
     bottom: -70px;
@@ -154,17 +272,17 @@
 
     }
     .alpacaInCannon{
-      width: 65px;
-      top: -40px;
+      width: 105px;
+      top: -77px;
       position: absolute;
-      left: 24px;
+      left: 63px;
       z-index: -1;
     }
     .explotion{
-      width: 108px;
-      top: -40px;
+      width: 184px;
+      top: -71px;
       position: absolute;
-      left: 0px;
+      left: 16px;
       z-index: 1;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
@@ -178,22 +296,45 @@
     position: absolute;
     top: 139px;
   }
+  
   .alpacaFlying {
     width: 100px;
     bottom: 50px;
     right: 30px;
-    transform: translate3d(0, 40%, 0) rotateX(70deg) rotateY(0deg) rotateZ(80deg);
-    animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
+    transition: right 1s ease-in-out, bottom 1s ease-in-out;
+    animation: zoom-in-zoom-out 3s ease infinite;
     position: absolute;
     right: 270px;
     z-index: 1;
   }
-  @keyframes yAxis {
-  50% {
-    animation-timing-function: cubic-bezier(0.02, 0.01, 0.2, 1);
-    transform: translateY(-100px);
+  @keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
   }
+  25% {
+    transform: scale(0.8, 0.8)
+    perspective(200px)
+    //rotateX(-180deg) 
+    rotateY(0deg);
+  }
+  50% {
+    transform: scale(0.7, 0.7)
+    perspective(200px)
+    //rotateX(-180deg)
+    rotateY(-180deg);
+  }
+  100% {
+    transform: scale(0.5, 0.5)
+    perspective(200px)
+    //rotate(0deg);
+  }
+  
 }
+.score{
+    height: 70px;
+    position: absolute;
+    top: 72px;
+  }
   
 }
 
