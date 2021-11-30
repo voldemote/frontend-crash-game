@@ -20,7 +20,7 @@ export class GameScene extends Container {
     endGameContainer = null;
 
     gameStartTime = 0;
-    memeThreshold = 5000;
+    memeThreshold = 2500;
 
     cashedOutUserIds = [];
 
@@ -142,7 +142,7 @@ export class GameScene extends Container {
         this.verticalAxis.update(timeElapsed);
         this.barChartContainer.update(timeElapsed);
         if (timeElapsed > this.memeThreshold) {
-            this.memeThreshold = timeElapsed + 6000;
+            this.memeThreshold = timeElapsed + 3200;
             this.memeContainer.generateNextMeme();
         }
         this.cashOutContainer.update();
