@@ -43,10 +43,10 @@ export class MemeContainer extends Container {
         }
 
         const rand = Math.random();
-        const width = PumpDumpGameMananger.width * (rand <= 0.5 ? 0.275 : 0.675);
-        const finalX = width + Math.random() * PumpDumpGameMananger.width * 0.1;
-        const height = PumpDumpGameMananger.height * (rand <= 0.5 ? 0.3 : 0.75);
-        const finalY = height + Math.random() * PumpDumpGameMananger.height * 0.1;
+        const initialX = PumpDumpGameMananger.width * (rand <= 0.5 ? 0.15 : 0.675);
+        const finalX = initialX + Math.random() * PumpDumpGameMananger.width * 0.1;
+        const initialY = PumpDumpGameMananger.height * (rand <= 0.5 ? 0.3 : 0.7);
+        const finalY = initialY + Math.random() * PumpDumpGameMananger.height * 0.1;
         const meme = this.memes[this.currentMemeIndex];
         meme.position.set(finalX, finalY);
         this.addChild(meme);
@@ -79,7 +79,7 @@ export class MemeContainer extends Container {
             .onComplete(() => {
                 meme.visible = false;
             })
-            .delay(4000)
+            .delay(3000)
             .easing(TWEEN.Easing.Back.In)
             .start();
 
