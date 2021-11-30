@@ -138,7 +138,7 @@ const PlaceBetCasino = ({
         else onBet({...bet, amount: newamount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
       }
       else {
-        onBet({autobet: false, ngame: 0, ready: true})
+        setBet({autobet: false, ngame: 0, ready: true})
       }
     }
   }, [bet])
