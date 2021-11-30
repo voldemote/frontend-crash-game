@@ -43,6 +43,13 @@ export const networkInfo = {
     url: 'https://polygonscan.com',
     apiExplorer: 'https://polygonscan.com',
   },
+  kovan: {
+    chainId: 42,
+    explorer: 'https://kovan.etherscan.io/',
+    label: 'Kovan',
+    url: 'https://kovan.infura.io/v3/f6acacf850c94276afe2351e85f61414',
+    apiExplorer: 'https://api-kovan.etherscan.io/api',
+  }
 };
 
 // const currentChainSelected = window.ethereum.networkVersion
