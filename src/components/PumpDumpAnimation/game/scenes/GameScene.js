@@ -20,7 +20,7 @@ export class GameScene extends Container {
     endGameContainer = null;
 
     gameStartTime = 0;
-    memeThreshold = 10000;
+    memeThreshold = 5000;
 
     cashedOutUserIds = [];
 

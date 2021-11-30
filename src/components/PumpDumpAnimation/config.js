@@ -32,6 +32,20 @@ export const ASSET_LIST = {
     MEME_6: constructPath('meme-6.png'),
     MEME_7: constructPath('meme-7.png'),
     MEME_8: constructPath('meme-8.png'),
+    MEME_9: constructPath('meme-9.png'),
+    MEME_10: constructPath('meme-10.png'),
+    MEME_11: constructPath('meme-11.png'),
+    MEME_12: constructPath('meme-12.png'),
+    MEME_13: constructPath('meme-13.png'),
+    MEME_14: constructPath('meme-14.png'),
+    MEME_15: constructPath('meme-15.png'),
+    MEME_16: constructPath('meme-16.png'),
+    MEME_17: constructPath('meme-17.png'),
+    MEME_18: constructPath('meme-18.png'),
+    MEME_19: constructPath('meme-19.png'),
+    MEME_20: constructPath('meme-20.png'),
+    MEME_21: constructPath('meme-21.png'),
+    MEME_22: constructPath('meme-22.png'),
 }
 
 export const AUDIO_LIST = {
