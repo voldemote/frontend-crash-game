@@ -16,7 +16,7 @@ export class EndGameContainer extends Container {
 
         let scaleData = { val: 0 };
         new TWEEN.Tween(scaleData)
-            .to({ val: 0.1 }, 600)
+            .to({ val: 1 }, 600)
             .onUpdate(() => {
                 crashImage.scale.set(scaleData.val);
             })

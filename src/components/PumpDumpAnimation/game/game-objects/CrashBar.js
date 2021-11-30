@@ -67,7 +67,7 @@ export class CrashBar extends Container {
     startStretch(offsetY) {
         const offset = { y: BAR_MIN_HEIGHT };
         new TWEEN.Tween(offset)
-            .to({ y: offsetY }, 800)
+            .to({ y: offsetY }, 1500)
             .onUpdate(() => {
                 this.stretchGraphic(offset.y);
             })
