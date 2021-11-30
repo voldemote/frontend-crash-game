@@ -20,14 +20,13 @@ import {
   currentNetwork,
 } from '../../../config/config';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
-import { resetState } from '../../../state/wallfair/slice';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
 import { SWITCH_NETWORKS } from '../../../utils/constants';
 import QRCode from 'react-qr-code';
 import { accountMapping } from 'api/third-party';
+import { WallfairActions } from 'store/actions/wallfair';
 
-const DepositTab = ({ user }) => {
-  const dispatch = useDispatch();
+const DepositTab = ({ user, resetState }) => {
   const [walletAddress, setWalletAddress] = useState(
     '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8'
   );
@@ -47,7 +46,7 @@ const DepositTab = ({ user }) => {
     });
   }, [walletAddress]);
 
-  const sendAccountMappingCall = () => {
+  const sendAccountMappingCall = useCallback(() => {
     if(account && visibleWalletForm) {
       const accountMappingBody = {
         userId: user.userId,
@@ -55,15 +54,15 @@ const DepositTab = ({ user }) => {
       };
       accountMapping(accountMappingBody, user.token);
     }
-  };
+  },[visibleWalletForm, account, user]);
 
   useEffect(() => {
-    dispatch(resetState());
+    resetState()
     if (active) {
       setTokenAreaOpen(true);
       sendAccountMappingCall();
     }
-  }, [account, active, dispatch]);
+  }, [account, active, resetState, sendAccountMappingCall]);
 
   useEffect(() => {
     if (chainId !== currentChainId) {setBalance(0);  return};
@@ -208,5 +207,25 @@ const mapStateToProps = state => {
     user,
   };
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    resetState: () => dispatch(WallfairActions.resetState()),
+    setHistory: (lockAddress, dataArray) =>
+      dispatch(
+        WallfairActions.setHistory({
+          lock: lockAddress,
+          data: dataArray,
+        })
+      ),
+    setStakes: (lockAddress, amounts, timestamps) =>
+      dispatch(
+        WallfairActions.setStakes({
+          lock: lockAddress,
+          data: [...amounts, ...timestamps],
+        })
+      ),
+  };
+};
 
-export default connect(mapStateToProps, null)(DepositTab);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DepositTab);

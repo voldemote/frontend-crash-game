@@ -1,27 +1,36 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
-import { useLocation, useParams } from 'react-router-dom';
-import { useIsMount } from 'components/hoc/useIsMount';
 import { connect, useSelector } from 'react-redux';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../../components//Popup/PopupTheme';
 import { RosiGameActions } from 'store/actions/rosi-game';
-
-import State from '../../helper/State';
-import { getTradeById } from '../../api';
-import alpacaActivities from '../../data/images/alpaca-activities.svg';
-import EventActivitiesTracker from '../../components/EventActivitiesTracker';
 import TabOptions from 'components/TabOptions';
-import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import useRosiData from 'hooks/useRosiData';
 import UserWalletTables from 'components/UserWalletTables';
 import classNames from 'classnames';
+import { useWeb3React } from '@web3-react/core';
+import { Contract, ethers } from 'ethers';
+
+// import {
+//   resetState,
+//   setStakes,
+//   setHistory,
+// } from '../../state/wallfair/slice';
+import {
+  WFAIRAddress,
+  lockAddresses,
+  currentChainId,
+  currentNetwork,
+} from '../../config/config';
+import WFairTokenLockABI from '../../config/abi/TokenLock.json';
+import { ZERO } from '../../utils/constants';
+import Loader from 'components/Loader/Loader';
+import {WallfairActions} from 'store/actions/wallfair';
 
 const UserWallet = ({
   tags,
@@ -35,16 +44,18 @@ const UserWallet = ({
   userId,
   refreshMyBetsData,
   showWalletBuyWfairPopup,
+  resetState,
+  setStakes,
+  setHistory
+
 }) => {
-  const isMount = useIsMount();
-  const { eventId, betId, tradeId } = useParams();
-  const location = useLocation();
-  let urlParams = new URLSearchParams(location.search);
+  const { active, library, account, chainId } = useWeb3React();
 
-  const { balance, currency, toNextRank } = useSelector(selectUser);
+  const { balance, currency } = useSelector(selectUser);
+  const signer = library?.getSigner();
+  const [stakesLoading, setStakesLoading] = useState(true);
 
-  const dispatch = useDispatch();
-  const { highData, luckyData, myBetsData } = useRosiData();
+  const { myBetsData } = useRosiData();
 
   const activityData = {
     DEPOSITS: [],
@@ -66,7 +77,12 @@ const UserWallet = ({
   };
 
   useEffect(() => {
-    refreshMyBetsData({ userId: userId || '6152b82b2a1ac4fa41b4c663' });
+    resetState();
+
+  }, [account, active, resetState]);
+
+  useEffect(() => {
+    refreshMyBetsData({ userId: userId });
     if (userId) {
       setActivityTabOptions([
         { name: 'DEPOSITS', index: 0 },
@@ -74,15 +90,28 @@ const UserWallet = ({
         { name: 'BETS', index: 2 },
       ]);
     }
-  }, [dispatch, connected, refreshMyBetsData, userId]);
+  }, [connected, refreshMyBetsData, userId]);
 
   useEffect(() => {
-    // if (isMount) {
-    //   fetchTags();
-    //   renderBetApprovePopup();
-    //   handleRefPersistent();
-    // }
-  }, []);
+    if (chainId !== currentChainId) {
+      setStakesLoading(false);
+      return
+    };
+    signer?.getAddress().then(address => {
+      getStakeValues({
+        address: address,
+        provider: library,
+        setStakes,
+        setStakesLoading: setStakesLoading,
+      });
+      getHistory({
+        address,
+        chainId,
+        setHistory,
+        provider: library,
+      });
+    });
+  }, [account, library, signer, chainId,setHistory, setStakes]);
 
   const renderCategoriesAndLeaderboard = () => {
     return (
@@ -106,11 +135,16 @@ const UserWallet = ({
                 </div>
               )}
             </TabOptions>
+
             <div className={styles.activityContainer}>
-              <UserWalletTables
-                type={activityTab.name}
-                rowData={activityData}
-              />
+              {stakesLoading ? (
+                <Loader />
+              ) : (
+                <UserWalletTables
+                  type={activityTab.name}
+                  rowData={activityData}
+                />
+              )}
             </div>
           </div>
         </Grid>
@@ -182,6 +216,82 @@ const UserWallet = ({
   );
 };
 
+const getHistory = async ({ address, setHistory, provider }) => {
+  for (const lockAddress of lockAddresses) {
+    const tokenLock = new Contract(
+      lockAddress,
+      WFairTokenLockABI.abi,
+      provider
+    );
+    const filter = tokenLock.filters.LogRelease(address);
+    const logs = await tokenLock.queryFilter(filter);
+    if (logs.length > 0) {
+      let dataArray = [];
+      for (const entry of logs) {
+        const block = await entry.getBlock();
+        dataArray.push([
+          entry.transactionHash,
+          ethers.utils.formatEther(entry.args.amount),
+          block.timestamp,
+        ]);
+      }
+      setHistory(lockAddress,dataArray)
+      // dispatch(
+      //   WallfairActions.setHistory({
+      //     lock: lockAddress,
+      //     data: dataArray,
+      //   })
+      // );
+
+      
+    }
+  }
+};
+
+const getStakeValues = async ({
+  address,
+  provider,
+  setStakes,
+  setStakesLoading,
+}) => {
+  // loop over all lock addresses
+  for (const lockAddress of lockAddresses) {
+    const tokenLock = new Contract(
+      lockAddress,
+      WFairTokenLockABI.abi,
+      provider
+    );
+    const totalTokensOf = await tokenLock.totalTokensOf(address);
+
+    if (totalTokensOf.gt(ZERO)) {
+      const unlockedTokensOf = await tokenLock.unlockedTokensOf(address);
+      const currentTime = Math.ceil(Date.now() / 1000);
+      const tokensVested = await tokenLock.tokensVested(address, currentTime);
+      // start timestamp in seconds
+      const startTimestamp = await tokenLock.startTime();
+      const vestingPeriod = await tokenLock.vestingPeriod();
+      // this is when vesting ends
+      const endTimestamp = startTimestamp.add(vestingPeriod);
+      const amounts = [totalTokensOf, unlockedTokensOf, tokensVested].map(
+        ethers.utils.formatEther
+      );
+      const timestamps = [startTimestamp, endTimestamp, vestingPeriod].map(t =>
+        t.toString()
+      );
+      setStakes(lockAddress,amounts,timestamps)
+      // dispatch(
+      //   WallfairActions.setStakes({
+      //     lock: lockAddress,
+      //     data: [...amounts, ...timestamps],
+      //   })
+      // );
+    }
+  }
+
+  // change loading state
+  setStakesLoading(false);
+};
+
 const mapStateToProps = state => {
   return {
     tags: state.event.tags,
@@ -193,6 +303,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    resetState: () => dispatch(WallfairActions.resetState()),
+    setHistory: (lockAddress, dataArray) => dispatch( WallfairActions.setHistory({
+          lock: lockAddress,
+          data: dataArray,
+        })),
+    setStakes: (lockAddress, amounts, timestamps) => dispatch(WallfairActions.setStakes({
+          lock: lockAddress,
+          data: [...amounts, ...timestamps],
+        })),
     refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
@@ -200,4 +319,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserWallet);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(UserWallet));
