@@ -354,7 +354,6 @@ const updateUserData = function* (action) {
 
       userFiltered = _.omit(userFiltered, ['imageName', 'profilePic']);
     }
-    console.log('sagas/authentication updateUserData', userFiltered);
     const response = yield call(Api.updateUser, userId, userFiltered);
     if (response) {
       const stateUser = yield select(state => state.authentication);
@@ -369,8 +368,9 @@ const updateUserData = function* (action) {
       if (action.newUser) {
         yield put(
           PopupActions.show({
-            popupType: PopupTheme.welcome,
+            popupType: PopupTheme.alpacaBuilder,
             options: {
+              small: false,
               initialReward: action?.initialReward,
             },
           })

@@ -88,9 +88,11 @@ const RosiGame = ({
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      if (hasAcceptedTerms() && !isPopupDisplayed()) {
-        showPopup(PopupTheme.explanation);
-        localStorage.setItem('gameHowDoesItWorkTip', true);
+      if (slug === GAMES['elonGame'].slug) {
+        if (hasAcceptedTerms() && !isPopupDisplayed()) {
+          showPopup(PopupTheme.explanation);
+          localStorage.setItem('gameHowDoesItWorkTip', true);
+        }
       }
     }, 1000);
     return () => clearTimeout(timerId);
@@ -300,17 +302,19 @@ const RosiGame = ({
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`} >
-            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump and Dump"} />
+          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`}>
+            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump & Dump"} showArrow={(slug === GAMES['elonGame'].slug)} />
             <Share popupPosition="right" className={styles.shareButton} />
-            <Icon
-              className={styles.questionIcon}
-              iconType={IconType.question}
-              iconTheme={IconTheme.white}
-              height={25}
-              width={25}
-              onClick={handleHelpClick}
-            />
+            {(slug === GAMES['elonGame'].slug) &&
+              <Icon
+                className={styles.questionIcon}
+                iconType={IconType.question}
+                iconTheme={IconTheme.white}
+                height={25}
+                width={25}
+                onClick={handleHelpClick}
+              />
+            }
             {showHowDoesItWork()}
           </div>
 

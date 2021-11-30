@@ -107,9 +107,7 @@ const MainMenu = ({
   };
 
   const onAlpacaBuilderClick = () => {
-    showPopup(PopupTheme.alpa, {  });
-
-    //handleAlpacaBuilderVisible(!alpacaBuilderVisible);
+    showPopup(PopupTheme.alpacaBuilder);
   };
 
   const handleName = e => {
@@ -479,6 +477,7 @@ const MainMenu = ({
         </h2>
         <div className={styles.mainContent}>
           <HomeSettings
+            profilePic={profilePic}
             onEditClick={() => onClickShowEditProfile()}
             onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}

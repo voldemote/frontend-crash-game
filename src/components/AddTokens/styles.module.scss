@@ -1,0 +1,31 @@
+@import '../../styles/all';
+
+.buttonWrapper {
+  padding: 25px 15px;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px;
+    width: 100%;
+    max-width: 460px;
+    height: 60px;
+    border-radius: 10px;
+    border: 0;
+    font-size: 18px;
+    font-family: $fontBold;
+    cursor: pointer;
+    background: $colorOrangeLight;
+
+    img {
+      width: 35px;
+      height: 35px;
+      &:nth-child(2) {
+        width: 25px;
+        height: 25px;
+        margin: 0 10px;
+      }
+    }
+  }
+}
