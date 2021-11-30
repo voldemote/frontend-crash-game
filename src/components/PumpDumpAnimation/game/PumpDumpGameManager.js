@@ -68,14 +68,17 @@ export class PumpDumpGameMananger {
         }
     }
 
-    // Call this function when you want to go to a new scene
-    static changeScene(newScene) {
+    static deleteExistingScene() {
         // Remove and destroy old scene... if we had one..
         if (this.currentScene) {
             this.app.stage.removeChild(this.currentScene);
             this.currentScene.destroy();
         }
+    }
 
+    // Call this function when you want to go to a new scene
+    static changeScene(newScene) {
+        this.deleteExistingScene();
         // Add the new one
         this.currentScene = newScene;
         this.app.stage.addChild(this.currentScene);
@@ -99,10 +102,10 @@ export class PumpDumpGameMananger {
 
     static launchCoin(launchTime) {
         // Preparation Scene
+        this.deleteExistingScene();
         console.warn('launch scene', launchTime);
         if (!this.app || launchTime <= 0) {
             console.warn('launch scene cancelled', launchTime);
-
             return;
         }
         const launchScene = new LaunchScene(launchTime, this._audioManager);
@@ -126,10 +129,7 @@ export class PumpDumpGameMananger {
     }
 
     static destroy() {
-        if (this.currentScene) {
-            this.app.stage.removeChild(this.currentScene);
-            this.currentScene.destroy();
-        }
+        this.deleteExistingScene();
         this.removeTicker();
         this.app.destroy(true, true);
     }

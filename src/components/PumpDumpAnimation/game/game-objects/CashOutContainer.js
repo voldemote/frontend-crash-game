@@ -4,7 +4,7 @@ import { INIT_CREATE_THRESHOLD, MERGE_BAR_COUNT } from "./BarChartContainer";
 import { calcCrashFactorFromElapsedTime } from "components/RosiGameAnimation/canvas/utils";
 
 const VERTICAL_GAP = 25;
-const GAP_FROM_BAR = 10;
+const GAP_FROM_BAR = 15;
 
 export class CashOutContainer extends Container {
     barContainer = null;
@@ -128,11 +128,12 @@ export class CashOutContainer extends Container {
 
     update() {
         if (this.barContainer.generatedBars && this.barContainer.generatedBars) {
-            this.barContainer.generatedBars.forEach((bars, index) => {
+            this.barContainer.generatedBars.forEach((bar, index) => {
                 if (this.cashOuts.has(index)) {
-                    const rect = bars.getBounds(true);
+                    const rect = bar.getBounds(true);
+                    const barBottom = rect.bottom - (bar.botBar * (this.barContainer.scale.y * bar.scale.y));
                     this.cashOuts.get(index).forEach((cashOut, index) => {
-                        cashOut.position.set(rect.x + rect.width * 0.5, rect.bottom + GAP_FROM_BAR + index * VERTICAL_GAP);
+                        cashOut.position.set(rect.x + rect.width * 0.5, barBottom + GAP_FROM_BAR + index * VERTICAL_GAP);
                     })
                 }
             })

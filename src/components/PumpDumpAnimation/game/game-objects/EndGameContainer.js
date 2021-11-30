@@ -9,7 +9,7 @@ export class EndGameContainer extends Container {
 
         let crashImage = new Sprite(resources[ASSET_LIST[`CRASH_${1 + Math.floor(Math.random() * 6)}`]].texture);
         crashImage.scale.set(0);
-        crashImage.position.set(crashRect.right, crashRect.top);
+        crashImage.position.set(crashRect.right + 5, crashRect.top - 5);
         crashImage.anchor.set(0.5);
         crashImage.roundPixels = true;
         this.addChild(crashImage);
