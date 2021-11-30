@@ -155,12 +155,12 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <p className={styles.noWFairNoProblem}>No PFAIR? No problem!</p>
-              {/* <button
+              <button
                 className={styles.buyWFairButton}
                 onClick={showWalletBuyWfairPopup}
               >
                 Buy WFAIR!
-              </button> */}
+              </button>
               <button
                   className={styles.buyWFairButton}
                   onClick={showRequestTokenPopup}
