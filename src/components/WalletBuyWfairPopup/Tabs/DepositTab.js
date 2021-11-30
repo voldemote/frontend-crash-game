@@ -20,16 +20,15 @@ import {
   currentNetwork,
 } from '../../../config/config';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
-import { resetState } from '../../../state/wallfair/slice';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
 import { SWITCH_NETWORKS } from '../../../utils/constants';
 import QRCode from 'react-qr-code';
+import { accountMapping } from 'api/third-party';
+import { WallfairActions } from 'store/actions/wallfair';
 
-
-const DepositTab = props => {
-  const dispatch = useDispatch();
+const DepositTab = ({ user, resetState }) => {
   const [walletAddress, setWalletAddress] = useState(
-    '0xC6065B9fc8171Ad3D29bad510709249681758972'
+    '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8'
   );
   const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
   // const [walletType, setWalletType] = useState('');
@@ -47,15 +46,26 @@ const DepositTab = props => {
     });
   }, [walletAddress]);
 
-  useEffect(() => {
-    dispatch(resetState());
-    if (active) {
-      setTokenAreaOpen(true);
+  const sendAccountMappingCall = useCallback(() => {
+    if(account && visibleWalletForm) {
+      const accountMappingBody = {
+        userId: user.userId,
+        account: account,
+      };
+      accountMapping(accountMappingBody, user.token);
     }
-  }, [account, active, dispatch]);
+  },[visibleWalletForm, account, user]);
 
   useEffect(() => {
-    if (chainId !== currentChainId) return;
+    resetState()
+    if (active) {
+      setTokenAreaOpen(true);
+      sendAccountMappingCall();
+    }
+  }, [account, active, resetState, sendAccountMappingCall]);
+
+  useEffect(() => {
+    if (chainId !== currentChainId) {setBalance(0);  return};
 
     signer?.getAddress().then(address => {
       getBalanceWFAIR({ address: address, provider: library }).then(result => {
@@ -143,6 +153,11 @@ const DepositTab = props => {
             </button>
           </div>
         )}
+        {!!account && (
+          <div className={styles.qrCodeImg}>
+            <QRCode value={walletAddress} size={120} />
+          </div>
+        )}
         {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
             <button
@@ -157,10 +172,7 @@ const DepositTab = props => {
             </button>
           </div>
         )}
-        <div className={styles.qrCodeImg}>
-          <QRCode value={walletAddress} size={120}/>
-        </div>
-        {visibleWalletForm && !active && <ConnectWallet />}
+        {visibleWalletForm && !active && <ConnectWallet accountMapping={sendAccountMappingCall} />}
         {tokenAreaOpen && account && (
           <TokenTransfer
             provider={library}
@@ -188,4 +200,32 @@ const getBalanceWFAIR = async ({ address, provider }) => {
   return ethers.utils.formatEther(balance);
 };
 
-export default DepositTab;
+const mapStateToProps = state => {
+  const user = state.authentication;
+
+  return {
+    user,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    resetState: () => dispatch(WallfairActions.resetState()),
+    setHistory: (lockAddress, dataArray) =>
+      dispatch(
+        WallfairActions.setHistory({
+          lock: lockAddress,
+          data: dataArray,
+        })
+      ),
+    setStakes: (lockAddress, amounts, timestamps) =>
+      dispatch(
+        WallfairActions.setStakes({
+          lock: lockAddress,
+          data: [...amounts, ...timestamps],
+        })
+      ),
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(DepositTab);

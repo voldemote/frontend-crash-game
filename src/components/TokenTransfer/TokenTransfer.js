@@ -23,6 +23,7 @@ const TokenTransfer = ({
   const [TXSuccess, setTXSuccess] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [formError, setformError] = useState('');
+  const [checkBox, setCheckBox] = useState(false);
 
   useEffect(() => {
     setIsLoading(false);
@@ -34,7 +35,7 @@ const TokenTransfer = ({
       setTXSuccess(false);
     }
   }, [modalOpen]);
-  console.log('balance', balance)
+  
   if (balance < 1) {
     return isloading ? (
       <Loader />
@@ -71,7 +72,25 @@ const TokenTransfer = ({
         /> */}
         {balance > 1 ? (
           <>
+            <div className={styles.checkBoxContainer}>
+              <p>Deposit All</p>
+              <input
+                type="checkbox"
+                key="checkBox"
+                placeholder="WFAIR Amount"
+                value={checkBox}
+                onClick={e => {
+                  setCheckBox(checkBox? false: true);
+                  const setBal = balance
+                    .replace(/[^0-9.,]/g, '')
+                    .replace(/(,)/g, '.')
+                    .replace(/(\..*?)\..*/g, '$1');
+                  setTransferValue(!checkBox? setBal: '0');
+                }}
+              />
+            </div>
             <input
+              disabled={checkBox}
               key="transferValue"
               placeholder="WFAIR Amount"
               value={transferValue}

@@ -37,7 +37,10 @@ export const wfSlice = createSlice({
       state.balances[symbol] = amount;
     },
     setStakes: (state, action) => {
+      console.log('---------->>>>>>>>setStakes', action.payload)
       const { lock, data } = action.payload;
+
+      console.log('----------->>>>', lock);
       state.stakes[lock] = data;
     },
     setHistory: (state, action) => {
@@ -60,7 +63,7 @@ export const {
 
 export const selectConnected = (state) => state.wallfair.connected;
 export const selectBalances = (state) => state.wallfair.balances;
-export const selectStakes = (state) => state.wallfair.stakes;
-export const selectHistory = (state) => state.wallfair.history;
+export const selectStakes = (state) => state?.wallfair?.stakes ? state.wallfair.stakes : []; 
+export const selectHistory = (state) => state?.wallfair?.history ? state.wallfair.history : [];
 
 export default wfSlice.reducer;
