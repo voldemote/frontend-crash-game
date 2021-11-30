@@ -127,7 +127,6 @@ const PlinkoGame = ({
         setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array, ready: false }})
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        console.log("bet", payload)
         const { data } = await Api.createTradePlinko(payload);
         setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier, ready: false}});
         //updateUserBalance(userId);
