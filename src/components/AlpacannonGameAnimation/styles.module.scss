@@ -298,13 +298,13 @@
   }
   
   .alpacaFlying {
-    width: 100px;
+    width: 155px;
     bottom: 50px;
     right: 30px;
     transition: right 1s ease-in-out, bottom 1s ease-in-out;
     animation: zoom-in-zoom-out 3s ease infinite;
     position: absolute;
-    right: 270px;
+    right: 400px;
     z-index: 1;
   }
   @keyframes zoom-in-zoom-out {
@@ -312,19 +312,19 @@
     transform: scale(1, 1);
   }
   25% {
-    transform: scale(0.8, 0.8)
+    transform: scale(1, 1)
     perspective(200px)
     //rotateX(-180deg) 
     rotateY(0deg);
   }
   50% {
-    transform: scale(0.7, 0.7)
+    transform: scale(1, 1)
     perspective(200px)
     //rotateX(-180deg)
     rotateY(-180deg);
   }
   100% {
-    transform: scale(0.5, 0.5)
+    transform: scale(1, 1)
     perspective(200px)
     //rotate(0deg);
   }
