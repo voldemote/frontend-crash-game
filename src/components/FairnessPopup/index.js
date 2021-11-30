@@ -107,11 +107,6 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
       </div>
       <div className={styles.separator}></div>
       <div className={styles.content}>
-        <div className={classNames("global-link-style", styles.verificationTool)}><a
-          href={"https://jsfiddle.net/fx1dev/ezx8vp6a/show"} target={"_blank"} rel="noreferrer"><b>Single Game
-          Verification Tool</b></a></div>
-
-
         <div className={classNames(styles.seedsCurrentForm)}>
           <div>
             <label>

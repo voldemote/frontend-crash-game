@@ -44,6 +44,7 @@ import LastGamesDetailPopup from '../LastGamesDetailPopup';
 import AlpacaBuilder from 'components/AlpacaBuilder';
 import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 import FairnessPopup from "../FairnessPopup";
+import SingleGameDetailPopup from "../SingleGameDetailPopup";
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -162,9 +163,10 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <LastGamesDetailPopup data={options?.data} />;
       case PopupTheme.fairnessPopup:
         return <FairnessPopup data={options?.data} />;
+      case PopupTheme.singleGamesDetail:
+        return <SingleGameDetailPopup data={options?.data} />;
       case PopupTheme.loginRegister:
         return <JoinPopup />;
-
       case PopupTheme.verifyEmail:
         return <VerifyEmailPopup closed={false} />;
 

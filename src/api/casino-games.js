@@ -8,7 +8,7 @@ import {
   API_MINES_CHECK,
   API_MINES_CURRENT, API_MINES_LAST_CASHOUTS,
   API_MINES_START,
-  CRASH_GAME_GET_VOLUME_BETS
+  CRASH_GAME_GET_VOLUME_BETS, SINGLE_GAME_API_GET_GAME_DETAILS
 } from '../constants/Api';
 import {promises} from "stream";
 
@@ -158,6 +158,19 @@ const getLastCashoutsMines = (gameTypeId) => {
   });
 };
 
+const getSingleGameDetailById = (gameHash, gameTypeId) => {
+  const callThis = ApiUrls.SINGLE_GAME_API_GET_GAME_DETAILS
+      .replace(':gameHash', gameHash)
+      .replace(':gameTypeId', gameTypeId);
+
+  console.log('callThis', callThis);
+
+  return  Api.get(callThis).catch(error => {
+    console.log('[API Error] called: getSingleGameDetailById', error);
+    throw error;
+  });
+}
+
 export {
   GameApi,
   Api,
@@ -167,5 +180,6 @@ export {
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
-  getLastCashoutsMines
+  getLastCashoutsMines,
+  getSingleGameDetailById
 };

@@ -1,0 +1,96 @@
+@import '../../styles/all';
+
+.gameDetails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 35px;
+
+  .logo {
+    height: 60px;
+  }
+
+  .title {
+    position: relative;
+    font-family: $fontBold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .nextGame, .prevGame {
+    font-size: 13px;
+    position: absolute;
+    font-weight: 100;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .prevGame {
+    right: -80px;
+    bottom: -12px;
+  }
+
+  .nextGame {
+    left: -80px;
+    bottom: -12px;
+  }
+
+  .subtitle {
+    font-family: $fontRegular;
+    font-size: 14px;
+    padding-top: 5px;
+  }
+
+  .separator {
+    margin: 5px 0;
+    height: 1px;
+    width: 160px;
+    background-color: $colorGrayLight1;
+    border-radius: 100%;
+  }
+
+  .gameDate {
+    font-size: 14px;
+    color: $colorDarkSlateGray;
+    margin-bottom: 15px;
+  }
+
+  .content {
+    width: 800px;
+    font-size: 15px;
+
+    & > div {
+      margin-bottom: 4px;
+
+    }
+
+    @media (max-width: $screen-md) {
+      width: 100%;
+    }
+  }
+
+  .verificationTool {
+    text-align: center;
+  }
+
+  .copyInputBlock {
+    padding: 5px 0 10px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+
+  .disabled, .disabled * {
+    cursor: not-allowed;
+  }
+
+  .disabled {
+    color: $colorRed;
+  }
+}

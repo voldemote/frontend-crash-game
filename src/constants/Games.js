@@ -220,7 +220,8 @@ export const GAMES = {
     id: '618a81ded90fd22298859bc4',
     slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/ygtor6e4/show'
   },
   plinko: {
     id: '618a821bd90fd22298859bc5',

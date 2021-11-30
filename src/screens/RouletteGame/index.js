@@ -80,18 +80,20 @@ const RouletteGame = ({
     getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
+
         setSpins(lastSpins.map((spin) => {
+          const output = {};
           if (spin.profit > 0) {
-            return {
-              type: 'win',
-              value: '+' + spin.profit
-            };
+            output.type = 'win';
+            output.value = '+' + spin.profit;
           } else {
-            return {
-              type: 'loss',
-              value: spin.profit
-            };
+            output.type = 'loss';
+            output.value = spin.profit;
           }
+
+          output.gameHash = spin.gameHash;
+
+          return output;
         }))
 
       })
@@ -99,6 +101,16 @@ const RouletteGame = ({
         dispatch(AlertActions.showError(error.message));
       });
 
+  }, [])
+
+  useEffect(() => {
+    (async () => {
+      //this get route is for retrieving client / server seeds for the game, if its very first time,
+      //casino_fairness record will be created automatically
+      await Api.getCurrentFairnessByGame(game.id);
+    })().catch(error => {
+      dispatch(AlertActions.showError(error.message));
+    });
   }, [])
 
   useEffect(() => {
@@ -212,7 +224,7 @@ const RouletteGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Spins" spins={spins}/>
+              <Spins text="My Spins" spins={spins} game={game}/>
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
