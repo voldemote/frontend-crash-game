@@ -3,8 +3,10 @@ import { isMobileRosiGame } from "components/RosiGameAnimation/canvas/utils";
 // const deviceType = isMobileRosiGame ? 'mobile' : 'desktop';
 // const resolution = deviceType === 'mobile' ? 2 : 1;
 
+const assetVersion = "3";
+
 const constructPath = asset =>
-    `/images/pump-dump-game/${isMobileRosiGame ? '@2x':'@1x'}/${asset}`;
+    `/images/pump-dump-game/${isMobileRosiGame ? '@2x':'@1x'}/${asset}?v=${assetVersion}`;
 
 // const constructPath = asset =>
 //     `/images/pump-dump-game/source/${asset}`;
