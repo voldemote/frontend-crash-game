@@ -3,6 +3,7 @@ import { Container, Sprite } from "pixi.js";
 import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 import TWEEN from '@tweenjs/tween.js';
 import _ from 'lodash';
+import { isMobile } from "react-device-detect";
 
 export class LaunchScene extends Container {
     tweets = [];
@@ -22,7 +23,7 @@ export class LaunchScene extends Container {
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
 
-        const tweetScale = 0.5;
+        const tweetScale = isMobile ? 0.8 : 0.5;
 
         for (let i = 0; i < this.totalTweets; ++i) {
             this.tweets[i] = new Sprite(resources[ASSET_LIST[`TWEET_${i + 1}`]].texture);
