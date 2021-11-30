@@ -10,10 +10,13 @@ const AlpacaBuilder = ({
   onExport,
   onCancel,
   downloadFileOnSave = false,
-  props
+  props,
+  layout,
+  cancelLabel='Cancel'
 }) => {
 
   const [svgProperties, setSvgProperties] = useState(props);
+  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0]);
   const svgRef = useRef();
   const svgDownloader = useRef();
 
@@ -102,31 +105,49 @@ const AlpacaBuilder = ({
     }
   };
 
+  const renderCategoryBtn = (cat, index) => {
+    const isSelected = selectedCategory && selectedCategory.name === cat.name;
+    return (
+      <span
+        key={`abcat_${index}`}
+        className={classNames(styles.category, isSelected ? styles.categorySelected : null)}
+        onClick={()=> {setSelectedCategory(cat)}}>{cat.name}</span>
+    );
+  }
+
   return (
     <>
     <div
       className={classNames(
-        styles.alpacaBuilder
+        styles.alpacaBuilder, layout === 'wide' ? styles.wide : null
       )}>
-      <div className={styles.head}>
-        <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
-          <rect width="100%" height="100%" fill="white" />
-          {renderSvg()}
-        </svg>
+      <div className={styles.headAndCategories}>
+        <div className={styles.head}>
+          <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
+            <rect width="100%" height="100%" fill="white" />
+            {renderSvg()}
+          </svg>
+        </div>
+        <div className={styles.categoriesRow}>
+          {CATEGORIES?.map((c, index) => renderCategoryBtn(c, index))}
+        </div>
       </div>
       <AbViewStyles
-        cssClassNames={styles.abView}
+        category={selectedCategory}
+        showCategories={false}
         onStyleClick={applyStyle}
         current={svgProperties}
         ></AbViewStyles>
 
       <div className={styles.toolbar}>
           <span
-            onClick={() => {if(onCancel) onCancel();}}>Cancel</span>
-          <span            
+            className={styles.secondaryAction}
+            onClick={() => {if(onCancel) onCancel();}}>{cancelLabel}</span>
+          <span
+            className={styles.primaryAction}
             onClick={() => resetSvg(true)}>Randomize</span>
           <span
-            className={styles.saveBtn}            
+            className={styles.primaryAction}
             onClick={() => exportSvg()}>Save</span>
         </div>
     </div>

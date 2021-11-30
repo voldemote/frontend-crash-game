@@ -6,8 +6,14 @@
   color: $colorPrimary;
 
   .toolbar {
-    span {
-      background-image: url('../../data/backgrounds/games/bet-button.svg');
+    .primaryAction {
+      background-image: url('../../data/backgrounds/highlight-modal-button.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .secondaryAction {
+      background-image: url('../../data/backgrounds/highlight-modal-button2-disabled.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;

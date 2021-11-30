@@ -16,7 +16,7 @@ import { checkUsername } from '../../api';
 const UsernamePopup = ({
   hidePopup = () => {},
   loading,
-  showWelcome,
+  showAlpacaBuilder,
   updateUser,
   user,
   initialReward,
@@ -57,7 +57,7 @@ const UsernamePopup = ({
 
   const skipUsername = () => {
     hidePopup();
-    showWelcome(initialReward);
+    showAlpacaBuilder(initialReward);
   };
 
   return (
@@ -116,12 +116,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    showWelcome: initialReward => {
+    showAlpacaBuilder: initialReward => {
       dispatch(
         PopupActions.show({
-          popupType: PopupTheme.welcome,
+          popupType: PopupTheme.alpacaBuilder,
           options: {
             initialReward: initialReward,
+            small: false,
           },
         })
       );
