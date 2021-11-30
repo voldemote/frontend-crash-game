@@ -11,7 +11,7 @@ function GameAudioControlLocals({ audio, game, color = '#7166c7'}) {
     audio.setVolume((value / 100).toFixed(1));
   }
   return (
-    <div className={classNames(styles.container, game==='plinko' && styles.plinko)}>
+    <div className={classNames(styles.container, (game==='plinko' || game==='cannon') && styles.plinko)}>
       <VolumeSlider level={aud} handleChange={onChangeVolume} color={color}/>
       <div
         className={classNames({

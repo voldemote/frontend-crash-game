@@ -12,6 +12,7 @@ import {formatToFixed, roundToTwo} from '../../helper/FormatNumbers';
 import { selectUser } from 'store/selectors/authentication';
 import { PopupActions } from 'store/actions/popup';
 import TokenNumberInput from 'components/TokenNumberInput';
+import { StandardInput, ToggleInput } from '../PlaceBetCasino/components';
 import PopupTheme from '../Popup/PopupTheme';
 import Input from '../Input';
 import { round } from 'lodash/math';
@@ -25,7 +26,7 @@ import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
-import {MinesInput} from "./MinesInput";
+import { MinesInput, ClearedInput} from "./MinesInput";
 import { trackMinesPlaceBet, trackMinesPlaceBetGuest } from "../../config/gtm"
 
 import {
@@ -58,6 +59,14 @@ const PlaceBetMines = ({
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
+  const [wincrease, setWincrease] = useState(0)
+  const [lincrease, setLincrease] = useState(0)
+  const [lossbutton, setLossbutton] = useState(false)
+  const [winbutton, setWinbutton] = useState(false)
+  const [profit1, setProfit1] = useState(0);
+  const [loss, setLoss] = useState(0);
+  const [accumulated, setAccumulated] = useState(0)
+  const [cleared, setCleared] = useState(1)
 
   const gameOffline = false//useSelector(selectGameOffline);
 
@@ -94,14 +103,80 @@ const PlaceBetMines = ({
     }
 
     trackMinesPlaceBet({ amount, mines });
-    // console.log('###payload', payload);
     await onBet(payload);
   }
 
   const placeAutoBet = async () => {
-    return;
+    if (userUnableToBet) return;
+    if (amount > userBalance) return;
+    setConfetti(false);
+    const payload = {
+      amount,
+      cleared,
+      autobet: true,
+      profitStop: Number(profit1),
+      lossStop: Number(loss),
+      wincrease: winbutton?0:Number(wincrease)/100,
+      lincrease: lossbutton?0:Number(lincrease)/100,
+      minesCount: mines,
+      accumulated
+    };
+    setAccumulated(0)
+    setBet((bet) => {
+      return{
+      ...bet,
+      ...payload,
+      stopped: false,
+      done: true
+    }})
+    onBet(payload);
   }
 
+  useEffect(() => {
+    if(bet.autobet && !bet.done){
+      let prof = 0
+      if(bet.win) {
+        prof = profit + bet.amount
+        handleCashout()
+        //document.getElementById('mines-cashout-btn').click();
+        const acc = prof + accumulated
+        setAccumulated((a)=> {return prof+ a})
+        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+          const newamount = bet.profitStop > 0 && Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease))
+          if(newamount < 1) setBet({autobet: false, pending: false})
+          else {
+            setTimeout(()=> {
+              setAccumulated((a)=> {return a- newamount})
+              setBet((bet) => {return{...bet, amount: newamount }})
+              onBet({...bet, amount: newamount, done: true})
+            }, 1000)
+          }
+        }
+        else {
+          setBet({autobet: false, pending: false})
+        }
+      }else{
+        const acc = accumulated - bet.amount
+        setAccumulated(acc)
+        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+          const newamount = bet.lossStop >= 0 && Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+          if(newamount < 1) setBet({autobet: false, pending: false})
+          else {
+            setBet((bet) => {return{...bet, amount: newamount }})
+            onBet({...bet, amount: newamount, done: true})
+          }
+        }
+        else {
+          setBet({autobet: false, pending: false})
+        }
+      }
+    }else if(!bet.autobet && bet.stopped){
+      setTimeout(()=> {
+        document.getElementById('mines-cashout-btn')?.click();
+      }, 500)
+
+    }
+  }, [bet.autobet, bet.done])
 
   const placeGuestBet = async () => {
     const payload = {
@@ -130,8 +205,8 @@ const PlaceBetMines = ({
   };
 
   const handleCashout = e => {
-    e.preventDefault();
-    e.stopPropagation();
+    e?.preventDefault();
+    e?.stopPropagation();
     onCashout();
   };
 
@@ -148,9 +223,9 @@ const PlaceBetMines = ({
   };
 
   const renderButton = () => {
-    if (!gameInProgress) {
+    if (!gameInProgress && !bet.autobet) {
       return (
-        (selector === 'manual') && (<span
+        <span
           role="button"
           tabIndex="0"
           className={classNames(styles.button, {
@@ -165,18 +240,31 @@ const PlaceBetMines = ({
           onClick={bet?.pending ? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
         >
           {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
-        </span>)
+        </span>
       );
     } else {
       return (
         <>
           <div className={styles.currentMultiplier}>Multiplier: <span className={classNames('global-cashout-profit')}>{!multiplier ? "-" : 'x' + multiplier}</span></div>
           <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
+          <span
+            role="button"
+            tabIndex="0"
+            style={{display: bet.autobet ? 'auto':'none'}}
+            className={classNames(styles.button, styles.cancel)}
+            onClick={() => setBet({...bet, autobet: false, stopped: true})}
+            data-tracking-id={
+              user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
+            }
+          >
+            Stop Autobet
+          </span>
 
           <div
             id={"mines-cashout-btn"}
             role="button"
             tabIndex="0"
+            style={{display: !bet.autobet ? 'auto':'none'}}
             className={classNames(
               styles.button,
               styles.cashoutButton, {
@@ -253,7 +341,7 @@ const PlaceBetMines = ({
 
         {selector === 'manual' ?
           <div className={classNames(styles.sliderContainer, {
-            [styles.hidden]: bet.done
+            [styles.hidden]: false && bet.done
           })}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
@@ -261,6 +349,83 @@ const PlaceBetMines = ({
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
+                minValue={1}
+                decimalPlaces={0}
+                maxValue={formatToFixed(
+                  user.balance > 10000 ? 10000 : user.balance
+                )}
+                dataTrackingIds={{
+                  inputFieldHalf: 'alpacawheel-input-field-half',
+                  inputFieldDouble: 'alpacawheel-input-field-double',
+                  inputFieldAllIn: 'alpacawheel-input-field-allin',
+                }}
+              />
+            ) : (
+              <div
+                className={classNames(
+                  styles.cashedOutInputContainer,
+                  styles.demoInput
+                )}
+              >
+                <Input
+                  className={classNames(styles.input)}
+                  type={'number'}
+                  value={amount}
+                  disabled={bet.autobet ? true : false}
+                  onChange={onGuestAmountChange}
+                  step={0.01}
+                  min="1"
+                  max={'10000'}
+                />
+                <span className={styles.eventTokenLabel}>
+                  <span>{TOKEN_NAME}</span>
+                </span>
+                <div className={styles.buttonWrapper}>
+                  <span
+                    className={styles.buttonItem}
+                    data-tracking-id="alpacawheel-input-field-half"
+                    onClick={() => onBetAmountChanged(0.5)}
+                  >
+                    ½
+                  </span>
+                  <span
+                    className={styles.buttonItem}
+                    data-tracking-id="alpacawheel-input-field-double"
+                    onClick={() => onBetAmountChanged(2)}
+                  >
+                    2x
+                  </span>
+                  <span
+                    className={styles.buttonItem}
+                    data-tracking-id="alpacawheel-input-field-allin"
+                    onClick={() => setAmount(10000)}
+                  >
+                    Max
+                  </span>
+                </div>
+              </div>
+            )}
+            <div className={styles.inputContainer}>
+              <label
+                className={classNames(
+                  styles.label,
+                )}
+              >
+                Mines
+              </label>
+              <div className={styles.riskSelection}>
+                <MinesInput mines={mines} setMines={setMines}/>
+              </div>
+            </div>
+          </div>
+          :
+          <div className={styles.sliderContainer}>
+            <label className={styles.label}>Bet Amount</label>
+            {user?.isLoggedIn ? (
+              <TokenNumberInput
+                value={amount}
+                currency={user?.currency}
+                setValue={(v)=>setAmount(v)}
                 minValue={1}
                 decimalPlaces={0}
                 maxValue={formatToFixed(
@@ -322,16 +487,49 @@ const PlaceBetMines = ({
                   styles.label,
                 )}
               >
+                Random Cards to Pick
+              </label>
+              <div className={styles.riskSelection}>
+                <ClearedInput mines={cleared} setMines={setCleared} min={1} max={25-mines} />
+              </div>
+            </div>
+            <div className={styles.inputContainer}>
+              <label
+                className={classNames(
+                  styles.label,
+                )}
+              >
                 Mines
               </label>
               <div className={styles.riskSelection}>
-                <MinesInput mines={mines} setMines={setMines}/>
+                <MinesInput mines={mines} setMines={(m)=>{setMines(m);m > 25-cleared && setCleared(25-m)}}/>
               </div>
             </div>
-          </div>
-          :
-          <div className={classNames(styles.sliderContainer, styles.autoBetContainer)}>
-            Coming Soon
+            <StandardInput title={'Stop on Profit'} setValue={setProfit1} value={profit1} />
+            <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
+            <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />
+            <ToggleInput title={'On Loss'} setValue={setLincrease} value={lincrease} setToggle={setLossbutton} toggle={lossbutton} />
+            {bet.autobet &&
+              <div className={styles.spinsleft}>
+                <span className={accumulated > 0 ? styles.reward : styles.lost}>
+                {Math.floor(accumulated)} PFAIR
+                </span>
+                accumulated
+              </div>
+            }
+            {bet.autobet && bet.amount &&
+              <div className={styles.spinsleft}>
+                Current bet:
+                <span className={styles.neutral}>
+                {Math.floor(bet.amount)} PFAIR
+                </span>
+              </div>
+            }
+            {bet.ngame > 0 &&
+              <div className={styles.spinsleft}>
+                {bet.ngame} spins left
+              </div>
+            }
           </div>
         }
       </div>

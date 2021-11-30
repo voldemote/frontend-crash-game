@@ -51,6 +51,7 @@ const RosiGame = ({
   } = useRosiData();
   const { slug } = useParams();
   const [audio, setAudio] = useState(null);
+  const [flag, setFlag] = useState(false)
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
@@ -105,6 +106,8 @@ const RosiGame = ({
   };
 
   async function handleBet(payload, crashFactor) {
+    if(flag) return
+    setFlag(true)
     audio.playBetSound();
     if (!payload) return;
     try {
@@ -112,28 +115,35 @@ const RosiGame = ({
       console.log("result", result)
       trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
       dispatch(RosiGameActions.setUserBet(payload));
+      setFlag(false)
       return result;
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Elon Game: Place Bet failed',
+          message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Place Bet failed`,
         })
       );
     }
   }
 
   function handleBetCancel(userId, amount) {
+    if(flag) return
+    setFlag(true)
     Api.cancelBet()
       .then(() => {
         trackElonCancelBet({ amount });
         dispatch(RosiGameActions.cancelBet({ userId }));
+        setFlag(false)
+        return true
       })
       .catch(() => {
         dispatch(
           AlertActions.showError({
-            message: 'Elon Game: Cancel Bet failed',
+            message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Cancel Bet failed`,
           })
         );
+        setFlag(false)
+        return true
       });
   }
 
@@ -156,7 +166,7 @@ const RosiGame = ({
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Elon Game: Cashout failed',
+          message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Cashout failed`,
         })
       );
     }
@@ -235,6 +245,25 @@ const RosiGame = ({
     }
   };
 
+  const showHowDoesItWork = () => {
+    if (slug === GAMES['elonGame'].slug) {
+      return (
+        <span
+          onClick={handleHelpClick}
+          className={styles.howtoLink}
+          data-tracking-id="elongame-how-does-it-work"
+        >
+          How does it work?
+        </span>
+      )
+    }
+    if (slug === GAMES['pumpDump'].slug) {
+      return (
+        <span></span>
+      );
+    }
+  }
+
   const renderWallpaperBanner = () => {
     return (
       <Link data-tracking-id="elon-wallpaper" to={Routes.elonWallpaper}>
@@ -247,8 +276,8 @@ const RosiGame = ({
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Elon Game" />
+          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`} >
+            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump and Dump"} />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -258,18 +287,12 @@ const RosiGame = ({
               width={25}
               onClick={handleHelpClick}
             />
-            <span
-              onClick={handleHelpClick}
-              className={styles.howtoLink}
-              data-tracking-id="elongame-how-does-it-work"
-            >
-              How does it work?
-            </span>
+            {showHowDoesItWork()}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes lastCrashes={lastCrashes} />
+              <LastCrashes lastCrashes={lastCrashes} gameTypeId={GAME_TYPE_ID}/>
               {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>

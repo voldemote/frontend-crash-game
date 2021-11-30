@@ -51,6 +51,12 @@ class GameApi {
     });
   }
 
+  createTradeCannon = payload => {
+    return this.api.post(ApiUrls.API_CANNON_BET, payload).catch(error => {
+      console.log('[API Error] called: createTrade', error);
+      throw error;
+    });
+  }
 
   createTradeMines = payload => {
     return this.api.post(ApiUrls.API_MINES_BET, payload).catch(error => {
@@ -104,17 +110,6 @@ const createTrade = payload => {
   });
 };
 
-const getGameDetailById = (gameId, type) => {
-  const gameUrl = ApiUrls.CRASH_GAME_API_GET_GAME_DETAILS.replace(
-    ':gameId',
-    gameId
-  );
-
-  return Api.get(gameUrl + (type ? `/${type}` : '')).catch(error => {
-    console.log('[API Error] called: getGameDetailById', error);
-  });
-};
-
 const transformUser = user => ({
   crashFactor: user.crashfactor,
   createdAt: user.created_at,
@@ -158,7 +153,6 @@ export {
   setToken,
   createTrade,
   getSpinsAlpacaWheel,
-  getGameDetailById,
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,

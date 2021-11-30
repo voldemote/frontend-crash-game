@@ -48,9 +48,9 @@ const BuyWithFiatTab = () => {
 const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
   const selectTabsComponent = type => {
     switch (type) {
-      case 'BUYWITHFIAT':
+      case 0:
         return <BuyWithFiatTab />;
-      case 'DEPOSIT':
+      case 1:
         return <DepositTab />;
       default:
         return <BuyWithFiatTab />;

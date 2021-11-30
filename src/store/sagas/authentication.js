@@ -233,7 +233,7 @@ const authenticationSucceeded = function* (action) {
       })
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
-    
+
     if (action.user) {
       yield put(AuthenticationActions.updateData(action.user));
     }
@@ -354,7 +354,7 @@ const updateUserData = function* (action) {
 
       userFiltered = _.omit(userFiltered, ['imageName', 'profilePic']);
     }
-
+    console.log('sagas/authentication updateUserData', userFiltered);
     const response = yield call(Api.updateUser, userId, userFiltered);
     if (response) {
       const stateUser = yield select(state => state.authentication);
@@ -413,9 +413,9 @@ const signUp = function* (action) {
   }
 };
 
-const loginExternal = function* ({ code, provider }) {
+const loginExternal = function* ({ code, provider, ref }) {
   yield put(push('/'));
-  const { response, error } = yield call(Api.loginExternal, { provider, body: { code } });
+  const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref } });
   if (response) {
     const data = response?.data;
 
@@ -431,6 +431,7 @@ const loginExternal = function* ({ code, provider }) {
         user: data?.user,
       })
     );
+    localStorage.removeItem('urlParam_ref');
   } else {
     yield put(
       AuthenticationActions.loginExternalFail({

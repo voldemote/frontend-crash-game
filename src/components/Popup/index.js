@@ -41,6 +41,7 @@ import UsernamePopup from 'components/UsernamePopup';
 import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
+import AlpacaBuilder from 'components/AlpacaBuilder';
 import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
@@ -225,6 +226,13 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <UsernamePopup initialReward={options.initialReward} />;
       case PopupTheme.requestTokens:
         return <RequestTokensPopup />;
+      case PopupTheme.alpacaBuilder:
+        return (
+          <div className={styles.alpacaBuilderPopup}>
+            <h2>Alpacabuilder</h2>
+            <AlpacaBuilder visible={visible} showTitle={false}/>
+          </div>
+        );
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
     }

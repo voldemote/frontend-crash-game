@@ -253,6 +253,10 @@ class AnimationController {
     this.idle = false;
   }
 
+  async clickCell(props) {
+    return this.game.clickCell(props)
+  }
+
   restart() {
     this.game.restartGame();
   }

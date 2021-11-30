@@ -78,6 +78,7 @@ export const API_MINES_CASHOUT = '/api/mines-game/cashout';
 export const API_MINES_CURRENT = '/api/mines-game/current';
 export const API_MINES_LAST_CASHOUTS = '/api/mines-game/lastcashouts';
 export const API_PLINKO_BET = '/api/simple-games/trade/plinko';
+export const API_CANNON_BET = '/api/simple-games/trade/alpacannon';
 export const API_CASH_OUT_ELON = 'api/elon-game/cashout';
 export const API_TRADE_GET_BY_ID = 'api/event/trade/:id';
 export const API_TRADES_LUCKY = 'api/trades/lucky/:gameId';
@@ -98,5 +99,5 @@ export const API_AUTH_FORGOT_PASSWORD = 'api/auth/forgot-password';
 export const API_AUTH_RESET_PASSWORD = 'api/auth/reset-password';
 //3rd parties
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
-export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/matches/:gameId';
+export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';
 export const CRASH_GAME_GET_VOLUME_BETS = 'api/globalstats/:range';

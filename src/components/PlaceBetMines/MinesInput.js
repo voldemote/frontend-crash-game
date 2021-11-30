@@ -52,3 +52,52 @@ export const MinesInput = ({mines, setMines, game}) => {
     </div>
   )
 }
+
+export const ClearedInput = ({mines, setMines, min, max, game}) => {
+  return(
+    <div className={classNames(styles.inputContainer)}>
+      <div
+        className={classNames(
+          styles.cashedOutInputContainer,
+          styles.demoInput,
+          styles.selectMines
+        )}
+      >
+        <Input
+          className={classNames(styles.input)}
+          type={'number'}
+          value={mines}
+          onChange={(e) => {
+            if(e.target.value < max && e.target.value > min) {
+              setMines(Math.floor(e.target.value))
+            } else {
+              setMines(1)
+            }
+          }}
+          step={1}
+        />
+        <span className={styles.eventTokenLabel}>
+          <span>Cards</span>
+        </span>
+        <div className={styles.buttonWrapper}>
+          <span
+            className={classNames(styles.buttonItem, styles.noselect)}
+            onClick={() => mines > min && setMines(mines - 1)}
+          >
+            -
+          </span>
+          <span
+            className={classNames(styles.buttonItem, styles.noselect)}
+            onClick={() => mines < max && setMines(mines + 1)}
+          >
+            +
+          </span>
+          <span
+            className={classNames(styles.buttonItem, styles.noselect)}
+            onClick={() => setMines(max)}
+          >{max}</span>
+        </div>
+      </div>
+    </div>
+  )
+}

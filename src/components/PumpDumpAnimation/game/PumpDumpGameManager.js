@@ -2,8 +2,6 @@ import { Application } from "@pixi/app";
 import { GameScene } from "./scenes/GameScene";
 import { LaunchScene } from "./scenes/LaunchScene";
 import TWEEN from '@tweenjs/tween.js';
-import { isMobile } from "react-device-detect";
-
 
 /*this class is purely static. Don't new this class*/
 export class PumpDumpGameMananger {
@@ -27,20 +25,25 @@ export class PumpDumpGameMananger {
 
     static _audioManager;
 
+    static _resolution = 2;
+
     // Use this function ONCE to start the entire game
     static initialize(backgroundColor, viewCanvas, audioManager) {
 
+        this._resolution = window.devicePixelRatio;
+        console.warn('dpr', this._resolution);
         // Create our pixi app
         this.app = new Application({
             view: viewCanvas,
-            resolution: 1,
+            resolution: this._resolution,
+            autoDensity: true,
             resizeTo: viewCanvas.parentElement,
             antialias: true,
             backgroundAlpha: 0,
         });
 
-        this._width = this.app.renderer.width;
-        this._height = this.app.renderer.height;
+        this._width = this.app.renderer.width / this._resolution;
+        this._height = this.app.renderer.height / this._resolution;
 
         this._audioManager = audioManager;
 
@@ -65,28 +68,32 @@ export class PumpDumpGameMananger {
         }
     }
 
-    // Call this function when you want to go to a new scene
-    static changeScene(newScene) {
+    static deleteExistingScene() {
         // Remove and destroy old scene... if we had one..
         if (this.currentScene) {
             this.app.stage.removeChild(this.currentScene);
             this.currentScene.destroy();
         }
+    }
 
+    // Call this function when you want to go to a new scene
+    static changeScene(newScene) {
+        this.deleteExistingScene();
         // Add the new one
         this.currentScene = newScene;
         this.app.stage.addChild(this.currentScene);
     }
 
-    static startGame(gameTime) {
+    static startGame(gameTime, cashOuts) {
         if (!this.app) {
             return;
         }
-        const gameScene = new GameScene(gameTime, this._audioManager);
+        const gameScene = new GameScene(gameTime, this._audioManager, cashOuts);
         this.changeScene(gameScene);
     }
 
     static endGame(isLosing) {
+        isLosing ? this._audioManager.playLoseSound() : this._audioManager.playGameOverSound();
         if (this.currentScene) {
             this.currentScene.stop();
             this.currentScene.handleEndGame();
@@ -95,8 +102,10 @@ export class PumpDumpGameMananger {
 
     static launchCoin(launchTime) {
         // Preparation Scene
+        this.deleteExistingScene();
         console.warn('launch scene', launchTime);
         if (!this.app || launchTime <= 0) {
+            console.warn('launch scene cancelled', launchTime);
             return;
         }
         const launchScene = new LaunchScene(launchTime, this._audioManager);
@@ -112,16 +121,16 @@ export class PumpDumpGameMananger {
         TWEEN.update(this.app.ticker.lastTime);
     }
 
-    static doCashedOutAnimation(cashOut) {
-        console.warn('cashout', cashOut);
+    static handleFreshCashouts(cashOuts) {
+        console.warn('fresh cashouts', cashOuts);
+        if (this.currentScene) {
+            this.currentScene.handleFreshCashouts(cashOuts);
+        }
     }
 
     static destroy() {
-        if (this.currentScene) {
-            this.app.stage.removeChild(this.currentScene);
-            this.currentScene.destroy();
-        }
+        this.deleteExistingScene();
         this.removeTicker();
-        this.app.destroy();
+        this.app.destroy(true, true);
     }
 }

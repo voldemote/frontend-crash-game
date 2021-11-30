@@ -8,6 +8,7 @@ const initialState = {
   preferencesVisible: false,
   referralsVisible: false,
   disclaimerHidden: false,
+  alpacaBuilderVisible: false
 };
 
 const setDrawer = (state, { payload }) => {
@@ -19,6 +20,7 @@ const setDrawer = (state, { payload }) => {
       myTradesVisible: false,
       emailNotificationsVisible: false,
       preferencesVisible: false,
+      alpacaBuilderVisible: false
     };
   }
 
@@ -70,6 +72,13 @@ const setDisclaimerHidden = (state, action) => {
   };
 };
 
+const setAlpacaBuilderVisible = (state, action) => {
+  return {
+    ...state,
+    alpacaBuilderVisible: action.visible,
+  };
+};
+
 const reducers = {
   [GeneralTypes.SET_GLOBAL_DRAWER]: setDrawer,
   [GeneralTypes.SET_EDIT_PROFILE_VISIBLE]: setEditProfileVisible,
@@ -78,6 +87,7 @@ const reducers = {
   [GeneralTypes.SET_PREFERENCES_VISIBLE]: setPreferencesVisible,
   [GeneralTypes.SET_REFERRALS_VISIBLE]: setReferralsVisible,
   [GeneralTypes.SET_DISCLAIMER_VISIBLE]: setDisclaimerHidden,
+  [GeneralTypes.SET_ALPACA_BUILDER_VISIBLE]: setAlpacaBuilderVisible,
 };
 
 export default function (state = initialState, action) {

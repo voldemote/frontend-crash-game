@@ -64,7 +64,7 @@
 
   .inputBox {
     position: relative;
-    margin-top: 10px;
+    // margin-top: 10px;
 
     @media (max-width: $screen-sm) {
       font-size: 14px;
@@ -132,17 +132,18 @@
 
 .authenticationLegalAuthorizationAgreementCheckBox {
   align-self: flex-start;
-  width: 390px;
+  // width: 390px;
   .authenticationLegalAuthorizationAgreementText {
-    font-size: 14px;
+    font-size: 15px;
+    text-transform: uppercase;
 
     @media (max-width: $screen-sm) {
       font-size: 12px;
     }
 
     a {
-      color: $colorBlue;
-      text-decoration: none;
+      color: $colorBlack;
+      text-decoration: underline;
     }
   }
 }
@@ -217,9 +218,13 @@
 }
 .signInButton {
   margin-top: 5px;
+  background: #eee;
+  color: #666;
+
   &:first-child {
     margin-top: 0;
   }
+
   span svg {
     overflow: visible;
   }

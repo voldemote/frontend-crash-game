@@ -62,6 +62,7 @@ const Game = ({
   const [mines, setMines] = useState(5);
   const [currentStep, setCurrentStep] = useState(0);
   const [bet, setBet] = useState({
+    autobet: false,
     pending: false,
     done: false
   });
@@ -146,10 +147,11 @@ const Game = ({
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
-  };
+  }
 
   async function handleBet(payload) {
     audio.playBetSound();
+    setConfetti(false)
     if (!payload) return;
     try {
       if(payload.demo) {
@@ -161,13 +163,12 @@ const Game = ({
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
         gameInstance.game.controller.view.gameOver("lose");
-
         setGameInProgress(true);
         setCurrentStep(0);
-        setBet({
+        setBet((bet) => {return{
           ...bet,
           done: true
-        })
+        }})
 
         return data;
       }
@@ -190,12 +191,15 @@ const Game = ({
       setGameOver(true);
       updateUserBalance(userId);
       setConfetti(true);
-      setBet({
-        pending:false,
-        done: false
-      });
+      if(!bet.autobet){
+        setBet((bet)=> {return{
+          ...bet,
+          pending: false,
+          done: false
+        }});
+      }
 
-      trackMinesCashout({ 
+      trackMinesCashout({
         amount: data.reward,
         multiplier: data.crashFactor,
         profit: data.profit,

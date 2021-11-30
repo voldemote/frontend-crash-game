@@ -191,7 +191,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
     }
   }, [isGameRunning, betted, autobet]);
-  console.log("isGameRunning")
   const stopAutobet = () => {
 
     const payload = {
@@ -209,7 +208,9 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     setAutobet(null)
   };
 
-  const placeABet = () => {
+  const placeABet = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (userUnableToBet) return;
     if (amount > userBalance) return;
 
@@ -217,7 +218,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       amount,
       crashFactor: 999,
     };
-    onBet(payload, crashFactor);
+    const result = onBet(payload, crashFactor);
   };
   const placeAutoBet = async () => {
     if (userUnableToBet) return;
@@ -236,20 +237,20 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     trackElonStartAutobet({
       ...payload,
       autobet: 1,
-      multiplier: crashFactor, 
+      multiplier: crashFactor,
     });
     console.log("placeAutoBet")
     setAutobet(payload)
     setBetted(true)
-    onBet(payload, payload.crashFactor);
+    await onBet(payload, payload.crashFactor);
   };
 
 
-  const cancelBet = e => {
+  const cancelBet = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     setCanBet(false);
-    onCancel(user.userId, amount);
+    const result = await onCancel(user.userId, amount);
   };
 
   const placeGuestBet = () => {
@@ -343,7 +344,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 (amount > userBalance && user.isLoggedIn),
               [styles.notConnected]: !connected,
             })}
-            onClick={user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet}
+            onClick={user.isLoggedIn ? (selector === 'manual' ?  placeABet : placeAutoBet) : placeGuestBet}
             data-tracking-id={
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
@@ -805,12 +806,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             >
             <div className={styles.toggleButton}>
             <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
-              <span                  
+              <span
                 className={classNames(styles.buttonItem, lossbutton && styles.selected)}
                 onClick={() => setLossbutton(true)}>
                 Reset
               </span>
-              <span                  
+              <span
                 className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
                 onClick={() => setLossbutton(false)}>
                 Increase

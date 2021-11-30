@@ -18,7 +18,6 @@ const Login = ({
   styles,
   openSignUpPopup,
 }) => {
-  const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -181,8 +180,8 @@ const Login = ({
 
         <Button
           onClick={onConfirm}
-          withoutBackground={true}
-          highlightType={HighlightType.highlightModalButton2}
+          // withoutBackground={true}
+          // highlightType={HighlightType.highlightModalButton2}
           className={styles.submitButton}
           disabled={submitInProgress}
           disabledWithOverlay={true}
@@ -197,7 +196,7 @@ const Login = ({
             <button type="button" onClick={openSignUpPopup}>
               Create a new account
             </button>{' '}
-            {showNewFeatures && <>or use your social login.</>}
+            <>or use your social login.</>
           </p>
           <SocialLogin styles={styles} />
         </div>
