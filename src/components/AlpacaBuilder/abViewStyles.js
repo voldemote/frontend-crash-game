@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import {buildImagePath, CATEGORIES} from './data';
@@ -8,7 +8,6 @@ import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 
 const AbViewStyles = ({
-  cssClassNames,
   category,
   current = {},
   onStyleClick,
@@ -20,6 +19,10 @@ const AbViewStyles = ({
   const onCategoryChanged = (cat) => {
     setSelectedCategory(cat);
   }
+
+  useEffect(() => {
+    setSelectedCategory(category);
+  }, [category])
 
   const getCurrentCategory = () => current && current[selectedCategory?.name];
 
@@ -58,12 +61,11 @@ const AbViewStyles = ({
       borderLeftColor: currentColors[1] || currentColors[0],
     };
     return (
-      <a
+      <span
         key={`abcatcolors_${index}`}
         className={classNames(styles.color, isColorSelected(currentColors) ? styles.colorSelected : null)}
         style={specificColorsCss}
-        href="#/"
-        onClick={()=> {onColorChanged(index)}}>{index}</a>
+        onClick={()=> {onColorChanged(index)}}>{index}</span>
     );
   }
 
@@ -83,30 +85,27 @@ const AbViewStyles = ({
   const renderCategoryBtn = (cat, index) => {
     const isSelected = selectedCategory && selectedCategory.name === cat.name;
     return (
-      <a
+      <span
         key={`abcat_${index}`}
         className={classNames(styles.category, isSelected ? styles.categorySelected : null)}
-        href="#/"
-        onClick={()=> {onCategoryChanged(cat)}}>{cat.name}</a>
+        onClick={()=> {onCategoryChanged(cat)}}>{cat.name}</span>
     );
   }
 
   const renderClearBtn = () => {
     //const svgPath = buildImagePath(selectedCategory.name, style);
     return (
-      <a
+      <span
         key={`ab_cat_remove`}
         className={classNames(styles.tile, isStyleSelected(null) ? styles.tileSelected : null)}
-        href="#/"
         onClick={()=> {onStyleChanged(null)}}>
           <Icon iconType={IconType.cross} />
-        </a>
+        </span>
     );
   }
 
   return (
-
-    <div className={cssClassNames}>
+    <div className={styles.styleView}>
       {showCategories && (
         <div className={styles.categoriesRow}>
           {CATEGORIES?.map((c, index) => renderCategoryBtn(c, index))}
@@ -117,13 +116,12 @@ const AbViewStyles = ({
         {selectedCategory.styles
           && selectedCategory.styles.length>1
           && selectedCategory.styles?.map((style,index) =>
-            (<a
+            (<span
               key={`ab_cat_${style}`}
               className={classNames(styles.tile, isStyleSelected(style) ? styles.tileSelected : null)}
-              href="#/"
               onClick={()=> {onStyleChanged(style)}}>
                 {renderStyleBtn(style)}
-            </a>))}
+            </span>))}
       </div>
       <div className={styles.colors}>
         {selectedCategory.colors?.map((c,index) => renderColorBtn(index))}
