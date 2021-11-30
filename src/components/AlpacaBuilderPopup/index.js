@@ -9,7 +9,7 @@ import _ from 'lodash';
 import AlpacaBuilder from 'components/AlpacaBuilder';
 
 const AlpacaBuilderPopup = ({
-  hidePopup = () => {},
+  hidePopup,
   showWelcome,
   updateUser,
   user,
@@ -41,7 +41,7 @@ const AlpacaBuilderPopup = ({
 
   const closePopup = () => {
     hidePopup();
-    showWelcome(initialReward);
+    //showWelcome(initialReward);
   };
 
   return (
@@ -65,6 +65,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
+    },
     showWelcome: initialReward => {
       dispatch(
         PopupActions.show({
