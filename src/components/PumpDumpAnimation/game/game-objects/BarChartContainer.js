@@ -121,17 +121,6 @@ export class BarChartContainer extends Container {
         return { texture: PumpDumpGameMananger.app.renderer.generateTexture(bar), botBar: stickBotHeight, topBar: stickTopHeight };
     }
 
-    generateBarCrashTexture(height) {
-        const bar = new Graphics();
-
-        // Bar
-        bar.beginFill(0xff384b);
-        bar.drawRoundedRect(0, 0, BAR_WIDTH, height, BAR_ROUNDNESS);
-        bar.endFill();
-        
-        return PumpDumpGameMananger.app.renderer.generateTexture(bar);
-    }
-
     start() {
         this.shouldRunUpdate = true;
     }
