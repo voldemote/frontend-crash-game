@@ -110,6 +110,7 @@
     padding: 10px;
     width: 318px;
     height: 64px;
+    margin-top: 10px;
 
     .imageSizeEther {
       height: 35px;
@@ -211,6 +212,10 @@
   .connectWalletContainer {
     height: 100px;
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
 
     .connectWalletButton {
       border-radius: 30px;
