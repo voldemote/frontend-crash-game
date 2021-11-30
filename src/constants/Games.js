@@ -13,6 +13,7 @@ import Plinko from '../data/backgrounds/games/game-plinko.png';
 import PumpDump from '../data/backgrounds/games/game-pump-dump.png';
 import Routes from './Routes';
 
+import gameCardElon from '../data/images/house-games/card-elon.png';
 import gameCard1 from '../data/images/house-games/card-1.png';
 import gameCard5 from '../data/images/house-games/card-5.png';
 import gameCardPumpDump from '../data/images/house-games/card-pumpdump.png';
@@ -57,7 +58,14 @@ export const CASINO_GAMES = [
 ];
 
 export const NEW_SLOTS_GAMES = [
-    {
+  {
+    background: gameCardElon,
+    title: `Elon Game`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/elon-game',
+  },
+  {
     background: gameCardPumpDump,
     title: `Pump and Dump`,
     subtitle: '',
