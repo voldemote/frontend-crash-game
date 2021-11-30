@@ -1,13 +1,15 @@
-import { Web3Provider } from "@ethersproject/providers";
+import { Web3Provider } from '@ethersproject/providers';
 
-const getLibrary = (provider) => {
+const getLibrary = provider => {
   const chainId =
-    typeof provider.chainid === "number"
+    typeof provider.chainid === 'number'
       ? provider.chainId
-      : typeof provider.chainId === "string"
+      : typeof provider.chainId === 'string'
       ? parseInt(provider.chainId)
-      : "any";
+      : 'any';
+
   const library = new Web3Provider(provider, chainId);
+
   library.pollingInterval = 15_000;
   return library;
 };

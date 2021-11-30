@@ -65,8 +65,8 @@ const DepositTab = ({ user, resetState }) => {
   }, [account, active, resetState, sendAccountMappingCall]);
 
   useEffect(() => {
-    if (chainId !== currentChainId) {setBalance(0);  return};
-
+    if (parseInt(chainId) !== parseInt(currentChainId)) {return};
+    
     signer?.getAddress().then(address => {
       getBalanceWFAIR({ address: address, provider: library }).then(result => {
         setBalance(result);
@@ -203,7 +203,6 @@ const DepositTab = ({ user, resetState }) => {
 const getBalanceWFAIR = async ({ address, provider }) => {
   const contract = new Contract(WFAIRAddress, WFairABI.abi, provider);
   const balance = await contract.balanceOf(address);
-
   return ethers.utils.formatEther(balance);
 };
 

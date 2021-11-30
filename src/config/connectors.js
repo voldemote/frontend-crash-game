@@ -6,9 +6,6 @@ import { NetworkConnector } from '@web3-react/network-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { currentChainId, currentNetwork, networkInfo } from './config';
 
-console.log(currentChainId);
-console.log(currentNetwork);
-
 const urls = Object.values(networkInfo).reduce(
   (obj, n) => Object.assign(obj, { [n.chainId]: n.url }),
   {}

@@ -17,7 +17,7 @@ const BuyWithFiatTab = () => {
     cryptoCurrencyCode: 'MATIC',
     walletAddress: '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8', // Our backend wallet (should not be changeable)
     disableWalletAddressForm: true,
-    networks: 'ethereum,mainnet,polygon',
+    networks: 'ethereum,mainnet,polygon,kovan',
     themeColor: '7879f1', // App theme color
     countryCode: 'DE', // INR/GBP
     email, // Your customer's email address

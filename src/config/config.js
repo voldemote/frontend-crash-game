@@ -52,15 +52,15 @@ export const networkInfo = {
   }
 };
 
-// const currentChainSelected = window.ethereum.networkVersion
-// const currentNetworkKey =
-//   Object.keys(networkInfo).find(
-//     value =>
-//       parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
-//   ) || actions.network.name
+const currentChainSelected = window.ethereum.networkVersion || actions.network.chainId
+const currentNetworkKey =
+  Object.keys(networkInfo).find(
+    value =>
+      parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
+  ) || actions.network.name
 
-export const currentChainId = actions.network.chainId;
-export const currentNetwork = networkInfo[actions.network.name];
+export const currentChainId = currentChainSelected;
+export const currentNetwork = networkInfo[currentNetworkKey];
 
 export const WFAIRAddress = actions.token.address;
 export const lockAddresses = actions.locks.map(l => l.address);
