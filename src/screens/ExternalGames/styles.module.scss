@@ -1,11 +1,26 @@
 @import '../../styles/all';
 
 .container {
-  width: 100%;
-  margin: 0 auto;
+  display: flex;
+  width: calc(100% - 50px);
   max-width: 1300px;
-
+  margin: 0 25px;
   // @media (min-width: $screen-lg) {
   //   max-width: 80%;
   // }
+
+  .game{
+    height: 100px;
+    cursor: pointer;
+    width: calc(25% - 30px);
+    padding: 15px;
+    margin: 0 25px 25px 0;
+    overflow: hidden;
+    background: white;
+    box-shadow: 2px 4px 3px 0 rgba(206, 213, 220, 0.5);
+    .title{
+      font-weight: bold;
+    }
+  }
+
 }

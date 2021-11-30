@@ -33,6 +33,7 @@ export default {
   games: '/games',
   wallet: '/wallet',
   externalGames: '/external-games/',
+  externalGame: '/external-game/:game',
   home: '/',
   liveEvents: '/live-events/:category?',
   newLiveEvent: '/live-events/new',
