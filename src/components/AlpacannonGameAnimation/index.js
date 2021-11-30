@@ -39,7 +39,10 @@ const AlpacannonGameAnimation = ({
     }
   }, [])
 
-  const updateSize = () => setWidth(window.innerWidth)
+  const updateSize = () => {
+    setWidth(window.innerWidth)
+    setHeight(window.innerHeight)
+  }
 
   useEffect(() => {
     if(bet && !bet.ready && bet.amount && !bet.running) spin(bet)
