@@ -30,6 +30,21 @@ export const INIT_CREATE_THRESHOLD = isMobileRosiGame ? 500 : 300;   // Every 30
 
 export const MERGE_BAR_COUNT = 2;
 
+// Top edge of the bar from the center of the bar. Note: Not the top edge of the stick
+const GetBarTopEdgeDistance = (bar) => {
+    return ((bar.height - bar.topBar) - (bar.height * 0.5)) * (bar.scale.y * bar.parent.scale.y);
+}
+
+const reducer = (accumlated, current) => {
+    const dist = GetBarTopEdgeDistance(current);
+    return {
+        x: accumlated.x + current.x,
+        y: accumlated.y + current.y - dist,
+        heightIndex: accumlated.heightIndex + current.heightIndex,
+        isNegative: accumlated.isNegative && current.isNegative
+    };
+}
+
 export class BarChartContainer extends Container {
     greenBarDetails = [];
     redBarDetails = [];
@@ -153,14 +168,7 @@ export class BarChartContainer extends Container {
         return false;
     }
 
-    reducer(accumlated, current) {
-        return {
-            x: accumlated.x + current.x,
-            y: accumlated.y + current.y,
-            heightIndex: accumlated.heightIndex + current.heightIndex,
-            isNegative: accumlated.isNegative && current.isNegative
-        };
-    }
+
 
     mergeBars() {
         const bigBarConfigs = [];
@@ -174,8 +182,7 @@ export class BarChartContainer extends Container {
             } while(count < MERGE_BAR_COUNT && this.generatedBars[index - count])
 
             // Get average position
-            const funct = this.reducer.bind(this);
-            const bigBarConfig = barsToMerge.reduce(funct, { x: 0, y: 0, heightIndex: 0, isNegative: true });
+            const bigBarConfig = barsToMerge.reduce(reducer, { x: 0, y: 0, heightIndex: 0, isNegative: true });
             bigBarConfig.x = barsToMerge[barsToMerge.length - 1].x;
             bigBarConfig.y /= barsToMerge.length;
             bigBarConfig.heightIndex = Math.ceil(bigBarConfig.heightIndex / barsToMerge.length);
@@ -210,13 +217,15 @@ export class BarChartContainer extends Container {
             details = this.greenBarDetails[bigBarConfig.heightIndex];
         }
         const bar = new Sprite(details.texture);
-        bar.scale.set(0);
         bar.anchor.set(0.5);
         bar.heightIndex = bigBarConfig.heightIndex;
         bar.topBar = details.topBar;
         bar.botBar = details.botBar;
         bar.isNegative = bigBarConfig.isNegative;
-        bar.position.set(bigBarConfig.x, bigBarConfig.y);
+        let positionY = this.getBarTopEdgeDistance(bar);
+        console.warn('posiiton', bigBarConfig.y, positionY);
+        bar.position.set(bigBarConfig.x, bigBarConfig.y + positionY);
+        bar.scale.set(0);
         this.addChild(bar);
         return bar;
 
@@ -272,10 +281,9 @@ export class BarChartContainer extends Container {
         bar.once('crash-bar-created', () => {
             const rect = bar.getBounds(true);
             this.emit('crash-bar-position', rect);
-            console.warn('sdsad', (PumpDumpGameMananger.height - AXIS_START_POS_OFFSET_Y), rect.top, BAR_MIN_HEIGHT);
-            const scaleGap = (1 / this.scale.y) / this.barScale.y;
-            const gap = ((PumpDumpGameMananger.height - AXIS_START_POS_OFFSET_Y) - (rect.top + bar.topStickHeight + BAR_MIN_HEIGHT * 0.5));
-            bar.startStretch(gap * scaleGap);
+            const scaleGap = this.scale.y * bar.scale.y;
+            const gap = ((PumpDumpGameMananger.height - AXIS_START_POS_OFFSET_Y) - (rect.top + (bar.topStickHeight + BAR_MIN_HEIGHT) * scaleGap));
+            bar.startStretch(gap * (1 / scaleGap));
         });
     }
 
