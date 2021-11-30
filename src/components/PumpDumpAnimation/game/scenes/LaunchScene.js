@@ -23,7 +23,7 @@ export class LaunchScene extends Container {
         const width = PumpDumpGameMananger.width;
         const height = PumpDumpGameMananger.height;
 
-        const tweetScale = isMobile ? 0.8 : 0.5;
+        const tweetScale = isMobile ? 0.8 : 0.6;
 
         for (let i = 0; i < this.totalTweets; ++i) {
             this.tweets[i] = new Sprite(resources[ASSET_LIST[`TWEET_${i + 1}`]].texture);
