@@ -11,6 +11,7 @@ import websocketsReducer from './websockets';
 import leaderboardReducer from './leaderboard';
 import generalReducer from './general';
 import rosiGameReducer from './rosi-game';
+import wallfairReducer from './wallfair';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
@@ -30,4 +31,5 @@ export default history =>
     router: connectRouter(history),
     general: generalReducer,
     rosiGame: rosiGameReducer,
+    wallfair: wallfairReducer
   });
