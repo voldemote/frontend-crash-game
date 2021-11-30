@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 export class MemeContainer extends Container {
     memeConfig = [
-        { x: 0.2, y: 0.2 },
+        { x: 0.1, y: 0.2 },
         { x: 0.4, y: 0.75 },
         { x: 0.7, y: 0.7 },
     ];
@@ -19,7 +19,7 @@ export class MemeContainer extends Container {
         this.currentMemeIndex = 0;
         const resources = PumpDumpGameMananger.app.loader.resources;
 
-        for (let i = 0; i <= 7; ++i) {
+        for (let i = 0; i <= 21; ++i) {
             this.memes[i] = new Sprite(resources[ASSET_LIST[`MEME_${i + 1}`]].texture);
             this.memes[i].visible = false;
             this.memes[i].alpha = 0;
@@ -54,7 +54,7 @@ export class MemeContainer extends Container {
         let data = { alpha: 0, scale: 0 };
         
         new TWEEN.Tween(data)
-            .to({ alpha: 1, scale: 0.1 }, 400)
+            .to({ alpha: 1, scale: 1 }, 400)
             .onStart(() => {
                 meme.visible = true;
             })
@@ -66,7 +66,7 @@ export class MemeContainer extends Container {
             .start();
 
         data.alpha = 1;
-        data.scale = 0.1;
+        data.scale = 1;
         new TWEEN.Tween(data)
             .to({ alpha: 0, scale: 0 }, 400)
             .onStart(() => {
