@@ -191,10 +191,10 @@ const DepositTab = ({ user, resetState }) => {
             account={account}
           />
         )}
-        {!!account && (<p className={styles.firstDiscription}>
+        {/* {!!account && (<p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not
           accept BEP20 from Binance.
-        </p>)}
+        </p>)} */}
       </div>
     </>
   );
