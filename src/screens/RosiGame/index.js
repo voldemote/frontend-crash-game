@@ -26,6 +26,9 @@ import {
   trackElonCancelBet,
   trackElonCashout,
   trackElonPlaceBet,
+  trackPumpDumpCancelBet,
+  trackPumpDumpCashout,
+  trackPumpDumpPlaceBet,
 } from '../../config/gtm';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
@@ -115,7 +118,11 @@ const RosiGame = ({
     try {
       const result = await Api.createTrade(payload);
       console.log("result", result)
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
+      if (slug === GAMES['elonGame'].slug) {
+        trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
+      } else if (slug === GAMES['pumpDump'].slug) {
+        trackPumpDumpPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
+      }
       dispatch(RosiGameActions.setUserBet(payload));
       setFlag(false)
       return result;
@@ -133,7 +140,13 @@ const RosiGame = ({
     setFlag(true)
     Api.cancelBet()
       .then(() => {
-        trackElonCancelBet({ amount });
+        if (slug === GAMES['elonGame'].slug) {
+          trackElonCancelBet({ amount });
+
+        } else if (slug === GAMES['pumpDump'].slug) {
+          trackPumpDumpCancelBet({ amount });
+        }
+
         dispatch(RosiGameActions.cancelBet({ userId }));
         setFlag(false)
         return true
@@ -156,12 +169,23 @@ const RosiGame = ({
       const response = await Api.cashOut();
       const { crashFactor: crashFactorCashout, reward } = response.data;
 
-      trackElonCashout({
-        amount: reward,
-        multiplier: parseFloat(crashFactorCashout),
-        autobet: autobet != null ? 1 : 0,
-        accumulated: autobet?.accumulated,
-      });
+      if (slug === GAMES['elonGame'].slug) {
+        trackElonCashout({
+          amount: reward,
+          multiplier: parseFloat(crashFactorCashout),
+          autobet: autobet != null ? 1 : 0,
+          accumulated: autobet?.accumulated,
+        });
+
+      } else if (slug === GAMES['pumpDump'].slug) {
+        trackPumpDumpCashout({
+          amount: reward,
+          multiplier: parseFloat(crashFactorCashout),
+          autobet: autobet != null ? 1 : 0,
+          accumulated: autobet?.accumulated,
+        });
+      }
+
       AlertActions.showSuccess(JSON.stringify(response));
 
       return response;

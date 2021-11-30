@@ -248,5 +248,4 @@ export const GAMES = {
     name: 'cannon',
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
-
 };
