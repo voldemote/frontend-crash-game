@@ -10,7 +10,7 @@
     border-bottom: 1px solid $separatorColor;
     display: flex;
     flex-direction: column;
-
+    width: 100%;
     .svg {
       max-height: 250px;
       margin: auto;
@@ -34,11 +34,10 @@
       width: calc((100% / 4) - 20px);
       padding: 2px;
       border-radius: 20px;
-      border: 1px solid $unselectedBorderColor;
       background-color: $unselectedBg;
       text-align: center;
       display: flex;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
 
       img,
       svg {
@@ -49,9 +48,8 @@
       }
     }
     .tileSelected {
-      border: 1px solid $selectedBorderColor;
       background-color: $selectedBg;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 1px 3px $selectedBorderColor;
     }
   }
 
@@ -71,12 +69,10 @@
       height: 0px;
       width: 0px;
       font-size: 0px;
-      outline: 1px solid $separatorColor;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
     }
     .colorSelected {
-      outline: 1px solid $selectedBorderColor;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 4px $selectedBorderColor;
     }
   }
 
@@ -90,7 +86,6 @@
       cursor: pointer;
       margin: 10px;
       background-color: $unselectedBg;
-      outline: 1px solid $unselectedBorderColor;
       border-radius: 20px;
       height: 50px;
       width: 50px;
@@ -98,12 +93,11 @@
       text-align: center;
       line-height: 50px;
       text-decoration: none;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
     }
     .categorySelected {
-      outline: 1px solid $selectedBorderColor;
       background-color: $selectedBg;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 1px 3px $selectedBorderColor;
     }
   }
 
@@ -132,12 +126,36 @@
   }
 
   &.wide{
-    @media (min-width: $mobileScreen) {
-      .headAndCategories{
-        width: 50%;
+    @media (min-width: $largeScreen) {
+      flex-direction: row;
+      display: flex;
+
+      .head{
+        display: flex;
+        flex-direction: row;
+        width: 44%;
+
+        .svg{
+          max-height: 100%;
+        }
+      }
+      .categoriesRow{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 12%;
+        .category {
+          margin:10px;
+          border-radius: 20px;
+          height: 40px;
+          width: 80px;
+          font-size: 10px;
+          line-height: 40px;
+        }
+
       }
       .styleView{
-        width: 50%;
+        width: 44%;
       }
       .toolbar{
         width: 100%;

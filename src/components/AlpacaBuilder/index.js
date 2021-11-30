@@ -121,16 +121,14 @@ const AlpacaBuilder = ({
       className={classNames(
         styles.alpacaBuilder, layout === 'wide' ? styles.wide : null
       )}>
-      <div className={styles.headAndCategories}>
-        <div className={styles.head}>
-          <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
-            <rect width="100%" height="100%" fill="white" />
-            {renderSvg()}
-          </svg>
-        </div>
-        <div className={styles.categoriesRow}>
-          {CATEGORIES?.map((c, index) => renderCategoryBtn(c, index))}
-        </div>
+      <div className={styles.head}>
+        <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
+          <rect width="100%" height="100%" fill="white" />
+          {renderSvg()}
+        </svg>
+      </div>
+      <div className={styles.categoriesRow}>
+        {CATEGORIES?.map((c, index) => renderCategoryBtn(c, index))}
       </div>
       <AbViewStyles
         category={selectedCategory}
