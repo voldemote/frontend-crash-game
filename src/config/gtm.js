@@ -437,4 +437,56 @@ export const trackPumpDumpCancelBet = ({ amount, ...dataLayerProps }) => {
   TagManager.dataLayer(tagManagerArgs);
 };
 
+export const trackPumpDumpStartAutobet = ({ amount, multiplier, autobet, profit, loss, wincrease, lincrease, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount, //bet amount
+      multiplier, //attemp auto cashout at
+      autobet, //autobet true/false
+      profit, //stop on profit
+      loss, //stop on loss
+      wincrease, //on win inscrease
+      lincrease, //on loss increase
+      event: 'pumpdumpStartAutobet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpStopAutobet = ({ amount, multiplier, autobet, profit, loss, wincrease, lincrease, accumulated, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount, //bet amount
+      multiplier, //attemp auto cashout at
+      autobet, //autobet true/false
+      profit, //stop on profit
+      loss, //stop on loss
+      wincrease, //on win inscrease
+      lincrease, //on loss increase
+      accumulated,
+      event: 'pumpdumpStopAutobet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpChangeAutoCashout = ({
+  multiplier,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      multiplier,
+      event: 'pumpdumpChangeAutoCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
 export default TagManager;

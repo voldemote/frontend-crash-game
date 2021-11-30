@@ -204,19 +204,19 @@ export const SPORTS_BETTING_GAMES = [
   },
 ];
 export const GAMES = {
-  pumpDump: {
+  'pump-dump': {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
-  elonGame: {
+  'elon-game': {
     id: '614381d74f78686665a5bb76',
     slug: 'elon-game',
     name: `Elon Game`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   },
-  alpacaWheel: {
+  'alpaca-wheel': {
     id: '618a81ded90fd22298859bc4',
     slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
@@ -240,5 +240,4 @@ export const GAMES = {
     name: 'cannon',
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
-
 };

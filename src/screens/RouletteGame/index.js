@@ -46,7 +46,7 @@ const RouletteGame = ({
   refreshLuckyData,
   updateUserBalance
 }) => {
-  const game = GAMES.alpacaWheel
+  const game = GAMES['alpaca-wheel'];
   const ALPACA_WHEEL_GAME_EVENT_ID = game.id;
 
   const Api = new GameApi(game.url, token);
