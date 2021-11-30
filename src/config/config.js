@@ -36,6 +36,13 @@ export const networkInfo = {
     url: 'https://polygon-rpc.com',
     apiExplorer: 'https://polygon-rpc.com',
   },
+  mumbai: {
+    chainId: 80001,
+    explorer: 'https://rpc-mumbai.maticvigil.com/',
+    label: 'Mumbai Testnet',
+    url: 'https://polygonscan.com',
+    apiExplorer: 'https://polygonscan.com',
+  },
 };
 
 // const currentChainSelected = window.ethereum.networkVersion
