@@ -96,7 +96,7 @@ const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
         </Grid>
       </div>
       <div className={styles.activityContainer}>
-        <RenderTabs type={activeTab.name} />
+        <RenderTabs type={activeTab.index} />
       </div>
     </div>
   );
