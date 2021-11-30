@@ -134,11 +134,12 @@ const PlaceBetCasino = ({
       setAccumulated(acc)
       if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
         const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
+        console.log("dale", {...bet, amount: newamount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
         if(newamount < 1) setBet({autobet: false, ngame: 0, ready: true})
         else onBet({...bet, amount: newamount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
       }
       else {
-        onBet({autobet: false, ngame: 0, ready: true})
+        setBet({autobet: false, ngame: 0, ready: true})
       }
     }
   }, [bet])
