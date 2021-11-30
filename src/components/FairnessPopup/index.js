@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import LogoSplash from '../../data/images/wfair-logo-splash.png';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {PopupActions} from 'store/actions/popup';
 import moment from 'moment';
 import {GameApi} from '../../api/casino-games';
@@ -13,23 +13,20 @@ import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 
 import CryptoJS from 'crypto-js';
+import {AlertActions} from "../../store/actions/alert";
 
 const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
 };
 
-const getReadableAmount = amount => {
-  const one = 10000;
-  return roundToTwo(+amount / one);
-};
-
-
 const FairnessPopup = ({hidePopup, showPopup, data}) => {
+  const dispatch = useDispatch();
   const {game, token} = data;
   const Api = new GameApi(game.url, token);
 
   const [newClientSeed, setNewClientSeed] = useState();
   const [activeSeeds, setActiveSeeds] = useState({});
+  const [rotated, setRotated] = useState(false);
 
   const generateNewClientSeed = () => {
     const randomClientSeed = CryptoJS.lib.WordArray.random(12).toString();
@@ -39,10 +36,12 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
   const handleRotateSeeds = async () => {
     const response = await Api.updateCurrentFairnessByGame(game.id, {
       clientSeed: newClientSeed
-    }).catch(err => {
-      console.error('getGameDetailById err', err);
+    }).catch(error => {
+      dispatch(AlertActions.showError(error.message));
     });
     //const resData = response?.data || null;
+
+    setRotated(true);
 
     setActiveSeeds({
       clientSeed: newClientSeed,
@@ -67,31 +66,18 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
       }
 
       generateNewClientSeed();
-    })().catch(err => {
-      console.error('initialNotification error', err);
+    })().catch(error => {
+      dispatch(AlertActions.showError(error.message));
     });
   }, [])
 
-  console.log('newClientSeed', newClientSeed);
-
-
-  const handleCrashFactorChange = async (gameHash, type) => {
-    // const response = await getGameDetailById(gameHash, gameTypeId, type).catch(err => {
-    //   console.error('getGameDetailById err', err);
-    // });
-    // const details = response?.data || null;
-    //
-    // if (details.match) {
-    //   showPopup(PopupTheme.lastGamesDetail, {
-    //     maxWidth: true,
-    //     data: {
-    //       details,
-    //     },
-    //   });
-    // } else {
-    //   hidePopup();
-    // }
-  };
+  useEffect(()=> {
+    if(rotated) {
+      setTimeout(()=> {
+        hidePopup()
+      }, 3000)
+    }
+  }, [rotated])
 
   return (
     <div className={styles.gameDetails}>
@@ -122,7 +108,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
 
           <div>
             <label>
-              Active Server Seed (Hashed SHA-256)
+              Active Server Seed (Hashed by SHA-256)
             </label>
             <input
               className={styles.profileInput}
@@ -149,7 +135,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
         <div className={classNames(styles.seedsRotateForm)}>
           <div>
             <label>
-              New Client Seed
+              New Client Seed (editable)
             </label>
             <input
               className={styles.profileInput}
@@ -160,7 +146,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
 
           <div>
             <label>
-              Next Server Seed (Hashed SHA-256)
+              Next Server Seed (Hashed by SHA-256)
             </label>
             <input
               className={styles.profileInput}
@@ -175,7 +161,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
             className={classNames(styles.button)}
             onClick={handleRotateSeeds}
           >
-          Rotate
+            {rotated ? "Rotated succesfully" : "Rotate"}
         </div>
 
         </div>

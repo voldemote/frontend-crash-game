@@ -79,7 +79,7 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
         <div className={classNames("global-link-style", styles.verificationTool)}><a href={game?.verificationTool} target={"_blank"} rel="noreferrer"><b>{game?.name} - Verification Tool</b></a></div>
           <div>
               <b>Multiplier:</b>{' '}
-              <span>{roundToTwo(resData?.crashFactor)}</span>
+              <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
           </div>
           <div>
               <b>Game Hash:</b>{' '}
@@ -95,17 +95,6 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
           </div>
 
           <div className={styles.copyInputBlock}>
-              <label>Client seed</label>
-              <InputBox
-                  type={'text'}
-                  value={resData.clientSeed}
-                  setValue={_.noop}
-                  theme={InputBoxTheme.copyToClipboardInput}
-                  onClick={(e, val) => {}}
-              />
-          </div>
-
-          <div className={styles.copyInputBlock}>
               <label className={hashed && styles.disabled}>Server seed ({hashed ? "Hashed - please rotate your seeds pair to reveal it" : "Revealed"})</label>
               <InputBox
                   type={'text'}
@@ -117,6 +106,17 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
                       // e.currentTarget.style.backgroundColor = '#c0f1c0';
                       // document.getSelection().removeAllRanges();
                   }}
+              />
+          </div>
+
+          <div className={styles.copyInputBlock}>
+              <label>Client seed</label>
+              <InputBox
+                  type={'text'}
+                  value={resData.clientSeed}
+                  setValue={_.noop}
+                  theme={InputBoxTheme.copyToClipboardInput}
+                  onClick={(e, val) => {}}
               />
           </div>
 
