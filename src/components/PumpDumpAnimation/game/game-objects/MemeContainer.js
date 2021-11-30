@@ -3,6 +3,7 @@ import { Container, Sprite } from "pixi.js";
 import { PumpDumpGameMananger } from "../PumpDumpGameManager";
 import TWEEN from '@tweenjs/tween.js';
 import _ from 'lodash';
+import { isMobile } from "react-device-detect";
 
 export class MemeContainer extends Container {
     memeConfig = [
@@ -43,9 +44,9 @@ export class MemeContainer extends Container {
         }
 
         const rand = Math.random();
-        const initialX = PumpDumpGameMananger.width * (rand <= 0.5 ? 0.15 : 0.675);
+        const initialX = PumpDumpGameMananger.width * (isMobile ? (rand <= 0.5 ? 0.25 : 0.675) : (rand <= 0.5 ? 0.18 : 0.675));
         const finalX = initialX + Math.random() * PumpDumpGameMananger.width * 0.1;
-        const initialY = PumpDumpGameMananger.height * (rand <= 0.5 ? 0.3 : 0.7);
+        const initialY = PumpDumpGameMananger.height * (isMobile ? (rand <= 0.5 ? 0.4 : 0.7) : (rand <= 0.5 ? 0.3 : 0.7));
         const finalY = initialY + Math.random() * PumpDumpGameMananger.height * 0.1;
         const meme = this.memes[this.currentMemeIndex];
         meme.position.set(finalX, finalY);
