@@ -10,15 +10,44 @@
   // }
 
   .game{
-    height: 100px;
+    display: flex;
+    border-radius: 20px;
+    max-height: 150px;
     cursor: pointer;
     width: calc(25% - 30px);
-    padding: 15px;
     margin: 0 25px 25px 0;
     overflow: hidden;
-    background: white;
+    height: fit-content;
+    position: relative;
     box-shadow: 2px 4px 3px 0 rgba(206, 213, 220, 0.5);
+    &:hover{
+      .title{
+        display: block !important;
+      }
+      &::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(
+        180deg,hsla(0,0%,100%,0),#00000060 75%);
+      }
+    }
+    img{
+      width: 100%;
+      height: fit-content;
+    }
     .title{
+      display: none;
+      padding: 10px;
+      color: white;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
       font-weight: bold;
     }
   }

@@ -248,14 +248,12 @@ export const EXTERNAL_GAMES = [
   {
     GameCategory: 'Xgames',
     GameName: 'JetX',
-    Token: 'Demo',
     demoLink: 'https://www.smartsoftgaming.com/GameDemo/JetX3',
     intro: 'JetX is an innovative game created by SmartSoft. Despite the simplicity of the rules, the game is a very exciting. Once the player places the bet, the Jet starts to fly and the winning coefficient increases according to the altitude of the flight. The player can cash out at any time by clicking the "Collect” button. The win is determined by the multiplication of the bet made and the winning coefficient. If the jet explodes before the player collects the win, player loses. Players can make two parallel bets on one flight. The winnings may vary from 0 to infinity.',
   },
   {
     GameCategory: 'Xgames',
     GameName: 'Cappadocia',
-    Token: 'Demo',
     demoLink: 'https://www.smartsoftgaming.com/GameDemo/Cappadocia',
     intro: 'Another amazing adventure to the perfect combination of ancient historical and unique cultural heritage. Cappadocia is waiting for you and you should take an opportunity for the breathtaking adventure - to fly over the  Khaki hills with hot-air balloons,  collect unforgettable memories, and unlimited winnings. A colorful journey to this magical place with the magical hot-air balloon is starting from now! This game is very special! Get ready for the new experience!',
   }
