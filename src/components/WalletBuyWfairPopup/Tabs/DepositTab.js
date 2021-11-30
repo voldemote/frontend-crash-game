@@ -81,61 +81,67 @@ const DepositTab = ({ user, resetState }) => {
   return (
     <>
       <div className={styles.depositTabContainer}>
-        <div className={styles.depositHeader}>
-          <div
-            className={classNames(
-              notSelectedNetworkId &&
-                'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
-                ? styles.inactiveButton
-                : styles.activeButton
-            )}
-            onClick={async () => {
-              const networkId = notSelectedNetworkId;
-              if ('Polygon' === SWITCH_NETWORKS[networkId]) {
-                await switchMetaMaskNetwork(networkId);
-              }
-            }}
-          >
-            <img
-              className={styles.imageSizePolygon}
-              src={
-                notSelectedNetworkId &&
-                'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
-                  ? PolygonLogo
-                  : PolygonLogoActive
-              }
-              alt="Polygon-logo"
-            />
-          </div>
-          <div
-            className={classNames(
-              notSelectedNetworkId &&
-                'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
-                ? styles.inactiveButton
-                : styles.activeButton
-            )}
-            onClick={async () => {
-              const networkId = notSelectedNetworkId;
-
-              if ('Ethereum' === SWITCH_NETWORKS[networkId]) {
-                await switchMetaMaskNetwork(networkId);
-              }
-            }}
-          >
-            <img
-              className={styles.imageSizeEther}
-              src={
-                notSelectedNetworkId &&
-                'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
-                  ? EthereumLogo
-                  : EthereumLogoActive
-              }
-              alt="Ethereum-logo"
-            />
-          </div>
-        </div>
-
         {!!account && (
+        <>
+          <p>Select your preferred network</p>
+          <div className={styles.depositHeader}>
+            
+            <div
+              className={classNames(
+                notSelectedNetworkId &&
+                  'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
+                  ? styles.inactiveButton
+                  : styles.activeButton
+              )}
+              onClick={async () => {
+                const networkId = notSelectedNetworkId;
+                if ('Polygon' === SWITCH_NETWORKS[networkId]) {
+                  await switchMetaMaskNetwork(networkId);
+                }
+              }}
+            >
+              <img
+                className={styles.imageSizePolygon}
+                src={
+                  notSelectedNetworkId &&
+                  'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
+                    ? PolygonLogo
+                    : PolygonLogoActive
+                }
+                alt="Polygon-logo"
+              />
+            </div>
+            <div
+              className={classNames(
+                notSelectedNetworkId &&
+                  'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
+                  ? styles.inactiveButton
+                  : styles.activeButton
+              )}
+              onClick={async () => {
+                const networkId = notSelectedNetworkId;
+
+                if ('Ethereum' === SWITCH_NETWORKS[networkId]) {
+                  await switchMetaMaskNetwork(networkId);
+                }
+              }}
+            >
+              <img
+                className={styles.imageSizeEther}
+                src={
+                  notSelectedNetworkId &&
+                  'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
+                    ? EthereumLogo
+                    : EthereumLogoActive
+                }
+                alt="Ethereum-logo"
+              />
+            </div>
+          </div>
+        </>
+        )}
+
+        {/* {!!account && (
           <div className={styles.copyhash}>
             <p className={styles.copyhashText}>{walletAddress}</p>
             <button
@@ -152,14 +158,15 @@ const DepositTab = ({ user, resetState }) => {
               )}
             </button>
           </div>
-        )}
-        {!!account && (
+        )} */}
+        {/* {!!account && (
           <div className={styles.qrCodeImg}>
             <QRCode value={walletAddress} size={120} />
           </div>
-        )}
+        )} */}
         {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
+            <p>Please connect to your wallet in order to deposit WFAIR</p>
             <button
               type="button"
               className={styles.connectWalletButton}
@@ -184,10 +191,10 @@ const DepositTab = ({ user, resetState }) => {
             account={account}
           />
         )}
-        <p className={styles.firstDiscription}>
+        {!!account && (<p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not
           accept BEP20 from Binance.
-        </p>
+        </p>)}
       </div>
     </>
   );
