@@ -7,7 +7,7 @@ const getLibrary = provider => {
       : typeof provider.chainId === 'string'
       ? parseInt(provider.chainId)
       : 'any';
-
+console.log('----chain ID',chainId)
   const library = new Web3Provider(provider, chainId);
 
   library.pollingInterval = 15_000;

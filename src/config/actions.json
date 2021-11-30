@@ -365,5 +365,19 @@
     "chainId": 42,
     "gas": "auto",
     "gasPrice": "auto"
+  },
+  "default": {
+    "production": {
+      "ethereum": "0x3D01B461c7231E7acB9DeaBDB03D7Ccba074B722",
+      "polygon": "0xe31B4C9245cB1d049f588E389cFc275b9b5a6cf0"
+    },
+    "staging": {
+      "ethereum": "0x3D01B461c7231E7acB9DeaBDB03D7Ccba074B722",
+      "polygon": "0xe31B4C9245cB1d049f588E389cFc275b9b5a6cf0"
+    },
+    "development": {
+      "ethereum": "0x3D01B461c7231E7acB9DeaBDB03D7Ccba074B722",
+      "polygon": "0xe31B4C9245cB1d049f588E389cFc275b9b5a6cf0"
+    }
   }
 }
