@@ -39,15 +39,15 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
     }).catch(error => {
       dispatch(AlertActions.showError(error.message));
     });
-    //const resData = response?.data || null;
+    const resData = response?.data?.data || null;
 
     setRotated(true);
 
     setActiveSeeds({
       clientSeed: newClientSeed,
       nonce: 0,
-      hashedServerSeed: activeSeeds.hashedNextServerSeed,
-      hashedNextServerSeed: ''
+      hashedServerSeed: resData.hashedServerSeed,
+      hashedNextServerSeed: resData.hashedNextServerSeed
     });
   }
 
