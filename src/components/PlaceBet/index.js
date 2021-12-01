@@ -457,7 +457,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
-          This is a simulated version. Signin to start playing.
+          This is a simulated version. Sign in to start playing.
         </div>
       );
     }
