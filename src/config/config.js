@@ -74,8 +74,7 @@ export const networkInfo = {
   },
 };
 
-const currentChainSelected =
-  window.ethereum.networkVersion || actions.network.chainId;
+const currentChainSelected = window?.ethereum?.networkVersion || actions.network.chainId
 const currentNetworkKey =
   Object.keys(networkInfo).find(
     value =>

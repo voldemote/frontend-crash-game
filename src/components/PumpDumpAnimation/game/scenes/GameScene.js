@@ -24,6 +24,8 @@ export class GameScene extends Container {
 
     cashedOutUserIds = [];
 
+    paused = false;
+
     audioManager;
 
     visibilityChangeRemoveHandle = null;
@@ -68,6 +70,8 @@ export class GameScene extends Container {
 
     start(gameStartTime, cashOuts) {
         this.gameStartTime = gameStartTime;
+
+        this.paused = false;
 
         // If game has already been running
         this.removeVisibilityChangeHandle();
@@ -143,14 +147,17 @@ export class GameScene extends Container {
         this.barChartContainer.update(timeElapsed);
         if (timeElapsed > this.memeThreshold) {
             this.memeThreshold = timeElapsed + 3200;
-            this.memeContainer.generateNextMeme();
+            if (!this.paused) {
+                this.memeContainer.generateNextMeme();
+            }
         }
         this.cashOutContainer.update();
     }
 
     handleEndGame() {
         let timeElapsed = Date.now() - this.gameStartTime;
-        this.barChartContainer.createCrashBar(timeElapsed)
+        this.barChartContainer.createCrashBar(timeElapsed);
+        this.paused = true;
         this.barChartContainer.once('crash-bar-position', (rect) => {
             this.endGameContainer.showCrash(rect);
         });
