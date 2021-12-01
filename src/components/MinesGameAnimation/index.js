@@ -167,7 +167,7 @@ const MinesGameAnimation = ({
 
       if(isMine) {
         allMinesPos = getTranslatedReveal(checkMine?.data?.board, 1);
-        handleLost()
+        handleLost(checkMine?.data);
       }
 
       const hiddenFields = checkMine?.data.clientBoard.filter((item)=> {
@@ -197,8 +197,10 @@ const MinesGameAnimation = ({
     }
   }
 
-  const handleLost = () => {
+  const handleLost = (checkMine) => {
     setGameInProgress(false);
+
+    console.log('checkMine', checkMine);
 
     //disable place button before
     setBet((bet) => {
@@ -231,7 +233,8 @@ const MinesGameAnimation = ({
 
     const prepareObj = {
       type: 'loss',
-      value: '-' + amount
+      value: '-' + amount,
+      gameHash: checkMine?.gameHash
     }
     setCashouts((cashouts) => [prepareObj, ...cashouts]);
   }

@@ -93,19 +93,18 @@ const Game = ({
     });
   }, []);
 
-  const getLastCashout = (profit) => {
+  const getLastCashout = (data) => {
+    const {profit, gameHash} = data;
     let prepareObj = {};
     if(profit > 0) {
-      prepareObj = {
-        type: 'win',
-        value: '+' + profit
-      };
+      prepareObj.type = 'win';
+      prepareObj.value = '+' + profit;
     } else {
-      prepareObj = {
-        type: 'loss',
-        value: profit
-      };
+      prepareObj.type = 'loss';
+      prepareObj.value = profit;
     }
+    prepareObj.gameHash = gameHash;
+
     setCashouts([prepareObj, ...cashouts])
   }
 
@@ -114,17 +113,18 @@ const Game = ({
       .then(response => {
         const lastCashouts = response?.data.lastCrashes;
         setCashouts(lastCashouts.map((entry)=> {
+          const output = {};
           if(entry.profit > 0) {
-            return {
-              type: 'win',
-              value: '+' + entry.profit
-            };
+            output.type = 'win';
+            output.value = '+' + entry.profit;
           } else {
-            return {
-              type: 'loss',
-              value: entry.profit
-            };
+            output.type = 'loss';
+            output.value = entry.profit;
           }
+
+          output.gameHash = entry.gameHash;
+
+          return output;
         }))
 
       })
@@ -207,7 +207,7 @@ const Game = ({
 
     try {
       const { data } = await gameApi.cashoutMines();
-      getLastCashout(data.profit);
+      getLastCashout(data);
       setGameOver(true);
       updateUserBalance(userId);
       setConfetti(true);
@@ -314,7 +314,7 @@ const Game = ({
                 setGameInstance={setGameInstance}
                 onCashout={handleCashout}
               />
-              <LastCashouts text="My Cashouts" spins={cashouts} />
+              <LastCashouts text="My Cashouts" spins={cashouts} game={gameCfg}/>
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
