@@ -221,14 +221,8 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  min-height: 749px;
   flex-direction: column;
-
-  .buyWithFiatTabIframe {
-    display: block;
-    width: 100%;
-    max-height: 650px;
-    max-width: 450px;
-  }
 
   .cryptoTabsContianer {
     width: 500px;
@@ -261,6 +255,20 @@
       background-color: white;
     }
   }
+
+  .cryptoContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 25px;
+    p {
+      font-family: $fontRegular;
+      font-size: small;
+    }
+  }
+
   .cryptoCalculatorContainer {
     display: flex;
     flex-direction: column;
@@ -360,9 +368,81 @@
       height: 45px;
       font-family: $fontRegular;
       color: $colorWhite;
-      margin-top: 55px;
-      margin-bottom: 36px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       cursor: pointer;
+    }
+  }
+
+  .transactionContainer {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-top: 40px;
+
+    .transferSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 75%;
+      margin: 0 auto;
+      flex-direction: column;
+      p {
+        font-family: $fontRegular;
+        font-size: small;
+        margin-bottom: 22px;
+
+        span {
+          font-family: $fontBold;
+        }
+      }
+      .cryptoUrlContiner {
+        width: 350px;
+        height: 80px;
+        background: $colorWhite;
+        border: 1px solid $colorLightGray2;
+        box-sizing: border-box;
+        border-radius: 20px;
+        margin-bottom: 11px;
+        margin-top: 11px;
+        display: flex;
+        align-items: center;
+
+        input {
+          width: 100%;
+          height: 70px;
+          padding: 10px;
+          margin: 0px 10px;
+          border: none;
+          font-size: medium;
+          &:focus-visible {
+            outline: none;
+          }
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+
+      .sendUrlBtn {
+        background: linear-gradient(
+          180deg,
+          $colorPinkDark 0%,
+          $colorLightDark2 97.4%
+        );
+        border-radius: 22.5px;
+        border: 1px solid $colorWhite;
+        width: 240px;
+        height: 45px;
+        font-family: $fontRegular;
+        color: $colorWhite;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
     }
   }
 }

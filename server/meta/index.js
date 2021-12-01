@@ -62,8 +62,6 @@ let meta = {
 module.exports = {
   // Append routes
   appendRoutes: async (apiPath, listPaths = []) => {
-    return meta;
-
     for (let listCounter = 0; listCounter < listPaths.length; listCounter++) {
       // quering api to get data
       const response = await axios.get(`${apiPath}${listPaths[listCounter]}`);

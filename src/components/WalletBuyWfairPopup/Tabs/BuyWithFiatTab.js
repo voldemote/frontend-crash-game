@@ -7,69 +7,35 @@ import { ReactComponent as ArrowUp } from '../../../data/icons/arrow_up_icon.svg
 import { ReactComponent as ArrowDown } from '../../../data/icons/arrow_down_icon.svg';
 import { convertCurrency } from '../../../api/third-party';
 import transakSDK from '@transak/transak-sdk';
+import transakConfig from 'constants/transakConfig';
 
-const BuyWithFiatTab = () => {
+const BuyWithFiatTab = ({ hidePopup , user }) => {
   const [selectedCurrency, setSelectedCurrency] = useState('eur');
   const [currency, setCurrency] = useState(0);
   const [WFAIRToken, setWFAIRToken] = useState(0);
 
-  const { email } = useSelector(state => state.authentication);
-  let transak = {
-    apiKey: '82fbd931-e077-46d2-87aa-272b72d4962c', // Your API Key
-    environment: 'STAGING', // STAGING/PRODUCTION
-    defaultCryptoCurrency: 'MATIC',
-    cryptoCurrencyCode: 'MATIC',
-    walletAddress: '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8', // Our backend wallet (should not be changeable)
-    disableWalletAddressForm: true,
-    networks: 'ethereum,mainnet,polygon,kovan',
-    themeColor: '7879f1', // App theme color
-    countryCode: 'DE', // INR/GBP
-    email, // Your customer's email address
-    hideMenu: true,
-    // redirectURL: window.location.origin,
-    // hostURL: window.location.origin,
-    partnerCustomerId: '615bf607f04fbb15aa5dd367', // Internal user id (mongo db)
-  };
-
-  const transakQueryParams = Object.keys(transak)
-    .map(key => transak[key] && `${key}=${transak[key]}`)
-    .join('&');
-
-  const transakRedner = () => (
-    <iframe
-      title="Transak On/Off Ramp Widget (Website)"
-      src={`https://staging-global.transak.com?${transakQueryParams}`}
-      frameBorder="no"
-      allowtransparency="true"
-      allowFullScreen=""
-      className={styles.buyWithFiatTabIframe}
-    ></iframe>
-  );
-
-  const transakPopUp = (config) => {
-    let transak = new transakSDK(config);
-
+  const transakPopUp = () => {
+    transakConfig.partnerCustomerId = user.userId
+    let transak = new transakSDK(transakConfig);
     transak.init();
 
     // To get all the events
     transak.on(transak.ALL_EVENTS, data => {
-      console.log(data);
+      // console.log(data);
     });
 
-    // This will trigger when the user closed the widget
-    transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, orderData => {
-      transak.close();
+    transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, data => {
+      // in case required to trigger a function on close
     });
 
     // This will trigger when the user marks payment is made.
     transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, orderData => {
-      console.log(orderData);
+      // console.log(orderData);
       transak.close();
     });
   };
 
   const currencyChange = event => {
-    console.log('--->>>Cal', event.target.value);
     const inputCurrency = event.target.value > 2000 ? 2000 : event.target.value;
     setCurrency(inputCurrency);
 
@@ -84,9 +50,8 @@ const BuyWithFiatTab = () => {
   };
 
   const OnClickTransakContinue = () => {
-    // console.log('---->>> OnlickOnClickTransakContinue');
-    // const transak = {}
-    // transakPopUp(transak);
+    hidePopup();
+    transakPopUp();
   };
 
   return (
@@ -144,4 +109,13 @@ const BuyWithFiatTab = () => {
   );
 };
 
-export default BuyWithFiatTab;
+const mapStateToProps = state => {
+  const user = state.authentication;
+
+  return {
+    user,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(BuyWithFiatTab);

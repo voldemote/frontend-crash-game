@@ -4,7 +4,6 @@ const fs = require('fs');
 const app = express();
 const { appendRoutes, appendRoutesForUser } = require('./meta');
 const { replaceMeta } = require('./utils/replaceMetaUtil');
-const { getCoinMarketAppConversion } = require('./utils/api');
 
 // set main PORT
 const PORT = process.env.PORT || 3000;
@@ -17,13 +16,6 @@ const listPaths = ['api/event/list'];
 const listPathForUser = 'api/user/';
 
 const indexPath = path.resolve(__dirname, '..', 'build', 'index.html');
-
-app.get('/get/quote/conversion', (req, res) => {
-  console.log('called')
-  getCoinMarketAppConversion().then(data => {
-    res.send(data)
-  })
-})
 
 appendRoutes(apiPath, listPaths).then(meta => {
   const routes = Object.keys(meta);

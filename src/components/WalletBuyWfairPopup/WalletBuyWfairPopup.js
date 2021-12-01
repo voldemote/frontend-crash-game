@@ -10,13 +10,11 @@ import DepositTab from './Tabs/DepositTab';
 import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
 
-
-
-const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
+const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
-        return <BuyWithFiatTab />;
+        return <BuyWithFiatTab hidePopup={hidePopup}/>;
       case 1:
         return <BuyWithCrypto />;
       case 2:
@@ -66,7 +64,7 @@ const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
         </Grid>
       </div>
       <div className={styles.activityContainer}>
-        <RenderTabs type={activeTab.index} />
+        <RenderTabs type={activeTab.index} hidePopup={hidePopup} />
       </div>
     </div>
   );
