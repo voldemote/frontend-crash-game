@@ -13,9 +13,10 @@ import Plinko from '../data/backgrounds/games/game-plinko.png';
 import PumpDump from '../data/backgrounds/games/game-pump-dump.png';
 import Routes from './Routes';
 
+import gameCardElon from '../data/images/house-games/card-elon.png';
 import gameCard1 from '../data/images/house-games/card-1.png';
 import gameCard5 from '../data/images/house-games/card-5.png';
-import gameCard3 from '../data/images/house-games/card-3.png';
+import gameCardPumpDump from '../data/images/house-games/card-pumpdump.png';
 import gameCard4 from '../data/images/house-games/card-4.png';
 import gameCardMines from '../data/images/house-games/card-mines.png';
 
@@ -58,6 +59,20 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
+    background: gameCardElon,
+    title: `Elon Game`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/elon-game',
+  },
+  {
+    background: gameCardPumpDump,
+    title: `Pump and Dump`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/pump-dump',
+  },
+  {
     background: gameCardMines,
     title: `Mines`,
     subtitle: '',
@@ -79,13 +94,6 @@ export const NEW_SLOTS_GAMES = [
     description: '',
     active: true,
     linkTo: '/games/alpaca-wheel',
-  },
-  {
-    background: gameCard3,
-    title: `Pump and Dump`,
-    subtitle: '',
-    active: false,
-    linkTo: '/games/pump-dump',
   },
   {
     background: gameCard5,
@@ -233,6 +241,12 @@ export const GAMES = {
     id: '619cc432121e61d6f06338c9',
     slug: 'mines',
     name: `Mines`,
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+  },
+  cannon: {
+    id: '61a09b35121e61d6f06338ca',
+    slug: 'cannon',
+    name: 'cannon',
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
 };

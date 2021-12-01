@@ -1,15 +1,13 @@
-import cn from 'classnames';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
-import { BackgroundPlinko } from './AnimationController'//AnimationController
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 
-const PlinkoGameAnimation = ({
+const AlpacannonGameAnimation = ({
   connected,
   amount,
   activities,
@@ -23,87 +21,105 @@ const PlinkoGameAnimation = ({
   const dispatch = useDispatch();
   const backgroundRef = useRef(null);
 
+  const [game, setGame] = useState('ready');
   const [audio, setAudio] = useState(null);
+  const [slider, setSlider] = useState(0);
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
-  const [backg, setBackg] = useState(0);
-  const [lastgame, setLastgame] = useState(null);
-  const [shadow, setShadow] = useState(null);
-  //const [backgr, setBackgr] = useState(backgroundString(0));
-  const [flag, setFlag] = useState(false);
-  const [ball, setBall] = useState(null);
-/*
-  useEffect(() => {
-    const lastnewgame = activities[activities.length-1]?.data
-    if(activities?.length > 0 && lastgame != lastnewgame.gameHash && lastnewgame.gameName == "GAME_PLINKO" && lastnewgame.userId != userId){
-      lastgame && setShadow(lastnewgame.path)
-      setLastgame(lastnewgame.gameHash)
-    }
-  }, [activities])
 
-  useEffect(() => {
-    if(backgroundRef) {
-      setWidth(backgroundRef.current.clientWidth)
-      setHeight(backgroundRef.current.clientHeight)
-    }
-    const aud = new AudioController(1)
+  useEffect(() =>{
+    const aud = new AudioController(2)
     setAudio(aud)
-    aud.startBgm();
+    aud.startBgm()
     onInit(aud)
+    window.addEventListener('resize', updateSize);
+    updateSize()
     return () => {
       aud.stopBgm();
     }
-  },[])
+  }, [])
+
+  const updateSize = () => setWidth(window.innerWidth)
+
   useEffect(() => {
-    if(bet && !bet.pending && bet.path) spin(bet);
+    if(bet && !bet.ready && bet.amount && !bet.running) spin(bet)
   }, [bet]);
-  */
 
-  const spin = async () => {
-    setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-    !bet.autobet && setBet((bet) => {return{ball: bet.ball, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
-  }
-/*
-  const changeBackground = (count) => {
-    if(flag) return
-    else setFlag(true)
-    setBackg((backg) => backg === 2 ? 0 : backg + 1)
+  const spin = () => {
+    console.log("Go!")
+    setBet((bet) => {return{...bet, running: true, crash: Math.round(Math.random()*100) }})
+    setGame('shoot')
+    setTimeout(() => {setGame('shoot')}, 400)
     setTimeout(() => {
-      setBackg((backg) => backg === 2 ? 0 : backg + 1)
-      count < 30 ? changeBackground(count + 1) : setFlag(false)
-    }, 100)
+      setGame('crashed')
+      if(bet.profit > 0){
+        audio.playWinSound()
+        /*
+        const spin = bet.profit > 0 ?
+          { type: 'win', value: '+' + bet.profit } :
+          bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
+          { type: 'loss', value: bet.profit}
+        setSpins((spins) => [spin].concat(spins))
+        */
+
+      }
+      setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
+    }, 1400)
+    setTimeout(() => {setGame('ready')}, 3000)
   }
 
-  const handleEnd = (win) => {
-    if(win) {
-      audio.playWinSound()
-      changeBackground(0)
-    } else audio.playLoseSound();
-    const spin = bet.profit > 0 ?
-      { type: 'win', value: '+' + bet.profit } :
-      bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
-      { type: 'loss', value: bet.profit}
-    setSpins((spins) => [spin].concat(spins))
-    bet.autobet ?
-     setBet((bet) => {return {ball: bet.ball-1, pending: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}}) :
-     setBet((bet) => {return {...bet, ball: bet.ball-1}})
+  const interpolate = (number) => Math.floor((Number(number) + 42)*96/80)
+
+  const interpolateMultiplier = (number) => 100/(100-((Number(number) + 42)*96/80))//Math.floor((Number(number) + 41)*98/80)
+
+  const onSlider = (e) => {
+    setBet((bet) => {return {...bet, rollover: interpolate(e.target.value)}})
+    setSlider(e.target.value)
   }
-  */
+
+//1250 width
   return (
-    <div ref={backgroundRef} className={styles.animation}>
-      {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
-      {false && <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />}
-      {/*false && width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />*/}
+    <div
+      ref={backgroundRef}
+      className={classNames(
+        styles.animation,
+        (width < 600 || isMobile) && styles.animationMobile
+      )}
+    >
+      <img className={styles.background} src={(width < 600 || isMobile) ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
+      {audio && <GameAudioControlsLocal game='cannon' audio={audio} />}
+      <input
+          className={styles.slider}
+          value={slider}
+          onChange={onSlider}
+          style={{zIndex: game==='ready'&&4, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
+          type="range"
+          step={1}
+          min={-40}
+          max={40} />
+      <div className={styles.chance}>
+        <span>{100-interpolate(slider)}%</span>
+      </div>
+      <div className={styles.interpolateMultiplier}>
+        <span>{interpolateMultiplier(slider).toFixed(2)}</span>
+      </div>
+      <div className={styles.fullcannon} style={{transform: `rotate(${slider}deg)`}}>
+        <img className={styles.cannon} src="/images/cannon-games/cannon.png" alt="cannon" />
+        <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca-in-cannon.png" alt="alpaca in cannon" />
+        <img className={styles.explotion} style={{ opacity: game === 'shoot' ? 1 : 0 }} src="/images/cannon-games/explotion.svg" alt="explotion" />
+      </div>
+      <img className={styles.alpacaFlying} style={{ opacity: game==='shoot'?1:0, bottom: game==='shoot' && 188, right: game==='shoot' && ((bet.crash?bet.crash:50)*5) + 20 }} src="/images/cannon-games/alpaca-flying.png" alt="alpaca flying" />
+      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash?bet.crash:50) * 5) + 20 }} src="/images/cannon-games/alpaca-crash.png" alt="alpaca crash" />
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = state => {
   return {
     userId: state.authentication.userId,
     activities: state.notification.activities,
     connected: state.websockets.connected
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(PlinkoGameAnimation);
+export default connect(mapStateToProps)(AlpacannonGameAnimation);

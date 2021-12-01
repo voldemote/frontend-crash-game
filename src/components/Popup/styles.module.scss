@@ -51,7 +51,8 @@
 
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
-    &.usernamePopup {
+    &.usernamePopup,
+    &.alpacaBuilderPopup {
       overflow: visible;
     }
 
@@ -104,16 +105,9 @@
       }
     }
 
-    .alpacaBuilderPopup {
-      overflow: visible;
-      //max-width: max-content;
-      width: 600px;
-      height: 600px;
-      padding: 0 30px;
-
-      @media (max-width: $screen-sm) {
-        padding: 0 15px;
-      }
+    &.alpacaBuilderPopup {
+      max-width: 1000px;
+      width: 1000px;
     }
 
     @media (max-width: $screen-sm) {

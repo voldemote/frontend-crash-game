@@ -199,7 +199,7 @@ const PlaceBetCasino = ({
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
-          This is a simulated version. Signin to start playing.
+          This is a simulated version. Sign in to start playing.
         </div>
       );
     }
@@ -304,8 +304,8 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput disable={!bet.ready || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
-            {gameName!=='plinko' && <NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={bet} />}
+            {gameName !== 'cannon' && <RiskInput disable={!bet.ready || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />}
+            {gameName==='wheel' && <NgamesInput text={'Number of Spins'} ngame={ngame} setNgame={setNgame} game={bet} />}
           </div>
           :
           <div className={styles.sliderContainer}>
@@ -370,7 +370,7 @@ const PlaceBetCasino = ({
                 </div>
               </div>
             )}
-            <RiskInput disable={!bet.ready || bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />
+            {gameName !== 'cannon' && <RiskInput disable={!bet.ready || bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />}
             <StandardInput title={'Stop on Profit'} setValue={setProfit} value={profit} />
             <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
             <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />

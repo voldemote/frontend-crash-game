@@ -56,7 +56,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
               <p>{gameLabel}</p>
             </div>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <div className={styles.messageLeft}>
               <p>
                 {username ? (
@@ -67,13 +67,13 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
               </p>
             </div>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <div className={styles.messageRight}>
               <p>{stakedAmountStr} {TOKEN_NAME}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
-          <Grid item xs className={hideSecondaryColumns && styles.hideSecondaryColumns}>
+          <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <div className={styles.messageCenter}>
               <p className={styles.rewardMulti}>{crashFactorStr}x</p>
             </div>

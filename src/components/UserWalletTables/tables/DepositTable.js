@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect,useMemo, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from '../styles.module.scss';
 import classNames from 'classnames';
-
+import { useSelector } from 'react-redux';
+import { selectHistory, selectStakes } from 'store/selectors/wallfair';
+import { numberWithCommas, shortenAddress } from 'utils/common';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   const { wFair, network, address, date, txHash } = data;
@@ -49,11 +51,32 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   );
 };
 
+const formateRowList = (stakes) => {
+return Object.keys(stakes && stakes)?.map(lockAddress => {
+  return {
+    wFair: numberWithCommas(Math.floor(stakes[lockAddress][1])),
+    network: '',
+    address: '',
+    date: new Date(stakes[lockAddress][2] * 1000).toLocaleDateString('en-US'),
+    txHash: shortenAddress(lockAddress),
+  };
+});
+
+}
+
 const DepositTable = ({
-  renderRow,
   className,
   hideSecondaryColumns = false,
 }) => {
+  const historyData = useSelector(selectHistory);
+  const stakes = useSelector(selectStakes);
+  const [depositRows, setDepositRows] = useState([]);
+
+
+  useEffect(() => {
+    setDepositRows(formateRowList(stakes));
+  }, [stakes]);
+
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
       <div className={styles.header}>
@@ -88,10 +111,12 @@ const DepositTable = ({
         </Grid>
       </div>
       <div className={styles.messageContainer}>
-        {renderRow.map((row, index) => <DepositRow data={row} key={index}/>)} 
+        {depositRows?.map((row, index) => (
+          <DepositRow data={row} key={index} />
+        ))}
       </div>
     </div>
   );
 };
 
-export default DepositTable;
+export default React.memo(DepositTable);

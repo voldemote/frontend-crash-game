@@ -229,6 +229,7 @@ const RouletteGame = ({
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
                 <PlaceBetCasino
+                  gameName={'wheel'}
                   connected={connected}
                   setAmount={setAmount}
                   setBet={setBet}

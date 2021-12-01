@@ -26,6 +26,9 @@ import {
   trackElonCancelBet,
   trackElonCashout,
   trackElonPlaceBet,
+  trackPumpDumpCancelBet,
+  trackPumpDumpCashout,
+  trackPumpDumpPlaceBet,
 } from '../../config/gtm';
 import { GameApi } from '../../api/crash-game';
 import { GAMES } from '../../constants/Games';
@@ -51,6 +54,7 @@ const RosiGame = ({
   } = useRosiData();
   const { slug } = useParams();
   const [audio, setAudio] = useState(null);
+  const [flag, setFlag] = useState(false)
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
@@ -84,9 +88,11 @@ const RosiGame = ({
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      if (hasAcceptedTerms() && !isPopupDisplayed()) {
-        showPopup(PopupTheme.explanation);
-        localStorage.setItem('gameHowDoesItWorkTip', true);
+      if (slug === GAMES['elonGame'].slug) {
+        if (hasAcceptedTerms() && !isPopupDisplayed()) {
+          showPopup(PopupTheme.explanation);
+          localStorage.setItem('gameHowDoesItWorkTip', true);
+        }
       }
     }, 1000);
     return () => clearTimeout(timerId);
@@ -105,13 +111,20 @@ const RosiGame = ({
   };
 
   async function handleBet(payload, crashFactor) {
+    if(flag) return
+    setFlag(true)
     audio.playBetSound();
     if (!payload) return;
     try {
       const result = await Api.createTrade(payload);
       console.log("result", result)
-      trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
+      if (slug === GAMES['elonGame'].slug) {
+        trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
+      } else if (slug === GAMES['pumpDump'].slug) {
+        trackPumpDumpPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
+      }
       dispatch(RosiGameActions.setUserBet(payload));
+      setFlag(false)
       return result;
     } catch (e) {
       dispatch(
@@ -123,10 +136,20 @@ const RosiGame = ({
   }
 
   function handleBetCancel(userId, amount) {
+    if(flag) return
+    setFlag(true)
     Api.cancelBet()
       .then(() => {
-        trackElonCancelBet({ amount });
+        if (slug === GAMES['elonGame'].slug) {
+          trackElonCancelBet({ amount });
+
+        } else if (slug === GAMES['pumpDump'].slug) {
+          trackPumpDumpCancelBet({ amount });
+        }
+
         dispatch(RosiGameActions.cancelBet({ userId }));
+        setFlag(false)
+        return true
       })
       .catch(() => {
         dispatch(
@@ -134,6 +157,8 @@ const RosiGame = ({
             message: `${slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump and Dump'}: Cancel Bet failed`,
           })
         );
+        setFlag(false)
+        return true
       });
   }
 
@@ -144,12 +169,23 @@ const RosiGame = ({
       const response = await Api.cashOut();
       const { crashFactor: crashFactorCashout, reward } = response.data;
 
-      trackElonCashout({
-        amount: reward,
-        multiplier: parseFloat(crashFactorCashout),
-        autobet: autobet != null ? 1 : 0,
-        accumulated: autobet?.accumulated,
-      });
+      if (slug === GAMES['elonGame'].slug) {
+        trackElonCashout({
+          amount: reward,
+          multiplier: parseFloat(crashFactorCashout),
+          autobet: autobet != null ? 1 : 0,
+          accumulated: autobet?.accumulated,
+        });
+
+      } else if (slug === GAMES['pumpDump'].slug) {
+        trackPumpDumpCashout({
+          amount: reward,
+          multiplier: parseFloat(crashFactorCashout),
+          autobet: autobet != null ? 1 : 0,
+          accumulated: autobet?.accumulated,
+        });
+      }
+
       AlertActions.showSuccess(JSON.stringify(response));
 
       return response;
@@ -266,17 +302,19 @@ const RosiGame = ({
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`} >
-            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump and Dump"} />
+          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`}>
+            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump & Dump"} showArrow={(slug === GAMES['elonGame'].slug)} />
             <Share popupPosition="right" className={styles.shareButton} />
-            <Icon
-              className={styles.questionIcon}
-              iconType={IconType.question}
-              iconTheme={IconTheme.white}
-              height={25}
-              width={25}
-              onClick={handleHelpClick}
-            />
+            {(slug === GAMES['elonGame'].slug) &&
+              <Icon
+                className={styles.questionIcon}
+                iconType={IconType.question}
+                iconTheme={IconTheme.white}
+                height={25}
+                width={25}
+                onClick={handleHelpClick}
+              />
+            }
             {showHowDoesItWork()}
           </div>
 

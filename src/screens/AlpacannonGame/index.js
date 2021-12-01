@@ -35,7 +35,7 @@ import {
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 
-const ALPACANNON_GAME_EVENT_ID = GAMES.plinko.id
+const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
 const PlinkoGame = ({
   showPopup,
@@ -46,12 +46,12 @@ const PlinkoGame = ({
   refreshLuckyData,
   updateUserBalance
 }) => {
-  const Api = new GameApi(GAMES.plinko.url, token);
+  const Api = new GameApi(GAMES.cannon.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
-  const [bet, setBet] = useState({pending: true, ball: 0});
+  const [bet, setBet] = useState({ready: true, rollover: 50});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
@@ -116,21 +116,21 @@ const PlinkoGame = ({
     if (!payload) return;
     try {
       if(payload.demo) {
-        const array = Array.from({length: 12}, ()=> Math.round(Math.random()))
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: array }})
+        setBet((bet) => { return {...bet, ...payload, profit: 50, ready: false} })
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
-        const { data } = await Api.createTradePlinko(payload);
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
-        updateUserBalance(userId);
-        trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
-        trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
-        return data;
+        const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
+        setBet((bet) => { return {...bet, ...payload, profit: data.profit, ready: false} })
+        //setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
+        //updateUserBalance(userId);
+        //trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
+        //trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
+      //  return data;
       }
     } catch (e) {
       dispatch(
         AlertActions.showError({
-          message: 'Plinko: Place Bet failed',
+          message: 'Cannon: Place Bet failed',
         })
       );
     }
@@ -198,18 +198,19 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Games" spins={spins} />
+              {/*<Spins text="My Games" spins={spins} />*/}
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
                 <PlaceBetCasino
-                  gameName={'plinko'}
+                  gameName={'cannon'}
                   connected={connected}
                   setAmount={setAmount}
                   amount={amount}
                   setRisk={setRisk}
                   risk={risk}
                   onBet={handleBet}
+                  setBet={setBet}
                   bet={bet}
                 />
               </div>

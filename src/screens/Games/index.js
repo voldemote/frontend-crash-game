@@ -14,7 +14,7 @@ const Games = () => {
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
-        <ElonGame />
+        {/* <ElonGame /> */}
         {/*
           <GameCards
             games={CASINO_GAMES}

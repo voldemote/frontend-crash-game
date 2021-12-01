@@ -9,7 +9,7 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import { GameAudioManager } from './utils/GameAudioManager';
 import { PumpDumpGameMananger } from './game/PumpDumpGameManager';
 import Counter from 'components/RosiGameAnimation/Counter';
-import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
+import { PUMPDUMP_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
 import Timer from 'components/RosiGameAnimation/Timer';
 import { ASSET_LIST } from './config';
 
@@ -106,9 +106,11 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
       PumpDumpGameMananger.endGame(isLosing);
       // leave some time for player to see crash value
       setTimeout(() => {
-        PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
-        setIsPreparingRound(true);
-      }, ROSI_GAME_AFTER_CRASH_DELAY);
+        if (!hasStarted) {
+          PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
+          setIsPreparingRound(true);
+        }
+      }, PUMPDUMP_GAME_AFTER_CRASH_DELAY);
     }
   }, [hasStarted, hasGameLoaded]); // eslint-disable-line
 

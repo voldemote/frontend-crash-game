@@ -30,7 +30,7 @@ import EloneWithPhone from '../../data/images/elon-with-phone.png';
 import alpacaActivities from '../../data/images/alpaca-activities.svg';
 import gameCard1 from '../../data/images/house-games/card-1.png';
 import gameCard5 from '../../data/images/house-games/card-5.png';
-import gameCard3 from '../../data/images/house-games/card-3.png';
+import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
 import gameCard4 from '../../data/images/house-games/card-4.png';
 import gameCardMines from '../../data/images/house-games/card-mines.png';
 import IceCreamImg from '../../data/images/alpaca-verse/ice-cream.png';
@@ -270,6 +270,11 @@ const Home = ({
         <div className={styles.cardBox}>
           <Grid container>
             <Grid item lg={3} md={6} xs={12}>
+              <Link to={'/games/pump-dump'}>
+                <img src={gameCardPumpDump} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
               </Link>
@@ -287,9 +292,6 @@ const Home = ({
             {/* <Grid item lg={3} md={6} xs={12}>
               <img src={gameCard5} alt="" />
             </Grid> */}
-            <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard3} alt="" />
-            </Grid>
           </Grid>
         </div>
       </div>

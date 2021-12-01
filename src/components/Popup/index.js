@@ -41,7 +41,7 @@ import UsernamePopup from 'components/UsernamePopup';
 import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
-import AlpacaBuilder from 'components/AlpacaBuilder';
+import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
 import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
@@ -234,12 +234,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.requestTokens:
         return <RequestTokensPopup />;
       case PopupTheme.alpacaBuilder:
-        return (
-          <div className={styles.alpacaBuilderPopup}>
-            <h2>Alpacabuilder</h2>
-            <AlpacaBuilder visible={visible} showTitle={false}/>
-          </div>
-        );
+        return <AlpacaBuilderPopup initialReward={options.initialReward}/>;
+
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
     }
@@ -277,6 +273,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
             type === PopupTheme.username ? styles.usernamePopup : null,
+            type === PopupTheme.alpacaBuilder ? styles.alpacaBuilderPopup : null,
             small ? styles.small : null,
             maxWidth ? styles.maxWidth : null,
             type === PopupTheme.auth &&
