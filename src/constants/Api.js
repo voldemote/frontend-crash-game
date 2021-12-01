@@ -97,6 +97,7 @@ export const API_AUTH_SIGNUP = 'api/auth/sign-up';
 export const API_AUTH_LOGIN_EXTERNAL = 'api/auth/login/:provider';
 export const API_AUTH_FORGOT_PASSWORD = 'api/auth/forgot-password';
 export const API_AUTH_RESET_PASSWORD = 'api/auth/reset-password';
+export const API_USER_WALLET_TRANSACTIONS = 'api/user/wallet/transactions';
 //3rd parties
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
 export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';

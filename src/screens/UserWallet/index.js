@@ -31,6 +31,7 @@ import WFairTokenLockABI from '../../config/abi/TokenLock.json';
 import { ZERO } from '../../utils/constants';
 import Loader from 'components/Loader/Loader';
 import {WallfairActions} from 'store/actions/wallfair';
+import { TransactionActions } from 'store/actions/transaction';
 
 const UserWallet = ({
   tags,
@@ -47,8 +48,8 @@ const UserWallet = ({
   showRequestTokenPopup,
   resetState,
   setStakes,
-  setHistory
-
+  setHistory,
+  fetchWalletTransactions,
 }) => {
   const { active, library, account, chainId } = useWeb3React();
 
@@ -113,6 +114,8 @@ const UserWallet = ({
       });
     });
   }, [account, library, signer, chainId,setHistory, setStakes]);
+
+  useEffect(() => {fetchWalletTransactions()}, [fetchWalletTransactions]);
 
   const renderCategoriesAndLeaderboard = () => {
     return (
@@ -311,21 +314,31 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     resetState: () => dispatch(WallfairActions.resetState()),
-    setHistory: (lockAddress, dataArray) => dispatch( WallfairActions.setHistory({
+    setHistory: (lockAddress, dataArray) =>
+      dispatch(
+        WallfairActions.setHistory({
           lock: lockAddress,
           data: dataArray,
-        })),
-    setStakes: (lockAddress, amounts, timestamps) => dispatch(WallfairActions.setStakes({
+        })
+      ),
+    setStakes: (lockAddress, amounts, timestamps) =>
+      dispatch(
+        WallfairActions.setStakes({
           lock: lockAddress,
           data: [...amounts, ...timestamps],
-        })),
-    refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
+        })
+      ),
+    refreshMyBetsData: (data) =>
+      dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
     showRequestTokenPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.requestTokens }));
     },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions())
+    }
   };
 };
 
