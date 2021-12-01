@@ -80,33 +80,7 @@ const AlpacannonGameAnimation = ({
     setBet((bet) => {return {...bet, rollover: interpolate(e.target.value)}})
     setSlider(e.target.value)
   }
-  const element = document.getElementById("fly");
-  const imagePath = '/images';
-  const totalFrames = 8;
-  const animationDuration = 1300;
-  const timePerFrame = animationDuration / totalFrames;
-  let timeWhenLastUpdate;
-  let timeFromLastUpdate;
-  let frameNumber = 1;
-
-  function step(startTime) {
-    if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
-
-    timeFromLastUpdate = startTime - timeWhenLastUpdate;
-
-    if (timeFromLastUpdate > timePerFrame) {
-      document.getElementById("fly").attr('src', imagePath + `/alpaca_fly_center_000${frameNumber}.png`);
-      timeWhenLastUpdate = startTime;
-
-      if (frameNumber >= totalFrames) {
-        frameNumber = 1;
-      } else {
-        frameNumber = frameNumber + 1;
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
+  
 //1250 width
   console.log("Crash: ", bet.crash);
 
@@ -145,8 +119,8 @@ const AlpacannonGameAnimation = ({
         <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca-in-cannon.png" alt="alpaca in cannon" />
         <img className={styles.explotion} style={{ opacity: game === 'shoot' ? 1 : 0 }} src="/images/cannon-games/explotion.svg" alt="explotion" />
       </div>
-      <img id="fly" className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game === 'shoot' && 188, right: game === 'shoot' && ((bet.crash ? bet.crash : 50) * 5) + 20 }} src={bet.crash < 35 ? "/images/cannon-games/alpaca-left.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-right.svg" : "/images/cannon-games/alpaca-center.svg"} alt="alpaca flying" />
-      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash?bet.crash:50) * 5) + 20 }} src="/images/cannon-games/alpaca-crash.png" alt="alpaca crash" />
+      <img id="fly" className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game === 'shoot' && 188, right: game === 'shoot' && ((bet.crash ? bet.crash : 50) * 5) + 40 }} src={bet.crash > 35 ? "/images/cannon-games/alpaca-left.svg" : bet.crash < 65 ? "/images/cannon-games/alpaca-right.svg" : "/images/cannon-games/alpaca-center.svg"} alt="alpaca flying" />
+      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash ? bet.crash : 50) * 5) + 20 }} src={bet.crash > 35 ? "/images/cannon-games/alpaca-crash-left.png" : bet.crash < 65 ? "/images/cannon-games/alpaca-crash.png" : "/images/cannon-games/alpaca-crash.png"} alt="alpaca crash" />
       <img className={styles.score} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash ? bet.crash : 50) * 5) + 20 }} src="/images/cannon-games/score.svg" alt="alpaca crash" />
     </div>
   )
