@@ -15,7 +15,7 @@ const BuyWithFiatTab = () => {
     environment: 'STAGING', // STAGING/PRODUCTION
     defaultCryptoCurrency: 'MATIC',
     cryptoCurrencyCode: 'MATIC',
-    walletAddress: '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8', // Our backend wallet (should not be changeable)
+    walletAddress: '0x71a62c90E152557B68a8C8C6c5a8560117eBf288', // Our backend wallet (should not be changeable)
     disableWalletAddressForm: true,
     networks: 'ethereum,mainnet,polygon,kovan',
     themeColor: '7879f1', // App theme color
