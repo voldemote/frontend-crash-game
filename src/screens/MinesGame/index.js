@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js-legacy';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 //import * as ApiUser from 'api/crash-game';
 import {connect, useDispatch, useSelector} from 'react-redux';
@@ -35,6 +35,7 @@ import {getLastCashoutsMines} from "../../api/casino-games";
 import {roundToTwo} from "../../helper/FormatNumbers";
 
 import {trackMinesCashout} from "../../config/gtm";
+import classNames from "classnames";
 
 const Game = ({
   showPopup,
@@ -83,6 +84,15 @@ const Game = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
+  const handleFairnessPopup = useCallback(event => {
+    showPopup(PopupTheme.fairnessPopup, {
+      maxWidth: true, data: {
+        game: gameCfg,
+        token
+      }
+    });
+  }, []);
+
   const getLastCashout = (profit) => {
     let prepareObj = {};
     if(profit > 0) {
@@ -123,6 +133,16 @@ const Game = ({
       });
 
   }, [user.isLoggedIn])
+
+  useEffect(() => {
+    (async () => {
+      //this get route is for retrieving client / server seeds for the game, if its very first time,
+      //casino_fairness record will be created automatically
+      await gameApi.getCurrentFairnessByGame(gameCfg.id);
+    })().catch(error => {
+      dispatch(AlertActions.showError(error.message));
+    });
+  }, [])
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
@@ -320,6 +340,17 @@ const Game = ({
                   confetti={confetti}
                   setConfetti={setConfetti}
                 />
+
+                <div className={styles.fairnessContainer}>
+                  <Icon
+                      className={styles.balanceIcon}
+                      iconType={IconType.balanceScaleSolid}
+                      iconTheme={IconTheme.black}
+                      height={18}
+                      width={18}
+                  /> <span className={classNames('global-link-style', styles.fairnessOpenPopup)}
+                           onClick={handleFairnessPopup}>Fairness</span>
+                </div>
               </div>
             </div>
           </div>
