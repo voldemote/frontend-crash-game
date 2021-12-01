@@ -35,7 +35,13 @@ import {
   trackElonPlaceBetGuest,
   trackElonStartAutobet,
   trackElonStopAutobet,
+  trackPumpDumpChangeAutoCashout,
+  trackPumpDumpPlaceBetGuest,
+  trackPumpDumpStartAutobet,
+  trackPumpDumpStopAutobet,
 } from '../../config/gtm';
+import { useParams } from 'react-router';
+import { GAMES } from 'constants/Games';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
@@ -65,6 +71,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const [winbutton, setWinbutton] = useState(false)
   const [autobet, setAutobet] = useState(null)
   const [betted, setBetted] = useState(false)
+  const { slug } = useParams();
 
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
@@ -117,8 +124,13 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     let value = _.get(event, 'target.value', 0);
     const v = processAutoCashoutValue(value);
     let result = parseFloat(v);
+    
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonChangeAutoCashout({ multiplier: result });
 
-    trackElonChangeAutoCashout({ multiplier: result });
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpChangeAutoCashout({ multiplier: result });
+    }
   };
 
   const onGuestAmountChange = event => {
@@ -204,7 +216,13 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       accumulated: autobet.accumulated
     };
 
-    trackElonStopAutobet({...payload});
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonStopAutobet({...payload});
+
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpStopAutobet({...payload});
+    }
+    
     setAutobet(null)
   };
 
@@ -234,11 +252,22 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       crashFactor: 999,
     };
 
-    trackElonStartAutobet({
-      ...payload,
-      autobet: 1,
-      multiplier: crashFactor,
-    });
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonStartAutobet({
+        ...payload,
+        autobet: 1,
+        multiplier: crashFactor,
+      });
+
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpStartAutobet({
+        ...payload,
+        autobet: 1,
+        multiplier: crashFactor,
+      });
+    }
+
+
     console.log("placeAutoBet")
     setAutobet(payload)
     setBetted(true)
@@ -268,10 +297,18 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       userId: 'Guest',
     };
 
-    trackElonPlaceBetGuest({
-      amount: payload.amount,
-      multiplier: payload.crashFactor,
-    });
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonPlaceBetGuest({
+        amount: payload.amount,
+        multiplier: payload.crashFactor,
+      });
+
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpPlaceBetGuest({
+        amount: payload.amount,
+        multiplier: payload.crashFactor,
+      });
+    }
 
     dispatch(RosiGameActions.setUserBet(payload));
     dispatch(RosiGameActions.addInGameBet(payload));
@@ -420,7 +457,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
-          This is a simulated version. Signin to start playing.
+          This is a simulated version. Sign in to start playing.
         </div>
       );
     }
