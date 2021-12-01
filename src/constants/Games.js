@@ -18,6 +18,7 @@ import gameCard5 from '../data/images/house-games/card-5.png';
 import gameCard3 from '../data/images/house-games/card-3.png';
 import gameCard4 from '../data/images/house-games/card-4.png';
 import gameCardMines from '../data/images/house-games/card-mines.png';
+import gameCard6 from '../data/images/house-games/Apacannon.png';
 
 export const CASINO_GAMES = [
   {
@@ -93,6 +94,13 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     active: false,
     linkTo: '/games/oilrush',
+  },
+  {
+    background: gameCard6,
+    title: `AlpaCannon`,
+    subtitle: '',
+    active: false,
+    linkTo: '/games/alpacannon',
   },
   /*,
   {
@@ -240,5 +248,4 @@ export const GAMES = {
     name: 'cannon',
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
-
 };

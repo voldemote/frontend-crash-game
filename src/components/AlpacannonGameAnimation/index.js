@@ -67,7 +67,7 @@ const AlpacannonGameAnimation = ({
 
       }
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
-      
+
     }, 1400)
     setTimeout(() => {setGame('ready')}, 3000)
   }
@@ -108,8 +108,8 @@ const AlpacannonGameAnimation = ({
     requestAnimationFrame(step);
   }
 //1250 width
-console.log(bet);
-  
+  console.log("Crash: ", bet.crash);
+
   return (
     <div
       ref={backgroundRef}
@@ -139,13 +139,13 @@ console.log(bet);
       <div className={styles.interpolateMultiplier}>
         <span>{interpolateMultiplier(slider).toFixed(2)}</span>
       </div>
-      
+
       <div className={styles.fullcannon} style={{transform: `rotate(${slider}deg)`}}>
         <img className={styles.cannon} src="/images/cannon-games/cannon.png" alt="cannon" />
         <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca-in-cannon.png" alt="alpaca in cannon" />
         <img className={styles.explotion} style={{ opacity: game === 'shoot' ? 1 : 0 }} src="/images/cannon-games/explotion.svg" alt="explotion" />
       </div>
-      <img id="fly" className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game === 'shoot' && 188, right: game === 'shoot' && ((bet.crash ? bet.crash : 50) * 5) + 20 }} src={bet.rollover < 65 ? "/images/cannon-games/alpaca-left.svg" : bet.rollover > 65 ? "/images/cannon-games/alpaca-right.svg" : "/images/cannon-games/alpaca-center.svg"} alt="alpaca flying" />
+      <img id="fly" className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game === 'shoot' && 188, right: game === 'shoot' && ((bet.crash ? bet.crash : 50) * 5) + 20 }} src={bet.crash < 35 ? "/images/cannon-games/alpaca-left.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-right.svg" : "/images/cannon-games/alpaca-center.svg"} alt="alpaca flying" />
       <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash?bet.crash:50) * 5) + 20 }} src="/images/cannon-games/alpaca-crash.png" alt="alpaca crash" />
       <img className={styles.score} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash ? bet.crash : 50) * 5) + 20 }} src="/images/cannon-games/score.svg" alt="alpaca crash" />
     </div>
