@@ -44,11 +44,13 @@ const RouletteGame = ({
   token,
   refreshHighData,
   refreshLuckyData,
-  updateUserBalance
+  updateUserBalance,
+  match
 }) => {
   const game = GAMES.alpacaWheel
   const ALPACA_WHEEL_GAME_EVENT_ID = game.id;
-
+  const gameName = match?.params?.game
+  const gameCategory = match?.params?.category
   const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
@@ -169,15 +171,15 @@ const RouletteGame = ({
   const handleNewSpin = (newSpin)=> {
     setSpins([newSpin, ...spins])
   }
-  //https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=0e916bd4-ab9e-4449-b880-fb849fa8c188&GameCategory=Games&GameName=Cappadocia&&ReturnUrl=https://www.smartsoftgaming.com&Lang=en&PortalName=SmartSoft
-  //https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=Games&GameName=Cappadocia&Token=DEMO&PortalName=demo&ReturnUrl=https://as.com
-  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=Xgames&GameName=Cappadocia&Token=DEMO&PortalName=demo&ReturnUrl=https://as.com`
+
+  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=36bf7fd7-45bd-4ec3-b8ce-91a2c03c7011&PortalName=wallfair`
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/external-games" text="Cappadocia" />
+            <BackLink to="/external-games" text={gameName} />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}

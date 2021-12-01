@@ -5,10 +5,7 @@
   width: calc(100% - 50px);
   max-width: 1300px;
   margin: 0 25px;
-  // @media (min-width: $screen-lg) {
-  //   max-width: 80%;
-  // }
-
+  flex-wrap: wrap;
   .game{
     display: flex;
     border-radius: 20px;

@@ -11,7 +11,7 @@ const ExternalGames = () => {
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         {EXTERNAL_GAMES.map((game) =>
-          <Link to={`/external-game/${game.GameName}`} className={styles.game}>
+          <Link to={`/external-game/${game.GameName}/${game.GameCategory}`} className={styles.game}>
             <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName}.png`}/>
             <p className={styles.title}>{game.GameName}</p>
           </Link>
