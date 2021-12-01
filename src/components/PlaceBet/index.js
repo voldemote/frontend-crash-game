@@ -57,7 +57,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const isBetInQueue = useSelector(betInQueue);
   const userCashedOut = useSelector(isCashedOut);
   const [amount, setAmount] = useState(sliderMinAmount);
-  const [crashFactor, setCrashFactor] = useState('25.00');
+  const [crashFactor, setCrashFactor] = useState('2500');
   const [showCashoutWarning, setShowCashoutWarning] = useState(false);
   const [crashFactorDirty, setCrashFactorDirty] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -113,7 +113,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
     setCrashFactor(v);
     let result = parseFloat(v);
-    if (result > 0 && result < 1) {
+    if (result >= 0 && result < 100) {
       setShowCashoutWarning(true);
     } else {
       setShowCashoutWarning(false);
@@ -123,7 +123,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const onCrashFactorLostFocus = event => {
     let value = _.get(event, 'target.value', 0);
     const v = processAutoCashoutValue(value);
-    let result = parseFloat(v);
+    let result = parseFloat(v) / 100;
     
     if (slug === GAMES['elonGame'].slug) {
       trackElonChangeAutoCashout({ multiplier: result });
@@ -165,7 +165,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     const tick = () => {
       let now = Date.now();
       const diff = now - gameStartedTime;
-      const autoCashoutAt = parseFloat(crashFactor);
+      const autoCashoutAt = parseFloat(crashFactor/100);
       const factor = calcCrashFactorFromElapsedTime(diff < 1 ? 1 : diff);
       if (factor >= autoCashoutAt) {
         if (user.isLoggedIn) {
@@ -212,7 +212,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       loss: Number(loss),
       wincrease: winbutton?0:Number(wincrease)/100,
       lincrease: lossbutton?0:Number(lincrease)/100,
-      multiplier: crashFactor,
+      multiplier: crashFactor/100,
       accumulated: autobet.accumulated
     };
 
@@ -256,14 +256,14 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       trackElonStartAutobet({
         ...payload,
         autobet: 1,
-        multiplier: crashFactor,
+        multiplier: crashFactor/100,
       });
 
     } else if (slug === GAMES['pumpDump'].slug) {
       trackPumpDumpStartAutobet({
         ...payload,
         autobet: 1,
-        multiplier: crashFactor,
+        multiplier: crashFactor/100,
       });
     }
 
@@ -292,7 +292,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     onBet();
     const payload = {
       amount,
-      crashFactor: Math.round(Math.abs(parseFloat(crashFactor)) * 100) / 100,
+      crashFactor: crashFactor / 100,
       username: 'Guest',
       userId: 'Guest',
     };
@@ -633,11 +633,11 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                   value={crashFactor}
                   onChange={onCrashFactorChange}
                   onBlur={onCrashFactorLostFocus}
-                  min="1"
+                  min="100"
                   pattern={/^[^0-9.]+/}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>×</span>
+                  <span>%</span>
                 </span>
               </div>
             </div>
@@ -725,11 +725,11 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                   value={crashFactor}
                   onChange={onCrashFactorChange}
                   onBlur={onCrashFactorLostFocus}
-                  min="1"
+                  min="100"
                   pattern={/^[^0-9.]+/}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>×</span>
+                  <span>%</span>
                 </span>
               </div>
             </div>
@@ -872,12 +872,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       </div>
       {showCashoutWarning ? (
         <div className={styles.error}>
-          <span>Betting less than 1 is not recommended. </span>
+          <span>Betting less than 100 is not recommended. </span>
           <span
             data-for="rt"
             className={styles.why}
             data-tip="The multiplying factor defines your final reward.<br/>
-             A multiplier of 2x means twice the reward, when the game ends.<br/>
+             A multiplier of 200% means twice the reward, when the game ends.<br/>
               If the game ends before your multiplier,<br/> your amount invested is lost.<br/>"
           >
             Understand why.
