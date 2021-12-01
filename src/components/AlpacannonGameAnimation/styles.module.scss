@@ -297,20 +297,58 @@
     top: 139px;
   }
   
-  .alpacaFlying {
-    width: 23%;
+  .alpacaFlyingLeft {
+    //width: 23%;
+    width: 50%;
+    height: 100%;
     bottom: 21%;
     right: 30px;
-    -webkit-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
-    -moz-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
-    -ms-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
-    -o-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
-    transition: bounce 1s ease-in-out,  top 1s ease-in-out, bottom 1s ease-in-out;
-   //animation: zoom-in-zoom-out 3s ease-in-out;
+    background: url("./assets/alpaca_fly_left.png");
+     animation-name: sprite; 
+  animation-duration: 2.5s;
+  animation-timing-function: steps(8);
+  animation-iteration-count: 1;
     position: absolute;
     right: 44%;
     z-index: 1;
   }
+   .alpacaFlyingRight {
+    //width: 23%;
+    width: 50%;
+    height: 100%;
+    bottom: 21%;
+    right: 30px;
+    background: url("./assets/alpaca_fly_left.png");
+    
+     animation-name: sprite; 
+  animation-duration: 2.5s;
+  animation-timing-function: steps(8);
+  animation-iteration-count: infinite;
+    position: absolute;
+    right: 44%;
+    z-index: 1;
+  }
+   .alpacaFlying {
+    //width: 23%;
+    width: 20%;
+    height: 240px;
+    background: url("./assets/alpaca_fly_left.png");
+   
+     animation-name: sprite; 
+  animation-duration: 2s;
+  animation-timing-function: steps(8);
+  animation-iteration-count: 1;
+    position: absolute;
+    right: 44%;
+    z-index: 1;
+  }
+  @keyframes sprite {
+  to { background-position: -8640px; }
+}
+   @keyframes slide {
+      from { margin-left: 0%; }
+      to { margin-left: calc(100% - var(--w, 150px)); }
+    }
   @keyframes zoom-in-zoom-out {
   0% {
     transform: scale(1, 1);
