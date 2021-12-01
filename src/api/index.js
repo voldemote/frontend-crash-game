@@ -521,7 +521,7 @@ const convertCurrency = ({convertFrom, convertTo, amount}) => {
   })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
-});
+};
 
 const getWalletTransactions = () => {
   return Api.get(ApiUrls.API_USER_WALLET_TRANSACTIONS).catch((error) => {

@@ -92,6 +92,11 @@ const WithDrawalsTable = ({ renderRow, className, hideSecondaryColumns = false }
         {renderRow.map((row, index) => (
           <DepositRow data={row} key={index} />
         ))}
+        {renderRow.length === 0 && (
+          <div className={styles.noEntries}>
+            <span>No entries found</span>
+          </div>
+        )}
       </div>
     </div>
   );

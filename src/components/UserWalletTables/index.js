@@ -1,25 +1,33 @@
 import { Grid } from '@material-ui/core';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 import styles from './styles.module.scss';
 import BetTable from './tables/BetTable';
 import DepositTable from './tables/DepositTable';
 import WithDrawalsTable from './tables/WithDrawalsTable';
+import OnRampTable from './tables/OnRampTable';
 
-const UserWalletTables = ({ className, type = 'DEPOSITS', rowData }) => {
-  // const rowData = {
-  //     DEPOSITS: true? []: [ {wFair : "deposits wFair", network: "deposit network", address: "deposit Adress", date: new Date().toDateString(), txHash: "deposit txhash"}],
-  //     WITHDRAWALS: true? []: [ {wfair: 'withdrawal wfaire', fee: 'fee', network: "network", startDate: new Date().toDateString(), status: "Review",txHash: "deposit txhash"} ],
-  //     BETS:true? []: [{game:"game", user: "user", trade: "trade", mult: '3.00x', cashout: '30 PFair'}]
-  // };
+const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) => {
+
+  if(isError) {
+      return (
+        <div className={styles.noEntries}>
+            <span>Error fetching transactions</span>
+        </div>
+      );
+  }
 
   const renderDepositTableRows = (depositTableRows) => {
-    return <DepositTable renderRow={depositTableRows} />;
+    return <DepositTable depositRows={depositTableRows} />;
   };
   const renderWithDrawalsTableRows = (depositTableRows) => {
     return <WithDrawalsTable renderRow={depositTableRows} />;
   };
   const renderBetsTableRows = (betTabelRows) => {
     return <BetTable renderRow={betTabelRows} />;
+  };
+  const renderOnRampTableRows = (betTabelRows) => {
+    return <OnRampTable renderRow={betTabelRows} />;
   };
 
   const renderTableRows = (type) => {
@@ -30,10 +38,13 @@ const UserWalletTables = ({ className, type = 'DEPOSITS', rowData }) => {
         return renderWithDrawalsTableRows(rowData[type]);
       case 'BETS':
         return renderBetsTableRows(rowData[type]);
+      case 'ONRAMP':
+        return renderOnRampTableRows(rowData[type]);
       default:
         return renderDepositTableRows(rowData[type]);
     }
   };
   return renderTableRows(type);
 };
+
 export default UserWalletTables;
