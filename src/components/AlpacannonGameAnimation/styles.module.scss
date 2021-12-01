@@ -305,8 +305,8 @@
     -moz-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
     -ms-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
     -o-transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
-    transition: bottom 1s ease-in-out, bottom 1s ease-in-out;
-    animation: zoom-in-zoom-out 3s ease-in-out;
+    transition: bounce 1s ease-in-out,  top 1s ease-in-out, bottom 1s ease-in-out;
+   //animation: zoom-in-zoom-out 3s ease-in-out;
     position: absolute;
     right: 44%;
     z-index: 1;
