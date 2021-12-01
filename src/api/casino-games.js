@@ -158,16 +158,12 @@ const getLastCashoutsMines = (gameTypeId) => {
   });
 };
 
-const getSingleGameDetailById = (gameHash, gameTypeId) => {
+const getSingleGameDetailById = (gameHash, gameTypeId, type) => {
   const callThis = ApiUrls.SINGLE_GAME_API_GET_GAME_DETAILS
-      .replace(':gameHash', gameHash)
-      .replace(':gameTypeId', gameTypeId);
+      .replace(':gameHash', gameHash);
 
-  console.log('callThis', callThis);
-
-  return  Api.get(callThis).catch(error => {
+  return Api.get(callThis + (type ? `/${type}` : '') + `?gameId=${gameTypeId}`).catch(error => {
     console.log('[API Error] called: getSingleGameDetailById', error);
-    throw error;
   });
 }
 
