@@ -25,29 +25,28 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
     : '---';
 
   const handleCrashFactorChange = async (gameHash, type) => {
-    // const response = await getSingleGameDetailById(gameHash, gameTypeId, type).catch(err => {
-    //   console.error('getGameDetailById err', err);
-    // });
-    // const resData = response?.data || null;
-    //
-    // console.log('resData', resData);
+      console.log("ggameHash", gameHash);
+    const response = await getSingleGameDetailById(gameHash, game.id, type).catch(err => {
+      console.error('getGameDetailById err', err);
+    });
+    const nextPrevResData = response?.data || null;
 
-    console.log("get detail type", type);
-
-    // if (details.match) {
-    //   showPopup(PopupTheme.lastGamesDetail, {
-    //     maxWidth: true,
-    //     data: {
-    //       details,
-    //     },
-    //   });
-    // } else {
-    //   hidePopup();
-    // }
+    if (nextPrevResData?.gameHash) {
+      showPopup(PopupTheme.singleGamesDetail, {
+        maxWidth: true,
+        data: {
+          resData: nextPrevResData,
+          game
+        },
+      });
+    } else {
+      hidePopup();
+    }
   };
 
   const profit = resData?.profit;
   const hashed = _.has(resData, 'hashedServerSeed');
+  const gameHash = resData?.gameHash;
 
   return (
     <div className={styles.gameDetails}>
@@ -57,7 +56,7 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
         <div
           className={styles.nextGame}
           onClick={() => {
-            handleCrashFactorChange('HASH', 'next');
+            handleCrashFactorChange(gameHash, 'next');
           }}
         >
           {'<'} Next
@@ -65,7 +64,7 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
         <div
           className={styles.prevGame}
           onClick={() => {
-            handleCrashFactorChange('HASH', 'prev');
+            handleCrashFactorChange(gameHash, 'prev');
           }}
         >
           Prev {'>'}
@@ -80,6 +79,10 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
           <div>
               <b>Multiplier:</b>{' '}
               <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+          </div>
+          <div>
+              <b>Risk factor:</b>{' '}
+              <span>{resData?.riskFactor}</span>
           </div>
           <div>
               <b>Game Hash:</b>{' '}

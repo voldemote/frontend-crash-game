@@ -14,14 +14,10 @@ const Spins = ({spins, showPopup, text, game}) => {
 
   const handleClick = async (crash, e) => {
     const gameHash = crash?.gameHash;
-
-    console.log('##spins', spins);
     const response = await getSingleGameDetailById(gameHash, game.id).catch(err => {
       console.error("Can't get user by id:", err);
     });
     const resData = response?.data || null;
-
-    console.log('resData', resData);
 
     if (resData) {
       showPopup(PopupTheme.singleGamesDetail, {
