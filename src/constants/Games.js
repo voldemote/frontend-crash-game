@@ -243,7 +243,8 @@ export const GAMES = {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/dgbh7p68/show'
   },
   mines: {
     id: '619cc432121e61d6f06338c9',
