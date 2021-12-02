@@ -139,13 +139,13 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
         {hasStarted && (
           <>
             <Timer pause={!hasStarted} startTimeMs={gameStartedTime} />
-            <span>x</span>
+            <span>%</span>
           </>
         )}
         {!hasStarted && !!lastCrashValue && (
           <>
-            <span>{lastCrashValue?.crashFactor?.toFixed(2)}</span>
-            <span>x</span>
+            <span>{Math.floor(lastCrashValue?.crashFactor*100)}</span>
+            <span>%</span>
           </>
         )}
       </div>

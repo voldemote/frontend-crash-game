@@ -35,7 +35,7 @@ const LastCrashes = ({ lastCrashes, showPopup, text, gameTypeId }) => {
             key={`${crash?.crashFactor}${i}`}
             className={styles.crash}
           >
-            {crash?.crashFactor?.toFixed(2)}
+            {Math.floor(crash?.crashFactor*100)}%
           </span>
         ))}
       </div>
