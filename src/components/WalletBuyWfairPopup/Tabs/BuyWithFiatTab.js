@@ -18,7 +18,7 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
   const transakPopUp = () => {
     transakConfig.partnerCustomerId = user.userId
     transakConfig.fiatAmount = currency;
-    transakConfig.fiatCurrency = selectedCurrency;
+    transakConfig.fiatCurrency = selectedCurrency.toLocaleUpperCase();
 
     console.log(currency);
     let transak = new transakSDK(transakConfig);
