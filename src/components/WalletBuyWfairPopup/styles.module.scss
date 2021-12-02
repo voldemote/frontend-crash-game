@@ -155,7 +155,7 @@
         height: 60px;
         border-radius: 20px;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         column-gap: 10px;
 
@@ -163,7 +163,13 @@
           width: 30px;
           height: 30px;
         }
-
+        .coinWrapper {
+          padding-right: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          column-gap: 10px;
+        }
         .innerContiner {
           width: 134px;
           height: 60px;
