@@ -179,7 +179,6 @@
         @media (max-width: $screen-md) {
           height: 100%;
           font-size: 16px;
-          padding: 0 20px;
         }
 
         span {
@@ -198,7 +197,7 @@
           }
         }
         .coinWrapper {
-          padding-right: 15px;
+          padding: 0 15px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -214,7 +213,6 @@
           @media (max-width: $screen-md) {
             height: 100%;
             font-size: 16px;
-            padding: 0 20px;
           }
 
           .dropdown {

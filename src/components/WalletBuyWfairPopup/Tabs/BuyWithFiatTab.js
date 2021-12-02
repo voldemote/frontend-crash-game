@@ -75,7 +75,7 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
       };
       
       const { response } = await convertCurrency(convertCurrencyPayload);
-      const { WFAIR, convertedAmount } = response?.data;
+      const { convertedAmount } = response?.data;
       const roundedAmount = Math.floor(Number(convertedAmount) * 100) / 100;
       let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
     
