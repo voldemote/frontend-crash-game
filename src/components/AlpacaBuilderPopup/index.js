@@ -8,7 +8,13 @@ import { PopupActions } from 'store/actions/popup';
 const AlpacaBuilderPopup = ({
   hidePopup,
   saveAlpacaBuilderData,
-  showRegisterPopup
+  showRegisterPopup,
+  cancelLabel = "Skip",
+  saveLabel = "Next",
+  popUpTitle = "Register your Alpaca",
+  userId,
+  alpacaBuilderProps,
+  updateExistingUser
 }) => {
 
   const convertToBase64 = file => {
@@ -40,16 +46,26 @@ const AlpacaBuilderPopup = ({
 
   const closePopup = (exportData = null) => {
     hidePopup();
-    saveAlpacaBuilderData(exportData);
-    showRegisterPopup();
+    if(userId){
+      const userWithAlpacaBuilderData = {
+        imageName: exportData.fileName,
+        profilePic: exportData.base64,
+        alpacaBuilderProps: exportData.alpacaBuilderProps
+      };
+      updateExistingUser(userWithAlpacaBuilderData);
+    } else {
+      saveAlpacaBuilderData(exportData);
+      showRegisterPopup();
+    }
   };
 
   return (
     <div className={styles.alpacaPopup}>
-      <h2 className={styles.title}>Register your Alpaca</h2>
+      <h2 className={styles.title}>{popUpTitle}</h2>
       <AlpacaBuilder
-        cancelLabel="Skip"
-        saveLabel="Next"
+        props={alpacaBuilderProps}
+        cancelLabel={cancelLabel}
+        saveLabel={saveLabel}
         layout="wide"
         onExport={(data) => handleAlpacaBuilderExport(data)}
         onCancel={() => closePopup()}/>
@@ -70,6 +86,12 @@ const mapDispatchToProps = dispatch => {
     },
     showRegisterPopup: () => {
       dispatch(OnboardingActions.next());
+    },
+    updateExistingUser: data => {
+      dispatch(AuthenticationActions.initiateUpdateUserData({
+        user: data,
+        newUser: false //otherwise it triggers welcome popup
+      }));
     }
   };
 };
