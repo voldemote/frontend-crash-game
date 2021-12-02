@@ -58,7 +58,7 @@ const Bet = ({ cashedOut, bet, gameRunning, endGame }) => {
       <div className={styles.rightColumn}>
         {cashedOut ? (
           <span className={styles.crashFactor}>
-            {bet.crashFactor && Math.floor(bet.crashFactor*100)}%
+            {bet.crashFactor?.toFixed && bet.crashFactor.toFixed(2)}
           </span>
         ) : null}
         <span
