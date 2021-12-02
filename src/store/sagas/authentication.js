@@ -328,13 +328,13 @@ const firstSignUpPopup = function* (options) {
     (popupType === PopupTheme.auth || popupType === PopupTheme.disclaimer);
 
   if (authState === AuthState.LOGGED_OUT && !skip) {
-    yield put(
-      PopupActions.show({
-        popupType: options.last
-          ? PopupTheme.signUpNotificationSecond
-          : PopupTheme.signUpNotificationFirst,
-      })
-    );
+    // yield put(
+    //   PopupActions.show({
+    //     popupType: options.last
+    //       ? PopupTheme.signUpNotificationSecond
+    //       : PopupTheme.signUpNotificationFirst,
+    //   })
+    // );
   }
 };
 
