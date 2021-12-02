@@ -140,7 +140,14 @@ const Game = ({
       //casino_fairness record will be created automatically
       await gameApi.getCurrentFairnessByGame(gameCfg.id);
     })().catch(error => {
-      dispatch(AlertActions.showError(error.message));
+      dispatch(AlertActions.showError({
+        message: `${GAME_NAME}: ${error.response.data}`
+      }));
+
+      setBet({
+        ...bet,
+        pending: true
+      })
     });
   }, [])
 

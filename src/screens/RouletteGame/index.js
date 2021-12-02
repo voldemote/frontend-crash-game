@@ -109,7 +109,14 @@ const RouletteGame = ({
       //casino_fairness record will be created automatically
       await Api.getCurrentFairnessByGame(game.id);
     })().catch(error => {
-      dispatch(AlertActions.showError(error.message));
+      dispatch(AlertActions.showError({
+        message: `${game.name}: ${error.response.data}`
+      }));
+
+      setBet({
+        ...bet,
+        ready: false
+      })
     });
   }, [])
 

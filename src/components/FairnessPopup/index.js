@@ -46,8 +46,8 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
     setActiveSeeds({
       clientSeed: newClientSeed,
       nonce: 0,
-      hashedServerSeed: resData.hashedServerSeed,
-      hashedNextServerSeed: resData.hashedNextServerSeed
+      hashedServerSeed: resData?.hashedServerSeed,
+      hashedNextServerSeed: resData?.hashedNextServerSeed
     });
   }
 
@@ -75,7 +75,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
     if(rotated) {
       setTimeout(()=> {
         hidePopup()
-      }, 3000)
+      }, 2000)
     }
   }, [rotated])
 
@@ -112,7 +112,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
             </label>
             <input
               className={styles.profileInput}
-              value={activeSeeds.hashedServerSeed}
+              value={activeSeeds?.hashedServerSeed}
               disabled={true}
               // onChange={''}
             />
