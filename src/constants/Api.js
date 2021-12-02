@@ -70,6 +70,7 @@ export const API_EVENT_GET_COVER_STREAM = 'api/event/cover/streamed';
 export const API_BET_RESOLVE = 'api/event/bet/:id/resolve';
 export const API_BET_CANCEL = 'api/event/bet/:id/cancel';
 export const API_BET_DELETE = 'api/event/bet/:id/delete';
+export const API_SET_SESSION = 'new-session';
 export const API_TRADE_CREATE_ELON = 'api/elon-game/trade';
 export const API_WHEEL_BET = 'api/simple-games/trade/wheel';
 export const API_MINES_BET = '/api/mines-game/trade';

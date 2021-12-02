@@ -96,8 +96,7 @@ const AlpacannonGameAnimation = ({
     >
       <img className={styles.background} src={(height < width && isMobile) ? "/images/cannon-games/alpacannon-background-landscape.png" : (width < 600 || isMobile) ? "/images/cannon-games/alpacannon_background_mobile.png": "/images/cannon-games/alpacannon_background_desktop.png"} alt="background" />
       {audio && <GameAudioControlsLocal game='cannon' audio={audio} />}
-      <input
-          className={styles.slider}
+      <input className={styles.slider}
           value={slider}
           onChange={onSlider}
           style={{zIndex: game==='ready'&&4, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
