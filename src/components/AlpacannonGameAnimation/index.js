@@ -55,8 +55,9 @@ const AlpacannonGameAnimation = ({
     setTimeout(() => {setGame('shoot')}, 400)
     setTimeout(() => {
       setGame('crashed')
+      audio.playCrashSound()
       if(bet.profit > 0){
-        audio.playWinSound()
+        
         /*
         const spin = bet.profit > 0 ?
           { type: 'win', value: '+' + bet.profit } :

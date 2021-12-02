@@ -53,6 +53,14 @@ export class AudioController {
           url: '/sounds/elon/sfx_cashout3.mp3',
           loop: false,
         },
+        crash: {
+          url: '/sounds/cannon/crash.mp3',
+          loop: false,
+        },
+        cannon: {
+          url: '/sounds/cannon/cannon.mp3',
+          loop: false,
+        },
         placebet: {
           url: '/sounds/elon/sfx_placebet.mp3',
           loop: false,
@@ -150,6 +158,15 @@ export class AudioController {
 
   playWinSound() {
     this.playSound('cashout', false, 1);
+
+  }
+
+  playCannonSound() {
+    this.playSound('cannon', false, 1);
+
+  }
+  playCrashSound() {
+    this.playSound('crash', false, 1);
 
   }
 

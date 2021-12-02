@@ -112,7 +112,7 @@ const PlinkoGame = ({
 
 
   async function handleBet(payload) {
-    audio.playBetSound();
+    audio.playCannonSound();
     if (!payload) return;
     try {
       if(payload.demo) {
