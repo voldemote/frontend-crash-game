@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
+import { getSpinsAlpacaWheel, GameApi, setInitialSession } from 'api/casino-games';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -59,6 +59,7 @@ const RouletteGame = ({
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({ready: true});
   const [amount, setAmount] = useState(50);
+  const [init, setInit] = useState(null);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -70,6 +71,17 @@ const RouletteGame = ({
 
 
   useEffect(() => {
+    setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
+      .then(({data}) => {
+        console.log("data.TokenID", data.TokenID)
+        setInit(data.TokenID)
+        console.log("response", data)
+      })
+      .catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
+
+    /*
     getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
@@ -91,7 +103,10 @@ const RouletteGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
-
+    */
+    return () => {
+      setInit(null)
+    }
   }, [])
 
   useEffect(() => {
@@ -172,14 +187,14 @@ const RouletteGame = ({
     setSpins([newSpin, ...spins])
   }
 
-  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=36bf7fd7-45bd-4ec3-b8ce-91a2c03c7011&PortalName=wallfair`
+  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair`
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/external-games" text={gameName} />
+            <BackLink to="/games" text={gameName} />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
@@ -190,8 +205,7 @@ const RouletteGame = ({
               onClick={handleHelpClick}
             />
           </div>
-
-          <iframe className={styles.mainContainer} src={url}/>
+          {init && <iframe className={styles.mainContainer} src={url}/>}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}

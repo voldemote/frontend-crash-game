@@ -97,6 +97,13 @@ const getSpinsAlpacaWheel = (gameTypeId) => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
+const setInitialSession = (payload) => {
+  const callThis = ApiUrls.API_SET_SESSION;
+
+  return Api.post(callThis, payload).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
 
 const setToken = token => {
   const authentication = 'Bearer ' + token;
@@ -151,6 +158,7 @@ export {
   GameApi,
   Api,
   setToken,
+  setInitialSession,
   createTrade,
   getSpinsAlpacaWheel,
   getLuckyUsers,
