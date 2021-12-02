@@ -108,6 +108,10 @@ const MainMenu = ({
     setName(e.target.value);
   };
 
+  const onAlpacaBuilderClick = () => {
+    showPopup(PopupTheme.alpacaBuilder);
+  };
+
   const handleUsernameDebounceAction = useMemo(() => {
     return _.debounce(async eventValue => {
       const response = await checkUsername(eventValue).catch(err => {
@@ -478,6 +482,7 @@ const MainMenu = ({
             onPreferencesClick={() => onPreferencesClick()}
             onLogoutClick={() => onClickGoToRoute(Routes.logout)}
             onCloseProfile={() => close()}
+            onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
           />
         </div>
       </div>
