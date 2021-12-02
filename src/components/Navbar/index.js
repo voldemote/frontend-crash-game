@@ -34,6 +34,7 @@ import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
 
 import moment from 'moment';
 import Link from 'components/Link';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const Navbar = ({
   user,
@@ -48,6 +49,7 @@ const Navbar = ({
   showPopup,
   userMessages,
   setMessageRead,
+  startOnboardingFlow,
 }) => {
   const [leaderboardWeeklyDate, setLeaderboardWeeklyDate] = useState(
     new Date()
@@ -140,11 +142,16 @@ const Navbar = ({
 
   const hasOpenDrawer = !isOpen('');
 
-  const showPopupForUnauthenticated = authenticationType => {
+  const showPopupForRegister = () => {
     if (!isLoggedIn()) {
-      showPopup(PopupTheme.auth, { small: true, authenticationType });
+      startOnboardingFlow();
     }
-  };
+  }
+  const showPopupForLogin = () => {
+    if (!isLoggedIn()) {
+      showPopup(PopupTheme.auth, { small: true, authenticationType:AuthenticationType.login });
+    }
+  }
 
   const showAlphaPlatformPopup = () => {
     showPopup(PopupTheme.alphaPlatform);
@@ -230,7 +237,7 @@ const Navbar = ({
         <Button
           className={style.loginButton}
           withoutBackground={true}
-          onClick={() => showPopupForUnauthenticated(AuthenticationType.login)}
+          onClick={() => showPopupForLogin()}
         >
           Login
         </Button>
@@ -238,7 +245,7 @@ const Navbar = ({
           className={style.signUpButton}
           withoutBackground={true}
           onClick={() =>
-            showPopupForUnauthenticated(AuthenticationType.register)
+            showPopupForRegister()
           }
         >
           Sign Up
@@ -476,6 +483,9 @@ const mapDispatchToProps = dispatch => {
     },
     setEditProfileVisible: bool => {
       dispatch(GeneralActions.setEditProfileVisible(bool));
+    },
+    startOnboardingFlow: () =>{
+      dispatch(OnboardingActions.start());
     },
     showPopup: (popupType, options) => {
       dispatch(

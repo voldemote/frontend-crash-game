@@ -10,6 +10,7 @@ import SocialLogin from '../SocialLogin';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from '../AuthenticationType';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const Login = ({
   errorState,
@@ -221,15 +222,20 @@ const mapDispatchToProps = (dispatch) => {
     },
     openSignUpPopup: () => {
       dispatch(
-        PopupActions.show({
-          popupType: PopupTheme.auth,
-          options: {
-            authenticationType: AuthenticationType.register,
-            preloadEmailSignUp: true,
-            small: false,
-          },
-        })
-      );
+        OnboardingActions.start({options:{
+          preloadEmailSignUp: true,
+        }})
+      )
+      // dispatch(
+      //   PopupActions.show({
+      //     popupType: PopupTheme.auth,
+      //     options: {
+      //       authenticationType: AuthenticationType.register,
+      //       preloadEmailSignUp: true,
+      //       small: false,
+      //     },
+      //   })
+      // );
     },
   };
 };
