@@ -14,22 +14,24 @@ const Spins = ({spins, showPopup, text, game}) => {
 
   const handleClick = async (crash, e) => {
     const gameHash = crash?.gameHash;
-    const response = await getSingleGameDetailById(gameHash, game.id).catch(err => {
-      console.error("Can't get user by id:", err);
-    });
-    const resData = response?.data || null;
 
-    if (resData) {
-      showPopup(PopupTheme.singleGamesDetail, {
-        maxWidth: true,
-        data: {
-          resData,
-          game
-        },
+    if(gameHash) {
+      const response = await getSingleGameDetailById(gameHash, game.id).catch(err => {
+        console.error("Can't get user by id:", err);
       });
+      const resData = response?.data || null;
+
+      if (resData) {
+        showPopup(PopupTheme.singleGamesDetail, {
+          maxWidth: true,
+          data: {
+            resData,
+            game
+          },
+        });
+      }
     }
   };
-
 
 
   return (
