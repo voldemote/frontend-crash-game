@@ -173,7 +173,7 @@ const BuyWithCrypto = () => {
         </button>
       </div>
       {/* transaction Section */}
-      {true && (
+      {transaction && (
         <div className={styles.transactionContainer}>
           <div className={styles.transferSection}>
             <p>
