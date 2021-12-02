@@ -28,7 +28,7 @@ import { WallfairActions } from 'store/actions/wallfair';
 
 const DepositTab = ({ user, resetState }) => {
   const [walletAddress, setWalletAddress] = useState(
-    '0x71a62c90E152557B68a8C8C6c5a8560117eBf288'
+    '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8'
   );
   const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
   // const [walletType, setWalletType] = useState('');

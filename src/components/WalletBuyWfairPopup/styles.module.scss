@@ -4,7 +4,7 @@
   //   display: flex;
   //   align-items: center;
   height: 100%;
-  width: 100%;
+  width: 660px;
   background-color: $colorWhite;
   color: $colorPrimaryDark;
   border-radius: 10px;
@@ -81,15 +81,372 @@
   margin-top: 10px;
   display: flex;
   justify-content: center;
-  height: 700px;
   width: 100%;
+  flex-direction: column;
+
+  .buyWithFiatTabIframe {
+    display: block;
+    width: 100%;
+    max-height: 650px;
+    max-width: 450px;
+  }
+
+  .textContainer {
+    width: 507px;
+    height: 224px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 5px;
+    margin-top: 20px;
+
+    p {
+      font-family: $fontRegular;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 25px;
+      text-align: justify;
+      margin-bottom: 25px;
+    }
+  }
+  .wfairCalculatorContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+
+    .inputContiner {
+      width: 550px;
+      height: 80px;
+      background: $colorWhite;
+      border: 1px solid $colorLightGray2;
+      box-sizing: border-box;
+      border-radius: 20px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 70%;
+        height: 70px;
+        padding: 20px;
+        margin: 0px 10px;
+        border: none;
+        font-size: large;
+        direction: ltr;
+        text-align: center;
+        font-size: 30px;
+        &:focus-visible {
+          outline: none;
+        }
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .inputRightContainer {
+        width: 30%;
+        height: 80px;
+        border-left: 1px solid $colorLightGray2;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .innerContiner {
+          width: 134px;
+          height: 68px;
+          background-color: $colorBlueLight;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+
+          .innerContent {
+            p {
+              font-family: $fontBold;
+              font-size: 18px;
+            }
+          }
+          .innerIcon {
+            svg {
+              fill: #3570ff;
+              stroke: none;
+            }
+          }
+        }
+
+        img {
+          height: 40px;
+          width: 80%;
+          object-fit: contain;
+        }
+      }
+    }
+    .InputLineSeparator {
+      width: 550px;
+      height: 80px;
+      background: $colorWhite;
+      margin-bottom: 11px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        height: 80px;
+      }
+    }
+
+    .transankContineButton {
+      background: linear-gradient(
+        180deg,
+        $colorPinkDark 0%,
+        $colorLightDark2 97.4%
+      );
+      border-radius: 22.5px;
+      border: 1px solid $colorWhite;
+      width: 240px;
+      height: 45px;
+      font-family: $fontRegular;
+      color: $colorWhite;
+      margin-top: 55px;
+      margin-bottom: 36px;
+      cursor: pointer;
+    }
+  }
 }
 
-.buyWithFiatTabIframe {
-  display: block;
+.buyWithCryptoContainer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
   width: 100%;
-  max-height: 650px;
-  max-width: 450px;
+  min-height: 749px;
+  flex-direction: column;
+
+  .cryptoTabsContianer {
+    width: 500px;
+    height: 63px;
+    display: flex;
+    margin: 0 auto;
+    padding: 5px;
+    margin-top: 20px;
+    border-radius: 50px;
+    background-color: $colorPinkDark;
+    justify-content: center;
+    align-items: center;
+
+    .cryptoTab {
+      width: 160px;
+      height: 46px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+      cursor: pointer;
+      p {
+        margin-left: 10px;
+        font-size: 20px;
+        line-height: 25px;
+        font-family: $fontRegular;
+      }
+    }
+    .cryptoTabActive {
+      background-color: white;
+    }
+  }
+
+  .cryptoContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 25px;
+    p {
+      font-family: $fontRegular;
+      font-size: small;
+    }
+  }
+
+  .cryptoCalculatorContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+
+    .cryptoInputContiner {
+      width: 350px;
+      height: 80px;
+      background: $colorWhite;
+      border: 1px solid $colorLightGray2;
+      box-sizing: border-box;
+      border-radius: 20px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 70%;
+        height: 70px;
+        padding: 20px;
+        margin: 0px 10px;
+        border: none;
+        font-size: 30px;
+        direction: ltr;
+        text-align: center;
+        &:focus-visible {
+          outline: none;
+        }
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .inputRightContainer {
+        width: 40%;
+        height: 80px;
+        border-left: 1px solid $colorLightGray2;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .innerContiner {
+          width: 134px;
+          height: 68px;
+          background-color: $colorBlueLight;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+
+          .innerContent {
+            p {
+              font-family: $fontBold;
+              font-size: 18px;
+            }
+          }
+          .innerIcon {
+            svg {
+              fill: #3570ff;
+              stroke: none;
+            }
+          }
+        }
+
+        img {
+          height: 40px;
+          width: 50%;
+        }
+      }
+    }
+    .InputLineSeparator {
+      width: 550px;
+      height: 80px;
+      background: $colorWhite;
+      margin-bottom: 11px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        height: 80px;
+      }
+    }
+
+    .transankContineButton {
+      background: linear-gradient(
+        180deg,
+        $colorPinkDark 0%,
+        $colorLightDark2 97.4%
+      );
+      border-radius: 22.5px;
+      border: 1px solid $colorWhite;
+      width: 240px;
+      height: 45px;
+      font-family: $fontRegular;
+      color: $colorWhite;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .transactionContainer {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-top: 40px;
+
+    .transferSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 75%;
+      margin: 0 auto;
+      flex-direction: column;
+      p {
+        font-family: $fontRegular;
+        font-size: small;
+        margin-bottom: 22px;
+
+        span {
+          font-family: $fontBold;
+        }
+      }
+      .cryptoUrlContiner {
+        width: 350px;
+        height: 80px;
+        background: $colorWhite;
+        border: 1px solid $colorLightGray2;
+        box-sizing: border-box;
+        border-radius: 20px;
+        margin-bottom: 11px;
+        margin-top: 11px;
+        display: flex;
+        align-items: center;
+
+        input {
+          width: 100%;
+          height: 70px;
+          padding: 10px;
+          margin: 0px 10px;
+          border: none;
+          font-size: medium;
+          &:focus-visible {
+            outline: none;
+          }
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+
+      .sendUrlBtn {
+        background: linear-gradient(
+          180deg,
+          $colorPinkDark 0%,
+          $colorLightDark2 97.4%
+        );
+        border-radius: 22.5px;
+        border: 1px solid $colorWhite;
+        width: 240px;
+        height: 45px;
+        font-family: $fontRegular;
+        color: $colorWhite;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .depositTabContainer {
@@ -107,7 +464,7 @@
     border: 1px solid $colorWhite;
     background-color: $colorPinkDark;
     border-radius: 50px;
-    padding: 10px;
+    padding: 10px 8px;
     width: 318px;
     height: 64px;
     margin-top: 10px;
@@ -127,10 +484,10 @@
       display: flex;
       background-color: $colorWhite;
       border-radius: 50px;
-      padding: 8px;
+      padding: 8px 3px;
       display: flex;
       cursor: not-allowed;
-      // justify-content: center;
+      justify-content: center;
     }
     .inactiveButton {
       height: 50px;
@@ -140,7 +497,7 @@
       padding: 10px;
       display: flex;
       cursor: pointer;
-      // justify-content: center;
+      justify-content: center;
     }
   }
 
