@@ -94,15 +94,15 @@ const TokenTransfer = ({
               key="transferValue"
               placeholder="WFAIR Amount"
               value={transferValue}
+              type={`number`}
+              max={balance < 2000 ? balance : 2000}
               onChange={e => {
-                if (e.target.value <= balance) {
                   setTransferValue(
                     e.target.value
                       .replace(/[^0-9.,]/g, '')
                       .replace(/(,)/g, '.')
                       .replace(/(\..*?)\..*/g, '$1')
                   );
-                }
               }}
             />
             <div className={styles.buttonWrapper}>

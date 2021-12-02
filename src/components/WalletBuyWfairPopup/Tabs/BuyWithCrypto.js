@@ -133,7 +133,7 @@ const BuyWithCrypto = () => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
-          <input type="number" value={WFAIRToken} />
+          <input type="number" disabled readonly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
             {activeTab === 'bitcoin' && <BitcoinIcon />}
             {activeTab === 'ethereum' && <EthereumIcon />}

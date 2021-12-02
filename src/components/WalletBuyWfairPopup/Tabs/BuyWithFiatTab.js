@@ -93,7 +93,7 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.inputContiner}>
-          <input type="number" value={WFAIRToken} />
+          <input type="number" disabled readonly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
             <img src={WallfairInput} alt="wallfair-input" />
           </div>
