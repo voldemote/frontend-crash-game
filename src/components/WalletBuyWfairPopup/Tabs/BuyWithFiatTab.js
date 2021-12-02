@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
-import WallfairInput from '../../../data/images/wallfair-input.png';
+import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.svg';
 import Dropdown from '../../Dropdown';
 import { convertCurrency } from '../../../api/index';
 import transakSDK from '@transak/transak-sdk';
@@ -74,7 +74,6 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
       const { response } = await convertCurrency(convertCurrencyPayload);
       const { WFAIR, convertedAmount } = response?.data;
       const roundedAmount = Math.floor(Number(convertedAmount) * 100) / 100;
-      console.log(roundedAmount);
       let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
     
       setWFAIRToken(WfairTokenValue);
@@ -92,10 +91,6 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
 
   return (
     <div className={styles.buyWithFiatTabContainer}>
-      <div className={styles.textContainer}>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tortor tellus, pellentesque volutpat augue eu, gravida volutpat ipsum.</p>
-        <p>Sed venenatis accumsan tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-      </div>
       <div className={styles.wfairCalculatorContainer}>
         {/* Currency */}
         <div className={styles.inputContiner}>
@@ -125,10 +120,14 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.inputContiner}>
-          <input disabled readonly value={WFAIRToken} />
+          <input disabled readOnly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
-            <img src={WallfairInput} alt="wallfair-input" />
+            <WfairIcon /><span>WFAIR</span>
           </div>
+        </div>
+        <div className={styles.textContainer}>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tortor tellus, pellentesque volutpat augue eu, gravida volutpat ipsum.</p>
+          <p>Sed venenatis accumsan tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
         </div>
         <button
           className={styles.transankContineButton}

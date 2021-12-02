@@ -7,17 +7,18 @@ import { ReactComponent as ArrowDown } from '../../../data/icons/arrow_down_icon
 import { ReactComponent as BitcoinIcon } from '../../../data/icons/bitcoin-symbol.svg';
 import { ReactComponent as EthereumIcon } from '../../../data/icons/ethereum-symbol.svg';
 import { ReactComponent as LitecoinIcon } from '../../../data/icons/litecoin-symbol.svg';
+import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.svg';
 import { convertCurrency } from '../../../api/index';
 import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
 
 const content = {
   bitcoin: `Send any amount of BTC to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
-Roobet does not accept bitcoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.`,
+Alpacasino does not accept bitcoin that originates from any mixing services; please refrain from depositing directly or indirectly from these services.`,
   ethereum: `Send any amount of ETH to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
-Roobet does not accept ethereum that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.`,
+Alpacasino does not accept ethereum that originates from any mixing services; please refrain from depositing directly or indirectly from these services.`,
   litecoin: `Send any amount of LTC to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
-Roobet does not accept litecoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.`,
+Alpacasino does not accept litecoin that originates from any mixing services; please refrain from depositing directly or indirectly from these services.`,
 };
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -61,16 +62,19 @@ const BuyWithCrypto = () => {
     if (currency > 0) {
 
       const convertCurrencyPayload = {
-        convertFrom: selectedCurrency.label.toLocaleUpperCase(),
-        convertTo: cryptoShortName[activeTab],
+        convertFrom: cryptoShortName[activeTab],
+        convertTo: 'WFAIR',
         amount: currency
       };
       
       const { response } = await convertCurrency(convertCurrencyPayload);
       const { convertedAmount } = response?.data;
       const convertedTokenValue = !convertedAmount ? 0 : convertedAmount.toFixed(4);
+
+      const roundedAmount = Math.floor(Number(convertedTokenValue) * 100) / 100;
+      let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
     
-      setTokenValue(convertedTokenValue);
+      setTokenValue(WfairTokenValue);
     }
   }
     
@@ -122,18 +126,13 @@ const BuyWithCrypto = () => {
         </div>
       </div>
 
-      {/* Content */}
-      <div className={styles.cryptoContent}>
-        <p>{content[activeTab]}</p>
-      </div>
-
       {/* Crypto Calculator */}
       <div className={styles.cryptoCalculatorContainer}>
         {/* Currency */}
         <div className={styles.cryptoInputContiner}>
-          <input
-            type="number"
-            value={currency}
+          
+          <input 
+            value={currency} 
             min={1}
             max={2000}
             onChange={currencyChange}
@@ -141,15 +140,10 @@ const BuyWithCrypto = () => {
             onClick={selectContent}
           />
           <div className={styles.inputRightContainer}>
-            <div className={styles.innerContiner}>
-              <Dropdown
-                style={styles.dropdown}
-                value={selectedCurrency.label}
-                placeholder="Select currency..."
-                setValue={onCurrencyChange}
-                options={CURRENCY_OPTIONS}
-              />
-            </div>
+            {activeTab === 'bitcoin' && <><BitcoinIcon />BTC</>}
+            {activeTab === 'ethereum' && <><EthereumIcon />ETH</>}
+            {activeTab === 'litecoin' && <><LitecoinIcon />LTC</>}
+            {/* <img src={WallfairInput} alt="wallfair-input" /> */}
           </div>
         </div>
         <div className={styles.InputLineSeparator}>
@@ -157,14 +151,17 @@ const BuyWithCrypto = () => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
-          <input disabled readonly value={tokenValue} />
+          <input disabled readOnly value={tokenValue} />
           <div className={styles.inputRightContainer}>
-            {activeTab === 'bitcoin' && <BitcoinIcon />}
-            {activeTab === 'ethereum' && <EthereumIcon />}
-            {activeTab === 'litecoin' && <LitecoinIcon />}
-            {/* <img src={WallfairInput} alt="wallfair-input" /> */}
+            <WfairIcon /><span>WFAIR</span>
           </div>
         </div>
+
+        {/* Content */}
+        <div className={styles.cryptoContent}>
+          <p>{content[activeTab]}</p>
+        </div>
+        
         <button
           className={styles.transankContineButton}
           onClick={OnClickConfirmAmount}
