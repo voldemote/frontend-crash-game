@@ -138,7 +138,7 @@ const PlaceBetCasino = ({
         else onBet({...bet, amount: newamount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
       }
       else {
-        onBet({autobet: false, ngame: 0, ready: true})
+        setBet({autobet: false, ngame: 0, ready: true})
       }
     }
   }, [bet])
@@ -199,7 +199,7 @@ const PlaceBetCasino = ({
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
-          This is a simulated version. Signin to start playing.
+          This is a simulated version. Sign in to start playing.
         </div>
       );
     }

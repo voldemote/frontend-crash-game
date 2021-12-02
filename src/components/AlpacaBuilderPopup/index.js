@@ -5,7 +5,7 @@ import { AuthenticationActions } from 'store/actions/authentication';
 import { OnboardingActions } from 'store/actions/onboarding';
 
 const AlpacaBuilderPopup = ({
-  hidePopup = () => {},
+  hidePopup,
   saveAlpacaBuilderData,
   showRegisterPopup
 }) => {
@@ -60,8 +60,12 @@ const mapStateToProps = () => {}
 
 const mapDispatchToProps = dispatch => {
   return {
+
     saveAlpacaBuilderData: exportData => {
       dispatch(AuthenticationActions.setAlpacaBuilderData(exportData));
+    },
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
     },
     showRegisterPopup: () => {
       dispatch(OnboardingActions.next());

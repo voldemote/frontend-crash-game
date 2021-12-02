@@ -128,13 +128,13 @@ const RosiGameAnimation = ({
         {gameStarted && (
           <>
             <Timer pause={!gameStarted} startTimeMs={gameStartedTime} />
-            <span>x</span>
+            <span>%</span>
           </>
         )}
         {!gameStarted && !!lastCrashValue && (
           <>
-            <span>{lastCrashValue?.crashFactor?.toFixed(2)}</span>
-            <span>x</span>
+            <span>{Math.floor(lastCrashValue?.crashFactor*100)}</span>
+            <span>%</span>
           </>
         )}
       </div>

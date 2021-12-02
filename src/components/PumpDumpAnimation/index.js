@@ -9,7 +9,7 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import { GameAudioManager } from './utils/GameAudioManager';
 import { PumpDumpGameMananger } from './game/PumpDumpGameManager';
 import Counter from 'components/RosiGameAnimation/Counter';
-import { ROSI_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
+import { PUMPDUMP_GAME_AFTER_CRASH_DELAY } from 'constants/RosiGame';
 import Timer from 'components/RosiGameAnimation/Timer';
 import { ASSET_LIST } from './config';
 
@@ -110,7 +110,7 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
           PumpDumpGameMananger.launchCoin(new Date(nextGameAtTimeStamp).getTime() - Date.now());
           setIsPreparingRound(true);
         }
-      }, ROSI_GAME_AFTER_CRASH_DELAY);
+      }, PUMPDUMP_GAME_AFTER_CRASH_DELAY);
     }
   }, [hasStarted, hasGameLoaded]); // eslint-disable-line
 
@@ -139,13 +139,13 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
         {hasStarted && (
           <>
             <Timer pause={!hasStarted} startTimeMs={gameStartedTime} />
-            <span>x</span>
+            <span>%</span>
           </>
         )}
         {!hasStarted && !!lastCrashValue && (
           <>
-            <span>{lastCrashValue?.crashFactor?.toFixed(2)}</span>
-            <span>x</span>
+            <span>{Math.floor(lastCrashValue?.crashFactor*100)}</span>
+            <span>%</span>
           </>
         )}
       </div>

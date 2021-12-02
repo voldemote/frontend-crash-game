@@ -20,9 +20,11 @@ export class GameScene extends Container {
     endGameContainer = null;
 
     gameStartTime = 0;
-    memeThreshold = 10000;
+    memeThreshold = 2500;
 
     cashedOutUserIds = [];
+
+    paused = false;
 
     audioManager;
 
@@ -68,6 +70,8 @@ export class GameScene extends Container {
 
     start(gameStartTime, cashOuts) {
         this.gameStartTime = gameStartTime;
+
+        this.paused = false;
 
         // If game has already been running
         this.removeVisibilityChangeHandle();
@@ -142,15 +146,18 @@ export class GameScene extends Container {
         this.verticalAxis.update(timeElapsed);
         this.barChartContainer.update(timeElapsed);
         if (timeElapsed > this.memeThreshold) {
-            this.memeThreshold = timeElapsed + 10000;
-            this.memeContainer.generateNextMeme();
+            this.memeThreshold = timeElapsed + 3200;
+            if (!this.paused) {
+                this.memeContainer.generateNextMeme();
+            }
         }
         this.cashOutContainer.update();
     }
 
     handleEndGame() {
         let timeElapsed = Date.now() - this.gameStartTime;
-        this.barChartContainer.createCrashBar(timeElapsed)
+        this.barChartContainer.createCrashBar(timeElapsed);
+        this.paused = true;
         this.barChartContainer.once('crash-bar-position', (rect) => {
             this.endGameContainer.showCrash(rect);
         });

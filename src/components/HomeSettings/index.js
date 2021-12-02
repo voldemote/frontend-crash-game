@@ -3,10 +3,13 @@ import styles from './styles.module.scss';
 import Icon from '../Icon';
 import IconType from '../Icon/IconType';
 import DefaultProfilePicture from 'data/images/alpaca-logo-mini.svg';
+import EditProfilePicture from 'data/images/profile.svg';
 import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
 
 const HomeSettings = ({
+  profilePic,
+  onAlpacaBuilderClick,
   onEditClick,
   onReferralsClick,
   onEmailNotificationClick,
@@ -17,6 +20,25 @@ const HomeSettings = ({
     <div className={styles.settings}>
       <div className={styles.settingContainer}>
         <div
+          onClick={onAlpacaBuilderClick}
+          className={classNames(
+            styles.singleSettingHolder,
+            styles.settingActive
+          )}
+        >
+          <img
+            src={profilePic ? profilePic : DefaultProfilePicture}
+            alt="profile_picture"
+            className={styles.profilePicture}
+          />
+          <p className={styles.settingTitle}>Customize your Alpaca</p>
+          <Icon
+            width={15}
+            iconType={IconType.arrowSmallRight}
+            className={styles.goIntoSettingIcon}
+          />
+        </div>
+        <div
           onClick={onEditClick}
           className={classNames(
             styles.singleSettingHolder,
@@ -24,8 +46,8 @@ const HomeSettings = ({
           )}
         >
           <img
-            src={DefaultProfilePicture}
-            alt="profile_picture"
+            src={EditProfilePicture}
+            alt="edit_profile"
             className={styles.profilePicture}
           />
           <p className={styles.settingTitle}>Edit my Profile</p>

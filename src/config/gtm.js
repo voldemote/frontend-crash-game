@@ -370,4 +370,123 @@ export const trackMinesCashout = ({ amount, multiplier, accumulated, autobet, ..
   TagManager.dataLayer(tagManagerArgs);
 };
 
+// PUMP AND DUMP
+
+export const trackPumpDumpPlaceBet = ({
+  amount,
+  multiplier,
+  autobet,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      event: 'pumpdumpPlaceBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpPlaceBetGuest = ({
+  amount,
+  multiplier,
+  autobet,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      event: 'pumpdumpPlaceBetGuest',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpCashout = ({ amount, multiplier, accumulated, autobet, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      accumulated,
+      event: 'pumpdumpCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpCancelBet = ({ amount, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      event: 'pumpdumpCancelBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpStartAutobet = ({ amount, multiplier, autobet, profit, loss, wincrease, lincrease, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount, //bet amount
+      multiplier, //attemp auto cashout at
+      autobet, //autobet true/false
+      profit, //stop on profit
+      loss, //stop on loss
+      wincrease, //on win inscrease
+      lincrease, //on loss increase
+      event: 'pumpdumpStartAutobet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpStopAutobet = ({ amount, multiplier, autobet, profit, loss, wincrease, lincrease, accumulated, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount, //bet amount
+      multiplier, //attemp auto cashout at
+      autobet, //autobet true/false
+      profit, //stop on profit
+      loss, //stop on loss
+      wincrease, //on win inscrease
+      lincrease, //on loss increase
+      accumulated,
+      event: 'pumpdumpStopAutobet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackPumpDumpChangeAutoCashout = ({
+  multiplier,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      multiplier,
+      event: 'pumpdumpChangeAutoCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
 export default TagManager;

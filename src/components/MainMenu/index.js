@@ -471,6 +471,7 @@ const MainMenu = ({
         </h2>
         <div className={styles.mainContent}>
           <HomeSettings
+            profilePic={profilePic}
             onEditClick={() => onClickShowEditProfile()}
             onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}
