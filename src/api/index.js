@@ -511,6 +511,18 @@ const updateStatus = (userId, status) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const convertCurrency = ({convertFrom, convertTo, amount}) => {
+  return Api.get(ApiUrls.CONVERT_CURRENCY, {
+    params: {
+      convertFrom,
+      convertTo,
+      amount
+    },
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -571,4 +583,5 @@ export {
   requestTokens,
   fetchChatMessagesByUser,
   setUserMessageRead,
+  convertCurrency,
 };
