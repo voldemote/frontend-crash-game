@@ -52,7 +52,7 @@ const MainMenu = ({
   const [profilePic, setProfilePic] = useState(user.profilePicture);
   const [imageName, setImageName] = useState(null);
   const [aboutMe, setAboutMe] = useState(user.aboutMe);
-  const [alpacaBuilderProps, setAlpacaBuilderProps] = useState(user.alpacaBuilderProps);
+  const [alpacaBuilderProps, setAlpacaBuilderProps] = useState({...user.alpacaBuilderProps});
   const [profileSubmitActive, setProfileSubmitActive] = useState(true);
   const [profileErrorMessage, setProfileErrorMessage] = useState();
 
@@ -65,13 +65,11 @@ const MainMenu = ({
     setName(user.name);
     setEmail(user.email);
     setAboutMe(user.aboutMe);
-    setAlpacaBuilderProps(user.alpacaBuilderProps);
+    setAlpacaBuilderProps({...user.alpacaBuilderProps});
   }, [user, editVisible]);
 
   const clickUploadProfilePicture = () => {
-    //showPopup(PopupTheme.alpacaBuilder, { small: true });
     handleAlpacaBuilderVisible(!alpacaBuilderVisible);
-    //profilePictureRefName.current?.click();
   };
 
   const history = useHistory();
@@ -104,12 +102,6 @@ const MainMenu = ({
 
   const onReferralsClick = () => {
     handleReferralsVisible(!referralsVisible);
-  };
-
-  const onAlpacaBuilderClick = () => {
-    showPopup(PopupTheme.alpa, {  });
-
-    //handleAlpacaBuilderVisible(!alpacaBuilderVisible);
   };
 
   const handleName = e => {
@@ -186,7 +178,7 @@ const MainMenu = ({
     if (!blob) return;
     await handleFileUpload(blob);
     handleAlpacaBuilderVisible(false);
-    setAlpacaBuilderProps(props);
+    setAlpacaBuilderProps({...props});
   };
 
   const resizePicture = base64 =>
@@ -485,7 +477,6 @@ const MainMenu = ({
             onPreferencesClick={() => onPreferencesClick()}
             onLogoutClick={() => onClickGoToRoute(Routes.logout)}
             onCloseProfile={() => close()}
-            onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
           />
         </div>
       </div>

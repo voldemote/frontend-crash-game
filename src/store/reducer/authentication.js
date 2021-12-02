@@ -28,6 +28,7 @@ const initialState = {
   totalOpenTradesAmount: 0,
   preferences: {},
   notificationSettings: {},
+  alpacaBuilderData: null,
 };
 
 const requestSmsSucceeded = (action, state) => {
@@ -432,6 +433,13 @@ const onVerify = (action, state) => {
   };
 };
 
+const setAlpacaBuilderData = (action, state) => {
+  return {
+    ...state,
+    alpacaBuilderData: {...action}
+  };
+};
+
 export default function (state = initialState, action) {
   switch (action.type) {
     // @formatter:off
@@ -497,6 +505,8 @@ export default function (state = initialState, action) {
       return forgotPasswordFail(action, state);
     case AuthenticationTypes.RESET_PASSWORD_FAIL:
       return resetPasswordFail(action, state);
+    case AuthenticationTypes.SET_ALPACA_BUILDER_DATA:
+      return setAlpacaBuilderData(action, state);
     default:
       return cleanErrors(action, state);
     // @formatter:on

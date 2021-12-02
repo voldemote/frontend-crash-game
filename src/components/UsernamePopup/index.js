@@ -12,11 +12,12 @@ import { connect } from 'react-redux';
 import authState from 'constants/AuthState';
 import _ from 'lodash';
 import { checkUsername } from '../../api';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const UsernamePopup = ({
   hidePopup = () => {},
   loading,
-  showAlpacaBuilder,
+  showOnboardingFlowNext,
   updateUser,
   user,
   initialReward,
@@ -57,7 +58,7 @@ const UsernamePopup = ({
 
   const skipUsername = () => {
     hidePopup();
-    showAlpacaBuilder(initialReward);
+    showOnboardingFlowNext(initialReward);
   };
 
   return (
@@ -116,13 +117,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    showAlpacaBuilder: initialReward => {
+    showOnboardingFlowNext: initialReward => {
       dispatch(
-        PopupActions.show({
-          popupType: PopupTheme.alpacaBuilder,
+        OnboardingActions.next({
           options: {
-            initialReward: initialReward,
-            small: false,
+            initialReward
           },
         })
       );

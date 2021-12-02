@@ -14,6 +14,7 @@ import rosiGameReducer from './rosi-game';
 import wallfairReducer from './wallfair';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
+import onboardingReducer from './onboarding';
 
 export default history =>
   combineReducers({
@@ -31,5 +32,6 @@ export default history =>
     router: connectRouter(history),
     general: generalReducer,
     rosiGame: rosiGameReducer,
-    wallfair: wallfairReducer
+    wallfair: wallfairReducer,
+    onboarding: onboardingReducer,
   });
