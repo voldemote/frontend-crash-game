@@ -13,8 +13,8 @@ const transakConfig = {
   redirectURL: '',
   hostURL: window.location.origin,
 //   partnerCustomerId: '615bf607f04fbb15aa5dd367', // Internal user id (mongo db)
-  widgetHeight: '750px',
-  widgetWidth: '500px',
+  widgetHeight: window.innerHeight - 50 + 'px',
+  // widgetWidth: '500px',
 };
 
 export default transakConfig ;
