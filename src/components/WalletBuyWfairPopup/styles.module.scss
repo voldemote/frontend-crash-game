@@ -365,6 +365,10 @@
       font-family: $fontRegular;
       font-size: 16px;
     }
+    @media (max-width: $screen-md) {
+      width: 90%;
+      margin: 25px 0;
+    }
   }
 
   .cryptoCalculatorContainer {
@@ -522,40 +526,49 @@
         font-family: $fontRegular;
         font-size: small;
         margin-bottom: 22px;
+        word-break: break-all;
 
         span {
           font-family: $fontBold;
         }
       }
-      .cryptoUrlContiner {
+      .transferSectionCopy {
+        margin: 25px 0;
         width: 100%;
-        height: 40px;
-        background: #f1f2f6;
-        border: 1px solid $colorLightGray2;
-        box-sizing: border-box;
-        border-radius: 8px;
-        margin-bottom: 11px;
-        display: flex;
-        align-items: center;
-
-        input {
-          background: #f1f2f6;
-          width: 100%;
-          height: 38px;
-          // padding: 20px;
-          margin: 0px 10px;
-          border: none;
-          direction: ltr;
-          text-align: left;
-          font-size: 16px;
-          &:focus-visible {
-            outline: none;
-          }
+        text-align: center;
+        p {
+          margin-bottom: 5px;
         }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
+        .cryptoUrlContiner {
+          width: 100%;
+          height: 40px;
+          background: #f1f2f6;
+          border: 1px solid $colorLightGray2;
+          box-sizing: border-box;
+          border-radius: 8px;
+          margin-bottom: 11px;
+          display: flex;
+          align-items: center;
+
+          input {
+            background: #f1f2f6;
+            width: 100%;
+            height: 100%;
+            // padding: 20px;
+            margin: 0px 10px;
+            border: none;
+            direction: ltr;
+            text-align: left;
+            font-size: 16px;
+            &:focus-visible {
+              outline: none;
+            }
+          }
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
         }
       }
 

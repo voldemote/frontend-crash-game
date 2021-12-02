@@ -11,6 +11,8 @@ import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.sv
 import { convertCurrency } from '../../../api/index';
 import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
+import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
+import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 
 const content = {
   bitcoin: `Send any amount of BTC to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
@@ -27,7 +29,7 @@ const cryptoShortName = {
 };
 
 const BuyWithCrypto = () => {
-    const CURRENCY_OPTIONS = [
+  const CURRENCY_OPTIONS = [
     {
       label: 'EUR',
       value: 0,
@@ -51,40 +53,43 @@ const BuyWithCrypto = () => {
 
   const selectContent = event => {
     event.target.select();
-  }
+  };
 
   const currencyChange = event => {
     const inputCurrency = event.target.value > 2000 ? 2000 : event.target.value;
     setCurrency(inputCurrency);
-  }
+  };
 
-  const currencyLostFocus = async (event) => {
+  const currencyLostFocus = async event => {
     if (currency > 0) {
-
       const convertCurrencyPayload = {
         convertFrom: cryptoShortName[activeTab],
         convertTo: 'WFAIR',
-        amount: currency
+        amount: currency,
       };
-      
+
       const { response } = await convertCurrency(convertCurrencyPayload);
       const { convertedAmount } = response?.data;
-      const convertedTokenValue = !convertedAmount ? 0 : convertedAmount.toFixed(4);
+      const convertedTokenValue = !convertedAmount
+        ? 0
+        : convertedAmount.toFixed(4);
 
       const roundedAmount = Math.floor(Number(convertedTokenValue) * 100) / 100;
-      let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
-    
+      let WfairTokenValue = !roundedAmount
+        ? 0
+        : numberWithCommas(roundedAmount);
+
       setTokenValue(WfairTokenValue);
     }
-  }
-    
+  };
+
   const OnClickConfirmAmount = () => {
     // const transak = {}
     // transakPopUp(transak);
     setAddress(
       'e94fc3db563b9e595f76bf7c3a90105a54ea4eaaf1ddb6b9950c31dc626d5d58'
     );
-    setTransaction(!transaction)
+    setTransaction(!transaction);
   };
 
   const onCurrencyChange = val => {
@@ -133,9 +138,8 @@ const BuyWithCrypto = () => {
       <div className={styles.cryptoCalculatorContainer}>
         {/* Currency */}
         <div className={styles.cryptoInputContiner}>
-          
-          <input 
-            value={currency} 
+          <input
+            value={currency}
             min={1}
             max={2000}
             onChange={currencyChange}
@@ -143,9 +147,24 @@ const BuyWithCrypto = () => {
             onClick={selectContent}
           />
           <div className={styles.inputRightContainer}>
-            {activeTab === 'bitcoin' && <><BitcoinIcon />BTC</>}
-            {activeTab === 'ethereum' && <><EthereumIcon />ETH</>}
-            {activeTab === 'litecoin' && <><LitecoinIcon />LTC</>}
+            {activeTab === 'bitcoin' && (
+              <>
+                <BitcoinIcon />
+                BTC
+              </>
+            )}
+            {activeTab === 'ethereum' && (
+              <>
+                <EthereumIcon />
+                ETH
+              </>
+            )}
+            {activeTab === 'litecoin' && (
+              <>
+                <LitecoinIcon />
+                LTC
+              </>
+            )}
             {/* <img src={WallfairInput} alt="wallfair-input" /> */}
           </div>
         </div>
@@ -156,7 +175,8 @@ const BuyWithCrypto = () => {
         <div className={styles.cryptoInputContiner}>
           <input disabled readOnly value={tokenValue} />
           <div className={styles.inputRightContainer}>
-            <WfairIcon /><span>WFAIR</span>
+            <WfairIcon />
+            <span>WFAIR</span>
           </div>
         </div>
 
@@ -164,7 +184,7 @@ const BuyWithCrypto = () => {
         <div className={styles.cryptoContent}>
           <p>{content[activeTab]}</p>
         </div>
-        
+
         <button
           className={styles.transankContineButton}
           onClick={OnClickConfirmAmount}
@@ -183,15 +203,21 @@ const BuyWithCrypto = () => {
               </span>{' '}
               to the following {cryptoShortName[activeTab]} Address
             </p>
-            <p>{address}</p>
-            <h4>Send Transaction URL</h4>
-            <div className={styles.cryptoUrlContiner}>
-              <input
-                type="text"
-                value={url}
-                placeholder="Paste URL here"
-                onChange={e => setUrl(e.target.value)}
-              />
+            <ReferralLinkCopyInputBox
+              className={styles.referralLink}
+              inputTheme={InputBoxTheme.copyToClipboardInputWhite}
+              forDeposit={address}
+            />
+            <div className={styles.transferSectionCopy}>
+              <p>Send Transaction URL</p>
+              <div className={styles.cryptoUrlContiner}>
+                <input
+                  type="text"
+                  value={url}
+                  placeholder="Paste URL here"
+                  onChange={e => setUrl(e.target.value)}
+                />
+              </div>
             </div>
             <button className={styles.sendUrlBtn}> Send</button>
           </div>
