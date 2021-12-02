@@ -137,6 +137,7 @@
         font-size: large;
         direction: ltr;
         text-align: center;
+        font-size: 30px;
         &:focus-visible {
           outline: none;
         }
@@ -181,6 +182,7 @@
         img {
           height: 40px;
           width: 80%;
+          object-fit: contain;
         }
       }
     }
@@ -293,7 +295,7 @@
         padding: 20px;
         margin: 0px 10px;
         border: none;
-        font-size: large;
+        font-size: 30px;
         direction: ltr;
         text-align: center;
         &:focus-visible {
@@ -462,7 +464,7 @@
     border: 1px solid $colorWhite;
     background-color: $colorPinkDark;
     border-radius: 50px;
-    padding: 10px;
+    padding: 10px 8px;
     width: 318px;
     height: 64px;
     margin-top: 10px;
@@ -482,10 +484,10 @@
       display: flex;
       background-color: $colorWhite;
       border-radius: 50px;
-      padding: 8px;
+      padding: 8px 3px;
       display: flex;
       cursor: not-allowed;
-      // justify-content: center;
+      justify-content: center;
     }
     .inactiveButton {
       height: 50px;
@@ -495,7 +497,7 @@
       padding: 10px;
       display: flex;
       cursor: pointer;
-      // justify-content: center;
+      justify-content: center;
     }
   }
 

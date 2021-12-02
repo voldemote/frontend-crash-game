@@ -57,8 +57,8 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
   return (
     <div className={styles.buyWithFiatTabContainer}>
       <div className={styles.textContainer}>
-        <p>Intro text -</p>
-        <p>lorum....</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tortor tellus, pellentesque volutpat augue eu, gravida volutpat ipsum.</p>
+        <p>Sed venenatis accumsan tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
       </div>
       <div className={styles.wfairCalculatorContainer}>
         {/* Currency */}

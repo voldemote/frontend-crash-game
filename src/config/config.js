@@ -86,6 +86,7 @@ export const currentNetwork = networkInfo[currentNetworkKey];
 
 // export const WFAIRAddress = actions.token.address;
 export const WFAIRAddress = currentNetwork.contractAddress;
+console.log('WFAIRAddress', WFAIRAddress);
 export const lockAddresses = actions.locks.map(l => l.address);
 export const lockInfo = Object.values(actions.locks).reduce(
   (obj, l) => Object.assign(obj, { [l.address]: { name: l.name } }),

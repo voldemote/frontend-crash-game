@@ -40,7 +40,7 @@ const TokenTransfer = ({
     return isloading ? (
       <Loader />
     ) : (
-      <div className={styles.transfer}>Insufficient Balance for a Transfer</div>
+      <div className={styles.transfer}>Insufficient balance for a deposit</div>
     );
   }
 
@@ -57,7 +57,7 @@ const TokenTransfer = ({
       )}
       <div className={styles.transferWrapper}>
         <strong>{`You can maximally transfer ${numberWithCommas(
-          balance > 2000 ? 2000 : balance
+          balance > 2000 ? 2000 : Number(balance).toFixed(2)
         )} WFAIR`}</strong>
         {formError && (
           <div className={styles.transferFormErrors}>

@@ -69,7 +69,7 @@ const BuyWithCrypto = () => {
           )}
           onClick={() => setActiveTab('bitcoin')}
         >
-          <CryptoTabIcon />
+          <BitcoinIcon />
           <p>Bitcoin</p>
         </div>
         <div
@@ -79,7 +79,7 @@ const BuyWithCrypto = () => {
           )}
           onClick={() => setActiveTab('ethereum')}
         >
-          <CryptoTabIcon />
+          <EthereumIcon />
           <p>Ethereum</p>
         </div>
         <div
@@ -89,7 +89,7 @@ const BuyWithCrypto = () => {
           )}
           onClick={() => setActiveTab('litecoin')}
         >
-          <CryptoTabIcon />
+          <LitecoinIcon />
           <p>Litecoin</p>
         </div>
       </div>
