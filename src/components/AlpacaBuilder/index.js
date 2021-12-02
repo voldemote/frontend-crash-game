@@ -1,5 +1,4 @@
-import { useEffect, useState, memo, useRef, createElement } from 'react';
-
+import { useEffect, useState, memo, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import AbViewStyles from './abViewStyles';
@@ -12,16 +11,18 @@ const AlpacaBuilder = ({
   downloadFileOnSave = false,
   props,
   layout,
-  cancelLabel='Cancel'
+  cancelLabel = 'Cancel',
+  saveLabel = 'Save',
 }) => {
 
-  const [svgProperties, setSvgProperties] = useState(props);
+  const [svgProperties, setSvgProperties] = useState({...props});
   const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0]);
   const svgRef = useRef();
   const svgDownloader = useRef();
 
   useEffect(() => {
     if(!props) resetSvg(true);
+    else setSvgProperties({...props});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
@@ -42,23 +43,23 @@ const AlpacaBuilder = ({
     let p = {...svgProperties};
     p[categoryName] = style;
     setSvgProperties(p);
-    console.log(JSON.stringify(svgProperties,null, 2));
   }
 
   const renderSvg = () =>
     svgProperties && Object.keys(svgProperties)
     .map((catName, index) => {
-      const current = svgProperties[catName];
+      const current = {...svgProperties[catName]};
       if(!current.style) return null;
       const aliasColor = CATEGORIES.find(c => c.name === catName)?.useColorFrom;
       if(aliasColor){
-        current.colors = svgProperties[aliasColor].colors;
+        current.colors = [...svgProperties[aliasColor].colors];
       }
       const id = `svg_abuilder_${catName}_${index}`;
       return (<DynamicSvg key={id} id={id} current={current}/>);
     });
 
   const exportSvg = () => {
+
     try{
       var svg = svgRef.current;
       var canvas = svgDownloader.current;
@@ -69,8 +70,9 @@ const AlpacaBuilder = ({
       var data = (new XMLSerializer()).serializeToString(svg);
       var DOMURL = window.URL || window.webkitURL || window;
       var img = new Image();
-      var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-      var url = DOMURL.createObjectURL(svgBlob);
+      //  var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+      //var url = DOMURL.createObjectURL(svgBlob);
+      var url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent( data );
 
       img.onload = function () {
         ctx.drawImage(img, 0, 0, EXPORT_SIZE, EXPORT_SIZE);
@@ -99,6 +101,7 @@ const AlpacaBuilder = ({
           a.dispatchEvent(evt);
         }
       };
+      img.onerror = function(err) {console.log(err)};
       img.src = url;
     }catch(err){
       console.log(err);
@@ -146,7 +149,7 @@ const AlpacaBuilder = ({
             onClick={() => resetSvg(true)}>Randomize</span>
           <span
             className={styles.primaryAction}
-            onClick={() => exportSvg()}>Save</span>
+            onClick={() => exportSvg()}>{saveLabel}</span>
         </div>
     </div>
     <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>

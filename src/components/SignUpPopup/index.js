@@ -11,8 +11,9 @@ import { TOKEN_NAME } from '../../constants/Token';
 import PopupTheme from '../Popup/PopupTheme';
 import AuthenticationType from '../Authentication/AuthenticationType';
 import { selectTotalUsers } from '../../store/selectors/leaderboard';
+import { OnboardingActions } from 'store/actions/onboarding';
 
-const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
+const SignUpPopup = ({ authState, startOnboarding }) => {
   const totalUsers = useSelector(selectTotalUsers);
 
   const renderWelcomeText = () => {
@@ -36,10 +37,7 @@ const SignUpPopup = ({ closed, user, hidePopup, showPopup, authState }) => {
 
   const goToJoinPage = () => {
     if (authState !== LOGGED_IN) {
-      showPopup(PopupTheme.auth, {
-        small: true,
-        authenticationType: AuthenticationType.register,
-      });
+      startOnboarding();
     }
   };
 
@@ -75,17 +73,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    hidePopup: () => {
-      dispatch(PopupActions.hide());
-    },
-    showPopup: (popupType, options) => {
-      dispatch(
-        PopupActions.show({
-          popupType,
-          options,
-        })
-      );
-    },
+    startOnboarding: () => {
+      dispatch(OnboardingActions.start());
+    }
   };
 };
 
