@@ -28,7 +28,7 @@ const AlpacannonGameAnimation = ({
   const [height, setHeight] = useState(null);
 
   useEffect(() =>{
-    const aud = new AudioController(2)
+    const aud = new AudioController(3)
     setAudio(aud)
     aud.startBgm()
     onInit(aud)
