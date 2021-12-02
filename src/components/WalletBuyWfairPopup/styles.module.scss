@@ -160,11 +160,14 @@
         .innerContiner {
           width: 134px;
           height: 68px;
-          background-color: $colorBlueLight;
+          //background-color: $colorBlueLight;
           display: flex;
           justify-content: space-around;
           align-items: center;
 
+          .dropdown {
+            margin-bottom: 0;
+          }
           .innerContent {
             p {
               font-family: $fontBold;
