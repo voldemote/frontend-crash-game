@@ -86,7 +86,6 @@ const BuyWithCrypto = () => {
   const onCurrencyChange = val => {
     setSelectedCurrency(CURRENCY_OPTIONS.find(c => c.value === val));
   };
-  
   return (
     <div className={styles.buyWithCryptoContainer}>
       {/* Crypto Tabs */}
@@ -174,8 +173,8 @@ const BuyWithCrypto = () => {
         </button>
       </div>
       {/* transaction Section */}
-      <div className={styles.transactionContainer}>
-        {transaction && (
+      {true && (
+        <div className={styles.transactionContainer}>
           <div className={styles.transferSection}>
             <p>
               Please transfer the{' '}
@@ -196,8 +195,8 @@ const BuyWithCrypto = () => {
             </div>
             <button className={styles.sendUrlBtn}> Send</button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
