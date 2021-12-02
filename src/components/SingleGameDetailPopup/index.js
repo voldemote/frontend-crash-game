@@ -49,8 +49,6 @@ const MinesDetails = ({resData}) => {
     const profit = resData?.profit;
     const board = resData?.board || [];
 
-    console.log('resData', resData);
-
     return  <>
         <div>
             <b>Multiplier:</b>{' '}
