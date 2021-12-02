@@ -138,6 +138,9 @@ const BuyWithCrypto = () => {
       <div className={styles.cryptoCalculatorContainer}>
         {/* Currency */}
         <div className={styles.cryptoInputContiner}>
+          <div className={styles.labelContainer}>
+            <span>You pay</span>
+          </div>
           <input
             value={currency}
             min={1}
@@ -173,6 +176,9 @@ const BuyWithCrypto = () => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
+          <div className={styles.labelContainer}>
+            <span>You receive</span>
+          </div>
           <input disabled readOnly value={tokenValue} />
           <div className={styles.inputRightContainer}>
             <WfairIcon />
