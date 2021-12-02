@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import AlpacaBuilder from 'components/AlpacaBuilder';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { OnboardingActions } from 'store/actions/onboarding';
+import { PopupActions } from 'store/actions/popup';
 
 const AlpacaBuilderPopup = ({
   hidePopup,
