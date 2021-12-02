@@ -70,8 +70,11 @@ const BuyWithCrypto = () => {
       const { response } = await convertCurrency(convertCurrencyPayload);
       const { convertedAmount } = response?.data;
       const convertedTokenValue = !convertedAmount ? 0 : convertedAmount.toFixed(4);
+
+      const roundedAmount = Math.floor(Number(convertedTokenValue) * 100) / 100;
+      let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
     
-      setTokenValue(convertedTokenValue);
+      setTokenValue(WfairTokenValue);
     }
   }
     
@@ -148,7 +151,7 @@ const BuyWithCrypto = () => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
-          <input disabled readonly value={tokenValue} />
+          <input disabled readOnly value={tokenValue} />
           <div className={styles.inputRightContainer}>
             <WfairIcon /><span>WFAIR</span>
           </div>

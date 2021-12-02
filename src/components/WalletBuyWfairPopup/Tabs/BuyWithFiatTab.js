@@ -74,7 +74,6 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
       const { response } = await convertCurrency(convertCurrencyPayload);
       const { WFAIR, convertedAmount } = response?.data;
       const roundedAmount = Math.floor(Number(convertedAmount) * 100) / 100;
-      console.log(roundedAmount);
       let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
     
       setWFAIRToken(WfairTokenValue);
@@ -121,7 +120,7 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.inputContiner}>
-          <input disabled readonly value={WFAIRToken} />
+          <input disabled readOnly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
             <WfairIcon /><span>WFAIR</span>
           </div>
