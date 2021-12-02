@@ -93,7 +93,7 @@
 
   .textContainer {
     width: 507px;
-    height: 224px;
+    // height: 224px;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -104,8 +104,8 @@
       font-family: $fontRegular;
       font-style: normal;
       font-weight: normal;
-      font-size: 20px;
-      line-height: 25px;
+      font-size: 16px;
+      line-height: 20px;
       text-align: justify;
       margin-bottom: 25px;
     }
@@ -118,25 +118,27 @@
     align-items: center;
 
     .inputContiner {
-      width: 550px;
-      height: 80px;
-      background: $colorWhite;
+      max-width: 500px;
+      width: 100%;
+      height: 62px;
+      background: #f1f2f6;
       border: 1px solid $colorLightGray2;
       box-sizing: border-box;
-      border-radius: 20px;
+      border-radius: 8px;
       margin-bottom: 11px;
       display: flex;
       align-items: center;
 
       input {
+        background: #f1f2f6;
         width: 70%;
-        height: 70px;
+        height: 60px;
         padding: 20px;
         margin: 0px 10px;
         border: none;
         font-size: large;
         direction: ltr;
-        text-align: center;
+        text-align: right;
         font-size: 30px;
         &:focus-visible {
           outline: none;
@@ -150,16 +152,21 @@
 
       .inputRightContainer {
         width: 30%;
-        height: 80px;
-        border-left: 1px solid $colorLightGray2;
+        height: 60px;
         border-radius: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
+        column-gap: 10px;
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
 
         .innerContiner {
           width: 134px;
-          height: 68px;
+          height: 60px;
           //background-color: $colorBlueLight;
           display: flex;
           justify-content: space-around;
@@ -168,6 +175,7 @@
           .dropdown {
             margin-bottom: 0;
           }
+
           .innerContent {
             p {
               font-family: $fontBold;
@@ -191,14 +199,14 @@
     }
     .InputLineSeparator {
       width: 550px;
-      height: 80px;
+      height: 60px;
       background: $colorWhite;
       margin-bottom: 11px;
       display: flex;
       justify-content: center;
       align-items: center;
       img {
-        height: 80px;
+        height: 60px;
       }
     }
 
@@ -214,9 +222,10 @@
       height: 45px;
       font-family: $fontRegular;
       color: $colorWhite;
-      margin-top: 55px;
+      margin-top: 25px;
       margin-bottom: 36px;
       cursor: pointer;
+      font-size: 18px;
     }
   }
 }
@@ -226,7 +235,8 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  min-height: 749px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   flex-direction: column;
 
   .cryptoTabsContianer {
@@ -249,15 +259,20 @@
       align-items: center;
       border-radius: 30px;
       cursor: pointer;
+
       p {
         margin-left: 10px;
         font-size: 20px;
         line-height: 25px;
         font-family: $fontRegular;
+        color: $colorWhite;
       }
     }
     .cryptoTabActive {
-      background-color: white;
+      background-color: $colorWhite;
+      p {
+        color: $colorBlack;
+      }
     }
   }
 
@@ -265,12 +280,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 75%;
-    margin: 0 auto;
-    margin-top: 25px;
+    width: 100%;
+    max-width: 500px;
+    margin: 25px auto;
     p {
       font-family: $fontRegular;
-      font-size: small;
+      font-size: 16px;
     }
   }
 
@@ -282,25 +297,28 @@
     align-items: center;
 
     .cryptoInputContiner {
-      width: 350px;
-      height: 80px;
-      background: $colorWhite;
+      max-width: 500px;
+      width: 100%;
+      height: 62px;
+      background: #f1f2f6;
       border: 1px solid $colorLightGray2;
       box-sizing: border-box;
-      border-radius: 20px;
+      border-radius: 8px;
       margin-bottom: 11px;
       display: flex;
       align-items: center;
 
       input {
+        background: #f1f2f6;
         width: 70%;
-        height: 70px;
+        height: 60px;
         padding: 20px;
         margin: 0px 10px;
         border: none;
-        font-size: 30px;
+        font-size: large;
         direction: ltr;
-        text-align: center;
+        text-align: right;
+        font-size: 30px;
         &:focus-visible {
           outline: none;
         }
@@ -312,24 +330,26 @@
       }
 
       .inputRightContainer {
-        width: 40%;
-        height: 80px;
-        border-left: 1px solid $colorLightGray2;
+        width: 30%;
+        height: 60px;
         border-radius: 20px;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
+        padding-right: 15px;
+        column-gap: 10px;
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
 
         .innerContiner {
           width: 134px;
-          height: 68px;
+          height: 60px;
           //background-color: $colorBlueLight;
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
 
           .dropdown {
-            padding: 0 10px;
             margin-bottom: 0;
           }
 
@@ -349,20 +369,21 @@
 
         img {
           height: 40px;
-          width: 50%;
+          width: 80%;
+          object-fit: contain;
         }
       }
     }
     .InputLineSeparator {
       width: 550px;
-      height: 80px;
+      height: 60px;
       background: $colorWhite;
       margin-bottom: 11px;
       display: flex;
       justify-content: center;
       align-items: center;
       img {
-        height: 80px;
+        height: 60px;
       }
     }
 
@@ -381,11 +402,12 @@
       margin-top: 10px;
       margin-bottom: 10px;
       cursor: pointer;
+      font-size: 18px;
     }
   }
 
   .transactionContainer {
-    height: 300px;
+    // height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -408,24 +430,27 @@
         }
       }
       .cryptoUrlContiner {
-        width: 350px;
-        height: 80px;
-        background: $colorWhite;
+        max-width: 500px;
+        width: 100%;
+        height: 40px;
+        background: #f1f2f6;
         border: 1px solid $colorLightGray2;
         box-sizing: border-box;
-        border-radius: 20px;
+        border-radius: 8px;
         margin-bottom: 11px;
-        margin-top: 11px;
         display: flex;
         align-items: center;
 
         input {
+          background: #f1f2f6;
           width: 100%;
-          height: 70px;
-          padding: 10px;
+          height: 38px;
+          // padding: 20px;
           margin: 0px 10px;
           border: none;
-          font-size: medium;
+          direction: ltr;
+          text-align: left;
+          font-size: 16px;
           &:focus-visible {
             outline: none;
           }
@@ -452,6 +477,7 @@
         margin-top: 10px;
         margin-bottom: 10px;
         cursor: pointer;
+        font-size: 18px;
       }
     }
   }
@@ -583,15 +609,21 @@
     row-gap: 10px;
 
     .connectWalletButton {
-      border-radius: 30px;
+      background: linear-gradient(
+        180deg,
+        $colorPinkDark 0%,
+        $colorLightDark2 97.4%
+      );
+      border-radius: 22.5px;
       border: 1px solid $colorWhite;
-      background-color: $colorPinkDark;
-      font-size: 20px;
-      width: 300px;
-      color: $colorWhite;
-      padding: 10px;
-      cursor: pointer;
+      width: 240px;
+      height: 45px;
       font-family: $fontRegular;
+      color: $colorWhite;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 18px;
     }
   }
 }
