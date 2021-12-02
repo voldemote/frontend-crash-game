@@ -124,7 +124,7 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
         <div className={styles.InputLineSeparator}>
           <img src={InputLineSeparator} alt="input_line_separator" />
         </div>
-        {/* WFAIR TOKEN */}        
+        {/* WFAIR TOKEN */}
         <div className={styles.inputContiner}>
           <div className={styles.labelContainer}>
             <span>You receive</span>
