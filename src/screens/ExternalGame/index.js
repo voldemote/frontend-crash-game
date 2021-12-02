@@ -36,9 +36,11 @@ import {
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import { isMobile } from 'react-device-detect';
 
 const RouletteGame = ({
   showPopup,
+  history,
   connected,
   userId,
   token,
@@ -73,9 +75,12 @@ const RouletteGame = ({
   useEffect(() => {
     setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
       .then(({data}) => {
-        console.log("data.TokenID", data.TokenID)
-        setInit(data.TokenID)
-        console.log("response", data)
+        if(isMobile) {
+          window.open(`https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=wallfair`)
+          history.push('/games')
+        }else{
+          setInit(data.TokenID)
+        }
       })
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
