@@ -100,6 +100,11 @@
     padding: 5px;
     margin-top: 20px;
 
+    @media (max-width: $screen-md) {
+      margin-top: 10px;
+      width: 90%;
+    }
+
     p {
       font-family: $fontRegular;
       font-style: normal;
@@ -108,6 +113,10 @@
       line-height: 20px;
       text-align: justify;
       margin-bottom: 25px;
+
+      @media (max-width: $screen-md) {
+        margin-bottom: 10px;
+      }
     }
   }
   .wfairCalculatorContainer {
@@ -128,6 +137,9 @@
       margin-bottom: 11px;
       display: flex;
       align-items: center;
+      @media (max-width: $screen-md) {
+        height: 40px;
+      }
 
       input {
         background: #f1f2f6;
@@ -142,6 +154,11 @@
         font-size: 30px;
         &:focus-visible {
           outline: none;
+        }
+        @media (max-width: $screen-md) {
+          height: 100%;
+          font-size: 16px;
+          padding: 0 20px;
         }
       }
       input::-webkit-outer-spin-button,
@@ -159,9 +176,26 @@
         align-items: center;
         column-gap: 10px;
 
+        @media (max-width: $screen-md) {
+          height: 100%;
+          font-size: 16px;
+          padding: 0 20px;
+        }
+
+        span {
+          @media (max-width: $screen-sm) {
+            font-size: 12px;
+          }
+        }
+
         svg {
           width: 30px;
           height: 30px;
+
+          @media (max-width: $screen-sm) {
+            width: 20px;
+            height: 20px;
+          }
         }
 
         .innerContiner {
@@ -171,6 +205,11 @@
           display: flex;
           justify-content: space-around;
           align-items: center;
+          @media (max-width: $screen-md) {
+            height: 100%;
+            font-size: 16px;
+            padding: 0 20px;
+          }
 
           .dropdown {
             margin-bottom: 0;
@@ -200,7 +239,6 @@
     .InputLineSeparator {
       height: 60px;
       width: 100%;
-      background: $colorWhite;
       margin-bottom: 11px;
       display: flex;
       justify-content: center;
@@ -226,6 +264,12 @@
       margin-bottom: 36px;
       cursor: pointer;
       font-size: 18px;
+
+      @media (max-width: $screen-md) {
+        width: 225px;
+        height: 40px;
+        font-size: 16px;
+      }
     }
   }
 }
@@ -249,8 +293,9 @@
     justify-content: center;
 
     align-items: center;
-    @media (max-width: $screen-md) {
+    @media (max-width: $screen-sm) {
       margin-top: 8px;
+      width: 90%;
     }
 
     .cryptoTab {
@@ -261,6 +306,9 @@
       align-items: center;
       border-radius: 30px;
       cursor: pointer;
+      @media (max-width: $screen-sm) {
+        height: 40px;
+      }
 
       p {
         margin-left: 10px;
@@ -268,8 +316,27 @@
         line-height: 25px;
         font-family: $fontRegular;
         color: $colorWhite;
+        @media (max-width: $screen-sm) {
+          font-size: 12px;
+        }
+      }
+      p.fullName {
+        display: inline-block;
+
+        @media (max-width: $screen-sm) {
+          display: none;
+        }
+      }
+      p.shortName {
+        display: none;
+        @media (max-width: $screen-sm) {
+          display: inline-block;
+        }
+      }
+      svg {
         @media (max-width: $screen-md) {
-          font-size: 14px;
+          width: 20px;
+          height: 20px;
         }
       }
     }
@@ -315,11 +382,14 @@
       margin-bottom: 11px;
       display: flex;
       align-items: center;
+      @media (max-width: $screen-md) {
+        height: 40px;
+      }
 
       input {
         background: #f1f2f6;
         width: 70%;
-        height: 60px;
+        height: 100%;
         padding: 20px;
         margin: 0px 10px;
         border: none;
@@ -330,7 +400,12 @@
         &:focus-visible {
           outline: none;
         }
+        @media (max-width: $screen-md) {
+          padding: 0 20px;
+          font-size: 16px;
+        }
       }
+
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -350,6 +425,10 @@
         svg {
           width: 30px;
           height: 30px;
+          @media (max-width: $screen-md) {
+            width: 20px;
+            height: 20px;
+          }
         }
 
         .innerContiner {
@@ -383,9 +462,8 @@
       }
     }
     .InputLineSeparator {
-      width: 550px;
       height: 60px;
-      background: $colorWhite;
+      width: 100%;
       margin-bottom: 11px;
       display: flex;
       justify-content: center;
@@ -411,6 +489,11 @@
       margin-bottom: 10px;
       cursor: pointer;
       font-size: 18px;
+      @media (max-width: $screen-md) {
+        width: 225px;
+        height: 40px;
+        font-size: 16px;
+      }
     }
   }
 

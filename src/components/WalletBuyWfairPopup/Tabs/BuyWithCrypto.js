@@ -102,7 +102,8 @@ const BuyWithCrypto = () => {
           onClick={() => setActiveTab('bitcoin')}
         >
           <BitcoinIcon />
-          <p>Bitcoin</p>
+          <p className={styles.fullName}>Bitcoin</p>
+          <p className={styles.shortName}>BTC</p>
         </div>
         <div
           className={classNames(
@@ -112,7 +113,8 @@ const BuyWithCrypto = () => {
           onClick={() => setActiveTab('ethereum')}
         >
           <EthereumIcon />
-          <p>Ethereum</p>
+          <p className={styles.fullName}>Ethereum</p>
+          <p className={styles.shortName}>ETH</p>
         </div>
         <div
           className={classNames(
@@ -122,7 +124,8 @@ const BuyWithCrypto = () => {
           onClick={() => setActiveTab('litecoin')}
         >
           <LitecoinIcon />
-          <p>Litecoin</p>
+          <p className={styles.fullName}>Litecoin</p>
+          <p className={styles.shortName}>LTC</p>
         </div>
       </div>
 

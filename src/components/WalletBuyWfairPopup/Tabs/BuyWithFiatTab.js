@@ -8,8 +8,10 @@ import { convertCurrency } from '../../../api/index';
 import transakSDK from '@transak/transak-sdk';
 import transakConfig from 'constants/transakConfig';
 import { numberWithCommas } from '../../../utils/common';
+import PopupTheme from 'components/Popup/PopupTheme';
+import { PopupActions } from 'store/actions/popup';
 
-const BuyWithFiatTab = ({ hidePopup , user }) => {
+const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
   const CURRENCY_OPTIONS = [
     {
       label: 'EUR',
@@ -40,6 +42,7 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
 
     transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, data => {
       // in case required to trigger a function on close
+      showWalletBuyWfairPopup()
     });
 
     // This will trigger when the user marks payment is made.
@@ -148,5 +151,14 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    showWalletBuyWfairPopup: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+    },
+  };
+};
 
-export default connect(mapStateToProps, null)(BuyWithFiatTab);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyWithFiatTab);
