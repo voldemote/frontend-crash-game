@@ -11,9 +11,94 @@ import _ from "lodash";
 import InputBox from '../InputBox';
 import InputBoxTheme from '../InputBox/InputBoxTheme';
 
+import mineImg from '../../data/images/singleGameDetails/mines/mine.jpg';
+import coinImg from '../../data/images/singleGameDetails/mines/coin.jpg';
+
 const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
 };
+
+const WheelDetails = ({resData}) => {
+    const profit = resData?.profit;
+
+    return  <>
+        <div>
+            <b>Multiplier:</b>{' '}
+            <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+        </div>
+        <div>
+            <b>Risk factor:</b>{' '}
+            <span>{resData?.riskFactor}</span>
+        </div>
+        <div>
+            <b>Game Hash:</b>{' '}
+            <span>{resData?.gameHash}</span>
+        </div>
+        <div>
+            <b>Staked amount:</b>{' '}
+            <span>{resData?.stakedAmount}</span>
+        </div>
+        <div>
+            <b>Profit:</b>{' '}
+            <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+        </div>
+    </>
+}
+
+const MinesDetails = ({resData}) => {
+    const profit = resData?.profit;
+    const board = resData?.board || [];
+
+    console.log('resData', resData);
+
+    return  <>
+        <div>
+            <b>Multiplier:</b>{' '}
+            <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+        </div>
+        <div>
+            <b>Mines count:</b>{' '}
+            <span>{resData?.minesCount}</span>
+        </div>
+        <div>
+            <b>Game Hash:</b>{' '}
+            <span>{resData?.gameHash}</span>
+        </div>
+        <div>
+            <b>Staked amount:</b>{' '}
+            <span>{resData?.stakedAmount}</span>
+        </div>
+        <div>
+            <b>Profit:</b>{' '}
+            <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+        </div>
+        <div>
+            <b>Revealed board:</b>
+            <div className={styles.minesGameBoard}>
+                {board.map((cell)=> {
+                    const parsed = parseInt(cell);
+                    if(parsed === 1) {
+                        return <img src={mineImg}/>;
+                    } else {
+                        return <img src={coinImg}/>;
+                    }
+
+
+                })}
+            </div>
+        </div>
+    </>
+}
+
+const renderDetails = (game, resData) => {
+    if(game.name === "Alpaca Wheel") {
+        return <WheelDetails resData={resData} />;
+    }
+
+    if(game.name === "Mines") {
+        return <MinesDetails resData={resData} />;
+    }
+}
 
 const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
   const { game, resData } = data;
@@ -44,7 +129,6 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
     }
   };
 
-  const profit = resData?.profit;
   const hashed = _.has(resData, 'hashedServerSeed');
   const gameHash = resData?.gameHash;
 
@@ -76,25 +160,9 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
         </div>
       <div className={styles.content}>
         <div className={classNames("global-link-style", styles.verificationTool)}><a href={game?.verificationTool} target={"_blank"} rel="noreferrer"><b>{game?.name} - Verification Tool</b></a></div>
-          <div>
-              <b>Multiplier:</b>{' '}
-              <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
-          </div>
-          <div>
-              <b>Risk factor:</b>{' '}
-              <span>{resData?.riskFactor}</span>
-          </div>
-          <div>
-              <b>Game Hash:</b>{' '}
-              <span>{resData?.gameHash}</span>
-          </div>
-          <div>
-              <b>Staked amount:</b>{' '}
-              <span>{resData?.stakedAmount}</span>
-          </div>
-          <div>
-              <b>Profit:</b>{' '}
-              <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+
+          <div className={styles.detailsByGameBlock}>
+              {renderDetails(game, resData)}
           </div>
 
           <div className={styles.copyInputBlock}>
