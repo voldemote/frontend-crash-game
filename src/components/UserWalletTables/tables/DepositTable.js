@@ -17,27 +17,15 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
             <p>{numberWithCommas(Text.formatByONEConstant(amount, 0))}</p>
           </div>
         </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
+        <Grid item xs>
           <div className={styles.messageCenter}>
             <p>{network_code}</p>
           </div>
         </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
+        <Grid item xs>
           <div className={styles.messageCenter}>{shortenAddress(sender)}</div>
         </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
+        <Grid item xs>
           <div className={styles.messageCenter}>
             <p className={styles.rewardMulti}>
               {new Date(created_at).toLocaleDateString('en-US')}
@@ -66,25 +54,13 @@ const DepositTable = ({
           <Grid item xs>
             <p className={styles.titleFirst}>WFAIR</p>
           </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
+          <Grid item xs>
             <p className={styles.title}>NETWORK</p>
           </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
+          <Grid item xs>
             <p className={styles.title}>ADDRESS</p>
           </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
+          <Grid item xs>
             <p className={styles.title}>DATE</p>
           </Grid>
           <Grid item xs>
