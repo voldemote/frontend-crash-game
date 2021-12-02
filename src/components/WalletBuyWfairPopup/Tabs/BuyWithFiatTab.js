@@ -12,11 +12,11 @@ import { numberWithCommas } from '../../../utils/common';
 const BuyWithFiatTab = ({ hidePopup , user }) => {
   const CURRENCY_OPTIONS = [
     {
-      label: 'USD',
+      label: 'EUR',
       value: 0,
     },
     {
-      label: 'EUR',
+      label: 'USD',
       value: 1,
     },
   ];

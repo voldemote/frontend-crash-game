@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
-import WallfairInput from '../../../data/images/wallfair-input.png';
+import Dropdown from '../../Dropdown';
 import { ReactComponent as ArrowUp } from '../../../data/icons/arrow_up_icon.svg';
 import { ReactComponent as ArrowDown } from '../../../data/icons/arrow_down_icon.svg';
 import { ReactComponent as BitcoinIcon } from '../../../data/icons/bitcoin-symbol.svg';
@@ -26,7 +26,17 @@ const cryptoShortName = {
 };
 
 const BuyWithCrypto = () => {
-  const [selectedCurrency, setSelectedCurrency] = useState('eur');
+    const CURRENCY_OPTIONS = [
+    {
+      label: 'EUR',
+      value: 0,
+    },
+    {
+      label: 'USD',
+      value: 1,
+    },
+  ];
+  const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
   const [currency, setCurrency] = useState(0);
   const [tokenValue, setTokenValue] = useState(0);
   const [activeTab, setActiveTab] = useState('bitcoin');
@@ -51,7 +61,7 @@ const BuyWithCrypto = () => {
     if (currency > 0) {
 
       const convertCurrencyPayload = {
-        convertFrom: selectedCurrency.toLocaleUpperCase(),
+        convertFrom: selectedCurrency.label.toLocaleUpperCase(),
         convertTo: cryptoShortName[activeTab],
         amount: currency
       };
@@ -73,6 +83,10 @@ const BuyWithCrypto = () => {
     setTransaction(!transaction)
   };
 
+  const onCurrencyChange = val => {
+    setSelectedCurrency(CURRENCY_OPTIONS.find(c => c.value === val));
+  };
+  
   return (
     <div className={styles.buyWithCryptoContainer}>
       {/* Crypto Tabs */}
@@ -129,19 +143,13 @@ const BuyWithCrypto = () => {
           />
           <div className={styles.inputRightContainer}>
             <div className={styles.innerContiner}>
-              <div className={styles.innerContent}>
-                <p>{selectedCurrency === 'eur' ? 'EUR' : 'USD'}</p>
-              </div>
-              <div
-                className={styles.innerIcon}
-                onClick={() =>
-                  setSelectedCurrency(
-                    selectedCurrency === 'eur' ? 'usd' : 'eur'
-                  )
-                }
-              >
-                {selectedCurrency === 'eur' ? <ArrowDown /> : <ArrowUp />}
-              </div>
+              <Dropdown
+                style={styles.dropdown}
+                value={selectedCurrency.label}
+                placeholder="Select currency..."
+                setValue={onCurrencyChange}
+                options={CURRENCY_OPTIONS}
+              />
             </div>
           </div>
         </div>
