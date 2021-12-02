@@ -523,6 +523,12 @@ const convertCurrency = ({convertFrom, convertTo, amount}) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const getWalletTransactions = () => {
+  return Api.get(ApiUrls.API_USER_WALLET_TRANSACTIONS).catch((error) => {
+    console.log('[API Error] called: getWalletTransactions', error);
+  });
+};
+
 export {
   Api,
   createBet,
@@ -584,4 +590,5 @@ export {
   fetchChatMessagesByUser,
   setUserMessageRead,
   convertCurrency,
+  getWalletTransactions,
 };

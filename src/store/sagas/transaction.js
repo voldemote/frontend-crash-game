@@ -24,6 +24,40 @@ const fetchTransactions = function* () {
   }
 };
 
+const fetchWalletTransactions = function* () {
+  const authState = yield select(state => state.authentication.authState);
+  try {
+    if (authState !== AuthState.LOGGED_IN) {
+      throw new Error('Not logged in.');
+    }
+
+    yield put(TransactionActions.fetchWalletTransactionsLoading());
+
+    const { data } = yield call(Api.getWalletTransactions);
+
+    const transactions = data.reduce((acc, transaction) => {
+      const key = transaction.external_system;
+      return {
+        ...acc,
+        [key]: [
+          ...(acc[key] || []),
+          transaction
+        ]
+      }
+    }, {})
+
+    yield put(
+      TransactionActions.fetchWalletTransactionsSuceeded({
+        transactions,
+      })
+    );
+
+  } catch (err) {
+    yield put(TransactionActions.fetchWalletTransactionsFailed());
+  }
+}
+
 export default {
   fetchTransactions,
+  fetchWalletTransactions,
 };
