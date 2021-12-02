@@ -7,7 +7,7 @@ import { selectHistory, selectStakes } from 'store/selectors/wallfair';
 import { numberWithCommas, shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
 
-const DepositRow = ({ data, hideSecondaryColumns = false }) => {
+const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
   const { amount, network_code, sender, created_at, transaction_hash } = data;
   return (
     <div className={styles.messageItem}>
@@ -31,22 +31,10 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           xs
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
-          <div className={styles.messageCenter}>{shortenAddress(sender)}</div>
-        </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
           <div className={styles.messageCenter}>
             <p className={styles.rewardMulti}>
               {new Date(created_at).toLocaleDateString('en-US')}
             </p>
-          </div>
-        </Grid>
-        <Grid item xs>
-          <div className={classNames(styles.messageLast, styles.messageRight)}>
-            <p className={styles.reward}>{shortenAddress(transaction_hash)}</p>
           </div>
         </Grid>
       </Grid>
@@ -54,10 +42,10 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   );
 };
 
-const DepositTable = ({
+const OnRampTable = ({
   className,
   hideSecondaryColumns = false,
-  depositRows = [],
+  renderRow = [],
 }) => {
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
@@ -78,25 +66,15 @@ const DepositTable = ({
             xs
             className={hideSecondaryColumns && styles.hideSecondaryColumns}
           >
-            <p className={styles.title}>ADDRESS</p>
-          </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
             <p className={styles.title}>DATE</p>
-          </Grid>
-          <Grid item xs>
-            <p className={styles.titleLast}>TX HASH</p>
           </Grid>
         </Grid>
       </div>
       <div className={styles.messageContainer}>
-        {depositRows?.map((row) => (
-          <DepositRow data={row} key={row.id} />
+        {renderRow?.map((row) => (
+          <OnRampRow data={row} key={row.id} />
         ))}
-        {depositRows.length === 0 && (
+        {renderRow.length === 0 && (
           <div className={styles.noEntries}>
             <span>No entries found</span>
           </div>
@@ -106,4 +84,4 @@ const DepositTable = ({
   );
 };
 
-export default React.memo(DepositTable);
+export default React.memo(OnRampTable);

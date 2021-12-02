@@ -31,6 +31,7 @@ import WFairTokenLockABI from '../../config/abi/TokenLock.json';
 import { ZERO } from '../../utils/constants';
 import Loader from 'components/Loader/Loader';
 import {WallfairActions} from 'store/actions/wallfair';
+import { TransactionActions } from 'store/actions/transaction';
 
 const UserWallet = ({
   tags,
@@ -47,8 +48,11 @@ const UserWallet = ({
   showRequestTokenPopup,
   resetState,
   setStakes,
-  setHistory
-
+  setHistory,
+  fetchWalletTransactions,
+  isTransactionsFetchLoading,
+  isTransactionsFetchError,
+  transactions,
 }) => {
   const { active, library, account, chainId } = useWeb3React();
 
@@ -59,8 +63,9 @@ const UserWallet = ({
   const { myBetsData } = useRosiData();
 
   const activityData = {
-    DEPOSITS: [],
-    WITHDRAWALS: [],
+    DEPOSITS: transactions.deposit || [],
+    WITHDRAWALS: transactions.withdrawal || [],
+    ONRAMP: [...(transactions.transak || []), ...(transactions.onramp || [])] || [],
     BETS: myBetsData ? myBetsData : [],
   };
 
@@ -71,6 +76,7 @@ const UserWallet = ({
   const [activityTabOptions, setActivityTabOptions] = useState([
     { name: 'DEPOSITS', index: 0 },
     { name: 'WITHDRAWALS', index: 1 },
+    { name: 'ONRAMP', index: 2 },
   ]);
 
   const handleActivitySwitchTab = ({ index }) => {
@@ -79,7 +85,6 @@ const UserWallet = ({
 
   useEffect(() => {
     resetState();
-
   }, [account, active, resetState]);
 
   useEffect(() => {
@@ -88,7 +93,8 @@ const UserWallet = ({
       setActivityTabOptions([
         { name: 'DEPOSITS', index: 0 },
         { name: 'WITHDRAWALS', index: 1 },
-        { name: 'BETS', index: 2 },
+        { name: 'ONRAMP', index: 2 },
+        { name: 'BETS', index: 3 },
       ]);
     }
   }, [connected, refreshMyBetsData, userId]);
@@ -96,9 +102,9 @@ const UserWallet = ({
   useEffect(() => {
     if (chainId !== currentChainId) {
       setStakesLoading(false);
-      return
-    };
-    signer?.getAddress().then(address => {
+      return;
+    }
+    signer?.getAddress().then((address) => {
       getStakeValues({
         address: address,
         provider: library,
@@ -112,7 +118,11 @@ const UserWallet = ({
         provider: library,
       });
     });
-  }, [account, library, signer, chainId,setHistory, setStakes]);
+  }, [account, library, signer, chainId, setHistory, setStakes]);
+
+  useEffect(() => {
+    fetchWalletTransactions();
+  }, [fetchWalletTransactions]);
 
   const renderCategoriesAndLeaderboard = () => {
     return (
@@ -123,7 +133,7 @@ const UserWallet = ({
               options={activityTabOptions ? activityTabOptions : []}
               className={styles.tabLayout}
             >
-              {option => (
+              {(option) => (
                 <div
                   className={
                     option.index === activityTab.index
@@ -138,12 +148,13 @@ const UserWallet = ({
             </TabOptions>
 
             <div className={styles.activityContainer}>
-              {stakesLoading ? (
+              {stakesLoading || isTransactionsFetchLoading ? (
                 <Loader />
               ) : (
                 <UserWalletTables
                   type={activityTab.name}
                   rowData={activityData}
+                  isError={isTransactionsFetchError}
                 />
               )}
             </div>
@@ -196,8 +207,8 @@ const UserWallet = ({
                 Buy WFAIR!
               </button>
               <button
-                  className={styles.buyWFairButton}
-                  onClick={showRequestTokenPopup}
+                className={styles.buyWFairButton}
+                onClick={showRequestTokenPopup}
               >
                 <span>Request test tokens</span>
               </button>
@@ -305,27 +316,40 @@ const mapStateToProps = state => {
     events: state.event.events,
     connected: state.websockets.connected,
     userId: state.authentication.userId,
+    isTransactionsFetchLoading: state.transaction.walletTransactions.isLoading,
+    isTransactionsFetchError: state.transaction.walletTransactions.isError,
+    transactions: state.transaction.walletTransactions.transactions,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     resetState: () => dispatch(WallfairActions.resetState()),
-    setHistory: (lockAddress, dataArray) => dispatch( WallfairActions.setHistory({
+    setHistory: (lockAddress, dataArray) =>
+      dispatch(
+        WallfairActions.setHistory({
           lock: lockAddress,
           data: dataArray,
-        })),
-    setStakes: (lockAddress, amounts, timestamps) => dispatch(WallfairActions.setStakes({
+        })
+      ),
+    setStakes: (lockAddress, amounts, timestamps) =>
+      dispatch(
+        WallfairActions.setStakes({
           lock: lockAddress,
           data: [...amounts, ...timestamps],
-        })),
-    refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
+        })
+      ),
+    refreshMyBetsData: (data) =>
+      dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
     showRequestTokenPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.requestTokens }));
     },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions())
+    }
   };
 };
 

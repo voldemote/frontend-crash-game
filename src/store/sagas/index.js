@@ -13,7 +13,7 @@ import { BetTypes } from '../actions/bet';
 import { EventActions } from '../actions/event';
 import { EventTypes } from '../actions/event';
 import { REHYDRATE } from 'redux-persist';
-import { TransactionTypes } from '../actions/transaction';
+import { TransactionActions, TransactionTypes } from '../actions/transaction';
 import { UserTypes } from '../actions/user';
 import { AlertTypes } from '../actions/alert';
 import { ChatActions, ChatTypes } from '../actions/chat';
@@ -194,6 +194,10 @@ const root = function* () {
     takeLatest(
       [RosiGameTypes.FETCH_MY_BETS_DATA_STARTED],
       RosiGameSagas.fetchMyBetsData
+    ),
+    takeLatest(
+      [TransactionTypes.FETCH_WALLET_TRANSACTIONS],
+      TransactionSagas.fetchWalletTransactions
     ),
     // @formatter:on
   ]);
