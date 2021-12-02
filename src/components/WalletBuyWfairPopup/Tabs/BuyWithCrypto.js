@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import WallfairInput from '../../../data/images/wallfair-input.png';
 import { ReactComponent as ArrowUp } from '../../../data/icons/arrow_up_icon.svg';
 import { ReactComponent as ArrowDown } from '../../../data/icons/arrow_down_icon.svg';
-import { ReactComponent as CryptoTabIcon } from '../../../data/icons/crypto-tab-icon.svg';
 import { ReactComponent as BitcoinIcon } from '../../../data/icons/bitcoin-symbol.svg';
 import { ReactComponent as EthereumIcon } from '../../../data/icons/ethereum-symbol.svg';
 import { ReactComponent as LitecoinIcon } from '../../../data/icons/litecoin-symbol.svg';
-import { convertCurrency } from '../../../api/third-party';
+import { convertCurrency } from '../../../api/index';
 import classNames from 'classnames';
+import { numberWithCommas } from '../../../utils/common';
 
 const content = {
   bitcoin: `Send any amount of BTC to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
@@ -29,26 +28,42 @@ const cryptoShortName = {
 const BuyWithCrypto = () => {
   const [selectedCurrency, setSelectedCurrency] = useState('eur');
   const [currency, setCurrency] = useState(0);
-  const [WFAIRToken, setWFAIRToken] = useState(0);
+  const [tokenValue, setTokenValue] = useState(0);
   const [activeTab, setActiveTab] = useState('bitcoin');
   const [address, setAddress] = useState('');
   const [url, setUrl] = useState('');
   const [transaction, setTransaction] = useState(false);
 
+  useEffect(() => {
+    currencyLostFocus();
+  }, [activeTab, selectedCurrency]);
+
+  const selectContent = event => {
+    event.target.select();
+  }
+
   const currencyChange = event => {
     const inputCurrency = event.target.value > 2000 ? 2000 : event.target.value;
     setCurrency(inputCurrency);
+  }
 
-    const convertCurrencyPayload = {
-      convert: selectedCurrency.toLocaleUpperCase(),
-      symbol: 'WFAIR',
-    };
-    convertCurrency(convertCurrencyPayload);
-    let WfairTokenValue = !event.target.value ? 0 : event.target.value;
+  const currencyLostFocus = async (event) => {
+    if (currency > 0) {
 
-    setWFAIRToken(WfairTokenValue);
-  };
-
+      const convertCurrencyPayload = {
+        convertFrom: selectedCurrency.toLocaleUpperCase(),
+        convertTo: cryptoShortName[activeTab],
+        amount: currency
+      };
+      
+      const { response } = await convertCurrency(convertCurrencyPayload);
+      const { convertedAmount } = response?.data;
+      const convertedTokenValue = !convertedAmount ? 0 : convertedAmount.toFixed(4);
+    
+      setTokenValue(convertedTokenValue);
+    }
+  }
+    
   const OnClickConfirmAmount = () => {
     // const transak = {}
     // transakPopUp(transak);
@@ -109,6 +124,8 @@ const BuyWithCrypto = () => {
             min={1}
             max={2000}
             onChange={currencyChange}
+            onBlur={currencyLostFocus}
+            onClick={selectContent}
           />
           <div className={styles.inputRightContainer}>
             <div className={styles.innerContiner}>
@@ -133,7 +150,7 @@ const BuyWithCrypto = () => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
-          <input type="number" disabled readonly value={WFAIRToken} />
+          <input disabled readonly value={tokenValue} />
           <div className={styles.inputRightContainer}>
             {activeTab === 'bitcoin' && <BitcoinIcon />}
             {activeTab === 'ethereum' && <EthereumIcon />}
@@ -155,7 +172,7 @@ const BuyWithCrypto = () => {
             <p>
               Please transfer the{' '}
               <span>
-                {WFAIRToken} {cryptoShortName[activeTab]}
+                {tokenValue} {cryptoShortName[activeTab]}
               </span>{' '}
               to the following {cryptoShortName[activeTab]} Address
             </p>
@@ -165,7 +182,7 @@ const BuyWithCrypto = () => {
               <input
                 type="text"
                 value={url}
-                placeholder="Copy Url here"
+                placeholder="Paste URL here"
                 onChange={e => setUrl(e.target.value)}
               />
             </div>

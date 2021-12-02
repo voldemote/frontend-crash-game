@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import WallfairInput from '../../../data/images/wallfair-input.png';
 import { ReactComponent as ArrowUp } from '../../../data/icons/arrow_up_icon.svg';
 import { ReactComponent as ArrowDown } from '../../../data/icons/arrow_down_icon.svg';
-import { convertCurrency } from '../../../api/third-party';
+import { convertCurrency } from '../../../api/index';
 import transakSDK from '@transak/transak-sdk';
 import transakConfig from 'constants/transakConfig';
+import { numberWithCommas } from '../../../utils/common';
 
 const BuyWithFiatTab = ({ hidePopup , user }) => {
   const [selectedCurrency, setSelectedCurrency] = useState('eur');
@@ -16,6 +17,11 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
 
   const transakPopUp = () => {
     transakConfig.partnerCustomerId = user.userId
+    transakConfig.fiatAmount = currency;
+    transakConfig.fiatCurrency = selectedCurrency;
+    transakConfig.apiKey = 11111;
+
+    console.log(currency);
     let transak = new transakSDK(transakConfig);
     transak.init();
 
@@ -35,19 +41,37 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
     });
   };
 
+  useEffect(() => {
+    currencyLostFocus();
+  }, [selectedCurrency]);
+
+  const selectContent = event => {
+    event.target.select();
+  }
+
   const currencyChange = event => {
     const inputCurrency = event.target.value > 2000 ? 2000 : event.target.value;
     setCurrency(inputCurrency);
+  }
 
-    const convertCurrencyPayload = {
-      convert: selectedCurrency.toLocaleUpperCase(),
-      symbol: 'WFAIR',
-    };
-    convertCurrency(convertCurrencyPayload);
-    let WfairTokenValue = !event.target.value ? 0 : event.target.value;
+  const currencyLostFocus = async (event) => {
+    if (currency > 0) {
 
-    setWFAIRToken(WfairTokenValue);
-  };
+      const convertCurrencyPayload = {
+        convertFrom: selectedCurrency.toLocaleUpperCase(),
+        convertTo: 'WFAIR',
+        amount: currency
+      };
+      
+      const { response } = await convertCurrency(convertCurrencyPayload);
+      const { WFAIR, convertedAmount } = response?.data;
+      const roundedAmount = Math.floor(Number(convertedAmount) * 100) / 100;
+      console.log(roundedAmount);
+      let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
+    
+      setWFAIRToken(WfairTokenValue);
+    }
+  }
 
   const OnClickTransakContinue = () => {
     hidePopup();
@@ -69,6 +93,8 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
             min={1}
             max={2000}
             onChange={currencyChange}
+            onBlur={currencyLostFocus}
+            onClick={selectContent}
           />
           <div className={styles.inputRightContainer}>
             <div className={styles.innerContiner}>
@@ -93,7 +119,7 @@ const BuyWithFiatTab = ({ hidePopup , user }) => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.inputContiner}>
-          <input type="number" disabled readonly value={WFAIRToken} />
+          <input disabled readonly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
             <img src={WallfairInput} alt="wallfair-input" />
           </div>

@@ -102,4 +102,4 @@ export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
 export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';
 export const CRASH_GAME_GET_VOLUME_BETS = 'api/globalstats/:range';
 export const ACCOUNT_MAPPING = 'https://account-mapper-dev.wallfair.io/map';
-export const CONVERT_CURRENCY = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
+export const CONVERT_CURRENCY = 'api/quote';
