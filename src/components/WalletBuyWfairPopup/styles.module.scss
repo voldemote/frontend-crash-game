@@ -4,7 +4,7 @@
   //   display: flex;
   //   align-items: center;
   height: 100%;
-  width: 660px;
+  padding: 16px 0;
   background-color: $colorWhite;
   color: $colorPrimaryDark;
   border-radius: 10px;
@@ -78,22 +78,22 @@
 }
 
 .buyWithFiatTabContainer {
+  width: 100%;
   margin-top: 10px;
   display: flex;
   justify-content: center;
-  width: 100%;
   flex-direction: column;
+  padding: 0 24px;
+  @media (max-width: $screen-md) {
+    padding: 0 16px;
+  }
 
   .buyWithFiatTabIframe {
     display: block;
     width: 100%;
-    max-height: 650px;
-    max-width: 450px;
   }
 
   .textContainer {
-    width: 507px;
-    // height: 224px;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -198,8 +198,8 @@
       }
     }
     .InputLineSeparator {
-      width: 550px;
       height: 60px;
+      width: 100%;
       background: $colorWhite;
       margin-bottom: 11px;
       display: flex;
@@ -231,17 +231,15 @@
 }
 
 .buyWithCryptoContainer {
+  width: 100%;
   margin-top: 10px;
   display: flex;
   justify-content: center;
-  width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
   flex-direction: column;
 
   .cryptoTabsContianer {
-    width: 500px;
-    height: 63px;
     display: flex;
     margin: 0 auto;
     padding: 5px;
@@ -249,7 +247,11 @@
     border-radius: 50px;
     background-color: $colorPinkDark;
     justify-content: center;
+
     align-items: center;
+    @media (max-width: $screen-md) {
+      margin-top: 8px;
+    }
 
     .cryptoTab {
       width: 160px;
@@ -266,6 +268,9 @@
         line-height: 25px;
         font-family: $fontRegular;
         color: $colorWhite;
+        @media (max-width: $screen-md) {
+          font-size: 14px;
+        }
       }
     }
     .cryptoTabActive {
@@ -280,9 +285,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    max-width: 500px;
-    margin: 25px auto;
+    width: 84%;
+    margin: 0 auto;
+    margin-top: 25px;
     p {
       font-family: $fontRegular;
       font-size: 16px;
@@ -295,7 +300,10 @@
     margin-top: 30px;
     justify-content: center;
     align-items: center;
-
+    padding: 0 24px;
+    @media (max-width: $screen-md) {
+      padding: 0 16px;
+    }
     .cryptoInputContiner {
       max-width: 500px;
       width: 100%;
@@ -407,17 +415,18 @@
   }
 
   .transactionContainer {
-    // height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    // margin-top: 40px;
-
+    padding: 0 24px;
+    @media (max-width: $screen-md) {
+      padding: 0 16px;
+    }
     .transferSection {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 75%;
+      width: 100%;
       margin: 0 auto;
       flex-direction: column;
       p {
@@ -430,7 +439,6 @@
         }
       }
       .cryptoUrlContiner {
-        max-width: 500px;
         width: 100%;
         height: 40px;
         background: #f1f2f6;
@@ -602,19 +610,25 @@
 
   .connectWalletContainer {
     height: 100px;
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     row-gap: 10px;
-
+    @media (max-width: $screen-md) {
+      margin-top: 0px;
+    }
+    p {
+      text-align: center;
+    }
     .connectWalletButton {
       background: linear-gradient(
         180deg,
         $colorPinkDark 0%,
         $colorLightDark2 97.4%
       );
-      border-radius: 22.5px;
+      margin-top: 16px;
+      border-radius: 30px;
       border: 1px solid $colorWhite;
       width: 240px;
       height: 45px;
