@@ -55,7 +55,7 @@ const Timer = ({ startTimeMs, showIncome = false }) => {
   return showIncome ? (
     renderProfit()
   ) : (
-    <span>{factor <= 0 ? 100 : Math.floor(factor*100)}</span>
+    <span>{factor <= 0 ? 1.0 : factor}</span>
   );
 };
 
