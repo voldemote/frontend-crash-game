@@ -38,6 +38,10 @@ const BuyWithCrypto = () => {
     currencyLostFocus();
   }, [activeTab, selectedCurrency]);
 
+  const selectContent = event => {
+    event.target.select();
+  }
+
   const currencyChange = event => {
     const inputCurrency = event.target.value > 2000 ? 2000 : event.target.value;
     setCurrency(inputCurrency);
@@ -121,7 +125,7 @@ const BuyWithCrypto = () => {
             max={2000}
             onChange={currencyChange}
             onBlur={currencyLostFocus}
-            onClick="this.setSelectionRange(0, this.value.length)"
+            onClick={selectContent}
           />
           <div className={styles.inputRightContainer}>
             <div className={styles.innerContiner}>
@@ -146,7 +150,7 @@ const BuyWithCrypto = () => {
         </div>
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
-          <input value={tokenValue} />
+          <input disabled readonly value={tokenValue} />
           <div className={styles.inputRightContainer}>
             {activeTab === 'bitcoin' && <BitcoinIcon />}
             {activeTab === 'ethereum' && <EthereumIcon />}
