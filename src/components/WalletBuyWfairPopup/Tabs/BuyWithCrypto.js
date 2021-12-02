@@ -208,6 +208,7 @@ const BuyWithCrypto = () => {
               inputTheme={InputBoxTheme.copyToClipboardInputWhite}
               forDeposit={address}
             />
+          
             <div className={styles.transferSectionCopy}>
               <p>Send Transaction URL</p>
               <div className={styles.cryptoUrlContiner}>

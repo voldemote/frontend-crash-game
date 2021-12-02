@@ -530,6 +530,12 @@
           font-family: $fontBold;
         }
       }
+      .referralLink {
+        border: 1px solid $colorLightGray2 !important;
+        box-sizing: border-box;
+        border-radius: 8px;
+      }
+
       .transferSectionCopy {
         margin: 25px 0;
         width: 100%;
