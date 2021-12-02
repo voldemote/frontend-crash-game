@@ -33,6 +33,10 @@ export class AudioController {
           url: '/sounds/plinko/plinko_bgm.mp3',
           loop: true,
         },
+        bgm_cannon: {
+          url: '/sounds/cannon/bgm.mp3',
+          loop: true,
+        },
         flying: {
           url: '/sounds/elon/flying.mp3',
           loop: true,
@@ -123,6 +127,8 @@ export class AudioController {
       this.playSound('bgm1', true);
     }else if (this.bgmIndex === 2) {
       this.playSound('bgm2', true);
+    } else if (this.bgmIndex === 3) {
+      this.playSound('bgm_cannon', true);
     }
   }
 
