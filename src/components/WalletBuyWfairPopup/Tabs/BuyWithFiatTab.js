@@ -97,6 +97,9 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
       <div className={styles.wfairCalculatorContainer}>
         {/* Currency */}
         <div className={styles.inputContiner}>
+          <div className={styles.labelContainer}>
+            <span>You pay</span>
+          </div>
           <input
             type="number"
             value={currency}
@@ -121,8 +124,11 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
         <div className={styles.InputLineSeparator}>
           <img src={InputLineSeparator} alt="input_line_separator" />
         </div>
-        {/* WFAIR TOKEN */}
+        {/* WFAIR TOKEN */}        
         <div className={styles.inputContiner}>
+          <div className={styles.labelContainer}>
+            <span>You receive</span>
+          </div>
           <input disabled readOnly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
             <div className={styles.coinWrapper}>
