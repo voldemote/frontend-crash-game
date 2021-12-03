@@ -69,5 +69,6 @@ export default {
   pToken: 'pToken',
   leaderboardRanking: 'leaderboardRanking',
   leaderboardUser: 'leaderboardUser',
-  leaderboardToken: 'leaderboardToken'
+  leaderboardToken: 'leaderboardToken',
+  balanceScaleSolid: 'balanceScaleSolid'
 };

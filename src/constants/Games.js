@@ -19,6 +19,7 @@ import gameCard5 from '../data/images/house-games/card-5.png';
 import gameCardPumpDump from '../data/images/house-games/card-pumpdump.png';
 import gameCard4 from '../data/images/house-games/card-4.png';
 import gameCardMines from '../data/images/house-games/card-mines.png';
+import gameCardAlpacannon from '../data/images/house-games/card-alpacannon-soon.png';
 
 export const CASINO_GAMES = [
   {
@@ -101,6 +102,13 @@ export const NEW_SLOTS_GAMES = [
     subtitle: '',
     active: false,
     linkTo: '/games/oilrush',
+  },
+  {
+    background: gameCardAlpacannon,
+    title: `AlpaCannon`,
+    subtitle: '',
+    active: false,
+    linkTo: '/games/alpacannon',
   },
   /*,
   {
@@ -228,19 +236,22 @@ export const GAMES = {
     id: '618a81ded90fd22298859bc4',
     slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/ygtor6e4/show'
   },
   plinko: {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/dgbh7p68/show'
   },
   mines: {
     id: '619cc432121e61d6f06338c9',
     slug: 'mines',
     name: `Mines`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/w5b6actu/show'
   },
   cannon: {
     id: '61a09b35121e61d6f06338ca',
@@ -249,3 +260,106 @@ export const GAMES = {
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
 };
+
+
+export const EXTERNAL_GAMES = [
+  {
+    GameCategory: 'JetX',
+    GameName: 'JetX',
+    intro: 'JetX is an innovative game created by SmartSoft. Despite the simplicity of the rules, the game is a very exciting. Once the player places the bet, the Jet starts to fly and the winning coefficient increases according to the altitude of the flight. The player can cash out at any time by clicking the "Collect” button. The win is determined by the multiplication of the bet made and the winning coefficient. If the jet explodes before the player collects the win, player loses. Players can make two parallel bets on one flight. The winnings may vary from 0 to infinity.',
+  },
+  {
+    GameCategory: 'Games',
+    GameName: 'Cappadocia',
+    intro: 'Another amazing adventure to the perfect combination of ancient historical and unique cultural heritage. Cappadocia is waiting for you and you should take an opportunity for the breathtaking adventure - to fly over the  Khaki hills with hot-air balloons,  collect unforgettable memories, and unlimited winnings. A colorful journey to this magical place with the magical hot-air balloon is starting from now! This game is very special! Get ready for the new experience!',
+  },
+  {
+    GameCategory: 'Games',
+    GameName: 'Balloon',
+  },
+  {
+    GameCategory: 'XGames',
+    GameName: 'JetX3',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Viking',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Aztec',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Birds',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Casino',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Galaxy',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Cowboy',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'BookOfWin',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Christmas',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Sport',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Dota',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'FunFruit',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Pharaon',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'DonutCity',
+  },
+
+  {
+    GameCategory: 'Slots',
+    GameName: 'Samurai',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Football',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Argo',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'BankJob',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'MoonStone',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Apollo',
+  },
+  {
+    GameCategory: 'Slots',
+    GameName: 'Evolution',
+  }
+];

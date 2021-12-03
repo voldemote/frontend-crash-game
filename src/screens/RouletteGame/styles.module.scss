@@ -256,3 +256,18 @@
     cursor: pointer;
   }
 }
+
+.fairnessContainer {
+  text-align: right;
+  font-size: 14.5px;
+  line-height: 1;
+
+  .balanceIcon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .fairnessOpenPopup {
+    cursor: pointer;
+  }
+}

@@ -2,13 +2,13 @@ import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import {
-  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES,
+  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES, API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES,
   API_MINES_BET,
   API_MINES_CASHOUT,
   API_MINES_CHECK,
   API_MINES_CURRENT, API_MINES_LAST_CASHOUTS,
   API_MINES_START,
-  CRASH_GAME_GET_VOLUME_BETS
+  CRASH_GAME_GET_VOLUME_BETS, SINGLE_GAME_API_GET_GAME_DETAILS
 } from '../constants/Api';
 import {promises} from "stream";
 
@@ -86,6 +86,23 @@ class GameApi {
     });
   }
 
+  getCurrentFairnessByGame = (gameTypeId) => {
+    const callThis = ApiUrls.API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+
+    return this.api.get(callThis).catch(error => {
+      console.log('[API Error] called: getCurrentFairnessByGame', error);
+      throw error;
+    });
+  }
+
+  updateCurrentFairnessByGame = (gameTypeId, data) => {
+    const callThis = ApiUrls.API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+
+    return  this.api.post(callThis, data).catch(error => {
+      console.log('[API Error] called: updateCurrentFairnessByGame', error);
+      throw error;
+    });
+  }
 }
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');
@@ -94,6 +111,13 @@ const getSpinsAlpacaWheel = (gameTypeId) => {
   const callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
 
   return Api.get(callThis).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
+const setInitialSession = (payload) => {
+  const callThis = ApiUrls.API_SET_SESSION;
+
+  return Api.post(callThis, payload).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
@@ -147,14 +171,25 @@ const getLastCashoutsMines = (gameTypeId) => {
   });
 };
 
+const getSingleGameDetailById = (gameHash, gameTypeId, type) => {
+  const callThis = ApiUrls.SINGLE_GAME_API_GET_GAME_DETAILS
+      .replace(':gameHash', gameHash);
+
+  return Api.get(callThis + (type ? `/${type}` : '') + `?gameId=${gameTypeId}`).catch(error => {
+    console.log('[API Error] called: getSingleGameDetailById', error);
+  });
+}
+
 export {
   GameApi,
   Api,
   setToken,
+  setInitialSession,
   createTrade,
   getSpinsAlpacaWheel,
   getLuckyUsers,
   getHighUsers,
   getTotalBetsVolumeByRange,
-  getLastCashoutsMines
+  getLastCashoutsMines,
+  getSingleGameDetailById
 };

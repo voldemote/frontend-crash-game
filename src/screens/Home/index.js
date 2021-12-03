@@ -53,6 +53,7 @@ import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const Home = ({
   authState,
@@ -61,6 +62,7 @@ const Home = ({
   fetchTags,
   showPopup,
   events,
+  startOnboardingFlow
 }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
@@ -69,7 +71,7 @@ const Home = ({
   const [expandFair, setExpandFair] = useState(false);
   const [expandDecentral, setExpandDecentral] = useState(false);
   let urlParams = new URLSearchParams(location.search);
-  
+
   useOAuthCallback();
 
   const isLoggedIn = () => {
@@ -299,9 +301,9 @@ const Home = ({
   };
 
   const renderWelcome = () => {
-    const showPopupForUnauthenticated = authenticationType => {
+    const showPopupForUnauthenticated = () => {
       if (!isLoggedIn()) {
-        showPopup(PopupTheme.auth, { small: true, authenticationType });
+        startOnboardingFlow();
       }
     };
     return (
@@ -339,7 +341,7 @@ const Home = ({
             <div
               className={styles.pillButton}
               onClick={() =>
-                showPopupForUnauthenticated(AuthenticationType.register)
+                showPopupForUnauthenticated()
               }
             >
               <img src={medalCoin} alt="medal" className={styles.medal} />
@@ -667,6 +669,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    startOnboardingFlow: () =>{
+      dispatch(OnboardingActions.start());
     },
   };
 };

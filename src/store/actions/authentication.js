@@ -42,6 +42,7 @@ export const AuthenticationTypes = {
   UPDATE_STATUS: 'Authentication/UPDATE_STATUS',
   LOGIN_EXTERNAL: 'Authentication/LOGIN_EXTERNAL',
   LOGIN_EXTERNAL_FAIL: 'Authentication/LOGIN_EXTERNAL_FAIL',
+  SET_ALPACA_BUILDER_DATA: 'Authentication/SET_ALPACA_BUILDER_DATA',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -257,6 +258,16 @@ const loginExternalFail = makeActionCreator(
   }
 );
 
+const setAlpacaBuilderData = makeActionCreator(
+  AuthenticationTypes.SET_ALPACA_BUILDER_DATA,
+  {
+    base64: null,
+    fileName: null,
+    alpacaBuilderProps: null
+  }
+);
+
+
 export const AuthenticationActions = {
   fetchReferrals,
   fetchReferralsFailed,
@@ -298,4 +309,5 @@ export const AuthenticationActions = {
   updateStatus,
   loginExternal,
   loginExternalFail,
+  setAlpacaBuilderData
 };

@@ -35,4 +35,6 @@ export default {
   lastGamesDetail: 'lastGamesDetail',
   alpacaBuilder: 'alpacaBuilder',
   walletBuyWfair: 'walletBuyWfair',
+  fairnessPopup: 'fairnessPopup',
+  singleGamesDetail: 'singleGamesDetail'
 };

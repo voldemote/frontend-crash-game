@@ -44,6 +44,7 @@ import InfoBox from 'components/InfoBox';
 import EventTypes from 'constants/EventTypes';
 import BetActionsMenu from 'components/BetActionsMenu';
 import { trackNonstreamedEventPlaceTrade } from '../../config/gtm';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const BetView = ({
   betId,
@@ -65,6 +66,7 @@ const BetView = ({
   fetchOutcomes,
   // fetchSellOutcomes,
   resetOutcomes,
+  startOnboarding,
 }) => {
   // Static balance amount to simulate for non-logged users
   // Slider is also using 2800 as max value
@@ -203,7 +205,7 @@ const BetView = ({
   };
 
   const showJoinPopup = () => {
-    showPopup(PopupTheme.auth, { small: true });
+    startOnboarding();
   };
 
   const onChoiceSelect = (id, enabled) => {
@@ -715,6 +717,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(BetActions.setOutcomes());
       dispatch(BetActions.setSellOutcomes());
     },
+    startOnboarding: () => {
+      dispatch(OnboardingActions.start());
+    }
   };
 };
 

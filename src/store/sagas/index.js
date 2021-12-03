@@ -7,6 +7,7 @@ import UserSagas from './user';
 import ChatSagas from './chat';
 import WebsocketsSagas from './websockets';
 import LeaderboardSagas from './leaderboard';
+import OnboardingSaga from './onboarding';
 import { all, select, takeLatest, takeEvery, put } from 'redux-saga/effects';
 import { AuthenticationTypes } from '../actions/authentication';
 import { BetTypes } from '../actions/bet';
@@ -26,6 +27,7 @@ import { LOCATION_CHANGE } from 'connected-react-router';
 import { LeaderboardTypes } from '../actions/leaderboard';
 import { RosiGameTypes } from '../actions/rosi-game';
 import * as RosiGameSagas from './rosi-game';
+import { OnboardingTypes } from 'store/actions/onboarding';
 
 const root = function* () {
   yield all([
@@ -198,6 +200,10 @@ const root = function* () {
     takeLatest(
       [TransactionTypes.FETCH_WALLET_TRANSACTIONS],
       TransactionSagas.fetchWalletTransactions
+    ),
+    takeLatest(
+      [OnboardingTypes.START, OnboardingTypes.NEXT],
+      OnboardingSaga.loadOnboardingStep
     ),
     // @formatter:on
   ]);
