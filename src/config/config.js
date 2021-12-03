@@ -50,7 +50,7 @@ export const networkInfo = {
     apiExplorer: 'https://polygon-rpc.com',
     contractAddress: enviroment
       ? actions.default[enviroment].polygon
-      : actions.default.development.polygon,
+      : actions.default.production.polygon,
   },
   mumbai: {
     chainId: 80001,
@@ -69,8 +69,8 @@ export const networkInfo = {
     url: 'https://kovan.infura.io/v3/f6acacf850c94276afe2351e85f61414',
     apiExplorer: 'https://api-kovan.etherscan.io/api',
     contractAddress: enviroment
-      ? actions.default[enviroment].polygon
-      : actions.default.development.polygon,
+      ? actions.default[enviroment].ethereum
+      : actions.default.development.ethereum,
   },
 };
 
@@ -78,8 +78,8 @@ const currentChainSelected = window?.ethereum?.networkVersion || actions.network
 const currentNetworkKey =
   Object.keys(networkInfo).find(
     value =>
-      parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
-  ) || actions.network.name;
+    parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
+  )
 
 export const currentChainId = currentChainSelected;
 export const currentNetwork = networkInfo[currentNetworkKey];
