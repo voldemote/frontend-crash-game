@@ -16,7 +16,7 @@ import { NotificationActions } from 'store/actions/notification';
 import { LOGGED_IN } from 'constants/AuthState';
 import Button from '../Button';
 import Wallet from '../Wallet';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { matchPath } from 'react-router-dom';
 import { LeaderboardActions } from '../../store/actions/leaderboard';
 import { GeneralActions } from '../../store/actions/general';
@@ -62,6 +62,8 @@ const Navbar = ({
   });
 
   const { balance, currency, toNextRank } = useSelector(selectUser);
+
+  const history = useHistory();
 
   useEffect(() => {
     let nextSunday = moment().day(7).startOf('day').toDate();
@@ -190,19 +192,19 @@ const Navbar = ({
     );
 
     const walletBtn = (
-      <Link
+      <Button
         className={classNames(
           style.balanceOverview,
           style.pillButton,
           style.leaderboardValues,
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
-        to={Routes.wallet}
+        onClick={() => history.push(Routes.wallet)}
         data-tracking-id="menu-wallet-icon"
       >
         <Icon iconType={'pToken'} />
-        {formatToFixed(balance, 0, true)} {currency}
-      </Link>
+        <p>{formatToFixed(balance, 0, true)} {currency}</p>
+      </Button>
     );
 
     const profileBtn = (
