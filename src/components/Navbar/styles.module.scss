@@ -17,10 +17,6 @@
     padding: 36px 24px;
   }
 
-  img {
-    margin-right: 2rem;
-  }
-
   .drawerWrapper {
     display: contents;
   }
@@ -109,8 +105,8 @@
     }
 
     a {
-      color: $colorPrimary;
-      opacity: 0.5;
+      color: $colorWhite;
+      opacity: 0.7;
       text-decoration: none;
       margin: 0 15px;
       font-family: $fontLight;
@@ -264,7 +260,7 @@
       &:after {
         content: '';
         position: absolute;
-        background-color: $colorPinkDark;
+        background-color: $colorWhite;
         bottom: -5px;
         left: 50%;
         width: 80%;
@@ -277,7 +273,18 @@
 
     .logoLink {
       opacity: 1;
-      margin: 4rem 0 0;
+      margin: 2rem 0 0 1rem;
+
+      .logoContainer {
+        display: flex;
+        align-items: center;
+        .logoText {
+          color: $colorWhite;
+          font-family: $fontBold;
+          font-size: 50px;
+          line-height: 50px;
+        }
+      }
 
       & > img {
         margin: 0;

@@ -404,11 +404,16 @@ const Navbar = ({
       <div className={classNames(style.navbarItems, style.hideOnMobile)}>
         {renderNavbarLink(
           Routes.home,
-          <img
-            src={IconHeaderLogo}
-            alt="Header Logo"
-            className={style.medal}
-          />,
+          <div className={style.logoContainer}>
+            <img
+              src={IconHeaderLogo}
+              alt="Header Logo"
+              className={style.logoImg}
+            />
+            <span className={style.logoText}>
+              Alpacasino
+            </span>
+          </div>,          
           true
         )}
 
