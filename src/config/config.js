@@ -48,9 +48,7 @@ export const networkInfo = {
     label: 'Polygon',
     url: 'https://polygon-rpc.com',
     apiExplorer: 'https://polygon-rpc.com',
-    contractAddress: enviroment
-      ? actions.default[enviroment].polygon
-      : actions.default.production.polygon,
+    contractAddress: actions.default.production.polygon,
   },
   mumbai: {
     chainId: 80001,
@@ -69,26 +67,28 @@ export const networkInfo = {
     url: 'https://kovan.infura.io/v3/f6acacf850c94276afe2351e85f61414',
     apiExplorer: 'https://api-kovan.etherscan.io/api',
     contractAddress: enviroment
-      ? actions.default[enviroment].ethereum
-      : actions.default.development.ethereum,
+      ? actions.default[enviroment].polygon
+      : actions.default.development.polygon,
   },
 };
 
-const currentChainSelected = window?.ethereum?.networkVersion || actions.network.chainId
-const currentNetworkKey =
-  Object.keys(networkInfo).find(
+export const currentChainId = async () => {
+  const currentChainSelected = await window?.ethereum?.networkVersion;
+  return currentChainSelected;
+};
+
+export const currentNetwork = async () => {
+  const currentChainSelected = await window?.ethereum?.networkVersion;
+
+  const currentNetworkKey = Object.keys(networkInfo).find(
     value =>
-    parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
-  )
+      parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
+  );
+  return networkInfo[currentNetworkKey];
+};
 
-export const currentChainId = currentChainSelected;
-export const currentNetwork = networkInfo[currentNetworkKey];
+export const WFAIRAddress = async () => {
+  const network = await currentNetwork();
+  return network?.contractAddress;
+};
 
-// export const WFAIRAddress = actions.token.address;
-export const WFAIRAddress = currentNetwork.contractAddress;
-
-export const lockAddresses = actions.locks.map(l => l.address);
-export const lockInfo = Object.values(actions.locks).reduce(
-  (obj, l) => Object.assign(obj, { [l.address]: { name: l.name } }),
-  {}
-);

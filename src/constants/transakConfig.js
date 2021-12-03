@@ -6,6 +6,7 @@ const transakConfig = {
   cryptoCurrencyCode: process.env.REACT_APP_TRANSAK_CRYPTO_CURRENCY_CODE || 'MATIC',
   walletAddress: process.env.REACT_APP_TRANSAK_WALLET_ADDRESS || '0x71a62c90E152557B68a8C8C6c5a8560117eBf288', // Our backend wallet (should not be changeable)
   networks: process.env.REACT_APP_TRANSAK_NETWORK ||'ethereum,mainnet,polygon,kovan',
+  disableWalletAddressForm: true,
   themeColor: '7879f1', // App theme color
   // hideMenu: true,
   // redirectURL: window.location.origin,

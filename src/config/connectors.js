@@ -11,12 +11,14 @@ const urls = Object.values(networkInfo).reduce(
   {}
 );
 const chainIds = Object.values(networkInfo).map(i => i.chainId);
-const POLLING_INTERVAL = 12000;
 
-export const network = new NetworkConnector({
-  urls,
-  defaultChainId: currentChainId,
-});
+export const network = async () => {
+  const currentId = await currentChainId();
+  new NetworkConnector({
+    urls,
+    defaultChainId: currentId,
+  });
+};
 
 export const gnosisSafe = new SafeAppConnector(chainIds);
 

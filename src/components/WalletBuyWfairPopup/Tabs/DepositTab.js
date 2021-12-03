@@ -15,16 +15,16 @@ import TokenTransfer from 'components/TokenTransfer';
 import { Contract, ethers } from 'ethers';
 import {
   WFAIRAddress,
-  lockAddresses,
   currentChainId,
   currentNetwork,
 } from '../../../config/config';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
-import { SWITCH_NETWORKS } from '../../../utils/constants';
+import { SWITCH_NETWORKS, NETWORK_TYPES } from '../../../utils/constants';
 import QRCode from 'react-qr-code';
 import { accountMapping } from 'api/third-party';
 import { WallfairActions } from 'store/actions/wallfair';
+import Loader from 'components/Loader/Loader';
 
 const DepositTab = ({ user, resetState }) => {
   const [walletAddress, setWalletAddress] = useState(
@@ -37,6 +37,7 @@ const DepositTab = ({ user, resetState }) => {
   const [tokenAreaOpen, setTokenAreaOpen] = useState(false);
   const [hash, setHash] = useState('');
   const [balance, setBalance] = useState(0);
+  const [isLoadingTransferToken, setIsLoadingTransferToken] = useState(true);
   const signer = library?.getSigner();
 
   const copy = useCallback(() => {
@@ -47,17 +48,17 @@ const DepositTab = ({ user, resetState }) => {
   }, [walletAddress]);
 
   const sendAccountMappingCall = useCallback(() => {
-    if(account && visibleWalletForm) {
+    if (account && visibleWalletForm) {
       const accountMappingBody = {
         userId: user.userId,
         account: account,
       };
       accountMapping(accountMappingBody, user.token);
     }
-  },[visibleWalletForm, account, user]);
+  }, [visibleWalletForm, account, user]);
 
   useEffect(() => {
-    resetState()
+    resetState();
     if (active) {
       setTokenAreaOpen(true);
       sendAccountMappingCall();
@@ -65,13 +66,23 @@ const DepositTab = ({ user, resetState }) => {
   }, [account, active, resetState, sendAccountMappingCall]);
 
   useEffect(() => {
-    if (parseInt(chainId) !== parseInt(currentChainId)) {return};
-    
-    signer?.getAddress().then(address => {
-      getBalanceWFAIR({ address: address, provider: library }).then(result => {
-        setBalance(result);
+    const updateWallet = async () => {
+      const currentId = await currentChainId();
+      console.log(currentId);
+      if (parseInt(chainId) !== parseInt(currentId)) {
+        return;
+      }
+
+      signer?.getAddress().then(address => {
+        getBalanceWFAIR({ address: address, provider: library }).then(
+          result => {
+            setBalance(result);
+            setIsLoadingTransferToken(false);
+          }
+        );
       });
-    });
+    };
+    updateWallet().catch(console.error);
   }, [account, library, signer, hash, chainId, setBalance]);
 
   const notSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
@@ -82,63 +93,65 @@ const DepositTab = ({ user, resetState }) => {
     <>
       <div className={styles.depositTabContainer}>
         {!!account && (
-        <>
-          <p>Select your preferred network</p>
-          <div className={styles.depositHeader}>
-            
-            <div
-              className={classNames(
-                notSelectedNetworkId &&
-                  'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
-                  ? styles.inactiveButton
-                  : styles.activeButton
-              )}
-              onClick={async () => {
-                const networkId = notSelectedNetworkId;
-                if ('Polygon' === SWITCH_NETWORKS[networkId]) {
-                  await switchMetaMaskNetwork(networkId);
-                }
-              }}
-            >
-              <img
-                className={styles.imageSizePolygon}
-                src={
+          <>
+            <p>Select your preferred network</p>
+            <div className={styles.depositHeader}>
+              <div
+                className={classNames(
                   notSelectedNetworkId &&
-                  'Polygon' === SWITCH_NETWORKS[notSelectedNetworkId]
-                    ? PolygonLogo
-                    : PolygonLogoActive
-                }
-                alt="Polygon-logo"
-              />
-            </div>
-            <div
-              className={classNames(
-                notSelectedNetworkId &&
-                  'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
-                  ? styles.inactiveButton
-                  : styles.activeButton
-              )}
-              onClick={async () => {
-                const networkId = notSelectedNetworkId;
+                    NETWORK_TYPES.POLY === SWITCH_NETWORKS[notSelectedNetworkId]
+                    ? styles.inactiveButton
+                    : styles.activeButton
+                )}
+                onClick={async () => {
+                  const networkId = notSelectedNetworkId;
+                  if (NETWORK_TYPES.POLY === SWITCH_NETWORKS[networkId]) {
+                    setIsLoadingTransferToken(true);
+                    await switchMetaMaskNetwork(networkId);
+                  }
+                  
+                }}
+              >
+                <img
+                  className={styles.imageSizePolygon}
+                  src={
+                    notSelectedNetworkId &&
+                    NETWORK_TYPES.POLY === SWITCH_NETWORKS[notSelectedNetworkId]
+                      ? PolygonLogo
+                      : PolygonLogoActive
+                  }
+                  alt="Polygon-logo"
+                />
+              </div>
+              <div
+                className={classNames(
+                  notSelectedNetworkId &&
+                    NETWORK_TYPES.ETH === SWITCH_NETWORKS[notSelectedNetworkId]
+                    ? styles.inactiveButton
+                    : styles.activeButton
+                )}
+                onClick={async () => {
+                  const networkId = notSelectedNetworkId;
 
-                if ('Ethereum' === SWITCH_NETWORKS[networkId]) {
-                  await switchMetaMaskNetwork(networkId);
-                }
-              }}
-            >
-              <img
-                className={styles.imageSizeEther}
-                src={
-                  notSelectedNetworkId &&
-                  'Ethereum' === SWITCH_NETWORKS[notSelectedNetworkId]
-                    ? EthereumLogo
-                    : EthereumLogoActive
-                }
-                alt="Ethereum-logo"
-              />
+                  if (NETWORK_TYPES.ETH === SWITCH_NETWORKS[networkId]) {
+                    setIsLoadingTransferToken(true);
+                    await switchMetaMaskNetwork(networkId);
+                  }
+                }}
+              >
+                <img
+                  className={styles.imageSizeEther}
+                  src={
+                    notSelectedNetworkId &&
+                    NETWORK_TYPES.ETH === SWITCH_NETWORKS[notSelectedNetworkId]
+                      ? EthereumLogo
+                      : EthereumLogoActive
+                  }
+                  alt="Ethereum-logo"
+                />
+              </div>
             </div>
-          </div>
-        </>
+          </>
         )}
 
         {/* {!!account && (
@@ -179,8 +192,13 @@ const DepositTab = ({ user, resetState }) => {
             </button>
           </div>
         )}
-        {visibleWalletForm && !active && <ConnectWallet accountMapping={sendAccountMappingCall} />}
-        {tokenAreaOpen && account && (
+        {visibleWalletForm && !active && (
+          <ConnectWallet accountMapping={sendAccountMappingCall} />
+        )}
+        {isLoadingTransferToken? (
+          tokenAreaOpen && account && <Loader />
+        ) : (
+           tokenAreaOpen && account && 
           <TokenTransfer
             provider={library}
             hash={hash}
@@ -201,9 +219,21 @@ const DepositTab = ({ user, resetState }) => {
 };
 
 const getBalanceWFAIR = async ({ address, provider }) => {
-  const contract = new Contract(WFAIRAddress, WFairABI.abi, provider);
-  const balance = await contract.balanceOf(address);
-  return ethers.utils.formatEther(balance);
+  const contractAddress = await WFAIRAddress();
+  console.log('contractAddress', contractAddress);
+  const contract = new Contract(contractAddress, WFairABI.abi, provider);
+  if (contract) {
+    return await contract
+      .balanceOf(address)
+      .then(balance => {
+        return ethers.utils.formatEther(balance);
+      })
+      .catch(err => {
+        console.log(err);
+        return 0;
+      });
+  }
+  return 0;
 };
 
 const mapStateToProps = state => {
@@ -232,6 +262,5 @@ const mapDispatchToProps = dispatch => {
       ),
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(DepositTab);
