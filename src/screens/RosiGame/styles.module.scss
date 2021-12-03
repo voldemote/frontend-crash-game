@@ -39,7 +39,7 @@
       font-size: 11px;
       font-family: $fontRegular;
       text-decoration: underline;
-      color: $colorLightPink;
+      color: $colorLightYellow;
 
       @media (max-width: $screen-xs) {
         display: none;
@@ -156,10 +156,10 @@
 }
 .chatWrapper {
   margin-top: 32px;
-  background-color: $colorWhite;
+  background: rgba(122, 121, 121, 0.1);
   border-radius: 10px;
   margin-right: 25px;
-  border: 1px solid $colorLightGray;
+  border: 1px solid $colorLightGray4;
 
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
@@ -168,7 +168,7 @@
 
 .chatContainer {
   height: 312px;
-  background: $colorWhite;
+  background: transparent;
   border-radius: 10px;
   margin: 0px;
   padding: 10px;
