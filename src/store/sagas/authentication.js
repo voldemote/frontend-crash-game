@@ -388,10 +388,8 @@ const updateUserData = function* (action) {
 
       if (action.newUser) {
         yield put(
-          PopupActions.show({
-            popupType: PopupTheme.welcome,
+          OnboardingActions.next({
             options: {
-              small: false,
               initialReward: action?.initialReward,
             },
           })

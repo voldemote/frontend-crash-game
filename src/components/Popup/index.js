@@ -234,7 +234,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.requestTokens:
         return <RequestTokensPopup />;
       case PopupTheme.alpacaBuilder:
-        return <AlpacaBuilderPopup initialReward={options.initialReward}/>;
+        return <AlpacaBuilderPopup {...options}/>;
 
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
