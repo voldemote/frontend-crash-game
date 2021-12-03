@@ -13,7 +13,7 @@ const TokenTransfer = ({
   balance,
   showCancel = false,
   tranferAddress,
-  account,
+  contractAddress,
 }) => {
   const [transferValue, setTransferValue] = useState('0');
   const [blocked, setBlocked] = useState(false);
@@ -39,13 +39,14 @@ const TokenTransfer = ({
     console.log('provider', provider);
     console.log('tranferAddress', tranferAddress);
     console.log('transferValue', transferValue);
-    console.log('WFAIRAddress', transferValue);
+    console.log('WFAIRAddress', contractAddress);
 
     setBlocked(true);
     setformError('');
     WFAIRTransfer({
-      provider: provider,
-      setter: setter,
+      provider,
+      setter,
+      contractAddress,
       tokenAmount: transferValue,
       to_address: tranferAddress,
       setBlocked: setBlocked,

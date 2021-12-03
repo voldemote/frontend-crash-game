@@ -6,6 +6,7 @@ import SafeCall from "../SafeContractCall";
 const WFAIRTransfer = ({
   provider,
   setter,
+  contractAddress,
   tokenAmount,
   to_address: toAddress,
   setBlocked,
@@ -28,7 +29,11 @@ const WFAIRTransfer = ({
     console.log("Gas price in Gwei:", gas_price);
 
     const signer = provider?.getSigner();
-    const wfairToken = new ethers.Contract(WFAIRAddress, WFAIRAbi.abi, signer);
+    const wfairToken = new ethers.Contract(
+      contractAddress,
+      WFAIRAbi.abi,
+      signer
+    );
 
     // .5 => 0.5 || 6. => 6.0
     tokenAmount =

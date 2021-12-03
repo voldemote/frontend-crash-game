@@ -14,10 +14,8 @@ import ConnectWallet from 'components/ConnectWallet/ConnectWallet';
 import TokenTransfer from 'components/TokenTransfer';
 import { Contract, ethers } from 'ethers';
 import {
-  WFAIRAddress,
-  lockAddresses,
-  currentChainId,
   currentNetwork,
+  WFAIRAddress,
 } from '../../../config/config';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
@@ -25,26 +23,19 @@ import { SWITCH_NETWORKS } from '../../../utils/constants';
 import QRCode from 'react-qr-code';
 import { accountMapping } from 'api/third-party';
 import { WallfairActions } from 'store/actions/wallfair';
+import useWeb3Network from '../../../hooks/useWeb3Network';
 
 const DepositTab = ({ user, resetState }) => {
   const [walletAddress, setWalletAddress] = useState(
     '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8'
   );
-  const [hasCopiedSuccessfully, setHasCopiedSuccessfully] = useState(false);
-  // const [walletType, setWalletType] = useState('');
   const { active, library, account, chainId } = useWeb3React();
+  const { currentNetwork, currentChainId } = useWeb3Network();
   const [visibleWalletForm, setVisibleWalletForm] = useState(false);
   const [tokenAreaOpen, setTokenAreaOpen] = useState(false);
   const [hash, setHash] = useState('');
   const [balance, setBalance] = useState(0);
   const signer = library?.getSigner();
-
-  const copy = useCallback(() => {
-    TextUtil.toClipboard(walletAddress).then(() => {
-      setHasCopiedSuccessfully(true);
-      setTimeout(setHasCopiedSuccessfully, 2000, false);
-    });
-  }, [walletAddress]);
 
   const sendAccountMappingCall = useCallback(() => {
     if(account && visibleWalletForm) {
@@ -65,14 +56,18 @@ const DepositTab = ({ user, resetState }) => {
   }, [account, active, resetState, sendAccountMappingCall]);
 
   useEffect(() => {
-    if (parseInt(chainId) !== parseInt(currentChainId)) {return};
-    
-    signer?.getAddress().then(address => {
-      getBalanceWFAIR({ address: address, provider: library }).then(result => {
-        setBalance(result);
+    if (currentNetwork && parseInt(chainId) === parseInt(currentChainId)) {
+      signer?.getAddress().then(address => {
+        getBalanceWFAIR({
+          address,
+          provider: library,
+          contractAddress: currentNetwork.contractAddress,
+        }).then(result => {
+          setBalance(result);
+        });
       });
-    });
-  }, [account, library, signer, hash, chainId, setBalance]);
+    }
+  }, [currentNetwork, library, signer, chainId, currentChainId])
 
   const notSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
     sn => sn !== window.ethereum?.chainId
@@ -188,7 +183,7 @@ const DepositTab = ({ user, resetState }) => {
             showCancel={false}
             balance={balance}
             tranferAddress={walletAddress}
-            account={account}
+            contractAddress={currentNetwork?.contractAddress}
           />
         )}
         {/* {!!account && (<p className={styles.firstDiscription}>
@@ -200,8 +195,8 @@ const DepositTab = ({ user, resetState }) => {
   );
 };
 
-const getBalanceWFAIR = async ({ address, provider }) => {
-  const contract = new Contract(WFAIRAddress, WFairABI.abi, provider);
+const getBalanceWFAIR = async ({ address, provider, contractAddress }) => {
+  const contract = new Contract(contractAddress, WFairABI.abi, provider);
   const balance = await contract.balanceOf(address);
   return ethers.utils.formatEther(balance);
 };

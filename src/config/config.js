@@ -74,12 +74,12 @@ export const networkInfo = {
   },
 };
 
-const currentChainSelected = window?.ethereum?.networkVersion || actions.network.chainId
+const currentChainSelected = window?.ethereum?.networkVersion;
 const currentNetworkKey =
   Object.keys(networkInfo).find(
     value =>
     parseInt(networkInfo[value].chainId) === parseInt(currentChainSelected)
-  )
+  );
 
 export const currentChainId = currentChainSelected;
 export const currentNetwork = networkInfo[currentNetworkKey];
