@@ -1,8 +1,22 @@
-import { currentNetwork } from "../../../config/config";
-import Loader from "../../Loader/Loader";
-import styles from "./styles.module.scss";
+import { useEffect, useState } from 'react';
+
+import { currentNetwork } from '../../../config/config';
+import Loader from '../../Loader/Loader';
+import styles from './styles.module.scss';
 
 const Waiting = ({ setModalOpen, hash, action }) => {
+  const [mainUrl, setMainUrl] = useState();
+  const [mainLabel, setMainLabel] = useState();
+
+  useEffect(() => {
+    const updatedNetwork = async () => {
+      const networkSelected = await currentNetwork();
+      setMainUrl(networkSelected.explorer);
+      setMainLabel(networkSelected.label);
+    };
+    updatedNetwork();
+  }, []);
+
   return (
     <div className={styles.promoMessage}>
       <span className={styles.prizeAmount}>{`Waiting for confirmation`}</span>
@@ -12,7 +26,7 @@ const Waiting = ({ setModalOpen, hash, action }) => {
           <p>
             <strong
               onClick={() => {
-                window.open(`${currentNetwork.explorer}tx/${hash}`, "_blank");
+                window.open(`${mainUrl}tx/${hash}`, '_blank');
               }}
             >
               {hash}
@@ -21,10 +35,10 @@ const Waiting = ({ setModalOpen, hash, action }) => {
           <button
             className={styles.keepGoing}
             onClick={() => {
-              window.open(`${currentNetwork.explorer}tx/${hash}`, "_blank");
+              window.open(`${mainUrl}tx/${hash}`, '_blank');
             }}
           >
-            Look up on Etherscan
+            Look up on {mainLabel}
           </button>
         </>
       )}

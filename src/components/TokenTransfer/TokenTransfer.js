@@ -34,6 +34,7 @@ const TokenTransfer = ({
     if (!modalOpen) {
       setBlocked(false);
       setTXSuccess(false);
+      setter(false)
     }
   }, [modalOpen]);
 

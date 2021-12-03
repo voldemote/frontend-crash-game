@@ -36,7 +36,7 @@ export const networkInfo = {
   polygon: {
     chainId: 137,
     explorer: 'https://polygonscan.com/',
-    label: 'Polygon',
+    label: 'Polyscan',
     url: 'https://polygon-rpc.com',
     apiExplorer: 'https://polygon-rpc.com',
     contractAddress: actions.default.production.polygon,
