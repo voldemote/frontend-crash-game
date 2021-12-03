@@ -65,7 +65,7 @@ const UserWallet = ({
   const activityData = {
     DEPOSITS: transactions.deposit || [],
     WITHDRAWALS: transactions.withdrawal || [],
-    ONRAMP: [...(transactions.transak || []), ...(transactions.onramp || [])] || [],
+    ONRAMP: transactions.onramp || [],
     BETS: myBetsData ? myBetsData : [],
   };
 

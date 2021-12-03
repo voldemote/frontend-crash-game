@@ -36,7 +36,7 @@ const fetchWalletTransactions = function* () {
     const { data } = yield call(Api.getWalletTransactions);
 
     const transactions = data.reduce((acc, transaction) => {
-      const key = transaction.external_system;
+      const key = transaction.originator;
       return {
         ...acc,
         [key]: [
