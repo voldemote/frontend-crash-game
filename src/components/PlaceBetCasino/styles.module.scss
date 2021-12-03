@@ -103,6 +103,7 @@
 .spinsleft {
   margin: 5px;
   text-align: center;
+  color: $colorWhite;
   .reward {
     margin: 3px;
     color: $colorGreen;
@@ -448,6 +449,7 @@
 
   .buttonWrapper {
     margin-left: 0px;
+    color: $colorWhite;
     @media (min-width: $screen-lg) {
       margin-left: 30px;
     }
