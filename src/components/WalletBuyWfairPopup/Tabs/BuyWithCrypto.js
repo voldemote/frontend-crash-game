@@ -205,7 +205,7 @@ const BuyWithCrypto = () => {
             <p>
               Please transfer the{' '}
               <span>
-                {tokenValue} {cryptoShortName[activeTab]}
+                {currency} {cryptoShortName[activeTab]}
               </span>{' '}
               to the following {cryptoShortName[activeTab]} Address
             </p>

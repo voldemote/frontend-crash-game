@@ -18,7 +18,8 @@
     font-family: $fontRegular;
     font-size: 16px;
     margin-bottom: 10px;
-    border: 1px solid $colorGrayLight;
+    background: #f1f2f6;
+    border: 1px solid $colorLightGray2;
     &:focus {
       border: 1px solid $colorGrayLight;
     }

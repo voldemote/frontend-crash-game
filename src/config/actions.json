@@ -354,18 +354,6 @@
       "lockConfigFile": "deployprivSale2Lock"
     }
   ],
-  "token": {
-    "name": "WFAIR",
-    "address": "0xe31B4C9245cB1d049f588E389cFc275b9b5a6cf0",
-    "timestamp": "1632584024280",
-    "deployer": "0x6756766Ad3b2585e541a6f369AF05A31a3836724"
-  },
-  "network": {
-    "name": "kovan",
-    "chainId": 42,
-    "gas": "auto",
-    "gasPrice": "auto"
-  },
   "default": {
     "production": {
       "ethereum": "0xC6065B9fc8171Ad3D29bad510709249681758972",

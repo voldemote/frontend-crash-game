@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectBalances } from '../../state/wallfair/slice';
+import React, { useState, useEffect, useCallback } from 'react';
 import { numberWithCommas } from '../../utils/common';
 import TxModal from '../TxModal';
 import WFAIRTransfer from '../WFAIRTransfer';
 import styles from './styles.module.scss';
 import Loader from 'components/Loader/Loader';
+import { WFAIRAddress } from "../../config/config";
 
 const TokenTransfer = ({
   provider,
@@ -35,6 +34,27 @@ const TokenTransfer = ({
       setTXSuccess(false);
     }
   }, [modalOpen]);
+
+  const handleTransaction = useCallback(() => {
+    console.log('provider', provider);
+    console.log('tranferAddress', tranferAddress);
+    console.log('transferValue', transferValue);
+    console.log('WFAIRAddress', transferValue);
+
+    setBlocked(true);
+    setformError('');
+    WFAIRTransfer({
+      provider: provider,
+      setter: setter,
+      tokenAmount: transferValue,
+      to_address: tranferAddress,
+      setBlocked: setBlocked,
+      setModalOpen: setModalOpen,
+      setTXSuccess: setTXSuccess,
+      setformError: setformError,
+    });
+    setTransferValue('0');
+  }, [provider, setter, tranferAddress, transferValue]);
   
   if (balance < 1) {
     return isloading ? (
@@ -56,7 +76,7 @@ const TokenTransfer = ({
         />
       )}
       <div className={styles.transferWrapper}>
-        <strong>{`You can maximally transfer ${numberWithCommas(
+        <strong>{`You can transfer up to ${numberWithCommas(
           balance > 2000 ? 2000 : Number(balance).toFixed(2)
         )} WFAIR`}</strong>
         {formError && (
@@ -70,7 +90,7 @@ const TokenTransfer = ({
           value={transferAddress}
           onChange={(e) => setTransferAddress(e.target.value)}
         /> */}
-        {balance > 1 ? (
+        {balance > 0 ? (
           <>
             <div className={styles.checkBoxContainer}>
               <p>Deposit All</p>
@@ -108,21 +128,7 @@ const TokenTransfer = ({
             <div className={styles.buttonWrapper}>
               <button
                 className={styles.transferButton}
-                onClick={() => {
-                  setBlocked(true);
-                  setformError('');
-                  WFAIRTransfer({
-                    provider: provider,
-                    setter: setter,
-                    tokenAmount: transferValue,
-                    to_address: tranferAddress,
-                    setBlocked: setBlocked,
-                    setModalOpen: setModalOpen,
-                    setTXSuccess: setTXSuccess,
-                    setformError: setformError,
-                  });
-                  setTransferValue('0');
-                }}
+                onClick={handleTransaction}
               >
                 Send Transaction
               </button>
