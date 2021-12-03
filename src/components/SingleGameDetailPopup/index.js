@@ -18,8 +18,35 @@ const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
 };
 
+const PlinkoDetails = ({resData}) => {
+  const profit = resData?.profit.toFixed(2);
+
+  return  <>
+    <div>
+      <b>Multiplier:</b>{' '}
+      <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+    </div>
+    <div>
+      <b>Risk factor:</b>{' '}
+      <span>{resData?.riskFactor}</span>
+    </div>
+    <div>
+      <b>Game Hash:</b>{' '}
+      <span>{resData?.gameHash}</span>
+    </div>
+    <div>
+      <b>Staked amount:</b>{' '}
+      <span>{resData?.stakedAmount}</span>
+    </div>
+    <div>
+      <b>Profit:</b>{' '}
+      <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+    </div>
+  </>
+}
+
 const WheelDetails = ({resData}) => {
-    const profit = resData?.profit;
+    const profit = resData?.profit.toFixed(2);
 
     return  <>
         <div>
@@ -46,7 +73,7 @@ const WheelDetails = ({resData}) => {
 }
 
 const MinesDetails = ({resData}) => {
-    const profit = resData?.profit;
+    const profit = resData?.profit.toFixed(2);
     const board = resData?.board || [];
 
     return  <>
@@ -95,6 +122,10 @@ const renderDetails = (game, resData) => {
 
     if(game.name === "Mines") {
         return <MinesDetails resData={resData} />;
+    }
+
+    if(game.name === "Plinko") {
+        return <PlinkoDetails resData={resData} />;
     }
 }
 
