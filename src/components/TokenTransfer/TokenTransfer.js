@@ -4,7 +4,6 @@ import TxModal from '../TxModal';
 import WFAIRTransfer from '../WFAIRTransfer';
 import styles from './styles.module.scss';
 import Loader from 'components/Loader/Loader';
-import { WFAIRAddress } from "../../config/config";
 
 const TokenTransfer = ({
   provider,
@@ -34,6 +33,10 @@ const TokenTransfer = ({
       setTXSuccess(false);
     }
   }, [modalOpen]);
+
+  const getLookupLabel = () => {
+    return Object.keys()
+  };
 
   const handleTransaction = useCallback(() => {
     console.log('provider', provider);
@@ -74,6 +77,7 @@ const TokenTransfer = ({
           success={TXSuccess}
           setModalOpen={setModalOpen}
           action={'Token Transfer'}
+          lookupLabel={getLookupLabel}
         />
       )}
       <div className={styles.transferWrapper}>

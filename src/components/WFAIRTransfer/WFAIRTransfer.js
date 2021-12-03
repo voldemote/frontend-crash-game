@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { WFAIRAddress } from "../../config/config";
 import WFAIRAbi from "../../config/abi/WFAIRToken.json";
 import SafeCall from "../SafeContractCall";
 

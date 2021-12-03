@@ -22,10 +22,8 @@ import { Contract, ethers } from 'ethers';
 //   setHistory,
 // } from '../../state/wallfair/slice';
 import {
-  WFAIRAddress,
   lockAddresses,
   currentChainId,
-  currentNetwork,
 } from '../../config/config';
 import WFairTokenLockABI from '../../config/abi/TokenLock.json';
 import { ZERO } from '../../utils/constants';

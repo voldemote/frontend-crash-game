@@ -13,10 +13,6 @@ import CopyIcon from '../../../data/icons/copy-icon.svg';
 import ConnectWallet from 'components/ConnectWallet/ConnectWallet';
 import TokenTransfer from 'components/TokenTransfer';
 import { Contract, ethers } from 'ethers';
-import {
-  currentNetwork,
-  WFAIRAddress,
-} from '../../../config/config';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
 import { SWITCH_NETWORKS } from '../../../utils/constants';

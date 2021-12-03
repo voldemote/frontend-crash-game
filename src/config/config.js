@@ -85,7 +85,7 @@ export const currentChainId = currentChainSelected;
 export const currentNetwork = networkInfo[currentNetworkKey];
 
 // export const WFAIRAddress = actions.token.address;
-export const WFAIRAddress = currentNetwork.contractAddress;
+export const WFAIRAddress = currentNetwork?.contractAddress;
 
 export const lockAddresses = actions.locks.map(l => l.address);
 export const lockInfo = Object.values(actions.locks).reduce(
