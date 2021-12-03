@@ -110,7 +110,7 @@ const RouletteGame = ({
       await Api.getCurrentFairnessByGame(game.id);
     })().catch(error => {
       dispatch(AlertActions.showError({
-        message: `${game.name}: ${error.response.data}`
+        message: `${game.name}: ${error.response?.data || error.message}`
       }));
 
       setBet({

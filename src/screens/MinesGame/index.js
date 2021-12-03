@@ -141,7 +141,7 @@ const Game = ({
       await gameApi.getCurrentFairnessByGame(gameCfg.id);
     })().catch(error => {
       dispatch(AlertActions.showError({
-        message: `${GAME_NAME}: ${error.response.data}`
+        message: `${GAME_NAME}: ${error.response?.data || error.message}`
       }));
 
       setBet({
