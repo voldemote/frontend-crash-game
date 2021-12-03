@@ -46,9 +46,6 @@ const UserWallet = ({
   const signer = library?.getSigner();
   const [stakesLoading, setStakesLoading] = useState(true);
 
-  console.log({ isTransactionsFetchLoading, stakesLoading });
-
-
   const { myBetsData } = useRosiData();
 
   const activityData = {
