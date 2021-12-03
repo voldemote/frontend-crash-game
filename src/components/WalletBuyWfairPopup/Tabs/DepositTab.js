@@ -166,7 +166,7 @@ const DepositTab = ({ user, resetState }) => {
         )} */}
         {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
-            <p>Please connect to your wallet in order to deposit WFAIR</p>
+            <p>Please connect your wallet in order to deposit WFAIR into your balance</p>
             <button
               type="button"
               className={styles.connectWalletButton}
