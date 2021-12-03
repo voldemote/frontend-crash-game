@@ -14,14 +14,6 @@ import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 
-const content = {
-  bitcoin: `Send any amount of BTC to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
-Alpacasino does not accept bitcoin that originates from any mixing services; please refrain from depositing directly or indirectly from these services.`,
-  ethereum: `Send any amount of ETH to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
-Alpacasino does not accept ethereum that originates from any mixing services; please refrain from depositing directly or indirectly from these services.`,
-  litecoin: `Send any amount of LTC to the following address. In the case of a non-instant deposit, 1 confirmation is required. We do not accept BEP20 from Binance.
-Alpacasino does not accept litecoin that originates from any mixing services; please refrain from depositing directly or indirectly from these services.`,
-};
 const cryptoShortName = {
   bitcoin: 'BTC',
   ethereum: `ETH`,
@@ -177,7 +169,7 @@ const BuyWithCrypto = () => {
         {/* WFAIR TOKEN */}
         <div className={styles.cryptoInputContiner}>
           <div className={styles.labelContainer}>
-            <span>You receive</span>
+            <span>You receive (estimate)</span>
           </div>
           <input disabled readOnly value={tokenValue} />
           <div className={styles.inputRightContainer}>
@@ -188,12 +180,14 @@ const BuyWithCrypto = () => {
 
         {/* Content */}
         <div className={styles.cryptoContent}>
-          <p>{content[activeTab]}</p>
+          <p>Transactions with BTC, ETH and LTC are being manually processed for the time being, and can take a few hours. We intend to automate this in the next weeks.</p>
+          <p>Please follow the instructions provided below in order to use this method of deposit.</p>
         </div>
 
         <button
-          className={styles.transankContineButton}
+          className={classNames(styles.transankContineButton, currency === 0 ? styles.disabled : null)}
           onClick={OnClickConfirmAmount}
+          disabled={currency === 0}
         >
           Confirm Amount
         </button>
@@ -203,7 +197,7 @@ const BuyWithCrypto = () => {
         <div className={styles.transactionContainer}>
           <div className={styles.transferSection}>
             <p>
-              Please transfer the{' '}
+              Please transfer {' '}
               <span>
                 {currency} {cryptoShortName[activeTab]}
               </span>{' '}
@@ -214,8 +208,9 @@ const BuyWithCrypto = () => {
               inputTheme={InputBoxTheme.copyToClipboardInputWhite}
               forDeposit={address}
             />
+            <p>Once transaction is completed, please send proof of transaction via email to <a href="mailto:deposits@alpacasino.io?subject=Deposit">deposits@alpacasino.io</a></p>
           
-            <div className={styles.transferSectionCopy}>
+            {/* <div className={styles.transferSectionCopy}>
               <p>Send Transaction URL</p>
               <div className={styles.cryptoUrlContiner}>
                 <input
@@ -226,7 +221,7 @@ const BuyWithCrypto = () => {
                 />
               </div>
             </div>
-            <button className={styles.sendUrlBtn}> Send</button>
+            <button className={styles.sendUrlBtn}> Send</button> */}
           </div>
         </div>
       )}

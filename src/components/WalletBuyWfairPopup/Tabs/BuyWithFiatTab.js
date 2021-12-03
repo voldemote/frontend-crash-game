@@ -10,6 +10,7 @@ import transakConfig from 'constants/transakConfig';
 import { numberWithCommas } from '../../../utils/common';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
+import classNames from 'classnames';
 
 const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
   const CURRENCY_OPTIONS = [
@@ -127,7 +128,7 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
         {/* WFAIR TOKEN */}
         <div className={styles.inputContiner}>
           <div className={styles.labelContainer}>
-            <span>You receive</span>
+            <span>You receive (estimate)</span>
           </div>
           <input disabled readOnly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
@@ -137,12 +138,13 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
           </div>
         </div>
         <div className={styles.textContainer}>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tortor tellus, pellentesque volutpat augue eu, gravida volutpat ipsum.</p>
-          <p>Sed venenatis accumsan tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+          <p>The value shown in WFAIR is an estimate. Transactions are subject to price fluctuations.</p>
+          <p>All transactions are processed via the external partner Transak.com. When you click the button below, you will be redirected to the partner page to complete the transaction.</p>
         </div>
         <button
-          className={styles.transankContineButton}
+          className={classNames(styles.transankContineButton, currency === 0 ? styles.disabled : null)}
           onClick={OnClickTransakContinue}
+          disabled={currency === 0}
         >
           Continue with Transak
         </button>
