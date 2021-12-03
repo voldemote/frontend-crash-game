@@ -12,7 +12,7 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
 import classNames from 'classnames';
 
-const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
+const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSuccessPopup, user }) => {
   const CURRENCY_OPTIONS = [
     {
       label: 'EUR',
@@ -49,7 +49,9 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, user }) => {
     // This will trigger when the user marks payment is made.
     transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, orderData => {
       // console.log(orderData);
+      showTransakSuccessPopup();
       transak.close();
+
     });
   };
 
@@ -165,6 +167,9 @@ const mapDispatchToProps = dispatch => {
   return {
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+    },
+    showTransakSuccessPopup: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.transakSuccess }));
     },
   };
 };
