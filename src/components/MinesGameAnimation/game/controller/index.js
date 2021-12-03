@@ -103,8 +103,6 @@ export default class Controller extends Emitter {
       const { grid: { collection } } = this.model;
       const isLoggedIn = this.gameConfig?.isLoggedIn;
 
-      console.log('ON CLICK CELL');
-
       if(isLoggedIn) {
         const cell = this.view.grid.cells[ row ][ col ];
 

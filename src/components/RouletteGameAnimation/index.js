@@ -107,6 +107,9 @@ const RouletteGameAnimation = ({
         value: bet.profit
       };
     }
+
+    prepareObj.gameHash = bet.gameHash;
+
     setSpins(prepareObj);
     setRunning(false);
     setBet((bet)=>{return{...bet, ready: true}});

@@ -103,3 +103,6 @@ export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
 export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';
 export const CRASH_GAME_GET_VOLUME_BETS = 'api/globalstats/:range';
 export const ACCOUNT_MAPPING = 'https://account-mapper-dev.wallfair.io/map';
+export const API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
+export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
+export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameHash';

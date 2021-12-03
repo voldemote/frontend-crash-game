@@ -236,19 +236,22 @@ export const GAMES = {
     id: '618a81ded90fd22298859bc4',
     slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/ygtor6e4/show'
   },
   plinko: {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/dgbh7p68/show'
   },
   mines: {
     id: '619cc432121e61d6f06338c9',
     slug: 'mines',
     name: `Mines`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/fx1dev/w5b6actu/show'
   },
   cannon: {
     id: '61a09b35121e61d6f06338ca',

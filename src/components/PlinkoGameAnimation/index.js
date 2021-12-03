@@ -89,7 +89,7 @@ const PlinkoGameAnimation = ({
 
   const spin = async () => {
     setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-    !bet.autobet && setBet((bet) => {return{ball: bet.ball, ready: true, amount: bet.amount, profit: bet.profit, reward: bet.reward}});
+    !bet.autobet && setBet((bet) => {return{ball: bet.ball, ready: true, amount: bet.amount, profit: bet.profit, reward: bet.reward, gameHash: bet.gameHash}});
   }
 
   const changeBackground = (count) => {
@@ -111,11 +111,23 @@ const PlinkoGameAnimation = ({
       audio.playWinSound()
       changeBackground(0)
     } else audio.playLoseSound();
-    const spin = bet.profit > 0 ?
-      { type: 'win', value: '+' + bet.profit } :
-      bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
-      { type: 'loss', value: bet.profit}
-    setSpins((spins) => [spin].concat(spins))
+
+    const newSpin = {};
+    if (bet.profit > 0) {
+      newSpin.type = 'win';
+      newSpin.value = '+' + bet.profit;
+    } else if(bet.profit === 0) {
+      newSpin.type = 'even';
+      newSpin.value = bet.profit;
+    } else {
+      newSpin.type = 'loss';
+      newSpin.value = bet.profit;
+    }
+
+    newSpin.gameHash = bet.gameHash;
+
+    setSpins((spins) => [newSpin].concat(spins))
+
     bet.autobet ?
      setBet((bet) => {return {...bet, ball: bet.ball-1, ready: true}}) :
      setBet((bet) => {return {...bet, ball: bet.ball-1}})
