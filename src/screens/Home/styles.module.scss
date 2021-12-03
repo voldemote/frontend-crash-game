@@ -7,7 +7,6 @@
   flex-direction: column;
   margin: 0 3rem;
   margin-top: 100px;
-  background: $colorhomeBackground;
 
   @media (max-width: $screen-sm) {
     margin: 0 15px;
@@ -981,7 +980,7 @@
         $colorLightDark2 97%
       );
       font-family: $fontRegular;
-      border: 1px solid $colorhomeBackground;
+      border: 1px solid $colorBackground;
       color: $colorWhite;
     }
   }

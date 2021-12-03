@@ -40,7 +40,10 @@
   max-width: 100vw;
 }
 
-body,
+body {
+  background: $colorBackground;
+}
+
 html {
   height: 100%;
   font-family: $fontRegular;
