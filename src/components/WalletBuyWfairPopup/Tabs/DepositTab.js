@@ -24,7 +24,7 @@ import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
 
 const DepositTab = ({ user, resetState }) => {
-  const walletAddress = process.env.DEPOSIT_WALLET;
+  const walletAddress = process.env.REACT_APP_DEPOSIT_WALLET;
   const { active, library, account, chainId } = useWeb3React();
   const { currentNetwork } = useWeb3Network();
   const [visibleWalletForm, setVisibleWalletForm] = useState(false);
