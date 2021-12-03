@@ -111,7 +111,6 @@ const MainMenu = ({
 
   const onAlpacaBuilderClick = () => {
     showPopup(PopupTheme.alpacaBuilder, {
-      popUpTitle:"Customize your Alpaca",
       userId: user.userId,
       alpacaBuilderProps: {...alpacaBuilderProps}
     });
