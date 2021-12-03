@@ -39,11 +39,15 @@ const UserWallet = ({
   isTransactionsFetchError,
   transactions,
 }) => {
+
   const { active, library, account, chainId } = useWeb3React();
 
   const { balance, currency } = useSelector(selectUser);
   const signer = library?.getSigner();
   const [stakesLoading, setStakesLoading] = useState(true);
+
+  console.log({ isTransactionsFetchLoading, stakesLoading });
+
 
   const { myBetsData } = useRosiData();
 
@@ -117,7 +121,7 @@ const UserWallet = ({
             </TabOptions>
 
             <div className={styles.activityContainer}>
-              {stakesLoading || isTransactionsFetchLoading ? (
+              {isTransactionsFetchLoading ? (
                 <Loader />
               ) : (
                 <UserWalletTables
