@@ -9,9 +9,9 @@ const AlpacaBuilderPopup = ({
   hidePopup,
   saveAlpacaBuilderData,
   showRegisterPopup,
-  cancelLabel = "Skip",
-  saveLabel = "Next",
-  popUpTitle = "Register your Alpaca",
+  cancelLabel,
+  saveLabel,
+  popUpTitle = "Customize your Alpaca",
   userId,
   alpacaBuilderProps,
   updateExistingUser
@@ -47,12 +47,14 @@ const AlpacaBuilderPopup = ({
   const closePopup = (exportData = null) => {
     hidePopup();
     if(userId){
-      const userWithAlpacaBuilderData = {
-        imageName: exportData.fileName,
-        profilePic: exportData.base64,
-        alpacaBuilderProps: exportData.alpacaBuilderProps
-      };
-      updateExistingUser(userWithAlpacaBuilderData);
+      if(exportData){
+        const userWithAlpacaBuilderData = {
+          imageName: exportData.fileName,
+          profilePic: exportData.base64,
+          alpacaBuilderProps: exportData.alpacaBuilderProps
+        };
+        updateExistingUser(userWithAlpacaBuilderData);
+      }
     } else {
       saveAlpacaBuilderData(exportData);
       showRegisterPopup();
