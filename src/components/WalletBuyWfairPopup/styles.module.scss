@@ -556,6 +556,14 @@
           font-family: $fontBold;
         }
       }
+      .backBtn {
+        text-align: left;
+        align-self: flex-start;
+        margin-bottom: 25px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
       .referralLink {
         border: 1px solid $colorLightGray2 !important;
         box-sizing: border-box;
@@ -743,6 +751,7 @@
 
   .connectWalletContainer {
     margin-top: 20px;
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
