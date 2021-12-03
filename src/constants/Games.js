@@ -19,7 +19,7 @@ import gameCard5 from '../data/images/house-games/card-5.png';
 import gameCardPumpDump from '../data/images/house-games/card-pumpdump.png';
 import gameCard4 from '../data/images/house-games/card-4.png';
 import gameCardMines from '../data/images/house-games/card-mines.png';
-import gameCard6 from '../data/images/house-games/Apacannon.png';
+import gameCardAlpacannon from '../data/images/house-games/card-alpacannon-soon.png';
 
 export const CASINO_GAMES = [
   {
@@ -104,7 +104,7 @@ export const NEW_SLOTS_GAMES = [
     linkTo: '/games/oilrush',
   },
   {
-    background: gameCard6,
+    background: gameCardAlpacannon,
     title: `AlpaCannon`,
     subtitle: '',
     active: false,
