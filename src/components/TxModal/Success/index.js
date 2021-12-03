@@ -23,8 +23,6 @@ const Success = ({ setModalOpen, canAddToken, setTokenAreaOpen }) => {
       >
         Go Back To Deposit!
       </button>
-      <ConfettiLeft className={styles.confettiLeft} />
-      <ConfettiRight className={styles.confettiRight} />
     </div>
   );
 };
