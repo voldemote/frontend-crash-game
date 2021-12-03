@@ -163,13 +163,8 @@ const Navbar = ({
 
   const renderNavButtons = () => {
     const leaderboardBtn = (
-      <div
-        className={classNames(
-          style.ranking,
-          style.pillButton,
-          style.hiddenMobile,
-          isOpen(drawers.leaderboard) ? style.pillButtonActive : null
-        )}
+      <Button
+        className={classNames(style.ranking, style.pillButton, style.hiddenMobile)}
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
         data-tracking-id="menu-leaderboard"
       >
@@ -177,7 +172,7 @@ const Navbar = ({
         <p className={style.rankingText}>
           {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
         </p>
-      </div>
+      </Button>
     );
 
     const notificationsBtn = (
@@ -239,7 +234,7 @@ const Navbar = ({
           withoutBackground={true}
           onClick={() => showPopupForLogin()}
         >
-          Login
+          <p>Login</p>
         </Button>
         <Button
           className={style.signUpButton}
@@ -248,7 +243,7 @@ const Navbar = ({
             showPopupForRegister()
           }
         >
-          Sign Up
+          <p>Sign Up</p>
         </Button>
       </div>
     );

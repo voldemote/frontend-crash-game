@@ -7,6 +7,7 @@ import { LOGGED_IN } from 'constants/AuthState';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
+import Button from '../../components/Button';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
@@ -309,49 +310,17 @@ const Home = ({
     return (
       <div className={styles.welcomeContainer}>
         <div className={styles.cardBox}>
-          <div className={styles.leftSection}>
-            <div className={styles.title}>
-              <div className={styles.leftSection}>
-                <h2>
-                  WELCOME TO THE <br />
-                  <span className={styles.pink}>ALPACA</span>SINO
-                </h2>
-              </div>
-            </div>
-            <p className={styles.description}>
-              Hello Human, welcome to the Alpacasino. Sign up now and test our
-              upcoming WFAIR-powered casino absolutely for free with play-money.
-              Help our alpacas build the perfect fun, transparent and
-              decentralized casino.{' '}
-            </p>
-            <div className={styles.categorySection}>
-              <div className={styles.categoryItem}>
-                <img src={ChipOne} alt="chip-one" />
-                <span>FAIR</span>
-              </div>
-              <div className={styles.categoryItem}>
-                <img src={ChipTwo} alt="chip-two" />
-                <span>SOCIAL</span>
-              </div>
-              <div className={styles.categoryItem}>
-                <img src={ChipThree} alt="chip-three" />
-                <span>DECENTRALISED</span>
-              </div>
-            </div>
-            <div
-              className={styles.pillButton}
-              onClick={() =>
-                showPopupForUnauthenticated()
-              }
-            >
-              <img src={medalCoin} alt="medal" className={styles.medal} />
-              <p className={styles.rankingText}>TRY NOW</p>
-            </div>
-          </div>
-          <div className={styles.rightSection}>
-            <img src={WelceomBg} alt="" />
-          </div>
+          <h3>
+            GET YOUR BONUS<br/>
+            AND CREATE YOUR<br/> 
+            OWN ALPACA
+          </h3>
         </div>
+        <Button
+          className={styles.startButton}
+          onClick={showPopupForUnauthenticated}>
+          <span className={styles.buttonText}>START</span>
+        </Button>
       </div>
     );
   };
@@ -615,7 +584,9 @@ const Home = ({
   const renderStatusTableSection = () => {};
 
   return (
-    <BaseContainerWithNavbar>
+    <BaseContainerWithNavbar
+      loggedIn={isLoggedIn()}
+      >
       {/* {renderHeadline()} */}
       {/* <Header /> */}
       <div className={styles.containerWrapper}>

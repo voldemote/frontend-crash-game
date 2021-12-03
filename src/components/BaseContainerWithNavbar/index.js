@@ -9,6 +9,7 @@ const BaseContainerWithNavbar = ({
   withPaddingTop,
   contentPadding,
   withoutPaddingBottom,
+  loggedIn,
   user,
 }) => {
   return (
@@ -21,8 +22,10 @@ const BaseContainerWithNavbar = ({
         withoutPaddingBottom ? styles.baseContainerWithPaddingBottomZero : null
       )}
     >
-      {children}
-      {/* <div className={styles.background}></div> */}
+      <div className={classNames(styles.headerBackground, loggedIn ? styles.withTransparent : null)}>
+        <div className={styles.gradientLayer}></div>
+      </div>
+      {children}      
     </div>
     <ContentFooter className={styles.betFooter} />
     </>

@@ -4,6 +4,7 @@ import React from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style from './styles.module.scss';
 import Highlight from '../Highlight';
+import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
 
 const Button = ({
   children,
@@ -56,10 +57,11 @@ const Button = ({
       disabled={disabled}
       onClick={disabled ? null : onClick}
       data-tracking-id={dataTrackingId}
-    >
+    >      
+      <div className={style.buttonInnerBackground}></div>
       {renderButtonDisabledOverlay()}
       {children}
-      {renderHighlight()}
+      {renderHighlight()}      
     </span>
   );
 };

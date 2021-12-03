@@ -383,154 +383,61 @@
 }
 
 .welcomeContainer {
-  margin-top: 70px;
-  @media screen and (max-width: $screen-md) {
-    margin-top: 84px;
+  margin: 200px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: $screen-md) {
+    margin: 60px 0;
   }
   .cardBox {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    background: white;
-    border: 1px solid #f2e5da;
-    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
-      0px 2px 2px rgba(159, 162, 191, 0.32);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 569px;
+    height: 264px;
+    background: rgba(0, 9, 43, 0.7);
+    border: 4px solid #ffd401;
+    box-sizing: border-box;
     border-radius: 12px;
-    @media screen and (max-width: $screen-md) {
-      grid-template-columns: auto;
+    @media (max-width: $screen-md) {
+      width: 100%;
+      height: 100%;
+      padding: 32px 0px;
     }
-    .leftSection {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 0;
-      .description {
-        max-width: 400px;
-      }
-      .categorySection {
-        display: flex;
-        align-items: center;
-        margin-top: 18px;
-        @media screen and (max-width: $screen-md) {
-          flex-direction: column;
-        }
-        .categoryItem {
-          display: flex;
-          align-items: center;
-          img {
-            width: 30px;
-            height: 30px;
-          }
-          span {
-            color: #e82e89;
-            font-size: 22px;
-            font-family: $fontBold;
-            margin-left: 8px;
-            margin-right: 14px;
-            @media screen and (max-width: $screen-md) {
-              font-size: 16px;
-            }
-          }
-        }
-      }
-      .pillButton {
-        position: relative;
-        color: $colorWhite;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        white-space: nowrap;
-        padding: 10px;
-        background: $colorPinkDark;
-        font-size: 12px;
-        border-radius: 20px;
-        font-family: $fontRegular;
-        cursor: pointer;
-        height: 35px;
-        min-width: 250px;
-        margin-top: 30px;
-
-        img,
-        svg {
-          position: absolute;
-          left: 8px;
-          max-height: 21px;
-        }
-
-        .rankingText {
-          font-size: 18px;
-          align-self: center;
-          @media screen and (max-width: $screen-md) {
-            font-size: 14px;
-          }
-        }
-      }
-      p {
-        text-align: center;
-        font-size: 20px;
-        @media screen and (max-width: $screen-md) {
-          padding: 0 12px;
-          font-size: 16px;
-        }
-      }
-    }
-    .rightSection {
-      display: flex;
-      justify-content: flex-end;
-      img {
-        width: 100%;
-        object-fit: contain;
-      }
-    }
-    .title {
-      display: flex;
-      align-items: center;
+    h3 {
       font-family: $fontBold;
-      font-weight: bold;
-      justify-content: flex-start;
-      h2 {
-        text-align: center;
-        font-size: 50px;
-        line-height: 60px;
-        color: #0e0927;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        @media (max-width: $screen-xs) {
-          font-size: 28px;
-          text-align: center;
-          line-height: 40px;
-        }
-      }
-      .pink {
-        color: #e82e89;
+      font-size: 40px;
+      line-height: 50px;
+      text-align: center;
+      color: $colorWhite;
+      -webkit-text-stroke: 1px $colorBlack;
+      @media (max-width: $screen-md) {
+        font-size: 24px;
+        line-height: 36px;
       }
     }
   }
-  .bottomContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .bottomBox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #0e0927;
-      border-radius: 0px 0px 12px 12px;
-      font-family: $fontMedium;
-      font-size: 24px;
-      padding: 12px 120px;
-      @media screen and (max-width: $screen-md) {
-        width: 100%;
-        padding: 8px 0;
-        font-size: 16px;
-      }
-      p {
-        color: #fff;
-        text-align: center;
-      }
-      .pink {
-        color: #e82e89;
+  .startButton {
+    width: 500px;
+    height: 120px;
+    margin-top: 10px;
+    @media (max-width: $screen-md) {
+      width: 100%;
+      height: 72px;
+    }
+    .buttonText {
+      -webkit-text-stroke: 2px #ff9c00;
+      font-family: $fontBold;
+      font-size: 40px;
+      color: #ffd401;
+      @media (max-width: $screen-md) {
+        font-size: 30px;
       }
     }
+  }
+  @media screen and (max-width: $screen-md) {
+    margin-top: 84px;
   }
 }
 
