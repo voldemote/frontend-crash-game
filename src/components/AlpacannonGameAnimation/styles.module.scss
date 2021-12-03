@@ -301,11 +301,13 @@
     width: 20%;
     bottom: 21%;
     right: 30px;
-    -webkit-transition: bounce 1s ease-in-out, top 1s ease-in-out, bottom 2s ease-out;
-    -moz-transition: bounce 1s ease-in-out,  top 1s ease-in-out, bottom 2s ease-out;
-    -ms-transition: bounce 1s ease-in-out,  top 1s ease-in-out, bottom 2s ease-out;
-    -o-transition: bounce 1s ease-in-out,  top 1s ease-in-out, bottom 2s ease-out;
-    transition: bounce 1s ease-in-out,  top 1s ease-in-out, bottom 2s ease-out ;
+    transform: scale(0.9, 0.9);
+
+    -webkit-transition: bounce 1s ease-in-out, transform 7.2s,top 1s ease-in-out, bottom 2s ease-out;
+    -moz-transition: bounce 1s ease-in-out, transform 7.2s, top 1s ease-in-out, bottom 2s ease-out;
+    -ms-transition: bounce 1s ease-in-out,  transform 7.2s, top 1s ease-in-out, bottom 2s ease-out;
+    -o-transition: bounce 1s ease-in-out, transform 7.2s, top 1s ease-in-out, bottom 2s ease-out;
+    transition: bounce 1s ease-in-out, transform 7.2s, top 1s ease-in-out, bottom 2s ease-out ;
     position: absolute;
     right: 44%;
     z-index: 1;
