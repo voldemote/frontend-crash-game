@@ -320,8 +320,10 @@
   .tokenDetail {
     display: grid;
     grid-template-columns: 1fr 1fr 1.2fr 0.2fr;
-    background: #ff0095;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
+    filter: drop-shadow(0px 9px 16px rgba(159, 162, 191, 0.18))
+      drop-shadow(0px 2px 2px rgba(159, 162, 191, 0.32));
     padding: 0 10px 0px 20px;
     margin: 15px 0 0;
     @media (max-width: $screen-md) {
@@ -542,19 +544,21 @@
     justify-content: flex-start;
     h2 {
       font-size: 30px;
+      color: $colorWhite;
       @media (max-width: $screen-xs) {
         font-size: 28px;
         text-align: center;
       }
     }
     .pink {
-      color: #e82e89;
+      color: $colorWhite;
     }
   }
   .cardBox {
     margin-top: 30px;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid #ededed;
+    box-sizing: border-box;
     box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
       0px 2px 2px rgba(159, 162, 191, 0.32);
     border-radius: 12px;
@@ -639,7 +643,7 @@
         h3 {
           font-family: $fontMedium;
           font-size: 22px;
-          color: #0e0927;
+          color: $colorWhite;
           margin-bottom: 6px;
           img {
             max-width: 160px;
@@ -650,7 +654,7 @@
           font-weight: 400;
           line-height: 20px;
           font-size: 14px;
-          color: #0e0927;
+          color: $colorWhite;
         }
         .thumbnail {
           display: flex;
@@ -684,11 +688,11 @@
         font-size: 16px;
       }
       p {
-        color: #fff;
+        color: $colorWhite;
         text-align: center;
       }
       .pink {
-        color: #e82e89;
+        color: $colorWhite;
       }
     }
   }
@@ -705,21 +709,23 @@
     justify-content: flex-start;
     h2 {
       font-size: 30px;
+      color: $colorWhite;
       @media (max-width: $screen-xs) {
         font-size: 28px;
         text-align: center;
       }
     }
     .pink {
-      color: #e82e89;
+      color: $colorWhite;
     }
   }
   .cardBox {
     padding-top: 30px;
     .card {
       display: flex;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid #ededed;
+      box-sizing: border-box;
       margin: 20px auto;
       padding-right: 20px;
       padding-bottom: 28px;
@@ -756,7 +762,7 @@
         h3 {
           font-family: $fontMedium;
           font-size: 22px;
-          color: #e82e89;
+          color: $colorWhite;
           margin-bottom: 6px;
           img {
             max-width: 160px;
@@ -767,7 +773,7 @@
           font-weight: 400;
           line-height: 20px;
           font-size: 14px;
-          color: #0e0927;
+          color: $colorWhite;
         }
         button {
           margin-top: 16px;
@@ -775,7 +781,7 @@
           border: 0;
           font-family: $fontMedium;
           font-size: 14px;
-          color: #e82e89;
+          color: $colorWhite;
           cursor: pointer;
         }
       }
