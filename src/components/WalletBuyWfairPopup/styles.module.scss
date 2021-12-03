@@ -159,7 +159,8 @@
         font-size: large;
         direction: ltr;
         text-align: right;
-        font-size: 30px;
+        font-size: 24px;
+        font-family: $fontBold;
         &:focus-visible {
           outline: none;
         }
@@ -295,7 +296,7 @@
   margin-top: 10px;
   display: flex;
   justify-content: center;
-  padding-top: 20px;
+  // padding-top: 20px;
   padding-bottom: 20px;
   flex-direction: column;
 
@@ -425,7 +426,8 @@
         font-size: large;
         direction: ltr;
         text-align: right;
-        font-size: 30px;
+        font-size: 24px;
+        font-family: $fontBold;
         &:focus-visible {
           outline: none;
         }
@@ -599,6 +601,7 @@
             direction: ltr;
             text-align: left;
             font-size: 16px;
+            font-family: $fontBold;
             &:focus-visible {
               outline: none;
             }
@@ -633,7 +636,7 @@
 }
 
 .depositTabContainer {
-  padding: 50px 0;
+  padding: 30px 0;
   display: flex;
   flex-direction: column;
   width: 100%;

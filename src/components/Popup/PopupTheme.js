@@ -36,5 +36,6 @@ export default {
   alpacaBuilder: 'alpacaBuilder',
   walletBuyWfair: 'walletBuyWfair',
   fairnessPopup: 'fairnessPopup',
-  singleGamesDetail: 'singleGamesDetail'
+  singleGamesDetail: 'singleGamesDetail',
+  transakSuccess: 'transakSuccess'
 };

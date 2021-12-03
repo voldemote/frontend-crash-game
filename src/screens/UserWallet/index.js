@@ -56,13 +56,13 @@ const UserWallet = ({
   };
 
   const [activityTab, setActivityTab] = useState({
-    name: 'DEPOSITS',
+    name: 'FIAT DEPOSITS',
     index: 0,
   });
   const [activityTabOptions, setActivityTabOptions] = useState([
-    { name: 'DEPOSITS', index: 0 },
-    { name: 'WITHDRAWALS', index: 1 },
-    { name: 'ONRAMP', index: 2 },
+    { name: 'FIAT DEPOSITS', index: 0 },
+    { name: 'CRYPTO DEPOSITS', index: 1 },
+    { name: 'WITHDRAWALS', index: 2 },
   ]);
 
   const handleActivitySwitchTab = ({ index }) => {
@@ -77,9 +77,9 @@ const UserWallet = ({
     refreshMyBetsData({ userId: userId });
     if (userId) {
       setActivityTabOptions([
-        { name: 'DEPOSITS', index: 0 },
-        { name: 'WITHDRAWALS', index: 1 },
-        { name: 'ONRAMP', index: 2 },
+        { name: 'FIAT DEPOSITS', index: 0 },
+        { name: 'CRYPTO DEPOSITS', index: 1 },
+        { name: 'WITHDRAWALS', index: 2 },
         { name: 'BETS', index: 3 },
       ]);
     }
