@@ -24,6 +24,7 @@
 
   h2 {
     font-size: 33px;
+    color: $colorWhite;
 
     @media (max-width: $screen-xs) {
       font-size: 28px;
@@ -82,7 +83,7 @@
     position: relative;
     height: 310px;
     overflow: hidden;
-        border-radius: 20px;
+    border-radius: 20px;
     width: 310px;
     // margin-right: 10px;
     margin-bottom: 20px;
@@ -97,12 +98,12 @@
 
     .gameItem {
       height: 100%;
-      &:hover{
-        .title{
+      &:hover {
+        .title {
           display: block !important;
         }
-        &::before{
-          content: "";
+        &::before {
+          content: '';
           z-index: 2;
           position: absolute;
           bottom: 0;
@@ -111,15 +112,18 @@
           left: 0;
           width: 100%;
           background: linear-gradient(
-          180deg,hsla(0,0%,100%,0),#00000060 75%);
+            180deg,
+            hsla(0, 0%, 100%, 0),
+            #00000060 75%
+          );
         }
       }
-      img{
+      img {
         width: 100%;
         height: fit-content;
       }
-      .title{
-        z-index: 3; 
+      .title {
+        z-index: 3;
         display: none;
         padding: 10px;
         color: white;
@@ -131,7 +135,7 @@
       }
 
       &.gameItemLg {
-        img{
+        img {
           position: absolute;
           left: -300px;
           right: -300px;

@@ -115,6 +115,7 @@
 
     h2 {
       font-size: 33px;
+      color: $colorWhite;
 
       @media (max-width: $screen-xs) {
         font-size: 28px;
@@ -854,6 +855,7 @@
   .title {
     display: flex;
     align-items: center;
+    color: $colorWhite;
 
     h2 {
       font-size: 33px;
