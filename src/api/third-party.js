@@ -22,6 +22,6 @@ export const accountMapping = (body, token) => {
   };
 
   axios.post(ApiUrls.ACCOUNT_MAPPING, payload, config).then(response => {
-    console.log('------> Response----', response);
+    return response.data;
   });
 };

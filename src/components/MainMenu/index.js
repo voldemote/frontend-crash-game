@@ -316,7 +316,7 @@ const MainMenu = ({
           />
           Alpacabuilder
         </h2>
-        <div class={styles.alpacaBuilderWrapper}>
+        <div className={styles.alpacaBuilderWrapper}>
           <AlpacaBuilder
             onCancel={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
             onExport={data => handleAlpacaBuilderExport(data)}
