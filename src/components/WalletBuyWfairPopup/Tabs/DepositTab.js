@@ -75,7 +75,7 @@ const DepositTab = ({ user, resetState }) => {
   }, [account, library, signer, hash, chainId, setBalance]);
 
   const notSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
-    sn => sn !== window.ethereum.chainId
+    sn => sn !== window.ethereum?.chainId
   );
 
   return (

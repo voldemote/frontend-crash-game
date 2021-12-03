@@ -354,6 +354,12 @@
       "lockConfigFile": "deployprivSale2Lock"
     }
   ],
+  "network": {
+    "name": "kovan",
+    "chainId": 42,
+    "gas": "auto",
+    "gasPrice": "auto"
+  },
   "default": {
     "production": {
       "ethereum": "0xC6065B9fc8171Ad3D29bad510709249681758972",
