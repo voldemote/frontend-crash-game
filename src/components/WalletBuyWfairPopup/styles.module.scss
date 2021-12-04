@@ -1,8 +1,10 @@
 @import '../../styles/all';
 
+.wfairLogo {
+  cursor: pointer;
+}
+
 .container {
-  //   display: flex;
-  //   align-items: center;
   height: 100%;
   padding: 16px 0;
   background-color: $colorWhite;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
@@ -11,6 +11,7 @@ import { numberWithCommas } from '../../../utils/common';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
 import classNames from 'classnames';
+import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
 
 const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSuccessPopup, user }) => {
   const CURRENCY_OPTIONS = [
@@ -26,6 +27,10 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
   const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
   const [currency, setCurrency] = useState(0);
   const [WFAIRToken, setWFAIRToken] = useState(0);
+
+  const handleWFAIRClick = useCallback(async () => {
+    await addMetaMaskEthereum();
+  }, []);
 
   const transakPopUp = () => {
     transakConfig.partnerCustomerId = user.userId
@@ -135,7 +140,7 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
           <input disabled readOnly value={WFAIRToken} />
           <div className={styles.inputRightContainer}>
             <div className={styles.coinWrapper}>
-              <WfairIcon /><span>WFAIR</span>
+              <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} /><span>WFAIR</span>
             </div>
           </div>
         </div>

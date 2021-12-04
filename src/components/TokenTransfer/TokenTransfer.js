@@ -7,6 +7,7 @@ import Loader from 'components/Loader/Loader';
 import TokenNumberInput from 'components/TokenNumberInput';
 import { formatToFixed } from 'helper/FormatNumbers';
 import classNames from 'classnames';
+// import AddTokens from 'components/AddTokens';
 
 const TokenTransfer = ({
   provider,
@@ -43,11 +44,6 @@ const TokenTransfer = ({
   };
 
   const handleTransaction = useCallback(() => {
-    console.log('provider', provider);
-    console.log('tranferAddress', tranferAddress);
-    console.log('transferValue', transferValue);
-    console.log('WFAIRAddress', contractAddress);
-
     setBlocked(true);
     setformError('');
     WFAIRTransfer({
@@ -130,6 +126,7 @@ const TokenTransfer = ({
                 </button>
               )}
             </div>
+            {/* <AddTokens /> */}
           </>
         ) : (
           <div className={styles.transfer}>
