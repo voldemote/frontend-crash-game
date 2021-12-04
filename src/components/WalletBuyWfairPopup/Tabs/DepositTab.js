@@ -22,6 +22,7 @@ import { WallfairActions } from 'store/actions/wallfair';
 import useWeb3Network from '../../../hooks/useWeb3Network';
 import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
+// import AddTokens from 'components/AddTokens';
 
 const DepositTab = ({ user, resetState }) => {
   const walletAddress = process.env.REACT_APP_DEPOSIT_WALLET;
@@ -96,7 +97,6 @@ const DepositTab = ({ user, resetState }) => {
                     setIsLoadingTransferToken(true);
                     await switchMetaMaskNetwork(networkId);
                   }
-                  
                 }}
               >
                 <img
@@ -138,8 +138,10 @@ const DepositTab = ({ user, resetState }) => {
                 />
               </div>
             </div>
+            {/* <AddTokens /> */}
           </>
         )}
+        
 
         {/* {!!account && (
           <div className={styles.copyhash}>
@@ -177,6 +179,7 @@ const DepositTab = ({ user, resetState }) => {
             >
               Connect Wallet
             </button>
+            
           </div>
         )}
         {visibleWalletForm && !active && (

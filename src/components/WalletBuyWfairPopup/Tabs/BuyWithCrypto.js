@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import Dropdown from '../../Dropdown';
@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
+import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
 
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -42,6 +43,10 @@ const BuyWithCrypto = () => {
   useEffect(() => {
     currencyLostFocus();
   }, [activeTab, selectedCurrency]);
+
+  const handleWFAIRClick = useCallback(async () => {
+    await addMetaMaskEthereum();
+  }, []);
 
   const selectContent = event => {
     event.target.select();
@@ -76,17 +81,12 @@ const BuyWithCrypto = () => {
   };
 
   const OnClickConfirmAmount = () => {
-    // const transak = {}
-    // transakPopUp(transak);
     setAddress(
       'e94fc3db563b9e595f76bf7c3a90105a54ea4eaaf1ddb6b9950c31dc626d5d58'
     );
     setTransaction(!transaction);
   };
 
-  const onCurrencyChange = val => {
-    setSelectedCurrency(CURRENCY_OPTIONS.find(c => c.value === val));
-  };
   return (
     <div className={styles.buyWithCryptoContainer}>
 
@@ -175,7 +175,7 @@ const BuyWithCrypto = () => {
             </div>
             <input disabled readOnly value={tokenValue} />
             <div className={styles.inputRightContainer}>
-              <WfairIcon />
+              <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
               <span>WFAIR</span>
             </div>
           </div>
