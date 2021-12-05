@@ -300,7 +300,6 @@
   .alpacaFlying {
     width: 20%;
     bottom: 21%;
-    right: 30px;
     transform: scale(0.9, 0.9);
 
     -webkit-transition: bounce 1s ease-in-out, transform 7.2s,top 1s ease-in-out, bottom 2s ease-out;
@@ -311,25 +310,10 @@
     position: absolute;
     right: 44%;
     z-index: 1;
-  }
-  @keyframes zoom-in-zoom-out {
-  0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(.8, .8)
-  }
-  25% {
-    transform: scale(.7, .7)
-  }
-  50% {
-    transform: scale(.6, .6)
-  }
-  100% {
-    transform: scale(.3, .3)
-  }
+  
   
 }
+
 .score{
     height: 70px;
     position: absolute;
