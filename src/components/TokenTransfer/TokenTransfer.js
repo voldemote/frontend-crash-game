@@ -4,6 +4,10 @@ import TxModal from '../TxModal';
 import WFAIRTransfer from '../WFAIRTransfer';
 import styles from './styles.module.scss';
 import Loader from 'components/Loader/Loader';
+import TokenNumberInput from 'components/TokenNumberInput';
+import { formatToFixed } from 'helper/FormatNumbers';
+import classNames from 'classnames';
+// import AddTokens from 'components/AddTokens';
 
 const TokenTransfer = ({
   provider,
@@ -31,6 +35,7 @@ const TokenTransfer = ({
     if (!modalOpen) {
       setBlocked(false);
       setTXSuccess(false);
+      setter(false)
     }
   }, [modalOpen]);
 
@@ -39,11 +44,6 @@ const TokenTransfer = ({
   };
 
   const handleTransaction = useCallback(() => {
-    console.log('provider', provider);
-    console.log('tranferAddress', tranferAddress);
-    console.log('transferValue', transferValue);
-    console.log('WFAIRAddress', contractAddress);
-
     setBlocked(true);
     setformError('');
     WFAIRTransfer({
@@ -89,51 +89,28 @@ const TokenTransfer = ({
             <em>{formError}</em>
           </div>
         )}
-        {/* <input
-          key="transferAddress"
-          placeholder="Recipient Address"
-          value={transferAddress}
-          onChange={(e) => setTransferAddress(e.target.value)}
-        /> */}
+
         {balance > 0 ? (
           <>
-            <div className={styles.checkBoxContainer}>
-              <p>Deposit All</p>
-              <input
-                type="checkbox"
-                key="checkBox"
-                placeholder="WFAIR Amount"
-                value={checkBox}
-                onClick={e => {
-                  setCheckBox(checkBox? false: true);
-                  const setBal = balance
-                    .replace(/[^0-9.,]/g, '')
-                    .replace(/(,)/g, '.')
-                    .replace(/(\..*?)\..*/g, '$1');
-                  setTransferValue(!checkBox? setBal: '0');
-                }}
-              />
-            </div>
-            <input
-              disabled={checkBox}
+            <TokenNumberInput
+              className={styles.tokenNumberInput}
               key="transferValue"
-              placeholder="WFAIR Amount"
               value={transferValue}
-              type={`number`}
-              max={balance < 2000 ? balance : 2000}
-              onChange={e => {
-                  setTransferValue(
-                    e.target.value
-                      .replace(/[^0-9.,]/g, '')
-                      .replace(/(,)/g, '.')
-                      .replace(/(\..*?)\..*/g, '$1')
-                  );
-              }}
+              currency={'WFAIR'}
+              setValue={setTransferValue}
+              minValue={0}
+              decimalPlaces={0}
+              maxValue={formatToFixed(
+                balance < 2000 ? balance : 2000
+              )}
+              halfIcon={false}
+              doubleIcon={false}               
             />
             <div className={styles.buttonWrapper}>
               <button
-                className={styles.transferButton}
+                className={classNames(styles.transferButton, Number(transferValue) === 0? styles.disabled : null)}
                 onClick={handleTransaction}
+                disabled={Number(transferValue) === 0}
               >
                 Send Transaction
               </button>
@@ -149,6 +126,7 @@ const TokenTransfer = ({
                 </button>
               )}
             </div>
+            {/* <AddTokens /> */}
           </>
         ) : (
           <div className={styles.transfer}>

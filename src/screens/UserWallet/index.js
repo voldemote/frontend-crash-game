@@ -39,6 +39,7 @@ const UserWallet = ({
   isTransactionsFetchError,
   transactions,
 }) => {
+
   const { active, library, account, chainId } = useWeb3React();
 
   const { balance, currency } = useSelector(selectUser);
@@ -55,13 +56,13 @@ const UserWallet = ({
   };
 
   const [activityTab, setActivityTab] = useState({
-    name: 'DEPOSITS',
+    name: 'FIAT DEPOSITS',
     index: 0,
   });
   const [activityTabOptions, setActivityTabOptions] = useState([
-    { name: 'DEPOSITS', index: 0 },
-    { name: 'WITHDRAWALS', index: 1 },
-    { name: 'ONRAMP', index: 2 },
+    { name: 'FIAT DEPOSITS', index: 0 },
+    { name: 'CRYPTO DEPOSITS', index: 1 },
+    { name: 'WITHDRAWALS', index: 2 },
   ]);
 
   const handleActivitySwitchTab = ({ index }) => {
@@ -76,9 +77,9 @@ const UserWallet = ({
     refreshMyBetsData({ userId: userId });
     if (userId) {
       setActivityTabOptions([
-        { name: 'DEPOSITS', index: 0 },
-        { name: 'WITHDRAWALS', index: 1 },
-        { name: 'ONRAMP', index: 2 },
+        { name: 'FIAT DEPOSITS', index: 0 },
+        { name: 'CRYPTO DEPOSITS', index: 1 },
+        { name: 'WITHDRAWALS', index: 2 },
         { name: 'BETS', index: 3 },
       ]);
     }
@@ -117,7 +118,7 @@ const UserWallet = ({
             </TabOptions>
 
             <div className={styles.activityContainer}>
-              {stakesLoading || isTransactionsFetchLoading ? (
+              {isTransactionsFetchLoading ? (
                 <Loader />
               ) : (
                 <UserWalletTables

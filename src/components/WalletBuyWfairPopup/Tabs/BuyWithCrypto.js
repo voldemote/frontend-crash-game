@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../styles.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import Dropdown from '../../Dropdown';
@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
+import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
 
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -42,6 +43,10 @@ const BuyWithCrypto = () => {
   useEffect(() => {
     currencyLostFocus();
   }, [activeTab, selectedCurrency]);
+
+  const handleWFAIRClick = useCallback(async () => {
+    await addMetaMaskEthereum();
+  }, []);
 
   const selectContent = event => {
     event.target.select();
@@ -76,126 +81,128 @@ const BuyWithCrypto = () => {
   };
 
   const OnClickConfirmAmount = () => {
-    // const transak = {}
-    // transakPopUp(transak);
     setAddress(
       'e94fc3db563b9e595f76bf7c3a90105a54ea4eaaf1ddb6b9950c31dc626d5d58'
     );
     setTransaction(!transaction);
   };
 
-  const onCurrencyChange = val => {
-    setSelectedCurrency(CURRENCY_OPTIONS.find(c => c.value === val));
-  };
   return (
     <div className={styles.buyWithCryptoContainer}>
-      {/* Crypto Tabs */}
-      <div className={styles.cryptoTabsContianer}>
-        <div
-          className={classNames(
-            styles.cryptoTab,
-            activeTab === 'bitcoin' && styles.cryptoTabActive
-          )}
-          onClick={() => setActiveTab('bitcoin')}
-        >
-          <BitcoinIcon />
-          <p className={styles.fullName}>Bitcoin</p>
-          <p className={styles.shortName}>BTC</p>
-        </div>
-        <div
-          className={classNames(
-            styles.cryptoTab,
-            activeTab === 'ethereum' && styles.cryptoTabActive
-          )}
-          onClick={() => setActiveTab('ethereum')}
-        >
-          <EthereumIcon />
-          <p className={styles.fullName}>Ethereum</p>
-          <p className={styles.shortName}>ETH</p>
-        </div>
-        <div
-          className={classNames(
-            styles.cryptoTab,
-            activeTab === 'litecoin' && styles.cryptoTabActive
-          )}
-          onClick={() => setActiveTab('litecoin')}
-        >
-          <LitecoinIcon />
-          <p className={styles.fullName}>Litecoin</p>
-          <p className={styles.shortName}>LTC</p>
-        </div>
-      </div>
 
-      {/* Crypto Calculator */}
-      <div className={styles.cryptoCalculatorContainer}>
-        {/* Currency */}
-        <div className={styles.cryptoInputContiner}>
-          <div className={styles.labelContainer}>
-            <span>You pay</span>
-          </div>
-          <input
-            value={currency}
-            min={1}
-            max={2000}
-            onChange={currencyChange}
-            onBlur={currencyLostFocus}
-            onClick={selectContent}
-          />
-          <div className={styles.inputRightContainer}>
-            {activeTab === 'bitcoin' && (
-              <>
-                <BitcoinIcon />
-                BTC
-              </>
+      {!transaction && ( <>
+        {/* Crypto Tabs */}
+        <div className={styles.cryptoTabsContianer}>
+          <div
+            className={classNames(
+              styles.cryptoTab,
+              activeTab === 'bitcoin' && styles.cryptoTabActive
             )}
-            {activeTab === 'ethereum' && (
-              <>
-                <EthereumIcon />
-                ETH
-              </>
-            )}
-            {activeTab === 'litecoin' && (
-              <>
-                <LitecoinIcon />
-                LTC
-              </>
-            )}
-            {/* <img src={WallfairInput} alt="wallfair-input" /> */}
+            onClick={() => setActiveTab('bitcoin')}
+          >
+            <BitcoinIcon />
+            <p className={styles.fullName}>Bitcoin</p>
+            <p className={styles.shortName}>BTC</p>
           </div>
-        </div>
-        <div className={styles.InputLineSeparator}>
-          <img src={InputLineSeparator} alt="input_line_separator" />
-        </div>
-        {/* WFAIR TOKEN */}
-        <div className={styles.cryptoInputContiner}>
-          <div className={styles.labelContainer}>
-            <span>You receive (estimate)</span>
+          <div
+            className={classNames(
+              styles.cryptoTab,
+              activeTab === 'ethereum' && styles.cryptoTabActive
+            )}
+            onClick={() => setActiveTab('ethereum')}
+          >
+            <EthereumIcon />
+            <p className={styles.fullName}>Ethereum</p>
+            <p className={styles.shortName}>ETH</p>
           </div>
-          <input disabled readOnly value={tokenValue} />
-          <div className={styles.inputRightContainer}>
-            <WfairIcon />
-            <span>WFAIR</span>
+          <div
+            className={classNames(
+              styles.cryptoTab,
+              activeTab === 'litecoin' && styles.cryptoTabActive
+            )}
+            onClick={() => setActiveTab('litecoin')}
+          >
+            <LitecoinIcon />
+            <p className={styles.fullName}>Litecoin</p>
+            <p className={styles.shortName}>LTC</p>
           </div>
         </div>
 
-        {/* Content */}
-        <div className={styles.cryptoContent}>
-          <p>Transactions with BTC, ETH and LTC are being manually processed for the time being, and can take a few hours. We intend to automate this in the next weeks.</p>
-          <p>Please follow the instructions provided below in order to use this method of deposit.</p>
-        </div>
+        {/* Crypto Calculator */}
+        <div className={styles.cryptoCalculatorContainer}>
+          {/* Currency */}
+          <div className={styles.cryptoInputContiner}>
+            <div className={styles.labelContainer}>
+              <span>You pay</span>
+            </div>
+            <input
+              value={currency}
+              min={1}
+              max={2000}
+              onChange={currencyChange}
+              onBlur={currencyLostFocus}
+              onClick={selectContent}
+            />
+            <div className={styles.inputRightContainer}>
+              {activeTab === 'bitcoin' && (
+                <>
+                  <BitcoinIcon />
+                  BTC
+                </>
+              )}
+              {activeTab === 'ethereum' && (
+                <>
+                  <EthereumIcon />
+                  ETH
+                </>
+              )}
+              {activeTab === 'litecoin' && (
+                <>
+                  <LitecoinIcon />
+                  LTC
+                </>
+              )}
+              {/* <img src={WallfairInput} alt="wallfair-input" /> */}
+            </div>
+          </div>
+          <div className={styles.InputLineSeparator}>
+            <img src={InputLineSeparator} alt="input_line_separator" />
+          </div>
+          {/* WFAIR TOKEN */}
+          <div className={styles.cryptoInputContiner}>
+            <div className={styles.labelContainer}>
+              <span>You receive (estimate)</span>
+            </div>
+            <input disabled readOnly value={tokenValue} />
+            <div className={styles.inputRightContainer}>
+              <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
+              <span>WFAIR</span>
+            </div>
+          </div>
 
-        <button
-          className={classNames(styles.transankContineButton, currency === 0 ? styles.disabled : null)}
-          onClick={OnClickConfirmAmount}
-          disabled={currency === 0}
-        >
-          Confirm Amount
-        </button>
-      </div>
+          {/* Content */}
+          <div className={styles.cryptoContent}>
+            <p>Transactions with BTC, ETH and LTC are being manually processed for the time being, and can take a few hours. We intend to automate this in the next weeks.</p>
+            <p>Please follow the instructions provided in the next step in order to use this method of deposit.</p>
+          </div>
+
+          <button
+            className={classNames(styles.transankContineButton, currency === 0 ? styles.disabled : null)}
+            onClick={OnClickConfirmAmount}
+            disabled={currency === 0}
+          >
+            Confirm Amount
+          </button>
+        </div>
+      </>)}
+
+
       {/* transaction Section */}
       {transaction && (
         <div className={styles.transactionContainer}>
+          
           <div className={styles.transferSection}>
+            <span className={styles.backBtn} onClick={() => setTransaction(false)}>Back</span>
             <p>
               Please transfer {' '}
               <span>
