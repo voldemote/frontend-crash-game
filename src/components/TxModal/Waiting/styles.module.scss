@@ -68,13 +68,13 @@
     width: 100%;
     max-width: 460px;
     height: 60px;
-    border-radius: 10px;
+    border-radius: 30px;
     border: 0;
     font-size: 18px;
     font-family: $fontBold;
     cursor: pointer;
     background: $colorWhite;
     color: $colorWhite;
-    background-image: url('../../../data/backgrounds/highlight-deposit.svg');
+    background: $colorPinkDark;
   }
 }

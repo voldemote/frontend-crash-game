@@ -36,14 +36,14 @@ const WFAIRTransfer = ({
 
     // .5 => 0.5 || 6. => 6.0
     tokenAmount =
-      tokenAmount.split(".")[0] === ""
+      String(tokenAmount).split(".")[0] === ""
         ? "0" + tokenAmount
-        : tokenAmount.split(".")[1] === ""
+        : String(tokenAmount).split(".")[1] === ""
         ? tokenAmount + "0"
         : tokenAmount;
 
     wfairToken
-      .transfer(toAddress, ethers.utils.parseEther(tokenAmount)) // transfer tokens
+      .transfer(toAddress, ethers.utils.parseEther(String(tokenAmount))) // transfer tokens
       .then((tx) => {
         // Waiting for transaction receipt
         SafeCall({

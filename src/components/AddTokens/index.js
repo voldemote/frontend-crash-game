@@ -1,25 +1,24 @@
 import styles from "./styles.module.scss";
 import MetaMaskIcon from "../../data/icons/wallet/metamask.svg";
-import PlusIcon from "../../data/icons/plus.svg";
 import classNames from "classnames";
 import { addMetaMaskEthereum } from "../../utils/helpers/ethereum";
+import { useCallback } from "react";
 
 const AddTokens = ({ onFurtherClick, className }) => {
+
+  const handleClick = useCallback(async (event) => {
+    await addMetaMaskEthereum();
+  }, []);
+
   return (
     <div className={classNames(styles.buttonWrapper, className)}>
       <button
         className={styles.addToken}
-        onClick={async () => {
-          if (onFurtherClick && typeof onFurtherClick === "function") {
-            onFurtherClick();
-          }
-          await addMetaMaskEthereum();
-        }}
+        onClick={handleClick}
       >
         <img src={MetaMaskIcon} alt={`MetaMask`} />
-        <img src={PlusIcon} alt={`Plus`} />
-        <img src="https://main.wallfair.io/logo192.png" alt={`WallFair.`} />
-        <strong>&nbsp;&nbsp;&nbsp;Add WFAIR to Metamask</strong>
+        <img src="https://files.wallfair.io/token-logo/wfair_256.png" alt={`WFAIR Logo`} />
+        <span>Add WFAIR to Metamask</span>
       </button>
     </div>
   );

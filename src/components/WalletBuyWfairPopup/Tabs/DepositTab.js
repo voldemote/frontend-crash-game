@@ -22,9 +22,10 @@ import { WallfairActions } from 'store/actions/wallfair';
 import useWeb3Network from '../../../hooks/useWeb3Network';
 import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
+// import AddTokens from 'components/AddTokens';
 
 const DepositTab = ({ user, resetState }) => {
-  const walletAddress = process.env.DEPOSIT_WALLET;
+  const walletAddress = process.env.REACT_APP_DEPOSIT_WALLET;
   const { active, library, account, chainId } = useWeb3React();
   const { currentNetwork } = useWeb3Network();
   const [visibleWalletForm, setVisibleWalletForm] = useState(false);
@@ -96,7 +97,6 @@ const DepositTab = ({ user, resetState }) => {
                     setIsLoadingTransferToken(true);
                     await switchMetaMaskNetwork(networkId);
                   }
-                  
                 }}
               >
                 <img
@@ -138,8 +138,10 @@ const DepositTab = ({ user, resetState }) => {
                 />
               </div>
             </div>
+            {/* <AddTokens /> */}
           </>
         )}
+        
 
         {/* {!!account && (
           <div className={styles.copyhash}>
@@ -166,7 +168,7 @@ const DepositTab = ({ user, resetState }) => {
         )} */}
         {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
-            <p>Please connect to your wallet in order to deposit WFAIR</p>
+            <p>Please connect your wallet in order to deposit WFAIR into your balance</p>
             <button
               type="button"
               className={styles.connectWalletButton}
@@ -177,6 +179,7 @@ const DepositTab = ({ user, resetState }) => {
             >
               Connect Wallet
             </button>
+            
           </div>
         )}
         {visibleWalletForm && !active && (
