@@ -131,15 +131,12 @@ const WithdrawTab = () => {
               onClick={selectContent}
             />
           </div>
-          <div className={styles.InputLineSeparator}>
-            <img src={InputLineSeparator} alt="input_line_separator" />
-          </div>
           {/* WFAIR TOKEN */}
           <div className={styles.cryptoInputContainer}>
             <div className={styles.labelContainer}>
-              <span>You receive (estimate)</span>
+              <span>Amount</span>
             </div>
-            <input disabled readOnly value={tokenValue} />
+            <input min={1000} max={10000} value={tokenValue} />
             <div className={styles.inputRightContainer}>
               <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
               <span>WFAIR</span>
