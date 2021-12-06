@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getSpinsAlpacaWheel, GameApi, setInitialSession } from 'api/casino-games';
+import { GameApi, setInitialSession } from 'api/casino-games';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -52,9 +52,9 @@ const RouletteGame = ({
 }) => {
   const user = useSelector(selectUser);
   const game = GAMES.alpacaWheel
-  const ALPACA_WHEEL_GAME_EVENT_ID = game.id;
   const gameName = match?.params?.game
   const gameCategory = match?.params?.category
+  const EXTERNAL_GAME_EVENT_ID = gameName//game.id;
   const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
@@ -75,6 +75,7 @@ const RouletteGame = ({
 
 
   useEffect(() => {
+    return null
     if(!user.isLoggedIn){
       setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
     }else{
@@ -92,36 +93,13 @@ const RouletteGame = ({
         });
     }
 
-    /*
-    getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
-      .then(response => {
-        const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin)=> {
-          if(spin.profit > 0) {
-            return {
-              type: 'win',
-              value: '+' + spin.profit
-            };
-          } else {
-            return {
-              type: 'loss',
-              value: spin.profit
-            };
-          }
-        }))
-
-      })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
-      });
-    */
     return () => {
       setInit(null)
     }
   }, [])
 
   useEffect(() => {
-    dispatch(ChatActions.fetchByRoom({ roomId: ALPACA_WHEEL_GAME_EVENT_ID }));
+    dispatch(ChatActions.fetchByRoom({ roomId: EXTERNAL_GAME_EVENT_ID }));
   }, [dispatch, connected]);
 
 
@@ -140,13 +118,13 @@ const RouletteGame = ({
     try {
       if(payload.demo) {
         setBet({...payload, ready: false })
-        trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
+        //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
       } else {
         const { data } = await Api.createTrade(payload);
         setBet({...payload, ...data, ready: false});
         //updateUserBalance(userId);
-        trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
-        trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
+        //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
+        //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
         return data;
       }
     } catch (e) {
@@ -164,7 +142,7 @@ const RouletteGame = ({
         activitiesLimit={50}
         className={styles.activitiesTrackerGamesBlock}
         preselectedCategory={'game'}
-        gameId={ALPACA_WHEEL_GAME_EVENT_ID}></EventActivitiesTabs>
+        gameId={EXTERNAL_GAME_EVENT_ID}></EventActivitiesTabs>
     </Grid>
   );
 
@@ -186,7 +164,7 @@ const RouletteGame = ({
           )}
         </TabOptions>
         <Chat
-          roomId={ALPACA_WHEEL_GAME_EVENT_ID}
+          roomId={EXTERNAL_GAME_EVENT_ID}
           className={styles.chatContainer}
           chatMessageType={ChatMessageType.game}
         />
@@ -198,8 +176,9 @@ const RouletteGame = ({
     setSpins([newSpin, ...spins])
   }
 
-  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair`
-  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=${init}&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=https://www.smartsoftgaming.com&Lang=en&PortalName=SmartSoft`
+  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
+
+  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=${init}&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=SmartSoft`
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
