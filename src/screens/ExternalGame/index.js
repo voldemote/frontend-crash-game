@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi, setInitialSession } from 'api/casino-games';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -37,6 +37,7 @@ import {
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
+import { selectUser } from 'store/selectors/authentication';
 
 const RouletteGame = ({
   showPopup,
@@ -49,6 +50,7 @@ const RouletteGame = ({
   updateUserBalance,
   match
 }) => {
+  const user = useSelector(selectUser);
   const game = GAMES.alpacaWheel
   const ALPACA_WHEEL_GAME_EVENT_ID = game.id;
   const gameName = match?.params?.game
@@ -73,18 +75,22 @@ const RouletteGame = ({
 
 
   useEffect(() => {
-    setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
-      .then(({data}) => {
-        if(isMobile) {
-          window.open(`https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=wallfair`)
-          history.push('/games')
-        }else{
-          setInit(data.TokenID)
-        }
-      })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
-      });
+    if(!user.isLoggedIn){
+      setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
+    }else{
+      setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
+        .then(({data}) => {
+          if(isMobile) {
+            window.open(`https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=wallfair`)
+            history.push('/games')
+          }else{
+            setInit(data.TokenID)
+          }
+        })
+        .catch(error => {
+          dispatch(AlertActions.showError(error.message));
+        });
+    }
 
     /*
     getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
@@ -193,6 +199,7 @@ const RouletteGame = ({
   }
 
   const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair`
+  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=${init}&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=https://www.smartsoftgaming.com&Lang=en&PortalName=SmartSoft`
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -210,7 +217,7 @@ const RouletteGame = ({
               onClick={handleHelpClick}
             />
           </div>
-          {init && <iframe className={styles.mainContainer} src={url}/>}
+          {init && <iframe className={styles.mainContainer} src={user.isLoggedIn?url:urltest}/>}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}

@@ -17,12 +17,11 @@ export const accountMapping = (body, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   };
 
-  axios
-  .post(ApiUrls.ACCOUNT_MAPPING, payload, config)
-  .then(response => console.log('------> Response----', response));
-
+  axios.post(ApiUrls.ACCOUNT_MAPPING, payload, config).then(response => {
+    return response.data;
+  });
 };

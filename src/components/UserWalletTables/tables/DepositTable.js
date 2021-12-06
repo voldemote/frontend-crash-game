@@ -5,45 +5,36 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectHistory, selectStakes } from 'store/selectors/wallfair';
 import { numberWithCommas, shortenAddress } from 'utils/common';
+import Text from 'helper/Text';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
-  const { wFair, network, address, date, txHash } = data;
+  const { amount, network_code, sender, created_at, transaction_hash } = data;
   return (
     <div className={styles.messageItem}>
       <Grid container>
         <Grid item xs>
           <div className={classNames(styles.messageFirst, styles.messageLeft)}>
-            <p>{wFair}</p>
+            <p>{numberWithCommas(Text.formatByONEConstant(amount, 0))}</p>
           </div>
         </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
+        <Grid item xs>
           <div className={styles.messageCenter}>
-            <p>{network}</p>
+            <p>{network_code}</p>
           </div>
         </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
-          <div className={styles.messageCenter}>{address}</div>
+        <Grid item xs>
+          <div className={styles.messageCenter}>{shortenAddress(sender)}</div>
         </Grid>
-        <Grid
-          item
-          xs
-          className={hideSecondaryColumns && styles.hideSecondaryColumns}
-        >
+        <Grid item xs>
           <div className={styles.messageCenter}>
-            <p className={styles.rewardMulti}>{date}</p>
+            <p className={styles.rewardMulti}>
+              {new Date(created_at).toLocaleDateString('en-US')}
+            </p>
           </div>
         </Grid>
         <Grid item xs>
           <div className={classNames(styles.messageLast, styles.messageRight)}>
-            <p className={styles.reward}>{txHash}</p>
+            <p className={styles.reward}>{shortenAddress(transaction_hash)}</p>
           </div>
         </Grid>
       </Grid>
@@ -51,32 +42,11 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   );
 };
 
-const formateRowList = (stakes) => {
-return Object.keys(stakes && stakes)?.map(lockAddress => {
-  return {
-    wFair: numberWithCommas(Math.floor(stakes[lockAddress][1])),
-    network: '',
-    address: '',
-    date: new Date(stakes[lockAddress][2] * 1000).toLocaleDateString('en-US'),
-    txHash: shortenAddress(lockAddress),
-  };
-});
-
-}
-
 const DepositTable = ({
   className,
   hideSecondaryColumns = false,
+  depositRows = [],
 }) => {
-  const historyData = useSelector(selectHistory);
-  const stakes = useSelector(selectStakes);
-  const [depositRows, setDepositRows] = useState([]);
-
-
-  useEffect(() => {
-    setDepositRows(formateRowList(stakes));
-  }, [stakes]);
-
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
       <div className={styles.header}>
@@ -84,25 +54,13 @@ const DepositTable = ({
           <Grid item xs>
             <p className={styles.titleFirst}>WFAIR</p>
           </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
+          <Grid item xs>
             <p className={styles.title}>NETWORK</p>
           </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
+          <Grid item xs>
             <p className={styles.title}>ADDRESS</p>
           </Grid>
-          <Grid
-            item
-            xs
-            className={hideSecondaryColumns && styles.hideSecondaryColumns}
-          >
+          <Grid item xs>
             <p className={styles.title}>DATE</p>
           </Grid>
           <Grid item xs>
@@ -111,9 +69,14 @@ const DepositTable = ({
         </Grid>
       </div>
       <div className={styles.messageContainer}>
-        {depositRows?.map((row, index) => (
-          <DepositRow data={row} key={index} />
+        {depositRows?.map((row) => (
+          <DepositRow data={row} key={row.id} />
         ))}
+        {depositRows.length === 0 && (
+          <div className={styles.noEntries}>
+            <span>No entries found</span>
+          </div>
+        )}
       </div>
     </div>
   );

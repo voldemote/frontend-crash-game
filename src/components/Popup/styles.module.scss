@@ -48,6 +48,9 @@
     justify-content: center;
     // overflow: auto;
     pointer-events: none;
+    @media (max-width: $screen-sm) {
+      max-width: calc(100% - 20px);
+    }
 
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
@@ -135,8 +138,8 @@
 
   .closeButtonContainer {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 20px;
+    right: 20px;
 
     .closeButton {
       z-index: $zIndexPopup + 1;

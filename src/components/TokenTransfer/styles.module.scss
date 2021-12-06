@@ -3,22 +3,17 @@
 .transferWrapper {
   display: block;
   margin: 0 auto 15px;
-  margin-top: 50px;
+  margin-top: 25px;
   width: 100%;
   max-width: 460px;
   padding: 20px;
   border-radius: 12px;
 
-  input {
-    display: block;
-    width: 100%;
+  .tokenNumberInput {
     height: 60px;
     border-radius: 12px;
-    padding: 0 15px;
-    font-family: $fontRegular;
-    font-size: 16px;
-    margin-bottom: 10px;
-    border: 1px solid $colorGrayLight;
+    background: #f1f2f6;
+    border: 1px solid $colorLightGray2;
     &:focus {
       border: 1px solid $colorGrayLight;
     }
@@ -28,7 +23,7 @@
     display: block;
     text-align: center;
     font-family: $fontBold;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 20px;
   }
 
@@ -66,24 +61,32 @@
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     button {
-      margin-top: 10px;
-      display: block;
-      width: 100%;
-      height: 60px;
-      border-radius: 30px;
-      font-size: 16px;
-      font-family: $fontBold;
-      cursor: pointer;
-      background: $colorPinkDark;
-      color: $colorWhite;
+      background: linear-gradient(
+        180deg,
+        $colorPinkDark 0%,
+        $colorLightDark2 97.4%
+      );
+      border-radius: 22.5px;
       border: 1px solid $colorWhite;
-      margin-right: 10px;
+      width: 240px;
+      height: 45px;
+      font-family: $fontRegular;
+      color: $colorWhite;
+      cursor: pointer;
+      font-size: 18px;
 
-      @media all and (max-width: $screen-xs) {
-        font-size: 12px;
+      @media (max-width: $screen-md) {
+        width: 225px;
+        height: 40px;
+        font-size: 16px;
+      }
+
+      &.disabled {
+        cursor: default;
+        opacity: 0.6;
       }
     }
 

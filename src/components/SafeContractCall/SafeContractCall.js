@@ -1,19 +1,18 @@
 const SafeCall = ({ tx, callback, setter }) => {
-  var hash = "";
+  setter(tx.hash);
   var success = false;
   tx.wait()
-    .catch((err) => {
+    .catch(err => {
       // receiving receipt
-      hash = "Tx Failed";
+      setter('Tx Failed');
       success = false;
       console.error(err);
     })
     .then(() => {
       success = true;
-      hash = tx.hash;
     })
     .finally(() => {
-      setter(hash);
+      setter('');
       callback(success);
     });
 };

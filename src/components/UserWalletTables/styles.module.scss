@@ -270,4 +270,18 @@
   @media (max-width: $screen-xs) {
     padding: 4px 0px;
   }
+
+  &,
+  button {
+    font-size: 12px;
+  }
+}
+
+.noEntries {
+  display: flex;
+  height: 200px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: $colorGrayLight9;
 }

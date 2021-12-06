@@ -2,19 +2,17 @@ import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
+import {GAMES} from '../../constants/Games';
 
+const GAME_CFG = GAMES.plinko;
 const rows = 12, ball = 20, row = 30, peg = 10, separation = 30;
 
-const outcomesByRisk = [
-  [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10],
-  [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
-  [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
-]
 const formatk = (num) => {
   return Math.abs(num) > 999999 ? Math.sign(num)*((Math.abs(num)/1000000).toFixed(1)) + 'M' : Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
 export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio, shadow, setShadow}) => {
+  const outcomesByRisk = GAME_CFG.outcomesByRisk;
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
     return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
@@ -65,7 +63,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
 
   useEffect(() => {
     if(risk){
-      const prevOutcomes = outcomesByRisk[risk-1].reduce((outs, out, i) => {
+      const prevOutcomes = GAME_CFG.outcomesByRisk[risk-1].reduce((outs, out, i) => {
         return outs.concat({value: out, amount: Math.floor(amount*out), bright: outcomes[i].bright})
       }, [])
       setOutcomes(prevOutcomes)
