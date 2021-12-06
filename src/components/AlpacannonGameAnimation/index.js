@@ -55,44 +55,34 @@ const AlpacannonGameAnimation = ({
     //   if (rightPos > 400)  deg = -(rightPos/20)
     //   if (rightPos < 400)  deg = (rightPos / 20)
     //   console.log(rightPos+"--"+deg);
-     
+
 
     // document.getElementsByClassName(styles.fullcannon)[0].setAttribute('style', `transform: rotate(${deg}deg)`);
   }
   }, [bet]);
 
   const spin = () => {
-    console.log("Go!")
-    console.log("BET CRASH1", bet.crash)
-    setBet((bet) => {return{...bet, running: true, crash: Math.round(Math.random()*100) }})
-    setGame('shoot')
-   // console.log("BET CRASH3", bet.crash)
-    
-    setTimeout(() => {setGame('shoot')}, 400)
-    // console.log("RIGHT POS2", ((((bet.crash ? bet.crash : 50) * 5) + 20)))
-    // console.log("BET CRASH2", bet.crash)
+    const crash = bet.rollValue//Math.round(Math.random()*100)
+    setBet((bet) => {return{...bet, running: true, crash: (100 - crash), crashDegree: (crash - 50)*45/50, crashPosition: (((100 - crash) - 50)*35/50) + 41 } })
+    setGame('cannon')
+    setTimeout(() => { setGame('shoot') }, 1400)
     setTimeout(() => {
       setGame('crashed')
       audio.playCrashSound()
       if(bet.profit > 0){
-        
-        /*
+      /*
         const spin = bet.profit > 0 ?
           { type: 'win', value: '+' + bet.profit } :
           bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
           { type: 'loss', value: bet.profit}
         setSpins((spins) => [spin].concat(spins))
-        */
-
+      */
       }
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
-      //console.log("RIGHT POS3", ((((bet.crash ? bet.crash : 50) * 5) + 20)))
-
-    }, 1400)
+    }, 2400)
     setTimeout(() => {
-      setGame('ready')}, 
-    3000)
-   // document.getElementsByClassName(styles.fullcannon)[0].setAttribute('style', `transform: rotate0deg)`);
+      setGame('ready')},
+    4000)
   }
 
   const interpolate = (number) => Math.floor((Number(number) + 42)*96/80)
@@ -104,9 +94,7 @@ const AlpacannonGameAnimation = ({
     console.log(bet);
     setSlider(e.target.value)
   }
-  
-//1250 width
-  
+
   return (
     <div
       ref={backgroundRef}
@@ -122,7 +110,7 @@ const AlpacannonGameAnimation = ({
           className={styles.slider}
           value={slider}
           onChange={onSlider}
-          style={{zIndex: game==='ready'&&4, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
+          style={{zIndex: game==='ready' && 4, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
           type="range"
           step={1}
           min={-40}
@@ -130,21 +118,22 @@ const AlpacannonGameAnimation = ({
       <div className={styles.chance}>
         <span>{100-interpolate(slider)}%</span>
       </div>
-      <div className={styles.alpaResult} style={{ opacity: game === 'crashed' ? 1 : 0,right: ((bet.crash?bet.crash:50) * 5)+10 }}>
-        <span>{100 - interpolate(slider)}%</span>
-      </div>
       <div className={styles.interpolateMultiplier}>
         <span>{interpolateMultiplier(slider).toFixed(2)}</span>
       </div>
-<img id="fly" className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game === 'shoot' && 188, right: game === 'shoot' && ((bet.crash ? bet.crash : 50) * 5) + 20 }} src={bet.crash < 65 ? "/images/cannon-games/alpaca-right.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-left.svg" : "/images/cannon-games/alpaca-center.svg" } alt="alpaca flying" />
-      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash ? bet.crash : 50) * 5) + 20 }} src={bet.crash > 35 ? "/images/cannon-games/alpaca-crash-left.png" : bet.crash < 65 ? "/images/cannon-games/alpaca-crash.png" : "/images/cannon-games/alpaca-crash.png"} alt="alpaca crash" />
-      <img className={styles.score} style={{ opacity: game === 'crashed' ? 1 : 0, right: ((bet.crash ? bet.crash : 50) * 5) + 20 }} src="/images/cannon-games/score.svg" alt="alpaca crash" />
-      <div className={styles.fullcannon} style={{ transform: ((((bet.crash ? bet.crash : 50) * 5) + 20)) > 400 ? `rotate(${-((((bet.crash ? bet.crash : 50) * 5) + 20) / 10)}deg)` : bet.crash < 400 ? `rotate(${((((bet.crash ? bet.crash : 50) * 5) + 20) / 10)}deg)` : `rotate(0deg)`}}>
+      {/*style={{ opacity: game === 'crashed' ? 1 : 0, right: `${bet.crashPosition}%` }}*/}
+      <img className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game !== 'shoot' ? '10%':'43%', right: game !== 'shoot' ? (bet.crash > 60 ? '45%':bet.crash < 40?'34%':'44%') : `${bet.crashPosition}%`}} src={bet.crash < 35 ? "/images/cannon-games/alpaca-right.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-left.svg" : "/images/cannon-games/alpaca-center.svg" } alt="alpaca flying" />
+      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: `${bet.crashPosition}%`}} src={bet.crash > 65 ? "/images/cannon-games/alpaca-crash-left.png" : bet.crash < 35 ? "/images/cannon-games/alpaca-crash.png" : "/images/cannon-games/alpaca-crash.png"} alt="alpaca crash" />
+      <div className={styles.alpaResult} style={{ opacity: game === 'crashed' ? 1 : 0, right: `${bet.crashPosition}%`}}>
+        <img src="/images/cannon-games/score.svg" alt="alpaca crash" />
+        <span>{100 - bet.crash}</span>
+      </div>
+      <div className={styles.fullcannon} style={{ transform: bet.crashDegree && (game === 'cannon' || game === 'shoot') ? `rotate(${bet.crashDegree}deg)` : `rotate(0deg)`}}>
         <img className={styles.cannon} src="/images/cannon-games/cannon.png" alt="cannon" />
-        <img className={styles.alpacaInCannon} style={{opacity: game==='ready'?1:0}} src="/images/cannon-games/alpaca-in-cannon.png" alt="alpaca in cannon" />
+        <img className={styles.alpacaInCannon} style={{opacity: (game==='ready' || game==='cannon')?1:0}} src="/images/cannon-games/alpaca-in-cannon.png" alt="alpaca in cannon" />
         <img className={styles.explotion} style={{ opacity: game === 'shoot' ? 1 : 0 }} src="/images/cannon-games/explotion.svg" alt="explotion" />
       </div>
-      
+
     </div>
   )
 }

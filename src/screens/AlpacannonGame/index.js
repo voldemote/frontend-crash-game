@@ -116,13 +116,11 @@ const PlinkoGame = ({
     if (!payload) return;
     try {
       if(payload.demo) {
-        setBet((bet) => { return {...bet, ...payload, profit: 50, ready: false} })
+        setBet((bet) => { return {...bet, ...payload, profit: 50, ready: false, rollValue: Math.round(Math.random()*100)} })
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
-        console.log("data", data)
-        setBet((bet) => { return {...bet, ...payload, profit: data.profit, ready: false} })
-        //setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier}});
+        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false} })
         //updateUserBalance(userId);
         //trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
         //trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
