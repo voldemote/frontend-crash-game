@@ -75,8 +75,8 @@
   }
 
   @media (max-width: $screen-xs) {
-    flex-direction: column;
-    row-gap: 20px;
+    //flex-direction: column;
+    gap: 15px;
   }
 
   .wrapper {
@@ -89,15 +89,16 @@
     margin-bottom: 20px;
 
     @media (max-width: $screen-sm) {
+      width: 45%;
+      height: auto;
       margin: 0 auto;
-    }
-
-    @media (max-width: 320px) {
-      height: 400px;
     }
 
     .gameItem {
       height: 100%;
+      @media (max-width: $screen-md) {
+        height: auto;
+      }
       &:hover {
         .title {
           display: block !important;
@@ -135,12 +136,6 @@
       }
 
       &.gameItemLg {
-        img {
-          position: absolute;
-          left: -300px;
-          right: -300px;
-          margin: auto;
-        }
         .gameInfo {
           .title {
             @media (max-width: $screen-md) {
@@ -213,6 +208,10 @@
         border: 2px solid rgba(255, 255, 255, 0.1);
         filter: drop-shadow(0px 9px 16px rgba(159, 162, 191, 0.48))
           drop-shadow(0px 2px 2px rgba(159, 162, 191, 0.62));
+        @media (max-width: $screen-md) {
+          width: 100%;
+          height: auto;
+        }
       }
 
       .gameInfo {
