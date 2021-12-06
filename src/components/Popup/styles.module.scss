@@ -46,12 +46,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: auto;
+    // overflow: auto;
     pointer-events: none;
+    @media (max-width: $screen-sm) {
+      max-width: calc(100% - 20px);
+    }
 
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
-    &.usernamePopup {
+    &.usernamePopup,
+    &.alpacaBuilderPopup {
       overflow: visible;
     }
 
@@ -104,6 +108,11 @@
       }
     }
 
+    &.alpacaBuilderPopup {
+      max-width: 1000px;
+      width: 1000px;
+    }
+
     @media (max-width: $screen-sm) {
       min-height: calc(100vh - 20px);
 
@@ -129,8 +138,8 @@
 
   .closeButtonContainer {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 20px;
+    right: 20px;
 
     .closeButton {
       z-index: $zIndexPopup + 1;

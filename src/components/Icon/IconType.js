@@ -17,6 +17,7 @@ export default {
   bet2: 'bet2',
   bet: 'bet',
   bell: 'bell',
+  buildAlpaca: 'buildAlpaca',
   calendar: 'calendar',
   camera: 'camera',
   chat: 'chat',
@@ -68,5 +69,6 @@ export default {
   pToken: 'pToken',
   leaderboardRanking: 'leaderboardRanking',
   leaderboardUser: 'leaderboardUser',
-  leaderboardToken: 'leaderboardToken'
+  leaderboardToken: 'leaderboardToken',
+  balanceScaleSolid: 'balanceScaleSolid'
 };

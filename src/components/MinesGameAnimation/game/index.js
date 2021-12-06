@@ -19,6 +19,9 @@ export default class Game {
     this.controller.on("restartGame", this.restartGame, this);
   }
 
+  clickCell(props) {
+    return this.controller.onClickOnCell(props)
+  }
   /** As game is being restarted use original data again.
    * Dispatch dummy event to make LayoutManager does its work */
   restartGame() {

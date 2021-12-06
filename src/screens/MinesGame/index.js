@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js-legacy';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 //import * as ApiUser from 'api/crash-game';
 import {connect, useDispatch, useSelector} from 'react-redux';
@@ -35,6 +35,7 @@ import {getLastCashoutsMines} from "../../api/casino-games";
 import {roundToTwo} from "../../helper/FormatNumbers";
 
 import {trackMinesCashout} from "../../config/gtm";
+import classNames from "classnames";
 
 const Game = ({
   showPopup,
@@ -62,6 +63,7 @@ const Game = ({
   const [mines, setMines] = useState(5);
   const [currentStep, setCurrentStep] = useState(0);
   const [bet, setBet] = useState({
+    autobet: false,
     pending: false,
     done: false
   });
@@ -82,19 +84,27 @@ const Game = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
-  const getLastCashout = (profit) => {
+  const handleFairnessPopup = useCallback(event => {
+    showPopup(PopupTheme.fairnessPopup, {
+      maxWidth: true, data: {
+        game: gameCfg,
+        token
+      }
+    });
+  }, []);
+
+  const getLastCashout = (data) => {
+    const {profit, gameHash} = data;
     let prepareObj = {};
     if(profit > 0) {
-      prepareObj = {
-        type: 'win',
-        value: '+' + profit
-      };
+      prepareObj.type = 'win';
+      prepareObj.value = '+' + profit;
     } else {
-      prepareObj = {
-        type: 'loss',
-        value: profit
-      };
+      prepareObj.type = 'loss';
+      prepareObj.value = profit;
     }
+    prepareObj.gameHash = gameHash;
+
     setCashouts([prepareObj, ...cashouts])
   }
 
@@ -103,17 +113,18 @@ const Game = ({
       .then(response => {
         const lastCashouts = response?.data.lastCrashes;
         setCashouts(lastCashouts.map((entry)=> {
+          const output = {};
           if(entry.profit > 0) {
-            return {
-              type: 'win',
-              value: '+' + entry.profit
-            };
+            output.type = 'win';
+            output.value = '+' + entry.profit;
           } else {
-            return {
-              type: 'loss',
-              value: entry.profit
-            };
+            output.type = 'loss';
+            output.value = entry.profit;
           }
+
+          output.gameHash = entry.gameHash;
+
+          return output;
         }))
 
       })
@@ -122,6 +133,23 @@ const Game = ({
       });
 
   }, [user.isLoggedIn])
+
+  useEffect(() => {
+    (async () => {
+      //this get route is for retrieving client / server seeds for the game, if its very first time,
+      //casino_fairness record will be created automatically
+      await gameApi.getCurrentFairnessByGame(gameCfg.id);
+    })().catch(error => {
+      dispatch(AlertActions.showError({
+        message: `${GAME_NAME}: ${error.response?.data || error.message}`
+      }));
+
+      setBet({
+        ...bet,
+        pending: true
+      })
+    });
+  }, [])
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
@@ -146,10 +174,11 @@ const Game = ({
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
-  };
+  }
 
   async function handleBet(payload) {
     audio.playBetSound();
+    setConfetti(false)
     if (!payload) return;
     try {
       if(payload.demo) {
@@ -161,13 +190,12 @@ const Game = ({
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
         gameInstance.game.controller.view.gameOver("lose");
-
         setGameInProgress(true);
         setCurrentStep(0);
-        setBet({
+        setBet((bet) => {return{
           ...bet,
           done: true
-        })
+        }})
 
         return data;
       }
@@ -186,16 +214,19 @@ const Game = ({
 
     try {
       const { data } = await gameApi.cashoutMines();
-      getLastCashout(data.profit);
+      getLastCashout(data);
       setGameOver(true);
       updateUserBalance(userId);
       setConfetti(true);
-      setBet({
-        pending:false,
-        done: false
-      });
+      if(!bet.autobet){
+        setBet((bet)=> {return{
+          ...bet,
+          pending: false,
+          done: false
+        }});
+      }
 
-      trackMinesCashout({ 
+      trackMinesCashout({
         amount: data.reward,
         multiplier: data.crashFactor,
         profit: data.profit,
@@ -290,7 +321,7 @@ const Game = ({
                 setGameInstance={setGameInstance}
                 onCashout={handleCashout}
               />
-              <LastCashouts text="My Cashouts" spins={cashouts} />
+              <LastCashouts text="My Cashouts" spins={cashouts} game={gameCfg}/>
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -316,6 +347,17 @@ const Game = ({
                   confetti={confetti}
                   setConfetti={setConfetti}
                 />
+
+                <div className={styles.fairnessContainer}>
+                  <Icon
+                      className={styles.balanceIcon}
+                      iconType={IconType.balanceScaleSolid}
+                      iconTheme={IconTheme.black}
+                      height={18}
+                      width={18}
+                  /> <span className={classNames('global-link-style', styles.fairnessOpenPopup)}
+                           onClick={handleFairnessPopup}>Fairness</span>
+                </div>
               </div>
             </div>
           </div>

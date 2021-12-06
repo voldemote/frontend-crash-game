@@ -20,6 +20,10 @@ import { Link } from 'react-router-dom';
 import { checkUsername } from '../../api';
 import { AlertActions } from 'store/actions/alert';
 import { useDispatch } from 'react-redux';
+import AlpacaBuilder from 'components/AlpacaBuilder';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from '../Popup/PopupTheme';
+import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
 
 const MainMenu = ({
   opened,
@@ -38,6 +42,9 @@ const MainMenu = ({
   close,
   updateNotificationSettings,
   fetchReferrals,
+  alpacaBuilderVisible = false,
+  handleAlpacaBuilderVisible,
+  showPopup,
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(user.name);
@@ -46,6 +53,7 @@ const MainMenu = ({
   const [profilePic, setProfilePic] = useState(user.profilePicture);
   const [imageName, setImageName] = useState(null);
   const [aboutMe, setAboutMe] = useState(user.aboutMe);
+  const [alpacaBuilderProps, setAlpacaBuilderProps] = useState({...user.alpacaBuilderProps});
   const [profileSubmitActive, setProfileSubmitActive] = useState(true);
   const [profileErrorMessage, setProfileErrorMessage] = useState();
 
@@ -58,10 +66,11 @@ const MainMenu = ({
     setName(user.name);
     setEmail(user.email);
     setAboutMe(user.aboutMe);
+    setAlpacaBuilderProps({...user.alpacaBuilderProps});
   }, [user, editVisible]);
 
   const clickUploadProfilePicture = () => {
-    profilePictureRefName.current?.click();
+    handleAlpacaBuilderVisible(!alpacaBuilderVisible);
   };
 
   const history = useHistory();
@@ -98,6 +107,13 @@ const MainMenu = ({
 
   const handleName = e => {
     setName(e.target.value);
+  };
+
+  const onAlpacaBuilderClick = () => {
+    showPopup(PopupTheme.alpacaBuilder, {
+      userId: user.userId,
+      alpacaBuilderProps: {...alpacaBuilderProps}
+    });
   };
 
   const handleUsernameDebounceAction = useMemo(() => {
@@ -144,21 +160,33 @@ const MainMenu = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    updateUser(name, username, email, imageName, aboutMe, profilePic);
+    updateUser(name, username, email, imageName, aboutMe, profilePic, alpacaBuilderProps);
     setEditVisible(false);
   };
 
-  const handleProfilePictureUpload = async e => {
-    if (!e.target.files.length) return;
-    const base64 = await convertToBase64(e.target.files[0]);
-    if (e.target.files[0].size / 1024 / 1024 > 1) {
+  const handleFileUpload = async blob => {
+    const base64 = await convertToBase64(blob);
+    if (blob.size / 1024 / 1024 > 1) {
       const newPicture = await resizePicture(base64);
       setProfilePic(newPicture);
-      setImageName(e.target.files[0].name);
+      setImageName(blob.name);
     } else {
       setProfilePic(base64);
-      setImageName(e.target.files[0].name);
+      setImageName(blob.name);
     }
+  }
+
+  const handleProfilePictureUpload = async e => {
+    if (!e.target.files.length) return;
+    await handleFileUpload(e.target.files[0]);
+  };
+
+  const handleAlpacaBuilderExport = async ({blob, props}) => {
+
+    if (!blob) return;
+    await handleFileUpload(blob);
+    handleAlpacaBuilderVisible(false);
+    setAlpacaBuilderProps({...props});
   };
 
   const resizePicture = base64 =>
@@ -276,6 +304,41 @@ const MainMenu = ({
     );
   };
 
+  const renderAlpacaBuilderDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !alpacaBuilderVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
+          />
+          Alpacabuilder
+        </h2>
+        <div className={styles.alpacaBuilderWrapper}>
+          <AlpacaBuilder
+            onCancel={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
+            onExport={data => handleAlpacaBuilderExport(data)}
+            props={alpacaBuilderProps}/>
+        </div>
+      </div>
+    );
+  };
+
+  const renderAlpacaBuilderPopup = () => {
+    return (
+        <AlpacaBuilderPopup
+          onCancel={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
+          onExport={data => handleAlpacaBuilderExport(data)}
+          props={alpacaBuilderProps}/>
+    );
+  };
+
   const renderReferralsDrawer = () => {
     return (
       <div
@@ -324,7 +387,7 @@ const MainMenu = ({
                     <Icon
                       className={styles.uploadIcon}
                       iconTheme={IconTheme.white}
-                      iconType={IconType.avatarUpload}
+                      iconType={IconType.buildAlpaca}
                     />
                   </div>
                 ) : (
@@ -342,12 +405,12 @@ const MainMenu = ({
                   onChange={handleProfilePictureUpload}
                 />
               </div>
-              <p className={styles.profilePictureUploadLabel}>Your avatar</p>
+              <p className={styles.profilePictureUploadLabel}>Build your alpaca</p>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
             <div className={styles.profileContent}>
-              <div className={styles.profileInputGroup}>
+              {/* <div className={styles.profileInputGroup}>
                 <label className={styles.profileInputLabel}>
                   My full name is...
                 </label>
@@ -356,7 +419,7 @@ const MainMenu = ({
                   value={name}
                   onChange={handleName}
                 />
-              </div>
+              </div> */}
               <div className={styles.profileInputGroup}>
                 <label className={styles.profileInputLabel}>
                   My username is...
@@ -425,12 +488,14 @@ const MainMenu = ({
         </h2>
         <div className={styles.mainContent}>
           <HomeSettings
+            profilePic={profilePic}
             onEditClick={() => onClickShowEditProfile()}
             onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}
             onPreferencesClick={() => onPreferencesClick()}
             onLogoutClick={() => onClickGoToRoute(Routes.logout)}
             onCloseProfile={() => close()}
+            onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
           />
         </div>
       </div>
@@ -439,6 +504,7 @@ const MainMenu = ({
       {referralsVisible && renderReferralsDrawer()}
       {emailNotificationsVisible && renderEmailNotificationDrawer()}
       {preferencesVisible && renderPreferencesDrawer()}
+      {alpacaBuilderVisible && renderAlpacaBuilderDrawer()}
     </div>
   );
 };
@@ -451,15 +517,16 @@ const mapStateToProps = state => {
     emailNotificationsVisible: state.general.emailNotificationsVisible,
     preferencesVisible: state.general.preferencesVisible,
     referralsVisible: state.general.referralsVisible,
+    alpacaBuilderVisible: state.general.alpacaBuilderVisible,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateUser: (name, username, email, imageName, aboutMe, profilePic) => {
+    updateUser: (name, username, email, imageName, aboutMe, profilePic, alpacaBuilderProps) => {
       dispatch(
         AuthenticationActions.initiateUpdateUserData({
-          user: { name, username, email, imageName, aboutMe, profilePic },
+          user: { name, username, email, imageName, aboutMe, profilePic, alpacaBuilderProps },
         })
       );
     },
@@ -487,6 +554,17 @@ const mapDispatchToProps = dispatch => {
     },
     fetchReferrals: () => {
       dispatch(AuthenticationActions.fetchReferrals());
+    },
+    handleAlpacaBuilderVisible: bool => {
+      dispatch(GeneralActions.setAlpacaBuilderVisible(bool));
+    },
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
     },
   };
 };

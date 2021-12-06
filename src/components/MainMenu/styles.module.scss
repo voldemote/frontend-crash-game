@@ -252,6 +252,7 @@ $largeMobileHeight: 700px;
   margin-top: 10px;
   border-top: 1px solid $colorLightGray1;
   padding-top: 20px;
+  background-color: white;
 
   @supports (-webkit-touch-callout: none) {
     height: calc(100vh - 150px);
@@ -267,4 +268,10 @@ $largeMobileHeight: 700px;
 .panelHidden {
   opacity: 0;
   transform: translateX(110%);
+}
+
+.alpacaBuilderWrapper {
+  height: calc(100% - 40px);
+  background-color: white;
+  margin: 0 20px;
 }

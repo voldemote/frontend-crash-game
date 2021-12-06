@@ -73,6 +73,10 @@
     }
   }
 
+  .hideElon::before {
+    background-image: none;
+  }
+
   @media screen and (max-width: $screen-xs) {
     padding-left: 0px;
     padding-right: 0px;

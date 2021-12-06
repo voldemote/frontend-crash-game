@@ -10,6 +10,7 @@ import SocialLogin from '../SocialLogin';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from '../AuthenticationType';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const Login = ({
   errorState,
@@ -18,7 +19,6 @@ const Login = ({
   styles,
   openSignUpPopup,
 }) => {
-  const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -181,8 +181,8 @@ const Login = ({
 
         <Button
           onClick={onConfirm}
-          withoutBackground={true}
-          highlightType={HighlightType.highlightModalButton2}
+          // withoutBackground={true}
+          // highlightType={HighlightType.highlightModalButton2}
           className={styles.submitButton}
           disabled={submitInProgress}
           disabledWithOverlay={true}
@@ -197,7 +197,7 @@ const Login = ({
             <button type="button" onClick={openSignUpPopup}>
               Create a new account
             </button>{' '}
-            {showNewFeatures && <>or use your social login.</>}
+            <>or use your social login.</>
           </p>
           <SocialLogin styles={styles} />
         </div>
@@ -222,15 +222,20 @@ const mapDispatchToProps = (dispatch) => {
     },
     openSignUpPopup: () => {
       dispatch(
-        PopupActions.show({
-          popupType: PopupTheme.auth,
-          options: {
-            authenticationType: AuthenticationType.register,
-            preloadEmailSignUp: true,
-            small: false,
-          },
-        })
-      );
+        OnboardingActions.start({options:{
+          preloadEmailSignUp: true,
+        }})
+      )
+      // dispatch(
+      //   PopupActions.show({
+      //     popupType: PopupTheme.auth,
+      //     options: {
+      //       authenticationType: AuthenticationType.register,
+      //       preloadEmailSignUp: true,
+      //       small: false,
+      //     },
+      //   })
+      // );
     },
   };
 };

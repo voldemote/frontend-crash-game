@@ -35,7 +35,13 @@ import {
   trackElonPlaceBetGuest,
   trackElonStartAutobet,
   trackElonStopAutobet,
+  trackPumpDumpChangeAutoCashout,
+  trackPumpDumpPlaceBetGuest,
+  trackPumpDumpStartAutobet,
+  trackPumpDumpStopAutobet,
 } from '../../config/gtm';
+import { useParams } from 'react-router';
+import { GAMES } from 'constants/Games';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
@@ -65,6 +71,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const [winbutton, setWinbutton] = useState(false)
   const [autobet, setAutobet] = useState(null)
   const [betted, setBetted] = useState(false)
+  const { slug } = useParams();
 
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
   const numberOfDemoPlays =
@@ -117,8 +124,13 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     let value = _.get(event, 'target.value', 0);
     const v = processAutoCashoutValue(value);
     let result = parseFloat(v);
+    
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonChangeAutoCashout({ multiplier: result });
 
-    trackElonChangeAutoCashout({ multiplier: result });
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpChangeAutoCashout({ multiplier: result });
+    }
   };
 
   const onGuestAmountChange = event => {
@@ -191,7 +203,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
     }
   }, [isGameRunning, betted, autobet]);
-  console.log("isGameRunning")
   const stopAutobet = () => {
 
     const payload = {
@@ -205,11 +216,19 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       accumulated: autobet.accumulated
     };
 
-    trackElonStopAutobet({...payload});
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonStopAutobet({...payload});
+
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpStopAutobet({...payload});
+    }
+    
     setAutobet(null)
   };
 
-  const placeABet = () => {
+  const placeABet = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (userUnableToBet) return;
     if (amount > userBalance) return;
 
@@ -217,7 +236,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       amount,
       crashFactor: 999,
     };
-    onBet(payload, crashFactor);
+    const result = onBet(payload, crashFactor);
   };
   const placeAutoBet = async () => {
     if (userUnableToBet) return;
@@ -233,23 +252,34 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       crashFactor: 999,
     };
 
-    trackElonStartAutobet({
-      ...payload,
-      autobet: 1,
-      multiplier: crashFactor, 
-    });
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonStartAutobet({
+        ...payload,
+        autobet: 1,
+        multiplier: crashFactor,
+      });
+
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpStartAutobet({
+        ...payload,
+        autobet: 1,
+        multiplier: crashFactor,
+      });
+    }
+
+
     console.log("placeAutoBet")
     setAutobet(payload)
     setBetted(true)
-    onBet(payload, payload.crashFactor);
+    await onBet(payload, payload.crashFactor);
   };
 
 
-  const cancelBet = e => {
+  const cancelBet = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     setCanBet(false);
-    onCancel(user.userId, amount);
+    const result = await onCancel(user.userId, amount);
   };
 
   const placeGuestBet = () => {
@@ -267,10 +297,18 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       userId: 'Guest',
     };
 
-    trackElonPlaceBetGuest({
-      amount: payload.amount,
-      multiplier: payload.crashFactor,
-    });
+    if (slug === GAMES['elonGame'].slug) {
+      trackElonPlaceBetGuest({
+        amount: payload.amount,
+        multiplier: payload.crashFactor,
+      });
+
+    } else if (slug === GAMES['pumpDump'].slug) {
+      trackPumpDumpPlaceBetGuest({
+        amount: payload.amount,
+        multiplier: payload.crashFactor,
+      });
+    }
 
     dispatch(RosiGameActions.setUserBet(payload));
     dispatch(RosiGameActions.addInGameBet(payload));
@@ -343,7 +381,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 (amount > userBalance && user.isLoggedIn),
               [styles.notConnected]: !connected,
             })}
-            onClick={user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet}
+            onClick={user.isLoggedIn ? (selector === 'manual' ?  placeABet : placeAutoBet) : placeGuestBet}
             data-tracking-id={
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
@@ -419,7 +457,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     if (!user.isLoggedIn) {
       return (
         <div className={classNames([styles.betInfo, styles.guestInfo])}>
-          This is a simulated version. Signin to start playing.
+          This is a simulated version. Sign in to start playing.
         </div>
       );
     }
@@ -805,12 +843,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             >
             <div className={styles.toggleButton}>
             <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
-              <span                  
+              <span
                 className={classNames(styles.buttonItem, lossbutton && styles.selected)}
                 onClick={() => setLossbutton(true)}>
                 Reset
               </span>
-              <span                  
+              <span
                 className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
                 onClick={() => setLossbutton(false)}>
                 Increase

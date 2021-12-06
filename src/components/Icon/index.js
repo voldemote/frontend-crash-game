@@ -20,6 +20,7 @@ import { ReactComponent as IconAvatarUpload } from '../../data/icons/avatar-uplo
 import { ReactComponent as IconBell } from '../../data/icons/bell.svg';
 import { ReactComponent as IconBet } from '../../data/icons/bet.svg';
 import { ReactComponent as IconBet2 } from '../../data/icons/bet-2.svg';
+import { ReactComponent as IconBuildAlpaca } from '../../data/icons/build-alpaca.svg';
 import { ReactComponent as IconCalendar } from '../../data/icons/calendar.svg';
 import { ReactComponent as IconCamera } from '../../data/icons/camera.svg';
 import { ReactComponent as IconChat } from '../../data/icons/chat.svg';
@@ -70,8 +71,9 @@ import { ReactComponent as IconLeaderBoardRanking } from '../../data/icons/leade
 import { ReactComponent as IconLeaderBoardUser } from '../../data/icons/leaderboard-user.svg';
 import { ReactComponent as IconLeaderBoardToken } from '../../data/icons/leaderboard-token.svg';
 import { ReactComponent as IconFacebook } from '../../data/icons/facebook.svg';
-import { ReactComponent as IconGoogle } from '../../data/icons/google.svg';
+import { ReactComponent as IconGoogle } from '../../data/icons/google-color-icon.svg';
 import { ReactComponent as IconEmail } from '../../data/icons/email.svg';
+import { ReactComponent as BalanceScaleSolid } from '../../data/icons/balance-scale-solid.svg';
 
 const Icon = ({
   className,
@@ -106,6 +108,7 @@ const Icon = ({
       [IconType.bell]: <IconBell />,
       [IconType.bet]: <IconBet />,
       [IconType.bet2]: <IconBet2 />,
+      [IconType.buildAlpaca] : <IconBuildAlpaca />,
       [IconType.calendar]: <IconCalendar />,
       [IconType.camera]: <IconCamera style={{ transform: 'rotate(-10deg)' }} />,
       [IconType.chat]: <IconChat />,
@@ -158,6 +161,7 @@ const Icon = ({
       [IconType.facebook]: <IconFacebook />,
       [IconType.google]: <IconGoogle />,
       [IconType.email]: <IconEmail />,
+      [IconType.balanceScaleSolid]: <BalanceScaleSolid />
     });
   };
 

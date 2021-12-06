@@ -6,6 +6,7 @@ export const GeneralTypes = {
   SET_PREFERENCES_VISIBLE: 'General/SET_PREFERENCES_VISIBLE',
   SET_REFERRALS_VISIBLE: 'General/SET_REFFERRALS_VISIBLE',
   SET_DISCLAIMER_VISIBLE: 'General/SET_DISCLAIMER_VISIBLE',
+  SET_ALPACA_BUILDER_VISIBLE: 'General/SET_ALPACA_BUILDER_VISIBLE',
 };
 
 const setDrawer = payload => ({
@@ -38,6 +39,11 @@ const setReferralsVisible = visible => ({
   visible,
 });
 
+const setAlpacaBuilderVisible = visible => ({
+  type: GeneralTypes.SET_ALPACA_BUILDER_VISIBLE,
+  visible,
+});
+
 const setDisclaimerHidden = visible => ({
   type: GeneralTypes.SET_DISCLAIMER_VISIBLE,
   visible,
@@ -51,4 +57,5 @@ export const GeneralActions = {
   setPreferencesVisible,
   setReferralsVisible,
   setDisclaimerHidden,
+  setAlpacaBuilderVisible,
 };

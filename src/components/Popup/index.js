@@ -41,6 +41,11 @@ import UsernamePopup from 'components/UsernamePopup';
 import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
+import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
+import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
+import FairnessPopup from "../FairnessPopup";
+import SingleGameDetailPopup from "../SingleGameDetailPopup";
+import TransakSuccess from "../TransakSuccess";
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -89,6 +94,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
     if (!visible) {
       return null;
     }
+
+    console.log('type', type);
     switch (type) {
       case PopupTheme.betApprove:
         return <BetApproveView options={options} />;
@@ -155,9 +162,12 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <ReportEventPopup />;
       case PopupTheme.lastGamesDetail:
         return <LastGamesDetailPopup data={options?.data} />;
+      case PopupTheme.fairnessPopup:
+        return <FairnessPopup data={options?.data} />;
+      case PopupTheme.singleGamesDetail:
+        return <SingleGameDetailPopup data={options?.data} />;
       case PopupTheme.loginRegister:
         return <JoinPopup />;
-
       case PopupTheme.verifyEmail:
         return <VerifyEmailPopup closed={false} />;
 
@@ -224,6 +234,13 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <UsernamePopup initialReward={options.initialReward} />;
       case PopupTheme.requestTokens:
         return <RequestTokensPopup />;
+      case PopupTheme.alpacaBuilder:
+        return <AlpacaBuilderPopup {...options}/>;
+
+      case PopupTheme.walletBuyWfair:
+        return <WalletBuyWfairPopup />;
+      case PopupTheme.transakSuccess:
+        return <TransakSuccess />;
     }
 
     return null;
@@ -259,6 +276,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
             type === PopupTheme.username ? styles.usernamePopup : null,
+            type === PopupTheme.alpacaBuilder ? styles.alpacaBuilderPopup : null,
             small ? styles.small : null,
             maxWidth ? styles.maxWidth : null,
             type === PopupTheme.auth &&

@@ -14,6 +14,7 @@ import PopupTheme from '../../components/Popup/PopupTheme';
 import { AlertActions } from 'store/actions/alert';
 import { RosiGameActions } from '../actions/rosi-game';
 import { ChatActions } from 'store/actions/chat';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const afterLoginRoute = Routes.home;
 
@@ -233,20 +234,40 @@ const authenticationSucceeded = function* (action) {
       })
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
-    
+
     if (action.user) {
       yield put(AuthenticationActions.updateData(action.user));
     }
 
     if (action.newUser) {
+      const alpacaBuilderData = yield select(state => state.authentication.alpacaBuilderData);
+      if(alpacaBuilderData){
+        const userWithAlpacaBuilderData = {
+          imageName: alpacaBuilderData.fileName,
+          profilePic: alpacaBuilderData.base64,
+          alpacaBuilderProps: alpacaBuilderData.alpacaBuilderProps
+        };
+        yield put(AuthenticationActions.initiateUpdateUserData({
+          user: userWithAlpacaBuilderData,
+          newUser: false //otherwise it triggers welcome popup
+        }));
+        yield put(AuthenticationActions.setAlpacaBuilderData(null));
+      }
       yield put(
-        PopupActions.show({
-          popupType: PopupTheme.username,
+        OnboardingActions.next({
           options: {
             initialReward: action?.initialReward,
           },
         })
       );
+      // yield put(
+      //   PopupActions.show({
+      //     popupType: PopupTheme.username,
+      //     options: {
+      //       initialReward: action?.initialReward,
+      //     },
+      //   })
+      // );
     } else {
       yield put(PopupActions.hide());
     }
@@ -328,13 +349,13 @@ const firstSignUpPopup = function* (options) {
     (popupType === PopupTheme.auth || popupType === PopupTheme.disclaimer);
 
   if (authState === AuthState.LOGGED_OUT && !skip) {
-    yield put(
-      PopupActions.show({
-        popupType: options.last
-          ? PopupTheme.signUpNotificationSecond
-          : PopupTheme.signUpNotificationFirst,
-      })
-    );
+    // yield put(
+    //   PopupActions.show({
+    //     popupType: options.last
+    //       ? PopupTheme.signUpNotificationSecond
+    //       : PopupTheme.signUpNotificationFirst,
+    //   })
+    // );
   }
 };
 
@@ -354,7 +375,6 @@ const updateUserData = function* (action) {
 
       userFiltered = _.omit(userFiltered, ['imageName', 'profilePic']);
     }
-
     const response = yield call(Api.updateUser, userId, userFiltered);
     if (response) {
       const stateUser = yield select(state => state.authentication);
@@ -368,8 +388,7 @@ const updateUserData = function* (action) {
 
       if (action.newUser) {
         yield put(
-          PopupActions.show({
-            popupType: PopupTheme.welcome,
+          OnboardingActions.next({
             options: {
               initialReward: action?.initialReward,
             },
@@ -390,7 +409,7 @@ const signUp = function* (action) {
     password: action.password,
     passwordConfirm: action.passwordConfirm,
     ref: action.ref,
-    recaptchaToken: action.recaptchaToken,
+    recaptchaToken: action.recaptchaToken
   };
   const { response, error } = yield call(Api.signUp, payload);
   if (response) {
@@ -400,7 +419,7 @@ const signUp = function* (action) {
         email: action.email,
         password: action.password,
         newUser: true,
-        initialReward,
+        initialReward
       })
     );
     localStorage.removeItem('urlParam_ref');
@@ -413,9 +432,9 @@ const signUp = function* (action) {
   }
 };
 
-const loginExternal = function* ({ code, provider }) {
+const loginExternal = function* ({ code, provider, ref }) {
   yield put(push('/'));
-  const { response, error } = yield call(Api.loginExternal, { provider, body: { code } });
+  const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref } });
   if (response) {
     const data = response?.data;
 
@@ -431,6 +450,7 @@ const loginExternal = function* ({ code, provider }) {
         user: data?.user,
       })
     );
+    localStorage.removeItem('urlParam_ref');
   } else {
     yield put(
       AuthenticationActions.loginExternalFail({

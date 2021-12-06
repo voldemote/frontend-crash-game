@@ -11,7 +11,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 50px 24px;
-  z-index: $zIndexNavbar;
+  z-index: $sIndexNavbar;
   background-color: $colorWhite;
 
   @media (max-width: $screen-sm) {
@@ -437,7 +437,7 @@
           //padding: 20px 15px;
 
           @media (max-width: $screen-sm) {
-            flex-direction: column;
+            //flex-direction: column;
           }
         }
       }

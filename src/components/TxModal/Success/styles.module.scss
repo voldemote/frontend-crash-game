@@ -1,0 +1,96 @@
+@import '../../../styles/all';
+
+.promoMessage {
+  flex-basis: 50%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  color: $colorBlack;
+
+  @media screen and (min-width: $screen-md) {
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 80%;
+    }
+  }
+
+  p {
+    margin: 15px 0;
+    line-height: 1.75;
+    position: relative;
+    color: $colorBlack;
+    strong {
+      font-family: $fontBold;
+      border-bottom: 3px solid $colorPinkLight;
+    }
+    @media screen and (min-width: $screen-md) {
+      margin: 30px 0;
+    }
+  }
+  .prizeAmount {
+    font-size: 35px;
+    font-family: $fontBold;
+    text-align: center;
+    position: relative;
+    align-self: center;
+    margin-bottom: 40px;
+    color: $colorBlack;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: calc(100% - 15px);
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 10px;
+      background-color: $colorPinkDark;
+      border-top-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    @media screen and (min-width: $screen-md) {
+      font-size: 42px;
+    }
+  }
+  .confettiRight,
+  .confettiLeft {
+    position: absolute;
+    z-index: 1;
+  }
+  .confettiLeft {
+    left: calc(0vw - 80px);
+    top: calc(0vh - 120px);
+    @media screen and (max-width: $screen-md) {
+      top: calc(0vh - 160px);
+    }
+  }
+  .confettiRight {
+    right: calc(0vw - 80px);
+    top: calc(0vh - 140px);
+    @media screen and (max-width: $screen-md) {
+      top: calc(0vh - 180px);
+    }
+  }
+
+  .keepGoing {
+    display: block;
+    margin: 0 auto 15px;
+    width: 100%;
+    max-width: 460px;
+    height: 60px;
+    border-radius: 30px;
+    border: 0;
+    font-size: 18px;
+    font-family: $fontBold;
+    cursor: pointer;
+    background: $colorWhite;
+    color: $colorWhite;
+    background: $colorPinkDark;
+  }
+}

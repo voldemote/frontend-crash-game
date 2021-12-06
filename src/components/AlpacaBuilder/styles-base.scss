@@ -1,0 +1,171 @@
+@import './styles-variables';
+
+.alpacaBuilder {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .head {
+    border-bottom: 1px solid $separatorColor;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .svg {
+      max-height: 250px;
+      margin: auto;
+    }
+  }
+
+  .styleView{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tiles {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .tile {
+      cursor: pointer;
+      margin: 10px;
+      height: 100px;
+      width: calc((100% / 4) - 20px);
+      padding: 2px;
+      border-radius: 20px;
+      background-color: $unselectedBg;
+      text-align: center;
+      display: flex;
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+
+      img,
+      svg {
+        max-width: 100%;
+        max-height: 100%;
+        padding: 3px;
+        flex: 1;
+      }
+    }
+    .tileSelected {
+      background-color: $selectedBg;
+      box-shadow: 0 1px 3px $selectedBorderColor;
+    }
+  }
+
+  .colors {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .color {
+      cursor: pointer;
+      margin: 10px;
+      border-radius: 20px;
+      border-width: 20px;
+      border-style: solid;
+      height: 0px;
+      width: 0px;
+      font-size: 0px;
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+    }
+    .colorSelected {
+      box-shadow: 0 2px 4px $selectedBorderColor;
+    }
+  }
+
+  .categoriesRow {
+    display: flex;
+    overflow-x: auto;
+    justify-content: center;
+    padding: 10px 0;
+
+    .category {
+      cursor: pointer;
+      margin: 10px;
+      background-color: $unselectedBg;
+      border-radius: 20px;
+      height: 50px;
+      width: 50px;
+      font-size: 10px;
+      text-align: center;
+      line-height: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+    }
+    .categorySelected {
+      background-color: $selectedBg;
+      box-shadow: 0 1px 3px $selectedBorderColor;
+    }
+  }
+
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    span {
+      width: 120px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 18px;
+      color: $toolbarBtnColor;
+      cursor: pointer;
+      margin: 0 16px;
+    }
+    .secondaryAction{
+      color: #000;
+    }
+  }
+
+  &.wide{
+    @media (min-width: $largeScreen) {
+      flex-direction: row;
+      display: flex;
+
+      .head{
+        display: flex;
+        flex-direction: row;
+        width: 44%;
+
+        .svg{
+          height: 395px;
+          max-height: 100%;
+        }
+      }
+      .categoriesRow{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 12%;
+        .category {
+          margin:10px;
+          border-radius: 20px;
+          height: 40px;
+          width: 80px;
+          font-size: 10px;
+          line-height: 40px;
+        }
+
+      }
+      .styleView{
+        width: 44%;
+      }
+      .toolbar{
+        width: 100%;
+        justify-content: center;
+
+      }
+      .head {
+        border: none;
+      }
+    }
+  }
+}

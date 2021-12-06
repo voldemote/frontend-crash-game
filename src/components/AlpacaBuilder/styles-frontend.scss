@@ -1,0 +1,23 @@
+// Place in this file the style that is specific for the alpaca frontend app
+
+@import '../../styles/all';
+
+.alpacaBuilder {
+  color: $colorPrimary;
+
+  .toolbar {
+    .primaryAction {
+      background-image: url('../../data/backgrounds/highlight-modal-button.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .secondaryAction {
+      background-image: url('../../data/backgrounds/highlight-modal-button2-disabled.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+  }
+}
+

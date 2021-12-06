@@ -7,6 +7,7 @@
   flex-direction: column;
   margin: 0 3rem;
   margin-top: 100px;
+  background: $colorhomeBackground;
 
   @media (max-width: $screen-sm) {
     margin: 0 15px;
@@ -889,6 +890,99 @@
       border-radius: 12px;
       margin: 20px 0;
       width: 96%;
+    }
+  }
+}
+
+.currentBalanceSection {
+  margin-top: 100px;
+  margin-bottom: 85px;
+
+  .currentBlanceCard {
+    width: 319px;
+    height: 271px;
+    padding: 56px 78px 57px;
+    box-shadow: 0px 0px 5px 5px $colorLightGray;
+    border-radius: 11.5px;
+    border: solid 1px $colorLightGray;
+    background-color: $colorWhite;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      position: absolute;
+      content: '';
+      background-image: url('../../data/backgrounds/home-icons.svg');
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+      top: 169px;
+      left: -140px;
+      z-index: -1;
+    }
+
+    @media (max-width: $screen-xs) {
+      &::before {
+        position: absolute;
+        content: '';
+        background-image: url('../../data/backgrounds/home-icons.svg');
+        background-repeat: no-repeat;
+        width: 100px;
+        height: 100px;
+        background-size: contain;
+        top: 200px;
+        left: -80px;
+        z-index: -1;
+      }
+    }
+
+    .currentbalanceHeading {
+      margin: 0 18px 11px 19px;
+      font-family: $fontMedium;
+      font-size: 16px;
+      font-weight: 800;
+      color: $colorBlack;
+    }
+
+    .currentbalanceWFair {
+      width: 163px;
+      height: 126px;
+      margin: 11px 0 0;
+      font-family: $fontBold;
+      font-size: 50px;
+      font-weight: 800;
+      text-align: center;
+      color: $colorBlack;
+    }
+  }
+
+  .currentBlanceDiscription {
+    width: 319px;
+    height: 271px;
+    padding: 56px 78px 57px;
+    border-radius: 11.5px;
+
+    .noWFairNoProblem {
+      width: 288px;
+      height: 30px;
+      font-family: $fontRegular;
+      font-size: 24px;
+      font-weight: 500;
+      color: $colorBlack;
+    }
+    .buyWFairButton {
+      margin-top: 27px;
+      width: 240px;
+      height: 45px;
+      border-radius: 22.5px;
+      background-image: linear-gradient(
+        to bottom,
+        $colorPinkDark,
+        $colorLightDark2 97%
+      );
+      font-family: $fontRegular;
+      border: 1px solid $colorhomeBackground;
+      color: $colorWhite;
     }
   }
 }
