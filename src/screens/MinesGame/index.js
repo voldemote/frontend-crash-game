@@ -186,6 +186,11 @@ const Game = ({
           return count+1;
         })
       } else {
+        setBet((bet) => {
+          return {
+            ...bet,
+            pending: true
+          }});
         const { data } = await gameApi.createTradeMines(payload);
         setOutcomes(data?.outcomes)
         updateUserBalance(userId);
@@ -194,6 +199,7 @@ const Game = ({
         setCurrentStep(0);
         setBet((bet) => {return{
           ...bet,
+          pending: false,
           done: true
         }})
 
