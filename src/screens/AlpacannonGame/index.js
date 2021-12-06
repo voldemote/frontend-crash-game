@@ -128,11 +128,9 @@ const PlinkoGame = ({
       //  return data;
       }
     } catch (e) {
-      dispatch(
-        AlertActions.showError({
-          message: 'Cannon: Place Bet failed',
-        })
-      );
+      dispatch(AlertActions.showError({
+        message: 'Cannon: Place Bet failed',
+      }));
     }
   }
 
