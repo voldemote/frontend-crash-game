@@ -28,6 +28,29 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
+    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+    <script>
+        Weglot.initialize({
+            api_key: 'wg_c60b4ad5c87b4261234984991980ed8d1',
+            switchers: [
+                {
+                    button_style: {
+                        full_name: true,
+                        with_name: true,
+                        is_dropdown: true,
+                        with_flags: true,
+                        flag_type: "circle",
+                        invert_flags: false
+                    },
+                    location: {
+                        target: "#lang-switcher",
+                        sibling: null
+                    }
+                }
+            ]
+        });
+    </script>
+
     <title>Alpacasino</title>
 
     <style>
