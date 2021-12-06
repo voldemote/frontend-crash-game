@@ -30,10 +30,10 @@ const PlinkoDetails = ({resData}) => {
     return <div className={styles.plinkoBucketContainer}>
       {outcomesByRisk.map((cell, index)=> {
         if(index === winIndex) {
-          return <div className={classNames(styles.plinkoBucket, styles.plinkoWinBucket)}>{cell}</div>
+          return <div className={classNames(styles.plinkoBucket, styles.plinkoWinBucket)}>x{cell}</div>
         }
 
-        return <div className={styles.plinkoBucket}>{cell}</div>;
+        return <div className={styles.plinkoBucket}>x{cell}</div>;
       })}
     </div>
   }
