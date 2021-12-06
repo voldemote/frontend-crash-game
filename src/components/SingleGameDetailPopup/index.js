@@ -14,12 +14,29 @@ import InputBoxTheme from '../InputBox/InputBoxTheme';
 import mineImg from '../../data/images/singleGameDetails/mines/mine.jpg';
 import coinImg from '../../data/images/singleGameDetails/mines/coin.jpg';
 
+import {GAMES} from '../../constants/Games';
+
 const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
 };
 
 const PlinkoDetails = ({resData}) => {
   const profit = resData?.profit.toFixed(2);
+  const winIndex = resData?.winIndex;
+  const riskFactor = resData?.riskFactor;
+  const outcomesByRisk = GAMES.plinko.outcomesByRisk[parseInt(riskFactor)-1];
+
+  const renderBuckets = () => {
+    return <div className={styles.plinkoBucketContainer}>
+      {outcomesByRisk.map((cell, index)=> {
+        if(index === winIndex) {
+          return <div className={classNames(styles.plinkoBucket, styles.plinkoWinBucket)}>{cell}</div>
+        }
+
+        return <div className={styles.plinkoBucket}>{cell}</div>;
+      })}
+    </div>
+  }
 
   return  <>
     <div>
@@ -41,6 +58,10 @@ const PlinkoDetails = ({resData}) => {
     <div>
       <b>Profit:</b>{' '}
       <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+    </div>
+    <div>
+      <b>Buckets:</b>{' '}
+      {renderBuckets()}
     </div>
   </>
 }

@@ -107,4 +107,32 @@
       }
     }
   }
+
+  .plinkoBucketContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+
+    .plinkoBucket {
+      border-radius: 2px 2px 10px 10px;
+      box-shadow: inset 0 0 4px 2px #d7393f;
+      margin: 0 1px 5px 1px;
+      width: 40px;
+      height: 29px;
+      z-index: 20;
+      background: #dd8549;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      text-align: center;
+    }
+
+    .plinkoWinBucket {
+      background: #2bba00;
+      box-shadow: inset 0 0 4px 2px #1d7c00;
+    }
+  }
 }
