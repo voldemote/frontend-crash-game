@@ -71,12 +71,12 @@
   width: 100%;
 
   @media (max-width: $screen-lg) {
-    padding: 0 20px;
+    padding: 0;
   }
 
   @media (max-width: $screen-xs) {
     //flex-direction: column;
-    gap: 15px;
+    row-gap: 10px;
   }
 
   .wrapper {
