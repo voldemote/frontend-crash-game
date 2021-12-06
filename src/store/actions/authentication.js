@@ -247,6 +247,7 @@ const updateStatus = makeActionCreator(AuthenticationTypes.UPDATE_STATUS, {
 
 const loginExternal = makeActionCreator(AuthenticationTypes.LOGIN_EXTERNAL, {
   code: null,
+  ref: null,
   provider: null,
 });
 

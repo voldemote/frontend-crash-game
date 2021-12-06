@@ -346,7 +346,7 @@ const RosiGame = ({
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes lastCrashes={lastCrashes} gameTypeId={GAME_TYPE_ID}/>
+              <LastCrashes lastCrashes={lastCrashes} game={game}/>
               {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>
