@@ -52,6 +52,10 @@
       max-width: calc(100% - 20px);
     }
 
+    &.walletBuyWfair {
+      max-width: 700px;
+    }
+
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
     &.usernamePopup,

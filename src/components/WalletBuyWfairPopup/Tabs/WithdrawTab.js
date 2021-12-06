@@ -47,7 +47,20 @@ const WithdrawTab = () => {
   const addressChange = useCallback(event => {
     const inputAddress = event.target.value;
     setAddress(inputAddress);
-  });
+  }, []);
+
+  const addressLostFocus = useCallback(event => {
+    const inputAddress = event.target.value;
+    const regex = /^0x[a-fA-F0-9]{40}$/g;
+    const valid = inputAddress.match(regex);
+
+    if (!valid) {
+      console.error('wrong 0x address format');
+      return;
+    }
+
+    setAddress(inputAddress);
+  }, []);
 
   // const currencyLostFocus = async event => {
   //   if (currency > 0) {
@@ -127,8 +140,9 @@ const WithdrawTab = () => {
               type="text"
               value={address}
               onChange={addressChange}
-              // onBlur={currencyLostFocus}
+              onBlur={addressLostFocus}
               onClick={selectContent}
+              placeholder="Add your wallet address starting with 0x"
             />
           </div>
           {/* WFAIR TOKEN */}
@@ -143,10 +157,15 @@ const WithdrawTab = () => {
             </div>
           </div>
 
+          <div className={styles.calculation}>
+            <p>Estimated Transaction Fee: 123 WFAIR </p>
+            
+            <p><b>You receive (estimate): 111 WFAIR </b></p>
+          </div>
+
           {/* Content */}
           <div className={styles.cryptoContent}>
-            <p>Transactions with BTC, ETH and LTC are being manually processed for the time being, and can take a few hours. We intend to automate this in the next weeks.</p>
-            <p>Please follow the instructions provided in the next step in order to use this method of deposit.</p>
+            <p>Before proceeding, please double check that the wallet address is correct. Transactions are irreversible, and if you put the wrong address, your funds will be lost.</p>
           </div>
 
           <button

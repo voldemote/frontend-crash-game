@@ -259,6 +259,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           ref={popupElement}
           className={classNames(
             styles.modalDialog,
+            type === PopupTheme.walletBuyWfair ? styles.walletBuyWfair : null,
             type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.explanation
               ? styles.explanationPopupVisual
