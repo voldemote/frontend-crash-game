@@ -9,16 +9,19 @@ import Grid from '@material-ui/core/Grid';
 import DepositTab from './Tabs/DepositTab';
 import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
+import WithdrawTab from './Tabs/WithdrawTab';
 
 const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
-        return <BuyWithFiatTab hidePopup={hidePopup}/>;
-      case 1:
-        return <BuyWithCrypto />;
-      case 2:
         return <DepositTab />;
+      case 1:
+        return <BuyWithFiatTab hidePopup={hidePopup}/>;
+      case 2:
+        return <BuyWithCrypto />;
+      case 3:
+        return <WithdrawTab />;
       default:
         return <BuyWithFiatTab />;
     }
@@ -29,13 +32,14 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
 
 const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
-    name: 'BUY WITH FIAT',
+    name: 'DEPOSIT',
     index: 0,
   });
   const tabOptions = [
-    { name: 'BUY WITH FIAT', index: 0 },
-    { name: 'BUY WITH CRYPTO', index: 1 },
-    { name: 'DEPOSIT', index: 2 },
+    { name: 'DEPOSIT', index: 0 },
+    { name: 'BUY WITH FIAT', index: 1 },
+    { name: 'BUY WITH CRYPTO', index: 2 },
+    { name: 'WITHDRAW', index: 3 },
   ];
   const handleSwitchTab = ({ index }) => {
     setActiveTab(tabOptions[index]);
