@@ -11,6 +11,7 @@ export const CRASH_GAMES_BACKEND_URL =
 export const SECOND_CRASH_GAME_BACKEND_URL =
   process.env.REACT_APP_SECOND_CRASH_GAME_BACKEND_URL ||
   'http://localhost:8002/';
+export const ACCOUNT_MAPPING = process.env.REACT_APP_ACCOUNT_MAPPER_URL || 'https://account-mapper-dev.wallfair.io/map';
 
 export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
@@ -103,7 +104,6 @@ export const API_USER_WALLET_TRANSACTIONS = 'api/user/wallet/transactions';
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
 export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';
 export const CRASH_GAME_GET_VOLUME_BETS = 'api/globalstats/:range';
-export const ACCOUNT_MAPPING = 'https://account-mapper-dev.wallfair.io/map';
 export const CONVERT_CURRENCY = 'api/quote';
 export const API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
 export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
