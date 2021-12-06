@@ -53,7 +53,7 @@ jobs:
                             --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
                             --build-arg REACT_APP_URL="https://main.alpacasino.io"\
-                            --build-arg REACT_APP_DEPOSIT_WALLET="0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8"\
+                            --build-arg REACT_APP_DEPOSIT_WALLET="0xEfa1A1a1Ff0C49d4913Ef8A74E76221EE97BD75F"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
       - name: Build the docker image (development)

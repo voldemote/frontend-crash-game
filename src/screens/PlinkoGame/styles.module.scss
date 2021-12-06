@@ -153,10 +153,10 @@
   margin-top: 32px;
   width: 96%;
   // padding-right: 7px;
-  background: #fff;
+  background: rgba(122, 121, 121, 0.1);
   border-radius: 10px;
-  color: #000;
-  border: 1px solid #ededed;
+  color: $colorWhite;
+  border: 1px solid $colorLightGray4;
 
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
@@ -260,6 +260,7 @@
 .fairnessContainer {
   text-align: right;
   font-size: 14.5px;
+  color: $colorWhite;
   line-height: 1;
 
   .balanceIcon {

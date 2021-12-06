@@ -13,7 +13,7 @@
     left: 0;
     top: 12px;
     width: 100%;
-    border-bottom: 9px solid $colorLightPink;
+    border-bottom: 9px solid $colorLightYellow;
     z-index: -1;
   }
 }
@@ -195,7 +195,6 @@
 .signInButton {
   overflow: hidden;
   font-size: 16px;
-  border-radius: 10px;
   margin: 20px 0 0;
   width: 100%;
   cursor: pointer;
@@ -218,7 +217,6 @@
 }
 .signInButton {
   margin-top: 5px;
-  background: #eee;
   color: #666;
 
   &:first-child {
