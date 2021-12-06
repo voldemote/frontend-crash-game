@@ -5,7 +5,7 @@
   height: 40px;
   display: flex;
   align-items: center;
-  background: #e72d89;
+  background: $colorPrimary;
   border-radius: 20px;
   justify-content: flex-start;
   position: relative;
@@ -14,7 +14,7 @@
     width: 50%; //155px;
     box-shadow: 0 3px 6px 0 rgba(71, 101, 107, 0.12);
     border-radius: 18px;
-    background: #fff;
+    background: $colorLightYellow;
     height: 90%;
     top: 5%;
     left: 3px;
@@ -93,8 +93,8 @@
 }
 .container {
   position: relative;
-  background: #fff;
-  border: 1px solid $colorLightGray;
+  background: rgba(253, 253, 253, 0.1);
+  border: 1px solid $colorLightGray4;
   border-radius: 10px;
   margin-bottom: 14px;
 
@@ -105,7 +105,7 @@
 
 .label {
   display: inline-block;
-  color: #000;
+  color: $colorWhite;
   opacity: 0.8;
   font-family: $fontMedium;
   font-size: 12px;
@@ -375,8 +375,8 @@
   padding: 10.5px;
   height: 35px;
   border-radius: 10px;
-  border: 1.2px solid rgba(14, 9, 39, 0.3);
-  background: none;
+  border: 1.2px solid $colorLightGray4;
+  background: $colorPrimary;
   justify-content: flex-end;
   margin-bottom: 10px;
   @media (min-width: $screen-lg) {
@@ -398,6 +398,7 @@
     margin-right: 9px;
     min-width: 10px !important;
     width: 6ch;
+    color: $colorLightYellow;
     font-family: $fontBold;
     font-style: normal;
     font-weight: bold;
@@ -416,7 +417,7 @@
   }
 
   .eventTokenLabel {
-    color: #000;
+    color: $colorWhite;
     font-family: $fontRegular;
     font-size: 20px;
     font-style: normal;
@@ -430,6 +431,7 @@
   }
 
   .buttonWrapper {
+    color: $colorWhite;
     margin-left: 0px;
     @media (min-width: $screen-lg) {
       margin-left: 30px;
@@ -537,7 +539,6 @@
   height: 45px;
   width: 100%;
 
-  background-color: white;
   font-weight: bold;
   font-size: 24px;
   line-height: 24px;
@@ -551,6 +552,7 @@
 .currentMultiplier {
   width: 100%;
   padding: 0 10px;
+  color: $colorWhite;
 }
 
 .noselect {
