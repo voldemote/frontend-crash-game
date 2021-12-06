@@ -112,7 +112,7 @@ const PlinkoGame = ({
 
 
   async function handleBet(payload) {
-    audio.playCannonSound();
+    audio.playBetSound();
     if (!payload) return;
     try {
       if(payload.demo) {
@@ -121,7 +121,7 @@ const PlinkoGame = ({
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
         setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false} })
-        //updateUserBalance(userId);
+        updateUserBalance(userId);
         //trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
         //trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
       //  return data;
