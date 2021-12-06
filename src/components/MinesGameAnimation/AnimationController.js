@@ -62,7 +62,7 @@ export class AudioController {
             this.errors = [...this.errors, err];
           }
         },
-        preload: true,
+        preload: false
       }
     );
   }
