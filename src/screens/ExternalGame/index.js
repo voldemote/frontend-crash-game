@@ -75,7 +75,6 @@ const RouletteGame = ({
 
 
   useEffect(() => {
-    return null
     if(!user.isLoggedIn){
       setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
     }else{
