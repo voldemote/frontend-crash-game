@@ -120,6 +120,7 @@ const PlinkoGame = ({
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
+        console.log("Data: ", data)
         setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false} })
         updateUserBalance(userId);
         //trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
