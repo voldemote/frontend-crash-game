@@ -191,8 +191,8 @@ const DepositTab = ({ user, resetState }) => {
            tokenAreaOpen && account && 
           <TokenTransfer
             provider={library}
-            hash={hash}
-            setter={setHash}
+            // hash={hash}
+            // setter={setHash}
             showCancel={false}
             balance={balance}
             tranferAddress={walletAddress}

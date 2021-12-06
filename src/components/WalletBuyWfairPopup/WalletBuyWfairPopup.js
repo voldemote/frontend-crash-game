@@ -27,7 +27,7 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
   return selectTabsComponent(type);
 };
 
-const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
+const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
     name: 'BUY WITH FIAT',
     index: 0,
@@ -89,4 +89,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RequestTokensPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletBuyWfairPopup);

@@ -7,24 +7,33 @@ import Loader from 'components/Loader/Loader';
 import TokenNumberInput from 'components/TokenNumberInput';
 import { formatToFixed } from 'helper/FormatNumbers';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+import PopupTheme from 'components/Popup/PopupTheme';
+import { PopupActions } from 'store/actions/popup';
+import { TxDataActions } from 'store/actions/txProps';
 // import AddTokens from 'components/AddTokens';
 
 const TokenTransfer = ({
   provider,
-  setter,
   hash,
   balance,
   showCancel = false,
   tranferAddress,
   contractAddress,
+  showTxModal,
+  setter,
+  setBlocked,
+  setTXSuccess,
+  setformError,
+  formError,
 }) => {
   const [transferValue, setTransferValue] = useState('0');
-  const [blocked, setBlocked] = useState(false);
+  // const [blocked, setBlocked] = useState(false);
   const [isloading, setIsLoading] = useState(true);
 
-  const [TXSuccess, setTXSuccess] = useState(false);
+  // const [TXSuccess, setTXSuccess] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [formError, setformError] = useState('');
+  // const [formError, setformError] = useState('');
   const [checkBox, setCheckBox] = useState(false);
 
   useEffect(() => {
@@ -35,12 +44,15 @@ const TokenTransfer = ({
     if (!modalOpen) {
       setBlocked(false);
       setTXSuccess(false);
-      setter(false)
+      setter(false);
+    }
+    if (modalOpen) {
+      showTxModal();
     }
   }, [modalOpen]);
 
   const getLookupLabel = () => {
-    return Object.keys()
+    return Object.keys();
   };
 
   const handleTransaction = useCallback(() => {
@@ -59,7 +71,7 @@ const TokenTransfer = ({
     });
     setTransferValue('0');
   }, [provider, setter, tranferAddress, transferValue]);
-  
+
   if (balance < 1) {
     return isloading ? (
       <Loader />
@@ -70,7 +82,7 @@ const TokenTransfer = ({
 
   const renderBody = () => (
     <>
-      {modalOpen && (
+      {/* {modalOpen && (
         <TxModal
           hash={hash}
           blocked={blocked}
@@ -79,7 +91,7 @@ const TokenTransfer = ({
           action={'Token Transfer'}
           lookupLabel={getLookupLabel}
         />
-      )}
+      )} */}
       <div className={styles.transferWrapper}>
         <strong>{`You can transfer up to ${numberWithCommas(
           balance > 2000 ? 2000 : Number(balance).toFixed(2)
@@ -100,15 +112,16 @@ const TokenTransfer = ({
               setValue={setTransferValue}
               minValue={0}
               decimalPlaces={0}
-              maxValue={formatToFixed(
-                balance < 2000 ? balance : 2000
-              )}
+              maxValue={formatToFixed(balance < 2000 ? balance : 2000)}
               halfIcon={false}
-              doubleIcon={false}               
+              doubleIcon={false}
             />
             <div className={styles.buttonWrapper}>
               <button
-                className={classNames(styles.transferButton, Number(transferValue) === 0? styles.disabled : null)}
+                className={classNames(
+                  styles.transferButton,
+                  Number(transferValue) === 0 ? styles.disabled : null
+                )}
                 onClick={handleTransaction}
                 disabled={Number(transferValue) === 0}
               >
@@ -140,4 +153,33 @@ const TokenTransfer = ({
   return isloading ? <Loader /> : renderBody();
 };
 
-export default React.memo(TokenTransfer);
+const mapStateToProps = state => {
+  return {
+    formError: state.txProps.formError,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    showTxModal: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.txModal }));
+    },
+    setter: hash => {
+      dispatch(TxDataActions.setter(hash));
+    },
+    setBlocked: blocked => {
+      dispatch(TxDataActions.setBlocked(blocked));
+    },
+    setTXSuccess: TXSuccess => {
+      dispatch(TxDataActions.setTXSuccess(TXSuccess));
+    },
+    setformError: formError => {
+      dispatch(TxDataActions.setTXSuccess(formError));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(TokenTransfer));
