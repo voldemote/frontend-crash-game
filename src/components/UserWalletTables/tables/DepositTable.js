@@ -6,9 +6,10 @@ import { useSelector } from 'react-redux';
 import { selectHistory, selectStakes } from 'store/selectors/wallfair';
 import { numberWithCommas, shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
+import moment from 'moment';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
-  const { amount, network_code, sender, created_at, transaction_hash } = data;
+  const { amount, network_code, sender, created_at, transaction_hash, status } = data;
   return (
     <div className={styles.messageItem}>
       <Grid container>
@@ -28,8 +29,15 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
         <Grid item xs>
           <div className={styles.messageCenter}>
             <p className={styles.rewardMulti}>
-              {new Date(created_at).toLocaleDateString('en-US')}
+              {moment(created_at).format('DD.MM.YYYY HH:mm:ss')}
             </p>
+          </div>
+        </Grid>
+        <Grid item xs>
+         <div 
+          className={classNames(styles.messageLast, styles.messageRight, styles.messageTranform)}
+          >
+            <p >{status}</p>
           </div>
         </Grid>
         <Grid item xs>
@@ -62,6 +70,9 @@ const DepositTable = ({
           </Grid>
           <Grid item xs>
             <p className={styles.title}>DATE</p>
+          </Grid>
+          <Grid item xs>
+            <p className={styles.titleLast}>STATUS</p>
           </Grid>
           <Grid item xs>
             <p className={styles.titleLast}>TX HASH</p>

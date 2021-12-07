@@ -5,6 +5,11 @@
   flex-direction: column;
   position: relative;
   height: 100%;
+
+  @media (max-width: $screen-xs) {
+    min-width: 360px;
+  }
+
   .header {
     height: 39px;
     display: flex;
@@ -17,16 +22,26 @@
     text-align: center;
     color: #878593;
     font-size: 12px;
+
+    @media (max-width: $screen-xs) {
+      font-size: 8px;
+    }
   }
   .titleFirst {
     text-align: left;
     font-size: 12px;
     color: #878593;
+    @media (max-width: $screen-xs) {
+      font-size: 8px;
+    }
   }
   .titleLast {
     text-align: right;
     font-size: 12px;
     color: #878593;
+    @media (max-width: $screen-xs) {
+      font-size: 8px;
+    }
   }
 
   .messageItem {
@@ -44,24 +59,43 @@
 
     .messageFirst {
       display: flex;
+      @media (max-width: $screen-xs) {
+        font-size: 8px;
+      }
     }
     .messageCenter {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
+
+      @media (max-width: $screen-xs) {
+        font-size: 8px;
+      }
     }
     .messageRight {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: right;
+
+      @media (max-width: $screen-xs) {
+        font-size: 8px;
+      }
+    }
+    .messageTranform {
+      text-transform: capitalize;
     }
     .messageLast {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: right;
+      text-align: right;
+
+      @media (max-width: $screen-xs) {
+        font-size: 8px;
+      }
     }
     &.isVisible {
       opacity: 0.3;

@@ -14,6 +14,8 @@ import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
+import QRCode from 'react-qr-code';
+
 
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -216,7 +218,9 @@ const BuyWithCrypto = () => {
               forDeposit={address}
             />
             <p>Once transaction is completed, please send proof of transaction via email to <a href="mailto:deposits@alpacasino.io?subject=Deposit">deposits@alpacasino.io</a></p>
-          
+            <div className={styles.qrCodeImg}>
+            <QRCode value={address} size={220} />
+            </div>
             {/* <div className={styles.transferSectionCopy}>
               <p>Send Transaction URL</p>
               <div className={styles.cryptoUrlContiner}>
