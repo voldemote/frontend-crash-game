@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, connect } from 'react-redux';
+import { useDispatch, connect, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 import { StylesProvider } from '@material-ui/styles';
+import { selectUser } from 'store/selectors/authentication';
 
 const AlpacannonGameAnimation = ({
   connected,
@@ -22,6 +23,7 @@ const AlpacannonGameAnimation = ({
   const dispatch = useDispatch();
   const backgroundRef = useRef(null);
 
+  const user = useSelector(selectUser);
   const [game, setGame] = useState('ready');
   const [audio, setAudio] = useState(null);
   const [slider, setSlider] = useState(0);
@@ -60,11 +62,13 @@ const AlpacannonGameAnimation = ({
     setTimeout(() => {
       setGame('crashed')
       audio.playCrashSound()
-      const spin = bet.profit > 0 ?
-        { type: 'win', value: '+' + bet.profit } :
-        bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
-        { type: 'loss', value: bet.profit}
-      setSpins((spins) => [spin].concat(spins))
+      if(user.isLoggedIn){
+        const spin = bet.profit > 0 ?
+          { type: 'win', value: '+' + bet.profit } :
+          bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
+          { type: 'loss', value: bet.profit}
+        setSpins((spins) => [spin].concat(spins))
+      }
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
     }, 2400)
     setTimeout(() => {
