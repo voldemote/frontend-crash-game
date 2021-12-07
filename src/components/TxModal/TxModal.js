@@ -1,15 +1,16 @@
-import Modal from "../Modal";
 import Waiting from "./Waiting";
 import Success from "./Success";
 import Error from "./Error";
+import { connect } from "react-redux";
+import PopupTheme from "components/Popup/PopupTheme";
+import { PopupActions } from "store/actions/popup";
 
 const TxModal = ({
   hash,
   action,
   blocked,
   success,
-  setModalOpen,
-  setTokenAreaOpen,
+  hidePopup,
   canAddToken = false,
 }) => {
   const getModalContent = () => {
@@ -18,21 +19,37 @@ const TxModal = ({
       if (success) {
         return (
           <Success
-            setModalOpen={setModalOpen}
+            setModalOpen={hidePopup}
             canAddToken={canAddToken}
-            setTokenAreaOpen={setTokenAreaOpen}
           />
         );
       } else {
-        return <Error setModalOpen={setModalOpen} hash={hash} />;
+        return <Error setModalOpen={hidePopup} hash={hash} />;
       }
     }
   };
-  return (
-    <Modal isOpen={true} showCloseButton={false}>
-      {getModalContent()}
-    </Modal>
-  );
+  return getModalContent();
 };
 
-export default TxModal;
+const mapDispatchToProps = dispatch => {
+  return {
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
+    },
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    visible:
+      state.popup.popupType === PopupTheme.txModal &&
+      state.popup.visible,
+    hash: state.txProps.hash,
+    action: state.txProps.action,
+    success: state.txProps.TXSuccess,
+    blocked: state.txProps.blocked
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TxModal);

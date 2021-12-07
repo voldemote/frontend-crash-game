@@ -46,6 +46,7 @@ import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPo
 import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
 import TransakSuccess from "../TransakSuccess";
+import TxModal from 'components/TxModal';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -94,8 +95,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
     if (!visible) {
       return null;
     }
-
-    console.log('type', type);
     switch (type) {
       case PopupTheme.betApprove:
         return <BetApproveView options={options} />;
@@ -241,6 +240,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <WalletBuyWfairPopup />;
       case PopupTheme.transakSuccess:
         return <TransakSuccess />;
+      case PopupTheme.txModal:
+        return <TxModal />;
     }
 
     return null;

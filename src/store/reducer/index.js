@@ -15,6 +15,7 @@ import wallfairReducer from './wallfair';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import onboardingReducer from './onboarding';
+import txProps from './txProps';
 
 export default history =>
   combineReducers({
@@ -34,4 +35,5 @@ export default history =>
     rosiGame: rosiGameReducer,
     wallfair: wallfairReducer,
     onboarding: onboardingReducer,
+    txProps: txProps,
   });
