@@ -330,6 +330,7 @@
 
     display: flex;
     flex-flow: column nowrap;
+    z-index: 1;
 
     .closeLeaderboard {
       @extend .floatingCloseButton;
