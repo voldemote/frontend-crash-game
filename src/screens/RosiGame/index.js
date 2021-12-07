@@ -15,6 +15,7 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
+import { UserActions } from '../../store/actions/user';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 import Share from '../../components/Share';
@@ -45,6 +46,7 @@ const RosiGame = ({
   userId,
   path,
   token,
+  updateUserBalance
 }) => {
   const dispatch = useDispatch();
   const {
@@ -151,6 +153,7 @@ const RosiGame = ({
       }
       dispatch(RosiGameActions.setUserBet(payload));
       setFlag(false)
+      updateUserBalance(userId);
       return result;
     } catch (e) {
       dispatch(
@@ -174,7 +177,8 @@ const RosiGame = ({
         }
 
         dispatch(RosiGameActions.cancelBet({ userId }));
-        setFlag(false)
+        setFlag(false);
+        updateUserBalance(userId);
         return true
       })
       .catch(() => {
@@ -211,9 +215,8 @@ const RosiGame = ({
           accumulated: autobet?.accumulated,
         });
       }
-
+      updateUserBalance(userId);
       AlertActions.showSuccess(JSON.stringify(response));
-
       return response;
     } catch (e) {
       dispatch(
@@ -398,6 +401,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    updateUserBalance: (userId) => {
+      dispatch(UserActions.fetch({ userId, forceFetch: true }));
     },
   };
 };
