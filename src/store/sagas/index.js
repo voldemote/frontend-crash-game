@@ -214,7 +214,8 @@ const rehydrationDone = function* () {
 };
 
 const preLoading = function* () {
-  yield put(EventActions.fetchAll());
+  //related with disabled betting feature
+  // yield put(EventActions.fetchAll());
   yield put(WebsocketsActions.init());
 
   const userId = yield select(state => state.authentication.userId);

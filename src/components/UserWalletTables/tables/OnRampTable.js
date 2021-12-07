@@ -6,9 +6,10 @@ import { useSelector } from 'react-redux';
 import { selectHistory, selectStakes } from 'store/selectors/wallfair';
 import { numberWithCommas, shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
+import moment from 'moment';
 
 const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
-  const { amount, network_code, fiat_amount, fiat_currency, created_at } = data;
+  const { amount, network_code, fiat_amount, fiat_currency, created_at, status } = data;
   return (
     <div className={styles.messageItem}>
       <Grid container>
@@ -33,9 +34,16 @@ const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
           </div>
         </Grid>
         <Grid item xs>
-          <div className={styles.messageCenter}>
+         <div 
+          className={classNames(styles.messageLast, styles.messageRight, styles.messageTranform)}
+          >
+            <p >{status}</p>
+          </div>
+        </Grid>
+        <Grid item xs>
+          <div className={styles.messageLast}>
             <p className={styles.rewardMulti}>
-              {new Date(created_at).toLocaleDateString('en-US')}
+              {moment(created_at).format('DD.MM.YYYY HH:mm:ss')}
             </p>
           </div>
         </Grid>
@@ -64,6 +72,9 @@ const OnRampTable = ({
           </Grid>
           <Grid item xs>
             <p className={styles.title}>NETWORK</p>
+          </Grid>
+          <Grid item xs>
+            <p className={styles.titleLast}>STATUS</p>
           </Grid>
           <Grid item xs>
             <p className={styles.titleLast}>DATE</p>

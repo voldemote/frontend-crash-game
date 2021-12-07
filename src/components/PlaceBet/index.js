@@ -124,7 +124,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     let value = _.get(event, 'target.value', 0);
     const v = processAutoCashoutValue(value);
     let result = parseFloat(v);
-    
+
     if (slug === GAMES['elonGame'].slug) {
       trackElonChangeAutoCashout({ multiplier: result });
 
@@ -222,7 +222,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     } else if (slug === GAMES['pumpDump'].slug) {
       trackPumpDumpStopAutobet({...payload});
     }
-    
+
     setAutobet(null)
   };
 
@@ -908,7 +908,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           </div>
         </>
       }
-
       {renderProfit()}
       {renderButton()}
       {renderMessage()}
