@@ -2,41 +2,61 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../withdraw.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import Dropdown from '../../Dropdown';
-import { ReactComponent as ArrowUp } from '../../../data/icons/arrow_up_icon.svg';
-import { ReactComponent as ArrowDown } from '../../../data/icons/arrow_down_icon.svg';
-import { ReactComponent as BitcoinIcon } from '../../../data/icons/bitcoin-symbol.svg';
-import { ReactComponent as EthereumIcon } from '../../../data/icons/ethereum-symbol.svg';
-import { ReactComponent as LitecoinIcon } from '../../../data/icons/litecoin-symbol.svg';
+
 import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.svg';
-import { convertCurrency } from '../../../api/index';
+import { getWithdrawQuote, processWithdraw, getWithdrawStatus, convertCurrency } from '../../../api/index';
 import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
+import WithdrawalSuccessPopup from 'components/WithdrawalSuccessPopup';
+// import { TOKEN_NAME } from 'constants/Token';
+import { selectUser } from 'store/selectors/authentication';
+import { useSelector } from 'react-redux';
 
 const networkName = {
-  polygon: 'POLYGON',
-  ethereum: 'ETHEREUM',
+  polygon: 'MATIC',
+  ethereum: 'ETH',
 };
 
 const WithdrawTab = () => {
   const [address, setAddress] = useState('');
   const [tokenAmount, setTokenAmount] = useState(0);
-  const [activeTab, setActiveTab] = useState(networkName.polygon);
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const [activeNetwork, setActiveNetwork] = useState(networkName.polygon);
   const [transaction, setTransaction] = useState(false);
+  const [amountFees, setAmountFees] = useState(0);
+  const [fiatEquivalence, setFiatEquivalence] = useState(0);
+  const [responseProps, setResponseProps] = useState({});
 
-  // useEffect(() => {
-  //   currencyLostFocus();
-  // }, [activeTab]);
+  const { balance } =
+    useSelector(selectUser);
 
-  const handleWFAIRClick = useCallback(async () => {
-    await addMetaMaskEthereum();
-  }, []);
+  useEffect(() => {
+    tokenAmountLostFocus();
+  }, [activeNetwork]);
+
+  const renderSuccess = ({withdrawAmount, fiatEquivalence, amountFees}) => {
+    return (
+      <WithdrawalSuccessPopup
+        amountReceived={withdrawAmount}
+        currency={'WFAIR'}
+        wfairAmount={withdrawAmount}
+        fiatEquivalence={fiatEquivalence}
+        fee={amountFees}
+        network={activeNetwork === 'MATIC' ? 'POLYGON' : 'ETHEREUM'}
+      />
+    )
+  }
 
   const selectContent = event => {
     event.target.select();
   };
+
+  const handleWFAIRClick = useCallback(async () => {
+    await addMetaMaskEthereum();
+  }, []);
 
   const addressChange = useCallback(event => {
     const inputAddress = event.target.value;
@@ -61,35 +81,77 @@ const WithdrawTab = () => {
     setAddress(inputAddress);
   }, []);
 
-  // const tokenAmountLostFocus = async event => {
-  //   if (tokenAmount > 0) {
-  //     const convertCurrencyPayload = {
-  //       convertFrom: cryptoShortName[activeTab],
-  //       convertTo: 'WFAIR',
-  //       amount: currency,
-  //     };
+  const tokenAmountLostFocus = async event => {
+    if (tokenAmount > 0) {
+      
+      const payload = {
+        amount: tokenAmount,
+        network: activeNetwork,
+      }
 
-  //     const { response } = await convertCurrency(convertCurrencyPayload);
-  //     const { convertedAmount } = response?.data;
-  //     const convertedTokenValue = !convertedAmount
-  //       ? 0
-  //       : convertedAmount.toFixed(4);
+      const { response, error } = await getWithdrawQuote(payload);
+      console.log(response);
+      if (error) {
+        console.log(error);
+        console.error(error.message);
+        return;
+      }
 
-  //     const roundedAmount = Math.floor(Number(convertedTokenValue) * 100) / 100;
-  //     let WfairTokenValue = !roundedAmount
-  //       ? 0
-  //       : numberWithCommas(roundedAmount);
+      const { withdraw_amount:withdrawAmount, withdraw_fee:withdrawFee } = response?.data;
+      const parsedWithdrawAmount = !withdrawAmount ? 0 : parseFloat(withdrawAmount).toFixed(4);
+      const parsedFees = !withdrawFee ? 0 : parseFloat(withdrawFee).toFixed(4);
+      const calculatedWithdrawAmount = Number(parsedWithdrawAmount - parsedFees).toFixed(4);
 
-  //     setTokenValue(WfairTokenValue);
-  //   }
-  // };
+      setAmountFees(parsedFees);
+      setWithdrawAmount(calculatedWithdrawAmount);
 
-  // const OnClickConfirmAmount = () => {
-  //   setAddress(
-  //     'e94fc3db563b9e595f76bf7c3a90105a54ea4eaaf1ddb6b9950c31dc626d5d58'
-  //   );
-  //   setTransaction(!transaction);
-  // };
+      const convertCurrencyPayload = {
+        convertFrom: 'USD',
+        convertTo: 'WFAIR',
+        amount: calculatedWithdrawAmount,
+      };
+
+      const { response:responseConvertion } = await convertCurrency(convertCurrencyPayload);
+      const { WFAIR } = responseConvertion?.data;
+      const quoteUSD = WFAIR.quote?.USD.price;
+
+      console.log(quoteUSD);
+      
+      const marketValue = Number(calculatedWithdrawAmount * parseFloat(quoteUSD)).toFixed(2);
+      // const roundedAmount = Math.floor(marketValue * 100) / 100;
+      let withdrawMarketValue = !marketValue
+        ? 0
+        : numberWithCommas(marketValue);
+
+      setFiatEquivalence(withdrawMarketValue);
+      console.log(withdrawMarketValue);
+    }
+  };
+
+  const handleWithdraw = async () => {
+      const payload = {
+        amount: tokenAmount,
+        network: activeNetwork,
+        toAddress: address,
+      }
+
+      const { response, error } = await processWithdraw(payload);
+      console.log(response);
+      if (error) {
+        console.error(error.message);
+        return;
+      }
+
+      const { withdraw_amount:withdrawAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
+      setTransaction(true);
+      setResponseProps({
+        withdrawAmount,
+        amountFees,
+        fiatEquivalence,
+        network,
+        externalTransactionId
+      })
+  }
 
   return (
     <div className={styles.withdrawContainer}>
@@ -100,9 +162,9 @@ const WithdrawTab = () => {
           <div
             className={classNames(
               styles.cryptoTab,
-              activeTab === networkName.polygon && styles.cryptoTabActive
+              activeNetwork === networkName.polygon && styles.cryptoTabActive
             )}
-            onClick={() => setActiveTab(networkName.polygon)}
+            onClick={() => setActiveNetwork(networkName.polygon)}
           >
             {/* <BitcoinIcon /> */}
             <p className={styles.fullName}>Polygon</p>
@@ -111,9 +173,9 @@ const WithdrawTab = () => {
           <div
             className={classNames(
               styles.cryptoTab,
-              activeTab === networkName.ethereum && styles.cryptoTabActive
+              activeNetwork === networkName.ethereum && styles.cryptoTabActive
             )}
-            onClick={() => setActiveTab(networkName.ethereum)}
+            onClick={() => setActiveNetwork(networkName.ethereum)}
           >
             {/* <EthereumIcon /> */}
             <p className={styles.fullName}>Ethereum</p>
@@ -127,10 +189,10 @@ const WithdrawTab = () => {
           <div className={styles.addressInputContainer}>
             <div className={styles.labelContainer}>
               <span>
-                {activeTab === networkName.polygon && (
+                {activeNetwork === networkName.polygon && (
                   'Polygon Wallet Address'
                 )}
-                {activeTab === networkName.ethereum && (
+                {activeNetwork === networkName.ethereum && (
                   'Ethereum Wallet Address'
                 )}
               </span>
@@ -141,20 +203,25 @@ const WithdrawTab = () => {
               onChange={addressChange}
               onBlur={addressLostFocus}
               onClick={selectContent}
-              placeholder="Add your wallet address starting with 0x"
+              placeholder="Add your wallet address (0x...)"
+              onClick={selectContent}
             />
           </div>
+
+          <div className={styles.balanceContainer}>
+            <span>Balance: {numberWithCommas(parseFloat(balance).toFixed(2))} {'WFAIR'}</span>
+          </div>
+
           {/* WFAIR TOKEN */}
           <div className={styles.cryptoInputContainer}>
             <div className={styles.labelContainer}>
-              <span>Amount</span>
+              <span>Amount you wish to withdraw</span>
             </div>
             <input 
-              min={1000} 
-              max={10000} 
               value={tokenAmount} 
               onChange={tokenAmountChange}
-              // onBlur={tokenAmountLostFocus}
+              onBlur={tokenAmountLostFocus}
+              onClick={selectContent}
             />
             <div className={styles.inputRightContainer}>
               <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
@@ -167,24 +234,28 @@ const WithdrawTab = () => {
           {/* WFAIR TOKEN */}
           <div className={styles.cryptoInputContainer}>
             <div className={styles.labelContainer}>
-              <span>You receive (estimate - fees)</span>
+              <span>You receive (estimate)</span><span className={styles.gasFeeLabel}>{amountFees > 0 && `Fee: ±${amountFees} WFAIR`}</span>
             </div>
             <input
               disabled
               readOnly
-              value={tokenAmount}
+              value={withdrawAmount}
             />
             <div className={styles.inputRightContainer}>
               <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
               <span>WFAIR</span>
             </div>
           </div>
+          <div className={styles.equivalentFiat}>
+            <span>Estimated market value: ± ${fiatEquivalence}</span>
+          </div>
 
           {/* <div className={styles.calculation}>
             <p>Estimated Transaction Fee: 123 WFAIR </p>
             
             <p><b>You receive (estimate): 111 WFAIR </b></p>
-          </div> */}
+          </div> 
+          */}
 
           {/* Content */}
           <div className={styles.cryptoContent}>
@@ -192,51 +263,21 @@ const WithdrawTab = () => {
           </div>
 
           <button
-            className={classNames(styles.confirmButton, tokenAmount === 0 && address != null ? styles.disabled : null)}
-            // onClick={OnClickConfirmAmount}
-            disabled={tokenAmount === 0 && address != null}
+            className={classNames(styles.confirmButton, tokenAmount === 0 || address === null ? styles.disabled : null)}
+            onClick={handleWithdraw}
+            disabled={tokenAmount === 0 || address === null}
           >
             Confirm Amount
           </button>
         </div>
       </>)}
 
+      {transaction &&
+        renderSuccess(responseProps)
+      }
 
-      {/* transaction Section
-      {transaction && (
-        <div className={styles.transactionContainer}>
-          
-          <div className={styles.transferSection}>
-            <span className={styles.backBtn} onClick={() => setTransaction(false)}>Back</span>
-            <p>
-              Please transfer {' '}
-              <span>
-                {currency} {cryptoShortName[activeTab]}
-              </span>{' '}
-              to the following {cryptoShortName[activeTab]} Address
-            </p>
-            <ReferralLinkCopyInputBox
-              className={styles.referralLink}
-              inputTheme={InputBoxTheme.copyToClipboardInputWhite}
-              forDeposit={address}
-            />
-            <p>Once transaction is completed, please send proof of transaction via email to <a href="mailto:deposits@alpacasino.io?subject=Deposit">deposits@alpacasino.io</a></p>
-          
-            { <div className={styles.transferSectionCopy}>
-              <p>Send Transaction URL</p>
-              <div className={styles.cryptoUrlContiner}>
-                <input
-                  type="text"
-                  value={url}
-                  placeholder="Paste URL here"
-                  onChange={e => setUrl(e.target.value)}
-                />
-              </div>
-            </div>
-            <button className={styles.sendUrlBtn}> Send</button> }
-          </div>
-        </div>
-      )} */}
+
+
     </div>
   );
 };

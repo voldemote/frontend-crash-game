@@ -239,7 +239,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
       case PopupTheme.transakSuccess:
-        return <TransakSuccess />;
+        return <TransakSuccess options={options} />;
       case PopupTheme.txModal:
         return <TxModal />;
     }

@@ -35,10 +35,13 @@ const createInstance = (host, apiPath) => {
 
 const Api = createInstance(ApiUrls.BACKEND_URL, '/');
 
+const WithdrawServiceApi = createInstance(ApiUrls.WITHDRAW_SERVICE_URL, '/');
+
 const setToken = token => {
   const authentication = 'Bearer ' + token;
 
   Api.defaults.headers.common['Authorization'] = authentication;
+  WithdrawServiceApi.defaults.headers.common['Authorization'] = authentication;
 };
 
 const requestSms = (phone, ref) => {
@@ -529,6 +532,24 @@ const getWalletTransactions = () => {
   });
 };
 
+const getWithdrawQuote = ({amount, network}) => {
+  return WithdrawServiceApi.post(ApiUrls.API_GETQUOTE, {amount, network})
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const processWithdraw = ({amount, network, toAddress}) => {
+  return WithdrawServiceApi.post(ApiUrls.API_WITHDRAW, {amount, network, 'to_address': toAddress})
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const getWithdrawStatus = (transactionId) => {
+  return WithdrawServiceApi.post(ApiUrls.API_WITHDRAW_STATUS.replace(':id', transactionId))
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 export {
   Api,
   createBet,
@@ -591,4 +612,7 @@ export {
   setUserMessageRead,
   convertCurrency,
   getWalletTransactions,
+  getWithdrawQuote,
+  processWithdraw,
+  getWithdrawStatus,
 };

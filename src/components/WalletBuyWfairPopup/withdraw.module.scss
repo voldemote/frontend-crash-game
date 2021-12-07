@@ -187,6 +187,22 @@
       padding: 0 16px;
     }
 
+    .balanceContainer {
+      max-width: 500px;
+      width: 100%;
+      padding: 10px 0;
+      text-align: right;
+      font-family: $fontBold;
+    }
+
+    .equivalentFiat {
+      max-width: 500px;
+      width: 100%;
+      padding-right: 2px;
+      text-align: right;
+      font-family: $fontLight;
+    }
+
     .addressInputContainer {
       position: relative;
       max-width: 500px;
@@ -207,6 +223,7 @@
         top: -26px;
         width: 100%;
       }
+
       input {
         background: #f1f2f6;
         width: 100%;
@@ -246,10 +263,18 @@
       @media (max-width: $screen-md) {
         height: 40px;
       }
+
       .labelContainer {
         position: absolute;
         top: -26px;
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+        .gasFeeLabel {
+          font-family: $fontBold;
+        }
       }
       input {
         background: #f1f2f6;
@@ -330,7 +355,6 @@
     .InputLineSeparator {
       height: 50px;
       width: 100%;
-      margin-bottom: 25px;
       display: flex;
       justify-content: center;
       align-items: center;

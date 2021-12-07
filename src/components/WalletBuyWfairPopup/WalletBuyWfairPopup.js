@@ -15,11 +15,11 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
-        return <DepositTab />;
-      case 1:
         return <BuyWithFiatTab hidePopup={hidePopup}/>;
-      case 2:
+      case 1:
         return <BuyWithCrypto />;
+      case 2:
+        return <DepositTab />;
       case 3:
         return <WithdrawTab />;
       default:
@@ -36,9 +36,9 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     index: 0,
   });
   const tabOptions = [
-    { name: 'DEPOSIT', index: 0 },
-    { name: 'BUY WITH FIAT', index: 1 },
-    { name: 'BUY WITH CRYPTO', index: 2 },
+    { name: 'BUY WITH FIAT', index: 0 },
+    { name: 'BUY WITH CRYPTO', index: 1 },
+    { name: 'DEPOSIT', index: 2 },
     { name: 'WITHDRAW', index: 3 },
   ];
   const handleSwitchTab = ({ index }) => {

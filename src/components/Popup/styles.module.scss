@@ -54,6 +54,10 @@
 
     &.walletBuyWfair {
       max-width: 700px;
+
+      .modalContent {
+        min-height: 650px;
+      }
     }
 
     &.signUpNotificationPopupContainer,
