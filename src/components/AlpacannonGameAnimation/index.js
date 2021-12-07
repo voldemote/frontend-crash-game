@@ -84,7 +84,7 @@ const AlpacannonGameAnimation = ({
   }
 
   const onSlider = (e) => {
-    setBet((bet) => {return {...bet, rollover: interpolate(e.target.value)}})
+    setBet((bet) => {return {...bet, rollover: 100 - interpolate(e.target.value)}})
     setSlider(e.target.value)
   }
 
