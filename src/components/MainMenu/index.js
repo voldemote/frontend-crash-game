@@ -468,11 +468,11 @@ const MainMenu = ({
             styles.panelHidden
         )}
       >
-        <h2 className={styles.profileHeading}>
+        {/* <h2 className={styles.profileHeading}>
           <Link to={Routes.user.replace(':userId', user.userId)}>
             My Profile
           </Link>
-        </h2>
+        </h2> */}
         <div className={styles.mainContent}>
           <HomeSettings
             profilePic={profilePic}

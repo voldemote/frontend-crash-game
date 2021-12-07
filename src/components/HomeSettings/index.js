@@ -22,96 +22,75 @@ const HomeSettings = ({
         <div
           onClick={onAlpacaBuilderClick}
           className={classNames(
-            styles.singleSettingHolder,
-            styles.settingActive
+            styles.singleSettingHolder
           )}
         >
-          <img
-            src={profilePic ? profilePic : DefaultProfilePicture}
-            alt="profile_picture"
-            className={styles.profilePicture}
-          />
+          <Icon className={styles.referralIcon} iconType={'wallet'} />
+          <p className={styles.settingTitle}>Wallet</p>
+        </div>
+        <div
+          onClick={onAlpacaBuilderClick}
+          className={classNames(
+            styles.singleSettingHolder
+          )}
+        >
+          <Icon className={styles.referralIcon} iconType={'game'} />
+          <p className={styles.settingTitle}>Games</p>
+        </div>
+        <div
+          onClick={onAlpacaBuilderClick}
+          className={classNames(
+            styles.singleSettingHolder
+          )}
+        >
+          <Icon className={styles.referralIcon} iconType={'activities'} />
+          <p className={styles.settingTitle}>Activities</p>
+        </div>
+        <div
+          onClick={onAlpacaBuilderClick}
+          className={classNames(
+            styles.singleSettingHolder
+          )}
+        >
+          <Icon className={styles.referralIcon} iconType={'leaderboard'} />
+          <p className={styles.settingTitle}>Leaderboard</p>
+        </div>
+        <div
+          onClick={onAlpacaBuilderClick}
+          className={classNames(
+            styles.singleSettingHolder
+          )}
+        >
+          <Icon className={styles.referralIcon} iconType={'alpaca'} />
           <p className={styles.settingTitle}>Customize your Alpaca</p>
-          <Icon
-            width={15}
-            iconType={IconType.arrowSmallRight}
-            className={styles.goIntoSettingIcon}
-          />
         </div>
         <div
           onClick={onEditClick}
           className={classNames(
-            styles.singleSettingHolder,
-            styles.settingActive
+            styles.singleSettingHolder
           )}
         >
-          <img
-            src={EditProfilePicture}
-            alt="edit_profile"
-            className={styles.profilePicture}
-          />
+          <Icon className={styles.referralIcon} iconType={'profile'} />
           <p className={styles.settingTitle}>Edit my Profile</p>
-          <Icon
-            width={15}
-            iconType={IconType.arrowSmallRight}
-            className={styles.goIntoSettingIcon}
-          />
         </div>
         <div
           className={classNames(
-            styles.singleSettingHolder,
-            styles.settingActive
+            styles.singleSettingHolder
           )}
           onClick={() => onReferralsClick()}
         >
-          <Icon className={styles.referralIcon} iconType={'chat'} iconTheme={`primary`}/>
+          <Icon className={styles.referralIcon} iconType={'referral'} />
           <p className={styles.settingTitle}>Referrals</p>
-          <Icon
-            width={15}
-            iconType={IconType.arrowSmallRight}
-            className={styles.goIntoSettingIcon}
-          />
         </div>
-        {/*<div*/}
-        {/*  className={classNames(*/}
-        {/*    styles.singleSettingHolder,*/}
-        {/*    styles.settingActive*/}
-        {/*  )}*/}
-        {/*  onClick={onEmailNotificationClick}*/}
-        {/*>*/}
-        {/*  <img*/}
-        {/*    src={SettingNotification}*/}
-        {/*    alt="notifications"*/}
-        {/*    className={styles.settingIcon}*/}
-        {/*    style={{ width: '22px', marginLeft: '4px' }}*/}
-        {/*  />*/}
-        {/*  <p className={styles.settingTitle}>Email Notifications</p>*/}
-        {/*  <Icon*/}
-        {/*    width={15}*/}
-        {/*    iconType={IconType.arrowSmallRight}*/}
-        {/*    className={styles.goIntoSettingIcon}*/}
-        {/*  />*/}
-        {/*</div>*/}
+      
         <div
           className={classNames(
-            styles.singleSettingHolder,
-            styles.settingActive
+            styles.singleSettingHolder
           )}
           onClick={onLogoutClick}
         >
-          <Icon
-            width={15}
-            iconType={IconType.logout}
-            iconTheme={`primary`}
-            className={classNames(styles.settingIcon)}
-            style={{ width: '22px', marginLeft: '4px' }}
-          />
+          <Icon className={styles.referralIcon} iconType={'logout'} />
           <p className={styles.settingTitle}>Logout</p>
-          <Icon
-            width={15}
-            iconType={IconType.arrowSmallRight}
-            className={styles.goIntoSettingIcon}
-          />
         </div>
         <div className={styles.closeProfileContainer} onClick={onCloseProfile}>
           <Icon

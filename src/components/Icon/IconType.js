@@ -1,4 +1,5 @@
 export default {
+  alpaca: 'alpaca',
   activities: 'activities',
   addBet: 'addBet',
   addYellow: 'addYellow',
@@ -33,6 +34,7 @@ export default {
   edit: 'edit',
   email: 'email',
   facebook: 'facebook',
+  game: 'game',
   google: 'google',
   home: 'home',
   hourglass: 'hourglass',
@@ -46,6 +48,8 @@ export default {
   menu: 'menu',
   notification: 'notification',
   phoneNumber: 'phoneNumbers',
+  profile: 'profile',
+  referral: 'referral',
   refresh: 'refresh',
   search: 'search',
   settings: 'settings',
