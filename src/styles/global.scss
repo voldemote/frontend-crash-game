@@ -30,7 +30,7 @@ input:-webkit-autofill:active {
   height: 100%;
   background-color: white;
   transition: right 0.5s ease-in-out;
-  border: 1px solid lightgrey;
+  //border: 1px solid lightgrey;
   @media (min-width: $screen-sm) {
     width: 500px;
   }

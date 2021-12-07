@@ -255,7 +255,7 @@
 
     .menuContainer {
       cursor: pointer;
-      z-index: 10;
+      z-index: 5;
       .menu {
         width: auto;
         @media (max-width: $screen-md) {
@@ -326,14 +326,10 @@
   }
 
   .leaderboard {
-    background-color: $colorWhite;
+    background-color: $colorPrimary;
 
     display: flex;
     flex-flow: column nowrap;
-    z-index: 5;
-    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
-      0px 2px 2px rgba(159, 162, 191, 0.32);
-    border-radius: 0px 0px 12px 0px;
 
     .closeLeaderboard {
       @extend .floatingCloseButton;
@@ -349,10 +345,15 @@
       justify-content: space-between;
       position: relative;
 
+      .leaderboardIcon {
+        width: 30px;
+        height: 30px;
+        margin-left: 30px;
+      }
       &:after {
         content: '';
         position: absolute;
-        background: url('../../data/images/side-panel-alpaca.png');
+        //background: url('../../data/images/side-panel-alpaca.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -369,8 +370,8 @@
     }
 
     .leaderboardHeading {
-      padding: 20px 30px;
-      color: $colorPrimary;
+      padding: 20px 16px;
+      color: $colorWhite;
       width: 100%;
       font-family: $fontBold;
       font-size: 24px;
@@ -469,7 +470,7 @@
 
       .linkSide {
         font-family: $fontBold;
-        color: $colorPinkDark;
+        color: $colorLightYellow;
         cursor: pointer;
         font-size: 14px;
         line-height: 18px;
@@ -481,7 +482,7 @@
       span {
         font-size: 18px;
         font-family: $fontBold;
-        color: $colorPrimary;
+        color: $colorLightYellow;
         opacity: 1;
         padding: 0;
       }
@@ -492,15 +493,13 @@
     }
 
     .leaderboardInfoItem {
-      background-color: $colorLightGray1;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
       width: 100%;
       padding: 20px;
-      border-radius: 12px;
-      color: $colorPrimary;
+      color: $colorWhite;
       height: 100%;
       font-family: $fontRegular;
 
