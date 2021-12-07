@@ -1,0 +1,37 @@
+@import '../../styles/all';
+
+.disabled{
+  cursor:not-allowed !important;
+}
+.referralIcon {
+  position: absolute;
+  left: 23px;
+  width: 30px;
+
+  @media (max-width: $screen-sm) {
+    left: 15px;
+  }
+}
+
+.settingTitle {
+  position: absolute;
+  left: 70px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: $colorLightGray2;
+  @media (max-width: $screen-sm) {
+    width: 60%;
+    left: 50px;
+  }
+
+  &:hover {
+    color: $colorPrimary;
+  }
+}
+
+.goIntoSettingIcon {
+  position: absolute;
+  right: 20px;
+}

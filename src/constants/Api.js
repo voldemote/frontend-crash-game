@@ -106,3 +106,4 @@ export const ACCOUNT_MAPPING = 'https://account-mapper-dev.wallfair.io/map';
 export const API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
 export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
 export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameHash';
+export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start?redirectUri=/kyc-updated';

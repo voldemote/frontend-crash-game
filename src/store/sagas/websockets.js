@@ -15,6 +15,7 @@ import { UNIVERSAL_EVENTS_ROOM_ID } from 'constants/Activities';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 import { GAMES } from '../../constants/Games';
+import { UserActions } from '../actions/user';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -275,12 +276,16 @@ export function* init() {
           case UserNotificationTypes.EVENT_RESOLVE:
           case UserNotificationTypes.EVENT_USER_REWARD:
           case UserNotificationTypes.USER_AWARD:
+          case UserNotificationTypes.EVENT_USER_KYC_UPDATE:
             yield put(
               AlertActions.showNotification({
                 notification: payload,
               })
             );
             yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
+            if(type === UserNotificationTypes.EVENT_USER_KYC_UPDATE){
+                yield put(UserActions.fetch({ forceFetch: true }));
+            }
             break;
           case notificationTypes.EVENT_BET_STARTED:
             yield put(EventActions.fetchAll());

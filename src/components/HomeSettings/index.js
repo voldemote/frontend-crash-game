@@ -6,6 +6,7 @@ import DefaultProfilePicture from 'data/images/alpaca-logo-mini.svg';
 import EditProfilePicture from 'data/images/profile.svg';
 import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
+import KycStatus from 'components/KycStatus';
 
 const HomeSettings = ({
   profilePic,
@@ -72,6 +73,9 @@ const HomeSettings = ({
             className={styles.goIntoSettingIcon}
           />
         </div>
+        <KycStatus className={classNames(styles.singleSettingHolder,styles.settingActive)}/>
+
+
         {/*<div*/}
         {/*  className={classNames(*/}
         {/*    styles.singleSettingHolder,*/}
