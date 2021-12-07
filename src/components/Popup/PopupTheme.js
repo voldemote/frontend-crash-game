@@ -37,5 +37,6 @@ export default {
   walletBuyWfair: 'walletBuyWfair',
   fairnessPopup: 'fairnessPopup',
   singleGamesDetail: 'singleGamesDetail',
-  transakSuccess: 'transakSuccess'
+  transakSuccess: 'transakSuccess',
+  txModal: 'txModal'
 };
