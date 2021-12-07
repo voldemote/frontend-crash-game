@@ -27,7 +27,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
   return (
     <div className={styles.gamesContainer}>
       <div className={styles.gamesCategory}>
-        <img src={AlpacaIcon} alt={'Alpaca Icon'} />
+        {/*<img src={AlpacaIcon} alt={'Alpaca Icon'} />*/}
         <h2>{category}</h2>
       </div>
       <div className={styles.games}>
