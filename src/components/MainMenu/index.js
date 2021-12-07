@@ -78,18 +78,25 @@ const MainMenu = ({
     history.push(destinationRoute);
   };
 
+  const onGamesClick = () => {
+    onClickGoToRoute(Routes.games);
+  }
+
+  const onActivitiesClick = () => {
+    onClickGoToRoute(Routes.activities);
+  }
+
+  const onLeaderboardClick = () => {
+    
+  }
+
   const onClickShowEditProfile = () => {
     setProfilePic(user.profilePicture);
     setEditVisible(!editVisible);
   };
 
-  const onMyWalletClick = name => {
-    // fetchOpenBets();
-    // fetchTransactions();
-    // setOpenDrawer(name);
-    // handleMyTradesVisible(!myTradesVisible);
-    fetchReferrals();
-    // setOpenMenu(menus.referrals);
+  const onWalletClick = name => {
+    onClickGoToRoute(Routes.wallet);
   };
 
   const onEmailNotificationClick = () => {
@@ -468,14 +475,18 @@ const MainMenu = ({
             styles.panelHidden
         )}
       >
-        <h2 className={styles.profileHeading}>
+        {/* <h2 className={styles.profileHeading}>
           <Link to={Routes.user.replace(':userId', user.userId)}>
             My Profile
           </Link>
-        </h2>
+        </h2> */}
         <div className={styles.mainContent}>
           <HomeSettings
             profilePic={profilePic}
+            onWalletClick={onWalletClick}
+            onGamesClick={onGamesClick}
+            onActivitiesClick={onActivitiesClick}
+            onLeaderboardClick={onLeaderboardClick}
             onEditClick={() => onClickShowEditProfile()}
             onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}

@@ -229,6 +229,21 @@ const Navbar = ({
       </div>
     );
 
+    const hamburgerMenuBtn = (
+      <div
+        role="button"
+        className={classNames(
+          style.menuContainer
+        )}
+        onClick={() => toggleOpenDrawer(drawers.profile)}
+      >
+        <Icon
+          className={style.downCaret}
+          iconType={'hamburgerMenu'}
+        />
+      </div>
+    );
+
     const joinBtn = (
       <div className={style.navbarItems}>
         <Button
@@ -255,8 +270,9 @@ const Navbar = ({
         <div className={style.navbarItems}>
           {leaderboardBtn}
           {walletBtn}
-          {notificationsBtn}
-          {profileBtn}
+          {/* {notificationsBtn} */}
+          {/* {profileBtn} */}
+          {hamburgerMenuBtn}
         </div>
       );
     } else {
@@ -418,24 +434,6 @@ const Navbar = ({
           </div>,          
           true
         )}
-
-        <div className={style.linkWrapper}>
-          {renderNavbarLink(`/games`, 'Games', null, 'menu-games')}
-          {renderNavbarLink(
-            `/activities`,
-            'Activities',
-            null,
-            'menu-activities'
-          )}
-          {/* {renderNavbarLink(`/events`, 'Events', null, 'menu-events')} */}
-          {/*{renderNavbarLink(*/}
-          {/*  `/live-events/all`,*/}
-          {/*  'Live Events',*/}
-          {/*  null,*/}
-          {/*  'menu-live-events'*/}
-          {/*)}*/}
-          {/* {isLoggedIn() && renderNavbarLink(`/rewards`, 'Earn', null, 'menu-earn')} */}
-        </div>
       </div>
 
       <div ref={drawerWrapper} className={style.drawerWrapper}>

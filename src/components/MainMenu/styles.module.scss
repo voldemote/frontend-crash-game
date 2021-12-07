@@ -11,7 +11,7 @@ $largeMobileHeight: 700px;
   width: 500px;
   height: 100vh;
   top: 0;
-  background-color: $colorWhite;
+  background-color: $colorPrimary;
 
   right: -105%;
   transition: right 0.5s ease-in-out;
@@ -25,7 +25,7 @@ $largeMobileHeight: 700px;
   &.menuOpened {
     right: 0;
     padding: 90px 24px 0;
-    background-color: $colorWhite;
+    background-color: $colorPrimary;
     backdrop-filter: blur(6px);
     overflow: hidden;
     box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
@@ -250,9 +250,8 @@ $largeMobileHeight: 700px;
   flex-flow: column;
   overflow-y: auto;
   margin-top: 10px;
-  border-top: 1px solid $colorLightGray1;
   padding-top: 20px;
-  background-color: white;
+  background-color: $colorPrimary;
 
   @supports (-webkit-touch-callout: none) {
     height: calc(100vh - 150px);

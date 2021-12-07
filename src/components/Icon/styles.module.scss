@@ -35,7 +35,7 @@
 
   &.iconPrimaryLightTransparent {
     > svg {
-      @include svgColorStroke($colorPrimaryLight20);
+      @include svgColorStroke($mainAction);
     }
   }
 

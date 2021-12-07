@@ -252,6 +252,10 @@
       }
     }
 
+    .menuContainer {
+      cursor: pointer;
+    }
+
     .active {
       opacity: 1;
       font-family: $fontBold;
