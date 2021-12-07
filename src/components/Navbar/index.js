@@ -121,6 +121,10 @@ const Navbar = ({
     setEditProfileVisible(false);
   };
 
+  const handleLeaderboard = () => {
+    toggleOpenDrawer(drawers.leaderboard);
+  }
+
   const getProfileStyle = () => {
     const profilePicture = getProfilePictureUrl(_.get(user, 'profilePicture'));
 
@@ -268,8 +272,8 @@ const Navbar = ({
     if (isLoggedIn()) {
       return (
         <div className={style.navbarItems}>
-          {!isOpen(drawers.profile) && leaderboardBtn}
-          {!isOpen(drawers.profile) && walletBtn}
+          {leaderboardBtn}
+          {walletBtn}
           {/* {notificationsBtn} */}
           {/* {profileBtn} */}
           {hamburgerMenuBtn}
@@ -278,7 +282,7 @@ const Navbar = ({
     } else {
       return (
         <div className={style.navbarItems}>
-          {!isOpen(drawers.profile) && joinBtn}
+          {joinBtn}
           {hamburgerMenuBtn}
         </div>
       );

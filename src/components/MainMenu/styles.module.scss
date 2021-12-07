@@ -12,6 +12,7 @@ $largeMobileHeight: 700px;
   height: 100vh;
   top: 0;
   background-color: $colorPrimary;
+  z-index: 1;
 
   right: -105%;
   transition: right 0.5s ease-in-out;
@@ -92,7 +93,7 @@ $largeMobileHeight: 700px;
     display: flex;
     padding-bottom: 25px;
     margin-bottom: 25px;
-    color: $colorPrimary;
+    color: $colorWhite;
     font-size: 24px;
     padding-left: 30px;
     width: 95%;

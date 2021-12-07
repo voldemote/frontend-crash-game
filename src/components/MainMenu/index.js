@@ -30,6 +30,7 @@ const MainMenu = ({
   user,
   updateUser,
   setEditVisible,
+  setOpenDrawer,
   handleMyTradesVisible,
   handleEmailNotificationsVisible,
   handlePreferencesVisible,
@@ -88,7 +89,7 @@ const MainMenu = ({
   }
 
   const onLeaderboardClick = () => {
-
+    setOpenDrawer('leaderboard');
   }
 
   const onClickShowEditProfile = () => {
@@ -536,6 +537,9 @@ const mapDispatchToProps = dispatch => {
           user: { notificationSettings },
         })
       );
+    },
+    setOpenDrawer: drawerName => {
+      dispatch(GeneralActions.setDrawer(drawerName));
     },
     setEditVisible: bool => {
       dispatch(GeneralActions.setEditProfileVisible(bool));
