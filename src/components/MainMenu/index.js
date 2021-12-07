@@ -16,6 +16,7 @@ import EmailNotifications from 'components/EmailNotifications';
 import Preferences from 'components/Preferences';
 import Referrals from 'components/Referrals';
 import Textarea from 'components/Textarea';
+import { LOGGED_IN } from 'constants/AuthState';
 import { Link } from 'react-router-dom';
 import { checkUsername } from '../../api';
 import { AlertActions } from 'store/actions/alert';
@@ -87,7 +88,7 @@ const MainMenu = ({
   }
 
   const onLeaderboardClick = () => {
-    
+
   }
 
   const onClickShowEditProfile = () => {
@@ -482,6 +483,7 @@ const MainMenu = ({
         </h2> */}
         <div className={styles.mainContent}>
           <HomeSettings
+            loggedIn={user.authState === LOGGED_IN}
             profilePic={profilePic}
             onWalletClick={onWalletClick}
             onGamesClick={onGamesClick}

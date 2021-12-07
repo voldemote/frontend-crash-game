@@ -238,7 +238,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.profile)}
       >
         <Icon
-          className={style.downCaret}
+          className={style.menu}
           iconType={'hamburgerMenu'}
         />
       </div>
@@ -268,8 +268,8 @@ const Navbar = ({
     if (isLoggedIn()) {
       return (
         <div className={style.navbarItems}>
-          {leaderboardBtn}
-          {walletBtn}
+          {!isOpen(drawers.profile) && leaderboardBtn}
+          {!isOpen(drawers.profile) && walletBtn}
           {/* {notificationsBtn} */}
           {/* {profileBtn} */}
           {hamburgerMenuBtn}
@@ -278,8 +278,8 @@ const Navbar = ({
     } else {
       return (
         <div className={style.navbarItems}>
-          {leaderboardBtn}
-          {joinBtn}
+          {!isOpen(drawers.profile) && joinBtn}
+          {hamburgerMenuBtn}
         </div>
       );
     }
@@ -439,10 +439,10 @@ const Navbar = ({
       <div ref={drawerWrapper} className={style.drawerWrapper}>
         {renderNavButtons()}
         {renderLeaderboardDrawer()}
+        {renderMenuDrawer()}
         {isLoggedIn() && (
           <>
             {renderNotificationsDrawer()}
-            {renderMenuDrawer()}
             {renderWalletDrawer()}
             {renderEmailNotificationDrawer()}
           </>

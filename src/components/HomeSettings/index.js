@@ -8,6 +8,7 @@ import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
 
 const HomeSettings = ({
+  loggedIn,
   profilePic,
   onWalletClick,
   onGamesClick,
@@ -23,6 +24,7 @@ const HomeSettings = ({
   return (
     <div className={styles.settings}>
       <div className={styles.settingContainer}>
+        {loggedIn && (
         <div
           onClick={onWalletClick}
           className={classNames(
@@ -32,6 +34,7 @@ const HomeSettings = ({
           <Icon className={styles.referralIcon} iconType={'wallet'} />
           <p className={styles.settingTitle}>Wallet</p>
         </div>
+        )}
         <div
           onClick={onGamesClick}
           className={classNames(
@@ -59,43 +62,47 @@ const HomeSettings = ({
           <Icon className={styles.referralIcon} iconType={'leaderboard'} />
           <p className={styles.settingTitle}>Leaderboard</p>
         </div>
-        <div
-          onClick={onAlpacaBuilderClick}
-          className={classNames(
-            styles.singleSettingHolder
-          )}
-        >
-          <Icon className={styles.referralIcon} iconType={'alpaca'} />
-          <p className={styles.settingTitle}>Customize your Alpaca</p>
-        </div>
-        <div
-          onClick={onEditClick}
-          className={classNames(
-            styles.singleSettingHolder
-          )}
-        >
-          <Icon className={styles.referralIcon} iconType={'profile'} />
-          <p className={styles.settingTitle}>Edit my Profile</p>
-        </div>
-        <div
-          className={classNames(
-            styles.singleSettingHolder
-          )}
-          onClick={() => onReferralsClick()}
-        >
-          <Icon className={styles.referralIcon} iconType={'referral'} />
-          <p className={styles.settingTitle}>Referrals</p>
-        </div>
-      
-        <div
-          className={classNames(
-            styles.singleSettingHolder
-          )}
-          onClick={onLogoutClick}
-        >
-          <Icon className={styles.referralIcon} iconType={'logout'} />
-          <p className={styles.settingTitle}>Logout</p>
-        </div>
+        {loggedIn && (
+        <>
+          <div
+            onClick={onAlpacaBuilderClick}
+            className={classNames(
+              styles.singleSettingHolder
+            )}
+          >
+            <Icon className={styles.referralIcon} iconType={'alpaca'} />
+            <p className={styles.settingTitle}>Customize your Alpaca</p>
+          </div>
+          <div
+            onClick={onEditClick}
+            className={classNames(
+              styles.singleSettingHolder
+            )}
+          >
+            <Icon className={styles.referralIcon} iconType={'profile'} />
+            <p className={styles.settingTitle}>Edit my Profile</p>
+          </div>
+          <div
+            className={classNames(
+              styles.singleSettingHolder
+            )}
+            onClick={() => onReferralsClick()}
+          >
+            <Icon className={styles.referralIcon} iconType={'referral'} />
+            <p className={styles.settingTitle}>Referrals</p>
+          </div>
+        
+          <div
+            className={classNames(
+              styles.singleSettingHolder
+            )}
+            onClick={onLogoutClick}
+          >
+            <Icon className={styles.referralIcon} iconType={'logout'} />
+            <p className={styles.settingTitle}>Logout</p>
+          </div>
+        </>
+        )}
         <div className={styles.closeProfileContainer} onClick={onCloseProfile}>
           <Icon
             iconTheme={IconTheme.white}
