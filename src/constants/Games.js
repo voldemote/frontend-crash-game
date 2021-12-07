@@ -262,7 +262,7 @@ export const GAMES = {
   },
   cannon: {
     id: '61a09b35121e61d6f06338ca',
-    slug: 'cannon',
+    slug: 'alpacannon',
     name: 'cannon',
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
   }
