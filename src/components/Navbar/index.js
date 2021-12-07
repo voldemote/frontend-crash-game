@@ -317,6 +317,10 @@ const Navbar = ({
             className={style.closeLeaderboard}
           />
           <div className={style.leaderboardHeadingWrapper}>
+            <Icon
+              iconType={'leaderboard'}
+              className={style.leaderboardIcon}
+            />
             <p className={style.leaderboardHeading}>
               Community
               Leaderboard

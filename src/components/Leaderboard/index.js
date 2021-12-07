@@ -107,21 +107,21 @@ const Leaderboard = ({
         <p className={style.rankingHeading}>
           <Icon
             iconType={IconType.leaderboardRanking}
-            iconTheme={IconTheme.primary}
+            iconTheme={IconTheme.transparent}
           />
           RANKING
         </p>
         <p className={style.userHeading}>
           <Icon
             iconType={IconType.leaderboardUser}
-            iconTheme={IconTheme.primary}
+            iconTheme={IconTheme.transparent}
           />
           USER
         </p>
         <p className={style.tokenHeading}>
           <Icon
             iconType={IconType.leaderboardToken}
-            iconTheme={IconTheme.primary}
+            iconTheme={IconTheme.transparent}
           />
           TOKENS WON
         </p>
