@@ -55,6 +55,13 @@ const UserWallet = ({
     BETS: myBetsData ? myBetsData : [],
   };
 
+  const activityDataMap = {
+    'FIAT DEPOSITS': 'ONRAMP',
+    'CRYPTO DEPOSITS': 'DEPOSITS',
+    'WITHDRAWALS': 'WITHDRAWALS',
+    'BETS': 'BETS',
+  }
+
   const [activityTab, setActivityTab] = useState({
     name: 'FIAT DEPOSITS',
     index: 0,
@@ -122,7 +129,7 @@ const UserWallet = ({
                 <Loader />
               ) : (
                 <UserWalletTables
-                  type={activityTab.name}
+                  type={activityDataMap[activityTab.name]}
                   rowData={activityData}
                   isError={isTransactionsFetchError}
                 />
