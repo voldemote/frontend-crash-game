@@ -24,7 +24,7 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
      {categories.map(category1 =>
        <>
        <div className={styles.gamesCategory}>
-         <img src={AlpacaIcon} alt={'Alpaca Icon'} />
+         {/*<img src={AlpacaIcon} alt={'Alpaca Icon'} />*/}
          <h2>{category1}</h2>
        </div>
        <div className={styles.games}>
@@ -34,7 +34,7 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
              key={`gamecard-${index}-`}
            >
              <Link
-               to={`/external-game/${game.TechnicalName?game.TechnicalName: game.GameName.replaceAll(' ', '')}/${game.TechnicalCategory?game.TechnicalCategory: game.GameCategory}`}
+               to={`/external-game/${game.TechnicalName}/${game.TechnicalCategory}`}
                className={classNames(
                  styles.game,
                  styles.gameLink
@@ -47,8 +47,8 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
                    getGameItemSizeClass()
                  )}
                >
-                 <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName?game.TechnicalName:game.GameName.replaceAll(' ', '')}.png`}/>
-                 <p className={styles.title}>{game.GameName}</p>
+                 <img src={game.picture?game.picture:`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName}.png`}/>
+                 <p className={styles.title}>{game.TechnicalName}</p>
                </div>
              </Link>
            </div>

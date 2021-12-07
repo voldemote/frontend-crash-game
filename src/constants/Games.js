@@ -271,212 +271,233 @@ export const GAMES = {
 
 export const EXTERNAL_GAMES = [
   {
-    GameCategory: 'JetX',
-    GameName: 'XGames',
-    TechnicalName: 'JetX',
-    TechnicalCategory: 'JetX'
-  },
-  {
-    GameCategory: 'Games',
-    GameName: 'Cappadocia'
-  },
-  {
-    GameCategory: 'Games',
-    GameName: 'Balloon',
-  },
-  {
-    GameCategory: 'XGames',
-    GameName: 'JetX3',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Viking',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Aztec',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Birds',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Casino',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Galaxy',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Cowboy',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'BookOfWin',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Christmas',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Sport',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Dota',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'FunFruit',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Pharaon',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'DonutCity',
-  },
+  TechnicalName: 'JetX',
+  TechnicalCategory: 'JetX',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'Cappadocia',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'Balloon',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'SpinX',
+  TechnicalCategory: 'XGames',
+  GameCategory: 'Casino Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/SpinX.jpg`
+  },{
+  TechnicalName: 'JetX3',
+  TechnicalCategory: 'XGames',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'Viking',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Aztec',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Birds',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Casino',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Galaxy',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'CitySlot',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/City.jpg`
+  },{
+  TechnicalName: 'Cowboy',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'BookOfWin',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Christmas',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Sport',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Dota',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'FunFruit',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Pharaoh',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/Pharaon.jpg`
+  },{
+  TechnicalName: 'DonutCity',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Samurai',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Football',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Argo',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'SweetCubes',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Bank',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/Bankjob.jpg`
+  },{
+  TechnicalName: 'MoonStone',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Apollo',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+},/*{
+  TechnicalName: 'BlazingHot',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/BlazingHot.jpg`
+},*/{
+  TechnicalName: 'Evolution',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games'
+  },{
+  TechnicalName: 'Fruit5',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/MagicGarden.jpg`
+},/*{
+  TechnicalName: 'BlazingHot10',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/BlazingHot10.jpg`
+},*/{
+  TechnicalName: 'Fruit10',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/MagicGarden10.jpg`
+  },{
+  TechnicalName: 'BlazingHot40',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/BlazingHot40.jpg`
+  },{
+  TechnicalName: 'Fruit40',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/MagicGarden40.jpg`
+  },{
+  TechnicalName: 'Dark',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/Dark.jpg`
+},/*{
+  TechnicalName: 'WW2',
+  TechnicalCategory: 'Slots',
+  GameCategory: 'Slot Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/WW2.jpg`
+},*/{
+  TechnicalName: 'VirtualRoulette',
+  TechnicalCategory: 'Roulette',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'VirtualBurningRoulette',
+  TechnicalCategory: 'Roulette',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'BonusRoulette',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+},/*{
+  TechnicalName: 'AnimationRoulette',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/AnimationRoulette.jpg`
+},*/{
+  TechnicalName: 'SicBo',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'VirtualClassicRoulette',
+  TechnicalCategory: 'Roulette',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'Blackjack',
+  TechnicalCategory: 'BoardGames',
+  GameCategory: 'Board Games'
+  },{
+  TechnicalName: 'ClassicKeno',
+  TechnicalCategory: 'Keno',
+  GameCategory: 'Keno Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/ClassicKeno.jpg`
+  },{
+  TechnicalName: 'RussianKeno',
+  TechnicalCategory: 'Keno',
+  GameCategory: 'Keno Games'
+  },{
+  TechnicalName: 'VipKeno',
+  TechnicalCategory: 'Keno',
+  GameCategory: 'Keno Games'
+  },{
+  TechnicalName: 'LuckySeven',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'TripleSeven',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'WheelOfLightDeluxe',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/WheelOfLight.jpg`
 
-  {
-    GameCategory: 'Slots',
-    GameName: 'Samurai',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Football',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Argo',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'BankJob',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'MoonStone',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Apollo',
-  },
-  {
-    GameCategory: 'Slots',
-    GameName: 'Evolution',
-  },
-
-
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'Virtual Roulette',
-    TechnicalName: 'VirtualRoulette',
-    TechnicalCategory: 'Games'
-  },
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'Virtual Burning Roulette',
-    TechnicalName: 'VirtualBurningRoulette',
-    TechnicalCategory: 'Games'
-  },
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'Bonus Roulette',
-    TechnicalName: 'BonusRoulette',
-    TechnicalCategory: 'Games'
-  },
-  /*
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'Personal Roulette',
-    TechnicalName: 'AnimationRoulette',
-    TechnicalCategory: 'GamesLobby'
-  },
-  */
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'SicBo',
-    TechnicalName: 'SicBo',
-    TechnicalCategory: 'Games'
-  },
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'Virtual Classic Roulette',
-    TechnicalName: 'VirtualClassicRoulette',
-    TechnicalCategory: 'Roulette'
-  },
-  {
-    GameCategory: 'Casino Games',
-    GameName: 'BlackJack',
-    TechnicalName: 'Blackjack',
-    TechnicalCategory: 'Games'
-  },
-  /*
-  {
-    GameCategory: 'Keno',
-    GameName: 'French Keno',
-    TechnicalName: 'ClassicKeno',
-    TechnicalCategory: 'Keno'
-  },*/
-  {
-    GameCategory: 'Keno',
-    GameName: 'Russian Keno',
-    TechnicalName: 'RussianKeno',
-    TechnicalCategory: 'Keno'
-  },
-  {
-    GameCategory: 'Keno',
-    GameName: 'VIP Keno',
-    TechnicalName: 'VipKeno',
-    TechnicalCategory: 'Keno'
-  },
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Lucky Seven',
-    TechnicalName: 'LuckySeven',
-    TechnicalCategory: 'Games'
-  },
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Triple Seven',
-    TechnicalName: 'TripleSeven',
-    TechnicalCategory: 'Games'
-  },
-  /*
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Wheel of Light',
-    TechnicalName: 'WheelOfLightDeluxe',
-    TechnicalCategory: 'Games'
-  },
-  */
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Space Lotto',
-    TechnicalName: 'SpaceLotto',
-    TechnicalCategory: 'Games'
-  },
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Zodiac Scratch',
-    TechnicalName: 'ZodiacScratch',
-    TechnicalCategory: 'Games'
-  },
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Gem Stones',
-    TechnicalName: 'GemStones',
-    TechnicalCategory: 'Games'
-  },
-  /*
-  {
-    GameCategory: 'Other Games',
-    GameName: 'Scratch&Win Deluxe',
-    TechnicalName: 'LuckyDoubleDeluxe',
-    TechnicalCategory: 'SweetCandy'
-  }*/
-];
+  },{
+  TechnicalName: 'SpaceLotto',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'ZodiacScratch',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  },{
+  TechnicalName: 'GemStones',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+},/*{
+  TechnicalName: 'LuckyDoubleDeluxe',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games',
+  picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/LuckyDoubleDeluxe.jpg`
+},*/{
+  TechnicalName: 'SweetCandy',
+  TechnicalCategory: 'Games',
+  GameCategory: 'Casino Games'
+  }
+]
