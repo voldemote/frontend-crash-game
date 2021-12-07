@@ -60,15 +60,11 @@ const AlpacannonGameAnimation = ({
     setTimeout(() => {
       setGame('crashed')
       audio.playCrashSound()
-      if(bet.profit > 0){
-      /*
-        const spin = bet.profit > 0 ?
-          { type: 'win', value: '+' + bet.profit } :
-          bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
-          { type: 'loss', value: bet.profit}
-        setSpins((spins) => [spin].concat(spins))
-      */
-      }
+      const spin = bet.profit > 0 ?
+        { type: 'win', value: '+' + bet.profit } :
+        bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
+        { type: 'loss', value: bet.profit}
+      setSpins((spins) => [spin].concat(spins))
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
     }, 2400)
     setTimeout(() => {
@@ -76,7 +72,7 @@ const AlpacannonGameAnimation = ({
     }, 3400)
   }
 
-  const interpolate = (number) => Math.floor((Number(number) + 42)*96/80)
+  const interpolate = (number) => 100 - Math.floor((Number(number) + 42)*96/80)
 
   const interpolateMultiplier = (number) => {
     const EDGE = 0.025
@@ -103,13 +99,13 @@ const AlpacannonGameAnimation = ({
         className={styles.slider}
         value={slider}
         onChange={onSlider}
-        style={{zIndex: game==='ready' && 5, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
+        style={{zIndex: game==='ready' && 5, background: `linear-gradient(90deg, rgba(240,0,0,1) ${100 - interpolate(slider)}%, rgba(0,255,0,1) ${100 - interpolate(slider)}%)`}}
         type="range"
         step={1}
         min={-40}
         max={40} />
       <div className={styles.chance}>
-        <span>{100-interpolate(slider)}%</span>
+        <span>{interpolate(slider)}%</span>
       </div>
       <div className={styles.interpolateMultiplier}>
         <span>{interpolateMultiplier(slider).toFixed(2)}</span>
