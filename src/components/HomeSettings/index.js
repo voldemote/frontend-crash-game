@@ -9,6 +9,10 @@ import IconTheme from '../Icon/IconTheme';
 
 const HomeSettings = ({
   profilePic,
+  onWalletClick,
+  onGamesClick,
+  onActivitiesClick,
+  onLeaderboardClick,
   onAlpacaBuilderClick,
   onEditClick,
   onReferralsClick,
@@ -20,7 +24,7 @@ const HomeSettings = ({
     <div className={styles.settings}>
       <div className={styles.settingContainer}>
         <div
-          onClick={onAlpacaBuilderClick}
+          onClick={onWalletClick}
           className={classNames(
             styles.singleSettingHolder
           )}
@@ -29,7 +33,7 @@ const HomeSettings = ({
           <p className={styles.settingTitle}>Wallet</p>
         </div>
         <div
-          onClick={onAlpacaBuilderClick}
+          onClick={onGamesClick}
           className={classNames(
             styles.singleSettingHolder
           )}
@@ -38,7 +42,7 @@ const HomeSettings = ({
           <p className={styles.settingTitle}>Games</p>
         </div>
         <div
-          onClick={onAlpacaBuilderClick}
+          onClick={onActivitiesClick}
           className={classNames(
             styles.singleSettingHolder
           )}
@@ -47,7 +51,7 @@ const HomeSettings = ({
           <p className={styles.settingTitle}>Activities</p>
         </div>
         <div
-          onClick={onAlpacaBuilderClick}
+          onClick={onLeaderboardClick}
           className={classNames(
             styles.singleSettingHolder
           )}

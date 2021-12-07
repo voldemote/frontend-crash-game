@@ -434,24 +434,6 @@ const Navbar = ({
           </div>,          
           true
         )}
-
-        <div className={style.linkWrapper}>
-          {renderNavbarLink(`/games`, 'Games', null, 'menu-games')}
-          {renderNavbarLink(
-            `/activities`,
-            'Activities',
-            null,
-            'menu-activities'
-          )}
-          {/* {renderNavbarLink(`/events`, 'Events', null, 'menu-events')} */}
-          {/*{renderNavbarLink(*/}
-          {/*  `/live-events/all`,*/}
-          {/*  'Live Events',*/}
-          {/*  null,*/}
-          {/*  'menu-live-events'*/}
-          {/*)}*/}
-          {/* {isLoggedIn() && renderNavbarLink(`/rewards`, 'Earn', null, 'menu-earn')} */}
-        </div>
       </div>
 
       <div ref={drawerWrapper} className={style.drawerWrapper}>
