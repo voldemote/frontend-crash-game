@@ -21,9 +21,8 @@ const networkName = {
 };
 
 const WithdrawTab = () => {
-  const [currency, setCurrency] = useState(0);
   const [address, setAddress] = useState('');
-  const [tokenValue, setTokenValue] = useState(0);
+  const [tokenAmount, setTokenAmount] = useState(0);
   const [activeTab, setActiveTab] = useState(networkName.polygon);
   const [transaction, setTransaction] = useState(false);
 
@@ -37,11 +36,6 @@ const WithdrawTab = () => {
 
   const selectContent = event => {
     event.target.select();
-  };
-
-  const currencyChange = event => {
-    const inputCurrency = event.target.value > 2000 ? 2000 : event.target.value;
-    setCurrency(inputCurrency);
   };
 
   const addressChange = useCallback(event => {
@@ -150,7 +144,11 @@ const WithdrawTab = () => {
             <div className={styles.labelContainer}>
               <span>Amount</span>
             </div>
-            <input min={1000} max={10000} value={tokenValue} />
+            <input 
+              min={1000} 
+              max={10000} 
+              value={tokenAmount} 
+            />
             <div className={styles.inputRightContainer}>
               <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
               <span>WFAIR</span>
@@ -169,9 +167,9 @@ const WithdrawTab = () => {
           </div>
 
           <button
-            className={classNames(styles.transankContineButton, currency === 0 ? styles.disabled : null)}
+            className={classNames(styles.confirmButton, tokenAmount === 0 && address != null ? styles.disabled : null)}
             // onClick={OnClickConfirmAmount}
-            disabled={currency === 0}
+            disabled={tokenAmount === 0 && address != null}
           >
             Confirm Amount
           </button>

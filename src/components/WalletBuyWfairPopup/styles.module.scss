@@ -56,6 +56,7 @@
   line-height: 18px;
   padding-top: 24px;
   // margin: 0 16px;
+  justify-content: center;
 
   @media (max-width: $screen-md) {
     margin-left: 0px;
@@ -1052,6 +1053,29 @@
       align-items: center;
       img {
         height: 50px;
+      }
+    }
+
+    .confirmButton {
+      background: linear-gradient(
+        180deg,
+        $colorPinkDark 0%,
+        $colorLightDark2 97.4%
+      );
+      margin-top: 16px;
+      border-radius: 30px;
+      border: 1px solid $colorWhite;
+      width: 240px;
+      height: 45px;
+      font-family: $fontRegular;
+      color: $colorWhite;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 18px;
+
+      &.disabled {
+        opacity: 0.6;
       }
     }
   }
