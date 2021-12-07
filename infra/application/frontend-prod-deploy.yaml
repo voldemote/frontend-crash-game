@@ -35,10 +35,10 @@ spec:
               port: 3000
             initialDelaySeconds: 2
             periodSeconds: 3
-          name: frontend
+          name: frontend-dev
           envFrom:
             - configMapRef:
-                name: frontend-config
+                name: frontend-dev-config
             - configMapRef:
                 name: frontend-app-secrets
           ports:

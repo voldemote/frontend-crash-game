@@ -9,6 +9,6 @@ spec:
         - name: frontend-dev
           envFrom:
             - configMapRef:
-                name: frontend-config
+                name: frontend-dev-config
             - configMapRef:
                 name: frontend-app-secrets

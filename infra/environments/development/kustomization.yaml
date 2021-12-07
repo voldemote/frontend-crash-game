@@ -8,7 +8,7 @@ commonLabels:
   environment: staging
 
 configMapGenerator:
-  - name: frontend-config
+  - name: frontend-dev-config
     behavior: merge
     envs:
       - environment
