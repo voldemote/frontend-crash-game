@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from '../styles.module.scss';
 import classNames from 'classnames';
+import moment from 'moment';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   const { wfair, fee, network, startDate, status, txHash } = data;
@@ -30,11 +31,13 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           <div className={styles.messageCenter}>{network}</div>
         </Grid>
         <Grid item xs>
-         <div className={styles.messageCenter}>{startDate}</div>
+         <div className={styles.messageCenter}>
+           {moment(startDate).format('DD.MM.YYYY HH:mm:ss')}
+           </div>
         </Grid>
         <Grid item xs>
          <div 
-          className={classNames(styles.messageLast, styles.messageRight)}
+          className={classNames(styles.messageLast, styles.messageRight, styles.messageTranform)}
           >
             <p >{status}</p>
           </div>
