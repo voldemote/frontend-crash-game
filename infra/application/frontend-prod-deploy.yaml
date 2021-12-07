@@ -15,7 +15,7 @@ spec:
         app: frontend-dev
     spec:
       containers:
-        - image: registry.digitalocean.com/wallfair/frontend_k8s_develop
+        - image: registry.digitalocean.com/wallfair/frontend_k8s
           imagePullPolicy: Always
           resources:
             limits:
