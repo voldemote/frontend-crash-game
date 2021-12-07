@@ -17,41 +17,46 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
         return styles.gameItemLg;
     }
   };
+  const categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[])
 
   return (
     <div className={styles.gamesContainer}>
-      <div className={styles.gamesCategory}>
-        <img src={AlpacaIcon} alt={'Alpaca Icon'} />
-        <h2>{category}</h2>
-      </div>
-      <div className={styles.games}>
-        {games.map((game, index) =>
-          <div
-            className={styles.wrapper}
-            key={`gamecard-${index}-`}
-          >
-            <Link
-              to={`/external-game/${game.GameName}/${game.GameCategory}`}
-              className={classNames(
-                styles.game,
-                styles.gameLink
-              )}
-            >
-              <div
-                key={index}
-                className={classNames(
-                  styles.gameItem,
-                  getGameItemSizeClass()
-                )}
-              >
-                <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName}.png`}/>
-                <p className={styles.title}>{game.GameName}</p>
-              </div>
-            </Link>
-          </div>
-        )}
+     {categories.map(category1 =>
+       <>
+       <div className={styles.gamesCategory}>
+         <img src={AlpacaIcon} alt={'Alpaca Icon'} />
+         <h2>{category1}</h2>
+       </div>
+       <div className={styles.games}>
+         {games.filter(g => g.GameCategory===category1).map((game, index) =>
+           <div
+             className={styles.wrapper}
+             key={`gamecard-${index}-`}
+           >
+             <Link
+               to={`/external-game/${game.TechnicalName?game.TechnicalName: game.GameName.replaceAll(' ', '')}/${game.TechnicalCategory?game.TechnicalCategory: game.GameCategory}`}
+               className={classNames(
+                 styles.game,
+                 styles.gameLink
+               )}
+             >
+               <div
+                 key={index}
+                 className={classNames(
+                   styles.gameItem,
+                   getGameItemSizeClass()
+                 )}
+               >
+                 <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName?game.TechnicalName:game.GameName.replaceAll(' ', '')}.png`}/>
+                 <p className={styles.title}>{game.GameName}</p>
+               </div>
+             </Link>
+           </div>
+         )}
 
-      </div>
+       </div>
+       </>
+     )}
     </div>
   );
 };

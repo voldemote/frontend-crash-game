@@ -272,13 +272,13 @@ export const GAMES = {
 export const EXTERNAL_GAMES = [
   {
     GameCategory: 'JetX',
-    GameName: 'JetX',
-    intro: 'JetX is an innovative game created by SmartSoft. Despite the simplicity of the rules, the game is a very exciting. Once the player places the bet, the Jet starts to fly and the winning coefficient increases according to the altitude of the flight. The player can cash out at any time by clicking the "Collect” button. The win is determined by the multiplication of the bet made and the winning coefficient. If the jet explodes before the player collects the win, player loses. Players can make two parallel bets on one flight. The winnings may vary from 0 to infinity.',
+    GameName: 'XGames',
+    TechnicalName: 'JetX',
+    TechnicalCategory: 'JetX'
   },
   {
     GameCategory: 'Games',
-    GameName: 'Cappadocia',
-    intro: 'Another amazing adventure to the perfect combination of ancient historical and unique cultural heritage. Cappadocia is waiting for you and you should take an opportunity for the breathtaking adventure - to fly over the  Khaki hills with hot-air balloons,  collect unforgettable memories, and unlimited winnings. A colorful journey to this magical place with the magical hot-air balloon is starting from now! This game is very special! Get ready for the new experience!',
+    GameName: 'Cappadocia'
   },
   {
     GameCategory: 'Games',
@@ -368,5 +368,115 @@ export const EXTERNAL_GAMES = [
   {
     GameCategory: 'Slots',
     GameName: 'Evolution',
-  }
+  },
+
+
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'Virtual Roulette',
+    TechnicalName: 'VirtualRoulette',
+    TechnicalCategory: 'Games'
+  },
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'Virtual Burning Roulette',
+    TechnicalName: 'VirtualBurningRoulette',
+    TechnicalCategory: 'Games'
+  },
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'Bonus Roulette',
+    TechnicalName: 'BonusRoulette',
+    TechnicalCategory: 'Games'
+  },
+  /*
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'Personal Roulette',
+    TechnicalName: 'AnimationRoulette',
+    TechnicalCategory: 'GamesLobby'
+  },
+  */
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'SicBo',
+    TechnicalName: 'SicBo',
+    TechnicalCategory: 'Games'
+  },
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'Virtual Classic Roulette',
+    TechnicalName: 'VirtualClassicRoulette',
+    TechnicalCategory: 'Roulette'
+  },
+  {
+    GameCategory: 'Casino Games',
+    GameName: 'BlackJack',
+    TechnicalName: 'Blackjack',
+    TechnicalCategory: 'Games'
+  },
+  /*
+  {
+    GameCategory: 'Keno',
+    GameName: 'French Keno',
+    TechnicalName: 'ClassicKeno',
+    TechnicalCategory: 'Keno'
+  },*/
+  {
+    GameCategory: 'Keno',
+    GameName: 'Russian Keno',
+    TechnicalName: 'RussianKeno',
+    TechnicalCategory: 'Keno'
+  },
+  {
+    GameCategory: 'Keno',
+    GameName: 'VIP Keno',
+    TechnicalName: 'VipKeno',
+    TechnicalCategory: 'Keno'
+  },
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Lucky Seven',
+    TechnicalName: 'LuckySeven',
+    TechnicalCategory: 'Games'
+  },
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Triple Seven',
+    TechnicalName: 'TripleSeven',
+    TechnicalCategory: 'Games'
+  },
+  /*
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Wheel of Light',
+    TechnicalName: 'WheelOfLightDeluxe',
+    TechnicalCategory: 'Games'
+  },
+  */
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Space Lotto',
+    TechnicalName: 'SpaceLotto',
+    TechnicalCategory: 'Games'
+  },
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Zodiac Scratch',
+    TechnicalName: 'ZodiacScratch',
+    TechnicalCategory: 'Games'
+  },
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Gem Stones',
+    TechnicalName: 'GemStones',
+    TechnicalCategory: 'Games'
+  },
+  /*
+  {
+    GameCategory: 'Other Games',
+    GameName: 'Scratch&Win Deluxe',
+    TechnicalName: 'LuckyDoubleDeluxe',
+    TechnicalCategory: 'SweetCandy'
+  }*/
 ];

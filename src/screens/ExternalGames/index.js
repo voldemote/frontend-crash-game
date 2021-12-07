@@ -10,11 +10,15 @@ const ExternalGames = () => {
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
-        {EXTERNAL_GAMES.map((game) =>
+
+        {EXTERNAL_GAMES.map((game) =>{
+console.log("aa", game.GameName.replaceAll(' ', ''))
+          return(
           <Link to={`/external-game/${game.GameName}/${game.GameCategory}`} className={styles.game}>
-            <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName}.png`}/>
+            <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName.replaceAll(' ', '')}.png`}/>
             <p className={styles.title}>{game.GameName}</p>
           </Link>
+        )}
         )}
       </div>
     </BaseContainerWithNavbar>
