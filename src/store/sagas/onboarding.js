@@ -13,6 +13,9 @@ const loadOnboardingStep = function* (action) {
           popupType: PopupTheme.alpacaBuilder,
           options: {
             ...action?.options,
+            saveLabel:"Next",
+            cancelLabel: "Skip",
+            popUpTitle: "Register your Alpaca",
             small: false
           },
         })

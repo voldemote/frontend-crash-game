@@ -27,7 +27,7 @@ export const CATEGORIES = [{
   },{
     name: 'hair',
     path: '/images/alpaca-builder/elements/',
-    styles: ['Hair1', 'Hair2', 'Hair3', 'Hair4', 'Hair6', 'Hair7', 'Hair8', 'Hair9'],
+    styles: ['Hair2', 'Hair3', 'Hair4', 'Hair6', 'Hair7', 'Hair8', 'Hair9'],
     colors:[
       ['#FEFFAD'],['#FFFFFF'],['#FFCECE'],
       ['#B5FFC9'],['#FFADAD'],['#CECBCE'],

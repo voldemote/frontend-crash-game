@@ -62,7 +62,7 @@ const BetsTable = props => {
 };
 
 const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
-  const { details } = data;
+  const { details, game } = data;
   const { match, bets } = details;
 
   const matchDate = match?.created_at;
@@ -83,6 +83,7 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
         maxWidth: true,
         data: {
           details,
+          game
         },
       });
     } else {
@@ -117,7 +118,7 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
         <span>{date}</span>
       </div>
       <div className={styles.content}>
-        <div className={classNames("global-link-style", styles.verificationTool)}><a href={"https://jsfiddle.net/fx1dev/ezx8vp6a/show"} target={"_blank"} rel="noreferrer"><b>Hash Verification Tool</b></a></div>
+        <div className={classNames("global-link-style", styles.verificationTool)}><a href={game.verificationTool} target={"_blank"} rel="noreferrer"><b>{game.name} - Verification Tool</b></a></div>
         <div>
           <b>Crash factor:</b>{' '}
           <span>{roundToTwo(match?.crashfactor).toFixed(2)}</span>

@@ -93,6 +93,8 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           >
             <p>Imprint</p>
           </Link>
+
+          <div id="lang-switcher" />
         </div>
       </div>
     </div>

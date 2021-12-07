@@ -224,34 +224,41 @@ export const GAMES = {
     id: '61817de6a9695acd029ffef3',
     slug: 'pump-dump',
     name: `Pump and Dump`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/alpacasino/7kdomu0n/show'
   },
   elonGame: {
     id: '614381d74f78686665a5bb76',
     slug: 'elon-game',
     name: `Elon Game`,
-    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL
+    url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
+    verificationTool: 'https://jsfiddle.net/alpacasino/bf0vgm9e/show'
   },
   alpacaWheel: {
     id: '618a81ded90fd22298859bc4',
     slug: 'alpaca-wheel',
     name: `Alpaca Wheel`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
-    verificationTool: 'https://jsfiddle.net/fx1dev/ygtor6e4/show'
+    verificationTool: 'https://jsfiddle.net/alpacasino/L04wbsrn/show'
   },
   plinko: {
     id: '618a821bd90fd22298859bc5',
     slug: 'plinko',
     name: `Plinko`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
-    verificationTool: 'https://jsfiddle.net/fx1dev/dgbh7p68/show'
+    verificationTool: 'https://jsfiddle.net/alpacasino/gre6zwo2/show',
+    outcomesByRisk: [
+      [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10],
+      [33, 11, 4, 2, 1.1, 0.6, 0.3, 0.6, 1.1, 2, 4, 11, 33],
+      [170, 24, 8.1, 2, 0.7, 0.2, 0.2, 0.2, 0.7, 2, 8.1, 24, 170]
+    ]
   },
   mines: {
     id: '619cc432121e61d6f06338c9',
     slug: 'mines',
     name: `Mines`,
     url: process.env.REACT_APP_CASINO_GAMES_BACKEND_URL,
-    verificationTool: 'https://jsfiddle.net/fx1dev/w5b6actu/show'
+    verificationTool: 'https://jsfiddle.net/alpacasino/w32sLogm/show'
   },
   cannon: {
     id: '61a09b35121e61d6f06338ca',
