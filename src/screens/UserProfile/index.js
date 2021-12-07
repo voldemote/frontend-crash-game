@@ -73,18 +73,9 @@ const UserProfile = () => {
     switch (tabIndex) {
       case 0:
         return (
-          <>
-            <img
-              src={
-                matchMediaMobile
-                  ? ProfileActivityMobileTemplate1
-                  : ProfileActivityTemplate1
-              }
-              className={styles.templateImage}
-              alt=""
-            />
+          <div className={styles.transactionHistory}>
             <div className={styles.inactivePlaceholder}>Coming soon</div>
-          </>
+          </div>
         );
       case 1:
         return (

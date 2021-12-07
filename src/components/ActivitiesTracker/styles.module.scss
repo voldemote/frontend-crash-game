@@ -10,9 +10,9 @@
 
   .chatMessage {
     position: relative;
-    color: $colorBlack;
+    color: $colorWhite;
     padding: 1rem 20px;
-    background-color: $colorWhite10;
+    background-color: $colorPrimary;
     display: inline-flex;
     display: -ms-inline-flexbox;
     display: -webkit-box;
@@ -73,7 +73,7 @@
     width: 47px;
     justify-content: flex-end;
     text-align: right;
-    color: $colorPinkDark;
+    color: $colorLightYellow;
     font-family: $fontBold;
   }
 
@@ -82,7 +82,7 @@
     font-size: 14px;
     align-items: center;
     //width: 100%;
-    background-color: $colorLightGray1;
+    background-color: $colorPrimary;
   }
 
   .categoryList {
@@ -198,7 +198,7 @@
     margin-top: 0;
 
     > :nth-child(even) {
-      background-color: $colorWhite;
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     &::-webkit-scrollbar {
