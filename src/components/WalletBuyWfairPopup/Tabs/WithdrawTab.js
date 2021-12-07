@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styles from '../styles.module.scss';
+import styles from '../withdraw.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import Dropdown from '../../Dropdown';
 import { ReactComponent as ArrowUp } from '../../../data/icons/arrow_up_icon.svg';
@@ -43,6 +43,11 @@ const WithdrawTab = () => {
     setAddress(inputAddress);
   }, []);
 
+  const tokenAmountChange = useCallback(event => {
+    const inputAmount = event.target.value;
+    setTokenAmount(inputAmount);
+  }, []);
+
   const addressLostFocus = useCallback(event => {
     const inputAddress = event.target.value;
     const regex = /^0x[a-fA-F0-9]{40}$/g;
@@ -56,8 +61,8 @@ const WithdrawTab = () => {
     setAddress(inputAddress);
   }, []);
 
-  // const currencyLostFocus = async event => {
-  //   if (currency > 0) {
+  // const tokenAmountLostFocus = async event => {
+  //   if (tokenAmount > 0) {
   //     const convertCurrencyPayload = {
   //       convertFrom: cryptoShortName[activeTab],
   //       convertTo: 'WFAIR',
@@ -148,6 +153,26 @@ const WithdrawTab = () => {
               min={1000} 
               max={10000} 
               value={tokenAmount} 
+              onChange={tokenAmountChange}
+              // onBlur={tokenAmountLostFocus}
+            />
+            <div className={styles.inputRightContainer}>
+              <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
+              <span>WFAIR</span>
+            </div>
+          </div>
+          <div className={styles.InputLineSeparator}>
+            <img src={InputLineSeparator} alt="input_line_separator" />
+          </div>
+          {/* WFAIR TOKEN */}
+          <div className={styles.cryptoInputContainer}>
+            <div className={styles.labelContainer}>
+              <span>You receive (estimate - fees)</span>
+            </div>
+            <input
+              disabled
+              readOnly
+              value={tokenAmount}
             />
             <div className={styles.inputRightContainer}>
               <WfairIcon className={styles.wfairLogo} onClick={handleWFAIRClick} />
@@ -155,11 +180,11 @@ const WithdrawTab = () => {
             </div>
           </div>
 
-          <div className={styles.calculation}>
+          {/* <div className={styles.calculation}>
             <p>Estimated Transaction Fee: 123 WFAIR </p>
             
             <p><b>You receive (estimate): 111 WFAIR </b></p>
-          </div>
+          </div> */}
 
           {/* Content */}
           <div className={styles.cryptoContent}>
