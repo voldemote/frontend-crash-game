@@ -1,7 +1,25 @@
+import PopupTheme from "components/Popup/PopupTheme";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { PopupActions } from "store/actions/popup";
 import { currentNetwork } from "../../../config/config";
 import styles from "./styles.module.scss";
 
-const Error = ({ setModalOpen, hash }) => {
+const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup }) => {
+
+  const [mainUrl, setMainUrl] = useState()
+  const [mainLabel, setMainLabel] = useState();
+
+
+  useEffect(() => {
+    const updatedNetwork = async () => {
+      const networkSelected = await currentNetwork()
+      setMainUrl(networkSelected.explorer)
+      setMainLabel(networkSelected.label);
+    }
+    updatedNetwork()
+  }, [])
+
   return (
     <div className={styles.promoMessage}>
       <span className={styles.prizeAmount}>{`Oopssssss`}</span>
@@ -9,10 +27,10 @@ const Error = ({ setModalOpen, hash }) => {
       {hash && (
         <>
           <p>
-            Look up on Etherscan <br />
+            Look up on {mainLabel} <br />
             <strong
               onClick={() => {
-                window.open(`${currentNetwork.explorer}tx/${hash}`, "_blank");
+                window.open(`${mainUrl}tx/${hash}`, "_blank");
               }}
             >
               {hash}
@@ -25,6 +43,7 @@ const Error = ({ setModalOpen, hash }) => {
         className={styles.keepGoing}
         onClick={() => {
           setModalOpen(false);
+          showWalletBuyWfairPopup();
         }}
       >
         Close
@@ -33,4 +52,13 @@ const Error = ({ setModalOpen, hash }) => {
   );
 };
 
-export default Error;
+const mapDispatchToProps = dispatch => {
+  return {
+    showWalletBuyWfairPopup: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+    },
+  };
+};
+
+
+export default connect(null, mapDispatchToProps)(Error);

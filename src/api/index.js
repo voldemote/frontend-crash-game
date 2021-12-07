@@ -511,6 +511,24 @@ const updateStatus = (userId, status) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const convertCurrency = ({convertFrom, convertTo, amount}) => {
+  return Api.get(ApiUrls.CONVERT_CURRENCY, {
+    params: {
+      convertFrom,
+      convertTo,
+      amount
+    },
+  })
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
+const getWalletTransactions = () => {
+  return Api.get(ApiUrls.API_USER_WALLET_TRANSACTIONS).catch((error) => {
+    console.log('[API Error] called: getWalletTransactions', error);
+  });
+};
+
 export {
   Api,
   createBet,
@@ -571,4 +589,6 @@ export {
   requestTokens,
   fetchChatMessagesByUser,
   setUserMessageRead,
+  convertCurrency,
+  getWalletTransactions,
 };

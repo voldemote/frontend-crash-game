@@ -314,7 +314,7 @@ const Home = ({
               <div className={styles.leftSection}>
                 <h2>
                   WELCOME TO THE <br />
-                  <span class={styles.pink}>ALPACA</span>SINO
+                  <span className={styles.pink}>ALPACA</span>SINO
                 </h2>
               </div>
             </div>
@@ -360,7 +360,7 @@ const Home = ({
       <div className={styles.alpacadopter}>
         <div className={styles.title}>
           <h2>
-            Become an Early <span class={styles.pink}>ALPACA</span>DOPTER
+            Become an Early <span className={styles.pink}>ALPACA</span>DOPTER
           </h2>
         </div>
         <div className={styles.cardBox}>
@@ -461,7 +461,7 @@ const Home = ({
       <div className={styles.alpacaverse}>
         <div className={styles.title}>
           <h2>
-            Welcome to the <span class={styles.pink}>ALPACA</span>VERSE
+            Welcome to the <span className={styles.pink}>ALPACA</span>VERSE
           </h2>
         </div>
         <div className={styles.cardBox}>

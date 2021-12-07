@@ -354,16 +354,24 @@
       "lockConfigFile": "deployprivSale2Lock"
     }
   ],
-  "token": {
-    "name": "WFAIR",
-    "address": "0x3D01B461c7231E7acB9DeaBDB03D7Ccba074B722",
-    "timestamp": "1632584024280",
-    "deployer": "0x6756766Ad3b2585e541a6f369AF05A31a3836724"
-  },
   "network": {
-    "name": "rinkeby",
-    "chainId": 4,
+    "name": "kovan",
+    "chainId": 42,
     "gas": "auto",
     "gasPrice": "auto"
+  },
+  "default": {
+    "production": {
+      "ethereum": "0xC6065B9fc8171Ad3D29bad510709249681758972",
+      "polygon": "0xb6B5CDF74606181a1b05bfC0B9F17fC2A64B0cD5"
+    },
+    "staging": {
+      "ethereum": "0xe31B4C9245cB1d049f588E389cFc275b9b5a6cf0",
+      "polygon": "0x96f9AFf5f850A46A8ab709f7fb8947C09E5bcc28"
+    },
+    "development": {
+      "ethereum": "0xe31B4C9245cB1d049f588E389cFc275b9b5a6cf0",
+      "polygon": "0x96f9AFf5f850A46A8ab709f7fb8947C09E5bcc28"
+    }
   }
 }

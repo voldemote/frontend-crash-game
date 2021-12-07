@@ -1,30 +1,36 @@
 @import '../../styles/all';
 
 .buttonWrapper {
-  padding: 25px 15px;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
 
   button {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto 15px;
-    width: 100%;
+    // margin: 0 auto 15px;
+    // width: 100%;
     max-width: 460px;
-    height: 60px;
-    border-radius: 10px;
+    height: auto;
+    border-radius: 30px;
     border: 0;
-    font-size: 18px;
+
     font-family: $fontBold;
     cursor: pointer;
-    background: $colorOrangeLight;
+    background: transparent;
+    border: 1px solid $colorPinkDark;
+    padding: 3px 10px;
+    // width: 200px;
+    font-size: 12px;
 
     img {
-      width: 35px;
-      height: 35px;
+      width: 30px;
+      height: 30px;
       &:nth-child(2) {
-        width: 25px;
-        height: 25px;
-        margin: 0 10px;
+        width: 26px;
+        height: 26px;
+        margin: 0 5px 0 0;
       }
     }
   }

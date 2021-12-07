@@ -1,11 +1,11 @@
 import { ethers } from "ethers";
-import { WFAIRAddress } from "../../config/config";
 import WFAIRAbi from "../../config/abi/WFAIRToken.json";
 import SafeCall from "../SafeContractCall";
 
 const WFAIRTransfer = ({
   provider,
   setter,
+  contractAddress,
   tokenAmount,
   to_address: toAddress,
   setBlocked,
@@ -28,18 +28,22 @@ const WFAIRTransfer = ({
     console.log("Gas price in Gwei:", gas_price);
 
     const signer = provider?.getSigner();
-    const wfairToken = new ethers.Contract(WFAIRAddress, WFAIRAbi.abi, signer);
+    const wfairToken = new ethers.Contract(
+      contractAddress,
+      WFAIRAbi.abi,
+      signer
+    );
 
     // .5 => 0.5 || 6. => 6.0
     tokenAmount =
-      tokenAmount.split(".")[0] === ""
+      String(tokenAmount).split(".")[0] === ""
         ? "0" + tokenAmount
-        : tokenAmount.split(".")[1] === ""
+        : String(tokenAmount).split(".")[1] === ""
         ? tokenAmount + "0"
         : tokenAmount;
 
     wfairToken
-      .transfer(toAddress, ethers.utils.parseEther(tokenAmount)) // transfer tokens
+      .transfer(toAddress, ethers.utils.parseEther(String(tokenAmount))) // transfer tokens
       .then((tx) => {
         // Waiting for transaction receipt
         SafeCall({

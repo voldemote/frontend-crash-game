@@ -7,50 +7,17 @@ import { UserActions } from '../../store/actions/user';
 import TabOptions from 'components/TabOptions';
 import Grid from '@material-ui/core/Grid';
 import DepositTab from './Tabs/DepositTab';
+import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
+import BuyWithCrypto from './Tabs/BuyWithCrypto';
 
-const BuyWithFiatTab = () => {
-  const { email } = useSelector(state => state.authentication);
-  let transak = {
-    apiKey: '82fbd931-e077-46d2-87aa-272b72d4962c', // Your API Key
-    environment: 'STAGING', // STAGING/PRODUCTION
-    defaultCryptoCurrency: 'MATIC',
-    cryptoCurrencyCode: 'MATIC',
-    walletAddress: '0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8', // Our backend wallet (should not be changeable)
-    disableWalletAddressForm: true,
-    networks: 'ethereum,mainnet,polygon',
-    themeColor: '7879f1', // App theme color
-    countryCode: 'DE', // INR/GBP
-    email, // Your customer's email address
-    hideMenu: true,
-    // redirectURL: window.location.origin,
-    // hostURL: window.location.origin,
-    partnerCustomerId: '615bf607f04fbb15aa5dd367', // Internal user id (mongo db)
-  };
-
-  const transakQueryParams = Object.keys(transak)
-    .map(key => transak[key] && `${key}=${transak[key]}`)
-    .join('&');
-
-  return (
-    <div className={styles.buyWithFiatTabContainer}>
-      <iframe
-        title="Transak On/Off Ramp Widget (Website)"
-        src={`https://staging-global.transak.com?${transakQueryParams}`}
-        frameBorder="no"
-        allowtransparency="true"
-        allowFullScreen=""
-        className={styles.buyWithFiatTabIframe}
-      ></iframe>
-    </div>
-  );
-};
-
-const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
+const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
-        return <BuyWithFiatTab />;
+        return <BuyWithFiatTab hidePopup={hidePopup}/>;
       case 1:
+        return <BuyWithCrypto />;
+      case 2:
         return <DepositTab />;
       default:
         return <BuyWithFiatTab />;
@@ -60,14 +27,15 @@ const RenderTabs = ({ type = 'BUYWITHFIAT' }) => {
   return selectTabsComponent(type);
 };
 
-const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
+const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
     name: 'BUY WITH FIAT',
     index: 0,
   });
   const tabOptions = [
     { name: 'BUY WITH FIAT', index: 0 },
-    { name: 'DEPOSIT', index: 1 },
+    { name: 'BUY WITH CRYPTO', index: 1 },
+    { name: 'DEPOSIT', index: 2 },
   ];
   const handleSwitchTab = ({ index }) => {
     setActiveTab(tabOptions[index]);
@@ -96,7 +64,7 @@ const RequestTokensPopup = ({ hidePopup, requestTokens }) => {
         </Grid>
       </div>
       <div className={styles.activityContainer}>
-        <RenderTabs type={activeTab.index} />
+        <RenderTabs type={activeTab.index} hidePopup={hidePopup} />
       </div>
     </div>
   );
@@ -121,4 +89,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RequestTokensPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletBuyWfairPopup);

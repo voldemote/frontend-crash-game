@@ -45,6 +45,8 @@ import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
 import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
+import TransakSuccess from "../TransakSuccess";
+import TxModal from 'components/TxModal';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -237,6 +239,10 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
 
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
+      case PopupTheme.transakSuccess:
+        return <TransakSuccess />;
+      case PopupTheme.txModal:
+        return <TxModal />;
     }
 
     return null;

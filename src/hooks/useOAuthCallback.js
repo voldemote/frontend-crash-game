@@ -4,10 +4,10 @@ import { useParams, useLocation, useHistory } from "react-router-dom";
 import { AuthenticationActions } from "store/actions/authentication";
 
 const providerActionMap = {
-  google: ({ code }) =>
-    AuthenticationActions.loginExternal({ provider: 'google', code }),
-  facebook: ({ code }) =>
-    AuthenticationActions.loginExternal({ provider: 'facebook', code }),
+  google: (payload) =>
+    AuthenticationActions.loginExternal({ provider: 'google', ...payload }),
+  facebook: (payload) =>
+    AuthenticationActions.loginExternal({ provider: 'facebook', ...payload }),
 };
 
 const useOAuthCallback = () => {
@@ -22,17 +22,14 @@ const useOAuthCallback = () => {
     if(!provider) return;
     const code = params.get('code');
     const error = params.get('error');
+    const { ref: refParam } = JSON.parse(params.get('state'));
+    const ref = refParam === 'null' ? null : refParam;
     
-    // if(process.env.REACT_APP_SHOW_UPCOMING_FEATURES !== 'true') {
-    //   return history.push('/');
-    // }
-
     if(error) {
       dispatch(AuthenticationActions.loginExternalFail({ message: 'Something went wrong.'}));
       history.push('/');
     } else if(code) {
-      const refLocalStorage = localStorage.getItem('urlParam_ref');
-      const payload = { code, ref:refLocalStorage };
+      const payload = { code, ref };
       dispatch(
         providerActionMap[provider](payload)
       );

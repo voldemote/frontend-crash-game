@@ -1,3 +1,4 @@
+import Text from "helper/Text";
 import { isMobile } from "react-device-detect";
 
 export const numberWithCommas = (x) => {
@@ -23,10 +24,16 @@ export const calculateTimeLeft = (date) => {
   return timeLeft;
 };
 
-export const shortenAddress = (account) => {
-  if (isMobile)
-    return account?.substr(0, 4) + "..." + account?.substr(account?.length - 2);
-  return account?.substr(0, 6) + "..." + account?.substr(account?.length - 4);
+export const shortenAddress = (account, isElement = true) => {
+  const shortened = isMobile
+    ? account?.substr(0, 4) + "..." + account?.substr(account?.length - 2)
+    : account?.substr(0, 6) + "..." + account?.substr(account?.length - 4);
+
+  if(!isElement) {
+    return shortened;
+  }
+
+  return <button className="copyButton" onClick={() => Text.toClipboard(account)} title={`Click to copy! - ${account}`}>{shortened}</button>;
 };
 
 export const openExternalLink = (link, target = "_blank") => {
