@@ -585,7 +585,6 @@ const Home = ({
 
   return (
     <BaseContainerWithNavbar
-      home
       loggedIn={isLoggedIn()}
       >
       {/* {renderHeadline()} */}
