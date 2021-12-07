@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: frontend-dev
   labels:
-    app: frontend
+    app: frontend-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: frontend-dev
   template:
     metadata:
       labels:
-        app: frontend
+        app: frontend-dev
     spec:
       containers:
-        - image: registry.digitalocean.com/wallfair/frontend_k8s
+        - image: registry.digitalocean.com/wallfair/frontend_k8s_develop
           imagePullPolicy: Always
           resources:
             limits:
