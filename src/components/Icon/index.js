@@ -36,6 +36,7 @@ import { ReactComponent as IconDeleteInput } from '../../data/icons/delete-input
 import { ReactComponent as IconDeposit } from '../../data/icons/deposit.svg';
 import { ReactComponent as IconEdit } from '../../data/icons/edit.svg';
 import { ReactComponent as IconGame } from '../../data/icons/game.svg';
+import { ReactComponent as IconHamburgerMenu } from '../../data/icons/hamburger-menu.svg';
 import { ReactComponent as IconHome } from '../../data/icons/home.svg';
 import { ReactComponent as IconHourglass } from '../../data/icons/hourglass.svg';
 import { ReactComponent as IconInfo } from '../../data/icons/info.svg';
@@ -126,6 +127,7 @@ const Icon = ({
       [IconType.cross]: <IconCross />,
       [IconType.deleteInput]: <IconDeleteInput />,
       [IconType.deposit]: <IconDeposit />,
+      [IconType.hamburgerMenu]: <IconHamburgerMenu />,
       [IconType.home]: <IconHome />,
       [IconType.logoSmall]: <IconLogoSmall />,
       [IconType.logout]: <IconLogout />,

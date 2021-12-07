@@ -36,6 +36,7 @@ export default {
   facebook: 'facebook',
   game: 'game',
   google: 'google',
+  hamburgerMenu: 'hamburgerMenu',
   home: 'home',
   hourglass: 'hourglass',
   info: 'info',

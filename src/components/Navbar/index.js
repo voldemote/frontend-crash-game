@@ -229,6 +229,21 @@ const Navbar = ({
       </div>
     );
 
+    const hamburgerMenuBtn = (
+      <div
+        role="button"
+        className={classNames(
+          style.menuContainer
+        )}
+        onClick={() => toggleOpenDrawer(drawers.profile)}
+      >
+        <Icon
+          className={style.downCaret}
+          iconType={'hamburgerMenu'}
+        />
+      </div>
+    );
+
     const joinBtn = (
       <div className={style.navbarItems}>
         <Button
@@ -255,8 +270,9 @@ const Navbar = ({
         <div className={style.navbarItems}>
           {leaderboardBtn}
           {walletBtn}
-          {notificationsBtn}
-          {profileBtn}
+          {/* {notificationsBtn} */}
+          {/* {profileBtn} */}
+          {hamburgerMenuBtn}
         </div>
       );
     } else {
