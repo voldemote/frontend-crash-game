@@ -43,13 +43,20 @@ export const IS_IN_IFRAME = window.parent !== window;
 export const SWITCH_NETWORKS = getNetworkOnEnviroment();
 export const NETWORK_TYPES = netWorkTypes;
 
-// export const SWITCH_NETWORKS =
-//   environment !== 'staging'
-//     ? {
-//         '0x89': 'Polygon',
-//         '0x1': 'Ethereum',
-//       }
-//     : {
-//         '0x13881': 'Polygon', //Mumbai
-//         '0x2a': 'Ethereum', //Kovan
-//       };
+
+export const EXPLORERS = {
+  staging: {
+    ETH: 'https://kovan.etherscan.io/tx/',
+    MATIC: 'https://mumbai.polygonscan.com/tx/',
+  },
+  production: {
+    ETH: 'https://etherscan.io/tx/',
+    MATIC: 'https://polygonscan.com/tx/',
+  }
+}
+
+export const getTransactionURL = (network, txHash) => {
+  const environment = process.env.REACT_APP_ENVIRONMENT;
+  return `${EXPLORERS[environment][network]}${txHash}`;
+}
+
