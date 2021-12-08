@@ -4,7 +4,7 @@
   padding: 30px 0;
 
   @media (max-width: $screen-xs) {
-    padding: 0 15px 15px;
+    padding: 0;
   }
 }
 
@@ -81,10 +81,10 @@
 
   .wrapper {
     position: relative;
-    height: 310px;
+    height: 150px;
     overflow: hidden;
     border-radius: 20px;
-    width: 310px;
+    width: 150px;
     // margin-right: 10px;
     margin-bottom: 20px;
 
