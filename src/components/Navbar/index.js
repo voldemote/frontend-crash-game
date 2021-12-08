@@ -243,7 +243,7 @@ const Navbar = ({
       >
         <Icon
           className={style.menu}
-          iconType={'hamburgerMenu'}
+          iconType={isOpen(drawers.profile) || isOpen(drawers.leaderboard) ? 'close' : 'hamburgerMenu'}
         />
       </div>
     );
@@ -311,11 +311,6 @@ const Navbar = ({
         )}
       >
         <div className={classNames(style.drawerContent)}>
-          <Icon
-            iconType={'cross'}
-            onClick={closeDrawers}
-            className={style.closeLeaderboard}
-          />
           <div className={style.leaderboardHeadingWrapper}>
             <Icon
               iconType={'leaderboard'}

@@ -103,13 +103,6 @@ const HomeSettings = ({
           </div>
         </>
         )}
-        <div className={styles.closeProfileContainer} onClick={onCloseProfile}>
-          <Icon
-            iconTheme={IconTheme.white}
-            iconType={IconType.cross}
-            className={styles.closeProfile}
-          />
-        </div>
       </div>
     </div>
   );
