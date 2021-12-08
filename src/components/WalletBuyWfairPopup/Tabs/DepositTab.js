@@ -22,6 +22,7 @@ import { WallfairActions } from 'store/actions/wallfair';
 import useWeb3Network from '../../../hooks/useWeb3Network';
 import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
+import { numberWithCommas } from 'utils/common';
 // import AddTokens from 'components/AddTokens';
 
 const DepositTab = ({ user, resetState }) => {
@@ -189,15 +190,18 @@ const DepositTab = ({ user, resetState }) => {
           tokenAreaOpen && account && <Loader />
         ) : (
            tokenAreaOpen && account && 
+           <>
+           <div className={styles.balanceContainer}>
+            <span>Current balance: {numberWithCommas(parseFloat(balance).toFixed(2))} {'WFAIR'}</span>
+          </div>
           <TokenTransfer
             provider={library}
-            // hash={hash}
-            // setter={setHash}
             showCancel={false}
             balance={balance}
             tranferAddress={walletAddress}
             contractAddress={currentNetwork?.contractAddress}
           />
+          </>
         )}
         {/* {!!account && (<p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not

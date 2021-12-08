@@ -1,23 +1,46 @@
 @import '../../../styles/all';
 
 .promoMessage {
-  flex-basis: 50%;
   display: flex;
-  flex-flow: column;
+  align-items: center;
   justify-content: center;
-  position: relative;
-  text-align: center;
-  color: $colorBlack;
-  padding: 40px;
+  flex-direction: column;
+  padding: 35px;
 
-  @media screen and (min-width: $screen-md) {
-    &::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 80%;
+  .logo {
+    height: 60px;
+  }
+
+  .title {
+    font-family: $fontBold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .subtitle {
+    font-family: $fontRegular;
+    font-size: 14px;
+  }
+
+  .content {
+    margin: 100px 0;
+    text-align: center;
+    color: $colorBlack;
+
+    @media (max-width: $screen-sm) {
+      margin: 50px 0;
+    }
+
+    .message {
+      font-family: $fontBold;
+      font-size: 24px;
+    }
+
+    .info {
+      font-size: 12px;
+      color: $colorPrimary;
+      opacity: 0.4;
+      padding-top: 10px;
     }
   }
 

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { PopupActions } from "store/actions/popup";
 import { currentNetwork } from "../../../config/config";
 import styles from "./styles.module.scss";
+import WfairLogo from '../../../data/images/wfair-logo-splash.png';
+
 
 const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup }) => {
 
@@ -22,12 +24,22 @@ const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup }) => {
 
   return (
     <div className={styles.promoMessage}>
-      <span className={styles.prizeAmount}>{`Oopssssss`}</span>
-      <p>{`Your transaction has failed.`}</p>
+      <span>
+        <img src={WfairLogo} className={styles.logo} alt="Wallfair logo" />
+      </span>
+      <div className={styles.title}>Transaction failed</div>
+      <div className={styles.content}>
+        <div className={styles.message}>
+          Your transaction failed.
+        </div>
+        <div className={styles.info}>
+          Please try again or contact our support team in case you need help.
+        </div>
+      </div>
       {hash && (
         <>
           <p>
-            Look up on {mainLabel} <br />
+            You can check details on Polygonscan or Etherscan<br />
             <strong
               onClick={() => {
                 window.open(`${mainUrl}tx/${hash}`, "_blank");

@@ -209,7 +209,6 @@ const WithdrawTab = () => {
               onBlur={addressLostFocus}
               onClick={selectContent}
               placeholder="Add your wallet address (0x...)"
-              onClick={selectContent}
             />
           </div>
 

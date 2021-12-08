@@ -21,6 +21,11 @@ const cryptoShortName = {
   ethereum: `ETH`,
   litecoin: `LTC`,
 };
+const cryptoRegexFormat = {
+  bitcoin: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/g,
+  ethereum: /^0x[a-fA-F0-9]{40}$/g,
+  litecoin: /^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/g,
+};
 
 const tokenAddress = {
   bitcoin: process.env.REACT_APP_DEPOSIT_WALLET_BITCOIN,
@@ -44,11 +49,13 @@ const BuyWithCrypto = () => {
   const [tokenValue, setTokenValue] = useState(0);
   const [activeTab, setActiveTab] = useState('bitcoin');
   const [address, setAddress] = useState('');
+  const [cryptoAddress, setCryptoAddress] = useState('');
   const [url, setUrl] = useState('');
   const [transaction, setTransaction] = useState(false);
 
   useEffect(() => {
     currencyLostFocus();
+    setCryptoAddress('')
   }, [activeTab, selectedCurrency]);
 
   const handleWFAIRClick = useCallback(async () => {
@@ -91,6 +98,25 @@ const BuyWithCrypto = () => {
     setAddress(tokenAddress[activeTab]);
     setTransaction(!transaction);
   };
+
+  const cryptoAddressChange = useCallback(event => {
+  const inputAddress = event.target.value;
+  setCryptoAddress(inputAddress);
+}, []);
+
+const cryptoAddressLostFocus = useCallback(event => {
+  const inputAddress = event.target.value;
+  const regex = cryptoRegexFormat[activeTab];
+  const valid = inputAddress.match(regex);
+
+  if (!valid) {
+    console.error(`wrong 0x ${activeTab} address format`);
+    return;
+  }
+
+  setCryptoAddress(inputAddress);
+}, []);
+
 
   return (
     <div className={styles.buyWithCryptoContainer}>
@@ -135,6 +161,23 @@ const BuyWithCrypto = () => {
 
           {/* Crypto Calculator */}
           <div className={styles.cryptoCalculatorContainer}>
+            {/* Crypto Address */}
+            <div className={styles.addressInputContainer}>
+            <div className={styles.labelContainer}>
+              <span>
+                {activeTab} Wallet Address
+              </span>
+            </div>
+            <input
+              type="text"
+              value={cryptoAddress}
+              onChange={cryptoAddressChange}
+              onBlur={cryptoAddressLostFocus}
+              onClick={selectContent}
+              placeholder="Add your wallet address (0x...)"
+            />
+          </div>
+
             {/* Currency */}
             <div className={styles.cryptoInputContiner}>
               <div className={styles.labelContainer}>
