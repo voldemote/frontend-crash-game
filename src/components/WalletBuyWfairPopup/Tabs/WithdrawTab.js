@@ -37,13 +37,14 @@ const WithdrawTab = () => {
     tokenAmountLostFocus();
   }, [activeNetwork]);
 
-  const renderSuccess = ({withdrawAmount, fiatEquivalence, amountFees}) => {
+  const renderSuccess = ({withdrawAmount, fiatEquivalence, amountFees, calculatedAmount}) => {
     return (
       <WithdrawalSuccessPopup
         amountReceived={withdrawAmount}
         currency={'WFAIR'}
-        wfairAmount={withdrawAmount}
+        wfairAmount={tokenAmount}
         fiatEquivalence={fiatEquivalence}
+        calculatedAmount={calculatedAmount}
         fee={amountFees}
         network={activeNetwork === 'MATIC' ? 'POLYGON' : 'ETHEREUM'}
       />
@@ -143,9 +144,13 @@ const WithdrawTab = () => {
       }
 
       const { withdraw_amount:withdrawAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
+
+      const calculatedAmount = parseFloat(withdrawAmount) - parseFloat(amountFees);
+
       setTransaction(true);
       setResponseProps({
         withdrawAmount,
+        calculatedAmount,
         amountFees,
         fiatEquivalence,
         network,

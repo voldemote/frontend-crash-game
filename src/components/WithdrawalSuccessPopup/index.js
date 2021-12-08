@@ -6,11 +6,14 @@ const WithdrawalSuccessPopup = ({
   status,
   network,
   amountReceived,
+  calculatedAmount,
   currency,
   wfairAmount,
   fiatEquivalence,
   fee
 }) => {
+
+  
 
   return (
     <div className={styles.withdrawalSuccess}>
@@ -19,7 +22,7 @@ const WithdrawalSuccessPopup = ({
       {/* <div className={styles.subtitle}>Withdrawal Successfully Processed</div> */}
       <div className={styles.content}>
         <div className={styles.message}>
-          You will receive {Number(amountReceived).toFixed(2)} {currency} on your Wallet
+          You will receive {Number(calculatedAmount).toFixed(2)} {currency} on your Wallet
         </div>
         <div className={styles.info}>
           Be aware that the transaction might take 2-5 minutes
@@ -35,12 +38,16 @@ const WithdrawalSuccessPopup = ({
           <div className={styles.value}>{wfairAmount} WFAIR</div>
         </div>
         <div className={styles.row}>
-          <div className={styles.key}>Equivalent in USD</div>
-          <div className={styles.value}>${fiatEquivalence}</div>
-        </div>
-        <div className={styles.row}>
           <div className={styles.key}>Transaction fee</div>
           <div className={styles.value}>{Number(fee).toFixed(2)}</div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.key}>You receive</div>
+          <div className={styles.value}>{Number(calculatedAmount).toFixed(2)}</div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.key}>Estimated value in USD</div>
+          <div className={styles.value}>${fiatEquivalence}</div>
         </div>
       </div>
 

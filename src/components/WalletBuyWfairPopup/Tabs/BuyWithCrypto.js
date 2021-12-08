@@ -245,7 +245,7 @@ const BuyWithCrypto = () => {
               </a>
             </p>
             <div className={styles.qrCodeImg}>
-              <QRCode value={address} size={220} />
+              {address && <QRCode value={address} size={220} />}
             </div>
             {/* <div className={styles.transferSectionCopy}>
               <p>Send Transaction URL</p>
