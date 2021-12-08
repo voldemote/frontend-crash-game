@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import AlpacaBuilder from 'components/AlpacaBuilder';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
+import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
 
 const MainMenu = ({
   opened,
@@ -118,7 +119,10 @@ const MainMenu = ({
   };
 
   const onAlpacaBuilderClick = () => {
-    showPopup(PopupTheme.alpacaBuilder);
+    showPopup(PopupTheme.alpacaBuilder, {
+      userId: user.userId,
+      alpacaBuilderProps: {...alpacaBuilderProps}
+    });
   };
 
   const handleUsernameDebounceAction = useMemo(() => {
@@ -332,6 +336,15 @@ const MainMenu = ({
             props={alpacaBuilderProps}/>
         </div>
       </div>
+    );
+  };
+
+  const renderAlpacaBuilderPopup = () => {
+    return (
+        <AlpacaBuilderPopup
+          onCancel={() => handleAlpacaBuilderVisible(!alpacaBuilderVisible)}
+          onExport={data => handleAlpacaBuilderExport(data)}
+          props={alpacaBuilderProps}/>
     );
   };
 

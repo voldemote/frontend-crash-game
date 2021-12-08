@@ -30,10 +30,6 @@ export class AudioController {
           loop: true,
         },
         bgm2: {
-          url: '/sounds/plinko/plinko_bgm.mp3',
-          loop: true,
-        },
-        bgm_cannon: {
           url: '/sounds/cannon/bgm.mp3',
           loop: true,
         },
@@ -128,22 +124,13 @@ export class AudioController {
   }
 
   startBgm() {
-    const diff = this.elapsed / 1000;
-    if (this.bgmIndex === 0) {
-      this.playSound('bgm0', true);
-    }else if (this.bgmIndex === 1) {
-      this.playSound('bgm1', true);
-    }else if (this.bgmIndex === 2) {
-      this.playSound('bgm2', true);
-    } else if (this.bgmIndex === 3) {
-      this.playSound('bgm_cannon', true);
-    }
+    this.playSound(`bgm${this.bgmIndex}`, true);
   }
 
   stopBgm() {
     this.stopSound(`bgm${this.bgmIndex}`);
-    this.stopSound('flying');
   }
+
   playTick() {
     this.playSound('tick', false, 1);
   }
@@ -158,19 +145,18 @@ export class AudioController {
 
   playWinSound() {
     this.playSound('cashout', false, 1);
-
   }
 
   playCannonSound() {
     this.playSound('cannon', false, 1);
-
   }
+
   playCrashSound() {
     this.playSound('crash', false, 1);
-
   }
 
   playBetSound() {
     this.playSound('placebet');
   }
+
 }

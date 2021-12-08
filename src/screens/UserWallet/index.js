@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import { useWeb3React } from '@web3-react/core';
 
 import Loader from 'components/Loader/Loader';
-import {WallfairActions} from 'store/actions/wallfair';
+import { WallfairActions } from 'store/actions/wallfair';
 import { TransactionActions } from 'store/actions/transaction';
 
 const UserWallet = ({
@@ -39,7 +39,6 @@ const UserWallet = ({
   isTransactionsFetchError,
   transactions,
 }) => {
-
   const { active, library, account, chainId } = useWeb3React();
 
   const { balance, currency } = useSelector(selectUser);
@@ -53,6 +52,13 @@ const UserWallet = ({
     WITHDRAWALS: transactions.withdrawal || [],
     ONRAMP: transactions.onramp || [],
     BETS: myBetsData ? myBetsData : [],
+  };
+
+  const activityDataMap = {
+    'FIAT DEPOSITS': 'ONRAMP',
+    'CRYPTO DEPOSITS': 'DEPOSITS',
+    WITHDRAWALS: 'WITHDRAWALS',
+    BETS: 'BETS',
   };
 
   const [activityTab, setActivityTab] = useState({
@@ -85,14 +91,13 @@ const UserWallet = ({
     }
   }, [connected, refreshMyBetsData, userId]);
 
-  
   useEffect(() => {
     fetchWalletTransactions();
   }, [fetchWalletTransactions]);
 
   useEffect(() => {
-    isTransactionsFetchError?setStakesLoading(false):setStakesLoading(true);
-  },[isTransactionsFetchError])
+    isTransactionsFetchError ? setStakesLoading(false) : setStakesLoading(true);
+  }, [isTransactionsFetchError]);
 
   const renderCategoriesAndLeaderboard = () => {
     return (
@@ -103,13 +108,14 @@ const UserWallet = ({
               options={activityTabOptions ? activityTabOptions : []}
               className={styles.tabLayout}
             >
-              {(option) => (
+              {option => (
                 <div
-                  className={
+                  className={classNames(
+                    styles.headerTables,
                     option.index === activityTab.index
                       ? styles.tabItemSelected
                       : styles.tabItem
-                  }
+                  )}
                   onClick={() => handleActivitySwitchTab(option)}
                 >
                   {option.name}
@@ -122,7 +128,7 @@ const UserWallet = ({
                 <Loader />
               ) : (
                 <UserWalletTables
-                  type={activityTab.name}
+                  type={activityDataMap[activityTab.name]}
                   rowData={activityData}
                   isError={isTransactionsFetchError}
                 />
@@ -145,8 +151,8 @@ const UserWallet = ({
     }
     return (
       <div className={styles.currentBalanceSection}>
-        <Grid container alignContent="center">
-          <Grid container justifyContent="flex-end" item lg={6} md={6} xs={12}>
+        <Grid container alignContent="center" justifyContent="center">
+          <Grid className={styles.balanceCard} container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
               <p className={styles.currentbalanceHeading}>Current balance</p>
               <p
@@ -161,6 +167,7 @@ const UserWallet = ({
           </Grid>
 
           <Grid
+            className={styles.balanceCard}
             container
             justifyContent="flex-start"
             item
@@ -204,7 +211,6 @@ const UserWallet = ({
   );
 };
 
-
 const mapStateToProps = state => {
   return {
     tags: state.event.tags,
@@ -234,8 +240,7 @@ const mapDispatchToProps = dispatch => {
           data: [...amounts, ...timestamps],
         })
       ),
-    refreshMyBetsData: (data) =>
-      dispatch(RosiGameActions.fetchMyBetsData(data)),
+    refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
@@ -243,8 +248,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(PopupActions.show({ popupType: PopupTheme.requestTokens }));
     },
     fetchWalletTransactions: () => {
-      dispatch(TransactionActions.fetchWalletTransactions())
-    }
+      dispatch(TransactionActions.fetchWalletTransactions());
+    },
   };
 };
 

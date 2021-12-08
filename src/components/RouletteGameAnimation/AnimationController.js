@@ -158,6 +158,7 @@ class AnimationController {
     let sections = sectionsArray[this.risk-1]
     this.r = (Math.min(this.canvas.width, this.canvas.height) / 2.25) | 0;
     this.wheels = [];
+    img.src = '../images/roulette-game/alpaca-' + (this.risk) + '.svg';
     for (let selected = 0; selected < sections.length; selected++) {
       let c = document.createElement('canvas');
       c.id = selected;
@@ -271,7 +272,6 @@ class AnimationController {
       cx - this.frame.width / 2,
       cy - this.frame.height / 2
     );
-    img.src = '../images/roulette-game/alpaca-' + (this.risk) + '.svg';
 
     if(!play) {
       img.onload = function () {

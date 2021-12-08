@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import lifecycle from 'page-lifecycle'
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
@@ -14,6 +15,7 @@ import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
+import { UserActions } from '../../store/actions/user';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 import Share from '../../components/Share';
@@ -37,12 +39,14 @@ import PumpDumpAnimation from '../../components/PumpDumpAnimation';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import TabOptions from 'components/TabOptions';
 
+
 const RosiGame = ({
   showPopup,
   connected,
   userId,
   path,
   token,
+  updateUserBalance
 }) => {
   const dispatch = useDispatch();
   const {
@@ -54,7 +58,8 @@ const RosiGame = ({
   } = useRosiData();
   const { slug } = useParams();
   const [audio, setAudio] = useState(null);
-  const [flag, setFlag] = useState(false)
+  const [flag, setFlag] = useState(false);
+  const [visibility, setVisibility] = useState('visible');
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
   const chatTabOptions = [{ name: 'CHAT', index: 0 }];
@@ -64,7 +69,7 @@ const RosiGame = ({
   const game = Object.values(GAMES).find(g => g.slug === slug);
   const GAME_TYPE_ID = game.id;
   const Api = new GameApi(game.url, token, game.id);
-  useEffect(() => {
+  function getCurrentGameState(){
     Api.getCurrentGameInfo()
       .then(response => {
         dispatch(
@@ -77,8 +82,32 @@ const RosiGame = ({
       .catch(error => {
         dispatch(AlertActions.showError(error.message));
       });
+  }
+  useEffect(() => {
+    getCurrentGameState()
     dispatch(ChatActions.fetchByRoom({ roomId: GAME_TYPE_ID }));
   }, [dispatch, connected]);
+
+  /*
+  * When we switch from inactive tab to active
+  * request game state
+  * */
+
+  useEffect(() => {
+    const handler = (event) => {
+      if(document.visibilityState === 'visible'){
+        if((event.oldState === 'hidden' || event.oldState === 'frozen')
+          && (event.newState === 'active' || event.newState === 'passive')){
+          getCurrentGameState()
+        }
+        setVisibility(event.newState)
+      }
+    };
+    lifecycle.addEventListener('statechange', handler);
+    return () => {
+      lifecycle.removeEventListener('statechange', handler);
+    }
+  }, [])
 
   //Bets state update interval
   useEffect(() => {
@@ -117,7 +146,6 @@ const RosiGame = ({
     if (!payload) return;
     try {
       const result = await Api.createTrade(payload);
-      console.log("result", result)
       if (slug === GAMES['elonGame'].slug) {
         trackElonPlaceBet({ amount: payload.amount, multiplier: crashFactor, autobet: payload.autobet ? 1 : 0 });
       } else if (slug === GAMES['pumpDump'].slug) {
@@ -125,6 +153,7 @@ const RosiGame = ({
       }
       dispatch(RosiGameActions.setUserBet(payload));
       setFlag(false)
+      updateUserBalance(userId);
       return result;
     } catch (e) {
       dispatch(
@@ -148,7 +177,8 @@ const RosiGame = ({
         }
 
         dispatch(RosiGameActions.cancelBet({ userId }));
-        setFlag(false)
+        setFlag(false);
+        updateUserBalance(userId);
         return true
       })
       .catch(() => {
@@ -185,9 +215,8 @@ const RosiGame = ({
           accumulated: autobet?.accumulated,
         });
       }
-
+      updateUserBalance(userId);
       AlertActions.showSuccess(JSON.stringify(response));
-
       return response;
     } catch (e) {
       dispatch(
@@ -253,7 +282,7 @@ const RosiGame = ({
   );
 
   const renderAnimation = () => {
-    if (slug === GAMES['elonGame'].slug) {
+    if (slug === GAMES['elonGame'].slug && visibility !== 'frozen') {
       return (
         <GameAnimation
           inGameBets={inGameBets}
@@ -320,7 +349,7 @@ const RosiGame = ({
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes lastCrashes={lastCrashes} gameTypeId={GAME_TYPE_ID}/>
+              <LastCrashes lastCrashes={lastCrashes} game={game}/>
               {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>
@@ -372,6 +401,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    updateUserBalance: (userId) => {
+      dispatch(UserActions.fetch({ userId, forceFetch: true }));
     },
   };
 };
