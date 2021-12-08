@@ -11,28 +11,17 @@ import Button from '../../components/Button';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
-import Routes from 'constants/Routes';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
 import { GeneralActions } from '../../store/actions/general';
-import AuthenticationType from '../../components/Authentication/AuthenticationType';
-import PopupTheme from '../../components/Popup/PopupTheme';
-import WelceomBg from '../../data/images/home/welcome-bg.png';
-import ChipOne from '../../data/images/home/chip-one.png';
-import ChipTwo from '../../data/images/home/chip-two.png';
-import ChipThree from '../../data/images/home/chip-three.png';
-import medalCoin from '../../data/icons/medal-coin.png';
-import SlotGameIconBg from '../../data/images/house-games/title.svg';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import EloneWithPhone from '../../data/images/elon-with-phone.png';
-import alpacaActivities from '../../data/images/alpaca-activities.svg';
-import gameCard1 from '../../data/images/house-games/card-1.png';
-import gameCard5 from '../../data/images/house-games/card-5.png';
-import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
-import gameCard4 from '../../data/images/house-games/card-4.png';
+import gameCardWheel from '../../data/images/house-games/card-wheel.png';
+import gameCardElon from '../../data/images/house-games/card-elon.png';
+import gameCardPlinko from '../../data/images/house-games/card-plinko.png';
 import gameCardMines from '../../data/images/house-games/card-mines.png';
 import IceCreamImg from '../../data/images/alpaca-verse/ice-cream.png';
 import SocialImg from '../../data/images/alpaca-verse/social-img.png';
@@ -163,22 +152,6 @@ const Home = ({
     );
   };
 
-  const renderRosiBanner = () => {
-    return (
-      <div className={styles.elonGame}>
-        <div className={styles.title}>
-          <img src={SlotGameIconBg} alt={'Visit slot games'} />
-          <h2>House Games</h2>
-        </div>
-        <Link data-tracking-id="home-play-elon" to={Routes.elonGame}>
-          <div className={styles.banner}>
-            <div className={styles.title}>Play the Elon Game</div>
-            <button className={styles.button}>SIGN UP!</button>
-          </div>
-        </Link>
-      </div>
-    );
-  };
   const renderHowTokenWorks = () => {
     return (
       <div className={styles.howTokenWorks}>
@@ -250,8 +223,7 @@ const Home = ({
   const renderActivities = () => {
     return (
       <div className={styles.activities}>
-        <div className={styles.title}>
-          <img src={alpacaActivities} alt="" />
+        <div className={styles.title}>          
           <h2>Activities</h2>
         </div>
         <Grid item xs={12}>
@@ -267,16 +239,14 @@ const Home = ({
     );
   };
 
-  const renderGamesCards = () => {
+  const renderHouseGames = () => {
     return (
       <div className={styles.gameCards}>
+        <div className={styles.title}>          
+          <h2>House Games</h2>
+        </div>
         <div className={styles.cardBox}>
           <Grid container>
-            <Grid item lg={3} md={6} xs={12}>
-              <Link to={'/games/pump-dump'}>
-                <img src={gameCardPumpDump} alt="" />
-              </Link>
-            </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
@@ -284,17 +254,19 @@ const Home = ({
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/plinko'}>
-                <img src={gameCard4} alt="" />
+                <img src={gameCardPlinko} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={6} xs={12}>
+              <Link to={'/games/elon'}>
+                <img src={gameCardElon} alt="" />
               </Link>
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/alpaca-wheel'}>
-                <img src={gameCard1} alt="" />
+                <img src={gameCardWheel} alt="" />
               </Link>
             </Grid>
-            {/* <Grid item lg={3} md={6} xs={12}>
-              <img src={gameCard5} alt="" />
-            </Grid> */}
           </Grid>
         </div>
       </div>
@@ -581,8 +553,6 @@ const Home = ({
     );
   };
 
-  const renderStatusTableSection = () => {};
-
   return (
     <BaseContainerWithNavbar
       home
@@ -593,8 +563,7 @@ const Home = ({
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
-          {isLoggedIn() && renderRosiBanner()}
-          {isLoggedIn() && renderGamesCards()}
+          {isLoggedIn() && renderHouseGames()}
           {isLoggedIn() && renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}

@@ -148,7 +148,7 @@ const InputBox = ({
           className={styles.inputDeleteIconContainer}
           onClick={copyToClipboard}
         >
-          <Icon iconTheme={IconTheme.white} iconType={IconType.copy} />
+          <Icon iconTheme={IconTheme.favorite} iconType={IconType.copy} />
         </div>
       );
     }

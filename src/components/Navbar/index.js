@@ -251,13 +251,13 @@ const Navbar = ({
     const joinBtn = (
       <div className={style.navbarItems}>
         <span
-          className={style.loginButton}          
+          className={style.loginButton}
           onClick={() => showPopupForLogin()}
         >
           <p>Login</p>
         </span>
         <span
-          className={style.signUpButton}          
+          className={style.signUpButton}
           onClick={() =>
             showPopupForRegister()
           }
