@@ -178,7 +178,7 @@ const RouletteGame = ({
 
   const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
 
-  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=${init}&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=SmartSoft`
+  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
