@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import classNames from 'classnames';
-import medalCoin from '../../data/icons/medal-coin.png';
+import CoinIcon from '../../data/icons/coin.png';
 import LogoDemo from '../../data/images/logo-demo.svg';
 import style from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
@@ -14,7 +14,6 @@ import Notifications from '../Notifications';
 import { connect } from 'react-redux';
 import { NotificationActions } from 'store/actions/notification';
 import { LOGGED_IN } from 'constants/AuthState';
-import Button from '../Button';
 import Wallet from '../Wallet';
 import { NavLink, useHistory } from 'react-router-dom';
 import { matchPath } from 'react-router-dom';
@@ -167,6 +166,30 @@ const Navbar = ({
     return authState === LOGGED_IN;
   };
 
+  const renderWalletButton = () => {
+    const walletBtn = (
+      <span
+        className={classNames(
+          style.balanceOverview,
+          style.walletButton,
+          style.leaderboardValues,
+          isOpen(drawers.wallet) ? style.pillButtonActive : null
+        )}
+        data-tracking-id="menu-wallet-icon"
+      >
+        <img src={CoinIcon} alt="medal" className={style.medal} />
+        <p>{formatToFixed(balance, 0, true)} {currency}</p>
+        <span 
+          className={style.plusButton} 
+          onClick={() => history.push(Routes.wallet)}></span>
+      </span>
+    );
+    return (
+      <div className={style.centerContainer}>
+        {isLoggedIn() && walletBtn}
+      </div>
+    )
+  }
   const renderNavButtons = () => {
     const leaderboardBtn = (
       <span
@@ -174,7 +197,7 @@ const Navbar = ({
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
         data-tracking-id="menu-leaderboard"
       >
-        <img src={medalCoin} alt="medal" className={style.medal} />
+        <img src={CoinIcon} alt="medal" className={style.medal} />
         <p className={style.rankingText}>
           {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
         </p>
@@ -193,22 +216,6 @@ const Navbar = ({
           </div>
         )}
       </div>
-    );
-
-    const walletBtn = (
-      <span
-        className={classNames(
-          style.balanceOverview,
-          style.pillButton,
-          style.leaderboardValues,
-          isOpen(drawers.wallet) ? style.pillButtonActive : null
-        )}
-        onClick={() => history.push(Routes.wallet)}
-        data-tracking-id="menu-wallet-icon"
-      >
-        <Icon iconType={'pToken'} />
-        <p>{formatToFixed(balance, 0, true)} {currency}</p>
-      </span>
     );
 
     const profileBtn = (
@@ -270,8 +277,7 @@ const Navbar = ({
     if (isLoggedIn()) {
       return (
         <div className={style.navbarItems}>
-          {leaderboardBtn}
-          {walletBtn}
+          {/* {leaderboardBtn} */}
           {/* {notificationsBtn} */}
           {/* {profileBtn} */}
           {hamburgerMenuBtn}
@@ -436,7 +442,7 @@ const Navbar = ({
           true
         )}
       </div>
-
+      {renderWalletButton()}
       <div ref={drawerWrapper} className={style.drawerWrapper}>
         {renderNavButtons()}
         {renderLeaderboardDrawer()}
