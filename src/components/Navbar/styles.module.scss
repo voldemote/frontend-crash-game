@@ -10,11 +10,15 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 24px;
+  padding: 50px 50px;
   z-index: $sIndexNavbar;
 
-  @media (max-width: $screen-sm) {
+  @media (max-width: $screen-md) {
     padding: 36px 24px;
+  }
+
+  @media (min-width: 1900px) {
+    padding: 50px 100px;
   }
 
   .drawerWrapper {
@@ -34,6 +38,72 @@
     display: flex;
     flex-flow: column nowrap;
     height: inherit;
+  }
+
+  .centerContainer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    .walletButton {
+      color: $colorLightYellow;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      padding-left: 10px;
+      font-size: 12px;
+      border: 1px solid $colorLightYellow;
+      box-sizing: border-box;
+      border-radius: 24px;
+      font-family: $fontRegular;
+      cursor: pointer;
+      min-width: 80px;
+      height: 40px;
+      z-index: 0;
+
+      .plusButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        background: #ffd31a;
+        border: 1px solid #ffd401;
+        box-sizing: border-box;
+        border-radius: 25px;
+        color: $colorWhite;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 20px;
+        &:before {
+          content: '\FF0B';
+        }
+      }
+
+      img,
+      svg {
+        margin-right: 10px;
+        max-height: 24px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      &.leaderboardValues {
+        background-color: $colorPrimary;
+      }
+
+      &Active {
+        background-color: transparent;
+        border: 2px solid rgba(172, 196, 255, 0.42);
+        padding: 8px 13px;
+      }
+      @media (max-width: $screen-sm) {
+        display: none;
+      }
+    }
   }
 
   .navbarItems {
@@ -137,49 +207,6 @@
       z-index: 5;
       @media (max-width: 360px) {
         display: none !important;
-      }
-    }
-
-    .pillButton {
-      color: $colorLightYellow;
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      padding: 10px;
-      padding-right: 16px;
-      font-size: 12px;
-      border: 2px solid $colorLightYellow;
-      box-sizing: border-box;
-      border-radius: 20px;
-      font-family: $fontRegular;
-      cursor: pointer;
-      margin-right: 10px;
-      min-width: 80px;
-      height: 43px;
-      z-index: 0;
-
-      img,
-      svg {
-        margin-right: 10px;
-        max-height: 21px;
-      }
-
-      p {
-        font-size: 13px;
-      }
-
-      @media screen and (min-width: $screen-sm) {
-        margin-right: 16px;
-      }
-
-      &.leaderboardValues {
-        background-color: $colorPrimary;
-      }
-
-      &Active {
-        background-color: transparent;
-        border: 2px solid rgba(172, 196, 255, 0.42);
-        padding: 8px 13px;
       }
     }
 
@@ -287,15 +314,16 @@
 
     .logoLink {
       opacity: 1;
-      margin: 2rem 0 0 1rem;
+      margin: 0;
 
       .logoContainer {
         display: flex;
         align-items: center;
         .logoText {
+          margin-left: 10px;
           color: $colorWhite;
           font-family: $fontBold;
-          font-size: 50px;
+          font-size: 30px;
           line-height: 50px;
         }
       }
@@ -545,7 +573,7 @@
 
   .logoMobile {
     width: auto;
-    max-width: 60px;
+    max-width: 42px;
 
     & > svg,
     & > svg > * {

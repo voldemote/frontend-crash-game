@@ -21,9 +21,9 @@ const LeaderboardItem = ({
       <>
         {/* <div className={style.placeSeperate} /> */}
         <div className={style.tableEntryHolder}>
-          <Button className={style.loadButton} onClick={onLoad}>
-            <p>Load more</p>
-          </Button>
+          <span className={style.loadButton} onClick={onLoad}>
+            Load more
+          </span>
         </div>
       </>
     );
