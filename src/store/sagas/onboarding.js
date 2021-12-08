@@ -40,16 +40,16 @@ const loadOnboardingStep = function* (action) {
           },
         })
       );
-    case OnboardingSteps.welcomeScreen:
-      return yield put(
-        PopupActions.show({
-          popupType: PopupTheme.welcome,
-          options: {
-            ...action?.options,
-            small: false,
-          },
-        })
-      );
+    // case OnboardingSteps.welcomeScreen:
+      // return yield put(
+      //   PopupActions.show({
+      //     popupType: PopupTheme.welcome,
+      //     options: {
+      //       ...action?.options,
+      //       small: false,
+      //     },
+      //   })
+      // );
     }
 };
 
