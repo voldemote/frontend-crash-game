@@ -3,7 +3,6 @@
 .chatContainer {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
   height: 400px;
   position: relative;
 
@@ -18,7 +17,6 @@
     align-items: flex-start;
     flex-flow: column nowrap;
     overflow-y: scroll;
-    margin-bottom: 1rem;
     position: relative;
 
     @media (min-width: $screen-md) {
