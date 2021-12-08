@@ -6,7 +6,7 @@
   position: relative;
   height: 100%;
   .header {
-    height: 46px;
+    height: 50px;
     display: flex;
     padding-left: 8px;
     padding-right: 8px;
@@ -31,16 +31,15 @@
 
   .messageItem {
     position: relative;
-    border-bottom: 0.5px solid $colorLightGray;
     display: inline-flex;
     display: -ms-inline-flexbox;
     display: -webkit-box;
-    margin-top: 0.5rem;
     font-size: 12px;
     //text-align: left;
     hyphens: auto;
     transition: opacity 300ms ease-out, transform 300ms ease-out;
     width: 100%;
+    padding: 8px 10px;
 
     .messageFirst {
       display: flex;
@@ -193,7 +192,7 @@
     position: relative;
     //height: 260px;
     height: 100%;
-    padding: 10px;
+    padding: 0;
 
     &::-webkit-scrollbar {
       width: 0;
@@ -202,6 +201,10 @@
 
     > :first-child {
       margin-top: 0;
+    }
+
+    > :nth-child(even) {
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
