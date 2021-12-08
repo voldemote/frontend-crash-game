@@ -250,22 +250,20 @@ const Navbar = ({
 
     const joinBtn = (
       <div className={style.navbarItems}>
-        <Button
-          className={style.loginButton}
-          withoutBackground={true}
+        <span
+          className={style.loginButton}          
           onClick={() => showPopupForLogin()}
         >
           <p>Login</p>
-        </Button>
-        <Button
-          className={style.signUpButton}
-          withoutBackground={true}
+        </span>
+        <span
+          className={style.signUpButton}          
           onClick={() =>
             showPopupForRegister()
           }
         >
           <p>Sign Up</p>
-        </Button>
+        </span>
       </div>
     );
 
