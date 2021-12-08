@@ -53,8 +53,16 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
 
     // This will trigger when the user marks payment is made.
     transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, orderData => {
-      // console.log(orderData);
-      showTransakSuccessPopup();
+      console.log({orderData});
+      showTransakSuccessPopup(
+      {
+        fiatAmount: orderData.status.fiatAmount,
+        fiatCurrency: orderData.status.fiatCurrency,
+        cryptoAmount: orderData.status.cryptoAmount,
+        cryptoCurrency: orderData.status.cryptoCurrency,
+        equivalenceWFAIR: WFAIRToken,
+        explorer: orderData.status.walletLink,
+      });
       transak.close();
 
     });
@@ -173,8 +181,8 @@ const mapDispatchToProps = dispatch => {
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
-    showTransakSuccessPopup: () => {
-      dispatch(PopupActions.show({ popupType: PopupTheme.transakSuccess }));
+    showTransakSuccessPopup: (options) => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.transakSuccess, options}));
     },
   };
 };

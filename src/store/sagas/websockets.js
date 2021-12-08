@@ -16,6 +16,7 @@ import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from '../actions/user';
+import { ObjectId } from '../../helper/Games';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -320,6 +321,10 @@ const isHomePage = (currentAction, pathSlugs) =>
 const isGamePage = (currentAction, pathSlugs) =>
   (currentAction[0] === 'games' || pathSlugs[0] === 'games') &&
   (pathSlugs.length > 1 || currentAction.length > 1);
+  const isExternalPage = (currentAction, pathSlugs) =>
+    (currentAction[0] === 'external-game' || pathSlugs[0] === 'external-game') &&
+    (pathSlugs.length > 1 || currentAction.length > 1);
+
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -361,6 +366,10 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
       newRoomsToJoin.push(game.id);
       newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
     }
+  }
+  if(isExternalPage(currentAction, pathSlugs)){
+    newRoomsToJoin.push(ObjectId(pathSlugs[1]));
+    newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
 
   // leave all non active rooms except UserMessageRoomId

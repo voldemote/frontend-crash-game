@@ -55,10 +55,12 @@
   font-size: 14px;
   line-height: 18px;
   padding-top: 24px;
-  margin-left: 16px;
+  // margin: 0 16px;
+  justify-content: center;
 
   @media (max-width: $screen-md) {
     margin-left: 0px;
+    margin-right: 0px;
     font-size: 11px;
     line-height: 14px;
   }
@@ -398,6 +400,7 @@
       margin-top: 48px;
       padding: 0 16px;
     }
+
     .cryptoInputContiner {
       position: relative;
       max-width: 500px;
@@ -567,6 +570,9 @@
         text-decoration: underline;
         cursor: pointer;
       }
+      .qrCodeImg {
+        margin-top: 20px;
+      }
 
       .referralLink {
         border: 1px solid $colorLightGray2 !important;
@@ -636,6 +642,10 @@
     }
   }
 }
+
+/*************************/
+/* DEPOSIT TAB CONTAINER */
+/*************************/
 
 .depositTabContainer {
   padding: 30px 0;

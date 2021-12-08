@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, connect } from 'react-redux';
+import { useDispatch, connect, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import VolumeSlider from '../VolumeSlider';
 import { AudioController } from '../AudioController';
 import GameAudioControlsLocal from '../GameAudioControlsLocal';
 import { isMobile } from 'react-device-detect';
 import { StylesProvider } from '@material-ui/styles';
+import { selectUser } from 'store/selectors/authentication';
 
 const AlpacannonGameAnimation = ({
   connected,
@@ -22,6 +23,7 @@ const AlpacannonGameAnimation = ({
   const dispatch = useDispatch();
   const backgroundRef = useRef(null);
 
+  const user = useSelector(selectUser);
   const [game, setGame] = useState('ready');
   const [audio, setAudio] = useState(null);
   const [slider, setSlider] = useState(0);
@@ -60,14 +62,12 @@ const AlpacannonGameAnimation = ({
     setTimeout(() => {
       setGame('crashed')
       audio.playCrashSound()
-      if(bet.profit > 0){
-      /*
+      if(user.isLoggedIn){
         const spin = bet.profit > 0 ?
           { type: 'win', value: '+' + bet.profit } :
           bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
           { type: 'loss', value: bet.profit}
         setSpins((spins) => [spin].concat(spins))
-      */
       }
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
     }, 2400)
@@ -76,7 +76,7 @@ const AlpacannonGameAnimation = ({
     }, 3400)
   }
 
-  const interpolate = (number) => Math.floor((Number(number) + 42)*96/80)
+  const interpolate = (number) => 100 - Math.floor((Number(number) + 42)*96/80)
 
   const interpolateMultiplier = (number) => {
     const EDGE = 0.025
@@ -84,7 +84,7 @@ const AlpacannonGameAnimation = ({
   }
 
   const onSlider = (e) => {
-    setBet((bet) => {return {...bet, rollover: interpolate(e.target.value)}})
+    setBet((bet) => {return {...bet, rollover: 100 - interpolate(e.target.value)}})
     setSlider(e.target.value)
   }
 
@@ -103,18 +103,18 @@ const AlpacannonGameAnimation = ({
         className={styles.slider}
         value={slider}
         onChange={onSlider}
-        style={{zIndex: game==='ready' && 5, background: `linear-gradient(90deg, rgba(240,0,0,1) ${interpolate(slider)}%, rgba(0,255,0,1) ${interpolate(slider)}%)`}}
+        style={{zIndex: game==='ready' && 5, background: `linear-gradient(90deg, rgba(240,0,0,1) ${100 - interpolate(slider)}%, rgba(0,255,0,1) ${100 - interpolate(slider)}%)`}}
         type="range"
         step={1}
         min={-40}
         max={40} />
       <div className={styles.chance}>
-        <span>{100-interpolate(slider)}%</span>
+        <span>{interpolate(slider)}%</span>
       </div>
       <div className={styles.interpolateMultiplier}>
         <span>{interpolateMultiplier(slider).toFixed(2)}</span>
       </div>
-      <img className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game !== 'shoot' ? '10%':'43%', right: game !== 'shoot' ? (bet.crash > 65 ? '50%':bet.crash < 35?'32%':'41%') : `${bet.crashPosition}%`}} src={bet.crash < 35 ? "/images/cannon-games/alpaca-right.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-left.svg" : "/images/cannon-games/alpaca-center.svg" } alt="alpaca flying" />
+      <img className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game !== 'shoot' ? '10%':'60%', right: game !== 'shoot' ? (bet.crash > 65 ? '50%':bet.crash < 35?'32%':'41%') : `${bet.crashPosition}%`}} src={bet.crash < 35 ? "/images/cannon-games/alpaca-right.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-left.svg" : "/images/cannon-games/alpaca-center.svg" } alt="alpaca flying" />
       <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: `${bet.crashPosition}%`}} src={bet.crash > 65 ? "/images/cannon-games/alpaca-crash-left.png" : bet.crash < 35 ? "/images/cannon-games/alpaca-crash.png" : "/images/cannon-games/alpaca-crash.png"} alt="alpaca crash" />
       <div className={styles.alpaResult} style={{ zIndex: game === 'crashed' ? 5:4, opacity: game === 'crashed' ? 1 : 0, right: `${bet.crashPosition}%`}}>
         <img src="/images/cannon-games/score.svg" alt="alpaca crash" />

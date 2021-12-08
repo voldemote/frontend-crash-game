@@ -9,7 +9,7 @@ import PopupTheme from '../Popup/PopupTheme';
 import { connect } from 'react-redux';
 
 const TransakSuccess = ({ visible, hidePopup, options }) => {
-  
+  console.log({options});
   return (
     <div className={styles.successTransakContainer}>
       <span className={styles.successTransakHeadline}>
@@ -20,6 +20,27 @@ const TransakSuccess = ({ visible, hidePopup, options }) => {
         In a few seconds, you will receive an email from Transak to track your order.
         Once the order has been succesfully processed, your funds will be credited in your balance.
       </span>
+      
+      {options.cryptoCurrency && options.cryptoAmount && options.equivalenceWFAIR &&
+        <div className={styles.summary}>
+          <div className={styles.row}>
+            <div className={styles.key}>Amount of {_.get(options, 'cryptoCurrency')}</div>
+            <div className={styles.value}>{_.get(options, 'cryptoAmount')}</div>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.key}>Amount of {_.get(options, 'fiatCurrency')}</div>
+            <div className={styles.value}>{_.get(options, 'fiatAmount')}</div>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.key}>Estimated amount in WFAIR</div>
+            <div className={styles.value}>{_.get(options, 'equivalenceWFAIR')}</div>
+          </div>
+          {/* <div className={styles.row}>
+            <div className={styles.key}>Transaction fee</div>
+            <div className={styles.value}>{_.get(options, 'fee')}</div>
+          </div> */}
+        </div>
+      }
 
       <div className={styles.betButtonContainer}>
         <Button

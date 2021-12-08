@@ -2,6 +2,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from '../styles.module.scss';
 import classNames from 'classnames';
+import moment from 'moment';
+import { getTransactionURL } from 'utils/constants';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   const { wfair, fee, network, startDate, status, txHash } = data;
@@ -30,11 +32,13 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           <div className={styles.messageCenter}>{network}</div>
         </Grid>
         <Grid item xs>
-         <div className={styles.messageCenter}>{startDate}</div>
+         <div className={styles.messageCenter}>
+           {moment(startDate).format('DD.MM.YYYY HH:mm:ss')}
+           </div>
         </Grid>
         <Grid item xs>
          <div 
-          className={classNames(styles.messageLast, styles.messageRight)}
+          className={classNames(styles.messageLast, styles.messageRight, styles.messageTranform)}
           >
             <p >{status}</p>
           </div>
@@ -43,7 +47,9 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           <div 
           className={classNames(styles.messageLast, styles.messageRight)}
           >
-            <p >{txHash}</p>
+            <a href={getTransactionURL(network, txHash)} target="_blank" rel="noreferrer">
+              <p>{txHash}</p>
+            </a>
           </div>
         </Grid>
       </Grid>
@@ -84,7 +90,7 @@ const WithDrawalsTable = ({ renderRow, className, hideSecondaryColumns = false }
             <p className={styles.titleLast}>STATUS</p>
           </Grid>
           <Grid item xs>
-            <p className={styles.titleLast}>TXHASH</p>
+            <p className={styles.titleLast}>TX HASH</p>
           </Grid>
         </Grid>
       </div>

@@ -124,13 +124,13 @@ export class AudioController {
   }
 
   startBgm() {
-    //const diff = this.elapsed / 1000;
     this.playSound(`bgm${this.bgmIndex}`, true);
   }
 
   stopBgm() {
     this.stopSound(`bgm${this.bgmIndex}`);
   }
+
   playTick() {
     this.playSound('tick', false, 1);
   }
@@ -145,17 +145,18 @@ export class AudioController {
 
   playWinSound() {
     this.playSound('cashout', false, 1);
-
   }
 
   playCannonSound() {
     this.playSound('cannon', false, 1);
-
   }
+
   playCrashSound() {
     this.playSound('crash', false, 1);
   }
+
   playBetSound() {
     this.playSound('placebet');
   }
+
 }

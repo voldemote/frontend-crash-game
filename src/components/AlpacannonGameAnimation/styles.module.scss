@@ -49,7 +49,7 @@
     width: 76.3%;
     top: 32.3%;
     -webkit-appearance: none;
-    height: 7.5px;
+    height: 8px;
     border-radius: 5px;
     outline: none;
     -webkit-transition: .2s;
@@ -140,10 +140,10 @@
   }
 
   .alpacaFlying {
-    width: 125px;
-    bottom: 10%;
+    width: 120px;
+    bottom: 30%;
     //transform: scale(0.9, 0.9);
-    transition: bounce 1s ease-in-out, transform 1s, bottom 1s ease-out, right 1s ease-out;
+    transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
     position: absolute;
     right: 41%;
     z-index: 4;
@@ -151,7 +151,6 @@
     -moz-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
     -ms-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
     -o-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
-    transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
     position: absolute;
     z-index: 1;
   }
