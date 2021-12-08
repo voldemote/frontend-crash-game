@@ -221,7 +221,7 @@ const authenticationSucceeded = function* (action) {
 
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ userId, forceFetch: true }));
-    yield put(EventActions.fetchAll());
+    // yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
     yield put(RosiGameActions.clearGuestData());
@@ -332,7 +332,7 @@ const refreshImportantData = function* () {
 
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ forceFetch: true }));
-    yield put(EventActions.fetchAll());
+    // yield put(EventActions.fetchAll());
 
     yield delay(10 * 1000);
     yield call(refreshImportantData);

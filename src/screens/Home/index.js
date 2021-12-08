@@ -117,7 +117,7 @@ const Home = ({
 
   useEffect(() => {
     if (isMount) {
-      fetchTags();
+      // fetchTags();
       renderBetApprovePopup();
       handleRefPersistent();
     }
