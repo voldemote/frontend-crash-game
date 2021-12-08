@@ -90,6 +90,14 @@
   padding-bottom: 20px;
   flex-direction: column;
 
+  h2 {
+    display: flex;
+    justify-content: center;
+    font-family: $fontRegular;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
   .cryptoTabsContainer {
     display: flex;
     margin: 0 auto;

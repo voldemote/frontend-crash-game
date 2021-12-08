@@ -138,13 +138,11 @@ const WithdrawTab = () => {
         return;
       }
 
-      const { withdraw_amount:withdrawAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
-
-      const calculatedAmount = parseFloat(withdrawAmount) - parseFloat(amountFees);
+      const { withdraw_amount:calculatedAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
 
       setTransaction(true);
       setResponseProps({
-        withdrawAmount,
+        withdrawAmount: tokenAmount,
         calculatedAmount,
         amountFees,
         fiatEquivalence,
@@ -155,8 +153,8 @@ const WithdrawTab = () => {
 
   return (
     <div className={styles.withdrawContainer}>
-
       {!transaction && ( <>
+        <h2>Withdraw</h2>
         {/* Crypto Tabs */}
         <div className={styles.cryptoTabsContainer}>
           <div
