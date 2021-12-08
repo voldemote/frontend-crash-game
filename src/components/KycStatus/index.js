@@ -1,14 +1,10 @@
 import { connect } from 'react-redux';
 import styles from './styles.module.scss';
 import * as ApiUrls from 'constants/Api';
-import IconType from 'components/Icon/IconType';
-import Icon from 'components/Icon';
-import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 
 const KycStatus = ({
   user = {},
-  className,
 }) => {
 
   const [userId, setUserId] = useState({...user?.userId});
@@ -20,10 +16,10 @@ const KycStatus = ({
 
   const openFractal = () => {
     const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', userId);
-    !isKycApproved() && window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
+    window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
   }
 
-  const getLabelText = () => {
+  const getStatusDescription = () => {
     switch(userKyc?.status){
       case 'pending': return "KYC Verification in progress...";
       case 'approved': return "KYC Verified";
@@ -33,25 +29,41 @@ const KycStatus = ({
     }
   };
 
-  const isKycApproved = () => userKyc?.status === 'approved';
+  const isKycStarted = () => userKyc && userKyc.status;
+  const showStartButton = () => !isKycStarted() || userKyc.status === 'error' || userKyc.status === 'rejected';
+
+  const renderKycStatus = () => (
+    <>
+      <div className={styles.group}>
+        <label>Your current status:</label>
+        <p className={styles[userKyc.status]}>{getStatusDescription()}</p>
+      </div>
+      <div className={styles.group}>
+        <label>Last updated on:</label>
+        <p>{userKyc.date && new Date(userKyc.date).toUTCString()}</p>
+      </div>
+      <div className={styles.group}>
+        <label>Reference:</label>
+        <p>{userKyc.uid}</p>
+      </div>
+    </>
+  );
+
 
   return user && (
-    <div
-      className={classNames(className, isKycApproved() ? styles.disabled : null)}
-      onClick={() => openFractal()}
-      >
-      <Icon
-        className={styles.referralIcon}
-        iconType={isKycApproved() ? IconType.success : IconType.question}
-        iconTheme={`primary`}/>
-      <p className={styles.settingTitle}>{getLabelText()}</p>
-      {!isKycApproved() &&
-        <Icon
-          width={15}
-          iconType={IconType.arrowSmallRight}
-          className={styles.goIntoSettingIcon}
-        />}
-
+    <div className={styles.kycInfoContainer}>
+      {!isKycStarted()
+        ? <>
+          <p>In order to withdraw your funds or make larger deposits, you must perform a "Know Your Customer" (KYC) checks.</p>
+          <p>We perform KYC operations via our partner Fractal.</p>
+          </>
+        : renderKycStatus()}
+      {showStartButton() &&
+        <button
+          onClick={openFractal}
+          >
+        Continue with Fractal
+      </button>}
     </div>
   );
 };

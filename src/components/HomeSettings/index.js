@@ -6,7 +6,7 @@ import DefaultProfilePicture from 'data/images/alpaca-logo-mini.svg';
 import EditProfilePicture from 'data/images/profile.svg';
 import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
-import KycStatus from 'components/KycStatus';
+
 
 const HomeSettings = ({
   profilePic,
@@ -16,6 +16,7 @@ const HomeSettings = ({
   onEmailNotificationClick,
   onLogoutClick,
   onCloseProfile,
+  onKycInfoClick,
 }) => {
   return (
     <div className={styles.settings}>
@@ -73,8 +74,21 @@ const HomeSettings = ({
             className={styles.goIntoSettingIcon}
           />
         </div>
-        <KycStatus className={classNames(styles.singleSettingHolder,styles.settingActive)}/>
-
+        <div
+          className={classNames(
+            styles.singleSettingHolder,
+            styles.settingActive
+          )}
+          onClick={() => onKycInfoClick()}
+        >
+          <Icon className={styles.referralIcon} iconType={IconType.question} iconTheme={`primary`}/>
+          <p className={styles.settingTitle}>KYC Verification</p>
+          <Icon
+            width={15}
+            iconType={IconType.arrowSmallRight}
+            className={styles.goIntoSettingIcon}
+          />
+        </div>
 
         {/*<div*/}
         {/*  className={classNames(*/}
