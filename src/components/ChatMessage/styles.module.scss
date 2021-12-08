@@ -2,6 +2,7 @@
 
 .chatMessage {
   color: $colorBlack;
+  width: 100%;
   padding: 0rem 1rem;
   border-radius: 10px;
   display: inline-flex;
@@ -50,6 +51,8 @@
     color: $colorWhite;
     font-size: 12px;
     font-family: $fontBold;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   // span {
