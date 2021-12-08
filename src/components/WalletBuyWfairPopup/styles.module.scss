@@ -71,6 +71,7 @@
   padding-bottom: 12px;
   opacity: 1;
   cursor: pointer;
+  color: $colorBlack;
   border-bottom: 3px solid $mainAction;
 }
 
@@ -79,6 +80,7 @@
   padding-bottom: 12px;
   opacity: 0.3;
   cursor: pointer;
+  color: $colorBlack;
 }
 
 .buyWithFiatTabContainer {
@@ -310,7 +312,7 @@
     padding: 5px;
     margin-top: 20px;
     border-radius: 50px;
-    background-color: $colorPinkDark;
+    background-color: $colorLightYellow;
     justify-content: center;
 
     align-items: center;

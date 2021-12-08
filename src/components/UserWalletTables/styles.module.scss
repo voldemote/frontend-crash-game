@@ -11,16 +11,16 @@
   }
 
   .header {
-    height: 39px;
+    height: 50px;
     display: flex;
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
-    background: $colorLightGray1;
+    background: rgba(255, 255, 255, 0.1);
   }
   .title {
     text-align: center;
-    color: #878593;
+    color: $colorWhite;
     font-size: 12px;
 
     @media (max-width: $screen-xs) {
@@ -30,7 +30,7 @@
   .titleFirst {
     text-align: left;
     font-size: 12px;
-    color: #878593;
+    color: $colorWhite;
     @media (max-width: $screen-xs) {
       font-size: 8px;
     }
@@ -38,7 +38,7 @@
   .titleLast {
     text-align: right;
     font-size: 12px;
-    color: #878593;
+    color: $colorWhite;
     @media (max-width: $screen-xs) {
       font-size: 8px;
     }
@@ -46,7 +46,6 @@
 
   .messageItem {
     position: relative;
-    border-bottom: 0.5px solid $colorLightGray;
     display: inline-flex;
     display: -ms-inline-flexbox;
     display: -webkit-box;
@@ -56,6 +55,7 @@
     hyphens: auto;
     transition: opacity 300ms ease-out, transform 300ms ease-out;
     width: 100%;
+    padding: 8px 10px;
 
     .messageFirst {
       display: flex;
@@ -227,7 +227,7 @@
     position: relative;
     //height: 260px;
     height: 100%;
-    padding: 10px;
+    padding: 0;
 
     &::-webkit-scrollbar {
       width: 0;
@@ -236,6 +236,10 @@
 
     > :first-child {
       margin-top: 0;
+    }
+
+    > :nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 
@@ -300,6 +304,7 @@
   white-space: nowrap;
   padding: 4px 10px;
   overflow-x: hidden;
+  color: $colorWhite;
 
   @media (max-width: $screen-xs) {
     padding: 4px 0px;

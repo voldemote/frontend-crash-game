@@ -315,8 +315,8 @@
 /* ACTIVITY TRACKER */
 .activityWrapper {
   margin-top: 32px;
-  background: $colorWhite;
-  border: 1px solid $colorLightGray;
+  background: $colorPrimary;
+  border: 1px solid $colorLightGray4;
 
   .headerTables {
     @media screen and (max-width: $screen-xs) {
@@ -526,20 +526,13 @@
       font-family: $fontRegular;
       font-size: 24px;
       font-weight: 500;
-      color: $colorBlack;
+      color: $colorWhite;
     }
     .buyWFairButton {
       margin-top: 20px;
       width: 240px;
       height: 45px;
-      border-radius: 22.5px;
-      background-image: linear-gradient(
-        to bottom,
-        $colorPinkDark,
-        $colorLightDark2 97%
-      );
       font-family: $fontRegular;
-      border: 1px solid $colorBackground;
       color: $colorWhite;
       cursor: pointer;
     }

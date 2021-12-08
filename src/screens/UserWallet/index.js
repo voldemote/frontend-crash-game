@@ -17,6 +17,7 @@ import { useWeb3React } from '@web3-react/core';
 import Loader from 'components/Loader/Loader';
 import { WallfairActions } from 'store/actions/wallfair';
 import { TransactionActions } from 'store/actions/transaction';
+import Button from 'components/Button';
 
 const UserWallet = ({
   tags,
@@ -177,18 +178,18 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <p className={styles.noWFairNoProblem}>No PFAIR? No problem!</p>
-              <button
+              <Button
                 className={styles.buyWFairButton}
                 onClick={showWalletBuyWfairPopup}
               >
-                Buy WFAIR!
-              </button>
-              <button
+                <p>Buy WFAIR!</p>
+              </Button>
+              <Button
                 className={styles.buyWFairButton}
                 onClick={showRequestTokenPopup}
               >
-                <span>Request test tokens</span>
-              </button>
+                <p>Request test tokens</p>
+              </Button>
             </div>
           </Grid>
         </Grid>
