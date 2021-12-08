@@ -7,6 +7,7 @@ import { selectHistory, selectStakes } from 'store/selectors/wallfair';
 import { numberWithCommas, shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
 import moment from 'moment';
+import {getTransactionURL} from '../../../utils/constants';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   const { amount, network_code, sender, created_at, transaction_hash, status } = data;
@@ -42,7 +43,9 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
         </Grid>
         <Grid item xs>
           <div className={classNames(styles.messageLast, styles.messageRight)}>
-            <p className={styles.reward}>{shortenAddress(transaction_hash)}</p>
+            <a href={getTransactionURL(network_code, transaction_hash)} target="_blank" rel="noreferrer">
+              <p>{shortenAddress(transaction_hash, false)}</p>
+            </a>
           </div>
         </Grid>
       </Grid>
