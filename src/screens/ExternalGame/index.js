@@ -27,7 +27,7 @@ import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
 import Routes from 'constants/Routes';
-import { getGameById } from '../../helper/Games';
+import { getGameById, ObjectId } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import {
   trackAlpacaWheelPlaceBetGuest,
@@ -39,13 +39,6 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 
-export const ObjectId = (gamename) => {
-  const encoded = new Buffer(gamename.substring(0,23)).toString('hex')
-  const fill = 24 - encoded.length
-  return encoded + ' '.repeat(fill).replace(/./g, (v, i) =>
-    ((parseInt(encoded[(i*2)%encoded.length], 16) + parseInt(i*2, 16))%16).toString(16)
-  )
-}
 
 const RouletteGame = ({
   showPopup,
@@ -100,7 +93,6 @@ const RouletteGame = ({
           dispatch(AlertActions.showError(error.message));
         });
     }
-
     return () => {
       setInit(null)
     }
@@ -186,7 +178,7 @@ const RouletteGame = ({
 
   const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
 
-  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=${init}&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=SmartSoft`
+  const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
