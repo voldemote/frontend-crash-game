@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 import WfairLogo from '../../../data/images/wfair-logo-splash.png';
 
 
-const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup }) => {
+const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup, notActiveNetwork }) => {
 
   const [mainUrl, setMainUrl] = useState()
   const [mainLabel, setMainLabel] = useState();
@@ -39,13 +39,16 @@ const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup }) => {
       {hash && (
         <>
           <p>
-            You can check details on Polygonscan or Etherscan<br />
+            You can check details on {' '}
+            {notActiveNetwork !== 'Polygon'? 'Polygonscan' : 'Etherscan'}
+            <br />
             <strong
               onClick={() => {
                 window.open(`${mainUrl}tx/${hash}`, "_blank");
               }}
             >
-              {hash}
+              View on {' '}
+            {notActiveNetwork !== 'Polygon'? 'Polygonscan' : 'Etherscan'}
             </strong>
           </p>
           <br />

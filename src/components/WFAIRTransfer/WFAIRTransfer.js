@@ -52,6 +52,7 @@ const WFAIRTransfer = ({
             console.log("SafeCall -> callback()", success);
             setTXSuccess(success);
             setBlocked(false);
+            setter(tx.hash);
           },
           setter: setter,
         });

@@ -68,18 +68,6 @@
     color: $colorBlack;
 
     z-index: 2;
-    &::after {
-      content: '';
-      position: absolute;
-      width: calc(100% - 15px);
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 10px;
-      background-color: $colorPinkDark;
-      border-top-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
     @media screen and (min-width: $screen-md) {
       font-size: 42px;
     }

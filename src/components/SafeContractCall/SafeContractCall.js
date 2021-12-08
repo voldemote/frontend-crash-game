@@ -10,6 +10,7 @@ const SafeCall = ({ tx, callback, setter }) => {
     })
     .then(() => {
       success = true;
+      setter(tx.hash);
     })
     .finally(() => {
       setter('');
