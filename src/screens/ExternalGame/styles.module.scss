@@ -153,11 +153,9 @@
 }
 .chatWrapper {
   margin-top: 32px;
-  width: 96%;
-  // padding-right: 7px;
-  background: #fff;
+  background: rgba(122, 121, 121, 0.1);
   border-radius: 10px;
-  color: #000;
+  margin-right: 25px;
   border: 1px solid #ededed;
 
   @media screen and (max-width: $screen-xs) {
@@ -167,9 +165,11 @@
 
 .chatContainer {
   height: 312px;
+  background: transparent;
   border-radius: 10px;
   margin: 0px;
-  // padding: 10px;
+  padding: 10px;
+  margin-top: 12px;
 
   .chatMessageContainer {
     @media (max-width: $screen-sm) {
