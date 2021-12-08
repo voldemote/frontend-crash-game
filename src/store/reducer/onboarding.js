@@ -6,8 +6,8 @@ const initialState = {
 
 export const Order = [
   OnboardingSteps.buildAvatar,
-  OnboardingSteps.registerEmail,
-  OnboardingSteps.setUsername
+  OnboardingSteps.setUsername,
+  OnboardingSteps.registerEmail
   // OnboardingSteps.welcomeScreen,
 ];
 
