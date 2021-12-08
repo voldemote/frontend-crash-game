@@ -142,13 +142,15 @@
     }
 
     .pillButton {
-      color: $colorWhite;
+      color: $colorLightYellow;
       display: flex;
       align-items: center;
       white-space: nowrap;
       padding: 10px;
       padding-right: 16px;
       font-size: 12px;
+      border: 2px solid $colorLightYellow;
+      box-sizing: border-box;
       border-radius: 20px;
       font-family: $fontRegular;
       cursor: pointer;

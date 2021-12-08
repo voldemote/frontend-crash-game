@@ -169,7 +169,7 @@ const Navbar = ({
 
   const renderNavButtons = () => {
     const leaderboardBtn = (
-      <Button
+      <span
         className={classNames(style.ranking, style.pillButton, style.hiddenMobile)}
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
         data-tracking-id="menu-leaderboard"
@@ -178,7 +178,7 @@ const Navbar = ({
         <p className={style.rankingText}>
           {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
         </p>
-      </Button>
+      </span>
     );
 
     const notificationsBtn = (
@@ -196,7 +196,7 @@ const Navbar = ({
     );
 
     const walletBtn = (
-      <Button
+      <span
         className={classNames(
           style.balanceOverview,
           style.pillButton,
@@ -208,7 +208,7 @@ const Navbar = ({
       >
         <Icon iconType={'pToken'} />
         <p>{formatToFixed(balance, 0, true)} {currency}</p>
-      </Button>
+      </span>
     );
 
     const profileBtn = (
