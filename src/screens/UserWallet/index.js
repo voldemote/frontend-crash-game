@@ -189,9 +189,9 @@ const UserWallet = ({
                 className={styles.buyWFairButton}
                 onClick={showWithdrawPopup}
               >
-                Withdraw WFAIR!
-              </button>
-              <button
+                <p>Withdraw WFAIR!</p>
+              </Button>
+              <Button
                 className={styles.buyWFairButton}
                 onClick={showRequestTokenPopup}
               >
