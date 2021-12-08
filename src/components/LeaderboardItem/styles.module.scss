@@ -327,16 +327,21 @@
   }
 
   .loadButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 40px;
     padding: 0 24px;
     margin: 0 auto;
-    text-align: right;
-    color: white;
+    text-align: center;
+    color: $colorLightYellow;
     line-height: 1;
+    font-family: $fontBold;
     font-size: 12px;
     position: relative;
     cursor: pointer;
     text-transform: uppercase;
+    text-decoration: underline;
   }
 }
 
