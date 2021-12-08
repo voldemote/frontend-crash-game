@@ -43,7 +43,7 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
                   getGameItemSizeClass()
                 )}
               >
-                <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName}.png`}/>
+                <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName}.png`} alt={`${game.GameName}`}/>
                 <p className={styles.title}>{game.GameName}</p>
               </div>
             </Link>

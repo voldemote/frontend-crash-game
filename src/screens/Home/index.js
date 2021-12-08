@@ -4,6 +4,9 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { LOGGED_IN } from 'constants/AuthState';
+import {
+  EXTERNAL_GAMES
+} from '../../constants/Games';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -15,6 +18,7 @@ import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
+import GameSmartsoft from 'components/GameSmartsoft';
 import { GeneralActions } from '../../store/actions/general';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
@@ -272,6 +276,17 @@ const Home = ({
       </div>
     );
   };
+
+  const renderSlogGames = () => {
+    return (
+      <div className={styles.gameCards}>
+        <GameSmartsoft
+          games={EXTERNAL_GAMES}
+          category="Slot Games"
+        />
+      </div>
+    )
+  }
 
   const renderWelcome = () => {
     const showPopupForUnauthenticated = () => {
@@ -564,6 +579,7 @@ const Home = ({
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
           {isLoggedIn() && renderHouseGames()}
+          {isLoggedIn() && renderSlogGames()}
           {isLoggedIn() && renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
