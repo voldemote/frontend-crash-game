@@ -104,111 +104,6 @@
   }
 }
 
-.elonGame {
-  margin-top: 70px;
-  .title {
-    display: flex;
-    align-items: center;
-    font-size: 22px;
-    font-weight: 700;
-    justify-content: flex-start;
-
-    h2 {
-      font-size: 33px;
-      color: $colorWhite;
-
-      @media (max-width: $screen-xs) {
-        font-size: 28px;
-      }
-    }
-
-    img {
-      margin-right: 5px;
-    }
-  }
-  .banner {
-    margin-top: 16px;
-    background-image: url('../../data/backgrounds/games/elon-game-banner-lg.png');
-    border-radius: 12px;
-    min-height: 272px;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: center;
-    padding: 30px;
-    background-repeat: no-repeat;
-    background-size: contain;
-
-    @media (max-width: $screen-lg) {
-      padding: 20px;
-      min-height: unset;
-      height: 200px;
-    }
-
-    @media (max-width: $screen-md) {
-      padding: 20px;
-      min-height: unset;
-      height: 150px;
-    }
-
-    @media (max-width: $screen-sm) {
-      background-image: url('../../data/backgrounds/games/elon-game-banner-mobile.png');
-      height: 100%;
-      background-position: center;
-      padding: 80px;
-    }
-
-    @media (max-width: $screen-xs) {
-      padding: 40px;
-    }
-
-    .title {
-      opacity: 0;
-      font-family: $fontBold;
-      font-size: 30px;
-      color: $colorWhite;
-
-      h2 {
-        font-size: 33px;
-
-        @media (max-width: $screen-xs) {
-          font-size: 28px;
-        }
-      }
-
-      @media (max-width: $screen-md) {
-        font-size: 22px;
-      }
-
-      @media (max-width: $screen-sm) {
-        font-size: 36px;
-        margin-top: 100%;
-      }
-
-      @media (max-width: $screen-xs) {
-        font-size: 30px;
-      }
-    }
-
-    .button {
-      opacity: 0;
-      margin-top: 10px;
-      background: linear-gradient(180deg, #e82e89 0%, #a21c5d 97.4%);
-      border-radius: 30px;
-      width: 340px;
-      border: none;
-      max-width: 95%;
-      box-sizing: border-box;
-      color: #fff;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-  }
-}
-
 .bottomWrapper {
   display: flex;
   align-items: flex-start;
@@ -778,7 +673,7 @@
   }
 }
 .gameCards {
-  margin-top: 20px;
+  margin-top: 70px;
   .title {
     display: flex;
     align-items: center;
@@ -788,7 +683,7 @@
 
     h2 {
       font-size: 33px;
-
+      color: $colorWhite;
       @media (max-width: $screen-xs) {
         font-size: 28px;
       }

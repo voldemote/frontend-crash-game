@@ -1,7 +1,6 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import Link from 'components/Link';
-import AlpacaIcon from '../../data/images/house-games/title.svg';
 import { PopupActions } from 'store/actions/popup';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -21,7 +20,7 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
   return (
     <div className={styles.gamesContainer}>
       <div className={styles.gamesCategory}>
-        <img src={AlpacaIcon} alt={'Alpaca Icon'} />
+        {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
         <h2>{category}</h2>
       </div>
       <div className={styles.games}>
