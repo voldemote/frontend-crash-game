@@ -38,6 +38,7 @@ const UserWallet = ({
   isTransactionsFetchLoading,
   isTransactionsFetchError,
   transactions,
+  showWithdrawPopup,
 }) => {
   const { active, library, account, chainId } = useWeb3React();
 
@@ -185,6 +186,12 @@ const UserWallet = ({
               </button>
               <button
                 className={styles.buyWFairButton}
+                onClick={showWithdrawPopup}
+              >
+                Withdraw WFAIR!
+              </button>
+              <button
+                className={styles.buyWFairButton}
                 onClick={showRequestTokenPopup}
               >
                 <span>Request test tokens</span>
@@ -241,6 +248,9 @@ const mapDispatchToProps = dispatch => {
         })
       ),
     refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
+    showWithdrawPopup: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletWithdraw }));
+    },
     showWalletBuyWfairPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
