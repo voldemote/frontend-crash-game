@@ -47,6 +47,7 @@ import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
 import TransakSuccess from "../TransakSuccess";
 import TxModal from 'components/TxModal';
+import WalletWithdrawPopup from 'components/WalletBuyWfairPopup/WalletWithdrawPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -238,6 +239,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
 
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
+      case PopupTheme.walletWithdraw:
+        return <WalletWithdrawPopup />;
       case PopupTheme.transakSuccess:
         return <TransakSuccess options={options} />;
       case PopupTheme.txModal:

@@ -3,9 +3,7 @@ import styles from './styles.module.scss';
 import WfairLogo from '../../data/images/wfair-logo-splash.png';
 
 const WithdrawalSuccessPopup = ({ 
-  status,
   network,
-  amountReceived,
   calculatedAmount,
   currency,
   wfairAmount,

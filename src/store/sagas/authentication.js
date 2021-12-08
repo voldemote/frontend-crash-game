@@ -206,13 +206,13 @@ const fetchReferralsSucceeded = function* (action) {
 const registrationSucceeded = function* (action) {
   const authState = yield select(state => state.authentication.authState);
 
-  if (action.email && action.name && authState === AuthState.LOGGED_IN) {
-    yield put(
-      PopupActions.show({
-        popupType: PopupTheme.welcome,
-      })
-    );
-  }
+  // if (action.email && action.name && authState === AuthState.LOGGED_IN) {
+  //   yield put(
+  //     PopupActions.show({
+  //       popupType: PopupTheme.welcome,
+  //     })
+  //   );
+  // }
 };
 
 const authenticationSucceeded = function* (action) {
@@ -221,7 +221,7 @@ const authenticationSucceeded = function* (action) {
 
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ userId, forceFetch: true }));
-    yield put(EventActions.fetchAll());
+    // yield put(EventActions.fetchAll());
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
     yield put(RosiGameActions.clearGuestData());
@@ -332,7 +332,7 @@ const refreshImportantData = function* () {
 
   if (authState === AuthState.LOGGED_IN) {
     yield put(UserActions.fetch({ forceFetch: true }));
-    yield put(EventActions.fetchAll());
+    // yield put(EventActions.fetchAll());
 
     yield delay(10 * 1000);
     yield call(refreshImportantData);

@@ -3,14 +3,10 @@ import {PopupActions} from '../../store/actions/popup';
 import {connect} from 'react-redux';
 import PopupTheme from '../Popup/PopupTheme';
 import _ from 'lodash';
+import {displaySignedFormat} from "../../helper/FormatNumbers";
 import {getSingleGameDetailById} from "../../api/casino-games";
 
 const Spins = ({spins, showPopup, text, game}) => {
-  //  onClick={e => handleCrashFactorClick(crash, e)}
-  const displaySignedFormat = (value) => {
-    const val = Math.floor(value);
-    return val > 0 ? `+${val}` : val
-  }
 
   const handleClick = async (crash, e) => {
     const gameHash = crash?.gameHash;

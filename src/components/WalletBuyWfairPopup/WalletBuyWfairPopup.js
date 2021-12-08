@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import PopupTheme from '../Popup/PopupTheme';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { UserActions } from '../../store/actions/user';
 import TabOptions from 'components/TabOptions';
@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import DepositTab from './Tabs/DepositTab';
 import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
-import WithdrawTab from './Tabs/WithdrawTab';
 
 const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
@@ -20,8 +19,6 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
         return <BuyWithCrypto />;
       case 2:
         return <DepositTab />;
-      case 3:
-        return <WithdrawTab />;
       default:
         return <BuyWithFiatTab />;
     }
@@ -39,7 +36,6 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     { name: 'BUY WITH FIAT', index: 0 },
     { name: 'BUY WITH CRYPTO', index: 1 },
     { name: 'DEPOSIT', index: 2 },
-    { name: 'WITHDRAW', index: 3 },
   ];
   const handleSwitchTab = ({ index }) => {
     setActiveTab(tabOptions[index]);

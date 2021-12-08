@@ -99,33 +99,28 @@ const WithdrawTab = () => {
       }
 
       const { withdraw_amount:withdrawAmount, withdraw_fee:withdrawFee } = response?.data;
-      const parsedWithdrawAmount = !withdrawAmount ? 0 : parseFloat(withdrawAmount).toFixed(4);
-      const parsedFees = !withdrawFee ? 0 : parseFloat(withdrawFee).toFixed(4);
-      const calculatedWithdrawAmount = Number(parsedWithdrawAmount - parsedFees).toFixed(4);
+      const parsedWithdrawAmount = parseFloat(withdrawAmount).toFixed(4);
+      const parsedFees = parseFloat(withdrawFee).toFixed(4);
 
       setAmountFees(parsedFees);
-      setWithdrawAmount(calculatedWithdrawAmount);
+      setWithdrawAmount(parsedWithdrawAmount);
 
       const convertCurrencyPayload = {
         convertFrom: 'USD',
         convertTo: 'WFAIR',
-        amount: calculatedWithdrawAmount,
+        amount: parsedWithdrawAmount,
       };
 
       const { response:responseConvertion } = await convertCurrency(convertCurrencyPayload);
       const { WFAIR } = responseConvertion?.data;
       const quoteUSD = WFAIR.quote?.USD.price;
-
-      console.log(quoteUSD);
       
-      const marketValue = Number(calculatedWithdrawAmount * parseFloat(quoteUSD)).toFixed(2);
-      // const roundedAmount = Math.floor(marketValue * 100) / 100;
+      const marketValue = parsedWithdrawAmount > 0 && Number(parsedWithdrawAmount * parseFloat(quoteUSD)).toFixed(2);
       let withdrawMarketValue = !marketValue
         ? 0
         : numberWithCommas(marketValue);
 
       setFiatEquivalence(withdrawMarketValue);
-      console.log(withdrawMarketValue);
     }
   };
 
@@ -143,13 +138,11 @@ const WithdrawTab = () => {
         return;
       }
 
-      const { withdraw_amount:withdrawAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
-
-      const calculatedAmount = parseFloat(withdrawAmount) - parseFloat(amountFees);
+      const { withdraw_amount:calculatedAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
 
       setTransaction(true);
       setResponseProps({
-        withdrawAmount,
+        withdrawAmount: tokenAmount,
         calculatedAmount,
         amountFees,
         fiatEquivalence,
@@ -160,8 +153,8 @@ const WithdrawTab = () => {
 
   return (
     <div className={styles.withdrawContainer}>
-
       {!transaction && ( <>
+        <h2>Withdraw</h2>
         {/* Crypto Tabs */}
         <div className={styles.cryptoTabsContainer}>
           <div
@@ -209,7 +202,6 @@ const WithdrawTab = () => {
               onBlur={addressLostFocus}
               onClick={selectContent}
               placeholder="Add your wallet address (0x...)"
-              onClick={selectContent}
             />
           </div>
 

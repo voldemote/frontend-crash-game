@@ -38,5 +38,6 @@ export default {
   fairnessPopup: 'fairnessPopup',
   singleGamesDetail: 'singleGamesDetail',
   transakSuccess: 'transakSuccess',
-  txModal: 'txModal'
+  txModal: 'txModal',
+  walletWithdraw: 'walletWithdraw',
 };
