@@ -68,4 +68,29 @@
       }
     }
   }
+
+  .summary {
+    width: 100%;
+    border-top: 1px dashed $colorGrayLight2;
+    padding: 20px 30px 40px;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      @media (max-width: $screen-sm) {
+        margin-bottom: 10px;
+      }
+
+      .key {
+        opacity: 0.4;
+      }
+
+      .value {
+        color: $colorPrimary;
+      }
+    }
+  }
 }

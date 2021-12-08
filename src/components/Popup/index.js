@@ -239,7 +239,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.walletBuyWfair:
         return <WalletBuyWfairPopup />;
       case PopupTheme.transakSuccess:
-        return <TransakSuccess />;
+        return <TransakSuccess options={options} />;
       case PopupTheme.txModal:
         return <TxModal />;
     }
@@ -260,6 +260,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           ref={popupElement}
           className={classNames(
             styles.modalDialog,
+            type === PopupTheme.walletBuyWfair ? styles.walletBuyWfair : null,
             type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.explanation
               ? styles.explanationPopupVisual
