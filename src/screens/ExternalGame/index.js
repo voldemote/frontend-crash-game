@@ -39,6 +39,14 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 
+export const ObjectId = (gamename) => {
+  const encoded = new Buffer(gamename.substring(0,23)).toString('hex')
+  const fill = 24 - encoded.length
+  return encoded + ' '.repeat(fill).replace(/./g, (v, i) =>
+    ((parseInt(encoded[(i*2)%encoded.length], 16) + parseInt(i*2, 16))%16).toString(16)
+  )
+}
+
 const RouletteGame = ({
   showPopup,
   history,
@@ -54,7 +62,8 @@ const RouletteGame = ({
   const game = GAMES.alpacaWheel
   const gameName = match?.params?.game
   const gameCategory = match?.params?.category
-  const EXTERNAL_GAME_EVENT_ID = gameName//game.id;
+
+  const EXTERNAL_GAME_EVENT_ID = ObjectId(gameName)//game.id;
   const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
