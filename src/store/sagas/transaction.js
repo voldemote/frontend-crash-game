@@ -35,16 +35,42 @@ const fetchWalletTransactions = function* () {
 
     const { data } = yield call(Api.getWalletTransactions);
 
-    const transactions = data.reduce((acc, transaction) => {
-      const key = transaction.originator;
-      return {
-        ...acc,
-        [key]: [
-          ...(acc[key] || []),
-          transaction
-        ]
-      }
-    }, {})
+    const statuses = ['new', 'processing', 'completed'];
+
+    const transactions = data
+      .reduce(
+        (acc, transaction, _, all) => { // group all transaction log iterations
+          const alreadyFound = acc.some(
+            ({ external_transaction_id }) =>
+              external_transaction_id === transaction.external_transaction_id
+          );
+
+          if(alreadyFound) {
+            return acc;
+          }
+
+          const highestLog = all
+            .filter(
+              ({ external_transaction_id }) =>
+                external_transaction_id === transaction.external_transaction_id
+            )
+            .sort(
+              (a, b) => statuses.indexOf(b.status) - statuses.indexOf(a.status)
+            )
+            [0];
+
+          return [...acc, highestLog];
+      },
+        []
+      )
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .reduce((acc, transaction) => {
+        const key = transaction.originator;
+        return {
+          ...acc,
+          [key]: [...(acc[key] || []), transaction],
+        };
+      }, {});
 
     yield put(
       TransactionActions.fetchWalletTransactionsSuceeded({
