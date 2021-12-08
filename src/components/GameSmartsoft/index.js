@@ -31,7 +31,7 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
             key={`gamecard-${index}-`}
           >
             <Link
-              to={`/external-game/${game.GameName}/${game.GameCategory}`}
+              to={`/external-game/${game.TechnicalName}/${game.TechnicalCategory}`}
               className={classNames(
                 styles.game,
                 styles.gameLink
@@ -44,16 +44,13 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
                   getGameItemSizeClass()
                 )}
               >
-                <img src={`https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.GameName}.png`} alt={`${game.GameName}`}/>
+                <img src={game.picture ? game.picture : `https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName}.png`} alt={`${game.TechnicalName}`}/>
                 <p className={styles.title}>{game.GameName}</p>
               </div>
             </Link>
           </div>
         )}
-
        </div>
-       </>
-     )}
     </div>
   );
 };
