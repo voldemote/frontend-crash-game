@@ -262,7 +262,7 @@ const Home = ({
               </Link>
             </Grid>
             <Grid item lg={3} md={6} xs={12}>
-              <Link to={'/games/elon'}>
+              <Link to={'/games/elon-game'}>
                 <img src={gameCardElon} alt="" />
               </Link>
             </Grid>
