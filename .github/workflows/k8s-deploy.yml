@@ -53,7 +53,7 @@ jobs:
                             --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
                             --build-arg REACT_APP_URL="https://main.alpacasino.io"\
-                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL=https://account-mapper-staging.wallfair.io/map\
+                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper-staging.wallfair.io/map"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xEfa1A1a1Ff0C49d4913Ef8A74E76221EE97BD75F"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
@@ -71,7 +71,7 @@ jobs:
                             --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
                             --build-arg REACT_APP_URL="https://dev.alpacasino.io"\
-                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL=https://account-mapper-dev.wallfair.io/map\
+                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper-dev.wallfair.io/map"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
@@ -87,7 +87,7 @@ jobs:
                             --build-arg REACT_APP_RECAPTCHA_KEY=${{ secrets.REACT_APP_RECAPTCHA_KEY }}\
                             --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_PROD_GTM_ID }}\
                             --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false\
-                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL=https://account-mapper.alpacasino.io/map\
+                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper.alpacasino.io/map"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xAA9e0AA096c55A9E1553a7a17Ea7415E4B4E4c66"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
@@ -106,7 +106,7 @@ jobs:
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
                             --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false\
                             --build-arg REACT_APP_URL="https://play.alpacasino.io"\
-                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL=https://account-mapper-staging.wallfair.io/map\
+                            --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper-staging.wallfair.io/map"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xEfa1A1a1Ff0C49d4913Ef8A74E76221EE97BD75F"\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_alpa_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_alpa_prod:${GITHUB_SHA::6}
