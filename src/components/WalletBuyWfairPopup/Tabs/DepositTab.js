@@ -19,12 +19,14 @@ import { SWITCH_NETWORKS, NETWORK_TYPES } from '../../../utils/constants';
 import QRCode from 'react-qr-code';
 import { accountMapping } from 'api/third-party';
 import { WallfairActions } from 'store/actions/wallfair';
+import { TxDataActions } from 'store/actions/txProps';
 import useWeb3Network from '../../../hooks/useWeb3Network';
 import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
+import { numberWithCommas } from 'utils/common';
 // import AddTokens from 'components/AddTokens';
 
-const DepositTab = ({ user, resetState }) => {
+const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
   const walletAddress = process.env.REACT_APP_DEPOSIT_WALLET;
   const { active, library, account, chainId } = useWeb3React();
   const { currentNetwork } = useWeb3Network();
@@ -76,6 +78,8 @@ const DepositTab = ({ user, resetState }) => {
   const notSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
     sn => sn !== window.ethereum?.chainId
   );
+
+  setNotSelectedNetwork(SWITCH_NETWORKS[notSelectedNetworkId]);
 
   return (
     <>
@@ -189,15 +193,18 @@ const DepositTab = ({ user, resetState }) => {
           tokenAreaOpen && account && <Loader />
         ) : (
            tokenAreaOpen && account && 
+           <>
+           <div className={styles.balanceContainer}>
+            <span>Current balance: {numberWithCommas(parseFloat(balance).toFixed(2))} {'WFAIR'}</span>
+          </div>
           <TokenTransfer
             provider={library}
-            // hash={hash}
-            // setter={setHash}
             showCancel={false}
             balance={balance}
             tranferAddress={walletAddress}
             contractAddress={currentNetwork?.contractAddress}
           />
+          </>
         )}
         {/* {!!account && (<p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not
@@ -247,6 +254,10 @@ const mapDispatchToProps = dispatch => {
           lock: lockAddress,
           data: [...amounts, ...timestamps],
         })
+      ),
+    setNotSelectedNetwork: (activeNetwork) =>
+      dispatch(
+        TxDataActions.setNotActiveNetwork(activeNetwork)
       ),
   };
 };
