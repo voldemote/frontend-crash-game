@@ -327,12 +327,9 @@
   }
 
   .loadButton {
+    height: 40px;
+    padding: 0 24px;
     margin: 0 auto;
-    background: url('../../data/backgrounds/highlight-activities-labels-active.svg') !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    border-radius: 5px;
-    padding: 55px;
     text-align: right;
     color: white;
     line-height: 1;
@@ -340,13 +337,6 @@
     position: relative;
     cursor: pointer;
     text-transform: uppercase;
-
-    &::before {
-      content: '...';
-      font-size: 12px;
-      height: 100%;
-      margin-right: 5px;
-    }
   }
 }
 
