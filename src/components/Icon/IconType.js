@@ -24,6 +24,7 @@ export default {
   chat: 'chat',
   chat2: 'chat2',
   checked: 'checked',
+  close: 'close',
   collapseSidebar: 'collapseSidebar',
   confettiLeft: 'confettiLeft',
   confettiRight: 'confettiRight',

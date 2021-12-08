@@ -40,18 +40,6 @@
     display: flex;
     align-items: center;
 
-    .signUpButton {
-      width: 11rem;
-      height: 55px;
-      border-radius: 4px;
-      font-size: 16px;
-      margin-left: 0;
-      background-position: center;
-      @media (min-width: $screen-xs-max) {
-        margin-left: 20px;
-      }
-    }
-
     svg {
       stroke-width: 0;
     }
@@ -69,36 +57,47 @@
       }
     }
     .signUpButton {
-      width: 11rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 43px;
       border-radius: 30px;
       font-size: 15px;
       line-height: 20px;
       margin-left: 0;
       margin-right: 20px;
-      background-position: center;
-      color: #ffffff;
-      text-transform: uppercase;
+      background: #ffd31a;
+      color: black;
+      border: 2px solid #ea9c00;
+      box-sizing: border-box;
+      border-radius: 25px;
       font-family: $fontRegular;
+      padding: 0 24px;
+      cursor: pointer;
 
       @media (max-width: $screen-sm) {
-        width: 8rem;
+        display: none;
         height: 40px;
         font-size: 14px;
       }
     }
 
     .loginButton {
-      color: $colorWhite;
-      text-transform: uppercase;
-      width: 11rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 43px;
+      color: #ffd31a;
       font-size: 16px;
       font-family: $fontRegular;
       margin-right: 20px;
+      border: 2px solid #ffd31a;
+      box-sizing: border-box;
+      border-radius: 25px;
+      padding: 0 24px;
+      cursor: pointer;
 
       @media (max-width: $screen-sm) {
-        width: 8rem;
         height: 40px;
         font-size: 14px;
       }
@@ -142,13 +141,15 @@
     }
 
     .pillButton {
-      color: $colorWhite;
+      color: $colorLightYellow;
       display: flex;
       align-items: center;
       white-space: nowrap;
       padding: 10px;
       padding-right: 16px;
       font-size: 12px;
+      border: 2px solid $colorLightYellow;
+      box-sizing: border-box;
       border-radius: 20px;
       font-family: $fontRegular;
       cursor: pointer;

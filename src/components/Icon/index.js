@@ -27,6 +27,7 @@ import { ReactComponent as IconCamera } from '../../data/icons/camera.svg';
 import { ReactComponent as IconChat } from '../../data/icons/chat.svg';
 import { ReactComponent as IconChat2 } from '../../data/icons/chat2.svg';
 import { ReactComponent as IconChecked } from '../../data/icons/checked.svg';
+import { ReactComponent as IconClose } from '../../data/icons/close.svg';
 import { ReactComponent as IconCollapseSidebar } from '../../data/icons/collapse-sidebar.svg';
 import { ReactComponent as IconConfettiLeft } from '../../data/icons/confetti-left.svg';
 import { ReactComponent as IconConfettiRight } from '../../data/icons/confetti-right.svg';
@@ -120,6 +121,7 @@ const Icon = ({
       [IconType.chat]: <IconChat />,
       [IconType.chat2]: <IconChat2 />,
       [IconType.checked]: <IconChecked />,
+      [IconType.close]: <IconClose />,
       [IconType.collapseSidebar]: <IconCollapseSidebar />,
       [IconType.confettiLeft]: <IconConfettiLeft />,
       [IconType.confettiRight]: <IconConfettiRight />,

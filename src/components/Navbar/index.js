@@ -169,7 +169,7 @@ const Navbar = ({
 
   const renderNavButtons = () => {
     const leaderboardBtn = (
-      <Button
+      <span
         className={classNames(style.ranking, style.pillButton, style.hiddenMobile)}
         onClick={() => toggleOpenDrawer(drawers.leaderboard)}
         data-tracking-id="menu-leaderboard"
@@ -178,7 +178,7 @@ const Navbar = ({
         <p className={style.rankingText}>
           {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
         </p>
-      </Button>
+      </span>
     );
 
     const notificationsBtn = (
@@ -196,7 +196,7 @@ const Navbar = ({
     );
 
     const walletBtn = (
-      <Button
+      <span
         className={classNames(
           style.balanceOverview,
           style.pillButton,
@@ -208,7 +208,7 @@ const Navbar = ({
       >
         <Icon iconType={'pToken'} />
         <p>{formatToFixed(balance, 0, true)} {currency}</p>
-      </Button>
+      </span>
     );
 
     const profileBtn = (
@@ -243,29 +243,27 @@ const Navbar = ({
       >
         <Icon
           className={style.menu}
-          iconType={'hamburgerMenu'}
+          iconType={isOpen(drawers.profile) || isOpen(drawers.leaderboard) ? 'close' : 'hamburgerMenu'}
         />
       </div>
     );
 
     const joinBtn = (
       <div className={style.navbarItems}>
-        <Button
-          className={style.loginButton}
-          withoutBackground={true}
+        <span
+          className={style.loginButton}          
           onClick={() => showPopupForLogin()}
         >
           <p>Login</p>
-        </Button>
-        <Button
-          className={style.signUpButton}
-          withoutBackground={true}
+        </span>
+        <span
+          className={style.signUpButton}          
           onClick={() =>
             showPopupForRegister()
           }
         >
           <p>Sign Up</p>
-        </Button>
+        </span>
       </div>
     );
 
@@ -311,11 +309,6 @@ const Navbar = ({
         )}
       >
         <div className={classNames(style.drawerContent)}>
-          <Icon
-            iconType={'cross'}
-            onClick={closeDrawers}
-            className={style.closeLeaderboard}
-          />
           <div className={style.leaderboardHeadingWrapper}>
             <Icon
               iconType={'leaderboard'}
