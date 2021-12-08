@@ -20,37 +20,41 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
 
   return (
     <div className={styles.gamesContainer}>
-      <div className={styles.gamesCategory}>
-        {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
-        <h2>{category}</h2>
-      </div>
-      <div className={styles.games}>
-        {games.map((game, index) =>
-          <div
-            className={styles.wrapper}
-            key={`gamecard-${index}-`}
-          >
-            <Link
-              to={`/external-game/${game.TechnicalName}/${game.TechnicalCategory}`}
-              className={classNames(
-                styles.game,
-                styles.gameLink
-              )}
+      {categories.map(category1 =>
+       <>
+        <div className={styles.gamesCategory}>
+          {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
+          <h2>{category1}</h2>
+        </div>
+        <div className={styles.games}>
+          {games.filter(g => g.GameCategory===category1).map((game, index) =>
+            <div
+              className={styles.wrapper}
+              key={`gamecard-${index}-`}
             >
-              <div
-                key={index}
+              <Link
+                to={`/external-game/${game.TechnicalName}/${game.TechnicalCategory}`}
                 className={classNames(
-                  styles.gameItem,
-                  getGameItemSizeClass()
+                  styles.game,
+                  styles.gameLink
                 )}
               >
-                <img src={game.picture ? game.picture : `https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName}.png`} alt={`${game.TechnicalName}`}/>
-                <p className={styles.title}>{game.GameName}</p>
-              </div>
-            </Link>
-          </div>
-        )}
-       </div>
+                <div
+                  key={index}
+                  className={classNames(
+                    styles.gameItem,
+                    getGameItemSizeClass()
+                  )}
+                >
+                  <img src={game.picture ? game.picture : `https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName}.png`} alt={`${game.TechnicalName}`}/>
+                  <p className={styles.title}>{game.TechnicalName}</p>
+                </div>
+              </Link>
+            </div>
+          )}
+        </div>
+        </>
+     )}
     </div>
   );
 };
