@@ -206,13 +206,13 @@ const fetchReferralsSucceeded = function* (action) {
 const registrationSucceeded = function* (action) {
   const authState = yield select(state => state.authentication.authState);
 
-  if (action.email && action.name && authState === AuthState.LOGGED_IN) {
-    yield put(
-      PopupActions.show({
-        popupType: PopupTheme.welcome,
-      })
-    );
-  }
+  // if (action.email && action.name && authState === AuthState.LOGGED_IN) {
+  //   yield put(
+  //     PopupActions.show({
+  //       popupType: PopupTheme.welcome,
+  //     })
+  //   );
+  // }
 };
 
 const authenticationSucceeded = function* (action) {
