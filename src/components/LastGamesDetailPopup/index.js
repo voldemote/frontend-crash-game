@@ -6,15 +6,7 @@ import moment from 'moment';
 import { getGameDetailById } from '../../api/crash-game';
 import PopupTheme from '../Popup/PopupTheme';
 import classNames from 'classnames';
-
-const roundToTwo = num => {
-  return +(Math.round(num + 'e+2') + 'e-2');
-};
-
-const getReadableAmount = amount => {
-  const one = 10000;
-  return roundToTwo(+amount / one);
-};
+import {getReadableAmount, roundToTwo} from "../../helper/FormatNumbers";
 
 const BetsTable = props => {
   const { bets } = props;
@@ -78,7 +70,7 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
     });
     const details = response?.data || null;
 
-    if (details.match) {
+    if (details?.match) {
       showPopup(PopupTheme.lastGamesDetail, {
         maxWidth: true,
         data: {
@@ -121,7 +113,7 @@ const LastGamesDetailsPopup = ({ hidePopup, showPopup, data }) => {
         <div className={classNames("global-link-style", styles.verificationTool)}><a href={game.verificationTool} target={"_blank"} rel="noreferrer"><b>{game.name} - Verification Tool</b></a></div>
         <div>
           <b>Crash factor:</b>{' '}
-          <span>{roundToTwo(match?.crashfactor).toFixed(2)}</span>
+          <span>{roundToTwo(match?.crashfactor)}</span>
         </div>
         <div>
           <b>Game ID:</b> <span>{match?.id}</span>

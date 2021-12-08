@@ -1,15 +1,11 @@
 import styles from './styles.module.scss';
 import {PopupActions} from '../../store/actions/popup';
 import {connect} from 'react-redux';
-import {roundToTwo} from "../../helper/FormatNumbers";
+import {displaySignedFormat} from "../../helper/FormatNumbers";
 import {getSingleGameDetailById} from "../../api/casino-games";
 import PopupTheme from "../Popup/PopupTheme";
 
 const LastCashouts = ({spins, showPopup, text, game}) => {
-  const displaySignedFormat = (value) => {
-    const val = roundToTwo(value);
-    return val > 0 ? `+${val}` : val
-  }
 
     const handleClick = async (crash, e) => {
         const gameHash = crash?.gameHash;
