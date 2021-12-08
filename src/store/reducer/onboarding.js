@@ -6,9 +6,9 @@ const initialState = {
 
 export const Order = [
   OnboardingSteps.buildAvatar,
-  OnboardingSteps.registerEmail,
   OnboardingSteps.setUsername,
-  OnboardingSteps.welcomeScreen,
+  OnboardingSteps.registerEmail
+  // OnboardingSteps.welcomeScreen,
 ];
 
 const start = (action, state) => {

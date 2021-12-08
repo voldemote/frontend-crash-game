@@ -26,6 +26,7 @@ const TokenTransfer = ({
   setTXSuccess,
   setformError,
   formError,
+  setTransactionAmount
 }) => {
   const [transferValue, setTransferValue] = useState('0');
   // const [blocked, setBlocked] = useState(false);
@@ -69,6 +70,7 @@ const TokenTransfer = ({
       setTXSuccess: setTXSuccess,
       setformError: setformError,
     });
+    setTransactionAmount(transferValue);
     setTransferValue('0');
   }, [provider, setter, tranferAddress, transferValue]);
 
@@ -176,6 +178,10 @@ const mapDispatchToProps = dispatch => {
     setformError: formError => {
       dispatch(TxDataActions.setTXSuccess(formError));
     },
+    setTransactionAmount: transactionAmount => {
+      dispatch(TxDataActions.setTransactionAmount(transactionAmount))
+    }
+
   };
 };
 

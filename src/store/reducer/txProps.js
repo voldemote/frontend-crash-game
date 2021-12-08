@@ -6,7 +6,9 @@ const initialState = {
   TXSuccess: false,
   formError: '',
   hash: '',
-  action: 'Token Transfer'
+  action: 'Token Transfer',
+notActiveNetwork: '',
+  transactionAmmount: 0,
 };
 
 const setHash = (action, state) => {
@@ -35,6 +37,19 @@ const setFormError = (action, state) => {
     formError: action.payload
   };
 };
+const setActiveNetwork = (action, state) => {
+  return {
+    ...state, 
+    notActiveNetwork: action.payload
+  };
+};
+
+const setTransactionAmount = (action, state) => {
+  return {
+    ...state, 
+    transactionAmmount: action.payload
+  };
+};
 
 
 export default function (state = initialState, action) {
@@ -47,6 +62,10 @@ export default function (state = initialState, action) {
       return setTxSuccess(action, state);
     case TxDataTypes.SET_FORM_ERROR:
       return setFormError(action, state);
+    case TxDataTypes.SET_ACTIVE_NETWORK:
+      return setActiveNetwork(action, state);
+    case TxDataTypes.SET_TRANSACTION_AMOUNT:
+      return setTransactionAmount(action, state);
     default:
       return state;
   }
