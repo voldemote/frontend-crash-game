@@ -12,8 +12,14 @@ import TokenTransfer from 'components/TokenTransfer';
 import { Contract, ethers } from 'ethers';
 import WFairABI from '../../../config/abi/WFAIRToken.json';
 import { switchMetaMaskNetwork } from '../../../utils/helpers/ethereum';
-import { SWITCH_NETWORKS, NETWORK_TYPES } from '../../../utils/constants';
+import {
+  SWITCH_NETWORKS,
+  NETWORK_TYPES,
+  ENV_NETWORK,
+  networkSelection,
+} from '../../../utils/constants';
 import { mapAccount, accountMappingChallenge } from 'api/third-party';
+
 import { WallfairActions } from 'store/actions/wallfair';
 import { TxDataActions } from 'store/actions/txProps';
 import useWeb3Network from '../../../hooks/useWeb3Network';
@@ -32,6 +38,8 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
   const [hash, setHash] = useState('');
   const [balance, setBalance] = useState(0);
   const [isLoadingTransferToken, setIsLoadingTransferToken] = useState(true);
+  const [notSelectedNetworkId, setNotSelectedNetworkId] = useState('');
+  const [activeNetwork, setActiveNetwork] = useState('');
   const signer = library?.getSigner();
 
   const sendAccountMappingCall = useCallback(async () => {
@@ -72,13 +80,44 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
       });
     };
     updateWallet().catch(console.error);
-  }, [account, library, signer, hash, chainId, setBalance]);
+  }, [account, library, signer, chainId, setBalance]);
 
-  const notSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
-    sn => sn !== window.ethereum?.chainId
-  );
+  useEffect(() => {
+    const activeNetwork = networkSelection(window.ethereum?.chainId);
+    setActiveNetwork(activeNetwork);
 
-  setNotSelectedNetwork(SWITCH_NETWORKS[notSelectedNetworkId]);
+    const notNetworkId = Object.entries(ENV_NETWORK).find(keyValue =>
+      keyValue.includes(window.ethereum?.chainId)
+    );
+    if (notNetworkId) {
+      let newNotSelectedNetworkId = Object.keys(SWITCH_NETWORKS).find(
+        sn => sn !== window.ethereum?.chainId
+      );
+
+      setNotSelectedNetworkId(newNotSelectedNetworkId);
+      setNotSelectedNetwork(SWITCH_NETWORKS[newNotSelectedNetworkId]);
+    } else setNotSelectedNetworkId('');
+  }, [
+    account,
+    library,
+    signer,
+    chainId,
+    notSelectedNetworkId,
+    setNotSelectedNetwork,
+    setNotSelectedNetworkId,
+  ]);
+
+  const switchNetwok = async () => {
+    const network = activeNetwork ? activeNetwork : 'Polygon';
+    const networkId = Object.entries(ENV_NETWORK).find(keyValue =>
+      keyValue.includes(network)
+    )[0];
+    await switchMetaMaskNetwork(networkId);
+    const notNetworkId = Object.entries(ENV_NETWORK).find(
+      keyValue => !keyValue.includes(network)
+    )[0];
+    setNotSelectedNetworkId(notNetworkId);
+  };
 
   return (
     <>
@@ -89,10 +128,14 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
             <div className={styles.depositHeader}>
               <div
                 className={classNames(
-                  notSelectedNetworkId &&
-                    NETWORK_TYPES.POLY === SWITCH_NETWORKS[notSelectedNetworkId]
-                    ? styles.inactiveButton
-                    : styles.activeButton
+                  notSelectedNetworkId
+                    ? NETWORK_TYPES.POLY ===
+                      SWITCH_NETWORKS[notSelectedNetworkId]
+                      ? styles.inactiveButton
+                      : styles.activeButton
+                    : activeNetwork === NETWORK_TYPES.POLY
+                    ? styles.activeButton
+                    : styles.inactiveButton
                 )}
                 onClick={async () => {
                   const networkId = notSelectedNetworkId;
@@ -105,20 +148,28 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
                 <img
                   className={styles.imageSizePolygon}
                   src={
-                    notSelectedNetworkId &&
-                    NETWORK_TYPES.POLY === SWITCH_NETWORKS[notSelectedNetworkId]
-                      ? PolygonLogo
-                      : PolygonLogoActive
+                    notSelectedNetworkId
+                      ? NETWORK_TYPES.POLY ===
+                        SWITCH_NETWORKS[notSelectedNetworkId]
+                        ? PolygonLogo
+                        : PolygonLogoActive
+                      : activeNetwork === NETWORK_TYPES.POLY
+                      ? PolygonLogoActive
+                      : PolygonLogo
                   }
                   alt="Polygon-logo"
                 />
               </div>
               <div
                 className={classNames(
-                  notSelectedNetworkId &&
-                    NETWORK_TYPES.ETH === SWITCH_NETWORKS[notSelectedNetworkId]
-                    ? styles.inactiveButton
-                    : styles.activeButton
+                  notSelectedNetworkId
+                    ? NETWORK_TYPES.ETH ===
+                      SWITCH_NETWORKS[notSelectedNetworkId]
+                      ? styles.inactiveButton
+                      : styles.activeButton
+                    : activeNetwork === NETWORK_TYPES.ETH
+                    ? styles.activeButton
+                    : styles.inactiveButton
                 )}
                 onClick={async () => {
                   const networkId = notSelectedNetworkId;
@@ -132,10 +183,14 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
                 <img
                   className={styles.imageSizeEther}
                   src={
-                    notSelectedNetworkId &&
-                    NETWORK_TYPES.ETH === SWITCH_NETWORKS[notSelectedNetworkId]
-                      ? EthereumLogo
-                      : EthereumLogoActive
+                    notSelectedNetworkId
+                      ? NETWORK_TYPES.ETH ===
+                        SWITCH_NETWORKS[notSelectedNetworkId]
+                        ? EthereumLogo
+                        : EthereumLogoActive
+                      : activeNetwork === NETWORK_TYPES.ETH
+                      ? EthereumLogoActive
+                      : EthereumLogo
                   }
                   alt="Ethereum-logo"
                 />
@@ -186,6 +241,21 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
             </button>
           </div>
         )}
+
+        {account && !notSelectedNetworkId.length ? (
+          <div className={styles.connectWalletContainer}>
+            <p>You are selected wrong network</p>
+            <p>Click below to switch network</p>
+            <button
+              type="button"
+              className={styles.connectWalletButton}
+              onClick={switchNetwok}
+            >
+              Switch Network
+            </button>
+          </div>
+        ) : null}
+
         {visibleWalletForm && !active && (
           <ConnectWallet accountMapping={sendAccountMappingCall} />
         )}
@@ -193,26 +263,23 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
           <Loader />
         ) : isLoadingTransferToken ? (
           tokenAreaOpen && account && <Loader />
-        ) : (
-          tokenAreaOpen &&
-          account && (
-            <>
-              <div className={styles.balanceContainer}>
-                <span>
-                  Current balance:{' '}
-                  {numberWithCommas(parseFloat(balance).toFixed(2))} {'WFAIR'}
-                </span>
-              </div>
-              <TokenTransfer
-                provider={library}
-                showCancel={false}
-                balance={balance}
-                tranferAddress={walletAddress}
-                contractAddress={currentNetwork?.contractAddress}
-              />
-            </>
-          )
-        )}
+        ) : tokenAreaOpen && account && notSelectedNetworkId.length ? (
+          <>
+            <div className={styles.balanceContainer}>
+              <span>
+                Current balance:{' '}
+                {numberWithCommas(parseFloat(balance).toFixed(2))} {'WFAIR'}
+              </span>
+            </div>
+            <TokenTransfer
+              provider={library}
+              showCancel={false}
+              balance={balance}
+              tranferAddress={walletAddress}
+              contractAddress={currentNetwork?.contractAddress}
+            />
+          </>
+        ) : null}
         {/* {!!account && (<p className={styles.firstDiscription}>
           Only send MATIC to this address, 1 confirmation(s) required. We do not
           accept BEP20 from Binance.
