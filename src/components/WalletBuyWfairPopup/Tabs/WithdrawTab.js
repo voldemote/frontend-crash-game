@@ -14,6 +14,10 @@ import WithdrawalSuccessPopup from 'components/WithdrawalSuccessPopup';
 // import { TOKEN_NAME } from 'constants/Token';
 import { selectUser } from 'store/selectors/authentication';
 import { useSelector } from 'react-redux';
+import EthereumLogoActive from '../../../data/icons/ethereum-logo-icon-active.svg';
+import EthereumLogo from '../../../data/icons/ethereum-logo-icon.svg';
+import PolygonLogoActive from '../../../data/icons/polygon-logo-active.svg';
+import PolygonLogo from '../../../data/icons/polygon-logo.svg';
 
 const networkName = {
   polygon: 'MATIC',
@@ -164,9 +168,11 @@ const WithdrawTab = () => {
             )}
             onClick={() => setActiveNetwork(networkName.polygon)}
           >
-            {/* <BitcoinIcon /> */}
-            <p className={styles.fullName}>Polygon</p>
-            <p className={styles.shortName}>Polygon</p>
+            <img
+              className={styles.imageSizePolygon}
+              src={activeNetwork === networkName.polygon ? PolygonLogoActive : PolygonLogo} 
+              alt="Polygon Logo"
+            />
           </div>
           <div
             className={classNames(
@@ -175,9 +181,11 @@ const WithdrawTab = () => {
             )}
             onClick={() => setActiveNetwork(networkName.ethereum)}
           >
-            {/* <EthereumIcon /> */}
-            <p className={styles.fullName}>Ethereum</p>
-            <p className={styles.shortName}>Ethereum</p>
+            <img
+              className={styles.imageSizeEthereum}
+              src={activeNetwork === networkName.ethereum ? EthereumLogoActive : EthereumLogo} 
+              alt="Ethereum Logo"
+            />
           </div>
         </div>
 
@@ -201,7 +209,7 @@ const WithdrawTab = () => {
               onChange={addressChange}
               onBlur={addressLostFocus}
               onClick={selectContent}
-              placeholder="Add your wallet address (0x...)"
+              placeholder={`Add your ${activeNetwork === networkName.polygon ? 'Polygon' : 'Ethereum'} wallet address`}
             />
           </div>
 

@@ -79,6 +79,7 @@ const RouletteGame = ({
   useEffect(() => {
     if(!user.isLoggedIn){
       if(isMobile) {
+        history.push('/games')
         window.location = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
       }else{
         setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
@@ -87,6 +88,7 @@ const RouletteGame = ({
       setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
         .then(({data}) => {
           if(isMobile) {
+            history.push('/games')
             window.location = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
           }else{
             setInit(data.TokenID)
