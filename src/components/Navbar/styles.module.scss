@@ -416,8 +416,9 @@
       font-size: 24px;
       line-height: 30px;
 
-      @media screen and (min-width: $screen-xs) {
-        font-size: 24px;
+      @media (max-width: $screen-md) {
+        font-size: 22px;
+        margin-right: 30px;
       }
     }
 

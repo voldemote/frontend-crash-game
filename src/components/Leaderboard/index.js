@@ -105,24 +105,12 @@ const Leaderboard = ({
     <div className={classNames(style.leaderboardTable, className)}>
       <div className={classNames(style.tableHeadings, headingClass)}>
         <p className={style.rankingHeading}>
-          <Icon
-            iconType={IconType.leaderboardRanking}
-            iconTheme={IconTheme.transparent}
-          />
           RANKING
         </p>
         <p className={style.userHeading}>
-          <Icon
-            iconType={IconType.leaderboardUser}
-            iconTheme={IconTheme.transparent}
-          />
           USER
         </p>
         <p className={style.tokenHeading}>
-          <Icon
-            iconType={IconType.leaderboardToken}
-            iconTheme={IconTheme.transparent}
-          />
           TOKENS WON
         </p>
       </div>
