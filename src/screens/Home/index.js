@@ -230,7 +230,7 @@ const Home = ({
           <h2>House Games</h2>
         </div>
         <div className={styles.cardBox}>
-          <Grid container>
+          <Grid container spacing={1}>
             <Grid item lg={3} md={6} xs={12}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
