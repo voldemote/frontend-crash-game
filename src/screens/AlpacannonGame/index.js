@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -34,6 +34,7 @@ import {
   trackPlinkoPlaceBet
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
+import { selectUser } from 'store/selectors/authentication';
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
@@ -49,6 +50,7 @@ const PlinkoGame = ({
   const Api = new GameApi(GAMES.cannon.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
+  const user = useSelector(selectUser);
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({ready: true, rollover: 50});
@@ -64,32 +66,33 @@ const PlinkoGame = ({
   }, []);
 
   useEffect(() => {
-    getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
-      .then(response => {
-        const lastSpins = response?.data.lastCrashes;
-        setSpins(lastSpins.map((spin) => {
-          if(spin.profit > 0) {
-            return {
-              type: 'win',
-              value: '+' + spin.profit
+    if(user.isLoggedIn){
+      getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
+        .then(response => {
+          const lastSpins = response?.data.lastCrashes;
+          setSpins(lastSpins.map((spin) => {
+            if(spin.profit > 0) {
+              return {
+                type: 'win',
+                value: '+' + spin.profit
+              }
+            } else if(spin.profit === 0){
+              return {
+                type: 'even',
+                value: '' + spin.profit
+              }
+            }else {
+              return {
+                type: 'loss',
+                value: spin.profit
+              }
             }
-          } else if(spin.profit === 0){
-            return {
-              type: 'even',
-              value: '' + spin.profit
-            }
-          }else {
-            return {
-              type: 'loss',
-              value: spin.profit
-            }
-          }
-        }))
-      })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
-      });
-
+          }))
+        })
+        .catch(error => {
+          dispatch(AlertActions.showError(error.message));
+        });
+    }
   }, [])
 
   useEffect(() => {
@@ -120,7 +123,6 @@ const PlinkoGame = ({
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
-        console.log("Data: ", data)
         setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false} })
         updateUserBalance(userId);
         // trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
