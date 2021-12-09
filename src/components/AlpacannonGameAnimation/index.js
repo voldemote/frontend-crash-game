@@ -114,9 +114,9 @@ const AlpacannonGameAnimation = ({
       <div className={styles.interpolateMultiplier}>
         <span>{interpolateMultiplier(slider).toFixed(2)}</span>
       </div>
-      <img className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game !== 'shoot' ? '-10%':'55%', right: game !== 'shoot' ? (bet.crash > 65 ? `41%` : bet.crash < 35?`41%`:'41%') : `calc(${bet.crashPosition}% + 60px)`}} src={bet.crash < 35 ? "/images/cannon-games/alpaca-right.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-left.svg" : "/images/cannon-games/alpaca-center.svg" } alt="alpaca flying" />
-      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: `calc(${bet.crashPosition}% + 70px)`}} src={bet.crash > 65 ? "/images/cannon-games/alpaca-crash-left.png" : bet.crash < 35 ? "/images/cannon-games/alpaca-crash.png" : "/images/cannon-games/alpaca-crash.png"} alt="alpaca crash" />
-      <div className={styles.alpaResult} style={{ zIndex: game === 'crashed' ? 5:4, opacity: game === 'crashed' ? 1 : 0, right: `calc(${bet.crashPosition}% + 40px)`}}>
+      <img className={styles.alpacaFlying} style={{ opacity: game === 'shoot' ? 1 : 0, bottom: game !== 'shoot' ? '-10%':(width < 600?'49%':'55%'), right: game !== 'shoot' ? (bet.crash > 65 ? `41%` : bet.crash < 35?`41%`:'41%') : width < 600?`calc(${bet.crashPosition}%`:`calc(${bet.crashPosition}% + 40px)`}} src={bet.crash < 35 ? "/images/cannon-games/alpaca-right.svg" : bet.crash > 65 ? "/images/cannon-games/alpaca-left.svg" : "/images/cannon-games/alpaca-center.svg" } alt="alpaca flying" />
+      <img className={styles.alpacaCrash} style={{ opacity: game === 'crashed' ? 1 : 0, right: width < 600?`calc(${bet.crashPosition}%`:`calc(${bet.crashPosition}% + 40px)`}} src={bet.crash > 65 ? "/images/cannon-games/alpaca-crash-left.png" : bet.crash < 35 ? "/images/cannon-games/alpaca-crash.png" : "/images/cannon-games/alpaca-crash.png"} alt="alpaca crash" />
+      <div className={styles.alpaResult} style={{ zIndex: game === 'crashed' ? 5:4, opacity: game === 'crashed' ? 1 : 0, right: width < 600?`calc(${bet.crashPosition}%`:`calc(${bet.crashPosition}% + 40px)`}}>
         <img src="/images/cannon-games/score.svg" alt="alpaca crash" />
         <span style={{color: bet.win ? '#2dcb70':'#ff5858'}}>{100 - bet.crash}</span>
       </div>
