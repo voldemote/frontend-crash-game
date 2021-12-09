@@ -25,7 +25,8 @@
     .rankingHeading {
       width: 60px;
       margin-right: 77px;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
       color: $colorLightYellow;
       font-size: 14px;
       line-height: 18px;
@@ -45,7 +46,8 @@
     }
 
     .userHeading {
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
       font-size: 14px;
       line-height: 18px;
       color: $colorLightYellow;
@@ -63,7 +65,8 @@
     }
 
     .tokenHeading {
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
       font-size: 14px;
       line-height: 18px;
       color: $colorLightYellow;

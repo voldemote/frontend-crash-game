@@ -16,16 +16,19 @@
   .title {
     text-align: center;
     color: $colorWhite;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
   }
   .titleLeft {
     text-align: left;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     color: $colorWhite;
   }
   .titleRight {
     text-align: right;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     color: $colorWhite;
   }
 
@@ -34,7 +37,8 @@
     display: inline-flex;
     display: -ms-inline-flexbox;
     display: -webkit-box;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     //text-align: left;
     hyphens: auto;
     transition: opacity 300ms ease-out, transform 300ms ease-out;
@@ -83,7 +87,7 @@
 
       :first-child {
         font-size: 12px;
-        font-family: $fontBold;
+        font-family: $fontOmnes;
       }
 
       :last-child {

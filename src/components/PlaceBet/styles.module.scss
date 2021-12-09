@@ -40,11 +40,12 @@
     }
     .selected {
       color: #000;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
     }
     .deselected {
       color: #fff;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
     }
   }
 }
@@ -85,7 +86,7 @@
   }
   .selected {
     color: #000;
-    font-family: $fontMedium;
+    font-family: $fontOmnes;
   }
 }
 
@@ -106,7 +107,7 @@
   display: inline-block;
   color: #1f1d38;
   opacity: 0.8;
-  font-family: $fontMedium;
+  font-family: $fontOmnes;
   font-size: 12px;
   letter-spacing: 0;
   text-align: left;
@@ -156,7 +157,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: monospace $fontMedium;
+  font-family: monospace $fontOmnes;
   .empty {
     cursor: default;
     pointer-events: none;
@@ -187,7 +188,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: monospace $fontMedium;
+  font-family: monospace $fontOmnes;
   cursor: default;
   pointer-events: none;
   user-select: none;
@@ -213,7 +214,7 @@
     margin-right: 9px;
     min-width: 10px !important;
     width: 6ch !important;
-    font-family: $fontBold;
+    font-family: $fontOmnes;
     font-style: normal;
     font-weight: bold;
     font-size: 21px;
@@ -227,7 +228,7 @@
       margin-right: 9px;
       min-width: 10px !important;
       width: 6ch !important;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
       font-style: normal;
       font-weight: bold;
       font-size: 21px;
@@ -257,7 +258,8 @@
       padding: 0;
       font-size: 14px;
       line-height: 18px;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
       text-transform: uppercase;
     }
     @media screen and (max-width: 800px) {
@@ -291,7 +293,7 @@
   @media screen and (max-width: $screen-xs) {
     margin-top: 10px;
   }
-  font-family: $fontBold;
+  font-family: $fontOmnes;
   width: 15em;
   height: 70px;
   font-size: 16px;
@@ -395,7 +397,7 @@
     min-width: 10px !important;
     width: 6ch;
     color: $colorLightYellow;
-    font-family: $fontBold;
+    font-family: $fontOmnes;
     font-style: normal;
     font-weight: bold;
     font-size: 21px;
@@ -414,7 +416,7 @@
 
   .eventTokenLabel {
     color: $colorWhite;
-    font-family: $fontRegular;
+    font-family: $fontOmnes;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -444,7 +446,7 @@
     }
     .buttonItem {
       margin-left: 12px;
-      font-family: $fontMedium;
+      font-family: $fontOmnes;
       cursor: pointer;
     }
   }
@@ -470,7 +472,7 @@
 }
 
 .tooltip {
-  font-family: $fontBold;
+  font-family: $fontOmnes;
   background-color: $colorPrimary45 !important;
   text-align: left !important;
 }

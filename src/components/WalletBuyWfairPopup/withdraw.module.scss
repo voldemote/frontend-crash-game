@@ -49,7 +49,7 @@
   display: flex;
   align-items: flex-end;
   color: $colorWhite;
-  font-family: $fontRegular;
+  font-family: $fontOmnes;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -93,7 +93,7 @@
   h2 {
     display: flex;
     justify-content: center;
-    font-family: $fontRegular;
+    font-family: $fontOmnes;
     text-transform: uppercase;
     font-size: 14px;
   }
@@ -129,7 +129,7 @@
         margin-left: 10px;
         font-size: 20px;
         line-height: 25px;
-        font-family: $fontRegular;
+        font-family: $fontOmnes;
         color: $colorWhite;
         @media (max-width: $screen-sm) {
           font-size: 12px;
@@ -173,7 +173,7 @@
     margin-top: 25px;
     text-align: justify;
     p {
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       font-size: 16px;
       padding-bottom: 10px;
     }
@@ -200,7 +200,8 @@
       width: 100%;
       padding: 10px 0;
       text-align: right;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
     }
 
     .equivalentFiat {
@@ -243,7 +244,8 @@
         direction: ltr;
         text-align: left;
         font-size: 16px;
-        font-family: $fontBold;
+        font-family: $fontOmnes;
+        font-weight: bold;
         &:focus-visible {
           outline: none;
         }
@@ -281,7 +283,8 @@
         flex-direction: row;
 
         .gasFeeLabel {
-          font-family: $fontBold;
+          font-family: $fontOmnes;
+          font-weight: bold;
         }
       }
       input {
@@ -291,11 +294,11 @@
         padding: 20px;
         margin: 0px 10px;
         border: none;
-        font-size: large;
         direction: ltr;
         text-align: right;
         font-size: 24px;
-        font-family: $fontBold;
+        font-family: $fontOmnes;
+        font-weight: bold;
         &:focus-visible {
           outline: none;
         }
@@ -341,7 +344,8 @@
 
           .innerContent {
             p {
-              font-family: $fontBold;
+              font-family: $fontOmnes;
+              font-weight: bold;
               font-size: 18px;
             }
           }
@@ -382,7 +386,7 @@
       border: 1px solid $colorWhite;
       width: 240px;
       height: 45px;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       color: $colorWhite;
       margin-top: 10px;
       margin-bottom: 10px;
