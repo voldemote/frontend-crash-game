@@ -24,17 +24,6 @@ const HomeSettings = ({
   return (
     <div className={styles.settings}>
       <div className={styles.settingContainer}>
-        {loggedIn && (
-        <div
-          onClick={onWalletClick}
-          className={classNames(
-            styles.singleSettingHolder
-          )}
-        >
-          <Icon className={styles.referralIcon} iconType={'wallet'} />
-          <p className={styles.settingTitle}>Wallet</p>
-        </div>
-        )}
         <div
           onClick={onGamesClick}
           className={classNames(

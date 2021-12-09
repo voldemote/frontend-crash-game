@@ -82,7 +82,6 @@ const UsernamePopup = ({
         <Button
           onClick={skipUsername}
           withoutBackground={true}
-          highlightType={HighlightType.highlightModalButton2Disabled}
           className={styles.button}
         >
           <span>Skip</span>
@@ -90,11 +89,6 @@ const UsernamePopup = ({
         <Button
           onClick={onConfirm}
           withoutBackground={true}
-          highlightType={
-            loading
-              ? HighlightType.highlightModalButton2Disabled
-              : HighlightType.highlightModalButton2
-          }
           className={styles.button}
           disabled={loading}
           disabledWithOverlay={false}

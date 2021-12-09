@@ -25,7 +25,7 @@ $largeMobileHeight: 700px;
 
   &.menuOpened {
     right: 0;
-    padding: 90px 24px 0;
+    padding: 0px 24px 0;
     background-color: $colorPrimary;
     backdrop-filter: blur(6px);
     overflow: hidden;
@@ -113,27 +113,33 @@ $largeMobileHeight: 700px;
     border-radius: 10px;
   }
 
-  .editProfileContent {
-    padding-bottom: 50px;
-    overflow-y: auto;
-
+  .submitButtonContainer {
+    display: flex;
+    justify-content: center;
     .profileSubmit {
-      width: 100%;
-      height: 55px;
-      border-radius: 4px;
+      padding: 0 12px;
+      height: 48px;
       line-height: 25px;
-      font-size: 16px;
       margin-top: 50px;
-      border: none;
-      background-color: $colorYellowLight;
+      background: #ffd31a;
+      border: 2px solid #ea9c00;
+      box-sizing: border-box;
+      border-radius: 25px;
       color: $colorBlack;
       text-transform: uppercase;
       font-family: $fontOmnes;
+      font-weight: bold;
+      font-size: 16px;
 
       &:hover {
         cursor: pointer;
       }
     }
+  }
+
+  .editProfileContent {
+    padding-bottom: 50px;
+    overflow-y: auto;
 
     .profilePictureWrapper {
       width: 100%;
@@ -144,6 +150,7 @@ $largeMobileHeight: 700px;
       .profilePicture {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         .profilePictureUpload {
           margin-bottom: 20px;
@@ -180,7 +187,8 @@ $largeMobileHeight: 700px;
         }
 
         .profilePictureUploadLabel {
-          font-size: 12px;
+          font-size: 20px;
+          font-weight: normal;
           // opacity: 0.4;
           text-align: center;
           color: $colorWhite;
@@ -199,7 +207,8 @@ $largeMobileHeight: 700px;
           height: 12px;
           // opacity: 0.3;
           line-height: 12px;
-          font-size: 12px;
+          font-size: 16px;
+          font-weight: 600;
           margin: 14px 0;
         }
 
@@ -207,13 +216,14 @@ $largeMobileHeight: 700px;
           border-radius: 4px;
           width: 100%;
           height: 60px;
-          background-color: $colorGrayLight;
+          background-color: rgba(255, 255, 255, 0.1);
           margin-bottom: 24px;
           line-height: 24px;
           font-size: 16px;
           font-family: $fontOmnes;
+          font-weight: 600;
           border: none;
-          color: $colorPrimary;
+          color: $colorWhite;
           text-indent: 20px;
 
           &:focus {
