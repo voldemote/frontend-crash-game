@@ -74,6 +74,10 @@ jobs:
                             --build-arg REACT_APP_URL="https://dev.alpacasino.io"\
                             --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper-dev.wallfair.io/map"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xB56AE8254dF096173A27700bf1F1EC2b659F3eC8"\
+                            --build-arg REACT_APP_ENVIRONMENT="staging"\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_BITCOIN=tempstqet6vmulp4f0w3flmcj8wluhxtmtm9s22y7t\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0xtemp9Ac4e7a8568d7806Fe08bcFF936C42d44E659\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=TEmPtNea1nQhx7rrQfXCAGrzajJMzqRVum\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
       - name: Build the docker image (production)
@@ -90,6 +94,10 @@ jobs:
                             --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false\
                             --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper.alpacasino.io/map"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xAA9e0AA096c55A9E1553a7a17Ea7415E4B4E4c66"\
+                            --build-arg REACT_APP_ENVIRONMENT="staging"\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_BITCOIN=tempstqet6vmulp4f0w3flmcj8wluhxtmtm9s22y7t\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0xtemp9Ac4e7a8568d7806Fe08bcFF936C42d44E659\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=TEmPtNea1nQhx7rrQfXCAGrzajJMzqRVum\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
       - name: Build the docker image (alpa production)
