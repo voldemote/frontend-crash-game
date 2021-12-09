@@ -39,6 +39,11 @@ $largeMobileHeight: 700px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 80px;
+
+    @media (max-width: $screen-sm) {
+      margin-top: 30px;
+    }
 
     .singleSettingHolder {
       position: relative;
@@ -85,10 +90,9 @@ $largeMobileHeight: 700px;
         line-height: 30px;
         color: $colorWhite;
         @media (max-width: $screen-sm) {
-          width: 60%;
-          left: 50px;
+          left: 70px;
           font-size: 17px;
-          font-weight: 400;
+          font-weight: 500;
           line-height: 22px;
         }
       }

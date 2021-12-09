@@ -7,13 +7,6 @@ import TabOptions from '../../components/TabOptions';
 import { getUserPublicInfo, getUserPublicStats } from '../../api';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
-import ProfileActivityTemplate1 from '../../data/backgrounds/profile/userprofile_activity1.png';
-import ProfileActivityTemplate2 from '../../data/backgrounds/profile/userprofile_activity2.png';
-import ProfileActivityTemplate3 from '../../data/backgrounds/profile/userprofile_activity3.png';
-
-import ProfileActivityMobileTemplate1 from '../../data/backgrounds/profile/userprofile_mobile_activity1.png';
-import ProfileActivityMobileTemplate2 from '../../data/backgrounds/profile/userprofile_mobile_activity2.png';
-import ProfileActivityMobileTemplate3 from '../../data/backgrounds/profile/userprofile_mobile_activity3.png';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +26,11 @@ const UserProfile = () => {
     { name: 'TRANSACTION HISTORY', index: 0 },
     { name: 'ACTIVITIES', index: 1 },
     { name: 'LEADERBOARD', index: 2 },
+  ];
+  const [sideTabIndex, setSideTabIndex] = useState(0);
+  const sideTabOptions = [
+    { name: 'Statistics', index: 0 },
+    { name: 'Achievement', index: 1 },
   ];
   const currentUser = useSelector(state => state.authentication);
   const dispatch = useDispatch();
@@ -62,6 +60,10 @@ const UserProfile = () => {
 
   const handleSwitchTab = option => {
     setTabIndex(option.index);
+  };
+
+  const handleSwitchSideTab = option => {
+    setSideTabIndex(option.index);
   };
 
   const onSuspendButtonClick = status => {
@@ -105,7 +107,6 @@ const UserProfile = () => {
   const UserStatsSide = () => {
     return (
       <>
-        <div className={styles.header}>Statistics</div>
         <div className={styles.statsBlock}>
           <div className={styles.statItem}>
             <div className={styles.statItemHead}>
@@ -179,31 +180,46 @@ const UserProfile = () => {
                 </Button>
               )}
             </div>
-
-            <TabOptions options={tabOptions} className={styles.tabLayout}>
-              {option => (
-                <div
-                  className={
-                    option.index === tabIndex
-                      ? styles.tabItemSelected
-                      : styles.tabItem
-                  }
-                  onClick={() => handleSwitchTab(option)}
-                >
-                  {option.name}
-                </div>
-              )}
-            </TabOptions>
           </div>
           <div className={styles.contentBlock}>
             <div className={styles.mainContent}>
+              <TabOptions options={tabOptions} className={styles.tabLayout}>
+                {option => (
+                  <div
+                    className={
+                      option.index === tabIndex
+                        ? styles.tabItemSelected
+                        : styles.tabItem
+                    }
+                    onClick={() => handleSwitchTab(option)}
+                  >
+                    {option.name}
+                  </div>
+                )}
+              </TabOptions>
               <div className={styles.userActivities}>
                 {renderTabConditional()}
               </div>
             </div>
 
-            <div className={styles.sideContent}>
-              <UserStatsSide />
+            <div>
+              <TabOptions options={sideTabOptions} className={styles.tabLayout}>
+                {option => (
+                  <div
+                    className={
+                      option.index === sideTabIndex
+                        ? styles.tabItemSelected
+                        : styles.tabItem
+                    }
+                    onClick={() => handleSwitchSideTab(option)}
+                  >
+                    {option.name}
+                  </div>
+                )}
+              </TabOptions>
+              <div className={styles.sideContent}>
+                <UserStatsSide />
+              </div>
             </div>
           </div>
         </div>
