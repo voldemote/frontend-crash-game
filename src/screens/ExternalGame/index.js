@@ -80,7 +80,6 @@ const RouletteGame = ({
     if(!user.isLoggedIn){
       if(isMobile) {
         window.location = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
-        history.push('/games')
       }else{
         setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
       }
@@ -89,7 +88,6 @@ const RouletteGame = ({
         .then(({data}) => {
           if(isMobile) {
             window.location = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
-            history.push('/games')
           }else{
             setInit(data.TokenID)
           }
