@@ -275,6 +275,9 @@ const cryptoAddressLostFocus = useCallback(event => {
               </span>{' '}
               to the following {cryptoShortName[activeTab]} Address
             </p>
+            <div className={styles.qrCodeImg}>
+              {address && <QRCode value={address} size={150} />}
+            </div>
             <ReferralLinkCopyInputBox
               className={styles.referralLink}
               inputTheme={InputBoxTheme.copyToClipboardInputWhite}
@@ -287,9 +290,6 @@ const cryptoAddressLostFocus = useCallback(event => {
                 deposits@alpacasino.io
               </a>
             </p>
-            <div className={styles.qrCodeImg}>
-              {address && <QRCode value={address} size={220} />}
-            </div>
             {/* <div className={styles.transferSectionCopy}>
               <p>Send Transaction URL</p>
               <div className={styles.cryptoUrlContiner}>
