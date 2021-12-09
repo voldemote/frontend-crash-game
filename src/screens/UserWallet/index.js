@@ -94,7 +94,7 @@ const UserWallet = ({
 
   useEffect(() => {
     fetchWalletTransactions();
-  }, [fetchWalletTransactions]);
+  }, [fetchWalletTransactions, balance]);
 
   useEffect(() => {
     isTransactionsFetchError ? setStakesLoading(false) : setStakesLoading(true);
