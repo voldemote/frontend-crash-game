@@ -8,9 +8,12 @@
   margin-bottom: 14px;
   padding: 7px 20px;
   margin-top: 14px;
+  font-weight: 600;
+
   .title {
     display: inline-block;
     color: $colorWhite;
+    font-size: 14px;
     width: 30%;
 
     @media screen and (max-width: $screen-sm) {

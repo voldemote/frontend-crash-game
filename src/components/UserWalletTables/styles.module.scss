@@ -21,15 +21,16 @@
   .title {
     text-align: center;
     color: $colorWhite;
-    font-size: 12px;
-
+    font-size: 14px;
+    font-weight: 600;
     @media (max-width: $screen-xs) {
       font-size: 8px;
     }
   }
   .titleFirst {
     text-align: left;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     color: $colorWhite;
     @media (max-width: $screen-xs) {
       font-size: 8px;
@@ -37,7 +38,8 @@
   }
   .titleLast {
     text-align: right;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     color: $colorWhite;
     @media (max-width: $screen-xs) {
       font-size: 8px;
@@ -50,7 +52,8 @@
     display: -ms-inline-flexbox;
     display: -webkit-box;
     margin-top: 0.5rem;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     text-align: left;
     hyphens: auto;
     transition: opacity 300ms ease-out, transform 300ms ease-out;
@@ -115,10 +118,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-weight: bold;
+      font-family: $fontOmnes;
 
       :first-child {
         font-size: 12px;
-        font-family: $fontBold;
       }
 
       :last-child {

@@ -49,7 +49,7 @@
   display: flex;
   align-items: flex-end;
   color: $colorWhite;
-  font-family: $fontRegular;
+  font-family: $fontOmnes;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -113,7 +113,7 @@
     }
 
     p {
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       font-style: normal;
       font-weight: normal;
       font-size: 16px;
@@ -166,7 +166,8 @@
         direction: ltr;
         text-align: right;
         font-size: 24px;
-        font-family: $fontBold;
+        font-family: $fontOmnes;
+        font-weight: bold;
         &:focus-visible {
           outline: none;
         }
@@ -236,7 +237,8 @@
 
           .innerContent {
             p {
-              font-family: $fontBold;
+              font-family: $fontOmnes;
+              font-weight: bold;
               font-size: 18px;
             }
           }
@@ -277,7 +279,7 @@
       border: 1px solid $colorWhite;
       width: 240px;
       height: 45px;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       color: $colorWhite;
       margin-top: 25px;
       margin-bottom: 36px;
@@ -337,7 +339,7 @@
         margin-left: 10px;
         font-size: 20px;
         line-height: 25px;
-        font-family: $fontRegular;
+        font-family: $fontOmnes;
         color: $colorWhite;
         @media (max-width: $screen-sm) {
           font-size: 12px;
@@ -400,11 +402,11 @@
       padding: 20px 5px;
       margin: 0px 10px;
       border: none;
-      font-size: large;
       direction: ltr;
       text-align: left;
       font-size: 16px;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
       &:focus-visible {
         outline: none;
       }
@@ -425,7 +427,7 @@
     margin-top: 25px;
     text-align: justify;
     p {
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       font-size: 16px;
       padding-bottom: 10px;
     }
@@ -474,11 +476,11 @@
         padding: 20px;
         margin: 0px 10px;
         border: none;
-        font-size: large;
         direction: ltr;
         text-align: right;
         font-size: 24px;
-        font-family: $fontBold;
+        font-family: $fontOmnes;
+        font-weight: bold;
         &:focus-visible {
           outline: none;
         }
@@ -524,7 +526,8 @@
 
           .innerContent {
             p {
-              font-family: $fontBold;
+              font-family: $fontOmnes;
+              font-weight: bold;
               font-size: 18px;
             }
           }
@@ -565,7 +568,7 @@
       border: 1px solid $colorWhite;
       width: 240px;
       height: 45px;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       color: $colorWhite;
       margin-top: 10px;
       margin-bottom: 25px;
@@ -599,14 +602,15 @@
       margin: 0 auto;
       flex-direction: column;
       p {
-        font-family: $fontRegular;
+        font-family: $fontOmnes;
         font-size: small;
         margin-bottom: 22px;
         text-align: justify;
         font-size: 16px;
 
         span {
-          font-family: $fontBold;
+          font-family: $fontOmnes;
+          font-weight: bold;
         }
       }
       .backBtn {
@@ -655,7 +659,8 @@
             direction: ltr;
             text-align: left;
             font-size: 16px;
-            font-family: $fontBold;
+            font-family: $fontOmnes;
+            font-weight: bold;
             &:focus-visible {
               outline: none;
             }
@@ -678,7 +683,7 @@
         border: 1px solid $colorWhite;
         width: 240px;
         height: 45px;
-        font-family: $fontRegular;
+        font-family: $fontOmnes;
         color: $colorWhite;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -707,7 +712,8 @@
     width: 100%;
     padding: 10px 0;
     text-align: center;
-    font-family: $fontBold;
+    font-family: $fontOmnes;
+    font-weight: bold;
   }
 
   .depositHeader {
@@ -767,7 +773,7 @@
       width: 255px;
       height: 16px;
       margin: 0 14px 0 0;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       font-size: 12.6px;
       font-weight: 500;
       color: $colorWhite;
@@ -790,7 +796,7 @@
     width: 443.9px;
     height: 32px;
     margin-top: 40px;
-    font-family: $fontRegular;
+    font-family: $fontOmnes;
     font-size: 12.6px;
     font-weight: 500;
     text-align: center;
@@ -843,7 +849,7 @@
       border: 1px solid $colorWhite;
       width: 240px;
       height: 45px;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       color: $colorWhite;
       margin-top: 10px;
       margin-bottom: 10px;

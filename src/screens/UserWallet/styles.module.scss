@@ -45,7 +45,7 @@
   }
 
   h1 {
-    font-family: $fontBold;
+    font-family: $fontOmnes;
     font-size: 46px;
     font-weight: bold;
     line-height: 1.13;
@@ -86,10 +86,11 @@
   div.slogan {
     padding: 12px 0;
     font-size: 25px;
-    font-family: $fontMedium;
+    font-family: $fontOmnes;
 
     span {
-      font-family: $fontBold;
+      font-family: $fontOmnes;
+      font-weight: bold;
       color: $colorYellowLight;
     }
 
@@ -137,7 +138,7 @@
     align-items: center;
     justify-content: space-between;
     color: $colorWhite;
-    font-family: $fontRegular;
+    font-family: $fontOmnes;
     font-size: 24px;
     margin-bottom: 20px;
 
@@ -363,7 +364,7 @@
   display: flex;
   align-items: flex-end;
   color: $colorWhite;
-  font-family: $fontRegular;
+  font-family: $fontOmnes;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -486,7 +487,7 @@
 
     .currentbalanceHeading {
       // margin: 54px 18px 21px 19px;
-      font-family: $fontMedium;
+      font-family: $fontOmnes;
       font-size: 16px;
       font-weight: 800;
       color: $colorBlack;
@@ -495,7 +496,7 @@
     .currentbalanceWFair {
       // height: 126px;
       // margin: 11px 0 0;
-      font-family: $fontBold;
+      font-family: $fontOmnes;
       font-size: 50px;
       font-weight: 800;
       text-align: center;
@@ -523,7 +524,7 @@
     .noWFairNoProblem {
       width: 288px;
       height: 30px;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       font-size: 24px;
       font-weight: 500;
       color: $colorWhite;
@@ -532,7 +533,7 @@
       margin-top: 20px;
       width: 240px;
       height: 45px;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
       color: $colorWhite;
       cursor: pointer;
     }

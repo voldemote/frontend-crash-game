@@ -97,7 +97,7 @@ $largeMobileHeight: 700px;
     font-size: 24px;
     padding-left: 30px;
     width: 95%;
-    font-family: $fontBold;
+    font-family: $fontOmnes;
   }
 
   .profileErrorHandLing {
@@ -128,7 +128,7 @@ $largeMobileHeight: 700px;
       background-color: $colorYellowLight;
       color: $colorBlack;
       text-transform: uppercase;
-      font-family: $fontRegular;
+      font-family: $fontOmnes;
 
       &:hover {
         cursor: pointer;
@@ -211,7 +211,7 @@ $largeMobileHeight: 700px;
           margin-bottom: 24px;
           line-height: 24px;
           font-size: 16px;
-          font-family: $fontRegular;
+          font-family: $fontOmnes;
           border: none;
           color: $colorPrimary;
           text-indent: 20px;
