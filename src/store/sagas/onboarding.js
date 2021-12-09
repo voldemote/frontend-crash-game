@@ -40,7 +40,11 @@ const loadOnboardingStep = function* (action) {
           },
         })
       );
-    // case OnboardingSteps.welcomeScreen:
+    case OnboardingSteps.welcomeScreen:
+      //just do nothing for now
+      return yield put(
+        PopupActions.hide()
+      )
       // return yield put(
       //   PopupActions.show({
       //     popupType: PopupTheme.welcome,
