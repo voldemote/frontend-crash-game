@@ -385,7 +385,7 @@ const MainMenu = ({
           Edit My Profile
         </h2>
         <div className={styles.editProfileContent}>
-          <div className={styles.profilePictureWrapper}>
+          {/* <div className={styles.profilePictureWrapper}>
             <div className={styles.profilePicture}>
               <div
                 className={styles.profilePictureUpload}
@@ -416,7 +416,7 @@ const MainMenu = ({
               </div>
               <p className={styles.profilePictureUploadLabel}>Build your alpaca</p>
             </div>
-          </div>
+          </div> */}
           <form onSubmit={handleSubmit}>
             <div className={styles.profileContent}>
               {/* <div className={styles.profileInputGroup}>
