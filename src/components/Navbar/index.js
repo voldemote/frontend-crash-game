@@ -340,24 +340,6 @@ const Navbar = ({
             </div>
           )}
 
-          <div className={style.leaderboardCountdownBlock}>
-            <div className={style.leaderboardInfoItem}>
-              <div className={style.timerSide}>
-                <span>Next draft at: </span>
-                <TimeLeftCounter
-                  endDate={leaderboardWeeklyDate}
-                  containerClass={style.leaderboardTimerComponent}
-                />
-              </div>
-              <div
-                className={style.linkSide}
-                onClick={() => showAlphaPlatformPopup()}
-              >
-                Learn more
-              </div>
-            </div>
-          </div>
-
           <Leaderboard
             fetch={openDrawer === drawers.leaderboard}
             setMissingAmount={setMisingWinnerAmount}
