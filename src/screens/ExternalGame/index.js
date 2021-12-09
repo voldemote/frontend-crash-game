@@ -78,7 +78,12 @@ const RouletteGame = ({
 
   useEffect(() => {
     if(!user.isLoggedIn){
-      setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
+      if(isMobile) {
+        window.open(`https://server.ssg-public.com/GameLauncher/Loader.aspx??Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`)
+        history.push('/games')
+      }else{
+        setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
+      }
     }else{
       setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
         .then(({data}) => {
