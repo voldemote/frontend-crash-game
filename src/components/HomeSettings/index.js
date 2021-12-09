@@ -7,6 +7,7 @@ import EditProfilePicture from 'data/images/profile.svg';
 import SettingNotification from 'data/images/setting-notifications.png';
 import IconTheme from '../Icon/IconTheme';
 
+
 const HomeSettings = ({
   profilePic,
   onAlpacaBuilderClick,
@@ -15,6 +16,7 @@ const HomeSettings = ({
   onEmailNotificationClick,
   onLogoutClick,
   onCloseProfile,
+  onKycInfoClick,
 }) => {
   return (
     <div className={styles.settings}>
@@ -72,6 +74,22 @@ const HomeSettings = ({
             className={styles.goIntoSettingIcon}
           />
         </div>
+        <div
+          className={classNames(
+            styles.singleSettingHolder,
+            styles.settingActive
+          )}
+          onClick={() => onKycInfoClick()}
+        >
+          <Icon className={styles.referralIcon} iconType={IconType.question} iconTheme={`primary`}/>
+          <p className={styles.settingTitle}>KYC Verification</p>
+          <Icon
+            width={15}
+            iconType={IconType.arrowSmallRight}
+            className={styles.goIntoSettingIcon}
+          />
+        </div>
+
         {/*<div*/}
         {/*  className={classNames(*/}
         {/*    styles.singleSettingHolder,*/}

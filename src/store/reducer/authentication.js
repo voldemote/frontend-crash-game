@@ -29,6 +29,7 @@ const initialState = {
   preferences: {},
   notificationSettings: {},
   alpacaBuilderData: null,
+  kyc: {},
 };
 
 const requestSmsSucceeded = (action, state) => {
@@ -248,6 +249,9 @@ const updateData = (action, state) => {
     },
     alpacaBuilderProps: {
       $set: action.alpacaBuilderProps,
+    },
+    kyc: {
+      $set: action.kyc,
     },
   });
 };
