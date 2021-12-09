@@ -463,12 +463,14 @@ const MainMenu = ({
                   {profileErrorMessage}
                 </div>
               )}
-              <input
-                disabled={profileSubmitActive ? false : true}
-                className={styles.profileSubmit}
-                type={'submit'}
-                value={'Save changes'}
-              />
+              <div className={styles.submitButtonContainer}>
+                <input
+                  disabled={profileSubmitActive ? false : true}
+                  className={styles.profileSubmit}
+                  type={'submit'}
+                  value={'Save changes'}
+                />
+              </div>
             </div>
           </form>
         </div>
