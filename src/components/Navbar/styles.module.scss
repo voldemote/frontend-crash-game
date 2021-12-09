@@ -374,6 +374,11 @@
       align-items: center;
       justify-content: space-between;
       position: relative;
+      padding: 15px 0;
+
+      @media (max-width: $screen-md) {
+        padding: 0;
+      }
 
       .leaderboardIcon {
         width: 30px;
@@ -447,79 +452,6 @@
         padding: 0 15px;
         height: auto;
       }
-    }
-
-    .leaderboardCountdownBlock {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-      margin-bottom: 15px;
-      width: 100%;
-      height: 44px;
-      z-index: -3;
-
-      @media (max-width: $screen-sm) {
-        padding: 0 15px;
-      }
-
-      .leaderboardInfoItem {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        width: 88%;
-        align-items: center;
-
-        &:last-child {
-          margin-right: 0;
-          margin-left: 0;
-        }
-
-        @media (max-width: $screen-sm) {
-          width: 100%;
-          //padding: 20px 15px;
-
-          @media (max-width: $screen-sm) {
-            //flex-direction: column;
-          }
-        }
-      }
-
-      @media (max-width: $screen-sm) {
-        margin: 15px 0;
-        flex-direction: column;
-      }
-
-      .timerSide {
-        font-weight: bold;
-        font-size: 14px;
-        display: flex;
-        font-family: $fontRegular;
-        align-items: center;
-      }
-
-      .linkSide {
-        font-family: $fontBold;
-        color: $colorLightYellow;
-        cursor: pointer;
-        font-size: 14px;
-        line-height: 18px;
-        text-decoration-line: underline;
-      }
-    }
-
-    .leaderboardTimerComponent {
-      span {
-        font-size: 18px;
-        font-family: $fontBold;
-        color: $colorLightYellow;
-        opacity: 1;
-        padding: 0;
-      }
-    }
-
-    .time-part-name {
-      font-size: 16px;
     }
 
     .leaderboardInfoItem {
