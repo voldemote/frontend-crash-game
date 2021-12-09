@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from '../styles.module.scss';
 import classNames from 'classnames';
-import { roundToTwo } from '../../../helper/FormatNumbers';
+import {getReadableAmount, roundToTwo} from '../../../helper/FormatNumbers';
 import { toNumericString } from 'helper/FormatNumbers';
 import { TOKEN_NAME } from '../../../constants/Token';
 import { GAMES } from 'constants/Games';
@@ -17,6 +17,7 @@ const DepositRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
   gameLabel ??
   Object.values(GAMES).find(g => g.id.indexOf(gameId) > -1)?.name ??
   'Game';
+  const cashout = stakedAmount * crashFactor;
 
   return (
     <div className={styles.messageItem}>
@@ -55,7 +56,7 @@ const DepositRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
         </Grid>
         <Grid item xs>
           <div className={classNames(styles.messageLast, styles.messageRight)}>
-            <p className={styles.reward}>{toNumericString(stakedAmount)} {TOKEN_NAME}</p>
+            <p className={styles.reward}>{toNumericString(roundToTwo(cashout, 0))} {TOKEN_NAME}</p>
           </div>
         </Grid>
       </Grid>
