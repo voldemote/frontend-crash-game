@@ -136,26 +136,6 @@ const Home = ({
     );
   };
 
-  const onSeeLeaderboard = () => {
-    window.scrollTo(0, 0);
-    setOpenDrawer('leaderboard');
-  };
-
-  const renderTags = () => {
-    return (
-      <div className={styles.tags}>
-        {tags &&
-          tags.map((tag, index) => {
-            return (
-              <div key={index} className={styles.tag}>
-                #{tag}
-              </div>
-            );
-          })}
-      </div>
-    );
-  };
-
   const renderHowTokenWorks = () => {
     return (
       <div className={styles.howTokenWorks}>
@@ -539,35 +519,6 @@ const Home = ({
     );
   };
 
-  const renderCurrentBalanceSection = () => {
-    return (
-      <div className={styles.currentBalanceSection}>
-        <Grid container alignContent="center">
-          <Grid container justifyContent="flex-end" item lg={6} md={6} xs={12}>
-            <div className={styles.currentBlanceCard}>
-              <p className={styles.currentbalanceHeading}>Current balance</p>
-              <p className={styles.currentbalanceWFair}>4365 WFAIR</p>
-            </div>
-          </Grid>
-
-          <Grid
-            container
-            justifyContent="flex-start"
-            item
-            lg={6}
-            md={6}
-            xs={12}
-          >
-            <div className={styles.currentBlanceDiscription}>
-              <p className={styles.noWFairNoProblem}>No WFAIR? No problem!</p>
-              <button className={styles.buyWFairButton}>Buy WFAIR!</button>
-            </div>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  };
-
   return (
     <BaseContainerWithNavbar
       home
@@ -587,19 +538,6 @@ const Home = ({
         </div>
       </div>
     </BaseContainerWithNavbar>
-
-    // <BaseContainerWithNavbar>
-    //   {/* {renderHeadline()} */}
-    //   {/* <Header /> */}
-    //   <div className={styles.containerWrapper}>
-    //     <div className={styles.container}>
-    //       {renderCurrentBalanceSection()}
-    //       {renderStatusTableSection()}
-    //       {renderCategoriesAndLeaderboard()}
-    //     </div>
-    //   </div>
-
-    // </BaseContainerWithNavbar>
   );
 };
 

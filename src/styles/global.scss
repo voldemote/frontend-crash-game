@@ -77,7 +77,11 @@ $border: 1px solid $colorWhite30;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: linear-gradient(180deg, #ffd401 0%, #b67e0b 97.4%);
+  background: linear-gradient(
+    180deg,
+    $colorLightYellow 0%,
+    $colorLightDark2 97.4%
+  );
   color: $colorWhite;
   font-size: 16px;
   border-radius: 25px;

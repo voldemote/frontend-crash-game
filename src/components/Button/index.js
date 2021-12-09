@@ -57,11 +57,11 @@ const Button = ({
       disabled={disabled}
       onClick={disabled ? null : onClick}
       data-tracking-id={dataTrackingId}
-    >      
+    >
       <div className={style.buttonInnerBackground}></div>
       {renderButtonDisabledOverlay()}
       {children}
-      {renderHighlight()}      
+      {renderHighlight()}
     </span>
   );
 };
