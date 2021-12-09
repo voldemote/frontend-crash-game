@@ -244,8 +244,8 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
 
         {account && !notSelectedNetworkId.length ? (
           <div className={styles.connectWalletContainer}>
-            <p>You are selected wrong network</p>
-            <p>Click below to switch network</p>
+            <p>You have selected the wrong network</p>
+            <p>Please click below to switch to the correct one</p>
             <button
               type="button"
               className={styles.connectWalletButton}
