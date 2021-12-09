@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { AuthenticationActions } from '../../../store/actions/authentication';
+import { PopupActions } from '../../../store/actions/popup';
 import { FormGroup, InputLabel } from '../../Form';
 import InputBox from 'components/InputBox';
 import Button from '../../Button';
@@ -12,7 +13,7 @@ import HighlightTheme from 'components/Highlight/HighlightTheme';
 import Routes from 'constants/Routes';
 import { Link } from 'react-router-dom';
 
-const EmailSignUp = ({ styles, signUp, errorState }) => {
+const EmailSignUp = ({ styles, signUp, errorState, hidePopup }) => {
 
   let fooRef = useRef(null);
   let emailRef = useRef(null);
@@ -87,6 +88,8 @@ const EmailSignUp = ({ styles, signUp, errorState }) => {
       ref: refLocalStorage,
       recaptchaToken,
     });
+
+    hidePopup();
   };
 
   const validateInput = (options) => {
@@ -145,7 +148,7 @@ const EmailSignUp = ({ styles, signUp, errorState }) => {
           rel="noreferrer"
         >
           Privacy Policy
-        </Link> 
+        </Link>
       </p>
     );
     return (
@@ -241,7 +244,7 @@ const EmailSignUp = ({ styles, signUp, errorState }) => {
           onConfirm={onConfirm}
         />
 
-        
+
       </FormGroup>
 
       {renderLegalAuthorizationAgreementCheckBox()}
@@ -274,6 +277,9 @@ const mapDispatchToProps = (dispatch) => {
     signUp: (payload) => {
       dispatch(AuthenticationActions.signUp(payload));
     },
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
+    }
   };
 };
 

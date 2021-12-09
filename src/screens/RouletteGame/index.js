@@ -80,7 +80,6 @@ const RouletteGame = ({
     getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
       .then(response => {
         const lastSpins = response?.data.lastCrashes;
-
         setSpins(lastSpins.map((spin) => {
           const output = {};
           if (spin.profit > 0) {
