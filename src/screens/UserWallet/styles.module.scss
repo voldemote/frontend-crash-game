@@ -17,7 +17,7 @@
   width: 100%;
 
   @media (min-width: $screen-lg) {
-    max-width: 1300px;
+    // max-width: 1300px;
   }
 }
 
@@ -317,7 +317,6 @@
 .activityWrapper {
   margin-top: 32px;
   background: $colorPrimary;
-  border: 1px solid $colorLightGray4;
 
   .headerTables {
     @media screen and (max-width: $screen-xs) {
@@ -329,9 +328,6 @@
   @media screen and (max-width: $screen-xs) {
     overflow: hidden;
   }
-
-  box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
-    0px 2px 2px rgba(159, 162, 191, 0.32);
   border-radius: 12px;
 
   @media screen and (max-width: $screen-xs) {
@@ -390,6 +386,41 @@
 /* ACTIVITY TRACKER */
 .activities {
   margin-top: 40px;
+  opacity: 0.6;
+
+  &::before {
+    position: absolute;
+    content: '';
+    background-image: url('../../data/images/wallet-left-image.svg');
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 65%;
+    bottom: -85px;
+    left: 0px;
+    background-position: bottom left;
+    opacity: 0.5;
+  }
+  &::after {
+    position: absolute;
+    content: '';
+    background-image: url('../../data/images/wallet-right-image.svg');
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 60%;
+    bottom: 35px;
+    right: 0px;
+    background-position: bottom right;
+  }
+
+  @media (max-width: $screen-md) {
+    &::after {
+      display: none;
+    }
+    &::before {
+      display: none;
+    }
+  }
+
   .title {
     display: flex;
     align-items: center;
@@ -438,14 +469,15 @@
 }
 
 .currentBalanceSection {
-  margin-top: 100px;
-  margin-bottom: 85px;
-
-  @media (max-width: $screen-xs) {
-    & > div > div {
-      justify-content: center;
-    }
-  }
+  margin: 0 auto;
+  margin-top: 30px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: rgba($colorBlue80, 0.8);
+  max-width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .balanceCard {
     @media (max-width: $screen-md) {
@@ -454,53 +486,52 @@
   }
 
   .currentBlanceCard {
-    width: 319px;
-    height: 271px;
-    box-shadow: 0px 0px 5px 5px $colorLightGray;
-    border-radius: 11.5px;
-    border: solid 1px $colorLightGray;
-    background-color: $colorWhite;
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    padding-top: 100px;
 
-    &::before {
-      position: absolute;
-      content: '';
-      background-image: url('../../data/backgrounds/home-icons.svg');
-      background-repeat: no-repeat;
-      width: 100%;
-      height: 100%;
-      top: 22px;
-      left: -145px;
-      background-position: bottom left;
-    }
+    svg {
+      width: 590px;
+      height: 250px;
 
-    @media (max-width: $screen-xs) {
-      &::before {
-        display: none;
+      @media (max-width: $screen-xs) {
+        width: 300px;
+        height: 140px;
+      }
+      @media (max-width: $screen-md) {
+        width: 400px;
+        height: 190px;
+      }
+      @media (max-width: $screen-lg) {
+        width: 370px;
+        // height: 200px;
       }
     }
 
     .currentbalanceHeading {
-      // margin: 54px 18px 21px 19px;
       font-family: $fontOmnes;
-      font-size: 16px;
-      font-weight: 800;
-      color: $colorBlack;
+      color: $colorWhite;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 30px;
     }
 
     .currentbalanceWFair {
-      // height: 126px;
-      // margin: 11px 0 0;
+      margin-top: 50px;
+      max-height: 70px;
+      width: 90%;
+      background: $colorBlanceBackground;
+      box-sizing: border-box;
       font-family: $fontOmnes;
       font-size: 50px;
-      font-weight: 800;
+      font-weight: 600;
       text-align: center;
-      color: $colorBlack;
+      color: $colorWhite;
       overflow-wrap: break-word;
       &.font30 {
         font-size: 30px;
@@ -515,14 +546,45 @@
   }
 
   .currentBlanceDiscription {
-    width: 319px;
-    // height: 271px;
-    border-radius: 11.5px;
-    // margin-top: 47px;
-    margin-left: 57px;
+    width: 100%;
+    background: $colorBlue80;
+    padding: 40px 0px;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: '';
+      background-image: url('../../data/images/balance-coins.svg');
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+      bottom: 0px;
+      left: 300px;
+      background-position: bottom;
+    }
 
     @media (max-width: $screen-md) {
-      margin-top: 47px;
+      padding: 10px;
+    }
+
+    @media (max-width: $screen-xs) {
+      &::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: $screen-lg) {
+      &::after {
+        position: absolute;
+        content: '';
+        background-image: url('../../data/images/balance-coins.svg');
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+        bottom: 0px;
+        left: 47%;
+        background-position: bottom;
+      }
     }
 
     .buttonContainer {

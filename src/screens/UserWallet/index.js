@@ -18,6 +18,7 @@ import Loader from 'components/Loader/Loader';
 import { WallfairActions } from 'store/actions/wallfair';
 import { TransactionActions } from 'store/actions/transaction';
 import Button from 'components/Button';
+import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
 
 const UserWallet = ({
   tags,
@@ -156,15 +157,13 @@ const UserWallet = ({
         <Grid container alignContent="center" justifyContent="center">
           <Grid className={styles.balanceCard} container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
-              <p className={styles.currentbalanceHeading}>Current balance</p>
+              <p className={styles.currentbalanceHeading}>Current balance:</p>
               <p
                 className={classNames(styles.currentbalanceWFair, fontStyling)}
               >
-                {balanceFixed}
+                {balanceFixed} {' '} {currency}
               </p>
-              <p className={classNames(styles.currentbalanceWFair)}>
-                {currency}
-              </p>
+              <WalletCoins />
             </div>
           </Grid>
 
