@@ -25,6 +25,7 @@ import AlpacaBuilder from 'components/AlpacaBuilder';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
+import KycStatus from 'components/KycStatus';
 
 const MainMenu = ({
   opened,
@@ -47,6 +48,8 @@ const MainMenu = ({
   alpacaBuilderVisible = false,
   handleAlpacaBuilderVisible,
   showPopup,
+  kycInfoVisible = false,
+  handleKycInfoVisible,
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(user.name);
@@ -112,6 +115,10 @@ const MainMenu = ({
 
   const onReferralsClick = () => {
     handleReferralsVisible(!referralsVisible);
+  };
+
+  const onKycInfoClick = () => {
+    handleKycInfoVisible(!kycInfoVisible);
   };
 
   const handleName = e => {
@@ -339,6 +346,29 @@ const MainMenu = ({
     );
   };
 
+  const renderKycInfoDrawer = () => {
+    return (
+      <div
+        className={classNames(
+          styles.panel,
+          !kycInfoVisible && styles.panelHidden
+        )}
+      >
+        <h2 className={styles.profileHeading}>
+          <Icon
+            className={styles.backButton}
+            iconType={'arrowTopRight'}
+            onClick={() => handleKycInfoVisible(!kycInfoVisible)}
+          />
+          KYC Info
+        </h2>
+        <div className={styles.alpacaBuilderWrapper}>
+          <KycStatus/>
+        </div>
+      </div>
+    );
+  };
+
   const renderAlpacaBuilderPopup = () => {
     return (
         <AlpacaBuilderPopup
@@ -512,6 +542,7 @@ const MainMenu = ({
             onLogoutClick={() => onClickGoToRoute(Routes.logout)}
             onCloseProfile={() => close()}
             onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
+            onKycInfoClick={() => onKycInfoClick()}
           />
         </div>
       </div>
@@ -521,6 +552,7 @@ const MainMenu = ({
       {emailNotificationsVisible && renderEmailNotificationDrawer()}
       {preferencesVisible && renderPreferencesDrawer()}
       {alpacaBuilderVisible && renderAlpacaBuilderDrawer()}
+      {kycInfoVisible && renderKycInfoDrawer()}
     </div>
   );
 };
@@ -534,6 +566,7 @@ const mapStateToProps = state => {
     preferencesVisible: state.general.preferencesVisible,
     referralsVisible: state.general.referralsVisible,
     alpacaBuilderVisible: state.general.alpacaBuilderVisible,
+    kycInfoVisible: state.general.kycInfoVisible,
   };
 };
 
@@ -570,6 +603,9 @@ const mapDispatchToProps = dispatch => {
     },
     handleReferralsVisible: bool => {
       dispatch(GeneralActions.setReferralsVisible(bool));
+    },
+    handleKycInfoVisible: bool => {
+      dispatch(GeneralActions.setKycInfoVisible(bool));
     },
     fetchReferrals: () => {
       dispatch(AuthenticationActions.fetchReferrals());

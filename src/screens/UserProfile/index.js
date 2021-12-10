@@ -9,11 +9,13 @@ import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import Button from 'components/Button';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { AuthenticationActions } from 'store/actions/authentication';
 import Leaderboard from 'components/Leaderboard';
-
-const UserProfile = () => {
+import BetTable from 'components/UserWalletTables/tables/BetTable';
+import useRosiData from 'hooks/useRosiData';
+import { RosiGameActions } from 'store/actions/rosi-game';
+const UserProfile = ({refreshMyBetsData}) => {
   let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
 
   const { userId } = useParams();
@@ -23,9 +25,8 @@ const UserProfile = () => {
   const [locked, setLocked] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const tabOptions = [
-    { name: 'TRANSACTION HISTORY', index: 0 },
-    { name: 'ACTIVITIES', index: 1 },
-    { name: 'LEADERBOARD', index: 2 },
+    { name: 'BETS PLACED', index: 0 },
+    { name: 'LEADERBOARD', index: 1 },
   ];
   const [sideTabIndex, setSideTabIndex] = useState(0);
   const sideTabOptions = [
@@ -34,10 +35,15 @@ const UserProfile = () => {
   ];
   const currentUser = useSelector(state => state.authentication);
   const dispatch = useDispatch();
+  const { myBetsData } = useRosiData();
+  const betsRow = myBetsData ? myBetsData: [];
+
 
   useEffect(() => {
+    refreshMyBetsData({ userId: userId });
     fetchUser(userId);
     fetchUserStats(userId);
+
   }, [userId]);
 
   const fetchUser = async userId => {
@@ -75,22 +81,11 @@ const UserProfile = () => {
     switch (tabIndex) {
       case 0:
         return (
-          <div className={styles.transactionHistory}>
-            <div className={styles.inactivePlaceholder}>Coming soon</div>
+          <div className={styles.activities}>
+            <BetTable renderRow={betsRow} />
           </div>
         );
       case 1:
-        return (
-          <div className={styles.activities}>
-            <ActivitiesTracker
-              showCategories={false}
-              activitiesLimit={50}
-              userId={userId}
-              className={styles.activitiesTrackerUserPage}
-            />
-          </div>
-        );
-      case 2:
         return (
           <div className={styles.leaderboard}>
             <Leaderboard
@@ -228,4 +223,19 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+const mapStateToProps = state => {
+  return {
+    userId: state.authentication.userId,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    
+    refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
+    
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

@@ -22,7 +22,7 @@ const AlpacaBuilder = ({
   const svgDownloader = useRef();
 
   useEffect(() => {
-    if(!props) resetSvg(true);
+    if(!props || !props.chip) resetSvg(true);
     else setSvgProperties({...props});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);

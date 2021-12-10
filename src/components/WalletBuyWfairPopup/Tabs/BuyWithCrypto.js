@@ -27,7 +27,7 @@ const cryptoRegexFormat = {
   litecoin: /^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/g,
 };
 
-const tokenAddress = {
+const depositAddress = {
   bitcoin: process.env.REACT_APP_DEPOSIT_WALLET_BITCOIN,
   ethereum: process.env.REACT_APP_DEPOSIT_WALLET_ETHEREUM,
   litecoin: process.env.REACT_APP_DEPOSIT_WALLET_LITECOIN,
@@ -95,7 +95,7 @@ const BuyWithCrypto = () => {
   };
 
   const OnClickConfirmAmount = () => {
-    setAddress(tokenAddress[activeTab]);
+    setAddress(depositAddress[activeTab]);
     setTransaction(!transaction);
   };
 
@@ -110,7 +110,7 @@ const cryptoAddressLostFocus = useCallback(event => {
   const valid = inputAddress.match(regex);
 
   if (!valid) {
-    console.error(`wrong 0x ${activeTab} address format`);
+    console.error(`wrong ${activeTab} address format`);
     return;
   }
 
@@ -174,7 +174,7 @@ const cryptoAddressLostFocus = useCallback(event => {
               onChange={cryptoAddressChange}
               onBlur={cryptoAddressLostFocus}
               onClick={selectContent}
-              placeholder="Add your wallet address (0x...)"
+              placeholder={`Add your ${cryptoShortName[activeTab]} wallet address`}
             />
           </div>
 
@@ -275,6 +275,9 @@ const cryptoAddressLostFocus = useCallback(event => {
               </span>{' '}
               to the following {cryptoShortName[activeTab]} Address
             </p>
+            <div className={styles.qrCodeImg}>
+              {address && <QRCode value={address} size={150} />}
+            </div>
             <ReferralLinkCopyInputBox
               className={styles.referralLink}
               inputTheme={InputBoxTheme.copyToClipboardInputWhite}
@@ -287,9 +290,6 @@ const cryptoAddressLostFocus = useCallback(event => {
                 deposits@alpacasino.io
               </a>
             </p>
-            <div className={styles.qrCodeImg}>
-              {address && <QRCode value={address} size={220} />}
-            </div>
             {/* <div className={styles.transferSectionCopy}>
               <p>Send Transaction URL</p>
               <div className={styles.cryptoUrlContiner}>

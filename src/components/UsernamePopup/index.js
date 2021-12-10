@@ -47,6 +47,7 @@ const UsernamePopup = ({
         username,
       };
       updateUser(payload, initialReward);
+      hidePopup();
     } else {
       setErrorMessage(
         <div>

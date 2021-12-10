@@ -113,7 +113,6 @@ $largeMobileHeight: 700px;
         border-radius: 50%;
         border: 1px solid $colorGrayLight;
         background-color: $colorGrayLight3;
-        z-index: 2;
 
         @media (max-width: $screen-sm) {
           left: 15px;

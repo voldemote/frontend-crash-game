@@ -95,7 +95,7 @@ const UserWallet = ({
 
   useEffect(() => {
     fetchWalletTransactions();
-  }, [fetchWalletTransactions]);
+  }, [fetchWalletTransactions, balance]);
 
   useEffect(() => {
     isTransactionsFetchError ? setStakesLoading(false) : setStakesLoading(true);
@@ -178,25 +178,51 @@ const UserWallet = ({
             xs={12}
           >
             <div className={styles.currentBlanceDiscription}>
-              <p className={styles.noWFairNoProblem}>No PFAIR? No problem!</p>
-              <Button
-                className={styles.buyWFairButton}
-                onClick={showWalletBuyWfairPopup}
-              >
-                <p>Buy WFAIR!</p>
-              </Button>
-              <Button
-                className={styles.buyWFairButton}
-                onClick={showWithdrawPopup}
-              >
-                <p>Withdraw WFAIR!</p>
-              </Button>
-              <Button
-                className={styles.buyWFairButton}
-                onClick={showRequestTokenPopup}
-              >
-                <p>Request test tokens</p>
-              </Button>
+              <div className={styles.buttonContainer}>
+                <p className={styles.label}>No WFAIR? No problem!</p>
+                <Button
+                  className={styles.button}
+                  onClick={showWalletBuyWfairPopup}
+                >
+                  <span>Buy WFAIR!</span>
+                </Button>
+              </div>
+              <div className={styles.buttonContainer}>
+                <p className={styles.label}>Let's withdraw my funds</p>
+                <Button
+                  className={styles.button}
+                  onClick={showWithdrawPopup}
+                >
+                  <span>Withdraw</span>
+                </Button>
+              </div>
+              <div className={styles.buttonContainer}>
+                <p className={styles.label}>Start the verification</p>
+                <Button
+                  className={styles.button}
+                  // onClick={showRequestTokenPopup}
+                >
+                  <span>Verification</span>
+                </Button>
+              </div>
+              <div className={styles.buttonContainer}>
+                <p className={styles.label}>I need support</p>
+                <Button
+                  className={styles.button}
+                  // onClick={showRequestTokenPopup}
+                >
+                  <span>Support</span>
+                </Button>
+              </div>
+              {/* <div className={styles.buttonContainer}>
+                <p className={styles.label}>Start the verification</p>
+                <Button
+                  className={styles.button}
+                  // onClick={showRequestTokenPopup}
+                >
+                  <span>Request test tokens</span>
+                </Button>
+              </div> */}
             </div>
           </Grid>
         </Grid>
