@@ -112,4 +112,5 @@ export const CONVERT_CURRENCY = 'api/quote';
 export const API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
 export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gameTypeId';
 export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameHash';
-export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start?redirectUri=/kyc-updated';
+export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start';
+export const KYC_DATA_FOR_USER = 'api/user/:userId/kyc-data';
