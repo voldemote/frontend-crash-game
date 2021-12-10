@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: frontend-dev
   labels:
-    app: frontend
+    app: frontend-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: frontend-dev
   template:
     metadata:
       labels:
-        app: frontend
+        app: frontend-dev
     spec:
       containers:
         - image: registry.digitalocean.com/wallfair/frontend_k8s
@@ -35,10 +35,10 @@ spec:
               port: 3000
             initialDelaySeconds: 2
             periodSeconds: 3
-          name: frontend
+          name: frontend-dev
           envFrom:
             - configMapRef:
-                name: frontend-config
+                name: frontend-dev-config
             - configMapRef:
                 name: frontend-app-secrets
           ports:

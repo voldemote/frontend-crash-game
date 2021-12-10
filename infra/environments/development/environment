@@ -1,3 +1,6 @@
+REACT_APP_NEWS_API_SSL_MODE=true
+REACT_APP_SHOW_UPCOMING_FEATURES=true
+ENABLE_SITE_MAP=false
 REACT_APP_BACKEND_URL=https://staging-api.alpacasino.io/
 REACT_APP_URL=https://dev.alpacasino.io
 REACT_APP_SOCKET_URL=https://comm-staging-api.alpacasino.io/
