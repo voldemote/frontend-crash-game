@@ -235,22 +235,22 @@ const Home = ({
         </div>
         <div className={styles.cardBox}>
           <Grid container spacing={1}>
-            <Grid item lg={3} md={6} xs={12}>
+            <Grid item lg={3} md={3} xs={6}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={6} xs={12}>
+            <Grid item lg={3} md={3} xs={6}>
               <Link to={'/games/plinko'}>
                 <img src={gameCardPlinko} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={6} xs={12}>
+            <Grid item lg={3} md={3} xs={6}>
               <Link to={'/games/elon-game'}>
                 <img src={gameCardElon} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={6} xs={12}>
+            <Grid item lg={3} md={3} xs={6}>
               <Link to={'/games/alpaca-wheel'}>
                 <img src={gameCardWheel} alt="" />
               </Link>
