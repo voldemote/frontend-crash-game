@@ -44,6 +44,10 @@ import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/alpaca-dopter/yellow-thumbnail.png';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
+import AlpacaPink from '../../data/images/home/alpaca-pink.svg';
+import AlpacaBlue from '../../data/images/home/alpaca-blue.svg';
+import AlpacaYellow from '../../data/images/home/alpaca-yellow.svg';
+
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
@@ -277,17 +281,21 @@ const Home = ({
     return (
       <div className={styles.welcomeContainer}>
         <div className={styles.cardBox}>
-          <h3>
-            GET YOUR BONUS<br/>
-            AND CREATE YOUR<br/> 
-            OWN ALPACA
-          </h3>
+          <h1>Alpacasino</h1>
+          <h2>
+            Get your <span className={styles.highlight}>50 PFAIR bonus</span> and<br/>
+            create yoru <span className={styles.highlight}>alpaca</span>
+          </h2>
+
+          <Button
+            className={styles.startButton}
+            onClick={showPopupForUnauthenticated}>
+            <span className={styles.buttonText}>Sign up</span>
+          </Button>
+          <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
+          <img className={styles.alpacaYellow} src={AlpacaYellow} alt="" />
+          <img className={styles.alpacaBlue} src={AlpacaBlue} alt="" />
         </div>
-        <Button
-          className={styles.startButton}
-          onClick={showPopupForUnauthenticated}>
-          <span className={styles.buttonText}>START</span>
-        </Button>
       </div>
     );
   };
@@ -529,8 +537,8 @@ const Home = ({
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
-          {isLoggedIn() && renderHouseGames()}
-          {isLoggedIn() && renderSlogGames()}
+          {renderHouseGames()}
+          {renderSlogGames()}
           {isLoggedIn() && renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
