@@ -248,7 +248,7 @@ const PlaceBetMines = ({
         <>
           <div className={styles.currentMultiplier}>Multiplier: <span className={classNames('global-cashout-profit')}>{!multiplier ? "-" : 'x' + multiplier}</span></div>
           <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
-          <Button
+          {bet.autobet && <Button
             role="button"
             tabIndex="0"
             style={{display: bet.autobet ? 'auto':'none'}}
@@ -259,7 +259,7 @@ const PlaceBetMines = ({
             }
           >
             <p>Stop Autobet</p>
-          </Button>
+          </Button>}
 
           <Button
             id={"mines-cashout-btn"}

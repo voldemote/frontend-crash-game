@@ -386,7 +386,7 @@
 /* ACTIVITY TRACKER */
 .activities {
   margin-top: 40px;
-  opacity: 0.6;
+  padding: 0 10px;
 
   &::before {
     position: absolute;
@@ -398,7 +398,7 @@
     bottom: -85px;
     left: 0px;
     background-position: bottom left;
-    opacity: 0.5;
+    z-index: -1;
   }
   &::after {
     position: absolute;
@@ -407,7 +407,7 @@
     background-repeat: no-repeat;
     width: 50%;
     height: 60%;
-    bottom: 35px;
+    bottom: 50px;
     right: 0px;
     background-position: bottom right;
   }
@@ -473,7 +473,7 @@
   margin-top: 30px;
   border-radius: 12px;
   border: 1px solid transparent;
-  background: rgba($colorBlue80, 0.8);
+  background: rgba($colorBlue80, 0.6);
   max-width: 80%;
   display: flex;
   justify-content: center;
@@ -547,7 +547,7 @@
 
   .currentBlanceDiscription {
     width: 100%;
-    background: $colorBlue80;
+    background: rgba($colorBlue80, 0.8);
     padding: 40px 0px;
     position: relative;
 
