@@ -2,6 +2,6 @@ resources:
   - frontend-prod-deploy.yaml
 
 configMapGenerator:
-  - name: frontend-config
+  - name: frontend-dev-config
     envs:
       - environment
