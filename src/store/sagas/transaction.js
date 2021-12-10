@@ -49,7 +49,7 @@ const fetchWalletTransactions = function* () {
             return acc;
           }
 
-          const highestLog = all
+          const logs = all
             .filter(
               ({ external_transaction_id }) =>
                 external_transaction_id === transaction.external_transaction_id
@@ -57,7 +57,11 @@ const fetchWalletTransactions = function* () {
             .sort(
               (a, b) => statuses.indexOf(b.status) - statuses.indexOf(a.status)
             )
-            [0];
+          const highestLog = logs[0];
+          if(transaction.originator === 'withdraw') {
+            const { fee = null } = logs.find((log) => !!log.fee);
+            highestLog.fee = fee;
+          }
 
           return [...acc, highestLog];
       },

@@ -4,7 +4,7 @@ import styles from '../styles.module.scss';
 import classNames from 'classnames';
 import moment from 'moment';
 import { getTransactionURL } from 'utils/constants';
-import { numberWithCommas, shortenAddress } from 'utils/common';
+import { shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
@@ -14,7 +14,7 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
       <Grid container>
         <Grid item xs>
           <div className={classNames(styles.messageFirst, styles.messageLeft)}>
-            <p>{numberWithCommas(Text.formatByONEConstant(amount, 2))}</p>
+            <p>{Text.formatByONEConstant(amount, 2)}</p>
           </div>
         </Grid>
         <Grid
@@ -23,7 +23,7 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
           <div className={styles.messageCenter}>
-            <p>{numberWithCommas(Text.formatByONEConstant(fee, 4))}</p>
+            <p>{fee ? Text.formatByONEConstant(fee, 4) : 'No data'}</p>
           </div>
         </Grid>
         <Grid
@@ -65,7 +65,11 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
               target="_blank"
               rel="noreferrer"
             >
-              <p>{transaction_hash ? shortenAddress(transaction_hash, false) : 'No data'}</p>
+              <p>
+                {transaction_hash
+                  ? shortenAddress(transaction_hash, false)
+                  : 'No data'}
+              </p>
             </a>
           </div>
         </Grid>
