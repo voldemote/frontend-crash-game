@@ -3,9 +3,9 @@ kind: Kustomization
 resources:
   - frontend-dev-deploy.yaml
 
-namespace: development
+namespace: staging
 commonLabels:
-  environment: development
+  environment: staging
 
 configMapGenerator:
   - name: frontend-dev-config
