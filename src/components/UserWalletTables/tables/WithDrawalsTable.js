@@ -4,15 +4,17 @@ import styles from '../styles.module.scss';
 import classNames from 'classnames';
 import moment from 'moment';
 import { getTransactionURL } from 'utils/constants';
+import { numberWithCommas, shortenAddress } from 'utils/common';
+import Text from 'helper/Text';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
-  const { wfair, fee, network, startDate, status, txHash } = data;
+  const { amount, fee, network_code, receiver, created_at, transaction_hash, status } = data;
   return (
     <div className={styles.messageItem}>
       <Grid container>
         <Grid item xs>
           <div className={classNames(styles.messageFirst, styles.messageLeft)}>
-            <p>{wfair}</p>
+            <p>{numberWithCommas(Text.formatByONEConstant(amount, 2))}</p>
           </div>
         </Grid>
         <Grid
@@ -21,7 +23,7 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
           <div className={styles.messageCenter}>
-            <p>{fee}</p>
+            <p>{numberWithCommas(Text.formatByONEConstant(fee, 4))}</p>
           </div>
         </Grid>
         <Grid
@@ -29,26 +31,41 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           xs
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
         >
-          <div className={styles.messageCenter}>{network}</div>
+          <div className={styles.messageCenter}>
+            {shortenAddress(receiver, false)}
+          </div>
+        </Grid>
+        <Grid
+          item
+          xs
+          className={hideSecondaryColumns && styles.hideSecondaryColumns}
+        >
+          <div className={styles.messageCenter}>{network_code}</div>
         </Grid>
         <Grid item xs>
-         <div className={styles.messageCenter}>
-           {moment(startDate).format('DD.MM.YYYY HH:mm:ss')}
-           </div>
-        </Grid>
-        <Grid item xs>
-         <div 
-          className={classNames(styles.messageLast, styles.messageRight, styles.messageTranform)}
-          >
-            <p >{status}</p>
+          <div className={styles.messageCenter}>
+            {moment(created_at).format('DD.MM.YYYY HH:mm:ss')}
           </div>
         </Grid>
         <Grid item xs>
-          <div 
-          className={classNames(styles.messageLast, styles.messageRight)}
+          <div
+            className={classNames(
+              styles.messageLast,
+              styles.messageRight,
+              styles.messageTranform
+            )}
           >
-            <a href={getTransactionURL(network, txHash)} target="_blank" rel="noreferrer">
-              <p>{txHash}</p>
+            <p>{status}</p>
+          </div>
+        </Grid>
+        <Grid item xs>
+          <div className={classNames(styles.messageLast, styles.messageRight)}>
+            <a
+              href={getTransactionURL(network_code, transaction_hash)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <p>{transaction_hash ? shortenAddress(transaction_hash, false) : 'No data'}</p>
             </a>
           </div>
         </Grid>
@@ -71,6 +88,13 @@ const WithDrawalsTable = ({ renderRow, className, hideSecondaryColumns = false }
             className={hideSecondaryColumns && styles.hideSecondaryColumns}
           >
             <p className={styles.title}>FEE</p>
+          </Grid>
+          <Grid
+            item
+            xs
+            className={hideSecondaryColumns && styles.hideSecondaryColumns}
+          >
+            <p className={styles.title}>RECEIVER</p>
           </Grid>
           <Grid
             item
