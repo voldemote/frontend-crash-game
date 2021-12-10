@@ -19,14 +19,18 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   return (
     <div className={styles.container}>
       <div className={classNames(styles.footer, className)}>
-        <a
-          href="https://wallfair.io/"
-          target="_blank"
-          rel="noreferrer"
-          data-tracking-id="footer-wfair-logo"
-        >
-          <img src={LogoFooter} className={styles.footerLogo} alt={'Powered-by-Wallfair'} />
-        </a>
+        <div className={styles.logoContainer}>
+          <a
+            href="https://wallfair.io/"
+            target="_blank"
+            rel="noreferrer"
+            data-tracking-id="footer-wfair-logo"
+          >
+            <img src={LogoFooter} className={styles.footerLogo} alt={'Powered-by-Wallfair'} />
+          </a>
+          
+          <iframe className={styles.license} title="license" src="https://licensing.gaming-curacao.com/validator/?lh=58e4868441e3bb0ff2fe2230d82a8091&amp;template=seal" width={125} height={50} style={{border:'none'}} />
+        </div>
         <div className={styles.links}>
           <Link
             data-tracking-id="footer-provablyfair"
