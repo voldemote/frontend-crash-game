@@ -22,11 +22,28 @@
     align-items: center;
   }
 
-  img.footerLogo {
-    max-width: 300px;
+  .logoContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 
     @media (max-width: $screen-sm) {
-      margin-bottom: 20px;
+      flex-direction: column;
+      // padding: 0 0 20px 0;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    img.footerLogo {
+      max-width: 300px;
+
+      @media (max-width: $screen-sm) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .license {
+      border-radius: 8px;
     }
   }
 
