@@ -12,8 +12,9 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
 import classNames from 'classnames';
 import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
+import { TransactionActions } from 'store/actions/transaction';
 
-const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSuccessPopup, user }) => {
+const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSuccessPopup, user, fetchWalletTransactions }) => {
   const CURRENCY_OPTIONS = [
     {
       label: 'EUR',
@@ -66,6 +67,8 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
       });
       transak.close();
 
+      fetchWalletTransactions();
+
     });
   };
 
@@ -93,7 +96,9 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
       
       const { response } = await convertCurrency(convertCurrencyPayload);
       const { convertedAmount } = response?.data;
-      const roundedAmount = Math.floor(Number(convertedAmount) * 100) / 100;
+      const adjustedAmount = convertedAmount * 0.9; //90% of estimated amount to consider Transak fees
+      const roundedAmount = Math.floor(Number(adjustedAmount) * 100) / 100;
+      
       let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
     
       setWFAIRToken(WfairTokenValue);
@@ -184,6 +189,9 @@ const mapDispatchToProps = dispatch => {
     },
     showTransakSuccessPopup: (options) => {
       dispatch(PopupActions.show({ popupType: PopupTheme.transakSuccess, options}));
+    },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions());
     },
   };
 };

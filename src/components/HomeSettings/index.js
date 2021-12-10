@@ -20,6 +20,7 @@ const HomeSettings = ({
   onEmailNotificationClick,
   onLogoutClick,
   onCloseProfile,
+  onKycInfoClick,
 }) => {
   return (
     <div className={styles.settings}>
@@ -70,6 +71,15 @@ const HomeSettings = ({
           >
             <Icon className={styles.referralIcon} iconType={'profile'} />
             <p className={styles.settingTitle}>Edit my Profile</p>
+          </div>
+          <div
+            onClick={() => onKycInfoClick()}
+            className={classNames(
+              styles.singleSettingHolder
+            )}
+          >
+            <Icon className={styles.referralIcon} iconType={'question'} />
+            <p className={styles.settingTitle}>KYC Verification</p>
           </div>
           <div
             className={classNames(

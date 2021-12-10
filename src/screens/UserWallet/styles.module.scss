@@ -518,24 +518,35 @@
     width: 319px;
     // height: 271px;
     border-radius: 11.5px;
-    margin-top: 47px;
+    // margin-top: 47px;
     margin-left: 57px;
 
-    .noWFairNoProblem {
-      width: 288px;
-      height: 30px;
-      font-family: $fontOmnes;
-      font-size: 24px;
-      font-weight: 500;
-      color: $colorWhite;
+    @media (max-width: $screen-md) {
+      margin-top: 47px;
     }
-    .buyWFairButton {
-      margin-top: 20px;
-      width: 240px;
-      height: 45px;
-      font-family: $fontOmnes;
-      color: $colorWhite;
-      cursor: pointer;
+
+    .buttonContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .label {
+        height: 30px;
+        font-family: $fontOmnes;
+        font-size: 24px;
+        font-weight: 500;
+        color: $colorWhite;
+      }
+
+      .button {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 240px;
+        height: 45px;
+        font-family: $fontOmnes;
+        color: $colorWhite;
+        cursor: pointer;
+      }
     }
   }
 }
