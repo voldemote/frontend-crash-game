@@ -62,7 +62,7 @@ class Text {
     const l = number.length;
     const ONE_length = 18;
     const decimal = number.substring(l - ONE_length, l - ONE_length + decimalPlaces);
-    const whole = number.substring(0, l - ONE_length);
+    const whole = number.substring(0, l - ONE_length).padStart(1, '0');
     
     if(decimalPlaces === 0) {
       return whole;
