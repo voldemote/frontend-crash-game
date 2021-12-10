@@ -191,7 +191,7 @@ const Login = ({
         </Button>
       </form>
       {!forgotPassword && (
-        <div className={styles.dontHaveAnAccount}>
+        <div className={styles.dontHaveAnAccountLogin}>
           <p>
             Don't have an account?{' '}
             <button type="button" onClick={openSignUpPopup}>

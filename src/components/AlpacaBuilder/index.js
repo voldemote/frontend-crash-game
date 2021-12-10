@@ -127,9 +127,13 @@ const AlpacaBuilder = ({
       )}>
       <div className={styles.head}>
         <svg ref={svgRef} className={styles.svg} viewBox="0 0 512 512">
-          <rect width="100%" height="100%" fill="white" />
+          <rect width="100%" height="100%" fill="transparent" />
           {renderSvg()}
         </svg>
+        <Button
+          className={styles.primaryAction}
+          onClick={() => resetSvg(true)}><p>Randomize</p></Button>
+
       </div>
       <div className={styles.categoriesRow}>
         {CATEGORIES?.map((c, index) => renderCategoryBtn(c, index))}
@@ -142,12 +146,9 @@ const AlpacaBuilder = ({
         ></AbViewStyles>
 
       <div className={styles.toolbar}>
-          <Button
+          <span
             className={styles.secondaryAction}
-            onClick={() => {if(onCancel) onCancel();}}><p>{cancelLabel}</p></Button>
-          <Button
-            className={styles.primaryAction}
-            onClick={() => resetSvg(true)}><p>Randomize</p></Button>
+            onClick={() => {if(onCancel) onCancel();}}><p>{cancelLabel}</p></span>
           <Button
             className={styles.primaryAction}
             onClick={() => exportSvg()}><p>{saveLabel}</p></Button>

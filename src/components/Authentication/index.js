@@ -13,10 +13,10 @@ const Authentication = ({
     [AuthenticationType.register]: 
       <>
         <EmailSignUp styles={styles} />
-          <div className={styles.dontHaveAnAccount}>
-            <p>or use your social login</p>
-            <SocialLogin styles={styles} authenticationType={AuthenticationType.register} />
-          </div>
+        <div className={styles.dontHaveAnAccount}>
+          <p>or use your social login</p>
+          <SocialLogin styles={styles} authenticationType={AuthenticationType.register} />
+        </div>
       </>
       ,
     [AuthenticationType.login]: 

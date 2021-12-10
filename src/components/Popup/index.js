@@ -286,7 +286,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             small ? styles.small : null,
             maxWidth ? styles.maxWidth : null,
             type === PopupTheme.auth &&
-              options?.authenticationType === AuthenticationType.register &&
               styles.registrationPopupContainer,
             [
               PopupTheme.signUpNotificationFirst,

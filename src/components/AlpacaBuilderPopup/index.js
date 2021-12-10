@@ -11,7 +11,7 @@ const AlpacaBuilderPopup = ({
   showRegisterPopup,
   cancelLabel,
   saveLabel,
-  popUpTitle = "Customize your Alpaca",
+  popUpTitle = "Alpacavatar",
   userId,
   alpacaBuilderProps,
   updateExistingUser

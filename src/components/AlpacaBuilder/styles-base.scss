@@ -1,3 +1,4 @@
+@import '../../styles/all';
 @import './styles-variables';
 
 .alpacaBuilder {
@@ -5,11 +6,13 @@
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: 800px;
+  padding: 40px 40px;
 
   .head {
-    border-bottom: 1px solid $separatorColor;
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     .svg {
       max-height: 250px;
@@ -30,7 +33,7 @@
     .tile {
       cursor: pointer;
       margin: 10px;
-      height: 100px;
+      height: 80px;
       width: calc((100% / 4) - 20px);
       padding: 2px;
       border-radius: 20px;
@@ -114,31 +117,33 @@
       border-radius: 30px;
       text-decoration: none;
       font-size: 18px;
+      font-weight: 600;
       color: $toolbarBtnColor;
       cursor: pointer;
       margin: 0 16px;
-      @media (max-width: $largeScreen) {
+      @media (max-width: $screen-md) {
         margin: 0 4px;
         font-size: 14px;
       }
     }
     .secondaryAction {
-      color: #000;
+      color: #0b4bc2;
     }
   }
 
   &.wide {
-    @media (min-width: $largeScreen) {
+    @media (min-width: $screen-md) {
       flex-direction: row;
       display: flex;
 
       .head {
         display: flex;
-        flex-direction: row;
-        width: 44%;
+        flex-direction: column;
+        align-items: center;
+        width: 220px;
 
         .svg {
-          height: 395px;
+          height: 195px;
           max-height: 100%;
         }
       }
@@ -146,9 +151,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 12%;
+        width: 15%;
         .category {
-          margin: 10px;
+          margin-top: 8px;
           border-radius: 20px;
           height: 40px;
           width: 80px;
@@ -157,11 +162,24 @@
         }
       }
       .styleView {
-        width: 44%;
+        width: 50%;
       }
       .head {
         border: none;
       }
+    }
+  }
+  .primaryAction {
+    max-width: 180px;
+    height: 47px;
+    padding: 0 20px;
+    p {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 25px;
+      text-align: center;
+      color: #ffe98f;
     }
   }
 }
