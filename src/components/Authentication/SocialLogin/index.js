@@ -41,7 +41,6 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
       }
       <LoginButton styles={styles} onClick={initGoogleLogin}>
         <Icon iconType={IconType.google} {...iconProps} />
-        <span>{prefixText} with Google</span>
       </LoginButton>
 
       {/*
