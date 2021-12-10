@@ -147,7 +147,6 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
   }
   const OnClickTransakContinue = async () => {
     hidePopup();
-    console.log('user kyc:', user?.kyc);
     if(!user.kyc){
       // this should open kyc in fractal first
       // const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
