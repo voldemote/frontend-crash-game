@@ -18,7 +18,11 @@ import {
   ENV_NETWORK,
   networkSelection,
 } from '../../../utils/constants';
-import { mapAccount, accountMappingChallenge } from 'api/third-party';
+import {
+  mapAccount,
+  accountMappingChallenge,
+  isUserOwner,
+} from 'api/third-party';
 
 import { WallfairActions } from 'store/actions/wallfair';
 import { TxDataActions } from 'store/actions/txProps';
@@ -302,6 +306,12 @@ const challengeHandler = async (
 ) => {
   try {
     setSigningInProcess(true);
+    const isOwner = await isUserOwner({ address: address }, token);
+
+    if (isOwner) {
+      return;
+    }
+
     const res = await accountMappingChallenge({ address: address }, token);
     const msg = await signer.signMessage(res.challenge);
 
@@ -312,10 +322,10 @@ const challengeHandler = async (
     };
 
     mapAccount(req, token);
-    setSigningInProcess(false);
   } catch (e) {
     console.log(e);
     deactivate();
+  } finally {
     setSigningInProcess(false);
   }
 };
