@@ -49,7 +49,6 @@ const rootReducerProxy = (state, action) => {
         ...userInitialState
       }
     }
-    return persistedReducer(state, action)
   }
   return persistedReducer(state, action);
 };
