@@ -263,14 +263,14 @@ const Navbar = ({
         >
           <p>Login</p>
         </span>
-        <span
+        {/* <span
           className={style.signUpButton}
           onClick={() =>
             showPopupForRegister()
           }
         >
           <p>Sign Up</p>
-        </span>
+        </span> */}
       </div>
     );
 
