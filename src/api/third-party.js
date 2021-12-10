@@ -9,6 +9,21 @@ export const getNews = params =>
     },
   });
 
+export const isUserOwner = (payload, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  return axios
+    .post(ApiUrls.ACCOUNT_MAPPING + '/isUserOwner', payload, config)
+    .then(response => {
+      return response.data?.owner;
+    });
+}
+
 export const mapAccount = (payload, token) => {
   const config = {
     headers: {
