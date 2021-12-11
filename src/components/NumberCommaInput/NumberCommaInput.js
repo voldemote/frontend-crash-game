@@ -6,8 +6,7 @@ const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
 
   useEffect(() => {
     setValueInternal(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [value]);
 
   const onChangeInternal = event => {
     const string = event.target.value;
