@@ -118,6 +118,10 @@
       width: 1000px;
     }
 
+    &.usernamePopup {
+      max-width: 700px;
+    }
+
     @media (max-width: $screen-sm) {
       min-height: calc(100vh - 20px);
 
