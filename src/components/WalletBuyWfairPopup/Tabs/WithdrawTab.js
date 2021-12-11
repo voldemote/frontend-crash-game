@@ -157,7 +157,7 @@ const WithdrawTab = () => {
   }
 
   const onClickMax = () => {
-    setTokenAmount(_.floor(balance, 0));
+    setTokenAmount(balance);
   };
 
   return (
