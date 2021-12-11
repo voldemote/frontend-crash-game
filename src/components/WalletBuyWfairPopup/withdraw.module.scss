@@ -259,6 +259,7 @@
 
       input {
         background: #f1f2f6;
+        outline: none !important;
         width: 100%;
         height: 100%;
         padding: 20px 5px;
@@ -415,9 +416,11 @@
     }
 
     .confirmButton {
-      background: linear-gradient(180deg,
-          $colorLightYellow 0%,
-          $colorLightDark2 97.4%);
+      background: linear-gradient(
+        180deg,
+        $colorLightYellow 0%,
+        $colorLightDark2 97.4%
+      );
       margin-top: 16px;
       border-radius: 30px;
       border: 1px solid $colorWhite;
