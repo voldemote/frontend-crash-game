@@ -41,7 +41,7 @@
   }
 
   .eventTokenLabel {
-    color: black;
+    color: $colorWhite;
     font-family: $fontOmnes;
     font-size: 20px;
     font-style: normal;
@@ -53,7 +53,7 @@
 
   .buttonWrapper {
     margin-left: 0px;
-    color: black;
+    color: $colorWhite;
 
     .button:hover {
       background: #e72d8910;
