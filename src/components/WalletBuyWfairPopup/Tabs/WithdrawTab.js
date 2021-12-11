@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../withdraw.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import Dropdown from '../../Dropdown';
+import _ from 'lodash';
 
 import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.svg';
 import { getWithdrawQuote, processWithdraw, getWithdrawStatus, convertCurrency } from '../../../api/index';
@@ -155,6 +156,10 @@ const WithdrawTab = () => {
       })
   }
 
+  const onClickMax = () => {
+    setTokenAmount(_.floor(balance, 0));
+  };
+
   return (
     <div className={styles.withdrawContainer}>
       {!transaction && (
@@ -235,7 +240,8 @@ const WithdrawTab = () => {
                 <span>Amount you wish to withdraw</span>
               </div>
               <NumberCommaInput
-                min={1}
+                min={0}
+                max={balance}
                 value={tokenAmount}
                 onChange={tokenAmountChange}
                 onBlur={tokenAmountLostFocus}
@@ -247,6 +253,12 @@ const WithdrawTab = () => {
                   onClick={handleWFAIRClick}
                 />
                 <span>WFAIR</span>
+                <span
+                  className={styles.button}
+                  onClick={onClickMax}
+                >
+                  Max
+                </span>
               </div>
             </div>
             <div className={styles.InputLineSeparator}>
