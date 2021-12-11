@@ -92,7 +92,7 @@
 
 .container {
   position: relative;
-  background: rgba(253, 253, 253, 0.1);
+  background: $colorPrimary;
   border: 1px solid $colorLightGray4;
   border-radius: 10px;
   margin-bottom: 14px;
@@ -105,7 +105,7 @@
 
 .label {
   display: inline-block;
-  color: #1f1d38;
+  color: $colorWhite;
   opacity: 0.8;
   font-family: $fontOmnes;
   font-size: 12px;

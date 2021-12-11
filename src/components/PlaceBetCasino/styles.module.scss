@@ -122,7 +122,7 @@
 }
 .container {
   position: relative;
-  background: rgba(253, 253, 253, 0.1);
+  background: $colorPrimary;
   border: 1px solid $colorLightGray4;
   border-radius: 10px;
   margin-bottom: 14px;
