@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
-  const [valueInternal, setValueInternal] = useState();
+  const [valueInternal, setValueInternal] = useState(0);
   const oldValue = useRef();
 
   useEffect(() => {
