@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
-  const [valueInternal, setValueInternal] = useState();
+  const [valueInternal, setValueInternal] = useState(0);
   const oldValue = useRef();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
     let stringNumber = string.replace(/,/, '.'); // replace comma with dot
 
     if (stringNumber[0] === '.') stringNumber = ''; // do not start with dot
-    if (stringNumber[0] === '-' && stringNumber[1] === '.')
+    if (stringNumber[0] === '-' && stringNumber[1] === '.' && stringNumber.length === 2)
       // do not has minus and then dot
       stringNumber = string[0];
     if (
@@ -23,24 +23,23 @@ const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
       stringNumber = stringNumber.substr(0, stringNumber.length - 1); // do not have minus after number
 
     stringNumber = stringNumber.replace(/[^\d.-]/g, ''); // keep only numbers
-
     const noDots = (stringNumber.match(/\./g) || []).length;
     const noMinus = (stringNumber.match(/-/g) || []).length;
 
     // check if multiple dots are entered
     if (noDots > 1 || noMinus > 1) stringNumber = oldValue.current;
 
-    if (Number(stringNumber) <= min) stringNumber = min;
-    if (Number(stringNumber) >= max) stringNumber = max;
+    if (Number(stringNumber) < min && stringNumber !== '-') stringNumber = min;
+    if (Number(stringNumber) >= max && stringNumber !== '-') stringNumber = max;
     oldValue.current = stringNumber;
 
     setValueInternal(stringNumber);
-    onChange(Number(stringNumber));
+    onChange(stringNumber === '-' ? stringNumber : Number(stringNumber));
   };
 
   return (
     <input
-      value={valueInternal || ''}
+      value={valueInternal}
       onChange={onChangeInternal}
       type="text"
       {...rest}

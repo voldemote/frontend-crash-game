@@ -184,7 +184,7 @@ const cryptoAddressLostFocus = useCallback(event => {
               </div>
               <NumberCommaInput
                 value={currency}
-                min={1}
+                min={0}
                 max={2000}
                 onChange={currencyChange}
                 onBlur={currencyLostFocus}

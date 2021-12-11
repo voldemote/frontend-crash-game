@@ -201,7 +201,7 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
           </div>
           <NumberCommaInput
             value={currency}
-            min={1}
+            min={0}
             max={2000}
             onChange={currencyChange}
             onBlur={currencyLostFocus}
