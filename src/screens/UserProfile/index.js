@@ -31,7 +31,6 @@ const UserProfile = ({refreshMyBetsData}) => {
   const [sideTabIndex, setSideTabIndex] = useState(0);
   const sideTabOptions = [
     { name: 'Statistics', index: 0 },
-    { name: 'Achievement', index: 1 },
   ];
   const currentUser = useSelector(state => state.authentication);
   const dispatch = useDispatch();
@@ -82,7 +81,9 @@ const UserProfile = ({refreshMyBetsData}) => {
       case 0:
         return (
           <div className={styles.activities}>
-            <BetTable renderRow={betsRow} />
+            <BetTable 
+              headingClass={styles.heading}
+              renderRow={betsRow} />
           </div>
         );
       case 1:

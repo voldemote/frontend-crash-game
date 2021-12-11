@@ -30,8 +30,14 @@
       line-height: 18px;
       display: flex;
       align-items: center;
+      padding: 4px 0;
       span {
         margin-right: 5px;
+      }
+
+      @media (max-width: $screen-md) {
+        font-weight: 600;
+        font-size: 12px;
       }
 
       @media (max-width: $screen-xs) {
@@ -51,8 +57,14 @@
       color: $colorLightYellow;
       display: flex;
       align-items: center;
+      padding: 4px 0;
       span {
         margin-right: 5px;
+      }
+
+      @media (max-width: $screen-md) {
+        font-weight: 600;
+        font-size: 12px;
       }
 
       @media (max-width: $screen-xs) {
@@ -64,7 +76,7 @@
 
     .tokenHeading {
       position: absolute;
-      right: 50px;
+      right: 40px;
       font-family: $fontOmnes;
       font-weight: bold;
       font-size: 14px;
@@ -72,12 +84,15 @@
       color: $colorLightYellow;
       display: flex;
       align-items: center;
+      padding: 4px 0;
       span {
         margin-right: 5px;
       }
 
       @media (max-width: $screen-md) {
-        right: 20px;
+        right: 16px;
+        font-weight: 600;
+        font-size: 12px;
       }
 
       @media (max-width: $screen-xs) {

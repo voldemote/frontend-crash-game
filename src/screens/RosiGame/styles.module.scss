@@ -26,12 +26,15 @@
 
     &::before {
       position: absolute;
-      background-image: url('../../data/images/elon-musk-1.svg');
+      background: url('../../data/images/elon-musk-1.svg');
       content: '';
       width: 100px;
       height: 100px;
       top: -35px;
       left: -70px;
+      @media (max-width: $screen-sm) {
+        background: transparent;
+      }
     }
 
     .howtoLink {
