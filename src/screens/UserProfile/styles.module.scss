@@ -212,8 +212,8 @@
 
     .activities {
       width: 100%;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
+      background-color: $colorPrimary;
+      border-radius: 12px;
     }
 
     .leaderboard {
@@ -221,17 +221,17 @@
       background-color: $colorPrimary;
       border-radius: 12px;
 
-      .heading {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        @media (max-width: $screen-sm) {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-        }
-      }
-
       .leaderboardTable {
         overflow-y: hidden;
+      }
+    }
+
+    .heading {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      @media (max-width: $screen-sm) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
       }
     }
   }
