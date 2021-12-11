@@ -16,6 +16,10 @@
     &:focus {
       border: 1px solid $colorGrayLight;
     }
+
+    & > * {
+      color: $colorBlack;
+    }
   }
 
   strong {
