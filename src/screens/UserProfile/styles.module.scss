@@ -141,7 +141,6 @@
       margin-bottom: 8px;
       @media (max-width: $screen-sm) {
         margin-left: 0px;
-        justify-content: space-between;
         font-size: 11px;
         line-height: 14px;
       }
@@ -151,6 +150,9 @@
         padding-bottom: 12px;
         opacity: 0.3;
         cursor: pointer;
+        @media (max-width: $screen-sm) {
+          padding: 12px 20px;
+        }
       }
 
       .tabItemSelected {
@@ -159,6 +161,9 @@
         border-bottom: 2px solid $mainAction;
         opacity: 1;
         cursor: pointer;
+        @media (max-width: $screen-sm) {
+          padding: 12px 20px;
+        }
       }
     }
 
