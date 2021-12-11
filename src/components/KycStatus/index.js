@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import styles from './styles.module.scss';
 import * as ApiUrls from 'constants/Api';
 import { useEffect, useState } from 'react';
+import Button from 'components/Button';
 
 const KycStatus = ({
   user = {},
@@ -59,11 +60,12 @@ const KycStatus = ({
           </>
         : renderKycStatus()}
       {showStartButton() &&
-        <button
+        <Button
+          className={styles.button}
           onClick={openFractal}
           >
-        Continue with Fractal
-      </button>}
+          <p>Continue with Fractal</p>
+      </Button>}
     </div>
   );
 };
