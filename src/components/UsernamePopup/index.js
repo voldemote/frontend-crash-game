@@ -81,13 +81,13 @@ const UsernamePopup = ({
           <div className={styles.errorHandLing}>{errorMessage}</div>
         )}
         <div className={styles.buttons}>
-          <Button
+          <span
             onClick={skipUsername}
             withoutBackground={true}
-            className={styles.button}
+            className={styles.skipButton}
           >
-            <span>Skip</span>
-          </Button>
+            Skip
+          </span>
           <Button
             onClick={onConfirm}
             withoutBackground={true}
