@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
+const NumberCommaInput = ({ value, onChange, min, max, withoutDecimals = false, ...rest }) => {
   const [valueInternal, setValueInternal] = useState(0);
   const oldValue = useRef();
 
@@ -10,7 +10,10 @@ const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
 
   const onChangeInternal = event => {
     const string = event.target.value;
-    let stringNumber = string.replace(/,/, '.'); // replace comma with dot
+
+    let stringNumber = string;
+    if(withoutDecimals) stringNumber = string.replace(/[,.]/, ''); // do not allow dot or comma when we do not want decimals
+    else stringNumber = string.replace(/,/, '.'); // replace comma with dot
 
     if (stringNumber[0] === '.') stringNumber = ''; // do not start with dot
     if (stringNumber[0] === '-' && stringNumber[1] === '.' && stringNumber.length === 2)
@@ -41,8 +44,8 @@ const NumberCommaInput = ({ value, onChange, min, max, ...rest }) => {
     <input
       value={valueInternal}
       onChange={onChangeInternal}
-      type="text"
       {...rest}
+      type="text"
     />
   );
 };
