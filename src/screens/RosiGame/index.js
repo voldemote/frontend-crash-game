@@ -423,7 +423,7 @@ const RosiGame = ({
           <div className={styles.boughtText}>
             <img src={BoughtText} alt="text" />
           </div>
-          <img src={PonziTweet} alt="text"/>
+          <img src={PonziTweet} alt="text" style={{ display: 'none' }} />
         </div>
 
         <div className={styles.placeBetContainer}>
