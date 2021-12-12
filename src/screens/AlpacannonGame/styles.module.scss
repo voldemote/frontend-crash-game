@@ -52,7 +52,6 @@
       height: 25px;
 
       svg {
-
         g,
         path,
         circle {
@@ -286,8 +285,8 @@
     position: absolute;
     top: 0;
     z-index: 10;
-    content: "";
-    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    content: '';
+    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
     height: 55px;
     width: 100%;
 
@@ -301,8 +300,8 @@
     position: absolute;
     bottom: 0;
     z-index: 10;
-    content: "";
-    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    content: '';
+    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
     height: 200px;
     width: 100%;
     transform: rotate(-180deg);
@@ -324,10 +323,12 @@
   }
 
   h2 {
+    font-family: $fontOmnes;
+    font-weight: 900;
     font-size: 50px;
     text-align: center;
     margin-bottom: 30px;
-    @include simpleBorderedText(#000);
+    @include simpleBorderedText(#000, 2px);
 
     @media (max-width: $screen-xs) {
       font-size: 40px;
@@ -335,11 +336,13 @@
   }
 
   h3 {
+    font-family: $fontOmnes;
+    font-weight: 900;
     font-size: 40px;
     color: white;
     text-align: center;
     margin-top: 100px;
-    @include simpleBorderedText(#000);
+    @include simpleBorderedText(#000, 2px);
 
     @media (max-width: $screen-xs) {
       font-size: 32px;
@@ -347,9 +350,11 @@
   }
 
   p {
+    font-family: $fontOmnes;
+    font-weight: 900;
     font-size: 22px;
     line-height: 50px;
-    @include simpleBorderedText(#000, 1px);
+    @include simpleBorderedText(#000, 1.5px);
 
     @media (max-width: $screen-xs) {
       font-size: 20px;
