@@ -455,7 +455,7 @@ const RosiGame = ({
         </div>
       </div>
 
-      {renderGameContent()}
+      {slug === GAMES['elonGame'].slug ? renderGameContent() : null}
     </BaseContainerWithNavbar>
   );
 };
