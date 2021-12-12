@@ -1,3 +1,4 @@
+import { TOKEN_NAME } from "constants/Token";
 import React, { useState } from "react";
 import walletImage from "../../data/icons/wallet.png";
 import { numberWithCommas } from "../../utils/common";
@@ -36,7 +37,7 @@ const TransferButton = ({
         }}
       >
         <img src={walletImage} alt={`Wallet`} />
-        Transfer {numberWithCommas(Math.floor(balance))} WFAIR
+        Transfer {numberWithCommas(Math.floor(balance))} {TOKEN_NAME}
       </button>
     );
   }

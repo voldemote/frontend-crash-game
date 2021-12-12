@@ -305,7 +305,7 @@ const BetView = ({
           >
             You need to have a sufficient amount of {TOKEN_NAME} tokens to
             participate in events
-            {/* How to buy WFAIR token? */}
+            {/* How to buy {TOKEN_NAME} token? */}
           </InfoBox>
         </div>
         <TokenNumberInput

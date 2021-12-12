@@ -16,6 +16,7 @@ import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
 import QRCode from 'react-qr-code';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
+import { TOKEN_NAME } from 'constants/Token';
 
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -226,7 +227,7 @@ const cryptoAddressLostFocus = useCallback(event => {
                   className={styles.wfairLogo}
                   onClick={handleWFAIRClick}
                 />
-                <span>WFAIR</span>
+                <span>{TOKEN_NAME}</span>
               </div>
             </div>
 

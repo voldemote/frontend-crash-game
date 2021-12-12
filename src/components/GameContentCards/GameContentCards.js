@@ -7,6 +7,7 @@ import GemsImg from '../../data/images/alpaca-verse/gems.png';
 import FairImg from '../../data/images/alpaca-verse/fair-img.png';
 import StarImg from '../../data/images/alpaca-verse/star.png';
 import DecentralImg from '../../data/images/alpaca-verse/decentral-img.png';
+import { TOKEN_NAME } from 'constants/Token';
 
 const GameContentCards = () => {
     const [expandSocial, setExpandSocial] = useState(false);
@@ -117,11 +118,11 @@ const GameContentCards = () => {
                   casino operators to use this open-source, non profit
                   technology. Wallfair is striving to become a fully
                   decentralized autonomous organation (DAO) that is fully
-                  governed by the voting of every WFAIR token holder.
+                  governed by the voting of every {TOKEN_NAME} token holder.
                   <br />
                   <br />
-                  Every WFAIR holder participates in the growth of the network
-                  as WFAIR is the currency used for any interaction, e.g. users
+                  Every {TOKEN_NAME} holder participates in the growth of the network
+                  as {TOKEN_NAME} is the currency used for any interaction, e.g. users
                   signin up / depositing / betting in external applications.
                 </p>
               )}
