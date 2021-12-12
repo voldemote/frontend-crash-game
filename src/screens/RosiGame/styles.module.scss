@@ -32,6 +32,7 @@
       height: 100px;
       top: -35px;
       left: -70px;
+
       @media (max-width: $screen-sm) {
         background: transparent;
       }
@@ -51,6 +52,7 @@
         padding: 0 15px 15px;
       }
     }
+
     .shareButton {
       padding-right: 10px;
     }
@@ -63,6 +65,7 @@
       height: 25px;
 
       svg {
+
         g,
         path,
         circle {
@@ -88,59 +91,42 @@
       display: none;
     }
   }
+
   .mainContainer {
     display: flex;
+
     @media (max-width: $screen-md) {
       flex-direction: column;
     }
+
     .leftContainer {
       width: calc(100% - 370px);
+
       @media (max-width: $screen-md) {
         width: 100%;
       }
     }
+
     .rightContainer {
       width: 370px;
       padding-left: 14px;
+
       @media (max-width: $screen-md) {
         padding-left: 0px;
         width: 100%;
         margin-top: 7px;
       }
+
       .placeContainer {
         display: flex;
         flex-direction: column;
         /*height: 596px;*/
         height: fit-content;
+
         @media (max-width: $screen-md) {
           height: 100%;
         }
       }
-    }
-  }
-
-  .banner {
-    margin-top: 50px;
-    background-image: url('../../data/backgrounds/games/alpaca-wallpaper-banner.png');
-    min-height: 208px;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: relative;
-    &::after {
-      position: absolute;
-      content: '';
-      background-image: url('../../data/images/alpaca-logo-banner.png');
-      width: 145px;
-      height: 165px;
-      bottom: -15px;
-      right: -60px;
-    }
-
-    @media (max-width: $screen-md) {
-      background-image: url('../../data/backgrounds/games/wallpaper-banner-mobile.png');
-      height: 100%;
-      background-position: center;
     }
   }
 }
@@ -157,6 +143,7 @@
   display: flex;
   flex-direction: row;
 }
+
 .chatWrapper {
   margin-top: 32px;
   background: rgba(122, 121, 121, 0.1);
@@ -192,6 +179,7 @@
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
   }
+
   .activityContainer {
     position: relative;
     height: 324px;
@@ -233,6 +221,7 @@
   line-height: 18px;
   padding-top: 24px;
   border-bottom: 1px solid $colorLightGray2;
+
   @media (max-width: $screen-sm) {
     margin-left: 0px;
     justify-content: space-between;
@@ -252,5 +241,210 @@
     padding-bottom: 12px;
     opacity: 1;
     cursor: pointer;
+  }
+}
+
+.gameContent {
+  padding-top: 140px;
+  padding-bottom: 250px;
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+  margin-bottom: -40px;
+
+  @media (max-width: $screen-xl) {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  @media (max-width: $screen-md) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .firstBgImage {
+    background: url('../../data/images/common-games/top-bg.png');
+    height: 1080px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .secondBgImage {
+    background: url('../../data/images/common-games/middle-bg.png');
+    height: 1079px;
+    width: 100%;
+    top: 1079px;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .thirdBgImage {
+    background: url('../../data/images/common-games/bottom-bg.png');
+    height: 1080px;
+    width: 100%;
+    top: calc(1079px + 1079px);
+    left: 0;
+    position: absolute;
+    z-index: -1;
+
+    @media (max-width: $screen-lg) {
+      height: 1800px;
+      background-size: cover;
+    }
+  }
+
+
+  &:before {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    content: "";
+    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    height: 55px;
+    width: 100%;
+  }
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    content: "";
+    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    height: 55px;
+    width: 100%;
+    transform: rotate(-180deg);
+  }
+
+  h2 {
+    font-weight: 900;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 10;
+
+    @media (max-width: $screen-xs) {
+      font-size: 40px;
+    }
+  }
+
+  h3 {
+    font-weight: 900;
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+
+    @media (max-width: $screen-xs) {
+      font-size: 32px;
+    }
+  }
+
+  p {
+    color: white;
+    font-size: 20px;
+    line-height: 50px;
+    font-weight: 900;
+
+    @media (max-width: $screen-xs) {
+      font-size: 18px;
+      line-height: 42px;
+    }
+  }
+
+  .title {
+    margin-bottom: 85px;
+  }
+
+
+  .introContainer {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: 15%;
+    margin-bottom: 140px;
+    position: relative;
+
+    svg {
+      position: absolute;
+      left: -95%;
+      top: -300px;
+    }
+  }
+
+  .placeBetContainer {
+    max-width: 240px;
+    margin: 0 auto;
+    margin-top: 45px;
+    margin-bottom: 130px;
+  }
+
+  .secondHeadingContainer {
+    max-width: 600px;
+    margin-top: 145px;
+    margin-left: 18%;
+    position: relative;
+
+    svg {
+      position: absolute;
+      right: -85%;
+      top: 0;
+    }
+  }
+
+  .thirdHeadingContainer {
+    max-width: 875px;
+    margin-left: auto;
+    margin-right: 7%;
+    margin-top: 90px;
+    position: relative;
+
+    svg {
+      position: absolute;
+      left: -57%;
+      top: 50px;
+    }
+  }
+
+  .elonWrapper {
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 7%;
+  }
+
+  .banner {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-image: url('../../data/backgrounds/games/alpaca-wallpaper-banner.png');
+    min-height: 208px;
+    max-width: 1350px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: '';
+      background-image: url('../../data/images/alpaca-logo-banner.png');
+      width: 145px;
+      height: 165px;
+      bottom: -15px;
+      right: -60px;
+    }
+
+    @media (max-width: $screen-md) {
+      background-image: url('../../data/backgrounds/games/wallpaper-banner-mobile.png');
+      height: 100%;
+      background-position: center;
+    }
   }
 }
