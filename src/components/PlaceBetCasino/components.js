@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import Input from '../Input';
+import { TOKEN_NAME } from 'constants/Token';
 
 
 export const RiskInput = ({risk, setRisk, number, disable}) => {
@@ -111,7 +112,7 @@ export const StandardInput = ({setValue, value, title}) => {
           max={'100'}
         />
         <span className={styles.eventTokenLabel}>
-          <span>PFAIR</span>
+          <span>{TOKEN_NAME}</span>
         </span>
       </div>
     </div>

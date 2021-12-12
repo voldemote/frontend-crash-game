@@ -38,6 +38,14 @@ import Routes from 'constants/Routes';
 import PumpDumpAnimation from '../../components/PumpDumpAnimation';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import TabOptions from 'components/TabOptions';
+import { ReactComponent as ElonOnRocketSvg } from '../../data/icons/elon-game/elon-on-rocket.svg';
+import { ReactComponent as LuckyElonSvg } from '../../data/icons/elon-game/lucky-elon.svg';
+import { ReactComponent as ElonChampSvg } from '../../data/icons/elon-game/elon-champ.svg';
+import { ReactComponent as ElonOnAnimalSvg } from '../../data/icons/elon-game/elon-on-animal.svg';
+import PonziTweet from '../../data/images/pump-dump/ponzi-tweet.png';
+import BoughtText from '../../data/images/pump-dump/bought-text.png';
+import Button from 'components/Button';
+import GameContentCards from 'components/GameContentCards/GameContentCards';
 
 
 const RosiGame = ({
@@ -327,14 +335,123 @@ const RosiGame = ({
     );
   };
 
+  const renderGameContent = () => {
+    return (
+      <div className={styles.gameContent}>
+        <div className={styles.firstBgImage} />
+        <div className={styles.secondBgImage} />
+        <div className={styles.thirdBgImage} />
+
+        <h2 className={styles.title}>ELON GAME</h2>
+
+        <div className={styles.introContainer}>
+          <h2>INTRO</h2>
+          <p>
+            Elon had enough: Covid, inflation, corrupt politicians and that bastard Bezos and the other virgin. If that wasn’t enough, SEC got pissed again about some hilarious tweets he wrote. He was tired so decided to relax. As his Ambien stash was empty, there was the only thing he could do. Inhale…Exhale…
+            After a while, he knew what he had to do. There was only one place where he would finally be happy, the space.
+          </p>
+          <ElonOnRocketSvg />
+        </div>
+
+        <h3>HOW TO PLACE A BET</h3>
+        <div className={styles.howtoplacebet}>
+          <p>
+            Simply add the desired amount you wish to bet in the "Bet Amount" field and click on "Place Bet". The bet will be valid for the next round.
+          </p>
+        </div>
+        <div className={styles.placeBetContainer}>
+          <Button role="button" tabIndex="0" className={styles.button}>
+            <p>Place a bet</p>
+          </Button>
+        </div>
+
+        <div className={styles.secondHeadingContainer}>
+          <h2>HOW TO PLAY</h2>
+          <p>
+            Rules are simple: you bet on Elon going to Mars by putting your WFAIR in the fuel tank of his alpaca rocket. The closer Elon gets to Mars, the more valuable your tokens will get. But the space paca rockets also aren’t very reliable and crash at some point. So get your money out before it’s lost in space and before SEC start laughing.
+          </p>
+          <LuckyElonSvg />
+        </div>
+
+        <div className={styles.thirdHeadingContainer}>
+          <h2>READY TO TAKE OFF</h2>
+          <p>
+            Now it’s your turn to become a part of the mission. Help Elon to get to the Mars and he will immediately reward you! But if you fail, SEC and all the other haters will laugh.
+          </p>
+          <ElonChampSvg />
+        </div>
+
+        <div className={styles.elonWrapper}>
+          <ElonOnAnimalSvg />
+        </div>
+
+        <div className={styles.wrapperCards}>{renderWallpaperBanner()}</div>
+        <div className={styles.wrapperCards}>
+          <GameContentCards />
+        </div>
+      </div>
+    );
+  }
+
+  const renderPumpDumpContent = () => {
+    return (
+      <>
+        <div className={styles.pumpDumpContent}>
+          <h2>PUMP AND DUMP</h2>
+          <div className={styles.mapImage}>
+            <div className={styles.headingContainer}>
+              <h2>INTRO</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet.
+              </p>
+            </div>
+            <div className={styles.chartImageWrapper}>
+              <div className={styles.chartImage} />
+            </div>
+          </div>
+
+          <div className={styles.tweetContainer}>
+            <div className={styles.boughtText}>
+              <img src={BoughtText} alt="text" />
+            </div>
+            <img src={PonziTweet} alt="text" style={{ display: 'none' }} />
+          </div>
+
+          <div className={styles.placeBetContainer}>
+            <Button role="button" tabIndex="0" className={styles.button}>
+              <p>Place a bet</p>
+            </Button>
+          </div>
+        </div>
+        <div className={styles.wrapperPumpDumpCards}>
+          <GameContentCards />
+        </div>
+      </>
+    );
+  }
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`}>
-            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump & Dump"} showArrow={(slug === GAMES['elonGame'].slug)} />
+          <div
+            className={`${styles.headlineWrapper} ${
+              slug === GAMES['pumpDump'].slug && styles.hideElon
+            }`}
+          >
+            <BackLink
+              to="/games"
+              text={
+                slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump & Dump'
+              }
+              showArrow={slug === GAMES['elonGame'].slug}
+            />
             <Share popupPosition="right" className={styles.shareButton} />
-            {(slug === GAMES['elonGame'].slug) &&
+            {slug === GAMES['elonGame'].slug && (
               <Icon
                 className={styles.questionIcon}
                 iconType={IconType.question}
@@ -343,13 +460,13 @@ const RosiGame = ({
                 width={25}
                 onClick={handleHelpClick}
               />
-            }
+            )}
             {showHowDoesItWork()}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes lastCrashes={lastCrashes} game={game}/>
+              <LastCrashes lastCrashes={lastCrashes} game={game} />
               {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>
@@ -372,10 +489,12 @@ const RosiGame = ({
               {renderActivities()}
             </div>
           ) : null}
-          {renderWallpaperBanner()}
-
         </div>
       </div>
+
+      {slug === GAMES['elonGame'].slug
+        ? renderGameContent()
+        : renderPumpDumpContent()}
     </BaseContainerWithNavbar>
   );
 };

@@ -1,14 +1,16 @@
 import { OnboardingTypes, OnboardingSteps } from '../actions/onboarding';
 
 const initialState = {
-  currentStep: null
+  currentStep: null,
+  username: null,
+
 };
 
 export const Order = [
   OnboardingSteps.buildAvatar,
-  OnboardingSteps.registerEmail,
   OnboardingSteps.setUsername,
-  OnboardingSteps.welcomeScreen,
+  OnboardingSteps.registerEmail,
+  OnboardingSteps.wallet,
 ];
 
 const start = (action, state) => {
@@ -24,7 +26,8 @@ const next = (action, state) => {
   if(current <= Order.length-1) next = current +1;
   return {
     ...state,
-    currentStep: Order[next]
+    currentStep: Order[next],
+    username: action?.payload?.username ? action.payload.username : state.username
   }
 };
 

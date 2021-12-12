@@ -379,7 +379,7 @@ const PlaceBetCasino = ({
             {bet.autobet &&
               <div className={styles.spinsleft}>
                 <span className={accumulated > 0 ? styles.reward : styles.lost}>
-                {Math.floor(accumulated)} PFAIR
+                {Math.floor(accumulated)} {TOKEN_NAME}
                 </span>
                 accumulated
               </div>
@@ -388,7 +388,7 @@ const PlaceBetCasino = ({
               <div className={styles.spinsleft}>
                 Current bet:
                 <span className={styles.neutral}>
-                {Math.floor(bet.amount)} PFAIR
+                {Math.floor(bet.amount)} {TOKEN_NAME}
                 </span>
               </div>
             }

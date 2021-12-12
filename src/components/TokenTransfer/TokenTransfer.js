@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
 import { TxDataActions } from 'store/actions/txProps';
+import { TOKEN_NAME } from 'constants/Token';
 // import AddTokens from 'components/AddTokens';
 
 const TokenTransfer = ({
@@ -97,7 +98,7 @@ const TokenTransfer = ({
       <div className={styles.transferWrapper}>
         <strong>{`You can transfer up to ${numberWithCommas(
           balance > 2000 ? 2000 : Number(balance).toFixed(2)
-        )} WFAIR`}</strong>
+        )} ${TOKEN_NAME}`}</strong>
         {formError && (
           <div className={styles.transferFormErrors}>
             <em>{formError}</em>

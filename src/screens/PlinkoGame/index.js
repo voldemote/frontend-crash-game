@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -35,6 +35,11 @@ import {
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import classNames from "classnames";
+import Button from 'components/Button';
+import { selectUser } from 'store/selectors/authentication';
+import {ReactComponent as CoinSvg} from '../../data/icons/plinko-game/coin.svg'
+import { ReactComponent as BorderedCircleSvg } from '../../data/icons/plinko-game/bordered-cricle.svg';
+import GameContentCards from 'components/GameContentCards/GameContentCards';
 
 const PLINKO_GAME_EVENT_ID = GAMES.plinko.id
 
@@ -56,6 +61,8 @@ const PlinkoGame = ({
   const [bet, setBet] = useState({ready: true, ball: 0});
   const [amount, setAmount] = useState(50);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
+
+  const user = useSelector(selectUser);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -209,6 +216,41 @@ const PlinkoGame = ({
     </Grid>
   );
 
+  const renderBgCoins = () => (
+    <>
+      <div className={styles.firstCoin}>
+        <div className={styles.coinRectangle}>
+          <div className={styles.rectangle}></div>
+          <CoinSvg />
+        </div>
+      </div>
+      <div className={styles.secondCoin}>
+        <div className={styles.coinRectangle}>
+          <div className={styles.rectangle}></div>
+          <CoinSvg />
+        </div>
+      </div>
+      <div className={styles.thirdCoin}>
+        <div className={styles.coinRectangle}>
+          <div className={styles.rectangle}></div>
+          <CoinSvg />
+        </div>
+      </div>
+      <div className={styles.forthCoin}>
+        <div className={styles.coinRectangle}>
+          <div className={styles.rectangle}></div>
+          <CoinSvg />
+        </div>
+      </div>
+      <div className={styles.fifthCoin}>
+        <div className={styles.coinRectangle}>
+          <div className={styles.rectangle}></div>
+          <CoinSvg />
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -236,7 +278,7 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Games" spins={spins} game={gameCfg}/>
+              <Spins text="My Games" spins={spins} game={gameCfg} />
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -255,13 +297,21 @@ const PlinkoGame = ({
 
               <div className={styles.fairnessContainer}>
                 <Icon
-                    className={styles.balanceIcon}
-                    iconType={IconType.balanceScaleSolid}
-                    iconTheme={IconTheme.black}
-                    height={18}
-                    width={18}
-                /> <span className={classNames('global-link-style', styles.fairnessOpenPopup)}
-                         onClick={handleFairnessPopup}>Fairness</span>
+                  className={styles.balanceIcon}
+                  iconType={IconType.balanceScaleSolid}
+                  iconTheme={IconTheme.black}
+                  height={18}
+                  width={18}
+                />{' '}
+                <span
+                  className={classNames(
+                    'global-link-style',
+                    styles.fairnessOpenPopup
+                  )}
+                  onClick={handleFairnessPopup}
+                >
+                  Fairness
+                </span>
               </div>
             </div>
           </div>
@@ -271,6 +321,61 @@ const PlinkoGame = ({
               {renderActivities()}
             </div>
           ) : null}
+        </div>
+      </div>
+      <div className={styles.gameContent}>
+        <div className={styles.firstBgImage} />
+        <div className={styles.secondBgImage} />
+        <div className={styles.thirdBgImage} />
+
+        <h2 className={styles.title}>PLINKO GAME</h2>
+
+        {renderBgCoins()}
+
+        <div className={styles.firstHeadingContainer}>
+          <h2>How to play Plinko</h2>
+          <p className={styles.paragraph}>
+            Plinko is an exciting and simple gambling game to try your luck. 
+            Drop the coins and wait for them to hit the prizes.
+          </p>
+        </div>
+
+        <div className={styles.secondHeadingContainer}>
+          <h3>HOW TO PLACE A BET</h3>
+          <p className={styles.paragraph}>
+            Add the amount you want to bet and click on the "Place Bet" button.
+          </p>
+          <div className={styles.placeBetContainer}>
+            <Button
+              role="button"
+              tabIndex="0"
+              className={classNames(styles.button, {})}
+            >
+              <p>Place bet</p>
+            </Button>
+          </div>
+        </div>
+
+        <div className={styles.firstCircledContainer}>
+          <BorderedCircleSvg />
+          <BorderedCircleSvg />
+        </div>
+
+        <div className={styles.secondCircledContainer}>
+          <BorderedCircleSvg />
+          <BorderedCircleSvg />
+          <BorderedCircleSvg />
+        </div>
+
+        <div className={styles.secondHeadingContainer}>
+          <h2>Choose a Risk Level</h2>
+          <p className={styles.paragraph}>
+            By choosing a higher risk, the chances of hitting a positive multiplier are lower, but the higher the risk, the higher the multiplier.
+          </p>
+        </div>
+
+        <div className={styles.wrapperCards}>
+          <GameContentCards />
         </div>
       </div>
     </BaseContainerWithNavbar>

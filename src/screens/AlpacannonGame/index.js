@@ -35,6 +35,8 @@ import {
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import { selectUser } from 'store/selectors/authentication';
+import Button from 'components/Button';
+import GameContentCards from 'components/GameContentCards/GameContentCards';
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
@@ -223,6 +225,43 @@ const PlinkoGame = ({
             </div>
           ) : null}
         </div>
+      </div>
+
+      <div className={styles.gameContentWrapper}>
+        <div className={styles.gameContent}>
+          <h2>AlpaCannon</h2>
+          <div className={styles.headingContainer}>
+            <h2>INTRO</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet.{' '}
+            </p>
+          </div>
+          <h3>HOW TO PLACE A BET</h3>
+          <div className={styles.placeBetContainer}>
+            <Button role="button" tabIndex="0" className={styles.button}>
+              <p>Place a bet</p>
+            </Button>
+          </div>
+
+          <div className={styles.headingContainer}>
+            <h2>HOW TO PLAY</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet.{' '}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.wrapperCards}>
+        <GameContentCards />
       </div>
     </BaseContainerWithNavbar>
   );

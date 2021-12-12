@@ -54,7 +54,10 @@ const loadOnboardingStep = function* (action) {
       //     },
       //   })
       // );
-    }
+    case OnboardingSteps.wallet:
+      console.log('open wallet');
+      window.location.href = window.location.origin + '/wallet'; //temp solution
+  }
 };
 
 

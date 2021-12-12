@@ -26,13 +26,8 @@ import EloneWithPhone from '../../data/images/elon-with-phone.png';
 import gameCardWheel from '../../data/images/house-games/card-wheel.png';
 import gameCardElon from '../../data/images/house-games/card-elon.png';
 import gameCardPlinko from '../../data/images/house-games/card-plinko.png';
+import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
 import gameCardMines from '../../data/images/house-games/card-mines.png';
-import IceCreamImg from '../../data/images/alpaca-verse/ice-cream.png';
-import SocialImg from '../../data/images/alpaca-verse/social-img.png';
-import GemsImg from '../../data/images/alpaca-verse/gems.png';
-import FairImg from '../../data/images/alpaca-verse/fair-img.png';
-import StarImg from '../../data/images/alpaca-verse/star.png';
-import DecentralImg from '../../data/images/alpaca-verse/decentral-img.png';
 import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
 import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
 import MagentaThumbnail from '../../data/images/alpaca-dopter/magenta-thumbnail.png';
@@ -52,6 +47,8 @@ import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
 import { OnboardingActions } from 'store/actions/onboarding';
+import GameContentCards from 'components/GameContentCards/GameContentCards';
+import { TOKEN_NAME } from 'constants/Token';
 
 const Home = ({
   authState,
@@ -65,9 +62,6 @@ const Home = ({
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
-  const [expandSocial, setExpandSocial] = useState(false);
-  const [expandFair, setExpandFair] = useState(false);
-  const [expandDecentral, setExpandDecentral] = useState(false);
   let urlParams = new URLSearchParams(location.search);
 
   useOAuthCallback();
@@ -211,7 +205,7 @@ const Home = ({
   const renderActivities = () => {
     return (
       <div className={styles.activities}>
-        <div className={styles.title}>          
+        <div className={styles.title}>
           <h2>Activities</h2>
         </div>
         <Grid item xs={12}>
@@ -230,19 +224,14 @@ const Home = ({
   const renderHouseGames = () => {
     return (
       <div className={styles.gameCards}>
-        <div className={styles.title}>          
+        <div className={styles.title}>
           <h2>House Games</h2>
         </div>
         <div className={styles.cardBox}>
           <Grid container spacing={1}>
             <Grid item lg={3} md={3} xs={6}>
-              <Link to={'/games/mines'}>
-                <img src={gameCardMines} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={3} md={3} xs={6}>
-              <Link to={'/games/plinko'}>
-                <img src={gameCardPlinko} alt="" />
+              <Link to={'/games/pump-dump'}>
+                <img src={gameCardPumpDump} alt="" />
               </Link>
             </Grid>
             <Grid item lg={3} md={3} xs={6}>
@@ -251,8 +240,13 @@ const Home = ({
               </Link>
             </Grid>
             <Grid item lg={3} md={3} xs={6}>
-              <Link to={'/games/alpaca-wheel'}>
-                <img src={gameCardWheel} alt="" />
+              <Link to={'/games/plinko'}>
+                <img src={gameCardPlinko} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={3} xs={6}>
+              <Link to={'/games/mines'}>
+                <img src={gameCardMines} alt="" />
               </Link>
             </Grid>
           </Grid>
@@ -283,8 +277,8 @@ const Home = ({
         <div className={styles.cardBox}>
           <h1>Alpacasino</h1>
           <h2>
-            Get your <span className={styles.highlight}>50 PFAIR bonus</span> and<br/>
-            create yoru <span className={styles.highlight}>alpaca</span>
+            Get your <span className={styles.highlight}>50 {TOKEN_NAME} bonus</span> and<br/>
+            create your <span className={styles.highlight}>alpaca</span>
           </h2>
 
           <Button
@@ -342,7 +336,7 @@ const Home = ({
                   <div>
                     <h3>Grow your Alpaca</h3>
                     <p>
-                      You can earn PFAIR tokens in multiple ways: You can play
+                      You can earn {TOKEN_NAME} tokens in multiple ways: You can play
                       our house games (we are going to launch new games weekly),
                       invite other alpacas, provide feedback and (soon) battle
                       other alpacas(or bet on other alpaca fights) and send
@@ -392,15 +386,6 @@ const Home = ({
     );
   };
   const renderAlpacaVerse = () => {
-    const handleExpandSocial = () => {
-      setExpandSocial(!expandSocial);
-    };
-    const handleExpandFair = () => {
-      setExpandFair(!expandFair);
-    };
-    const handleExpandDecentral = () => {
-      setExpandDecentral(!expandDecentral);
-    };
     return (
       <div className={styles.alpacaverse}>
         <div className={styles.title}>
@@ -408,121 +393,7 @@ const Home = ({
             Welcome to the <span className={styles.pink}>ALPACA</span>VERSE
           </h2>
         </div>
-        <div className={styles.cardBox}>
-          <Grid container spacing={2}>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className={styles.card}>
-                <div className={styles.thumbnail}>
-                  <img src={IceCreamImg} alt="" />
-                </div>
-                <div className={styles.detail}>
-                  <h3>SOCIAL</h3>
-                  {!expandSocial ? (
-                    <p>
-                      It’s simple: Alpacas are social animals = Alpacasino is a
-                      social Betwork. Alpacas from all over the world meet to
-                      chat ...
-                    </p>
-                  ) : (
-                    <p>
-                      It’s simple: Alpacas are social animals = Alpacasino is a
-                      social Betwork. Alpacas from all over the world meet to
-                      chat, follow, interact and game together. You can
-                      customize and upgrade your Alpaca or check out any Alpacas
-                      activity history and copy bets, see other Alpacas activity
-                      in real time and chat / follow. Your alpaca grows with
-                      tokens owned and you will be able to battle or gang up
-                      with other alpacas in the future. Some cool NFT
-                      applications and skins might be on their way too ;)
-                    </p>
-                  )}
-                  <button onClick={handleExpandSocial}>
-                    {!expandSocial ? 'READ MORE' : 'LESS'}
-                  </button>
-                </div>
-                <div className={styles.thumbnailLast}>
-                  <img src={SocialImg} alt="" />
-                </div>
-              </div>
-            </Grid>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className={styles.card}>
-                <div className={styles.thumbnail}>
-                  <img src={GemsImg} alt="" />
-                </div>
-                <div className={styles.detail}>
-                  <h3>FAIR</h3>
-                  {!expandFair ? (
-                    <p>
-                      Alpacas are sometimes funny and misbehaving but always
-                      fair. We believe in a maximum of transparency ...
-                    </p>
-                  ) : (
-                    <p>
-                      Alpacas are sometimes funny and misbehaving but always
-                      fair. We believe in a maximum of transparency and
-                      blockchain allows for a technical implementation. This way
-                      every algorithm and maths behind the games and market
-                      makers are transparent from s ource code to unlimited
-                      history of outcomes. Every activity of every user and game
-                      is transparent. This is a much better approach than
-                      unknown and secret algorithms or “random” picks in
-                      traditional worlds.
-                    </p>
-                  )}
-                  <button onClick={handleExpandFair}>
-                    {!expandFair ? 'READ MORE' : 'LESS'}
-                  </button>
-                </div>
-                <div className={styles.thumbnailLast}>
-                  <img src={FairImg} alt="" />
-                </div>
-              </div>
-            </Grid>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className={styles.card}>
-                <div className={styles.thumbnail}>
-                  <img src={StarImg} alt="" />
-                </div>
-                <div className={styles.detail}>
-                  <h3>DECENTRAL</h3>
-                  {!expandDecentral ? (
-                    <p>
-                      Alpacas are self governing animals. Wallfair is a
-                      combination of smart contracts running on decentralized
-                      Polygon blockchain ...
-                    </p>
-                  ) : (
-                    <p>
-                      Alpacas are self governing animals. Wallfair is a
-                      combination of smart contracts running on decentralized
-                      Polygon blockchain as well an ERC 20 utility token. It’s a
-                      decentralized technology that allows any game provider to
-                      upload games, any user to create new games, events or
-                      battles and licensed casino operators to use this
-                      open-source, non profit technology. Wallfair is striving
-                      to become a fully decentralized autonomous organation
-                      (DAO) that is fully governed by the voting of every WFAIR
-                      token holder.
-                      <br />
-                      <br />
-                      Every WFAIR holder participates in the growth of the
-                      network as WFAIR is the currency used for any interaction,
-                      e.g. users signin up / depositing / betting in external
-                      applications.
-                    </p>
-                  )}
-                  <button onClick={handleExpandDecentral}>
-                    {!expandDecentral ? 'READ MORE' : 'LESS'}
-                  </button>
-                </div>
-                <div className={styles.thumbnailLast}>
-                  <img src={DecentralImg} alt="" />
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-        </div>
+        <GameContentCards />
       </div>
     );
   };
@@ -539,7 +410,7 @@ const Home = ({
           {!isLoggedIn() && renderWelcome()}
           {renderHouseGames()}
           {renderSlogGames()}
-          {isLoggedIn() && renderActivities()}
+          {renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}

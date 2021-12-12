@@ -16,7 +16,7 @@ import gameCard5 from '../data/images/house-games/card-5.png';
 import gameCardPumpDump from '../data/images/house-games/card-pumpdump.png';
 import gameCardPlinko from '../data/images/house-games/card-plinko.png';
 import gameCardMines from '../data/images/house-games/card-mines.png';
-import gameCardAlpacannon from '../data/images/house-games/card-alpacannon-soon.png';
+import gameCardAlpacannon from '../data/images/house-games/card-alpacannon.png';
 
 export const CASINO_GAMES = [
   {
@@ -57,18 +57,18 @@ export const CASINO_GAMES = [
 
 export const NEW_SLOTS_GAMES = [
   {
-    background: gameCardElon,
-    title: `Elon Game`,
-    subtitle: '',
-    active: true,
-    linkTo: '/games/elon-game',
-  },
-  {
     background: gameCardPumpDump,
     title: `Pump and Dump`,
     subtitle: '',
     active: true,
     linkTo: '/games/pump-dump',
+  },
+  {
+    background: gameCardElon,
+    title: `Elon Game`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/elon-game',
   },
   {
     background: gameCardMines,
@@ -94,18 +94,18 @@ export const NEW_SLOTS_GAMES = [
     linkTo: '/games/alpaca-wheel',
   },
   {
+    background: gameCardAlpacannon,
+    title: `AlpaCannon`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/alpacannon',
+  },
+  {
     background: gameCard5,
     title: `Oil Rush`,
     subtitle: '',
     active: false,
     linkTo: '/games/oilrush',
-  },
-  {
-    background: gameCardAlpacannon,
-    title: `AlpaCannon`,
-    subtitle: '',
-    active: false,
-    linkTo: '/games/alpacannon',
   },
   /*,
   {

@@ -1,10 +1,13 @@
 @import '../../styles/all';
 
+$tableMinWidth: 580px;
+
 .activitiesTrackerContainer {
   display: flex;
   flex-direction: column;
   position: relative;
   height: 100%;
+  min-width: $tableMinWidth;
 
   .header {
     display: flex;
@@ -15,6 +18,10 @@
     font-size: 14px;
     font-weight: 600;
     padding: 24px 10px;
+    min-width: $tableMinWidth;
+    > div { /* for grid container */
+      min-width: calc(#{$tableMinWidth} - 20px);
+    }
 
     @media (max-width: $screen-sm) {
       font-size: 12px;
@@ -48,6 +55,11 @@
     transition: opacity 300ms ease-out, transform 300ms ease-out;
     width: 100%;
     padding: 8px 10px;
+    min-width: $tableMinWidth;
+
+    > div { /* for grid container */
+      min-width: calc(#{$tableMinWidth} - 20px);
+    }
 
     @media (max-width: $screen-sm) {
       font-size: 12px;
@@ -81,7 +93,7 @@
     &.isVisible {
       opacity: 0.3;
 
-      & ~ .isVisible {
+      &~.isVisible {
         opacity: 1;
       }
     }
@@ -210,6 +222,7 @@
     //height: 260px;
     height: 100%;
     padding: 0;
+    min-width: $tableMinWidth;
 
     &::-webkit-scrollbar {
       width: 0;
