@@ -389,8 +389,10 @@ const RosiGame = ({
           <ElonOnAnimalSvg />
         </div>
 
-        {renderWallpaperBanner()}
-        <GameContentCards />
+        <div className={styles.wrapperCards}>{renderWallpaperBanner()}</div>
+        <div className={styles.wrapperCards}>
+          <GameContentCards />
+        </div>
       </div>
     );
   }

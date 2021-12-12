@@ -252,11 +252,6 @@
   position: relative;
   margin-bottom: -40px;
 
-  @media (max-width: $screen-xl) {
-    padding-left: 60px;
-    padding-right: 60px;
-  }
-
   @media (max-width: $screen-md) {
     padding-left: 30px;
     padding-right: 30px;
@@ -370,6 +365,10 @@
     margin-bottom: 140px;
     position: relative;
 
+    @media (max-width: $screen-xl) {
+      margin-right: 10%;
+    }
+
     svg {
       position: absolute;
       left: -95%;
@@ -390,10 +389,18 @@
     margin-left: 18%;
     position: relative;
 
+    @media (max-width: $screen-xl) {
+      margin-left: 5%;
+    }
+
     svg {
       position: absolute;
       right: -85%;
       top: 0;
+
+      @media (max-width: $screen-xl) {
+        right: -70%;
+      }
     }
   }
 
@@ -404,10 +411,18 @@
     margin-top: 90px;
     position: relative;
 
+    @media (max-width: $screen-xl) {
+      margin-right: 3%;
+      max-width: 750px;
+    }
+
     svg {
       position: absolute;
       left: -57%;
       top: 50px;
+      @media (max-width: $screen-xl) {
+        left: -40%
+      }
     }
   }
 
@@ -445,6 +460,18 @@
       background-image: url('../../data/backgrounds/games/wallpaper-banner-mobile.png');
       height: 100%;
       background-position: center;
+    }
+  }
+
+  .wrapperCards {
+    @media (max-width: $screen-xl) {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    @media (max-width: $screen-md) {
+      padding-left: 0px;
+      padding-right: 0px;
     }
   }
 }
