@@ -337,7 +337,7 @@
     position: relative;
     height: 324px;
 
-    @media screen and (max-width: $screen-xs) {
+    @media screen and (max-width: $screen-sm) {
       overflow-x: auto;
     }
   }
