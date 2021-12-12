@@ -363,7 +363,7 @@ const RosiGame = ({
                 />
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
-            </div>
+            </div> 
           </div>
           {isMiddleOrLargeDevice ? null : renderBets()}
           {isMiddleOrLargeDevice ? (
@@ -373,7 +373,6 @@ const RosiGame = ({
             </div>
           ) : null}
           {renderWallpaperBanner()}
-
         </div>
       </div>
     </BaseContainerWithNavbar>
