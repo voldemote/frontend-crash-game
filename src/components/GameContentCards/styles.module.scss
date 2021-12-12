@@ -1,87 +1,85 @@
 @import '../../styles/all';
 
-.container {
-  display: flex;
+.cardBox {
+  padding-top: 30px;
   max-width: 1350px;
   margin: 0 auto;
-  justify-content: center;
-  flex-wrap: wrap;
 
-  @media (max-width: $screen-xl) {
-    padding-right: 30px;
-    padding-left: 30px;
-  }
-
-  .cardContainer {
-    background: rgba(255, 255, 255, 0.3);
-    border: 1px solid #EDEDED;
-    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18), 0px 2px 2px rgba(159, 162, 191, 0.32);
+  .card {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #ededed;
+    box-sizing: border-box;
+    margin: 20px auto;
+    padding-right: 20px;
+    padding-bottom: 28px;
+    min-height: 208px;
+    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
+      0px 2px 2px rgba(159, 162, 191, 0.32);
     border-radius: 12px;
-    margin-right: 15px;
-    margin-left: 15px;
-    flex: 1;
-    padding: 20px 100px 20px 80px;
-    min-height: 220px;
-    position: relative;
-    min-width: 320px;
-    max-width: 500px;
-    margin-top: 30px;
 
-    .iceCream {
-      position: absolute;
-      top: -20px;
-      left: 5px;
+    @media screen and (max-width: $screen-md) {
+      flex-direction: column;
+      padding-right: 0;
     }
 
-    .blueShip {
-      position: absolute;
-      right: 20px;
-      top: 20px;
+    @media screen and (max-width: 763px) {
+      margin-top: 20px;
+      height: auto;
     }
 
-    .diamons {
-      position: absolute;
-      top: -20px;
-      left: -10px;
+    .thumbnail {
+      text-align: center;
+      margin-top: -20px;
+
+      @media screen and (max-width: 763px) {
+        margin-top: 10px !important;
+      }
     }
 
-    .yellowShip {
-      position: absolute;
-      right: 20px;
-      top: 12px;
+    .thumbnailLast {
+      margin: auto;
+
+      @media screen and (max-width: 763px) {
+        margin-top: 10px !important;
+      }
     }
 
-    .star {
-      position: absolute;
-      top: -20px;
-      left: -4px;
-    }
+    .detail {
+      padding: 30px 12px 0 12px;
 
-    .pinkShip {
-      position: absolute;
-      right: 20px;
-      top: 12px;
-    }
+      @media screen and (max-width: $screen-md) {
+        text-align: center;
+      }
 
-    &:last-child {
-      margin-right: 0;
-    }
+      h3 {
+        font-family: $fontOmnes;
+        font-size: 22px;
+        color: $colorWhite;
+        margin-bottom: 6px;
 
-    >h3 {
-      font-size: 22px;
-      font-weight: 700;
-      color: white;
-      text-align: left;
-    }
+        img {
+          max-width: 160px;
+          margin-left: 5px;
+        }
+      }
 
-    >p {
-      font-size: 14px;
-      color: white;
-      max-width: 240px;
-    }
-  }
+      p {
+        font-weight: 400;
+        line-height: 20px;
+        font-size: 14px;
+        color: $colorWhite;
+      }
 
-  .secondCard {
-    padding-left: 105px;
+      button {
+        margin-top: 16px;
+        background: transparent;
+        border: 0;
+        font-family: $fontOmnes;
+        font-size: 14px;
+        color: $colorWhite;
+        cursor: pointer;
+      }
+    }
   }
 }

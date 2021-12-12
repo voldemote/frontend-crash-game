@@ -104,6 +104,7 @@
     position: absolute;
     top: 1000px;
     left: -5%;
+
     @media (max-width: $screen-xs) {
       top: 1170px;
     }
@@ -203,6 +204,7 @@
     font-size: 20px;
     line-height: 50px;
     font-weight: 900;
+
     @media (max-width: $screen-xs) {
       font-size: 18px;
       line-height: 42px;
@@ -298,6 +300,18 @@
     @media (max-width: $screen-sm) {
       margin-top: 230px;
       margin-bottom: 150px;
+    }
+  }
+
+  .wrapperCards {
+    @media (max-width: $screen-xl) {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    @media (max-width: $screen-md) {
+      padding-left: 0px;
+      padding-right: 0px;
     }
   }
 }
