@@ -39,6 +39,7 @@
         padding: 0 15px 15px;
       }
     }
+
     .shareButton {
       padding-right: 10px;
     }
@@ -51,6 +52,7 @@
       height: 25px;
 
       svg {
+
         g,
         path,
         circle {
@@ -72,31 +74,39 @@
       display: none;
     }
   }
+
   .mainContainer {
     display: flex;
+
     @media (max-width: $screen-md) {
       flex-direction: column;
     }
+
     .leftContainer {
       display: flex;
       flex-direction: column;
       width: calc(100% - 370px);
+
       @media (max-width: $screen-md) {
         width: 100%;
         flex-direction: column-reverse;
       }
     }
+
     .rightContainer {
       width: 370px;
       padding-left: 14px;
+
       @media (max-width: $screen-md) {
         padding-left: 0px;
         width: 100%;
         margin-top: 7px;
       }
+
       .placeContainer {
         display: flex;
         flex-direction: column;
+
         @media (max-width: $screen-md) {
           height: 100%;
         }
@@ -149,6 +159,7 @@
   display: flex;
   flex-direction: row;
 }
+
 .chatWrapper {
   margin-top: 32px;
   background: rgba(122, 121, 121, 0.1);
@@ -186,6 +197,7 @@
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
   }
+
   .activityContainer {
     position: relative;
     color: #000;
@@ -232,6 +244,7 @@
   padding-top: 24px;
   // margin-left: 16px;
   border-bottom: 1px solid #878593;
+
   @media (max-width: $screen-sm) {
     margin-left: 0px;
     justify-content: space-between;
@@ -253,4 +266,113 @@
     opacity: 1;
     cursor: pointer;
   }
+}
+
+.gameContentWrapper {
+  background: url('../../data/images/alpacannon/winter-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 2000px;
+  margin-top: 20px;
+
+  @media (max-width: $screen-lg) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.gameContent {
+  padding-top: 80px;
+
+  .headingContainer {
+    margin: 0 auto;
+    margin-top: 110px;
+    max-width: 870px;
+  }
+
+  h2 {
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 30px;
+    @include simpleBorderedText(#000);
+
+    @media (max-width: $screen-xs) {
+      font-size: 40px;
+    }
+  }
+
+  h3 {
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    margin-top: 100px;
+    @include simpleBorderedText(#000);
+
+    @media (max-width: $screen-xs) {
+      font-size: 32px;
+    }
+  }
+
+  p {
+    font-size: 22px;
+    line-height: 50px;
+    @include simpleBorderedText(#000, 1px);
+
+    @media (max-width: $screen-xs) {
+      font-size: 20px;
+    }
+  }
+
+  &:before {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    content: "";
+    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    height: 55px;
+    width: 100%;
+
+    @media (max-width: $screen-lg) {
+      left: -30px;
+      width: calc(100% + 60px);
+    }
+  }
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    content: "";
+    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    height: 200px;
+    width: 100%;
+    transform: rotate(-180deg);
+
+    @media (max-width: $screen-lg) {
+      left: -30px;
+      width: calc(100% + 60px);
+    }
+  }
+
+  .placeBetContainer {
+    max-width: 240px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 550px;
+
+    @media (max-width: $screen-sm) {
+      margin-bottom: 300px;
+    }
+
+    @media (max-width: $screen-xs) {
+      margin-bottom: 140px;
+    }
+  }
+}
+
+.wrapperCards {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 80px;
 }
