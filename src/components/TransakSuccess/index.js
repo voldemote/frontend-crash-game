@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../Popup/PopupTheme';
 import { connect } from 'react-redux';
+import { TOKEN_NAME } from 'constants/Token';
 
 const TransakSuccess = ({ visible, hidePopup, options }) => {
   console.log({options});
@@ -32,7 +33,7 @@ const TransakSuccess = ({ visible, hidePopup, options }) => {
             <div className={styles.value}>{_.get(options, 'fiatAmount')}</div>
           </div>
           <div className={styles.row}>
-            <div className={styles.key}>Estimated amount in WFAIR</div>
+            <div className={styles.key}>Estimated amount in {TOKEN_NAME}</div>
             <div className={styles.value}>{_.get(options, 'equivalenceWFAIR')}</div>
           </div>
           {/* <div className={styles.row}>

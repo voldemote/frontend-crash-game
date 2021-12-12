@@ -20,6 +20,7 @@ import EthereumLogo from '../../../data/icons/ethereum-logo-icon.svg';
 import PolygonLogoActive from '../../../data/icons/polygon-logo-active.svg';
 import PolygonLogo from '../../../data/icons/polygon-logo.svg';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
+import { TOKEN_NAME } from 'constants/Token';
 
 const networkName = {
   polygon: 'MATIC',
@@ -230,7 +231,7 @@ const WithdrawTab = () => {
             <div className={styles.balanceContainer}>
               <span>
                 Balance: {numberWithCommas(parseFloat(balance).toFixed(2))}{' '}
-                {'WFAIR'}
+                {TOKEN_NAME}
               </span>
             </div>
 
@@ -252,7 +253,7 @@ const WithdrawTab = () => {
                   className={styles.wfairLogo}
                   onClick={handleWFAIRClick}
                 />
-                <span>WFAIR</span>
+                <span>{TOKEN_NAME}</span>
                 <span
                   className={styles.button}
                   onClick={onClickMax}
@@ -269,7 +270,7 @@ const WithdrawTab = () => {
               <div className={styles.labelContainer}>
                 <span>You receive (estimate)</span>
                 <span className={styles.gasFeeLabel}>
-                  {amountFees > 0 && `Fee: ±${amountFees} WFAIR`}
+                  {amountFees > 0 && `Fee: ±${amountFees} ${TOKEN_NAME}`}
                 </span>
               </div>
               <input disabled readOnly value={withdrawAmount} />
@@ -278,7 +279,7 @@ const WithdrawTab = () => {
                   className={styles.wfairLogo}
                   onClick={handleWFAIRClick}
                 />
-                <span>WFAIR</span>
+                <span>{TOKEN_NAME}</span>
               </div>
             </div>
             <div className={styles.equivalentFiat}>
@@ -286,9 +287,9 @@ const WithdrawTab = () => {
             </div>
 
             {/* <div className={styles.calculation}>
-            <p>Estimated Transaction Fee: 123 WFAIR </p>
+            <p>Estimated Transaction Fee: 123 {TOKEN_NAME} </p>
             
-            <p><b>You receive (estimate): 111 WFAIR </b></p>
+            <p><b>You receive (estimate): 111 {TOKEN_NAME} </b></p>
           </div> 
           */}
 

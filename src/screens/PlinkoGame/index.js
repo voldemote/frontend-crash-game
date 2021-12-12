@@ -330,25 +330,27 @@ const PlinkoGame = ({
         {renderBgCoins()}
 
         <div className={styles.firstHeadingContainer}>
-          <h2>Heading 2</h2>
+          <h2>How to play Plinko</h2>
           <p className={styles.paragraph}>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Plinko is an exciting and simple gambling game to try your luck. 
+            Drop the coins and wait for them to hit the prizes.
           </p>
         </div>
 
-        <h3>HOW TO PLACE A BET</h3>
-        <div className={styles.placeBetContainer}>
-          <Button
-            role="button"
-            tabIndex="0"
-            className={classNames(styles.button, {})}
-          >
-            <p>Place a bet</p>
-          </Button>
+        <div className={styles.secondHeadingContainer}>
+          <h3>HOW TO PLACE A BET</h3>
+          <p className={styles.paragraph}>
+            Add the amount you want to bet and click on the "Place Bet" button
+          </p>
+          <div className={styles.placeBetContainer}>
+            <Button
+              role="button"
+              tabIndex="0"
+              className={classNames(styles.button, {})}
+            >
+              <p>Place bet</p>
+            </Button>
+          </div>
         </div>
 
         <div className={styles.firstCircledContainer}>
@@ -363,13 +365,9 @@ const PlinkoGame = ({
         </div>
 
         <div className={styles.secondHeadingContainer}>
-          <h2>Heading 2</h2>
+          <h2>Choose a Risk Level</h2>
           <p className={styles.paragraph}>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            By choosing a higher risk, the chances of hitting a positive multiplier are lower, but the higher the risk, the higher the multiplier.
           </p>
         </div>
 

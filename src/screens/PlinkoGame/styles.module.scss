@@ -62,13 +62,12 @@
     }
   }
 
-
   &:before {
     position: absolute;
     top: 0;
     z-index: 10;
-    content: "";
-    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    content: '';
+    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
     height: 55px;
     width: 100%;
   }
@@ -77,8 +76,8 @@
     position: absolute;
     bottom: 0;
     z-index: 10;
-    content: "";
-    background: linear-gradient(180deg, #00092B 0%, rgba(14, 9, 39, 0) 100%);
+    content: '';
+    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
     height: 55px;
     width: 100%;
     transform: rotate(-180deg);
@@ -107,6 +106,9 @@
 
     @media (max-width: $screen-xs) {
       top: 1170px;
+    }
+    @media (max-width: $screen-lg) {
+      display: none;
     }
   }
 
@@ -150,6 +152,9 @@
     @media (max-width: $screen-lg) {
       top: 2150px;
     }
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
   }
 
   .coinRectangle {
@@ -158,7 +163,11 @@
     z-index: 0;
 
     .rectangle {
-      background: linear-gradient(90deg, rgba(196, 196, 196, 0) 0%, #FFD626 82.45%);
+      background: linear-gradient(
+        90deg,
+        rgba(196, 196, 196, 0) 0%,
+        #ffd626 82.45%
+      );
       opacity: 0.5;
       width: 635px;
       height: 100px;
@@ -173,7 +182,7 @@
   }
 
   h2 {
-    font-weight: 900;
+    font-weight: 700;
     font-size: 50px;
     color: white;
     text-align: center;
@@ -187,7 +196,7 @@
   }
 
   h3 {
-    font-weight: 900;
+    font-weight: 700;
     font-size: 40px;
     color: white;
     text-align: center;
@@ -203,7 +212,7 @@
     color: white;
     font-size: 20px;
     line-height: 50px;
-    font-weight: 900;
+    font-weight: 700;
 
     @media (max-width: $screen-xs) {
       font-size: 18px;
@@ -229,6 +238,12 @@
     margin: 0 auto;
     margin-top: 45px;
     margin-bottom: 130px;
+
+    .button {
+      p {
+        color: $colorWhite;
+      }
+    }
   }
 
   .firstCircledContainer,
@@ -251,7 +266,7 @@
     @media (max-width: $screen-lg) {
       margin-left: 0;
       justify-content: center;
-      margin-top: 350px
+      margin-top: 350px;
     }
 
     @media (max-width: $screen-md) {
@@ -354,7 +369,6 @@
       height: 25px;
 
       svg {
-
         g,
         path,
         circle {

@@ -758,7 +758,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                   max={'100'}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>PFAIR</span>
+                  <span>{TOKEN_NAME}</span>
                 </span>
 
               </div>
@@ -786,7 +786,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 max={'100'}
               />
               <span className={styles.eventTokenLabel}>
-                <span>PFAIR</span>
+                <span>{TOKEN_NAME}</span>
               </span>
             </div>
             <label
@@ -897,14 +897,14 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         <>
           <div className={styles.spinsleft} style={{marginTop: 18}}>
             <span className={autobet.accumulated > 0 ? styles.reward : styles.lost}>
-            {Math.floor(autobet.accumulated)} PFAIR
+            {Math.floor(autobet.accumulated)} {TOKEN_NAME}
             </span>
             accumulated
           </div>
           <div className={styles.spinsleft}>
             Current bet:
             <span className={styles.neutral}>
-            {Math.floor(autobet.amount)} PFAIR
+            {Math.floor(autobet.amount)} {TOKEN_NAME}
             </span>
           </div>
         </>

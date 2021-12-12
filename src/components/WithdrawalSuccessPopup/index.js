@@ -33,7 +33,7 @@ const WithdrawalSuccessPopup = ({
         </div>
         <div className={styles.row}>
           <div className={styles.key}>Amount</div>
-          <div className={styles.value}>{wfairAmount} WFAIR</div>
+          <div className={styles.value}>{wfairAmount} {TOKEN_NAME}</div>
         </div>
         <div className={styles.row}>
           <div className={styles.key}>Transaction fee</div>

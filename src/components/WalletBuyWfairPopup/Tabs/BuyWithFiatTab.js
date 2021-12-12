@@ -15,6 +15,7 @@ import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
 import * as _ from 'lodash';
 import { TransactionActions } from 'store/actions/transaction';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
+import { TOKEN_NAME } from 'constants/Token';
 
 const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSuccessPopup, user, fetchWalletTransactions }) => {
   const CURRENCY_OPTIONS = [
@@ -234,13 +235,13 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
                 className={styles.wfairLogo}
                 onClick={handleWFAIRClick}
               />
-              <span>WFAIR</span>
+              <span>{TOKEN_NAME}</span>
             </div>
           </div>
         </div>
         <div className={styles.textContainer}>
           <p>
-            The value shown in WFAIR is an estimate. Transactions are subject to
+            The value shown in {TOKEN_NAME} is an estimate. Transactions are subject to
             price fluctuations.
           </p>
           <p>

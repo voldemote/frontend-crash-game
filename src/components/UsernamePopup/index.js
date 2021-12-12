@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
-import { ReactComponent as ConfettiLeft } from '../../data/icons/confetti-left.svg';
-import { ReactComponent as ConfettiRight } from '../../data/icons/confetti-right.svg';
 import InputBox from '../InputBox';
 import Button from '../Button';
-import HighlightType from '../Highlight/HighlightType';
-import { PopupActions } from '../../store/actions/popup';
-import { AuthenticationActions } from '../../store/actions/authentication';
-import PopupTheme from '../Popup/PopupTheme';
 import { connect } from 'react-redux';
-import authState from 'constants/AuthState';
 import _ from 'lodash';
 import { checkUsername } from '../../api';
 import { OnboardingActions } from 'store/actions/onboarding';
@@ -18,35 +11,25 @@ const UsernamePopup = ({
   hidePopup = () => {},
   loading,
   showOnboardingFlowNext,
-  updateUser,
   user,
-  initialReward,
 }) => {
   const [username, setUsername] = useState(user?.username || '');
   const [errorMessage, setErrorMessage] = useState();
-  const [profileErrorMessage, setProfileErrorMessage] = useState();
-
-  const isAuthenticated = () => user.authState === authState.LOGGED_IN;
 
   const onConfirm = async () => {
-    if (!isAuthenticated()) return;
-
     //check unique username
-    const response = await checkUsername(username).catch(err => {
+    let response;
+    try {
+      response = await checkUsername(username);
+    } catch (err) {
       console.error('checkUsername err', err);
-    });
+    }
 
     const isUnique = _.get(response, 'data.isUnique', false);
 
     if (isUnique) {
       setErrorMessage('');
-      const payload = {
-        email: user.email,
-        name: user.name,
-        profilePicture: user.profilePicture,
-        username,
-      };
-      updateUser(payload, initialReward);
+      showOnboardingFlowNext(username)
       hidePopup();
     } else {
       setErrorMessage(
@@ -59,7 +42,7 @@ const UsernamePopup = ({
 
   const skipUsername = () => {
     hidePopup();
-    showOnboardingFlowNext(initialReward);
+    showOnboardingFlowNext('');
   };
 
   return (
@@ -83,7 +66,6 @@ const UsernamePopup = ({
         <div className={styles.buttons}>
           <span
             onClick={skipUsername}
-            withoutBackground={true}
             className={styles.skipButton}
           >
             Skip
@@ -114,26 +96,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    showOnboardingFlowNext: initialReward => {
+    showOnboardingFlowNext: username => {
       dispatch(
         OnboardingActions.next({
-          options: {
-            initialReward
-          },
+            payload: {username}
         })
       );
-    },
-    updateUser: (payload, initialReward) => {
-      dispatch(
-        AuthenticationActions.initiateUpdateUserData(
-          {
-            user: payload,
-          },
-          true,
-          initialReward
-        )
-      );
-    },
+    }
   };
 };
 

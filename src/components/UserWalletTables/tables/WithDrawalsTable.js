@@ -6,6 +6,7 @@ import moment from 'moment';
 import { getTransactionURL } from 'utils/constants';
 import { shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
+import { TOKEN_NAME } from 'constants/Token';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   const { amount, fee, network_code, receiver, created_at, transaction_hash, status } = data;
@@ -84,7 +85,7 @@ const WithDrawalsTable = ({ renderRow, className, hideSecondaryColumns = false }
       <div className={styles.header}>
         <Grid container>
           <Grid item xs>
-            <p className={styles.titleFirst}>WFAIR</p>
+            <p className={styles.titleFirst}>{TOKEN_NAME}</p>
           </Grid>
           <Grid
             item

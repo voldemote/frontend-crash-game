@@ -47,6 +47,7 @@ import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
 import { OnboardingActions } from 'store/actions/onboarding';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
+import { TOKEN_NAME } from 'constants/Token';
 
 const Home = ({
   authState,
@@ -203,7 +204,7 @@ const Home = ({
   const renderActivities = () => {
     return (
       <div className={styles.activities}>
-        <div className={styles.title}>          
+        <div className={styles.title}>
           <h2>Activities</h2>
         </div>
         <Grid item xs={12}>
@@ -222,7 +223,7 @@ const Home = ({
   const renderHouseGames = () => {
     return (
       <div className={styles.gameCards}>
-        <div className={styles.title}>          
+        <div className={styles.title}>
           <h2>House Games</h2>
         </div>
         <div className={styles.cardBox}>
@@ -275,8 +276,8 @@ const Home = ({
         <div className={styles.cardBox}>
           <h1>Alpacasino</h1>
           <h2>
-            Get your <span className={styles.highlight}>50 PFAIR bonus</span> and<br/>
-            create yoru <span className={styles.highlight}>alpaca</span>
+            Get your <span className={styles.highlight}>50 {TOKEN_NAME} bonus</span> and<br/>
+            create your <span className={styles.highlight}>alpaca</span>
           </h2>
 
           <Button
@@ -334,7 +335,7 @@ const Home = ({
                   <div>
                     <h3>Grow your Alpaca</h3>
                     <p>
-                      You can earn PFAIR tokens in multiple ways: You can play
+                      You can earn {TOKEN_NAME} tokens in multiple ways: You can play
                       our house games (we are going to launch new games weekly),
                       invite other alpacas, provide feedback and (soon) battle
                       other alpacas(or bet on other alpaca fights) and send
@@ -408,7 +409,7 @@ const Home = ({
           {!isLoggedIn() && renderWelcome()}
           {renderHouseGames()}
           {renderSlogGames()}
-          {isLoggedIn() && renderActivities()}
+          {renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}

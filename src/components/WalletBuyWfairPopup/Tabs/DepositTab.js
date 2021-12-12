@@ -30,6 +30,7 @@ import useWeb3Network from '../../../hooks/useWeb3Network';
 import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
 import { numberWithCommas } from 'utils/common';
+import { TOKEN_NAME } from 'constants/Token';
 // import AddTokens from 'components/AddTokens';
 
 const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
@@ -234,7 +235,7 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
         {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
             <p>
-              Please connect your wallet in order to deposit WFAIR into your
+              Please connect your wallet in order to deposit {TOKEN_NAME} into your
               balance
             </p>
             <button

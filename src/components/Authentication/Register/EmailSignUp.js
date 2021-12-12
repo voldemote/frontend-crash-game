@@ -13,7 +13,7 @@ import HighlightTheme from 'components/Highlight/HighlightTheme';
 import Routes from 'constants/Routes';
 import { Link } from 'react-router-dom';
 
-const EmailSignUp = ({ styles, signUp, errorState, hidePopup }) => {
+const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
 
   let fooRef = useRef(null);
   let emailRef = useRef(null);
@@ -82,6 +82,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup }) => {
 
     const refLocalStorage = localStorage.getItem('urlParam_ref');
     signUp({
+      username,
       email,
       password,
       passwordConfirm: passwordConfirmation,
@@ -272,6 +273,7 @@ const mapStateToProps = (state) => {
     loading: state.authentication.loading,
     errorState: state.authentication.error,
     popupVisible: state.popup.visible,
+    username: state.onboarding.username
   };
 };
 
