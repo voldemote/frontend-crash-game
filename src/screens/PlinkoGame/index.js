@@ -340,7 +340,7 @@ const PlinkoGame = ({
         <div className={styles.secondHeadingContainer}>
           <h3>HOW TO PLACE A BET</h3>
           <p className={styles.paragraph}>
-            Add the amount you want to bet and click on the "Place Bet" button
+            Add the amount you want to bet and click on the "Place Bet" button.
           </p>
           <div className={styles.placeBetContainer}>
             <Button

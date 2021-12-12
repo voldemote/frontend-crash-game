@@ -229,9 +229,9 @@ const PlinkoGame = ({
 
       <div className={styles.gameContentWrapper}>
         <div className={styles.gameContent}>
-          <h2>Alpacacanon</h2>
+          <h2>AlpaCannon</h2>
           <div className={styles.headingContainer}>
-            <h2>Heading 2</h2>
+            <h2>INTRO</h2>
             <p>
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
               nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
@@ -248,7 +248,7 @@ const PlinkoGame = ({
           </div>
 
           <div className={styles.headingContainer}>
-            <h2>Heading 2</h2>
+            <h2>HOW TO PLAY</h2>
             <p>
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
               nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam

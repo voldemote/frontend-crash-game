@@ -400,7 +400,7 @@ const RosiGame = ({
           <h2>PUMP AND DUMP</h2>
           <div className={styles.mapImage}>
             <div className={styles.headingContainer}>
-              <h2>Heading 2</h2>
+              <h2>INTRO</h2>
               <p>
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                 diam nonumy eirmod tempor invidunt ut labore et dolore magna
