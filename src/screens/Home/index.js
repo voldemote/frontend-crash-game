@@ -26,6 +26,7 @@ import EloneWithPhone from '../../data/images/elon-with-phone.png';
 import gameCardWheel from '../../data/images/house-games/card-wheel.png';
 import gameCardElon from '../../data/images/house-games/card-elon.png';
 import gameCardPlinko from '../../data/images/house-games/card-plinko.png';
+import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
 import gameCardMines from '../../data/images/house-games/card-mines.png';
 import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
 import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
@@ -229,13 +230,8 @@ const Home = ({
         <div className={styles.cardBox}>
           <Grid container spacing={1}>
             <Grid item lg={3} md={3} xs={6}>
-              <Link to={'/games/mines'}>
-                <img src={gameCardMines} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={3} md={3} xs={6}>
-              <Link to={'/games/plinko'}>
-                <img src={gameCardPlinko} alt="" />
+              <Link to={'/games/pump-dump'}>
+                <img src={gameCardPumpDump} alt="" />
               </Link>
             </Grid>
             <Grid item lg={3} md={3} xs={6}>
@@ -244,8 +240,13 @@ const Home = ({
               </Link>
             </Grid>
             <Grid item lg={3} md={3} xs={6}>
-              <Link to={'/games/alpaca-wheel'}>
-                <img src={gameCardWheel} alt="" />
+              <Link to={'/games/plinko'}>
+                <img src={gameCardPlinko} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={3} md={3} xs={6}>
+              <Link to={'/games/mines'}>
+                <img src={gameCardMines} alt="" />
               </Link>
             </Grid>
           </Grid>

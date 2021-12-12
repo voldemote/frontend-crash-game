@@ -347,16 +347,18 @@ const RosiGame = ({
         <div className={styles.introContainer}>
           <h2>INTRO</h2>
           <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Elon had enough: Covid, inflation, corrupt politicians and that bastard Bezos and the other virgin. If that wasn’t enough, SEC got pissed again about some hilarious tweets he wrote. He was tired so decided to relax. As his Ambien stash was empty, there was the only thing he could do. Inhale…Exhale…
+            After a while, he knew what he had to do. There was only one place where he would finally be happy, the space.
           </p>
           <ElonOnRocketSvg />
         </div>
 
         <h3>HOW TO PLACE A BET</h3>
+        <div className={styles.howtoplacebet}>
+          <p>
+            Simply add the desired amount you wish to bet in the "Bet Amount" field and click on "Place Bet". The bet will be valid for the next round.
+          </p>
+        </div>
         <div className={styles.placeBetContainer}>
           <Button role="button" tabIndex="0" className={styles.button}>
             <p>Place a bet</p>
@@ -364,25 +366,17 @@ const RosiGame = ({
         </div>
 
         <div className={styles.secondHeadingContainer}>
-          <h2>Heading 2</h2>
+          <h2>HOW TO PLAY</h2>
           <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Rules are simple: you bet on Elon going to Mars by putting your WFAIR in the fuel tank of his alpaca rocket. The closer Elon gets to Mars, the more valuable your tokens will get. But the space paca rockets also aren’t very reliable and crash at some point. So get your money out before it’s lost in space and before SEC start laughing.
           </p>
           <LuckyElonSvg />
         </div>
 
         <div className={styles.thirdHeadingContainer}>
-          <h2>Heading 2</h2>
+          <h2>READY TO TAKE OFF</h2>
           <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Now it’s your turn to become a part of the mission. Help Elon to get to the Mars and he will immediately reward you! But if you fail, SEC and all the other haters will laugh.
           </p>
           <ElonChampSvg />
         </div>
@@ -399,10 +393,10 @@ const RosiGame = ({
     );
   }
 
-  const renderPumpDumbContent = () => {
+  const renderPumpDumpContent = () => {
     return (
       <>
-        <div className={styles.pumpDumbContent}>
+        <div className={styles.pumpDumpContent}>
           <h2>PUMP AND DUMP</h2>
           <div className={styles.mapImage}>
             <div className={styles.headingContainer}>
@@ -500,7 +494,7 @@ const RosiGame = ({
 
       {slug === GAMES['elonGame'].slug
         ? renderGameContent()
-        : renderPumpDumbContent()}
+        : renderPumpDumpContent()}
     </BaseContainerWithNavbar>
   );
 };
