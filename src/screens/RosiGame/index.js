@@ -42,6 +42,8 @@ import { ReactComponent as ElonOnRocketSvg } from '../../data/icons/elon-game/el
 import { ReactComponent as LuckyElonSvg } from '../../data/icons/elon-game/lucky-elon.svg';
 import { ReactComponent as ElonChampSvg } from '../../data/icons/elon-game/elon-champ.svg';
 import { ReactComponent as ElonOnAnimalSvg } from '../../data/icons/elon-game/elon-on-animal.svg';
+import PonziTweet from '../../data/images/pump-dump/ponzi-tweet.png';
+import BoughtText from '../../data/images/pump-dump/bought-text.png';
 import Button from 'components/Button';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
 
@@ -397,6 +399,47 @@ const RosiGame = ({
     );
   }
 
+  const renderPumpDumbContent = () => {
+    return (
+      <>
+        <div className={styles.pumpDumbContent}>
+          <h2>PUMP AND DUMP</h2>
+          <div className={styles.mapImage}>
+            <div className={styles.headingContainer}>
+              <h2>Heading 2</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet.
+              </p>
+            </div>
+            <div className={styles.chartImageWrapper}>
+              <div className={styles.chartImage} />
+            </div>
+          </div>
+
+          <div className={styles.tweetContainer}>
+            <div className={styles.boughtText}>
+              <img src={BoughtText} alt="text" />
+            </div>
+            <img src={PonziTweet} alt="text" style={{ display: 'none' }} />
+          </div>
+
+          <div className={styles.placeBetContainer}>
+            <Button role="button" tabIndex="0" className={styles.button}>
+              <p>Place a bet</p>
+            </Button>
+          </div>
+        </div>
+        <div className={styles.wrapperPumpDumpCards}>
+          <GameContentCards />
+        </div>
+      </>
+    );
+  }
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -455,7 +498,9 @@ const RosiGame = ({
         </div>
       </div>
 
-      {slug === GAMES['elonGame'].slug ? renderGameContent() : null}
+      {slug === GAMES['elonGame'].slug
+        ? renderGameContent()
+        : renderPumpDumbContent()}
     </BaseContainerWithNavbar>
   );
 };
