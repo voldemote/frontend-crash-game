@@ -22,6 +22,11 @@
   position: relative;
   margin-bottom: -40px;
 
+  @media (max-width: $screen-md) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
   .firstBgImage {
     background: url('../../data/images/common-games/top-bg.png');
     height: 1080px;
@@ -50,6 +55,7 @@
     left: 0;
     position: absolute;
     z-index: -1;
+
     @media (max-width: $screen-lg) {
       height: 1800px;
       background-size: cover;
@@ -98,6 +104,9 @@
     position: absolute;
     top: 1000px;
     left: -5%;
+    @media (max-width: $screen-xs) {
+      top: 1170px;
+    }
   }
 
   .thirdCoin {
@@ -122,6 +131,10 @@
       right: 0;
     }
 
+    @media (max-width: $screen-md) {
+      display: none;
+    }
+
     .rectangle {
       width: 550px !important;
     }
@@ -132,6 +145,7 @@
     position: absolute;
     top: 1950px;
     left: 0;
+
     @media (max-width: $screen-lg) {
       top: 2150px;
     }
@@ -163,6 +177,12 @@
     color: white;
     text-align: center;
     margin-bottom: 30px;
+    position: relative;
+    z-index: 10;
+
+    @media (max-width: $screen-xs) {
+      font-size: 40px;
+    }
   }
 
   h3 {
@@ -170,6 +190,12 @@
     font-size: 40px;
     color: white;
     text-align: center;
+    position: relative;
+    z-index: 10;
+
+    @media (max-width: $screen-xs) {
+      font-size: 32px;
+    }
   }
 
   .paragraph {
@@ -177,6 +203,10 @@
     font-size: 20px;
     line-height: 50px;
     font-weight: 900;
+    @media (max-width: $screen-xs) {
+      font-size: 18px;
+      line-height: 42px;
+    }
   }
 
   .firstHeadingContainer {
@@ -186,7 +216,7 @@
     position: relative;
     z-index: 10;
 
-    @media (max-width: $screen-xl) {
+    @media (max-width: $screen-lg) {
       margin-left: auto;
       margin-right: auto;
     }
@@ -221,6 +251,14 @@
       justify-content: center;
       margin-top: 350px
     }
+
+    @media (max-width: $screen-md) {
+      margin-top: 400px;
+    }
+
+    @media (max-width: $screen-sm) {
+      display: none;
+    }
   }
 
   .secondCircledContainer {
@@ -231,6 +269,10 @@
       margin-left: 0;
       justify-content: center;
     }
+
+    @media (max-width: $screen-sm) {
+      display: none;
+    }
   }
 
   .secondHeadingContainer {
@@ -240,10 +282,22 @@
     margin-top: 250px;
     position: relative;
     z-index: 10;
-    margin-bottom: 500px;
+    margin-bottom: 400px;
+
     @media (max-width: $screen-lg) {
       margin-right: auto;
       justify-content: center;
+      max-width: 600px;
+    }
+
+    @media (max-width: $screen-md) {
+      margin-top: 120px;
+      margin-bottom: 300px;
+    }
+
+    @media (max-width: $screen-sm) {
+      margin-top: 230px;
+      margin-bottom: 150px;
     }
   }
 }
