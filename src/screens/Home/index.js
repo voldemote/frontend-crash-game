@@ -539,7 +539,7 @@ const Home = ({
           {!isLoggedIn() && renderWelcome()}
           {renderHouseGames()}
           {renderSlogGames()}
-          {isLoggedIn() && renderActivities()}
+          {renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
           {renderHowTokenWorks()}
