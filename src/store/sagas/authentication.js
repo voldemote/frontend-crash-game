@@ -403,6 +403,7 @@ const updateUserData = function* (action) {
 
 const signUp = function* (action) {
   const payload = {
+    username: action.username,
     email: action.email,
     country: action.country,
     birth: action.birth,

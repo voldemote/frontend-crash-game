@@ -191,6 +191,7 @@ const updateInvestmentData = makeActionCreator(
 );
 
 const signUp = makeActionCreator(AuthenticationTypes.SIGN_UP, {
+  username: null,
   email: null,
   country: null,
   birth: null,
