@@ -401,37 +401,42 @@ const RosiGame = ({
 
   const renderPumpDumbContent = () => {
     return (
-      <div className={styles.pumpDumbContent}>
-        <h2>PUMP AND DUMP</h2>
-        <div className={styles.mapImage}>
-          <div className={styles.headingContainer}>
-            <h2>Heading 2</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.
-            </p>
+      <>
+        <div className={styles.pumpDumbContent}>
+          <h2>PUMP AND DUMP</h2>
+          <div className={styles.mapImage}>
+            <div className={styles.headingContainer}>
+              <h2>Heading 2</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet.
+              </p>
+            </div>
+            <div className={styles.chartImageWrapper}>
+              <div className={styles.chartImage} />
+            </div>
           </div>
-          <div className={styles.chartImageWrapper}>
-            <div className={styles.chartImage} />
-          </div>
-        </div>
 
-        <div className={styles.tweetContainer}>
-          <div className={styles.boughtText}>
-            <img src={BoughtText} alt="text" />
+          <div className={styles.tweetContainer}>
+            <div className={styles.boughtText}>
+              <img src={BoughtText} alt="text" />
+            </div>
+            <img src={PonziTweet} alt="text" style={{ display: 'none' }} />
           </div>
-          <img src={PonziTweet} alt="text" style={{ display: 'none' }} />
-        </div>
 
-        <div className={styles.placeBetContainer}>
-          <Button role="button" tabIndex="0" className={styles.button}>
-            <p>Place a bet</p>
-          </Button>
+          <div className={styles.placeBetContainer}>
+            <Button role="button" tabIndex="0" className={styles.button}>
+              <p>Place a bet</p>
+            </Button>
+          </div>
         </div>
-      </div>
+        <div className={styles.wrapperPumpDumpCards}>
+          <GameContentCards />
+        </div>
+      </>
     );
   }
 
