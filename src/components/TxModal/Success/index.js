@@ -6,6 +6,7 @@ import WfairLogo from '../../../data/images/wfair-logo-splash.png';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import {NETWORK_TYPES} from 'utils/constants';
+import { TOKEN_NAME } from 'constants/Token';
 
 const Success = ({
   setModalOpen,
@@ -58,7 +59,7 @@ const Success = ({
         </div>
         <div className={styles.row}>
           <div className={styles.key}>Amount</div>
-          <div className={styles.value}>{transactionAmmount} WFAIR</div>
+          <div className={styles.value}>{transactionAmmount} {TOKEN_NAME}</div>
         </div>
       </div>
 

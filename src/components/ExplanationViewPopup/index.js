@@ -53,7 +53,7 @@ const ExplanationViewPopup = ({ closed, hidePopup }) => {
 
           <p>
             To participate, simply choose an event that has an active live
-            stream, enter an amount of WFAIR you'd like to wager and finally
+            stream, enter an amount of {TOKEN_NAME} you'd like to wager and finally
             choose your desired outcome(s)!
           </p>
 

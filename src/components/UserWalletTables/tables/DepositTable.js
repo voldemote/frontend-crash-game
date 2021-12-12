@@ -8,6 +8,7 @@ import { numberWithCommas, shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
 import moment from 'moment';
 import {getTransactionURL} from '../../../utils/constants';
+import { TOKEN_NAME } from 'constants/Token';
 
 const DepositRow = ({ data, hideSecondaryColumns = false }) => {
   const { amount, network_code, sender, created_at, transaction_hash, status } = data;
@@ -63,7 +64,7 @@ const DepositTable = ({
       <div className={styles.header}>
         <Grid container>
           <Grid item xs>
-            <p className={styles.titleFirst}>WFAIR</p>
+            <p className={styles.titleFirst}>{TOKEN_NAME}</p>
           </Grid>
           <Grid item xs>
             <p className={styles.title}>NETWORK</p>
