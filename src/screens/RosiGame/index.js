@@ -38,6 +38,12 @@ import Routes from 'constants/Routes';
 import PumpDumpAnimation from '../../components/PumpDumpAnimation';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import TabOptions from 'components/TabOptions';
+import { ReactComponent as ElonOnRocketSvg } from '../../data/icons/elon-game/elon-on-rocket.svg';
+import { ReactComponent as LuckyElonSvg } from '../../data/icons/elon-game/lucky-elon.svg';
+import { ReactComponent as ElonChampSvg } from '../../data/icons/elon-game/elon-champ.svg';
+import { ReactComponent as ElonOnAnimalSvg } from '../../data/icons/elon-game/elon-on-animal.svg';
+import Button from 'components/Button';
+import GameContentCards from 'components/GameContentCards/GameContentCards';
 
 
 const RosiGame = ({
@@ -327,14 +333,88 @@ const RosiGame = ({
     );
   };
 
+  const renderGameContent = () => {
+    return (
+      <div className={styles.gameContent}>
+        <div className={styles.firstBgImage} />
+        <div className={styles.secondBgImage} />
+        <div className={styles.thirdBgImage} />
+
+        <h2 className={styles.title}>ELON GAME</h2>
+
+        <div className={styles.introContainer}>
+          <h2>INTRO</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet.
+          </p>
+          <ElonOnRocketSvg />
+        </div>
+
+        <h3>HOW TO PLACE A BET</h3>
+        <div className={styles.placeBetContainer}>
+          <Button role="button" tabIndex="0" className={styles.button}>
+            <p>Place a bet</p>
+          </Button>
+        </div>
+
+        <div className={styles.secondHeadingContainer}>
+          <h2>Heading 2</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet.
+          </p>
+          <LuckyElonSvg />
+        </div>
+
+        <div className={styles.thirdHeadingContainer}>
+          <h2>Heading 2</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet.
+          </p>
+          <ElonChampSvg />
+        </div>
+
+        <div className={styles.elonWrapper}>
+          <ElonOnAnimalSvg />
+        </div>
+
+        <div className={styles.wrapperCards}>{renderWallpaperBanner()}</div>
+        <div className={styles.wrapperCards}>
+          <GameContentCards />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={`${styles.headlineWrapper} ${(slug === GAMES['pumpDump'].slug) && styles.hideElon}`}>
-            <BackLink to="/games" text={(slug === GAMES['elonGame'].slug) ? "Elon Game" : "Pump & Dump"} showArrow={(slug === GAMES['elonGame'].slug)} />
+          <div
+            className={`${styles.headlineWrapper} ${
+              slug === GAMES['pumpDump'].slug && styles.hideElon
+            }`}
+          >
+            <BackLink
+              to="/games"
+              text={
+                slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump & Dump'
+              }
+              showArrow={slug === GAMES['elonGame'].slug}
+            />
             <Share popupPosition="right" className={styles.shareButton} />
-            {(slug === GAMES['elonGame'].slug) &&
+            {slug === GAMES['elonGame'].slug && (
               <Icon
                 className={styles.questionIcon}
                 iconType={IconType.question}
@@ -343,13 +423,13 @@ const RosiGame = ({
                 width={25}
                 onClick={handleHelpClick}
               />
-            }
+            )}
             {showHowDoesItWork()}
           </div>
 
           <div className={styles.mainContainer}>
             <div className={styles.leftContainer}>
-              <LastCrashes lastCrashes={lastCrashes} game={game}/>
+              <LastCrashes lastCrashes={lastCrashes} game={game} />
               {renderAnimation()}
             </div>
             <div className={styles.rightContainer}>
@@ -363,7 +443,7 @@ const RosiGame = ({
                 />
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
-            </div> 
+            </div>
           </div>
           {isMiddleOrLargeDevice ? null : renderBets()}
           {isMiddleOrLargeDevice ? (
@@ -372,9 +452,10 @@ const RosiGame = ({
               {renderActivities()}
             </div>
           ) : null}
-          {renderWallpaperBanner()}
         </div>
       </div>
+
+      {slug === GAMES['elonGame'].slug ? renderGameContent() : null}
     </BaseContainerWithNavbar>
   );
 };
