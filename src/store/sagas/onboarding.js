@@ -15,7 +15,7 @@ const loadOnboardingStep = function* (action) {
             ...action?.options,
             saveLabel:"Next",
             cancelLabel: "Skip",
-            popUpTitle: "Build your Alpaca",
+            popUpTitle: "Alpacavatar",
             small: false
           },
         })
@@ -26,7 +26,7 @@ const loadOnboardingStep = function* (action) {
           popupType: PopupTheme.auth,
           options: {
             ...action?.options,
-            small: true,
+            small: false,
           },
         })
       );

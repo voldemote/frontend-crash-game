@@ -54,12 +54,15 @@
   .buttonWrapper {
     margin-left: 0px;
     color: $colorWhite;
+
     .button:hover {
       background: #e72d8910;
     }
+
     @media (min-width: $screen-lg) {
       margin-left: 30px;
     }
+
     :first-child {
       font-size: 14px;
     }
@@ -71,6 +74,7 @@
     :last-child {
       font-size: 14px;
     }
+
     .button {
       margin-left: 4px;
       font-family: $fontOmnes;

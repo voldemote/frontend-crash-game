@@ -27,7 +27,7 @@ const BetsRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
             <p>{gameLabel}</p>
           </div>
         </Grid>
-        <Grid
+        {/* <Grid
           item
           xs
           className={hideSecondaryColumns && styles.hideSecondaryColumns}
@@ -35,7 +35,7 @@ const BetsRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
           <div className={styles.messageCenter}>
             <p>{username}</p>
           </div>
-        </Grid>
+        </Grid> */}
         <Grid
           item
           xs
@@ -67,22 +67,23 @@ const BetsRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
 const BetTable = ({
   renderRow,
   className,
+  headingClass,
   hideSecondaryColumns = false,
 }) => {
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
-      <div className={styles.header}>
+      <div className={classNames(headingClass, styles.header)}>
         <Grid container>
           <Grid item xs>
             <p className={styles.titleFirst}>GAME</p>
           </Grid>
-          <Grid
+          {/* <Grid
             item
             xs
             className={hideSecondaryColumns && styles.hideSecondaryColumns}
           >
             <p className={styles.title}>USER</p>
-          </Grid>
+          </Grid> */}
           <Grid
             item
             xs

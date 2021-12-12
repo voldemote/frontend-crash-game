@@ -1,43 +1,38 @@
 @import '../../styles/all';
 
-.kycInfoContainer{
-
+.kycInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  button{
-    cursor: pointer;
-    margin-top: 27px;
-    width: 240px;
-    height: 45px;
-    border-radius: 22.5px;
-    background-image: linear-gradient(
-      to bottom,
-      $colorPinkDark,
-      $colorLightDark2 97%
-    );
-    font-family: $fontRegular;
-    border: 1px solid $colorhomeBackground;
+
+  p {
     color: $colorWhite;
-  }
-  p{
     font-size: 16px;
     line-height: 30px;
-    padding:5px;
-    margin-bottom:20px;
+    padding: 5px;
+    margin-bottom: 20px;
   }
 
+  .button {
+    margin-top: 30px;
+    padding: 0 32px;
+    height: 60px;
+    p {
+      margin-bottom: 0;
+    }
+  }
   .group {
-    padding:4px 10px;
+    padding: 4px 10px;
 
-      label {
-        display: block;
-        height: 12px;
-        line-height: 12px;
-        font-size: 12px;
-        margin: 14px 0;
-        text-align: left;
-      }
-
-
+    label {
+      display: block;
+      height: 12px;
+      line-height: 12px;
+      font-size: 12px;
+      margin: 14px 0;
+      text-align: left;
+    }
 
     p {
       text-indent: 20px;
@@ -53,20 +48,16 @@
       border: none;
       color: $colorPrimary;
 
-      &.approved{
+      &.approved {
         background-color: $colorLightGreen;
       }
-      &.rejected, &.error{
+      &.rejected,
+      &.error {
         background-color: $colorRedLight;
       }
-      &.pending{
+      &.pending {
         background-color: $colorGrayLight;
       }
-
+    }
   }
-
-  }
-
-
 }
-

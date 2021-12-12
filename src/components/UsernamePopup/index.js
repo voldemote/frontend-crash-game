@@ -65,40 +65,42 @@ const UsernamePopup = ({
   return (
     <div className={styles.usernamePopup}>
       <h2 className={styles.title}>Complete your profile</h2>
-      <div className={styles.description}>
-        How would you like others to see you? Please pick a username for
-        yourself
+      <div className={styles.container}>
+        <div className={styles.description}>
+          How would you like others to see you?<br/>
+          Please pick a username for yourself
+        </div>
+        <InputBox
+          className={styles.inputBox}
+          placeholder="Your Username..."
+          value={username}
+          setValue={setUsername}
+          onConfirm={onConfirm}
+        />
+        {!_.isEmpty(errorMessage) && (
+          <div className={styles.errorHandLing}>{errorMessage}</div>
+        )}
+        <div className={styles.buttons}>
+          <span
+            onClick={skipUsername}
+            withoutBackground={true}
+            className={styles.skipButton}
+          >
+            Skip
+          </span>
+          <Button
+            onClick={onConfirm}
+            withoutBackground={true}
+            className={styles.button}
+            disabled={loading}
+            disabledWithOverlay={false}
+          >
+            <span>Submit</span>
+          </Button>
+        </div>
       </div>
-      <InputBox
-        className={styles.inputBox}
-        placeholder="Your Username..."
-        value={username}
-        setValue={setUsername}
-        onConfirm={onConfirm}
-      />
-      {!_.isEmpty(errorMessage) && (
-        <div className={styles.errorHandLing}>{errorMessage}</div>
-      )}
-      <div className={styles.buttons}>
-        <Button
-          onClick={skipUsername}
-          withoutBackground={true}
-          className={styles.button}
-        >
-          <span>Skip</span>
-        </Button>
-        <Button
-          onClick={onConfirm}
-          withoutBackground={true}
-          className={styles.button}
-          disabled={loading}
-          disabledWithOverlay={false}
-        >
-          <span>Submit</span>
-        </Button>
-      </div>
-      <ConfettiLeft className={styles.confettiLeft} />
-      <ConfettiRight className={styles.confettiRight} />
+      {/* <ConfettiLeft className={styles.confettiLeft} />
+      <ConfettiRight className={styles.confettiRight} /> */}
     </div>
   );
 };

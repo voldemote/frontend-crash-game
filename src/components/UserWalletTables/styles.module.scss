@@ -6,43 +6,32 @@
   position: relative;
   height: 100%;
 
-  @media (max-width: $screen-xs) {
-    min-width: 360px;
-  }
-
   .header {
-    height: 50px;
     display: flex;
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
-  }
-  .title {
-    text-align: center;
-    color: $colorWhite;
     font-size: 14px;
     font-weight: 600;
-    @media (max-width: $screen-xs) {
-      font-size: 8px;
+    padding: 24px 10px;
+
+    @media (max-width: $screen-sm) {
+      font-size: 12px;
+      padding: 16px 10px;
     }
-  }
-  .titleFirst {
-    text-align: left;
-    font-size: 14px;
-    font-weight: 600;
-    color: $colorWhite;
-    @media (max-width: $screen-xs) {
-      font-size: 8px;
+
+    .title {
+      text-align: center;
+      color: $colorLightYellow;
     }
-  }
-  .titleLast {
-    text-align: right;
-    font-size: 14px;
-    font-weight: 600;
-    color: $colorWhite;
-    @media (max-width: $screen-xs) {
-      font-size: 8px;
+    .titleFirst {
+      text-align: left;
+      color: $colorLightYellow;
+    }
+    .titleLast {
+      text-align: right;
+      color: $colorLightYellow;
     }
   }
 
@@ -60,31 +49,24 @@
     width: 100%;
     padding: 8px 10px;
 
+    @media (max-width: $screen-sm) {
+      font-size: 12px;
+    }
+
     .messageFirst {
       display: flex;
-      @media (max-width: $screen-xs) {
-        font-size: 8px;
-      }
     }
     .messageCenter {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-
-      @media (max-width: $screen-xs) {
-        font-size: 8px;
-      }
     }
     .messageRight {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: right;
-
-      @media (max-width: $screen-xs) {
-        font-size: 8px;
-      }
+      justify-content: flex-end;
     }
     .messageTranform {
       text-transform: capitalize;
@@ -93,12 +75,8 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: right;
+      justify-content: flex-end;
       text-align: right;
-
-      @media (max-width: $screen-xs) {
-        font-size: 8px;
-      }
     }
     &.isVisible {
       opacity: 0.3;
@@ -312,11 +290,6 @@
 
   @media (max-width: $screen-xs) {
     padding: 4px 0px;
-  }
-
-  &,
-  button {
-    font-size: 12px;
   }
 }
 

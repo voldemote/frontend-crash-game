@@ -1,12 +1,32 @@
 @import '../../styles/all';
 
 .registration {
-  padding: 50px 20px;
+  width: 1000px;
+  height: auto;
   display: flex;
-  max-width: 500px;
-  width: 100vw;
-  @media screen and (min-width: $screen-sm) {
-    padding: 50px;
+  align-items: center;
+  flex-direction: column;
+  background: url('../../data/backgrounds/popup/popup-wide-bg.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  @media (max-width: $screen-sm) {
+    padding: 50px 30px 100px;
+    background: url('../../data/backgrounds/popup/popup-bg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+  }
+
+  .title {
+    margin-top: 40px;
+    margin-left: 30px;
+    text-align: center;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 60px;
+    color: #ffd31a;
+    text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
   }
 
   &.registrationWithPromo {
@@ -122,11 +142,15 @@
     }
   }
   .form {
-    flex-basis: 50%;
-    max-width: 100%;
-    flex-grow: 1;
+    position: relative;
     display: flex;
-    flex-flow: column;
+    max-width: 800px;
+    padding: 80px 50px 80px 80px;
+    column-gap: 20px;
+    @media (max-width: $screen-sm) {
+      flex-direction: column;
+      padding: 0;
+    }
   }
 }
 .promoMessage.raffle {

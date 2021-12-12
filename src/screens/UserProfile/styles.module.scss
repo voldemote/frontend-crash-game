@@ -141,7 +141,6 @@
       margin-bottom: 8px;
       @media (max-width: $screen-sm) {
         margin-left: 0px;
-        justify-content: space-between;
         font-size: 11px;
         line-height: 14px;
       }
@@ -151,6 +150,9 @@
         padding-bottom: 12px;
         opacity: 0.3;
         cursor: pointer;
+        @media (max-width: $screen-sm) {
+          padding: 12px 20px;
+        }
       }
 
       .tabItemSelected {
@@ -159,6 +161,9 @@
         border-bottom: 2px solid $mainAction;
         opacity: 1;
         cursor: pointer;
+        @media (max-width: $screen-sm) {
+          padding: 12px 20px;
+        }
       }
     }
 
@@ -212,8 +217,8 @@
 
     .activities {
       width: 100%;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
+      background-color: $colorPrimary;
+      border-radius: 12px;
     }
 
     .leaderboard {
@@ -221,17 +226,17 @@
       background-color: $colorPrimary;
       border-radius: 12px;
 
-      .heading {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        @media (max-width: $screen-sm) {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-        }
-      }
-
       .leaderboardTable {
         overflow-y: hidden;
+      }
+    }
+
+    .heading {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      @media (max-width: $screen-sm) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
       }
     }
   }

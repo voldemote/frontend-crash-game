@@ -35,15 +35,13 @@
     margin-right: 52px;
     font-size: 16px;
     font-weight: 600;
-    line-height: 44px;
     letter-spacing: 0.5px;
     color: $colorWhite;
     opacity: 1;
 
     @media (max-width: $screen-md) {
       margin-right: 30px;
-      font-size: 14px;
-      line-height: 38px;
+      font-size: 12px;
     }
 
     img {
@@ -61,29 +59,26 @@
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
+
     color: $colorWhite;
 
     @media (max-width: $screen-md) {
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
     }
   }
 
   .firstBalance {
     position: absolute;
-    right: 50px;
+    right: 40px;
     text-align: end;
     color: $colorLightYellow;
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
 
     @media (max-width: $screen-md) {
-      right: 20px;
-      font-size: 16px;
-      line-height: 20px;
+      right: 16px;
+      font-size: 12px;
     }
   }
 }
@@ -107,15 +102,13 @@
     margin-right: 52px;
     font-size: 16px;
     font-weight: 600;
-    line-height: 44px;
     letter-spacing: 0.5px;
     color: $colorWhite;
     opacity: 1;
 
     @media (max-width: $screen-md) {
       margin-right: 30px;
-      font-size: 14px;
-      line-height: 38px;
+      font-size: 12px;
     }
 
     img {
@@ -133,29 +126,25 @@
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
     color: $colorWhite;
 
     @media (max-width: $screen-md) {
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
     }
   }
 
   .secondBalance {
     position: absolute;
-    right: 50px;
+    right: 40px;
     text-align: end;
     color: $colorLightYellow;
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
 
     @media (max-width: $screen-md) {
-      right: 20px;
-      font-size: 16px;
-      line-height: 20px;
+      right: 16px;
+      font-size: 12px;
     }
   }
 }
@@ -179,15 +168,13 @@
     margin-right: 52px;
     font-size: 16px;
     font-weight: 600;
-    line-height: 44px;
     letter-spacing: 0.5px;
     color: $colorWhite;
     opacity: 1;
 
     @media (max-width: $screen-md) {
       margin-right: 30px;
-      font-size: 14px;
-      line-height: 38px;
+      font-size: 12px;
     }
 
     img {
@@ -205,29 +192,25 @@
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
     color: $colorWhite;
 
     @media (max-width: $screen-md) {
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
     }
   }
 
   .thirdBalance {
     position: absolute;
-    right: 50px;
+    right: 40px;
     text-align: end;
     color: $colorLightYellow;
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
 
     @media (max-width: $screen-md) {
-      right: 20px;
-      font-size: 16px;
-      line-height: 20px;
+      right: 16px;
+      font-size: 12px;
     }
   }
 
@@ -239,15 +222,13 @@
     margin-right: 52px;
     font-size: 16px;
     font-weight: 600;
-    line-height: 20px;
     letter-spacing: 0.5px;
     color: $colorWhite;
     opacity: 1;
 
     @media (max-width: $screen-md) {
       margin-right: 30px;
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
     }
 
     img {
@@ -281,15 +262,13 @@
     justify-content: space-between;
     margin-right: 52px;
     font-size: 16px;
-    line-height: 24px;
     letter-spacing: 0.5px;
     color: $colorWhite;
     opacity: 1;
 
     @media (max-width: $screen-md) {
       margin-right: 30px;
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
     }
 
     img {
@@ -308,29 +287,25 @@
     font-family: $fontOmnes;
     font-weight: 500;
     font-size: 14px;
-    line-height: 18px;
     color: $colorWhite;
 
     @media (max-width: $screen-md) {
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
     }
   }
 
   .entryBalance {
     position: absolute;
-    right: 50px;
+    right: 40px;
     text-align: end;
     color: $colorLightYellow;
     font-family: $fontOmnes;
     font-weight: 600;
     font-size: 14px;
-    line-height: 18px;
 
     @media (max-width: $screen-md) {
-      right: 20px;
-      font-size: 16px;
-      line-height: 20px;
+      right: 16px;
+      font-size: 12px;
     }
   }
 
@@ -355,7 +330,7 @@
 }
 
 .tableCurrentUser {
-  border-left: 4px solid $colorPinkLight;
+  border-left: 4px solid $colorLightYellow;
   background-color: $colorPrimary45;
 }
 

@@ -186,69 +186,72 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup }) => {
         backgroundColor={'#ff0000'}
         className={styles.stepsTooltipError}
       />
+      <div className={styles.rowContainer}>
+        <div>
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            ref={(ref) => (emailRef = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+          >
+            <InputLabel className={styles.inputLabel}>E-Mail address</InputLabel>
+            <InputBox
+              type="email"
+              className={styles.inputBox}
+              placeholder="john.doe@gmail.com"
+              value={email}
+              disabled={submitInProgress}
+              setValue={(e) => {
+                setInputEmail(e.trim().toLowerCase());
+              }}
+              onConfirm={onConfirm}
+              onBlur={() => validateInput({ emailOnly: true })}
+            />
+          </FormGroup>
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            ref={(ref) => (pwRef = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+          >
+            <InputLabel className={styles.inputLabel}>Password</InputLabel>
+            <InputBox
+              type="password"
+              className={styles.inputBox}
+              placeholder="***********"
+              value={password}
+              setValue={setPassword}
+              disabled={submitInProgress}
+              onConfirm={onConfirm}
+            />
+          </FormGroup>
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            ref={(ref) => (pwConfirmRef = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+          >
+            <InputLabel className={styles.inputLabel}>Confirm Password</InputLabel>
+            <InputBox
+              type="password"
+              className={styles.inputBox}
+              placeholder="***********"
+              value={passwordConfirmation}
+              setValue={setPasswordConfirmation}
+              disabled={submitInProgress}
+              onConfirm={onConfirm}
+            />
 
-      <FormGroup
-        className={styles.formGroup}
-        data-tip
-        ref={(ref) => (emailRef = ref)}
-        data-event="none"
-        data-event-off="dblclick"
-      >
-        <InputLabel className={styles.inputLabel}>E-Mail address</InputLabel>
-        <InputBox
-          type="email"
-          className={styles.inputBox}
-          placeholder="john.doe@gmail.com"
-          value={email}
-          disabled={submitInProgress}
-          setValue={(e) => {
-            setInputEmail(e.trim().toLowerCase());
-          }}
-          onConfirm={onConfirm}
-          onBlur={() => validateInput({ emailOnly: true })}
-        />
-      </FormGroup>
-      <FormGroup
-        className={styles.formGroup}
-        data-tip
-        ref={(ref) => (pwRef = ref)}
-        data-event="none"
-        data-event-off="dblclick"
-      >
-        <InputLabel className={styles.inputLabel}>Password</InputLabel>
-        <InputBox
-          type="password"
-          className={styles.inputBox}
-          placeholder="***********"
-          value={password}
-          setValue={setPassword}
-          disabled={submitInProgress}
-          onConfirm={onConfirm}
-        />
-      </FormGroup>
-      <FormGroup
-        className={styles.formGroup}
-        data-tip
-        ref={(ref) => (pwConfirmRef = ref)}
-        data-event="none"
-        data-event-off="dblclick"
-      >
-        <InputLabel className={styles.inputLabel}>Confirm Password</InputLabel>
-        <InputBox
-          type="password"
-          className={styles.inputBox}
-          placeholder="***********"
-          value={passwordConfirmation}
-          setValue={setPasswordConfirmation}
-          disabled={submitInProgress}
-          onConfirm={onConfirm}
-        />
 
-
-      </FormGroup>
-
-      {renderLegalAuthorizationAgreementCheckBox()}
-
+          </FormGroup>
+        </div>
+        <div>
+          {renderLegalAuthorizationAgreementCheckBox()}
+        </div>
+      </div>
       <Button
         onClick={onConfirm}
         // withoutBackground={true}

@@ -51,7 +51,21 @@
   margin-top: 20px;
   font-family: $fontOmnes;
   text-transform: uppercase;
+  .rowContainer {
+    width: 100%;
+    display: flex;
+    column-gap: 40px;
+    > div {
+      width: 50%;
+      @media (max-width: $screen-sm) {
+        width: auto;
+      }
+    }
 
+    @media (max-width: $screen-sm) {
+      flex-direction: column;
+    }
+  }
   .formGroup {
     position: relative;
     width: 100%;
@@ -73,6 +87,11 @@
 
   .inputLabel {
     font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+    align-items: center;
+    color: #ffd31a;
+    text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
 
     @media (max-width: $screen-sm) {
       font-size: 12px;
@@ -136,6 +155,7 @@
   align-self: flex-start;
   // width: 390px;
   .authenticationLegalAuthorizationAgreementText {
+    flex: 1;
     font-size: 15px;
     text-transform: uppercase;
 
@@ -198,11 +218,12 @@
   overflow: hidden;
   font-size: 16px;
   margin: 20px 0 0;
-  width: 100%;
+  padding: 0 40px;
   cursor: pointer;
   color: $colorWhite;
   text-transform: uppercase;
   @media (max-width: $screen-sm) {
+    width: 100%;
     height: 50px;
     margin: 10px 0 0;
   }
@@ -273,17 +294,42 @@
 
 .alreadyHaveAnAccount,
 .dontHaveAnAccount {
-  margin-top: 25px;
+  position: absolute;
+  right: 140px;
+  bottom: 200px;
   font-size: 14px;
   text-align: center;
+  @media (max-width: $screen-sm) {
+    position: static;
+    margin-top: 25px;
+    text-align: center;
+  }
   button {
     @extend .unstyledButton;
     text-decoration: underline;
     font-size: 14px;
     color: $colorPrimary;
   }
+  p {
+    margin-bottom: 20px;
+  }
 }
-.dontHaveAnAccount {
+.dontHaveAnAccountLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 25px;
+  text-align: center;
+  padding: 0 20px;
+  @media (max-width: $screen-sm) {
+    padding: 0;
+  }
+  button {
+    @extend .unstyledButton;
+    text-decoration: underline;
+    font-size: 14px;
+    color: $colorPrimary;
+  }
   p {
     margin-bottom: 20px;
   }
