@@ -50,6 +50,10 @@
     left: 0;
     position: absolute;
     z-index: -1;
+    @media (max-width: $screen-lg) {
+      height: 1800px;
+      background-size: cover;
+    }
   }
 
 
@@ -83,6 +87,10 @@
     position: absolute;
     top: 450px;
     right: 18%;
+
+    @media (max-width: $screen-lg) {
+      right: 0;
+    }
   }
 
   .secondCoin {
@@ -97,6 +105,10 @@
     position: absolute;
     top: 900px;
     right: -19%;
+
+    @media (max-width: $screen-lg) {
+      display: none;
+    }
   }
 
   .forthCoin {
@@ -104,6 +116,11 @@
     position: absolute;
     top: 1150px;
     right: 5%;
+
+    @media (max-width: $screen-lg) {
+      top: 850px;
+      right: 0;
+    }
 
     .rectangle {
       width: 550px !important;
@@ -115,6 +132,9 @@
     position: absolute;
     top: 1950px;
     left: 0;
+    @media (max-width: $screen-lg) {
+      top: 2150px;
+    }
   }
 
   .coinRectangle {
@@ -165,6 +185,11 @@
     margin-bottom: 125px;
     position: relative;
     z-index: 10;
+
+    @media (max-width: $screen-xl) {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .placeBetContainer {
@@ -190,11 +215,22 @@
   .firstCircledContainer {
     margin-left: 550px;
     margin-top: 250px;
+
+    @media (max-width: $screen-lg) {
+      margin-left: 0;
+      justify-content: center;
+      margin-top: 350px
+    }
   }
 
   .secondCircledContainer {
     margin-left: 420px;
     margin-top: 150px;
+
+    @media (max-width: $screen-lg) {
+      margin-left: 0;
+      justify-content: center;
+    }
   }
 
   .secondHeadingContainer {
@@ -205,6 +241,10 @@
     position: relative;
     z-index: 10;
     margin-bottom: 500px;
+    @media (max-width: $screen-lg) {
+      margin-right: auto;
+      justify-content: center;
+    }
   }
 }
 
