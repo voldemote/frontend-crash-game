@@ -9,7 +9,8 @@ export const OnboardingSteps = {
   buildAvatar: "buildAvatar",
   registerEmail: "registerEmail",
   setUsername: "setUsername",
-  welcomeScreen: "welcomeScreen",
+  // welcomeScreen: "welcomeScreen",
+  wallet: "wallet",
 };
 
 const start = makeActionCreator(OnboardingTypes.START, {});
