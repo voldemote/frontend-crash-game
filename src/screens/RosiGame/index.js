@@ -373,7 +373,6 @@ const RosiGame = ({
             </div>
           ) : null}
           {renderWallpaperBanner()}
-            <h1>Hei my man</h1>
         </div>
       </div>
     </BaseContainerWithNavbar>
