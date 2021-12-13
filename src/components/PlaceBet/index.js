@@ -50,7 +50,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const history = useHistory();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = 0;
+  const sliderMinAmount = 50;
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const gameStartedTimeStamp = useSelector(selectTimeStarted);
