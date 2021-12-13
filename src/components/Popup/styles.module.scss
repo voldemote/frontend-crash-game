@@ -153,6 +153,12 @@
     .closeButton {
       z-index: $zIndexPopup + 1;
       cursor: pointer;
+
+      svg > path {
+        opacity: 1;
+        stroke: $mainAction;
+        stroke-opacity: 1;
+      }
     }
   }
 }
