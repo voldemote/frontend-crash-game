@@ -6,6 +6,8 @@
   justify-content: center;
   flex-direction: column;
   padding: 35px;
+  background-color: $colorWhite;
+  border-radius: 12px;
 
   .logo {
     height: 60px;
@@ -86,7 +88,7 @@
     strong {
       font-family: $fontOmnes;
       font-weight: bold;
-      border-bottom: 3px solid $colorPinkLight;
+      border-bottom: 3px solid $colorLightYellow;
       cursor: pointer;
       word-break: break-all;
     }
