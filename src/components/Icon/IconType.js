@@ -76,5 +76,6 @@ export default {
   leaderboardRanking: 'leaderboardRanking',
   leaderboardUser: 'leaderboardUser',
   leaderboardToken: 'leaderboardToken',
-  balanceScaleSolid: 'balanceScaleSolid'
+  balanceScaleSolid: 'balanceScaleSolid',
+  userProfile: 'userProfile'
 };
