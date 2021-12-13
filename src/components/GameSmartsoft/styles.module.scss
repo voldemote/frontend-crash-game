@@ -84,11 +84,10 @@
     height: 148px;
     overflow: hidden;
     border-radius: 20px;
-    width: 148px;
-
+    width: 200px;
     @media (max-width: $screen-sm) {
       width: 40vw;
-      height: 40vw;
+      height: 30vw;
       // margin: 0 auto;
     }
 

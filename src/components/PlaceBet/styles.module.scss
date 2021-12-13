@@ -4,7 +4,8 @@
   height: 40px;
   display: flex;
   align-items: center;
-  background: $colorPrimary;
+  background: $colorBlue80;
+  border: 1px solid $colorBlueBorder;
   border-radius: 20px;
   justify-content: flex-start;
   position: relative;
@@ -92,8 +93,8 @@
 
 .container {
   position: relative;
-  background: $colorPrimary;
-  border: 1px solid $colorLightGray4;
+  background: $colorBlue80;
+  border: 1px solid $colorBlueBorder;
   border-radius: 10px;
   margin-bottom: 14px;
 
@@ -253,7 +254,7 @@
     padding: 10px;
 
     // justify-content: center;
-    border-bottom: 1px solid $colorLightGray2;
+    border-bottom: 1px solid $colorBlueBorder;
     .placebidTitle {
       padding: 0;
       font-size: 14px;
@@ -370,9 +371,8 @@
   align-items: center;
   padding: 10.5px;
   height: 35px;
-  border-radius: 10px;
-  border: 1.2px solid $colorLightGray4;
-  background: $colorPrimary;
+  border: 1.2px solid $colorBlueBorder;
+  background: $colorBlue80;
   justify-content: flex-end;
   margin-bottom: 10px;
   @media (min-width: $screen-lg) {

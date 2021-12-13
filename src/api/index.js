@@ -556,6 +556,11 @@ const getUserKycData = (userId) => {
     .catch(error => ({ error: error.message }));
 };
 
+const getRandomUsername = () => {
+  return Api.get(ApiUrls.RANDOM_USERNAME)
+    .catch(error => ({ error: error.message }));
+}
+
 export {
   Api,
   createBet,
@@ -622,4 +627,5 @@ export {
   processWithdraw,
   getWithdrawStatus,
   getUserKycData,
+  getRandomUsername
 };

@@ -389,7 +389,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
       return (
         <>
-          <span
+          <Button
             role="button"
             tabIndex="0"
             className={classNames(styles.button, styles.cancel)}
@@ -399,12 +399,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             }
           >
             {user.isLoggedIn ? 'Cancel Bet' : 'Cancel Bet'}
-          </span>
+          </Button>
         </>
       );
     } else {
       return (
-        <span
+        <Button
           role="button"
           tabIndex="0"
           className={classNames(styles.button, {
@@ -420,7 +420,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           }
         >
           {user.isLoggedIn ? 'Cash Out' : 'Cash Out'}
-        </span>
+        </Button>
       );
     }
   };

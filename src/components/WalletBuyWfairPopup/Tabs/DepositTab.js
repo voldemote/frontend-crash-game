@@ -31,6 +31,7 @@ import Loader from 'components/Loader/Loader';
 import { currentChainId, WFAIRAddress } from 'config/config';
 import { numberWithCommas } from 'utils/common';
 import { TOKEN_NAME } from 'constants/Token';
+import Button from 'components/Button';
 // import AddTokens from 'components/AddTokens';
 
 const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
@@ -235,19 +236,17 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
         {!visibleWalletForm && !account && (
           <div className={styles.connectWalletContainer}>
             <p>
-              Please connect your wallet in order to deposit {TOKEN_NAME} into your
-              balance
+              You can add {TOKEN_NAME} to your account by connecting your existing wallet with {TOKEN_NAME} tokens. Click the button below to select one of the supported providers.
             </p>
-            <button
-              type="button"
-              className={styles.connectWalletButton}
+            <Button
+              className={styles.button}
               onClick={() => {
                 setVisibleWalletForm(true);
                 setTokenAreaOpen(true);
               }}
             >
               Connect Wallet
-            </button>
+            </Button>
           </div>
         )}
 
@@ -255,13 +254,12 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
           <div className={styles.connectWalletContainer}>
             <p>You have selected the wrong network</p>
             <p>Please click below to switch to the correct one</p>
-            <button
-              type="button"
-              className={styles.connectWalletButton}
+            <Button
+              className={styles.button}
               onClick={switchNetwok}
             >
               Switch Network
-            </button>
+            </Button>
           </div>
         ) : null}
 

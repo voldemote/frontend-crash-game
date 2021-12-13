@@ -1,9 +1,9 @@
 @import '../../styles/all.scss';
 
 .container {
-  background: $colorPrimary;
-  border: 1px solid $colorLightGray4;
-  border-radius: 10px;
+  background: $colorBlue80;
+  border: 1px solid $colorBlueBorder;
+  border-radius: 12px;
   overflow: auto;
   flex: 1;
 

@@ -21,10 +21,24 @@ const HomeSettings = ({
   onLogoutClick,
   onCloseProfile,
   onKycInfoClick,
+  onProfileClick
 }) => {
   return (
     <div className={styles.settings}>
       <div className={styles.settingContainer}>
+        {loggedIn && (
+        <>
+          <div
+            onClick={onProfileClick}
+            className={classNames(
+              styles.singleSettingHolder
+            )}
+          >
+            <Icon className={styles.referralIcon} iconType={'userProfile'} />
+            <p className={styles.settingTitle}>My Profile</p>
+          </div>
+          </>
+          )}
         <div
           onClick={onGamesClick}
           className={classNames(

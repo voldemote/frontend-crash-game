@@ -373,10 +373,6 @@ const PlinkoGame = ({
             By choosing a higher risk, the chances of hitting a positive multiplier are lower, but the higher the risk, the higher the multiplier.
           </p>
         </div>
-
-        <div className={styles.wrapperCards}>
-          <GameContentCards />
-        </div>
       </div>
     </BaseContainerWithNavbar>
   );
