@@ -526,13 +526,12 @@
       margin-top: 50px;
       max-height: 70px;
       width: 90%;
-      background: $colorBlanceBackground;
       box-sizing: border-box;
       font-family: $fontOmnes;
       font-size: 50px;
       font-weight: 600;
       text-align: center;
-      color: $colorWhite;
+      color: $colorLightYellow;
       overflow-wrap: break-word;
       &.font30 {
         font-size: 30px;
@@ -607,7 +606,6 @@
         width: 240px;
         height: 45px;
         font-family: $fontOmnes;
-        cursor: pointer;
       }
     }
   }

@@ -19,6 +19,7 @@ import { WallfairActions } from 'store/actions/wallfair';
 import { TransactionActions } from 'store/actions/transaction';
 import Button from 'components/Button';
 import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
+import * as ApiUrls from 'constants/Api';
 
 const UserWallet = ({
   tags,
@@ -29,7 +30,7 @@ const UserWallet = ({
   refreshHighData,
   refreshLuckyData,
   connected,
-  userId,
+  user,
   refreshMyBetsData,
   showWalletBuyWfairPopup,
   showRequestTokenPopup,
@@ -49,6 +50,7 @@ const UserWallet = ({
   const [stakesLoading, setStakesLoading] = useState(true);
 
   const { myBetsData } = useRosiData();
+  const [userKyc, setUserKyc] = useState({...user?.kyc});
 
   const activityData = {
     DEPOSITS: transactions.deposit || [],
@@ -83,8 +85,8 @@ const UserWallet = ({
   }, [account, active, resetState]);
 
   useEffect(() => {
-    refreshMyBetsData({ userId: userId });
-    if (userId) {
+    refreshMyBetsData({ userId: user.userId });
+    if (user.userId) {
       setActivityTabOptions([
         { name: 'FIAT DEPOSITS', index: 0 },
         { name: 'CRYPTO DEPOSITS', index: 1 },
@@ -92,7 +94,8 @@ const UserWallet = ({
         { name: 'BETS', index: 3 },
       ]);
     }
-  }, [connected, refreshMyBetsData, userId]);
+    setUserKyc(user?.kyc);
+  }, [connected, refreshMyBetsData, user]);
 
   useEffect(() => {
     fetchWalletTransactions();
@@ -101,6 +104,17 @@ const UserWallet = ({
   useEffect(() => {
     isTransactionsFetchError ? setStakesLoading(false) : setStakesLoading(true);
   }, [isTransactionsFetchError]);
+
+  const isKycStarted = () => userKyc && userKyc.status;
+
+  const isKycVerified = () => userKyc && userKyc.status === 'approved';
+
+  const showStartButton = () => !isKycStarted() || userKyc.status === 'error' || userKyc.status === 'rejected';
+
+  const openFractal = () => {
+    const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
+    window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
+  }
 
   const renderCategoriesAndLeaderboard = () => {
     return (
@@ -190,20 +204,26 @@ const UserWallet = ({
                 <p className={styles.label}>Let's withdraw my funds</p>
                 <Button
                   className={styles.button}
+                  disabled={!isKycVerified()}
+                  disabledWithOverlay={false}
                   onClick={showWithdrawPopup}
                 >
                   Withdraw
                 </Button>
               </div>
-              <div className={styles.buttonContainer}>
-                <p className={styles.label}>Start the verification</p>
-                <Button
-                  className={styles.button}
-                  // onClick={showRequestTokenPopup}
-                >
-                  Verification
-                </Button>
-              </div>
+              {
+                showStartButton() && (
+                  <div className={styles.buttonContainer}>
+                  <p className={styles.label}>Start the verification</p>
+                  <Button
+                    className={styles.button}
+                    onClick={openFractal}
+                  >
+                    Verification
+                  </Button>
+                </div>
+                )
+              }
               <div className={styles.buttonContainer}>
                 <p className={styles.label}>I need support</p>
                 <Button
@@ -249,7 +269,7 @@ const mapStateToProps = state => {
     tags: state.event.tags,
     events: state.event.events,
     connected: state.websockets.connected,
-    userId: state.authentication.userId,
+    user: state.authentication,
     isTransactionsFetchLoading: state.transaction.walletTransactions.isLoading,
     isTransactionsFetchError: state.transaction.walletTransactions.isError,
     transactions: state.transaction.walletTransactions.transactions,
