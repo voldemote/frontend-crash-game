@@ -7,9 +7,8 @@
   padding: 10.5px;
   height: 45px;
   margin-bottom: 24px;
-  border-radius: 10px;
-  border: 1.2px solid $colorLightGray4;
-  background: $colorPrimary;
+  border: 1.2px solid $colorBlueBorder;
+  background: $colorBlue80;
   justify-content: flex-end;
 
   @media (min-width: $screen-lg) {

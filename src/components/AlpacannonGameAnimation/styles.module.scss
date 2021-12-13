@@ -5,14 +5,14 @@
   justify-content: space-around;
   overflow: hidden;
   border-radius: 12px;
-  border: 1px solid hsla(0,0%,100%,.17);
+  border: 1px solid $colorBlueBorder;
   height: fit-content;
   position: relative;
-  .background{
+  .background {
     width: 100%;
     height: auto;
   }
-  .chance{
+  .chance {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,13 +21,13 @@
     right: 66%;
     width: 10.5%;
     height: 5%;
-    span{
+    span {
       color: white;
       font-weight: bold;
       font-size: 19px;
     }
   }
-  .result{
+  .result {
     display: flex;
     opacity: 0;
     justify-content: center;
@@ -37,7 +37,7 @@
     right: 66%;
     width: 10.5%;
     height: 5%;
-    span{
+    span {
       color: white;
       font-weight: bold;
       font-size: 19px;
@@ -52,8 +52,8 @@
     height: 8px;
     border-radius: 5px;
     outline: none;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -74,7 +74,7 @@
     }
   }
 
-  .interpolateMultiplier{
+  .interpolateMultiplier {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,13 +83,13 @@
     right: 24%;
     width: 10.5%;
     height: 5%;
-    span{
+    span {
       color: white;
       font-weight: bold;
       font-size: 19px;
     }
   }
-  .fullcannon{
+  .fullcannon {
     height: 50%;
     width: 140px;
     bottom: -25%;
@@ -97,7 +97,7 @@
     pointer-events: none;
     right: calc(50% - 70px);
     transition: transform 1s;
-    .cannon{
+    .cannon {
       height: auto;
       width: 90%;
       position: absolute;
@@ -106,14 +106,14 @@
       left: 0;
       right: 0;
     }
-    .alpacaInCannon{
+    .alpacaInCannon {
       width: 55%;
       top: -23%;
       position: absolute;
       left: 29%;
       z-index: -1;
     }
-    .explotion{
+    .explotion {
       width: 95%;
       top: -22%;
       position: absolute;
@@ -126,36 +126,49 @@
       transition: opacity 0.3 ease-in-out;
     }
   }
-  .alpacaCrash{
+  .alpacaCrash {
     height: 50px;
     position: absolute;
     top: 26%;
     z-index: 4;
   }
   @keyframes bounce {
-    0% {transform: scale(0.9);}
-    25% {transform: scale(1.3);}
-    50% {transform: scale(1.5);}
-    100% {transform: scale(0.9);}
+    0% {
+      transform: scale(0.9);
+    }
+    25% {
+      transform: scale(1.3);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(0.9);
+    }
   }
 
   .alpacaFlying {
     width: 80px;
     bottom: 30%;
     //transform: scale(0.9, 0.9);
-    transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
+    transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out,
+      right 1s ease-out;
     position: absolute;
     right: 45%;
     z-index: 4;
-    -webkit-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
-    -moz-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
-    -ms-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
-    -o-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out, right 1s ease-out;
+    -webkit-transition: bounce 1s ease-in-out, transform 7.2s,
+      bottom 1s ease-out, right 1s ease-out;
+    -moz-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out,
+      right 1s ease-out;
+    -ms-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out,
+      right 1s ease-out;
+    -o-transition: bounce 1s ease-in-out, transform 7.2s, bottom 1s ease-out,
+      right 1s ease-out;
     position: absolute;
     z-index: 1;
   }
 
-  .alpaResult{
+  .alpaResult {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -165,11 +178,11 @@
     width: 80px;
     height: 80px;
     z-index: 5;
-    img{
+    img {
       position: absolute;
       height: 100%;
     }
-    span{
+    span {
       margin-top: -14px;
       transform: rotate(-14deg);
       color: black;
@@ -177,10 +190,9 @@
       font-size: 19px;
     }
   }
-
 }
 .animationMobile {
-  .slider{
+  .slider {
     right: 12.6%;
     width: 74.8%;
     top: 38.3%;
@@ -193,97 +205,94 @@
       height: 15px;
       width: 22.5px;
     }
-
   }
-  .interpolateMultiplier{
+  .interpolateMultiplier {
     top: 49.2%;
     right: 30%;
-    span{
+    span {
       font-size: 13px;
     }
   }
-  .chance{
+  .chance {
     top: 49.2%;
-    right: 59.0%;
-    span{
+    right: 59%;
+    span {
       font-size: 13px;
     }
   }
-  .alpaResult{
+  .alpaResult {
     top: 14%;
     height: 60px;
   }
-  .alpacaCrash{
+  .alpacaCrash {
     height: 50px;
     top: 32%;
   }
-  .alpacaFlying{
+  .alpacaFlying {
     width: 85px;
   }
-  .fullcannon{
+  .fullcannon {
     //width: 100px;
     //right: calc(50% - 50px);
-    .alpacaInCannon{
-  //    top: -28%;
+    .alpacaInCannon {
+      //    top: -28%;
     }
   }
 }
 .animationMobilePortrait {
-  .background{
+  .background {
     width: 100%;
     max-height: 64vh;
     object-fit: cover;
   }
-  .alpaResult{
+  .alpaResult {
     top: 0%;
     height: 35px;
-    span{
+    span {
       color: black;
       font-weight: bold;
       font-size: 12px;
     }
   }
-  .fullcannon{
+  .fullcannon {
     width: 80px;
     right: calc(50% - 40px);
-    .explotion{
+    .explotion {
       top: -25px;
     }
   }
-  .slider{
+  .slider {
     top: 24.5%;
     right: 11.6%;
     width: 75.8%;
     height: 5px;
   }
-  .interpolateMultiplier{
+  .interpolateMultiplier {
     right: 24%;
   }
-  .chance{
+  .chance {
     right: 66%;
   }
-  .alpacaCrash{
+  .alpacaCrash {
     height: 51px;
     top: 13%;
   }
   .alpacaFlying {
     width: 70px;
   }
-
 }
 
-.audioControls{
+.audioControls {
   position: absolute;
   z-index: 999;
   left: 20px;
   top: 10px;
-  svg{
+  svg {
     fill: #f2ff53 !important;
   }
   @media (max-width: $screen-xs-max) {
-
   }
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     top: 60px;
     left: 5px !important;
   }

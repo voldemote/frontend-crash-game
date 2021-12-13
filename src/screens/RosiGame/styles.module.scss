@@ -145,10 +145,10 @@
 
 .chatWrapper {
   margin-top: 32px;
-  background: rgba(122, 121, 121, 0.1);
+  background: $colorBlue80;
   border-radius: 10px;
   margin-right: 25px;
-  border: 1px solid $colorLightGray4;
+  border: 1px solid $colorBlueBorder;
 
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
@@ -219,7 +219,7 @@
   font-size: 14px;
   line-height: 18px;
   padding-top: 24px;
-  border-bottom: 1px solid $colorLightGray2;
+  border-bottom: 1px solid $colorBlueBorder;
 
   @media (max-width: $screen-sm) {
     margin-left: 0px;
