@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { AuthenticationActions } from '../../../store/actions/authentication';
 import { PopupActions } from '../../../store/actions/popup';
@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 
 const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
 
-  let fooRef = useRef(null);
+  const fooRef = useRef(null);
   let emailRef = useRef(null);
   let pwRef = useRef(null);
   let pwConfirmRef = useRef(null);
@@ -40,18 +40,20 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
   useEffect(() => {
     ReactTooltip.rebuild();
 
+
     if (errorState) {
       setSubmitInProgress(false);
       fooRef.current = genericRef;
       setError(errorState);
-      ReactTooltip.show(fooRef);
+      ReactTooltip.show(fooRef.current);
       handleReCaptchaVerify();
+    } else if(error){
+      ReactTooltip.show(fooRef.current);
+    } else {
+      ReactTooltip.hide();
     }
 
-    return () => {
-      setError(null);
-    };
-  }, [errorState, fooRef]);
+  }, [errorState, fooRef, error]);
 
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) return;
@@ -98,41 +100,33 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
   };
 
   const validateInput = (options) => {
-    let error;
-    if (!legalAuthorizationAgreed) {
-      error = 'Confirm that you agree with Terms and Conditions';
-      fooRef = acceptRef;
-    }
-    if (!passwordsMatch()) {
-      error = 'Passwords do not match';
-      fooRef = pwConfirmRef;
-    }
-    if (!passwordIsValid()) {
-      error = 'Your password needs to be 8 characters long';
-      fooRef = pwRef;
-    }
+    let formError = null;
+    let fieldRef = null;
 
     if (!emailIsValid()) {
-      error = 'Not a valid email address';
-      fooRef = emailRef;
-    }
-    if (emailIsValid() && options && options.emailOnly) {
-      error = undefined;
-      ReactTooltip.hide(emailRef);
+      formError = 'Not a valid email address';
+      fieldRef = emailRef.current;
+    } else if (!passwordIsValid()) {
+      formError = 'Your password needs to be 8 characters long';
+      fieldRef = pwRef.current;
+    } else if (!passwordsMatch()) {
+      formError = 'Passwords do not match';
+      fieldRef = pwConfirmRef.current;
+    } else if (!legalAuthorizationAgreed) {
+      formError = 'Confirm that you agree with Terms and Conditions';
+      fieldRef = acceptRef.current;
     }
 
-    setError(error);
-    if (error) {
-      ReactTooltip.show(fooRef);
-    }
+    setError(formError);
+    fooRef.current = fieldRef;
 
-    return error;
+    return formError;
   };
 
   const renderLegalAuthorizationAgreementCheckBox = () => {
     const legalAuthorizationAgreementText = (
       <p
-        ref={(ref) => (acceptRef = ref)}
+        ref={(ref) => (acceptRef.current = ref)}
         data-tip
         data-event="none"
         data-event-off="dblclick"
@@ -175,7 +169,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
     >
       {errorState && (
         <div
-          ref={(ref) => (genericRef = ref)}
+          ref={(ref) => (genericRef.current = ref)}
           data-tip
           data-event="none"
           data-event-off="dblclick"
@@ -198,11 +192,13 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
           <FormGroup
             className={styles.formGroup}
             data-tip
-            ref={(ref) => (emailRef = ref)}
+            rootRef={(ref) => (emailRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
-            <InputLabel className={styles.inputLabel}>E-Mail address</InputLabel>
+            <InputLabel className={styles.inputLabel}>
+              E-Mail address
+            </InputLabel>
             <InputBox
               type="email"
               className={styles.inputBox}
@@ -219,7 +215,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
           <FormGroup
             className={styles.formGroup}
             data-tip
-            ref={(ref) => (pwRef = ref)}
+            rootRef={(ref) => (pwRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -237,11 +233,13 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
           <FormGroup
             className={styles.formGroup}
             data-tip
-            ref={(ref) => (pwConfirmRef = ref)}
+            rootRef={(ref) => (pwConfirmRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
-            <InputLabel className={styles.inputLabel}>Confirm Password</InputLabel>
+            <InputLabel className={styles.inputLabel}>
+              Confirm Password
+            </InputLabel>
             <InputBox
               type="password"
               className={styles.inputBox}
@@ -251,13 +249,9 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
               disabled={submitInProgress}
               onConfirm={onConfirm}
             />
-
-
           </FormGroup>
         </div>
-        <div>
-          {renderLegalAuthorizationAgreementCheckBox()}
-        </div>
+        <div>{renderLegalAuthorizationAgreementCheckBox()}</div>
       </div>
       <Button
         onClick={onConfirm}
