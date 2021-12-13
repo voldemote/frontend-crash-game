@@ -243,7 +243,7 @@ const PlinkoGame = ({
           <h3>HOW TO PLACE A BET</h3>
           <div className={styles.placeBetContainer}>
             <Button role="button" tabIndex="0" className={styles.button}>
-              <p>Place a bet</p>
+              Place a bet
             </Button>
           </div>
 

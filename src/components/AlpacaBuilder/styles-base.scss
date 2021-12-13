@@ -126,26 +126,6 @@
     width: 100%;
     justify-content: center;
     align-items: flex-start;
-
-    span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 600;
-      color: $toolbarBtnColor;
-      cursor: pointer;
-      margin: 0 16px;
-      @media (max-width: $screen-md) {
-        margin: 0 4px;
-        font-size: 14px;
-      }
-    }
-    .secondaryAction {
-      color: #0b4bc2;
-    }
   }
 
   &.wide {
@@ -190,13 +170,24 @@
     max-width: 180px;
     height: 47px;
     padding: 0 20px;
-    p {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 25px;
-      text-align: center;
-      color: #ffe98f;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .secondaryAction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: $colorLightYellow;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0 16px;
+    @media (max-width: $screen-md) {
+      margin: 0 4px;
+      font-size: 14px;
     }
   }
 }

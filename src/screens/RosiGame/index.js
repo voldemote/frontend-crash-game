@@ -361,7 +361,7 @@ const RosiGame = ({
         </div>
         <div className={styles.placeBetContainer}>
           <Button role="button" tabIndex="0" className={styles.button}>
-            <p>Place a bet</p>
+            Place a bet
           </Button>
         </div>
 
@@ -423,7 +423,7 @@ const RosiGame = ({
 
           <div className={styles.placeBetContainer}>
             <Button role="button" tabIndex="0" className={styles.button}>
-              <p>Place a bet</p>
+              Place a bet
             </Button>
           </div>
         </div>

@@ -142,8 +142,10 @@ $border: 1px solid $colorWhite30;
 }
 
 .global-link-style {
+  color: $colorLightYellow;
   font-weight: bold;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .main-page-background {

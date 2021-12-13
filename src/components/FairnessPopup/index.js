@@ -160,7 +160,7 @@ const FairnessPopup = ({hidePopup, showPopup, data}) => {
             className={classNames(styles.button)}
             onClick={handleRotateSeeds}
           >
-            <p>{rotated ? "Rotated succesfully" : "Rotate"}</p>
+            {rotated ? "Rotated succesfully" : "Rotate"}
           </Button>
 
         </div>
