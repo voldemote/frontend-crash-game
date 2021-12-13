@@ -205,6 +205,7 @@ const root = function* () {
       [OnboardingTypes.START, OnboardingTypes.NEXT],
       OnboardingSaga.loadOnboardingStep
     ),
+    takeEvery([OnboardingTypes.START], OnboardingSaga.getUsernameSuggestion)
     // @formatter:on
   ]);
 };

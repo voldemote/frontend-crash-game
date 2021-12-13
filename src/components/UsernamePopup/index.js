@@ -81,8 +81,6 @@ const UsernamePopup = ({
           </Button>
         </div>
       </div>
-      {/* <ConfettiLeft className={styles.confettiLeft} />
-      <ConfettiRight className={styles.confettiRight} /> */}
     </div>
   );
 };
