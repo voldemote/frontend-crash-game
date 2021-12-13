@@ -12,6 +12,7 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { PopupActions } from 'store/actions/popup';
 import { TxDataActions } from 'store/actions/txProps';
 import { TOKEN_NAME } from 'constants/Token';
+import Button from 'components/Button';
 // import AddTokens from 'components/AddTokens';
 
 const TokenTransfer = ({
@@ -120,7 +121,7 @@ const TokenTransfer = ({
               doubleIcon={false}
             />
             <div className={styles.buttonWrapper}>
-              <button
+              <Button
                 className={classNames(
                   styles.transferButton,
                   Number(transferValue) === 0 ? styles.disabled : null
@@ -129,17 +130,17 @@ const TokenTransfer = ({
                 disabled={Number(transferValue) === 0}
               >
                 Send Transaction
-              </button>
+              </Button>
 
               {showCancel && (
-                <button
-                  className={styles.cancelButton}
+                <Button
+                  className={styles.transferButton}
                   onClick={() => {
                     setformError('');
                   }}
                 >
                   Cancel
-                </button>
+                </Button>
               )}
             </div>
             {/* <AddTokens /> */}

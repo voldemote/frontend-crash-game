@@ -7,6 +7,7 @@ import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import {NETWORK_TYPES} from 'utils/constants';
 import { TOKEN_NAME } from 'constants/Token';
+import Button from 'components/Button';
 
 const Success = ({
   setModalOpen,
@@ -63,14 +64,14 @@ const Success = ({
         </div>
       </div>
 
-      <button
+      <Button
         className={styles.keepGoing}
         onClick={() => {
           updateModalAndArea();
         }}
       >
         Go Back To Wallet!
-      </button>
+      </Button>
     </div>
   );
 };

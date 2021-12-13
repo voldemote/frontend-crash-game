@@ -80,23 +80,10 @@
   }
 
   .keepGoing {
-    display: block;
-    margin: 0 auto 15px;
-    width: 100%;
-    max-width: 460px;
-    height: 60px;
-    background: linear-gradient(
-      180deg,
-      $colorLightYellow 0%,
-      $colorLightDark2 97.4%
-    );
-    border-radius: 30px;
-    border: 1px solid $colorWhite;
+    margin-top: 10px;
+    width: 240px;
+    height: 45px;
     font-family: $fontOmnes;
-    font-size: 18px;
-    font-weight: bold;
-    color: $colorWhite;
-    cursor: pointer;
   }
 
   .summary {

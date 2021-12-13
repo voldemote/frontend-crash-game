@@ -17,6 +17,7 @@ import { addMetaMaskEthereum } from 'utils/helpers/ethereum';
 import QRCode from 'react-qr-code';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import { TOKEN_NAME } from 'constants/Token';
+import Button from 'components/Button';
 
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -234,26 +235,30 @@ const cryptoAddressLostFocus = useCallback(event => {
             {/* Content */}
             <div className={styles.cryptoContent}>
               <p>
-                Transactions with BTC, ETH and LTC are being manually processed
-                for the time being, and can take a few hours. We intend to
-                automate this in the next weeks.
+                You can add WFAIR to your account by exchanging Bitcoin, Ethereum, 
+                or Litecoin.
               </p>
               <p>
-                Please follow the instructions provided in the next step in
-                order to use this method of deposit.
+                Transactions with BTC, ETH and LTC are being manually processed 
+                for the time being. It means it may take up to a few hours for your 
+                funds to arrive into the Alpacasino wallet. We intend to automate this 
+                in the next weeks.
+              </p>
+              <p>
+                Please follow the instructions provided in the next step to use this deposit method.
               </p>
             </div>
 
-            <button
+            <Button
               className={classNames(
-                styles.transankContineButton,
+                styles.button,
                 currency === 0 ? styles.disabled : null
               )}
               onClick={OnClickConfirmAmount}
               disabled={currency === 0}
             >
               Confirm Amount
-            </button>
+            </Button>
           </div>
         </>
       )}
