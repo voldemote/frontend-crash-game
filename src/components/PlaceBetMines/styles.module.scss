@@ -310,7 +310,6 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: white;
 
   &:hover {
     cursor: pointer;
@@ -536,10 +535,6 @@
   font-size: 24px;
   line-height: 24px;
   text-align: center;
-}
-
-.cashoutButton {
-  color: $colorYellow;
 }
 
 .currentMultiplier {

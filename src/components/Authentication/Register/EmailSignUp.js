@@ -262,7 +262,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
         disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
       >
-        <span>Sign Up with E-mail</span>
+        Sign Up with E-mail
       </Button>
     </form>
   );

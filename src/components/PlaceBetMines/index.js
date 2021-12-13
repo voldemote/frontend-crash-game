@@ -240,7 +240,7 @@ const PlaceBetMines = ({
           disabled={false}
           onClick={bet?.pending ? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
         >
-          <p>{user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}</p>
+          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
         </Button>
       );
     } else {
@@ -268,12 +268,11 @@ const PlaceBetMines = ({
             style={{display: !bet.autobet ? 'auto':'none'}}
             className={classNames(
               styles.button,
-              styles.cashoutButton, {
-              [styles.buttonDisabled]: currentStep === 0})
+              {[styles.buttonDisabled]: currentStep === 0})
             }
             onClick={currentStep === 0 ? ()=>{} : handleCashout }
           >
-            <p>Cashout</p>
+            Cashout
           </Button>
         </>
       )

@@ -220,7 +220,6 @@
   margin: 20px 0 0;
   padding: 0 40px;
   cursor: pointer;
-  color: $colorWhite;
   text-transform: uppercase;
   @media (max-width: $screen-sm) {
     width: 100%;
@@ -240,7 +239,6 @@
 }
 .signInButton {
   margin-top: 5px;
-  color: #666;
 
   &:first-child {
     margin-top: 0;
