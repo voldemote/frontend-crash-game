@@ -136,6 +136,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
       >
         <b>I am above 18 years of age</b> and have read and accepted the{' '}
         <Link
+          className={'global-link-style'}
           to={Routes.terms}
           target="_blank"
           rel="noreferrer"
@@ -144,6 +145,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
         </Link>
         {' '}and{' '}
         <Link
+          className={'global-link-style'}
           to={Routes.privacy}
           target="_blank"
           rel="noreferrer"
