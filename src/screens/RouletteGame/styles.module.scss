@@ -153,10 +153,10 @@
   margin-top: 32px;
   width: 96%;
   // padding-right: 7px;
-  background: rgba(122, 121, 121, 0.1);
+  background: $colorBlue80;
   border-radius: 10px;
   color: $colorWhite;
-  border: 1px solid $colorLightGray4;
+  border: 1px solid $colorBlueBorder;
 
   @media screen and (max-width: $screen-xs) {
     margin-bottom: 20px;
@@ -233,7 +233,7 @@
   line-height: 18px;
   padding-top: 24px;
   // margin-left: 16px;
-  border-bottom: 1px solid #878593;
+  border-bottom: 1px solid $colorBlueBorder;
   @media (max-width: $screen-sm) {
     margin-left: 0px;
     justify-content: space-between;

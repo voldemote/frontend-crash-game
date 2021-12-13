@@ -79,6 +79,7 @@ import { ReactComponent as IconLeaderBoardToken } from '../../data/icons/leaderb
 import { ReactComponent as IconFacebook } from '../../data/icons/facebook.svg';
 import { ReactComponent as IconGoogle } from '../../data/icons/google-color-icon.svg';
 import { ReactComponent as IconEmail } from '../../data/icons/email.svg';
+import { ReactComponent as IconUserProfile } from '../../data/icons/user-profile.svg';
 import { ReactComponent as BalanceScaleSolid } from '../../data/icons/balance-scale-solid.svg';
 
 const Icon = ({
@@ -173,7 +174,8 @@ const Icon = ({
       [IconType.facebook]: <IconFacebook />,
       [IconType.google]: <IconGoogle />,
       [IconType.email]: <IconEmail />,
-      [IconType.balanceScaleSolid]: <BalanceScaleSolid />
+      [IconType.balanceScaleSolid]: <BalanceScaleSolid />,
+      [IconType.userProfile]: <IconUserProfile />
     });
   };
 

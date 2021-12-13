@@ -1,6 +1,6 @@
 @import '../../styles/all';
 
-.button{
+.button {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -9,7 +9,7 @@
   padding: 5px 20px;
   cursor: pointer;
 }
-.trape{
+.trape {
   position: absolute;
   min-width: 660px;
   max-width: 660px;
@@ -26,7 +26,7 @@
     transform: scale(0.55);
   }
 }
-.board{
+.board {
   position: relative;
   width: fit-content;
   display: flex;
@@ -50,7 +50,7 @@
     transform: scale(0.55);
   }
 
-/*
+  /*
   &:after{
     content: '';
     border-bottom: 380px solid transparent;
@@ -64,11 +64,12 @@
     padding: 20px 40px;
   }
   */
-  .ball{
+  .ball {
     z-index: 15;
     background: white;
     background-image: url('../../data/icons/medal-coin.png');
-    background-size: 100%;    position: absolute;
+    background-size: 100%;
+    position: absolute;
     margin: auto;
     left: 0;
     right: 0;
@@ -79,11 +80,12 @@
     transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
     //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
   }
-  .ballshadow{
+  .ballshadow {
     z-index: 15;
     background: white;
     background-image: url('../../data/icons/medal-coin.png');
-    background-size: 100%;    position: absolute;
+    background-size: 100%;
+    position: absolute;
     margin: auto;
     opacity: 0.4;
     left: 0;
@@ -95,27 +97,28 @@
     transition: transform 0.15s linear 0s, opacity 0.175s linear 0s;
     //box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
   }
-  .row{
+  .row {
     display: flex;
     min-width: fit-content;
     height: 30px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    .peg{
+    .peg {
       z-index: 5;
       display: flex;
       min-width: 10px;
       width: 10px;
       height: 10px;
       background: #d7393f;
-      box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2), -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
+      box-shadow: 2px 2px 3px rgba(0, 25, 50, 0.2),
+        -2px 2px 2px -1px rgba(0, 0, 0, 0.15) inset, 3px 3px 5px -2px #fff inset;
       border-radius: 100%;
       margin-left: 15px;
       margin-right: 15px;
     }
   }
-  .boxes{
+  .boxes {
     display: flex;
     justify-content: center;
     //background: white;
@@ -127,7 +130,7 @@
     right: -200px;
     margin: auto;
     bottom: 5px;
-    .box{
+    .box {
       border-radius: 2px 2px 10px 10px;
       -webkit-box-shadow: inset 0 0 4px 2px #d7393f;
       box-shadow: inset 0 0 4px 2px #d7393f;
@@ -144,39 +147,52 @@
       display: flex;
       text-align: center;
     }
-    .bright{
+    .bright {
       background: #d7393f;
       border: 1px solid #e6e76a;
       animation: shake 0.5s infinite;
-      &.red{
+      &.red {
         border: 1px solid #e6e76a;
       }
     }
   }
   @keyframes shake {
-  	0% { transform: rotate(0deg); }
-    17% { transform: rotate(5deg); }
-    34% { transform: rotate(0deg); }
-    50% { transform: rotate(-5deg); }
-    67% { transform: rotate(0deg); }
-    84% { transform: rotate(5deg); }
-    100% { transform: rotate(0deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    17% {
+      transform: rotate(5deg);
+    }
+    34% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-5deg);
+    }
+    67% {
+      transform: rotate(0deg);
+    }
+    84% {
+      transform: rotate(5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
   }
-
 }
-.background{
+.background {
   position: absolute;
 }
 .animation {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    overflow: hidden;
-    border-radius: 12px;
-    border: 1px solid hsla(0,0%,100%,.17);
-    max-height: 470px;
-    min-height: 470px;
-    position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid $colorBlueBorder;
+  max-height: 470px;
+  min-height: 470px;
+  position: relative;
   @media (max-width: 580px) {
     max-height: 320px;
     min-height: 320px;
@@ -220,18 +236,17 @@
   }
 }
 
-.audioControls{
+.audioControls {
   position: absolute;
   z-index: 999;
   left: 20px;
   top: 10px;
-  svg{
+  svg {
     fill: #f2ff53 !important;
   }
   @media (max-width: $screen-xs-max) {
-
   }
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     top: 60px;
     left: 5px !important;
   }
