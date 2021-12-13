@@ -19,7 +19,8 @@ $tableMinWidth: 580px;
     font-weight: 600;
     padding: 24px 10px;
     min-width: $tableMinWidth;
-    > div { /* for grid container */
+    > div {
+      /* for grid container */
       min-width: calc(#{$tableMinWidth} - 20px);
     }
 
@@ -57,7 +58,8 @@ $tableMinWidth: 580px;
     padding: 8px 10px;
     min-width: $tableMinWidth;
 
-    > div { /* for grid container */
+    > div {
+      /* for grid container */
       min-width: calc(#{$tableMinWidth} - 20px);
     }
 
@@ -93,7 +95,7 @@ $tableMinWidth: 580px;
     &.isVisible {
       opacity: 0.3;
 
-      &~.isVisible {
+      & ~ .isVisible {
         opacity: 1;
       }
     }
