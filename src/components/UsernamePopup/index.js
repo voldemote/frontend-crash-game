@@ -19,6 +19,12 @@ const UsernamePopup = ({
   useEffect(() => {
     setUsername(suggestion)
   }, [suggestion])
+  useEffect(() => {
+    const len = username.length
+    if(len < 3 || len > 25){
+      setErrorMessage('Username length should be from 3 to 25 characters long')
+    }
+  }, [username])
   const onConfirm = async () => {
     //check unique username
     let response;
@@ -84,6 +90,7 @@ const UsernamePopup = ({
             withoutBackground={true}
             className={styles.button}
             disabledWithOverlay={false}
+            disabled={!!errorMessage}
           >
             Submit
           </Button>
