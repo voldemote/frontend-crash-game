@@ -121,4 +121,15 @@
       bottom: 220px;
     }
   }
+  .randomize {
+    font-size: 20px;
+    font-weight: 600;
+    color: $colorLightYellow;
+    padding: 0 30px;
+    text-decoration: underline;
+    cursor: pointer;
+    @media (max-width: $screen-sm) {
+      font-size: 16px;
+    }
+  }
 }

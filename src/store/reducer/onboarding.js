@@ -3,7 +3,7 @@ import { OnboardingTypes, OnboardingSteps } from '../actions/onboarding';
 const initialState = {
   currentStep: null,
   username: null,
-
+  suggestion: ''
 };
 
 export const Order = [
@@ -31,6 +31,12 @@ const next = (action, state) => {
   }
 };
 
+const addSuggestion = (action, state) => {
+  return {...state,
+    suggestion: action.username
+  }
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     // @formatter:off
@@ -38,6 +44,8 @@ export default function (state = initialState, action) {
       return start(action, state);
     case OnboardingTypes.NEXT:
       return next(action, state);
+    case OnboardingTypes.ADD_USERNAME_SUGGESTION:
+      return addSuggestion(action, state);
     default:
       return state;
     // @formatter:on

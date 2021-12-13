@@ -205,6 +205,8 @@ const root = function* () {
       [OnboardingTypes.START, OnboardingTypes.NEXT],
       OnboardingSaga.loadOnboardingStep
     ),
+    takeEvery([OnboardingTypes.START], OnboardingSaga.getUsernameSuggestion),
+    takeEvery([OnboardingTypes.GET_USERNAME], OnboardingSaga.getUsernameSuggestion),
     // @formatter:on
   ]);
 };

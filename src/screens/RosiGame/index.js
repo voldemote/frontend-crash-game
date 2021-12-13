@@ -386,9 +386,6 @@ const RosiGame = ({
         </div>
 
         <div className={styles.wrapperCards}>{renderWallpaperBanner()}</div>
-        <div className={styles.wrapperCards}>
-          <GameContentCards />
-        </div>
       </div>
     );
   }
@@ -426,9 +423,6 @@ const RosiGame = ({
               Place a bet
             </Button>
           </div>
-        </div>
-        <div className={styles.wrapperPumpDumpCards}>
-          <GameContentCards />
         </div>
       </>
     );

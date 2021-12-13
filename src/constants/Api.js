@@ -114,3 +114,4 @@ export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gam
 export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameHash';
 export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start';
 export const KYC_DATA_FOR_USER = 'api/user/:userId/kyc-data';
+export const RANDOM_USERNAME = 'api/user/random-username';
