@@ -137,7 +137,7 @@ const Login = ({
         <FormGroup
           className={styles.formGroup}
           data-tip
-          ref={(ref) => (emailRef = ref)}
+          rootRef={(ref) => (emailRef = ref)}
           data-event="none"
           data-event-off="dblclick"
         >
@@ -160,7 +160,7 @@ const Login = ({
           <FormGroup
             className={styles.formGroup}
             data-tip
-            ref={(ref) => (pwRef = ref)}
+            rootRef={(ref) => (pwRef = ref)}
             data-event="none"
             data-event-off="dblclick"
             hidden={forgotPassword}

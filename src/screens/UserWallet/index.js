@@ -19,6 +19,7 @@ import { WallfairActions } from 'store/actions/wallfair';
 import { TransactionActions } from 'store/actions/transaction';
 import Button from 'components/Button';
 import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
+import * as ApiUrls from 'constants/Api';
 
 const UserWallet = ({
   tags,
@@ -29,7 +30,7 @@ const UserWallet = ({
   refreshHighData,
   refreshLuckyData,
   connected,
-  userId,
+  user,
   refreshMyBetsData,
   showWalletBuyWfairPopup,
   showRequestTokenPopup,
@@ -49,6 +50,7 @@ const UserWallet = ({
   const [stakesLoading, setStakesLoading] = useState(true);
 
   const { myBetsData } = useRosiData();
+  const [userKyc, setUserKyc] = useState({...user?.kyc});
 
   const activityData = {
     DEPOSITS: transactions.deposit || [],
@@ -83,8 +85,8 @@ const UserWallet = ({
   }, [account, active, resetState]);
 
   useEffect(() => {
-    refreshMyBetsData({ userId: userId });
-    if (userId) {
+    refreshMyBetsData({ userId: user.userId });
+    if (user.userId) {
       setActivityTabOptions([
         { name: 'FIAT DEPOSITS', index: 0 },
         { name: 'CRYPTO DEPOSITS', index: 1 },
@@ -92,7 +94,8 @@ const UserWallet = ({
         { name: 'BETS', index: 3 },
       ]);
     }
-  }, [connected, refreshMyBetsData, userId]);
+    setUserKyc(user?.kyc);
+  }, [connected, refreshMyBetsData, user]);
 
   useEffect(() => {
     fetchWalletTransactions();
@@ -101,6 +104,17 @@ const UserWallet = ({
   useEffect(() => {
     isTransactionsFetchError ? setStakesLoading(false) : setStakesLoading(true);
   }, [isTransactionsFetchError]);
+
+  const isKycStarted = () => userKyc && userKyc.status;
+
+  const isKycVerified = () => userKyc && userKyc.status === 'approved';
+
+  const showStartButton = () => !isKycStarted() || userKyc.status === 'error' || userKyc.status === 'rejected';
+
+  const openFractal = () => {
+    const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
+    window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
+  }
 
   const renderCategoriesAndLeaderboard = () => {
     return (
@@ -157,6 +171,13 @@ const UserWallet = ({
         <Grid container alignContent="center" justifyContent="center">
           <Grid className={styles.balanceCard} container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
+              <h2>Welcome to your Alpacasino wallet!</h2>
+              <p className={styles.welcome}>
+                You are in the right place to check your current balance, 
+                add WFAIR into your wallet, or withdraw your tokens. If you 
+                have any questions about your wallet or its functionality, 
+                please get in touch with our Support!
+              </p>
               <p className={styles.currentbalanceHeading}>Current balance:</p>
               <p
                 className={classNames(styles.currentbalanceWFair, fontStyling)}
@@ -178,40 +199,39 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>No WFAIR? No problem!</p>
+                <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p>
                 <Button
                   className={styles.button}
                   onClick={showWalletBuyWfairPopup}
                 >
                   Buy WFAIR!
                 </Button>
-              </div>
-              <div className={styles.buttonContainer}>
-                <p className={styles.label}>Let's withdraw my funds</p>
                 <Button
                   className={styles.button}
+                  disabled={!isKycVerified()}
+                  disabledWithOverlay={false}
                   onClick={showWithdrawPopup}
                 >
                   Withdraw
                 </Button>
               </div>
+              {
+                showStartButton() && (
+                  <div className={styles.buttonContainer}>
+                  <p className={styles.label}>
+                    Enable the full functionality of your account in 30 seconds! Complete our verification process now, and you will be able to withdraw your funds and add an unlimited amount of WFAIR.
+</p>
+                  <Button
+                    className={styles.button}
+                    onClick={openFractal}
+                  >
+                    Complete Verification!
+                  </Button>
+                </div>
+                )
+              }
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>Start the verification</p>
-                <Button
-                  className={styles.button}
-                  // onClick={showRequestTokenPopup}
-                >
-                  Verification
-                </Button>
-              </div>
-              <div className={styles.buttonContainer}>
-                <p className={styles.label}>I need support</p>
-                <Button
-                  className={styles.button}
-                  // onClick={showRequestTokenPopup}
-                >
-                  Support
-                </Button>
+                <p className={styles.label}>In case of any questions please <span onClick={() => {}}>click here</span> to contact our Support.</p>
               </div>
               {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Start the verification</p>
@@ -249,7 +269,7 @@ const mapStateToProps = state => {
     tags: state.event.tags,
     events: state.event.events,
     connected: state.websockets.connected,
-    userId: state.authentication.userId,
+    user: state.authentication,
     isTransactionsFetchLoading: state.transaction.walletTransactions.isLoading,
     isTransactionsFetchError: state.transaction.walletTransactions.isError,
     transactions: state.transaction.walletTransactions.transactions,

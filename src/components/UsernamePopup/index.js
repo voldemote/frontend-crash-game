@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss';
 import InputBox from '../InputBox';
 import Button from '../Button';
@@ -8,14 +8,25 @@ import { checkUsername } from '../../api';
 import { OnboardingActions } from 'store/actions/onboarding';
 
 const UsernamePopup = ({
-  hidePopup = () => {},
-  loading,
-  showOnboardingFlowNext,
-  user,
-}) => {
-  const [username, setUsername] = useState(user?.username || '');
+                         hidePopup = () => {
+                         },
+                         showOnboardingFlowNext,
+                         suggestion,
+                         getSuggestion
+                       }) => {
+  const [username, setUsername] = useState(suggestion || '');
   const [errorMessage, setErrorMessage] = useState();
-
+  useEffect(() => {
+    setUsername(suggestion)
+  }, [suggestion])
+  useEffect(() => {
+    const len = username.length
+    if(len < 3 || len > 25){
+      setErrorMessage('Username length should be from 3 to 25 characters long');
+    } else {
+      setErrorMessage('');
+    }
+  }, [username])
   const onConfirm = async () => {
     //check unique username
     let response;
@@ -40,10 +51,10 @@ const UsernamePopup = ({
     }
   };
 
-  const skipUsername = () => {
-    hidePopup();
-    showOnboardingFlowNext('');
-  };
+  // const skipUsername = () => {
+  //   hidePopup();
+  //   showOnboardingFlowNext('');
+  // };
 
   return (
     <div className={styles.usernamePopup}>
@@ -51,7 +62,7 @@ const UsernamePopup = ({
       <div className={styles.container}>
         <div className={styles.description}>
           How would you like others to see you?<br/>
-          Please pick a username for yourself
+          Please pick a username for yourself or randomize.
         </div>
         <InputBox
           className={styles.inputBox}
@@ -65,33 +76,31 @@ const UsernamePopup = ({
         )}
         <div className={styles.buttons}>
           <span
-            onClick={skipUsername}
+            onClick={getSuggestion}
             className={styles.skipButton}
           >
-            Skip
+            Randomize
           </span>
+
           <Button
             onClick={onConfirm}
             withoutBackground={true}
             className={styles.button}
-            disabled={loading}
             disabledWithOverlay={false}
+            disabled={!!errorMessage}
           >
             Submit
           </Button>
         </div>
       </div>
-      {/* <ConfettiLeft className={styles.confettiLeft} />
-      <ConfettiRight className={styles.confettiRight} /> */}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    loading: state.authentication.loading,
-    user: state.authentication,
-  };
+    suggestion: state.onboarding.suggestion
+  }
 };
 
 const mapDispatchToProps = dispatch => {
@@ -102,6 +111,9 @@ const mapDispatchToProps = dispatch => {
             payload: {username}
         })
       );
+    },
+    getSuggestion: () => {
+      dispatch(OnboardingActions.getUsername())
     }
   };
 };

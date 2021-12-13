@@ -301,8 +301,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
                     width={30}
                     height={30}
                     className={styles.closeButton}
-                    iconType={IconType.deleteInput}
-                    iconTheme={IconTheme.primary}
+                    iconType={IconType.close}
                     onClick={hidePopup}
                   />
                 )}

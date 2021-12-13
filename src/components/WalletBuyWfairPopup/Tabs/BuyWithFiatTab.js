@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 import { TransactionActions } from 'store/actions/transaction';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import { TOKEN_NAME } from 'constants/Token';
+import Button from 'components/Button';
 
 const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSuccessPopup, user, fetchWalletTransactions }) => {
   const CURRENCY_OPTIONS = [
@@ -239,27 +240,39 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
             </div>
           </div>
         </div>
-        <div className={styles.textContainer}>
-          <p>
-            The value shown in {TOKEN_NAME} is an estimate. Transactions are subject to
-            price fluctuations.
-          </p>
-          <p>
-            All transactions are processed via the external partner Transak.com.
-            When you click the button below, you will be redirected to the
-            partner page to complete the transaction.
-          </p>
-        </div>
-        <button
+        <Button
           className={classNames(
-            styles.transankContineButton,
+            styles.button,
             currency === 0 ? styles.disabled : null
           )}
           onClick={OnClickTransakContinue}
           disabled={currency === 0}
         >
           Continue with Transak
-        </button>
+        </Button>
+        <div className={styles.textContainer}>
+          <p>
+            You can add WFAIR to your account with your credit card or bank transfer. 
+            Enter the amount of EUR or USD below and click continue to proceed with 
+            the top-up process.
+          </p>
+          <p>
+            The value of WFAIR shown here is an estimate, as the transactions are 
+            subject to price fluctuations.
+          </p>
+          <p>
+            All transactions are processed via the external partner Transak.com. 
+            When you click the button below, you will be redirected to the partner 
+            page to complete the transaction.
+          </p>
+          <p>
+            IMPORTANT. Due to our internal top-up processes and to add funds to 
+            your wallet faster, TRANSAK will display the exchange rate for your currency 
+            into MATIC. This is entirely correct behaviour, and at the end of the process, 
+            you will receive WFAIR into your account. In case of any questions, refer to 
+            this article or please get in touch with our Support. 
+          </p>
+        </div>
       </div>
     </div>
   );

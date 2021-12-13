@@ -88,6 +88,10 @@ const MainMenu = ({
     onClickGoToRoute(Routes.games);
   }
 
+  const onProfileClick = () => {
+    onClickGoToRoute(`/user/${user.userId}`);
+  }
+
   const onActivitiesClick = () => {
     onClickGoToRoute(Routes.activities);
   }
@@ -155,10 +159,10 @@ const MainMenu = ({
   }, []);
 
   const handleUsername = e => {
-    if(e.target.value.length > 128) {
+    if(e.target.value.length > 25) {
       dispatch(
         AlertActions.showError({
-          message: 'Username can have a maximum of 128 characteres.',
+          message: 'Username can have a maximum of 25 characters.',
         })
       );
     }
@@ -529,6 +533,7 @@ const MainMenu = ({
         </h2> */}
         <div className={styles.mainContent}>
           <HomeSettings
+            user={user}
             loggedIn={user.authState === LOGGED_IN}
             profilePic={profilePic}
             onWalletClick={onWalletClick}
@@ -543,6 +548,7 @@ const MainMenu = ({
             onCloseProfile={() => close()}
             onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
             onKycInfoClick={() => onKycInfoClick()}
+            onProfileClick={onProfileClick}
           />
         </div>
       </div>

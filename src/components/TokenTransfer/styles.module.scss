@@ -1,5 +1,12 @@
 @import '../../styles/all';
 
+.transferButton {
+  margin-top: 10px;
+  width: 240px;
+  height: 45px;
+  font-family: $fontOmnes;
+}
+
 .transferWrapper {
   display: block;
   margin: 0 auto 15px;

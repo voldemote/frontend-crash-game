@@ -95,7 +95,7 @@ const PlinkoGame = ({
           dispatch(AlertActions.showError(error.message));
         });
     }
-  }, [])
+  }, [user.isLoggedIn])
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: ALPACANNON_GAME_EVENT_ID }));
@@ -258,10 +258,6 @@ const PlinkoGame = ({
             </p>
           </div>
         </div>
-      </div>
-
-      <div className={styles.wrapperCards}>
-        <GameContentCards />
       </div>
     </BaseContainerWithNavbar>
   );

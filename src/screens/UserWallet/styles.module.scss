@@ -475,15 +475,13 @@
   border-radius: 12px;
   border: 1px solid transparent;
   background: rgba($colorBlue80, 0.6);
-  max-width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .balanceCard {
-    @media (max-width: $screen-md) {
-      justify-content: center;
-    }
+  @media (max-width: $screen-xs) {
+    justify-content: center;
+    margin-top: 80px;
   }
 
   .currentBlanceCard {
@@ -494,7 +492,21 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding-top: 100px;
+    padding: 40px 20px 0;
+
+    h2 {
+      color: $colorWhite;
+      text-align: center;
+    }
+
+    p.welcome {
+      padding-top: 10px;
+      color: $colorWhite;
+      font-weight: 700;
+      padding: 10px 30px 20px;
+      line-height: 26px;
+      text-align: justify;
+    }
 
     svg {
       width: 590px;
@@ -523,16 +535,15 @@
     }
 
     .currentbalanceWFair {
-      margin-top: 50px;
+      margin-bottom: 20px;
       max-height: 70px;
       width: 90%;
-      background: $colorBlanceBackground;
       box-sizing: border-box;
       font-family: $fontOmnes;
       font-size: 50px;
       font-weight: 600;
       text-align: center;
-      color: $colorWhite;
+      color: $colorLightYellow;
       overflow-wrap: break-word;
       &.font30 {
         font-size: 30px;
@@ -592,22 +603,31 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 40px;
 
       .label {
-        height: 30px;
+        text-align: justify;
+        line-height: 24px;
+        padding: 0 40px 10px;
+        margin: 0 auto;
         font-family: $fontOmnes;
-        font-size: 24px;
-        font-weight: 500;
+        font-size: 16px;
+        font-weight: 700;
         color: $colorWhite;
+
+        span {
+          color: $mainAction;
+          text-decoration: underline;
+          cursor: pointer;
+        }
       }
 
       .button {
         margin-top: 10px;
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
         width: 240px;
         height: 45px;
         font-family: $fontOmnes;
-        cursor: pointer;
       }
     }
   }

@@ -6,6 +6,8 @@
   justify-content: center;
   flex-direction: column;
   padding: 35px;
+  background-color: $colorWhite;
+  border-radius: 12px;
 
   .logo {
     height: 60px;
@@ -78,20 +80,10 @@
   }
 
   .keepGoing {
-    display: block;
-    margin: 0 auto 15px;
-    width: 100%;
-    max-width: 460px;
-    height: 60px;
-    border-radius: 30px;
-    border: 0;
-    font-size: 18px;
+    margin-top: 10px;
+    width: 240px;
+    height: 45px;
     font-family: $fontOmnes;
-    font-weight: bold;
-    cursor: pointer;
-    background: $colorWhite;
-    color: $colorWhite;
-    background: $colorYellowLight;
   }
 
   .summary {

@@ -219,6 +219,10 @@
       width: 100%;
       background-color: $colorPrimary;
       border-radius: 12px;
+      @media (max-width: $screen-sm) {
+        border-radius: 0;
+        overflow-x: auto;
+      }
     }
 
     .leaderboard {
@@ -259,6 +263,11 @@
       background: transparent;
     }
 
+    .sideContainer {
+      @media (max-width: $screen-sm) {
+        display: none;
+      }
+    }
     .sideContent {
       border-radius: 10px;
       background-color: $colorPrimary;
@@ -267,7 +276,6 @@
       padding: 15px;
 
       @media (max-width: $screen-sm) {
-        margin-top: 15px;
         width: 100%;
         padding: 0px;
       }
