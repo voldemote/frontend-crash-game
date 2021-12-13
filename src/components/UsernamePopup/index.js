@@ -19,6 +19,14 @@ const UsernamePopup = ({
   useEffect(() => {
     setUsername(suggestion)
   }, [suggestion])
+  useEffect(() => {
+    const len = username.length
+    if(len < 3 || len > 25){
+      setErrorMessage('Username length should be from 3 to 25 characters long');
+    } else {
+      setErrorMessage('');
+    }
+  }, [username])
   const onConfirm = async () => {
     //check unique username
     let response;
@@ -43,10 +51,10 @@ const UsernamePopup = ({
     }
   };
 
-  const skipUsername = () => {
-    hidePopup();
-    showOnboardingFlowNext('');
-  };
+  // const skipUsername = () => {
+  //   hidePopup();
+  //   showOnboardingFlowNext('');
+  // };
 
   return (
     <div className={styles.usernamePopup}>
@@ -54,12 +62,7 @@ const UsernamePopup = ({
       <div className={styles.container}>
         <div className={styles.description}>
           How would you like others to see you?<br/>
-          Please pick a username for yourself or <span
-          onClick={getSuggestion}
-          className={styles.randomize}
-        >
-            Randomize
-          </span>
+          Please pick a username for yourself or randomize.
         </div>
         <InputBox
           className={styles.inputBox}
@@ -73,10 +76,10 @@ const UsernamePopup = ({
         )}
         <div className={styles.buttons}>
           <span
-            onClick={skipUsername}
+            onClick={getSuggestion}
             className={styles.skipButton}
           >
-            Skip
+            Randomize
           </span>
 
           <Button
@@ -84,6 +87,7 @@ const UsernamePopup = ({
             withoutBackground={true}
             className={styles.button}
             disabledWithOverlay={false}
+            disabled={!!errorMessage}
           >
             Submit
           </Button>
