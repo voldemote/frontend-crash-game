@@ -75,10 +75,14 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
     return passwordConfirmation && password === passwordConfirmation;
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     const error = validateInput();
     if (error) return;
     setSubmitInProgress(true);
+
+    if (!recaptchaToken) { 
+      await handleReCaptchaVerify();
+    }
 
     const refLocalStorage = localStorage.getItem('urlParam_ref');
     signUp({
