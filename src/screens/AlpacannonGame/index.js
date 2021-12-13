@@ -259,10 +259,6 @@ const PlinkoGame = ({
           </div>
         </div>
       </div>
-
-      <div className={styles.wrapperCards}>
-        <GameContentCards />
-      </div>
     </BaseContainerWithNavbar>
   );
 };
