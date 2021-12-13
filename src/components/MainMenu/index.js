@@ -155,10 +155,10 @@ const MainMenu = ({
   }, []);
 
   const handleUsername = e => {
-    if(e.target.value.length > 128) {
+    if(e.target.value.length > 25) {
       dispatch(
         AlertActions.showError({
-          message: 'Username can have a maximum of 128 characteres.',
+          message: 'Username can have a maximum of 25 characters.',
         })
       );
     }
