@@ -1,8 +1,10 @@
-import { put } from 'redux-saga/effects';
+import {call, put} from 'redux-saga/effects'
 import { select } from 'redux-saga/effects';
 import { OnboardingSteps } from 'store/actions/onboarding';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../../components/Popup/PopupTheme';
+import {getRandomUsername} from '../../api'
+import {OnboardingActions} from '../actions/onboarding'
 
 const loadOnboardingStep = function* (action) {
   const step = yield select(state => state.onboarding.currentStep);
@@ -60,7 +62,13 @@ const loadOnboardingStep = function* (action) {
   }
 };
 
+const getUsernameSuggestion = function* (){
+  const result = yield call(getRandomUsername);
+  return yield put(OnboardingActions.addUsernameSuggestion({username: result.data.username}))
+}
+
 
 export default {
   loadOnboardingStep,
+  getUsernameSuggestion
 };
