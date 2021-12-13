@@ -171,6 +171,13 @@ const UserWallet = ({
         <Grid container alignContent="center" justifyContent="center">
           <Grid className={styles.balanceCard} container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
+              <h2>Welcome to your Alpacasino wallet!</h2>
+              <p className={styles.welcome}>
+                You are in the right place to check your current balance, 
+                add WFAIR into your wallet, or withdraw your tokens. If you 
+                have any questions about your wallet or its functionality, 
+                please get in touch with our Support!
+              </p>
               <p className={styles.currentbalanceHeading}>Current balance:</p>
               <p
                 className={classNames(styles.currentbalanceWFair, fontStyling)}
@@ -192,16 +199,13 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>No WFAIR? No problem!</p>
+                <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p>
                 <Button
                   className={styles.button}
                   onClick={showWalletBuyWfairPopup}
                 >
                   Buy WFAIR!
                 </Button>
-              </div>
-              <div className={styles.buttonContainer}>
-                <p className={styles.label}>Let's withdraw my funds</p>
                 <Button
                   className={styles.button}
                   disabled={!isKycVerified()}
@@ -214,24 +218,20 @@ const UserWallet = ({
               {
                 showStartButton() && (
                   <div className={styles.buttonContainer}>
-                  <p className={styles.label}>Start the verification</p>
+                  <p className={styles.label}>
+                    Enable the full functionality of your account in 30 seconds! Complete our verification process now, and you will be able to withdraw your funds and add an unlimited amount of WFAIR.
+</p>
                   <Button
                     className={styles.button}
                     onClick={openFractal}
                   >
-                    Verification
+                    Complete Verification!
                   </Button>
                 </div>
                 )
               }
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>I need support</p>
-                <Button
-                  className={styles.button}
-                  // onClick={showRequestTokenPopup}
-                >
-                  Support
-                </Button>
+                <p className={styles.label}>In case of any questions please <span onClick={() => {}}>click here</span> to contact our Support.</p>
               </div>
               {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Start the verification</p>
