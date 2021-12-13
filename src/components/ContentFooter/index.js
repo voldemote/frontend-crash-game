@@ -101,6 +101,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           <div id="lang-switcher" />
         </div>
       </div>
+      <p className={styles.footerDisclaimer}>This website offers gaming with risk experience. To be a user of our site you must be over 18 y.o. We are not responsible for the violation of your local laws related to i-gaming. Play responsibly and have fun on Alpacasino.</p>
     </div>
   );
 };
