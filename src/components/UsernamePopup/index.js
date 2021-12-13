@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss';
 import InputBox from '../InputBox';
 import Button from '../Button';
@@ -8,14 +8,17 @@ import { checkUsername } from '../../api';
 import { OnboardingActions } from 'store/actions/onboarding';
 
 const UsernamePopup = ({
-  hidePopup = () => {},
-  loading,
-  showOnboardingFlowNext,
-  user,
-}) => {
-  const [username, setUsername] = useState(user?.username || '');
+                         hidePopup = () => {
+                         },
+                         showOnboardingFlowNext,
+                         suggestion,
+                         getSuggestion
+                       }) => {
+  const [username, setUsername] = useState(suggestion || '');
   const [errorMessage, setErrorMessage] = useState();
-
+  useEffect(() => {
+    setUsername(suggestion)
+  }, [suggestion])
   const onConfirm = async () => {
     //check unique username
     let response;
@@ -51,7 +54,12 @@ const UsernamePopup = ({
       <div className={styles.container}>
         <div className={styles.description}>
           How would you like others to see you?<br/>
-          Please pick a username for yourself
+          Please pick a username for yourself or <span
+          onClick={getSuggestion}
+          className={styles.randomize}
+        >
+            Randomize
+          </span>
         </div>
         <InputBox
           className={styles.inputBox}
@@ -70,11 +78,11 @@ const UsernamePopup = ({
           >
             Skip
           </span>
+
           <Button
             onClick={onConfirm}
             withoutBackground={true}
             className={styles.button}
-            disabled={loading}
             disabledWithOverlay={false}
           >
             Submit
@@ -87,9 +95,8 @@ const UsernamePopup = ({
 
 const mapStateToProps = state => {
   return {
-    loading: state.authentication.loading,
-    user: state.authentication,
-  };
+    suggestion: state.onboarding.suggestion
+  }
 };
 
 const mapDispatchToProps = dispatch => {
@@ -100,6 +107,9 @@ const mapDispatchToProps = dispatch => {
             payload: {username}
         })
       );
+    },
+    getSuggestion: () => {
+      dispatch(OnboardingActions.getUsername())
     }
   };
 };

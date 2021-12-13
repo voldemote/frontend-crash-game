@@ -4,6 +4,7 @@ export const OnboardingTypes = {
   START: 'Onboarding/START',
   NEXT: 'Onboarding/NEXT',
   GET_USERNAME: 'Onboarding/GET_USERNAME',
+  ADD_USERNAME_SUGGESTION: 'Onboarding/ADD_USERNAME_SUGGESTION',
 };
 
 export const OnboardingSteps = {
@@ -17,11 +18,13 @@ export const OnboardingSteps = {
 const start = makeActionCreator(OnboardingTypes.START, {});
 
 const next = makeActionCreator(OnboardingTypes.NEXT, {});
-const getUsername = makeActionCreator(OnboardingTypes.GET_USERNAME,
+const getUsername = makeActionCreator(OnboardingTypes.GET_USERNAME, {});
+const addUsernameSuggestion = makeActionCreator(OnboardingTypes.ADD_USERNAME_SUGGESTION,
   {username: null});
 
 export const OnboardingActions = {
   start,
   next,
-  getUsername
+  getUsername,
+  addUsernameSuggestion
 };

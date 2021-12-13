@@ -63,8 +63,8 @@ const loadOnboardingStep = function* (action) {
 };
 
 const getUsernameSuggestion = function* (){
-  const {username} = yield call(getRandomUsername);
-  return yield put(OnboardingActions.getUsername(username))
+  const result = yield call(getRandomUsername);
+  return yield put(OnboardingActions.addUsernameSuggestion({username: result.data.username}))
 }
 
 
