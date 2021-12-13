@@ -115,7 +115,6 @@
     margin-bottom: 30px;
     text-decoration: underline;
     font-family: $fontOmnes;
-    font-weight: 600;
     cursor: pointer;
 
     @media (max-width: $screen-sm) {
@@ -161,11 +160,6 @@
 
     @media (max-width: $screen-sm) {
       font-size: 12px;
-    }
-
-    a {
-      color: $colorBlack;
-      text-decoration: underline;
     }
   }
 }
@@ -324,9 +318,7 @@
   }
   button {
     @extend .unstyledButton;
-    text-decoration: underline;
     font-size: 14px;
-    color: $colorPrimary;
   }
   p {
     margin-bottom: 20px;
