@@ -22,7 +22,9 @@ const UsernamePopup = ({
   useEffect(() => {
     const len = username.length
     if(len < 3 || len > 25){
-      setErrorMessage('Username length should be from 3 to 25 characters long')
+      setErrorMessage('Username length should be from 3 to 25 characters long');
+    } else {
+      setErrorMessage('');
     }
   }, [username])
   const onConfirm = async () => {
