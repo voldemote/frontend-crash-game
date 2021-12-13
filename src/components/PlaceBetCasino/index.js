@@ -174,7 +174,7 @@ const PlaceBetCasino = ({
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
-          <p>{user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}</p>
+          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
         </Button>
       );
     } else {
@@ -189,7 +189,7 @@ const PlaceBetCasino = ({
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
             }
           >
-            <p>{bet.autobet ? 'Stop Autobet' :  'Cancel Bet'}</p>
+            {bet.autobet ? 'Stop Autobet' :  'Cancel Bet'}
           </Button>
         </>
       )

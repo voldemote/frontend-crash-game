@@ -77,7 +77,7 @@ const UsernamePopup = ({
             disabled={loading}
             disabledWithOverlay={false}
           >
-            <span>Submit</span>
+            Submit
           </Button>
         </div>
       </div>

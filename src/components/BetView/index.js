@@ -426,9 +426,7 @@ const BetView = ({
                   : 'nonstreamed-event-join-now'
               }
             >
-              <span className={'buttonText'}>
-                {userLoggedIn ? 'Place Trade' : 'Join Now And Start Trading'}
-              </span>
+              {userLoggedIn ? 'Place Trade' : 'Join Now And Start Trading'}
             </Button>
           </span>
 

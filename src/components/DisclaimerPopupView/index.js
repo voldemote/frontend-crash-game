@@ -87,7 +87,7 @@ const DisclaimerPopupView = ({ closed, hidePopup }) => {
         disabled={!agreedWithTerms}
         disabledWithOverlay={true}
       >
-        <span>Proceed</span>
+        Proceed
       </Button>
     );
   };

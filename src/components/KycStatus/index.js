@@ -64,7 +64,7 @@ const KycStatus = ({
           className={styles.button}
           onClick={openFractal}
           >
-          <p>Continue with Fractal</p>
+          Continue with Fractal
       </Button>}
     </div>
   );
