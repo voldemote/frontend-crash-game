@@ -7,7 +7,14 @@
   flex-direction: row;
   flex-wrap: wrap;
   max-width: 800px;
-  padding: 40px 40px;
+  padding: 70px 40px;
+
+  @media (max-width: $screen-sm) {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    min-height: 980px;
+    padding: 70px 0 0px;
+  }
 
   .head {
     display: flex;
@@ -40,7 +47,8 @@
       background-color: $unselectedBg;
       text-align: center;
       display: flex;
-      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+      // box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0;
 
       img,
       svg {
@@ -52,7 +60,7 @@
     }
     .tileSelected {
       background-color: $selectedBg;
-      box-shadow: 0 1px 3px $selectedBorderColor;
+      box-shadow: 0 1px 5px $colorPrimary;
     }
   }
 
@@ -65,17 +73,22 @@
 
     .color {
       cursor: pointer;
-      margin: 10px;
+      margin: 5px;
       border-radius: 20px;
       border-width: 20px;
       border-style: solid;
       height: 0px;
       width: 0px;
       font-size: 0px;
-      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+      // box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0;
+
+      @media (max-width: $screen-sm) {
+        margin: 5px;
+      }
     }
     .colorSelected {
-      box-shadow: 0 2px 4px $selectedBorderColor;
+      box-shadow: 0 1px 3px $colorPrimary;
     }
   }
 
@@ -83,24 +96,28 @@
     display: flex;
     overflow-x: auto;
     justify-content: center;
+    flex-wrap: wrap;
     padding: 10px 0;
 
     .category {
       cursor: pointer;
-      margin: 10px;
+      margin: 5px;
       background-color: $unselectedBg;
+      text-transform: capitalize;
       border-radius: 20px;
       height: 50px;
       width: 50px;
-      font-size: 10px;
+      font-size: 12px;
+      font-weight: bold;
       text-align: center;
       line-height: 50px;
       text-decoration: none;
-      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+      // box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0;
     }
     .categorySelected {
       background-color: $selectedBg;
-      box-shadow: 0 1px 3px $selectedBorderColor;
+      box-shadow: 0 1px 3px $colorPrimary;
     }
   }
 
@@ -116,7 +133,7 @@
       align-items: center;
       border-radius: 30px;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: $toolbarBtnColor;
       cursor: pointer;
@@ -132,7 +149,7 @@
   }
 
   &.wide {
-    @media (min-width: $screen-md) {
+    @media (min-width: $screen-sm) {
       flex-direction: row;
       display: flex;
 
@@ -157,7 +174,7 @@
           border-radius: 20px;
           height: 40px;
           width: 80px;
-          font-size: 10px;
+          font-size: 14px;
           line-height: 40px;
         }
       }
