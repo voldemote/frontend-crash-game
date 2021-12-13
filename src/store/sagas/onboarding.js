@@ -1,5 +1,6 @@
 import {call, put} from 'redux-saga/effects'
 import { select } from 'redux-saga/effects';
+import { push } from 'connected-react-router'
 import { OnboardingSteps } from 'store/actions/onboarding';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from '../../components/Popup/PopupTheme';
@@ -57,8 +58,7 @@ const loadOnboardingStep = function* (action) {
       //   })
       // );
     case OnboardingSteps.wallet:
-      console.log('open wallet');
-      window.location.href = window.location.origin + '/wallet'; //temp solution
+      yield put(push('/wallet'))
   }
 };
 
