@@ -13,10 +13,12 @@
   background-position: center;
   @media (max-width: $screen-sm) {
     height: auto;
-    padding: 50px 30px 100px;
+    min-height: 1050px;
+    padding: 20px 30px 100px;
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    // background-size: 120% 100%;
+    background-size: cover;
     background-position: center;
   }
   .title {

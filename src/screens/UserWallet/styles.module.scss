@@ -410,6 +410,7 @@
     bottom: 50px;
     right: 0px;
     background-position: bottom right;
+    z-index: -1;
   }
 
   @media (max-width: $screen-md) {
@@ -606,7 +607,6 @@
         width: 240px;
         height: 45px;
         font-family: $fontOmnes;
-        color: $colorWhite;
         cursor: pointer;
       }
     }

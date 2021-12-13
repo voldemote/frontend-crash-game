@@ -6,7 +6,7 @@ export const getGameById = gameTypeId => {
 };
 
 export const ObjectId = (gamename) => {
-  const encoded = new Buffer(gamename.substring(0,23)).toString('hex')
+  const encoded = new Buffer(gamename).toString('hex').substring(0,23)
   const fill = 24 - encoded.length
   return encoded + ' '.repeat(fill).replace(/./g, (v, i) =>
     ((parseInt(encoded[(i*2)%encoded.length], 16) + parseInt(i*2, 16))%16).toString(16)

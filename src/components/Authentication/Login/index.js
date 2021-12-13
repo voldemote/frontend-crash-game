@@ -11,6 +11,7 @@ import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from '../AuthenticationType';
 import { OnboardingActions } from 'store/actions/onboarding';
+import classNames from 'classnames';
 
 const Login = ({
   errorState,
@@ -98,7 +99,7 @@ const Login = ({
     return (
       <div
         onClick={() => setForgotPassword(true)}
-        className={styles.forgotPasswordLink}
+        className={classNames('global-link-style', styles.forgotPasswordLink)}
         hidden={forgotPassword}
       >
         Forgot Password
@@ -187,16 +188,18 @@ const Login = ({
           disabled={submitInProgress}
           disabledWithOverlay={true}
         >
-          <span>{forgotPassword ? 'Send' : 'Login'}</span>
+          {forgotPassword ? 'Send' : 'Login'}
         </Button>
       </form>
       {!forgotPassword && (
         <div className={styles.dontHaveAnAccountLogin}>
           <p>
-            Don't have an account?{' '}
-            <button type="button" onClick={openSignUpPopup}>
+            Don't have an account?<br/>
+            <a 
+              className={'global-link-style'}
+              onClick={openSignUpPopup}>
               Create a new account
-            </button>{' '}
+            </a>{' '}
             <>or use your social login.</>
           </p>
           <SocialLogin styles={styles} />

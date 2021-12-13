@@ -284,7 +284,7 @@ const Home = ({
           <Button
             className={styles.startButton}
             onClick={showPopupForUnauthenticated}>
-            <span className={styles.buttonText}>Sign up</span>
+            Sign up
           </Button>
           <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
           <img className={styles.alpacaYellow} src={AlpacaYellow} alt="" />
