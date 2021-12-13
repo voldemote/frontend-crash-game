@@ -16,7 +16,7 @@ import BetTable from 'components/UserWalletTables/tables/BetTable';
 import useRosiData from 'hooks/useRosiData';
 import { RosiGameActions } from 'store/actions/rosi-game';
 const UserProfile = ({refreshMyBetsData}) => {
-  let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
+  const matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
 
   const { userId } = useParams();
   const [user, setUser] = useState();
@@ -28,6 +28,8 @@ const UserProfile = ({refreshMyBetsData}) => {
     { name: 'BETS PLACED', index: 0 },
     { name: 'LEADERBOARD', index: 1 },
   ];
+  if(matchMediaMobile) tabOptions.push({ name: 'STATISTICS', index: 2});
+
   const [sideTabIndex, setSideTabIndex] = useState(0);
   const sideTabOptions = [
     { name: 'Statistics', index: 0 },
@@ -95,6 +97,12 @@ const UserProfile = ({refreshMyBetsData}) => {
               userRef={user}
               className={styles.leaderboardTable}
             />
+          </div>
+        );
+      case 2:
+        return (
+          <div className={styles.sideContent}>
+            <UserStatsSide />
           </div>
         );
     }
@@ -198,7 +206,7 @@ const UserProfile = ({refreshMyBetsData}) => {
               </div>
             </div>
 
-            <div>
+            <div className={styles.sideContainer}>
               <TabOptions options={sideTabOptions} className={styles.tabLayout}>
                 {option => (
                   <div
