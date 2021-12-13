@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { GameApi, setInitialSession } from 'api/casino-games';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -166,6 +166,18 @@ const RouletteGame = ({
   const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
 
   const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
+  const contentRef = useRef(null);
+
+/*
+  onLoad={() => iframeURLChange(contentRef.current, (newURL) => console.log("URL changed:", newURL))}
+
+  useEffect(() => {
+    iframeURLChange(contentRef?.current, function (newURL) {
+      console.log("URL changed:", newURL);
+    });
+  }, [JSON.stringify(contentRef?.current)]);
+  */
+  //user.isLoggedIn?url:urltest
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -183,7 +195,7 @@ const RouletteGame = ({
               onClick={handleHelpClick}
             />
           </div>
-          {init && <iframe className={styles.mainContainer} src={user.isLoggedIn?url:urltest}/>}
+          {init && <iframe onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={user.isLoggedIn?url:urltest} />}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
