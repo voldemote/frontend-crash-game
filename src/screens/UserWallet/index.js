@@ -183,7 +183,7 @@ const UserWallet = ({
                   className={styles.button}
                   onClick={showWalletBuyWfairPopup}
                 >
-                  <span>Buy WFAIR!</span>
+                  Buy WFAIR!
                 </Button>
               </div>
               <div className={styles.buttonContainer}>
@@ -192,7 +192,7 @@ const UserWallet = ({
                   className={styles.button}
                   onClick={showWithdrawPopup}
                 >
-                  <span>Withdraw</span>
+                  Withdraw
                 </Button>
               </div>
               <div className={styles.buttonContainer}>
@@ -201,7 +201,7 @@ const UserWallet = ({
                   className={styles.button}
                   // onClick={showRequestTokenPopup}
                 >
-                  <span>Verification</span>
+                  Verification
                 </Button>
               </div>
               <div className={styles.buttonContainer}>
@@ -210,7 +210,7 @@ const UserWallet = ({
                   className={styles.button}
                   // onClick={showRequestTokenPopup}
                 >
-                  <span>Support</span>
+                  Support
                 </Button>
               </div>
               {/* <div className={styles.buttonContainer}>
@@ -219,7 +219,7 @@ const UserWallet = ({
                   className={styles.button}
                   // onClick={showRequestTokenPopup}
                 >
-                  <span>Request test tokens</span>
+                  Request test tokens
                 </Button>
               </div> */}
             </div>

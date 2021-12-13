@@ -187,7 +187,7 @@ const Login = ({
           disabled={submitInProgress}
           disabledWithOverlay={true}
         >
-          <span>{forgotPassword ? 'Send' : 'Login'}</span>
+          {forgotPassword ? 'Send' : 'Login'}
         </Button>
       </form>
       {!forgotPassword && (

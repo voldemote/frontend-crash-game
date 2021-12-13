@@ -57,7 +57,7 @@ const AlphaPlatformPopup = ({ closed, hidePopup }) => {
         onClick={hidePopup}
         className={styles.ctaButton}
       >
-        <p>Let's do it!</p>
+      Let's do it!
       </Button>
     );
   };

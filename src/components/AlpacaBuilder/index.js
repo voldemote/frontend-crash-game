@@ -130,9 +130,9 @@ const AlpacaBuilder = ({
           <rect width="100%" height="100%" fill="transparent" />
           {renderSvg()}
         </svg>
-        <Button
-          className={styles.primaryAction}
-          onClick={() => resetSvg(true)}><p>Randomize</p></Button>
+        <span
+          className={styles.secondaryAction}
+          onClick={() => resetSvg(true)}>Randomize</span>
 
       </div>
       <div className={styles.categoriesRow}>
@@ -148,10 +148,10 @@ const AlpacaBuilder = ({
       <div className={styles.toolbar}>
           <span
             className={styles.secondaryAction}
-            onClick={() => {if(onCancel) onCancel();}}><p>{cancelLabel}</p></span>
+            onClick={() => {if(onCancel) onCancel();}}>{cancelLabel}</span>
           <Button
             className={styles.primaryAction}
-            onClick={() => exportSvg()}><p>{saveLabel}</p></Button>
+            onClick={() => exportSvg()}>{saveLabel}</Button>
         </div>
     </div>
     <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>

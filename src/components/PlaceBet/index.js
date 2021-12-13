@@ -364,7 +364,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               user.isLoggedIn ? null : 'elongame-showloginpopup'
             }
           >
-            <p>{user.isLoggedIn ? 'Stop Auto Bet' : 'Stop Auto Bet'}</p>
+            {user.isLoggedIn ? 'Stop Auto Bet' : 'Stop Auto Bet'}
           </Button>
         </>
       );
@@ -387,7 +387,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
           >
-            <p>{user.isLoggedIn ? (selector === 'manual' ? 'Place Bet (Next Round)' : 'Start Auto Bet') : 'Play Demo'}</p>
+            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet (Next Round)' : 'Start Auto Bet') : 'Play Demo'}
           </Button>
         );
     //  }

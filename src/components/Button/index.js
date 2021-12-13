@@ -60,7 +60,7 @@ const Button = ({
     >
       <div className={style.buttonInnerBackground}></div>
       {renderButtonDisabledOverlay()}
-      {children}
+      <span>{children}</span>
       {renderHighlight()}
     </span>
   );

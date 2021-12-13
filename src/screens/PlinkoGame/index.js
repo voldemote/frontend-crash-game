@@ -348,7 +348,7 @@ const PlinkoGame = ({
               tabIndex="0"
               className={classNames(styles.button, {})}
             >
-              <p>Place bet</p>
+              Place bet
             </Button>
           </div>
         </div>

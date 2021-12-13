@@ -172,7 +172,7 @@ const UserProfile = ({refreshMyBetsData}) => {
                     onSuspendButtonClick(locked ? 'active' : 'locked')
                   }
                 >
-                  <span>{locked ? 'Reactivate' : 'Suspend'}</span>
+                  {locked ? 'Reactivate' : 'Suspend'}
                 </Button>
               )}
             </div>
