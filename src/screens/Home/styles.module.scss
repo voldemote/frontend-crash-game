@@ -390,10 +390,8 @@
   .cardBox {
     margin-top: 30px;
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #ededed;
+    border: 1px solid $colorBlueBorder;
     box-sizing: border-box;
-    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
-      0px 2px 2px rgba(159, 162, 191, 0.32);
     border-radius: 12px;
     @media screen and (max-width: $screen-md) {
       border-radius: 12px 12px 0 0;
@@ -492,6 +490,10 @@
         .thumbnail {
           display: flex;
           margin: 0 auto 14px;
+
+          img {
+            height: 80px;
+          }
 
           &.cactusJack {
             @media screen and (max-width: $screen-md) {
