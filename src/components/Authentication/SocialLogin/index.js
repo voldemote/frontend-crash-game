@@ -38,7 +38,7 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
   const prefixText = authenticationType === AuthenticationType.register ? "Sign up" : "Login";
 
   return (
-    <>
+    <div className={styles.socialContainer}>
       {prepend.map(({ content, onClick }) => (
         <LoginButton styles={styles} onClick={onClick}>
           {content}
@@ -47,16 +47,19 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
       {isVisible.google && 
         <LoginButton styles={styles} onClick={initGoogleLogin}>
           <Icon iconType={IconType.google} {...iconProps} />
+          <p>Sign up with Google</p>
         </LoginButton>
       }
       {isVisible.twitch && 
         <LoginButton styles={styles} onClick={initTwitchLogin}>
           <Icon iconType={IconType.twitch} {...iconProps} />
+          <p>Sign up with Twitch</p>
         </LoginButton>
       }
       {isVisible.discord &&
         <LoginButton styles={styles} onClick={initDiscordLogin}>
           <Icon iconType={IconType.discord} {...iconProps} />
+          <p>Sign up with Discord</p>
         </LoginButton>
       }
 
@@ -66,7 +69,7 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
         <span>{prefixText} with Facebook</span>
       </LoginButton>
       */}
-    </>
+    </div>
   );
 };
 

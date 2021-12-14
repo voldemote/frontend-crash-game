@@ -9,15 +9,17 @@ const Authentication = ({
   authenticationType,
   preloadEmailSignUp
 }) => {
+
+  const renderSocialLogin = () => (
+    <div className={styles.dontHaveAnAccount}>
+      {/* <p>or use your social login</p> */}
+      <SocialLogin styles={styles} authenticationType={AuthenticationType.register} />
+    </div>
+  );
+
   return {
     [AuthenticationType.register]: 
-      <>
-        <EmailSignUp styles={styles} />
-        <div className={styles.dontHaveAnAccount}>
-          <p>or use your social login</p>
-          <SocialLogin styles={styles} authenticationType={AuthenticationType.register} />
-        </div>
-      </>
+        <EmailSignUp styles={styles} renderSocialLogin={renderSocialLogin} />
       ,
     [AuthenticationType.login]: 
       <Login styles={styles} />
