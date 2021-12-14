@@ -66,6 +66,8 @@ jobs:
                             --build-arg REACT_APP_TRANSAK_CRYPTO_CURRENCY_CODE=MATIC\
                             --build-arg REACT_APP_TRANSAK_WALLET_ADDRESS=0x71a62c90E152557B68a8C8C6c5a8560117eBf288\
                             --build-arg REACT_APP_TRANSAK_NETWORK=ethereum,mainnet,polygon,kovan\
+                            --build-arg REACT_APP_TWITCH_CLIENT_ID=ducsd7kb44uqzp5u3gqgsmsbx2uggs\
+                            --build-arg REACT_APP_DISCORD_CLIENT_ID=920342099684126730\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
       - name: Build the docker image (development)
@@ -95,6 +97,8 @@ jobs:
                             --build-arg REACT_APP_TRANSAK_CRYPTO_CURRENCY_CODE=MATIC\
                             --build-arg REACT_APP_TRANSAK_WALLET_ADDRESS=0x71a62c90E152557B68a8C8C6c5a8560117eBf288\
                             --build-arg REACT_APP_TRANSAK_NETWORK=ethereum,mainnet,polygon,kovan\
+                            --build-arg REACT_APP_TWITCH_CLIENT_ID=ducsd7kb44uqzp5u3gqgsmsbx2uggs\
+                            --build-arg REACT_APP_DISCORD_CLIENT_ID=920342099684126730\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_develop:${GITHUB_SHA::6}
       - name: Build the docker image (production)
@@ -116,6 +120,8 @@ jobs:
                             --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0xtemp9Ac4e7a8568d7806Fe08bcFF936C42d44E659\
                             --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=TEmPtNea1nQhx7rrQfXCAGrzajJMzqRVum\
                             --build-arg REACT_APP_TOKEN_NAME=WFAIR\
+                            --build-arg REACT_APP_TWITCH_CLIENT_ID=ducsd7kb44uqzp5u3gqgsmsbx2uggs\
+                            --build-arg REACT_APP_DISCORD_CLIENT_ID=920342099684126730\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_prod:${GITHUB_SHA::6}
       - name: Build the docker image (alpa production)
