@@ -81,6 +81,7 @@ import { ReactComponent as IconGoogle } from '../../data/icons/google-color-icon
 import { ReactComponent as IconEmail } from '../../data/icons/email.svg';
 import { ReactComponent as IconUserProfile } from '../../data/icons/user-profile.svg';
 import { ReactComponent as BalanceScaleSolid } from '../../data/icons/balance-scale-solid.svg';
+import { ReactComponent as IconDiscord } from '../../data/icons/discord.svg';
 
 const Icon = ({
   className,
@@ -175,7 +176,8 @@ const Icon = ({
       [IconType.google]: <IconGoogle />,
       [IconType.email]: <IconEmail />,
       [IconType.balanceScaleSolid]: <BalanceScaleSolid />,
-      [IconType.userProfile]: <IconUserProfile />
+      [IconType.userProfile]: <IconUserProfile />,
+      [IconType.discord]: <IconDiscord />
     });
   };
 
