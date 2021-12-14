@@ -30,13 +30,12 @@ import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
 import gameCardMines from '../../data/images/house-games/card-mines.png';
 import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
 import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
-import MagentaThumbnail from '../../data/images/alpaca-dopter/magenta-thumbnail.png';
+import MagentaThumbnail from '../../data/images/candy-1.png';
 import BlueAlpaca from '../../data/images/alpaca-dopter/blue-alpaca.png';
 import BlueChip from '../../data/images/alpaca-dopter/blue-chip.png';
-import BlueThumbnail from '../../data/images/alpaca-dopter/blue-thumbnail.png';
 import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
 import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
-import YellowThumbnail from '../../data/images/alpaca-dopter/yellow-thumbnail.png';
+import YellowThumbnail from '../../data/images/candy-3.png';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
 import AlpacaPink from '../../data/images/home/alpaca-pink.svg';
@@ -287,7 +286,6 @@ const Home = ({
             Sign up
           </Button>
           <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
-          <img className={styles.alpacaYellow} src={AlpacaYellow} alt="" />
           <img className={styles.alpacaBlue} src={AlpacaBlue} alt="" />
         </div>
       </div>
@@ -321,7 +319,7 @@ const Home = ({
                   <div
                     className={classNames(styles.thumbnail, styles.cactusJack)}
                   >
-                    <img src={MagentaThumbnail} alt="" />
+                    <img src={YellowThumbnail} alt="" />
                   </div>
                 </div>
               </div>
@@ -344,7 +342,7 @@ const Home = ({
                     </p>
                   </div>
                   <div className={styles.thumbnail}>
-                    <img src={BlueThumbnail} alt="" />
+                    <img src={MagentaThumbnail} alt="" />
                   </div>
                 </div>
               </div>
