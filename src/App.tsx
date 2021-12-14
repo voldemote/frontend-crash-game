@@ -36,7 +36,7 @@ import ScrollToTop from 'utils/ScrollToTop';
 import DisclaimerPopupContainer from 'components/DisclaimerPopupContainer';
 import PageTracker from 'components/PageTracker';
 import EventRouter from 'components/Events/EventRouter';
-import TypeformController from 'components/TypeformController';
+// import TypeformController from 'components/TypeformController';
 import ElonWallPaper from 'screens/ElonWallPaper';
 import Fair from 'screens/Fair';
 import TermsConditions from 'screens/TermsConditions';
@@ -62,7 +62,7 @@ const App = () => {
             <Popup />
             <AudioContent />
             <DisclaimerPopupContainer />
-            <TypeformController />
+            {/* <TypeformController /> */}
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
               <Route exact path={Routes.home} component={Home} />
