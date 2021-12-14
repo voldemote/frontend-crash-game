@@ -77,5 +77,6 @@ export default {
   leaderboardUser: 'leaderboardUser',
   leaderboardToken: 'leaderboardToken',
   balanceScaleSolid: 'balanceScaleSolid',
-  userProfile: 'userProfile'
+  userProfile: 'userProfile',
+  discord: 'discord',
 };
