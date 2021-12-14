@@ -182,11 +182,8 @@ const Login = ({
 
         <Button
           onClick={onConfirm}
-          // withoutBackground={true}
-          // highlightType={HighlightType.highlightModalButton2}
           className={styles.submitButton}
           disabled={submitInProgress}
-          disabledWithOverlay={true}
         >
           {forgotPassword ? 'Send' : 'Login'}
         </Button>

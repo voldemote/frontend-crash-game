@@ -73,10 +73,8 @@
         }
       }
       .button {
-        padding: 0 30px;
         @media (max-width: $screen-sm) {
-          font-size: 14px;
-          width: 150px;
+          font-size: 20px;
         }
 
         & > span > svg {

@@ -5,18 +5,65 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  height: 60px;
-  background: linear-gradient(180deg, #feea89 0%, #ffd401 100%);
-  border: 3px solid #ffbb31;
+  padding: 4px 5px;
+  background: #ffd31a;
+  border: 4px solid #ea9c00;
   box-sizing: border-box;
-  box-shadow: 0px 3px 4px #b67e0b;
   border-radius: 60px;
-  color: $colorWhite;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: bold;
   font-family: $fontOmnes;
-  letter-spacing: 0;
+  line-height: 100%;
+  text-transform: none;
   user-select: none;
+  text-align: center;
+  @media (max-width: $screen-sm) {
+    font-size: 20px;
+  }
+  .buttonInnerBackground {
+    width: 100%;
+    position: relative;
+    background: linear-gradient(
+      0deg,
+      #ea9c00 -92.86%,
+      rgba(234, 156, 0, 0) 171.43%
+    );
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    .buttonPattern {
+      position: absolute;
+      background: url('../../data/backgrounds/but-pattern.svg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 80%;
+      height: 100%;
+    }
+    .butonSecondInnerBackground {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ffe98f;
+      box-sizing: border-box;
+      border-radius: 46px;
+      .buttonThirdInnerBackground {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #f1af0a;
+        box-sizing: border-box;
+        border-radius: 46px;
+        padding: 0px 30px;
+        padding-bottom: 2px;
+        color: $colorWhite;
+        @media (max-width: $screen-sm) {
+          padding: 0px 16px;
+        }
+      }
+    }
+  }
 
   &:hover {
     cursor: pointer;
@@ -48,42 +95,6 @@
 
     @media (min-width: $screen-sm) {
       display: none;
-    }
-  }
-
-  .buttonInnerBackground {
-    position: absolute;
-    background: #ffd401;
-    border: 2px solid #ffbb31;
-    box-sizing: border-box;
-    border-radius: 60px;
-    left: 4%;
-    right: 4%;
-    top: 16%;
-    bottom: 16%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .buttonDisabledOverlay {
-    position: absolute;
-    background: #ffd401;
-    border-radius: 10px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: not-allowed !important;
-  }
-
-  > * {
-    &:not(.buttonDisabledOverlay):not(.highlight) {
-      z-index: 1;
-    }
-  }
-  .buttonText {
-    &:not(.buttonDisabledOverlay):not(.highlight) {
-      z-index: 2;
     }
   }
 }
