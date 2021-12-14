@@ -20,7 +20,6 @@
   @media (max-width: $screen-sm) {
     font-size: 20px;
   }
-
   .buttonInnerBackground {
     width: 100%;
     position: relative;
@@ -36,6 +35,10 @@
     padding: 8px 10px;
     .buttonPattern {
       position: absolute;
+      background: url('../../data/backgrounds/but-pattern.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       width: 80%;
       height: 100%;
     }
@@ -48,12 +51,13 @@
       .buttonThirdInnerBackground {
         display: flex;
         justify-content: center;
+        align-items: center;
         border: 1px solid #f1af0a;
         box-sizing: border-box;
         border-radius: 46px;
         padding: 0px 30px;
-        color: #ffe98f;
-        -webkit-text-stroke: 1px #ea9c00;
+        padding-bottom: 2px;
+        color: $colorWhite;
         @media (max-width: $screen-sm) {
           padding: 0px 16px;
         }

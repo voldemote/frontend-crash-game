@@ -51,10 +51,10 @@ const Button = ({
       data-tracking-id={dataTrackingId}
     >
       <div className={style.buttonInnerBackground}>
-        <img className={style.buttonPattern} src={ButtonPattern} alt='button-pattern'/>
+        <div className={style.buttonPattern}/>
         <div className={style.butonSecondInnerBackground}>
           <div className={classNames(style.buttonThirdInnerBackground)}>
-            {children}
+            <span>{children}</span>
           </div>
         </div>
       </div>
