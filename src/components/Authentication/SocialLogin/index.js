@@ -21,7 +21,8 @@ const LoginButton = ({ children, onClick, styles }) => (
 );
 
 const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
-  const { initGoogleLogin, initFacebookLogin } = useSocialLogins();
+  const { initGoogleLogin, initFacebookLogin, initTwitchLogin } =
+    useSocialLogins();
   const showNewFeatures =
     process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const iconProps = {
@@ -32,15 +33,17 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
 
   return (
     <>
-      {
-        prepend.map(({ content, onClick }) => (
-          <LoginButton styles={styles} onClick={onClick}>
-            {content}
-          </LoginButton>
-        ))
-      }
+      {prepend.map(({ content, onClick }) => (
+        <LoginButton styles={styles} onClick={onClick}>
+          {content}
+        </LoginButton>
+      ))}
       <LoginButton styles={styles} onClick={initGoogleLogin}>
         <Icon iconType={IconType.google} {...iconProps} />
+      </LoginButton>
+
+      <LoginButton styles={styles} onClick={initTwitchLogin}>
+        <Icon iconType={IconType.twitch} {...iconProps} />
       </LoginButton>
 
       {/*

@@ -28,6 +28,14 @@ export const useSocialLogins = () => {
       const scope = encodeURIComponent('user_birthday,email');
       
       document.location.href = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${state}`;
+    },
+    initTwitchLogin: () => {
+
+      const clientId = process.env.REACT_APP_TWITCH_CLIENT_ID;
+      const redirectUri = encodeURIComponent(process.env.REACT_APP_URL + '/oauth/twitch');
+      const scope = encodeURIComponent('user:read:email');
+      
+      document.location.href = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${state}`;
     }
   };
 };
