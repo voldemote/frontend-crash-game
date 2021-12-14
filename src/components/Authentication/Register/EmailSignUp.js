@@ -12,8 +12,9 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import HighlightTheme from 'components/Highlight/HighlightTheme';
 import Routes from 'constants/Routes';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
+const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSocialLogin }) => {
 
   const fooRef = useRef(null);
   let emailRef = useRef(null);
@@ -251,14 +252,22 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
             />
           </FormGroup>
         </div>
-        <div>{renderLegalAuthorizationAgreementCheckBox()}</div>
+        <div>
+          {renderLegalAuthorizationAgreementCheckBox()}
+          <Button
+            onClick={onConfirm}
+            className={classNames([styles.submitButton,styles.mobile])}
+            disabled={submitInProgress || !legalAuthorizationAgreed}
+            disabledWithOverlay={false}
+          >
+            Sign Up with E-mail
+          </Button>
+          {renderSocialLogin()}
+        </div>
       </div>
       <Button
         onClick={onConfirm}
-        // withoutBackground={true}
-        // highlightType={HighlightType.highlightModalButton}
-        // highlightTheme={HighlightTheme.fillPink}
-        className={styles.submitButton}
+        className={classNames([styles.submitButton,styles.desktop])}
         disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
       >

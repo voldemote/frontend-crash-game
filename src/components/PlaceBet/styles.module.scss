@@ -185,7 +185,7 @@
   margin: 15px auto;
 
   font-size: 18pt;
-  color: $colorPrimary;
+  color: $colorBlue80;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -299,6 +299,8 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  font-size: 15px;
+  width: 260px;
 
   &:hover {
     cursor: pointer;

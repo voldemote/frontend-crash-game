@@ -176,12 +176,12 @@ const Navbar = ({
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
         data-tracking-id="menu-wallet-icon"
+        onClick={() => history.push(Routes.wallet)}
       >
         <img src={CoinIcon} alt="medal" className={style.medal} />
         <p>{formatToFixed(balance, 0, true)} {currency}</p>
         <span 
-          className={style.plusButton}
-          onClick={() => history.push(Routes.wallet)}>+</span>
+          className={style.plusButton}>+</span>
       </span>
     );
     return (
