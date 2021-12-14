@@ -1,11 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from '../withdraw.module.scss';
 import InputLineSeparator from '../../../data/images/input_line_separator.png';
 import Dropdown from '../../Dropdown';
 import _ from 'lodash';
 
 import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.svg';
-import { getWithdrawQuote, processWithdraw, getWithdrawStatus, convertCurrency } from '../../../api/index';
+import {
+  getWithdrawQuote,
+  processWithdraw,
+  getWithdrawStatus,
+  convertCurrency,
+} from '../../../api/index';
 import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
@@ -21,6 +26,8 @@ import PolygonLogoActive from '../../../data/icons/polygon-logo-active.svg';
 import PolygonLogo from '../../../data/icons/polygon-logo.svg';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import { TOKEN_NAME } from 'constants/Token';
+import ReactTooltip from 'react-tooltip';
+import { FormGroup, InputLabel } from 'components/Form';
 
 const networkName = {
   polygon: 'MATIC',
@@ -28,6 +35,13 @@ const networkName = {
 };
 
 const WithdrawTab = () => {
+  const fooRef = useRef(null);
+  let addressRef = useRef(null);
+  let pwRef = useRef(null);
+  let pwConfirmRef = useRef(null);
+  let acceptRef = useRef(null);
+  let genericRef = useRef(null);
+
   const [address, setAddress] = useState('');
   const [tokenAmount, setTokenAmount] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
@@ -36,15 +50,64 @@ const WithdrawTab = () => {
   const [amountFees, setAmountFees] = useState(0);
   const [fiatEquivalence, setFiatEquivalence] = useState(0);
   const [responseProps, setResponseProps] = useState({});
+  const [error, setError] = useState(null);
+  const [submitButtonDisable, setSubmitButtonDisable] = useState(true);
 
-  const { balance } =
-    useSelector(selectUser);
+  const { balance } = useSelector(selectUser);
 
   useEffect(() => {
     tokenAmountLostFocus();
   }, [activeNetwork]);
 
-  const renderSuccess = ({withdrawAmount, fiatEquivalence, amountFees, calculatedAmount}) => {
+  useEffect(() => {
+    ReactTooltip.rebuild();
+
+    if (error) {
+      ReactTooltip.show(fooRef.current);
+    } else {
+      ReactTooltip.hide();
+    }
+  }, [fooRef, error]);
+
+  useEffect(() => {
+    const isAddressValid = isValidAdress(address);
+    if (
+      isAddressValid !== null &&
+      isAddressValid &&
+      error === null &&
+      withdrawAmount > 0 &&
+      tokenAmount > 0
+    ) {
+      setSubmitButtonDisable(false);
+    } else setSubmitButtonDisable(true);
+  }, [error, tokenAmount, withdrawAmount, address, setAddress]);
+
+  const isValidAdress = address => {
+    const regex = /^0x[a-fA-F0-9]{40}$/g;
+    return address.match(regex);
+  };
+
+  const validateInput = options => {
+    let formError = null;
+    let fieldRef = null;
+
+    if (!isValidAdress(address)) {
+      formError = 'wrong 0x address format';
+      fieldRef = addressRef.current;
+    }
+
+    setError(formError);
+    fooRef.current = fieldRef;
+
+    return formError;
+  };
+
+  const renderSuccess = ({
+    withdrawAmount,
+    fiatEquivalence,
+    amountFees,
+    calculatedAmount,
+  }) => {
     return (
       <WithdrawalSuccessPopup
         amountReceived={withdrawAmount}
@@ -55,8 +118,8 @@ const WithdrawTab = () => {
         fee={amountFees}
         network={activeNetwork === 'MATIC' ? 'POLYGON' : 'ETHEREUM'}
       />
-    )
-  }
+    );
+  };
 
   const selectContent = event => {
     event.target.select();
@@ -66,14 +129,14 @@ const WithdrawTab = () => {
     await addMetaMaskEthereum();
   }, []);
 
-  const addressChange = useCallback(event => {
+  const addressChange = event => {
     const inputAddress = event.target.value;
     setAddress(inputAddress);
-  }, []);
+  };
 
-  const tokenAmountChange = useCallback(value => {
+  const tokenAmountChange = value => {
     setTokenAmount(value);
-  }, []);
+  };
 
   const addressLostFocus = useCallback(event => {
     const inputAddress = event.target.value;
@@ -90,11 +153,10 @@ const WithdrawTab = () => {
 
   const tokenAmountLostFocus = async event => {
     if (tokenAmount > 0) {
-      
       const payload = {
         amount: tokenAmount,
         network: activeNetwork,
-      }
+      };
 
       const { response, error } = await getWithdrawQuote(payload);
       console.log(response);
@@ -104,7 +166,10 @@ const WithdrawTab = () => {
         return;
       }
 
-      const { withdraw_amount:withdrawAmount, withdraw_fee:withdrawFee } = response?.data;
+      const {
+        withdraw_amount: withdrawAmount,
+        withdraw_fee: withdrawFee,
+      } = response?.data;
       const parsedWithdrawAmount = parseFloat(withdrawAmount).toFixed(4);
       const parsedFees = parseFloat(withdrawFee).toFixed(4);
 
@@ -117,45 +182,57 @@ const WithdrawTab = () => {
         amount: parsedWithdrawAmount,
       };
 
-      const { response:responseConvertion } = await convertCurrency(convertCurrencyPayload);
+      const { response: responseConvertion } = await convertCurrency(
+        convertCurrencyPayload
+      );
       const { WFAIR } = responseConvertion?.data;
       const quoteUSD = WFAIR.quote?.USD.price;
-      
-      const marketValue = parsedWithdrawAmount > 0 && Number(parsedWithdrawAmount * parseFloat(quoteUSD)).toFixed(2);
+
+      const marketValue =
+        parsedWithdrawAmount > 0 &&
+        Number(parsedWithdrawAmount * parseFloat(quoteUSD)).toFixed(2);
       let withdrawMarketValue = !marketValue
         ? 0
         : numberWithCommas(marketValue);
 
       setFiatEquivalence(withdrawMarketValue);
+    } else {
+      setWithdrawAmount(0);
+      setSubmitButtonDisable(true);
     }
   };
 
   const handleWithdraw = async () => {
-      const payload = {
-        amount: tokenAmount,
-        network: activeNetwork,
-        toAddress: address,
-      }
+    const payload = {
+      amount: tokenAmount,
+      network: activeNetwork,
+      toAddress: address,
+    };
 
-      const { response, error } = await processWithdraw(payload);
-      console.log(response);
-      if (error) {
-        console.error(error.message);
-        return;
-      }
+    const { response, error } = await processWithdraw(payload);
+    console.log(response);
+    if (error) {
+      console.error(error.message);
+      return;
+    }
 
-      const { withdraw_amount:calculatedAmount, withdraw_fee:amountFees, network, external_transaction_id:externalTransactionId } = response?.data;
+    const {
+      withdraw_amount: calculatedAmount,
+      withdraw_fee: amountFees,
+      network,
+      external_transaction_id: externalTransactionId,
+    } = response?.data;
 
-      setTransaction(true);
-      setResponseProps({
-        withdrawAmount: tokenAmount,
-        calculatedAmount,
-        amountFees,
-        fiatEquivalence,
-        network,
-        externalTransactionId
-      })
-  }
+    setTransaction(true);
+    setResponseProps({
+      withdrawAmount: tokenAmount,
+      calculatedAmount,
+      amountFees,
+      fiatEquivalence,
+      network,
+      externalTransactionId,
+    });
+  };
 
   const onClickMax = () => {
     setTokenAmount(balance);
@@ -206,7 +283,41 @@ const WithdrawTab = () => {
 
           {/* Input Fields */}
           <div className={styles.inputFieldsContainer}>
-            {/* Currency */}
+            <ReactTooltip
+              getContent={() => error}
+              place="bottom"
+              effect="solid"
+              type="error"
+              backgroundColor={'#ff0000'}
+              className={styles.stepsTooltipError}
+            />
+            <FormGroup
+              className={styles.addressInputContainer}
+              data-tip
+              rootRef={ref => (addressRef.current = ref)}
+              data-event="none"
+              data-event-off="dblclick"
+            >
+              <div className={styles.labelContainer}>
+                <span>
+                  {activeNetwork === networkName.polygon &&
+                    'Polygon Wallet Address'}
+                  {activeNetwork === networkName.ethereum &&
+                    'Ethereum Wallet Address'}
+                </span>
+              </div>
+              <input
+                type="text"
+                value={address}
+                onChange={addressChange}
+                onBlur={validateInput}
+                onClick={selectContent}
+                placeholder={`Add your ${
+                  activeNetwork === networkName.polygon ? 'Polygon' : 'Ethereum'
+                } wallet address`}
+              />
+            </FormGroup>
+            {/* Currency
             <div className={styles.addressInputContainer}>
               <div className={styles.labelContainer}>
                 <span>
@@ -226,7 +337,7 @@ const WithdrawTab = () => {
                   activeNetwork === networkName.polygon ? 'Polygon' : 'Ethereum'
                 } wallet address`}
               />
-            </div>
+            </div> */}
 
             <div className={styles.balanceContainer}>
               <span>
@@ -254,10 +365,7 @@ const WithdrawTab = () => {
                   onClick={handleWFAIRClick}
                 />
                 <span>{TOKEN_NAME}</span>
-                <span
-                  className={styles.button}
-                  onClick={onClickMax}
-                >
+                <span className={styles.button} onClick={onClickMax}>
                   Max
                 </span>
               </div>
@@ -305,10 +413,11 @@ const WithdrawTab = () => {
             <button
               className={classNames(
                 styles.confirmButton,
-                tokenAmount === 0 || address === null ? styles.disabled : null
+                submitButtonDisable ? styles.disabled : null
               )}
               onClick={handleWithdraw}
-              disabled={tokenAmount === 0 || address === null}
+              disabled={submitButtonDisable}
+              // disabled={tokenAmount === 0 && error.length > 0 ?}
             >
               Confirm Amount
             </button>
