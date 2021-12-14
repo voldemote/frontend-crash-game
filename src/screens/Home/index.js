@@ -358,15 +358,11 @@ const Home = ({
                 <div className={styles.detail}>
                   <div>
                     <div className={styles.title}>
-                      <h3>What Is</h3>
-                      <img src={AlphaLogo} alt="" />
+                      <h3>What</h3>
                     </div>
                     <p>
-                      Alpacasino is a play-money testing platform for the
-                      developers behind Wallfair. We’re using play-money
-                      (“PFAIR”) which is completely virtual and you do not need
-                      to invest, risk or even lose any real money or
-                      cryptocurrencies.
+                      Alpacasino is the first betting and gaming platform powered 
+                      by Wallfair.
                     </p>
                   </div>
                   <div className={styles.thumbnail}>
@@ -413,7 +409,7 @@ const Home = ({
           {renderActivities()}
           {renderAlpacaDopter()}
           {renderAlpacaVerse()}
-          {renderHowTokenWorks()}
+          {/* {renderHowTokenWorks()} */}
         </div>
       </div>
     </BaseContainerWithNavbar>
