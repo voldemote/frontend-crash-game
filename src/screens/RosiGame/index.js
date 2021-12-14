@@ -442,7 +442,7 @@ const RosiGame = ({
               text={
                 slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump & Dump'
               }
-              showArrow={slug === GAMES['elonGame'].slug}
+              showArrow={slug !== GAMES['elonGame'].slug}
             />
             <Share popupPosition="right" className={styles.shareButton} />
             {slug === GAMES['elonGame'].slug && (
