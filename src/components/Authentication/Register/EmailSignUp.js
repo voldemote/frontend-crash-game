@@ -132,7 +132,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username }) => {
         data-event-off="dblclick"
         className={styles.authenticationLegalAuthorizationAgreementText}
       >
-        <b>I am above 18 years of age</b> and have read and accepted the{' '}
+        <b>I am at least 18 years of age</b> and have read and accepted the{' '}
         <Link
           className={'global-link-style'}
           to={Routes.terms}
