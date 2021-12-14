@@ -4,6 +4,7 @@ import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
+import {SEND_BUY_WITH_CRYPTO} from '../constants/Api'
 
 const {
   store: { dispatch },
@@ -561,6 +562,13 @@ const getRandomUsername = () => {
     .catch(error => ({ error: error.message }));
 }
 
+const sendBuyWithCrypto = (data) => {
+  if (!Api.defaults.headers.common['Authorization']) return;
+  return Api.post(ApiUrls.SEND_BUY_WITH_CRYPTO, data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }))
+}
+
 export {
   Api,
   createBet,
@@ -627,5 +635,6 @@ export {
   processWithdraw,
   getWithdrawStatus,
   getUserKycData,
-  getRandomUsername
+  getRandomUsername,
+  sendBuyWithCrypto
 };
