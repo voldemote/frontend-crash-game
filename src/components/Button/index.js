@@ -4,20 +4,15 @@ import React from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style from './styles.module.scss';
 import Highlight from '../Highlight';
-import ButtonPattern from '../../data/backgrounds/but-pattern.svg';
-import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
 
 const Button = ({
   children,
   highlightType,
   highlightTheme,
   className,
-  theme,
+  theme = ButtonTheme.primaryButton,
   onClick,
-  withoutBackground = false,
   disabled,
-  disabledWithOverlay = true,
-  fixed,
   dataTrackingId,
 }) => {
 
@@ -38,26 +33,25 @@ const Button = ({
     <span
       className={classNames(
         className,
-        style.button,
+        theme === ButtonTheme.primaryButton ? style.primaryButton : style.secondaryButton,
         disabled ? style.disabled : null,
-        SelectionHelper.get(theme, {
-          [ButtonTheme.authenticationScreenButton]:
-            style.authenticationScreenButton,
-          [ButtonTheme.welcomeScreenButton]: style.welcomeScreenButton,
-        })
       )}
       disabled={disabled}
       onClick={disabled ? null : onClick}
       data-tracking-id={dataTrackingId}
-    >
-      <div className={style.buttonInnerBackground}>
-        <div className={style.buttonPattern}/>
-        <div className={style.butonSecondInnerBackground}>
-          <div className={classNames(style.buttonThirdInnerBackground)}>
-            <span>{children}</span>
+    > 
+      {theme === ButtonTheme.primaryButton ?
+        <div className={style.buttonInnerBackground}>
+          <div className={style.buttonPattern}/>
+          <div className={style.butonSecondInnerBackground}>
+            <div className={classNames(style.buttonThirdInnerBackground)}>
+              <span>{children}</span>
+            </div>
           </div>
         </div>
-      </div>
+        :
+        <>{children}</>
+      }
       {renderHighlight()}
     </span>
   );

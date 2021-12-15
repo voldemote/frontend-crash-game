@@ -12,6 +12,7 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from '../AuthenticationType';
 import { OnboardingActions } from 'store/actions/onboarding';
 import classNames from 'classnames';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const Login = ({
   errorState,
@@ -183,6 +184,7 @@ const Login = ({
         <Button
           onClick={onConfirm}
           className={styles.submitButton}
+          theme={forgotPassword ? ButtonTheme.primaryButton : ButtonTheme.secondaryButton}
           disabled={submitInProgress}
         >
           {forgotPassword ? 'Send' : 'Login'}
