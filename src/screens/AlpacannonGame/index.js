@@ -84,22 +84,21 @@ const PlinkoGame = ({
         .then(response => {
           const lastSpins = response?.data.lastCrashes;
           setSpins(lastSpins.map((spin) => {
-            if(spin.profit > 0) {
-              return {
-                type: 'win',
-                value: '+' + spin.profit
-              }
-            } else if(spin.profit === 0){
-              return {
-                type: 'even',
-                value: '' + spin.profit
-              }
-            }else {
-              return {
-                type: 'loss',
-                value: spin.profit
-              }
+            const output = {};
+            if (spin.profit > 0) {
+              output.type = 'win';
+              output.value = '+' + spin.profit;
+            } else if (spin.profit === 0) {
+              output.type = 'even';
+              output.value = spin.profit;
+            } else {
+              output.type = 'loss';
+              output.value = spin.profit;
             }
+
+            output.gameHash = spin.gameHash;
+
+            return output;
           }))
         })
         .catch(error => {
@@ -155,7 +154,7 @@ const PlinkoGame = ({
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
-        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false} })
+        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false, gameHash: data.gameHash} })
         updateUserBalance(userId);
         // trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
         // trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
@@ -230,7 +229,7 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Games" spins={spins} />
+              <Spins text="My Games" spins={spins} game={gameCfg}/>
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
