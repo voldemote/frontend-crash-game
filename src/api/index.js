@@ -527,6 +527,12 @@ const convertCurrency = ({convertFrom, convertTo, amount}) => {
     .catch(error => ({ error: error.response?.data }));
 };
 
+const generateCryptopayChannel = (body) => {
+  return Api.post(ApiUrls.GENERATE_CRYPTOPAY_CHANNEL, body)
+    .then(({ data }) => (data.data))
+    .catch((error) => ({ error: error.response?.data }));
+}
+
 const getWalletTransactions = () => {
   return Api.get(ApiUrls.API_USER_WALLET_TRANSACTIONS).catch((error) => {
     console.log('[API Error] called: getWalletTransactions', error);
@@ -636,5 +642,6 @@ export {
   getWithdrawStatus,
   getUserKycData,
   getRandomUsername,
-  sendBuyWithCrypto
+  sendBuyWithCrypto,
+  generateCryptopayChannel,
 };

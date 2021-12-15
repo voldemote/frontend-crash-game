@@ -14,13 +14,12 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
+      default:
         return <BuyWithFiatTab hidePopup={hidePopup}/>;
       case 1:
         return <DepositTab />;
       case 2:
         return <BuyWithCrypto />;
-      default:
-        return <BuyWithFiatTab />;
     }
   };
 
