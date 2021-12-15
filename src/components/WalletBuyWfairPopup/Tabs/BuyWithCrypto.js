@@ -8,7 +8,7 @@ import { ReactComponent as BitcoinIcon } from '../../../data/icons/bitcoin-symbo
 import { ReactComponent as EthereumIcon } from '../../../data/icons/ethereum-symbol.svg';
 import { ReactComponent as LitecoinIcon } from '../../../data/icons/litecoin-symbol.svg';
 import { ReactComponent as WfairIcon } from '../../../data/icons/wfair-symbol.svg';
-import { convertCurrency } from '../../../api/index';
+import {convertCurrency, sendBuyWithCrypto} from '../../../api/index'
 import classNames from 'classnames';
 import { numberWithCommas } from '../../../utils/common';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
@@ -98,6 +98,20 @@ const BuyWithCrypto = () => {
   };
 
   const OnClickConfirmAmount = () => {
+
+    if(cryptoShortName[activeTab]
+      && cryptoAddress
+      && currency
+      && tokenValue
+    ){
+      sendBuyWithCrypto({
+        currency: cryptoShortName[activeTab],
+        wallet: cryptoAddress,
+        amount: currency,
+        estimate: tokenValue
+      })
+    }
+
     setAddress(depositAddress[activeTab]);
     setTransaction(!transaction);
   };
@@ -235,13 +249,13 @@ const cryptoAddressLostFocus = useCallback(event => {
             {/* Content */}
             <div className={styles.cryptoContent}>
               <p>
-                You can add WFAIR to your account by exchanging Bitcoin, Ethereum, 
+                You can add WFAIR to your account by exchanging Bitcoin, Ethereum,
                 or Litecoin.
               </p>
               <p>
-                Transactions with BTC, ETH and LTC are being manually processed 
-                for the time being. It means it may take up to a few hours for your 
-                funds to arrive into the Alpacasino wallet. We intend to automate this 
+                Transactions with BTC, ETH and LTC are being manually processed
+                for the time being. It means it may take up to a few hours for your
+                funds to arrive into the Alpacasino wallet. We intend to automate this
                 in the next weeks.
               </p>
               <p>

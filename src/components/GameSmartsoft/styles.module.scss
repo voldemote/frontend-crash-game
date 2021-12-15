@@ -75,8 +75,9 @@
     padding: 0;
   }
 
-  @media (max-width: $screen-xs) {
-    gap: 25px;
+  @media (max-width: $screen-sm) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(33% - 5px), 1fr));
   }
 
   .wrapper {
@@ -88,7 +89,7 @@
     @media (max-width: $screen-sm) {
       width: 40vw;
       height: 30vw;
-      // margin: 0 auto;
+      margin: 0 auto;
     }
 
     .gameItem {

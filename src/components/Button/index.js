@@ -4,28 +4,18 @@ import React from 'react';
 import SelectionHelper from '../../helper/SelectionHelper';
 import style from './styles.module.scss';
 import Highlight from '../Highlight';
-import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
 
 const Button = ({
   children,
   highlightType,
   highlightTheme,
   className,
-  theme,
+  theme = ButtonTheme.primaryButton,
   onClick,
-  withoutBackground = false,
   disabled,
-  disabledWithOverlay = true,
-  fixed,
+  withoutPadding = false,
   dataTrackingId,
 }) => {
-  const renderButtonDisabledOverlay = () => {
-    if (disabled && disabledWithOverlay) {
-      return <span className={style.buttonDisabledOverlay}></span>;
-    }
-
-    return null;
-  };
 
   const renderHighlight = () => {
     if (highlightType) {
@@ -43,24 +33,26 @@ const Button = ({
   return (
     <span
       className={classNames(
-        style.button,
         className,
-        fixed ? style.buttonFixed : null,
-        withoutBackground ? style.withoutBackground : null,
+        theme === ButtonTheme.primaryButton ? style.primaryButton : style.secondaryButton,
         disabled ? style.disabled : null,
-        SelectionHelper.get(theme, {
-          [ButtonTheme.authenticationScreenButton]:
-            style.authenticationScreenButton,
-          [ButtonTheme.welcomeScreenButton]: style.welcomeScreenButton,
-        })
       )}
       disabled={disabled}
       onClick={disabled ? null : onClick}
       data-tracking-id={dataTrackingId}
-    >
-      <div className={style.buttonInnerBackground}></div>
-      {renderButtonDisabledOverlay()}
-      <span>{children}</span>
+    > 
+      {theme === ButtonTheme.primaryButton ?
+        <div className={style.buttonInnerBackground}>
+          {!withoutPadding && <div className={style.buttonPattern}/> }
+          <div className={style.butonSecondInnerBackground}>
+            <div className={classNames(style.buttonThirdInnerBackground, withoutPadding && style.withoutPadding)}>
+              <span>{children}</span>
+            </div>
+          </div>
+        </div>
+        :
+        <>{children}</>
+      }
       {renderHighlight()}
     </span>
   );

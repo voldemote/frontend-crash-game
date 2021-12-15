@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, memo } from 'react';
+import React, { useCallback, useEffect, useState, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import lifecycle from 'page-lifecycle'
@@ -46,6 +46,7 @@ import PonziTweet from '../../data/images/pump-dump/ponzi-tweet.png';
 import BoughtText from '../../data/images/pump-dump/bought-text.png';
 import Button from 'components/Button';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
+import classNames from "classnames";
 
 
 const RosiGame = ({
@@ -428,6 +429,15 @@ const RosiGame = ({
     );
   }
 
+  const handleFairnessPopup = useCallback(event => {
+    const target = document.querySelector('#lastCrashes [data-crash-index="1"]');
+
+    //click second last crash factor, starting from the latest one
+    if(target) {
+      target.click();
+    }
+  }, []);
+
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -442,7 +452,7 @@ const RosiGame = ({
               text={
                 slug === GAMES['elonGame'].slug ? 'Elon Game' : 'Pump & Dump'
               }
-              showArrow={slug === GAMES['elonGame'].slug}
+              showArrow={slug !== GAMES['elonGame'].slug}
             />
             <Share popupPosition="right" className={styles.shareButton} />
             {slug === GAMES['elonGame'].slug && (
@@ -455,7 +465,7 @@ const RosiGame = ({
                 onClick={handleHelpClick}
               />
             )}
-            {showHowDoesItWork()}
+            {/*{showHowDoesItWork()}*/}
           </div>
 
           <div className={styles.mainContainer}>
@@ -472,6 +482,25 @@ const RosiGame = ({
                   onCancel={handleBetCancel}
                   gameId={path}
                 />
+                <div className={styles.fairnessContainer}>
+                  <Icon
+                    className={styles.balanceIcon}
+                    iconType={IconType.balanceScaleSolid}
+                    iconTheme={IconTheme.black}
+                    height={18}
+                    width={18}
+                  />{' '}
+                  <span
+                    className={classNames(
+                      'global-link-style',
+                      styles.fairnessOpenPopup
+                    )}
+                    onClick={handleFairnessPopup}
+                  >
+                  Fairness
+                </span>
+                </div>
+
                 {isMiddleOrLargeDevice ? renderBets() : null}
               </div>
             </div>

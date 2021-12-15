@@ -15,8 +15,6 @@
 .button {
   margin-top: 10px;
   // margin-bottom: 20px;
-  width: 240px;
-  height: 45px;
   font-family: $fontOmnes;
 }
 
@@ -129,6 +127,11 @@
       line-height: 20px;
       text-align: justify;
       margin-bottom: 25px;
+
+      span {
+        cursor: pointer;
+        text-decoration: underline;
+      }
 
       @media (max-width: $screen-md) {
         margin-bottom: 10px;

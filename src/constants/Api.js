@@ -1,23 +1,16 @@
 export const API_USER_REQUEST_TOKENS = 'api/user/requestTokens';
 // Env vars
-export const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || 'https://dev-api.wallfair.io/';
-export const BACKEND_SOCKET_URL =
-  process.env.REACT_APP_SOCKET_URL || 'https://comm-dev-api.wallfair.io/';
-export const CRASH_GAME_BACKEND_URL =
-  process.env.REACT_APP_CRASH_GAME_BACKEND_URL || 'http://localhost:8003/';
-export const CRASH_GAMES_BACKEND_URL =
-    process.env.REACT_APP_CASINO_GAMES_BACKEND_URL || 'http://localhost:8003/';
-export const SECOND_CRASH_GAME_BACKEND_URL =
-  process.env.REACT_APP_SECOND_CRASH_GAME_BACKEND_URL ||
-  'http://localhost:8002/';
-export const ACCOUNT_MAPPING = process.env.REACT_APP_ACCOUNT_MAPPER_URL || 'https://account-mapper-dev.wallfair.io/map';
-export const WITHDRAW_SERVICE_URL = process.env.REACT_APP_WITHDRAW_SERVICE_URL || 'https://withdraw-service-staging.wallfair.io';
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+export const BACKEND_SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
+export const CRASH_GAME_BACKEND_URL = process.env.REACT_APP_CRASH_GAME_BACKEND_URL;
+export const CRASH_GAMES_BACKEND_URL = process.env.REACT_APP_CASINO_GAMES_BACKEND_URL;
+export const SECOND_CRASH_GAME_BACKEND_URL = process.env.REACT_APP_SECOND_CRASH_GAME_BACKEND_URL;
+export const ACCOUNT_MAPPING = process.env.REACT_APP_ACCOUNT_MAPPER_URL;
+export const WITHDRAW_SERVICE_URL = process.env.REACT_APP_WITHDRAW_SERVICE_URL;
 
 export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-export const NEWS_API_SSL_MODE =
-  process.env.REACT_APP_NEWS_API_SSL_MODE === 'true';
+export const NEWS_API_SSL_MODE = process.env.REACT_APP_NEWS_API_SSL_MODE === 'true';
 export const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY;
 
 // Services
@@ -115,3 +108,4 @@ export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameH
 export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start';
 export const KYC_DATA_FOR_USER = 'api/user/:userId/kyc-data';
 export const RANDOM_USERNAME = 'api/user/random-username';
+export const SEND_BUY_WITH_CRYPTO = 'api/user/buy-with-crypto'

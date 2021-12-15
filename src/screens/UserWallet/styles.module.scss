@@ -506,6 +506,12 @@
       padding: 10px 30px 20px;
       line-height: 26px;
       text-align: justify;
+
+      span {
+        color: $mainAction;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
 
     svg {
@@ -573,6 +579,7 @@
       bottom: 0px;
       left: 300px;
       background-position: bottom;
+      pointer-events: none;
     }
 
     @media (max-width: $screen-md) {
@@ -623,10 +630,9 @@
       }
 
       .button {
-        margin-top: 10px;
-        // margin-bottom: 20px;
+        margin-top: 0px;
+        margin-bottom: 20px;
         width: 240px;
-        height: 45px;
         font-family: $fontOmnes;
       }
     }

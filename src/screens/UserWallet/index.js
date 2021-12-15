@@ -176,7 +176,7 @@ const UserWallet = ({
                 You are in the right place to check your current balance, 
                 add WFAIR into your wallet, or withdraw your tokens. If you 
                 have any questions about your wallet or its functionality, 
-                please get in touch with our Support!
+                please get in touch with our <span onClick={() => {window.fcWidget.open()}}>Support</span>!
               </p>
               <p className={styles.currentbalanceHeading}>Current balance:</p>
               <p
@@ -199,13 +199,15 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p>
+                {/* <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p> */}
+                <p className={styles.label}>Need WFAIR to play? No problem.</p>
                 <Button
                   className={styles.button}
                   onClick={showWalletBuyWfairPopup}
                 >
-                  Buy WFAIR!
+                  Add WFAIR!
                 </Button>
+                <p className={styles.label}>Want to withdraw WFAIR? No problem.</p>
                 <Button
                   className={styles.button}
                   disabled={!isKycVerified()}
@@ -220,7 +222,7 @@ const UserWallet = ({
                   <div className={styles.buttonContainer}>
                   <p className={styles.label}>
                     Enable the full functionality of your account in 30 seconds! Complete our verification process now, and you will be able to withdraw your funds and add an unlimited amount of WFAIR.
-</p>
+                  </p>
                   <Button
                     className={styles.button}
                     onClick={openFractal}
@@ -231,7 +233,7 @@ const UserWallet = ({
                 )
               }
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>In case of any questions please <span onClick={() => {}}>click here</span> to contact our Support.</p>
+                <p className={styles.label}>In case of any questions please <span onClick={() => {window.fcWidget.open()}}>click here</span> to contact our Support.</p>
               </div>
               {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Start the verification</p>

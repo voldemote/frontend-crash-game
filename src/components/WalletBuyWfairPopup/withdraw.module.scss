@@ -211,10 +211,17 @@
     justify-content: center;
     align-items: center;
     padding: 0 24px;
+    position: relative;
 
     @media (max-width: $screen-md) {
       margin-top: 48px;
       padding: 0 16px;
+    }
+
+    .stepsTooltipError {
+      // position: absolute;
+      // left: 20px;
+      // top: 40px;
     }
 
     .balanceContainer {
@@ -355,6 +362,10 @@
         align-items: center;
         padding-right: 15px;
         column-gap: 10px;
+
+        @media (max-width: $screen-md) {
+          width: 40%;
+        }
 
         .button {
           cursor: pointer;
