@@ -184,24 +184,17 @@ const Login = ({
         <Button
           onClick={onConfirm}
           className={styles.submitButton}
-          theme={forgotPassword ? ButtonTheme.primaryButton : ButtonTheme.secondaryButton}
           disabled={submitInProgress}
         >
           {forgotPassword ? 'Send' : 'Login'}
         </Button>
       </form>
       {!forgotPassword && (
-        <div className={styles.dontHaveAnAccountLogin}>
+        <div className={styles.dontHaveAnAccount}>
           <p>
-            Don't have an account?<br/>
-            <a 
-              className={'global-link-style'}
-              onClick={openSignUpPopup}>
-              Create a new account
-            </a>{' '}
-            <>or use your social login.</>
+            or continue with
           </p>
-          <SocialLogin styles={styles} />
+          <SocialLogin styles={styles} signUp={false}/>
         </div>
       )}
     </>

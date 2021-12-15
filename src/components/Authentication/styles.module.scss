@@ -317,6 +317,7 @@
   }
   p {
     font-size: 18px;
+    font-weight: 600;
   }
   svg {
     width: 24px;
@@ -325,32 +326,21 @@
     max-height: 24px;
   }
 }
-.dontHaveAnAccountLogin {
+
+.socialContainer {
   display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  margin-top: 25px;
-  text-align: center;
-  padding: 0 20px;
-  width: 690px;
-  @media (max-width: $screen-sm) {
-    width: auto;
-    padding: 0;
-  }
-  .socialContainer {
-    margin-top: 10px;
-  }
-  button {
-    @extend .unstyledButton;
-    font-size: 14px;
-  }
-  p {
-    font-size: 18px;
-  }
-  svg {
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+  .socialIcon {
     width: 24px;
-    max-width: 24px;
     height: 24px;
-    max-height: 24px;
+  }
+  &.verticalContainer {
+    flex-direction: column;
+  }
+  .socialButton {
+    width: 65px;
+    height: 65px;
   }
 }
