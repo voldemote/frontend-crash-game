@@ -270,7 +270,7 @@ const BuyWithFiatTab = ({ hidePopup , showWalletBuyWfairPopup, showTransakSucces
             your wallet faster, TRANSAK will display the exchange rate for your currency 
             into MATIC. This is entirely correct behaviour, and at the end of the process, 
             you will receive WFAIR into your account. In case of any questions, refer to 
-            this article or please get in touch with our Support. 
+            this article or please get in touch with our <span onClick={() => {window.fcWidget.open()}}>Support</span>. 
           </p>
         </div>
       </div>

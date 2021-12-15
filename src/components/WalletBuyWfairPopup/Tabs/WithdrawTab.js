@@ -28,6 +28,7 @@ import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import { TOKEN_NAME } from 'constants/Token';
 import ReactTooltip from 'react-tooltip';
 import { FormGroup, InputLabel } from 'components/Form';
+import { validate } from '@material-ui/pickers';
 
 const networkName = {
   polygon: 'MATIC',
@@ -37,10 +38,7 @@ const networkName = {
 const WithdrawTab = () => {
   const fooRef = useRef(null);
   let addressRef = useRef(null);
-  let pwRef = useRef(null);
-  let pwConfirmRef = useRef(null);
-  let acceptRef = useRef(null);
-  let genericRef = useRef(null);
+  let amountRef = useRef(null);
 
   const [address, setAddress] = useState('');
   const [tokenAmount, setTokenAmount] = useState(0);
@@ -56,7 +54,14 @@ const WithdrawTab = () => {
   const { balance } = useSelector(selectUser);
 
   useEffect(() => {
-    tokenAmountLostFocus();
+    const updateField = async () => {
+      await updateReceiveField();
+      validateInput();
+    }
+
+    updateField();
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetwork]);
 
   useEffect(() => {
@@ -94,6 +99,11 @@ const WithdrawTab = () => {
     if (!isValidAdress(address)) {
       formError = 'wrong 0x address format';
       fieldRef = addressRef.current;
+    }
+
+    if (withdrawAmount < 0) {
+      formError = 'Please consider adding a higher amount to cover the fees';
+      fieldRef = amountRef.current;
     }
 
     setError(formError);
@@ -138,6 +148,15 @@ const WithdrawTab = () => {
     setTokenAmount(value);
   };
 
+  useEffect(() => {
+    let updateTimer = setTimeout(() => updateReceiveField(), 1 * 1000);
+
+    return () => {
+      clearTimeout(updateTimer);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokenAmount]);
+
   const addressLostFocus = useCallback(event => {
     const inputAddress = event.target.value;
     const regex = /^0x[a-fA-F0-9]{40}$/g;
@@ -151,7 +170,7 @@ const WithdrawTab = () => {
     setAddress(inputAddress);
   }, []);
 
-  const tokenAmountLostFocus = async event => {
+  const updateReceiveField = async () => {
     if (tokenAmount > 0) {
       const payload = {
         amount: tokenAmount,
@@ -200,6 +219,7 @@ const WithdrawTab = () => {
       setWithdrawAmount(0);
       setSubmitButtonDisable(true);
     }
+    validateInput();
   };
 
   const handleWithdraw = async () => {
@@ -236,6 +256,7 @@ const WithdrawTab = () => {
 
   const onClickMax = () => {
     setTokenAmount(balance);
+    // tokenAmountLostFocus(balance);
   };
 
   return (
@@ -347,7 +368,13 @@ const WithdrawTab = () => {
             </div>
 
             {/* WFAIR TOKEN */}
-            <div className={styles.cryptoInputContainer}>
+            <FormGroup
+              className={styles.cryptoInputContainer}
+              data-tip
+              rootRef={ref => (amountRef.current = ref)}
+              data-event="none"
+              data-event-off="dblclick"
+            >
               <div className={styles.labelContainer}>
                 <span>Amount you wish to withdraw</span>
               </div>
@@ -356,7 +383,6 @@ const WithdrawTab = () => {
                 max={balance}
                 value={tokenAmount}
                 onChange={tokenAmountChange}
-                onBlur={tokenAmountLostFocus}
                 onClick={selectContent}
               />
               <div className={styles.inputRightContainer}>
@@ -369,7 +395,7 @@ const WithdrawTab = () => {
                   Max
                 </span>
               </div>
-            </div>
+            </FormGroup>
             <div className={styles.InputLineSeparator}>
               <img src={InputLineSeparator} alt="input_line_separator" />
             </div>
