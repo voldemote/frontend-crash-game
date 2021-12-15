@@ -24,6 +24,8 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import Button from 'components/Button';
+import Routes from 'constants/Routes';
+import { useHistory } from 'react-router';
 
 const PlaceBetCasino = ({
   gameName,
@@ -37,6 +39,7 @@ const PlaceBetCasino = ({
   risk,
 }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
 
@@ -66,8 +69,6 @@ const PlaceBetCasino = ({
     const changedValue = _.floor(amount * multiplier, 0);
     if (changedValue > 10000) {
       setAmount(10000);
-    } else if (changedValue < 1) {
-      setAmount(1);
     } else {
       setAmount(changedValue);
     }
@@ -157,24 +158,32 @@ const PlaceBetCasino = ({
 
   const renderButton = () => {
     if (!bet.autobet) {
+
+      let buttonEnable = false;
+
+      if (
+        !connected ||
+        userUnableToBet ||
+        (amount > userBalance && user.isLoggedIn)
+      ) buttonEnable = true;
+      if(amount === 0) buttonEnable = false;
+
       return (
         <Button
           role="button"
           tabIndex="0"
-          className={classNames(styles.button, {
-            [styles.buttonDisabled]:
-              !connected ||
-              userUnableToBet ||
-              !bet?.ready ||
-              (amount > userBalance && user.isLoggedIn),
-            [styles.notConnected]: !connected,
-          })}
-          onClick={!bet?.ready? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
+          className={classNames(styles.button)}
+          disabled={buttonEnable}
+          onClick={!bet?.ready? null : (user.isLoggedIn && amount > 0) ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
           data-tracking-id={
             user.isLoggedIn ? 'alpacawheel-place-bet' : 'alpacawheel-play-demo'
           }
         >
-          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start autobet') : 'Play Demo'}
+          {user.isLoggedIn && amount > 0
+              ? selector === 'manual'
+                ? 'Place Bet'
+                : 'Start Auto Bet'
+              : 'Play Demo'}
         </Button>
       );
     } else {
@@ -194,6 +203,21 @@ const PlaceBetCasino = ({
         </>
       )
     }
+  };
+
+  const renderBuyWFAIRMessage = () => {
+    return (
+      <div className={styles.buyTokenInfo}>
+        <p
+          className={classNames([
+            user.isLoggedIn && amount > userBalance ? styles.visible : null,
+          ])}
+        >
+          Insufficient balance to place this bet.{' '}
+          <span onClick={() => history.push(Routes.wallet)}>Add funds</span>
+        </p>
+      </div>
+    );
   };
 
   const renderMessage = () => {
@@ -250,11 +274,9 @@ const PlaceBetCasino = ({
                 value={amount}
                 currency={user?.currency}
                 setValue={(v)=>setAmount(v)}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'alpacawheel-input-field-half',
                   inputFieldDouble: 'alpacawheel-input-field-double',
@@ -409,6 +431,7 @@ const PlaceBetCasino = ({
         className={styles.tooltip}
       />
       {renderButton()}
+      {renderBuyWFAIRMessage()}
       {renderMessage()}
     </div>
   );
