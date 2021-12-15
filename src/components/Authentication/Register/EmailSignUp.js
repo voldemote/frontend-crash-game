@@ -173,7 +173,6 @@ const EmailSignUp = ({
           {errorState}
         </div>
       )}
-
       <ReactTooltip
         getContent={() => error}
         place="bottom"
@@ -268,6 +267,14 @@ const EmailSignUp = ({
       >
         Sign Up with E-mail
       </Button>
+      <div className={styles.recaptchaInfo}>
+        <p>This site is protected by reCAPTCHA and the Google</p>
+        <a target="_blank" href="https://policies.google.com/privacy" rel="noreferrer">
+          Privacy Policy
+        </a>
+        <span> and </span>
+        <a target="_blank" href="https://policies.google.com/terms" rel="noreferrer">Terms of Service</a> apply.
+      </div>
     </form>
   );
 };
