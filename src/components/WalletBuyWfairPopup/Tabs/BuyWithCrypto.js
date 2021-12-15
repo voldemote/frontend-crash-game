@@ -52,7 +52,6 @@ const BuyWithCrypto = () => {
     const currencyName = cryptoShortName[tab];
     const channel = await generateCryptopayChannel({ currency: currencyName });
 
-    console.log(channel);
     setAddress(channel.address);
     setUri(channel.uri);
 
