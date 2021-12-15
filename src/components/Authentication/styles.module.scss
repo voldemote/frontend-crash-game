@@ -305,7 +305,7 @@
   text-align: center;
   @media (max-width: $screen-sm) {
     position: static;
-    margin-top: 25px;
+    margin-top: 14px;
     text-align: center;
   }
 
@@ -338,6 +338,8 @@
   }
   &.verticalContainer {
     flex-direction: column;
+    gap: 8px;
+    margin: 14px 0 20px;
   }
   .socialButton {
     width: 65px;
