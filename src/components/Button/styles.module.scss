@@ -1,6 +1,6 @@
 @import '../../styles/all';
 
-.button {
+.primaryButton {
   display: flex;
   position: relative;
   align-items: center;
@@ -84,19 +84,25 @@
     opacity: 0.7;
     cursor: not-allowed;
   }
+}
 
-  &.authenticationScreenButton {
-    padding: 0 2rem;
-    width: 100%;
-    border-radius: 0;
-  }
+.secondaryButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffd31a;
+  font-family: $fontOmnes;
+  font-weight: 600;
+  font-size: 24px;
+  text-transform: none;
+  border: 2px solid #ffd31a;
+  box-sizing: border-box;
+  border-radius: 25px;
+  padding: 6px 24px;
+  background: #080e33;
+  cursor: pointer;
 
-  &.welcomeScreenButton {
-    width: 100%;
-    margin-top: auto;
-
-    @media (min-width: $screen-sm) {
-      display: none;
-    }
+  @media (max-width: $screen-sm) {
+    font-size: 20px;
   }
 }
