@@ -61,7 +61,7 @@ const App = () => {
             <AlertBox />
             <Popup />
             <AudioContent />
-            <DisclaimerPopupContainer />
+            {/* <DisclaimerPopupContainer /> */}
             {/* <TypeformController /> */}
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
