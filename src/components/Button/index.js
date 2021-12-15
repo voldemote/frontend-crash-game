@@ -43,7 +43,7 @@ const Button = ({
     > 
       {theme === ButtonTheme.primaryButton ?
         <div className={style.buttonInnerBackground}>
-          <div className={style.buttonPattern}/>
+          {!withoutPadding && <div className={style.buttonPattern}/> }
           <div className={style.butonSecondInnerBackground}>
             <div className={classNames(style.buttonThirdInnerBackground, withoutPadding && style.withoutPadding)}>
               <span>{children}</span>

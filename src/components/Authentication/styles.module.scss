@@ -238,6 +238,13 @@
       display: none;
     }
   }
+
+  svg {
+    width: 24px;
+    max-width: 24px;
+    height: 24px;
+    max-height: 24px;
+  }
 }
 .signInButton {
   margin-top: 5px;
@@ -319,12 +326,6 @@
     font-size: 18px;
     font-weight: 600;
   }
-  svg {
-    width: 24px;
-    max-width: 24px;
-    height: 24px;
-    max-height: 24px;
-  }
 }
 
 .socialContainer {
@@ -342,7 +343,8 @@
     margin: 14px 0 20px;
   }
   .socialButton {
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
   }
 }
