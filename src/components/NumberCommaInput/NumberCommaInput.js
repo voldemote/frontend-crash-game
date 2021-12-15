@@ -15,6 +15,7 @@ const NumberCommaInput = ({ value, onChange, min, max, withoutDecimals = false, 
     if(withoutDecimals) stringNumber = string.replace(/[,.]/, ''); // do not allow dot or comma when we do not want decimals
     else stringNumber = string.replace(/,/, '.'); // replace comma with dot
 
+    if (stringNumber[0] === '-') stringNumber = ''; // do not start with minus
     if (stringNumber[0] === '.') stringNumber = ''; // do not start with dot
     if (stringNumber[0] === '-' && stringNumber[1] === '.' && stringNumber.length === 2)
       // do not has minus and then dot
@@ -32,8 +33,8 @@ const NumberCommaInput = ({ value, onChange, min, max, withoutDecimals = false, 
     // check if multiple dots are entered
     if (noDots > 1 || noMinus > 1) stringNumber = oldValue.current;
 
-    if (Number(stringNumber) < min && stringNumber !== '-') stringNumber = min;
-    if (Number(stringNumber) >= max && stringNumber !== '-') stringNumber = max;
+    if (min && Number(stringNumber) < min && stringNumber !== '-') stringNumber = min;
+    if (max && Number(stringNumber) >= max && stringNumber !== '-') stringNumber = max;
     oldValue.current = stringNumber;
 
     setValueInternal(stringNumber);

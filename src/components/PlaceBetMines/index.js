@@ -35,6 +35,8 @@ import {
   Select
 } from '../Form';
 import Button from 'components/Button';
+import Routes from 'constants/Routes';
+import { useHistory } from 'react-router';
 
 const PlaceBetMines = ({
   connected,
@@ -67,7 +69,9 @@ const PlaceBetMines = ({
   const [profit1, setProfit1] = useState(0);
   const [loss, setLoss] = useState(0);
   const [accumulated, setAccumulated] = useState(0)
-  const [cleared, setCleared] = useState(1)
+  const [cleared, setCleared] = useState(1);
+  const history = useHistory();
+
 
   const gameOffline = false//useSelector(selectGameOffline);
 
@@ -225,22 +229,23 @@ const PlaceBetMines = ({
 
   const renderButton = () => {
     if (!gameInProgress && !bet.autobet) {
+      let buttonEnable = false;
+      if (
+        !connected ||
+              userUnableToBet ||
+              bet?.pending ||
+              (amount > userBalance && user.isLoggedIn)
+      ) buttonEnable = true;
+      if(amount === 0) buttonEnable = false;
       return (
         <Button
           role="button"
           tabIndex="0"
-          className={classNames(styles.button, {
-            [styles.buttonDisabled]:
-              !connected ||
-              userUnableToBet ||
-              bet?.pending ||
-              (amount > userBalance && user.isLoggedIn),
-            [styles.notConnected]: !connected,
-          })}
-          disabled={false}
-          onClick={bet?.pending ? null : user.isLoggedIn ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
+          className={classNames(styles.button)}
+          disabled={buttonEnable}
+          onClick={bet?.pending ? null : (user.isLoggedIn && amount > 0) ? (selector === 'manual' ? placeABet : placeAutoBet) : placeGuestBet }
         >
-          {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
+          {(user.isLoggedIn && amount > 0) ? (selector === 'manual' ? 'Place Bet' : 'Start Auto Bet') : 'Play Demo'}
         </Button>
       );
     } else {
@@ -299,6 +304,22 @@ const PlaceBetMines = ({
       );
     }
   };
+  const renderBuyWFAIRMessage = () => {
+  return (
+    <div className={styles.buyTokenInfo}>
+      <p
+        className={classNames([
+          user.isLoggedIn && amount > userBalance ? styles.visible : null,
+        ])}
+      >
+        Insufficient balance to place this bet.{' '}
+        <span onClick={() => history.push(Routes.wallet)}>Add funds</span>
+      </p>
+    </div>
+  );
+};
+
+
   const [selector, setSelector] = useState('manual')
 
   const switchButton = () => {
@@ -349,11 +370,12 @@ const PlaceBetMines = ({
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                // maxValue={formatToFixed(
+                //   user.balance > 10000 ? 10000 : user.balance
+                // )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'alpacawheel-input-field-half',
                   inputFieldDouble: 'alpacawheel-input-field-double',
@@ -542,6 +564,7 @@ const PlaceBetMines = ({
         className={styles.tooltip}
       />
       {renderButton()}
+      {renderBuyWFAIRMessage()}
       {renderMessage()}
     </div>
   );

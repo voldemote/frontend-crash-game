@@ -10,7 +10,17 @@ import moment from 'moment';
 import { TOKEN_NAME } from 'constants/Token';
 
 const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
-  const { amount, network_code, fiat_amount, fiat_currency, created_at, status, symbol } = data;
+  const {
+    amount,
+    network_code,
+    fiat_amount,
+    fiat_currency,
+    input_amount,
+    input_currency,
+    created_at,
+    status,
+    symbol,
+  } = data;
   return (
     <div className={styles.messageItem}>
       <Grid container>
@@ -26,12 +36,12 @@ const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
         </Grid>
         <Grid item xs>
           <div className={styles.messageCenter}>
-            <p>{fiat_amount || 'No data'}</p>
+            <p>{fiat_amount || input_amount || 'No data'}</p>
           </div>
         </Grid>
         <Grid item xs>
           <div className={styles.messageCenter}>
-            <p>{fiat_currency || 'No data'}</p>
+            <p>{fiat_currency || input_currency || 'No data'}</p>
           </div>
         </Grid>
         <Grid item xs>
