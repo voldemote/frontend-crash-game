@@ -40,15 +40,17 @@ import {
   trackPumpDumpStartAutobet,
   trackPumpDumpStopAutobet,
 } from '../../config/gtm';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { GAMES } from 'constants/Games';
 import Button from 'components/Button';
+import Routes from 'constants/Routes';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
+  const sliderMinAmount = 50;
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const gameStartedTimeStamp = useSelector(selectTimeStarted);
@@ -87,15 +89,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     };
   }, [canBet]);
 
-  useEffect(() => {
-    if (user.isLoggedIn && userBalance < amount) {
-      setAmount(userBalance);
-    }
-  }, [user]);
-
   const onTokenNumberChange = number => {
     setAmount(number);
-    // debouncedSetCommitment(number, currency);
   };
 
   const processAutoCashoutValue = value => {
@@ -144,8 +139,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     const changedValue = _.floor(amount * multiplier, 0);
     if (changedValue > 10000) {
       setAmount(10000);
-    } else if (changedValue < 1) {
-      setAmount(1);
+    } else if (changedValue < 0) {
+      setAmount(0);
     } else {
       setAmount(changedValue);
     }
@@ -382,12 +377,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 (amount > userBalance && user.isLoggedIn),
               [styles.notConnected]: !connected,
             })}
-            onClick={user.isLoggedIn ? (selector === 'manual' ?  placeABet : placeAutoBet) : placeGuestBet}
+            onClick={(user.isLoggedIn && amount > 0) ? (selector === 'manual' ?  placeABet : placeAutoBet) : placeGuestBet}
             data-tracking-id={
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
           >
-            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet (Next Round)' : 'Start Auto Bet') : 'Play Demo'}
+            {(user.isLoggedIn && amount > 0) ? (selector === 'manual' ? 'Place Bet (Next Round)' : 'Start Auto Bet') : 'Play Demo'}
           </Button>
         );
     //  }
@@ -428,6 +423,21 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         </Button>
       );
     }
+  };
+
+  const renderBuyWFAIRMessage = () => {
+
+    
+      return (
+        <div className={styles.buyTokenInfo}>
+          <p className={classNames([
+              user.isLoggedIn && (amount > userBalance) ? styles.visible : null,
+          ])}>
+            Insufficient balance to place this bet. <span onClick={() => history.push(Routes.wallet)}>Add funds</span>
+          </p>
+        </div>
+      );
+    
   };
 
   const renderMessage = () => {
@@ -557,15 +567,14 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
+              // LOGGED IN + MANUAL SELECTOR
               <TokenNumberInput
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'elongame-input-field-half',
                   inputFieldDouble: 'elongame-event-input-field-double',
@@ -573,45 +582,46 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 }}
               />
             ) : (
-              <div
-                className={classNames(
-                  styles.cashedOutInputContainer,
-                  styles.demoInput
-                )}
-              >
-                <Input
-                  className={classNames(styles.input)}
-                  type={'number'}
-                  value={amount}
-                  onChange={onGuestAmountChange}
-                  step={0.01}
-                  min="1"
-                  max={'10000'}
-                />
-                <span className={styles.eventTokenLabel}>
-                  <span>{TOKEN_NAME}</span>
-                </span>
-                <div className={styles.buttonWrapper}>
-                  <span
-                    className={styles.buttonItem}
-                    onClick={() => onBetAmountChanged(0.5)}
-                  >
-                    ½
-                  </span>
-                  <span
-                    className={styles.buttonItem}
-                    onClick={() => onBetAmountChanged(2)}
-                  >
-                    2x
-                  </span>
-                  <span
-                    className={styles.buttonItem}
-                    onClick={() => setAmount(10000)}
-                  >
-                    Max
-                  </span>
-                </div>
-              </div>
+              // NOT LOGGED + MANUAL SELECTOR
+               <div
+                 className={classNames(
+                   styles.cashedOutInputContainer,
+                   styles.demoInput
+                 )}
+               >
+                 <Input
+                   className={classNames(styles.input)}
+                   type={'number'}
+                   value={amount}
+                   onChange={onGuestAmountChange}
+                   step={0.01}
+                   min="1"
+                   max={'10000'}
+                 />
+                 <span className={styles.eventTokenLabel}>
+                   <span>{TOKEN_NAME}</span>
+                 </span>
+                 <div className={styles.buttonWrapper}>
+                   <span
+                     className={styles.buttonItem}
+                     onClick={() => onBetAmountChanged(0.5)}
+                   >
+                     ½
+                   </span>
+                   <span
+                     className={styles.buttonItem}
+                     onClick={() => onBetAmountChanged(2)}
+                   >
+                     2x
+                   </span>
+                   <span
+                     className={styles.buttonItem}
+                     onClick={() => setAmount(10000)}
+                   >
+                     Max
+                   </span>
+                 </div>
+               </div>
             )}
             <div className={styles.inputContainer}>
               <label
@@ -644,18 +654,18 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             </div>
           </div>
         :
+          
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
+              // LOGGED IN + AUTOPLAY SELECTOR
               <TokenNumberInput
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'elongame-input-field-half',
                   inputFieldDouble: 'elongame-event-input-field-double',
@@ -663,6 +673,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 }}
               />
             ) : (
+              // NOT LOGGED + AUTOPLAY SELECTOR
               <div
                 className={classNames(
                   styles.cashedOutInputContainer,
@@ -911,6 +922,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       }
       {renderProfit()}
       {renderButton()}
+      {renderBuyWFAIRMessage()}
       {renderMessage()}
     </div>
   );
