@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { AuthenticationActions } from '../../../store/actions/authentication';
 import { PopupActions } from '../../../store/actions/popup';
@@ -6,16 +6,20 @@ import { FormGroup, InputLabel } from '../../Form';
 import InputBox from 'components/InputBox';
 import Button from '../../Button';
 import CheckBox from 'components/CheckBox';
-import HighlightType from '../../Highlight/HighlightType';
 import ReactTooltip from 'react-tooltip';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import HighlightTheme from 'components/Highlight/HighlightTheme';
 import Routes from 'constants/Routes';
+import { RECAPTCHA_KEY } from 'constants/Api';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSocialLogin }) => {
-
+const EmailSignUp = ({
+  styles,
+  signUp,
+  errorState,
+  hidePopup,
+  username,
+  renderSocialLogin,
+}) => {
   const fooRef = useRef(null);
   let emailRef = useRef(null);
   let pwRef = useRef(null);
@@ -23,47 +27,40 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
   let acceptRef = useRef(null);
   let genericRef = useRef(null);
 
-  const { executeRecaptcha } = useGoogleReCaptcha();
-
   const [email, setInputEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [legalAuthorizationAgreed, setLegalAuthorizationAgreed] =
     useState(false);
   const [error, setError] = useState(null);
-  const [recaptchaToken, setRecaptchaToken] = useState(false);
   const [submitInProgress, setSubmitInProgress] = useState(false);
 
   useEffect(() => {
-    handleReCaptchaVerify();
-  }, [executeRecaptcha]);
-
-  useEffect(() => {
     ReactTooltip.rebuild();
-
 
     if (errorState) {
       setSubmitInProgress(false);
       fooRef.current = genericRef;
       setError(errorState);
       ReactTooltip.show(fooRef.current);
-      handleReCaptchaVerify();
-    } else if(error){
+    } else if (error) {
       ReactTooltip.show(fooRef.current);
     } else {
       ReactTooltip.hide();
     }
-
   }, [errorState, fooRef, error]);
 
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-
-    const token = await executeRecaptcha('join');
-    if (!token) return handleReCaptchaVerify();
-
-    setRecaptchaToken(token);
-  }, [executeRecaptcha]);
+  const handleReCaptchaVerify = () => {
+    return new Promise((resolve, _) => {
+      window.grecaptcha.ready(function () {
+        window.grecaptcha
+          .execute(RECAPTCHA_KEY, { action: 'join' })
+          .then(token => {
+            resolve(token);
+          });
+      });
+    });
+  };
 
   const emailIsValid = () => {
     const regExpression = /^[a-z0-9+._-]+@[a-z0-9+._-]+$/;
@@ -82,25 +79,22 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
     const error = validateInput();
     if (error) return;
     setSubmitInProgress(true);
+    handleReCaptchaVerify().then(recaptchaToken => {
+      const refLocalStorage = localStorage.getItem('urlParam_ref');
+      signUp({
+        username,
+        email,
+        password,
+        passwordConfirm: passwordConfirmation,
+        ref: refLocalStorage,
+        recaptchaToken,
+      });
 
-    if (!recaptchaToken) { 
-      await handleReCaptchaVerify();
-    }
-
-    const refLocalStorage = localStorage.getItem('urlParam_ref');
-    signUp({
-      username,
-      email,
-      password,
-      passwordConfirm: passwordConfirmation,
-      ref: refLocalStorage,
-      recaptchaToken,
+      hidePopup();
     });
-
-    hidePopup();
   };
 
-  const validateInput = (options) => {
+  const validateInput = options => {
     let formError = null;
     let fieldRef = null;
 
@@ -127,7 +121,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
   const renderLegalAuthorizationAgreementCheckBox = () => {
     const legalAuthorizationAgreementText = (
       <p
-        ref={(ref) => (acceptRef.current = ref)}
+        ref={ref => (acceptRef.current = ref)}
         data-tip
         data-event="none"
         data-event-off="dblclick"
@@ -141,8 +135,8 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
           rel="noreferrer"
         >
           Terms &amp; Conditions
-        </Link>
-        {' '}and{' '}
+        </Link>{' '}
+        and{' '}
         <Link
           className={'global-link-style'}
           to={Routes.privacy}
@@ -160,7 +154,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
         setChecked={setLegalAuthorizationAgreed}
         text={legalAuthorizationAgreementText}
       />
-    )
+    );
   };
 
   return (
@@ -170,7 +164,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
     >
       {errorState && (
         <div
-          ref={(ref) => (genericRef.current = ref)}
+          ref={ref => (genericRef.current = ref)}
           data-tip
           data-event="none"
           data-event-off="dblclick"
@@ -193,7 +187,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
           <FormGroup
             className={styles.formGroup}
             data-tip
-            rootRef={(ref) => (emailRef.current = ref)}
+            rootRef={ref => (emailRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -206,7 +200,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
               placeholder="john.doe@gmail.com"
               value={email}
               disabled={submitInProgress}
-              setValue={(e) => {
+              setValue={e => {
                 setInputEmail(e.trim().toLowerCase());
               }}
               onConfirm={onConfirm}
@@ -216,7 +210,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
           <FormGroup
             className={styles.formGroup}
             data-tip
-            rootRef={(ref) => (pwRef.current = ref)}
+            rootRef={ref => (pwRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -234,7 +228,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
           <FormGroup
             className={styles.formGroup}
             data-tip
-            rootRef={(ref) => (pwConfirmRef.current = ref)}
+            rootRef={ref => (pwConfirmRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -256,9 +250,10 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
           {renderLegalAuthorizationAgreementCheckBox()}
           <Button
             onClick={onConfirm}
-            className={classNames([styles.submitButton,styles.mobile])}
+            className={classNames([styles.submitButton, styles.mobile])}
             disabled={submitInProgress || !legalAuthorizationAgreed}
             disabledWithOverlay={false}
+            data-action="submit"
           >
             Sign Up with E-mail
           </Button>
@@ -267,7 +262,7 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
       </div>
       <Button
         onClick={onConfirm}
-        className={classNames([styles.submitButton,styles.desktop])}
+        className={classNames([styles.submitButton, styles.desktop])}
         disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
       >
@@ -277,23 +272,23 @@ const EmailSignUp = ({ styles, signUp, errorState, hidePopup, username, renderSo
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loading: state.authentication.loading,
     errorState: state.authentication.error,
     popupVisible: state.popup.visible,
-    username: state.onboarding.username
+    username: state.onboarding.username,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    signUp: (payload) => {
+    signUp: payload => {
       dispatch(AuthenticationActions.signUp(payload));
     },
     hidePopup: () => {
       dispatch(PopupActions.hide());
-    }
+    },
   };
 };
 
