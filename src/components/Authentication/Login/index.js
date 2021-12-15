@@ -111,7 +111,7 @@ const Login = ({
   return (
     <>
       <form
-        className={styles.authenticationInputBoxContainer}
+        className={classNames(styles.authenticationInputBoxContainer, forgotPassword && styles.forgotPassword)}
         onSubmit={onConfirm}
       >
         {errorState && (

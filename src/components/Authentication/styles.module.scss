@@ -51,6 +51,10 @@
   margin-top: 20px;
   font-family: $fontOmnes;
   text-transform: uppercase;
+
+  &.forgotPassword {
+    padding: 50px 20px;
+  }
   .rowContainer {
     width: 100%;
     display: flex;
