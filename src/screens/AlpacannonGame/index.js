@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -37,6 +37,7 @@ import { UserActions } from 'store/actions/user';
 import { selectUser } from 'store/selectors/authentication';
 import Button from 'components/Button';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
+import classNames from "classnames";
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
@@ -49,7 +50,8 @@ const PlinkoGame = ({
   refreshLuckyData,
   updateUserBalance
 }) => {
-  const Api = new GameApi(GAMES.cannon.url, token);
+  const gameCfg = GAMES.cannon;
+  const Api = new GameApi(gameCfg.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
   const user = useSelector(selectUser);
@@ -65,6 +67,15 @@ const PlinkoGame = ({
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation);
+  }, []);
+
+  const handleFairnessPopup = useCallback(event => {
+    showPopup(PopupTheme.fairnessPopup, {
+      maxWidth: true, data: {
+        game: gameCfg,
+        token
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -102,6 +113,25 @@ const PlinkoGame = ({
     refreshHighData();
     refreshLuckyData();
   }, [dispatch, connected]);
+
+  useEffect(() => {
+    (async () => {
+      //this get route is for retrieving client / server seeds for the game, if its very first time,
+      //casino_fairness record will be created automatically
+      if(userId) {
+        await Api.getCurrentFairnessByGame(gameCfg.id);
+      }
+    })().catch(error => {
+      dispatch(AlertActions.showError({
+        message: `${gameCfg.name}: ${error.response?.data || error.message}`
+      }));
+
+      setBet({
+        ...bet,
+        ready: false
+      })
+    });
+  }, [])
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
@@ -215,6 +245,25 @@ const PlinkoGame = ({
                   setBet={setBet}
                   bet={bet}
                 />
+              </div>
+
+              <div className={styles.fairnessContainer}>
+                <Icon
+                  className={styles.balanceIcon}
+                  iconType={IconType.balanceScaleSolid}
+                  iconTheme={IconTheme.black}
+                  height={18}
+                  width={18}
+                />{' '}
+                <span
+                  className={classNames(
+                    'global-link-style',
+                    styles.fairnessOpenPopup
+                  )}
+                  onClick={handleFairnessPopup}
+                >
+                  Fairness
+                </span>
               </div>
             </div>
           </div>
