@@ -888,49 +888,17 @@
   justify-content: center;
 
   .addressCopy {
+    width: calc(100% - 125px - 100px);
+    padding-top: 25px;
     margin-left: 20px;
-    background: none;
-    font-size: 24px;
-    font-family: $fontBold;
-    border: none;
-    position: relative;
-    cursor: pointer;
-
-    &:active {
-      opacity: 0.6;
-    }
-    $bgColorPseudo: transparentize(#000000, 0.4);
-    &::before,
-    &::after {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &::before {
-      top: calc(100% + 4px);
-      content: '';
-      border: 6px solid transparent;
-      border-top: 0;
-      border-bottom-color: $bgColorPseudo;
-    }
-    &::after {
-      top: calc(100% + 10px);
-      content: attr(data-tooltip-text);
-      background-color: $bgColorPseudo;
-      width: max-content;
-      white-space: nowrap;
-      padding: 7px;
-      color: #fff;
-      font-size: 16px;
-      border-radius: 8px;
-    }
   }
 
   @media screen and (max-width: $screen-xs) {
     flex-direction: column;
 
     .addressCopy {
-      margin: 10px 0 40px;
+      margin: 10px 0;
+      width: 100%;
     }
   }
   @media screen and (min-width: $screen-md) {

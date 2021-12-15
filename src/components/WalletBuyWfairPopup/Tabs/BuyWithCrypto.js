@@ -26,17 +26,6 @@ const cryptoShortName = {
   ethereum: `ETH`,
   litecoin: `LTC`,
 };
-const cryptoRegexFormat = {
-  bitcoin: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/g,
-  ethereum: /^0x[a-fA-F0-9]{40}$/g,
-  litecoin: /^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/g,
-};
-
-const depositAddress = {
-  bitcoin: process.env.REACT_APP_DEPOSIT_WALLET_BITCOIN,
-  ethereum: process.env.REACT_APP_DEPOSIT_WALLET_ETHEREUM,
-  litecoin: process.env.REACT_APP_DEPOSIT_WALLET_LITECOIN,
-};
 
 const BuyWithCrypto = () => {
   const [currency, setCurrency] = useState(0);
@@ -93,24 +82,6 @@ const BuyWithCrypto = () => {
     }
   }, [activeTab]);
 
-  const OnClickConfirmAmount = () => {
-
-    if(cryptoShortName[activeTab]
-      && currency
-      && tokenValue
-    ){
-      sendBuyWithCrypto({
-        currency: cryptoShortName[activeTab],
-        amount: currency,
-        estimate: tokenValue
-      })
-    }
-
-    setAddress(depositAddress[activeTab]);
-    setTransaction(!transaction);
-  };
-
-
   const onChangeAmount = useDebounce({
     callback: onCurrencyChange,
     delay: 500,
@@ -118,135 +89,122 @@ const BuyWithCrypto = () => {
 
   return (
     <div className={styles.buyWithCryptoContainer}>
-      {!transaction && (
-        <>
-          {/* Crypto Tabs */}
-          <div className={styles.cryptoTabsContianer}>
-            <div
-              className={classNames(
-                styles.cryptoTab,
-                activeTab === 'bitcoin' && styles.cryptoTabActive
-              )}
-              onClick={() => setActiveTab('bitcoin')}
-            >
-              <BitcoinIcon />
-              <p className={styles.fullName}>Bitcoin</p>
-              <p className={styles.shortName}>BTC</p>
+      {/* Crypto Tabs */}
+      <div className={styles.cryptoTabsContianer}>
+        <div
+          className={classNames(
+            styles.cryptoTab,
+            activeTab === 'bitcoin' && styles.cryptoTabActive
+          )}
+          onClick={() => setActiveTab('bitcoin')}
+        >
+          <BitcoinIcon />
+          <p className={styles.fullName}>Bitcoin</p>
+          <p className={styles.shortName}>BTC</p>
+        </div>
+        <div
+          className={classNames(
+            styles.cryptoTab,
+            activeTab === 'ethereum' && styles.cryptoTabActive
+          )}
+          onClick={() => setActiveTab('ethereum')}
+        >
+          <EthereumIcon />
+          <p className={styles.fullName}>Ethereum</p>
+          <p className={styles.shortName}>ETH</p>
+        </div>
+        <div
+          className={classNames(
+            styles.cryptoTab,
+            activeTab === 'litecoin' && styles.cryptoTabActive
+          )}
+          onClick={() => setActiveTab('litecoin')}
+        >
+          <LitecoinIcon />
+          <p className={styles.fullName}>Litecoin</p>
+          <p className={styles.shortName}>LTC</p>
+        </div>
+      </div>
+
+      {/* Crypto Calculator */}
+      <div className={styles.cryptoCalculatorContainer}>
+        {/* Content */}
+        <div className={styles.cryptoContent}>
+          <p>
+            To deposit {cryptoShortName[activeTab]}, simply make a transfer to the wallet provided below.
+          </p>
+        </div>
+
+        {/* QR code and address */}
+        <div className={styles.transferInformation}>
+          <div className={styles.qrCodeImg}>
+            {uri && <QRCode value={uri} size={125} />}
+          </div>
+          <div className={styles.addressCopy}>
+            <ReferralLinkCopyInputBox
+              inputTheme={InputBoxTheme.copyToClipboardInputWhite}
+              forDeposit={address}
+            />
+          </div>
+        </div>
+        <div className={styles.cryptoContent}>
+          <p>
+            Use the calculator to estimate how much WFAIR you can get by
+            depositing cryptos.
+          </p>
+        </div>
+        {/* Currency */}
+
+        <div className={styles.cryptoInputsWrapper}>
+          <div className={styles.cryptoInputContiner}>
+            <div className={styles.labelContainer}>
+              <span>You pay</span>
             </div>
-            <div
-              className={classNames(
-                styles.cryptoTab,
-                activeTab === 'ethereum' && styles.cryptoTabActive
+            <NumberCommaInput
+              value={currency}
+              min={0}
+              max={2000}
+              onChange={onChangeAmount}
+              onClick={selectContent}
+            />
+            <div className={styles.inputRightContainer}>
+              {activeTab === 'bitcoin' && (
+                <>
+                  <BitcoinIcon />
+                  BTC
+                </>
               )}
-              onClick={() => setActiveTab('ethereum')}
-            >
-              <EthereumIcon />
-              <p className={styles.fullName}>Ethereum</p>
-              <p className={styles.shortName}>ETH</p>
-            </div>
-            <div
-              className={classNames(
-                styles.cryptoTab,
-                activeTab === 'litecoin' && styles.cryptoTabActive
+              {activeTab === 'ethereum' && (
+                <>
+                  <EthereumIcon />
+                  ETH
+                </>
               )}
-              onClick={() => setActiveTab('litecoin')}
-            >
-              <LitecoinIcon />
-              <p className={styles.fullName}>Litecoin</p>
-              <p className={styles.shortName}>LTC</p>
+              {activeTab === 'litecoin' && (
+                <>
+                  <LitecoinIcon />
+                  LTC
+                </>
+              )}
             </div>
           </div>
 
-          {/* Crypto Calculator */}
-          <div className={styles.cryptoCalculatorContainer}>
-            {/* Content */}
-            <div className={styles.cryptoContent}>
-              <p>
-                You can add WFAIR to your account by exchanging Bitcoin,
-                Ethereum, or Litecoin.
-              </p>
-              <p>
-                Select a currency, then use the QR code or copy the wallet
-                address below and deposit as much as you want. We'll know it's
-                you.
-              </p>
+          {/* WFAIR TOKEN */}
+          <div className={styles.cryptoInputContiner}>
+            <div className={styles.labelContainer}>
+              <span>You receive (estimate)</span>
             </div>
-
-            {/* QR code and address */}
-            <div className={styles.transferInformation}>
-              <div className={styles.qrCodeImg}>
-                {uri && <QRCode value={uri} size={125} />}
-              </div>
-
-              <button
-                onClick={() => Text.toClipboard(address)}
-                type="button"
-                className={styles.addressCopy}
-                data-tooltip-text="Click to copy!"
-              >
-                {shortenAddress(address, false)}
-              </button>
-            </div>
-            <div className={styles.cryptoContent}>
-              <p>
-                Use the calculator to estimate how much WFAIR you can get by
-                depositing cryptos.
-              </p>
-            </div>
-            {/* Currency */}
-
-            <div className={styles.cryptoInputsWrapper}>
-              <div className={styles.cryptoInputContiner}>
-                <div className={styles.labelContainer}>
-                  <span>You pay</span>
-                </div>
-                <NumberCommaInput
-                  value={currency}
-                  min={0}
-                  max={2000}
-                  onChange={onChangeAmount}
-                  onClick={selectContent}
-                />
-                <div className={styles.inputRightContainer}>
-                  {activeTab === 'bitcoin' && (
-                    <>
-                      <BitcoinIcon />
-                      BTC
-                    </>
-                  )}
-                  {activeTab === 'ethereum' && (
-                    <>
-                      <EthereumIcon />
-                      ETH
-                    </>
-                  )}
-                  {activeTab === 'litecoin' && (
-                    <>
-                      <LitecoinIcon />
-                      LTC
-                    </>
-                  )}
-                </div>
-              </div>
-             
-              {/* WFAIR TOKEN */}
-              <div className={styles.cryptoInputContiner}>
-                <div className={styles.labelContainer}>
-                  <span>You receive (estimate)</span>
-                </div>
-                <input disabled readOnly value={tokenValue} />
-                <div className={styles.inputRightContainer}>
-                  <WfairIcon
-                    className={styles.wfairLogo}
-                    onClick={handleWFAIRClick}
-                  />
-                  <span>{TOKEN_NAME}</span>
-                </div>
-              </div>
+            <input disabled readOnly value={tokenValue} />
+            <div className={styles.inputRightContainer}>
+              <WfairIcon
+                className={styles.wfairLogo}
+                onClick={handleWFAIRClick}
+              />
+              <span>{TOKEN_NAME}</span>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 };
