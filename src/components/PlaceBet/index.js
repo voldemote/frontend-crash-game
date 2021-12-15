@@ -40,15 +40,17 @@ import {
   trackPumpDumpStartAutobet,
   trackPumpDumpStopAutobet,
 } from '../../config/gtm';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { GAMES } from 'constants/Games';
 import Button from 'components/Button';
+import Routes from 'constants/Routes';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
+  const sliderMinAmount = 50;
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const gameStartedTimeStamp = useSelector(selectTimeStarted);
@@ -66,12 +68,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const gameOffline = useSelector(selectGameOffline);
   const [profit, setProfit] = useState(0);
   const [loss, setLoss] = useState(0);
-  const [wincrease, setWincrease] = useState(0)
-  const [lincrease, setLincrease] = useState(0)
-  const [lossbutton, setLossbutton] = useState(false)
-  const [winbutton, setWinbutton] = useState(false)
-  const [autobet, setAutobet] = useState(null)
-  const [betted, setBetted] = useState(false)
+  const [wincrease, setWincrease] = useState(0);
+  const [lincrease, setLincrease] = useState(0);
+  const [lossbutton, setLossbutton] = useState(false);
+  const [winbutton, setWinbutton] = useState(false);
+  const [autobet, setAutobet] = useState(null);
+  const [betted, setBetted] = useState(false);
   const { slug } = useParams();
 
   const userUnableToBet = amount < 1 || !canBet || gameOffline;
@@ -87,15 +89,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     };
   }, [canBet]);
 
-  useEffect(() => {
-    if (user.isLoggedIn && userBalance < amount) {
-      setAmount(userBalance);
-    }
-  }, [user]);
-
   const onTokenNumberChange = number => {
     setAmount(number);
-    // debouncedSetCommitment(number, currency);
   };
 
   const processAutoCashoutValue = value => {
@@ -128,7 +123,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
     if (slug === GAMES['elonGame'].slug) {
       trackElonChangeAutoCashout({ multiplier: result });
-
     } else if (slug === GAMES['pumpDump'].slug) {
       trackPumpDumpChangeAutoCashout({ multiplier: result });
     }
@@ -144,8 +138,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     const changedValue = _.floor(amount * multiplier, 0);
     if (changedValue > 10000) {
       setAmount(10000);
-    } else if (changedValue < 1) {
-      setAmount(1);
+    } else if (changedValue < 0) {
+      setAmount(0);
     } else {
       setAmount(changedValue);
     }
@@ -157,7 +151,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
   useEffect(() => {
     setAnimate(false);
-    if(isGameRunning) setBetted(false)
+    if (isGameRunning) setBetted(false);
   }, [isGameRunning]);
 
   useEffect(() => {
@@ -186,48 +180,54 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   }, [isGameRunning, crashFactor, userCashedOut]);
 
   useEffect(() => {
-    if(!isGameRunning && autobet && !betted){
+    if (!isGameRunning && autobet && !betted) {
       const newautobet = {
         ...autobet,
-        amount: parseInt(autobet.amount*(autobet.win ? 1+autobet.wincrease : 1+autobet.lincrease))
-      }
-      console.log("newautobet", newautobet)
-      if(newautobet.profit > newautobet.accumulated && newautobet.loss > -newautobet.accumulated){
-        console.log("1")
-        setBetted(true)
-        setAutobet({...newautobet, accumulated: autobet.accumulated - newautobet.amount })
+        amount: parseInt(
+          autobet.amount *
+            (autobet.win ? 1 + autobet.wincrease : 1 + autobet.lincrease)
+        ),
+      };
+      console.log('newautobet', newautobet);
+      if (
+        newautobet.profit > newautobet.accumulated &&
+        newautobet.loss > -newautobet.accumulated
+      ) {
+        console.log('1');
+        setBetted(true);
+        setAutobet({
+          ...newautobet,
+          accumulated: autobet.accumulated - newautobet.amount,
+        });
         onBet(newautobet, newautobet.crashFactor);
-      }else{
-        console.log("2")
-        setAutobet(null)
+      } else {
+        console.log('2');
+        setAutobet(null);
       }
-
     }
   }, [isGameRunning, betted, autobet]);
   const stopAutobet = () => {
-
     const payload = {
       amount,
       autobet: 1,
       profit: Number(profit),
       loss: Number(loss),
-      wincrease: winbutton?0:Number(wincrease)/100,
-      lincrease: lossbutton?0:Number(lincrease)/100,
+      wincrease: winbutton ? 0 : Number(wincrease) / 100,
+      lincrease: lossbutton ? 0 : Number(lincrease) / 100,
       multiplier: crashFactor,
-      accumulated: autobet.accumulated
+      accumulated: autobet.accumulated,
     };
 
     if (slug === GAMES['elonGame'].slug) {
-      trackElonStopAutobet({...payload});
-
+      trackElonStopAutobet({ ...payload });
     } else if (slug === GAMES['pumpDump'].slug) {
-      trackPumpDumpStopAutobet({...payload});
+      trackPumpDumpStopAutobet({ ...payload });
     }
 
-    setAutobet(null)
+    setAutobet(null);
   };
 
-  const placeABet = (e) => {
+  const placeABet = e => {
     e.preventDefault();
     e.stopPropagation();
     if (userUnableToBet) return;
@@ -248,8 +248,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       autobet: true,
       profit: Number(profit),
       loss: Number(loss),
-      wincrease: winbutton?0:Number(wincrease)/100,
-      lincrease: lossbutton?0:Number(lincrease)/100,
+      wincrease: winbutton ? 0 : Number(wincrease) / 100,
+      lincrease: lossbutton ? 0 : Number(lincrease) / 100,
       crashFactor: 999,
     };
 
@@ -259,7 +259,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         autobet: 1,
         multiplier: crashFactor,
       });
-
     } else if (slug === GAMES['pumpDump'].slug) {
       trackPumpDumpStartAutobet({
         ...payload,
@@ -268,15 +267,13 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       });
     }
 
-
-    console.log("placeAutoBet")
-    setAutobet(payload)
-    setBetted(true)
+    console.log('placeAutoBet');
+    setAutobet(payload);
+    setBetted(true);
     await onBet(payload, payload.crashFactor);
   };
 
-
-  const cancelBet = async (e) => {
+  const cancelBet = async e => {
     e.preventDefault();
     e.stopPropagation();
     setCanBet(false);
@@ -288,7 +285,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       showLoginPopup();
       return;
     }
-
     if (userUnableToBet) return;
     onBet();
     const payload = {
@@ -303,7 +299,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         amount: payload.amount,
         multiplier: payload.crashFactor,
       });
-
     } else if (slug === GAMES['pumpDump'].slug) {
       trackPumpDumpPlaceBetGuest({
         amount: payload.amount,
@@ -323,7 +318,12 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     setCanBet(false);
     dispatch(RosiGameActions.cashOut());
     const response = await onCashout(false, autobet);
-    autobet && setAutobet({...autobet, accumulated: autobet.accumulated + response.data.reward, win: true})
+    autobet &&
+      setAutobet({
+        ...autobet,
+        accumulated: autobet.accumulated + response.data.reward,
+        win: true,
+      });
     setAnimate(true);
   };
 
@@ -352,7 +352,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   };
 
   const renderButton = () => {
-    if(autobet){
+    if (autobet) {
       return (
         <>
           <Button
@@ -368,29 +368,44 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           </Button>
         </>
       );
-    }else if (displayBetButton) {
-    //  else{
+    } else if (displayBetButton) {
+      let buttonEnable = false;
+
+      if (
+        !connected ||
+        userUnableToBet ||
+        isBetInQueue ||
+        (amount > userBalance && user.isLoggedIn)
+      ) buttonEnable = true;
+      if(amount === 0) buttonEnable = false;
+
+
+        //  else{
         return (
           <Button
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, {
-              [styles.buttonDisabled]:
-                !connected ||
-                userUnableToBet ||
-                isBetInQueue ||
-                (amount > userBalance && user.isLoggedIn),
-              [styles.notConnected]: !connected,
-            })}
-            onClick={user.isLoggedIn ? (selector === 'manual' ?  placeABet : placeAutoBet) : placeGuestBet}
+            className={classNames(styles.button)}
+            disabled={buttonEnable}
+            onClick={
+              user.isLoggedIn && amount > 0
+                ? selector === 'manual'
+                  ? placeABet
+                  : placeAutoBet
+                : placeGuestBet
+            }
             data-tracking-id={
               user.isLoggedIn ? 'elongame-place-bet' : 'elongame-play-demo'
             }
           >
-            {user.isLoggedIn ? (selector === 'manual' ? 'Place Bet (Next Round)' : 'Start Auto Bet') : 'Play Demo'}
+            {user.isLoggedIn && amount > 0
+              ? selector === 'manual'
+                ? 'Place Bet (Next Round)'
+                : 'Start Auto Bet'
+              : 'Play Demo'}
           </Button>
         );
-    //  }
+      //  }
     } else if ((userPlacedABet && !isGameRunning) || isBetInQueue) {
       return (
         <>
@@ -430,6 +445,21 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     }
   };
 
+  const renderBuyWFAIRMessage = () => {
+    return (
+      <div className={styles.buyTokenInfo}>
+        <p
+          className={classNames([
+            user.isLoggedIn && amount > userBalance ? styles.visible : null,
+          ])}
+        >
+          Insufficient balance to place this bet.{' '}
+          <span onClick={() => history.push(Routes.wallet)}>Add funds</span>
+        </p>
+      </div>
+    );
+  };
+
   const renderMessage = () => {
     if (gameOffline) {
       return (
@@ -467,7 +497,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const renderProfit = () => {
     if (userPlacedABet && isGameRunning) {
       return (
-        <div className={styles.profit} style={{bottom: 0}}>
+        <div className={styles.profit} style={{ bottom: 0 }}>
           <Timer
             showIncome
             pause={!isGameRunning}
@@ -484,21 +514,45 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     }
   };
 
-  const [selector, setSelector] = useState('manual')
+  const [selector, setSelector] = useState('manual');
 
   const switchButton = () => {
     return (
       <div className={styles.selector}>
-        <span className={styles.top} style={{ left: selector === 'manual' ? 2 : '49.4%' }}></span>
-        <div className={classNames(styles.tab)} onClick={() => {setSelector('manual'); setAutobet(null)}} >
-          <span className={selector === 'manual' ? styles.selected : styles.deselected}>Manual Bet</span>
+        <span
+          className={styles.top}
+          style={{ left: selector === 'manual' ? 2 : '49.4%' }}
+        ></span>
+        <div
+          className={classNames(styles.tab)}
+          onClick={() => {
+            setSelector('manual');
+            setAutobet(null);
+          }}
+        >
+          <span
+            className={
+              selector === 'manual' ? styles.selected : styles.deselected
+            }
+          >
+            Manual Bet
+          </span>
         </div>
-        <div className={classNames(styles.tab)} onClick={() => setSelector('auto')} >
-          <span className={selector !== 'manual' ? styles.selected : styles.deselected}>Auto Bet</span>
+        <div
+          className={classNames(styles.tab)}
+          onClick={() => setSelector('auto')}
+        >
+          <span
+            className={
+              selector !== 'manual' ? styles.selected : styles.deselected
+            }
+          >
+            Auto Bet
+          </span>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const canvasStyles = {
     position: 'fixed',
@@ -553,19 +607,18 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             </p>
           </InfoBox>
         </div>
-        {selector === 'manual' ?
+        {selector === 'manual' ? (
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
+              // LOGGED IN + MANUAL SELECTOR
               <TokenNumberInput
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'elongame-input-field-half',
                   inputFieldDouble: 'elongame-event-input-field-double',
@@ -573,6 +626,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 }}
               />
             ) : (
+              // NOT LOGGED + MANUAL SELECTOR
               <div
                 className={classNames(
                   styles.cashedOutInputContainer,
@@ -643,19 +697,18 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               </div>
             </div>
           </div>
-        :
+        ) : (
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
+              // LOGGED IN + AUTOPLAY SELECTOR
               <TokenNumberInput
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'elongame-input-field-half',
                   inputFieldDouble: 'elongame-event-input-field-double',
@@ -663,46 +716,45 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 }}
               />
             ) : (
+              // NOT LOGGED + AUTOPLAY SELECTOR
               <div
                 className={classNames(
                   styles.cashedOutInputContainer,
                   styles.demoInput
                 )}
               >
-              <Input
-                className={classNames(styles.input)}
-                type={'number'}
-                value={amount}
-                onChange={onGuestAmountChange}
-                step={0.01}
-                min="1"
-                max={'10000'}
-              />
-              <span className={styles.eventTokenLabel}>
-                <span>{TOKEN_NAME}</span>
-              </span>
-              <div className={styles.buttonWrapper}>
-                <span
-                  className={styles.buttonItem}
-                  onClick={() => onBetAmountChanged(0.5)}
-                >
-                  ½
+                <Input
+                  className={classNames(styles.input)}
+                  type={'number'}
+                  value={amount}
+                  onChange={onGuestAmountChange}
+                  step={0.01}
+                  min="1"
+                  max={'10000'}
+                />
+                <span className={styles.eventTokenLabel}>
+                  <span>{TOKEN_NAME}</span>
                 </span>
-                <span
-                  className={styles.buttonItem}
-                  onClick={() => onBetAmountChanged(2)}
-                >
-                  2x
-                </span>
-                <span
-                  className={styles.buttonItem}
-                  onClick={() => setAmount(10000)}
-                >
-                  Max
-                </span>
-              </div>
-
-
+                <div className={styles.buttonWrapper}>
+                  <span
+                    className={styles.buttonItem}
+                    onClick={() => onBetAmountChanged(0.5)}
+                  >
+                    ½
+                  </span>
+                  <span
+                    className={styles.buttonItem}
+                    onClick={() => onBetAmountChanged(2)}
+                  >
+                    2x
+                  </span>
+                  <span
+                    className={styles.buttonItem}
+                    onClick={() => setAmount(10000)}
+                  >
+                    Max
+                  </span>
+                </div>
               </div>
             )}
             <div className={styles.inputContainer}>
@@ -735,13 +787,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               </div>
             </div>
             <div className={styles.inputContainer}>
-              <label
-                className={classNames(
-                  styles.label,
-                )}
-              >
-                Stop on Profit
-              </label>
+              <label className={classNames(styles.label)}>Stop on Profit</label>
               <div
                 className={classNames(
                   styles.cashedOutInputContainer,
@@ -752,7 +798,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                   className={classNames(styles.input)}
                   type={'number'}
                   value={profit}
-                  onChange={(e) => setProfit(e.target.value)}
+                  onChange={e => setProfit(e.target.value)}
                   step={1}
                   min="1"
                   max={'100'}
@@ -760,16 +806,9 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 <span className={styles.eventTokenLabel}>
                   <span>{TOKEN_NAME}</span>
                 </span>
-
               </div>
             </div>
-            <label
-              className={classNames(
-                styles.label,
-              )}
-            >
-              Stop on Loss
-            </label>
+            <label className={classNames(styles.label)}>Stop on Loss</label>
             <div
               className={classNames(
                 styles.cashedOutInputContainer,
@@ -780,7 +819,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 className={classNames(styles.input)}
                 type={'number'}
                 value={loss}
-                onChange={(e) => setLoss(e.target.value)}
+                onChange={e => setLoss(e.target.value)}
                 step={1}
                 min="1"
                 max={'100'}
@@ -789,13 +828,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 <span>{TOKEN_NAME}</span>
               </span>
             </div>
-            <label
-              className={classNames(
-                styles.label,
-              )}
-            >
-              On Win
-            </label>
+            <label className={classNames(styles.label)}>On Win</label>
             <div
               className={classNames(
                 styles.cashedOutInputContainer,
@@ -803,15 +836,29 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               )}
             >
               <div className={styles.toggleButton}>
-                <span className={styles.toggleLabel} style={{ marginLeft: winbutton ? 1 : '44.2%', width: !winbutton && '55%'}}></span>
                 <span
-                  className={classNames(styles.buttonItem, winbutton && styles.selected)}
-                  onClick={() => setWinbutton(true)}>
+                  className={styles.toggleLabel}
+                  style={{
+                    marginLeft: winbutton ? 1 : '44.2%',
+                    width: !winbutton && '55%',
+                  }}
+                ></span>
+                <span
+                  className={classNames(
+                    styles.buttonItem,
+                    winbutton && styles.selected
+                  )}
+                  onClick={() => setWinbutton(true)}
+                >
                   Reset
                 </span>
                 <span
-                  className={classNames(styles.buttonItem, !winbutton && styles.selected)}
-                  onClick={() => setWinbutton(false)}>
+                  className={classNames(
+                    styles.buttonItem,
+                    !winbutton && styles.selected
+                  )}
+                  onClick={() => setWinbutton(false)}
+                >
                   Increase
                 </span>
               </div>
@@ -819,7 +866,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 className={classNames(styles.input)}
                 type={'number'}
                 value={wincrease}
-                onChange={(e) => setWincrease(e.target.value)}
+                onChange={e => setWincrease(e.target.value)}
                 step={1}
                 min="0"
                 max={'100'}
@@ -827,39 +874,46 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               <span className={styles.eventTokenLabel}>
                 <span>%</span>
               </span>
-
             </div>
-            <label
-              className={classNames(
-                styles.label,
-              )}
-            >
-              On Loss
-            </label>
+            <label className={classNames(styles.label)}>On Loss</label>
             <div
               className={classNames(
                 styles.cashedOutInputContainer,
                 styles.demoInput
               )}
             >
-            <div className={styles.toggleButton}>
-            <span className={styles.toggleLabel} style={{marginLeft: lossbutton ? 1 : '44.2%', width: !lossbutton && '55%'}}></span>
-              <span
-                className={classNames(styles.buttonItem, lossbutton && styles.selected)}
-                onClick={() => setLossbutton(true)}>
-                Reset
-              </span>
-              <span
-                className={classNames(styles.buttonItem, !lossbutton && styles.selected)}
-                onClick={() => setLossbutton(false)}>
-                Increase
-              </span>
-            </div>
+              <div className={styles.toggleButton}>
+                <span
+                  className={styles.toggleLabel}
+                  style={{
+                    marginLeft: lossbutton ? 1 : '44.2%',
+                    width: !lossbutton && '55%',
+                  }}
+                ></span>
+                <span
+                  className={classNames(
+                    styles.buttonItem,
+                    lossbutton && styles.selected
+                  )}
+                  onClick={() => setLossbutton(true)}
+                >
+                  Reset
+                </span>
+                <span
+                  className={classNames(
+                    styles.buttonItem,
+                    !lossbutton && styles.selected
+                  )}
+                  onClick={() => setLossbutton(false)}
+                >
+                  Increase
+                </span>
+              </div>
               <Input
                 className={classNames(styles.input)}
                 type={'number'}
                 value={lincrease}
-                onChange={(e) => setLincrease(e.target.value)}
+                onChange={e => setLincrease(e.target.value)}
                 step={1}
                 min="0"
                 max={'100'}
@@ -869,7 +923,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               </span>
             </div>
           </div>
-        }
+        )}
       </div>
       {showCashoutWarning ? (
         <div className={styles.error}>
@@ -893,24 +947,27 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
         multiline
         className={styles.tooltip}
       />
-      {autobet &&
+      {autobet && (
         <>
-          <div className={styles.spinsleft} style={{marginTop: 18}}>
-            <span className={autobet.accumulated > 0 ? styles.reward : styles.lost}>
-            {Math.floor(autobet.accumulated)} {TOKEN_NAME}
+          <div className={styles.spinsleft} style={{ marginTop: 18 }}>
+            <span
+              className={autobet.accumulated > 0 ? styles.reward : styles.lost}
+            >
+              {Math.floor(autobet.accumulated)} {TOKEN_NAME}
             </span>
             accumulated
           </div>
           <div className={styles.spinsleft}>
             Current bet:
             <span className={styles.neutral}>
-            {Math.floor(autobet.amount)} {TOKEN_NAME}
+              {Math.floor(autobet.amount)} {TOKEN_NAME}
             </span>
           </div>
         </>
-      }
+      )}
       {renderProfit()}
       {renderButton()}
+      {renderBuyWFAIRMessage()}
       {renderMessage()}
     </div>
   );
