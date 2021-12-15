@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Button from 'components/Button';
 import HighlightTheme from 'components/Highlight/HighlightTheme';
 import HighlightType from 'components/Highlight/HighlightType';
@@ -7,21 +8,25 @@ import IconType from 'components/Icon/IconType';
 import AuthenticationType from '../AuthenticationType';
 import { useSocialLogins } from './useSocialLogins';
 
-const LoginButton = ({ children, onClick, styles }) => (
+const LoginButton = ({ children, onClick, styles, signUp }) => (
   <Button
     onClick={onClick}
-    // withoutBackground={true}
-    // highlightType={HighlightType.highlightModalButton}
-    // highlightTheme={HighlightTheme.fillPink}
-    className={styles.signInButton}
-    disabledWithOverlay={true}
+    className={signUp ? styles.signInButton : styles.socialButton}    
+    withoutPadding={!signUp}
   >
     {children}
   </Button>
 );
 
-const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
-  const { initGoogleLogin, initFacebookLogin } = useSocialLogins();
+const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType }) => {
+  const {
+    initGoogleLogin,
+    initFacebookLogin,
+    initTwitchLogin,
+    initDiscordLogin,
+    isVisible
+  } = useSocialLogins();
+
   const showNewFeatures =
     process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const iconProps = {
@@ -31,25 +36,31 @@ const SocialLogin = ({ styles, prepend = [], authenticationType }) => {
   const prefixText = authenticationType === AuthenticationType.register ? "Sign up" : "Login";
 
   return (
-    <>
-      {
-        prepend.map(({ content, onClick }) => (
-          <LoginButton styles={styles} onClick={onClick}>
-            {content}
-          </LoginButton>
-        ))
+    <div className={classNames(styles.socialContainer, signUp && styles.verticalContainer)}>
+      {prepend.map(({ content, onClick }) => (
+        <LoginButton styles={styles} onClick={onClick}>
+          {content}
+        </LoginButton>
+      ))}
+      {isVisible.google && 
+        <LoginButton styles={styles} onClick={initGoogleLogin} signUp={signUp}>
+          <Icon className={styles.socialIcon} iconType={IconType.google} {...iconProps} />
+          {signUp && <p>Sign up with Google</p>}
+        </LoginButton>
       }
-      <LoginButton styles={styles} onClick={initGoogleLogin}>
-        <Icon iconType={IconType.google} {...iconProps} />
-      </LoginButton>
-
-      {/*
-      showNewFeatures && <LoginButton styles={styles} onClick={initFacebookLogin}>
-        <Icon iconType={IconType.facebook} {...iconProps} />
-        <span>{prefixText} with Facebook</span>
-      </LoginButton>
-      */}
-    </>
+      {isVisible.twitch && 
+        <LoginButton styles={styles} onClick={initTwitchLogin} signUp={signUp}>
+          <Icon className={styles.socialIcon} iconType={IconType.twitch} {...iconProps} />
+          {signUp && <p>Sign up with Twitch</p>}
+        </LoginButton>
+      }
+      {isVisible.discord &&
+        <LoginButton styles={styles} onClick={initDiscordLogin} signUp={signUp}>
+          <Icon className={styles.socialIcon} iconType={IconType.discord} {...iconProps} />
+          {signUp && <p>Sign up with Discord</p>}
+        </LoginButton>
+      }
+    </div>
   );
 };
 

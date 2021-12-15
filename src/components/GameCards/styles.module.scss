@@ -1,7 +1,7 @@
 @import '../../styles/all';
 
 .gamesContainer {
-  padding: 30px 0;
+  padding: 30px 0px;
 
   @media (max-width: $screen-xs) {
     padding: 0;
@@ -65,20 +65,34 @@
 }
 
 .games {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  row-gap: 15px;
-  column-gap: 15px;
+  // display: flex;
+  // flex-wrap: wrap;
+  // width: 100%;
+  // row-gap: 15px;
+  // column-gap: 15px;
 
-  @media (max-width: $screen-xs) {
-    //flex-direction: column;
-    column-gap: 0px;
+  text-align: center;
+  margin-top: 20px;
+  img {
+    border-radius: 12px;
+    width: 96%;
   }
+
+  // @media (max-width: $screen-xs) {
+  //   //flex-direction: column;
+  //   column-gap: 0px;
+  // }
 
   .wrapper {
     position: relative;
     height: 491px;
+    // width: 22%;
+
+    @media (max-width: $screen-md) {
+      width: 32%;
+      height: auto;
+      margin: 0 auto;
+    }
 
     @media (max-width: $screen-sm) {
       width: 43%;

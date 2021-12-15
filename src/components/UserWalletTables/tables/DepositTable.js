@@ -26,7 +26,9 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
           </div>
         </Grid>
         <Grid item xs>
-          <div className={styles.messageCenter}>{shortenAddress(sender)}</div>
+          <div className={styles.messageCenter}>
+            <p>{shortenAddress(sender)}</p>
+          </div>
         </Grid>
         <Grid item xs>
           <div className={styles.messageCenter}>

@@ -34,6 +34,9 @@ import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
 import moment from 'moment';
 import Link from 'components/Link';
 import { OnboardingActions } from 'store/actions/onboarding';
+import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
+
 
 const Navbar = ({
   user,
@@ -176,12 +179,12 @@ const Navbar = ({
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
         data-tracking-id="menu-wallet-icon"
+        onClick={() => history.push(Routes.wallet)}
       >
         <img src={CoinIcon} alt="medal" className={style.medal} />
         <p>{formatToFixed(balance, 0, true)} {currency}</p>
         <span 
-          className={style.plusButton}
-          onClick={() => history.push(Routes.wallet)}>+</span>
+          className={style.plusButton}>+</span>
       </span>
     );
     return (
@@ -257,20 +260,13 @@ const Navbar = ({
 
     const joinBtn = (
       <div className={style.navbarItems}>
-        <span
+        <Button
           className={style.loginButton}
+          theme={ButtonTheme.secondaryButton}
           onClick={() => showPopupForLogin()}
         >
-          <p>Login</p>
-        </span>
-        {/* <span
-          className={style.signUpButton}
-          onClick={() =>
-            showPopupForRegister()
-          }
-        >
-          <p>Sign Up</p>
-        </span> */}
+          Login
+        </Button>
       </div>
     );
 

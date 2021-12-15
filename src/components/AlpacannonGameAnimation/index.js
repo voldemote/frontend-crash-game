@@ -53,7 +53,7 @@ const AlpacannonGameAnimation = ({
 
   const spin = () => {
     const crash = bet.rollValue//Math.round(Math.random()*100)
-    setBet((bet) => {return{...bet, win: bet.profit > 0, running: true, crash: (100 - crash), crashDegree: (crash - 50)*45/50, crashPosition: (((100 - crash) - 50)*35/50) + 41 } })
+    setBet((bet) => {return{...bet, win: bet.profit > 0, running: true, crash: (100 - crash), crashDegree: (crash - 50)*45/50, crashPosition: (((100 - crash) - 50)*35/50) + 41} })
     setGame('cannon')
     setTimeout(() => {
       audio.playCannonSound();
@@ -63,11 +63,21 @@ const AlpacannonGameAnimation = ({
       setGame('crashed')
       audio.playCrashSound()
       if(user.isLoggedIn){
-        const spin = bet.profit > 0 ?
-          { type: 'win', value: '+' + bet.profit } :
-          bet.profit === 0 ? { type: 'even', value: '' + bet.profit } :
-          { type: 'loss', value: bet.profit}
-        setSpins((spins) => [spin].concat(spins))
+        const newSpin = {};
+        if (bet.profit > 0) {
+          newSpin.type = 'win';
+          newSpin.value = '+' + bet.profit;
+        } else if(bet.profit === 0) {
+          newSpin.type = 'even';
+          newSpin.value = bet.profit;
+        } else {
+          newSpin.type = 'loss';
+          newSpin.value = bet.profit;
+        }
+
+        newSpin.gameHash = bet.gameHash;
+
+        setSpins((spins) => [newSpin].concat(spins))
       }
       setTimeout(() => {setBet((bet) => {return{...bet, ready: true, running: false}})}, 1000)
     }, 2400)

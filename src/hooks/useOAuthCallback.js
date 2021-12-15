@@ -3,13 +3,6 @@ import { useDispatch } from "react-redux";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 import { AuthenticationActions } from "store/actions/authentication";
 
-const providerActionMap = {
-  google: (payload) =>
-    AuthenticationActions.loginExternal({ provider: 'google', ...payload }),
-  facebook: (payload) =>
-    AuthenticationActions.loginExternal({ provider: 'facebook', ...payload }),
-};
-
 const useOAuthCallback = () => {
   const dispatch = useDispatch();
   const { provider } = useParams();
@@ -30,9 +23,7 @@ const useOAuthCallback = () => {
       history.push('/');
     } else if(code) {
       const payload = { code, ref };
-      dispatch(
-        providerActionMap[provider](payload)
-      );
+      dispatch(AuthenticationActions.loginExternal({ ...payload, provider }));
     } else {
       history.push('/');
     }
