@@ -20,6 +20,37 @@ const roundToTwo = num => {
   return +(Math.round(num + 'e+2') + 'e-2');
 };
 
+const AlpacannonDetails = ({resData}) => {
+  const profit = resData?.profit.toFixed(2);
+
+  return  <>
+    <div>
+      <b>Multiplier:</b>{' '}
+      <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+    </div>
+    <div>
+      <b>Selected factor:</b>{' '}
+      <span>{resData?.riskFactor}</span>
+    </div>
+    <div>
+      <b>Game Hash:</b>{' '}
+      <span>{resData?.gameHash}</span>
+    </div>
+    <div>
+      <b>Staked amount:</b>{' '}
+      <span>{resData?.stakedAmount}</span>
+    </div>
+    <div>
+      <b>Profit:</b>{' '}
+      <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+    </div>
+    <div>
+      <b>Outcome factor:</b>{' '} <br />
+      <div className={styles.alpaCannonRollValue}>{resData?.rollValue}</div>
+    </div>
+  </>
+}
+
 const PlinkoDetails = ({resData}) => {
   const profit = resData?.profit.toFixed(2);
   const winIndex = resData?.winIndex;
@@ -148,6 +179,10 @@ const renderDetails = (game, resData) => {
     if(game.name === "Plinko") {
         return <PlinkoDetails resData={resData} />;
     }
+
+    if(game.name === "Alpacannon") {
+        return <AlpacannonDetails resData={resData} />;
+    }
 }
 
 const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
@@ -160,7 +195,6 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
     : '---';
 
   const handleCrashFactorChange = async (gameHash, type) => {
-      console.log("ggameHash", gameHash);
     const response = await getSingleGameDetailById(gameHash, game.id, type).catch(err => {
       console.error('getGameDetailById err', err);
     });

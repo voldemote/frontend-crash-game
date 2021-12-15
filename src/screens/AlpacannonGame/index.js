@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -37,6 +37,7 @@ import { UserActions } from 'store/actions/user';
 import { selectUser } from 'store/selectors/authentication';
 import Button from 'components/Button';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
+import classNames from "classnames";
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
@@ -49,7 +50,8 @@ const PlinkoGame = ({
   refreshLuckyData,
   updateUserBalance
 }) => {
-  const Api = new GameApi(GAMES.cannon.url, token);
+  const gameCfg = GAMES.cannon;
+  const Api = new GameApi(gameCfg.url, token);
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
   const user = useSelector(selectUser);
@@ -67,28 +69,36 @@ const PlinkoGame = ({
     showPopup(PopupTheme.explanation);
   }, []);
 
+  const handleFairnessPopup = useCallback(event => {
+    showPopup(PopupTheme.fairnessPopup, {
+      maxWidth: true, data: {
+        game: gameCfg,
+        token
+      }
+    });
+  }, []);
+
   useEffect(() => {
     if(user.isLoggedIn){
       getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
         .then(response => {
           const lastSpins = response?.data.lastCrashes;
           setSpins(lastSpins.map((spin) => {
-            if(spin.profit > 0) {
-              return {
-                type: 'win',
-                value: '+' + spin.profit
-              }
-            } else if(spin.profit === 0){
-              return {
-                type: 'even',
-                value: '' + spin.profit
-              }
-            }else {
-              return {
-                type: 'loss',
-                value: spin.profit
-              }
+            const output = {};
+            if (spin.profit > 0) {
+              output.type = 'win';
+              output.value = '+' + spin.profit;
+            } else if (spin.profit === 0) {
+              output.type = 'even';
+              output.value = spin.profit;
+            } else {
+              output.type = 'loss';
+              output.value = spin.profit;
             }
+
+            output.gameHash = spin.gameHash;
+
+            return output;
           }))
         })
         .catch(error => {
@@ -102,6 +112,25 @@ const PlinkoGame = ({
     refreshHighData();
     refreshLuckyData();
   }, [dispatch, connected]);
+
+  useEffect(() => {
+    (async () => {
+      //this get route is for retrieving client / server seeds for the game, if its very first time,
+      //casino_fairness record will be created automatically
+      if(userId) {
+        await Api.getCurrentFairnessByGame(gameCfg.id);
+      }
+    })().catch(error => {
+      dispatch(AlertActions.showError({
+        message: `${gameCfg.name}: ${error.response?.data || error.message}`
+      }));
+
+      setBet({
+        ...bet,
+        ready: false
+      })
+    });
+  }, [])
 
   const handleChatSwitchTab = option => {
     setChatTabIndex(option.index);
@@ -125,7 +154,7 @@ const PlinkoGame = ({
         // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
-        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false} })
+        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false, gameHash: data.gameHash} })
         updateUserBalance(userId);
         // trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
         // trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
@@ -200,7 +229,7 @@ const PlinkoGame = ({
                 setBet={setBet}
                 onInit={audio => setAudio(audio)}
               />
-              <Spins text="My Games" spins={spins} />
+              <Spins text="My Games" spins={spins} game={gameCfg}/>
             </div>
             <div className={styles.rightContainer}>
               <div className={styles.placeContainer}>
@@ -215,6 +244,25 @@ const PlinkoGame = ({
                   setBet={setBet}
                   bet={bet}
                 />
+              </div>
+
+              <div className={styles.fairnessContainer}>
+                <Icon
+                  className={styles.balanceIcon}
+                  iconType={IconType.balanceScaleSolid}
+                  iconTheme={IconTheme.black}
+                  height={18}
+                  width={18}
+                />{' '}
+                <span
+                  className={classNames(
+                    'global-link-style',
+                    styles.fairnessOpenPopup
+                  )}
+                  onClick={handleFairnessPopup}
+                >
+                  Fairness
+                </span>
               </div>
             </div>
           </div>

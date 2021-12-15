@@ -140,4 +140,13 @@
       box-shadow: inset 0 0 4px 2px #1d7c00;
     }
   }
+
+  .alpaCannonRollValue {
+    display: inline-block;
+    border: 2px solid black;
+    background-color: white;
+    padding: 5px 15px;
+    border-radius: 10px 10px;
+    font-weight: bold;
+  }
 }
