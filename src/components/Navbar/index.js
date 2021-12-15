@@ -34,6 +34,9 @@ import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
 import moment from 'moment';
 import Link from 'components/Link';
 import { OnboardingActions } from 'store/actions/onboarding';
+import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
+
 
 const Navbar = ({
   user,
@@ -257,20 +260,13 @@ const Navbar = ({
 
     const joinBtn = (
       <div className={style.navbarItems}>
-        <span
+        <Button
           className={style.loginButton}
+          theme={ButtonTheme.secondaryButton}
           onClick={() => showPopupForLogin()}
         >
-          <p>Login</p>
-        </span>
-        {/* <span
-          className={style.signUpButton}
-          onClick={() =>
-            showPopupForRegister()
-          }
-        >
-          <p>Sign Up</p>
-        </span> */}
+          Login
+        </Button>
       </div>
     );
 
