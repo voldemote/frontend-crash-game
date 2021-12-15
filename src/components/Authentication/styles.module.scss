@@ -328,18 +328,29 @@
 .dontHaveAnAccountLogin {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   margin-top: 25px;
   text-align: center;
   padding: 0 20px;
+  width: 690px;
   @media (max-width: $screen-sm) {
+    width: auto;
     padding: 0;
+  }
+  .socialContainer {
+    margin-top: 10px;
   }
   button {
     @extend .unstyledButton;
     font-size: 14px;
   }
   p {
-    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  svg {
+    width: 24px;
+    max-width: 24px;
+    height: 24px;
+    max-height: 24px;
   }
 }
