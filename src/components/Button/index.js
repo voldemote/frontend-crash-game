@@ -92,9 +92,56 @@ const Button = ({
   return (
     <>
       { theme === ButtonTheme.primaryButton ?
-        <PrimaryButton /> : theme === ButtonTheme.secondaryButton ?
-        <SecondaryButton /> :
-        <LoginButton />
+        <span
+          className={classNames(
+            className,
+            style.primaryButton,
+            disabled ? style.disabled : null,
+          )}
+          disabled={disabled}
+          onClick={disabled ? null : onClick}
+          data-tracking-id={dataTrackingId}
+        > 
+          <div className={style.buttonInnerBackground}>
+            {!withoutPadding && <div className={style.buttonPattern}/> }
+            <div className={style.butonSecondInnerBackground}>
+              <div className={classNames(style.buttonThirdInnerBackground, withoutPadding && style.withoutPadding)}>
+                <span>{children}</span>
+              </div>
+            </div>
+          </div>
+        </span> : theme === ButtonTheme.secondaryButton ?
+        <span
+          className={classNames(
+            className,
+            style.secondaryButton,
+            disabled ? style.disabled : null,
+          )}
+          disabled={disabled}
+          onClick={disabled ? null : onClick}
+          data-tracking-id={dataTrackingId}
+        > 
+          <div className={style.buttonInnerBackground}>
+            {!withoutPadding && <div className={style.buttonPattern}/> }
+            <div className={style.butonSecondInnerBackground}>
+              <div className={classNames(style.buttonThirdInnerBackground, withoutPadding && style.withoutPadding)}>
+                <span>{children}</span>
+              </div>
+            </div>
+          </div>
+        </span> :
+        <span
+          className={classNames(
+            className,
+            style.loginButton,
+            disabled ? style.disabled : null,
+          )}
+          disabled={disabled}
+          onClick={disabled ? null : onClick}
+          data-tracking-id={dataTrackingId}
+        >
+          {children}
+        </span>
       }
     </>
   );
