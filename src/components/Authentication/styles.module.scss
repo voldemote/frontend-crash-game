@@ -51,6 +51,10 @@
   margin-top: 20px;
   font-family: $fontOmnes;
   text-transform: uppercase;
+
+  &.forgotPassword {
+    padding: 50px 20px;
+  }
   .rowContainer {
     width: 100%;
     display: flex;
@@ -207,6 +211,20 @@
   padding-top: 20px;
 }
 
+.recaptchaInfo {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 10px;
+  opacity: 0.8;
+  text-transform: none;
+
+  a {
+    color: #ffd401;
+    text-decoration: underline;
+  }
+}
+
 .submitButton,
 .signInButton {
   overflow: hidden;
@@ -237,6 +255,13 @@
     @media (max-width: $screen-sm) {
       display: none;
     }
+  }
+
+  svg {
+    width: 24px;
+    max-width: 24px;
+    height: 24px;
+    max-height: 24px;
   }
 }
 .signInButton {
@@ -319,12 +344,6 @@
     font-size: 18px;
     font-weight: 600;
   }
-  svg {
-    width: 24px;
-    max-width: 24px;
-    height: 24px;
-    max-height: 24px;
-  }
 }
 
 .socialContainer {
@@ -342,7 +361,8 @@
     margin: 14px 0 20px;
   }
   .socialButton {
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
   }
 }

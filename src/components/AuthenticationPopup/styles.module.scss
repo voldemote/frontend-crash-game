@@ -11,11 +11,10 @@
   background-size: contain;
   background-position: center;
   @media (max-width: $screen-sm) {
-    padding: 50px 30px 100px;
-    background: url('../../data/backgrounds/popup/popup-bg.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
+    padding: 0px 30px;
+    width: 100%;
+    border-radius: 30% 30% 15% 15%;
+    background: #31a1df;
   }
 
   &.portraitBg {
@@ -25,24 +24,72 @@
     background-size: contain;
     background-position: center;
     @media (max-width: $screen-sm) {
-      padding: 50px 30px 100px;
-      background-size: 100% 100%;
+      width: 100%;
+      border-radius: 30% 30% 15% 15%;
+      background: #31a1df;
     }
-    .title {
-      margin-top: 0;
-      margin-left: -20px;
+  }
+
+  .popupTop {
+    position: absolute;
+    top: -5px;
+    width: 100%;
+    height: 157px;
+    z-index: 1;
+    @media (min-width: $screen-sm) {
+      display: none;
+    }
+  }
+  .popupLeft {
+    position: absolute;
+    width: 13px;
+    height: calc(100% - 128px - 50px);
+    left: 0;
+    top: 128px;
+    @media (min-width: $screen-sm) {
+      display: none;
+    }
+  }
+  .popupRight {
+    position: absolute;
+    width: 13px;
+    height: calc(100% - 140px - 50px);
+    right: 0;
+    top: 140px;
+    @media (min-width: $screen-sm) {
+      display: none;
+    }
+  }
+  .popupBottom {
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+    height: 76px;
+    z-index: 1;
+    @media (min-width: $screen-sm) {
+      display: none;
     }
   }
 
   .title {
-    margin-top: 40px;
-    margin-left: 30px;
+    z-index: 1;
+    position: absolute;
+    top: -28px;
     text-align: center;
-    font-style: normal;
     font-weight: bold;
-    font-size: 60px;
+    font-size: 50px;
+    line-height: 100%;
     color: #ffd31a;
     text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
+    @media (min-width: $screen-sm) {
+      top: 50px;
+      font-size: 50px;
+    }
+    &.portrait {
+      @media (min-width: $screen-sm) {
+        top: 0px;
+      }
+    }
   }
 
   &.registrationWithPromo {
@@ -161,21 +208,21 @@
     position: relative;
     display: flex;
     max-width: 800px;
-    padding: 80px 50px 80px 80px;
+    padding: 180px 50px 80px 80px;
     column-gap: 20px;
     @media (max-width: $screen-sm) {
+      width: 100%;
       flex-direction: column;
-      padding: 0;
+      padding: 100px 0 0;
     }
     &.loginForm {
-      padding: 80px 50px 80px 50px;
+      padding: 120px 50px 80px 50px;
       width: 400px;
-      min-height: 500px;
       flex-direction: column;
       @media (max-width: $screen-sm) {
         width: 100%;
         min-height: fit-content;
-        padding: 0;
+        padding: 100px 0 20px;
       }
     }
   }

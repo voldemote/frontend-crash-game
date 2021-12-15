@@ -128,6 +128,11 @@
       text-align: justify;
       margin-bottom: 25px;
 
+      span {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
       @media (max-width: $screen-md) {
         margin-bottom: 10px;
       }

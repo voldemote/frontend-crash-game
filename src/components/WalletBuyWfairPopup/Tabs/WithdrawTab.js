@@ -28,6 +28,8 @@ import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import { TOKEN_NAME } from 'constants/Token';
 import ReactTooltip from 'react-tooltip';
 import { FormGroup, InputLabel } from 'components/Form';
+import { validate } from '@material-ui/pickers';
+import WithdrawalErrorPopup from 'components/WithdrawalErrorPopup';
 
 const networkName = {
   polygon: 'MATIC',
@@ -37,10 +39,7 @@ const networkName = {
 const WithdrawTab = () => {
   const fooRef = useRef(null);
   let addressRef = useRef(null);
-  let pwRef = useRef(null);
-  let pwConfirmRef = useRef(null);
-  let acceptRef = useRef(null);
-  let genericRef = useRef(null);
+  let amountRef = useRef(null);
 
   const [address, setAddress] = useState('');
   const [tokenAmount, setTokenAmount] = useState(0);
@@ -52,11 +51,19 @@ const WithdrawTab = () => {
   const [responseProps, setResponseProps] = useState({});
   const [error, setError] = useState(null);
   const [submitButtonDisable, setSubmitButtonDisable] = useState(true);
+  const [transactionFailed, setTransactionFailed] = useState(false);
+  const [transactionFailedMessage, setTransactionFailedMessage] = useState('');
 
   const { balance } = useSelector(selectUser);
 
   useEffect(() => {
-    tokenAmountLostFocus();
+    const updateField = async () => {
+      await updateReceiveField();
+    };
+
+    updateField();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetwork]);
 
   useEffect(() => {
@@ -76,10 +83,15 @@ const WithdrawTab = () => {
       isAddressValid &&
       error === null &&
       withdrawAmount > 0 &&
-      tokenAmount > 0
+      tokenAmount >= 400
     ) {
       setSubmitButtonDisable(false);
-    } else setSubmitButtonDisable(true);
+    } else {
+      setSubmitButtonDisable(true);
+      validateInput();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, tokenAmount, withdrawAmount, address, setAddress]);
 
   const isValidAdress = address => {
@@ -91,9 +103,15 @@ const WithdrawTab = () => {
     let formError = null;
     let fieldRef = null;
 
-    if (!isValidAdress(address)) {
+    if (address && !isValidAdress(address)) {
       formError = 'wrong 0x address format';
       fieldRef = addressRef.current;
+    } else if (tokenAmount > 0 && tokenAmount < 400) {
+      formError = 'Minimum withdraw limit 400 WFAIR';
+      fieldRef = amountRef.current;
+    } else if (withdrawAmount < 0) {
+      formError = 'Please consider adding a higher amount to cover the fees';
+      fieldRef = amountRef.current;
     }
 
     setError(formError);
@@ -138,6 +156,15 @@ const WithdrawTab = () => {
     setTokenAmount(value);
   };
 
+  useEffect(() => {
+    let updateTimer = setTimeout(() => updateReceiveField(), 1 * 1000);
+
+    return () => {
+      clearTimeout(updateTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokenAmount]);
+
   const addressLostFocus = useCallback(event => {
     const inputAddress = event.target.value;
     const regex = /^0x[a-fA-F0-9]{40}$/g;
@@ -151,7 +178,7 @@ const WithdrawTab = () => {
     setAddress(inputAddress);
   }, []);
 
-  const tokenAmountLostFocus = async event => {
+  const updateReceiveField = async () => {
     if (tokenAmount > 0) {
       const payload = {
         amount: tokenAmount,
@@ -198,7 +225,6 @@ const WithdrawTab = () => {
       setFiatEquivalence(withdrawMarketValue);
     } else {
       setWithdrawAmount(0);
-      setSubmitButtonDisable(true);
     }
   };
 
@@ -210,9 +236,10 @@ const WithdrawTab = () => {
     };
 
     const { response, error } = await processWithdraw(payload);
-    console.log(response);
     if (error) {
       console.error(error.message);
+      setTransactionFailedMessage(error.message);
+      setTransactionFailed(true);
       return;
     }
 
@@ -236,11 +263,12 @@ const WithdrawTab = () => {
 
   const onClickMax = () => {
     setTokenAmount(balance);
+    // tokenAmountLostFocus(balance);
   };
 
   return (
     <div className={styles.withdrawContainer}>
-      {!transaction && (
+      {!transaction && !transactionFailed && (
         <>
           <h2>Withdraw</h2>
           {/* Crypto Tabs */}
@@ -347,7 +375,13 @@ const WithdrawTab = () => {
             </div>
 
             {/* WFAIR TOKEN */}
-            <div className={styles.cryptoInputContainer}>
+            <FormGroup
+              className={styles.cryptoInputContainer}
+              data-tip
+              rootRef={ref => (amountRef.current = ref)}
+              data-event="none"
+              data-event-off="dblclick"
+            >
               <div className={styles.labelContainer}>
                 <span>Amount you wish to withdraw</span>
               </div>
@@ -356,7 +390,6 @@ const WithdrawTab = () => {
                 max={balance}
                 value={tokenAmount}
                 onChange={tokenAmountChange}
-                onBlur={tokenAmountLostFocus}
                 onClick={selectContent}
               />
               <div className={styles.inputRightContainer}>
@@ -369,7 +402,7 @@ const WithdrawTab = () => {
                   Max
                 </span>
               </div>
-            </div>
+            </FormGroup>
             <div className={styles.InputLineSeparator}>
               <img src={InputLineSeparator} alt="input_line_separator" />
             </div>
@@ -426,6 +459,12 @@ const WithdrawTab = () => {
       )}
 
       {transaction && renderSuccess(responseProps)}
+      {transactionFailed && (
+        <WithdrawalErrorPopup
+          errorMessage={transactionFailedMessage}
+          closeTransactionFailed={setTransactionFailed}
+        />
+      )}
     </div>
   );
 };

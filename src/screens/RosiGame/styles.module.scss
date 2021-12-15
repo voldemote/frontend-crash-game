@@ -676,3 +676,20 @@
     }
   }
 }
+
+.fairnessContainer {
+  text-align: right;
+  font-size: 14.5px;
+  color: $colorWhite;
+  line-height: 1;
+  margin-bottom: 10px;
+
+  .balanceIcon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .fairnessOpenPopup {
+    cursor: pointer;
+  }
+}

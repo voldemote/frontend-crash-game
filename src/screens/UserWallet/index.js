@@ -176,7 +176,7 @@ const UserWallet = ({
                 You are in the right place to check your current balance, 
                 add WFAIR into your wallet, or withdraw your tokens. If you 
                 have any questions about your wallet or its functionality, 
-                please get in touch with our Support!
+                please get in touch with our <span onClick={() => {window.fcWidget.open()}}>Support</span>!
               </p>
               <p className={styles.currentbalanceHeading}>Current balance:</p>
               <p
@@ -233,7 +233,7 @@ const UserWallet = ({
                 )
               }
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>In case of any questions please <span onClick={() => {}}>click here</span> to contact our Support.</p>
+                <p className={styles.label}>In case of any questions please <span onClick={() => {window.fcWidget.open()}}>click here</span> to contact our Support.</p>
               </div>
               {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Start the verification</p>
