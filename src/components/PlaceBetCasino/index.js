@@ -24,6 +24,7 @@ import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
 import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const PlaceBetCasino = ({
   gameName,
@@ -183,7 +184,8 @@ const PlaceBetCasino = ({
           <Button
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, styles.cancel)}
+            className={styles.button}
+            theme={ButtonTheme.secondaryButton}
             onClick={() => bet.autobet ? setBet({...bet, autobet: false, ready: gameName === 'plinko' ? true: false}) : setBet({...bet, ngame: 0})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'

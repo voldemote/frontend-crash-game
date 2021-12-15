@@ -43,6 +43,7 @@ import {
 import { useParams } from 'react-router';
 import { GAMES } from 'constants/Games';
 import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
@@ -397,7 +398,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           <Button
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, styles.cancel)}
+            className={styles.button}
+            theme={ButtonTheme.secondaryButton}
             onClick={user.isLoggedIn ? cancelBet : cancelGuestBet}
             data-tracking-id={
               user.isLoggedIn ? null : 'elongame-showloginpopup'
