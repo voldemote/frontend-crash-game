@@ -29,7 +29,7 @@ const AlpacannonDetails = ({resData}) => {
       <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
     </div>
     <div>
-      <b>Risk factor:</b>{' '}
+      <b>Selected factor:</b>{' '}
       <span>{resData?.riskFactor}</span>
     </div>
     <div>
@@ -43,6 +43,10 @@ const AlpacannonDetails = ({resData}) => {
     <div>
       <b>Profit:</b>{' '}
       <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
+    </div>
+    <div>
+      <b>Outcome factor:</b>{' '} <br />
+      <div className={styles.alpaCannonRollValue}>{resData?.rollValue}</div>
     </div>
   </>
 }
