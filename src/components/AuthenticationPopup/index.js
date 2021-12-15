@@ -8,11 +8,11 @@ import { RECAPTCHA_KEY } from 'constants/Api';
 const AuthenticationPopup = ({ authenticationType, preloadEmailSignUp }) => {
 
   return (
-    <div className={classNames(styles.registration)}>
+    <div className={classNames(styles.registration, authenticationType === 'login' && styles.portraitBg)}>
       <h2 className={styles.title}>
         {authenticationType === 'register' ? 'Final Step' : 'Login'}
       </h2>
-      <div className={styles.form}>
+      <div className={classNames(styles.form, authenticationType === 'login' && styles.loginForm)}>
         <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
           <Authentication
             authenticationType={authenticationType}

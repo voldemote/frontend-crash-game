@@ -11,22 +11,41 @@
   background-size: contain;
   background-position: center;
   @media (max-width: $screen-sm) {
-    padding: 50px 30px 100px;
+    padding: 0px 30px 100px;
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
   }
 
+  &.portraitBg {
+    width: 800px;
+    background: url('../../data/backgrounds/popup/popup-bg.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    @media (max-width: $screen-sm) {
+      padding: 0px 30px 100px;
+      background-size: 100% 100%;
+    }
+    .title {
+      margin-top: 0;
+      margin-left: -20px;
+    }
+  }
+
   .title {
     margin-top: 40px;
     margin-left: 30px;
     text-align: center;
-    font-style: normal;
     font-weight: bold;
     font-size: 60px;
+    line-height: 100%;
     color: #ffd31a;
     text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
+    @media (max-width: $screen-sm) {
+      margin-top: 20px;
+    }
   }
 
   &.registrationWithPromo {
@@ -149,7 +168,18 @@
     column-gap: 20px;
     @media (max-width: $screen-sm) {
       flex-direction: column;
-      padding: 0;
+      padding: 90px 0 0;
+    }
+    &.loginForm {
+      padding: 80px 50px 80px 50px;
+      width: 400px;
+      min-height: 500px;
+      flex-direction: column;
+      @media (max-width: $screen-sm) {
+        width: 100%;
+        min-height: fit-content;
+        padding: 70px 0 0;
+      }
     }
   }
 }

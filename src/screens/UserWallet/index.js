@@ -199,13 +199,15 @@ const UserWallet = ({
           >
             <div className={styles.currentBlanceDiscription}>
               <div className={styles.buttonContainer}>
-                <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p>
+                {/* <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p> */}
+                <p className={styles.label}>Need WFAIR to play? No problem.</p>
                 <Button
                   className={styles.button}
                   onClick={showWalletBuyWfairPopup}
                 >
-                  Buy WFAIR!
+                  Add WFAIR!
                 </Button>
+                <p className={styles.label}>Want to withdraw WFAIR? No problem.</p>
                 <Button
                   className={styles.button}
                   disabled={!isKycVerified()}
@@ -220,7 +222,7 @@ const UserWallet = ({
                   <div className={styles.buttonContainer}>
                   <p className={styles.label}>
                     Enable the full functionality of your account in 30 seconds! Complete our verification process now, and you will be able to withdraw your funds and add an unlimited amount of WFAIR.
-</p>
+                  </p>
                   <Button
                     className={styles.button}
                     onClick={openFractal}
