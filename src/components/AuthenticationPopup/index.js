@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import Authentication from 'components/Authentication';
 import styles from './styles.module.scss';
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { RECAPTCHA_KEY } from 'constants/Api';
 import PopupTopImg from '../../data/backgrounds/popup/popup-top.png';
 import PopupLeftImg from '../../data/backgrounds/popup/popup-left.png';
 import PopupRightImg from '../../data/backgrounds/popup/popup-right.png';
@@ -20,12 +18,10 @@ const AuthenticationPopup = ({ authenticationType, preloadEmailSignUp }) => {
         {authenticationType === 'register' ? 'Final Step' : 'Login'}
       </h2>
       <div className={classNames(styles.form, authenticationType === 'login' && styles.loginForm)}>
-        <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
           <Authentication
             authenticationType={authenticationType}
             preloadEmailSignUp={preloadEmailSignUp}
           />
-        </GoogleReCaptchaProvider>
       </div>
     </div>
   );

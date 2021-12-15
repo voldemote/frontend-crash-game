@@ -363,6 +363,10 @@
         padding-right: 15px;
         column-gap: 10px;
 
+        @media (max-width: $screen-md) {
+          width: 40%;
+        }
+
         .button {
           cursor: pointer;
         }

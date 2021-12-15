@@ -211,6 +211,20 @@
   padding-top: 20px;
 }
 
+.recaptchaInfo {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 10px;
+  opacity: 0.8;
+  text-transform: none;
+
+  a {
+    color: #ffd401;
+    text-decoration: underline;
+  }
+}
+
 .submitButton,
 .signInButton {
   overflow: hidden;
