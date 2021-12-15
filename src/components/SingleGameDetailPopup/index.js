@@ -195,7 +195,6 @@ const SingleGameDetailPopup = ({ hidePopup, showPopup, data }) => {
     : '---';
 
   const handleCrashFactorChange = async (gameHash, type) => {
-      console.log("ggameHash", gameHash);
     const response = await getSingleGameDetailById(gameHash, game.id, type).catch(err => {
       console.error('getGameDetailById err', err);
     });
