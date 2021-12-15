@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const environment = process.env.REACT_APP_ENVIRONMENT || 'staging';
+const environment = process.env.REACT_APP_ENVIRONMENT;// 'staging' or 'production';
 const netWorkTypes = { ETH: 'Ethereum', POLY: 'Polygon' };
 const networkIds = {
   mainPolygon: '0x89',
