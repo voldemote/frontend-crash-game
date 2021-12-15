@@ -65,7 +65,7 @@ const Success = ({
       </div>
 
       <Button
-        className={styles.keepGoing}
+        // className={styles.keepGoing}
         onClick={() => {
           updateModalAndArea();
         }}
