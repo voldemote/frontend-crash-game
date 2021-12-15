@@ -12,7 +12,6 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from '../AuthenticationType';
 import { OnboardingActions } from 'store/actions/onboarding';
 import classNames from 'classnames';
-import ButtonTheme from 'components/Button/ButtonTheme';
 
 const Login = ({
   errorState,
