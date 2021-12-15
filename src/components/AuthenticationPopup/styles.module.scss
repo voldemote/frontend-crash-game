@@ -18,6 +18,22 @@
     background-position: center;
   }
 
+  &.portraitBg {
+    width: 800px;
+    background: url('../../data/backgrounds/popup/popup-bg.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    @media (max-width: $screen-sm) {
+      padding: 50px 30px 100px;
+      background-size: 100% 100%;
+    }
+    .title {
+      margin-top: 0;
+      margin-left: -20px;
+    }
+  }
+
   .title {
     margin-top: 40px;
     margin-left: 30px;
@@ -150,6 +166,17 @@
     @media (max-width: $screen-sm) {
       flex-direction: column;
       padding: 0;
+    }
+    &.loginForm {
+      padding: 80px 50px 80px 50px;
+      width: 400px;
+      min-height: 500px;
+      flex-direction: column;
+      @media (max-width: $screen-sm) {
+        width: 100%;
+        min-height: fit-content;
+        padding: 0;
+      }
     }
   }
 }
