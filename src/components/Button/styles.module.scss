@@ -140,8 +140,7 @@
         border-radius: 46px;
         padding: 0px 30px;
         padding-bottom: 2px;
-        color: #ff0000;
-        -webkit-text-stroke: 2px black;
+        color: $colorWhite;
         @media (max-width: $screen-sm) {
           padding: 0px 16px;
         }
