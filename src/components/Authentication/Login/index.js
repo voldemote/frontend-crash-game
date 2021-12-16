@@ -67,7 +67,7 @@ const Login = ({
       error = 'Not a valid email address';
       fooRef = emailRef;
     }
-    if (emailIsValid() && options && options.emailOnly) {
+    if (options && options.emailOnly && email.length === 0) {
       error = undefined;
       ReactTooltip.hide(emailRef);
     }
