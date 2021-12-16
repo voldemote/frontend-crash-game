@@ -278,6 +278,7 @@ const Home = ({
     };
     return (
       <div className={styles.welcomeContainer}>
+        <div className={styles.cardContainer}>
         <div className={styles.cardBox}>
           <h1>Alpacasino</h1>
           <h2>
@@ -285,13 +286,14 @@ const Home = ({
             create your <span className={styles.highlight}>alpaca</span>
           </h2>
 
-          <Button
+          <buton
             className={styles.startButton}
             onClick={showPopupForUnauthenticated}>
             Sign up
-          </Button>
+          </buton>
           <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
           <img className={styles.alpacaBlue} src={AlpacaBlue} alt="" />
+        </div>
         </div>
       </div>
     );
