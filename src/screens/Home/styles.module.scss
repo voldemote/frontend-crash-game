@@ -257,7 +257,7 @@
 }
 
 .welcomeContainer {
-  margin: 0px 0 220px;
+  margin: 50px 0 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -271,19 +271,6 @@
     background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
     padding: 15px;
     border-radius: 20px;
-    // &::before {
-    //   position: absolute;
-    //   content: url('../../data/images/top-popup-images.png');
-    //   top: 0;
-    //   left: 0;
-    // }
-    // &::after {
-    //   position: absolute;
-    //   content: url('../../data/images/bottom-popup-images.png');
-    //   bottom: 0;
-    //   right: 0;
-    // }
-
     .cardBox {
       display: flex;
       flex-direction: column;
@@ -325,41 +312,57 @@
       }
       .alpacaBlue {
         position: absolute;
-        width: 220px;
-        right: -55px;
-        bottom: -55px;
-        z-index: 1;
+        width: 300px;
+        right: -90px;
+        bottom: -90px;
+        z-index: -1;
         // @media (max-width: $screen-sm) {
         //   width: 140px;
         //   right: -20px;
         //   display: none;
         // }
       }
+      svg {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 40%;
+      }
       h1 {
-        margin-top: 120px;
-        font-weight: bold;
-        font-size: 60px;
-        line-height: 41px;
+        font-weight: 600;
+        font-size: 35px;
+        line-height: 40px;
+        font-family: $fontOmnes;
         color: $colorBlack;
         @media (max-width: $screen-sm) {
-          margin-top: 72px;
           font-size: 30px;
           line-height: 24px;
         }
       }
       h2 {
-        margin-top: 40px;
         font-weight: 600;
-        font-size: 30px;
-        line-height: 41px;
+        font-size: 35px;
+        line-height: 37px;
         text-align: center;
+        font-family: $fontOmnes;
         color: $colorBlack;
-        .highlight {
-          color: $colorBlack;
-        }
+        margin-bottom: 10px;
+
         @media (max-width: $screen-sm) {
-          margin-top: 30px;
-          font-size: 16px;
+          font-size: 20px;
+          line-height: 18px;
+        }
+      }
+      h3 {
+        font-weight: bold;
+        font-size: 50px;
+        line-height: 37px;
+        text-align: center;
+        font-family: $fontOmnes;
+        color: $colorBlack;
+        margin-bottom: 10px;
+
+        @media (max-width: $screen-sm) {
+          font-size: 25px;
           line-height: 18px;
         }
       }

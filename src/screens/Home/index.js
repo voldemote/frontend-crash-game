@@ -37,6 +37,8 @@ import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
 import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/candy-3.png';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
+import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
+
 
 import AlpacaPink from '../../data/images/top1-popup-images.png';
 import AlpacaBlue from '../../data/images/bottom-popup-images.png';
@@ -281,16 +283,23 @@ const Home = ({
       <div className={styles.welcomeContainer}>
           <div className={styles.cardContainer}>
         <div className={styles.cardBox}>
+          <h1>Welcome to</h1>
           <h1>Alpacasino</h1>
+
+          <LimitedOffer />
           <h2>
-            Get your <span className={styles.highlight}>50 {TOKEN_NAME} bonus</span> and<br/>
-            create your <span className={styles.highlight}>alpaca</span>
+            Join today and receive
           </h2>
+          <h3>50%</h3>
+          <h2>cashback up to</h2>
+          <h3>25 000</h3>
+          <h2>Wfairs</h2>
+
 
           <buton
             className={styles.startButton}
             onClick={showPopupForUnauthenticated}>
-            Sign up
+            Claim the offer!
           </buton>
           <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
           <img className={styles.alpacaBlue} src={AlpacaBlue} alt="" />
