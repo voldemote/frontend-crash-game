@@ -227,23 +227,28 @@ const Home = ({
           <h2>House Games</h2>
         </div>
         <div className={styles.cardBox}>
-          <Grid container spacing={1}>
-            <Grid item lg={3} md={3} xs={6}>
+          <Grid container spacing={3}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/pump-dump'}>
                 <img src={gameCardPumpDump} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/elon-game'}>
                 <img src={gameCardElon} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/plinko'}>
                 <img src={gameCardPlinko} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
+              <Link to={'/games/mines'}>
+                <img src={gameCardMines} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
               </Link>
