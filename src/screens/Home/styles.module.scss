@@ -266,12 +266,23 @@
   }
   .cardContainer {
     position: relative;
-
     height: 568px;
     width: 402px;
     background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
     padding: 15px;
     border-radius: 20px;
+    // &::before {
+    //   position: absolute;
+    //   content: url('../../data/images/top-popup-images.png');
+    //   top: 0;
+    //   left: 0;
+    // }
+    // &::after {
+    //   position: absolute;
+    //   content: url('../../data/images/bottom-popup-images.png');
+    //   bottom: 0;
+    //   right: 0;
+    // }
 
     .cardBox {
       display: flex;
@@ -285,21 +296,20 @@
       font-family: $fontOmnes;
       @media (max-width: $screen-sm) {
         width: 100%;
-        height: 350px;
+        height: 538px;
         padding: 60px 10px 0 0;
       }
       .alpacaPink {
         position: absolute;
         width: 200px;
-        left: -70px;
-        top: 0px;
-        z-index: -1;
-        @media (max-width: $screen-sm) {
-          width: 111px;
-          left: -30px;
-          top: -26px;
-          display: none;
-        }
+        left: -65px;
+        top: -80px;
+        // @media (max-width: $screen-sm) {
+        //   width: 111px;
+        //   left: -30px;
+        //   top: -26px;
+        //   display: none;
+        // }
       }
       .alpacaYellow {
         position: absolute;
@@ -316,15 +326,14 @@
       .alpacaBlue {
         position: absolute;
         width: 220px;
-        right: -80px;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: -1;
-        @media (max-width: $screen-sm) {
-          width: 140px;
-          right: -20px;
-          display: none;
-        }
+        right: -55px;
+        bottom: -55px;
+        z-index: 1;
+        // @media (max-width: $screen-sm) {
+        //   width: 140px;
+        //   right: -20px;
+        //   display: none;
+        // }
       }
       h1 {
         margin-top: 120px;
@@ -651,17 +660,27 @@
   margin-top: 70px;
   .title {
     display: flex;
-    align-items: center;
-    font-size: 22px;
-    font-weight: 700;
     justify-content: flex-start;
+    flex-direction: column;
 
     h2 {
-      font-size: 33px;
-      color: $colorWhite;
+      color: $colorHeading;
+      font-weight: 600;
+      font-size: 30px;
+      line-height: 20px;
+      font-family: $fontOmnes;
       @media (max-width: $screen-xs) {
         font-size: 28px;
       }
+    }
+
+    p {
+      margin-top: 10px;
+      font-family: $fontOmnes;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 20px;
+      color: $colorWhite;
     }
 
     img {

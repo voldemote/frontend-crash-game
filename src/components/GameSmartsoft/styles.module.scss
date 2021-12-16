@@ -24,9 +24,11 @@
   }
 
   h2 {
-    font-size: 33px;
-    color: $colorWhite;
-
+    color: $colorHeading;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 20px;
+    font-family: $fontOmnes;
     @media (max-width: $screen-xs) {
       font-size: 28px;
     }
