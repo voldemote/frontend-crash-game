@@ -1,21 +1,17 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getSpinsAlpacaWheel, GameApi } from 'api/casino-games';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
-import PlaceBet from 'components/PlaceBet';
 import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/PlinkoGameAnimation';
-import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import { RosiGameActions } from '../../store/actions/rosi-game';
-import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 import Share from '../../components/Share';
@@ -25,8 +21,6 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
-import Routes from 'constants/Routes';
-import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {
@@ -35,11 +29,9 @@ import {
 } from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import classNames from "classnames";
-import Button from 'components/Button';
 import { selectUser } from 'store/selectors/authentication';
-import {ReactComponent as CoinSvg} from '../../data/icons/plinko-game/coin.svg'
-import { ReactComponent as BorderedCircleSvg } from '../../data/icons/plinko-game/bordered-cricle.svg';
-import GameContentCards from 'components/GameContentCards/GameContentCards';
+
+import PlinkoAlpaca from '../../data/images/plinko-game/alpaca.png';
 
 const PLINKO_GAME_EVENT_ID = GAMES.plinko.id
 
@@ -216,41 +208,6 @@ const PlinkoGame = ({
     </Grid>
   );
 
-  const renderBgCoins = () => (
-    <>
-      <div className={styles.firstCoin}>
-        <div className={styles.coinRectangle}>
-          <div className={styles.rectangle}></div>
-          <CoinSvg />
-        </div>
-      </div>
-      <div className={styles.secondCoin}>
-        <div className={styles.coinRectangle}>
-          <div className={styles.rectangle}></div>
-          <CoinSvg />
-        </div>
-      </div>
-      <div className={styles.thirdCoin}>
-        <div className={styles.coinRectangle}>
-          <div className={styles.rectangle}></div>
-          <CoinSvg />
-        </div>
-      </div>
-      <div className={styles.forthCoin}>
-        <div className={styles.coinRectangle}>
-          <div className={styles.rectangle}></div>
-          <CoinSvg />
-        </div>
-      </div>
-      <div className={styles.fifthCoin}>
-        <div className={styles.coinRectangle}>
-          <div className={styles.rectangle}></div>
-          <CoinSvg />
-        </div>
-      </div>
-    </>
-  );
-
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -324,54 +281,39 @@ const PlinkoGame = ({
         </div>
       </div>
       <div className={styles.gameContent}>
-        <div className={styles.firstBgImage} />
-        <div className={styles.secondBgImage} />
-        <div className={styles.thirdBgImage} />
-
-        <h2 className={styles.title}>PLINKO GAME</h2>
-
-        {renderBgCoins()}
-
-        <div className={styles.firstHeadingContainer}>
-          <h2>How to play Plinko</h2>
-          <p className={styles.paragraph}>
-            Plinko is an exciting and simple gambling game to try your luck. 
-            Drop the coins and wait for them to hit the prizes.
+        <div className={styles.topContainer}>
+          <p>
+            <b>Most people think that Alpaca’s life is not complicated. Hey, many of them would say that Alpaca is the most relaxed animal in the whole universe (after unicorns, obviously…). But this is just an impression of people who simply do not understand how stressful it is to be an Alpaca.</b>
+          </p>
+          <p>
+            First of all, you have to be cute all the time. Then you have that whole candy land around you have to take care of. Finally, and most importantly, while you are taking care of those sweets laying around, you have to look still cute! No wonder that most of Alpacase are burned out at the end of the day, and the only thing that relaxes them is the sound of a coin dropping from top to bottom. Tick, tack, tick – that soothing song of the coin hitting obstacles on the way. Tick, tack, tick – the calming thought of how beautiful and simple the life of the coin is. Tick, tack, tick – over and over again. 
+          </p>
+          <p>
+            It’s time for you to join our burned-out Alpacas and enjoy Plinko, the game calming and exciting at the same time. So drop the coins and carry on until your WFAIR chest is full! 
           </p>
         </div>
-
-        <div className={styles.secondHeadingContainer}>
-          <h3>HOW TO PLACE A BET</h3>
-          <p className={styles.paragraph}>
-            Add the amount you want to bet and click on the "Place Bet" button.
-          </p>
-          <div className={styles.placeBetContainer}>
-            <Button
-              role="button"
-              tabIndex="0"
-              className={classNames(styles.button, {})}
-            >
-              Place bet
-            </Button>
+        <div className={styles.descriptionContainer}>
+          <div className={styles.firstWrapper}>
+            <img src={PlinkoAlpaca} alt='plinko-alpaca'/>
           </div>
-        </div>
-
-        <div className={styles.firstCircledContainer}>
-          <BorderedCircleSvg />
-          <BorderedCircleSvg />
-        </div>
-
-        <div className={styles.secondCircledContainer}>
-          <BorderedCircleSvg />
-          <BorderedCircleSvg />
-          <BorderedCircleSvg />
-        </div>
-
-        <div className={styles.secondHeadingContainer}>
-          <h2>Choose a Risk Level</h2>
-          <p className={styles.paragraph}>
-            By choosing a higher risk, the chances of hitting a positive multiplier are lower, but the higher the risk, the higher the multiplier.
-          </p>
+          <div className={styles.secondWrapper}>
+            <h2>HOW TO PLAY PLINKO?</h2>
+            <p>
+              <b>Step 1:</b> Enter the Bet amount into the field
+            </p>
+            <p>
+              <b>Step 2:</b> Select the risk level <br/>
+              The higher the risk level, the higher reward you might win. Watch the values of the prize in the bottom containers as you change the risk level
+            </p>
+            <p>
+              <b>Step 3:</b> Click Place Bet <br/>
+              Once you click the button, the coin is dropped from the top. Watch as the coin goes down and enjoy your prize!
+            </p>
+            <p>
+              <b>Step 4:</b> Repeat <br/>
+              You can see the hsitory of your bets in My Games bar. Your wins are marked green and losses red.
+            </p>
+          </div>
         </div>
       </div>
     </BaseContainerWithNavbar>
