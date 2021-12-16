@@ -82,6 +82,7 @@
 }
 
 .secondaryButton {
+  position: relative;
   display: flex;
   position: relative;
   align-items: center;
@@ -101,9 +102,19 @@
   @media (max-width: $screen-sm) {
     font-size: 20px;
   }
+  .buttonPattern {
+    display: block;
+    position: absolute;
+    background: url('../../data/backgrounds/but-pattern-second.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+    width: 100%;
+    height: 90%;
+  }
   .buttonInnerBackground {
     width: 100%;
-    position: relative;
     background: linear-gradient(
       0deg,
       #ea0000 -92.86%,
@@ -114,16 +125,6 @@
     align-items: center;
     justify-content: center;
     padding: 8px 10px;
-    .buttonPattern {
-      display: block;
-      position: absolute;
-      background: url('../../data/backgrounds/but-pattern.svg');
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 80%;
-      height: 100%;
-    }
     .butonSecondInnerBackground {
       width: 100%;
       height: 100%;
@@ -135,7 +136,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid #000000;
+        border: 1px solid #a00505;
         box-sizing: border-box;
         border-radius: 46px;
         padding: 0px 30px;
