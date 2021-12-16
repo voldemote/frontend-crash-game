@@ -286,41 +286,35 @@
         height: 538px;
         padding: 60px 10px 0 0;
       }
-      .alpacaPink {
+      .topFront {
+        position: absolute;
+        width: 75px;
+        left: -26px;
+        top: -8px;
+        z-index: 1;
+      }
+
+      .topBack {
         position: absolute;
         width: 200px;
-        left: -65px;
+        left: -70px;
         top: -80px;
-        // @media (max-width: $screen-sm) {
-        //   width: 111px;
-        //   left: -30px;
-        //   top: -26px;
-        //   display: none;
-        // }
-      }
-      .alpacaYellow {
-        position: absolute;
-        width: 140px;
-        left: -48px;
-        bottom: -70px;
-        @media (max-width: $screen-sm) {
-          width: 70px;
-          left: 0px;
-          bottom: -30px;
-          display: none;
-        }
-      }
-      .alpacaBlue {
-        position: absolute;
-        width: 300px;
-        right: -90px;
-        bottom: -90px;
         z-index: -1;
-        // @media (max-width: $screen-sm) {
-        //   width: 140px;
-        //   right: -20px;
-        //   display: none;
-        // }
+      }
+
+      .bottomFront {
+        position: absolute;
+        width: 100px;
+        right: -30px;
+        bottom: 90px;
+        z-index: 1;
+      }
+      .bottomBack {
+        position: absolute;
+        width: 325px;
+        right: -90px;
+        bottom: -80px;
+        z-index: -1;
       }
       svg {
         margin-top: 20px;
@@ -384,6 +378,55 @@
           margin-top: 24px;
           font-size: 24px;
         }
+      }
+    }
+  }
+}
+
+.aboutDescritpion {
+  margin: 80px 0;
+  .descriptionCardContainer {
+    // height: 375px;
+    width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(180deg, #ffffff 0%, #f1dbd2 51.56%);
+    border-radius: 20px;
+    padding: 10px;
+
+    .descriptionCard {
+      width: 100%;
+      border: 3px solid #fbb2a5;
+      box-sizing: border-box;
+      border-radius: 20px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 10px;
+      height: 300px;
+
+      h1 {
+        margin: 20px 0px;
+        font-family: $fontOmnes;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 20px;
+        /* identical to box height, or 67% */
+
+        text-align: center;
+      }
+      p {
+        margin-bottom: 20px;
+        font-family: $fontOmnes;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+
+        text-align: center;
       }
     }
   }
