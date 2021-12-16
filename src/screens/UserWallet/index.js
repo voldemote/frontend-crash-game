@@ -56,14 +56,16 @@ const UserWallet = ({
     DEPOSITS: transactions.deposit || [],
     WITHDRAWALS: transactions.withdraw || [],
     ONRAMP: transactions.onramp || [],
+    CRYPTO: transactions.crypto || [],
     BETS: myBetsData ? myBetsData : [],
   };
 
   const activityDataMap = {
     'FIAT DEPOSITS': 'ONRAMP',
-    'CRYPTO DEPOSITS': 'DEPOSITS',
+    'WFAIR DEPOSITS': 'DEPOSITS',
     WITHDRAWALS: 'WITHDRAWALS',
     BETS: 'BETS',
+    'CRYPTO DEPOSITS': 'CRYPTO',
   };
 
   const [activityTab, setActivityTab] = useState({
@@ -72,8 +74,9 @@ const UserWallet = ({
   });
   const [activityTabOptions, setActivityTabOptions] = useState([
     { name: 'FIAT DEPOSITS', index: 0 },
-    { name: 'CRYPTO DEPOSITS', index: 1 },
-    { name: 'WITHDRAWALS', index: 2 },
+    { name: 'WFAIR DEPOSITS', index: 1 },
+    { name: 'CRYPTO DEPOSITS', index: 2 },
+    { name: 'WITHDRAWALS', index: 3 },
   ]);
 
   const handleActivitySwitchTab = ({ index }) => {
@@ -89,9 +92,10 @@ const UserWallet = ({
     if (user.userId) {
       setActivityTabOptions([
         { name: 'FIAT DEPOSITS', index: 0 },
-        { name: 'CRYPTO DEPOSITS', index: 1 },
-        { name: 'WITHDRAWALS', index: 2 },
-        { name: 'BETS', index: 3 },
+        { name: 'WFAIR DEPOSITS', index: 1 },
+        { name: 'CRYPTO DEPOSITS', index: 2 },
+        { name: 'WITHDRAWALS', index: 3 },
+        { name: 'BETS', index: 4 },
       ]);
     }
     setUserKyc(user?.kyc);
@@ -115,29 +119,40 @@ const UserWallet = ({
     const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
     window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
   }
-
+  const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const renderCategoriesAndLeaderboard = () => {
     return (
       <div className={styles.activities}>
         <Grid item xs={12}>
           <div className={styles.activityWrapper}>
             <TabOptions
-              options={activityTabOptions ? activityTabOptions : []}
+              options={
+                activityTabOptions
+                  ? activityTabOptions.filter(
+                      ({ name }) => showNewFeatures || name !== 'CRYPTO DEPOSITS'
+                    )
+                  : []
+              }
               className={styles.tabLayout}
             >
-              {option => (
-                <div
-                  className={classNames(
-                    styles.headerTables,
-                    option.index === activityTab.index
-                      ? styles.tabItemSelected
-                      : styles.tabItem
-                  )}
-                  onClick={() => handleActivitySwitchTab(option)}
-                >
-                  {option.name}
-                </div>
-              )}
+              {(option) => {
+                const count = activityData[activityDataMap[option.name]].length;
+
+                return (
+                  <div
+                    className={classNames(
+                      styles.headerTables,
+                      option.index === activityTab.index
+                        ? styles.tabItemSelected
+                        : styles.tabItem
+                    )}
+                    onClick={() => handleActivitySwitchTab(option)}
+                    data-item-count={String(count)}
+                  >
+                    {option.name}
+                  </div>
+                );
+              }}
             </TabOptions>
 
             <div className={styles.activityContainer}>

@@ -14,18 +14,18 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
+      default:
         return <BuyWithFiatTab hidePopup={hidePopup}/>;
       case 1:
         return <DepositTab />;
       case 2:
         return <BuyWithCrypto />;
-      default:
-        return <BuyWithFiatTab />;
     }
   };
 
   return selectTabsComponent(type);
 };
+const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 
 const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
@@ -36,7 +36,8 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     { name: 'BUY WITH FIAT', index: 0 },
     { name: 'DEPOSIT', index: 1 },
     { name: 'BUY WITH CRYPTO', index: 2 },
-  ];
+  ].filter(({ name }) => showNewFeatures || name !== 'BUY WITH CRYPTO');
+  
   const handleSwitchTab = ({ index }) => {
     setActiveTab(tabOptions[index]);
   };

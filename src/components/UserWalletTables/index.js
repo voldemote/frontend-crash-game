@@ -6,6 +6,7 @@ import BetTable from './tables/BetTable';
 import DepositTable from './tables/DepositTable';
 import WithDrawalsTable from './tables/WithDrawalsTable';
 import OnRampTable from './tables/OnRampTable';
+import CryptosTable from './tables/CryptosTable';
 
 const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) => {
 
@@ -29,6 +30,9 @@ const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) =>
   const renderOnRampTableRows = (betTabelRows) => {
     return <OnRampTable renderRow={betTabelRows} />;
   };
+  const renderCryptosTableRows = (cryptosRows) => {
+    return <CryptosTable renderRow={cryptosRows} />;
+  };
 
   const renderTableRows = (type) => {
     switch (type) {
@@ -40,6 +44,8 @@ const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) =>
         return renderBetsTableRows(rowData[type]);
       case 'ONRAMP':
         return renderOnRampTableRows(rowData[type]);
+      case 'CRYPTO':
+        return renderCryptosTableRows(rowData[type]);
       default:
         return renderDepositTableRows(rowData[type]);
     }
