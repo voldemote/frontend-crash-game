@@ -24,20 +24,6 @@
     align-items: center;
     position: relative;
 
-    &::before {
-      position: absolute;
-      background: url('../../data/images/elon-musk-1.svg');
-      content: '';
-      width: 100px;
-      height: 100px;
-      top: -35px;
-      left: -70px;
-
-      @media (max-width: $screen-sm) {
-        background: transparent;
-      }
-    }
-
     .howtoLink {
       cursor: pointer;
       font-size: 11px;
