@@ -926,3 +926,13 @@
 .qrCodeImg {
   height: 125px;
 }
+
+.channelFetchError {
+  width: 100%;
+  text-align: center;
+  color: #e82e89;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

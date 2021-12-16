@@ -33,7 +33,7 @@ const BuyWithCrypto = () => {
   const [activeTab, setActiveTab] = useState('bitcoin');
   const [address, setAddress] = useState('');
   const [uri, setUri] = useState('');
-  const [transaction, setTransaction] = useState(false);
+  const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
 
   useEffect(() => {
     onCurrencyChange(currency);
@@ -51,10 +51,14 @@ const BuyWithCrypto = () => {
   const fetchReceiverAddress = useCallback(async (tab) => {
     const currencyName = cryptoShortName[tab];
     const channel = await generateCryptopayChannel({ currency: currencyName });
+    
+    if(channel.error) {
+      return setErrorFetchingChannel(true);
+    }
 
+    setErrorFetchingChannel(false);
     setAddress(channel.address);
     setUri(channel.uri);
-
   }, [activeTab]);
 
   const onCurrencyChange = useCallback(async (value) => {
@@ -130,28 +134,44 @@ const BuyWithCrypto = () => {
         {/* Content */}
         <div className={styles.cryptoContent}>
           <p>
-            To deposit {cryptoShortName[activeTab]}, simply make a transfer to the wallet provided below.
+            To deposit {cryptoShortName[activeTab]}, simply make a transfer to
+            the wallet provided below.
           </p>
         </div>
 
         {/* QR code and address */}
-        <div className={styles.transferInformation}>
-          <div className={styles.qrCodeImg}>
-            {uri && <QRCode value={uri} size={125} />}
+        {!errorFetchingChannel && (
+          <div className={styles.transferInformation}>
+            <div className={styles.qrCodeImg}>
+              {uri && <QRCode value={uri} size={125} />}
+            </div>
+            <div className={styles.addressCopy}>
+              <ReferralLinkCopyInputBox
+                inputTheme={InputBoxTheme.copyToClipboardInputWhite}
+                forDeposit={address}
+              />
+            </div>
           </div>
-          <div className={styles.addressCopy}>
-            <ReferralLinkCopyInputBox
-              inputTheme={InputBoxTheme.copyToClipboardInputWhite}
-              forDeposit={address}
-            />
+        )}
+
+        {errorFetchingChannel && (
+          <div
+            className={classNames(
+              styles.transferInformation,
+              styles.channelFetchError
+            )}
+          >
+            <p>Currently not available.</p>
           </div>
-        </div>
+        )}
+
         <div className={styles.cryptoContent}>
           <p>
             Use the calculator to estimate how much WFAIR you can get by
             depositing cryptos.
           </p>
         </div>
+
         {/* Currency */}
 
         <div className={styles.cryptoInputsWrapper}>
