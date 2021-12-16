@@ -12,7 +12,7 @@ const ResponsibleGambling = () => {
           <p>Last updated: 16 December 2021</p>
           <p>
             Alpacasino aims to make every user's experience enjoyable, entertaining and pleasurable.<br/>
-            Our Responsible Gambling Policy (“Policy” is provided to keep Your gambling habits intact, safe and well looked after. Here You will find the different methods provided to help You understand fundamental facts about gambling, our support options and support partners.
+            Our Responsible Gambling Policy is provided to keep Your gambling habits intact, safe and well looked after. Here You will find the different methods provided to help You understand fundamental facts about gambling, our support options and support partners.
           </p>
           <p>Please read this information carefully for Your own best well-being, benefit and security.</p>
           <p>Alpacasino is operated by Wallfair N.V. having its office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is registered in the company registration number 159041.</p>
