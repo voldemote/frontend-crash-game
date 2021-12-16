@@ -259,7 +259,7 @@ const EmailSignUp = ({
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin()}
+          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed)}
         </div>
       </div>
       <Button
