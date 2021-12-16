@@ -38,8 +38,8 @@ import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/candy-3.png';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 
-import AlpacaPink from '../../data/images/home/alpaca-pink.svg';
-import AlpacaBlue from '../../data/images/home/alpaca-blue.svg';
+import AlpacaPink from '../../data/images/top1-popup-images.png';
+import AlpacaBlue from '../../data/images/bottom-popup-images.png';
 import AlpacaYellow from '../../data/images/home/alpaca-yellow.svg';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs';
@@ -225,27 +225,33 @@ const Home = ({
       <div className={styles.gameCards}>
         <div className={styles.title}>
           <h2>House Games</h2>
+          <p>Games available only in Alpacasino. 100% fun & pure love </p>
         </div>
         <div className={styles.cardBox}>
-          <Grid container spacing={1}>
-            <Grid item lg={3} md={3} xs={6}>
+          <Grid container spacing={1} justify="space-between">
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/pump-dump'}>
                 <img src={gameCardPumpDump} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/elon-game'}>
                 <img src={gameCardElon} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/plinko'}>
                 <img src={gameCardPlinko} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={2} md={2} xs={6}>
+              <Link to={'/games/alpaca-wheel'}>
+                <img src={gameCardWheel} alt="" />
               </Link>
             </Grid>
           </Grid>
@@ -273,6 +279,7 @@ const Home = ({
     };
     return (
       <div className={styles.welcomeContainer}>
+          <div className={styles.cardContainer}>
         <div className={styles.cardBox}>
           <h1>Alpacasino</h1>
           <h2>
@@ -280,13 +287,14 @@ const Home = ({
             create your <span className={styles.highlight}>alpaca</span>
           </h2>
 
-          <Button
+          <buton
             className={styles.startButton}
             onClick={showPopupForUnauthenticated}>
             Sign up
-          </Button>
+          </buton>
           <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
           <img className={styles.alpacaBlue} src={AlpacaBlue} alt="" />
+        </div>
         </div>
       </div>
     );

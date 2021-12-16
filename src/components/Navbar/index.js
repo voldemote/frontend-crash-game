@@ -262,7 +262,7 @@ const Navbar = ({
       <div className={style.navbarItems}>
         <Button
           className={style.loginButton}
-          theme={ButtonTheme.secondaryButton}
+          theme={ButtonTheme.loginButton}
           onClick={() => showPopupForLogin()}
         >
           Login

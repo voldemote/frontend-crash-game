@@ -299,19 +299,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 15px;
   width: 260px;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .buttonDisabled {
   // opacity: 0.5;
 
   &:hover {
-    cursor: wait;
+    cursor: default;
   }
 }
 

@@ -101,6 +101,9 @@ const EmailSignUp = ({
     if (!emailIsValid()) {
       formError = 'Not a valid email address';
       fieldRef = emailRef.current;
+      if(options && options.emailOnly && email.length === 0) {
+        formError = '';
+      }
     } else if (!passwordIsValid()) {
       formError = 'Your password needs to be 8 characters long';
       fieldRef = pwRef.current;
@@ -256,7 +259,7 @@ const EmailSignUp = ({
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin()}
+          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed)}
         </div>
       </div>
       <Button

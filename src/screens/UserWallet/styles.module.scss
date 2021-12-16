@@ -5,8 +5,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 0 3rem;
-  margin-top: 100px;
+  margin: 100px auto 0;
+  max-width: 1300px;
 
   @media (max-width: $screen-sm) {
     margin: 0 15px;
@@ -17,7 +17,7 @@
   width: 100%;
 
   @media (min-width: $screen-lg) {
-    // max-width: 1300px;
+    max-width: 1300px;
   }
 }
 
@@ -323,6 +323,19 @@
       padding: 4px 5px;
       font-size: 10px;
     }
+    &:not([data-item-count='0'])::after {
+      content: attr(data-item-count);
+      display: inline-block;
+      padding: 1px 4px;
+      border-radius: 6px;
+      font-family: $fontRegular;
+      background-color: $mainAction;
+      font-size: 9px;
+      padding: 1px 4px;
+      line-height: 1;
+      color: $colorPrimary;
+      margin-left: 4px;
+    }
   }
 
   @media screen and (max-width: $screen-xs) {
@@ -387,16 +400,23 @@
 .activities {
   margin-top: 40px;
   padding: 0 10px;
+  position: relative;
+
+  @media (max-width: $screen-xs) {
+    padding: 0;
+  }
 
   &::before {
     position: absolute;
     content: '';
     background-image: url('../../data/images/wallet-left-image.svg');
     background-repeat: no-repeat;
-    width: 50%;
-    height: 65%;
-    bottom: -85px;
-    left: 0px;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    bottom: 320px;
+    transform: rotate(-20deg);
+    left: -70px;
     background-position: bottom left;
     z-index: -1;
   }
@@ -405,10 +425,11 @@
     content: '';
     background-image: url('../../data/images/wallet-right-image.svg');
     background-repeat: no-repeat;
+    background-size: contain;
     width: 100px;
-    height: 60%;
+    height: 80%;
     bottom: 50px;
-    right: 0px;
+    right: -50px;
     background-position: bottom right;
     z-index: -1;
   }
@@ -470,8 +491,7 @@
 }
 
 .currentBalanceSection {
-  margin: 0 auto;
-  margin-top: 30px;
+  margin: 30px auto 0;
   border-radius: 12px;
   border: 1px solid transparent;
   background: rgba($colorBlue80, 0.6);
@@ -479,9 +499,11 @@
   justify-content: center;
   align-items: center;
 
+  margin: 0 10px;
+
   @media (max-width: $screen-xs) {
     justify-content: center;
-    margin-top: 80px;
+    margin: 80px 0 0;
   }
 
   .currentBlanceCard {
@@ -494,6 +516,18 @@
     width: 100%;
     padding: 40px 20px 0;
 
+    // @media (max-width: $screen-lg) {
+    //   padding: 140px 20px 0;
+    // }
+
+    @media (max-width: $screen-md) {
+      padding: 140px 20px 0;
+    }
+
+    @media (max-width: $screen-xs) {
+      padding: 40px 20px 0;
+    }
+
     h2 {
       color: $colorWhite;
       text-align: center;
@@ -503,7 +537,7 @@
       padding-top: 10px;
       color: $colorWhite;
       font-weight: 700;
-      padding: 10px 30px 20px;
+      padding: 10px 20px 20px;
       line-height: 26px;
       text-align: justify;
 
@@ -515,20 +549,21 @@
     }
 
     svg {
-      width: 590px;
-      height: 250px;
+      width: 490px;
+      height: 200px;
+      margin-bottom: 20px;
 
-      @media (max-width: $screen-xs) {
-        width: 300px;
-        height: 140px;
+      @media (max-width: $screen-lg) {
+        width: 370px;
+        // height: 200px;
       }
       @media (max-width: $screen-md) {
         width: 400px;
         height: 190px;
       }
-      @media (max-width: $screen-lg) {
-        width: 370px;
-        // height: 200px;
+      @media (max-width: $screen-xs) {
+        width: 300px;
+        height: 140px;
       }
     }
 
@@ -541,7 +576,7 @@
     }
 
     .currentbalanceWFair {
-      margin-bottom: 20px;
+      // margin-bottom: 20px;
       max-height: 70px;
       width: 90%;
       box-sizing: border-box;
@@ -550,7 +585,8 @@
       font-weight: 600;
       text-align: center;
       color: $colorLightYellow;
-      overflow-wrap: break-word;
+      line-height: 50px;
+
       &.font30 {
         font-size: 30px;
       }

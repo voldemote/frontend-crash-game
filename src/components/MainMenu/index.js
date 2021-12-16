@@ -8,6 +8,7 @@ import Routes from '../../constants/Routes';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
+import { useWeb3React } from '@web3-react/core';
 import HomeSettings from '../HomeSettings';
 import MyTrades from '../MyTrades';
 import { AuthenticationActions } from 'store/actions/authentication';
@@ -61,6 +62,7 @@ const MainMenu = ({
   const [alpacaBuilderProps, setAlpacaBuilderProps] = useState({...user.alpacaBuilderProps});
   const [profileSubmitActive, setProfileSubmitActive] = useState(true);
   const [profileErrorMessage, setProfileErrorMessage] = useState();
+  const { deactivate } = useWeb3React();
 
   const profilePictureRefName = useRef(null);
 
@@ -512,6 +514,11 @@ const MainMenu = ({
     );
   };
 
+  const doLogout = () => {
+    deactivate();
+    onClickGoToRoute(Routes.logout);
+  };
+
   return (
     <div className={classNames(styles.menu, opened ? styles.menuOpened : null)}>
       <div
@@ -544,7 +551,7 @@ const MainMenu = ({
             onReferralsClick={() => onReferralsClick()}
             onEmailNotificationClick={() => onEmailNotificationClick()}
             onPreferencesClick={() => onPreferencesClick()}
-            onLogoutClick={() => onClickGoToRoute(Routes.logout)}
+            onLogoutClick={() => doLogout()}
             onCloseProfile={() => close()}
             onAlpacaBuilderClick={() => onAlpacaBuilderClick()}
             onKycInfoClick={() => onKycInfoClick()}

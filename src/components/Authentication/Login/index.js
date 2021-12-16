@@ -12,7 +12,6 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import AuthenticationType from '../AuthenticationType';
 import { OnboardingActions } from 'store/actions/onboarding';
 import classNames from 'classnames';
-import ButtonTheme from 'components/Button/ButtonTheme';
 
 const Login = ({
   errorState,
@@ -68,7 +67,7 @@ const Login = ({
       error = 'Not a valid email address';
       fooRef = emailRef;
     }
-    if (emailIsValid() && options && options.emailOnly) {
+    if (options && options.emailOnly && email.length === 0) {
       error = undefined;
       ReactTooltip.hide(emailRef);
     }
@@ -111,7 +110,7 @@ const Login = ({
   return (
     <>
       <form
-        className={styles.authenticationInputBoxContainer}
+        className={classNames(styles.authenticationInputBoxContainer, forgotPassword && styles.forgotPassword)}
         onSubmit={onConfirm}
       >
         {errorState && (
