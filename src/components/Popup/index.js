@@ -56,7 +56,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
 
   useEffect(() => {
     const close = e => {
-      if (type === PopupTheme.disclaimer) return;
+      if ([PopupTheme.disclaimer, PopupTheme.acceptToS].includes(type)) return;
       // Keycode is deprecated: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
       // Adding still for older browsers
       if (e?.keyCode === 27 || e?.key === 'Escape') {
