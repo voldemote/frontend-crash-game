@@ -47,6 +47,7 @@
       background-color: $unselectedBg;
       text-align: center;
       display: flex;
+      border: 1px solid black;
       // box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
       box-shadow: 0;
 
@@ -102,7 +103,7 @@
     .category {
       cursor: pointer;
       margin: 5px;
-      background-color: $unselectedBg;
+      background-color: white;
       text-transform: capitalize;
       border-radius: 20px;
       height: 50px;
@@ -125,7 +126,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
   }
 
   &.wide {
@@ -168,6 +169,14 @@
   }
   .primaryAction {
     font-size: 20px;
+    background: $colorButton;
+    color: $colorBlack;
+    font-weight: 600;
+    line-height: 40px;
+    cursor: pointer;
+    border-radius: 30px;
+    width: 150px;
+    border: none;
   }
   .secondaryAction {
     display: flex;
@@ -177,7 +186,7 @@
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
-    color: $colorLightYellow;
+    color: black;
     text-decoration: underline;
     cursor: pointer;
     margin: 0 16px;

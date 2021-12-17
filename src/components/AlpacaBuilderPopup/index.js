@@ -63,7 +63,7 @@ const AlpacaBuilderPopup = ({
 
   return (
     <div className={styles.alpacaPopup}>
-      <h2 className={styles.title}>{popUpTitle}</h2>
+      <div style={{marginTop: 115}} />
       <AlpacaBuilder
         props={alpacaBuilderProps}
         cancelLabel={cancelLabel}
