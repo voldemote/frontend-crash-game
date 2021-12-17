@@ -102,14 +102,7 @@ const Button = ({
           onClick={disabled ? null : onClick}
           data-tracking-id={dataTrackingId}
         > 
-          <div className={style.buttonInnerBackground}>
-            {!withoutPadding && <div className={style.buttonPattern}/> }
-            <div className={style.butonSecondInnerBackground}>
-              <div className={classNames(style.buttonThirdInnerBackground, withoutPadding && style.withoutPadding)}>
-                <span>{children}</span>
-              </div>
-            </div>
-          </div>
+          {children}
         </span> : theme === ButtonTheme.secondaryButton ?
         <span
           className={classNames(

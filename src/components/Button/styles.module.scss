@@ -5,70 +5,19 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  padding: 4px 5px;
-  background: #ffd31a;
-  border: 4px solid #ea9c00;
+  background: $colorButton;
+  color: $colorBlack;
   box-sizing: border-box;
   border-radius: 60px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   font-family: $fontOmnes;
-  line-height: 100%;
+  padding: 8px 30px;
   text-transform: none;
   user-select: none;
   text-align: center;
   @media (max-width: $screen-sm) {
-    font-size: 20px;
-  }
-  .buttonInnerBackground {
-    width: 100%;
-    position: relative;
-    background: linear-gradient(
-      0deg,
-      #ea9c00 -92.86%,
-      rgba(234, 156, 0, 0) 171.43%
-    );
-    border-radius: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 10px;
-    .buttonPattern {
-      display: block;
-      position: absolute;
-      background: url('../../data/backgrounds/but-pattern.svg');
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 80%;
-      height: 100%;
-    }
-    .butonSecondInnerBackground {
-      width: 100%;
-      height: 100%;
-      border: 1px solid #ffe98f;
-      z-index: 1;
-      box-sizing: border-box;
-      border-radius: 46px;
-      .buttonThirdInnerBackground {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #f1af0a;
-        box-sizing: border-box;
-        border-radius: 46px;
-        padding: 0px 30px;
-        padding-bottom: 2px;
-        color: $colorWhite;
-        @media (max-width: $screen-sm) {
-          padding: 0px 16px;
-        }
-        &.withoutPadding {
-          padding: 0;
-          padding-bottom: 0;
-        }
-      }
-    }
+    font-size: 18px;
   }
 
   &:hover {
