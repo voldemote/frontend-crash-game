@@ -15,9 +15,9 @@
   height: 740px;
 
   @media (max-width: $screen-sm) {
-    padding: 30px 90px 60px;
-    padding-right: 110px;
-    padding-top: 120px;
+    padding: 30px 125px 60px;
+    padding-right: 130px;
+    padding-top: 180px;
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -26,8 +26,9 @@
 
   @media (max-width: $screen-xs) {
     padding: 30px 70px 60px;
-    padding-top: 120px;
+    padding-top: 170px;
     padding-right: 85px;
+    background-size: 135% 115%;
   }
 
   .title {
@@ -55,9 +56,14 @@
       margin-bottom: 40px;
       color: black;
       line-height: 36px;
+      white-space: nowrap;
 
       @media (max-width: $screen-sm) {
         font-size: 16px;
+      }
+
+      @media (max-width: $screen-xs) {
+        white-space: normal;
       }
     }
 
