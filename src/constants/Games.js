@@ -445,11 +445,11 @@ export const EXTERNAL_GAMES = [
   TechnicalName: 'VirtualClassicRoulette',
   TechnicalCategory: 'Roulette',
   GameCategory: 'Casino Games'
-  },{
+},/*{
   TechnicalName: 'Blackjack',
   TechnicalCategory: 'BoardGames',
   GameCategory: 'Board Games'
-  },{
+},*/{
   TechnicalName: 'ClassicKeno',
   TechnicalCategory: 'Keno',
   GameCategory: 'Keno Games',
@@ -470,13 +470,13 @@ export const EXTERNAL_GAMES = [
   TechnicalName: 'TripleSeven',
   TechnicalCategory: 'Games',
   GameCategory: 'Casino Games'
-  },{
+},/*{
   TechnicalName: 'WheelOfLightDeluxe',
   TechnicalCategory: 'Games',
   GameCategory: 'Casino Games',
   picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/WheelOfLight.jpg`
 
-  },{
+},*/{
   TechnicalName: 'SpaceLotto',
   TechnicalCategory: 'Games',
   GameCategory: 'Casino Games'

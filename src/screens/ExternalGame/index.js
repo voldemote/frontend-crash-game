@@ -25,6 +25,8 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 
+const portal = process.env.SMARTSOFT_PORTALNAME ? process.env.SMARTSOFT_PORTALNAME : "wallfair"
+
 
 const RouletteGame = ({
   showPopup,
@@ -75,8 +77,9 @@ const RouletteGame = ({
         .then(({data}) => {
           if(isMobile) {
             history.push('/games')
-            window.location = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
+            window.location = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=${portal}&ReturnUrl=${window.location.origin}`
           }else{
+            console.log("data.TokenID", data.TokenID)
             setInit(data.TokenID)
           }
         })
@@ -163,7 +166,7 @@ const RouletteGame = ({
     </Grid>
   );
 
-  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
+  const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?GameCategory=${gameCategory}&GameName=${gameName}&Token=${init}&PortalName=${portal}&ReturnUrl=${window.location.origin}`
 
   const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
   const contentRef = useRef(null);
