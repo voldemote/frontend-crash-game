@@ -8,8 +8,8 @@ const NftBanner = props => {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <img src={PhoneAlpacaImage} alt="phone alpaca" />
           <img src={PhoneCoinAlpacaImage} alt="phone coin alpaca" />
+          <img src={PhoneAlpacaImage} alt="phone alpaca" />
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.whiteWrapper}>
@@ -26,11 +26,11 @@ const NftBanner = props => {
               valuable skills!
               <br />
               <br />
-              Content for the general referral link:
+              {/* Content for the general referral link: */}
             </p>
-            <div className={styles.buttonWrapper}>
+            {/* <div className={styles.buttonWrapper}>
               <button>Start</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

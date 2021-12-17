@@ -4,9 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { LOGGED_IN } from 'constants/AuthState';
-import {
-  EXTERNAL_GAMES
-} from '../../constants/Games';
+import { EXTERNAL_GAMES } from '../../constants/Games';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -39,7 +37,7 @@ import YellowThumbnail from '../../data/images/candy-3.png';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
 
-
+import AlpacaHeader from 'data/images/alpaca-header.png';
 import TopFront from '../../data/images/top-front-corner-image.png';
 import TopBack from '../../data/images/top-back-corner-image.png';
 import BottomFront from '../../data/images/bottom-front-corner-image.png';
@@ -63,7 +61,7 @@ const Home = ({
   fetchTags,
   showPopup,
   events,
-  startOnboardingFlow
+  startOnboardingFlow,
 }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
@@ -231,7 +229,7 @@ const Home = ({
     return (
       <div className={styles.gameCards}>
         <div className={styles.title}>
-          <h2>House Games</h2>
+          <h2>Alpaca Games</h2>
           <p>Games available only in Alpacasino. 100% fun & pure love </p>
         </div>
         <div className={styles.cardBox}>
@@ -270,46 +268,61 @@ const Home = ({
   const renderSlogGames = () => {
     return (
       <div className={styles.gameCards}>
-        <GameSmartsoft
-          games={EXTERNAL_GAMES}
-          category="Slot Games"
-        />
+        <GameSmartsoft games={EXTERNAL_GAMES} category="Slot Games" />
       </div>
-    )
-  }
+    );
+  };
 
   const renderAboutDescription = () => {
     return (
       <div className={styles.aboutDescritpion}>
-       <Grid container spacing={1} justify="space-between">
-            <Grid item lg={4} md={4} xs={12}>
-              <div className={styles.descriptionCardContainer}>
-                <div className={styles.descriptionCard}>
-                    <h1>Fair</h1>
-                    <p>We have a mission to prove that crypto casino can just the pure entertainment. We operate on open source code, provide honest bonuses, and publicly communicate the house edges along with a full history of all the bets. Simply no hidden tricks just awesome fun!</p>
-                </div>
+        <Grid container spacing={1} justify="space-between">
+          <Grid item lg={4} md={4} xs={12}>
+            <div className={styles.descriptionCardContainer}>
+              <div className={styles.descriptionCard}>
+                <h1>Fair</h1>
+                <p>
+                  We have a mission to prove that crypto casino can just the
+                  pure entertainment. We operate on open source code, provide
+                  honest bonuses, and publicly communicate the house edges along
+                  with a full history of all the bets. Simply no hidden tricks
+                  just awesome fun!
+                </p>
               </div>
-            </Grid>
-            <Grid item lg={4} md={4} xs={12}>
-              <div className={styles.descriptionCardContainer}>
-                <div className={styles.descriptionCard}>
-                  <h1>Unique</h1>
-                    <p>In Alpacasino you play with WFAIR, our own crypto currency. It gives you the advantage to earn money even when you are not playing. Stake your winnings and watch your wallet grow! The more people sign up, deposit and play, the higher the value of you wallet! </p>
-                </div>
-              </div>
-            </Grid>
-            <Grid item lg={4} md={4} xs={12}>
-              <div className={styles.descriptionCardContainer}>
-                <div className={styles.descriptionCard}>
-                    <h1>Social</h1>
-                    <p>Alpacasino is a part of Alpacaverse our flagship project that presents the future of the speculative entertainment. The future where world of betting, gambling and gaming is blended into one huge theme park metaverse. The place where you meet people and enjoy the excitement of potential rewards!</p>
-                </div>
-              </div>
-            </Grid>
+            </div>
           </Grid>
+          <Grid item lg={4} md={4} xs={12}>
+            <div className={styles.descriptionCardContainer}>
+              <div className={styles.descriptionCard}>
+                <h1>Unique</h1>
+                <p>
+                  In Alpacasino you play with WFAIR, our own crypto currency. It
+                  gives you the advantage to earn money even when you are not
+                  playing. Stake your winnings and watch your wallet grow! The
+                  more people sign up, deposit and play, the higher the value of
+                  you wallet!{' '}
+                </p>
+              </div>
+            </div>
+          </Grid>
+          <Grid item lg={4} md={4} xs={12}>
+            <div className={styles.descriptionCardContainer}>
+              <div className={styles.descriptionCard}>
+                <h1>Social</h1>
+                <p>
+                  Alpacasino is a part of Alpacaverse our flagship project that
+                  presents the future of the speculative entertainment. The
+                  future where world of betting, gambling and gaming is blended
+                  into one huge theme park metaverse. The place where you meet
+                  people and enjoy the excitement of potential rewards!
+                </p>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
       </div>
-    )
-  }
+    );
+  };
 
   const renderWelcome = () => {
     const showPopupForUnauthenticated = () => {
@@ -319,30 +332,37 @@ const Home = ({
     };
     return (
       <div className={styles.welcomeContainer}>
-          <div className={styles.cardContainer}>
-        <div className={styles.cardBox}>
-          <h1>Welcome to<br />Alpacasino</h1>
+        <div className={styles.cardContainer}>
+          <div className={styles.cardBox}>
+            <p>
+              Welcome to
+              <br /> <span>Alpacasino</span>
+            </p>
 
-          <LimitedOffer />
-          <span className={styles.limitedOfferDescription}>
-            Join today and receive<br />
-            <span className={styles.highlighted}>50%</span><br />
-            cashback up to<br />
-            <span className={styles.highlighted}>25 000</span><br />
-            WFAIR tokens
-          </span>
+            <LimitedOffer />
+            <span className={styles.limitedOfferDescription}>
+              Join today and receive
+              <br />
+              <span className={styles.highlighted}>50%</span>
+              <br />
+              cashback up to
+              <br />
+              <span className={styles.highlighted}>25 000</span>
+              
+              <p>WFAIRs</p>
+            </span>
 
-
-          <buton
-            className={styles.startButton}
-            onClick={showPopupForUnauthenticated}>
-            Claim the offer!
-          </buton>
-          <img className={styles.topFront} src={TopFront} alt="" />
-          <img className={styles.topBack} src={TopBack} alt="" />
-          <img className={styles.bottomFront} src={BottomFront} alt="" />
-          <img className={styles.bottomBack} src={BottomBack} alt="" />
-        </div>
+            <buton
+              className={styles.startButton}
+              onClick={showPopupForUnauthenticated}
+            >
+              Claim the offer!
+            </buton>
+            <img className={styles.topFront} src={TopFront} alt="" />
+            <img className={styles.topBack} src={TopBack} alt="" />
+            <img className={styles.bottomFront} src={BottomFront} alt="" />
+            <img className={styles.bottomBack} src={BottomBack} alt="" />
+          </div>
         </div>
       </div>
     );
@@ -390,11 +410,11 @@ const Home = ({
                   <div>
                     <h3>Grow your Alpaca</h3>
                     <p>
-                      You can earn {TOKEN_NAME} tokens in multiple ways: You can play
-                      our house games (we are going to launch new games weekly),
-                      invite other alpacas, provide feedback and (soon) battle
-                      other alpacas(or bet on other alpaca fights) and send
-                      tokens among each other.
+                      You can earn {TOKEN_NAME} tokens in multiple ways: You can
+                      play our house games (we are going to launch new games
+                      weekly), invite other alpacas, provide feedback and (soon)
+                      battle other alpacas(or bet on other alpaca fights) and
+                      send tokens among each other.
                     </p>
                   </div>
                   <div className={styles.thumbnail}>
@@ -415,8 +435,8 @@ const Home = ({
                       <h3>What</h3>
                     </div>
                     <p>
-                      Alpacasino is the first betting and gaming platform powered 
-                      by Wallfair.
+                      Alpacasino is the first betting and gaming platform
+                      powered by Wallfair.
                     </p>
                   </div>
                   <div className={styles.thumbnail}>
@@ -449,10 +469,7 @@ const Home = ({
   };
 
   return (
-    <BaseContainerWithNavbar
-      home
-      loggedIn={isLoggedIn()}
-      >
+    <BaseContainerWithNavbar home loggedIn={isLoggedIn()}>
       {/* {renderHeadline()} */}
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
@@ -499,7 +516,7 @@ const mapDispatchToProps = dispatch => {
         })
       );
     },
-    startOnboardingFlow: () =>{
+    startOnboardingFlow: () => {
       dispatch(OnboardingActions.start());
     },
   };

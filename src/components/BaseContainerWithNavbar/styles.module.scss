@@ -56,11 +56,21 @@
       }
 
       .aplacaHeader {
-        bottom: -20px;
-        left: 15%;
+        bottom: -150px;
+        left: calc(50% - 500px);
+        transform: translateX(-50%);
         position: absolute;
-        width: 350px;
+        width: 450px;
         display: block;
+
+        @media (max-width: 1300px) {
+          bottom: 0px;
+          left: calc(50% - 500px);
+          transform: translateX(-50%);
+          position: absolute;
+          width: 350px;
+          display: block;
+        }
       }
 
       video {
