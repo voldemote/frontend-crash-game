@@ -4,11 +4,11 @@ import styles from '../styles.module.scss';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectHistory, selectStakes } from 'store/selectors/wallfair';
-import { numberWithCommas, shortenAddress } from 'utils/common';
+import { formatTxStatus, numberWithCommas, shortenAddress } from 'utils/common';
 import Text from 'helper/Text';
 import moment from 'moment';
 import { TOKEN_NAME } from 'constants/Token';
-import { getTransactionURL } from '../../../utils/constants';
+import { getCryptosTransactionURL, getTransactionURL } from '../../../utils/constants';
 
 
 const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
@@ -47,28 +47,20 @@ const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
         </Grid>
         <Grid item xs>
           <div
-            className={classNames(
-              styles.messageLast,
-              styles.messageRight,
-              styles.messageTranform
-            )}
+            className={styles.messageCenter}
           >
-            <p>{status}</p>
+            <p>{formatTxStatus(status)}</p>
           </div>
         </Grid>
         <Grid item xs>
           <div className={classNames(styles.messageLast, styles.messageRight)}>
-            {['ETH', 'MATIC'].includes(input_currency) ? (
               <a
-                href={getTransactionURL(input_currency, transaction_hash)}
+                href={getCryptosTransactionURL(input_currency, transaction_hash)}
                 target="_blank"
                 rel="noreferrer"
               >
                 <p>{shortenAddress(transaction_hash, false)}</p>
               </a>
-            ) : (
-              <p>{shortenAddress(transaction_hash, false)}</p>
-            )}
           </div>
         </Grid>
       </Grid>
@@ -76,7 +68,7 @@ const OnRampRow = ({ data, hideSecondaryColumns = false }) => {
   );
 };
 
-const OnRampTable = ({
+const CryptosTable = ({
   className,
   hideSecondaryColumns = false,
   renderRow = [],
@@ -119,4 +111,4 @@ const OnRampTable = ({
   );
 };
 
-export default React.memo(OnRampTable);
+export default React.memo(CryptosTable);
