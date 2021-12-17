@@ -27,7 +27,7 @@ const BaseContainerWithNavbar = ({
     >
       <div className={classNames(styles.headerBackground, loggedIn || !home ? styles.withTransparent : null)}>
          <div className={styles.headerContianer}>
-            <video loop autoPlay muted  id="myVideo">
+            <video loop autoPlay muted playsInline id="myVideo">
                 <source src={HeaderVideo} type="video/mp4" />
             </video>
             <div className={styles.gradientLayer}></div>
