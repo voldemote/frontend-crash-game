@@ -214,7 +214,7 @@ const EmailSignUp = ({
             checked={legalAuthorizationAgreed}
             setChecked={setLegalAuthorizationAgreed}
           />
-          <Button
+          <button
             onClick={onConfirm}
             className={classNames([styles.submitButton, styles.mobile])}
             disabled={submitInProgress || !legalAuthorizationAgreed}
