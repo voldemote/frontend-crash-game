@@ -45,6 +45,15 @@ import BottomBack from '../../data/images/bottom-back-corner-image.png';
 import AlpacaBlue from '../../data/images/bottom-popup-images.png';
 import AlpacaYellow from '../../data/images/home/alpaca-yellow.svg';
 
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core';
+import AboutFirstImage from '../../data/images/about-1-image.png';
+import AboutSecondImage from '../../data/images/about-2-image.png';
+import AboutTopAlpaca from '../../data/images/about-top-alpaca.png';
+import AboutThirdImage from '../../data/images/about-3-image.png';
+
+
+
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
@@ -67,6 +76,10 @@ const Home = ({
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
+  const theme = useTheme();
+const isXSmall = useMediaQuery(theme.breakpoints.down('xs'));
+const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
 
   useOAuthCallback();
 
@@ -274,55 +287,81 @@ const Home = ({
   };
 
   const renderAboutDescription = () => {
-    return (
-      <div className={styles.aboutDescritpion}>
-        <Grid container spacing={1} justify="space-between">
-          <Grid item lg={4} md={4} xs={12}>
-            <div className={styles.descriptionCardContainer}>
-              <div className={styles.descriptionCard}>
-                <h1>Fair</h1>
-                <p>
-                  We have a mission to prove that crypto casino can just the
-                  pure entertainment. We operate on open source code, provide
-                  honest bonuses, and publicly communicate the house edges along
-                  with a full history of all the bets. Simply no hidden tricks
-                  just awesome fun!
-                </p>
-              </div>
+  return (
+    <div className={styles.aboutDescritpion}>
+      <Grid
+        container
+        spacing={isSmall || isXSmall ? 4 : 10}
+        alignItems="center"
+        justify="space-between"
+      >
+        <Grid item lg={4} md={4} xs={12}>
+          <div className={styles.descriptionCardContainer}>
+            <div className={styles.descriptionCard}>
+              <img
+                className={styles.aboutFirst}
+                src={AboutFirstImage}
+                alt="about-1"
+              />
+              <h1>Fair</h1>
+              <p>
+                We have a mission to prove that crypto casino can just the pure
+                entertainment. We operate on open source code, provide honest
+                bonuses, and publicly communicate the house edges along with a
+                full history of all the bets. Simply no hidden tricks just
+                awesome fun!
+              </p>
             </div>
-          </Grid>
-          <Grid item lg={4} md={4} xs={12}>
-            <div className={styles.descriptionCardContainer}>
-              <div className={styles.descriptionCard}>
-                <h1>Unique</h1>
-                <p>
-                  In Alpacasino you play with WFAIR, our own crypto currency. It
-                  gives you the advantage to earn money even when you are not
-                  playing. Stake your winnings and watch your wallet grow! The
-                  more people sign up, deposit and play, the higher the value of
-                  you wallet!{' '}
-                </p>
-              </div>
-            </div>
-          </Grid>
-          <Grid item lg={4} md={4} xs={12}>
-            <div className={styles.descriptionCardContainer}>
-              <div className={styles.descriptionCard}>
-                <h1>Social</h1>
-                <p>
-                  Alpacasino is a part of Alpacaverse our flagship project that
-                  presents the future of the speculative entertainment. The
-                  future where world of betting, gambling and gaming is blended
-                  into one huge theme park metaverse. The place where you meet
-                  people and enjoy the excitement of potential rewards!
-                </p>
-              </div>
-            </div>
-          </Grid>
+          </div>
         </Grid>
-      </div>
-    );
-  };
+        <Grid item lg={4} md={4} xs={12}>
+          <div className={styles.descriptionCardContainer}>
+            <div className={styles.descriptionCard}>
+              <img
+                className={styles.aboutTopAlpaca}
+                src={AboutTopAlpaca}
+                alt="about-top-alpaca"
+              />
+              <img
+                className={styles.aboutSecond}
+                src={AboutSecondImage}
+                alt="about-1"
+              />
+              <h1>Unique</h1>
+              <p>
+                In Alpacasino you play with WFAIR, our own crypto currency. It
+                gives you the advantage to earn money even when you are not
+                playing. Stake your winnings and watch your wallet grow! The
+                more people sign up, deposit and play, the higher the value of
+                you wallet!{' '}
+              </p>
+            </div>
+          </div>
+        </Grid>
+        <Grid item lg={4} md={4} xs={12}>
+          <div className={styles.descriptionCardContainer}>
+            <div className={styles.descriptionCard}>
+              <img
+                className={styles.aboutThird}
+                src={AboutThirdImage}
+                alt="about-1"
+              />
+              <h1>Social</h1>
+              <p>
+                Alpacasino is a part of Alpacaverse our flagship project that
+                presents the future of the speculative entertainment. The future
+                where world of betting, gambling and gaming is blended into one
+                huge theme park metaverse. The place where you meet people and
+                enjoy the excitement of potential rewards!
+              </p>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
+
 
   const renderWelcome = () => {
     const showPopupForUnauthenticated = () => {

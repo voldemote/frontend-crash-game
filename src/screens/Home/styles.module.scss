@@ -401,16 +401,11 @@
 }
 
 .aboutDescritpion {
-  margin: 80px 0;
-  @media (max-width: $screen-lg) {
-    margin-bottom: 140px;
-  }
-  @media (max-width: $screen-xs) {
-    margin-bottom: 180px;
-  }
+  margin: 350px auto;
+  margin-bottom: 250;
   .descriptionCardContainer {
     // height: 375px;
-    width: 320px;
+    // width: 320px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -431,6 +426,37 @@
       flex-direction: column;
       padding: 10px;
       height: 300px;
+      position: relative;
+
+      .aboutFirst {
+        position: absolute;
+        top: -59px;
+        left: 130px;
+        width: 130px;
+      }
+
+      .aboutTopAlpaca {
+        position: absolute;
+        bottom: 281px;
+        left: 65px;
+        width: 250px;
+
+        z-index: -1;
+      }
+      .aboutSecond {
+        position: absolute;
+        top: -35px;
+        left: 130px;
+        width: 110px;
+      }
+      .aboutThird {
+        position: absolute;
+        top: -123px;
+        left: 120px;
+        width: 116px;
+
+        z-index: -1;
+      }
 
       h1 {
         margin: 20px 0px;
