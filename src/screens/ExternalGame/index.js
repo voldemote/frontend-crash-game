@@ -180,7 +180,6 @@ const RouletteGame = ({
     });
   }, [JSON.stringify(contentRef?.current)]);
   */
-  //user.isLoggedIn?url:urltest
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
