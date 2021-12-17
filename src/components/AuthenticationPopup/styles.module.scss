@@ -46,7 +46,6 @@
       margin-right: 0;
     }
 
-
     // @media (max-width: $screen-sm) {
     //   width: 100%;
     //   border-radius: 30% 30% 15% 15%;
@@ -234,7 +233,6 @@
     }
 
     @media screen and (min-width: $screen-md) {
-
       .confettiRight,
       .confettiLeft {
         transform: scale(1.1);
@@ -278,7 +276,7 @@
       // padding: 120px 50px 80px 50px;
       // width: 400px;
       padding-top: 120px;
-      padding-left: 0;
+      padding-left: 48px;
       flex-direction: column;
 
       @media (max-width: $screen-md) {
@@ -331,7 +329,6 @@
   }
 
   @media screen and (max-width: $screen-xs) {
-
     .confettiRight,
     .confettiLeft {
       transform: scale(0.8);
