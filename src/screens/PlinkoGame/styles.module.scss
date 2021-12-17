@@ -15,55 +15,61 @@
 }
 
 .gameContent {
-  position: relative;
-
   max-width: 1300px;
   margin: 100px auto 30px;
-  padding: 30px 30px;
-
-  @media (max-width: $screen-md) {
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 40px auto 20px;
-  }
-  .topContainer {
-    font-size: 20px;
+  padding: 0px 30px;
+  .title {
     color: $colorWhite;
-    p {
-      padding-top: 20px;
+    @media (max-width: $screen-md) {
+      text-align: center;
     }
   }
-  .descriptionContainer {
-    margin-top: 130px;
-    display: flex;
+  .content {
+    padding: 30px 30px;
+
     @media (max-width: $screen-md) {
-      flex-direction: column;
+      padding: 0;
+      margin: 40px auto 20px;
     }
-    .firstWrapper {
-      width: 50%;
-      display: flex;
-      justify-content: center;
-      @media (max-width: $screen-md) {
-        width: 100%;
+    .topContainer {
+      font-size: 20px;
+      color: $colorWhite;
+      p {
+        padding-top: 20px;
       }
-      img {
-        width: auto;
-        object-fit: contain;
+    }
+    .descriptionContainer {
+      margin-top: 130px;
+      display: flex;
+      @media (max-width: $screen-md) {
+        flex-direction: column;
+      }
+      .firstWrapper {
+        width: 50%;
+        display: flex;
+        justify-content: center;
         @media (max-width: $screen-md) {
           width: 100%;
         }
+        img {
+          width: auto;
+          object-fit: contain;
+          @media (max-width: $screen-md) {
+            width: 100%;
+          }
+        }
       }
-    }
-    .secondWrapper {
-      width: 50%;
-      font-size: 20px;
-      color: $colorWhite;
-      margin-top: 40px;
-      @media (max-width: $screen-md) {
-        width: 100%;
-      }
-      p {
-        padding-top: 20px;
+      .secondWrapper {
+        width: 50%;
+        font-size: 20px;
+        color: $colorWhite;
+        margin-top: 40px;
+        @media (max-width: $screen-md) {
+          width: 100%;
+        }
+        p {
+          padding-top: 20px;
+        }
       }
     }
   }
