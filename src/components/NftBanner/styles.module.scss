@@ -1,10 +1,10 @@
 @import '../../styles/all';
 
 .wrapper {
-  height: 570px;
+  height: 530px;
 
   @media (max-width: $screen-lg) {
-    height: 620px;
+    height: 470px;
   }
 
   @media (max-width: $screen-md) {
@@ -23,12 +23,12 @@
   position: absolute;
   left: 0;
   width: 100%;
-  height: 570px;
+  height: 530px;
   margin-top: 85px;
   padding-bottom: 20px;
 
   @media (max-width: $screen-lg) {
-    height: 620px;
+    height: 470px;
   }
 
   @media (max-width: $screen-md) {
