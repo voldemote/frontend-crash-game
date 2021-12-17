@@ -20,7 +20,8 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
       default:
         return <DepositTab />;
       case 1:
-        return showNewFeatures ? <BuyWithFiatTab hidePopup={hidePopup} /> : <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
+        return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
+        // return showNewFeatures ? <BuyWithFiatTab hidePopup={hidePopup} /> : <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
       case 2:
         return <BuyWithCrypto />;
     }
