@@ -18,7 +18,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: '14.x'
       - name: Install node dependencies
         run: npm ci
       - name: Install doctl (to be able to login on Digital Ocean)
@@ -114,7 +114,7 @@ jobs:
                             --build-arg REACT_APP_PUMP_DUMP_GAME_BACKEND_URL="https://pump-dump-api.alpacasino.io/"\
                             --build-arg REACT_APP_NEWS_API_KEY=${{ secrets.REACT_APP_NEWS_API_KEY }}\
                             --build-arg REACT_APP_RECAPTCHA_KEY=${{ secrets.REACT_APP_RECAPTCHA_KEY }}\
-                            --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_GTM_ID }}\
+                            --build-arg REACT_APP_GTM_ID=${{ secrets.REACT_APP_PROD_GTM_ID }}\
                             --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\
                             --build-arg REACT_APP_FACEBOOK_CLIENT_ID=${{ secrets.REACT_APP_FACEBOOK_CLIENT_ID }}\
                             --build-arg REACT_APP_SHOW_UPCOMING_FEATURES=false\
