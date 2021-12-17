@@ -10,45 +10,61 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  padding: 40px 100px 80px 130px;
+  padding: 170px 210px 80px 190px;
+  width: 700px;
+  height: 740px;
+
   @media (max-width: $screen-sm) {
-    padding: 30px 30px 60px;
+    padding: 30px 90px 60px;
+    padding-right: 110px;
+    padding-top: 120px;
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
   }
 
+  @media (max-width: $screen-xs) {
+    padding: 30px 70px 60px;
+    padding-top: 120px;
+    padding-right: 85px;
+  }
+
   .title {
-    margin-left: 24px;
+    // margin-left: 24px;
     text-align: center;
     font-style: normal;
     font-weight: bold;
     font-size: 34px;
-    color: #ffd31a;
-    text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
-    @media (max-width: $screen-sm) {
-      display: none;
-    }
+    color: black;
+    line-height: 30px;
+
+    // @media (max-width: $screen-sm) {
+    //   display: none;
+    // }
   }
 
   .container {
-    padding: 100px 40px 16px;
+    padding: 25px 0 16px;
+    max-width: 380px;
+
     .description {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       text-align: center;
       margin-bottom: 40px;
-      color: $colorWhite;
-      text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
+      color: black;
+      line-height: 36px;
+
       @media (max-width: $screen-sm) {
         font-size: 16px;
       }
     }
 
     .inputBox {
-      width: 100%;
+      width: 250px;
       margin: 0 auto 40px;
+      background: white;
 
       @media (max-width: $screen-sm) {
         width: 100%;
@@ -58,32 +74,47 @@
     .buttons {
       display: flex;
       align-items: center;
-      justify-content: center;
+      flex-direction: column;
       width: 100%;
       column-gap: 20px;
+
       .skipButton {
         font-size: 20px;
         font-weight: 600;
-        color: $colorLightYellow;
+        color: #EA9C00;
         padding: 0 30px;
         text-decoration: underline;
         cursor: pointer;
+
         @media (max-width: $screen-sm) {
           font-size: 16px;
         }
       }
+
       .button {
+        font-size: 20px;
+        background: $colorButton;
+        color: $colorBlack;
+        font-weight: 600;
+        line-height: 40px;
+        cursor: pointer;
+        border-radius: 30px;
+        width: 150px;
+        border: none;
+        margin-top: 50px;
+
         @media (max-width: $screen-sm) {
           font-size: 20px;
         }
 
-        & > span > svg {
+        &>span>svg {
           @media (max-width: $screen-sm) {
             width: 140px;
           }
         }
       }
     }
+
     .errorHandLing {
       font-size: 14.5px;
       height: 60px;
@@ -119,6 +150,7 @@
       bottom: 220px;
     }
   }
+
   .randomize {
     font-size: 20px;
     font-weight: 600;
@@ -126,6 +158,7 @@
     padding: 0 30px;
     text-decoration: underline;
     cursor: pointer;
+
     @media (max-width: $screen-sm) {
       font-size: 16px;
     }
