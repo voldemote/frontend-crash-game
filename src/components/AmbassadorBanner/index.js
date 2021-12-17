@@ -43,7 +43,7 @@ const AmbassadorBanner = () => {
               <div>
                 <div className={styles.whiteBox}>
                   <p>
-                    Founders offer <span>00:00:00</span>
+                    Founders offer - <span>Limited Time</span>
                   </p>
                 </div>
                 <img src={AlpacaWithShavolImage} alt="alpaca with shavol" />
