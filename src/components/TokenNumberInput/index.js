@@ -36,8 +36,8 @@ const TokenNumberInput = ({
     const changedValue = _.floor(value * multiplier, 0);
     if (changedValue > maxValue) {
       setValue(_.floor(maxValue, 0));
-    } else if (changedValue < 1) {
-      setValue(1);
+    } else if (changedValue < 0) {
+      setValue(0);
     } else {
       setValue(changedValue);
     }
