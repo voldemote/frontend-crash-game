@@ -205,7 +205,7 @@
   text-transform: none;
 
   a {
-    color: #EA9C00;
+    color: #ea9c00;
     text-decoration: underline;
   }
 }
@@ -213,15 +213,8 @@
 .submitButton,
 .signInButton {
   margin: 30px 0 0;
-  font-size: 20px;
-  background: $colorButton;
-  color: $colorBlack;
-  font-weight: 600;
-  line-height: 40px;
-  cursor: pointer;
-  border-radius: 30px;
+  padding: 10px 0;
   width: 250px;
-  border: none;
 
   @media (max-width: $screen-sm) {
     margin: 10px 0 0;
@@ -350,24 +343,18 @@
   gap: 20px;
   justify-content: space-around;
   margin: 20px 0;
-  @media (max-width: $screen-sm) {
-    flex-direction: row !important;
-  }
   .socialIcon {
     width: 24px;
     height: 24px;
   }
   &.verticalContainer {
-    // flex-direction: column;
-    gap: 8px;
-    margin: 14px 0 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 32px 0 20px;
     @media (max-width: $screen-sm) {
-      margin-bottom: 0;
+      gap: 10px;
+      margin: 10px 0 0;
     }
-  }
-  .socialButton {
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
   }
 }

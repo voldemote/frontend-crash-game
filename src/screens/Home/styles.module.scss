@@ -331,7 +331,7 @@
         margin-left: 40%;
       }
       p {
-        font-weight: 800;
+        font-weight: 700;
         font-size: 35px;
         line-height: 40px;
         font-family: $fontOmnes;
@@ -347,7 +347,7 @@
         }
       }
       .limitedOfferDescription {
-        font-weight: 800;
+        font-weight: 700;
         font-size: 35px;
         line-height: 40px;
         text-align: center;
@@ -356,12 +356,6 @@
         margin-bottom: 10px;
 
         p {
-          font-weight: 800;
-          font-size: 35px;
-          line-height: 40px;
-          text-align: center;
-          font-family: $fontOmnes;
-          color: $colorBlack;
           margin-top: 60px;
           margin-bottom: 10px;
         }
@@ -381,7 +375,7 @@
         width: 240px;
         height: 45px;
         text-align: center;
-        font-weight: 800;
+        font-weight: 700;
         font-family: $fontOmnes;
         background: $colorButton;
         color: $colorBlack;
@@ -393,10 +387,6 @@
         justify-content: center;
         align-items: center;
         padding: 0 5px;
-        &:hover {
-          background: $colorPrimary;
-          color: $colorButton;
-        }
       }
     }
   }

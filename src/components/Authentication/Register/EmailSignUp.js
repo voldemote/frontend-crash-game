@@ -214,7 +214,7 @@ const EmailSignUp = ({
             checked={legalAuthorizationAgreed}
             setChecked={setLegalAuthorizationAgreed}
           />
-          <button
+          <Button
             onClick={onConfirm}
             className={classNames([styles.submitButton, styles.mobile])}
             disabled={submitInProgress || !legalAuthorizationAgreed}
@@ -222,18 +222,18 @@ const EmailSignUp = ({
             data-action="submit"
           >
             Sign Up with E-mail
-          </button>
+          </Button>
           {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed)}
         </div>
       </div>
-      <button
+      <Button
         onClick={onConfirm}
         className={classNames([styles.submitButton, styles.desktop])}
         disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
       >
         Sign Up with E-mail
-      </button>
+      </Button>
       <div className={styles.recaptchaInfo}>
         <p>This site is protected by reCAPTCHA and the Google</p>
         <a

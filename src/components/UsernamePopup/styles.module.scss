@@ -10,9 +10,9 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  padding: 170px 210px 80px 190px;
+  padding: 190px 200px 70px 190px;
   width: 700px;
-  height: 740px;
+  height: 790px;
 
   @media (max-width: $screen-sm) {
     padding: 30px 125px 60px;
@@ -25,9 +25,8 @@
   }
 
   @media (max-width: $screen-xs) {
-    padding: 30px 70px 60px;
+    padding: 30px 85px 60px 75px;
     padding-top: 170px;
-    padding-right: 85px;
     background-size: 135% 115%;
   }
 
@@ -87,7 +86,7 @@
       .skipButton {
         font-size: 20px;
         font-weight: 600;
-        color: #EA9C00;
+        color: #ea9c00;
         padding: 0 30px;
         text-decoration: underline;
         cursor: pointer;
@@ -113,7 +112,7 @@
           font-size: 20px;
         }
 
-        &>span>svg {
+        & > span > svg {
           @media (max-width: $screen-sm) {
             width: 140px;
           }
