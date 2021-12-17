@@ -5,6 +5,7 @@ export const OnboardingTypes = {
   NEXT: 'Onboarding/NEXT',
   GET_USERNAME: 'Onboarding/GET_USERNAME',
   ADD_USERNAME_SUGGESTION: 'Onboarding/ADD_USERNAME_SUGGESTION',
+  RESET: 'Onboarding/RESET',
 };
 
 export const OnboardingSteps = {
@@ -21,10 +22,12 @@ const next = makeActionCreator(OnboardingTypes.NEXT, {});
 const getUsername = makeActionCreator(OnboardingTypes.GET_USERNAME, {});
 const addUsernameSuggestion = makeActionCreator(OnboardingTypes.ADD_USERNAME_SUGGESTION,
   {username: null});
+const reset = makeActionCreator(OnboardingTypes.RESET, {});
 
 export const OnboardingActions = {
   start,
   next,
   getUsername,
-  addUsernameSuggestion
+  addUsernameSuggestion,
+  reset,
 };

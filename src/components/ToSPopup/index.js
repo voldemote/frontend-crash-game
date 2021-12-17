@@ -39,7 +39,7 @@ const ToSPopup = ({ acceptToSConsent = () => {}, isOnboarding = false }) => {
 const mapDispatchToProps = dispatch => {
   return {
     acceptToSConsent: (isOnboarding) => {
-      dispatch(AuthenticationActions.acceptToSConsent(isOnboarding))
+      dispatch(AuthenticationActions.acceptToSConsent({isOnboarding}))
     }
   };
 };

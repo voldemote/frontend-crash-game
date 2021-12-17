@@ -17,6 +17,9 @@ const UsernamePopup = ({
   const [username, setUsername] = useState(suggestion || '');
   const [errorMessage, setErrorMessage] = useState();
   useEffect(() => {
+    if(!suggestion) {
+      getSuggestion();
+    }
     setUsername(suggestion)
   }, [suggestion])
   useEffect(() => {

@@ -248,7 +248,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.txModal:
         return <TxModal />;
       case PopupTheme.acceptToS:
-        return <ToSPopup isOnboarding={options.isOnboarding} />;
+        return <ToSPopup isOnboarding={options?.isOnboarding} />;
     }
 
     return null;

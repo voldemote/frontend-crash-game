@@ -253,6 +253,7 @@ const loginExternal = makeActionCreator(AuthenticationTypes.LOGIN_EXTERNAL, {
   code: null,
   ref: null,
   provider: null,
+  tosAccepted: false,
 });
 
 
@@ -273,7 +274,10 @@ const setAlpacaBuilderData = makeActionCreator(
 );
 
 const acceptToSConsent = makeActionCreator(
-  AuthenticationTypes.ACCEPT_TOS_CONSENT
+  AuthenticationTypes.ACCEPT_TOS_CONSENT,
+  {
+    isOnboarding: false,
+  }
 );
 
 const failedToSConsent = makeActionCreator(

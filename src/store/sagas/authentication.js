@@ -434,7 +434,7 @@ const signUp = function* (action) {
   }
 };
 
-const loginExternal = function* ({ code, provider, ref }) {
+const loginExternal = function* ({ code, provider, ref, tosAccepted }) {
   yield put(push('/'));
   const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref } });
   if (response) {
@@ -453,6 +453,10 @@ const loginExternal = function* ({ code, provider, ref }) {
         shouldAcceptToS: data?.shouldAcceptToS,
       })
     );
+    console.log(tosAccepted);
+    if(data.newUser && tosAccepted) {
+      yield put(AuthenticationActions.acceptToSConsent());
+    }
     localStorage.removeItem('urlParam_ref');
   } else {
     yield put(
@@ -564,7 +568,7 @@ const updateStatus = function* (action) {
   }
 };
 
-const updateToSConsent = function* ({isOnboarding}) {
+const updateToSConsent = function* ({ isOnboarding }) {
   yield put(PopupActions.hide())
   const { error } = yield call(Api.acceptToS);
 
