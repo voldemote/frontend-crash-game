@@ -25,8 +25,8 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 
-const portal = process.env.REACT_APP_SMARTSOFT_PORTALNAME ? process.env.REACT_APP_SMARTSOFT_PORTALNAME : "wallfair"
-const urlLauncher = process.env.REACT_APP_SMARTSOFT_LAUNCHER_URL ? process.env.REACT_APP_SMARTSOFT_LAUNCHER_URL : "https://eu-server.ssgportal.com/GameLauncher/Loader.aspx"
+const portal = process.env.REACT_APP_SMARTSOFT_PORTALNAME
+const urlLauncher = process.env.REACT_APP_SMARTSOFT_LAUNCHER_URL
 
 const RouletteGame = ({
   showPopup,
