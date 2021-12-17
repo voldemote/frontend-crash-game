@@ -28,7 +28,7 @@ const LastCrashes = ({ lastCrashes, showPopup, text, game }) => {
     <div id="lastCrashes" className={styles.container}>
       <span className={styles.title}>{text ? text : 'Last Crashes'}</span>
       <div className={styles.crashes}>
-        <div className={styles.overlay}></div>
+        {/* <div className={styles.overlay}></div> */}
         {lastCrashes.map((crash, i) => (
           /* Crash factors are not guaranteed to be unique, so create a unique key - crash + index */
           <span

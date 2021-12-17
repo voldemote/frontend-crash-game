@@ -4,7 +4,7 @@ import styles from '../styles.module.scss';
 import classNames from 'classnames';
 import moment from 'moment';
 import { getTransactionURL } from 'utils/constants';
-import { shortenAddress } from 'utils/common';
+import { shortenAddress, formatTxStatus } from 'utils/common';
 import Text from 'helper/Text';
 import { TOKEN_NAME } from 'constants/Token';
 
@@ -56,7 +56,7 @@ const DepositRow = ({ data, hideSecondaryColumns = false }) => {
               styles.messageTranform
             )}
           >
-            <p>{status}</p>
+            <p>{formatTxStatus(status)}</p>
           </div>
         </Grid>
         <Grid item xs>

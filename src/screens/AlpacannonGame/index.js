@@ -5,17 +5,14 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
-import PlaceBet from 'components/PlaceBet';
 import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/AlpacannonGameAnimation';
-import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import styles from './styles.module.scss';
 import { AlertActions } from '../../store/actions/alert';
 import { RosiGameActions } from '../../store/actions/rosi-game';
-import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import { ChatActions } from 'store/actions/chat';
 import Share from '../../components/Share';
@@ -25,18 +22,13 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
-import Routes from 'constants/Routes';
-import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
-import {
-  trackPlinkoCashout,
-  trackPlinkoPlaceBet
-} from '../../config/gtm';
+import CannonAlpaca from '../../data/images/alpacannon/cannon-alpaca.png';
+
 import { UserActions } from 'store/actions/user';
 import { selectUser } from 'store/selectors/authentication';
 import Button from 'components/Button';
-import GameContentCards from 'components/GameContentCards/GameContentCards';
 import classNames from "classnames";
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
@@ -80,7 +72,7 @@ const PlinkoGame = ({
 
   useEffect(() => {
     if(user.isLoggedIn){
-      getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
+      getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID, userId)
         .then(response => {
           const lastSpins = response?.data.lastCrashes;
           setSpins(lastSpins.map((spin) => {
@@ -275,35 +267,48 @@ const PlinkoGame = ({
         </div>
       </div>
 
-      <div className={styles.gameContentWrapper}>
-        <div className={styles.gameContent}>
-          <h2>AlpaCannon</h2>
-          <div className={styles.headingContainer}>
-            <h2>INTRO</h2>
+      <div className={styles.gameContent}>
+        <h1 className={styles.title}>Cannon</h1>
+        <div className={styles.content}>
+          <div className={styles.topContainer}>
             <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.{' '}
+              <b>Everyone talks about the Wolves of Wallstreet. Everyone thinks those aggressive and ruthless creatures are the soil of the investment market, the gurus of investing. But all those stories are smokes and mirrors to protect the real money makers - the Order of the Happy Alpacas. Established back in the days by the genius Warren who discovered that Alpacas developed an astonishing ability to predict market movements way better and more precise than anyone else. </b>
+            </p>
+            <p>
+              He also knew that the moment the truth was out there, people would try to take advantage of Alpacas, so he had to protect them.He decided to place a decoy on the market back in the 80s, one Jordan Belfort and redirect all the attention to a narcissistic penny maker. It worked back then, but then Elon started this crazy Reddit investigation that got bigger attention than the pizzagate. People started sniffing. 
+            </p>
+            <p>
+              Warren had no choice but to pull off the same stunt again, but this time on a broader scale. He talked to his friend Martin, and they decided to remind people about the Jordan and Wolves of Wallstreet and make them the centre of the attention, the icon. It wasn't that expensive, just 5 Oscars, and it worked like a charm. Now it's your turn to see if your prediction skills are on par with Alpacas'. Make Warren proud!
             </p>
           </div>
-          <h3>HOW TO PLACE A BET</h3>
-          <div className={styles.placeBetContainer}>
-            <Button role="button" tabIndex="0" className={styles.button}>
-              Place a bet
-            </Button>
-          </div>
-
-          <div className={styles.headingContainer}>
-            <h2>HOW TO PLAY</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.{' '}
-            </p>
+          <div className={styles.descriptionContainer}>
+            <div className={styles.firstWrapper}>
+              <img src={CannonAlpaca} alt='cannon-alpaca'/>
+            </div>
+            <div className={styles.secondWrapper}>
+              <h2>HOW TO PLAY PUMP AND DUMP?</h2>
+              <p>
+                <b>Step 1:</b> Enter the bet amount you want to play with
+              </p>
+              <p>
+                <b>Step 2:</b> Click "Place Bet"<br/>
+              </p>
+              <p>
+                <b>Step 3:</b> Cash out before the Shitcoin hits the dump <br/>
+              </p>
+              <p>
+                <b>Step 4:</b> If your sound is muted, turn it on! <br/>
+              </p>
+              <p>
+                <b>Step 5:</b> Not ready jet? u can cancel the Bet <br/>
+              </p>
+              <p className={styles.importantTip}>
+                <b>IMPORTANT!</b> You can only place a bet for rounds that haven’t started yet.
+              </p>
+              <p className={styles.importantTip}>
+                You can see the history of your winnings and losses in the game bar.
+              </p>
+            </div>
           </div>
         </div>
       </div>

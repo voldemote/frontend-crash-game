@@ -15,312 +15,62 @@
 }
 
 .gameContent {
-  padding-top: 140px;
-  padding-bottom: 250px;
-  width: 100%;
-  margin-top: 20px;
-  position: relative;
-  margin-bottom: -40px;
-
-  @media (max-width: $screen-md) {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-
-  .firstBgImage {
-    background: url('../../data/images/common-games/top-bg.png');
-    height: 1080px;
-    width: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    z-index: -1;
-  }
-
-  .secondBgImage {
-    background: url('../../data/images/common-games/middle-bg.png');
-    height: 1079px;
-    width: 100%;
-    top: 1079px;
-    left: 0;
-    position: absolute;
-    z-index: -1;
-  }
-
-  .thirdBgImage {
-    background: url('../../data/images/common-games/bottom-bg.png');
-    height: 1080px;
-    width: 100%;
-    top: calc(1079px + 1079px);
-    left: 0;
-    position: absolute;
-    z-index: -1;
-
-    @media (max-width: $screen-lg) {
-      height: 1800px;
-      background-size: cover;
-    }
-  }
-
-  &:before {
-    position: absolute;
-    top: 0;
-    z-index: 10;
-    content: '';
-    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
-    height: 55px;
-    width: 100%;
-  }
-
-  &:after {
-    position: absolute;
-    bottom: 0;
-    z-index: 10;
-    content: '';
-    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
-    height: 55px;
-    width: 100%;
-    transform: rotate(-180deg);
-  }
-
+  max-width: 1300px;
+  margin: 100px auto 30px;
+  padding: 0px 30px;
   .title {
-    margin-bottom: 105px;
-  }
-
-  .firstCoin {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 450px;
-    right: 18%;
-
-    @media (max-width: $screen-lg) {
-      right: 0;
+    color: $colorWhite;
+    @media (max-width: $screen-md) {
+      text-align: center;
     }
   }
-
-  .secondCoin {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 1000px;
-    left: -5%;
-
-    @media (max-width: $screen-xs) {
-      top: 1170px;
-    }
-    @media (max-width: $screen-lg) {
-      display: none;
-    }
-  }
-
-  .thirdCoin {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 900px;
-    right: -19%;
-
-    @media (max-width: $screen-lg) {
-      display: none;
-    }
-  }
-
-  .forthCoin {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 1150px;
-    right: 5%;
-
-    @media (max-width: $screen-lg) {
-      top: 850px;
-      right: 0;
-    }
+  .content {
+    padding: 30px 30px;
 
     @media (max-width: $screen-md) {
-      display: none;
+      padding: 0;
+      margin: 40px auto 20px;
     }
-
-    .rectangle {
-      width: 550px !important;
-    }
-  }
-
-  .fifthCoin {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 1950px;
-    left: 0;
-
-    @media (max-width: $screen-lg) {
-      top: 2150px;
-    }
-    @media (max-width: $screen-xs) {
-      display: none;
-    }
-  }
-
-  .coinRectangle {
-    position: relative;
-    display: inline-block;
-    z-index: 0;
-
-    .rectangle {
-      background: linear-gradient(
-        90deg,
-        rgba(196, 196, 196, 0) 0%,
-        #ffd626 82.45%
-      );
-      opacity: 0.5;
-      width: 635px;
-      height: 100px;
-    }
-
-    svg {
-      position: absolute;
-      right: -50px;
-      top: -20px;
-      transform: rotate(-45deg);
-    }
-  }
-
-  h2 {
-    font-weight: 700;
-    font-size: 50px;
-    color: white;
-    text-align: center;
-    margin-bottom: 30px;
-    position: relative;
-    z-index: 10;
-
-    @media (max-width: $screen-xs) {
-      font-size: 40px;
-    }
-  }
-
-  h3 {
-    font-weight: 700;
-    font-size: 40px;
-    color: white;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-
-    @media (max-width: $screen-xs) {
-      font-size: 32px;
-    }
-  }
-
-  .paragraph {
-    color: white;
-    font-size: 20px;
-    line-height: 50px;
-    font-weight: 700;
-
-    @media (max-width: $screen-xs) {
-      font-size: 18px;
-      line-height: 42px;
-    }
-  }
-
-  .firstHeadingContainer {
-    max-width: 600px;
-    margin-left: 17%;
-    margin-bottom: 125px;
-    position: relative;
-    z-index: 10;
-
-    @media (max-width: $screen-lg) {
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-
-  .placeBetContainer {
-    max-width: 240px;
-    margin: 0 auto;
-    margin-top: 45px;
-    margin-bottom: 130px;
-  }
-
-  .firstCircledContainer,
-  .secondCircledContainer {
-    display: flex;
-
-    svg {
-      margin-right: 160px;
-
-      &:last-child {
-        margin-right: 0;
+    .topContainer {
+      font-size: 20px;
+      color: $colorWhite;
+      p {
+        padding-top: 20px;
       }
     }
-  }
-
-  .firstCircledContainer {
-    margin-left: 550px;
-    margin-top: 250px;
-
-    @media (max-width: $screen-lg) {
-      margin-left: 0;
-      justify-content: center;
-      margin-top: 350px;
-    }
-
-    @media (max-width: $screen-md) {
-      margin-top: 400px;
-    }
-
-    @media (max-width: $screen-sm) {
-      display: none;
-    }
-  }
-
-  .secondCircledContainer {
-    margin-left: 420px;
-    margin-top: 150px;
-
-    @media (max-width: $screen-lg) {
-      margin-left: 0;
-      justify-content: center;
-    }
-
-    @media (max-width: $screen-sm) {
-      display: none;
-    }
-  }
-
-  .secondHeadingContainer {
-    max-width: 880px;
-    margin-right: 150px;
-    margin-left: auto;
-    margin-top: 250px;
-    position: relative;
-    z-index: 10;
-    margin-bottom: 400px;
-
-    @media (max-width: $screen-lg) {
-      margin-right: auto;
-      justify-content: center;
-      max-width: 600px;
-    }
-
-    @media (max-width: $screen-md) {
-      margin-top: 120px;
-      margin-bottom: 300px;
-    }
-
-    @media (max-width: $screen-sm) {
-      margin-top: 230px;
-      margin-bottom: 150px;
-    }
-  }
-
-  .wrapperCards {
-    @media (max-width: $screen-xl) {
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-
-    @media (max-width: $screen-md) {
-      padding-left: 0px;
-      padding-right: 0px;
+    .descriptionContainer {
+      margin-top: 130px;
+      display: flex;
+      @media (max-width: $screen-md) {
+        flex-direction: column;
+      }
+      .firstWrapper {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        @media (max-width: $screen-md) {
+          width: 100%;
+        }
+        img {
+          width: auto;
+          object-fit: contain;
+          @media (max-width: $screen-md) {
+            width: 100%;
+          }
+        }
+      }
+      .secondWrapper {
+        width: 50%;
+        font-size: 20px;
+        color: $colorWhite;
+        margin-top: 40px;
+        @media (max-width: $screen-md) {
+          width: 100%;
+        }
+        p {
+          padding-top: 20px;
+        }
+      }
     }
   }
 }

@@ -153,23 +153,6 @@
   }
 }
 
-.authenticationLegalAuthorizationAgreementCheckBox {
-  align-self: flex-start;
-  input {
-    border: 1px solid black;
-  }
-  // width: 390px;
-  .authenticationLegalAuthorizationAgreementText {
-    flex: 1;
-    font-size: 15px;
-    text-transform: uppercase;
-
-    @media (max-width: $screen-sm) {
-      font-size: 12px;
-    }
-  }
-}
-
 .errorBox {
   position: relative;
   height: 60px;

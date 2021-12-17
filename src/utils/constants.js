@@ -68,7 +68,25 @@ export const EXPLORERS = {
   },
 };
 
+export const CRYPTOS_EXPLORERS = {
+  staging: {
+    ETH: 'https://goerli.etherscan.io/tx/',
+    LTC: 'https://blockexplorer.one/litecoin/testnet/tx/',
+    BTC: 'https://www.blockchain.com/btc-testnet/tx/',
+  },
+  production: {
+    ETH: 'https://etherscan.io/tx/',
+    LTC: 'https://blockexplorer.one/litecoin/mainnet/tx/',
+    BTC: 'https://www.blockchain.com/btc/tx/',
+  },
+};
+
 export const getTransactionURL = (network, txHash) => {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   return `${EXPLORERS[environment][network]}${txHash}`;
+};
+
+export const getCryptosTransactionURL = (network, txHash) => {
+  const environment = process.env.REACT_APP_ENVIRONMENT;
+  return `${CRYPTOS_EXPLORERS[environment][network]}${txHash}`;
 };

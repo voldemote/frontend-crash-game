@@ -97,9 +97,6 @@ const TokenTransfer = ({
         />
       )} */}
       <div className={styles.transferWrapper}>
-        <strong>{`You can transfer up to ${numberWithCommas(
-          balance > 2000 ? 2000 : Number(balance).toFixed(2)
-        )} ${TOKEN_NAME}`}</strong>
         {formError && (
           <div className={styles.transferFormErrors}>
             <em>{formError}</em>
@@ -116,7 +113,7 @@ const TokenTransfer = ({
               setValue={setTransferValue}
               minValue={0}
               decimalPlaces={0}
-              maxValue={formatToFixed(balance < 2000 ? balance : 2000)}
+              maxValue={formatToFixed(balance)}
               halfIcon={false}
               doubleIcon={false}
             />

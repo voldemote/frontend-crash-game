@@ -8,86 +8,96 @@ const ResponsibleGambling = () => {
       <div className={styles.container}>
        
        <div className={styles.textContainer}>
-          <h1>Gambling with responsibility</h1>
-          <p>Last updated: 15.11.2021</p>
+          <h1>Responsible Gambling</h1>
+          <p>Last updated: 16 December 2021</p>
           <p>
-            Please read this information carefully for your own benefit.<br />
-            is operated by WALLFAIR N.V. having its office at Zuikertuintjeweg Z/N (Zuikertuin Tower).<br />
-            Company Registration number 159041.
+            Alpacasino aims to make every user's experience enjoyable, entertaining and pleasurable.<br/>
+            Our Responsible Gambling Policy is provided to keep Your gambling habits intact, safe and well looked after. Here You will find the different methods provided to help You understand fundamental facts about gambling, our support options and support partners.
           </p>
+          <p>Please read this information carefully for Your own best well-being, benefit and security.</p>
+          <p>Alpacasino is operated by Wallfair N.V. having its office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is registered in the company registration number 159041.</p>
 
           <h2>Interpretation</h2>
           <p>
-            The words of which the initial letter is capitalized have meanings defined under the following conditions.<br />
-            The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+            The following definitions to the words used herein apply and should be interpreted in accordance with the definitions provided.
           </p>
 
           <h2>Definitions</h2>
           <p>
-            For the purposes of these Terms and Conditions:
-
+            For the purposes of this Policy:
             <ul>
-              <li><b>Account means</b> a unique account created for You to access our Service or parts of our Service.</li>
-              <li><b>Company</b> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Curacao Co</li>
-              <li><b>Service</b> refers to the Website.</li>
+              <li><b>Account</b> means a unique account created for You to access our Service or parts of our Service.</li>
+              <li><b>Company</b> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Wallfair N.V.</li>
+              <li><b>Service</b> refers to this Website, more specifically, Alpacasino.</li>
               <li><b>Website</b> refers to alpacasino.io</li>
-              <li><b>You</b> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
+              <li><b>You (your, yourself)</b> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
             </ul>
           </p>
 
           <h2>Responsible Gambling and Self Exclusion</h2>
           <p>
-            Gambling means for the majority of our Users, entertainment, fun and excitement. But we also know that for some of our Users gambling has negative side effects. In the medical science is pathologic gambling since many years as serious sickness recognised.<br />
-            Since our first day we think about this problematic and try out best to help. Under “Responsible Gambling” We understand multiple steps of measures, with which a gambling provider can help to lower the possibility of negative side effects appearing. -In case they already appear we also try to take active steps against them.<br />
-            The most important instrument against negative side effects from gambling are knowledge and education about the risks of gambling too support our Users self-control in order to make sure they do not suffer from negative side effects.
+            Gambling means for many of our users, entertainment, fun and excitement. But we also know that for some of our users, gambling has negative side effects.
+            Gambling can be addictive and we encourage you to play responsibly and only with the money you can afford to lose.<br />
+            Since many years, the medical field has recognized pathologic gambling as a serious sickness. To make sure you enjoy our games in a responsible and entertaining manner we provided self-exclusion.<br />
+            We therefore take Responsible Gambling very seriously and try our best to help.
+          </p>
+          <p>
+            Under “Responsible Gambling” We provide multiple steps or measures, with which We can help our users to lower the possibility of negative side effects appearing. In case they already appear We also try to take active steps against them. 
+          </p>
+          <p>
+            The most important instrument against negative side effects from gambling are knowledge and education about the risks of gambling. In order to support our user's self-control and to make sure they do not suffer from negative side effects, We wish to provide You with the following:
           </p>
 
           <h2>Information and contact</h2>
           <p>
-            Our Support will help you via email at all time without any additional costs for you:
+            Our support will help You via email at all times without any additional costs for You. You can reach our support under the following email:
             <ul>
-              <li>email: service@alpacasino.io</li>
+              <li>email: <a href={"mailto: support@alpacasino.io"}>support@alpacasino.io</a></li>
             </ul>
-            Our Support will of course not give out any information about You without Your consent to anyone else <br />
-            In addition you also can take a self-test, if You are already gambling addicted at: <a href="https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/" rel="noreferrer" target="_blank">https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/</a><br />
+            Our support will of course not give out any information about You without Your consent to anyone else. <br />
+            In addition You also can take a self-test, if You are already gambling addicted at: <a href="https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/" rel="noreferrer" target="_blank">https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/</a><br />
             And you can also find additional information about gambling addictions at: <a href="https://www.begambleaware.org/safer-gambling/" rel="noreferrer" target="_blank">https://www.begambleaware.org/safer-gambling/</a>
           </p>
 
-          <h2>Helpful hints for responsible gambling at alpacasino.io</h2>
+          <p>
+            We further wish to provide You with external help and support. Here are a few helpful specialist organisations which You can reach out to at any time should You feel that You are no longer in control of Your gambling habit.<br />
+            <a href="https://www.ncpgambling.org/5475-2/" rel="noreferrer" target="_blank">https://www.ncpgambling.org/5475-2/</a> <br/>
+            <a href="https://www.gamblingtherapy.org/information/where-can-i-get-help/" rel="noreferrer" target="_blank">https://www.gamblingtherapy.org/information/where-can-i-get-help/</a> <br/>
+            <a href="https://www.europeancasinoassociation.org/helplines-helpcenters-self-exclusion-portals/" rel="noreferrer" target="_blank">https://www.europeancasinoassociation.org/helplines-helpcenters-self-exclusion-portals/</a>
+          </p>
+
+          <h2>Helpful hints for responsible gambling at</h2>
+          <a href="https://preventionlane.org/responsible-gambling" rel="noreferrer" target="_blank">https://preventionlane.org/responsible-gambling</a>
           <p>
             We recommend you think about the following hints, before gambling in order to insure gambling stays fun for You and without any negative side effects: 
             <ul>
               <li>
-                Set yourself a deposit limit<br />
-                Before you start to gambling think about how much you can afford to gamble with according to Your financial situation. Play with amounts which are for fun and for Your entertainment
+                Set Yourself a <b>deposit limit</b><br />
+                Before You start to gamble, think about how much You can afford to gamble with according to Your financial situation. Play with amounts which are for fun and for Your entertainment
               </li>
               <li>
                 Do not try to win back a loss at every cost<br />
-                Try to not take to huge risks to win back what You lost before at any cost. Play for Entertainment and not to earn money.
+                Do not try to not take to huge risks to win back what You lost before at any cost. Play for entertainment and not to earn money.
               </li>
               <li>
-                Set yourself a time limit <br />
-                Set yourself a time limit and do not break it. Keep in mind gambling should stay in balance with your other hobbies and not be Your only hobby. 
+                Set Yourself a <b>time limit</b> <br />
+                Set Yourself a time limit and do not break it. Keep in mind gambling should stay in balance with Your other hobbies and not be Your only hobby.
               </li>
               <li>
                 Play smart:<br />
-                It is smarter to not play, when You are extremely stressed, depressed or under to much pressure. Also do not play when you are under the influence of Medications, Drugs or Alcohol.
+                It is smarter to <b>not play</b>, when You are extremely stressed, depressed or under to much pressure. <b>Also do not play</b> when You are under the influence of medications, drugs or alcohol.
               </li>
 
               <li>
                 Take breaks: <br />
-                You should take breaks when You notice, that You get tired or can´t concentrate anymore
-              </li>
-              <li>
-                Only one account:<br />
-                To make it easier to have an overview how much time and money You spend on gambling it is highly advised to not create more than one Account per Person.
+                You should take breaks when You notice that You are getting tired or can't concentrate anymore.
               </li>
             </ul>
           </p>
 
           <h2>Minor Protection</h2>
           <p>
-            To use our Service, You have to be 18 years or older. To avoid abuse, keep Your login data save from any minors near You.<br />
+            To use our Service, You have to be 18 years or older. To avoid abuse, keep Your login data safe and out of reach from any minors near You.<br />
             <br />
             Principally we recommend a filter program to avoid minors, especially children, to access any context on the internet, which is not healthy for them.<br />
             <br />
@@ -95,14 +105,20 @@ const ResponsibleGambling = () => {
             <a href="https://famisafe.wondershare.com/internet-filter/best-internet-filters.html" rel="noreferrer" target="_blank">https://famisafe.wondershare.com/internet-filter/best-internet-filters.html</a>
           </p>
 
-          <h2>Self-Exclusion</h2>
+          <h2>Self-Exclusion and Time Out:</h2>
           <p>
-            In case You are diagnosed with a gambling addiction or try to stay away from gambling for a different reason, we want to assist you to stay away from anything, that does nothing good for you. “Self-Exclusion” means, that You exclude yourself, out of Your own choice, from all gambling services. This exclusion cannot be undone for a set amount of time. If you wish to self-exclude yourself from gambling, please message our support and give them a time span between 6 months and 5 years. They also will explain you all future steps and what is needed from you.
-            <ul>
-              <li>email: service@alpacasino.io</li>
-            </ul>
-            Please keep in mind that Self Exclusion is permanent for the set time span and will not be undone for your own protection.<br /><br />
-            During Self Exclusion you are not allowed to create a new Account and every attempt to create a new Account during Self Exclusion is a violation of our Terms of Service and may result in the permanent ban of your original account.
+            Should You be diagnosed with a gambling addiction or have the need to stay away from gambling for a different reason, We want to assist You to stay away from anything, that is not in Your best interest. Self-Exclusion and Time Out practices allow You to take some time off and away from gambling on Alpacasino. You can determine the period and/or duration of time You wish to remain absent from Alpacasino. During Your chosen period of time, access to Your Alpacasino Account will be blocked. <br />
+            “Self-Exclusion” means, that You exclude Yourself, out of Your own choice, from all gambling Services. This exclusion cannot be undone for a set amount of time.<br/>
+            In order to activate this period of Self Exclusion or Time Out, we request You to kindly contact Our customer support via email: <a href={"mailto: support@alpacasino.io"}>support@alpacasino.io</a>
+          </p>
+          <p>
+            Please keep in mind that Self Exclusion is permanent for the set time span (agreed between You and our customer support for a minimum of 3 months) and will not be undone for Your own protection.
+          </p>
+          <p>
+            During Self Exclusion You are not allowed to create a new Account and every attempt to create a new Account during Self Exclusion is a violation of our Terms of Service and may result in the permanent ban of Your original Account.
+          </p>
+          <p>
+            As soon as Your selected Self-Exclusion period has come to an end, Your Account will automatically be reopened. However, You will receive an email confirmation of this information which will be sent to Your registered email address.
           </p>
       </div>
         

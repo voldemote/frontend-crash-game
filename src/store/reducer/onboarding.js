@@ -36,6 +36,9 @@ const addSuggestion = (action, state) => {
     suggestion: action.username
   }
 }
+const reset = (action, state) => {
+  return initialState;
+}
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -46,6 +49,8 @@ export default function (state = initialState, action) {
       return next(action, state);
     case OnboardingTypes.ADD_USERNAME_SUGGESTION:
       return addSuggestion(action, state);
+    case OnboardingTypes.RESET:
+      return reset(action, state);
     default:
       return state;
     // @formatter:on

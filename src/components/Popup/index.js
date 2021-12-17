@@ -48,6 +48,7 @@ import SingleGameDetailPopup from "../SingleGameDetailPopup";
 import TransakSuccess from "../TransakSuccess";
 import TxModal from 'components/TxModal';
 import WalletWithdrawPopup from 'components/WalletBuyWfairPopup/WalletWithdrawPopup';
+import ToSPopup from 'components/ToSPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -246,6 +247,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <TransakSuccess options={options} />;
       case PopupTheme.txModal:
         return <TxModal />;
+      case PopupTheme.acceptToS:
+        return <ToSPopup isOnboarding={options?.isOnboarding} />;
     }
 
     return null;
@@ -295,8 +298,12 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         >
           <div className={styles.modalContent}>
             <div className={styles.closeButtonContainer}>
-              {type !== PopupTheme.signUpNotificationSecond &&
-                type !== PopupTheme.disclaimer && (
+              {![
+                PopupTheme.signUpNotificationSecond,
+                PopupTheme.disclaimer,
+                PopupTheme.acceptToS,
+              ].includes(type)
+                 && (
                   <Icon
                     width={30}
                     height={30}

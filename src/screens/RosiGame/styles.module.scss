@@ -229,382 +229,65 @@
   }
 }
 
-.gameContent,
-.pumpDumpContent {
-  h2 {
-    font-weight: 700;
-    font-size: 50px;
-    color: white;
-    text-align: center;
-    margin-bottom: 30px;
-    position: relative;
-    z-index: 10;
-
-    @media (max-width: $screen-xs) {
-      font-size: 40px;
-    }
-  }
-
-  h3 {
-    font-weight: 700;
-    font-size: 40px;
-    color: white;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-
-    @media (max-width: $screen-xs) {
-      font-size: 32px;
-    }
-  }
-
-  p {
-    color: white;
-    font-size: 20px;
-    line-height: 50px;
-    font-weight: 700;
-
-    @media (max-width: $screen-xs) {
-      font-size: 18px;
-      line-height: 42px;
-    }
-  }
-
-  &:before {
-    position: absolute;
-    top: 0;
-    z-index: 10;
-    content: '';
-    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
-    height: 55px;
-    width: 100%;
-  }
-
-  &:after {
-    position: absolute;
-    bottom: 0;
-    z-index: 10;
-    content: '';
-    background: linear-gradient(180deg, #00092b 0%, rgba(14, 9, 39, 0) 100%);
-    height: 55px;
-    width: 100%;
-    transform: rotate(-180deg);
-  }
-}
-
-.wrapperPumpDumpCards {
-  padding-left: 30px;
-  padding-right: 30px;
-  margin-top: 80px;
-}
-
-.pumpDumpContent {
-  background: radial-gradient(
-    45.6% 193.05% at 50.75% 30.69%,
-    #0f2733 0%,
-    #0c1d26 100%
-  );
-  margin-top: 30px;
-  padding-top: 90px;
-  padding-bottom: 200px;
-  position: relative;
-
-  .mapImage {
-    background: url('../../data/images/pump-dump/pump-dump-map.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 1058px;
-    width: 100%;
-
-    @media (max-width: $screen-md) {
-      height: 900px;
-    }
-
-    @media (max-width: $screen-sm) {
-      height: auto;
-    }
-  }
-
-  .headingContainer {
-    max-width: 600px;
-    margin-left: 15%;
-    margin-top: 105px;
-
-    @media (max-width: $screen-sm) {
-      margin-left: auto;
-      margin-right: auto;
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-  }
-
-  .chartImageWrapper {
-    padding-right: 30px;
-    padding-left: 30px;
-
-    .chartImage {
-      background: url('../../data/images/pump-dump/chart.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      height: 946px;
-      max-width: 1250px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: -100px;
-
-      @media (max-width: $screen-xl) {
-        max-width: 1150px;
-        height: 701px;
-      }
-
-      @media (max-width: $screen-md) {
-        margin-top: 0px;
-        height: 500px;
-      }
-
-      @media (max-width: $screen-sm) {
-        height: 350px;
-        background-position: center;
-      }
-    }
-  }
-
-  .tweetContainer {
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1260px;
-    margin: 0 auto;
-    margin-top: 80px;
-    padding-left: 30px;
-    padding-right: 30px;
-
-    @media (max-width: $screen-md) {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .boughtText {
-      margin-top: 150px;
-
-      @media (max-width: $screen-md) {
-        margin-top: 0;
-        margin-bottom: 70px;
-      }
-    }
-  }
-
-  .placeBetContainer {
-    max-width: 240px;
-    margin: 0 auto;
-    margin-top: 130px;
-    margin-bottom: 50px;
-  }
-}
-
 .gameContent {
-  padding-top: 140px;
-  padding-bottom: 250px;
-  width: 100%;
-  margin-top: 20px;
-  position: relative;
-  margin-bottom: -40px;
-
-  @media (max-width: $screen-md) {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-
-  .firstBgImage {
-    background: url('../../data/images/common-games/top-bg.png');
-    height: 1080px;
-    width: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    z-index: -1;
-  }
-
-  .secondBgImage {
-    background: url('../../data/images/common-games/middle-bg.png');
-    height: 1079px;
-    width: 100%;
-    top: 1079px;
-    left: 0;
-    position: absolute;
-    z-index: -1;
-  }
-
-  .thirdBgImage {
-    background: url('../../data/images/common-games/bottom-bg.png');
-    height: 1080px;
-    width: 100%;
-    top: calc(1079px + 1079px);
-    left: 0;
-    position: absolute;
-    z-index: -1;
-
-    @media (max-width: $screen-lg) {
-      height: 1800px;
-      background-size: cover;
-    }
-  }
-
+  max-width: 1300px;
+  margin: 100px auto 30px;
+  padding: 0px 30px;
   .title {
-    margin-bottom: 85px;
-  }
-
-  .introContainer {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: 15%;
-    margin-bottom: 140px;
-    position: relative;
-
-    @media (max-width: $screen-xl) {
-      margin-right: 10%;
-    }
-
-    @media (max-width: $screen-lg) {
-      margin-right: auto;
-      max-width: 750px;
-      margin-top: 420px;
-      margin-bottom: 100px;
-    }
-
-    @media (max-width: $screen-sm) {
-      margin-top: 350px;
-    }
-
-    @media (max-width: $screen-xs) {
-      margin-top: 250px;
-    }
-
-    svg {
-      position: absolute;
-      left: -95%;
-      top: -300px;
-
-      @media (max-width: $screen-lg) {
-        left: calc(50% - 320px);
-        top: -650px;
-      }
-
-      @media (max-width: $screen-sm) {
-        width: 450px;
-        left: calc(50% - 225px);
-        top: -580px;
-      }
-
-      @media (max-width: $screen-xs) {
-        width: 360px;
-        left: calc(50% - 180px);
-        top: -500px;
-      }
+    color: $colorWhite;
+    @media (max-width: $screen-md) {
+      text-align: center;
     }
   }
+  .content {
+    padding: 30px 30px;
 
-  .howtoplacebet {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 600px;
-    margin-top: 55px;
-    position: relative;
-
-    @media (max-width: $screen-lg) {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 750px;
-      margin-top: 55px;
+    @media (max-width: $screen-md) {
+      padding: 0;
+      margin: 40px auto 20px;
     }
-
-    @media (max-width: $screen-sm) {
-      margin-top: 55px;
-    }
-  }
-
-  .placeBetContainer {
-    max-width: 240px;
-    margin: 0 auto;
-    margin-top: 45px;
-    margin-bottom: 130px;
-  }
-
-  .secondHeadingContainer {
-    max-width: 600px;
-    margin-top: 145px;
-    margin-left: 18%;
-    position: relative;
-
-    @media (max-width: $screen-xl) {
-      margin-left: 5%;
-    }
-
-    @media (max-width: $screen-lg) {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 750px;
-      margin-top: 480px;
-    }
-
-    @media (max-width: $screen-sm) {
-      margin-top: 400px;
-    }
-
-    svg {
-      position: absolute;
-      right: -85%;
-      top: 0;
-
-      @media (max-width: $screen-xl) {
-        right: -70%;
-      }
-
-      @media (max-width: $screen-lg) {
-        right: calc(50% - 150px);
-        top: -420px;
-      }
-
-      @media (max-width: $screen-sm) {
-        width: 300px;
-        right: calc(50% - 140px);
-        top: -380px;
+    .topContainer {
+      font-size: 20px;
+      color: $colorWhite;
+      p {
+        padding-top: 20px;
       }
     }
-  }
-
-  .thirdHeadingContainer {
-    max-width: 875px;
-    margin-left: auto;
-    margin-right: 7%;
-    margin-top: 90px;
-    position: relative;
-
-    @media (max-width: $screen-xl) {
-      margin-right: 3%;
-      max-width: 750px;
-    }
-
-    @media (max-width: $screen-lg) {
-      margin-right: auto;
-      max-width: 750px;
-      margin-top: 420px;
-    }
-
-    svg {
-      position: absolute;
-      left: -57%;
-      top: 50px;
-
-      @media (max-width: $screen-xl) {
-        left: -40%;
+    .descriptionContainer {
+      margin-top: 130px;
+      display: flex;
+      @media (max-width: $screen-md) {
+        flex-direction: column;
       }
-
-      @media (max-width: $screen-lg) {
-        top: -340px;
-        left: calc(50% - 120px);
+      .firstWrapper {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        @media (max-width: $screen-md) {
+          width: 100%;
+        }
+        img {
+          width: auto;
+          object-fit: contain;
+          @media (max-width: $screen-md) {
+            width: 100%;
+          }
+        }
+      }
+      .secondWrapper {
+        width: 50%;
+        font-size: 20px;
+        color: $colorWhite;
+        margin-top: 40px;
+        @media (max-width: $screen-md) {
+          width: 100%;
+        }
+        p {
+          padding-top: 20px;
+        }
+        .importantTip {
+          color: $colorLightYellow;
+        }
       }
     }
   }
@@ -629,27 +312,12 @@
     background-size: contain;
     position: relative;
 
-    &::after {
-      position: absolute;
-      content: '';
-      background-image: url('../../data/images/alpaca-logo-banner.png');
-      width: 145px;
-      height: 165px;
-      bottom: -15px;
-      right: -60px;
-
-      @media (max-width: $screen-xs) {
-        display: none;
-      }
-    }
-
     @media (max-width: $screen-md) {
       background-image: url('../../data/backgrounds/games/wallpaper-banner-mobile.png');
       height: 100%;
       background-position: center;
     }
   }
-
   .wrapperCards {
     @media (max-width: $screen-xl) {
       padding-left: 30px;

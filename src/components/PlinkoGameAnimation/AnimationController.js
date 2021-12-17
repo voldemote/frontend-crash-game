@@ -145,7 +145,7 @@ export const BackgroundPlinko = ({size, state}) => {
 */
 
 export const BackgroundPlinko = ({size, state, width, height}) => {
-  const colors = ["#d7393f", "#dd8549", "#e6e76a"]
+  const colors = ["#2f64b6", "#66b9e8", "#add1f1"]
   return(
     <svg className={styles.background} height={height} width={width}>
       <circle r={size/2} cx={width/2} cy={height/2} fill={colors[state % 3]} />
