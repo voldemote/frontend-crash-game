@@ -69,8 +69,9 @@ const UserWallet = ({
   };
 
   const [activityTab, setActivityTab] = useState({
-    name: 'FIAT DEPOSITS',
-    index: 0,
+    // name: 'FIAT DEPOSITS',
+    name: 'WFAIR DEPOSITS',
+    index: 1,
   });
   const [activityTabOptions, setActivityTabOptions] = useState([
     { name: 'FIAT DEPOSITS', index: 0 },
@@ -129,7 +130,7 @@ const UserWallet = ({
               options={
                 activityTabOptions
                   ? activityTabOptions.filter(
-                      ({ name }) => showNewFeatures || name !== 'CRYPTO DEPOSITS'
+                      ({ name }) => showNewFeatures || (name !== 'CRYPTO DEPOSITS' && name !== 'FIAT DEPOSITS')
                     )
                   : []
               }

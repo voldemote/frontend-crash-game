@@ -9,15 +9,18 @@ import Grid from '@material-ui/core/Grid';
 import DepositTab from './Tabs/DepositTab';
 import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
+import BuyWithFiatWallfairWebsiteTab from './Tabs/BuyWithFiatWallfairWebsiteTab';
+
+const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 
 const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
       case 0:
       default:
-        return <BuyWithFiatTab hidePopup={hidePopup}/>;
-      case 1:
         return <DepositTab />;
+      case 1:
+        return showNewFeatures ? <BuyWithFiatTab hidePopup={hidePopup} /> : <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
       case 2:
         return <BuyWithCrypto />;
     }
@@ -25,7 +28,7 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
 
   return selectTabsComponent(type);
 };
-const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
+
 
 const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
   const [activeTab, setActiveTab] = useState({
@@ -33,8 +36,8 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     index: 0,
   });
   const tabOptions = [
-    { name: 'BUY WITH FIAT', index: 0 },
-    { name: 'DEPOSIT', index: 1 },
+    { name: 'DEPOSIT', index: 0 },
+    { name: 'BUY WITH FIAT', index: 1 },
     { name: 'BUY WITH CRYPTO', index: 2 },
   ].filter(({ name }) => showNewFeatures || name !== 'BUY WITH CRYPTO');
   
