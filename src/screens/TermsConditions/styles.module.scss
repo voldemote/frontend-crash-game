@@ -29,6 +29,12 @@
     p {
       word-wrap: break-word;
     }
+
+    table,
+    td {
+      border: 1px solid $colorWhite;
+      border-collapse: collapse;
+    }
   }
 
   // @media (min-width: $screen-lg) {

@@ -107,6 +107,75 @@ const TermsConditions = () => {
           <p>“Prohibited Access Areas”: Australia, Aruba, Bonaire , Belize, Cyprus, Curacao, the Netherlands, Gibraltar, Guernsey, Germany, France, Hungary, Saba, Statia, St. Maarten, the United Kingdom, French Guiana, Israel, Iran, Ethiopia, Guadeloupe, Poland,, Venezuela, Cuba, Slovakia, French Polynesia, Jersey, Liechtenstein, Luxembourg, Martinique, Reunion, Mayotte, the United States and all of its territories, including but not limited to Puerto Rico, Guam, the US Virgin Islands, the Northern Mariana Islands, American Samoa and United States outlying Islands and any other jurisdiction that the Central Government of Curacao deems online gambling illegal. This shall include all the named Nations' Territories. Residents from the Prohibited Access Areas are prohibited from opening an Account or using or accessing the services or any other services offered by the company. Residents of the above-mentioned territories are not permitted to establish an Account, use or access the company’s products and services, or any other services. Thus, these zones are completely off-limits</p>
           <p>“Partially Prohibited Areas”: We do not authorize any transactions from Turkey, Argentina, Mexico, Brazil, or Colombia until we have fulfilled the KYC and AML 1 verification. Please review our KYC-AML-Policy for more details about the KYC and AML verification. Until approved, any person residing or having a permanent presence in one of these countries is barred from participating in any promotions or transactions.</p>
           <p>We currently do not accept any transactions or purchases from the following regions because of armed conflicts or political unrest (“Restricted due to Armed Conflict or Political Unrest”):</p>
+          <table>
+            <tr>
+              <td>Albania</td>
+              <td>Ghana</td>
+              <td>Mali</td>
+              <td>Somalia</td>
+            </tr>
+            <tr>
+              <td>Afghanistan</td>	
+              <td>Guyana</td>
+              <td>Mauritania</td>
+              <td>Sri Lanka</td>
+            </tr>
+            <tr>
+              <td>Algeria</td>
+              <td>Hong Kong</td>
+              <td>Morocco</td>
+              <td>Sudan</td>
+            </tr>
+            <tr>
+              <td>Angola</td>
+              <td>Iran</td>
+              <td>Myanmar</td>
+              <td>Syria</td>
+            </tr>
+            <tr>
+              <td>Bahamas</td>
+              <td>Iraq</td>
+              <td>Namibia</td>
+              <td>Taiwan</td>
+            </tr>
+            <tr>
+              <td>Botswana</td>
+              <td>Israel</td>
+              <td>Nicaragua</td>
+              <td>The Democratic Republic Of The Congo</td>
+            </tr>
+            <tr>
+              <td>Burkina Faso</td>
+              <td>Kenya</td>
+              <td>Niger</td>
+              <td>Trinidad and Tobago</td>
+            </tr>
+            <tr>
+              <td>Central African Republic</td>
+              <td>Kuwait</td>
+              <td>North Korea</td>
+              <td>Tunisia</td>
+            </tr>
+            <tr>
+              <td>Chad</td>	
+              <td>Laos</td>	
+              <td>Pakistan</td>
+              <td>Uganda</td>
+            </tr>
+            <tr>
+              <td>Ecuador</td>
+              <td>Lebanon</td>
+              <td>Palestine, Panama</td>
+              <td>Yemen</td>
+            </tr>
+            <tr>
+              <td>Ethiopia</td>
+              <td>Libya</td>
+              <td>Papua New Guinea</td>
+              <td>Zimbabwe</td>
+            </tr>
+
+          </table>
           <p>This restriction is temporary and will end as soon as the armed conflicts end and political stability returns to the region. People living or having a permanent residence in one of these nations are excluded from all services on the Website and may not access the Website in any way or create an Account on our Website. Any Account found to access the Website from a restricted area due to armed conflict or political unrest via a VPN or another method to hide his identity will be banned from the Website and all services. Any Alpacasino remaining in the Alpacasino wallet will be frozen</p>
           <p><b>“Regulated Territories”: </b></p>
           <p>We do not authorize any transactions from the following territories as we do not possess a license from the local regulators of each of the following nations: Belgium, Bulgaria, Czech Republic, Germany, Denmark, Estonia, Italy, Latvia, Lithuania, Portugal, Romania, Serbia, Sweden, Switzerland.</p>
@@ -334,100 +403,129 @@ const TermsConditions = () => {
           <p>13.2. We make every effort to ensure that we do not make errors in posting bookmaker lines. However, if as a result of human error or system problems a bet is accepted at an odd that is: materially different from those available in the general market at the time the bet was made; or clearly incorrect given the chance of the event occurring at the time the bet was made then we reserve the right to cancel or void that wager, or to cancel or void a wager made after an event has started.</p>
           <p>13.3. We have the right to recover from you any amount overpaid and to adjust your Account to rectify any mistake. An example of such a mistake might be where a price is incorrect or where we enter a result of an event incorrectly. If there are insufficient funds in your Account, we may demand that you pay us the relevant outstanding amount relating to any erroneous bets or wagers. Accordingly, we reserve the right to cancel, reduce or delete any pending plays, whether placed with funds resulting from the error or not.</p>
 
-          <h2>14. Communications and Notices</h2>
-          <p>
-            We cannot be held liable for any failure or delay in providing the Service due to an event of Force Majeure which could reasonably be considered to be outside our control despite our execution of reasonable preventative measures such as: an act of God; trade or labour dispute; power cut; act, failure or omission of any government or authority; obstruction or failure of telecommunication services; or any other delay or failure caused by a third party, and we will not be liable for any resulting loss or damage that you may suffer. In such an event, we reserve the right to cancel or suspend the Service without incurring any liability.
-          </p>
+          <h2>14. Rules of Betting</h2>
+          <p>14.1 BETS</p>
+          <p>14.1.1. A bet can only be placed over the internet by a registered user (Account holder) who has sufficient WFAIR Token credits in their Account to place the intended bet amount. </p>
+          <p>14.1.2. All your entered bets will be counted and fully executed by the system, even if you disconnect after entering the bet. Neither the Company nor its third-party partners are liable for any downtime, server disruptions, lagging, or any technical or political disturbance to the game play. Furthermore, the Company or its third-party partners shall accept no liability for any damages or losses which are deemed or alleged to have arisen out of or in connection with the Website or its content; including without limitation, delays or interruptions in operation or transmission, loss or corruption of data, communication or lines failure, any person's misuse of the site or its content or any errors or omissions in content. </p>
+          <p>14.1.3. Any and all bets which were started cannot be refunded, with no regard given to the fact if you were present or not during the time of placing your bet. You are therefore strongly advised to only start a bet and/or place a bet should you be certain that you want to, and are amenable to execute it. A bet, which has been placed and accepted, cannot be amended, withdrawn or cancelled by you.</p>
+          <p>14.1.4. The Company and its third-party partners are not liable for any losses which might occur to you during any bets, disregarding if you were present during the entire bet or not.</p>
+          <p>14.1.5. In the unfortunate event of an Alpacasino system malfunction all bets are deemed void.</p>
+          <p>14.1.6. By entering a bet, you acknowledge that any bet started cannot be refunded by the Company or its third-party partners. You are solely responsible for the bet placed, and the outcome of every bet made from your Account. You further acknowledge that once you have placed a bet, you cannot alter, withdraw, cancel or abort it. </p>
+          <p>14.1.7. Maximum bet </p>
+          <p>The maximum bet on any of our games is 10 000 WFAIR Token credits. </p>
+          <p>14.1.8. Minimum bet </p>
+          <p>The minimum bet on any of our games is 1 WFAIR Token credit. We cannot and accordingly, will not accept any bet lower than 1 WFAIR Token credit. By placing a bet on any of our games, you accept that 1 WFAIR Token credit is the lowest measurement for WFAIR Token credits used on the Website.</p>
+          <p>14.1.9. The concluded bet will be governed by the version of the Terms valid and available on the Alpacasino.io at the time of the bet being accepted. When you place a bet you acknowledge that you have read and understood in full all of these Terms regarding the placement of bets as stated on the  Alpacasino Website.</p>
+          <p>14.2 WINNINGS, PAYOUTS</p>
+          <p>14.2.1. The winner of a bet will be determined on the date of the bet’s settlement and we will not recognize protested or overturned decisions for wagering purposes. </p>
+          <p>14.2.2. All results posted shall be final after 72 hours and no queries will be entertained after that period of time. Within 72 hours after results are posted, we will only reset/correct the results due to human error, system error or mistakes made by the referring results source.</p>
+          <p>14.2.3. If a result cannot be validated by us, for instance if the feed broadcasting the bet is interrupted (and cannot be verified by another source) then at our election, the wagers on that event will be deemed invalid and wagers refunded.</p>
+          <p>14.2.4. Any payout of a winning bet is credited to your Account, consisting of the stake multiplied by the odds at which the bet was placed.</p>
+          <p>14.2.5.Alpacasino reserves the right to correct a wagering withdrawal credited to the Account if Alpacasino determines, in its sole discretion, that such withdrawal was credited due to an error.</p>
+          <p>14.2.6. Your Account is managed by Alpacasino including the calculation of your WFAIR Token credits as well as the amount winnings. These amounts are accepted as final and accurate, unless proven otherwise. Winnings will only be paid into your Account after the final result is confirmed. </p>
+          <p>14.2.7. Customers are solely responsible for their own Account transactions. Once a transaction is complete, it cannot be changed. We do not take responsibility for missing or duplicate wagers made by the Customer and will not entertain discrepancy requests because a play is missing or duplicated. Customers may review their transactions in the My Account section of the Website after each session to ensure all requested wagers were accepted.</p>
+          <p>14.2.8. The start dates and times displayed on the Website for matches are an indication only and are not guaranteed to be correct. If a match is suspended or postponed, and not resumed within 72 hours from the actual scheduled start time, the match will have no action and wagers will be refunded. </p>
+          <p>14.2.9. If an event is posted by us with an incorrect date, all wagers have action based on the date announced by the governing body.</p>
+          <p>14.2.10. Minimum win </p>
+          <p>The minimum win on any of our games is 0.01 WFAIR Token credit. Any bet which resulted in a profit lower than 0.01 WFAIR Token credit, will have the consequence that the win be rounded down to zero (0) WFAIR Token credit. By placing a bet on any of our games, you accept that all results are rounded down to the next amount of WFAIR Token credits measured in hundredths of WFAIR Token credits. We also reserve the right to adjust limits on individual Accounts as well.</p>
+          <p>14.2.11. Maximum win </p>
+          <p>The maximum win on any of our games is 1 % of Alpacasino´s liquidity (this amount includes the bet and the profit). Should any bet have the result that the winning amount is bigger than 1 % of Alpacasino´s liquidity, the win will be capped at the aforementioned amount. By placing any bet on any of our games, you accept that all winnings be capped at 1% of Alpacasino´s liquidity.  Any win above 1% of Alapacasino´s liquidity is currently not possible.</p>
+          <p>14.3 AUTOBET</p>
+          <p>Should you wish to place multiple bets in a row, we offer you an Autobet function.</p>
+          <p>14.3.1 With Autobet, you are given the option to raise, lower, repeat, or stop a bet with every loss, or win. You acknowledge that you are fully responsible for every bet you place via the Autobet function. The Company and its third-party partners cannot be held liable for any financial losses which occur during your Autobet session. You accept that you are solely responsible for all results of all bets made from your Account, without any regard given to whether or not you made use of the Autobet system, or another person made the bets from your Account.</p>
+          <p>14.3.2 By placing a bet via the Autobet option, you accept and acknowledge that you are responsible for all losses which might occur in the vent where you forget to turn off the Autobet function. You are strongly advised to turn off the Autobet option should you wish to stop betting.</p>
+          <p>14.3.3 You accept responsibility for all winnings and/or losses which might result when you place your bet via the Autobet function or in a different way than intended. The Company and its third-party partners cannot be held liable for any losses that might occur to your failure to enter your intended bet; neither does the Company offer refund options, should your bet have been incorrectly entered. We strongly advise that you review your settings before starting to bet via the Autobet function.</p>
+          <p>14.3.4 The Company does not allow any third-party automated betting scripts on the Website. Any such usage of third-party automated betting scripts or bots results in a breach of terms.</p>
+          
+          <h2>15. Communications and Notices</h2>
+          <p>15.1. All communications and notices to be given under these Terms by you to us shall be sent using a Customer Support form on the Website.</p>
+          <p>15.2. All communications and notices to be given under these Terms by us to you shall, unless otherwise specified in these Terms, be either posted on the Website and/or sent to the Registered Email Address we hold on our system for the relevant Customer. The chosen method of such communication shall be in our sole and exclusive discretion.</p>
+          <p>15.3. All communications and notices to be given under these Terms by either you or us shall be in writing in the English language and must be given to and from the Registered Email Address in your Account.</p>
+          <p>15.4. From time to time, we may contact you by email for the purpose of offering you information about betting, unique promotional offerings, and other information from alpacasino.io. You agree to receive such emails when you agree to these Terms when registering at the Website. You can choose to opt out of receiving such promotional offerings from us at any time by submitting a respective request to the customer support.</p>
+          
+          <h2>16. Matters beyond Our Control</h2>
+          <p>We cannot be held liable for any failure or delay in providing the service  due to an event of Force Majeure which could reasonably be considered to be outside our control despite our execution of reasonable preventative measures such as: an act of God; trade or labour dispute; power cut; act, failure or omission of any government or authority; obstruction or failure of telecommunication services; or any other delay or failure caused by a third party, and we will not be liable for any resulting loss or damage that you may suffer. In such an event, we reserve the right to cancel or suspend the service without incurring any liability.</p>
 
-          <h2>15. Liability</h2>
-          <p>
-            15.1. TO THE EXTENT PERMITTED BY APPLICABLE LAW, WE WILL NOT COMPENSATE YOU FOR ANY REASONABLY FORESEEABLE LOSS OR DAMAGE (EITHER DIRECT OR INDIRECT) YOU MAY SUFFER IF WE FAIL TO CARRY OUT OUR OBLIGATIONS UNDER THESE TERMS UNLESS WE BREACH ANY DUTIES IMPOSED ON US BY LAW (INCLUDING IF WE CAUSE DEATH OR PERSONAL INJURY BY OUR NEGLIGENCE) IN WHICH CASE WE SHALL NOT BE LIABLE TO YOU IF THAT FAILURE IS ATTRIBUTED TO: (I) YOUR OWN FAULT; (II) A THIRD PARTY UNCONNECTED WITH OUR PERFORMANCE OF THESE TERMS (FOR INSTANCE PROBLEMS DUE TO COMMUNICATIONS NETWORK PERFORMANCE, CONGESTION, AND CONNECTIVITY OR THE PERFORMANCE OF YOUR COMPUTER EQUIPMENT); OR (III) ANY OTHER EVENTS WHICH NEITHER WE NOR OUR SUPPLIERS COULD HAVE FORESEEN OR FORESTALLED EVEN IF WE OR THEY HAD TAKEN REASONABLE CARE. AS THIS SERVICE IS FOR CONSUMER USE ONLY WE WILL NOT BE LIABLE FOR ANY BUSINESS LOSSES OF ANY KIND.<br />
-            15.2. IN THE EVENT THAT WE ARE HELD LIABLE FOR ANY EVENT UNDER THESE TERMS, OUR TOTAL AGGREGATE LIABILITY TO YOU UNDER OR IN CONNECTION WITH THESE TERMS SHALL NOT EXCEED (A) THE VALUE OF THE BETS AND OR WAGERS YOU PLACED VIA YOUR ACCOUNT IN RESPECT OF THE RELEVANT BET/WAGER OR PRODUCT THAT GAVE RISE TO THE RELEVANT LIABILITY, OR (B) EUR €500 IN AGGREGATE, WHICHEVER IS LOWER.<br />
-            15.3. WE STRONGLY RECOMMEND THAT YOU (I) TAKE CARE TO VERIFY THE SUITABILITY AND COMPATIBILITY OF THE SERVICE WITH YOUR OWN COMPUTER EQUIPMENT PRIOR TO USE; AND (II) TAKE REASONABLE PRECAUTIONS TO PROTECT YOURSELF AGAINST HARMFUL PROGRAMS OR DEVICES INCLUDING THROUGH INSTALLATION OF ANTI-VIRUS SOFTWARE.
-          </p>
+          <h2>17. Liability</h2>
+          <p>17.1. To the extent permitted by applicable law, we will not compensate you for any reasonably foreseeable loss or damage (either direct or indirect) you may suffer if we fail to carry out our obligations under these Terms unless we breach any duties imposed on us by law (including if we cause death or personal injury by our negligence) in which case we shall not be liable to you if that failure is attributed to: (i) your own fault; (ii) a third party whose action cannot be attributed to us or our performance of services under and in connection with the services provided hereunder (for instance problems due to communications network performance, congestion, and connectivity or the performance of your computer equipment); or (iii) any other events which neither we nor our suppliers could have foreseen or forestalled even if we or they had taken reasonable care. As this service is for consumer use only we will not be liable for any business losses of any kind.</p>
+          <p>17.2. Without prejudice to the generality of the preceding provision, we, our directors, employees, partners, service providers</p>
+          <p>17.2.1. Do not warrant that the software, games and the Website are fit for their purpose;</p>
+          <p>17.2.2. Do not warrant that the software, games and the Website are free from errors;</p>
+          <p>17.2.3. Do not warrant that the software, games and the Website will be accessible without interruptions</p>
+          <p>17.3. You understand and acknowledge that, if there is a malfunction in a Game or its interoperability, any bets made during such a malfunction shall be void. Funds obtained from a malfunctioning Game shall be considered void, as well as any subsequent game rounds with said funds, regardless of what Games are played using such funds.</p>
+          <p>17.4. You hereby agree to fully indemnify and hold harmless us, our directors, employees, partners, and service providers for any cost, expense, loss, damages, claims and liabilities howsoever caused that may arise in relation to your use of the Website or participation in the Games.</p>
+          <p>17.5. In the event that we are held liable for any event under these Terms, our total aggregate liability to you under or in connection with these Terms shall – to the extent legally permissible  - not exceed (a) the value of the bets and or wagers you placed via your Account in respect of the relevant bet/wager or product that gave rise to the relevant liability, or (b) €500 in aggregate, whichever is lower.</p>
+          <p>17.6.  We strongly recommend that you (i) take care to verify the suitability and compatibility of the service with your own computer equipment prior to use; and (ii) take reasonable precautions to protect yourself against harmful programs or devices including through installation of anti-virus software.</p>
 
-          <h2>16. Gambling By Those Under Age</h2>
+          <h2>18. Gambling By Those under Age</h2>
+          <p>18.1. If we suspect that you are or receive notification that you are currently under 18 years or were under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you) when you placed any bets through the service on our Website your Account will be suspended (locked) to prevent you placing any further bets or making any withdrawals from your Account. We will then investigate the matter, including whether you have been betting as an agent for, or otherwise on behalf, of a person under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you). If having found that you: (a) are currently; (b) were under 18 years or below the majority age which applies to you at the relevant time; or (c) have been betting as an agent for or at the behest of a person under 18 years or below the majority age which applies:</p>
           <p>
-            16.1. If we suspect that you are or receive notification that you are currently under 18 years or were under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you) when you placed any bets through the Service your Account will be suspended (locked) to prevent you placing any further bets or making any withdrawals from your Account. We will then investigate the matter, including whether you have been betting as an agent for, or otherwise on behalf, of a person under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you). If having found that you: (a) are currently; (b) were under 18 years or below the majority age which applies to you at the relevant time; or (c) have been betting as an agent for or at the behest of a person under 18 years or below the majority age which applies:<br />
             <ul>
               <li>all winnings currently or due to be credited to your Account will be retained;</li>
-              <li>all winnings gained from betting through the Service whilst under age must be paid to us on demand (if you fail to comply with this provision we will seek to recover all costs associated with recovery of such sums); and/or</li>
-              <li>any monies deposited in your Account which are not winnings will be returned to you OR retained until you turn 18 years old at our sole discretion. We reserve the right to deduct payment transaction fees from the amount to return, including transaction fees for deposits to your alpacasino.io account which we covered.</li>
+              <li>all winnings gained from betting through the service whilst under age must be paid to us on demand (if you fail to comply with this provision we will seek to recover all costs associated with recovery of such sums); and/or</li>
+              <li>any monies deposited in your Account which are not winnings will be returned to you OR retained until you turn 18 years old at our sole discretion. We reserve the right to deduct payment transaction fees from the amount to return, including transaction fees for deposits to your alpacasino.io Account which we covered.</li>
             </ul>
-            16.2. This condition also applies to you if you are over the age of 18 years but you are placing your bets within a jurisdiction which specifies a higher age than 18 years for legal betting and you are below that legal minimum age in that jurisdiction.<br />
-            16.3. In the event we suspect you are in breach of the provisions of this Clause or are attempting to rely on them for a fraudulent purpose, we reserve the right to take any action necessary in order to investigate the matter, including informing the relevant law enforcement agencies.
           </p>
+          <p>18.2. This condition also applies to you if you are over the age of 18 years but you are placing your bets within a jurisdiction which specifies a higher age than 18 years for legal betting and you are below that legal minimum age in that jurisdiction.</p>
+          <p>18.3. In the event we suspect you are in breach of the provisions of this Clause or are attempting to rely on them for a fraudulent purpose, we reserve the right to take any action necessary in order to investigate the matter, including informing the relevant law enforcement agencies.</p>
 
-          <h2>17. Fraud</h2>
+          <h2>19. Fraud</h2>
+          <p>We prohibit and reject the use of the service for any form of illicit activity, including money laundering, terrorist financing, or trade sanctions violations. Accounts suspected of Money Laundering by using service may be blocked and transactions may be stopped until the risk department will finish all the required procedures. According to our policy, all crypto deposits must meet a basic rollover requirement. This rule applied to every User's cryptocurrency balance. Our risk department is eligible to stop every suspicious transaction to prevent money laundering. Users' Accounts may be under investigation by the risk department until all requirements will be met, payment in time of investigation will be stopped.</p>
+          <p>For further information please see these Terms.</p>
+          <p>We will seek criminal and contractual sanctions against any Customer involved in fraud, dishonesty or criminal acts. We will withhold payment to any Customer where any of these are suspected. The Customer shall indemnify and shall be liable to pay to us on demand all costs, charges or losses sustained or incurred by us (including any direct, indirect or consequential losses, loss of profit, loss of business and loss of reputation) arising directly or indirectly from the Customer’s fraud, dishonesty or criminal act.</p>
+
+          <h2>20. Intellectual Property</h2>
+          <p>20.1. Any unauthorised use of our name and logo may result in legal action being taken against you.</p>
+          <p>20.2. As between us and you, we are the sole owners of the rights in and to the service, our technology, software and business systems (the “Systems”) as well as our odds,</p>
+          <p>you must not use your personal profile for your own commercial gain (such as selling your status update to an advertiser); and when selecting a nickname for your Account we reserve the right to remove or reclaim it if we believe it appropriate.</p>
+          <p>20.3. You may not use our URL, trademarks, trade names and/or trade dress, logos (“Marks”) and/or our odds in connection with any product or service that is not ours, that in any manner is likely to cause confusion among Customers or in the public or that in any manner disparages us.</p>
+          <p>20.4. Except as expressly provided in these Terms, we and our licensors do not grant you any express or implied rights, license, title or interest in or to the Systems or the Marks and all such rights, license, title and interest specifically retained by us and our licensors. You agree not to use any automatic or manual device to monitor or copy web pages or content within the service. Any unauthorized use or reproduction may result in legal action being taken against you.</p>
+
+          <h2>21. Your License</h2>
+          <p>21.1. Subject to these Terms and your compliance with them, we grant to you a non-exclusive, limited, non transferable and non sub-licensable license to access and use the service for your personal non-commercial purposes only. Our license to you terminates if our agreement with you under these Terms ends or your Account has been deleted, blocked or frozen by us in accordance with these Terms.</p>
+          <p>21.2. Save in respect of your own content, you may not under any circumstances modify, publish, transmit, transfer, sell, reproduce, upload, post, distribute, perform, display, create derivative works from, or in any other manner exploit, the service and/or any of the content thereon or the software contained therein, except as we expressly permit in these Terms or otherwise on the Website. No information or content on the service or other information made available to you in connection with the service may be modified or altered, merged with other data or published in any form including for example screen or database scraping and any other activity intended to collect, store, reorganise or manipulate such information or content.</p>
+          <p>21.3. Any non-compliance by you with this Clause may also be a violation of our or third parties' intellectual property and other proprietary rights which may subject you to civil liability and/or criminal prosecution.</p>
+
+          <h2>22. Your Conduct and Safety</h2>
+          <p>22.1. For your protection and protection of all our Customers, the posting of any content on the service, as well as conduct in connection therewith and/or the service, which is in any way unlawful, inappropriate or undesirable is strictly prohibited (“Prohibited Behaviour”).</p>
+          <p>22.2. If you engage in Prohibited Behaviour, or we determine in our sole discretion that you are engaging in Prohibited Behaviour, your Account and/or your access to or use of the service may be terminated immediately without notice to you. Legal action may be taken against you by another Customer, other third party, enforcement authorities and/or us with respect to you having engaged in Prohibited Behaviour.</p>
+          <p>22.3. Prohibited Behaviour includes, but is not limited to, accessing or using the service to:</p>
           <p>
-            We will seek criminal and contractual sanctions against any Customer involved in fraud, dishonesty or criminal acts. We will withhold payment to any Customer where any of these are suspected. The Customer shall indemnify and shall be liable to pay to us on demand all costs, charges or losses sustained or incurred by us (including any direct, indirect or consequential losses, loss of profit, loss of business and loss of reputation) arising directly or indirectly from the Customer’s fraud, dishonesty or criminal act.
+            (i) promote or share information that you know is false, misleading or unlawful;<br/>
+            conduct any unlawful or illegal activity, such as, but not limited to, any activity that furthers or promotes any criminal activity or enterprise, violates another customer's or any other third party’s privacy or other rights or that creates,spreads computer viruses or harm minors in any way;<br/>
+            (ii) transmit or make available any content that is unlawful, harmful, threatening, abusive, tortuous, defamatory, vulgar, obscene, lewd, violent, hateful, or racially or ethnically or otherwise objectionable;<br/>
+            (iii) transmit or make available any content that the user does not have a right to make available under any law or contractual or fiduciary relationship, including without limitation, any content that infringes a third party’s copyright, trademark or other intellectual property and proprietary rights;<br/>
+            (iv) transmit or make available any content or material that contains any software virus or other computer or programming code (including HTML) designed to interrupt, destroy or alter the functionality of the service, its presentation or any other website, computer software or hardware;<br/>
+            (v) interfere with, disrupt or reverse engineer the service in any manner, including, without limitation, intercepting, emulating or redirecting the communication protocols used by us, creating or using cheats, mods or hacks or any other software designed to modify the service, or using any software that intercepts or collects information from or through the service;<br/>
+            (vi) retrieve or index any information from the service using any robot, spider or other automated mechanism;<br/>
+            (vii) participate in any activity or action that, in the sole and entire unfettered discretion of us results or may result in another Customer being defrauded or scammed;<br/>
+            (viii) transmit or make available any unsolicited or unauthorised advertising or mass mailing such as, but not limited to, junk mail, instant messaging, "spam", chain letters, pyramid schemes or other forms of solicitations;<br/>
+            (ix) create Accounts on the Website by automated means or under false or fraudulent pretences;<br/>
+            (x) impersonate another Customer or any other third party, or<br/>
+            (xi) any other act or thing done that we reasonably consider to be contrary to our business principles.
           </p>
+          <p>The above list of Prohibited Behaviour is not exhaustive and may be modified by us at any time or from time to time. We reserve the right to investigate and to take all such actions as we in our sole discretion deem appropriate or necessary under the circumstances, including without limitation deleting the Customer’s posting(s) from the service and/or terminating their Account, and take any action against any Customer or third party who directly or indirectly in, or knowingly permits any third party to directly or indirectly engage in Prohibited Behaviour, with or without notice to such Customer or third party.</p>
+          
+          <h2>23. Links to Other Websites</h2>
+          <p>The service may contain links to third party websites that are not maintained by, or related to, us, and over which we have no control. Links to such websites are provided solely as a convenience to Customers, and are in no way investigated, monitored or checked for accuracy or completeness by us. Links to such websites do not imply any endorsement by us of, and/or any affiliation with, the linked websites or their content or their owner(s). We have no control over or responsibility for the availability nor their accuracy, completeness, accessibility and usefulness. Accordingly when accessing such websites we recommend that you should take the usual precautions when visiting a new website including reviewing their privacy policy and terms of use.</p>
 
-          <h2>18. Intellectual Property</h2>
-          <p>
-            18.1. Any unauthorised use of our name and logo may result in legal action being taken against you.<br />
-            18.2. As between us and you, we are the sole owners of the rights in and to the Service, our technology, software and business systems (the "Systems") as well as our odds.you must not use your personal profile for your own commercial gain (such as selling your status update to an advertiser); andwhen selecting a nickname for your Account we reserve the right to remove or reclaim it if we believe it appropriate.<br />
-            18.3. You may not use our URL, trademarks, trade names and/or trade dress, logos ("Marks") and/or our odds in connection with any product or service that is not ours, that in any manner is likely to cause confusion among Customers or in the public or that in any manner disparages us.<br />
-            18.4. Except as expressly provided in these Terms, we and our licensors do not grant you any express or implied rights, license, title or interest in or to the Systems or the Marks and all such rights, license, title and interest specifically retained by us and our licensors. You agree not to use any automatic or manual device to monitor or copy web pages or content within the Service. Any unauthorized use or reproduction may result in legal action being taken against you.
-          </p>
+          <h2>24. Complaints</h2>
+          <p>24.1. If you have any concerns or questions regarding these Terms you should contact our customer service department via the links on the Website or via hello@alpacasino.io.and use your Registered Email Address in all communication with us.</p>
+          <p>24.2. Notwithstanding the foregoing, we take no liability whatsoever to you or to any third party when responding to any complaint that we received or took action in connection therewith.</p>
+          <p>24.3. If a Customer is not satisfied with how a bet has been settled then the Customer should provide details of their grievance to our customer service department. We shall use our reasonable endeavours to respond to queries of this nature within a few days (and in any event we intend to respond to all such queries within 28 days of receipt).</p>
+          <p>24.4. Disputes must be lodged within three (3) calendar days from the date the wager in question has been decided. No claims will be honoured after this period. The Customer is solely responsible for their Account transactions.</p>
+          <p>24.5. In the event of a dispute arising between you and us, our customer service department will attempt to reach an agreed solution. Should our customer service department be unable to reach an agreed solution with you, the matter will be escalated to our management.</p>
+          <p>24.6. Should all efforts to resolve a dispute to the Customer's satisfaction have failed, the Customer has the right to lodge a complaint with our licensing body Gaming Services Provider N.V.  </p>          
 
-          <h2>19. Your License</h2>
-          <p>
-            19.1. Subject to these Terms and your compliance with them, we grant to you a non-exclusive, limited, non transferable and non sub-licensable license to access and use the Service for your personal non-commercial purposes only. Our license to you terminates if our agreement with you under these Terms ends.<br />
-            19.2. Save in respect of your own content, you may not under any circumstances modify, publish, transmit, transfer, sell, reproduce, upload, post, distribute, perform, display, create derivative works from, or in any other manner exploit, the Service and/or any of the content thereon or the software contained therein, except as we expressly permit in these Terms or otherwise on the Website. No information or content on the Service or made available to you in connection with the Service may be modified or altered, merged with other data or published in any form including for example screen or database scraping and any other activity intended to collect, store, reorganise or manipulate such information or content.<br />
-            19.3. Any non-compliance by you with this Clause may also be a violation of our or third parties' intellectual property and other proprietary rights which may subject you to civil liability and/or criminal prosecution.
-          </p>
+          <h2>25. Assignment</h2>
+          <p>Neither these Terms nor any of the rights or obligations hereunder may be assigned by you without the prior written consent of us, which consent will not be unreasonably withheld. We may, without your consent, assign all or any portion of our rights and obligations hereunder to any third party provided such third party is able to provide a service of substantially similar quality to the service by posting written notice to this effect on the service.</p>
 
-          <h2>20. Your Conduct and Safety</h2>
-          <p>
-            20.1. For your protection and protection of all our Customers, the posting of any content on the Service, as well as conduct in connection therewith and/or the Service, which is in any way unlawful, inappropriate or undesirable is strictly prohibited (“Prohibited Behaviour”).<br />
-            20.2. If you engage in Prohibited Behaviour, or we determine in our sole discretion that you are engaging in Prohibited Behaviour, your Account and/or your access to or use of the Service may be terminated immediately without notice to you. Legal action may be taken against you by another Customer, other third party, enforcement authorities and/or us with respect to you having engaged in Prohibited Behaviour.<br />
-            20.3. Prohibited Behaviour includes, but is not limited to, accessing or using the Service to: <br />
-            promote or share information that you know is false, misleading or unlawful;<br />
-            conduct any unlawful or illegal activity, such as, but not limited to, any activity that furthers or promotes any criminal activity or enterprise, violates another Customer's or any other third party’s privacy or other rights or that creates or spreads computer viruses;<br />
-            harm minors in any way;transmit or make available any content that is unlawful, harmful, threatening, abusive, tortuous, defamatory, vulgar, obscene, lewd, violent, hateful, or racially or ethnically or otherwise objectionable;<br />
-            transmit or make available any content that the user does not have a right to make available under any law or contractual or fiduciary relationship, including without limitation, any content that infringes a third party’s copyright, trademark or other intellectual property and proprietary rights;<br />
-            transmit or make available any content or material that contains any software virus or other computer or programming code (including HTML) designed to interrupt, destroy or alter the functionality of the Service, its presentation or any other website, computer software or hardware;<br />
-            interfere with, disrupt or reverse engineer the Service in any manner, including, without limitation, intercepting, emulating or redirecting the communication protocols used by us, creating or using cheats, mods or hacks or any other software designed to modify the Service, or using any software that intercepts or collects information from or through the Service;retrieve or index any information from the Service using any robot, spider or other automated mechanism;<br />
-            participate in any activity or action that, in the sole and entire unfettered discretion of us results or may result in another Customer being defrauded or scammed;<br />
-            transmit or make available any unsolicited or unauthorised advertising or mass mailing such as, but not limited to, junk mail, instant messaging, "spim", "spam", chain letters, pyramid schemes or other forms of solicitations;<br />
-            create Accounts on the Website by automated means or under false or fraudulent pretences;<br />
-            impersonate another Customer or any other third party, orany other act or thing done that we reasonably consider to be contrary to our business principles.<br />
-            The above list of Prohibited Behaviour is not exhaustive and may be modified by us at any time or from time to time. We reserve the right to investigate and to take all such actions as we in our sole discretion deem appropriate or necessary under the circumstances, including without limitation deleting the Customer’s posting(s) from the Service and/or terminating their Account, and take any action against any Customer or third party who directly or indirectly in, or knowingly permits any third party to directly or indirectly engage in Prohibited Behaviour, with or without notice to such Customer or third party.
-          </p>
-
-          <h2>21. Links to Other Websites</h2>
-          <p>The Service may contain links to third party websites that are not maintained by, or related to, us, and over which we have no control. Links to such websites are provided solely as a convenience to Customers, and are in no way investigated, monitored or checked for accuracy or completeness by us. Links to such websites do not imply any endorsement by us of, and/or any affiliation with, the linked websites or their content or their owner(s). We have no control over or responsibility for the availability nor their accuracy, completeness, accessibility and usefulness. Accordingly when accessing such websites we recommend that you should take the usual precautions when visiting a new website including reviewing their privacy policy and terms of use.</p>
-
-          <h2>22. Complaints</h2>
-          <p>
-            22.1. If you have any concerns or questions regarding these Terms you should contact our Customer Service Department via the links on the Website and use your Registered Email Address in all communication with us.<br />
-            22.2. NOTWITHSTANDING THE FOREGOING, WE TAKE NO LIABILITY WHATSOEVER TO YOU OR TO ANY THIRD PARTY WHEN RESPONDING TO ANY COMPLAINT THAT WE RECEIVED OR TOOK ACTION IN CONNECTION THEREWITH.<br />
-            22.3. If a Customer is not satisfied with how a bet has been settled then the Customer should provide details of their grievance to our Customer Service Department. We shall use our reasonable endeavours to respond to queries of this nature within a few days (and in any event we intend to respond to all such queries within 28 days of receipt).<br />
-            22.4. Disputes must be lodged within three (3) days from the date the wager in question has been decided. No claims will be honoured after this period. The Customer is solely responsible for their Account transactions.<br />
-            22.5. In the event of a dispute arising between you and us our Customer Service Department will attempt to reach an agreed solution. Should our Customer Service Department be unable to reach an agreed solution with you, the matter will be escalated to our management.<br />
-            22.6. Should all efforts to resolve a dispute to the Customer's satisfaction have failed, the Customer has the right to lodge a complaint with our licensing body Gaming Services Provider N.V.
-          </p>
-
-          <h2>23. Assignment</h2>
-          <p>Neither these Terms nor any of the rights or obligations hereunder may be assigned by you without the prior written consent of us, which consent will not be unreasonably withheld. We may, without your consent, assign all or any portion of our rights and obligations hereunder to any third party provided such third party is able to provide a service of substantially similar quality to the Service by posting written notice to this effect on the Service.</p>
-
-          <h2>24. Severability</h2>
+          <h2>26. Severability</h2>
           <p>In the event that any provision of these Terms is deemed by any competent authority to be unenforceable or invalid, the relevant provision shall be modified to allow it to be enforced in line with the intention of the original text to the fullest extent permitted by applicable law. The validity and enforceability of the remaining provisions of these Terms shall not be affected.</p>
 
-          <h2>25. Breach of These Terms</h2>
-          <p>Without limiting our other remedies, we may suspend or terminate your Account and refuse to continue to provide you with the Service, in either case without giving you prior notice, if, in our reasonable opinion, you breach any material term of these Terms. Notice of any such action taken will, however, be promptly provided to you.</p>
-
-          <h2>26. General Provisions</h2>
-          <p>
-            26.1. <b>Term of agreement</b>. These Terms shall remain in full force and effect while you access or use the Service or are a Customer or visitor of the Website. These Terms will survive the termination of your Account for any reason.<br />
-            26.2. <b>Gender</b>. Words importing the singular number shall include the plural and vice versa, words importing the masculine gender shall include the feminine and neuter genders and vice versa and words importing persons shall include individuals, partnerships, associations, trusts, unincorporated organisations and corporations.<br />
-            26.3. <b>Waiver</b>. No waiver by us, whether by conduct or otherwise, of a breach or threatened breach by you of any term or condition of these Terms shall be effective against, or binding upon, us unless made in writing and duly signed by us, and, unless otherwise provided in the written waiver, shall be limited to the specific breach waived. The failure of us to enforce at any time any term or condition of these Terms shall not be construed to be a waiver of such provision or of the right of us to enforce such provision at any other time.<br />
-            26.4. <b>Acknowledgement</b>. By hereafter accessing or using the Service, you acknowledge having read, understood and agreed to each and every paragraph of these Terms. As a result, you hereby irrevocably waive any future argument, claim, demand or proceeding to the contrary of anything contained in these Terms.<br />
-            26.5. <b>Language</b>. In the event of there being a discrepancy between the English language version of these rules and any other language version, the English language version will be deemed to be correct.<br />
-            26.6. <b>Governing Law</b>. These Terms are governed by the law in force in Curaçao.<br />
-            26.7. <b>Entire agreement</b>. These Terms constitute the entire agreement between you and us with respect to your access to and use of the Service, and supersedes all other prior agreements and communications, whether oral or written with respect to the subject matter hereof.
-          </p>
+          <h2>27. Breach of These Terms</h2>
+          <p>27.1. Without limiting our other remedies, we may suspend or terminate your Account and refuse to continue to provide you with the service, in either case without giving you prior notice, if, in our reasonable opinion, you breach any material term of these Terms. Notice of any such action taken will, however, be promptly provided to you.</p>
+          <p>27.2. You agree to fully indemnify, defend and hold us harmless as well as our shareholders, directors, agents, and employees from and against all claims, demands, liabilities, damages, losses, costs, and expenses, including legal fees and any other charges whatsoever, howsoever caused, that may arise as a result of: (i) your breach of this Agreement, in whole or in part; (ii) violation by you of any law or any third party rights; and (iii) use by you of the service. </p>
       </div>
         
       </div>
