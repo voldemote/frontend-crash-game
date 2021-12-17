@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
+import { useEffect, useState } from 'react';
 import AuthenticationType from '../AuthenticationType';
 import { useSocialLogins } from './useSocialLogins';
 
@@ -24,6 +25,19 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
     isVisible
   } = useSocialLogins();
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const cb = () => {
+      const isSmall = window.innerWidth < 768;
+      if (isMobile !== isSmall) {
+        setIsMobile(isSmall);
+      }
+    };
+    window.addEventListener('resize', cb)
+   return () => window.removeEventListener('resize', cb)
+  }, [])
+
   const showNewFeatures =
     process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const iconProps = {
@@ -41,11 +55,13 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
     }[provider]({tosAccepted: ToSAccepted});
   }
 
+  const showLarge = (signUp && !isMobile);
+
   return (
     <div
       className={classNames(
         styles.socialContainer,
-        signUp && styles.verticalContainer
+        showLarge && styles.verticalContainer
       )}
     >
       {prepend.map(({ content, onClick }) => (
@@ -60,8 +76,8 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
           {content}
         </LoginButton>
       ))}
-      {isVisible.google && 
-        (signUp ? (
+      {isVisible.google &&
+        (showLarge ? (
           <LoginButton
             styles={styles}
             onClick={login('google', isRegistration)}
@@ -78,17 +94,18 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('google', isRegistration)}>
+            onClick={login('google', isRegistration)}
+            disabled={disabled}
+          >
             <Icon
               className={styles.socialIcon}
               iconType={IconType.google}
               {...iconProps}
             />
           </button>
-        ))
-      }
-      {isVisible.twitch && 
-        (signUp ? (
+        ))}
+      {isVisible.twitch &&
+        (showLarge ? (
           <LoginButton
             styles={styles}
             onClick={login('twitch', isRegistration)}
@@ -105,17 +122,18 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('twitch', isRegistration)}>
+            onClick={login('twitch', isRegistration)}
+            disabled={disabled}
+          >
             <Icon
               className={styles.socialIcon}
               iconType={IconType.twitch}
               {...iconProps}
             />
           </button>
-        ))
-      }
-      {isVisible.discord && 
-        (signUp ? (
+        ))}
+      {isVisible.discord &&
+        (showLarge ? (
           <LoginButton
             styles={styles}
             onClick={login('discord', isRegistration)}
@@ -132,15 +150,16 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('discord', isRegistration)}>
+            onClick={login('discord', isRegistration)}
+            disabled={disabled}
+          >
             <Icon
               className={styles.socialIcon}
               iconType={IconType.discord}
               {...iconProps}
             />
           </button>
-        ))
-      }
+        ))}
     </div>
   );
 };
