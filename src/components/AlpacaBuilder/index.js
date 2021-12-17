@@ -149,9 +149,9 @@ const AlpacaBuilder = ({
           <span
             className={styles.secondaryAction}
             onClick={() => {if(onCancel) onCancel();}}>{cancelLabel}</span>
-          <Button
+          <button
             className={styles.primaryAction}
-            onClick={() => exportSvg()}>{saveLabel}</Button>
+            onClick={() => exportSvg()}>{saveLabel}</button>
         </div>
     </div>
     <canvas ref={svgDownloader} style={{visibility:"hidden", height:0}}></canvas>

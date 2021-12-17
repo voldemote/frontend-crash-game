@@ -257,108 +257,281 @@
 }
 
 .welcomeContainer {
-  margin: 0px 0 220px;
+  margin-top: 200px;
+  margin-bottom: calc(100vh - 668px);
+  // margin-bottom: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   @media (max-width: $screen-sm) {
     margin: 80px 0 0;
   }
-  .cardBox {
+  .cardContainer {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 540px;
-    height: 570px;
-    padding: 80px 16px 0 0;
-    background: url('../../data/images/home/welcome-bg.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    font-family: $fontOmnes;
-    @media (max-width: $screen-sm) {
-      width: 100%;
-      height: 350px;
-      padding: 60px 10px 0 0;
-    }
-    .alpacaPink {
-      position: absolute;
-      width: 200px;
-      left: -70px;
-      top: 0px;
-      z-index: -1;
-      @media (max-width: $screen-sm) {
-        width: 111px;
-        left: -30px;
-        top: -26px;
-        display: none;
-      }
-    }
-    .alpacaYellow {
-      position: absolute;
-      width: 140px;
-      left: -48px;
-      bottom: -70px;
-      @media (max-width: $screen-sm) {
-        width: 70px;
-        left: 0px;
-        bottom: -30px;
-        display: none;
-      }
-    }
-    .alpacaBlue {
-      position: absolute;
-      width: 220px;
-      right: -80px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: -1;
-      @media (max-width: $screen-sm) {
-        width: 140px;
-        right: -20px;
-        display: none;
-      }
-    }
-    h1 {
-      margin-top: 120px;
-      font-weight: bold;
-      font-size: 60px;
-      line-height: 41px;
-      color: #ffd31a;
-      text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
-      @media (max-width: $screen-sm) {
-        margin-top: 72px;
-        font-size: 30px;
-        line-height: 24px;
-      }
-    }
-    h2 {
-      margin-top: 40px;
-      font-weight: 600;
-      font-size: 30px;
-      line-height: 41px;
-      text-align: center;
-      color: $colorWhite;
-      text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
-      .highlight {
-        color: $colorLightYellow;
-      }
-      @media (max-width: $screen-sm) {
-        margin-top: 30px;
-        font-size: 16px;
-        line-height: 18px;
-      }
-    }
+    height: 568px;
+    width: 402px;
+    background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
+    padding: 15px;
+    border-radius: 20px;
+    .cardBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid $colorPopBorder;
+      border-radius: 20px;
+      height: 538px;
 
-    .startButton {
-      margin-top: 56px;
-      font-size: 32px;
-      @media (max-width: $screen-md) {
-        margin-top: 24px;
-        font-size: 24px;
+      // padding: 80px 16px 0 0;
+      font-family: $fontOmnes;
+      @media (max-width: $screen-sm) {
+        width: 100%;
+        height: 538px;
+        padding: 60px 10px 0 0;
+      }
+      .topFront {
+        position: absolute;
+        width: 150px;
+        height: 190px;
+        left: -60px;
+        top: -19px;
+        z-index: 1;
+      }
+
+      .topBack {
+        position: absolute;
+        width: 330px;
+        left: -110px;
+        top: -120px;
+        z-index: -1;
+      }
+
+      .bottomFront {
+        position: absolute;
+        width: 150px;
+        right: -35px;
+        bottom: 84px;
+        z-index: 1;
+      }
+      .bottomBack {
+        position: absolute;
+        width: 420px;
+        right: -114px;
+        bottom: -105px;
+        z-index: -1;
+      }
+
+      .aplacaHeader {
+        bottom: -170px;
+        left: -510px;
+        position: absolute;
+        width: 450px;
+        display: block;
+      }
+      svg {
+        margin-left: 40%;
+      }
+      p {
+        font-weight: 800;
+        font-size: 35px;
+        line-height: 40px;
+        font-family: $fontOmnes;
+        color: $colorBlack;
+        text-align: center;
+        span {
+          font-size: 50px;
+          line-height: 1;
+        }
+        @media (max-width: $screen-sm) {
+          font-size: 30px;
+          line-height: 24px;
+        }
+      }
+      .limitedOfferDescription {
+        font-weight: 800;
+        font-size: 35px;
+        line-height: 40px;
+        text-align: center;
+        font-family: $fontOmnes;
+        color: $colorBlack;
+        margin-bottom: 10px;
+
+        p {
+          font-weight: 800;
+          font-size: 35px;
+          line-height: 40px;
+          text-align: center;
+          font-family: $fontOmnes;
+          color: $colorBlack;
+          margin-top: 60px;
+          margin-bottom: 10px;
+        }
+
+        @media (max-width: $screen-sm) {
+          font-size: 25px;
+          line-height: 30px;
+        }
+
+        .highlighted {
+          font-size: 90px;
+          line-height: 50px;
+        }
+      }
+
+      .startButton {
+        width: 240px;
+        height: 45px;
+        text-align: center;
+        font-weight: 800;
+        font-family: $fontOmnes;
+        background: $colorButton;
+        color: $colorBlack;
+        font-size: 20px;
+        border-radius: 30px;
+        border: 1px solid $colorButton;
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 5px;
+        &:hover {
+          background: $colorPrimary;
+          color: $colorButton;
+        }
       }
     }
+  }
+}
+
+.aboutDescritpion {
+  position: relative;
+  margin: 80px auto 80px;
+  padding: 300px 0;
+  background: url('../../data/images/home/about-background.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  @media (max-width: $screen-lg) {
+    margin-bottom: 140px;
+  }
+  @media (max-width: $screen-xs) {
+    margin-bottom: 180px;
+    padding: 300px 0 0;
+  }
+  .topImage {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  .parentContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .descriptionCardContainer {
+      position: relative;
+      width: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: linear-gradient(180deg, #ffffff 0%, #f1dbd2 51.56%);
+      border-radius: 20px;
+      padding: 10px;
+      position: relative;
+
+      .aboutFirst {
+        position: absolute;
+        top: -59px;
+        left: 130px;
+        width: 130px;
+      }
+
+      .aboutTopAlpaca {
+        position: absolute;
+        bottom: 281px;
+        left: 65px;
+        width: 250px;
+
+        z-index: -1;
+      }
+      .aboutSecond {
+        position: absolute;
+        top: -35px;
+        left: 130px;
+        width: 110px;
+      }
+      .aboutThird {
+        position: absolute;
+        top: -123px;
+        left: 120px;
+        width: 116px;
+
+        z-index: -1;
+      }
+
+      .descriptionCard {
+        width: 100%;
+        border: 3px solid #fbb2a5;
+        box-sizing: border-box;
+        border-radius: 20px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        height: 300px;
+
+        h1 {
+          margin: 20px 0px;
+          font-family: $fontOmnes;
+          font-weight: 600;
+          font-size: 30px;
+          line-height: 20px;
+          /* identical to box height, or 67% */
+
+          text-align: center;
+        }
+        p {
+          margin-bottom: 20px;
+          font-family: $fontOmnes;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+
+          text-align: center;
+        }
+      }
+      .thumbnail {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .thumbnailBack {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+      }
+    }
+  }
+}
+
+.nftBannerWrapper {
+  margin-top: 300px;
+  margin-bottom: 200px;
+  @media (max-width: $screen-xl) {
+    margin-top: 200px;
+    margin-top: 150px;
+  }
+
+  @media (max-width: $screen-md) {
+    margin-bottom: 100px;
+  }
+  @media (max-width: $screen-xs) {
+    display: none;
   }
 }
 
@@ -634,19 +807,33 @@
 }
 .gameCards {
   margin-top: 70px;
+
+  @media (max-width: $screen-sm) {
+    margin-top: 320px;
+  }
   .title {
     display: flex;
-    align-items: center;
-    font-size: 22px;
-    font-weight: 700;
     justify-content: flex-start;
+    flex-direction: column;
 
     h2 {
-      font-size: 33px;
-      color: $colorWhite;
+      color: $colorHeading;
+      font-weight: 800;
+      font-size: 50px;
+      line-height: 20px;
+      font-family: $fontOmnes;
       @media (max-width: $screen-xs) {
         font-size: 28px;
       }
+    }
+
+    p {
+      margin-top: 10px;
+      font-family: $fontOmnes;
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 2;
+      color: $colorWhite;
     }
 
     img {

@@ -61,11 +61,14 @@ const UsernamePopup = ({
 
   return (
     <div className={styles.usernamePopup}>
-      <h2 className={styles.title}>Complete your profile</h2>
+      <h2 className={styles.title}>Choose your username</h2>
       <div className={styles.container}>
         <div className={styles.description}>
-          How would you like others to see you?<br/>
-          Please pick a username for yourself or randomize.
+          How would you like others to see you?
+          <br />
+          Please pick a username for
+          <br />
+          yourself or randomize.
         </div>
         <InputBox
           className={styles.inputBox}
@@ -78,14 +81,11 @@ const UsernamePopup = ({
           <div className={styles.errorHandLing}>{errorMessage}</div>
         )}
         <div className={styles.buttons}>
-          <span
-            onClick={getSuggestion}
-            className={styles.skipButton}
-          >
+          <span onClick={getSuggestion} className={styles.skipButton}>
             Randomize
           </span>
 
-          <Button
+          <button
             onClick={onConfirm}
             withoutBackground={true}
             className={styles.button}
@@ -93,7 +93,7 @@ const UsernamePopup = ({
             disabled={!!errorMessage}
           >
             Submit
-          </Button>
+          </button>
         </div>
       </div>
     </div>

@@ -4,9 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { LOGGED_IN } from 'constants/AuthState';
-import {
-  EXTERNAL_GAMES
-} from '../../constants/Games';
+import { EXTERNAL_GAMES } from '../../constants/Games';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -37,10 +35,29 @@ import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
 import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/candy-3.png';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
+import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
 
-import AlpacaPink from '../../data/images/home/alpaca-pink.svg';
-import AlpacaBlue from '../../data/images/home/alpaca-blue.svg';
+import AlpacaHeader from 'data/images/alpaca-header.png';
+import TopFront from '../../data/images/top-front-corner-image.png';
+import TopBack from '../../data/images/top-back-corner-image.png';
+import BottomFront from '../../data/images/bottom-front-corner-image.png';
+import BottomBack from '../../data/images/bottom-back-corner-image.png';
+import AlpacaBlue from '../../data/images/bottom-popup-images.png';
 import AlpacaYellow from '../../data/images/home/alpaca-yellow.svg';
+
+import FairPiece from '../../data/images/home/fair-piece.svg';
+import UniquePiece from '../../data/images/home/unique-piece.svg';
+import SocialPiece from '../../data/images/home/social-piece.svg';
+import PlinkoAlpaca from '../../data/images/home/plinko-alpaca.svg';
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core';
+import AboutFirstImage from '../../data/images/about-1-image.png';
+import AboutSecondImage from '../../data/images/about-2-image.png';
+import AboutTopAlpaca from '../../data/images/about-top-alpaca.png';
+import AboutThirdImage from '../../data/images/about-3-image.png';
+
+
 
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
@@ -48,6 +65,8 @@ import useOAuthCallback from 'hooks/useOAuthCallback';
 import { OnboardingActions } from 'store/actions/onboarding';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
 import { TOKEN_NAME } from 'constants/Token';
+import AmbassadorBanner from 'components/AmbassadorBanner';
+import NftBanner from 'components/NftBanner';
 
 const Home = ({
   authState,
@@ -56,12 +75,16 @@ const Home = ({
   fetchTags,
   showPopup,
   events,
-  startOnboardingFlow
+  startOnboardingFlow,
 }) => {
   const isMount = useIsMount();
   const { eventId, betId, tradeId } = useParams();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
+  const theme = useTheme();
+const isXSmall = useMediaQuery(theme.breakpoints.down('xs'));
+const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
 
   useOAuthCallback();
 
@@ -224,28 +247,34 @@ const Home = ({
     return (
       <div className={styles.gameCards}>
         <div className={styles.title}>
-          <h2>House Games</h2>
+          <h2>Alpaca Games</h2>
+          <p>Games available only in Alpacasino. 100% fun & pure love </p>
         </div>
         <div className={styles.cardBox}>
-          <Grid container spacing={1}>
-            <Grid item lg={3} md={3} xs={6}>
+          <Grid container spacing={1} justify="space-between">
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/pump-dump'}>
                 <img src={gameCardPumpDump} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/elon-game'}>
                 <img src={gameCardElon} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/plinko'}>
                 <img src={gameCardPlinko} alt="" />
               </Link>
             </Grid>
-            <Grid item lg={3} md={3} xs={6}>
+            <Grid item lg={2} md={2} xs={6}>
               <Link to={'/games/mines'}>
                 <img src={gameCardMines} alt="" />
+              </Link>
+            </Grid>
+            <Grid item lg={2} md={2} xs={6}>
+              <Link to={'/games/alpaca-wheel'}>
+                <img src={gameCardWheel} alt="" />
               </Link>
             </Grid>
           </Grid>
@@ -257,10 +286,50 @@ const Home = ({
   const renderSlogGames = () => {
     return (
       <div className={styles.gameCards}>
-        <GameSmartsoft
-          games={EXTERNAL_GAMES}
-          category="Slot Games"
-        />
+        <GameSmartsoft games={EXTERNAL_GAMES} category="Slot Games" />
+      </div>
+    );
+  };
+
+  const renderAboutDescription = () => {
+    return (
+      <div className={styles.aboutDescritpion}>
+        <img className={styles.topImage} src={PlinkoAlpaca} alt='fair-piece'/>
+        <Grid container spacing={1} justify="space-between">
+          <Grid item lg={4} md={4} xs={12}>
+            <div className={styles.parentContainer}>
+              <div className={styles.descriptionCardContainer}>
+                <div className={styles.descriptionCard}>
+                    <h1>Fair</h1>
+                    <p>We have a mission to prove that crypto casino can just the pure entertainment. We operate on open source code, provide honest bonuses, and publicly communicate the house edges along with a full history of all the bets. Simply no hidden tricks just awesome fun!</p>
+                </div>
+                <img className={styles.thumbnail} src={FairPiece} alt='fair-piece'/>
+              </div>
+            </div>
+          </Grid>
+          <Grid item lg={4} md={4} xs={12}>
+            <div className={styles.parentContainer}>
+              <div className={styles.descriptionCardContainer}>
+                <div className={styles.descriptionCard}>
+                  <h1>Unique</h1>
+                    <p>In Alpacasino you play with WFAIR, our own crypto currency. It gives you the advantage to earn money even when you are not playing. Stake your winnings and watch your wallet grow! The more people sign up, deposit and play, the higher the value of you wallet! </p>
+                </div>
+                <img className={styles.thumbnail} src={UniquePiece} alt='unique-piece'/>
+              </div>
+            </div>
+          </Grid>
+          <Grid item lg={4} md={4} xs={12}>
+            <div className={styles.parentContainer}>
+              <div className={styles.descriptionCardContainer}>
+                <div className={styles.descriptionCard}>
+                    <h1>Social</h1>
+                    <p>Alpacasino is a part of Alpacaverse our flagship project that presents the future of the speculative entertainment. The future where world of betting, gambling and gaming is blended into one huge theme park metaverse. The place where you meet people and enjoy the excitement of potential rewards!</p>
+                </div>
+                <img className={styles.thumbnailBack} src={SocialPiece} alt='social-piece'/>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
       </div>
     )
   }
@@ -273,20 +342,37 @@ const Home = ({
     };
     return (
       <div className={styles.welcomeContainer}>
-        <div className={styles.cardBox}>
-          <h1>Alpacasino</h1>
-          <h2>
-            Get your <span className={styles.highlight}>50 {TOKEN_NAME} bonus</span> and<br/>
-            create your <span className={styles.highlight}>alpaca</span>
-          </h2>
+        <div className={styles.cardContainer}>
+          <div className={styles.cardBox}>
+            <p>
+              Welcome to
+              <br /> <span>Alpacasino</span>
+            </p>
 
-          <Button
-            className={styles.startButton}
-            onClick={showPopupForUnauthenticated}>
-            Sign up
-          </Button>
-          <img className={styles.alpacaPink} src={AlpacaPink} alt="" />
-          <img className={styles.alpacaBlue} src={AlpacaBlue} alt="" />
+            <LimitedOffer />
+            <span className={styles.limitedOfferDescription}>
+              Join today and receive
+              <br />
+              <span className={styles.highlighted}>50%</span>
+              <br />
+              cashback up to
+              <br />
+              <span className={styles.highlighted}>25 000</span>
+              
+              <p>WFAIRs</p>
+            </span>
+
+            <buton
+              className={styles.startButton}
+              onClick={showPopupForUnauthenticated}
+            >
+              Claim the offer!
+            </buton>
+            <img className={styles.topFront} src={TopFront} alt="" />
+            <img className={styles.topBack} src={TopBack} alt="" />
+            <img className={styles.bottomFront} src={BottomFront} alt="" />
+            <img className={styles.bottomBack} src={BottomBack} alt="" />
+          </div>
         </div>
       </div>
     );
@@ -334,11 +420,11 @@ const Home = ({
                   <div>
                     <h3>Grow your Alpaca</h3>
                     <p>
-                      You can earn {TOKEN_NAME} tokens in multiple ways: You can play
-                      our house games (we are going to launch new games weekly),
-                      invite other alpacas, provide feedback and (soon) battle
-                      other alpacas(or bet on other alpaca fights) and send
-                      tokens among each other.
+                      You can earn {TOKEN_NAME} tokens in multiple ways: You can
+                      play our house games (we are going to launch new games
+                      weekly), invite other alpacas, provide feedback and (soon)
+                      battle other alpacas(or bet on other alpaca fights) and
+                      send tokens among each other.
                     </p>
                   </div>
                   <div className={styles.thumbnail}>
@@ -359,8 +445,8 @@ const Home = ({
                       <h3>What</h3>
                     </div>
                     <p>
-                      Alpacasino is the first betting and gaming platform powered 
-                      by Wallfair.
+                      Alpacasino is the first betting and gaming platform
+                      powered by Wallfair.
                     </p>
                   </div>
                   <div className={styles.thumbnail}>
@@ -393,10 +479,7 @@ const Home = ({
   };
 
   return (
-    <BaseContainerWithNavbar
-      home
-      loggedIn={isLoggedIn()}
-      >
+    <BaseContainerWithNavbar home loggedIn={isLoggedIn()}>
       {/* {renderHeadline()} */}
       {/* <Header /> */}
       <div className={styles.containerWrapper}>
@@ -404,9 +487,14 @@ const Home = ({
           {!isLoggedIn() && renderWelcome()}
           {renderHouseGames()}
           {renderSlogGames()}
+          {renderAboutDescription()}
+          <AmbassadorBanner />
+          <div className={styles.nftBannerWrapper}>
+            <NftBanner />
+          </div>
           {renderActivities()}
-          {renderAlpacaDopter()}
-          {renderAlpacaVerse()}
+          {/* {renderAlpacaDopter()}
+          {renderAlpacaVerse()} */}
           {/* {renderHowTokenWorks()} */}
         </div>
       </div>
@@ -438,7 +526,7 @@ const mapDispatchToProps = dispatch => {
         })
       );
     },
-    startOnboardingFlow: () =>{
+    startOnboardingFlow: () => {
       dispatch(OnboardingActions.start());
     },
   };
