@@ -260,14 +260,15 @@ const authenticationSucceeded = function* (action) {
           },
         })
       );
-      // yield put(
-      //   PopupActions.show({
-      //     popupType: PopupTheme.username,
-      //     options: {
-      //       initialReward: action?.initialReward,
-      //     },
-      //   })
-      // );
+    } else if (authState.shouldAcceptToS) {
+      yield put(
+        PopupActions.show({
+          popupType: PopupTheme.acceptToS,
+          options: {
+            small: true,
+          },
+        })
+      );
     } else {
       yield put(PopupActions.hide());
     }
@@ -449,6 +450,7 @@ const loginExternal = function* ({ code, provider, ref }) {
         newUser: data.newUser,
         initialReward: data?.initialReward,
         user: data?.user,
+        shouldAcceptToS: data?.shouldAcceptToS,
       })
     );
     localStorage.removeItem('urlParam_ref');
@@ -481,6 +483,7 @@ const login = function* (action) {
         session: data.session,
         newUser: action.newUser,
         initialReward: action?.initialReward,
+        shouldAcceptToS: data?.shouldAcceptToS,
       })
     );
   } else {
@@ -561,6 +564,25 @@ const updateStatus = function* (action) {
   }
 };
 
+const updateToSConsent = function* ({isOnboarding}) {
+  yield put(PopupActions.hide())
+  const { error } = yield call(Api.acceptToS);
+
+  if(error) {
+    yield put(AuthenticationActions.failedToSConsent())
+    yield put(PopupActions.show({
+      popupType: PopupTheme.acceptToS,
+      options: {
+        small: true,
+      },
+    }))
+  } else {
+    if(isOnboarding) {
+      yield put(OnboardingActions.next())
+    }
+  }
+}
+
 export default {
   authenticationSucceeded,
   fetchReferrals,
@@ -582,4 +604,5 @@ export default {
   forgotPassword,
   resetPassword,
   updateStatus,
+  updateToSConsent,
 };

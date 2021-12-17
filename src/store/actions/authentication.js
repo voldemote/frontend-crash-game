@@ -43,6 +43,8 @@ export const AuthenticationTypes = {
   LOGIN_EXTERNAL: 'Authentication/LOGIN_EXTERNAL',
   LOGIN_EXTERNAL_FAIL: 'Authentication/LOGIN_EXTERNAL_FAIL',
   SET_ALPACA_BUILDER_DATA: 'Authentication/SET_ALPACA_BUILDER_DATA',
+  ACCEPT_TOS_CONSENT: 'Authentication/ACCEPT_TOS_CONSENT',
+  FAILED_TOS_CONSENT: 'Authentication/FAILED_TOS_CONSENT',
 };
 
 const fetchReferrals = makeActionCreator(AuthenticationTypes.FETCH_REFERRALS);
@@ -216,6 +218,7 @@ const loginSuccess = makeActionCreator(AuthenticationTypes.LOGIN_SUCCESS, {
   userId: null,
   session: null,
   newUser: false,
+  shouldAcceptToS: false,
 });
 
 const loginFail = makeActionCreator(AuthenticationTypes.LOGIN_FAIL, {
@@ -269,6 +272,14 @@ const setAlpacaBuilderData = makeActionCreator(
   }
 );
 
+const acceptToSConsent = makeActionCreator(
+  AuthenticationTypes.ACCEPT_TOS_CONSENT
+);
+
+const failedToSConsent = makeActionCreator(
+  AuthenticationTypes.FAILED_TOS_CONSENT
+);
+
 
 export const AuthenticationActions = {
   fetchReferrals,
@@ -311,5 +322,7 @@ export const AuthenticationActions = {
   updateStatus,
   loginExternal,
   loginExternalFail,
-  setAlpacaBuilderData
+  setAlpacaBuilderData,
+  acceptToSConsent,
+  failedToSConsent,
 };

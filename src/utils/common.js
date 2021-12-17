@@ -39,3 +39,7 @@ export const shortenAddress = (account, isElement = true) => {
 export const openExternalLink = (link, target = "_blank") => {
   window.open(link, target).focus();
 };
+
+export const formatTxStatus = (status) => {
+  return status.split('_').map(s => s[0].toUpperCase() + s.substring(1)).join(' ');
+} 

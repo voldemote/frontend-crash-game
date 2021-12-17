@@ -4,10 +4,9 @@ import { AuthenticationActions } from '../../../store/actions/authentication';
 import { PopupActions } from '../../../store/actions/popup';
 import { FormGroup, InputLabel } from '../../Form';
 import InputBox from 'components/InputBox';
+import LegalCheckbox from 'components/LegalCheckbox';
 import Button from '../../Button';
-import CheckBox from 'components/CheckBox';
 import ReactTooltip from 'react-tooltip';
-import Routes from 'constants/Routes';
 import { RECAPTCHA_KEY } from 'constants/Api';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -121,45 +120,6 @@ const EmailSignUp = ({
     return formError;
   };
 
-  const renderLegalAuthorizationAgreementCheckBox = () => {
-    const legalAuthorizationAgreementText = (
-      <p
-        ref={ref => (acceptRef.current = ref)}
-        data-tip
-        data-event="none"
-        data-event-off="dblclick"
-        className={styles.authenticationLegalAuthorizationAgreementText}
-      >
-        <b>I am at least 18 years of age</b> and have read and accepted the{' '}
-        <Link
-          className={'global-link-style'}
-          to={Routes.terms}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Terms &amp; Conditions
-        </Link>{' '}
-        and{' '}
-        <Link
-          className={'global-link-style'}
-          to={Routes.privacy}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Privacy Policy
-        </Link>
-      </p>
-    );
-    return (
-      <CheckBox
-        className={styles.authenticationLegalAuthorizationAgreementCheckBox}
-        checked={legalAuthorizationAgreed}
-        setChecked={setLegalAuthorizationAgreed}
-        text={legalAuthorizationAgreementText}
-      />
-    );
-  };
-
   return (
     <form
       className={styles.authenticationInputBoxContainer}
@@ -167,7 +127,7 @@ const EmailSignUp = ({
     >
       {errorState && (
         <div
-          ref={ref => (genericRef.current = ref)}
+          ref={(ref) => (genericRef.current = ref)}
           data-tip
           data-event="none"
           data-event-off="dblclick"
@@ -189,7 +149,7 @@ const EmailSignUp = ({
           <FormGroup
             className={styles.formGroup}
             data-tip
-            rootRef={ref => (emailRef.current = ref)}
+            rootRef={(ref) => (emailRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -202,7 +162,7 @@ const EmailSignUp = ({
               placeholder="john.doe@gmail.com"
               value={email}
               disabled={submitInProgress}
-              setValue={e => {
+              setValue={(e) => {
                 setInputEmail(e.trim().toLowerCase());
               }}
               onConfirm={onConfirm}
@@ -212,7 +172,7 @@ const EmailSignUp = ({
           <FormGroup
             className={styles.formGroup}
             data-tip
-            rootRef={ref => (pwRef.current = ref)}
+            rootRef={(ref) => (pwRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -230,7 +190,7 @@ const EmailSignUp = ({
           <FormGroup
             className={styles.formGroup}
             data-tip
-            rootRef={ref => (pwConfirmRef.current = ref)}
+            rootRef={(ref) => (pwConfirmRef.current = ref)}
             data-event="none"
             data-event-off="dblclick"
           >
@@ -249,7 +209,11 @@ const EmailSignUp = ({
           </FormGroup>
         </div>
         <div>
-          {renderLegalAuthorizationAgreementCheckBox()}
+          <LegalCheckbox
+            ref={(ref) => (acceptRef.current = ref)}
+            checked={legalAuthorizationAgreed}
+            setChecked={setLegalAuthorizationAgreed}
+          />
           <Button
             onClick={onConfirm}
             className={classNames([styles.submitButton, styles.mobile])}
@@ -272,11 +236,22 @@ const EmailSignUp = ({
       </Button>
       <div className={styles.recaptchaInfo}>
         <p>This site is protected by reCAPTCHA and the Google</p>
-        <a target="_blank" href="https://policies.google.com/privacy" rel="noreferrer">
+        <a
+          target="_blank"
+          href="https://policies.google.com/privacy"
+          rel="noreferrer"
+        >
           Privacy Policy
         </a>
         <span> and </span>
-        <a target="_blank" href="https://policies.google.com/terms" rel="noreferrer">Terms of Service</a> apply.
+        <a
+          target="_blank"
+          href="https://policies.google.com/terms"
+          rel="noreferrer"
+        >
+          Terms of Service
+        </a>{' '}
+        apply.
       </div>
     </form>
   );
