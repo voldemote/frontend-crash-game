@@ -63,66 +63,72 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
           {content}
         </LoginButton>
       ))}
-      {isVisible.google && signUp ? (
-        <LoginButton
-          styles={styles}
-          onClick={login('google', isRegistration)}
-          signUp={signUp}
-          disabled={disabled}
-        >
-          <Icon
-            className={styles.socialIcon}
-            iconType={IconType.google}
-            {...iconProps}
+      {isVisible.google && 
+        (signUp ? (
+          <LoginButton
+            styles={styles}
+            onClick={login('google', isRegistration)}
+            signUp={signUp}
+            disabled={disabled}
+          >
+            <Icon
+              className={styles.socialIcon}
+              iconType={IconType.google}
+              {...iconProps}
+            />
+            <p>Sign up with Google</p>
+          </LoginButton>
+        ) : (
+          <SocialGoogleIcon
+            className={styles.socialButton}
+            onClick={login('google', isRegistration)}
           />
-          <p>Sign up with Google</p>
-        </LoginButton>
-      ) : (
-        <SocialGoogleIcon
-          className={styles.socialButton}
-          onClick={login('google', isRegistration)}
-        />
-      )}
-      {isVisible.twitch && signUp ? (
-        <LoginButton
-          styles={styles}
-          onClick={login('twitch', isRegistration)}
-          signUp={signUp}
-          disabled={disabled}
-        >
-          <Icon
-            className={styles.socialIcon}
-            iconType={IconType.twitch}
-            {...iconProps}
+        ))
+      }
+      {isVisible.twitch && 
+        (signUp ? (
+          <LoginButton
+            styles={styles}
+            onClick={login('twitch', isRegistration)}
+            signUp={signUp}
+            disabled={disabled}
+          >
+            <Icon
+              className={styles.socialIcon}
+              iconType={IconType.twitch}
+              {...iconProps}
+            />
+            <p>Sign up with Twitch</p>
+          </LoginButton>
+        ) : (
+          <SocialTwitchIcon
+            className={styles.socialButton}
+            onClick={login('twitch', isRegistration)}
           />
-          <p>Sign up with Twitch</p>
-        </LoginButton>
-      ) : (
-        <SocialTwitchIcon
-          className={styles.socialButton}
-          onClick={login('twitch', isRegistration)}
-        />
-      )}
-      {isVisible.discord && signUp ? (
-        <LoginButton
-          styles={styles}
-          onClick={login('discord', isRegistration)}
-          signUp={signUp}
-          disabled={disabled}
-        >
-          <Icon
-            className={styles.socialIcon}
-            iconType={IconType.discord}
-            {...iconProps}
+        ))
+      }
+      {isVisible.discord && 
+        (signUp ? (
+          <LoginButton
+            styles={styles}
+            onClick={login('discord', isRegistration)}
+            signUp={signUp}
+            disabled={disabled}
+          >
+            <Icon
+              className={styles.socialIcon}
+              iconType={IconType.discord}
+              {...iconProps}
+            />
+            <p>Sign up with Discord</p>
+          </LoginButton>
+        ) : (
+          <SocialDiscordIcon
+            className={styles.socialButton}
+            onClick={login('discord', isRegistration)}
           />
-          <p>Sign up with Discord</p>
-        </LoginButton>
-      ) : (
-        <SocialDiscordIcon
-          className={styles.socialButton}
-          onClick={login('discord', isRegistration)}
-        />
-      )}
+        ))
+      }
     </div>
   );
 };

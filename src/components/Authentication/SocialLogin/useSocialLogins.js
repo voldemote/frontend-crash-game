@@ -26,7 +26,7 @@ export const useSocialLogins = () => {
     isVisible: {
       google: !!process.env.REACT_APP_GOOGLE_CLIENT_ID,
       facebook: !!process.env.REACT_APP_FACEBOOK_CLIENT_ID,
-      twitch: !!process.env.REACT_APP_TWITCH_CLIENT_ID,
+      twitch: !!process.env.REACT_APP_TWITCH_CLIENT_ID && !!process.env.REACT_APP_SHOW_UPCOMING_FEATURES,
       discord: !!process.env.REACT_APP_DISCORD_CLIENT_ID,
     },
     initGoogleLogin: (state = {}) =>
