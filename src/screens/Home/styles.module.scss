@@ -257,7 +257,9 @@
 }
 
 .welcomeContainer {
-  margin: 50px 0 220px;
+  margin-top: 200px;
+  margin-bottom: calc(100vh - 668px);
+  // margin-bottom: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -275,7 +277,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1px solid $colorWhite;
+      border: 1px solid $colorPopBorder;
       border-radius: 20px;
       height: 538px;
 
@@ -288,9 +290,10 @@
       }
       .topFront {
         position: absolute;
-        width: 75px;
-        left: -26px;
-        top: -8px;
+        width: 150px;
+        height: 190px;
+        left: -60px;
+        top: -19px;
         z-index: 1;
       }
 
@@ -304,37 +307,47 @@
 
       .bottomFront {
         position: absolute;
-        width: 100px;
-        right: -30px;
-        bottom: 90px;
+        width: 150px;
+        right: -35px;
+        bottom: 84px;
         z-index: 1;
       }
       .bottomBack {
         position: absolute;
-        width: 325px;
-        right: -90px;
-        bottom: -80px;
+        width: 420px;
+        right: -114px;
+        bottom: -105px;
         z-index: -1;
       }
+
+      .aplacaHeader {
+        bottom: -170px;
+        left: -510px;
+        position: absolute;
+        width: 450px;
+        display: block;
+      }
       svg {
-        margin-top: 20px;
-        margin-bottom: 20px;
         margin-left: 40%;
       }
-      h1 {
-        font-weight: 600;
+      p {
+        font-weight: 800;
         font-size: 35px;
         line-height: 40px;
         font-family: $fontOmnes;
         color: $colorBlack;
         text-align: center;
+        span {
+          font-size: 50px;
+          line-height: 1;
+        }
         @media (max-width: $screen-sm) {
           font-size: 30px;
           line-height: 24px;
         }
       }
       .limitedOfferDescription {
-        font-weight: 600;
+        font-weight: 800;
         font-size: 35px;
         line-height: 40px;
         text-align: center;
@@ -342,35 +355,47 @@
         color: $colorBlack;
         margin-bottom: 10px;
 
+        p {
+          font-weight: 800;
+          font-size: 35px;
+          line-height: 40px;
+          text-align: center;
+          font-family: $fontOmnes;
+          color: $colorBlack;
+          margin-top: 60px;
+          margin-bottom: 10px;
+        }
+
         @media (max-width: $screen-sm) {
           font-size: 25px;
           line-height: 30px;
         }
 
         .highlighted {
-          font-weight: bold;
-          font-size: 50px;
-          line-height: 45px;
+          font-size: 90px;
+          line-height: 50px;
         }
       }
 
       .startButton {
-        margin-top: 56px;
         width: 240px;
-        height: 40px;
+        height: 45px;
         text-align: center;
+        font-weight: 800;
         font-family: $fontOmnes;
         background: $colorButton;
         color: $colorBlack;
-        font-weight: 600;
         font-size: 20px;
-        line-height: 40px;
-        cursor: pointer;
         border-radius: 30px;
-        border: none;
-        @media (max-width: $screen-md) {
-          margin-top: 24px;
-          font-size: 24px;
+        border: 1px solid $colorButton;
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 5px;
+        &:hover {
+          background: $colorPrimary;
+          color: $colorButton;
         }
       }
     }
@@ -412,6 +437,38 @@
       background: linear-gradient(180deg, #ffffff 0%, #f1dbd2 51.56%);
       border-radius: 20px;
       padding: 10px;
+      height: 300px;
+      position: relative;
+
+      .aboutFirst {
+        position: absolute;
+        top: -59px;
+        left: 130px;
+        width: 130px;
+      }
+
+      .aboutTopAlpaca {
+        position: absolute;
+        bottom: 281px;
+        left: 65px;
+        width: 250px;
+
+        z-index: -1;
+      }
+      .aboutSecond {
+        position: absolute;
+        top: -35px;
+        left: 130px;
+        width: 110px;
+      }
+      .aboutThird {
+        position: absolute;
+        top: -123px;
+        left: 120px;
+        width: 116px;
+
+        z-index: -1;
+      }
 
       .descriptionCard {
         width: 100%;
@@ -762,8 +819,8 @@
 
     h2 {
       color: $colorHeading;
-      font-weight: 600;
-      font-size: 30px;
+      font-weight: 800;
+      font-size: 50px;
       line-height: 20px;
       font-family: $fontOmnes;
       @media (max-width: $screen-xs) {
@@ -774,9 +831,9 @@
     p {
       margin-top: 10px;
       font-family: $fontOmnes;
-      font-weight: 600;
-      font-size: 20px;
-      line-height: 20px;
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 2;
       color: $colorWhite;
     }
 

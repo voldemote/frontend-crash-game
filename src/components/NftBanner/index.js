@@ -25,7 +25,7 @@ const NftBanner = props => {
               will convert it into NFT with multiple unique capabilities and
               valuable skills!
               <br />
-              {/* <br /> */}
+              <br />
               {/* Content for the general referral link: */}
             </p>
             {/* <div className={styles.buttonWrapper}>
