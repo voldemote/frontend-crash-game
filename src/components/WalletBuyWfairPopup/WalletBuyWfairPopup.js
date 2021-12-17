@@ -38,7 +38,7 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
   });
   const tabOptions = [
     { name: 'DEPOSIT', index: 0 },
-    { name: 'BUY WITH FIAT', index: 1 },
+    { name: 'Buy WFAIR', index: 1 },
     { name: 'BUY WITH CRYPTO', index: 2 },
   ].filter(({ name }) => showNewFeatures || name !== 'BUY WITH CRYPTO');
   
