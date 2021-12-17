@@ -208,6 +208,9 @@
     color: #ea9c00;
     text-decoration: underline;
   }
+  @media screen and (max-width: $screen-sm-max) {
+    padding-top: 0;
+  }
 }
 
 .submitButton,
@@ -345,6 +348,10 @@
   justify-content: space-around;
   margin: 20px 0;
 
+  @media screen and (max-width: $screen-sm-max) {
+    margin: 10px 0;
+  }
+
   &.verticalContainer {
     flex-direction: column;
     align-items: center;
@@ -363,6 +370,13 @@
     svg {
       width: 30px;
       height: 30px;
+    }
+    &[disabled] {
+      opacity: 0.7;
+    }
+    @media screen and (max-width: $screen-xs-max) {
+      width: 45px;
+      height: 45px;
     }
   }
 }
