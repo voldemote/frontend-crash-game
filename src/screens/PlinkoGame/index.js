@@ -75,7 +75,7 @@ const PlinkoGame = ({
 
   useEffect(() => {
     if(userId) {
-      getSpinsAlpacaWheel(gameCfg.id)
+      getSpinsAlpacaWheel(gameCfg.id, userId)
         .then(response => {
           const lastSpins = response?.data.lastCrashes;
 
@@ -286,10 +286,10 @@ const PlinkoGame = ({
             <b>Most people think that Alpaca’s life is not complicated. Hey, many of them would say that Alpaca is the most relaxed animal in the whole universe (after unicorns, obviously…). But this is just an impression of people who simply do not understand how stressful it is to be an Alpaca.</b>
           </p>
           <p>
-            First of all, you have to be cute all the time. Then you have that whole candy land around you have to take care of. Finally, and most importantly, while you are taking care of those sweets laying around, you have to look still cute! No wonder that most of Alpacase are burned out at the end of the day, and the only thing that relaxes them is the sound of a coin dropping from top to bottom. Tick, tack, tick – that soothing song of the coin hitting obstacles on the way. Tick, tack, tick – the calming thought of how beautiful and simple the life of the coin is. Tick, tack, tick – over and over again. 
+            First of all, you have to be cute all the time. Then you have that whole candy land around you have to take care of. Finally, and most importantly, while you are taking care of those sweets laying around, you have to look still cute! No wonder that most of Alpacase are burned out at the end of the day, and the only thing that relaxes them is the sound of a coin dropping from top to bottom. Tick, tack, tick – that soothing song of the coin hitting obstacles on the way. Tick, tack, tick – the calming thought of how beautiful and simple the life of the coin is. Tick, tack, tick – over and over again.
           </p>
           <p>
-            It’s time for you to join our burned-out Alpacas and enjoy Plinko, the game calming and exciting at the same time. So drop the coins and carry on until your WFAIR chest is full! 
+            It’s time for you to join our burned-out Alpacas and enjoy Plinko, the game calming and exciting at the same time. So drop the coins and carry on until your WFAIR chest is full!
           </p>
         </div>
         <div className={styles.descriptionContainer}>

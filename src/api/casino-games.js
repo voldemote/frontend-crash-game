@@ -107,8 +107,12 @@ class GameApi {
 
 const Api = createInstance(ApiUrls.CRASH_GAMES_BACKEND_URL, '/');
 
-const getSpinsAlpacaWheel = (gameTypeId) => {
-  const callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+const getSpinsAlpacaWheel = (gameTypeId, userId) => {
+  let callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+
+  if(userId) {
+    callThis = callThis + `?userId=${userId}`
+  }
 
   return Api.get(callThis).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);
@@ -163,8 +167,12 @@ const getTotalBetsVolumeByRange = (range = '24h') => {
   return Api.get(url);
 };
 
-const getLastCashoutsMines = (gameTypeId) => {
-  const callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+const getLastCashoutsMines = (gameTypeId, userId) => {
+  let callThis = ApiUrls.API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES.replace(':gameTypeId', gameTypeId);
+
+  if(userId) {
+    callThis = callThis + `?userId=${userId}`
+  }
 
   return Api.get(callThis).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);

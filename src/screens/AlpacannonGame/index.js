@@ -80,7 +80,7 @@ const PlinkoGame = ({
 
   useEffect(() => {
     if(user.isLoggedIn){
-      getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID)
+      getSpinsAlpacaWheel(ALPACANNON_GAME_EVENT_ID, userId)
         .then(response => {
           const lastSpins = response?.data.lastCrashes;
           setSpins(lastSpins.map((spin) => {
