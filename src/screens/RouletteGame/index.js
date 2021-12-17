@@ -6,18 +6,14 @@ import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
-import PlaceBet from 'components/PlaceBet';
 import PlaceBetCasino from 'components/PlaceBetCasino';
 import BackLink from 'components/BackLink';
 import Spins from 'components/Spins';
 import GameAnimation from 'components/RouletteGameAnimation';
-import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
-import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
 import {AlertActions} from '../../store/actions/alert';
 import {RosiGameActions} from '../../store/actions/rosi-game';
-import ContentFooter from 'components/ContentFooter';
 import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import {ChatActions} from 'store/actions/chat';
 import Share from '../../components/Share';
@@ -27,8 +23,6 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import {PopupActions} from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
-import Routes from 'constants/Routes';
-import {getGameById} from '../../helper/Games';
 import {GAMES} from '../../constants/Games';
 import {
   trackAlpacaWheelPlaceBetGuest,
@@ -37,6 +31,7 @@ import {
 } from '../../config/gtm';
 import {UserActions} from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import WheelAlpaca from '../../data/images/roulette/wheel-alpaca.png';
 
 const RouletteGame = ({
                         showPopup,
@@ -270,7 +265,52 @@ const RouletteGame = ({
               {renderActivities()}
             </div>
           ) : null}
+        </div>
+      </div>
+      <div className={styles.gameContent}>
+        <h1 className={styles.title}>Wheel</h1>
 
+        <div className={styles.content}>
+          <div className={styles.topContainer}>
+            <p>
+              <b>People say Alpacas should not cycle. Some even suggest Alpacas should be banned from enjoying the fun of two wheels! There were press articles, TV coverage, and crazy people saying that Alpaca on a bike generates too much CO2! People say many stupid things, but this is definitely in winning the prize.  </b>
+            </p>
+            <p>
+              And it all started with pure human jealousy -  look at the human on a bike and Alpaca on a bike. Humans look ridiculous in those tight shorts, all sweaty in that funny thing on the head. And do not forget the grim on the face when they climb up the hill. Hilarious. On the other hand, Alpacas look simply cute, elegant, and they are always smiling. Imagine tour de France, where Alpacas compete with humans - people would cheer to the cute, furry animals, not those unattractive creatures that keep injecting stuff into their bodies to be faster. 
+            </p>
+            <p>
+              Now it's your chance to feel like Alpaca; turn the wheels and see what's your award.
+            </p>
+          </div>
+          <div className={styles.descriptionContainer}>
+            <div className={styles.firstWrapper}>
+              <img src={WheelAlpaca} alt='wheel-alpaca'/>
+            </div>
+            <div className={styles.secondWrapper}>
+              <h2>HOW TO PLAY WHEEL?</h2>
+              <p>
+                <b>Step 1:</b> Enter the bet amount you want to play with
+              </p>
+              <p>
+                <b>Step 2:</b> Select the risk level<br/>
+              </p>
+              <p>
+                <b>Step 3:</b> Enter the amount of spins <br/>
+              </p>
+              <p>
+                <b>Step 4:</b> Click "place bet" <br/>
+              </p>
+              <p>
+                <b>Step 5:</b> Win the amount where the wheel stops <br/>
+              </p>
+              <p>
+                <b>Never forget to turn on the sound!</b>
+              </p>
+              <p className={styles.importantTip}>
+                <b>Remember: The higher the risk level, the higher are the rewards you might win.</b> 
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </BaseContainerWithNavbar>
