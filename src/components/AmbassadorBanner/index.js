@@ -40,7 +40,7 @@ const AmbassadorBanner = () => {
         <div className={styles.ambassadorBannerContainer}>
           <div className={styles.container}>
             <div className={styles.firstColumn}>
-              <div className={styles.ambassadorBannerContainer}>
+              <div>
                 <div className={styles.whiteBox}>
                   <p>
                     Founders offer <span>00:00:00</span>
