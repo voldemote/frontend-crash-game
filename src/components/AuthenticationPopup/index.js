@@ -10,12 +10,12 @@ const AuthenticationPopup = ({ authenticationType, preloadEmailSignUp }) => {
 
   return (
     <div className={classNames(styles.registration, authenticationType === 'login' && styles.portraitBg)}>
-      <img src={PopupTopImg} className={styles.popupTop} alt='popup-top'/>
+      {/* <img src={PopupTopImg} className={styles.popupTop} alt='popup-top'/>
       <img src={PopupLeftImg} className={styles.popupLeft} alt='popup-left'/>
       <img src={PopupRightImg} className={styles.popupRight} alt='popup-right'/>
-      <img src={PopupBottomImg} className={styles.popupBottom} alt='popup-bottom'/>
+      <img src={PopupBottomImg} className={styles.popupBottom} alt='popup-bottom'/> */}
       <h2 className={classNames(styles.title, authenticationType === 'login' && styles.portrait)}>
-        {authenticationType === 'register' ? 'Final Step' : 'Login'}
+        {/* {authenticationType === 'register' ? 'Final Step' : 'Login'} */}
       </h2>
       <div className={classNames(styles.form, authenticationType === 'login' && styles.loginForm)}>
           <Authentication

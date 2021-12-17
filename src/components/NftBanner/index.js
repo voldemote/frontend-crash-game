@@ -8,8 +8,8 @@ const NftBanner = props => {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <img src={PhoneCoinAlpacaImage} alt="phone coin alpaca" />
-          <img src={PhoneAlpacaImage} alt="phone alpaca" />
+          <img src={PhoneCoinAlpacaImage} alt="phone alpaca" />
+          <img src={PhoneAlpacaImage} alt="phone coin alpaca" />
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.whiteWrapper}>

@@ -64,11 +64,11 @@
         display: block;
 
         @media (max-width: 1300px) {
-          bottom: 0px;
+          bottom: -250px;
           left: calc(50% - 500px);
           transform: translateX(-50%);
           position: absolute;
-          width: 350px;
+          width: 300px;
           display: block;
         }
       }
