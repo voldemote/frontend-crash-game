@@ -37,13 +37,13 @@
     background: #f7a800;
 
     @media (max-width: $screen-lg) {
-      margin-top: 140px;
+      margin-top: 60px;
       height: auto;
       position: relative;
     }
 
     @media (max-width: $screen-xs) {
-      margin-top: 190px;
+      margin-top: 90px;
     }
 
     .firstColumn {

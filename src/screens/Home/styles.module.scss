@@ -378,6 +378,12 @@
 
 .aboutDescritpion {
   margin: 80px 0;
+  @media (max-width: $screen-lg) {
+    margin-bottom: 140px;
+  }
+  @media (max-width: $screen-xs) {
+    margin-bottom: 180px;
+  }
   .descriptionCardContainer {
     // height: 375px;
     width: 320px;
@@ -422,6 +428,22 @@
         text-align: center;
       }
     }
+  }
+}
+
+.nftBannerWrapper {
+  margin-top: 300px;
+  margin-bottom: 200px;
+  @media (max-width: $screen-xl) {
+    margin-top: 200px;
+    margin-top: 150px;
+  }
+
+  @media (max-width: $screen-md) {
+    margin-bottom: 100px;
+  }
+  @media (max-width: $screen-xs) {
+    display: none;
   }
 }
 

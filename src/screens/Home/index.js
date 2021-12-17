@@ -54,6 +54,7 @@ import { OnboardingActions } from 'store/actions/onboarding';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
 import { TOKEN_NAME } from 'constants/Token';
 import AmbassadorBanner from 'components/AmbassadorBanner';
+import NftBanner from 'components/NftBanner';
 
 const Home = ({
   authState,
@@ -461,6 +462,9 @@ const Home = ({
           {renderSlogGames()}
           {renderAboutDescription()}
           <AmbassadorBanner />
+          <div className={styles.nftBannerWrapper}>
+            <NftBanner />
+          </div>
           {renderActivities()}
           {/* {renderAlpacaDopter()}
           {renderAlpacaVerse()} */}
