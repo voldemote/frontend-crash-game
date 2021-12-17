@@ -25,7 +25,7 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 
-const portal = process.env.SMARTSOFT_PORTALNAME ? process.env.SMARTSOFT_PORTALNAME : "wallfair"
+const portal = process.env.REACT_APP_SMARTSOFT_PORTALNAME ? process.env.REACT_APP_SMARTSOFT_PORTALNAME : "wallfair"
 
 
 const RouletteGame = ({
