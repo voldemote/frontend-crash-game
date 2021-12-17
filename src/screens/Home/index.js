@@ -333,11 +333,11 @@ const Home = ({
           </span>
 
 
-          <buton
+          <button
             className={styles.startButton}
             onClick={showPopupForUnauthenticated}>
             Claim the offer!
-          </buton>
+          </button>
           <img className={styles.topFront} src={TopFront} alt="" />
           <img className={styles.topBack} src={TopBack} alt="" />
           <img className={styles.bottomFront} src={BottomFront} alt="" />
