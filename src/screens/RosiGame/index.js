@@ -38,14 +38,9 @@ import Routes from 'constants/Routes';
 import PumpDumpAnimation from '../../components/PumpDumpAnimation';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import TabOptions from 'components/TabOptions';
-import { ReactComponent as ElonOnRocketSvg } from '../../data/icons/elon-game/elon-on-rocket.svg';
-import { ReactComponent as LuckyElonSvg } from '../../data/icons/elon-game/lucky-elon.svg';
-import { ReactComponent as ElonChampSvg } from '../../data/icons/elon-game/elon-champ.svg';
-import { ReactComponent as ElonOnAnimalSvg } from '../../data/icons/elon-game/elon-on-animal.svg';
-import PonziTweet from '../../data/images/pump-dump/ponzi-tweet.png';
-import BoughtText from '../../data/images/pump-dump/bought-text.png';
-import Button from 'components/Button';
-import GameContentCards from 'components/GameContentCards/GameContentCards';
+import PumpDumpAlpaca from '../../data/images/pump-dump/content-pumpdump.png';
+import ElonAlpaca from '../../data/images/elongame/content-elon.png';
+
 import classNames from "classnames";
 
 
@@ -339,53 +334,46 @@ const RosiGame = ({
   const renderGameContent = () => {
     return (
       <div className={styles.gameContent}>
-        <div className={styles.firstBgImage} />
-        <div className={styles.secondBgImage} />
-        <div className={styles.thirdBgImage} />
-
-        <h2 className={styles.title}>ELON GAME</h2>
-
-        <div className={styles.introContainer}>
-          <h2>INTRO</h2>
-          <p>
-            Elon had enough: Covid, inflation, corrupt politicians and that bastard Bezos and the other virgin. If that wasn’t enough, SEC got pissed again about some hilarious tweets he wrote. He was tired so decided to relax. As his Ambien stash was empty, there was the only thing he could do. Inhale…Exhale…
-            After a while, he knew what he had to do. There was only one place where he would finally be happy, the space.
-          </p>
-          <ElonOnRocketSvg />
+        <h1 className={styles.title}>Elon Game</h1>
+        <div className={styles.content}>
+          <div className={styles.topContainer}>
+            <p>
+              <b>Elon had enough: Covid, inflation, corrupt politicians and that bastard Bezos and the other virgin. If that wasn’t enough, SEC got pissed again about some hilarious tweets he wrote. He was tired so decided to relax. As his Ambien stash was empty, there was the only thing he could do. Inhale…Exhale… After a while, he knew what he had to do. There was only one place where he would finally be happy, the space.</b>
+            </p>
+            <p>
+              Rules are simple: you bet on Elon going to Mars by putting your WFAIR in the fuel tank of his alpaca rocket. The closer Elon gets to Mars, the more valuable your tokens will get. But the space paca rockets also aren’t very reliable and crash at some point. So get your money out before it’s lost in space and before SEC start laughing.
+            </p>
+            <p>
+              Now it’s your turn to become a part of the mission. Help Elon to get to the Mars and he will immediately reward you! But if you fail, SEC and all the other haters will laugh.
+            </p>
+          </div>
+          <div className={styles.descriptionContainer}>
+            <div className={styles.firstWrapper}>
+              <img src={ElonAlpaca} alt='elon-alpaca'/>
+            </div>
+            <div className={styles.secondWrapper}>
+              <h2>HOW TO PLAY ELON GAME?</h2>
+              <p>
+                <b>Step 1:</b> Enter the bet amount you want to play with
+              </p>
+              <p>
+                <b>Step 2:</b> Click "Place Bet" <br/>
+              </p>
+              <p>
+                <b>Step 3:</b> Cash out before the Elons rocket exploded <br/>
+              </p>
+              <p>
+                <b>Step 4:</b> Not ready jet? u can cancel the Bet <br/>              
+              </p>
+              <p className={styles.importantTip}>
+                <b>IMPORTANT!</b> You can only place a bet for rounds that haven’t started yet.
+              </p>
+              <p className={styles.importantTip}>
+                You can see the history of your winnings and losses in the game bar.
+              </p>
+            </div>
+          </div>
         </div>
-
-        <h3>HOW TO PLACE A BET</h3>
-        <div className={styles.howtoplacebet}>
-          <p>
-            Simply add the desired amount you wish to bet in the "Bet Amount" field and click on "Place Bet". The bet will be valid for the next round.
-          </p>
-        </div>
-        <div className={styles.placeBetContainer}>
-          <Button role="button" tabIndex="0" className={styles.button}>
-            Place a bet
-          </Button>
-        </div>
-
-        <div className={styles.secondHeadingContainer}>
-          <h2>HOW TO PLAY</h2>
-          <p>
-            Rules are simple: you bet on Elon going to Mars by putting your WFAIR in the fuel tank of his alpaca rocket. The closer Elon gets to Mars, the more valuable your tokens will get. But the space paca rockets also aren’t very reliable and crash at some point. So get your money out before it’s lost in space and before SEC start laughing.
-          </p>
-          <LuckyElonSvg />
-        </div>
-
-        <div className={styles.thirdHeadingContainer}>
-          <h2>READY TO TAKE OFF</h2>
-          <p>
-            Now it’s your turn to become a part of the mission. Help Elon to get to the Mars and he will immediately reward you! But if you fail, SEC and all the other haters will laugh.
-          </p>
-          <ElonChampSvg />
-        </div>
-
-        <div className={styles.elonWrapper}>
-          <ElonOnAnimalSvg />
-        </div>
-
         <div className={styles.wrapperCards}>{renderWallpaperBanner()}</div>
       </div>
     );
@@ -394,35 +382,49 @@ const RosiGame = ({
   const renderPumpDumpContent = () => {
     return (
       <>
-        <div className={styles.pumpDumpContent}>
-          <h2>PUMP AND DUMP</h2>
-          <div className={styles.mapImage}>
-            <div className={styles.headingContainer}>
-              <h2>INTRO</h2>
+        <div className={styles.gameContent}>
+          <h1 className={styles.title}>Pump and Dump</h1>
+          <div className={styles.content}>
+            <div className={styles.topContainer}>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet.
+                <b>Everyone talks about the Wolves of Wallstreet. Everyone thinks those aggressive and ruthless creatures are the soil of the investment market, the gurus of investing. But all those stories are smokes and mirrors to protect the real money makers - the Order of the Happy Alpacas. Established back in the days by the genius Warren who discovered that Alpacas developed an astonishing ability to predict market movements way better and more precise than anyone else. </b>
+              </p>
+              <p>
+                He also knew that the moment the truth was out there, people would try to take advantage of Alpacas, so he had to protect them.He decided to place a decoy on the market back in the 80s, one Jordan Belfort and redirect all the attention to a narcissistic penny maker. It worked back then, but then Elon started this crazy Reddit investigation that got bigger attention than the pizzagate. People started sniffing. 
+              </p>
+              <p>
+                Warren had no choice but to pull off the same stunt again, but this time on a broader scale. He talked to his friend Martin, and they decided to remind people about the Jordan and Wolves of Wallstreet and make them the centre of the attention, the icon. It wasn't that expensive, just 5 Oscars, and it worked like a charm. Now it's your turn to see if your prediction skills are on par with Alpacas'. Make Warren proud!
               </p>
             </div>
-            <div className={styles.chartImageWrapper}>
-              <div className={styles.chartImage} />
+            <div className={styles.descriptionContainer}>
+              <div className={styles.firstWrapper}>
+                <img src={PumpDumpAlpaca} alt='pumpdump-alpaca'/>
+              </div>
+              <div className={styles.secondWrapper}>
+                <h2>HOW TO PLAY PUMP AND DUMP?</h2>
+                <p>
+                  <b>Step 1:</b> Enter the bet amount you want to play with
+                </p>
+                <p>
+                  <b>Step 2:</b> Click "Place Bet" <br/>
+                </p>
+                <p>
+                  <b>Step 3:</b> Cash out before the Shitcoin hits the dump <br/>
+                </p>
+                <p>
+                  <b>Step 4:</b> If your sound is muted, turn it on! <br/>              
+                </p>
+                <p>
+                  <b>Step 5:</b> Not ready jet? u can cancel the Bet <br/>              
+                </p>
+                <p className={styles.importantTip}>
+                  <b>IMPORTANT!</b> You can only place a bet for rounds that haven’t started yet.
+                </p>
+                <p className={styles.importantTip}>
+                  You can see the history of your winnings and losses in the game bar.
+                </p>
+              </div>
             </div>
-          </div>
-
-          <div className={styles.tweetContainer}>
-            <div className={styles.boughtText}>
-              <img src={BoughtText} alt="text" />
-            </div>
-            <img src={PonziTweet} alt="text" style={{ display: 'none' }} />
-          </div>
-
-          <div className={styles.placeBetContainer}>
-            <Button role="button" tabIndex="0" className={styles.button}>
-              Place a bet
-            </Button>
           </div>
         </div>
       </>
