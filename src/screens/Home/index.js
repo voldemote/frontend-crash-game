@@ -53,6 +53,7 @@ import useOAuthCallback from 'hooks/useOAuthCallback';
 import { OnboardingActions } from 'store/actions/onboarding';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
 import { TOKEN_NAME } from 'constants/Token';
+import AmbassadorBanner from 'components/AmbassadorBanner';
 
 const Home = ({
   authState,
@@ -319,17 +320,16 @@ const Home = ({
       <div className={styles.welcomeContainer}>
           <div className={styles.cardContainer}>
         <div className={styles.cardBox}>
-          <h1>Welcome to</h1>
-          <h1>Alpacasino</h1>
+          <h1>Welcome to<br />Alpacasino</h1>
 
           <LimitedOffer />
-          <h2>
-            Join today and receive
-          </h2>
-          <h3>50%</h3>
-          <h2>cashback up to</h2>
-          <h3>25 000</h3>
-          <h2>Wfairs</h2>
+          <span className={styles.limitedOfferDescription}>
+            Join today and receive<br />
+            <span className={styles.highlighted}>50%</span><br />
+            cashback up to<br />
+            <span className={styles.highlighted}>25 000</span><br />
+            WFAIR tokens
+          </span>
 
 
           <buton
@@ -460,9 +460,10 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
+          <AmbassadorBanner />
           {renderActivities()}
-          {renderAlpacaDopter()}
-          {renderAlpacaVerse()}
+          {/* {renderAlpacaDopter()}
+          {renderAlpacaVerse()} */}
           {/* {renderHowTokenWorks()} */}
         </div>
       </div>

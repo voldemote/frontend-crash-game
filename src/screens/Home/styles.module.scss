@@ -327,29 +327,16 @@
         line-height: 40px;
         font-family: $fontOmnes;
         color: $colorBlack;
+        text-align: center;
         @media (max-width: $screen-sm) {
           font-size: 30px;
           line-height: 24px;
         }
       }
-      h2 {
+      .limitedOfferDescription {
         font-weight: 600;
         font-size: 35px;
-        line-height: 37px;
-        text-align: center;
-        font-family: $fontOmnes;
-        color: $colorBlack;
-        margin-bottom: 10px;
-
-        @media (max-width: $screen-sm) {
-          font-size: 20px;
-          line-height: 18px;
-        }
-      }
-      h3 {
-        font-weight: bold;
-        font-size: 50px;
-        line-height: 37px;
+        line-height: 40px;
         text-align: center;
         font-family: $fontOmnes;
         color: $colorBlack;
@@ -357,7 +344,13 @@
 
         @media (max-width: $screen-sm) {
           font-size: 25px;
-          line-height: 18px;
+          line-height: 30px;
+        }
+
+        .highlighted {
+          font-weight: bold;
+          font-size: 50px;
+          line-height: 45px;
         }
       }
 
