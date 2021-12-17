@@ -24,17 +24,30 @@
   }
 
   &.portraitBg {
-    width: 800px;
+    // width: 800px;
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 
     @media (max-width: $screen-sm) {
-      width: 100%;
-      border-radius: 30% 30% 15% 15%;
-      background: #31a1df;
+      background: url('../../data/backgrounds/popup/popup-bg.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 700px;
+      height: 670px;
     }
+
+    @media (max-width: $screen-xs) {
+      background-size: 105% 105%;
+    }
+
+
+    // @media (max-width: $screen-sm) {
+    //   width: 100%;
+    //   border-radius: 30% 30% 15% 15%;
+    //   background: #31a1df;
+    // }
   }
 
   .popupTop {
@@ -258,14 +271,15 @@
     }
 
     &.loginForm {
-      padding: 120px 50px 80px 50px;
-      width: 400px;
+      // padding: 120px 50px 80px 50px;
+      // width: 400px;
+      padding-top: 100px;
       flex-direction: column;
 
       @media (max-width: $screen-sm) {
-        width: 100%;
-        min-height: fit-content;
-        padding: 100px 0 20px;
+        // width: 100%;
+        // min-height: fit-content;
+        // padding: 100px 0 20px;
       }
     }
   }
