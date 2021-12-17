@@ -579,7 +579,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
           {switchButton(styles)}
-          <InfoBox iconType={IconType.info} position={`bottomLeft`}>
+          {/* <InfoBox iconType={IconType.info} position={`bottomLeft`}>
             <p>
               <strong>How to place a bet at Elon Game?</strong>
             </p>
@@ -608,7 +608,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               At the top of the page, you can see green numbers which show the
               previous crash numbers.
             </p>
-          </InfoBox>
+          </InfoBox> */}
         </div>
         {selector === 'manual' ? (
           <div className={styles.sliderContainer}>
