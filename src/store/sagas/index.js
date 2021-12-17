@@ -8,7 +8,7 @@ import ChatSagas from './chat';
 import WebsocketsSagas from './websockets';
 import LeaderboardSagas from './leaderboard';
 import OnboardingSaga from './onboarding';
-import { all, select, takeLatest, takeEvery, put } from 'redux-saga/effects';
+import { all, select, takeLatest, takeEvery, put, delay } from 'redux-saga/effects';
 import { AuthenticationTypes } from '../actions/authentication';
 import { BetTypes } from '../actions/bet';
 import { EventActions } from '../actions/event';
@@ -28,6 +28,8 @@ import { LeaderboardTypes } from '../actions/leaderboard';
 import { RosiGameTypes } from '../actions/rosi-game';
 import * as RosiGameSagas from './rosi-game';
 import { OnboardingTypes } from 'store/actions/onboarding';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
 
 const root = function* () {
   yield all([
@@ -171,6 +173,10 @@ const root = function* () {
       AuthenticationSagas.updateUserData
     ),
     takeLatest(
+      [AuthenticationTypes.ACCEPT_TOS_CONSENT],
+      AuthenticationSagas.updateToSConsent
+    ),
+    takeLatest(
       [EventTypes.FETCH_HISTORY_CHART_DATA, EventTypes.UPDATE_CHART_PARAMS],
       EventSagas.fetchHistoryChartData
     ),
@@ -219,8 +225,7 @@ const preLoading = function* () {
   //related with disabled betting feature
   // yield put(EventActions.fetchAll());
   yield put(WebsocketsActions.init());
-
-  const userId = yield select(state => state.authentication.userId);
+  const { userId, shouldAcceptToS } = yield select(state => state.authentication);
 
   if (userId) {
     yield put(
@@ -230,6 +235,19 @@ const preLoading = function* () {
       })
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
+
+    if(shouldAcceptToS) {
+      yield delay(1 * 1000);
+
+      yield put(
+        PopupActions.show({
+          popupType: PopupTheme.acceptToS,
+          options: {
+            small: true,
+          },
+        })
+      );
+    }
   }
 };
 

@@ -40,4 +40,5 @@ export default {
   transakSuccess: 'transakSuccess',
   txModal: 'txModal',
   walletWithdraw: 'walletWithdraw',
+  acceptToS: 'acceptToS',
 };

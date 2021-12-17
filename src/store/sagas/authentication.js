@@ -260,14 +260,15 @@ const authenticationSucceeded = function* (action) {
           },
         })
       );
-      // yield put(
-      //   PopupActions.show({
-      //     popupType: PopupTheme.username,
-      //     options: {
-      //       initialReward: action?.initialReward,
-      //     },
-      //   })
-      // );
+    } else if (authState.shouldAcceptToS) {
+      yield put(
+        PopupActions.show({
+          popupType: PopupTheme.acceptToS,
+          options: {
+            small: true,
+          },
+        })
+      );
     } else {
       yield put(PopupActions.hide());
     }
@@ -433,7 +434,7 @@ const signUp = function* (action) {
   }
 };
 
-const loginExternal = function* ({ code, provider, ref }) {
+const loginExternal = function* ({ code, provider, ref, tosAccepted }) {
   yield put(push('/'));
   const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref } });
   if (response) {
@@ -449,8 +450,13 @@ const loginExternal = function* ({ code, provider, ref }) {
         newUser: data.newUser,
         initialReward: data?.initialReward,
         user: data?.user,
+        shouldAcceptToS: data?.shouldAcceptToS,
       })
     );
+    console.log(tosAccepted);
+    if(data.newUser && tosAccepted) {
+      yield put(AuthenticationActions.acceptToSConsent());
+    }
     localStorage.removeItem('urlParam_ref');
   } else {
     yield put(
@@ -481,6 +487,7 @@ const login = function* (action) {
         session: data.session,
         newUser: action.newUser,
         initialReward: action?.initialReward,
+        shouldAcceptToS: data?.shouldAcceptToS,
       })
     );
   } else {
@@ -561,6 +568,25 @@ const updateStatus = function* (action) {
   }
 };
 
+const updateToSConsent = function* ({ isOnboarding }) {
+  yield put(PopupActions.hide())
+  const { error } = yield call(Api.acceptToS);
+
+  if(error) {
+    yield put(AuthenticationActions.failedToSConsent())
+    yield put(PopupActions.show({
+      popupType: PopupTheme.acceptToS,
+      options: {
+        small: true,
+      },
+    }))
+  } else {
+    if(isOnboarding) {
+      yield put(OnboardingActions.next())
+    }
+  }
+}
+
 export default {
   authenticationSucceeded,
   fetchReferrals,
@@ -582,4 +608,5 @@ export default {
   forgotPassword,
   resetPassword,
   updateStatus,
+  updateToSConsent,
 };

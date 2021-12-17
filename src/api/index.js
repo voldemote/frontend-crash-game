@@ -575,6 +575,13 @@ const sendBuyWithCrypto = (data) => {
     .catch(error => ({ error: error.message }))
 }
 
+const acceptToS = () => {
+  if (!Api.defaults.headers.common['Authorization']) return;
+  return Api.post(ApiUrls.ACCEPT_TOS)
+    .then((response) => ({ response }))
+    .catch((error) => ({ error: error.message }));
+}
+
 export {
   Api,
   createBet,
@@ -644,4 +651,5 @@ export {
   getRandomUsername,
   sendBuyWithCrypto,
   generateCryptopayChannel,
+  acceptToS,
 };
