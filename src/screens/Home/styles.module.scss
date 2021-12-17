@@ -403,29 +403,39 @@
 }
 
 .aboutDescritpion {
-  margin: 350px auto;
-  margin-bottom: 250;
-  .descriptionCardContainer {
-    // height: 375px;
-    // width: 320px;
+  position: relative;
+  margin: 80px auto 80px;
+  padding: 300px 0;
+  background: url('../../data/images/home/about-background.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  @media (max-width: $screen-lg) {
+    margin-bottom: 140px;
+  }
+  @media (max-width: $screen-xs) {
+    margin-bottom: 180px;
+    padding: 300px 0 0;
+  }
+  .topImage {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  .parentContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background: linear-gradient(180deg, #ffffff 0%, #f1dbd2 51.56%);
-    border-radius: 20px;
-    padding: 10px;
-
-    .descriptionCard {
-      width: 100%;
-      border: 3px solid #fbb2a5;
-      box-sizing: border-box;
-      border-radius: 20px;
-
+    .descriptionCardContainer {
+      position: relative;
+      width: 320px;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+
+      background: linear-gradient(180deg, #ffffff 0%, #f1dbd2 51.56%);
+      border-radius: 20px;
       padding: 10px;
       height: 300px;
       position: relative;
@@ -460,24 +470,51 @@
         z-index: -1;
       }
 
-      h1 {
-        margin: 20px 0px;
-        font-family: $fontOmnes;
-        font-weight: 600;
-        font-size: 30px;
-        line-height: 20px;
-        /* identical to box height, or 67% */
+      .descriptionCard {
+        width: 100%;
+        border: 3px solid #fbb2a5;
+        box-sizing: border-box;
+        border-radius: 20px;
 
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        height: 300px;
+
+        h1 {
+          margin: 20px 0px;
+          font-family: $fontOmnes;
+          font-weight: 600;
+          font-size: 30px;
+          line-height: 20px;
+          /* identical to box height, or 67% */
+
+          text-align: center;
+        }
+        p {
+          margin-bottom: 20px;
+          font-family: $fontOmnes;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+
+          text-align: center;
+        }
       }
-      p {
-        margin-bottom: 20px;
-        font-family: $fontOmnes;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 20px;
-
-        text-align: center;
+      .thumbnail {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .thumbnailBack {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
       }
     }
   }
