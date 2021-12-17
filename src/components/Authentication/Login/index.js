@@ -180,13 +180,13 @@ const Login = ({
 
         {renderForgotPasswordLink()}
 
-        <Button
+        <button
           onClick={onConfirm}
           className={styles.submitButton}
           disabled={submitInProgress}
         >
           {forgotPassword ? 'Send' : 'Login'}
-        </Button>
+        </button>
       </form>
       {!forgotPassword && (
         <div className={styles.dontHaveAnAccount}>
