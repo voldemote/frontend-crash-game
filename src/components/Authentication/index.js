@@ -12,7 +12,7 @@ const Authentication = ({
 
   const renderSocialLogin = (disabled = false) => (
     <div className={styles.dontHaveAnAccount}>
-      {/* <p>or use your social login</p> */}
+      <p>continue with social links</p>
       <SocialLogin styles={styles} disabled={disabled} authenticationType={AuthenticationType.register} />
     </div>
   );

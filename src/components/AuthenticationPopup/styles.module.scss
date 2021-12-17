@@ -14,13 +14,13 @@
   @media (max-width: $screen-sm) {
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
-    background-size: 100% 110%;
+    background-size: 100% 115%;
     width: 700px;
     height: 740px;
   }
 
   @media (max-width: $screen-xs) {
-    background-size: 120% 115%;
+    background-size: 120% 120%;
     margin-left: -8%;
     margin-right: -4%;
   }
