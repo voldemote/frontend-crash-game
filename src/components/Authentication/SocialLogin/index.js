@@ -2,9 +2,6 @@ import classNames from 'classnames';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
-import { ReactComponent as SocialGoogleIcon } from '../../../data/icons/social-google.svg';
-import { ReactComponent as SocialDiscordIcon } from '../../../data/icons/social-discord.svg';
-import { ReactComponent as SocialTwitchIcon } from '../../../data/icons/social-twitch.svg';
 import AuthenticationType from '../AuthenticationType';
 import { useSocialLogins } from './useSocialLogins';
 
@@ -79,10 +76,15 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             <p>Sign up with Google</p>
           </LoginButton>
         ) : (
-          <SocialGoogleIcon
-            className={styles.socialButton}
-            onClick={login('google', isRegistration)}
-          />
+          <button
+            className={styles.socialCircleButton}
+            onClick={login('google', isRegistration)}>
+            <Icon
+              className={styles.socialIcon}
+              iconType={IconType.twitch}
+              {...iconProps}
+            />
+          </button>
         ))
       }
       {isVisible.twitch && 
@@ -101,10 +103,15 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             <p>Sign up with Twitch</p>
           </LoginButton>
         ) : (
-          <SocialTwitchIcon
-            className={styles.socialButton}
-            onClick={login('twitch', isRegistration)}
-          />
+          <button
+            className={styles.socialCircleButton}
+            onClick={login('twitch', isRegistration)}>
+            <Icon
+              className={styles.socialIcon}
+              iconType={IconType.twitch}
+              {...iconProps}
+            />
+          </button>
         ))
       }
       {isVisible.discord && 
@@ -123,10 +130,15 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             <p>Sign up with Discord</p>
           </LoginButton>
         ) : (
-          <SocialDiscordIcon
-            className={styles.socialButton}
-            onClick={login('discord', isRegistration)}
-          />
+          <button
+            className={styles.socialCircleButton}
+            onClick={login('discord', isRegistration)}>
+            <Icon
+              className={styles.socialIcon}
+              iconType={IconType.discord}
+              {...iconProps}
+            />
+          </button>
         ))
       }
     </div>
