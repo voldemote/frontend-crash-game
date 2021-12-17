@@ -12,7 +12,6 @@ import { selectUser } from 'store/selectors/authentication';
 import BackLink from 'components/BackLink';
 import LastCashouts from 'components/LastCashouts';
 import GameAnimation from 'components/MinesGameAnimation';
-import GameBets from 'components/GameBets';
 import Chat from 'components/Chat';
 import useRosiData from 'hooks/useRosiData';
 import styles from './styles.module.scss';
@@ -26,13 +25,11 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
-import Routes from 'constants/Routes';
-import { getGameById } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {getLastCashoutsMines} from "../../api/casino-games";
-import {roundToTwo} from "../../helper/FormatNumbers";
+import MinesAlpaca from '../../data/images/mines/mines-alpaca.png';
 
 import {trackMinesCashout} from "../../config/gtm";
 import classNames from "classnames";
@@ -376,6 +373,48 @@ const Game = ({
               {renderActivities()}
             </div>
           ) : null}
+        </div>
+      </div>
+      <div className={styles.gameContent}>
+        <h1 className={styles.title}>Mines</h1>
+
+        <div className={styles.content}>
+          <div className={styles.topContainer}>
+            <p>
+              <b>One of the most active and hard-working animals out there is an alpaca. Besides sloths and unicorns, of course. Having said that you need to know they work very efficiently and their motto is “Do as little as possible but earn as much money as possible”. </b>
+            </p>
+            <p>
+              Sounds logic, right? As we all know from the geology lessons, there is a lot of WFAIRs under the Candyland of Alpacaworld and every Alpaca wants to find as much as possible. The problem they encounter on daily basis though is small, furry and blind - namely mole. They take away the gold from the bottom and then they leave an unpleasant surprise for the Alpacas. 
+            </p>
+            <p>
+              Black, smelly unpleasant surprise. If an alpaca dugs out the smelly surprise all the money is gone and he has to start from the beginning. Help Candyland to stay safe and beautiful and avoid as many mines as possible!
+            </p>
+          </div>
+          <div className={styles.descriptionContainer}>
+            <div className={styles.firstWrapper}>
+              <img src={MinesAlpaca} alt='mines-alpaca'/>
+            </div>
+            <div className={styles.secondWrapper}>
+              <h2>HOW TO PLAY MINES?</h2>
+              <p>
+                <b>Step 1:</b> Enter the amount you want to bet
+              </p>
+              <p>
+                <b>Step 2:</b> Select how many mines you want to have in the game/ The more mines, the higher the winnings<br/>
+              </p>
+              <p>
+                <b>Step 3:</b> Select "Place Bet" <br/>
+              </p>
+              <p>
+                <b>Step 4:</b> Select unturned fields <br/>
+                Try to avoid the hidden mines and click on as many coins as possible <br/>
+                The more coins you find the more money you make. If you find a poo try your luck in the next round
+              </p>
+              <p>
+                <b>Step 5:</b> Repeat and turn your volume up! <br/>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </BaseContainerWithNavbar>

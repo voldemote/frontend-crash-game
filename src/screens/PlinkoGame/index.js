@@ -283,7 +283,7 @@ const PlinkoGame = ({
       <div className={styles.gameContent}>
         <h1 className={styles.title}>Plinko</h1>
 
-        <div className={styles.topContainer}>
+        <div className={styles.content}>
           <div className={styles.topContainer}>
             <p>
               <b>Most people think that Alpaca’s life is not complicated. Hey, many of them would say that Alpaca is the most relaxed animal in the whole universe (after unicorns, obviously…). But this is just an impression of people who simply do not understand how stressful it is to be an Alpaca.</b>
