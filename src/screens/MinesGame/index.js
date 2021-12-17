@@ -110,7 +110,7 @@ const Game = ({
 
   useEffect(() => {
     if(userId) {
-      getLastCashoutsMines(GAME_TYPE_ID)
+      getLastCashoutsMines(GAME_TYPE_ID, userId)
         .then(response => {
           const lastCashouts = response?.data.lastCrashes;
           setCashouts(lastCashouts.map((entry) => {

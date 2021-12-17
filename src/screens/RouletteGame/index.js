@@ -78,7 +78,7 @@ const RouletteGame = ({
 
   useEffect(() => {
     if(userId) {
-      getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID)
+      getSpinsAlpacaWheel(ALPACA_WHEEL_GAME_EVENT_ID, userId)
         .then(response => {
           const lastSpins = response?.data.lastCrashes;
           setSpins(lastSpins.map((spin) => {
