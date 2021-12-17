@@ -216,7 +216,6 @@ const registrationSucceeded = function* (action) {
 };
 
 const authenticationSucceeded = function* (action) {
-  debugger;
   const authState = yield select(state => state.authentication.authState);
   const userId = yield select(state => state.authentication.userId);
 
@@ -469,7 +468,6 @@ const loginExternal = function* ({ code, provider, ref, tosAccepted }) {
 };
 
 const login = function* (action) {
-  debugger;
   const payload = {
     userIdentifier: action.email,
     password: action.password,
