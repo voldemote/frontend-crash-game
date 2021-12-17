@@ -81,7 +81,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             onClick={login('google', isRegistration)}>
             <Icon
               className={styles.socialIcon}
-              iconType={IconType.twitch}
+              iconType={IconType.google}
               {...iconProps}
             />
           </button>
