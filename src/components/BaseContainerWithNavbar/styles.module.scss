@@ -63,9 +63,9 @@
         width: 450px;
         display: block;
 
-        @media (max-width: 1300px) {
+        @media (max-width: 1100px) {
           bottom: -250px;
-          left: calc(50% - 500px);
+          left: calc(50% - 400px);
           transform: translateX(-50%);
           position: absolute;
           width: 300px;
