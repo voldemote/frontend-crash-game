@@ -285,7 +285,7 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const renderSlogGames = () => {
     return (
-      <div className={styles.gameCards}>
+      <div className={classNames(styles.gameCards, styles.casinoGames)}>
         <GameSmartsoft games={EXTERNAL_GAMES} category="Slot Games" />
       </div>
     );
@@ -351,23 +351,22 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
             <LimitedOffer />
             <span className={styles.limitedOfferDescription}>
-              Join today and receive
+              <span>Join today and receive</span>
               <br />
               <span className={styles.highlighted}>50%</span>
               <br />
-              cashback up to
+              <span>cashback up to</span>
               <br />
               <span className={styles.highlighted}>25 000</span>
-              
               <p>WFAIRs</p>
             </span>
 
-            <buton
+            <button
               className={styles.startButton}
               onClick={showPopupForUnauthenticated}
             >
               Claim the offer!
-            </buton>
+            </button>
             <img className={styles.topFront} src={TopFront} alt="" />
             <img className={styles.topBack} src={TopBack} alt="" />
             <img className={styles.bottomFront} src={BottomFront} alt="" />

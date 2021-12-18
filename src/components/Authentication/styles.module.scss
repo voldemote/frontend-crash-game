@@ -73,7 +73,7 @@
   .formGroup {
     position: relative;
     width: 100%;
-    margin: 12px 0;
+    margin: 20px 0 0;
 
     @media (max-width: $screen-sm) {
       margin: 10px 0;
@@ -119,6 +119,7 @@
     text-decoration: underline;
     font-family: $fontOmnes;
     cursor: pointer;
+    color: $colorButton;
 
     @media (max-width: $screen-sm) {
       margin: 10px 0;

@@ -257,18 +257,18 @@
 }
 
 .welcomeContainer {
-  margin-top: 200px;
-  margin-bottom: calc(100vh - 668px);
+  margin-top: 100px;
+  margin-bottom: calc(100vh - 538px);
   // margin-bottom: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   @media (max-width: $screen-sm) {
-    margin: 80px 0 0;
+    margin: 180px 0 0;
   }
   .cardContainer {
     position: relative;
-    height: 568px;
+    height: 508px;
     width: 402px;
     background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
     padding: 15px;
@@ -279,15 +279,16 @@
       align-items: center;
       border: 1px solid $colorPopBorder;
       border-radius: 20px;
-      height: 538px;
+      height: 478px;
 
       // padding: 80px 16px 0 0;
       font-family: $fontOmnes;
       @media (max-width: $screen-sm) {
         width: 100%;
-        height: 538px;
-        padding: 60px 10px 0 0;
+        height: 478px;
+        padding: 40px 10px 0 0;
       }
+
       .topFront {
         position: absolute;
         width: 150px;
@@ -307,7 +308,7 @@
 
       .bottomFront {
         position: absolute;
-        width: 150px;
+        width: 120px;
         right: -35px;
         bottom: 84px;
         z-index: 1;
@@ -348,17 +349,12 @@
       }
       .limitedOfferDescription {
         font-weight: 700;
-        font-size: 35px;
-        line-height: 40px;
+        font-size: 30px;
+        // line-height: 40px;
         text-align: center;
         font-family: $fontOmnes;
         color: $colorBlack;
         margin-bottom: 10px;
-
-        p {
-          margin-top: 60px;
-          margin-bottom: 10px;
-        }
 
         @media (max-width: $screen-sm) {
           font-size: 25px;
@@ -367,7 +363,12 @@
 
         .highlighted {
           font-size: 90px;
-          line-height: 50px;
+          line-height: 60px;
+
+          @media (max-width: $screen-xs) {
+            font-size: 70px;
+            line-height: 60px;
+          }
         }
       }
 
@@ -387,6 +388,7 @@
         justify-content: center;
         align-items: center;
         padding: 0 5px;
+        margin-bottom: 20px;
       }
     }
   }
@@ -796,11 +798,20 @@
   }
 }
 .gameCards {
-  margin-top: 70px;
+  margin-top: 220px;
 
   @media (max-width: $screen-sm) {
-    margin-top: 320px;
+    margin-top: 220px;
   }
+
+  &.casinoGames {
+    margin-top: 120px;
+
+    @media (max-width: $screen-sm) {
+      margin-top: 80px;
+    }
+  }
+
   .title {
     display: flex;
     justify-content: flex-start;
