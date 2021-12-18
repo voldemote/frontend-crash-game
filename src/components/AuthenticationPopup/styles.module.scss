@@ -295,7 +295,15 @@
         // width: 100%;
         // min-height: fit-content;
         // padding: 100px 0 20px;
-        padding: 150px 25% 20px 24%;
+        padding: 150px 15% 20px 15%;
+      }
+
+      @media (max-width: $screen-xs) {
+        // width: 100%;
+        // min-height: fit-content;
+        // padding: 100px 0 20px;
+        max-width: 400px;
+        padding: 150px 14% 20px 14%;
       }
     }
   }
