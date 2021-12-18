@@ -35,6 +35,10 @@ const EmailSignUp = ({
   const [submitInProgress, setSubmitInProgress] = useState(false);
 
   useEffect(() => {
+    validateInput();
+  }, [legalAuthorizationAgreed]);
+
+  useEffect(() => {
     ReactTooltip.rebuild();
 
     if (errorState) {
@@ -67,6 +71,8 @@ const EmailSignUp = ({
   };
 
   const passwordIsValid = () => {
+    console.log(password && password.length >= 8 && password.length <= 255);
+    console.log(password);
     return password && password.length >= 8 && password.length <= 255;
   };
 
@@ -113,6 +119,8 @@ const EmailSignUp = ({
       formError = 'Confirm that you agree with Terms and Conditions';
       fieldRef = acceptRef.current;
     }
+
+    console.log(formError, fieldRef);
 
     setError(formError);
     fooRef.current = fieldRef;
@@ -163,6 +171,7 @@ const EmailSignUp = ({
               value={email}
               disabled={submitInProgress}
               setValue={(e) => {
+                setError(null);
                 setInputEmail(e.trim().toLowerCase());
               }}
               onConfirm={onConfirm}
@@ -182,7 +191,10 @@ const EmailSignUp = ({
               className={styles.inputBox}
               placeholder="***********"
               value={password}
-              setValue={setPassword}
+              setValue={(e) => {
+                setError(null);
+                setPassword(e);
+              }}
               disabled={submitInProgress}
               onConfirm={onConfirm}
             />
@@ -202,34 +214,48 @@ const EmailSignUp = ({
               className={styles.inputBox}
               placeholder="***********"
               value={passwordConfirmation}
-              setValue={setPasswordConfirmation}
+              setValue={(e) => {
+                setError(null);
+                setPasswordConfirmation(e);
+              }}
               disabled={submitInProgress}
               onConfirm={onConfirm}
             />
           </FormGroup>
         </div>
         <div>
-          <LegalCheckbox
-            ref={(ref) => (acceptRef.current = ref)}
-            checked={legalAuthorizationAgreed}
-            setChecked={setLegalAuthorizationAgreed}
-          />
+          <FormGroup
+            className={styles.formGroup}
+            data-tip
+            rootRef={(ref) => (acceptRef.current = ref)}
+            data-event="none"
+            data-event-off="dblclick"
+          >
+            <LegalCheckbox
+              checked={legalAuthorizationAgreed}
+              setChecked={(e) => {
+                setLegalAuthorizationAgreed(e)
+              }}
+            />
+          </FormGroup>
           <Button
             onClick={onConfirm}
             className={classNames([styles.submitButton, styles.mobile])}
-            disabled={submitInProgress || !legalAuthorizationAgreed}
+            // disabled={submitInProgress || !legalAuthorizationAgreed}
+            disabled={submitInProgress}
             disabledWithOverlay={false}
             data-action="submit"
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed)}
+          {renderSocialLogin(submitInProgress)}
         </div>
       </div>
       <Button
         onClick={onConfirm}
         className={classNames([styles.submitButton, styles.desktop])}
-        disabled={submitInProgress || !legalAuthorizationAgreed}
+        // disabled={submitInProgress || !legalAuthorizationAgreed}
+        disabled={submitInProgress}
         disabledWithOverlay={false}
       >
         Sign Up with E-mail
