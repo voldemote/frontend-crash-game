@@ -34,9 +34,6 @@ const EmailSignUp = ({
   const [error, setError] = useState(null);
   const [submitInProgress, setSubmitInProgress] = useState(false);
 
-  useEffect(() => {
-    validateInput();
-  }, [legalAuthorizationAgreed]);
 
   useEffect(() => {
     ReactTooltip.rebuild();
@@ -60,7 +57,7 @@ const EmailSignUp = ({
           .execute(RECAPTCHA_KEY, { action: 'join' })
           .then(token => {
             resolve(token);
-          });
+          })
       });
     });
   };
@@ -71,8 +68,6 @@ const EmailSignUp = ({
   };
 
   const passwordIsValid = () => {
-    console.log(password && password.length >= 8 && password.length <= 255);
-    console.log(password);
     return password && password.length >= 8 && password.length <= 255;
   };
 
@@ -84,6 +79,7 @@ const EmailSignUp = ({
     const error = validateInput();
     if (error) return;
     setSubmitInProgress(true);
+    
     handleReCaptchaVerify().then(recaptchaToken => {
       const refLocalStorage = localStorage.getItem('urlParam_ref');
       signUp({
@@ -96,6 +92,7 @@ const EmailSignUp = ({
       });
 
       hidePopup();
+      setSubmitInProgress(false);
     });
   };
 
@@ -119,8 +116,6 @@ const EmailSignUp = ({
       formError = 'Confirm that you agree with Terms and Conditions';
       fieldRef = acceptRef.current;
     }
-
-    console.log(formError, fieldRef);
 
     setError(formError);
     fooRef.current = fieldRef;
@@ -175,7 +170,7 @@ const EmailSignUp = ({
                 setInputEmail(e.trim().toLowerCase());
               }}
               onConfirm={onConfirm}
-              onBlur={() => validateInput({ emailOnly: true })}
+              // onBlur={() => validateInput({ emailOnly: true })}
             />
           </FormGroup>
           <FormGroup
@@ -234,6 +229,7 @@ const EmailSignUp = ({
             <LegalCheckbox
               checked={legalAuthorizationAgreed}
               setChecked={(e) => {
+                setError(null);
                 setLegalAuthorizationAgreed(e)
               }}
             />
