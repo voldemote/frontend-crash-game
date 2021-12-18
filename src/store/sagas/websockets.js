@@ -176,6 +176,7 @@ const notificationTypes = {
 };
 
 export function* init() {
+  yield call(close);
   const token = yield select(state => state.authentication.token);
   try {
     const socket = yield call(createSocket, token);
@@ -284,8 +285,8 @@ export function* init() {
               })
             );
             yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
-            if(type === UserNotificationTypes.EVENT_USER_KYC_UPDATE){
-                yield put(UserActions.fetch({ forceFetch: true }));
+            if (type === UserNotificationTypes.EVENT_USER_KYC_UPDATE) {
+              yield put(UserActions.fetch({ forceFetch: true }));
             }
             break;
           case notificationTypes.EVENT_BET_STARTED:
@@ -317,14 +318,14 @@ export function* init() {
 const isActivitiesPage = (currentAction, pathSlugs) =>
   currentAction[0] === 'activities' || pathSlugs[0] === 'activities';
 const isHomePage = (currentAction, pathSlugs) =>
-  currentAction[0] === '' || pathSlugs[0] === '';
+  ['', 'logout'].includes(currentAction[0]) ||
+  ['', 'logout'].includes(pathSlugs[0]);
 const isGamePage = (currentAction, pathSlugs) =>
   (currentAction[0] === 'games' || pathSlugs[0] === 'games') &&
   (pathSlugs.length > 1 || currentAction.length > 1);
-  const isExternalPage = (currentAction, pathSlugs) =>
-    (currentAction[0] === 'external-game' || pathSlugs[0] === 'external-game') &&
-    (pathSlugs.length > 1 || currentAction.length > 1);
-
+const isExternalPage = (currentAction, pathSlugs) =>
+  (currentAction[0] === 'external-game' || pathSlugs[0] === 'external-game') &&
+  (pathSlugs.length > 1 || currentAction.length > 1);
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -367,7 +368,7 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
       newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
     }
   }
-  if(isExternalPage(currentAction, pathSlugs)){
+  if (isExternalPage(currentAction, pathSlugs)) {
     newRoomsToJoin.push(ObjectId(pathSlugs[1]));
     newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
@@ -449,6 +450,12 @@ export function* sendChatMessage(action) {
   }
 }
 
+export function close() {
+  if (websocket && websocket.connected) {
+    websocket.emit('forceDisconnect');
+  }
+}
+
 export function* idleCheck() {
   if (websocket && !websocket.connected) {
     yield put(WebsocketsActions.disconnected());
@@ -466,4 +473,5 @@ export default {
   sendChatMessage,
   joinOrLeaveRoomOnRouteChange,
   idleCheck,
+  close,
 };
