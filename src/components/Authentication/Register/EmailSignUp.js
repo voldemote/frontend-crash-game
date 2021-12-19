@@ -10,6 +10,8 @@ import ReactTooltip from 'react-tooltip';
 import { RECAPTCHA_KEY } from 'constants/Api';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import Login from '../Login';
+import AuthState from '../../../constants/AuthState';
 
 const EmailSignUp = ({
   styles,
@@ -18,6 +20,7 @@ const EmailSignUp = ({
   hidePopup,
   username,
   renderSocialLogin,
+  authState,
 }) => {
   const fooRef = useRef(null);
   let emailRef = useRef(null);
@@ -50,6 +53,15 @@ const EmailSignUp = ({
       ReactTooltip.hide();
     }
   }, [errorState, fooRef, error]);
+
+  useEffect(() => {
+    console.log(authState);
+    if (authState === AuthState.LOGGED_IN) {
+      hidePopup();
+      setSubmitInProgress(false);
+    }
+  }, [authState]);
+  
 
   const handleReCaptchaVerify = () => {
     return new Promise((resolve, _) => {
@@ -92,16 +104,6 @@ const EmailSignUp = ({
         recaptchaToken,
       });
 
-      // if (response) {
-        // hidePopup();
-      // }
-
-      // if (response) {
-      //   console.error(errorResponse);
-      //   responseError({errorMsg: errorResponse})
-      // }
-
-      setSubmitInProgress(false);
     });
   };
 
@@ -148,7 +150,7 @@ const EmailSignUp = ({
       className={styles.authenticationInputBoxContainer}
       onSubmit={onConfirm}
     >
-      {/* {errorState && ( */}
+      {errorState && (
         <div
           ref={(ref) => (genericRef.current = ref)}
           data-tip
@@ -158,7 +160,7 @@ const EmailSignUp = ({
         >
           {errorState}
         </div>
-      {/* )} */}
+      )}
       <ReactTooltip
         getContent={() => error}
         place="bottom"
@@ -305,6 +307,7 @@ const mapStateToProps = state => {
     errorState: state.authentication.error,
     popupVisible: state.popup.visible,
     username: state.onboarding.username,
+    authState: state.authentication.authState,
   };
 };
 
