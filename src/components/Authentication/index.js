@@ -10,10 +10,10 @@ const Authentication = ({
   preloadEmailSignUp
 }) => {
 
-  const renderSocialLogin = (disabled = false) => (
+  const renderSocialLogin = (disabled = false, validateInput) => (
     <div className={styles.dontHaveAnAccount}>
       <p>continue with social links</p>
-      <SocialLogin styles={styles} disabled={disabled} authenticationType={AuthenticationType.register} />
+      <SocialLogin styles={styles} disabled={disabled} validateInput={validateInput} authenticationType={AuthenticationType.register} />
     </div>
   );
 

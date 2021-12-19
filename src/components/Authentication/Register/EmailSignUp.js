@@ -38,12 +38,13 @@ const EmailSignUp = ({
   useEffect(() => {
     ReactTooltip.rebuild();
 
-    if (errorState) {
-      setSubmitInProgress(false);
-      fooRef.current = genericRef;
-      setError(errorState);
-      ReactTooltip.show(fooRef.current);
-    } else if (error) {
+    // if (errorState) {
+    //   setSubmitInProgress(false);
+    //   fooRef.current = genericRef;
+    //   setError(errorState);
+    //   ReactTooltip.show(fooRef.current);
+    // } else if (error) {
+    if (error) {
       ReactTooltip.show(fooRef.current);
     } else {
       ReactTooltip.hide();
@@ -91,7 +92,15 @@ const EmailSignUp = ({
         recaptchaToken,
       });
 
-      hidePopup();
+      // if (response) {
+        // hidePopup();
+      // }
+
+      // if (response) {
+      //   console.error(errorResponse);
+      //   responseError({errorMsg: errorResponse})
+      // }
+
       setSubmitInProgress(false);
     });
   };
@@ -99,6 +108,17 @@ const EmailSignUp = ({
   const validateInput = options => {
     let formError = null;
     let fieldRef = null;
+
+    //Used by Social Login buttons
+    if (options && options.tosOnly && !legalAuthorizationAgreed) {
+      formError = 'Confirm that you agree with Terms and Conditions';
+      fieldRef = acceptRef.current;
+
+      setError(formError);
+      fooRef.current = fieldRef;
+
+      return formError;
+    }
 
     if (!emailIsValid()) {
       formError = 'Not a valid email address';
@@ -128,7 +148,7 @@ const EmailSignUp = ({
       className={styles.authenticationInputBoxContainer}
       onSubmit={onConfirm}
     >
-      {errorState && (
+      {/* {errorState && ( */}
         <div
           ref={(ref) => (genericRef.current = ref)}
           data-tip
@@ -138,7 +158,7 @@ const EmailSignUp = ({
         >
           {errorState}
         </div>
-      )}
+      {/* )} */}
       <ReactTooltip
         getContent={() => error}
         place="bottom"
@@ -244,7 +264,7 @@ const EmailSignUp = ({
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin(submitInProgress)}
+          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed, validateInput)}
         </div>
       </div>
       <Button
