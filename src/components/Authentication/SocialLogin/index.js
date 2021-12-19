@@ -10,13 +10,13 @@ const LoginButton = ({ children, onClick, styles, disabled }) => (
   <Button
     onClick={onClick}
     className={classNames(styles.signInButton)}    
-    disabled={disabled}
+    // disabled={disabled}
   >
     {children}
   </Button>
 );
 
-const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, disabled }) => {
+const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, disabled, validateInput }) => {
   const {
     initGoogleLogin,
     initFacebookLogin,
@@ -47,6 +47,8 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
   const prefixText = isRegistration ? "Sign up" : "Login";
 
   const login = (provider, ToSAccepted) => () => {
+    validateInput({tosOnly: true});
+
     return !disabled && {
       'google': initGoogleLogin,
       'facebook': initFacebookLogin,

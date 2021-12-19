@@ -10,6 +10,8 @@ import ReactTooltip from 'react-tooltip';
 import { RECAPTCHA_KEY } from 'constants/Api';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import Login from '../Login';
+import AuthState from '../../../constants/AuthState';
 
 const EmailSignUp = ({
   styles,
@@ -18,6 +20,7 @@ const EmailSignUp = ({
   hidePopup,
   username,
   renderSocialLogin,
+  authState,
 }) => {
   const fooRef = useRef(null);
   let emailRef = useRef(null);
@@ -38,17 +41,27 @@ const EmailSignUp = ({
   useEffect(() => {
     ReactTooltip.rebuild();
 
-    if (errorState) {
-      setSubmitInProgress(false);
-      fooRef.current = genericRef;
-      setError(errorState);
-      ReactTooltip.show(fooRef.current);
-    } else if (error) {
+    // if (errorState) {
+    //   setSubmitInProgress(false);
+    //   fooRef.current = genericRef;
+    //   setError(errorState);
+    //   ReactTooltip.show(fooRef.current);
+    // } else if (error) {
+    if (error) {
       ReactTooltip.show(fooRef.current);
     } else {
       ReactTooltip.hide();
     }
   }, [errorState, fooRef, error]);
+
+  useEffect(() => {
+    console.log(authState);
+    if (authState === AuthState.LOGGED_IN) {
+      hidePopup();
+      setSubmitInProgress(false);
+    }
+  }, [authState]);
+  
 
   const handleReCaptchaVerify = () => {
     return new Promise((resolve, _) => {
@@ -91,14 +104,23 @@ const EmailSignUp = ({
         recaptchaToken,
       });
 
-      hidePopup();
-      setSubmitInProgress(false);
     });
   };
 
   const validateInput = options => {
     let formError = null;
     let fieldRef = null;
+
+    //Used by Social Login buttons
+    if (options && options.tosOnly && !legalAuthorizationAgreed) {
+      formError = 'Confirm that you agree with Terms and Conditions';
+      fieldRef = acceptRef.current;
+
+      setError(formError);
+      fooRef.current = fieldRef;
+
+      return formError;
+    }
 
     if (!emailIsValid()) {
       formError = 'Not a valid email address';
@@ -244,7 +266,7 @@ const EmailSignUp = ({
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin(submitInProgress)}
+          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed, validateInput)}
         </div>
       </div>
       <Button
@@ -285,6 +307,7 @@ const mapStateToProps = state => {
     errorState: state.authentication.error,
     popupVisible: state.popup.visible,
     username: state.onboarding.username,
+    authState: state.authentication.authState,
   };
 };
 
