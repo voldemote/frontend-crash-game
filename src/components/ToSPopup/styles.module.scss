@@ -2,7 +2,7 @@
 
 .tosPopup {
   position: relative;
-  height: auto;
+  height: fit-content;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -10,9 +10,9 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  padding: 40px 40px 80px 70px;
+  padding: 190px 120px;
   @media (max-width: $screen-sm) {
-    padding: 30px 30px 60px;
+    padding: 80px 70px;
     background: url('../../data/backgrounds/popup/popup-bg.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -25,8 +25,7 @@
     font-style: normal;
     font-weight: bold;
     font-size: 34px;
-    color: #ffd31a;
-    text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
+    color: $colorBlack;
     @media (max-width: $screen-sm) {
       display: none;
     }
@@ -34,13 +33,17 @@
 
   .container {
     padding: 100px 40px 16px;
+
+    @media (max-width: $screen-sm) {
+      padding: 80px 30px 60px;
+    }
+
     .description {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
       text-align: center;
       margin-bottom: 40px;
-      color: $colorWhite;
-      text-shadow: 0px 4px 8px rgba(5, 44, 146, 0.46);
+      color: $colorBlack;
       @media (max-width: $screen-sm) {
         font-size: 16px;
       }
