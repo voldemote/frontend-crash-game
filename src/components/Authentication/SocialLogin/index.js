@@ -47,7 +47,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
   const prefixText = isRegistration ? "Sign up" : "Login";
 
   const login = (provider, ToSAccepted) => () => {
-    validateInput({tosOnly: true});
+    signUp && validateInput({tosOnly: true});
 
     return !disabled && {
       'google': initGoogleLogin,
