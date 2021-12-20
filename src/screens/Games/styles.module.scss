@@ -4,8 +4,65 @@
   width: 100%;
   margin: 0 auto;
   max-width: 1300px;
+  background: rgba($colorPrimary, 0.7);
+  border-radius: 12px;
+  padding: 50px;
+  margin-top: calc(50vh - 150px);
 
   @media (max-width: $screen-sm) {
     padding: 0 15px;
+  }
+}
+
+.serachContainer {
+  width: 100%;
+
+  .serach {
+    border-radius: 30px;
+    border: 1px solid $colorButton;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    background: $colorPrimary;
+
+    input {
+      background: transparent;
+      width: 90%;
+      border: none;
+      color: $colorWhite;
+      font-family: $fontOmnes;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: center;
+
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      -moz-appearance: textfield;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: $colorWhite;
+      }
+    }
+  }
+  .serachItem {
+    font-family: $fontOmnes;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    min-width: 100px;
+
+    text-align: center;
+    color: #ffffff;
+    padding: 10px;
+    background-color: $colorButton;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
   }
 }

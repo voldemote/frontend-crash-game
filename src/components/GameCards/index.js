@@ -28,7 +28,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
     return (
       <Grid
         item
-        lg={3}
+        lg={2}
         md={3}
         xs={6}
         key={`gamecard-${_.get(game, 'title')}-${index}-`}
@@ -45,7 +45,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
             className={classNames(
               styles.gameItem,
               game.active ? null : styles.inactive,
-              getGameItemSizeClass()
+              // getGameItemSizeClass()
             )}
           >
             <img src={game.background} alt="game-background" />

@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import ContentFooter from 'components/ContentFooter';
 import HeaderVideo from 'data/videos/header-video.mp4'
 import AlpacaHeader from 'data/images/alpaca-header.png';
+import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
+
 
 const BaseContainerWithNavbar = ({
   children,
@@ -14,6 +16,7 @@ const BaseContainerWithNavbar = ({
   loggedIn,
   home = false,
   user,
+  carousel=false
 }) => {
   return (
     <>
@@ -26,13 +29,16 @@ const BaseContainerWithNavbar = ({
       )}
     >
       <div className={classNames(styles.headerBackground, loggedIn || !home ? styles.withTransparent : null)}>
+         {! carousel ?
          <div className={styles.headerContianer}>
             <video loop autoPlay muted playsInline id="myVideo">
                 <source src={HeaderVideo} type="video/mp4" />
             </video>
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
-          </div> 
+          </div>
+          : <CustomCarousel/>
+          } 
       </div>
       {children}      
     </div>

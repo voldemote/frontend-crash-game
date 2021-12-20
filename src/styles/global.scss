@@ -202,3 +202,30 @@ $border: 1px solid $colorWhite30;
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.carousel-root {
+  .carousel {
+    .control-dots {
+      bottom: 35% !important;
+      background: #00092b !important;
+      z-index: 99999999999999 !important;
+      border-radius: 30px !important;
+
+      width: 20% !important;
+      padding: 10px !important;
+      left: 40% !important;
+      align-items: center !important;
+
+      .dot {
+        height: 20px !important;
+        width: 20px !important;
+        background: rgba(255, 255, 255, 0.5) !important;
+        border: 2px solid #ffd401 !important;
+      }
+    }
+
+    .thumbs-wrapper {
+      display: none !important;
+    }
+  }
+}
