@@ -3,7 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import styles from './styles.module.scss';
 
 const CustomCarousel =  () => (
-  <Carousel autoPlay infiniteLoop={true} stopOnHover={false}>
+  <Carousel className={styles.carousel} autoPlay infiniteLoop={true} stopOnHover={false} showArrows={false} showStatus={false} showIndicators={false} >
     <div>
       <img alt="" src="https://i.ibb.co/WnNjgS2/dream.jpg" />
       {/* <p className={styles.legend}>Legend 1</p> */}
