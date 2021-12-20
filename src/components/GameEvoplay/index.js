@@ -7,12 +7,16 @@ import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { getEvoplaygames } from 'api/casino-games';
 
-const GameEvoplay = ({ category, showHowtoLink, showPopup }) => {
+const GameEvoplay = ({ showHowtoLink, showPopup }) => {
   const [games, setGames] = useState([]);
+  console.log("GameEvoplay")
 
   useEffect(() => {
-      getEvoplaygames()
+    console.log("GameEvoplay")
+    getEvoplaygames()
         .then(({data}) => {
+          console.log("games", data?.games)
+
           setGames(data?.games)
         })
         .catch(error => {
@@ -22,7 +26,7 @@ const GameEvoplay = ({ category, showHowtoLink, showPopup }) => {
       setGames([])
     }
   }, [])
-/*
+
   const getGameItemSizeClass = () => {
     switch (games.length) {
       case 3:
@@ -33,8 +37,8 @@ const GameEvoplay = ({ category, showHowtoLink, showPopup }) => {
         return styles.gameItemLg;
     }
   };
-  const categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[])
-*/
+  //const categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[])
+
   return (
     <div className={styles.gamesContainer}>
       <div className={styles.gamesCategory}>

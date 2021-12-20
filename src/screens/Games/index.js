@@ -22,6 +22,7 @@ const Games = () => {
             showHowtoLink={true}
           />
         */}
+        <GameEvoplay />
         <GameCards
           games={showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES}
           category="House Games"
@@ -30,7 +31,6 @@ const Games = () => {
           games={EXTERNAL_GAMES}
           category="Slot Games"
         />
-        <GameEvoplay />
       </div>
     </BaseContainerWithNavbar>
   );
