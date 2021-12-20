@@ -38,13 +38,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
    return () => window.removeEventListener('resize', cb)
   }, [])
 
-  const showNewFeatures =
-    process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const iconProps = {
     className: styles.buttonIcon,
   };
   const isRegistration = authenticationType === AuthenticationType.register
-  const prefixText = isRegistration ? "Sign up" : "Login";
 
   const login = (provider, ToSAccepted) => () => {
     signUp && validateInput({tosOnly: true});
@@ -96,8 +93,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('google', isRegistration)}
-            disabled={disabled}
+            onClick={(event) => {
+              login('google', isRegistration)();
+              event.preventDefault();
+            }}
           >
             <Icon
               className={styles.socialIcon}
@@ -124,8 +123,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('twitch', isRegistration)}
-            disabled={disabled}
+            onClick={(event) => {
+              login('twitch', isRegistration)();
+              event.preventDefault();
+            }}
           >
             <Icon
               className={styles.socialIcon}
@@ -152,8 +153,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('discord', isRegistration)}
-            disabled={disabled}
+            onClick={(event) => {
+              login('discord', isRegistration)();
+              event.preventDefault();
+            }}
           >
             <Icon
               className={styles.socialIcon}
