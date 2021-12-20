@@ -16,7 +16,7 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
         return styles.gameItemLg;
     }
   };
-  const categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[])
+  let categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[]);
 
   return (
     <div className={styles.gamesContainer}>
