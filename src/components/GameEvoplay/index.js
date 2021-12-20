@@ -5,6 +5,7 @@ import { PopupActions } from 'store/actions/popup';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
+import { getEvoplaygames } from 'api/casino-games';
 
 const GameEvoplay = ({ category, showHowtoLink, showPopup }) => {
   const [games, setGames] = useState([]);
