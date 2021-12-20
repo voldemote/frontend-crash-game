@@ -22,7 +22,7 @@ setExternalGames,
     'Alpaca Games',
     'Casino',
     'Slot',
-    'Board',
+    // 'Board',
     'Keno',
     'All',
   ];
@@ -65,14 +65,14 @@ setExternalGames,
   };
 
   return (
-    <div className={styles.serachContainer}>
+    <div className={styles.searchContainer}>
       <Grid container spacing={1} justifyContent="space-between">
         <Grid item lg={3} md={3} xs={3}>
-          <div className={styles.serach}>
+          <div className={styles.search}>
             <input
               type="text"
               value={search}
-              placeholder="Serach for Game"
+              placeholder="Search"
               onChange={onChangeSearch}
             />
           </div>
@@ -80,7 +80,7 @@ setExternalGames,
         {gamesTitleList.map((game, index) => {
           return (
             <Grid item key={index + game}>
-              <p className={styles.serachItem} onClick={e => selectGame(game)}>
+              <p className={styles.searchItem} onClick={e => selectGame(game)}>
                 {game}
               </p>
             </Grid>

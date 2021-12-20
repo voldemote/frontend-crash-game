@@ -1,3 +1,9 @@
 @import '../../styles/all';
 
 // /control-dots
+
+.carousel {
+  @media (max-width: $screen-sm) {
+    margin-top: 13vh;
+  }
+}
