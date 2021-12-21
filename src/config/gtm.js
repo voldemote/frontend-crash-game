@@ -489,4 +489,95 @@ export const trackPumpDumpChangeAutoCashout = ({
   TagManager.dataLayer(tagManagerArgs);
 };
 
+
+/* ALPACANNON */
+
+export const trackAlpacannonPlaceBet = ({
+  amount,
+  multiplier,
+  autobet,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      event: 'alpacannonPlaceBet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackAlpacannonPlaceBetGuest = ({
+  amount,
+  multiplier,
+  ...dataLayerProps
+}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      event: 'alpacannonPlaceBetGuest',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackAlpacannonCashout = ({ amount, multiplier, accumulated, autobet, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount,
+      multiplier,
+      autobet,
+      accumulated,
+      event: 'alpacannonCashout',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackAlpacannonStartAutobet = ({ amount, multiplier, autobet, profit, loss, wincrease, lincrease, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount, //bet amount
+      multiplier, //attemp auto cashout at
+      autobet, //autobet true/false
+      profit, //stop on profit
+      loss, //stop on loss
+      wincrease, //on win inscrease
+      lincrease, //on loss increase
+      event: 'alpacannonStartAutobet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackAlpacannonStopAutobet = ({ amount, multiplier, autobet, profit, loss, wincrease, lincrease, accumulated, ...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      amount, //bet amount
+      multiplier, //attemp auto cashout at
+      autobet, //autobet true/false
+      profit, //stop on profit
+      loss, //stop on loss
+      wincrease, //on win inscrease
+      lincrease, //on loss increase
+      accumulated,
+      event: 'alpacannonStopAutobet',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
 export default TagManager;
