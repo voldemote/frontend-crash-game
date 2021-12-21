@@ -56,9 +56,9 @@ jobs:
                             --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper-staging.wallfair.io"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xEfa1A1a1Ff0C49d4913Ef8A74E76221EE97BD75F"\
                             --build-arg REACT_APP_ENVIRONMENT="staging"\
-                            --build-arg REACT_APP_DEPOSIT_WALLET_BITCOIN=bc1qrdf9ndd8264dyl66n45cl22lavunymdgnjpj96\
-                            --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0xCdE7a3DCb537C81730DB750C0315D1730980759c\
-                            --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=ltc1qnzlfm88cgr58yxmjzm92se5ug6te6w5yhjfyjn\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_BITCOIN=mvBFHAfuccFDr7W86UNuJgPDrpkNLUishq\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0x13F593f4e0fb2b71d71aaC17770455817Cf90589\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=QRpuwHv8CQ5SciX15YD5NBett2qBfRrWQ8\
                             --build-arg REACT_APP_TOKEN_NAME=WFAIR\
                             --build-arg REACT_APP_TRANSAK_API_KEY=82fbd931-e077-46d2-87aa-272b72d4962c\
                             --build-arg REACT_APP_TRANSAK_ENVIROMENT=STAGING\
@@ -90,9 +90,9 @@ jobs:
                             --build-arg REACT_APP_ACCOUNT_MAPPER_URL="https://account-mapper-staging.wallfair.io"\
                             --build-arg REACT_APP_DEPOSIT_WALLET="0xEfa1A1a1Ff0C49d4913Ef8A74E76221EE97BD75F"\
                             --build-arg REACT_APP_ENVIRONMENT="staging"\
-                            --build-arg REACT_APP_DEPOSIT_WALLET_BITCOIN=bc1qrdf9ndd8264dyl66n45cl22lavunymdgnjpj96\
-                            --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0xCdE7a3DCb537C81730DB750C0315D1730980759c\
-                            --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=ltc1qnzlfm88cgr58yxmjzm92se5ug6te6w5yhjfyjn\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_BITCOIN=mvBFHAfuccFDr7W86UNuJgPDrpkNLUishq\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_ETHEREUM=0x13F593f4e0fb2b71d71aaC17770455817Cf90589\
+                            --build-arg REACT_APP_DEPOSIT_WALLET_LITECOIN=QRpuwHv8CQ5SciX15YD5NBett2qBfRrWQ8\
                             --build-arg REACT_APP_TOKEN_NAME=WFAIR\
                             --build-arg REACT_APP_TRANSAK_API_KEY=82fbd931-e077-46d2-87aa-272b72d4962c\
                             --build-arg REACT_APP_TRANSAK_ENVIROMENT=STAGING\
