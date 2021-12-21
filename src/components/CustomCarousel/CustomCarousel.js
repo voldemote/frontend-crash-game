@@ -6,11 +6,14 @@ import { useHistory } from 'react-router-dom';
 const CustomCarousel = props => {
   const history = useHistory();
   const bannerUrlLinks = [
-    '/games/alpaca-wheel',
-    '/external-game/JetX/JetX',
-    '/external-game/VirtualRoulette/Roulette',
-    '/external-game/ClassicKeno/Keno',
+    '/external-game/Cappadocia/Games',
+    '/external-game/MoonStone/Slots',
+    '/external-game/Samurai/Slots',
+    '/external-game/BlazingHot40/Slots',
+    '/external-game/Fruit5/Slots',
     '/external-game/JetX3/XGames',
+    '/external-game/JetX/JetX',
+    '/external-game/Balloon/Games',
   ];
 
   const onClickItem = itemIndex => {
@@ -28,7 +31,7 @@ const CustomCarousel = props => {
         stopOnHover={false}
         showArrows={true}
         showStatus={false}
-        showIndicators={true}
+        showIndicators={false}
         onClickItem={onClickItem}
       >
         <div>
@@ -59,6 +62,24 @@ const CustomCarousel = props => {
           <img
             alt=""
             src="https://files.wallfair.io/alpacasino/games-carousel/games-5.jpeg"
+          />
+        </div>
+        <div>
+          <img
+            alt=""
+            src="https://files.wallfair.io/alpacasino/games-carousel/games-6.jpeg"
+          />
+        </div>
+        <div>
+          <img
+            alt=""
+            src="https://files.wallfair.io/alpacasino/games-carousel/games-7.jpeg"
+          />
+        </div>
+        <div>
+          <img
+            alt=""
+            src="https://files.wallfair.io/alpacasino/games-carousel/games-8.jpeg"
           />
         </div>
       </Carousel>

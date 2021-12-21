@@ -6,9 +6,13 @@
 
   cursor: pointer;
   .carousel {
-    margin-top: 12vh;
+    margin-top: 10vh;
     @media (max-width: $screen-sm) {
       margin-top: 8.1vh;
     }
+  }
+
+  img {
+    object-fit: cover !important;
   }
 }

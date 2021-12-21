@@ -395,7 +395,7 @@ const Navbar = ({
 
   return (
     <div
-      className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}
+      className={classNames(style.navbar, (location.pathname === '/') ? style.home : null,hasOpenDrawer && style.navbarSticky)}
     >
       <div className={style.logoMobileWrapper}>
         {renderNavbarLink(
