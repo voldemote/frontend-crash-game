@@ -189,9 +189,7 @@ const PlaceBetMines = ({
       amount,
       minesCount: mines
     }
-
     trackMinesPlaceBetGuest({ amount, mines });
-
     if(demoCount >= 3) {
       showLoginPopup();
       setBet({
@@ -345,7 +343,6 @@ const PlaceBetMines = ({
     left: 0,
     zIndex: 999,
   };
-
   return (
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti
