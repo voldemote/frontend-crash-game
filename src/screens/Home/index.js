@@ -262,7 +262,7 @@ const Home = ({
 
         <p className={styles.allGames}>
           <Link to="/games">
-          All Games
+          More games
           </Link>
           </p>
       </div>
