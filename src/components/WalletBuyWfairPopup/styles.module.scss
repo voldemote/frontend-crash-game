@@ -6,15 +6,21 @@
 
 .container {
   height: 100%;
-  padding: 16px 0;
-  background-color: $colorWhite;
   color: $colorPrimaryDark;
   border-radius: 10px;
+  flex: auto;
+  width: 400px;
+  max-width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  @media screen and (min-width: $screen-sm) {
+    width: 600px;
+  }
 }
 
 .button {
   margin-top: 10px;
-  // margin-bottom: 20px;
   font-family: $fontOmnes;
 }
 
@@ -36,19 +42,11 @@
     }
   }
 }
-.activityWrapper {
-  @media screen and (max-width: $screen-xs) {
-    margin-bottom: 20px;
-  }
-  .activityContainer {
-    margin-top: 10px;
-    position: relative;
-    height: 700px;
-    min-height: 700px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+.activityContainer {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .tabLayout {
@@ -60,8 +58,6 @@
   font-weight: bold;
   font-size: 14px;
   line-height: 18px;
-  padding-top: 24px;
-  // margin: 0 16px;
   justify-content: center;
 
   @media (max-width: $screen-md) {
@@ -69,6 +65,9 @@
     margin-right: 0px;
     font-size: 11px;
     line-height: 14px;
+  }
+  & > div > div {
+    padding: 8px 22px !important;
   }
 }
 
@@ -91,7 +90,6 @@
 
 .buyWithFiatTabContainer {
   width: 100%;
-  margin-top: 50px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -318,9 +316,7 @@
   width: 100%;
   margin-top: 10px;
   display: flex;
-  justify-content: center;
-  // padding-top: 20px;
-  padding-bottom: 20px;
+  justify-content: space-between;
   flex-direction: column;
 
   .cryptoTabsContianer {

@@ -6,38 +6,16 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: url('../../data/backgrounds/popup/popup-medium-bg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  padding: 190px 120px;
-  @media (max-width: $screen-sm) {
-    padding: 80px 70px;
-    background: url('../../data/backgrounds/popup/popup-bg.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-  }
 
   .title {
-    // margin-left: 24px;
     text-align: center;
     font-style: normal;
     font-weight: bold;
     font-size: 34px;
     color: $colorBlack;
-    @media (max-width: $screen-sm) {
-      display: none;
-    }
   }
 
   .container {
-    padding: 100px 40px 16px;
-
-    @media (max-width: $screen-sm) {
-      padding: 80px 30px 60px;
-    }
-
     .description {
       font-size: 16px;
       font-weight: 600;
@@ -49,32 +27,12 @@
       }
     }
 
-    .inputBox {
-      width: 100%;
-      margin: 0 auto 40px;
-
-      @media (max-width: $screen-sm) {
-        width: 100%;
-      }
-    }
-
     .buttons {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       column-gap: 20px;
-      .skipButton {
-        font-size: 20px;
-        font-weight: 600;
-        color: $colorLightYellow;
-        padding: 0 30px;
-        text-decoration: underline;
-        cursor: pointer;
-        @media (max-width: $screen-sm) {
-          font-size: 16px;
-        }
-      }
       .button {
         @media (max-width: $screen-sm) {
           font-size: 20px;
@@ -86,51 +44,6 @@
           }
         }
       }
-    }
-    .errorHandLing {
-      font-size: 14.5px;
-      height: 60px;
-      width: 100%;
-      padding: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: $colorRedLight;
-      color: $colorWhite;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-  }
-
-  .confettiRight,
-  .confettiLeft {
-    position: absolute;
-    z-index: 1;
-  }
-
-  .confettiLeft {
-    left: -60px;
-    top: -20px;
-  }
-
-  .confettiRight {
-    right: -55px;
-    bottom: 200px;
-    height: 220px;
-
-    @media (max-width: $screen-sm) {
-      bottom: 220px;
-    }
-  }
-  .randomize {
-    font-size: 20px;
-    font-weight: 600;
-    color: $colorLightYellow;
-    padding: 0 30px;
-    text-decoration: underline;
-    cursor: pointer;
-    @media (max-width: $screen-sm) {
-      font-size: 16px;
     }
   }
 }

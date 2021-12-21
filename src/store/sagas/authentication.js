@@ -458,7 +458,7 @@ const loginExternal = function* ({ code, provider, ref, tosAccepted }) {
         shouldAcceptToS: data?.shouldAcceptToS,
       })
     );
-    console.log(tosAccepted);
+
     if(data.newUser && tosAccepted) {
       yield put(AuthenticationActions.acceptToSConsent());
     }
