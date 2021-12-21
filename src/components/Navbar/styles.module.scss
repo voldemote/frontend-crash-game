@@ -22,6 +22,10 @@
     padding: 50px 100px;
   }
 
+  &.home {
+    background: rgba(8, 14, 51, 0.6);
+  }
+
   .drawerWrapper {
     display: contents;
   }

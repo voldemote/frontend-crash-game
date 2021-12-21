@@ -56,7 +56,7 @@ const GameCards = ({ games,gameTitle = false, category, showHowtoLink, showPopup
   };
 
   return (
-    <div className={styles.gamesContainer}>
+    <div className={classNames(styles.gamesContainer, !gameTitle ? styles.gamesPageContainer : null)}>
       {gameTitle ?
       <div className={styles.title}>
           <h2>Alpaca Games</h2>
