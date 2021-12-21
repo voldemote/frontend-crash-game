@@ -52,7 +52,7 @@ const AmbassadorBanner = () => {
             <div className={styles.secondColumn}>
               <div className={styles.ambassadorBannerTitle}>
                 <p>
-                  Become our ambassador and earn up to 20,000,000 WFAIR / month
+                  Become our ambassador and earn up to 20&nbsp;000&nbsp;000 WFAIR / month
                 </p>
               </div>
               <div className={styles.ambassadorItemsWrapper}>
