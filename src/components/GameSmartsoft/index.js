@@ -5,7 +5,7 @@ import { PopupActions } from 'store/actions/popup';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
+const GameSmartsoft = ({ games, gameTitle, category, showHowtoLink, showPopup }) => {
   const getGameItemSizeClass = () => {
     switch (games.length) {
       case 3:
@@ -22,11 +22,18 @@ const GameSmartsoft = ({ games, category, showHowtoLink, showPopup }) => {
     <div className={styles.gamesContainer}>
       {categories.map(category1 =>
        <>
-        <div className={styles.gamesCategory}>
-          {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
-          <h2>{category1}</h2>
+       {gameTitle ? (
+         <div className={styles.title}>
+          <h2>Most played Games</h2>
+          <p>Only the most played and best Games in the Alpacasino</p>
         </div>
-        <div className={styles.games}>
+       ): (
+         <div className={styles.gamesCategory}>
+           {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
+           <h2>{category1}</h2>
+         </div>
+       )}
+        <div className={classNames(styles.games, gameTitle&& styles.gameSpace)}>
           {games.filter(g => g.GameCategory===category1).map((game, index) =>
             <div
               className={styles.wrapper}

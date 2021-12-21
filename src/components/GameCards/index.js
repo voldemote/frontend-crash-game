@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Grid } from '@material-ui/core';
 
-const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
+const GameCards = ({ games,gameTitle = false, category, showHowtoLink, showPopup }) => {
   const getGameItemSizeClass = () => {
     switch (games.length) {
       case 3:
@@ -57,9 +57,17 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
 
   return (
     <div className={styles.gamesContainer}>
+      {gameTitle ?
+      <div className={styles.title}>
+          <h2>Alpaca Games</h2>
+          <p>Games available only in Alpacasino. 100% fun & pure love </p>
+        </div>
+      
+      : (
       <div className={styles.gamesCategory}>
         <h2>{category}</h2>
       </div>
+      ) }
       <div className={styles.games}>
         <Grid container spacing={1}>
           {games.map((game, index) => renderHouseGames(game, index))}

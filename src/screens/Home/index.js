@@ -4,7 +4,11 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { LOGGED_IN } from 'constants/AuthState';
-import { EXTERNAL_GAMES } from '../../constants/Games';
+import {
+  EXTERNAL_GAMES,
+  NEW_SLOTS_GAMES,
+  SLOTS_GAMES,
+} from '../../constants/Games';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -57,8 +61,6 @@ import AboutSecondImage from '../../data/images/about-2-image.png';
 import AboutTopAlpaca from '../../data/images/about-top-alpaca.png';
 import AboutThirdImage from '../../data/images/about-3-image.png';
 
-
-
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
@@ -67,6 +69,7 @@ import GameContentCards from 'components/GameContentCards/GameContentCards';
 import { TOKEN_NAME } from 'constants/Token';
 import AmbassadorBanner from 'components/AmbassadorBanner';
 import NftBanner from 'components/NftBanner';
+import GameCards from 'components/GameCards';
 
 const Home = ({
   authState,
@@ -82,9 +85,10 @@ const Home = ({
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
   const theme = useTheme();
-const isXSmall = useMediaQuery(theme.breakpoints.down('xs'));
-const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const isXSmall = useMediaQuery(theme.breakpoints.down('xs'));
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
+  let alpacaGames = showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES;
 
   useOAuthCallback();
 
@@ -244,49 +248,23 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   };
 
   const renderHouseGames = () => {
-    return (
-      <div className={styles.gameCards}>
-        <div className={styles.title}>
-          <h2>Alpaca Games</h2>
-          <p>Games available only in Alpacasino. 100% fun & pure love </p>
-        </div>
-        <div className={styles.cardBox}>
-          <Grid container spacing={1} justify="space-between">
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/pump-dump'}>
-                <img src={gameCardPumpDump} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/elon-game'}>
-                <img src={gameCardElon} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/plinko'}>
-                <img src={gameCardPlinko} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/mines'}>
-                <img src={gameCardMines} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/alpaca-wheel'}>
-                <img src={gameCardWheel} alt="" />
-              </Link>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-    );
+    alpacaGames = alpacaGames.filter((game, i) => i < 6);
+    return <GameCards gameTitle games={alpacaGames} category="Alpaca Games" />;
   };
 
   const renderSlogGames = () => {
+    const externalGames = EXTERNAL_GAMES.filter(
+      (game, i) => game.GameCategory === 'Slot Games'
+    ).filter((g, i) => i < 18);
     return (
-      <div className={classNames(styles.gameCards, styles.casinoGames)}>
-        <GameSmartsoft games={EXTERNAL_GAMES} category="Slot Games" />
+      <div className={classNames(styles.allGamesContiner)}>
+        <GameSmartsoft gameTitle games={externalGames} category="Slot Games" />
+
+        <p className={styles.allGames}>
+          <Link to="/games">
+          All Games
+          </Link>
+          </p>
       </div>
     );
   };
@@ -294,16 +272,26 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const renderAboutDescription = () => {
     return (
       <div className={styles.aboutDescritpion}>
-        <img className={styles.topImage} src={PlinkoAlpaca} alt='fair-piece'/>
+        <img className={styles.topImage} src={PlinkoAlpaca} alt="fair-piece" />
         <Grid container spacing={1} justify="space-between">
           <Grid item lg={4} md={4} xs={12}>
             <div className={styles.parentContainer}>
               <div className={styles.descriptionCardContainer}>
                 <div className={styles.descriptionCard}>
-                    <h1>Fair</h1>
-                    <p>We have a mission to prove that crypto casino can just the pure entertainment. We operate on open source code, provide honest bonuses, and publicly communicate the house edges along with a full history of all the bets. Simply no hidden tricks just awesome fun!</p>
+                  <h1>Fair</h1>
+                  <p>
+                    We have a mission to prove that crypto casino can just the
+                    pure entertainment. We operate on open source code, provide
+                    honest bonuses, and publicly communicate the house edges
+                    along with a full history of all the bets. Simply no hidden
+                    tricks just awesome fun!
+                  </p>
                 </div>
-                <img className={styles.thumbnail} src={FairPiece} alt='fair-piece'/>
+                <img
+                  className={styles.thumbnail}
+                  src={FairPiece}
+                  alt="fair-piece"
+                />
               </div>
             </div>
           </Grid>
@@ -312,9 +300,19 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
               <div className={styles.descriptionCardContainer}>
                 <div className={styles.descriptionCard}>
                   <h1>Unique</h1>
-                    <p>In Alpacasino you play with WFAIR, our own crypto currency. It gives you the advantage to earn money even when you are not playing. Stake your winnings and watch your wallet grow! The more people sign up, deposit and play, the higher the value of you wallet! </p>
+                  <p>
+                    In Alpacasino you play with WFAIR, our own crypto currency.
+                    It gives you the advantage to earn money even when you are
+                    not playing. Stake your winnings and watch your wallet grow!
+                    The more people sign up, deposit and play, the higher the
+                    value of you wallet!{' '}
+                  </p>
                 </div>
-                <img className={styles.thumbnail} src={UniquePiece} alt='unique-piece'/>
+                <img
+                  className={styles.thumbnail}
+                  src={UniquePiece}
+                  alt="unique-piece"
+                />
               </div>
             </div>
           </Grid>
@@ -322,17 +320,28 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
             <div className={styles.parentContainer}>
               <div className={styles.descriptionCardContainer}>
                 <div className={styles.descriptionCard}>
-                    <h1>Social</h1>
-                    <p>Alpacasino is a part of Alpacaverse our flagship project that presents the future of the speculative entertainment. The future where world of betting, gambling and gaming is blended into one huge theme park metaverse. The place where you meet people and enjoy the excitement of potential rewards!</p>
+                  <h1>Social</h1>
+                  <p>
+                    Alpacasino is a part of Alpacaverse our flagship project
+                    that presents the future of the speculative entertainment.
+                    The future where world of betting, gambling and gaming is
+                    blended into one huge theme park metaverse. The place where
+                    you meet people and enjoy the excitement of potential
+                    rewards!
+                  </p>
                 </div>
-                <img className={styles.thumbnailBack} src={SocialPiece} alt='social-piece'/>
+                <img
+                  className={styles.thumbnailBack}
+                  src={SocialPiece}
+                  alt="social-piece"
+                />
               </div>
             </div>
           </Grid>
         </Grid>
       </div>
-    )
-  }
+    );
+  };
 
   const renderWelcome = () => {
     const showPopupForUnauthenticated = () => {
