@@ -14,7 +14,7 @@
     margin-top: calc(35vh - 50px);
   }
   @media (max-width: $screen-xs) {
-    margin-top: calc(35vh - 50px);
+    margin-top: calc(45vh - 50px);
   }
 
   @media (max-width: $screen-sm) {
@@ -68,9 +68,10 @@
     min-width: 150px;
 
     text-align: center;
-    color: #ffffff;
+    color: $colorWhite;
     padding: 10px;
-    background-color: $colorButton;
+    background-color: $colorPrimary;
+    border: 1px solid $colorButton;
     box-sizing: border-box;
     border-radius: 30px;
     cursor: pointer;

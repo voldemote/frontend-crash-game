@@ -6,11 +6,11 @@ import { useHistory } from 'react-router-dom';
 const CustomCarousel = props => {
   const history = useHistory();
   const bannerUrlLinks = [
+    '/games/alpaca-wheel',
     '/external-game/JetX/JetX',
-    '/external-game/JetX/JetX',
-    '/external-game/JetX/JetX',
-    '/external-game/JetX/JetX',
-    '/external-game/JetX/JetX',
+    '/external-game/VirtualRoulette/Roulette',
+    '/external-game/ClassicKeno/Keno',
+    '/external-game/JetX3/XGames',
   ];
 
   const onClickItem = itemIndex => {
