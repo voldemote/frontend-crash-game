@@ -28,7 +28,10 @@ const BaseContainerWithNavbar = ({
         withoutPaddingBottom ? styles.baseContainerWithPaddingBottomZero : null
       )}
     >
-      <div className={classNames(styles.headerBackground, loggedIn || !home ? styles.withTransparent : null)}>
+      <div className={classNames(styles.headerBackground, loggedIn || !home ? styles.withTransparent : null,
+        carousel && styles.withHalfTransparent,
+        carousel && styles.zIndexheaderBackground
+        )}>
          {! carousel ?
          <div className={styles.headerContianer}>
             <video loop autoPlay muted playsInline id="myVideo">
@@ -37,7 +40,7 @@ const BaseContainerWithNavbar = ({
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
-          : <CustomCarousel/>
+          : <CustomCarousel />
           } 
       </div>
       {children}      

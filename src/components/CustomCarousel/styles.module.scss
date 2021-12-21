@@ -1,9 +1,13 @@
 @import '../../styles/all';
 
-// /control-dots
+.carouselContainer {
+  position: absolute;
+  top: 0;
 
-.carousel {
-  @media (max-width: $screen-sm) {
-    margin-top: 13vh;
+  .carousel {
+    margin-top: 12vh;
+    @media (max-width: $screen-sm) {
+      margin-top: 8.1vh;
+    }
   }
 }

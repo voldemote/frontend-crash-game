@@ -7,15 +7,24 @@
   background: rgba($colorPrimary, 0.7);
   border-radius: 12px;
   padding: 50px;
-  margin-top: calc(50vh - 150px);
+  margin-top: calc(50vh - 50px);
+  position: relative;
 
   @media (max-width: $screen-sm) {
-    padding: 0 15px;
+    margin-top: calc(35vh - 50px);
+  }
+  @media (max-width: $screen-xs) {
+    margin-top: calc(35vh - 50px);
+  }
+
+  @media (max-width: $screen-sm) {
+    padding: 0 20px;
   }
 }
 
 .searchContainer {
   width: 100%;
+  margin-bottom: 50px;
 
   .search {
     border-radius: 30px;
@@ -24,6 +33,7 @@
     display: flex;
     justify-content: center;
     background: $colorPrimary;
+    margin-right: 10px;
 
     input {
       background: transparent;
@@ -55,7 +65,7 @@
     font-weight: 600;
     font-size: 20px;
     line-height: 20px;
-    min-width: 100px;
+    min-width: 150px;
 
     text-align: center;
     color: #ffffff;
@@ -64,5 +74,11 @@
     box-sizing: border-box;
     border-radius: 30px;
     cursor: pointer;
+
+    @media (max-width: $screen-md) {
+      font-size: 14px;
+      padding: 5px;
+      min-width: 100px;
+    }
   }
 }

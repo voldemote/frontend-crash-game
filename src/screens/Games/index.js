@@ -66,8 +66,8 @@ setExternalGames,
 
   return (
     <div className={styles.searchContainer}>
-      <Grid container spacing={1} justifyContent="space-between">
-        <Grid item lg={3} md={3} xs={3}>
+      <Grid container spacing={1} >
+        <Grid item lg={4} md={8} sm={8} xs={12}>
           <div className={styles.search}>
             <input
               type="text"
@@ -126,7 +126,7 @@ const Games = () => {
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} carousel>
-        {/* <CustomCarousel/> */}
+        {/* <CustomCarousel /> */}
       <div className={styles.container}>
         {/* <ElonGame /> */}
         {/*
