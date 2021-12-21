@@ -30,6 +30,7 @@ import { UserActions } from 'store/actions/user';
 import { selectUser } from 'store/selectors/authentication';
 import Button from 'components/Button';
 import classNames from "classnames";
+import { trackAlpacannonCashout, trackAlpacannonPlaceBet, trackAlpacannonPlaceBetGuest } from 'config/gtm';
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
@@ -143,13 +144,14 @@ const PlinkoGame = ({
     try {
       if(payload.demo) {
         setBet((bet) => { return {...bet, ...payload, profit: 50, ready: false, rollValue: Math.round(Math.random()*100)} })
-        // trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
+        trackAlpacannonPlaceBetGuest({ amount: payload.amount, multiplier: Math.round(Math.random()*100) });
       } else {
         const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
         setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false, gameHash: data.gameHash} })
         updateUserBalance(userId);
-        // trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
-        // trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });
+        
+        trackAlpacannonPlaceBet({ amount: payload.amount, multiplier: Math.round(data.rollSelected) });
+        trackAlpacannonCashout({ amount: data.profit, multiplier: data.winMultiplier });
         // return data;
       }
     } catch (e) {
@@ -267,7 +269,7 @@ const PlinkoGame = ({
         </div>
       </div>
 
-      <div className={styles.gameContent}>
+      {/* <div className={styles.gameContent}>
         <h1 className={styles.title}>Cannon</h1>
         <div className={styles.content}>
           <div className={styles.topContainer}>
@@ -311,7 +313,7 @@ const PlinkoGame = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </BaseContainerWithNavbar>
   );
 };
