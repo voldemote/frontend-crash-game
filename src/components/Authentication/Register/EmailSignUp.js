@@ -88,6 +88,8 @@ const EmailSignUp = ({
     
     handleReCaptchaVerify().then(recaptchaToken => {
       const refLocalStorage = localStorage.getItem('urlParam_ref');
+      const sidLocalStorage = localStorage.getItem('urlParam_sid');
+      const cidLocalStorage = localStorage.getItem('urlParam_cid');
       signUp({
         username,
         email,
@@ -95,6 +97,8 @@ const EmailSignUp = ({
         passwordConfirm: passwordConfirmation,
         ref: refLocalStorage,
         recaptchaToken,
+        sid: sidLocalStorage,
+        cid: cidLocalStorage,
       });
 
     });

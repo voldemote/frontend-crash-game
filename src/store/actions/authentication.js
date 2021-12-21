@@ -201,6 +201,8 @@ const signUp = makeActionCreator(AuthenticationTypes.SIGN_UP, {
   passwordConfirm: null,
   ref: null,
   recaptchaToken: null,
+  sid: null,
+  cid: null,
 });
 
 const signUpFail = makeActionCreator(AuthenticationTypes.SIGN_UP_FAIL, {
@@ -254,6 +256,8 @@ const loginExternal = makeActionCreator(AuthenticationTypes.LOGIN_EXTERNAL, {
   ref: null,
   provider: null,
   tosAccepted: false,
+  sid: null,
+  cid: null,
 });
 
 
