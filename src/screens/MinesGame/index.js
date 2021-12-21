@@ -34,6 +34,33 @@ import MinesAlpaca from '../../data/images/mines/mines-alpaca.png';
 import {trackMinesCashout} from "../../config/gtm";
 import classNames from "classnames";
 
+const outcomeMultipliers = [
+  [1.03, 1.09, 1.15, 1.21, 1.28, 1.35, 1.42, 1.5, 1.58, 1.67, 1.76, 1.86, 1.96, 2.07, 2.18, 2.3, 2.43, 2.56, 2.7, 2.85, 3.01, 3.18, 3.35, 3.53],
+  [1.08, 1.14, 1.2, 1.27, 1.34, 1.41, 1.49, 1.57, 1.66, 1.75, 1.85, 1.95, 2.06, 2.17, 2.29, 2.42, 2.55, 2.69, 2.84, 3, 3.17, 3.34, 3.52],
+  [1.14, 1.2, 1.27, 1.34, 1.41, 1.49, 1.57, 1.66, 1.75, 1.85, 1.95, 2.06, 2.17, 2.29, 2.42, 2.55, 2.69, 2.84, 3, 3.17, 3.34, 3.52],
+  [1.18, 1.24, 1.31, 1.38, 1.46, 1.54, 1.62, 1.71, 1.8, 1.9, 2, 2.11, 2.23, 2.35, 2.48, 2.62, 2.76, 2.91, 3.07, 3.24, 3.42],
+  [1.24, 1.31, 1.38, 1.46, 1.54, 1.62, 1.71, 1.8, 1.9, 2, 2.11, 2.23, 2.35, 2.48, 2.62, 2.76, 2.91, 3.07, 3.24, 3.42],
+  [1.3, 1.37, 1.45, 1.53, 1.61, 1.7, 1.79, 1.89, 1.99, 2.1, 2.22, 2.34, 2.47, 2.61, 2.75, 2.9, 3.06, 3.23, 3.41],
+  [1.37, 1.45, 1.53, 1.61, 1.7, 1.79, 1.89, 1.99, 2.1, 2.22, 2.34, 2.47, 2.61, 2.75, 2.9, 3.06, 3.23, 3.41],
+  [1.46, 1.54, 1.62, 1.71, 1.8, 1.9, 2, 2.11, 2.23, 2.35, 2.48, 2.62, 2.76, 2.91, 3.07, 3.24, 3.42],
+  [1.55, 1.64, 1.73, 1.83, 1.93, 2.04, 2.15, 2.27, 2.39, 2.52, 2.66, 2.81, 2.96, 3.12, 3.29, 3.47],
+  [1.65, 1.74, 1.84, 1.94, 2.05, 2.16, 2.28, 2.41, 2.54, 2.68, 2.83, 2.99, 3.15, 3.32, 3.5],
+  [1.77, 1.87, 1.97, 2.08, 2.19, 2.31, 2.44, 2.57, 2.71, 2.86, 3.02, 3.19, 3.37, 3.56],
+  [1.9, 2, 2.11, 2.23, 2.35, 2.48, 2.62, 2.76, 2.91, 3.07, 3.24, 3.42, 3.61],
+  [2.06, 2.17, 2.29, 2.42, 2.55, 2.69, 2.84, 3, 3.17, 3.34, 3.52, 3.71],
+  [2.25, 2.44, 2.65, 2.88, 3.12, 3.39, 3.68, 3.99, 4.33, 4.7, 5.1],
+  [2.47, 2.68, 2.91, 3.16, 3.43, 3.72, 4.04, 4.38, 4.75, 5.15],
+  [2.75, 2.98, 3.23, 3.5, 3.8, 4.12, 4.47, 4.85, 5.26],
+  [3, 3.26, 3.54, 3.84, 4.17, 4.52, 4.9, 5.32],
+  [3.54, 3.98, 4.48, 5.04, 5.67, 6.38, 7.18],
+  [4.13, 4.73, 5.42, 6.21, 7.11, 8.14],
+  [4.95, 5.77, 6.72, 7.83, 9.12],
+  [6.19, 7.43, 8.92, 10.7],
+  [8.25, 10.31, 12.89],
+  [12.38, 16.47],
+  [24.75]
+];
+
 const Game = ({
   showPopup,
   connected,
@@ -163,7 +190,7 @@ const Game = ({
         setProfit();
       }
     } else {
-      setMultiplier((multi)=> {
+      setMultiplier((multi) => {
         const currentMulti = outcomes[currentStep-1];
         const calculateProfit = (amount * currentMulti) - amount;
         setProfit(calculateProfit);
@@ -185,6 +212,9 @@ const Game = ({
         setDemoCount((count) => {
           return count+1;
         })
+        setGameInProgress(true);
+        setCurrentStep(0);
+        setOutcomes(outcomeMultipliers[payload.minesCount-1])
       } else {
         setBet((bet) => {
           return {
@@ -219,25 +249,30 @@ const Game = ({
     setCurrentStep(0);
 
     try {
-      const { data } = await gameApi.cashoutMines();
-      getLastCashout(data);
-      setGameOver(true);
-      updateUserBalance(userId);
-      setConfetti(true);
-      if(!bet.autobet){
-        setBet((bet)=> {return{
-          ...bet,
-          pending: false,
-          done: false
-        }});
+      if(user.isLoggedIn){
+        const { data } = await gameApi.cashoutMines();
+        getLastCashout(data);
+        setGameOver(true);
+        updateUserBalance(userId);
+        setConfetti(true);
+        if(!bet.autobet){
+          setBet((bet)=> {return{
+            ...bet,
+            pending: false,
+            done: false
+          }});
+        }
+        trackMinesCashout({
+          amount: data.reward,
+          multiplier: data.crashFactor,
+          profit: data.profit,
+        });
+      }else{
+        getLastCashout({profit: profit});
+        setGameOver(true);
+        setConfetti(true);
+        setBet({autobet: false, pending: false, done: false})
       }
-
-      trackMinesCashout({
-        amount: data.reward,
-        multiplier: data.crashFactor,
-        profit: data.profit,
-      });
-
       audio.playWinSound();
     } catch (e) {
       dispatch(
@@ -312,6 +347,7 @@ const Game = ({
                 setBet={setBet}
                 mines={mines}
                 setMines={setMines}
+                getLastCashout={getLastCashout}
                 onInit={audio => setAudio(audio)}
                 gameInProgress={gameInProgress}
                 setGameInProgress={setGameInProgress}
@@ -384,7 +420,7 @@ const Game = ({
               <b>One of the most active and hard-working animals out there is an alpaca. Besides sloths and unicorns, of course. Having said that you need to know they work very efficiently and their motto is “Do as little as possible but earn as much money as possible”. </b>
             </p>
             <p>
-              Sounds logic, right? As we all know from the geology lessons, there is a lot of WFAIRs under the Candyland of Alpacaworld and every Alpaca wants to find as much as possible. The problem they encounter on daily basis though is small, furry and blind - namely mole. They take away the gold from the bottom and then they leave an unpleasant surprise for the Alpacas. 
+              Sounds logic, right? As we all know from the geology lessons, there is a lot of WFAIRs under the Candyland of Alpacaworld and every Alpaca wants to find as much as possible. The problem they encounter on daily basis though is small, furry and blind - namely mole. They take away the gold from the bottom and then they leave an unpleasant surprise for the Alpacas.
             </p>
             <p>
               Black, smelly unpleasant surprise. If an alpaca dugs out the smelly surprise all the money is gone and he has to start from the beginning. Help Candyland to stay safe and beautiful and avoid as many mines as possible!
