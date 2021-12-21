@@ -1,62 +1,18 @@
 @import '../../styles/all';
 
-.registration {
-  width: 1000px;
-  height: 800px;
+.login {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: url('../../data/backgrounds/popup/popup-wide-bg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  width: 100%;
 
-  @media (max-width: $screen-sm) {
-    background: url('../../data/backgrounds/popup/popup-bg.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: center;
-    width: 700px;
-    height: 800px;
-    max-width: 170%;
-    // min-height: ;
+  @media (min-width: $screen-xs) {
+    width: 325px;
   }
-  @media (max-width: $screen-xs) {
-    height: 900px;
-    background-size: 100% 110%;
-    padding-top: 40px;
-  }
-
-  &.portraitBg {
-    // width: 800px;
-    background: url('../../data/backgrounds/popup/popup-bg-login.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-
-    @media (max-width: $screen-sm) {
-      background: url('../../data/backgrounds/popup/popup-bg.png');
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: center;
-      max-width: 520px;
-      width: 700px;
-      // height: 670px;
+  @media (min-width: $screen-sm) {
+    &.registration {
+      width: 600px;
     }
-
-    @media (max-width: $screen-xs) {
-      background-size: 110% 105%;
-      background-position: center;
-
-      margin-left: 0;
-      margin-right: 0;
-    }
-
-    // @media (max-width: $screen-sm) {
-    //   width: 100%;
-    //   border-radius: 30% 30% 15% 15%;
-    //   background: #31a1df;
-    // }
   }
 
   .popupTop {
@@ -260,51 +216,11 @@
   .form {
     position: relative;
     display: flex;
-    max-width: 800px;
-    padding: 170px 55px 80px 50px;
     column-gap: 20px;
-
-    @media (max-width: $screen-md) {
-      padding: 190px 110px 80px 120px;
-    }
-
-    @media (max-width: $screen-sm) {
-      width: 100%;
-      max-width: 400px;
-      flex-direction: column;
-      padding: 135px 30px 20px 30px;
-    }
-
-    @media (max-width: $screen-xs) {
-      max-width: 100vw;
-      padding-top: 135px;
-    }
+    width: 100%;
 
     &.loginForm {
-      // padding: 120px 50px 80px 50px;
-      // width: 400px;
-      padding-top: 150px;
-      padding-left: 48px;
       flex-direction: column;
-
-      @media (max-width: $screen-md) {
-        padding-right: 50px;
-      }
-
-      @media (max-width: $screen-sm) {
-        // width: 100%;
-        // min-height: fit-content;
-        // padding: 100px 0 20px;
-        padding: 150px 15% 20px 15%;
-      }
-
-      @media (max-width: $screen-xs) {
-        // width: 100%;
-        // min-height: fit-content;
-        // padding: 100px 0 20px;
-        max-width: 400px;
-        padding: 150px 14% 20px 14%;
-      }
     }
   }
 }

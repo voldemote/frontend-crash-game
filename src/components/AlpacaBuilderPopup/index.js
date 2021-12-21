@@ -63,7 +63,9 @@ const AlpacaBuilderPopup = ({
 
   return (
     <div className={styles.alpacaPopup}>
-      <div style={{marginTop: 115}} />
+      <span className={styles.title}>
+        Build your alpaca
+      </span>
       <AlpacaBuilder
         props={alpacaBuilderProps}
         cancelLabel={cancelLabel}

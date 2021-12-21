@@ -6,42 +6,14 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: url('../../data/backgrounds/popup/popup-medium-bg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  padding: 190px 200px 70px 190px;
-  width: 700px;
-  height: 790px;
-
-  @media (max-width: $screen-sm) {
-    padding: 30px 125px 60px;
-    padding-right: 130px;
-    padding-top: 180px;
-    background: url('../../data/backgrounds/popup/popup-bg.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-  }
-
-  @media (max-width: $screen-xs) {
-    padding: 30px 85px 60px 75px;
-    padding-top: 170px;
-    background-size: 135% 115%;
-  }
 
   .title {
-    // margin-left: 24px;
     text-align: center;
     font-style: normal;
     font-weight: bold;
     font-size: 34px;
     color: black;
     line-height: 30px;
-
-    // @media (max-width: $screen-sm) {
-    //   display: none;
-    // }
   }
 
   .container {
@@ -99,8 +71,9 @@
       .button {
         font-size: 20px;
         background: $colorButton;
+        font-family: $fontOmnes;
         color: $colorBlack;
-        font-weight: 600;
+        font-weight: 700;
         line-height: 40px;
         cursor: pointer;
         border-radius: 30px;

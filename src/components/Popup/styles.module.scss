@@ -4,7 +4,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  //display: none;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -26,29 +25,77 @@
   .modalContent {
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-flow: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     pointer-events: auto;
     background-clip: padding-box;
     outline: 0;
+    border-radius: 6px;
+    background: linear-gradient(
+      163.46deg,
+      $colorWhite -21.15%,
+      $colorRedLighter 100.59%
+    );
+    padding: 50px 30px 30px;
+    max-width: calc(100vw - 30px);
+    min-height: 280px;
+    min-width: 290px;
+
+    & > * {
+      // correct depth hierarchy
+      z-index: 2;
+      position: relative;
+    }
+
+    &::after {
+      // inset border
+      content: '';
+      position: absolute;
+      inset: 15px;
+      border-radius: 4px;
+      border: 1px solid $colorPopBorder;
+      z-index: 0;
+    }
+
+    .candyTopLeft,
+    .candyBottomRight {
+      position: absolute;
+      z-index: 1;
+      max-width: initial;
+    }
+    .candyTopLeft {
+      left: -124px;
+      top: -116px;
+      height: 365px;
+    }
+    .candyBottomRight {
+      width: 383px;
+      bottom: -96px;
+      right: -114px;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      padding: 50px;
+    }
+
+    @media screen and (min-width: $screen-xs) {
+      max-width: max-content;
+    }
   }
 
   .modalDialog {
     position: relative;
     width: auto;
-    max-width: 600px;
-    margin: 30px auto;
-
-    min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // overflow: auto;
+    align-items: center;
     pointer-events: none;
-    @media (max-width: $screen-sm) {
-      max-width: calc(100% - 20px);
-    }
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 50px 0 10px;
 
     &.walletBuyWfair {
       max-width: 700px;
@@ -63,6 +110,12 @@
     &.usernamePopup,
     &.alpacaBuilderPopup {
       overflow: visible;
+    }
+
+    &.alpacaBuilderPopup {
+      @media screen and (max-width: $screen-md-max) {
+        max-width: calc(100vw - 30px);
+      }
     }
 
     //here specific popup sizes per type, if needed
@@ -84,15 +137,6 @@
     &.disclaimerContainer {
       max-width: 800px;
       height: auto;
-    }
-
-    &.registrationPopupContainer {
-      width: auto;
-      max-width: max-content;
-      overflow: visible;
-      @media (max-width: $screen-md) {
-        max-width: calc(100vw - 15px);
-      }
     }
 
     &.explanationPopupVisual {
@@ -117,18 +161,7 @@
       }
     }
 
-    &.alpacaBuilderPopup {
-      max-width: 1000px;
-      width: 1000px;
-    }
-
-    &.usernamePopup {
-      max-width: 700px;
-    }
-
     @media (max-width: $screen-sm) {
-      min-height: calc(100vh - 20px);
-
       &.welcomeContainer {
         min-height: calc(100vh - 100px);
       }
@@ -151,8 +184,8 @@
 
   .closeButtonContainer {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: -15px;
+    right: -15px;
 
     .closeButton {
       z-index: $zIndexPopup + 1;

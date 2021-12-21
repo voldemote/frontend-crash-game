@@ -6,6 +6,8 @@ import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useEffect } from 'react';
+import candyTopLeft from '../../data/images/candy-top-left.png';
+import candyBottomRight from '../../data/images/candy-bottom-right.png';
 import PopupTheme from './PopupTheme';
 import BetView from '../BetView';
 import _ from 'lodash';
@@ -285,11 +287,12 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
             type === PopupTheme.username ? styles.usernamePopup : null,
-            type === PopupTheme.alpacaBuilder ? styles.alpacaBuilderPopup : null,
+            type === PopupTheme.alpacaBuilder
+              ? styles.alpacaBuilderPopup
+              : null,
             small ? styles.small : null,
             maxWidth ? styles.maxWidth : null,
-            type === PopupTheme.auth &&
-              styles.registrationPopupContainer,
+            type === PopupTheme.auth && styles.registrationPopupContainer,
             [
               PopupTheme.signUpNotificationFirst,
               PopupTheme.signUpNotificationSecond,
@@ -297,21 +300,30 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           )}
         >
           <div className={styles.modalContent}>
+            <img
+              className={styles.candyTopLeft}
+              src={candyTopLeft}
+              alt="candy-left-top"
+            />
+            <img
+              className={styles.candyBottomRight}
+              src={candyBottomRight}
+              alt="candy-left-top"
+            />
             <div className={styles.closeButtonContainer}>
               {![
                 PopupTheme.signUpNotificationSecond,
                 PopupTheme.disclaimer,
                 PopupTheme.acceptToS,
-              ].includes(type)
-                 && (
-                  <Icon
-                    width={30}
-                    height={30}
-                    className={styles.closeButton}
-                    iconType={IconType.close}
-                    onClick={hidePopup}
-                  />
-                )}
+              ].includes(type) && (
+                <Icon
+                  width={30}
+                  height={30}
+                  className={styles.closeButton}
+                  iconType={IconType.close}
+                  onClick={hidePopup}
+                />
+              )}
             </div>
 
             {renderPopup()}

@@ -48,7 +48,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
   font-family: $fontOmnes;
   text-transform: uppercase;
 
@@ -115,15 +114,11 @@
 
   .forgotPasswordLink {
     align-self: flex-end;
-    margin-bottom: 30px;
     text-decoration: underline;
     font-family: $fontOmnes;
     cursor: pointer;
     color: $colorButton;
-
-    @media (max-width: $screen-sm) {
-      margin: 10px 0;
-    }
+    margin: 10px 0;
   }
 
   .inputForm {
@@ -345,8 +340,8 @@
 
 .socialContainer {
   display: flex;
-  gap: 20px;
-  justify-content: space-around;
+  gap: 30px;
+  justify-content: center;
   margin: 20px 0;
 
   @media screen and (max-width: $screen-sm-max) {
