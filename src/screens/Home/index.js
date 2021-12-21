@@ -374,7 +374,7 @@ const Home = ({
               className={styles.startButton}
               onClick={showPopupForUnauthenticated}
             >
-              Claim the offer!
+              Start here!
             </button>
             <img className={styles.topFront} src={TopFront} alt="" />
             <img className={styles.topBack} src={TopBack} alt="" />
