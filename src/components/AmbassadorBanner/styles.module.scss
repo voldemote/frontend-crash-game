@@ -98,7 +98,11 @@
           white-space: nowrap;
 
           @media (max-width: $screen-xl) {
-            font-size: 34px;
+            font-size: 32px;
+          }
+
+          @media (max-width: $screen-md) {
+            font-size: 26px;
           }
 
           @media (max-width: $screen-xs) {
