@@ -9,14 +9,11 @@ import { getEvoplaygames } from 'api/casino-games';
 
 const GameEvoplay = ({ showHowtoLink, showPopup }) => {
   const [games, setGames] = useState([]);
-  console.log("GameEvoplay")
 
   useEffect(() => {
-    console.log("GameEvoplay")
     getEvoplaygames()
         .then(({data}) => {
-          console.log("games", data?.games)
-
+          console.log("data?.games", data?.games)
           setGames(data?.games)
         })
         .catch(error => {
@@ -38,7 +35,8 @@ const GameEvoplay = ({ showHowtoLink, showPopup }) => {
     }
   };
   //const categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[])
-
+  const categories = Object.values(games).reduce((gs, g) => { return gs.includes(g.game_sub_type) ? gs :gs.concat(g.game_sub_type) },[])
+  console.log("categories", categories)
   return (
     <div className={styles.gamesContainer}>
       <div className={styles.gamesCategory}>

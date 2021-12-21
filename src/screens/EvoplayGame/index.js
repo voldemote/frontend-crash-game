@@ -36,7 +36,6 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 
-
 const EvoplayGame = ({
   showPopup,
   history,
@@ -53,10 +52,9 @@ const EvoplayGame = ({
   const gameCategory = match?.params?.category
   const gameNumber = match?.params?.number
   const EXTERNAL_GAME_EVENT_ID = ObjectId(gameNumber)//game.id;
-  console.log("EXTERNAL_GAME_EVENT_ID", EXTERNAL_GAME_EVENT_ID)
+
+
   const dispatch = useDispatch();
-  const [demo, setDemo] = useState(true);
-  const [amount, setAmount] = useState(50);
   const [init, setInit] = useState(null);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -69,35 +67,21 @@ const EvoplayGame = ({
 
 
   useEffect(() => {
-  //  if(!user.isLoggedIn){
-      //setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
-  //  }else{
-      getUrlgame({UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber.length === 2 ? '000' + gameNumber : gameNumber.length === 3 ? '00' + gameNumber : gameNumber.length === 4 ? '0' + gameNumber : gameNumber, Provider: 'evoplay' })
-        .then(({data}) => {
-          console.log("data", data)
-          if(data?.url) setInit(data?.url)
-        })
-        .catch(error => {
-          dispatch(AlertActions.showError(error.message));
-        });
-
-
-/*
-      setInitialEvoplaySession({UserId: userId, GameName: gameName, Provider: 'evoplay' })
-        .then(({data}) => {
-          console.log("data", data)
-        })
-        .catch(error => {
-          dispatch(AlertActions.showError(error.message));
-        });
-        */
-  //  }
+    getUrlgame({returnUrl: window.location.origin, demo: !user.isLoggedIn, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'evoplay' })
+      .then(({data}) => {
+        console.log("data", data)
+        if(data?.url) setInit(data?.url)
+      })
+      .catch(error => {
+        dispatch(AlertActions.showError(error.message));
+      });
     return () => {
-    //  setInit(null)
+      setInit(null)
     }
   }, [])
 
   useEffect(() => {
+    console.log("ChatActions")
     dispatch(ChatActions.fetchByRoom({ roomId: EXTERNAL_GAME_EVENT_ID }));
   }, [dispatch, connected]);
 
@@ -142,11 +126,6 @@ const EvoplayGame = ({
     </Grid>
   );
 
-
-  //const url = `https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx?&GameName=${gameName}&Token=${init}&PortalName=wallfair&ReturnUrl=${window.location.origin}`
-
-  //const urltest = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
-
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
       <div className={styles.container}>
@@ -163,7 +142,7 @@ const EvoplayGame = ({
               onClick={handleHelpClick}
             />
           </div>
-          {init && <iframe className={styles.mainContainer} src={user.isLoggedIn?init:null}/>}
+          {init && <iframe className={styles.mainContainer} src={init}/>}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
