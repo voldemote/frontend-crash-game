@@ -413,7 +413,9 @@ const signUp = function* (action) {
     password: action.password,
     passwordConfirm: action.passwordConfirm,
     ref: action.ref,
-    recaptchaToken: action.recaptchaToken
+    recaptchaToken: action.recaptchaToken,
+    sid: action.sid,
+    cid: action.cid,
   };
   const { response, error } = yield call(Api.signUp, payload);
   if (response) {
@@ -430,6 +432,8 @@ const signUp = function* (action) {
     trackSignup({ method: 'Email' });
 
     localStorage.removeItem('urlParam_ref');
+    localStorage.removeItem('urlParam_sid');
+    localStorage.removeItem('urlParam_cid');
   } else {
     yield put(
       AuthenticationActions.signUpFail({
@@ -439,9 +443,9 @@ const signUp = function* (action) {
   }
 };
 
-const loginExternal = function* ({ code, provider, ref, tosAccepted }) {
+const loginExternal = function* ({ code, provider, ref, tosAccepted, sid, cid }) {
   yield put(push('/'));
-  const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref } });
+  const { response, error } = yield call(Api.loginExternal, { provider, body: { code, ref, sid, cid } });
   if (response) {
     const data = response?.data;
 
@@ -463,6 +467,8 @@ const loginExternal = function* ({ code, provider, ref, tosAccepted }) {
       yield put(AuthenticationActions.acceptToSConsent());
     }
     localStorage.removeItem('urlParam_ref');
+    localStorage.removeItem('urlParam_sid');
+    localStorage.removeItem('urlParam_cid');
   } else {
     yield put(
       AuthenticationActions.loginExternalFail({

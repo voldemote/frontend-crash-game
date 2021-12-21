@@ -15,14 +15,17 @@ const useOAuthCallback = () => {
     if(!provider) return;
     const code = params.get('code');
     const error = params.get('error');
-    const { ref: refParam, tosAccepted } = JSON.parse(params.get('state'));
+    const { ref: refParam, tosAccepted, sid: sidParam, cid: cidParam } = JSON.parse(params.get('state'));
+    const sid = sidParam === 'null' ? null : sidParam;
+    const cid = cidParam === 'null' ? null : cidParam;
     const ref = refParam === 'null' ? null : refParam;
+    
     
     if(error) {
       dispatch(AuthenticationActions.loginExternalFail({ message: 'Something went wrong.'}));
       history.push('/');
     } else if(code) {
-      const payload = { code, ref, tosAccepted };
+      const payload = { code, ref, tosAccepted, sid, cid };
       dispatch(AuthenticationActions.loginExternal({ ...payload, provider }));
     } else {
       history.push('/');

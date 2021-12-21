@@ -14,12 +14,16 @@ export const useSocialLogins = () => {
     [location]
   );
   const ref = params.get('ref');
+  const sid = params.get('sid');
+  const cid = params.get('cid');
   const init = (provider, payload) => initOAuthFlow({
     ...payload,
     redirectUri: redirectFactory(provider),
     state: enc(JSON.stringify({
       ...payload.state,
       ref: ref || null,
+      sid: sid || null,
+      cid: cid || null,
     }))
   });
   return {

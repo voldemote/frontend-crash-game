@@ -133,11 +133,25 @@ const Home = ({
     }
   };
 
+  const handleVoluumPersistent = () => {
+    const sid = urlParams.get('sid');
+    const cid = urlParams.get('cid');
+
+    if (sid) {
+      localStorage.setItem('urlParam_sid', sid);
+    }
+
+    if (cid) {
+      localStorage.setItem('urlParam_cid', cid);
+    }
+  };
+
   useEffect(() => {
     if (isMount) {
       // fetchTags();
       renderBetApprovePopup();
       handleRefPersistent();
+      handleVoluumPersistent();
     }
   }, []);
 
