@@ -34,8 +34,8 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         setIsMobile(isSmall);
       }
     };
-    window.addEventListener('resize', cb)
-   return () => window.removeEventListener('resize', cb)
+    window.addEventListener('resize', cb);
+    return () => window.removeEventListener('resize', cb);
   }, [])
 
   const iconProps = {
@@ -97,6 +97,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
               login('google', isRegistration)();
               event.preventDefault();
             }}
+            disabled={disabled}
           >
             <Icon
               className={styles.socialIcon}
@@ -127,6 +128,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
               login('twitch', isRegistration)();
               event.preventDefault();
             }}
+            disabled={disabled}
           >
             <Icon
               className={styles.socialIcon}
@@ -157,6 +159,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
               login('discord', isRegistration)();
               event.preventDefault();
             }}
+            disabled={disabled}
           >
             <Icon
               className={styles.socialIcon}

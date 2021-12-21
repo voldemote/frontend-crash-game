@@ -244,26 +244,29 @@ const EmailSignUp = ({
               checked={legalAuthorizationAgreed}
               setChecked={(e) => {
                 setError(null);
-                setLegalAuthorizationAgreed(e)
+                setLegalAuthorizationAgreed(e);
               }}
             />
           </FormGroup>
           <Button
             onClick={onConfirm}
             className={classNames([styles.submitButton, styles.mobile])}
-            disabled={submitInProgress}
+            disabled={submitInProgress || !legalAuthorizationAgreed}
             disabledWithOverlay={false}
             data-action="submit"
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed, validateInput)}
+          {renderSocialLogin(
+            submitInProgress || !legalAuthorizationAgreed,
+            validateInput
+          )}
         </div>
       </div>
       <Button
         onClick={onConfirm}
         className={classNames([styles.submitButton, styles.desktop])}
-        disabled={submitInProgress}
+        disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
       >
         Sign Up with E-mail
