@@ -160,7 +160,13 @@ const Home = ({
         <div className={styles.backgroundWrapper}>          
           <div className={styles.whiteWrapper}>
             <div className={styles.whiteContainer}>
+              <a
+                href="https://discord.gg/S7ebz6bb"
+                target="_blank"
+                rel="noreferrer"
+              >
               <DiscordMarker/>
+              </a>
             </div>
           </div>
           <div className={styles.body}>
@@ -498,6 +504,14 @@ const Home = ({
     );
   };
 
+  const renderFreeAlpacaOffer = () => {
+    return (
+      <div>
+
+      </div>
+    )
+  }
+
   return (
     <BaseContainerWithNavbar home loggedIn={isLoggedIn()}>
       {/* {renderHeadline()} */}
@@ -509,6 +523,7 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
+          {renderFreeAlpacaOffer()}
           {/* <AmbassadorBanner /> */}
           <div className={styles.nftBannerWrapper}>
             <NftBanner />
