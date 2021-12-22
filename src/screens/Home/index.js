@@ -72,6 +72,7 @@ import AmbassadorBanner from 'components/AmbassadorBanner';
 import NftBanner from 'components/NftBanner';
 import GameCards from 'components/GameCards';
 import LimitedOfferBanner from 'components/LimitedOfferBanner';
+import Routes from 'constants/Routes';
 
 const Home = ({
   authState,
@@ -378,7 +379,7 @@ const Home = ({
               <br />
               <p>WFAIRS FOR <span className={styles.red}>FREE</span></p>
               <div className={styles.conditionsWrapper}>
-                <span className={styles.conditions}>- no hidden conditions</span>
+                <span className={styles.conditions}>- no hidden conditions<Link to={Routes.terms}><sup>*</sup></Link></span>
                 <span className={styles.conditions}>- start playing in 1 min</span>
                 <span className={styles.conditions}>- limited to first 1000 users</span>
               </div>
@@ -390,6 +391,7 @@ const Home = ({
             >
               Register for free
             </button>
+            <span className={styles.terms}><sup>*</sup><Link target="_blank" to={Routes.terms}>Terms &amp; Conditions</Link></span>
             <img className={styles.topFront} src={TopFront} alt="" />
             <img className={styles.topBack} src={TopBack} alt="" />
             {/* <img className={styles.bottomFront} src={BottomFront} alt="" /> */}
