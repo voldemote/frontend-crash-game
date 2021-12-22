@@ -32,79 +32,6 @@
   }
 }
 
-.mainHeadline {
-  color: $colorWhite;
-  text-align: center;
-  max-width: 580px;
-  margin: 0 auto;
-  margin-top: 143px;
-  padding: 0 20px;
-
-  @media (max-width: $screen-sm) {
-    margin-top: 90px;
-  }
-
-  h1 {
-    font-family: $fontOmnes;
-    font-size: 46px;
-    font-weight: bold;
-    line-height: 1.13;
-    letter-spacing: 1px;
-
-    @media (max-width: $screen-md) {
-      font-size: 38px;
-    }
-  }
-
-  ul {
-    margin: 0 auto;
-    list-style: none;
-    margin-left: 20px;
-    text-align: left;
-    padding-top: 30px;
-
-    & li {
-      position: relative;
-      margin-bottom: 5px;
-      opacity: 0.6;
-      margin-left: 10px;
-    }
-
-    & li:before {
-      content: '';
-      position: absolute;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      width: 5px;
-      height: 5px;
-      top: 11px;
-      left: -15px;
-      transform: translateY(-50%) rotate(-45deg);
-    }
-  }
-
-  div.slogan {
-    padding: 12px 0;
-    font-size: 25px;
-    font-family: $fontOmnes;
-
-    span {
-      font-family: $fontOmnes;
-      font-weight: bold;
-      color: $colorYellowLight;
-    }
-
-    @media (max-width: $screen-md) {
-      font-size: 24px;
-      padding: 12px 15px 0;
-    }
-  }
-
-  .socialIcons {
-    padding-bottom: 0px;
-  }
-}
-
 .bottomWrapper {
   display: flex;
   align-items: flex-start;
@@ -851,5 +778,72 @@
     margin-top: 50px;
     margin-bottom: 100px;
     cursor: pointer;
+  }
+}
+
+.discordBanner {
+  width: 100%;
+  height: 130px;
+  margin-top: -100px;
+  margin-bottom: 40px;
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+  .backgroundWrapper {
+    position: absolute;
+    height: 100px;
+    left: 0;
+    right: 0;
+    background: #f7a800;
+    display: flex;
+    .body {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 36px;
+      color: $colorBlack;
+
+      @media (max-width: 1366px) {
+        font-size: 32px;
+      }
+
+      p {
+        margin-left: 20px;
+      }
+    }
+    .whiteWrapper {
+      max-width: 500px;
+      position: relative;
+      margin-right: 50px;
+      margin-top: 0px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 0px solid transparent;
+        border-left: 60px solid #fff;
+        border-bottom: 127px solid transparent;
+
+        @media (max-width: $screen-sm) {
+          border: none;
+        }
+      }
+
+      .whiteContainer {
+        background: white;
+        padding: 6px 30px;
+        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        svg {
+          width: 300px;
+          height: 110px;
+        }
+      }
+    }
   }
 }
