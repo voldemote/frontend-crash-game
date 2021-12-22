@@ -381,12 +381,13 @@ const Home = ({
     );
   };
 
+  const showPopupForUnauthenticated = () => {
+    if (!isLoggedIn()) {
+      startOnboardingFlow();
+    }
+  };
+  
   const renderWelcome = () => {
-    const showPopupForUnauthenticated = () => {
-      if (!isLoggedIn()) {
-        startOnboardingFlow();
-      }
-    };
     return (
       <div className={styles.welcomeContainer}>
         <div className={styles.cardContainer}>
@@ -533,6 +534,21 @@ const Home = ({
         </div>
 
         <div className={styles.backgroundWrapper}>
+          <span className={styles.title}>
+            To the first 1000 Alpacas <br/>
+            we giveaway <span className={styles.underline}>500 WFAIR for free</span>
+          </span>
+          <div className={styles.bottomInfoWrapper}>
+            <div className={styles.whiteWrapper}>
+              <div className={styles.whiteContainer}>
+                <p>Limited offer:</p>
+                <p className={styles.number}>726/1000</p>
+              </div>
+            </div>
+            <button onClick={showPopupForUnauthenticated}>
+              Register for free
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -549,7 +565,7 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
-          {/* {renderFreeAlpacaOffer()} */}
+          {renderFreeAlpacaOffer()}
           {/* <AmbassadorBanner /> */}
           <div className={styles.nftBannerWrapper}>
             <NftBanner />
