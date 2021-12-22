@@ -8,6 +8,7 @@ import {
   EXTERNAL_GAMES,
   NEW_SLOTS_GAMES,
   SLOTS_GAMES,
+  TOP_GAMES,
 } from '../../constants/Games';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
@@ -267,9 +268,7 @@ const Home = ({
   };
 
   const renderSlogGames = () => {
-    const externalGames = EXTERNAL_GAMES.filter(
-      (game, i) => game.GameCategory === 'Slot Games'
-    ).filter((g, i) => i < 18);
+    const externalGames = TOP_GAMES;
     return (
       <div className={classNames(styles.allGamesContiner)}>
         <GameSmartsoft gameTitle games={externalGames} category="Slot Games" />
@@ -374,14 +373,14 @@ const Home = ({
 
             <LimitedOffer />
             <span className={styles.limitedOfferDescription}>
-              <span>Join today and receive</span>
+              <span>Be 1 of 1000 Alpacas!</span>
               <br />
-              <span className={styles.highlighted}>50%</span>
+              <span className={styles.highlighted}>Sign up</span>
               <br />
-              <span>cashback up to</span>
+              <span>and get</span>
               <br />
-              <span className={styles.highlighted}>25 000</span>
-              <p>WFAIRs</p>
+              <span className={styles.highlighted}>500</span>
+              <p>WFAIRs for free</p>
             </span>
 
             <button

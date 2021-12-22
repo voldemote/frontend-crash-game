@@ -151,7 +151,8 @@
 
 .errorBox {
   position: relative;
-  height: 30px;
+  // height: 30px;
+  height: fit-content;
   width: 100%;
   padding: 10px 10px;
   display: flex;

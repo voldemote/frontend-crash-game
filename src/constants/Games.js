@@ -266,6 +266,103 @@ export const GAMES = {
   }
 };
 
+export const TOP_GAMES = [
+  {
+    TechnicalName: 'JetX',
+    TechnicalCategory: 'JetX',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'JetX3',
+    TechnicalCategory: 'XGames',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'Cappadocia',
+    TechnicalCategory: 'Games',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'Balloon',
+    TechnicalCategory: 'Games',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'SpinX',
+    TechnicalCategory: 'XGames',
+    GameCategory: 'Casino Games',
+    picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/SpinX.jpg`
+  },
+  {
+    TechnicalName: 'SweetCandy',
+    TechnicalCategory: 'Games',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'FunFruit',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'Cowboy',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'BookOfWin',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'Christmas',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'DonutCity',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'Fruit10',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games',
+    picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/MagicGarden10.jpg`
+  },
+  {
+    TechnicalName: 'BlazingHot40',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games',
+    picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/BlazingHot40.jpg`
+  },
+  {
+    TechnicalName: 'Dota',
+    TechnicalCategory: 'Slots',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'ClassicKeno',
+    TechnicalCategory: 'Keno',
+    GameCategory: 'Casino Games',
+    picture: `https://www.smartsoftgaming.com/Content/Images/GameIcons/ClassicKeno.jpg`
+  },
+  {
+    TechnicalName: 'VirtualRoulette',
+    TechnicalCategory: 'Roulette',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'VirtualClassicRoulette',
+    TechnicalCategory: 'Roulette',
+    GameCategory: 'Casino Games'
+  },
+  {
+    TechnicalName: 'LuckySeven',
+    TechnicalCategory: 'Games',
+    GameCategory: 'Casino Games'
+  }
+];
+
 
 export const EXTERNAL_GAMES = [
   {
@@ -445,11 +542,11 @@ export const EXTERNAL_GAMES = [
   TechnicalName: 'VirtualClassicRoulette',
   TechnicalCategory: 'Roulette',
   GameCategory: 'Casino Games'
-},/*{
+  },/*{
   TechnicalName: 'Blackjack',
   TechnicalCategory: 'BoardGames',
   GameCategory: 'Board Games'
-},*/{
+  },*/{
   TechnicalName: 'ClassicKeno',
   TechnicalCategory: 'Keno',
   GameCategory: 'Keno Games',
