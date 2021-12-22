@@ -51,6 +51,8 @@ const { store, persistor } = configStore();
 
 initTagManager();
 
+const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
+
 const App = () => {
   return (
     <div id={'main-scroll-container'}>
@@ -94,7 +96,7 @@ const App = () => {
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
               <Route exact path={Routes.oauth} component={Home} />
-              <Route exact path={Routes.externalGames} component={ExternalGames} />
+              {showUpcoming && <Route exact path={Routes.externalGames} component={ExternalGames} />}
               <Route exact path={Routes.evoplayGame} component={EvoplayGame} />
               <Route exact path={Routes.externalGame} component={ExternalGame} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}

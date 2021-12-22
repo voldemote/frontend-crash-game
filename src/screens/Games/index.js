@@ -7,7 +7,6 @@ import {
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
 import GameSmartsoft from '../../components/GameSmartsoft';
-import GameEvoplay from '../../components/GameEvoplay';
 
 const Games = () => {
   const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
@@ -30,7 +29,6 @@ const Games = () => {
           games={EXTERNAL_GAMES}
           category="Slot Games"
         />
-        <GameEvoplay />
       </div>
     </BaseContainerWithNavbar>
   );
