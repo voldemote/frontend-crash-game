@@ -31,6 +31,8 @@ import { FormGroup, InputLabel } from 'components/Form';
 import { validate } from '@material-ui/pickers';
 import WithdrawalErrorPopup from 'components/WithdrawalErrorPopup';
 
+const minTokenWithdrawAmount = 1000;
+
 const networkName = {
   polygon: 'MATIC',
   ethereum: 'ETH',
@@ -83,7 +85,7 @@ const WithdrawTab = () => {
       isAddressValid &&
       error === null &&
       withdrawAmount > 0 &&
-      tokenAmount >= 400
+      tokenAmount >= minTokenWithdrawAmount
     ) {
       setSubmitButtonDisable(false);
     } else {
@@ -106,8 +108,8 @@ const WithdrawTab = () => {
     if (address && !isValidAdress(address)) {
       formError = 'wrong 0x address format';
       fieldRef = addressRef.current;
-    } else if (tokenAmount > 0 && tokenAmount < 400) {
-      formError = 'Minimum withdraw limit 400 WFAIR';
+    } else if (tokenAmount > 0 && tokenAmount < minTokenWithdrawAmount) {
+      formError = `Minimum withdraw limit ${minTokenWithdrawAmount} WFAIR`;
       fieldRef = amountRef.current;
     } else if (withdrawAmount < 0) {
       formError = 'Please consider adding a higher amount to cover the fees';
