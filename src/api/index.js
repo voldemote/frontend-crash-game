@@ -582,6 +582,12 @@ const acceptToS = () => {
     .catch((error) => ({ error: error.message }));
 }
 
+const getUserCount = () => {
+  return Api.get(ApiUrls.USER_COUNT)
+    .then((response) => ({ response }))
+    .catch((error) => ({ error: error.message }));
+}
+
 export {
   Api,
   createBet,
@@ -652,4 +658,5 @@ export {
   sendBuyWithCrypto,
   generateCryptopayChannel,
   acceptToS,
+  getUserCount,
 };

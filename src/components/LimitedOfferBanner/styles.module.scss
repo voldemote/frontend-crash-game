@@ -1,0 +1,23 @@
+@import '../../styles/all';
+
+.bannerWrapper {
+  display: flex;
+  flex-direction: column;
+  background: $colorDarkerRed;
+  transform: rotate(-8deg);
+  color: $colorWhite;
+  align-items: center;
+  align-self: flex-end;
+  padding: 5px 10px;
+  margin: 0px 20px;
+
+  p {
+    color: $colorWhite !important;
+    font-size: 28px !important;
+  }
+
+  span {
+    color: $colorWhite !important;
+    font-weight: 700 !important;
+  }
+}

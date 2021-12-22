@@ -71,6 +71,7 @@ import { TOKEN_NAME } from 'constants/Token';
 import AmbassadorBanner from 'components/AmbassadorBanner';
 import NftBanner from 'components/NftBanner';
 import GameCards from 'components/GameCards';
+import LimitedOfferBanner from 'components/LimitedOfferBanner';
 
 const Home = ({
   authState,
@@ -371,27 +372,27 @@ const Home = ({
               <br /> <span>Alpacasino</span>
             </p>
 
-            <LimitedOffer />
+            <LimitedOfferBanner />
             <span className={styles.limitedOfferDescription}>
-              <span>Be 1 of 1000 Alpacas!</span>
-              <br />
-              <span className={styles.highlighted}>Sign up</span>
-              <br />
-              <span>and get</span>
-              <br />
               <span className={styles.highlighted}>500</span>
-              <p>WFAIRs for free</p>
+              <br />
+              <p>WFAIRS FOR <span className={styles.red}>FREE</span></p>
+              <div className={styles.conditionsWrapper}>
+                <span className={styles.conditions}>- no hidden conditions</span>
+                <span className={styles.conditions}>- start playing in 1 min</span>
+                <span className={styles.conditions}>- limited to first 1000 users</span>
+              </div>
             </span>
 
             <button
               className={styles.startButton}
               onClick={showPopupForUnauthenticated}
             >
-              Start here!
+              Register for free
             </button>
             <img className={styles.topFront} src={TopFront} alt="" />
             <img className={styles.topBack} src={TopBack} alt="" />
-            <img className={styles.bottomFront} src={BottomFront} alt="" />
+            {/* <img className={styles.bottomFront} src={BottomFront} alt="" /> */}
             <img className={styles.bottomBack} src={BottomBack} alt="" />
           </div>
         </div>
