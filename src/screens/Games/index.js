@@ -37,7 +37,7 @@ setExternalGames,
       const match = game.title.toLowerCase().match(value.toLowerCase());
       return Array.isArray(match);
     });
-    
+
 
     const searchedExternalGames = externalGames.filter(game => {
       const match = game.TechnicalName.toLowerCase().match(value.toLowerCase());
