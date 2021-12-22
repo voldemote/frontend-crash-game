@@ -1,0 +1,165 @@
+@import '../../styles/all';
+
+.banPopup {
+  position: relative;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+
+  .title {
+    text-align: center;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 34px;
+    color: black;
+    line-height: 30px;
+  }
+
+  .container {
+    max-width: 380px;
+
+    .description {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: left;
+      color: black;
+      line-height: 36px;
+      padding-top: 30px;
+      @media (max-width: $screen-sm) {
+        font-size: 16px;
+      }
+
+      @media (max-width: $screen-xs) {
+        white-space: normal;
+      }
+      p {
+        margin-bottom: 20px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      a {
+        text-decoration: underline;
+        font-weight: 700;
+      }
+    }
+
+    .banReason {
+      p {
+        margin-bottom: 0;
+      }
+      p:last-child {
+        padding: 10px;
+        line-height: 22px;
+        background-color: $colorPopBorder;
+        border-radius: 8px;
+      }
+    }
+
+    .inputBox {
+      width: 250px;
+      margin: 0 auto 40px;
+      background: white;
+
+      @media (max-width: $screen-sm) {
+        width: 100%;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      column-gap: 20px;
+
+      .skipButton {
+        font-size: 20px;
+        font-weight: 600;
+        color: #ea9c00;
+        padding: 0 30px;
+        text-decoration: underline;
+        cursor: pointer;
+
+        @media (max-width: $screen-sm) {
+          font-size: 16px;
+        }
+      }
+
+      .button {
+        font-size: 20px;
+        background: $colorButton;
+        font-family: $fontOmnes;
+        color: $colorBlack;
+        font-weight: 700;
+        line-height: 40px;
+        cursor: pointer;
+        border-radius: 30px;
+        width: 150px;
+        border: none;
+        margin-top: 50px;
+
+        @media (max-width: $screen-sm) {
+          font-size: 20px;
+        }
+
+        & > span > svg {
+          @media (max-width: $screen-sm) {
+            width: 140px;
+          }
+        }
+      }
+    }
+
+    .errorHandLing {
+      font-size: 14.5px;
+      height: 60px;
+      width: 100%;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $colorRedLight;
+      color: $colorWhite;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .confettiRight,
+  .confettiLeft {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .confettiLeft {
+    left: -60px;
+    top: -20px;
+  }
+
+  .confettiRight {
+    right: -55px;
+    bottom: 200px;
+    height: 220px;
+
+    @media (max-width: $screen-sm) {
+      bottom: 220px;
+    }
+  }
+
+  .randomize {
+    font-size: 20px;
+    font-weight: 600;
+    color: $colorLightYellow;
+    padding: 0 30px;
+    text-decoration: underline;
+    cursor: pointer;
+
+    @media (max-width: $screen-sm) {
+      font-size: 16px;
+    }
+  }
+}
