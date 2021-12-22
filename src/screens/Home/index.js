@@ -35,6 +35,7 @@ import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
 import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/candy-3.png';
 import { ReactComponent as DiscordMarker } from '../../data/images/home/discord-mark.svg';
+import AlpacaWithShavolImage from '../../data/images/home/alpaca-with-shavol.png'
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
 
@@ -506,8 +507,13 @@ const Home = ({
 
   const renderFreeAlpacaOffer = () => {
     return (
-      <div>
+      <div className={styles.freeAlpacaOfferContainer}>
+        <div className={styles.alpacaImage}>
+          <img src={AlpacaWithShavolImage} alt="alpaca with shavol" />
+        </div>
 
+        <div className={styles.backgroundWrapper}>
+        </div>
       </div>
     )
   }
@@ -523,7 +529,7 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
-          {renderFreeAlpacaOffer()}
+          {/* {renderFreeAlpacaOffer()} */}
           {/* <AmbassadorBanner /> */}
           <div className={styles.nftBannerWrapper}>
             <NftBanner />

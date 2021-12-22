@@ -465,7 +465,7 @@
 }
 
 .nftBannerWrapper {
-  margin-top: 600px;
+  margin-top: 200px;
   margin-bottom: 200px;
   @media (max-width: $screen-xl) {
     margin-top: 200px;
@@ -845,5 +845,23 @@
         }
       }
     }
+  }
+}
+
+.freeAlpacaOfferContainer {
+  height: 640px;
+  .backgroundWrapper {
+    position: absolute;
+    height: 260px;
+    left: 0;
+    right: 0;
+    margin-top: 220px;
+    background: #f7a800;
+    display: flex;
+  }
+  .alpacaImage {
+    position: absolute;
+    left: 0;
+    z-index: 1;
   }
 }
