@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Grid } from '@material-ui/core';
 
-const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
+const GameCards = ({ games,gameTitle = false, category, showHowtoLink, showPopup }) => {
   const getGameItemSizeClass = () => {
     switch (games.length) {
       case 3:
@@ -28,7 +28,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
     return (
       <Grid
         item
-        lg={3}
+        lg={2}
         md={3}
         xs={6}
         key={`gamecard-${_.get(game, 'title')}-${index}-`}
@@ -45,7 +45,7 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
             className={classNames(
               styles.gameItem,
               game.active ? null : styles.inactive,
-              getGameItemSizeClass()
+              // getGameItemSizeClass()
             )}
           >
             <img src={game.background} alt="game-background" />
@@ -56,10 +56,18 @@ const GameCards = ({ games, category, showHowtoLink, showPopup }) => {
   };
 
   return (
-    <div className={styles.gamesContainer}>
+    <div className={classNames(styles.gamesContainer, !gameTitle ? styles.gamesPageContainer : null)}>
+      {gameTitle ?
+      <div className={styles.title}>
+          <h2>Alpaca Games</h2>
+          <p>Games available only in Alpacasino. 100% fun & pure love </p>
+        </div>
+      
+      : (
       <div className={styles.gamesCategory}>
         <h2>{category}</h2>
       </div>
+      ) }
       <div className={styles.games}>
         <Grid container spacing={1}>
           {games.map((game, index) => renderHouseGames(game, index))}

@@ -8,9 +8,7 @@ import LegalCheckbox from 'components/LegalCheckbox';
 import Button from '../../Button';
 import ReactTooltip from 'react-tooltip';
 import { RECAPTCHA_KEY } from 'constants/Api';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import Login from '../Login';
 import AuthState from '../../../constants/AuthState';
 
 const EmailSignUp = ({
@@ -41,14 +39,9 @@ const EmailSignUp = ({
   useEffect(() => {
     ReactTooltip.rebuild();
 
-    // if (errorState) {
-    //   setSubmitInProgress(false);
-    //   fooRef.current = genericRef;
-    //   setError(errorState);
-    //   ReactTooltip.show(fooRef.current);
-    // } else if (error) {
     if (error) {
       ReactTooltip.show(fooRef.current);
+      setSubmitInProgress(false);
     } else {
       ReactTooltip.hide();
     }
@@ -95,6 +88,8 @@ const EmailSignUp = ({
     
     handleReCaptchaVerify().then(recaptchaToken => {
       const refLocalStorage = localStorage.getItem('urlParam_ref');
+      const sidLocalStorage = localStorage.getItem('urlParam_sid');
+      const cidLocalStorage = localStorage.getItem('urlParam_cid');
       signUp({
         username,
         email,
@@ -102,6 +97,8 @@ const EmailSignUp = ({
         passwordConfirm: passwordConfirmation,
         ref: refLocalStorage,
         recaptchaToken,
+        sid: sidLocalStorage,
+        cid: cidLocalStorage,
       });
 
     });
@@ -148,7 +145,7 @@ const EmailSignUp = ({
   return (
     <form
       className={styles.authenticationInputBoxContainer}
-      onSubmit={onConfirm}
+      // onSubmit={onConfirm}
     >
       {errorState && (
         <div
@@ -192,7 +189,6 @@ const EmailSignUp = ({
                 setInputEmail(e.trim().toLowerCase());
               }}
               onConfirm={onConfirm}
-              // onBlur={() => validateInput({ emailOnly: true })}
             />
           </FormGroup>
           <FormGroup
@@ -252,28 +248,29 @@ const EmailSignUp = ({
               checked={legalAuthorizationAgreed}
               setChecked={(e) => {
                 setError(null);
-                setLegalAuthorizationAgreed(e)
+                setLegalAuthorizationAgreed(e);
               }}
             />
           </FormGroup>
           <Button
             onClick={onConfirm}
             className={classNames([styles.submitButton, styles.mobile])}
-            // disabled={submitInProgress || !legalAuthorizationAgreed}
-            disabled={submitInProgress}
+            disabled={submitInProgress || !legalAuthorizationAgreed}
             disabledWithOverlay={false}
             data-action="submit"
           >
             Sign Up with E-mail
           </Button>
-          {renderSocialLogin(submitInProgress || !legalAuthorizationAgreed, validateInput)}
+          {renderSocialLogin(
+            submitInProgress || !legalAuthorizationAgreed,
+            validateInput
+          )}
         </div>
       </div>
       <Button
         onClick={onConfirm}
         className={classNames([styles.submitButton, styles.desktop])}
-        // disabled={submitInProgress || !legalAuthorizationAgreed}
-        disabled={submitInProgress}
+        disabled={submitInProgress || !legalAuthorizationAgreed}
         disabledWithOverlay={false}
       >
         Sign Up with E-mail

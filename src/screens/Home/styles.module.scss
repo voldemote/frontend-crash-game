@@ -9,7 +9,7 @@
   margin-top: 100px;
 
   @media (max-width: $screen-sm) {
-    margin: 0 15px;
+    margin: 100px 15px;
   }
 }
 
@@ -512,7 +512,7 @@
 }
 
 .nftBannerWrapper {
-  margin-top: 300px;
+  margin-top: 600px;
   margin-bottom: 200px;
   @media (max-width: $screen-xl) {
     margin-top: 200px;
@@ -803,50 +803,26 @@
   @media (max-width: $screen-sm) {
     margin-top: 220px;
   }
+}
 
-  &.casinoGames {
-    margin-top: 120px;
+.allGamesContiner {
+  margin-top: 50px;
 
-    @media (max-width: $screen-sm) {
-      margin-top: 80px;
-    }
+  @media (max-width: $screen-sm) {
+    margin-top: 50px;
   }
 
-  .title {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-
-    h2 {
-      color: $colorHeading;
-      font-weight: 800;
-      font-size: 50px;
-      line-height: 20px;
-      font-family: $fontOmnes;
-      @media (max-width: $screen-xs) {
-        font-size: 28px;
-      }
-    }
-
-    p {
-      margin-top: 10px;
-      font-family: $fontOmnes;
-      font-weight: 800;
-      font-size: 22px;
-      line-height: 2;
-      color: $colorWhite;
-    }
-
-    img {
-      margin-right: 5px;
-    }
-  }
-  .cardBox {
+  .allGames {
+    font-family: $fontOmnes;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    align-items: center;
     text-align: center;
-    margin-top: 20px;
-    img {
-      border-radius: 12px;
-      width: 96%;
-    }
+    text-decoration-line: underline;
+    color: $colorLightYellow;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    cursor: pointer;
   }
 }

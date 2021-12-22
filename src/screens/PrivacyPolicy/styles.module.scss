@@ -18,6 +18,14 @@
     text-align: justify;
     color: $colorWhite;
 
+    table {
+      tr td,
+      tr th {
+        border: 1px solid $colorGray;
+        padding: 5px;
+      }
+    }
+
     li {
       margin-left: 15px;
     }

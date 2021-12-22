@@ -12,6 +12,7 @@
   align-items: center;
   padding: 50px 50px;
   z-index: $sIndexNavbar;
+  background: $colorNavBackground;
 
   @media (max-width: $screen-md) {
     padding: 36px 24px;
@@ -19,6 +20,10 @@
 
   @media (min-width: 1900px) {
     padding: 50px 100px;
+  }
+
+  &.home {
+    background: rgba(8, 14, 51, 0);
   }
 
   .drawerWrapper {

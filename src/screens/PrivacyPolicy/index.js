@@ -10,99 +10,65 @@ const PrivacyPolicy = () => {
        
        <div className={styles.textContainer}>
           <h1>Privacy Policy</h1>
-          <p>Date: November 10, 2021</p>
+          <p>Date: December 16, 2021</p>
 
           <h2>Overview</h2>
           <p>
-            We, Alpacasino.io (Wallfair N.V.), are delighted that you have shown interest in our
-            enterprise. Data protection is of a particularly high priority for the management of Alpacasino.
-            Our transparency document according to Art. 13 and 14 GDPR is available upon request.
-            The use of the website is possible without any indication of personal data; however, if a data
-            subject wants to use special enterprise services via our website, processing of personal data
-            could become necessary. If the processing of personal data is necessary and there is no
-            statutory basis for such processing, we generally obtain consent from the data subject.<br /><br />
-            The processing of personal data, such as the name, address, e-mail address, or telephone
-            number of a data subject shall always be in line with the General Data Protection Regulation
-            (GDPR), and in accordance with the country-specific data protection regulations applicable.
-            By means of this data protection declaration, our enterprise would like to inform the general
-            public of the nature, scope, and purpose of the personal data we collect, use and process.
-            Furthermore, data subjects are informed, by means of this data protection declaration, of the
-            rights to which they are entitled.<br /><br />
-            As a data Controller, Alpacasino has implemented numerous technical and organizational
-            measures to ensure the most complete protection of personal data processed through this
-            website. However, Internet-based data transmissions may in principle have security gaps, so
-            absolute protection may not be guaranteed. For this reason, every data subject is free to
-            transfer personal data to us via alternative means, e.g. by telephone.
+            We, Alpacasino.io (Wallfair N.V.), are delighted that you have shown interest in our enterprise. 
+            Data protection is of a particularly high priority for the management of Alpacasino. Our transparency 
+            document according to Art. 13 and 14 GDPR is available upon request.
+            The use of the website is possible without any indication of personal data; however, if a data subject 
+            wants to use special enterprise services via our website, processing of personal data could become necessary. 
+            If the processing of personal data is necessary and there is no statutory basis for such processing, 
+            we generally obtain consent from the data subject.<br /><br />
+            The processing of personal data, such as the name, address, e-mail address, or telephone number of a data 
+            subject shall always be in line with the General Data Protection Regulation (GDPR), and in accordance with 
+            the country-specific data protection regulations applicable. By means of this data protection declaration, 
+            our enterprise would like to inform the general public of the nature, scope, and purpose of the personal 
+            data we collect, use and process. Furthermore, data subjects are informed, by means of this data protection 
+            declaration, of the rights to which they are entitled.<br /><br />
+            As a data Controller, Alpacasino has implemented numerous technical and organizational measures to 
+            ensure the most complete protection of personal data processed through this website. However, Internet-based 
+            data transmissions may in principle have security gaps, so absolute protection may not be guaranteed. 
+            For this reason, every data subject is free to transfer personal data to us via alternative means, e.g. by telephone.
           </p>
 
           <h2>1 Definitions</h2>
           <p>
-            This data protection declaration is based on the terms used by the European legislator for the
-            adoption of the General Data Protection Regulation (GDPR). It is prepared to be legible and
-            understandable for the general public, as well as our customers and business partners. To
-            ensure this, we would like to first explain the terminology used.
+            This data protection declaration is based on the terms used by the European legislator for the adoption 
+            of the General Data Protection Regulation (GDPR). It is prepared to be legible and understandable for 
+            the general public, as well as our customers and business partners. To ensure this, we would like to 
+            first explain the terminology used.<br /><br />
+
             In this data protection declaration, we use, inter alia, the following terms:
             a) Personal data
-            Personal data means any information relating to an identified or identifiable natural person
-            (“data subject”). An identifiable natural person is one who can be identified, directly or
-            indirectly, in particular by reference to an identifier such as a name, an identification number,
-            location data, an online identifier or to one or more factors specific to the physical,
-            physiological, genetic, mental, economic, cultural or social identity of that natural person.
+            Personal data means any information relating to an identified or identifiable natural person (“data subject”). An identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person.
             b) Data subject
-            Data subject is any identified or identifiable natural person, whose personal data is
-            processed by the Controller responsible for the processing.
+            Data subject is any identified or identifiable natural person, whose personal data is processed by the Controller responsible for the processing.
             c) Processing
-            Processing is any operation or set of operations which is performed on personal data or on
-            sets of personal data, whether or not by automated means, such as collection, recording,
-            organization, structuring, storage, adaptation or alteration, retrieval, consultation, use,
-            disclosure by transmission, dissemination or otherwise making available, alignment or
-            combination, restriction, erasure or destruction.
+            Processing is any operation or set of operations which is performed on personal data or on sets of personal data, whether or not by automated means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction.
             d) Restriction of processing
-            Restriction of processing is the marking of stored personal data with the aim of limiting their
-            processing in the future.
+            Restriction of processing is the marking of stored personal data with the aim of limiting their processing in the future.
             e) Profiling
-            Profiling means any form of automated processing of personal data consisting of the use of
-            personal data to evaluate certain personal aspects relating to a natural person, in particular
-            to analyze or predict aspects concerning that natural person’s performance at work,
-            economic situation, health, personal preferences, interests, reliability, behavior, location or
-            movements.
+            Profiling means any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person, in particular to analyze or predict aspects concerning that natural person’s performance at work, economic situation, health, personal preferences, interests, reliability, behavior, location or movements.
             f) Pseudonymization
-            Pseudonymization is the processing of personal data in such a manner that the personal
-            data can no longer be attributed to a specific data subject without the use of additional
-            information, provided that such additional information is kept separately and is subject to
-            technical and organizational measures to ensure that the personal data are not attributed to
-            an identified or identifiable natural person.
+            Pseudonymization is the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organizational measures to ensure that the personal data are not attributed to an identified or identifiable natural person.
             g) Controller or Controller responsible for the processing
-            Controller or Controller responsible for the processing is the natural or legal person, public
-            authority, agency or other body which, alone or jointly with others, determines the purposes
-            and means of the processing of personal data; where the purposes and means of such
-            processing are determined by Union or Member State law, the Controller or the specific
-            criteria for its nomination may be provided for by Union or Member State law.
+            Controller or Controller responsible for the processing is the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data; where the purposes and means of such processing are determined by Union or Member State law, the Controller or the specific criteria for its nomination may be provided for by Union or Member State law.
             h) Processor
-            Processor is a natural or legal person, public authority, agency or other body which
-            processes personal data on behalf of the Controller.
+            Processor is a natural or legal person, public authority, agency or other body which processes personal data on behalf of the Controller.
             i) Recipient
-            Recipient is a natural or legal person, public authority, agency or another body, to which the
-            personal data are disclosed, whether a third party or not. However, public authorities which
-            may receive personal data in the framework of a particular inquiry in accordance with Union
-            or Member State law shall not be regarded as recipients; the processing of those data by
-            those public authorities shall be in compliance with the applicable data protection rules
-            according to the purposes of the processing.
+            Recipient is a natural or legal person, public authority, agency or another body, to which the personal data are disclosed, whether a third party or not. However, public authorities which may receive personal data in the framework of a particular inquiry in accordance with Union or Member State law shall not be regarded as recipients; the processing of those data by those public authorities shall be in compliance with the applicable data protection rules according to the purposes of the processing.
             j) Third party
-            Third party is a natural or legal person, public authority, agency or body other than the data
-            subject, Controller, processor and persons who, under the direct authority of the Controller or
-            processor, are authorized to process personal data.
+            Third party is a natural or legal person, public authority, agency or body other than the data subject, Controller, processor and persons who, under the direct authority of the Controller or processor, are authorized to process personal data.
             k) Consent
-            Consent of the data subject is any freely given, specific, informed and unambiguous
-            indication of the data subject’s wishes by which he or she, by a statement or by a clear
-            affirmative action, signifies agreement to the processing of personal data relating to him or
-            her.
+            Consent of the data subject is any freely given, specific, informed and unambiguous indication of the data subject’s wishes by which he or she, by a statement or by a clear affirmative action, signifies agreement to the processing of personal data relating to him or her.
           </p>
 
           <h2>2 Name and Address of the Controller</h2>
 
           <p>
-            Controller for the purposes of the General Data Protection Regulation (GDPR), other data protection laws applicable in Member states of the European Union and other provisions related to data protection is: <br />
+            Controller for the purposes of the General Data Protection Regulation (GDPR), other data protection laws applicable in Member states of the European Union and other provisions related to data protection is:<br />
             Rosi Development GmbH<br />
             Weidenbornstrasse 8a<br />
             65189 Wiesbaden<br />
@@ -115,101 +81,273 @@ const PrivacyPolicy = () => {
 
           <p>
             The data protection officer of the Controller is Prof. Dr. Sebastian Gajek, Email:
-            <a href="mailto:privacy@alpacasino.io">privacy@alpacasino.io</a>
+            <a href="mailto:support@alpacasino.io">support@alpacasino.io</a>
             Any data subject may at any time contact our Data Protection Officer directly with all questions and suggestions concerning data protection.
           </p>
 
           <h2>4 Cookies</h2>
           <p>
             Our website uses cookies, text files that are stored in a computer system via an internet browser.<br /><br />
-            Many Internet sites and servers use cookies. Many cookies contain a so-called cookie ID. A
-            cookie ID is a unique identifier of the cookie. It consists of a character string through which
-            Internet pages and servers can be assigned to the specific Internet browser in which the
-            cookie was stored. This allows visited Internet sites and servers to differentiate the individual
-            browser of the data subject from other Internet browsers that contain other cookies. A
-            specific Internet browser can be recognized and identified using the unique cookie ID.<br /><br />
-            Through the use of cookies, Alpacasino can provide the users of this website with more
-            user-friendly services that would not be possible without the cookie setting.<br /><br />
-            By means of a cookie, the information and offers on our website can be optimized with the
-            user in mind. Cookies allow us, as previously mentioned, to recognize our website users. The
-            purpose of this recognition is to make it easier for users to utilize our website. The website
-            user that uses cookies, e.g. does not have to enter access data each time the website is
-            accessed, because this is taken over by the website, and the cookie is thus stored on the
-            user’s computer system. Another example is the cookie of a shopping cart in an online shop.
-            The online store remembers the articles that a customer has placed in the virtual shopping
-            cart via a cookie.<br /><br />
-            The data subject may, at any time, prevent the setting of cookies through our website by
-            means of a corresponding setting of the Internet browser used, and may thus permanently
-            deny the setting of cookies. Furthermore, already set cookies may be deleted at any time via
-            an Internet browser or other software programs. This is possible in all popular Internet
-            browsers. If the data subject deactivates the setting of cookies in the Internet browser used,
-            not all functions of our website may be entirely usable.
+            Many Internet sites and servers use cookies. Many cookies contain a so-called cookie ID. A cookie ID is a unique identifier of the cookie. It consists of a character string through which Internet pages and servers can be assigned to the specific Internet browser in which the cookie was stored. This allows visited Internet sites and servers to differentiate the individual browser of the data subject from other Internet browsers that contain other cookies. A specific Internet browser can be recognized and identified using the unique cookie ID.<br /><br />
+            Through the use of cookies, Alpacasino can provide the users of this website with more user-friendly services that would not be possible without the cookie setting.<br /><br />
+            By means of a cookie, the information and offers on our website can be optimized with the user in mind. Cookies allow us, as previously mentioned, to recognize our website users. The purpose of this recognition is to make it easier for users to utilize our website. The website user that uses cookies, e.g. does not have to enter access data each time the website is accessed, because this is taken over by the website, and the cookie is thus stored on the user’s computer system. Another example is the cookie of a shopping cart in an online shop. The online store remembers the articles that a customer has placed in the virtual shopping cart via a cookie.<br /><br />
+            The data subject may, at any time, prevent the setting of cookies through our website by means of a corresponding setting of the Internet browser used, and may thus permanently deny the setting of cookies. Furthermore, already set cookies may be deleted at any time via an Internet browser or other software programs. This is possible in all popular Internet browsers. If the data subject deactivates the setting of cookies in the Internet browser used, not all functions of our website may be entirely usable.
           </p>
+
+          <p>The cookies in use are described below:</p>
+
+          <table>
+            <tr>
+              <th>Cookies</th>
+              <th>Description</th>
+              <th>Source</th>
+              <th>Duration</th>
+            </tr>
+            <tr>
+              <td>COOKIES</td>
+              <td>Typeform. Used in connection with the website's pop-up questionnaires - The data obtained from this is used for statistical marketing purposes.</td>
+              <td>.typeform.com</td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>on_user_id</td>
+              <td>Typeform. This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td>
+              <td>.typeform.com</td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>__cf_bm</td>
+              <td>Typeform. This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td>
+              <td>.typeform.com</td>
+              <td>1 hour</td>
+            </tr>
+            <tr>
+              <td>_ga_6NYFR49FK7</td>
+              <td>Used by Google Analytics to collect data on the number of times a user has visited the web site as well as dates for the first and most recent visit.</td>
+              <td>.alpacasino.io</td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td>_ga</td>
+              <td>Registers a unique ID that is used to generate statistical data on how the visitor uses the website.</td>
+              <td>.alpacasino.io</td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td>_ga_#</td>
+              <td>Used by Google Analytics to collect data on the number of times the visitor uses the website</td>
+              <td>alpacasino.io</td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td>persist:root</td>
+              <td>This cookie stores visitor credentials in an encrypted cookie in order to allow the visitor to stay logged in on reentry, if the visitor has accepted the 'stay logged in '-button</td>
+              <td>alpacasino.io</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>acceptedTerms</td>
+              <td>Stores the answer the user provided on the "disclaimer acceptance". It is used to persist the answer, avoiding to show the popup with the question every time the user enters the page.</td>
+              <td>alpacasino.io</td>
+              <td>Persistent </td>
+            </tr>
+            <tr>
+              <td>gameVolume</td>
+              <td>Store and persist the user preferences about the game sound volume</td>
+              <td>alpacasino.io</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>numberOfElonGameDemoPlays</td>
+              <td>Store the number of times the user played the demo elon game to verify the limit of 3 play</td>
+              <td>alpacasino.io</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>_grecaptcha</td>
+              <td>reCAPTCHA stores necessary data when executed for the purpose of providing its risk analysis. https://developers.google.com/recaptcha/docs/faq</td>
+              <td>alpacasino.io</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>gameHowDoesItWorkTip</td>
+              <td>Stores and persists the information that the user don't need to see the tutorial popup</td>
+              <td>alpacasino.io</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>PHPSESSID</td>
+              <td>Preserves user session state across page requests.</td>
+              <td>Licensing.gaming-curacao.com</td>
+              <td>Session</td>
+            </tr>
+            <tr>
+              <td>rc::a</td>
+              <td>This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td>
+              <td>google.com</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>rc::c</td>
+              <td>This cookie is used to distinguish between humans and bots</td>
+              <td>google.com</td>
+              <td>Session </td>
+            </tr>
+            <tr>
+              <td>wglang</td>
+              <td>Determines the preferred language of the visitor. Allows the website to set the preferred language upon the visitor´s reentry.</td>
+              <td>alpacasino.io</td>
+              <td>Persistent</td>
+            </tr>
+            <tr>
+              <td>_fw_crm_v</td>
+              <td>Collects information on user preferences and/or interaction with web-campaign content. This is used on CRM-campaign platform used by the website owners for promoting events or products</td>
+              <td>alpacasino.io</td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>
+                Freshchat<br/>
+                _fbp<br/>
+                _ga<br/>
+                Zarget_visitor_info<br/>
+                _gcl_au<br />
+                e836a1e2-c206-4584-da85-6502352c5ae<br />
+                zarget_user_id
+              </td>
+              <td>Provides user support through chat box </td>
+              <td>freshchat.com </td>
+              <td>2 months</td>
+            </tr>
+            <tr>
+              <td>_ga</td>
+              <td>Provides user support through chat box </td>
+              <td>freshchat.com </td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td>Zarget_visitor_info</td>
+              <td>Provides user support through chat box </td>
+              <td>freshchat.com </td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>_gcl_au</td>
+              <td>Provides user support through chat box </td>
+              <td>freshchat.com </td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>e836a1e2-c206-4584-da85-6502352c5ae</td>
+              <td>Provides user support through chat box </td>
+              <td>freshchat.com </td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>zarget_user_id</td>
+              <td>Provides user support through chat box </td>
+              <td>freshchat.com </td>
+              <td>10 months</td>
+            </tr>
+          </table>
 
           <h2>5 Collection of General Data and Information</h2>
           <p>
-            Our website collects a series of general data and information when a data subject or
-            automated system calls up the website. This general data and information are stored in the
-            server log files. Collected may be (1) the browser types and versions used, (2) the operating
-            system used by the accessing system, (3) the website from which an accessing system
-            reaches our website (so-called referrers), (4) the sub-websites, (5) the date and time of
-            access to the Internet site, (6) an Internet protocol address (IP address), (7) the internet
-            service provider of the accessing system, and (8) any other similar data and information that
-            may be used in the event of attacks on our information technology systems.
-            When using these general data and information, we do not draw any conclusions about the
-            data subject. Rather, this information is needed to (1) deliver the content of our website
-            correctly, (2) optimize the content of our website as well as its advertisement, (3) ensure the
-            long-term viability of our information technology systems and website technology, and (4)
-            provide law enforcement authorities with the information necessary for criminal prosecution in
-            case of a cyber-attack. Therefore, we analyze anonymously collected data and information
-            statistically with the help of Google Analytics, Yandex Metrica and Hotjar, with the aim of
-            increasing the data protection and data security of our enterprise, and to ensure an optimal
-            level of protection for the personal data we process. The anonymous data of the server log
-            files are stored separately from all personal data provided by a data subject. You have the
-            option to familiarize yourselves with the Privacy Policies of the service providers under the
-            following links:
-            https://policies.google.com/privacy?hl=en-US
-            https://yandex.com/support/metrica/general/gdpr.html
-            https://www.hotjar.com/privacy/
+            Our website collects a series of general data and information when a data subject or automated system calls up the website. This general data and information are stored in the server log files. Collected may be (1) the browser types and versions used, (2) the operating system used by the accessing system, (3) the website from which an accessing system reaches our website (so-called referrers), (4) the sub-websites, (5) the date and time of access to the Internet site, (6) an Internet protocol address (IP address), (7) the internet service provider of the accessing system, and (8) any other similar data and information that may be used in the event of attacks on our information technology systems.
+            <br /><br />
+            When using these general data and information, we do not draw any conclusions about the data subject. Rather, this information is needed to (1) deliver the content of our website correctly, (2) optimize the content of our website as well as its advertisement, (3) ensure the long-term viability of our information technology systems and website technology, and (4) provide law enforcement authorities with the information necessary for criminal prosecution in case of a cyber-attack. Therefore, we analyze anonymously collected data and information statistically with the help of Google Analytics, Yandex Metrica and Hotjar, with the aim of increasing the data protection and data security of our enterprise, and to ensure an optimal level of protection for the personal data we process. The anonymous data of the server log files are stored separately from all personal data provided by a data subject. You have the option to familiarize yourselves with the Privacy Policies of the service providers under the following links:<br />
+            https://policies.google.com/privacy?hl=en-US<br />
+            https://yandex.com/support/metrica/general/gdpr.html<br />
+            https://www.hotjar.com/privacy/<br />
           </p>
+
+          <table>
+            <tr>
+              <th>GDPR Requirement</th>
+              <th>GDPR Reference</th>
+              <th>Actions Taken</th>
+            </tr>
+            <tr>
+              <td>Lawful Basis</td>
+              <td>Article 6, Article 11</td>
+              <td>Alpacasino: Establishes a lawful basis to process personal data. Data Subject: If the lawful basis is consent, Data Subject consents to Alpacasino’s data collection about them.</td>
+            </tr>
+            <tr>
+              <td>Processing children’s personal data</td>
+              <td>Article 8</td>
+              <td>Alpacasino: Does not distinguish between different types of personal data and does not knowingly collect children’s personal data.</td>
+            </tr>
+            <tr>
+              <td>Data protection by design</td>
+              <td>Article 25</td>
+              <td>Alpacasino: Collects the minimum personal data necessary to carry out normal business operations. Customer: Manages content within Alpacasino’s platform.</td>
+            </tr>
+            <tr>
+              <td>Data Protection Impact Assessments</td>
+              <td>Article 35</td>
+              <td>Alpacasino: Appoints responsible staff to perform any necessary Data Protection Impact Assessments. Customer: Determines level of content shared with business partners and may assist Alpacasino, as the processor.</td>
+            </tr>
+            <tr>
+              <td>Encryption</td>
+              <td>Article 32</td>
+              <td>Alpacasino (as a processor): Comply with security requirements. Personal Data is encrypted in transit and at rest using AES-256 bit encryption.</td>
+            </tr>
+            <tr>
+              <td>European Data Protection Board</td>
+              <td>Article 68</td>
+              <td>Alpacasino (as a processor): Monitor European Data Protection Board Activity</td>
+            </tr>
+            <tr>
+              <td>Personal data inventory</td>
+              <td>Article 30</td>
+              <td>Alpacasino and Customer (as a processor): Comply with a record of processing activity requirements.</td>
+            </tr>
+            <tr>
+              <td>Right to erasure</td>
+              <td>Article 17</td>
+              <td>Alpacasino appoints responsible staff to respond to any exercise of this Right. Data Subject: exercises their right to erasure as Alpacasino provides</td>
+            </tr>
+            <tr>
+              <td>Purpose limitation</td>
+              <td>Article 5 (B)</td>
+              <td>Data by Alpacasino should be collected for specified, explicit and legitimate purposes and not further processed in a manner that is incompatible with those purposes; further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes shall, in accordance with Article 89(1), not be considered to be incompatible with the initial purposes;</td>
+            </tr>
+          </table>
+
+          <p>Personal data that Alpacasino may collect from you is:</p>
+          <ul>
+            <li>Email Address</li>
+            <li>IP Address</li>
+          </ul>
+
+          <p>Alpacasino collects personal data in terms of the GDPR regulations to ensure we comply with all lawful, fair and reasonable standards and do so for the following purposes:</p>
+          <ul>
+            <li>If you wish to subscribe to Alpacasino´s marketing communications.</li>
+            <li>To process your sign-up application to become a user of Alpacasino.</li>
+            <li>To provide and improve services to you as a user.</li>
+            <li>To identify you as a user and authenticate your identity for security purposes and to comply with our legal obligations.</li>
+            <li>To maintain your user account.</li>
+            <li>To upgrade and enhance your experience within the website, or to tailor or develop information, services or products to suit your needs which may include market research and conducting promotions.</li>
+            <li>To tell you about our products or services that we think may be of interest to you by communicating with you via email.</li>
+            <li>To respond to your questions, comments, or requests.</li>
+            <li>For taking appropriate action should Alpacasino have reason to suspect that unlawful activity or misconduct of a serious nature has been, is being or may be engaged in that relates to our functions and activities.</li>
+            <li>To establish, exercise or defend any legal claims.</li>
+            <li>For know-your-customer (KYC) identity verification (3rd party provider, Fractal).</li>
+          </ul>
+          <p>By submitting your sign-up applications or otherwise choosing to provide Alpacasino with Personal Information you consent to Alpacasino collecting, using, processing and potentially disclosing your personal data for the above purposes and on the bases described in this Privacy Policy.</p>
 
           <h2>6 Registration</h2>
           <p>
-            The data subject has the possibility to register on the website of the Controller with the
-            indication of personal data. The personal data transmitted to the Controller is determined by
-            the respective input mask used for the registration. The personal data entered by the data
-            subject are collected and stored exclusively for internal use by the Controller, and for his own
-            purposes. The Controller may request transfer to one or more processors (e.g. a parcel
-            service) that also uses personal data for an internal purpose which is attributable to the
-            Controller.<br /><br />
-            By registering on the website of the Controller, the IP address—assigned by the Internet
-            service provider (ISP) and used by the data subject—date, and time of the registration are
-            also stored. The storage of this data takes place against the background that this is the only
-            way to prevent the misuse of our services, and, if necessary, to make it possible to
-            investigate committed offenses. Insofar, the storage of this data is necessary to secure the
-            Controller. This data is not passed on to third parties unless there is a statutory obligation to
-            pass on the data, or if the transfer serves the aim of criminal prosecution.<br /><br />
-            The registration of the data subject, with the voluntary indication of personal data, is intended
-            to enable the Controller to offer the data subject contents or services that may only be
-            offered to registered users due to the nature of the matter in question. Registered persons
-            are free to change the personal data specified during the registration at any time, or to have
-            them completely deleted from the data stock of the Controller.<br /><br />
-            The data Controller shall, at any time, provide information upon request to each data subject
-            as to what personal data are stored about the data subject. In addition, the data Controller
-            shall correct or erase personal data at the request or indication of the data subject, insofar as
-            there are no statutory storage obligations. Our Data Protection Officer is available to the data
-            subject as contact persons.
+            The data subject has the possibility to register on the website of the Controller with the indication of personal data. The personal data transmitted to the Controller is determined by the respective input mask used for the registration. The personal data entered by the data subject are collected and stored exclusively for internal use by the Controller, and for his own purposes. The Controller may request transfer to one or more processors (e.g. a parcel service) that also uses personal data for an internal purpose which is attributable to the Controller.<br /><br />
+            By registering on the website of the Controller, the IP address—assigned by the Internet service provider (ISP) and used by the data subject—date, and time of the registration are also stored. The storage of this data takes place against the background that this is the only way to prevent the misuse of our services, and, if necessary, to make it possible to investigate committed offenses. Insofar, the storage of this data is necessary to secure the Controller. This data is not passed on to third parties unless there is a statutory obligation to pass on the data, or if the transfer serves the aim of criminal prosecution.<br /><br />
+            The registration of the data subject, with the voluntary indication of personal data, is intended to enable the Controller to offer the data subject contents or services that may only be offered to registered users due to the nature of the matter in question. Registered persons are free to change the personal data specified during the registration at any time, or to have them completely deleted from the data stock of the Controller.<br /><br />
+            The data Controller shall, at any time, provide information upon request to each data subject as to what personal data are stored about the data subject. In addition, the data Controller shall correct or erase personal data at the request or indication of the data subject, insofar as there are no statutory storage obligations. Our Data Protection Officer is available to the data subject as contact persons.
           </p>
 
           <h2>7 Routine Erasure or Restriction of Processing of Personal Data</h2>
           <p>
-            The data Controller shall process and store the personal data of the data subject only for the
-            period necessary to achieve the purpose of storage, or as far as this is granted by the
-            European legislator or other legislators in laws or regulations to which the Controller is
-            subject to.
-            If the storage purpose is not applicable, or if a storage period prescribed by the European
-            legislator or another competent legislator expires, the personal data are routinely blocked or
-            erased in accordance with legal requirements.
+            The data Controller shall process and store the personal data of the data subject only for the period necessary to achieve the purpose of storage, or as far as this is granted by the European legislator or other legislators in laws or regulations to which the Controller is subject to.<br/><br />
+            If the storage purpose is not applicable, or if a storage period prescribed by the European legislator or another competent legislator expires, the personal data are routinely blocked or erased in accordance with legal requirements.
           </p>
           
           <h2>8 Rights of the Data Subject</h2>

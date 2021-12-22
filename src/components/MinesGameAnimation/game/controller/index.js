@@ -107,7 +107,7 @@ export default class Controller extends Emitter {
         const cell = this.view.grid.cells[ row ][ col ];
 
         if(!cell.isRevealed) {
-          this.handlers.checkSelectedCell({row, col}).then((result)=> {
+          this.handlers.checkSelectedCell({row, col}).then((result) => {
             this.model.updateCellsData([result]);
             this.view.updateGrid(col,row, result.isMine);
 
@@ -141,21 +141,28 @@ export default class Controller extends Emitter {
       //handle demo
       const result = Engine.checkSelectedCell(collection, row, col);
 
+        this.handlers.checkDemo()
+
         this.model.updateCellsData(result);
 
         const cell = this.view.grid.cells[ row ][ col ];
 
         if (result === Engine.MINE) {
           // this.view.gameOver("lose");
+          this.handlers.loseDemo()
+
           this.view.revealCells([cell]);
           this.view.pause();
+          resolve({ value: false })
         } else if (this.model.isGameWon) {
           this.view.revealCells(result);
           // this.view.gameOver("win");
           // this.view.flagMines(this.model.totFlaggedCells.flat());
           this.view.pause();
+          resolve({ value: true })
         } else {
           this.view.revealCells(result);
+          resolve({ value: true })
         }
       }
     })

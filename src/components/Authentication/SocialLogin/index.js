@@ -34,17 +34,14 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         setIsMobile(isSmall);
       }
     };
-    window.addEventListener('resize', cb)
-   return () => window.removeEventListener('resize', cb)
+    window.addEventListener('resize', cb);
+    return () => window.removeEventListener('resize', cb);
   }, [])
 
-  const showNewFeatures =
-    process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const iconProps = {
     className: styles.buttonIcon,
   };
   const isRegistration = authenticationType === AuthenticationType.register
-  const prefixText = isRegistration ? "Sign up" : "Login";
 
   const login = (provider, ToSAccepted) => () => {
     signUp && validateInput({tosOnly: true});
@@ -96,7 +93,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('google', isRegistration)}
+            onClick={(event) => {
+              login('google', isRegistration)();
+              event.preventDefault();
+            }}
             disabled={disabled}
           >
             <Icon
@@ -124,7 +124,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('twitch', isRegistration)}
+            onClick={(event) => {
+              login('twitch', isRegistration)();
+              event.preventDefault();
+            }}
             disabled={disabled}
           >
             <Icon
@@ -152,7 +155,10 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
         ) : (
           <button
             className={styles.socialCircleButton}
-            onClick={login('discord', isRegistration)}
+            onClick={(event) => {
+              login('discord', isRegistration)();
+              event.preventDefault();
+            }}
             disabled={disabled}
           >
             <Icon

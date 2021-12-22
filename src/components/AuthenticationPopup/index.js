@@ -9,7 +9,7 @@ import PopupBottomImg from '../../data/backgrounds/popup/popup-bottom.png';
 const AuthenticationPopup = ({ authenticationType, preloadEmailSignUp }) => {
 
   return (
-    <div className={classNames(styles.registration, authenticationType === 'login' && styles.portraitBg)}>
+    <div className={classNames(styles.login, authenticationType === 'register' && styles.registration)}>
       {/* <img src={PopupTopImg} className={styles.popupTop} alt='popup-top'/>
       <img src={PopupLeftImg} className={styles.popupLeft} alt='popup-left'/>
       <img src={PopupRightImg} className={styles.popupRight} alt='popup-right'/>

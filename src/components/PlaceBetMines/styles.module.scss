@@ -535,10 +535,14 @@
   text-align: center;
 }
 
-.currentMultiplier {
+.currentMultiplier, .currentProfit {
   width: 100%;
   padding: 0 10px;
   color: $colorWhite;
+}
+
+.currentProfit {
+  margin-bottom: 10px;
 }
 
 .noselect {

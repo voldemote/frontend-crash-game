@@ -14,8 +14,8 @@ const ToSPopup = ({ acceptToSConsent = () => {}, isOnboarding = false }) => {
 
   return (
     <div className={styles.tosPopup}>
-      <h2 className={styles.title}>Terms of Service</h2>
       <div className={styles.container}>
+        <h2 className={styles.title}>Terms of Service</h2>
         <div className={styles.description}>
           Please review and confirm that you agree with our terms of service.
         </div>

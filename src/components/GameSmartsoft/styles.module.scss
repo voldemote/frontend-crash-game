@@ -6,6 +6,37 @@
   @media (max-width: $screen-xs) {
     padding: 0;
   }
+
+  .title {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    h2 {
+      color: $colorHeading;
+      font-weight: 800;
+      font-size: 50px;
+      line-height: 20px;
+      font-family: $fontOmnes;
+      @media (max-width: $screen-xs) {
+        font-size: 28px;
+      }
+    }
+
+    p {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-family: $fontOmnes;
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 2;
+      color: $colorWhite;
+    }
+
+    img {
+      margin-right: 5px;
+    }
+  }
 }
 
 .gamesCategory {
@@ -24,7 +55,7 @@
   }
 
   h2 {
-    color: $colorHeading;
+    color: $colorWhite;
     font-weight: 600;
     font-size: 30px;
     line-height: 20px;
@@ -67,6 +98,10 @@
   }
 }
 
+.gameSpace {
+  justify-content: space-between;
+}
+
 .games {
   display: flex;
   flex-wrap: wrap;
@@ -87,7 +122,7 @@
     height: 148px;
     overflow: hidden;
     border-radius: 20px;
-    width: 200px;
+    width: 185px;
     @media (max-width: $screen-sm) {
       width: 40vw;
       height: 30vw;

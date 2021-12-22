@@ -7,14 +7,10 @@
   flex-direction: row;
   flex-wrap: wrap;
   max-width: 800px;
-  padding: 70px 40px;
 
   @media (max-width: $screen-sm) {
     flex-wrap: nowrap;
     flex-direction: column;
-    min-height: 980px;
-    padding: 70px 0 0px;
-    max-width: 500px;
   }
 
   .head {
@@ -172,7 +168,8 @@
     font-size: 20px;
     background: $colorButton;
     color: $colorBlack;
-    font-weight: 600;
+    font-family: $fontOmnes;
+    font-weight: 700;
     line-height: 40px;
     cursor: pointer;
     border-radius: 30px;
