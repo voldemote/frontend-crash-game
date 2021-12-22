@@ -519,7 +519,7 @@ const Home = ({
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
-          {renderDiscordBanner()}
+          {!isLoggedIn() && renderDiscordBanner()}
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
