@@ -5,6 +5,8 @@ import ContentTypes from '../constants/ContentTypes';
 import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
 import {SEND_BUY_WITH_CRYPTO} from '../constants/Api'
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
 
 const {
   store: { dispatch },
@@ -27,6 +29,20 @@ const createInstance = (host, apiPath) => {
         error.response.data?.message !== 'Invalid login'
       ) {
         dispatch(AuthenticationActions.forcedLogout());
+      } else if (
+        error.response.status === 403 &&
+        error.response.data?.errors?.banData
+      ) {
+        dispatch(AuthenticationActions.forcedLogout());
+        dispatch(
+          PopupActions.show({
+            popupType: PopupTheme.ban,
+            options: {
+              small: true,
+              banData: error.response.data?.errors?.banData,
+            },
+          })
+        );
       }
       throw error;
     }
