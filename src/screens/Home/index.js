@@ -26,11 +26,6 @@ import { GeneralActions } from '../../store/actions/general';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import EloneWithPhone from '../../data/images/elon-with-phone.png';
-import gameCardWheel from '../../data/images/house-games/card-wheel.png';
-import gameCardElon from '../../data/images/house-games/card-elon.png';
-import gameCardPlinko from '../../data/images/house-games/card-plinko.png';
-import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
-import gameCardMines from '../../data/images/house-games/card-mines.png';
 import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
 import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
 import MagentaThumbnail from '../../data/images/candy-1.png';
@@ -39,6 +34,7 @@ import BlueChip from '../../data/images/alpaca-dopter/blue-chip.png';
 import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
 import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/candy-3.png';
+import { ReactComponent as DiscordMarker } from '../../data/images/home/discord-mark.svg';
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
 
@@ -158,24 +154,24 @@ const Home = ({
     }
   }, []);
 
-  const renderHeadline = () => {
+  const renderDiscordBanner =() => {
     return (
-      <div className={styles.mainHeadline}>
-        <h1>Betting Reimagined</h1>
-
-        <div className={styles.slogan}>Clear, Social &amp; Fair</div>
-
-        <SocialIcons
-          className={styles.socialIcons}
-          dataTrackingIds={{
-            telegram: 'home-telegram',
-            instagram: 'home-instagram',
-            twitter: 'home-twitter',
-          }}
-        />
+      <div className={styles.discordBanner}>
+        <div className={styles.backgroundWrapper}>          
+          <div className={styles.whiteWrapper}>
+            <div className={styles.whiteContainer}>
+              <DiscordMarker/>
+            </div>
+          </div>
+          <div className={styles.body}>
+            <p>
+              Join Discord for early access of Games, News and Airdrops
+            </p>
+          </div>
+        </div>
       </div>
-    );
-  };
+    )
+  }
 
   const renderHowTokenWorks = () => {
     return (
@@ -509,6 +505,7 @@ const Home = ({
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
+          {renderDiscordBanner()}
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
