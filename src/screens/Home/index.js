@@ -22,6 +22,8 @@ import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
 import GameSmartsoft from 'components/GameSmartsoft';
+import Icon from 'components/Icon';
+import IconType from 'components/Icon/IconType';
 import { GeneralActions } from '../../store/actions/general';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
@@ -89,6 +91,7 @@ const Home = ({
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
   let alpacaGames = showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES;
+  const [showDiscordBanner, setShowDiscordBanner] = useState(false);
 
   useOAuthCallback();
 
@@ -152,13 +155,23 @@ const Home = ({
       renderBetApprovePopup();
       handleRefPersistent();
       handleVoluumPersistent();
+      setShowDiscordBanner(!checkdDiscordBanner());
     }
   }, []);
 
+  const checkdDiscordBanner = () => {
+    return localStorage.getItem('discordBanner') || false;
+  };
+
+  const hideDiscordBanner = () => {
+    localStorage.setItem('discordBanner', true);
+    setShowDiscordBanner(false);
+  }
+
   const renderDiscordBanner =() => {
     return (
-      <div className={styles.discordBanner}>
-        <div className={styles.backgroundWrapper}>          
+      <div className={classNames(styles.discordBanner, isLoggedIn() && styles.withPadding)}>
+        <div className={styles.backgroundWrapper}>
           <div className={styles.whiteWrapper}>
             <div className={styles.whiteContainer}>
               <a
@@ -170,7 +183,14 @@ const Home = ({
               </a>
             </div>
           </div>
-          <div className={styles.body}>
+          <div className={styles.bodyContainer}>
+            <Icon
+              className={styles.closeButton}
+              width={30}
+              height={30}
+              iconType={IconType.close}
+              onClick={hideDiscordBanner}
+            />
             <p>
               Join Discord for early access of Games, News and Airdrops
             </p>
@@ -525,7 +545,7 @@ const Home = ({
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
-          {!isLoggedIn() && renderDiscordBanner()}
+          {showDiscordBanner && renderDiscordBanner()}
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}

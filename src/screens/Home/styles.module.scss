@@ -789,6 +789,10 @@
   @media (max-width: $screen-sm) {
     display: none;
   }
+  &.withPadding {
+    margin-top: 40px;
+  }
+
   .backgroundWrapper {
     position: absolute;
     height: 100px;
@@ -796,7 +800,10 @@
     right: 0;
     background: #f7a800;
     display: flex;
-    .body {
+
+    .bodyContainer {
+      position: relative;
+      width: 100%;
       display: flex;
       align-items: center;
       font-weight: 600;
@@ -809,6 +816,12 @@
 
       p {
         margin-left: 20px;
+      }
+      .closeButton {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
       }
     }
     .whiteWrapper {
