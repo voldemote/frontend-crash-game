@@ -69,7 +69,6 @@ const EvoplayGame = ({
   useEffect(() => {
     getUrlgame({returnUrl: window.location.origin, demo: !user.isLoggedIn, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'evoplay' })
       .then(({data}) => {
-        console.log("data", data)
         if(data?.url) setInit(data?.url)
       })
       .catch(error => {
@@ -81,7 +80,6 @@ const EvoplayGame = ({
   }, [])
 
   useEffect(() => {
-    console.log("ChatActions")
     dispatch(ChatActions.fetchByRoom({ roomId: EXTERNAL_GAME_EVENT_ID }));
   }, [dispatch, connected]);
 

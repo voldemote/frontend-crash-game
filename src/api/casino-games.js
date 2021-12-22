@@ -137,7 +137,6 @@ const getEvoplaygames = (payload) => {
 
 const getUrlgame = (payload) => {
   const callThis = ApiUrls.API_GET_EVOPLAY_URLGAME;
-  console.log("payload", payload)
   return Api.post(callThis, payload).catch(error => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
