@@ -512,7 +512,7 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
-          <AmbassadorBanner />
+          {/* <AmbassadorBanner /> */}
           <div className={styles.nftBannerWrapper}>
             <NftBanner />
           </div>
