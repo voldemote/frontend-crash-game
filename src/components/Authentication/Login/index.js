@@ -58,7 +58,7 @@ const Login = ({
 
   const validateInput = (options) => {
     let error;
-    if (!passwordIsValid() && !forgotPassword) {
+    if (!passwordIsValid() && !forgotPassword && options === undefined) {
       error = 'Your password needs to be 8 characters long';
       fooRef = pwRef;
     }
@@ -67,6 +67,7 @@ const Login = ({
       error = 'Not a valid email address';
       fooRef = emailRef;
     }
+
     if (options && options.emailOnly && email.length === 0) {
       error = undefined;
       ReactTooltip.hide(emailRef);
