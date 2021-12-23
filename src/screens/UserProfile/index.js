@@ -28,12 +28,12 @@ const UserProfile = ({refreshMyBetsData}) => {
     { name: 'BETS PLACED', index: 0 },
     { name: 'LEADERBOARD', index: 1 },
   ];
-  if(matchMediaMobile) tabOptions.push({ name: 'STATISTICS', index: 2});
+  // if(matchMediaMobile) tabOptions.push({ name: 'STATISTICS', index: 2});
 
-  const [sideTabIndex, setSideTabIndex] = useState(0);
-  const sideTabOptions = [
-    { name: 'Statistics', index: 0 },
-  ];
+  // const [sideTabIndex, setSideTabIndex] = useState(0);
+  // const sideTabOptions = [
+  //   { name: 'Statistics', index: 0 },
+  // ];
   const currentUser = useSelector(state => state.authentication);
   const dispatch = useDispatch();
   const { myBetsData } = useRosiData();
@@ -69,9 +69,9 @@ const UserProfile = ({refreshMyBetsData}) => {
     setTabIndex(option.index);
   };
 
-  const handleSwitchSideTab = option => {
-    setSideTabIndex(option.index);
-  };
+  // const handleSwitchSideTab = option => {
+  //   setSideTabIndex(option.index);
+  // };
 
   const onSuspendButtonClick = status => {
     dispatch(AuthenticationActions.updateStatus({ userId, status }));
@@ -102,53 +102,53 @@ const UserProfile = ({refreshMyBetsData}) => {
       case 2:
         return (
           <div className={styles.sideContent}>
-            <UserStatsSide />
+            {/* <UserStatsSide /> */}
           </div>
         );
     }
   };
 
-  const UserStatsSide = () => {
-    return (
-      <>
-        <div className={styles.statsBlock}>
-          <div className={styles.statItem}>
-            <div className={styles.statItemHead}>
-              <span>{userStats?.casinoGamePlayCount}</span> Games
-            </div>
-            <div className={styles.statItemHint}>Total casino games played</div>
-          </div>
-          <div className={styles.statItem}>
-            <div className={styles.statItemHead}>
-              <span>{userStats?.casinoGameCashoutCount}</span> Cashouts
-            </div>
-            <div className={styles.statItemHint}>Total casino cashouts</div>
-          </div>
+  // const UserStatsSide = () => {
+  //   return (
+  //     <>
+  //       <div className={styles.statsBlock}>
+  //         <div className={styles.statItem}>
+  //           <div className={styles.statItemHead}>
+  //             <span>{userStats?.casinoGamePlayCount}</span> Games
+  //           </div>
+  //           <div className={styles.statItemHint}>Total casino games played</div>
+  //         </div>
+  //         <div className={styles.statItem}>
+  //           <div className={styles.statItemHead}>
+  //             <span>{userStats?.casinoGameCashoutCount}</span> Cashouts
+  //           </div>
+  //           <div className={styles.statItemHint}>Total casino cashouts</div>
+  //         </div>
 
-          <div className={styles.statItem}>
-            <div className={styles.statItemHead}>
-              <span>{userStats?.userBetsAmount?.totalBets}</span> Bets
-            </div>
-            <div className={styles.statItemHint}>Total bets</div>
-          </div>
+  //         <div className={styles.statItem}>
+  //           <div className={styles.statItemHead}>
+  //             <span>{userStats?.userBetsAmount?.totalBets}</span> Bets
+  //           </div>
+  //           <div className={styles.statItemHint}>Total bets</div>
+  //         </div>
 
-          <div className={styles.statItem}>
-            <div className={styles.statItemHead}>
-              <span>{userStats?.userBetsCashouts?.totalCashouts}</span> Cashouts
-            </div>
-            <div className={styles.statItemHint}>Total bet cashouts</div>
-          </div>
+  //         <div className={styles.statItem}>
+  //           <div className={styles.statItemHead}>
+  //             <span>{userStats?.userBetsCashouts?.totalCashouts}</span> Cashouts
+  //           </div>
+  //           <div className={styles.statItemHint}>Total bet cashouts</div>
+  //         </div>
 
-          <div className={styles.statItem}>
-            <div className={styles.statItemHead}>
-              <span>{userStats?.userBetsRewards?.totalRewards}</span> Rewards
-            </div>
-            <div className={styles.statItemHint}>Total bet rewards</div>
-          </div>
-        </div>
-      </>
-    );
-  };
+  //         <div className={styles.statItem}>
+  //           <div className={styles.statItemHead}>
+  //             <span>{userStats?.userBetsRewards?.totalRewards}</span> Rewards
+  //           </div>
+  //           <div className={styles.statItemHint}>Total bet rewards</div>
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // };
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -206,7 +206,7 @@ const UserProfile = ({refreshMyBetsData}) => {
               </div>
             </div>
 
-            <div className={styles.sideContainer}>
+            {/* <div className={styles.sideContainer}>
               <TabOptions options={sideTabOptions} className={styles.tabLayout}>
                 {option => (
                   <div
@@ -224,7 +224,7 @@ const UserProfile = ({refreshMyBetsData}) => {
               <div className={styles.sideContent}>
                 <UserStatsSide />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
