@@ -81,9 +81,9 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
           <Grid item xs>
             <div className={classNames(styles.messageLast, styles.messageRight)}>
               {type==='lost' ? (
-                  <p className={'global-cashout-loss'}>-{lostAmountStr} {TOKEN_NAME}</p>
+                  <p className={styles.loss}><span>{`-${lostAmountStr}`}</span> <span>{TOKEN_NAME}</span></p>
                 ):(
-                  <p className={styles.reward}>{rewardAmountStr} {TOKEN_NAME}</p>
+                  <p className={styles.reward}><span>{rewardAmountStr}</span> <span>{TOKEN_NAME}</span></p>
                 )}
               <img src={medalCoin} alt="medal" />
             </div>
