@@ -192,7 +192,13 @@ const Home = ({
               onClick={hideDiscordBanner}
             />
             <p>
-              Join Discord for early access of Games, News and Airdrops
+              <a
+                href="https://discord.gg/S7ebz6bb"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Join Discord for early access of Games, News and Airdrops
+              </a>
             </p>
           </div>
         </div>
@@ -565,7 +571,7 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
-          {renderFreeAlpacaOffer()}
+          {/* {renderFreeAlpacaOffer()} */}
           {/* <AmbassadorBanner /> */}
           <div className={styles.nftBannerWrapper}>
             <NftBanner />
