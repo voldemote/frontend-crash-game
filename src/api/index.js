@@ -588,6 +588,12 @@ const getUserCount = () => {
     .catch((error) => ({ error: error.message }));
 }
 
+const getBonusCount = (bonusId) => {
+  return Api.get(ApiUrls.BONUS_COUNT.replace(':id', bonusId))
+    .then((response) => ({ response }))
+    .catch((error) => ({ error: error.message }));
+}
+
 export {
   Api,
   createBet,
@@ -659,4 +665,5 @@ export {
   generateCryptopayChannel,
   acceptToS,
   getUserCount,
+  getBonusCount,
 };
