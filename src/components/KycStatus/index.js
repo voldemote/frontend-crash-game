@@ -47,6 +47,11 @@ const KycStatus = ({
         <label>Reference:</label>
         <p>{userKyc.uid}</p>
       </div>
+      {userKyc.status === 'pending' &&
+      <div className={styles.group}>
+        <p className={styles.warning}>Due to an unexpected number of requests, this process is taking longer than usual. Please be patient.</p>
+      </div>
+      }
     </>
   );
 

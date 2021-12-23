@@ -49,6 +49,13 @@
       &.pending {
         background-color: $colorGrayLight;
       }
+
+      &.warning {
+        text-indent: 0;
+        background-color: transparent;
+        color: $colorRedLight;
+        line-height: 20px;
+      }
     }
   }
 }
