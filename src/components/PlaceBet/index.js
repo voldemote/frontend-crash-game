@@ -346,7 +346,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       PopupActions.show({
         popupType: PopupTheme.auth,
         options: {
-          small: true,
+          small: false,
           authenticationType: AuthenticationType.register,
         },
       })
