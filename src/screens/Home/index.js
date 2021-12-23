@@ -72,6 +72,7 @@ import NftBanner from 'components/NftBanner';
 import GameCards from 'components/GameCards';
 import LimitedOfferBanner from 'components/LimitedOfferBanner';
 import Routes from 'constants/Routes';
+import { AMOUNT_BONUS, CURRENT_BONUS_ID } from 'constants/Bonus';
 
 const Home = ({
   authState,
@@ -405,13 +406,13 @@ const Home = ({
 
             <LimitedOfferBanner />
             <span className={styles.limitedOfferDescription}>
-              <span className={styles.highlighted}>500</span>
+              <span className={styles.highlighted}>{AMOUNT_BONUS}</span>
               <br />
               <p>WFAIRS FOR <span className={styles.red}>FREE</span></p>
               <div className={styles.conditionsWrapper}>
                 <span className={styles.conditions}>- no hidden conditions<Link to={Routes.terms}><sup>*</sup></Link></span>
                 <span className={styles.conditions}>- start playing in 1 min</span>
-                <span className={styles.conditions}>- limited to first 1000 users</span>
+                <span className={styles.conditions}>- limited to {CURRENT_BONUS_ID === 'LAUNCH_1k_500' ? 'first ' : ''}1000 users</span>
               </div>
             </span>
 

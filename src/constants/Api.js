@@ -116,3 +116,4 @@ export const SEND_BUY_WITH_CRYPTO = 'api/user/buy-with-crypto'
 export const GENERATE_CRYPTOPAY_CHANNEL = 'api/user/cryptopay/channel';
 export const ACCEPT_TOS = 'api/user/consent';
 export const USER_COUNT = 'api/user/count';
+export const BONUS_COUNT = 'api/user/check-bonus/:id';
