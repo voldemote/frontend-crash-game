@@ -150,7 +150,7 @@ const PlaceBetCasino = ({
       PopupActions.show({
         popupType: PopupTheme.auth,
         options: {
-          small: true,
+          small: false,
           authenticationType: AuthenticationType.register,
         },
       })
