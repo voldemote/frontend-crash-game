@@ -29,6 +29,10 @@ const KycStatus = ({
       await refreshKycStatus().catch((error) => {
         dispatch(AlertActions.showError(error.message));
       });
+
+      setTimeout(()=> {
+        setStatusRefreshed(false);
+      }, 15*1000)
     }
   }
 
