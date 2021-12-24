@@ -461,6 +461,7 @@ const loginExternal = function* ({ code, provider, ref, tosAccepted, sid, cid })
         initialReward: data?.initialReward,
         user: data?.user,
         shouldAcceptToS: data?.shouldAcceptToS,
+        emailConfirmed: data?.emailConfirmed,
       })
     );
 
@@ -511,6 +512,7 @@ const login = function* (action) {
         newUser: action.newUser,
         initialReward: action?.initialReward,
         shouldAcceptToS: data?.shouldAcceptToS,
+        emailConfirmed: data?.emailConfirmed,
       })
     );
   } else if(error?.statusCode === 403 && error?.errors?.banData) {

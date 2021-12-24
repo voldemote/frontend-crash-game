@@ -124,6 +124,9 @@ const requestEmailVerified = (action, state) => {
     emailVerificationState: {
       $set: true,
     },
+    emailConfirmed: {
+      $set: true,
+    }
   });
 };
 
@@ -254,6 +257,9 @@ const updateData = (action, state) => {
     kyc: {
       $set: action.kyc,
     },
+    emailConfirmed: {
+      $set: action.emailConfirmed,
+    }
   });
 };
 
@@ -354,6 +360,9 @@ const loginSuccess = (action, state) => {
     shouldAcceptToS: {
       $set: action.shouldAcceptToS,
     },
+    emailConfirmed: {
+      $set: action.emailConfirmed,
+    }
   });
 };
 

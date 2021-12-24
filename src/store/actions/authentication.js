@@ -128,6 +128,7 @@ const updateData = makeActionCreator(AuthenticationTypes.UPDATE_DATA, {
   preferences: null,
   aboutMe: null,
   alpacaBuilderProps: null,
+  emailConfirmed: null,
 });
 
 const verifySms = makeActionCreator(AuthenticationTypes.VERIFY_SMS, {
@@ -221,6 +222,7 @@ const loginSuccess = makeActionCreator(AuthenticationTypes.LOGIN_SUCCESS, {
   session: null,
   newUser: false,
   shouldAcceptToS: false,
+  emailConfirm: false,
 });
 
 const loginFail = makeActionCreator(AuthenticationTypes.LOGIN_FAIL, {
@@ -258,6 +260,7 @@ const loginExternal = makeActionCreator(AuthenticationTypes.LOGIN_EXTERNAL, {
   tosAccepted: false,
   sid: null,
   cid: null,
+  emailConfirmed: false,
 });
 
 
