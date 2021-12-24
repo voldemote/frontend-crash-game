@@ -22,7 +22,7 @@ const useBonusCounter = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return Math.max(count,0);
+  return count != null ? Math.max(count,0) : count;
 };
 
 export default useBonusCounter;

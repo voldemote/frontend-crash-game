@@ -9,7 +9,7 @@ const LimitedOfferBanner = ({className}) => {
   return (
     <div className={classNames(styles.bannerWrapper, className)}>
       <p>Limited offer!</p>
-      {count ? <span>{count} of 1000 Available</span> : null}
+      {count != null ? <span>{count} of 1000 Available</span> : null}
     </div>
   );
 };
