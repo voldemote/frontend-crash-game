@@ -178,6 +178,7 @@ const Navbar = ({
           style.leaderboardValues,
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
+        data-wg-notranslate
         data-tracking-id="menu-wallet-icon"
         onClick={() => history.push(Routes.wallet)}
       >

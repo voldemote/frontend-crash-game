@@ -33,7 +33,7 @@ const Spins = ({spins, showPopup, text, game}) => {
   return (
     <div className={styles.container}>
       <span className={styles.title}>{text ? text : 'Last Crashes'}</span>
-      <div className={styles.crashes}>
+      <div className={styles.crashes} data-wg-notranslate>
         {spins?.map((spin, i) => {
          const spinType = spin?.type;
 

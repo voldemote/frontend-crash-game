@@ -11,7 +11,7 @@ const formatk = (num) => {
   return Math.abs(num) > 999999 ? Math.sign(num)*((Math.abs(num)/1000000).toFixed(1)) + 'M' : Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
-export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio, shadow, setShadow}) => {
+export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall, audio, shadow, setShadow, bet}) => {
   const outcomesByRisk = GAME_CFG.outcomesByRisk;
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
@@ -21,19 +21,12 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   const [nball, setNball] = useState(0);
   const [nshadow, setNshadow] = useState(0);
   const boardref = useRef(null);
-  const brightBasket = (winMultiplier,) => {
-    /*if(shadow){
-      setNshadow((nshadow)=>nshadow-1)
-      onEnd(null, true)
-      return
-    }*/
-
-    const right = ballValue.path.filter(n=>n==1).length >= ballValue.path.length/2
-    const index = outcomes.findIndex((out, i) => right ? i > 5 && out.value === winMultiplier:out.value === winMultiplier)
-    if(index > 0){
-      setBox(index)
+  const brightBasket = (winMultiplier) => {
+    if(winMultiplier){
+      setBox(bet.winIndex)
       onEnd(winMultiplier > 1)
     }else{
+      //demo
       onEnd(winMultiplier > 1, true)
     }
   }

@@ -55,7 +55,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
     const gameName = data?.gameName;
     const gameTypeId = data?.gameTypeId;
     const gameLabel = getGameById(gameTypeId)?.name || gameName;
-    const multiplier = data?.crashFactor || data?.winMultiplier;
+    const multiplier = (_.has(data, 'crashFactor') ? data.crashFactor : data?.winMultiplier) || 0;
     const stakedAmount = data?.stakedAmount;
     const crashFactor = roundToTwo(multiplier);
     switch (activity.type) {

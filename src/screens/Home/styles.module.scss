@@ -32,79 +32,6 @@
   }
 }
 
-.mainHeadline {
-  color: $colorWhite;
-  text-align: center;
-  max-width: 580px;
-  margin: 0 auto;
-  margin-top: 143px;
-  padding: 0 20px;
-
-  @media (max-width: $screen-sm) {
-    margin-top: 90px;
-  }
-
-  h1 {
-    font-family: $fontOmnes;
-    font-size: 46px;
-    font-weight: bold;
-    line-height: 1.13;
-    letter-spacing: 1px;
-
-    @media (max-width: $screen-md) {
-      font-size: 38px;
-    }
-  }
-
-  ul {
-    margin: 0 auto;
-    list-style: none;
-    margin-left: 20px;
-    text-align: left;
-    padding-top: 30px;
-
-    & li {
-      position: relative;
-      margin-bottom: 5px;
-      opacity: 0.6;
-      margin-left: 10px;
-    }
-
-    & li:before {
-      content: '';
-      position: absolute;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      width: 5px;
-      height: 5px;
-      top: 11px;
-      left: -15px;
-      transform: translateY(-50%) rotate(-45deg);
-    }
-  }
-
-  div.slogan {
-    padding: 12px 0;
-    font-size: 25px;
-    font-family: $fontOmnes;
-
-    span {
-      font-family: $fontOmnes;
-      font-weight: bold;
-      color: $colorYellowLight;
-    }
-
-    @media (max-width: $screen-md) {
-      font-size: 24px;
-      padding: 12px 15px 0;
-    }
-  }
-
-  .socialIcons {
-    padding-bottom: 0px;
-  }
-}
-
 .bottomWrapper {
   display: flex;
   align-items: flex-start;
@@ -268,7 +195,7 @@
   }
   .cardContainer {
     position: relative;
-    height: 528px;
+    height: 548px;
     width: 402px;
     background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
     padding: 15px;
@@ -280,14 +207,23 @@
       align-items: center;
       border: 1px solid $colorPopBorder;
       border-radius: 20px;
-      height: 498px;
+      height: 518px;
 
       // padding: 80px 16px 0 0;
       font-family: $fontOmnes;
       @media (max-width: $screen-sm) {
         width: 100%;
-        height: 498px;
+        height: 518px;
         padding: 40px 10px 0 0;
+      }
+
+      .terms {
+        font-size: 12px;
+        margin-bottom: 10px;
+
+        a {
+          text-decoration: underline;
+        }
       }
 
       .topFront {
@@ -405,7 +341,7 @@
         justify-content: center;
         align-items: center;
         padding: 0 5px;
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
       }
     }
   }
@@ -529,7 +465,7 @@
 }
 
 .nftBannerWrapper {
-  margin-top: 600px;
+  margin-top: 200px;
   margin-bottom: 200px;
   @media (max-width: $screen-xl) {
     margin-top: 200px;
@@ -842,5 +778,193 @@
     margin-top: 50px;
     margin-bottom: 100px;
     cursor: pointer;
+  }
+}
+
+.discordBanner {
+  width: 100%;
+  height: 130px;
+  margin-top: -100px;
+  margin-bottom: 40px;
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+  &.withPadding {
+    margin-top: 40px;
+  }
+
+  .backgroundWrapper {
+    position: absolute;
+    height: 100px;
+    left: 0;
+    right: 0;
+    background: #f7a800;
+    display: flex;
+
+    .bodyContainer {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 36px;
+      color: $colorBlack;
+
+      @media (max-width: 1366px) {
+        font-size: 32px;
+      }
+
+      p {
+        // margin-left: 20px;
+        padding: 0 30px 0 20px;
+
+        @media (max-width: $screen-md) {
+          font-size: 26px;
+        }
+
+        a {
+          text-decoration: underline;
+        }
+      }
+      .closeButton {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+      }
+    }
+    .whiteWrapper {
+      max-width: 500px;
+      position: relative;
+      margin-right: 50px;
+      margin-top: 0px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 0px solid transparent;
+        border-left: 60px solid #fff;
+        border-bottom: 127px solid transparent;
+
+        @media (max-width: $screen-sm) {
+          border: none;
+        }
+      }
+
+      .whiteContainer {
+        background: white;
+        padding: 6px 30px;
+        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        svg {
+          width: 300px;
+          height: 110px;
+        }
+      }
+    }
+  }
+}
+
+.freeAlpacaOfferContainer {
+  height: 640px;
+  @media (max-width: $screen-md) {
+    display: none;
+  }
+  .backgroundWrapper {
+    position: absolute;
+    height: 260px;
+    left: 0;
+    right: 0;
+    margin-top: 220px;
+    background: #f7a800;
+    display: flex;
+    flex-direction: column;
+    .title {
+      margin-top: 20px;
+      margin-left: 440px;
+      font-weight: 700;
+      font-size: 60px;
+      @media (max-width: 1350px) {
+        margin-left: 200px;
+      }
+      @media (max-width: $screen-lg) {
+        margin-left: 40px;
+      }
+
+      .underline {
+        text-decoration: underline;
+      }
+    }
+    .bottomInfoWrapper {
+      margin: 40px 40px 0 340px;
+      display: flex;
+      justify-content: space-between;
+      @media (max-width: 1350px) {
+        margin: 40px 40px 0 40px;
+      }
+
+      .whiteWrapper {
+        max-width: 680px;
+        position: relative;
+        margin-right: 50px;
+        margin-top: 0px;
+
+        &:after {
+          content: '';
+          position: absolute;
+          right: -46px;
+          top: 0;
+          width: 0;
+          height: 0;
+          border-top: 0px solid transparent;
+          border-left: 46px solid #fff;
+          border-bottom: 89px solid transparent;
+
+          @media (max-width: $screen-sm) {
+            border: none;
+          }
+        }
+
+        .whiteContainer {
+          background: white;
+          padding: 6px 30px 6px 80px;
+          box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+          display: flex;
+          align-items: center;
+          p {
+            font-size: 30px;
+            font-weight: 700;
+          }
+          .number {
+            font-size: 56px;
+            font-weight: 700;
+            margin-left: 20px;
+          }
+        }
+      }
+      button {
+        border: 4px solid #080e33;
+        border-radius: 50px;
+        background: #f7a800;
+        color: #080e33;
+        font-size: 36px;
+        font-weight: 600;
+        padding: 6px 30px;
+        cursor: pointer;
+      }
+    }
+  }
+  .alpacaImage {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    @media (max-width: 1350px) {
+      display: none;
+    }
   }
 }

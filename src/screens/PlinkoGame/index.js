@@ -157,7 +157,7 @@ const PlinkoGame = ({
         //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk });
       } else {
         const { data } = await Api.createTradePlinko(payload);
-        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier, gameHash: data.gameHash, ready: false}});
+        setBet((bet)=>{return{...payload, ball: bet.ball+1, path: data.path, profit: data.profit, winMultiplier: data.winMultiplier, winIndex: data.winIndex, gameHash: data.gameHash, ready: false}});
         //updateUserBalance(userId);
         trackPlinkoPlaceBet({ amount: payload.amount, multiplier: risk });
         trackPlinkoCashout({ amount: data.profit, multiplier: data.winMultiplier });

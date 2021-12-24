@@ -88,8 +88,8 @@ const PlinkoGameAnimation = ({
   }, [bet]);
 
   const spin = async () => {
-    setBall({ path: bet.path, winMultiplier: bet.winMultiplier })
-    !bet.autobet && setBet((bet) => {return{ball: bet.ball, ready: true, amount: bet.amount, profit: bet.profit, reward: bet.reward, gameHash: bet.gameHash}});
+    setBall({ path: bet.path, winMultiplier: bet.winMultiplier, winIndex: bet.winIndex })
+    !bet.autobet && setBet((bet) => {return{ball: bet.ball, ready: true, amount: bet.amount, profit: bet.profit, reward: bet.reward, gameHash: bet.gameHash, winIndex: bet.winIndex}});
   }
 
   const changeBackground = (count) => {
@@ -138,7 +138,7 @@ const PlinkoGameAnimation = ({
       {audio && <GameAudioControlsLocal game='plinko' audio={audio} />}
       <img className={styles.trape} src="/images/casino-games/Trapezoid.png" alt="" />
       <BackgroundPlinko state={backg} width={width} height={height} size={Math.sqrt(width*width+height*height)*1.1} />
-      {width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} />}
+      {width && height && <AnimationController risk={risk} amount={bet.autobet ? bet.amount:amount} ballValue={ball} audio={audio} onEnd={handleEnd} setBall={setBall} shadow={shadow} setShadow={setShadow} bet={bet}/>}
     </div>
   );
 };

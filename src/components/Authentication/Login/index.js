@@ -58,7 +58,7 @@ const Login = ({
 
   const validateInput = (options) => {
     let error;
-    if (!passwordIsValid() && !forgotPassword) {
+    if (!passwordIsValid() && !forgotPassword && options === undefined) {
       error = 'Your password needs to be 8 characters long';
       fooRef = pwRef;
     }
@@ -67,6 +67,7 @@ const Login = ({
       error = 'Not a valid email address';
       fooRef = emailRef;
     }
+
     if (options && options.emailOnly && email.length === 0) {
       error = undefined;
       ReactTooltip.hide(emailRef);
@@ -78,6 +79,12 @@ const Login = ({
     }
 
     return error;
+  };
+
+  const clearErrorTooltip = () => {
+    setError(undefined);
+    ReactTooltip.hide(emailRef);
+    ReactTooltip.hide(pwRef);
   };
 
   const onConfirm = () => {
@@ -150,6 +157,7 @@ const Login = ({
             disabled={submitInProgress}
             setValue={(e) => {
               setInputEmail(e.trim().toLowerCase());
+              clearErrorTooltip();
             }}
             onConfirm={onConfirm}
             onBlur={() => validateInput({ emailOnly: true })}
@@ -171,7 +179,10 @@ const Login = ({
               className={styles.inputBox}
               placeholder="***********"
               value={password}
-              setValue={setPassword}
+              setValue={(e) => {
+                setPassword(e);
+                clearErrorTooltip();
+              }}
               disabled={submitInProgress}
               onConfirm={onConfirm}
             />

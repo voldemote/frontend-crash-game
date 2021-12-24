@@ -4,9 +4,9 @@ import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
-import {SEND_BUY_WITH_CRYPTO} from '../constants/Api'
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
+import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO} from '../constants/Api';
 
 const {
   store: { dispatch },
@@ -25,8 +25,10 @@ const createInstance = (host, apiPath) => {
     response => response,
     error => {
       if (
-        error.response.status === 401 &&
-        error.response.data?.message !== 'Invalid login'
+       ( error.response.status === 401 &&
+        error.response.data?.message !== 'Invalid login')
+        || ( error.response.status === 403 &&
+          error.response.data?.message === 'Your account is banned')
       ) {
         dispatch(AuthenticationActions.forcedLogout());
       } else if (
@@ -579,6 +581,12 @@ const getUserKycData = (userId) => {
     .catch(error => ({ error: error.message }));
 };
 
+const refreshKycStatus = (userId) => {
+  return Api.get(ApiUrls.KYC_REFRESH_STATUS)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
+
 const getRandomUsername = () => {
   return Api.get(ApiUrls.RANDOM_USERNAME)
     .catch(error => ({ error: error.message }));
@@ -600,6 +608,12 @@ const acceptToS = () => {
 
 const getUserCount = () => {
   return Api.get(ApiUrls.USER_COUNT)
+    .then((response) => ({ response }))
+    .catch((error) => ({ error: error.message }));
+}
+
+const getBonusCount = (bonusId) => {
+  return Api.get(ApiUrls.BONUS_COUNT.replace(':id', bonusId))
     .then((response) => ({ response }))
     .catch((error) => ({ error: error.message }));
 }
@@ -675,4 +689,6 @@ export {
   generateCryptopayChannel,
   acceptToS,
   getUserCount,
+  getBonusCount,
+  refreshKycStatus
 };

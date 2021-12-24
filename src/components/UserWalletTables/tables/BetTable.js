@@ -2,21 +2,27 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from '../styles.module.scss';
 import classNames from 'classnames';
+import _ from 'lodash';
 import {getReadableAmount, roundToTwo} from '../../../helper/FormatNumbers';
 import { toNumericString } from 'helper/FormatNumbers';
 import { TOKEN_NAME } from '../../../constants/Token';
 import { GAMES } from 'constants/Games';
-
-
-
-
+import {getGameById, getExternalGames} from "../../../helper/Games";
 
 const BetsRow = ({ data, gameLabel,hideSecondaryColumns = false }) => {
   const { gameId,username, crashFactor, stakedAmount } = data;
-  gameLabel =
-  gameLabel ??
-  Object.values(GAMES).find(g => g.id.indexOf(gameId) > -1)?.name ??
-  'Game';
+  gameLabel = getGameById(gameId)?.name;
+
+  if(!gameLabel) {
+    const topGames = getExternalGames();
+    const topGameEntry = _.find(topGames, {id: gameId});
+    gameLabel = topGameEntry?.TechnicalName;
+  }
+
+  if(!gameLabel) {
+    gameLabel = "Game";
+  }
+
   const cashout = stakedAmount * crashFactor;
 
   return (

@@ -45,6 +45,7 @@ export default {
   elonGame: '/games/elon-game',
   rouletteGame: '/games/alpaca-wheel',
   elonWallpaper: '/games/elon-wallpaper',
+  evoplayGame: '/evoplay-game/:game/:category/:number',
   verify: '/verify',
   chart: 'event/bet/:betId/history/chart',
   rewards: '/rewards',

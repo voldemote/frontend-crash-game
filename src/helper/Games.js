@@ -1,9 +1,16 @@
-const { GAMES } = require('../constants/Games');
+const { GAMES, EXTERNAL_GAMES } = require('../constants/Games');
 const _ = require('lodash');
 
 export const getGameById = gameTypeId => {
   return _.find(GAMES, { id: gameTypeId });
 };
+
+export const getExternalGames = () => {
+  return EXTERNAL_GAMES.map((game)=> {
+    game.id = ObjectId(game.TechnicalName);
+    return game;
+  })
+}
 
 export const ObjectId = (gamename) => {
   const encoded = new Buffer(gamename).toString('hex').substring(0,23)

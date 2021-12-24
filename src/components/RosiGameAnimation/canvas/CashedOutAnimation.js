@@ -202,7 +202,7 @@ class CashedOutAnimation {
 
     anim.elapsedTime = calcTotalDelayTime(crashFactor);
     anim.crashFactor = crashFactor;
-    anim.setTextValues(amount, crashFactor);
+    anim.setTextValues(amount.toFixed(0), crashFactor);
 
     const isSmallDistanceBetweenCrashes = x - previousAnimX <= anim.getWidth();
     if (isSmallDistanceBetweenCrashes) {

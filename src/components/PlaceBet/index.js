@@ -346,7 +346,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       PopupActions.show({
         popupType: PopupTheme.auth,
         options: {
-          small: true,
+          small: false,
           authenticationType: AuthenticationType.register,
         },
       })
@@ -500,7 +500,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const renderProfit = () => {
     if (userPlacedABet && isGameRunning) {
       return (
-        <div className={styles.profit} style={{ bottom: 0 }}>
+        <div className={styles.profit} style={{ bottom: 0 }} data-wg-notranslate>
           <Timer
             showIncome
             pause={!isGameRunning}
@@ -510,7 +510,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       );
     } else {
       return (
-        <div className={styles.profitPlaceholder}>
+        <div className={styles.profitPlaceholder} data-wg-notranslate>
           <span>+0 {TOKEN_NAME}</span>
         </div>
       );
@@ -955,6 +955,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           <div className={styles.spinsleft} style={{ marginTop: 18 }}>
             <span
               className={autobet.accumulated > 0 ? styles.reward : styles.lost}
+              data-wg-notranslate
             >
               {Math.floor(autobet.accumulated)} {TOKEN_NAME}
             </span>
@@ -962,7 +963,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           </div>
           <div className={styles.spinsleft}>
             Current bet:
-            <span className={styles.neutral}>
+            <span className={styles.neutral} data-wg-notranslate>
               {Math.floor(autobet.amount)} {TOKEN_NAME}
             </span>
           </div>
