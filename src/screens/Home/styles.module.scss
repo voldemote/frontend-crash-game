@@ -195,7 +195,7 @@
   }
   .cardContainer {
     position: relative;
-    height: 548px;
+    height: 570px;
     width: 402px;
     background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
     padding: 15px;
@@ -207,13 +207,13 @@
       align-items: center;
       border: 1px solid $colorPopBorder;
       border-radius: 20px;
-      height: 518px;
+      height: 540px;
 
       // padding: 80px 16px 0 0;
       font-family: $fontOmnes;
       @media (max-width: $screen-sm) {
         width: 100%;
-        height: 518px;
+        height: 530px;
         padding: 40px 10px 0 0;
       }
 
