@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import * as ApiUrls from 'constants/Api';
 import { useEffect, useState } from 'react';
 import Button from 'components/Button';
-import {getUserKycData} from "../../api";
+import {getUserKycData, refreshKycStatus} from "../../api";
 import {AlertActions} from "../../store/actions/alert";
 
 const KycStatus = ({
@@ -12,6 +12,7 @@ const KycStatus = ({
   const dispatch = useDispatch();
   const [userId, setUserId] = useState({...user?.userId});
   const [userKyc, setUserKyc] = useState({...user?.kyc});
+  const [statusRefreshed, setStatusRefreshed] = useState(false);
   useEffect(() => {
     setUserKyc(user?.kyc);
     setUserId(user?.userId);
@@ -22,14 +23,13 @@ const KycStatus = ({
     window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
   }
 
-
-  const refreshKycStatus = async () => {
-    const KYC = await getUserKycData(userId).catch((error) => {
-      dispatch(AlertActions.showError(error.message));
-    });
-
-
-    console.log('KYC', KYC);
+  const refreshKycStatusHandler = async () => {
+    setStatusRefreshed(true);
+    if(!statusRefreshed) {
+      await refreshKycStatus().catch((error) => {
+        dispatch(AlertActions.showError(error.message));
+      });
+    }
   }
 
   const getStatusDescription = () => {
@@ -68,7 +68,8 @@ const KycStatus = ({
       {(userKyc.status === 'pending') &&
         <Button
           className={styles.button}
-          onClick={refreshKycStatus}
+          onClick={refreshKycStatusHandler}
+          disabled={statusRefreshed}
         >
           Refresh KYC status
         </Button>

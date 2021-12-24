@@ -111,6 +111,7 @@ export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gam
 export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameHash';
 export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start';
 export const KYC_DATA_FOR_USER = 'api/user/:userId/kyc-data';
+export const KYC_REFRESH_STATUS = 'api/user/kyc/refresh';
 export const RANDOM_USERNAME = 'api/user/random-username';
 export const SEND_BUY_WITH_CRYPTO = 'api/user/buy-with-crypto'
 export const GENERATE_CRYPTOPAY_CHANNEL = 'api/user/cryptopay/channel';
