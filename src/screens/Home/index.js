@@ -410,9 +410,10 @@ const Home = ({
               <br />
               <p>WFAIRS FOR <span className={styles.red}>FREE</span></p>
               <div className={styles.conditionsWrapper}>
-                <span className={styles.conditions}>- no hidden conditions<Link to={Routes.terms}><sup>*</sup></Link></span>
+                <span className={styles.conditions}>- 50 WFAIR on email confirmed</span>
+                <span className={styles.conditions}>- 450 WFAIR on first deposit</span>
                 <span className={styles.conditions}>- start playing in 1 min</span>
-                <span className={styles.conditions}>- limited to {CURRENT_BONUS_ID === 'LAUNCH_1k_500' ? 'first ' : ''}1000 users</span>
+                <span className={styles.conditions}>- limited to 1000 users </span>
               </div>
             </span>
 

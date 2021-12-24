@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getBonusCount } from '../api';
+import { getBonusCount, getUserCount } from '../api';
 import { CURRENT_BONUS_ID } from '../constants/Bonus';
 
 const useBonusCounter = () => {
@@ -10,11 +10,13 @@ const useBonusCounter = () => {
 
   useEffect(() => {
     const getCurrentUserCount = async () => {
-      const result = await getBonusCount(CURRENT_BONUS_ID);
-      const totalUsers = result?.response?.data?.totalUsers;
-      
-      if (utils.isNumber(totalUsers)) {
-        setCount(1000 - totalUsers);
+      // const result = await getBonusCount(CURRENT_BONUS_ID);
+      const result = await getUserCount();
+      const totalUsers = result?.response?.data?.total;
+      const calculatedUsers = parseInt(totalUsers) % 1000;
+
+      if (utils.isNumber(calculatedUsers)) {
+        setCount(1000 - calculatedUsers);
       }
     }
 
