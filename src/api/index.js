@@ -4,7 +4,7 @@ import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
-import {SEND_BUY_WITH_CRYPTO} from '../constants/Api'
+import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO} from '../constants/Api';
 
 const {
   store: { dispatch },
@@ -563,6 +563,12 @@ const getUserKycData = (userId) => {
     .catch(error => ({ error: error.message }));
 };
 
+const refreshKycStatus = (userId) => {
+  return Api.get(ApiUrls.KYC_REFRESH_STATUS)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
+
 const getRandomUsername = () => {
   return Api.get(ApiUrls.RANDOM_USERNAME)
     .catch(error => ({ error: error.message }));
@@ -666,4 +672,5 @@ export {
   acceptToS,
   getUserCount,
   getBonusCount,
+  refreshKycStatus
 };
