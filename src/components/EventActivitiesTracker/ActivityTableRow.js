@@ -79,11 +79,11 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
             </div>
           </Grid>
           <Grid item xs>
-            <div className={classNames(styles.messageLast, styles.messageRight)}>
+            <div className={classNames(styles.messageLast, styles.messageRight)} data-wg-notranslate>
               {type==='lost' ? (
-                  <p className={styles.loss}><span>{`-${lostAmountStr}`}</span> <span>{TOKEN_NAME}</span></p>
+                  <p className={styles.loss}>{`-${lostAmountStr} ${TOKEN_NAME}`}</p>
                 ):(
-                  <p className={styles.reward}><span>{rewardAmountStr}</span> <span>{TOKEN_NAME}</span></p>
+                  <p className={styles.reward}>{`${rewardAmountStr} ${TOKEN_NAME}`}</p>
                 )}
               <img src={medalCoin} alt="medal" />
             </div>

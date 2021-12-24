@@ -100,16 +100,10 @@
     }
 
     .reward {
-      display: flex;
-      flex-direction: row;
-      column-gap: 3px;
       color: $colorGreen;
     }
 
     .loss {
-      display: flex;
-      flex-direction: row;
-      column-gap: 3px;
       color: $colorRed;
     }
 
