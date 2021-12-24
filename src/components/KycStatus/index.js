@@ -64,9 +64,13 @@ const KycStatus = ({
         <p>{userKyc.uid}</p>
       </div>
       {userKyc.status === 'pending' &&
-      <div className={styles.group}>
-        <p className={styles.warning}>Due to an unexpected number of requests, this process is taking longer than usual. Please be patient.</p>
-      </div>
+      <>
+        <div className={styles.group}>
+          <p className={styles.warning}>Due to an unexpected number of requests, this process is taking longer than usual. Please be patient.</p>
+        
+          <p className={styles.warning}>Important: To avoid delays, please use for KYC the same email used for registration on alpacasino.io ({user.email}).</p>
+        </div>
+      </>
       }
 
       {(userKyc.status === 'pending') &&
@@ -90,13 +94,27 @@ const KycStatus = ({
           <p>We perform KYC operations via our partner Fractal.</p>
           </>
         : renderKycStatus()}
+      
+      
+
       {showStartButton() &&
+      <>
         <Button
           className={styles.button}
           onClick={openFractal}
           >
           Continue with Fractal
-      </Button>}
+        </Button>
+        
+
+          <div className={styles.group}>          
+            <p className={styles.warning}>Important: To avoid delays, please use for KYC the same email used for registration on alpacasino.io ({user.email}).</p>
+          </div>
+        
+        
+      </>
+      }
+      
     </div>
   );
 };
