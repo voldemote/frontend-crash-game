@@ -41,4 +41,5 @@ export default {
   txModal: 'txModal',
   walletWithdraw: 'walletWithdraw',
   acceptToS: 'acceptToS',
+  ban: 'ban',
 };

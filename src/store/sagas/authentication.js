@@ -16,6 +16,7 @@ import { RosiGameActions } from '../actions/rosi-game';
 import { ChatActions } from 'store/actions/chat';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { trackSignup } from 'config/gtm';
+import { errors } from 'ethers';
 
 const afterLoginRoute = Routes.home;
 
@@ -469,6 +470,17 @@ const loginExternal = function* ({ code, provider, ref, tosAccepted, sid, cid })
     localStorage.removeItem('urlParam_ref');
     localStorage.removeItem('urlParam_sid');
     localStorage.removeItem('urlParam_cid');
+  } else if(error?.statusCode === 403 && error?.errors?.banData) {
+    const { banData } = error?.errors;
+    yield put(
+      PopupActions.show({
+        popupType: PopupTheme.ban,
+        options: {
+          small: true,
+          banData,
+        },
+      })
+    );
   } else {
     yield put(
       AuthenticationActions.loginExternalFail({
@@ -499,6 +511,17 @@ const login = function* (action) {
         newUser: action.newUser,
         initialReward: action?.initialReward,
         shouldAcceptToS: data?.shouldAcceptToS,
+      })
+    );
+  } else if(error?.statusCode === 403 && error?.errors?.banData) {
+    const { banData } = error?.errors;
+    yield put(
+      PopupActions.show({
+        popupType: PopupTheme.ban,
+        options: {
+          small: true,
+          banData,
+        },
       })
     );
   } else {

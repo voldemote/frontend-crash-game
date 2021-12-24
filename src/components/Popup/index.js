@@ -51,6 +51,7 @@ import TransakSuccess from "../TransakSuccess";
 import TxModal from 'components/TxModal';
 import WalletWithdrawPopup from 'components/WalletBuyWfairPopup/WalletWithdrawPopup';
 import ToSPopup from 'components/ToSPopup';
+import BanPopup from 'components/BanPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -251,6 +252,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <TxModal />;
       case PopupTheme.acceptToS:
         return <ToSPopup isOnboarding={options?.isOnboarding} />;
+      case PopupTheme.ban:
+        return <BanPopup banData={options?.banData} />;
     }
 
     return null;
