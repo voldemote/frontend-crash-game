@@ -4,7 +4,7 @@ import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
 import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
-import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO} from '../constants/Api'
+import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO} from '../constants/Api';
 
 const {
   store: { dispatch },
@@ -594,6 +594,12 @@ const getUserCount = () => {
     .catch((error) => ({ error: error.message }));
 }
 
+const getBonusCount = (bonusId) => {
+  return Api.get(ApiUrls.BONUS_COUNT.replace(':id', bonusId))
+    .then((response) => ({ response }))
+    .catch((error) => ({ error: error.message }));
+}
+
 export {
   Api,
   createBet,
@@ -665,5 +671,6 @@ export {
   generateCryptopayChannel,
   acceptToS,
   getUserCount,
+  getBonusCount,
   refreshKycStatus
 };

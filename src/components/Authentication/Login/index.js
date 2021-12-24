@@ -81,6 +81,12 @@ const Login = ({
     return error;
   };
 
+  const clearErrorTooltip = () => {
+    setError(undefined);
+    ReactTooltip.hide(emailRef);
+    ReactTooltip.hide(pwRef);
+  };
+
   const onConfirm = () => {
     const error = validateInput();
     if (error) return;
@@ -151,6 +157,7 @@ const Login = ({
             disabled={submitInProgress}
             setValue={(e) => {
               setInputEmail(e.trim().toLowerCase());
+              clearErrorTooltip();
             }}
             onConfirm={onConfirm}
             onBlur={() => validateInput({ emailOnly: true })}
@@ -172,7 +179,10 @@ const Login = ({
               className={styles.inputBox}
               placeholder="***********"
               value={password}
-              setValue={setPassword}
+              setValue={(e) => {
+                setPassword(e);
+                clearErrorTooltip();
+              }}
               disabled={submitInProgress}
               onConfirm={onConfirm}
             />
