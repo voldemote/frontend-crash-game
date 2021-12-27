@@ -15,7 +15,7 @@
   }
 
   .button {
-    margin-top: 30px;
+    margin: 30px 0;
   }
   .group {
     width: 100%;
@@ -48,6 +48,13 @@
       }
       &.pending {
         background-color: $colorGrayLight;
+      }
+
+      &.warning {
+        text-indent: 0;
+        background-color: transparent;
+        color: $colorRedLight;
+        line-height: 20px;
       }
     }
   }

@@ -266,6 +266,10 @@
     @media screen and (max-width: 800px) {
       /*display: none;*/
     }
+
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
   }
 }
 
@@ -289,7 +293,7 @@
 .button {
   // position: absolute;
   bottom: 6px;
-  margin: 0px auto 20px;
+  margin: 0px auto;
   outline: 0;
   @media screen and (max-width: $screen-xs) {
     margin-top: 10px;
@@ -436,6 +440,7 @@
     .buttonItem {
       margin-left: 12px;
       font-family: $fontOmnes;
+      color: $colorWhite;
       cursor: pointer;
     }
   }
@@ -469,7 +474,7 @@
 .betInfo {
   font-size: 14px;
   color: $colorGray;
-  margin: 0 auto;
+  margin: 20px auto 0;
   text-align: center;
   overflow-wrap: anywhere;
 }
@@ -479,5 +484,28 @@
   @media screen and (max-width: $screen-xs) {
     font-size: 12px;
     padding-top: 5px;
+  }
+}
+
+.buyTokenInfo {
+  font-size: 14px;
+  color: $colorGray;
+  margin: 0 auto 20px;
+  text-align: center;
+  overflow-wrap: anywhere;
+
+  p {
+    display: none;
+    margin-bottom: 20px;
+
+    &.visible {
+      display: block;
+    }
+  }
+
+  & span {
+    color: $mainAction;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }

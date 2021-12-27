@@ -178,6 +178,7 @@ const Navbar = ({
           style.leaderboardValues,
           isOpen(drawers.wallet) ? style.pillButtonActive : null
         )}
+        data-wg-notranslate
         data-tracking-id="menu-wallet-icon"
         onClick={() => history.push(Routes.wallet)}
       >
@@ -395,7 +396,7 @@ const Navbar = ({
 
   return (
     <div
-      className={classNames(style.navbar, hasOpenDrawer && style.navbarSticky)}
+      className={classNames(style.navbar, (location.pathname === '/') ? style.home : null,hasOpenDrawer && style.navbarSticky)}
     >
       <div className={style.logoMobileWrapper}>
         {renderNavbarLink(

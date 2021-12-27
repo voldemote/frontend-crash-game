@@ -172,6 +172,8 @@ class AnimationController {
     this.game.initialize({
       cellClickHandler: options.cellClickHandler,
       checkSelectedCell: options.checkSelectedCell,
+      checkDemo: options.checkDemo,
+      loseDemo: options.loseDemo,
       audio: this.audio
     });
     this.game.useConfig({gameConfig, gameViewConfig});

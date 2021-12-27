@@ -118,6 +118,30 @@ const getSpinsAlpacaWheel = (gameTypeId, userId) => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
+
+const setInitialEvoplaySession = (payload) => {
+  const callThis = ApiUrls.API_SET_EVOPLAY_SESSION;
+
+  return Api.post(callThis, payload).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
+
+const getEvoplaygames = (payload) => {
+  const callThis = ApiUrls.API_GET_EVOPLAY_GAMES;
+
+  return Api.get(callThis, payload).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
+
+const getUrlgame = (payload) => {
+  const callThis = ApiUrls.API_GET_EVOPLAY_URLGAME;
+  return Api.post(callThis, payload).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
+
 const setInitialSession = (payload) => {
   const callThis = ApiUrls.API_SET_SESSION;
 
@@ -137,6 +161,7 @@ const createTrade = payload => {
     throw error;
   });
 };
+
 
 const transformUser = user => ({
   crashFactor: user.crashfactor,
@@ -178,7 +203,7 @@ const getLastCashoutsMines = (gameTypeId, userId) => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
-
+//getEvoplaygames
 const getSingleGameDetailById = (gameHash, gameTypeId, type) => {
   const callThis = ApiUrls.SINGLE_GAME_API_GET_GAME_DETAILS
       .replace(':gameHash', gameHash);
@@ -192,6 +217,9 @@ export {
   GameApi,
   Api,
   setToken,
+  setInitialEvoplaySession,
+  getEvoplaygames,
+  getUrlgame,
   setInitialSession,
   createTrade,
   getSpinsAlpacaWheel,

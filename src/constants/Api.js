@@ -97,6 +97,10 @@ export const API_USER_WALLET_TRANSACTIONS = 'api/user/wallet/transactions';
 export const API_GETQUOTE = 'getQuote';
 export const API_WITHDRAW = 'withdraw';
 export const API_WITHDRAW_STATUS = 'withdraw/status/:id';
+export const API_SET_EVOPLAY_SESSION = '/api/evoplay/new-session';
+export const API_GET_EVOPLAY_URLGAME = '/api/evoplay/urlgame';
+export const API_GET_EVOPLAY_GAMES = '/api/evoplay/listgames';
+
 //3rd parties
 export const TINYURL_SHORTENER = 'https://tinyurl.com/api-create.php';
 export const CRASH_GAME_API_GET_GAME_DETAILS = 'api/elon-game/match/:gameHash';
@@ -107,7 +111,10 @@ export const API_UPDATE_CURRENT_FAIRNESS_SIMPLE_GAMES = 'api/fairness/seeds/:gam
 export const SINGLE_GAME_API_GET_GAME_DETAILS = 'api/simple-games/details/:gameHash';
 export const KYC_START_FOR_USER = 'api/user/:userId/kyc-start';
 export const KYC_DATA_FOR_USER = 'api/user/:userId/kyc-data';
+export const KYC_REFRESH_STATUS = 'api/user/kyc/refresh';
 export const RANDOM_USERNAME = 'api/user/random-username';
 export const SEND_BUY_WITH_CRYPTO = 'api/user/buy-with-crypto'
 export const GENERATE_CRYPTOPAY_CHANNEL = 'api/user/cryptopay/channel';
 export const ACCEPT_TOS = 'api/user/consent';
+export const USER_COUNT = 'api/user/count';
+export const BONUS_COUNT = 'api/user/check-bonus/:id';

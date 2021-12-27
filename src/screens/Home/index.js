@@ -4,7 +4,12 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { LOGGED_IN } from 'constants/AuthState';
-import { EXTERNAL_GAMES } from '../../constants/Games';
+import {
+  EXTERNAL_GAMES,
+  NEW_SLOTS_GAMES,
+  SLOTS_GAMES,
+  TOP_GAMES,
+} from '../../constants/Games';
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
@@ -17,15 +22,12 @@ import State from '../../helper/State';
 import { getTradeById } from '../../api';
 import SocialIcons from 'components/SocialIcons';
 import GameSmartsoft from 'components/GameSmartsoft';
+import Icon from 'components/Icon';
+import IconType from 'components/Icon/IconType';
 import { GeneralActions } from '../../store/actions/general';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import EloneWithPhone from '../../data/images/elon-with-phone.png';
-import gameCardWheel from '../../data/images/house-games/card-wheel.png';
-import gameCardElon from '../../data/images/house-games/card-elon.png';
-import gameCardPlinko from '../../data/images/house-games/card-plinko.png';
-import gameCardPumpDump from '../../data/images/house-games/card-pumpdump.png';
-import gameCardMines from '../../data/images/house-games/card-mines.png';
 import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
 import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
 import MagentaThumbnail from '../../data/images/candy-1.png';
@@ -34,6 +36,8 @@ import BlueChip from '../../data/images/alpaca-dopter/blue-chip.png';
 import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
 import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
 import YellowThumbnail from '../../data/images/candy-3.png';
+import { ReactComponent as DiscordMarker } from '../../data/images/home/discord-mark.svg';
+import AlpacaWithShavolImage from '../../data/images/home/alpaca-with-shavol.png'
 import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
 
@@ -57,8 +61,6 @@ import AboutSecondImage from '../../data/images/about-2-image.png';
 import AboutTopAlpaca from '../../data/images/about-top-alpaca.png';
 import AboutThirdImage from '../../data/images/about-3-image.png';
 
-
-
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
 import useOAuthCallback from 'hooks/useOAuthCallback';
@@ -67,6 +69,10 @@ import GameContentCards from 'components/GameContentCards/GameContentCards';
 import { TOKEN_NAME } from 'constants/Token';
 import AmbassadorBanner from 'components/AmbassadorBanner';
 import NftBanner from 'components/NftBanner';
+import GameCards from 'components/GameCards';
+import LimitedOfferBanner from 'components/LimitedOfferBanner';
+import Routes from 'constants/Routes';
+import { AMOUNT_BONUS, CURRENT_BONUS_ID } from 'constants/Bonus';
 
 const Home = ({
   authState,
@@ -82,9 +88,11 @@ const Home = ({
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
   const theme = useTheme();
-const isXSmall = useMediaQuery(theme.breakpoints.down('xs'));
-const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const isXSmall = useMediaQuery(theme.breakpoints.down('xs'));
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
+  let alpacaGames = showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES;
+  const [showDiscordBanner, setShowDiscordBanner] = useState(false);
 
   useOAuthCallback();
 
@@ -129,32 +137,75 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     }
   };
 
+  const handleVoluumPersistent = () => {
+    const sid = urlParams.get('sid');
+    const cid = urlParams.get('cid');
+
+    if (sid) {
+      localStorage.setItem('urlParam_sid', sid);
+    }
+
+    if (cid) {
+      localStorage.setItem('urlParam_cid', cid);
+    }
+  };
+
   useEffect(() => {
     if (isMount) {
       // fetchTags();
       renderBetApprovePopup();
       handleRefPersistent();
+      handleVoluumPersistent();
+      setShowDiscordBanner(!checkdDiscordBanner());
     }
   }, []);
 
-  const renderHeadline = () => {
-    return (
-      <div className={styles.mainHeadline}>
-        <h1>Betting Reimagined</h1>
-
-        <div className={styles.slogan}>Clear, Social &amp; Fair</div>
-
-        <SocialIcons
-          className={styles.socialIcons}
-          dataTrackingIds={{
-            telegram: 'home-telegram',
-            instagram: 'home-instagram',
-            twitter: 'home-twitter',
-          }}
-        />
-      </div>
-    );
+  const checkdDiscordBanner = () => {
+    return localStorage.getItem('discordBanner') || false;
   };
+
+  const hideDiscordBanner = () => {
+    localStorage.setItem('discordBanner', true);
+    setShowDiscordBanner(false);
+  }
+
+  const renderDiscordBanner =() => {
+    return (
+      <div className={classNames(styles.discordBanner, isLoggedIn() && styles.withPadding)}>
+        <div className={styles.backgroundWrapper}>
+          <div className={styles.whiteWrapper}>
+            <div className={styles.whiteContainer}>
+              <a
+                href="https://discord.gg/S7ebz6bb"
+                target="_blank"
+                rel="noreferrer"
+              >
+              <DiscordMarker/>
+              </a>
+            </div>
+          </div>
+          <div className={styles.bodyContainer}>
+            <Icon
+              className={styles.closeButton}
+              width={30}
+              height={30}
+              iconType={IconType.close}
+              onClick={hideDiscordBanner}
+            />
+            <p>
+              <a
+                href="https://discord.gg/S7ebz6bb"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Join Discord for early access of Games, News and Airdrops
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const renderHowTokenWorks = () => {
     return (
@@ -244,49 +295,21 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   };
 
   const renderHouseGames = () => {
-    return (
-      <div className={styles.gameCards}>
-        <div className={styles.title}>
-          <h2>Alpaca Games</h2>
-          <p>Games available only in Alpacasino. 100% fun & pure love </p>
-        </div>
-        <div className={styles.cardBox}>
-          <Grid container spacing={1} justify="space-between">
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/pump-dump'}>
-                <img src={gameCardPumpDump} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/elon-game'}>
-                <img src={gameCardElon} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/plinko'}>
-                <img src={gameCardPlinko} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/mines'}>
-                <img src={gameCardMines} alt="" />
-              </Link>
-            </Grid>
-            <Grid item lg={2} md={2} xs={6}>
-              <Link to={'/games/alpaca-wheel'}>
-                <img src={gameCardWheel} alt="" />
-              </Link>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-    );
+    alpacaGames = alpacaGames.filter((game, i) => i < 6);
+    return <GameCards gameTitle games={alpacaGames} category="Alpaca Games" />;
   };
 
   const renderSlogGames = () => {
+    const externalGames = TOP_GAMES;
     return (
-      <div className={styles.gameCards}>
-        <GameSmartsoft games={EXTERNAL_GAMES} category="Slot Games" />
+      <div className={classNames(styles.allGamesContiner)}>
+        <GameSmartsoft gameTitle games={externalGames} category="Slot Games" />
+
+        <p className={styles.allGames}>
+          <Link to="/games">
+          More games
+          </Link>
+          </p>
       </div>
     );
   };
@@ -294,16 +317,26 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const renderAboutDescription = () => {
     return (
       <div className={styles.aboutDescritpion}>
-        <img className={styles.topImage} src={PlinkoAlpaca} alt='fair-piece'/>
+        <img className={styles.topImage} src={PlinkoAlpaca} alt="fair-piece" />
         <Grid container spacing={1} justify="space-between">
           <Grid item lg={4} md={4} xs={12}>
             <div className={styles.parentContainer}>
               <div className={styles.descriptionCardContainer}>
                 <div className={styles.descriptionCard}>
-                    <h1>Fair</h1>
-                    <p>We have a mission to prove that crypto casino can just the pure entertainment. We operate on open source code, provide honest bonuses, and publicly communicate the house edges along with a full history of all the bets. Simply no hidden tricks just awesome fun!</p>
+                  <h1>Fair</h1>
+                  <p>
+                    We have a mission to prove that crypto casino can just the
+                    pure entertainment. We operate on open source code, provide
+                    honest bonuses, and publicly communicate the house edges
+                    along with a full history of all the bets. Simply no hidden
+                    tricks just awesome fun!
+                  </p>
                 </div>
-                <img className={styles.thumbnail} src={FairPiece} alt='fair-piece'/>
+                <img
+                  className={styles.thumbnail}
+                  src={FairPiece}
+                  alt="fair-piece"
+                />
               </div>
             </div>
           </Grid>
@@ -312,9 +345,19 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
               <div className={styles.descriptionCardContainer}>
                 <div className={styles.descriptionCard}>
                   <h1>Unique</h1>
-                    <p>In Alpacasino you play with WFAIR, our own crypto currency. It gives you the advantage to earn money even when you are not playing. Stake your winnings and watch your wallet grow! The more people sign up, deposit and play, the higher the value of you wallet! </p>
+                  <p>
+                    In Alpacasino you play with WFAIR, our own crypto currency.
+                    It gives you the advantage to earn money even when you are
+                    not playing. Stake your winnings and watch your wallet grow!
+                    The more people sign up, deposit and play, the higher the
+                    value of you wallet!{' '}
+                  </p>
                 </div>
-                <img className={styles.thumbnail} src={UniquePiece} alt='unique-piece'/>
+                <img
+                  className={styles.thumbnail}
+                  src={UniquePiece}
+                  alt="unique-piece"
+                />
               </div>
             </div>
           </Grid>
@@ -322,24 +365,36 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
             <div className={styles.parentContainer}>
               <div className={styles.descriptionCardContainer}>
                 <div className={styles.descriptionCard}>
-                    <h1>Social</h1>
-                    <p>Alpacasino is a part of Alpacaverse our flagship project that presents the future of the speculative entertainment. The future where world of betting, gambling and gaming is blended into one huge theme park metaverse. The place where you meet people and enjoy the excitement of potential rewards!</p>
+                  <h1>Social</h1>
+                  <p>
+                    Alpacasino is a part of Alpacaverse our flagship project
+                    that presents the future of the speculative entertainment.
+                    The future where world of betting, gambling and gaming is
+                    blended into one huge theme park metaverse. The place where
+                    you meet people and enjoy the excitement of potential
+                    rewards!
+                  </p>
                 </div>
-                <img className={styles.thumbnailBack} src={SocialPiece} alt='social-piece'/>
+                <img
+                  className={styles.thumbnailBack}
+                  src={SocialPiece}
+                  alt="social-piece"
+                />
               </div>
             </div>
           </Grid>
         </Grid>
       </div>
-    )
-  }
+    );
+  };
 
+  const showPopupForUnauthenticated = () => {
+    if (!isLoggedIn()) {
+      startOnboardingFlow();
+    }
+  };
+  
   const renderWelcome = () => {
-    const showPopupForUnauthenticated = () => {
-      if (!isLoggedIn()) {
-        startOnboardingFlow();
-      }
-    };
     return (
       <div className={styles.welcomeContainer}>
         <div className={styles.cardContainer}>
@@ -349,28 +404,29 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
               <br /> <span>Alpacasino</span>
             </p>
 
-            <LimitedOffer />
+            <LimitedOfferBanner />
             <span className={styles.limitedOfferDescription}>
-              Join today and receive
+              <span className={styles.highlighted}>{AMOUNT_BONUS}</span>
               <br />
-              <span className={styles.highlighted}>50%</span>
-              <br />
-              cashback up to
-              <br />
-              <span className={styles.highlighted}>25 000</span>
-              
-              <p>WFAIRs</p>
+              <p>WFAIRS FOR <span className={styles.red}>FREE</span></p>
+              <div className={styles.conditionsWrapper}>
+                <span className={styles.conditions}>- 50 WFAIR on email confirmed</span>
+                <span className={styles.conditions}>- 450 WFAIR on first deposit</span>
+                <span className={styles.conditions}>- start playing in 1 min</span>
+                <span className={styles.conditions}>- limited to 1000 users </span>
+              </div>
             </span>
 
-            <buton
+            <button
               className={styles.startButton}
               onClick={showPopupForUnauthenticated}
             >
-              Claim the offer!
-            </buton>
+              Register for free
+            </button>
+            <span className={styles.terms}><sup>*</sup><Link target="_blank" to={Routes.terms}>Terms &amp; Conditions</Link></span>
             <img className={styles.topFront} src={TopFront} alt="" />
             <img className={styles.topBack} src={TopBack} alt="" />
-            <img className={styles.bottomFront} src={BottomFront} alt="" />
+            {/* <img className={styles.bottomFront} src={BottomFront} alt="" /> */}
             <img className={styles.bottomBack} src={BottomBack} alt="" />
           </div>
         </div>
@@ -478,6 +534,34 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     );
   };
 
+  const renderFreeAlpacaOffer = () => {
+    return (
+      <div className={styles.freeAlpacaOfferContainer}>
+        <div className={styles.alpacaImage}>
+          <img src={AlpacaWithShavolImage} alt="alpaca with shavol" />
+        </div>
+
+        <div className={styles.backgroundWrapper}>
+          <span className={styles.title}>
+            To the first 1000 Alpacas <br/>
+            we giveaway <span className={styles.underline}>500 WFAIR for free</span>
+          </span>
+          <div className={styles.bottomInfoWrapper}>
+            <div className={styles.whiteWrapper}>
+              <div className={styles.whiteContainer}>
+                <p>Limited offer:</p>
+                <p className={styles.number}>726/1000</p>
+              </div>
+            </div>
+            <button onClick={showPopupForUnauthenticated}>
+              Register for free
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <BaseContainerWithNavbar home loggedIn={isLoggedIn()}>
       {/* {renderHeadline()} */}
@@ -485,10 +569,12 @@ const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
+          {showDiscordBanner && renderDiscordBanner()}
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
-          <AmbassadorBanner />
+          {/* {renderFreeAlpacaOffer()} */}
+          {/* <AmbassadorBanner /> */}
           <div className={styles.nftBannerWrapper}>
             <NftBanner />
           </div>

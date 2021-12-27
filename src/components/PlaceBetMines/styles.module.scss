@@ -275,6 +275,10 @@
     @media screen and (max-width: 800px) {
       // display: none;
     }
+
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
   }
 }
 
@@ -531,10 +535,14 @@
   text-align: center;
 }
 
-.currentMultiplier {
+.currentMultiplier, .currentProfit {
   width: 100%;
   padding: 0 10px;
   color: $colorWhite;
+}
+
+.currentProfit {
+  margin-bottom: 10px;
 }
 
 .noselect {

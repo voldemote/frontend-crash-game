@@ -20,6 +20,7 @@ import { TransactionActions } from 'store/actions/transaction';
 import Button from 'components/Button';
 import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
 import * as ApiUrls from 'constants/Api';
+import { resendEmailVerification } from 'api';
 
 const UserWallet = ({
   tags,
@@ -52,6 +53,8 @@ const UserWallet = ({
   const { myBetsData } = useRosiData();
   const [userKyc, setUserKyc] = useState({...user?.kyc});
 
+  const [emailSent, setEmailSent] = useState(false);
+
   const activityData = {
     DEPOSITS: transactions.deposit || [],
     WITHDRAWALS: transactions.withdraw || [],
@@ -83,6 +86,14 @@ const UserWallet = ({
   const handleActivitySwitchTab = ({ index }) => {
     setActivityTab(activityTabOptions[index]);
   };
+
+  const handleResendEmailConfirmation= async () => {
+    const result = await resendEmailVerification(user.userId);
+    const resultOk = result?.data?.status === "OK";
+    console.log('e-mail confirmation sent', result);
+
+    setEmailSent(resultOk);
+  }
 
   useEffect(() => {
     resetState();
@@ -130,7 +141,7 @@ const UserWallet = ({
               options={
                 activityTabOptions
                   ? activityTabOptions.filter(
-                      ({ name }) => showNewFeatures || (name !== 'CRYPTO DEPOSITS' && name !== 'FIAT DEPOSITS')
+                      ({ name }) => (showNewFeatures || (name !== 'CRYPTO DEPOSITS')) && (name !== 'FIAT DEPOSITS') //when fiat on ramp is activated, remove the second condition part
                     )
                   : []
               }
@@ -226,12 +237,27 @@ const UserWallet = ({
                 <p className={styles.label}>Want to withdraw WFAIR? No problem.</p>
                 <Button
                   className={styles.button}
-                  disabled={!isKycVerified()}
+                  disabled={!isKycVerified() || !user.emailConfirmed}
                   disabledWithOverlay={false}
                   onClick={showWithdrawPopup}
                 >
                   Withdraw
                 </Button>
+                {!user.emailConfirmed ? 
+                  <>
+                    <p className={styles.label}>You must confirm your email to receive bonus and make withdraws.</p>
+
+                    <Button
+                      className={styles.button}
+                      disabled={emailSent}
+                      disabledWithOverlay={false}
+                      onClick={handleResendEmailConfirmation}
+                    >
+                      {!emailSent ? 'Resend Email' : 'Email sent'}
+                    </Button>
+                  </>
+                  : null 
+                }
               </div>
               {
                 showStartButton() && (

@@ -40,13 +40,11 @@ import {
   trackPumpDumpStartAutobet,
   trackPumpDumpStopAutobet,
 } from '../../config/gtm';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { GAMES } from 'constants/Games';
 import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import Routes from 'constants/Routes';
-import { useHistory } from 'react-router';
-
 
 const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const dispatch = useDispatch();
@@ -54,7 +52,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
 
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
-  const sliderMinAmount = userBalance > 50 || !user.isLoggedIn ? 50 : 0;
+  const sliderMinAmount = 50;
   // const sliderMaxAmount = Math.min(500, userBalance);
   const isGameRunning = useSelector(selectHasStarted);
   const gameStartedTimeStamp = useSelector(selectTimeStarted);
@@ -93,15 +91,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     };
   }, [canBet]);
 
-  useEffect(() => {
-    if (user.isLoggedIn && userBalance < amount) {
-      setAmount(userBalance);
-    }
-  }, [user]);
-
   const onTokenNumberChange = number => {
     setAmount(number);
-    // debouncedSetCommitment(number, currency);
   };
 
   const processAutoCashoutValue = value => {
@@ -149,8 +140,8 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
     const changedValue = _.floor(amount * multiplier, 0);
     if (changedValue > 10000) {
       setAmount(10000);
-    } else if (changedValue < 1) {
-      setAmount(1);
+    } else if (changedValue < 0) {
+      setAmount(0);
     } else {
       setAmount(changedValue);
     }
@@ -355,7 +346,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       PopupActions.show({
         popupType: PopupTheme.auth,
         options: {
-          small: true,
+          small: false,
           authenticationType: AuthenticationType.register,
         },
       })
@@ -509,7 +500,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   const renderProfit = () => {
     if (userPlacedABet && isGameRunning) {
       return (
-        <div className={styles.profit} style={{ bottom: 0 }}>
+        <div className={styles.profit} style={{ bottom: 0 }} data-wg-notranslate>
           <Timer
             showIncome
             pause={!isGameRunning}
@@ -519,7 +510,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       );
     } else {
       return (
-        <div className={styles.profitPlaceholder}>
+        <div className={styles.profitPlaceholder} data-wg-notranslate>
           <span>+0 {TOKEN_NAME}</span>
         </div>
       );
@@ -588,7 +579,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       <div className={styles.inputContainer}>
         <div className={styles.placeBetContainer}>
           {switchButton(styles)}
-          <InfoBox iconType={IconType.info} position={`bottomLeft`}>
+          {/* <InfoBox iconType={IconType.info} position={`bottomLeft`}>
             <p>
               <strong>How to place a bet at Elon Game?</strong>
             </p>
@@ -617,21 +608,20 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               At the top of the page, you can see green numbers which show the
               previous crash numbers.
             </p>
-          </InfoBox>
+          </InfoBox> */}
         </div>
         {selector === 'manual' ? (
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
+              // LOGGED IN + MANUAL SELECTOR
               <TokenNumberInput
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'elongame-input-field-half',
                   inputFieldDouble: 'elongame-event-input-field-double',
@@ -714,15 +704,14 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           <div className={styles.sliderContainer}>
             <label className={styles.label}>Bet Amount</label>
             {user?.isLoggedIn ? (
+              // LOGGED IN + AUTOPLAY SELECTOR
               <TokenNumberInput
                 value={amount}
                 currency={user?.currency}
                 setValue={onTokenNumberChange}
-                minValue={1}
+                minValue={0}
                 decimalPlaces={0}
-                maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
-                )}
+                maxValue={10000}
                 dataTrackingIds={{
                   inputFieldHalf: 'elongame-input-field-half',
                   inputFieldDouble: 'elongame-event-input-field-double',
@@ -730,6 +719,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
                 }}
               />
             ) : (
+              // NOT LOGGED + AUTOPLAY SELECTOR
               <div
                 className={classNames(
                   styles.cashedOutInputContainer,
@@ -965,6 +955,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           <div className={styles.spinsleft} style={{ marginTop: 18 }}>
             <span
               className={autobet.accumulated > 0 ? styles.reward : styles.lost}
+              data-wg-notranslate
             >
               {Math.floor(autobet.accumulated)} {TOKEN_NAME}
             </span>
@@ -972,7 +963,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           </div>
           <div className={styles.spinsleft}>
             Current bet:
-            <span className={styles.neutral}>
+            <span className={styles.neutral} data-wg-notranslate>
               {Math.floor(autobet.amount)} {TOKEN_NAME}
             </span>
           </div>
@@ -980,6 +971,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       )}
       {renderProfit()}
       {renderButton()}
+      {renderBuyWFAIRMessage()}
       {renderMessage()}
     </div>
   );

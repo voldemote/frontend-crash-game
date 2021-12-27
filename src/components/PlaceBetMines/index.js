@@ -189,9 +189,7 @@ const PlaceBetMines = ({
       amount,
       minesCount: mines
     }
-
     trackMinesPlaceBetGuest({ amount, mines });
-
     if(demoCount >= 3) {
       showLoginPopup();
       setBet({
@@ -220,7 +218,7 @@ const PlaceBetMines = ({
       PopupActions.show({
         popupType: PopupTheme.auth,
         options: {
-          small: true,
+          small: false,
           authenticationType: AuthenticationType.register,
         },
       })
@@ -252,7 +250,7 @@ const PlaceBetMines = ({
       return (
         <>
           <div className={styles.currentMultiplier}>Multiplier: <span className={classNames('global-cashout-profit')}>{!multiplier ? "-" : 'x' + multiplier}</span></div>
-          <div className={styles.currentMultiplier}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
+          <div className={styles.currentProfit}>Profit: <span className={classNames('global-cashout-profit')}>{!profit ? "-" : '+' + roundToTwo(profit)}</span></div>
           {bet.autobet && <Button
             role="button"
             tabIndex="0"
@@ -345,7 +343,6 @@ const PlaceBetMines = ({
     left: 0,
     zIndex: 999,
   };
-
   return (
     <div className={classNames(styles.container)}>
       <ReactCanvasConfetti

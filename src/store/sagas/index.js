@@ -8,13 +8,19 @@ import ChatSagas from './chat';
 import WebsocketsSagas from './websockets';
 import LeaderboardSagas from './leaderboard';
 import OnboardingSaga from './onboarding';
-import { all, select, takeLatest, takeEvery, put, delay } from 'redux-saga/effects';
+import {
+  all,
+  select,
+  takeLatest,
+  takeEvery,
+  put,
+  delay,
+} from 'redux-saga/effects';
 import { AuthenticationTypes } from '../actions/authentication';
 import { BetTypes } from '../actions/bet';
-import { EventActions } from '../actions/event';
 import { EventTypes } from '../actions/event';
 import { REHYDRATE } from 'redux-persist';
-import { TransactionActions, TransactionTypes } from '../actions/transaction';
+import { TransactionTypes } from '../actions/transaction';
 import { UserTypes } from '../actions/user';
 import { AlertTypes } from '../actions/alert';
 import { ChatActions, ChatTypes } from '../actions/chat';
@@ -73,7 +79,10 @@ const root = function* () {
       AuthenticationSagas.authenticationSucceeded
     ),
     takeLatest([AuthenticationTypes.SIGN_UP], AuthenticationSagas.signUp),
-    takeLatest([AuthenticationTypes.LOGIN_EXTERNAL], AuthenticationSagas.loginExternal),
+    takeLatest(
+      [AuthenticationTypes.LOGIN_EXTERNAL],
+      AuthenticationSagas.loginExternal
+    ),
     takeLatest([AuthenticationTypes.LOGIN], AuthenticationSagas.login),
     takeLatest(
       [AuthenticationTypes.FORGOT_PASSWORD],
@@ -212,7 +221,10 @@ const root = function* () {
       OnboardingSaga.loadOnboardingStep
     ),
     takeEvery([OnboardingTypes.START], OnboardingSaga.getUsernameSuggestion),
-    takeEvery([OnboardingTypes.GET_USERNAME], OnboardingSaga.getUsernameSuggestion),
+    takeEvery(
+      [OnboardingTypes.GET_USERNAME],
+      OnboardingSaga.getUsernameSuggestion
+    ),
     // @formatter:on
   ]);
 };
@@ -225,7 +237,9 @@ const preLoading = function* () {
   //related with disabled betting feature
   // yield put(EventActions.fetchAll());
   yield put(WebsocketsActions.init());
-  const { userId, shouldAcceptToS } = yield select(state => state.authentication);
+  const { userId, shouldAcceptToS } = yield select(
+    state => state.authentication
+  );
 
   if (userId) {
     yield put(
@@ -236,7 +250,7 @@ const preLoading = function* () {
     );
     yield put(ChatActions.fetchByRoom({ roomId: UserMessageRoomId }));
 
-    if(shouldAcceptToS) {
+    if (shouldAcceptToS) {
       yield delay(1 * 1000);
 
       yield put(

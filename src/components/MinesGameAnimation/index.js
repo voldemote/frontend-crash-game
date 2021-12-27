@@ -95,6 +95,7 @@ const MinesGameAnimation = ({
   setDemoCount,
   gameInstance,
   setGameInstance,
+  getLastCashout,
   onCashout
 }) => {
   const dispatch = useDispatch();
@@ -138,7 +139,7 @@ const MinesGameAnimation = ({
   }
 
   const cellClickHandler = (data) => {
-    // setCurrentStep((current)=> {
+  // setCurrentStep((current)=> {
     //   return current+1;
     // })
   }
@@ -148,10 +149,37 @@ const MinesGameAnimation = ({
     return ((row * 5) + col);
   }
 
+  const checkDemo = async (props) => {
+    setCurrentStep((step) => step+1);
+  }
+
+  const loseDemo = async (props) => {
+    setGameInProgress(false);
+    //disable place button before
+    getLastCashout({profit: -amount})
+    setBet((bet) => {
+      return {
+        ...bet,
+        pending: true
+      }
+    })
+
+    setTimeout(()=> {
+      setBet((bet) => {
+          return {
+            pending: false,
+            done: false
+          }
+      });
+    }, 3000)
+    setCurrentStep(0);
+    setRunning(false)
+
+  }
+
   const checkSelectedCell = async (props) => {
     const {row, col} = props;
     let allMinesPos = null;
-
     setCurrentStep((step) => step+1);
 
     const queryPayload = {
@@ -199,9 +227,6 @@ const MinesGameAnimation = ({
 
   const handleLost = (checkMine) => {
     setGameInProgress(false);
-
-    console.log('checkMine', checkMine);
-
     //disable place button before
     setBet((bet) => {
       return {
@@ -325,6 +350,7 @@ const MinesGameAnimation = ({
         "backgroundColor": 0xffffff,
         view: canvasRef.current
       }
+
       const { audio, that } = AnimationController.init(canvasRef.current, {
         width: applicationConfig.width,
         height: applicationConfig.height,
@@ -335,7 +361,9 @@ const MinesGameAnimation = ({
         gameViewConfig,
         amount,
         cellClickHandler,
-        checkSelectedCell
+        checkSelectedCell,
+        loseDemo,
+        checkDemo
       });
       setGameInstance(that);
       setAudio(audio);

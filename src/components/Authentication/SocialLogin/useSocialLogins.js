@@ -14,19 +14,23 @@ export const useSocialLogins = () => {
     [location]
   );
   const ref = params.get('ref');
+  const sid = params.get('sid');
+  const cid = params.get('cid');
   const init = (provider, payload) => initOAuthFlow({
     ...payload,
     redirectUri: redirectFactory(provider),
     state: enc(JSON.stringify({
       ...payload.state,
       ref: ref || null,
+      sid: sid || null,
+      cid: cid || null,
     }))
   });
   return {
     isVisible: {
       google: !!process.env.REACT_APP_GOOGLE_CLIENT_ID,
       facebook: !!process.env.REACT_APP_FACEBOOK_CLIENT_ID,
-      twitch: !!process.env.REACT_APP_TWITCH_CLIENT_ID && !!process.env.REACT_APP_SHOW_UPCOMING_FEATURES,
+      twitch: false, //!!process.env.REACT_APP_TWITCH_CLIENT_ID && !!process.env.REACT_APP_SHOW_UPCOMING_FEATURES,
       discord: !!process.env.REACT_APP_DISCORD_CLIENT_ID,
     },
     initGoogleLogin: (state = {}) =>

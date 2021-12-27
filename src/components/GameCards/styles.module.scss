@@ -1,10 +1,58 @@
 @import '../../styles/all';
 
 .gamesContainer {
-  padding: 30px 0px;
+  padding: 30px 0px 0px;
+
+  @media (max-width: $screen-lg) {
+    padding: 90px 0px 0px;
+  }
+
+  @media (max-width: $screen-md) {
+    padding: 90px 0px 0px;
+  }
+
+  @media (max-width: $screen-sm) {
+    padding: 90px 0px 0px;
+  }
 
   @media (max-width: $screen-xs) {
-    padding: 0;
+    padding: 75px 0px 0px;
+  }
+
+  &.gamesPageContainer {
+    @media (max-width: $screen-xs) {
+      padding: 0;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  h2 {
+    color: $colorHeading;
+    font-weight: 800;
+    font-size: 50px;
+    line-height: 20px;
+    font-family: $fontOmnes;
+    @media (max-width: $screen-xs) {
+      font-size: 28px;
+    }
+  }
+
+  p {
+    margin-top: 10px;
+    font-family: $fontOmnes;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 2;
+    color: $colorWhite;
+  }
+
+  img {
+    margin-right: 5px;
   }
 }
 
@@ -14,8 +62,9 @@
   align-items: center;
   color: $colorBlack;
   font-family: $fontOmnes;
-  font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 20px;
   padding-bottom: 20px;
 
   @media (max-width: $screen-lg) {

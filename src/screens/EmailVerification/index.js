@@ -19,8 +19,6 @@ const EmailVerification = ({ emailVerificationState, verifyEmail }) => {
   useEffect(async () => {
     await verifyEmail(userId, code);
 
-    trackSignup({ method: 'Email' });
-
     history.push({
       pathname: Routes.home,
       query: { emailVerified: emailVerificationState },
