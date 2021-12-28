@@ -86,7 +86,6 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
           result => {
             setBalance(result);
             setIsLoadingTransferToken(false);
-            trackWalletConnect();
           }
         );
       });
@@ -245,6 +244,7 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
               onClick={() => {
                 setVisibleWalletForm(true);
                 setTokenAreaOpen(true);
+                trackWalletConnect();
               }}
             >
               Connect Wallet
