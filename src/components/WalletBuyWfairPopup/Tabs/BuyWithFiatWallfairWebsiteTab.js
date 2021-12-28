@@ -15,6 +15,7 @@ import { TransactionActions } from 'store/actions/transaction';
 // import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 // import { TOKEN_NAME } from 'constants/Token';
 import Button from 'components/Button';
+import { trackWalletBuywfairLink } from 'config/gtm';
 
 const BuyWithFiatWallfairWebsiteTab = () => {
   // const CURRENCY_OPTIONS = [
@@ -134,7 +135,9 @@ const BuyWithFiatWallfairWebsiteTab = () => {
         <a
           href="https://wallfair.io/buy-wfair"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+          onClick={() => trackWalletBuywfairLink()}
+        >
           <Button
             className={classNames(
               styles.button,

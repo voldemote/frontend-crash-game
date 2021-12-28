@@ -580,4 +580,108 @@ export const trackAlpacannonStopAutobet = ({ amount, multiplier, autobet, profit
   TagManager.dataLayer(tagManagerArgs);
 };
 
+
+/**********/
+/* WALLET */
+/**********/
+
+export const trackWalletConnect = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'walletConnect',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletDepositTab = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'walletDepositTab',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywfairTab = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'walletBuywfairTab',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletbuywithcryptoTab = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'walletBuywithcryptoTab',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywfairLink = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'trackWalletBuywfairLink',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywithcryptoConfirm = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'walletBuywithcryptoConfirm',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletAddWfair = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'trackWalletAddWfair',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletIcon = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'trackWalletIcon',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletWithdraw = ({...dataLayerProps}) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'trackWalletWithdraw',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
 export default TagManager;

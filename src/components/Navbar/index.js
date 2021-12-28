@@ -36,6 +36,7 @@ import Link from 'components/Link';
 import { OnboardingActions } from 'store/actions/onboarding';
 import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
+import { trackWalletIcon } from 'config/gtm';
 
 
 const Navbar = ({
@@ -180,7 +181,10 @@ const Navbar = ({
         )}
         data-wg-notranslate
         data-tracking-id="menu-wallet-icon"
-        onClick={() => history.push(Routes.wallet)}
+        onClick={() => {
+          trackWalletIcon();
+          history.push(Routes.wallet)
+        }}
       >
         <img src={CoinIcon} alt="medal" className={style.medal} />
         <p>{formatToFixed(balance, 0, true)} {currency}</p>

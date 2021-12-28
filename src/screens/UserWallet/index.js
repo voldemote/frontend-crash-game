@@ -21,6 +21,7 @@ import Button from 'components/Button';
 import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
 import * as ApiUrls from 'constants/Api';
 import { resendEmailVerification } from 'api';
+import { trackWalletAddWfair, trackWalletWithdraw } from 'config/gtm';
 
 const UserWallet = ({
   tags,
@@ -245,7 +246,7 @@ const UserWallet = ({
                 </Button>
                 {!user.emailConfirmed ? 
                   <>
-                    <p className={styles.label}>You must confirm your email to receive bonus and make withdraws.</p>
+                    <p className={styles.label}>You must confirm your email to be able to withdraw your tokens.</p>
 
                     <Button
                       className={styles.button}
@@ -339,9 +340,11 @@ const mapDispatchToProps = dispatch => {
       ),
     refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
     showWithdrawPopup: () => {
+      trackWalletWithdraw();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletWithdraw }));
     },
     showWalletBuyWfairPopup: () => {
+      trackWalletAddWfair();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
     showRequestTokenPopup: () => {

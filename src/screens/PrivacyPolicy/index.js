@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
        
        <div className={styles.textContainer}>
           <h1>Privacy Policy</h1>
-          <p>Date: December 16, 2021</p>
+          <p>Date: December 27, 2021</p>
 
           <h2>Overview</h2>
           <p>
@@ -318,6 +318,7 @@ const PrivacyPolicy = () => {
           <ul>
             <li>Email Address</li>
             <li>IP Address</li>
+            <li>Physical Address</li>
           </ul>
 
           <p>Alpacasino collects personal data in terms of the GDPR regulations to ensure we comply with all lawful, fair and reasonable standards and do so for the following purposes:</p>
@@ -331,7 +332,10 @@ const PrivacyPolicy = () => {
             <li>To tell you about our products or services that we think may be of interest to you by communicating with you via email.</li>
             <li>To respond to your questions, comments, or requests.</li>
             <li>For taking appropriate action should Alpacasino have reason to suspect that unlawful activity or misconduct of a serious nature has been, is being or may be engaged in that relates to our functions and activities.</li>
+            <li>To comply with Alpacasino´s contractual, legal, and statutory obligations.</li>
+            <li>AML regulation and fraud prevention.</li>
             <li>To establish, exercise or defend any legal claims.</li>
+            <li>If you do not provide Alpacasino with the Personal Information.</li>
             <li>For know-your-customer (KYC) identity verification (3rd party provider, Fractal).</li>
           </ul>
           <p>By submitting your sign-up applications or otherwise choosing to provide Alpacasino with Personal Information you consent to Alpacasino collecting, using, processing and potentially disclosing your personal data for the above purposes and on the bases described in this Privacy Policy.</p>

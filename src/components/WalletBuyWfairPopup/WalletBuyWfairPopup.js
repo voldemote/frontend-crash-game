@@ -11,6 +11,7 @@ import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
 import BuyWithFiatWallfairWebsiteTab from './Tabs/BuyWithFiatWallfairWebsiteTab';
 import BuyWithCryptoManual from './Tabs/BuyWithCryptoManual';
+import { trackWalletBuywfairTab, trackWalletbuywithcryptoTab, trackWalletDepositTab } from 'config/gtm';
 
 const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 
@@ -19,13 +20,17 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
     switch (type) {
       case 0:
       default:
+        trackWalletDepositTab();
         return <DepositTab />;
       case 1:
+        trackWalletBuywfairTab();
         return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
         // return showNewFeatures ? <BuyWithFiatTab hidePopup={hidePopup} /> : <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
       case 2:
+        trackWalletbuywithcryptoTab();
         return <BuyWithCryptoManual />;
       case 3:
+        trackWalletbuywithcryptoTab();
         return <BuyWithCrypto />;
     }
   };
