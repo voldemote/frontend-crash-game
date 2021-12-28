@@ -406,15 +406,15 @@ const Home = ({
 
             <LimitedOfferBanner />
             <span className={styles.limitedOfferDescription}>
-              <span className={styles.highlighted}>{AMOUNT_BONUS}</span>
-              <br />
-              <p>WFAIRS FOR <span className={styles.red}>FREE</span></p>
-              <div className={styles.conditionsWrapper}>
-                <span className={styles.conditions}>- 50 WFAIR on email confirmed</span>
-                <span className={styles.conditions}>- 450 WFAIR on first deposit</span>
-                <span className={styles.conditions}>- start playing in 1 min</span>
-                <span className={styles.conditions}>- limited to 1000 users </span>
-              </div>
+              <span className={classNames(styles.highlighted, styles.red)}>100%</span>
+              <p>top up on 1<sup>st</sup> deposit</p>
+              <span>up to 25&nbsp;000 WFAIR</span>
+              <ul className={styles.conditionsWrapper}>
+                {/* <li className={styles.conditions}>100% on your first deposit (up to 25&nbsp;000 WFAIR)</li> */}
+                <li className={styles.conditions}>start playing in 1 min</li>
+                <li className={styles.conditions}>limited to 1000 users</li>
+                <li className={styles.conditions}>100% fair</li>
+              </ul>
             </span>
 
             <button
