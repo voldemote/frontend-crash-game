@@ -585,10 +585,9 @@ export const trackAlpacannonStopAutobet = ({ amount, multiplier, autobet, profit
 /* WALLET */
 /**********/
 
-export const trackWalletConnect = ({...dataLayerProps}) => {
+export const trackWalletConnect = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'walletConnect',
     },
   };
@@ -596,10 +595,9 @@ export const trackWalletConnect = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletDepositTab = ({...dataLayerProps}) => {
+export const trackWalletDepositTab = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'walletDepositTab',
     },
   };
@@ -607,10 +605,9 @@ export const trackWalletDepositTab = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletBuywfairTab = ({...dataLayerProps}) => {
+export const trackWalletBuywfairTab = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'walletBuywfairTab',
     },
   };
@@ -618,10 +615,9 @@ export const trackWalletBuywfairTab = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletbuywithcryptoTab = ({...dataLayerProps}) => {
+export const trackWalletbuywithcryptoTab = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'walletBuywithcryptoTab',
     },
   };
@@ -629,10 +625,9 @@ export const trackWalletbuywithcryptoTab = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletBuywfairLink = ({...dataLayerProps}) => {
+export const trackWalletBuywfairLink = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'trackWalletBuywfairLink',
     },
   };
@@ -640,10 +635,9 @@ export const trackWalletBuywfairLink = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletBuywithcryptoConfirm = ({...dataLayerProps}) => {
+export const trackWalletBuywithcryptoConfirm = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'walletBuywithcryptoConfirm',
     },
   };
@@ -651,10 +645,9 @@ export const trackWalletBuywithcryptoConfirm = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletAddWfair = ({...dataLayerProps}) => {
+export const trackWalletAddWfair = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'trackWalletAddWfair',
     },
   };
@@ -662,10 +655,9 @@ export const trackWalletAddWfair = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletIcon = ({...dataLayerProps}) => {
+export const trackWalletIcon = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'trackWalletIcon',
     },
   };
@@ -673,10 +665,9 @@ export const trackWalletIcon = ({...dataLayerProps}) => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
-export const trackWalletWithdraw = ({...dataLayerProps}) => {
+export const trackWalletWithdraw = () => {
   const tagManagerArgs = {
     dataLayer: {
-      ...dataLayerProps,
       event: 'trackWalletWithdraw',
     },
   };
