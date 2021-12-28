@@ -32,6 +32,7 @@ import { currentChainId, WFAIRAddress } from 'config/config';
 import { numberWithCommas } from 'utils/common';
 import { TOKEN_NAME } from 'constants/Token';
 import Button from 'components/Button';
+import { trackWalletConnect } from 'config/gtm';
 // import AddTokens from 'components/AddTokens';
 
 const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
@@ -85,6 +86,7 @@ const DepositTab = ({ user, resetState, setNotSelectedNetwork }) => {
           result => {
             setBalance(result);
             setIsLoadingTransferToken(false);
+            trackWalletConnect();
           }
         );
       });
