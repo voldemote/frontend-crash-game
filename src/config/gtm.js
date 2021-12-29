@@ -628,7 +628,7 @@ export const trackWalletbuywithcryptoTab = () => {
 export const trackWalletBuywfairLink = () => {
   const tagManagerArgs = {
     dataLayer: {
-      event: 'trackWalletBuywfairLink',
+      event: 'walletBuywfairLink',
     },
   };
 
@@ -648,7 +648,7 @@ export const trackWalletBuywithcryptoConfirm = () => {
 export const trackWalletAddWfair = () => {
   const tagManagerArgs = {
     dataLayer: {
-      event: 'trackWalletAddWfair',
+      event: 'walletAddWfair',
     },
   };
 
@@ -658,7 +658,7 @@ export const trackWalletAddWfair = () => {
 export const trackWalletIcon = () => {
   const tagManagerArgs = {
     dataLayer: {
-      event: 'trackWalletIcon',
+      event: 'walletIcon',
     },
   };
 
@@ -668,7 +668,7 @@ export const trackWalletIcon = () => {
 export const trackWalletWithdraw = () => {
   const tagManagerArgs = {
     dataLayer: {
-      event: 'trackWalletWithdraw',
+      event: 'walletWithdraw',
     },
   };
 
