@@ -410,7 +410,6 @@ const Home = ({
               <p>top up on 1<sup>st</sup> deposit</p>
               <span>up to 25&nbsp;000 WFAIR</span>
               <ul className={styles.conditionsWrapper}>
-                {/* <li className={styles.conditions}>100% on your first deposit (up to 25&nbsp;000 WFAIR)</li> */}
                 <li className={styles.conditions}>start playing in 1 min</li>
                 <li className={styles.conditions}>limited to 1000 users</li>
                 <li className={styles.conditions}>100% fair</li>
