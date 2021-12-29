@@ -407,7 +407,7 @@ const Home = ({
             <LimitedOfferBanner />
             <span className={styles.limitedOfferDescription}>
               <span className={classNames(styles.highlighted, styles.red)}>100%</span>
-              <p>top up on 1<sup>st</sup> deposit</p>
+              <p>top-up on 1<sup>st</sup> deposit</p>
               <span>up to 25&nbsp;000 WFAIR</span>
               <ul className={styles.conditionsWrapper}>
                 <li className={styles.conditions}>start playing in 1 min</li>

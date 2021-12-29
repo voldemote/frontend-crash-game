@@ -380,22 +380,62 @@ const TermsConditions = () => {
           <p>12.25. Game winnings from spins or game rounds initiated with bonus funds but completed with real money after the bonus has been wagered, lost or expired will be removed and may result in your Account being closed for bonus abuse.</p>
           <p>12.26. We reserve the right to withdraw or suspend Promotions or campaigns at any time.</p>
           <p>12.27. We reserve the right to update the terms and conditions governing a specific Bonus at any time.</p>
+          <br/>
+          <p>New players can be awarded for making their first deposits by opting for either one (1) of our two (2) bonus Promotions. These two Promotions are the Welcome Protection Promotion and the Welcome Bonus Promotion. The two Promotions are mutually exclusive and once selected cannot be changed or claimed retrospectively.</p>
+          <p>Users are only entitled to choose one (1) of the two (2) below Promotions. By choosing one, the user will be automatically excluded from choosing the other.</p>
+
           <p><b>Welcome Protection Promotion</b></p>
-          <p>12.28. The Welcome Protection Promotion (“WPP”) is available to new players who create an Alpacasino Account during the period of 17 December 2021untill the 23rd of December 2021 00:00 GMT)</p>
-          <p>12.29 Players making their first deposit on Alpacasino are eligible to receive the WPP. The WPP offer currently consists of having 50% of the deposit amount credited back in case the credit on the users´ Account is completely depleted.</p>
+          <p>12.28. The Welcome Protection Promotion (“WPP”) is available to new players who create an Alpacasino Account during the period of 29th of December 2021 until the 7th of January 2022 00:00 GMT)</p>
+          <p>12.29  Players making their first deposit on Alpacasino are eligible to receive the WPP. The WPP offer currently consists of having 50% of the deposit amount credited back in case the credit on the users´ Account is completely depleted.</p>
           <p>12.30. The WPP is only available for new Accounts at Alpacasino.</p>
-          <p>12.31. The WPP applies exclusively to new users. </p>
+          <p>12.31. The WPP applies exclusively to new users.</p>
           <p>12.32. The WPP can be claimed only once per player.</p>
           <p>12.33. The WPP is non-transferable.</p>
           <p>12.34. The minimum deposit in order to be eligible for the WPP is 250 WFair.</p>
-          <p>12.35. The player Account can claim the 50% WPP after their WFair Account balance reaches 0; ie., no credit is left in the account, and the account has been depleted.</p>
+          <p>12.35. The player Account can claim the 50% WPP after their WFAIR Account balance reaches 0; ie., no credit is left in the account, and the account has been depleted.</p>
           <p>12.36. The 50% WPP applies to the user´s first deposit during this Promotion on the users’ Account. </p>
           <p>12.37. If a withdrawal is made before the 50% WPP is applied, this Promotion will be forfeited and cannot be claimed in the future.</p>
           <p>12.38. The WPP will be removed from the player's Account, and there will not be a 50% “cash-back“ if the account balance reaches 0.</p>
           <p>12.39. To claim the WPP, the users´ account credit needs to be depleted first. Then the user can click on a button on his/her Account page to claim the 50% WPP and receives his/her “cash-back": The Promotion credit is being credited instantly to the users´ Account.</p>
-          <p>12.40. The maximum amount that can be credited back using this promotion is 25.000 WFair.</p>
+          <p>12.40. The maximum amount that can be credited back using this promotion is 25.000 WFAIR Token credits.</p>
           <p>12.41. The WPP can be used or withdrawn by the user after claiming.</p>
           <p>12.42. The Company has the right to change, add, adjust, suspend, or remove any of the Promotions at any time with its sole discretion.</p>
+          <br />
+          <p><b>Welcome Bonus Promotion</b></p>
+
+          <p>12.27. The Welcome Bonus Promotion (“WBP”) is available to new players who create an Alpacasino Account.</p>
+
+          <p>12.28. Players making their first deposit on Alpacasino are eligible to receive this Promotion. The WBP offer currently consists of a deposit bonus of 100% up to 25.000 WFair Token credits on your first deposit.</p>
+
+          <p>12.29. This welcome bonus is only available for new Accounts at Alpacasino.</p>
+
+          <p>12.30. New players have five (5) calendar days, from date of sign-up, to claim the WBP.</p>
+
+          <p>12.31. The WBP can be claimed only once per player.</p>
+
+          <p>12.32. This WBP is non-transferable.</p>
+
+          <p>12.33. The minimum deposit in order to be eligible for the WBP is 250 WFAIR.</p>
+
+          <p>12.35. The 100% match bonus will be credited to the player's Account immediately after an eligible deposit is made.</p>
+
+          <p>The maximum match bonus is 25.000 WFAIR Token credit.</p>
+
+          <p>12.36. A wagering requirement of 35x regarding the deposit and welcome bonus must be met in order to unlock the WBP amounts.</p>
+
+          <p>12.37. Any remaining bonus credit from the WBP will be removed from a player's Account if a withdrawal is made during the period if the wagering amount hasn’t been reached. If a user wants to withdraw before having reached the wagering requirements, he is only authorized to a limited amount of his current account balance. Should the user, not have  reached the wagering requirement; the user cannot withdraw more than he/she initially deposited, ie. the amount the user wants to withdraw can only be equal to or lower than the first deposit and not higher than the actual credit he/she has in his/her account. All remaining credit will be forfeioted. Should the user have failed to comply with the wagering requirements after the stipulated time (12.38), all credit on the user´s account, which is more than his/her first deposit will be forfeited. If the user has a lower credit in his account than the first deposit, the credit amount will remain the same.</p>
+
+          <p>12.38. Players have 30 calendar days to earn the WBP, having complied with the requirements. After 30 calendar days, any unused bonus credits will be removed from the player's Account. During this active WBP no additional deposits can be made 2ntil the credit has reached 0, the wagering requirements have been met or the time to fulfill the requirements has expired. After the 30 days have expired, further deposits and withdrawals are re-enabled. The WBP automatically expires whem the users´ account credit has been depleted, ie. Has reached zero (0).</p>
+
+          <p>12.39. Different games and game types can contribute to the fulfillment of different turnover requirements. For example, if a game type contributes 100% to the wagering requirement, it means that if you wager 1 WFair Token credit, 1 WFair Token credit will be counted towards completing the wagering requirement.</p>
+
+          <p>The following are the game bonus turnover participation rates:</p>
+
+          <p>All games: 100%</p>
+
+          <p>12.40. The stake amount in any game with a "bonus buy" or "feature buy" option counts as the total cost of the spin, not the share or value of the game rounds of the feature or bonus being played.</p>
+
+          <p>12.41 Bonus money offered in standard bonuses and any other bonuses whose terms and conditions are not stated elsewhere are not withdrawable. After the wagering is completed, users will be able to withdraw the balance in line with  and as stipulated in Clause 9 of these Terms and Conditions.</p>
 
           <h2>13. Errors</h2>
           
