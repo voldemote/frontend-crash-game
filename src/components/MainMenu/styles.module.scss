@@ -19,7 +19,6 @@ $largeMobileHeight: 700px;
 
   .mainContent {
     overflow-y: auto;
-    padding-bottom: 30px;
     padding-left: 30px;
   }
 
@@ -255,16 +254,20 @@ $largeMobileHeight: 700px;
   position: absolute;
   width: 100%;
   opacity: 1;
-  height: calc(100vh - 90px);
+  height: 100vh;
   display: flex;
   flex-flow: column;
   overflow-y: auto;
-  margin-top: 10px;
-  padding-top: 20px;
   background-color: $colorPrimary;
 
   @supports (-webkit-touch-callout: none) {
     height: calc(100vh - 150px);
+  }
+
+  @media (max-width: $screen-sm) {
+    margin-top: 10px;
+    padding-top: 20px;
+    height: calc(100vh - 50px);
   }
 }
 
