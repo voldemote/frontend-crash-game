@@ -38,7 +38,7 @@ const GameEvoplay = ({ showHowtoLink, showPopup, allgames }) => {
     }
   };
 
-  const newGames = Object.values(games).filter(g => g.game_sub_type !== 'socketgames').map(g => {return{...g, game_sub_type:( g.game_sub_type === 'Blackjack' || g.game_sub_type === 'Table' || g.game_sub_type === 'Baccarat' ||g.game_sub_type === 'Roulette' ||g.game_sub_type === 'Poker')  ? 'Casino Games' : g.game_sub_type}})
+  const newGames = Object.values(games).filter(g => g.game_sub_type !== 'socketgames').map((g, i) => {return{...g, value: Object.keys(games)[i], game_sub_type:( g.game_sub_type === 'Blackjack' || g.game_sub_type === 'Table' || g.game_sub_type === 'Baccarat' ||g.game_sub_type === 'Roulette' ||g.game_sub_type === 'Poker')  ? 'Casino Games' : g.game_sub_type}})
 
   const categories = newGames.reduce((gs, g) => { return gs.includes(g.game_sub_type) ? gs :gs.concat(g.game_sub_type) },[])
 
@@ -47,7 +47,6 @@ const GameEvoplay = ({ showHowtoLink, showPopup, allgames }) => {
       {categories.reverse().map(category1 =>
        <>
          <div className={styles.gamesCategory}>
-            {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
             <h2>{category1}</h2>
           </div>
           <div className={styles.games}>
@@ -59,7 +58,7 @@ const GameEvoplay = ({ showHowtoLink, showPopup, allgames }) => {
                   key={`gamecard-${index}-`}
                 >
                   <Link
-                    to={`/evoplay-game/${game.name}/${game.game_sub_type}/${Object.keys(games)[index]}`}
+                    to={`/evoplay-game/${game.name}/${game.game_sub_type}/${game.value}`}
                     className={classNames(
                       styles.game,
                       styles.gameLink
