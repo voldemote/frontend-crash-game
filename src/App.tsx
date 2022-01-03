@@ -1,4 +1,5 @@
 import './styles.module.scss';
+import { useEffect, useState } from 'react';
 import AlertBox from './components/AlertBox';
 import Home from './screens/Home';
 import Logout from './screens/Logout';
@@ -54,6 +55,20 @@ initTagManager();
 const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
 
 const App = () => {
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const el = document.querySelector(".preloader");
+    if (el) {
+      el.remove();
+      setLoading(!isLoading);
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return null;
+  }
+  
   return (
     <div id={'main-scroll-container'}>
       <Provider store={store}>

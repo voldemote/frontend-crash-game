@@ -45,10 +45,45 @@
     <title>Alpacasino</title>
 
     <script src="https://www.google.com/recaptcha/api.js?render=%REACT_APP_RECAPTCHA_KEY%"></script>
+    <style>
+      body {
+        background-color: #00092b;
+      }
+      
+      .preloader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .rotate {
+        width: 120px;
+        height: 120px;
+        animation: rotation 1s infinite linear;
+      }
+        
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+    
+        to {
+          transform: rotate(359deg);
+        }
+      }
+    </style>
   </head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <div class="preloader">
+      <img src="/logo_120.png" class="rotate" />
+    </div>
   </body>
 </html>
