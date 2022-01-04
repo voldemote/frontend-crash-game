@@ -53,7 +53,6 @@ const EvoplayGame = ({
   const gameNumber = match?.params?.number
   const EXTERNAL_GAME_EVENT_ID = ObjectId(gameNumber)//game.id;
 
-
   const dispatch = useDispatch();
   const [init, setInit] = useState(null);
 
@@ -80,6 +79,7 @@ const EvoplayGame = ({
   }, [])
 
   useEffect(() => {
+    console.log("EXTERNAL_GAME_EVENT_ID", EXTERNAL_GAME_EVENT_ID)
     dispatch(ChatActions.fetchByRoom({ roomId: EXTERNAL_GAME_EVENT_ID }));
   }, [dispatch, connected]);
 

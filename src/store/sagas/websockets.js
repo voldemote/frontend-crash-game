@@ -326,6 +326,9 @@ const isGamePage = (currentAction, pathSlugs) =>
 const isExternalPage = (currentAction, pathSlugs) =>
   (currentAction[0] === 'external-game' || pathSlugs[0] === 'external-game') &&
   (pathSlugs.length > 1 || currentAction.length > 1);
+const isEvoplayPage = (currentAction, pathSlugs) =>
+  (currentAction[0] === 'evoplay-game' || pathSlugs[0] === 'evoplay-game') &&
+  (pathSlugs.length > 2 || currentAction.length > 2);
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -367,6 +370,10 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
       newRoomsToJoin.push(game.id);
       newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
     }
+  }
+  if(isEvoplayPage(currentAction, pathSlugs)){
+    newRoomsToJoin.push(ObjectId(pathSlugs[3]));
+    newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
   if (isExternalPage(currentAction, pathSlugs)) {
     newRoomsToJoin.push(ObjectId(pathSlugs[1]));
