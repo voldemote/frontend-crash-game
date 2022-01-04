@@ -6,7 +6,7 @@ import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
-import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO} from '../constants/Api';
+import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO, SEND_BUY_WITH_FIAT} from '../constants/Api';
 
 const {
   store: { dispatch },
@@ -597,6 +597,13 @@ const sendBuyWithCrypto = (data) => {
     .catch(error => ({ error: error.message }))
 }
 
+const sendBuyWithFiat = (data) => {
+  if (!Api.defaults.headers.common['Authorization']) return;
+  return Api.post(ApiUrls.SEND_BUY_WITH_FIAT, data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }))
+}
+
 const acceptToS = () => {
   if (!Api.defaults.headers.common['Authorization']) return;
   return Api.post(ApiUrls.ACCEPT_TOS)
@@ -684,6 +691,7 @@ export {
   getUserKycData,
   getRandomUsername,
   sendBuyWithCrypto,
+  sendBuyWithFiat,
   generateCryptopayChannel,
   acceptToS,
   getUserCount,
