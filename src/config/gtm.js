@@ -645,6 +645,16 @@ export const trackWalletBuywithcryptoConfirm = () => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
+export const trackWalletBuywithfiatRequest = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywithfiatRequest',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
 export const trackWalletAddWfair = () => {
   const tagManagerArgs = {
     dataLayer: {

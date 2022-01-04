@@ -7,9 +7,8 @@ import { UserActions } from '../../store/actions/user';
 import TabOptions from 'components/TabOptions';
 import Grid from '@material-ui/core/Grid';
 import DepositTab from './Tabs/DepositTab';
-import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
+import BuyWithFiatManualTab from './Tabs/BuyWithFiatManualTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
-import BuyWithFiatWallfairWebsiteTab from './Tabs/BuyWithFiatWallfairWebsiteTab';
 import BuyWithCryptoManual from './Tabs/BuyWithCryptoManual';
 import { trackWalletBuywfairTab, trackWalletbuywithcryptoTab, trackWalletDepositTab } from 'config/gtm';
 
@@ -24,8 +23,9 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
         return <DepositTab />;
       case 1:
         trackWalletBuywfairTab();
-        return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
-        // return showNewFeatures ? <BuyWithFiatTab hidePopup={hidePopup} /> : <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
+        // return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
+        // return <BuyWithFiatTab hidePopup={hidePopup} />;
+        return <BuyWithFiatManualTab hidePopup={hidePopup} />;
       case 2:
         trackWalletbuywithcryptoTab();
         return <BuyWithCryptoManual />;
@@ -45,10 +45,10 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     index: 0,
   });
   const tabOptions = [
-    { name: 'DEPOSIT', index: 0 },
-    { name: 'BUY WFAIR', index: 1 },
-    { name: 'BUY WITH CRYPTO', index: 2 }, //manual crypto transfer
-    { name: 'BUY WITH CRYPTO', index: 3 }, //cryptopay
+    { name: 'DEPOSIT WFAIR', index: 0 },
+    { name: 'DEPOSIT EUR / USD', index: 1 },
+    { name: 'DEPOSIT CRYPTO', index: 2 }, //manual crypto transfer
+    // { name: 'BUY WITH CRYPTO', index: 3 }, //cryptopay
   ].filter(({ index }) => showNewFeatures || index !== 3);
   
   const handleSwitchTab = ({ index }) => {

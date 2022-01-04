@@ -93,9 +93,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0 24px 30px;
+  padding: 0 24px 0;
   @media (max-width: $screen-md) {
-    padding: 0 16px;
+    padding: 10px 16px 0;
   }
 
   .buyWithFiatTabIframe {
@@ -103,6 +103,7 @@
     width: 100%;
   }
 
+  .resultContainer,
   .textContainer {
     max-width: 600px;
     width: 100%;
@@ -113,8 +114,16 @@
     margin-top: 20px;
     margin-bottom: 20px;
 
+    &.resultContainer {
+      justify-content: center;
+    }
+
     @media (max-width: $screen-md) {
       margin-top: 30px;
+    }
+
+    h2 {
+      margin: 0 auto 20px;
     }
 
     p {
@@ -139,8 +148,8 @@
   .wfairCalculatorContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    // margin-top: 20px;
+    // margin-bottom: 20px;
     justify-content: center;
     align-items: center;
     @media (max-width: $screen-md) {

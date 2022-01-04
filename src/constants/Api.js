@@ -114,6 +114,7 @@ export const KYC_DATA_FOR_USER = 'api/user/:userId/kyc-data';
 export const KYC_REFRESH_STATUS = 'api/user/kyc/refresh';
 export const RANDOM_USERNAME = 'api/user/random-username';
 export const SEND_BUY_WITH_CRYPTO = 'api/user/buy-with-crypto'
+export const SEND_BUY_WITH_FIAT = 'api/user/buy-with-fiat'
 export const GENERATE_CRYPTOPAY_CHANNEL = 'api/user/cryptopay/channel';
 export const ACCEPT_TOS = 'api/user/consent';
 export const USER_COUNT = 'api/user/count';
