@@ -413,7 +413,7 @@ const WithdrawTab = () => {
               <div className={styles.labelContainer}>
                 <span>You receive (estimate)</span>
                 <span className={styles.gasFeeLabel}>
-                  {amountFees > 0 && `Fee: ±${amountFees} ${TOKEN_NAME}`}
+                  {amountFees > 0 && `Fee: ±${parseFloat(amountFees).toFixed(2)} ${TOKEN_NAME}`}
                 </span>
               </div>
               <input disabled readOnly value={withdrawAmount} />
