@@ -105,6 +105,15 @@
       }
     }
 
+    &.walletDeposit {
+      max-width: 320px;
+
+      .modalContent {
+        min-height: 430px;
+        padding: 30px;
+      }
+    }
+
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
     &.usernamePopup,

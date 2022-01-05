@@ -1,0 +1,23 @@
+@import '../../../styles/all';
+
+.depositFiat {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 17px;
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: justify;
+  }
+}
