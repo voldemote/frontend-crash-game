@@ -44,6 +44,7 @@ const UserWallet = ({
   isTransactionsFetchError,
   transactions,
   showWithdrawPopup,
+  showWalletDepositPopup,
 }) => {
   const { active, library, account, chainId } = useWeb3React();
 
@@ -231,7 +232,8 @@ const UserWallet = ({
                 <p className={styles.label}>Need WFAIR to play? No problem.</p>
                 <Button
                   className={styles.button}
-                  onClick={showWalletBuyWfairPopup}
+                  // onClick={showWalletBuyWfairPopup}
+                  onClick={showWalletDepositPopup}
                 >
                   Add WFAIR!
                 </Button>
@@ -346,6 +348,10 @@ const mapDispatchToProps = dispatch => {
     showWalletBuyWfairPopup: () => {
       trackWalletAddWfair();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+    },
+    showWalletDepositPopup: () => {
+      trackWalletAddWfair();
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
     },
     showRequestTokenPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.requestTokens }));

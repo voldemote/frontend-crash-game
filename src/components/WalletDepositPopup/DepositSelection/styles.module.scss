@@ -1,0 +1,39 @@
+@import '../../../styles/all';
+
+.depositSelectionContainer {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 17px;
+}
+
+.selectorButton {
+  display: flex;
+  width: 262px;
+  height: 113px;
+  border-radius: 25px;
+  border: 1px solid $colorBlack;
+  align-items: center;
+  padding: 0 20px 0 11px;
+  column-gap: 15px;
+  background: $colorWhite;
+  cursor: pointer;
+
+  .buttonText {
+    width: 160px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      text-align: left;
+    }
+    p {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      text-align: left;
+    }
+  }
+}
