@@ -48,7 +48,7 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     { name: 'DEPOSIT WFAIR', index: 0 },
     { name: 'DEPOSIT EUR / USD', index: 1 },
     { name: 'DEPOSIT CRYPTO', index: 2 }, //manual crypto transfer
-    // { name: 'BUY WITH CRYPTO', index: 3 }, //cryptopay
+    { name: 'BUY WITH CRYPTO', index: 3 }, //cryptopay
   ].filter(({ index }) => showNewFeatures || index !== 3);
   
   const handleSwitchTab = ({ index }) => {
