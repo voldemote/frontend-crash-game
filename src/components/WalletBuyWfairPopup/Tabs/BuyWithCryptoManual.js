@@ -19,6 +19,7 @@ import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import { TOKEN_NAME } from 'constants/Token';
 import Button from 'components/Button';
 import useDebounce from 'hooks/useDebounce';
+import { trackWalletBuywithcryptoConfirm } from 'config/gtm';
 
 const cryptoShortName = {
   bitcoin: 'BTC',
@@ -106,6 +107,7 @@ const BuyWithCryptoManual = () => {
       && currency
       && tokenValue
     ){
+      trackWalletBuywithcryptoConfirm();
       sendBuyWithCrypto({
         currency: cryptoShortName[activeTab],
         wallet: cryptoAddress,

@@ -7,10 +7,10 @@ import { UserActions } from '../../store/actions/user';
 import TabOptions from 'components/TabOptions';
 import Grid from '@material-ui/core/Grid';
 import DepositTab from './Tabs/DepositTab';
-import BuyWithFiatTab from './Tabs/BuyWithFiatTab';
+import BuyWithFiatManualTab from './Tabs/BuyWithFiatManualTab';
 import BuyWithCrypto from './Tabs/BuyWithCrypto';
-import BuyWithFiatWallfairWebsiteTab from './Tabs/BuyWithFiatWallfairWebsiteTab';
 import BuyWithCryptoManual from './Tabs/BuyWithCryptoManual';
+import { trackWalletBuywfairTab, trackWalletbuywithcryptoTab, trackWalletDepositTab } from 'config/gtm';
 
 const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 
@@ -19,13 +19,18 @@ const RenderTabs = ({ type = 0 , hidePopup}) => {
     switch (type) {
       case 0:
       default:
+        trackWalletDepositTab();
         return <DepositTab />;
       case 1:
-        return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
-        // return showNewFeatures ? <BuyWithFiatTab hidePopup={hidePopup} /> : <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
+        trackWalletBuywfairTab();
+        // return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
+        // return <BuyWithFiatTab hidePopup={hidePopup} />;
+        return <BuyWithFiatManualTab hidePopup={hidePopup} />;
       case 2:
+        trackWalletbuywithcryptoTab();
         return <BuyWithCryptoManual />;
       case 3:
+        trackWalletbuywithcryptoTab();
         return <BuyWithCrypto />;
     }
   };
@@ -40,9 +45,9 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     index: 0,
   });
   const tabOptions = [
-    { name: 'DEPOSIT', index: 0 },
-    { name: 'BUY WFAIR', index: 1 },
-    { name: 'BUY WITH CRYPTO', index: 2 }, //manual crypto transfer
+    { name: 'DEPOSIT WFAIR', index: 0 },
+    { name: 'DEPOSIT EUR / USD', index: 1 },
+    { name: 'DEPOSIT CRYPTO', index: 2 }, //manual crypto transfer
     { name: 'BUY WITH CRYPTO', index: 3 }, //cryptopay
   ].filter(({ index }) => showNewFeatures || index !== 3);
   

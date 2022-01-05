@@ -580,4 +580,109 @@ export const trackAlpacannonStopAutobet = ({ amount, multiplier, autobet, profit
   TagManager.dataLayer(tagManagerArgs);
 };
 
+
+/**********/
+/* WALLET */
+/**********/
+
+export const trackWalletConnect = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletConnect',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletDepositTab = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletDepositTab',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywfairTab = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywfairTab',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletbuywithcryptoTab = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywithcryptoTab',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywfairLink = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywfairLink',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywithcryptoConfirm = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywithcryptoConfirm',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletBuywithfiatRequest = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywithfiatRequest',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletAddWfair = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletAddWfair',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletIcon = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletIcon',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
+export const trackWalletWithdraw = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletWithdraw',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
 export default TagManager;
