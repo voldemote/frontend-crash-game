@@ -23,7 +23,7 @@ const SocialIcons = ({ className, dataTrackingIds }) => {
       </a>
 
       <a
-        href="https://discord.gg/pkvNwhD9"
+        href="https://discord.gg/vxAtN9y4Vt"
         target="_blank"
         rel="noreferrer"
         data-tracking-id={dataTrackingIds.instagram}

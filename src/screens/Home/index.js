@@ -176,7 +176,7 @@ const Home = ({
           <div className={styles.whiteWrapper}>
             <div className={styles.whiteContainer}>
               <a
-                href="https://discord.gg/S7ebz6bb"
+                href="https://discord.gg/vxAtN9y4Vt"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -194,7 +194,7 @@ const Home = ({
             />
             <p>
               <a
-                href="https://discord.gg/S7ebz6bb"
+                href="https://discord.gg/vxAtN9y4Vt"
                 target="_blank"
                 rel="noreferrer"
               >
