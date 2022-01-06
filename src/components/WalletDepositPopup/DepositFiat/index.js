@@ -125,7 +125,6 @@ const DepositFiat = ({user, showWalletDepositPopup}) => {
         Deposit EUR or USD to start playing in a few hours.
       </p>
 
-
       {/* Currency */}
       <div className={styles.formGroupContainer}>
         <span>You pay</span>
@@ -212,3 +211,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DepositFiat);
+

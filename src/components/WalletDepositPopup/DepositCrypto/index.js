@@ -1,4 +1,6 @@
+
 import { useCallback, useEffect, useState } from 'react';
+
 import styles from './styles.module.scss';
 import {ReactComponent as BitcoinIcon} from '../../../data/icons/deposit/bitcoin.svg';
 import {ReactComponent as EuroIcon} from '../../../data/icons/deposit/euro.svg';
@@ -122,6 +124,7 @@ const DepositCrypto = ({user, showWalletDepositPopup}) => {
   return (
     <div className={styles.depositCrypto}>
       {/* <p className={styles.title}>
+
         WFAIR conversion calculator
       </p>
       <p>
@@ -265,3 +268,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DepositCrypto);
+

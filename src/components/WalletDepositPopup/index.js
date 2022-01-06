@@ -9,6 +9,7 @@ import DepositCrypto from './DepositCrypto';
 import DepositFiat from './DepositFiat';
 import DepositToken from './DepositToken';
 
+
 const WalletDepositPopup = ({visible, type}) => {
 
   const renderContent = () => {
@@ -19,6 +20,7 @@ const WalletDepositPopup = ({visible, type}) => {
         return <DepositFiat />;
       case PopupTheme.walletConnectWallet:
         return <DepositToken />;
+
       default:
         return <DepositSelection />;
     }
