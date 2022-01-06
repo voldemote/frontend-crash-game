@@ -17,19 +17,19 @@ const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
 const RenderTabs = ({ type = 0 , hidePopup}) => {
   const selectTabsComponent = type => {
     switch (type) {
-      case 0:
+      case 1:
       default:
         trackWalletDepositTab();
         return <DepositTab />;
-      case 1:
+      case 2:
         trackWalletBuywfairTab();
         // return <BuyWithFiatWallfairWebsiteTab hidePopup={hidePopup} />;
         // return <BuyWithFiatTab hidePopup={hidePopup} />;
         return <BuyWithFiatManualTab hidePopup={hidePopup} />;
-      case 2:
+      case 3:
         trackWalletbuywithcryptoTab();
         return <BuyWithCryptoManual />;
-      case 3:
+      case 0:
         trackWalletbuywithcryptoTab();
         return <BuyWithCrypto />;
     }
@@ -45,10 +45,10 @@ const WalletBuyWfairPopup = ({ hidePopup, requestTokens }) => {
     index: 0,
   });
   const tabOptions = [
-    { name: 'DEPOSIT WFAIR', index: 0 },
-    { name: 'DEPOSIT EUR / USD', index: 1 },
-    { name: 'DEPOSIT CRYPTO', index: 2 }, //manual crypto transfer
-    { name: 'BUY WITH CRYPTO', index: 3 }, //cryptopay
+    { name: 'BUY WITH CRYPTO', index: 0 }, //cryptopay
+    { name: 'DEPOSIT WFAIR', index: 1 },
+    { name: 'BUY WITH EUR / USD', index: 2 },
+    // { name: 'DEPOSIT CRYPTO', index: 3 }, //manual crypto transfer
   ].filter(({ index }) => showNewFeatures || index !== 3);
   
   const handleSwitchTab = ({ index }) => {
