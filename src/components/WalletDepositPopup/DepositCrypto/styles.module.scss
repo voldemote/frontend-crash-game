@@ -20,4 +20,244 @@
     line-height: 20px;
     text-align: justify;
   }
+
+  hr {
+    border: none;
+    height: 1px;
+    color: $colorPopBorder;
+    background-color: $colorPopBorder;
+    margin: 15px 0;
+    opacity: 0.6;
+  }
+
+  .depositNotes {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .overview {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    .overviewItem {
+      display: flex;
+      justify-content: space-between;
+
+      & span {
+        font-weight: 600;
+        font-size: 14px;
+
+        &.bonus {
+          color: $colorButton;
+        }
+
+        &.total {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .chooseOtherMethod {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    span {
+      padding-bottom: 3px;
+      color: $colorButton;
+      font-size: 14px;
+    }
+  }
+
+  .formGroupContainer {
+    & > span {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .inputContainer {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      height: 50px;
+      background: #f1f2f6;
+      border: 1px solid $colorLightGray2;
+      box-sizing: border-box;
+      border-radius: 40px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+      @media (max-width: $screen-md) {
+        margin-top: 0;
+        height: 40px;
+      }
+
+      .dropdown {
+        margin-bottom: 0;
+
+        & > :first-child {
+          height: 40px !important;
+          background-color: transparent !important;
+          .dropdownPlaceholder {
+            font-size: 12px !important;
+            margin: 0 auto !important;
+            font-weight: bold !important;
+          }
+        }
+      }
+
+      input {
+        background: #f1f2f6;
+        outline: none !important;
+        width: 100%;
+        height: 90%;
+        padding: 0;
+        margin: 0 0 0 20px;
+        border: none;
+        direction: ltr;
+        text-align: right;
+        font-size: 24px;
+        font-family: $fontOmnes;
+        font-weight: bold;
+        &:focus-visible {
+          outline: none;
+        }
+        @media (max-width: $screen-md) {
+          padding: 0;
+          font-size: 16px;
+        }
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .inputRightContainer {
+        width: 38%;
+        height: 60px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 10px;
+
+        @media (max-width: $screen-md) {
+          height: 100%;
+          font-size: 16px;
+        }
+
+        span {
+          font-weight: 600;
+          @media (max-width: $screen-sm) {
+            font-size: 14px;
+            font-weight: 600;
+          }
+        }
+
+        svg {
+          width: 30px;
+          height: 30px;
+
+          @media (max-width: $screen-sm) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .coinWrapper {
+          padding: 0 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          column-gap: 10px;
+          @media (max-width: $screen-md) {
+            padding: 0;
+          }
+        }
+        .innerContainer {
+          width: 134px;
+          height: 60px;
+          //background-color: $colorBlueLight;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          @media (max-width: $screen-md) {
+            height: 100%;
+            font-size: 16px;
+          }
+
+          .innerContent {
+            p {
+              font-family: $fontOmnes;
+              font-weight: bold;
+              font-size: 18px;
+            }
+          }
+          .innerIcon {
+            svg {
+              fill: #3570ff;
+              stroke: none;
+            }
+          }
+        }
+
+        img {
+          height: 40px;
+          width: 80%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+
+  .transferInformation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+
+    .addressCopy {
+      margin: 10px 0 0;
+      width: 100%;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    .summaryTotal {
+      font-weight: 700;
+      font-size: 16px;
+    }
+  }
+
+  .qrCodeImg {
+    height: 125px;
+    margin-bottom: 10px;
+  }
+
+  .channelFetchError {
+    width: 100%;
+    text-align: center;
+    color: #e82e89;
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

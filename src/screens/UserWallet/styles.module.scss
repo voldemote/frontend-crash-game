@@ -499,7 +499,7 @@
   justify-content: center;
   align-items: center;
 
-  margin: 0 10px;
+  // margin: 30px auto 0;
 
   @media (max-width: $screen-xs) {
     justify-content: center;
@@ -514,7 +514,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 40px 20px 0;
+    padding: 20px;
+    // margin: 20px;
 
     // @media (max-width: $screen-lg) {
     //   padding: 140px 20px 0;
@@ -537,9 +538,13 @@
       padding-top: 10px;
       color: $colorWhite;
       font-weight: 700;
-      padding: 10px 20px 20px;
+      padding: 20px 40px 20px;
       line-height: 26px;
       text-align: justify;
+
+      @media (max-width: $screen-xs) {
+        padding: 20px;
+      }
 
       span {
         color: $mainAction;
@@ -601,22 +606,26 @@
 
   .currentBlanceDiscription {
     width: 100%;
-    background: rgba($colorBlue80, 0.8);
+    background: rgba($colorBlue80, 0.6);
     padding: 40px 0px;
     position: relative;
 
-    &::after {
-      position: absolute;
-      content: '';
-      background-image: url('../../data/images/balance-coins.svg');
-      background-repeat: no-repeat;
-      width: 100%;
-      height: 100%;
-      bottom: 0px;
-      left: 300px;
-      background-position: bottom;
-      pointer-events: none;
+    &.smallCurrentBalanceDescription {
+      background: $colorPrimary;
     }
+
+    // &::after {
+    //   position: absolute;
+    //   content: '';
+    //   background-image: url('../../data/images/balance-coins.svg');
+    //   background-repeat: no-repeat;
+    //   width: 100%;
+    //   height: 100%;
+    //   bottom: 0px;
+    //   left: 300px;
+    //   background-position: bottom;
+    //   pointer-events: none;
+    // }
 
     @media (max-width: $screen-md) {
       padding: 10px;
@@ -628,19 +637,19 @@
       }
     }
 
-    @media (max-width: $screen-lg) {
-      &::after {
-        position: absolute;
-        content: '';
-        background-image: url('../../data/images/balance-coins.svg');
-        background-repeat: no-repeat;
-        width: 100%;
-        height: 100%;
-        bottom: 0px;
-        left: 47%;
-        background-position: bottom;
-      }
-    }
+    // @media (max-width: $screen-lg) {
+    //   &::after {
+    //     position: absolute;
+    //     content: '';
+    //     background-image: url('../../data/images/balance-coins.svg');
+    //     background-repeat: no-repeat;
+    //     width: 100%;
+    //     height: 100%;
+    //     bottom: 0px;
+    //     left: 47%;
+    //     background-position: bottom;
+    //   }
+    // }
 
     .buttonContainer {
       display: flex;
@@ -648,13 +657,19 @@
       align-items: center;
       margin-bottom: 40px;
 
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: $colorWhite;
+      }
+
       .label {
         text-align: justify;
         line-height: 24px;
         padding: 0 40px 10px;
         margin: 0 auto;
         font-family: $fontOmnes;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 700;
         color: $colorWhite;
 

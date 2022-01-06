@@ -197,23 +197,15 @@ const UserWallet = ({
     }
     return (
       <div className={styles.currentBalanceSection}>
-        <Grid container alignContent="center" justifyContent="center">
+        <Grid container alignContent="center">
           <Grid className={styles.balanceCard} container justifyContent="flex-end" item lg={6} md={6} xs={12}>
             <div className={styles.currentBlanceCard}>
-              <h2>Welcome to your Alpacasino wallet!</h2>
-              <p className={styles.welcome}>
-                You are in the right place to check your current balance, 
-                add WFAIR into your wallet, or withdraw your tokens. If you 
-                have any questions about your wallet or its functionality, 
-                please get in touch with our <span onClick={() => {window.fcWidget.open()}}>Support</span>!
-              </p>
               <p className={styles.currentbalanceHeading}>Current balance:</p>
               <p
                 className={classNames(styles.currentbalanceWFair, fontStyling)}
               >
                 {balanceFixed} {' '} {currency}
               </p>
-              <WalletCoins />
             </div>
           </Grid>
 
@@ -227,12 +219,16 @@ const UserWallet = ({
             xs={12}
           >
             <div className={styles.currentBlanceDiscription}>
-              <div className={styles.buttonContainer}>
-                {/* <p className={styles.label}>To add or withdraw WFAIR select one of the options below</p> */}
+              <div className={styles.currentBlanceCard}>
+                <h2>WHY WFAIR?</h2>
+                <p className={styles.welcome}>
+                  Alpacasino uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency  or in EUR / USD at any time around the world.
+                </p>
+              </div>
+              {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Need WFAIR to play? No problem.</p>
                 <Button
                   className={styles.button}
-                  // onClick={showWalletBuyWfairPopup}
                   onClick={showWalletDepositPopup}
                 >
                   Add WFAIR!
@@ -279,7 +275,7 @@ const UserWallet = ({
               }
               <div className={styles.buttonContainer}>
                 <p className={styles.label}>In case of any questions please <span onClick={() => {window.fcWidget.open()}}>click here</span> to contact our Support.</p>
-              </div>
+              </div> */}
               {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Start the verification</p>
                 <Button
@@ -289,6 +285,98 @@ const UserWallet = ({
                   Request test tokens
                 </Button>
               </div> */}
+            </div>
+          </Grid>
+
+          <Grid
+            className={styles.balanceCard}
+            container
+            item
+            lg={4}
+            md={4}
+            xs={12}
+          >
+            <div className={classNames(styles.currentBlanceDiscription, styles.smallCurrentBalanceDescription)}>
+              <div className={styles.buttonContainer}>
+                <p className={styles.label}>Need WFAIR to play? No problem.</p>
+                <Button
+                  className={styles.button}
+                  onClick={showWalletDepositPopup}
+                >
+                  Add WFAIR!
+                </Button>
+              </div>
+            </div>
+          </Grid>
+
+          <Grid
+            className={styles.balanceCard}
+            container
+            justifyContent="flex-start"
+            item
+            lg={4}
+            md={4}
+            xs={12}
+          >
+            <div className={classNames(styles.currentBlanceDiscription, styles.smallCurrentBalanceDescription)}>
+              <div className={styles.buttonContainer}>
+                <p className={styles.label}>Want to withdraw WFAIR? No problem.</p>
+                <Button
+                  className={styles.button}
+                  disabled={!isKycVerified() || !user.emailConfirmed}
+                  disabledWithOverlay={false}
+                  onClick={showWithdrawPopup}
+                >
+                  Withdraw
+                </Button>
+                {!user.emailConfirmed ? 
+                  <>
+                    <p className={styles.label}>You must confirm your email to be able to withdraw your tokens.</p>
+
+                    <Button
+                      className={styles.button}
+                      disabled={emailSent}
+                      disabledWithOverlay={false}
+                      onClick={handleResendEmailConfirmation}
+                    >
+                      {!emailSent ? 'Resend Email' : 'Email sent'}
+                    </Button>
+                  </>
+                  : null 
+                }
+              </div>
+            </div>
+          </Grid>
+
+          <Grid
+            className={styles.balanceCard}
+            container
+            justifyContent="flex-start"
+            item
+            lg={4}
+            md={4}
+            xs={12}
+          >
+            <div className={classNames(styles.currentBlanceDiscription, styles.smallCurrentBalanceDescription)}>
+              <div className={styles.buttonContainer}>
+              
+                {
+                showStartButton() && (
+                  <div className={styles.buttonContainer}>
+                  <p className={styles.title}>KYC Verification</p>
+                  <p className={styles.label}>
+                    Enable the full functionality of your account in 30 seconds! Complete our verification process now, and you will be able to withdraw your funds and add an unlimited amount of WFAIR.
+                  </p>
+                  <Button
+                    className={styles.button}
+                    onClick={openFractal}
+                  >
+                    Complete Verification!
+                  </Button>
+                </div>
+                )
+              }
+              </div>
             </div>
           </Grid>
         </Grid>

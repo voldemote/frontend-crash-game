@@ -7,6 +7,7 @@ import DepositSelection from './DepositSelection';
 import { PopupActions } from 'store/actions/popup';
 import DepositCrypto from './DepositCrypto';
 import DepositFiat from './DepositFiat';
+import DepositToken from './DepositToken';
 
 const WalletDepositPopup = ({visible, type}) => {
 
@@ -17,7 +18,7 @@ const WalletDepositPopup = ({visible, type}) => {
       case PopupTheme.walletDepositFiat:
         return <DepositFiat />;
       case PopupTheme.walletConnectWallet:
-        return <DepositSelection />;
+        return <DepositToken />;
       default:
         return <DepositSelection />;
     }
