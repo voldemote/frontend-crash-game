@@ -142,7 +142,7 @@ const UserWallet = ({
               options={
                 activityTabOptions
                   ? activityTabOptions.filter(
-                      ({ name }) => (showNewFeatures || (name !== 'CRYPTO DEPOSITS')) && (name !== 'FIAT DEPOSITS') //when fiat on ramp is activated, remove the second condition part
+                      ({ name }) => (name !== 'FIAT DEPOSITS') //when fiat on ramp is activated, remove the second condition part
                     )
                   : []
               }
