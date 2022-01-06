@@ -28,7 +28,7 @@ const cryptoShortName = {
 };
 
 const BuyWithCrypto = () => {
-  const [currency, setCurrency] = useState(0);
+  const [currency, setCurrency] = useState(0.1);
   const [tokenValue, setTokenValue] = useState(0);
   const [activeTab, setActiveTab] = useState('bitcoin');
   const [address, setAddress] = useState('');
