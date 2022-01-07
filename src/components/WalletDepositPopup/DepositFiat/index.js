@@ -60,7 +60,7 @@ const DepositFiat = ({user, showWalletDepositPopup}) => {
       let WfairTokenValue = !roundedAmount ? 0 : roundedAmount;
 
       setWFAIRToken(WfairTokenValue);
-      setBonus(WfairTokenValue);
+      setBonus(Math.min(100000, WfairTokenValue));
     }
   }
 
@@ -184,11 +184,11 @@ const DepositFiat = ({user, showWalletDepositPopup}) => {
       </div>
 
       <div className={styles.summary}>
-        <span>Add to Alpacasino Account in WFAIR</span>
-        <p className={styles.summaryTotal}>{numberWithCommas(parseFloat(WFAIRToken) + parseFloat(bonus))} {TOKEN_NAME}</p>
+        <span>Explanation explanation Explanation explanation Explanation explanation Explanation explanation Explanation explanation Explanation explanation </span>
       </div>
 
-      <Button>Deposit {currency > 0 && `${numberWithCommas(currency)} ${selectedCurrency.label}`}</Button>
+      {/* <Button>Buy {currency > 0 && `${numberWithCommas(currency)} ${selectedCurrency.label}`}</Button> */}
+      <Button>Proceed with partner</Button>
     </div>
   );
 };

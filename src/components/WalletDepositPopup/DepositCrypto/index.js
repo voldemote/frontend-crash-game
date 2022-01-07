@@ -96,7 +96,7 @@ const DepositCrypto = ({user, showWalletDepositPopup}) => {
         : roundedAmount;
 
       setTokenValue(WfairTokenValue);
-      setBonus(WfairTokenValue);
+      setBonus(Math.min(100000, WfairTokenValue));
     } else {
       setTokenValue(0);
       setBonus(0);

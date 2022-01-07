@@ -38,6 +38,8 @@ import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import { trackWalletIcon } from 'config/gtm';
 
+import {ReactComponent as WalletIcon} from '../../data/icons/navbar/wallet-icon.svg';
+
 
 const Navbar = ({
   user,
@@ -53,6 +55,7 @@ const Navbar = ({
   userMessages,
   setMessageRead,
   startOnboardingFlow,
+  showWalletDepositPopup,
 }) => {
   const [leaderboardWeeklyDate, setLeaderboardWeeklyDate] = useState(
     new Date()
@@ -181,15 +184,26 @@ const Navbar = ({
         )}
         data-wg-notranslate
         data-tracking-id="menu-wallet-icon"
-        onClick={() => {
-          trackWalletIcon();
-          history.push(Routes.wallet)
-        }}
       >
-        <img src={CoinIcon} alt="medal" className={style.medal} />
-        <p>{formatToFixed(balance, 0, true)} {currency}</p>
+        <div
+          className={style.walletLinkContainer}
+          onClick={() => {
+            trackWalletIcon();
+            history.push(Routes.wallet)
+          }}
+        >
+          <img src={CoinIcon} alt="medal" className={style.medal} />
+          <p title={`${formatToFixed(balance, 0, true)} ${currency}`}>{formatToFixed(balance, 0, true)} {currency}</p>
+        </div>
         <span 
-          className={style.plusButton}>+</span>
+          className={style.depositLabel}
+          onClick={() => {
+            trackWalletIcon();
+            showWalletDepositPopup();
+          }}
+        >
+          <span className={style.deposit}>Deposit</span> <WalletIcon/>
+        </span>
       </span>
     );
     return (
@@ -484,6 +498,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    showWalletDepositPopup: () => {
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
     },
   };
 };

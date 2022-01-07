@@ -65,23 +65,57 @@
       height: 38px;
       z-index: 0;
 
-      .plusButton {
+      .walletLinkContainer {
+        display: flex;
+        p {
+          width: 100%;
+          min-width: 110px;
+          text-align: center;
+        }
+        &:hover {
+          & p {
+            font-weight: 600;
+          }
+        }
+      }
+
+      .depositLabel {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 38px;
+        width: 124px;
         height: 38px;
         margin-left: 10px;
         background: #ffd31a;
         border: 1px solid #ffd401;
         box-sizing: border-box;
         border-radius: 25px;
-        color: $colorWhite;
+        color: $colorPrimary;
         font-style: normal;
         font-weight: 600;
-        font-size: 40px;
+        font-size: 16px;
         line-height: 20px;
-        padding-bottom: 7px;
+        padding: 0 12px;
+        justify-content: space-around;
+
+        &:hover {
+          & .deposit {
+            padding: 0;
+            font-weight: 700;
+          }
+        }
+
+        @media (max-width: $screen-xs) {
+          width: 38px;
+          padding: 0;
+          & .deposit {
+            display: none;
+          }
+        }
+
+        & svg {
+          margin: 0;
+        }
       }
 
       img,
@@ -92,9 +126,9 @@
 
       p {
         font-size: 16px;
-        @media (max-width: $screen-md) {
-          font-size: 14px;
-        }
+        // @media (max-width: $screen-md) {
+        //   font-size: 14px;
+        // }
       }
 
       &.leaderboardValues {

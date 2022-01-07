@@ -117,6 +117,26 @@ const TokenTransfer = ({
               halfIcon={false}
               doubleIcon={false}
             />
+
+            <div className={styles.overview}>
+              <p className={styles.title}>
+                Deposit Overview
+              </p>
+              <div className={styles.overviewItem}>
+                <span>Estimate</span><span>{numberWithCommas(transferValue)} {TOKEN_NAME}</span>
+              </div>
+              <hr/>
+              <div className={styles.overviewItem}>
+                <span>Bonus</span><span className={styles.bonus}>{numberWithCommas(Math.min(100000, transferValue))} {TOKEN_NAME}</span>
+              </div>
+              <hr/>
+              <div className={styles.overviewItem}>
+                <span className={styles.total}>Amount</span><span className={styles.total}>{numberWithCommas(parseFloat(transferValue) + parseFloat(Math.min(100000,transferValue)))} {TOKEN_NAME}</span>
+              </div>
+              <hr/>
+            </div>
+
+
             <div className={styles.buttonWrapper}>
               <Button
                 className={classNames(

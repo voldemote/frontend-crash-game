@@ -30,6 +30,7 @@ import ReactTooltip from 'react-tooltip';
 import { FormGroup, InputLabel } from 'components/Form';
 import { validate } from '@material-ui/pickers';
 import WithdrawalErrorPopup from 'components/WithdrawalErrorPopup';
+import Button from 'components/Button';
 
 const minTokenWithdrawAmount = 1000;
 
@@ -445,9 +446,9 @@ const WithdrawTab = () => {
               </p>
             </div>
 
-            <button
+            <Button
               className={classNames(
-                styles.confirmButton,
+                // styles.confirmButton,
                 submitButtonDisable ? styles.disabled : null
               )}
               onClick={handleWithdraw}
@@ -455,7 +456,7 @@ const WithdrawTab = () => {
               // disabled={tokenAmount === 0 && error.length > 0 ?}
             >
               Confirm Amount
-            </button>
+            </Button>
           </div>
         </>
       )}
