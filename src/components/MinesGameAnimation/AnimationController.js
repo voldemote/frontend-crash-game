@@ -159,7 +159,7 @@ class AnimationController {
     this.game = new Game();
     this.canvas = canvas;
     this.canvas.width = options.width;
-    this.canvas.height = options.height;
+    this.canvas.height = options.height-5;
     this.audio = new AudioController(0);
     this.audio.startBgm();
 
@@ -183,7 +183,7 @@ class AnimationController {
 
     let texture = PIXI.Texture.from(require('./assets/bg.png').default);
     let sprite1 = new PIXI.Sprite(texture);
-    sprite1.scale.x = 0.3;
+    sprite1.scale.x = 0.35;
     sprite1.scale.y = 0.24;
     app.stage.addChild(sprite1);
     app.stage.addChild(this.game.controller.view);
