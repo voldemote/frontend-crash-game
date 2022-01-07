@@ -19,3 +19,38 @@ export const ObjectId = (gamename) => {
     ((parseInt(encoded[(i*2)%encoded.length], 16) + parseInt(i*2, 16))%16).toString(16)
   )
 }
+
+export const prepareEvoplayGames = (evoplayGames) => {
+  const output = [];
+  for (let key in evoplayGames) {
+    const gameInfo = evoplayGames[key];
+    const catSubType = gameInfo.game_sub_type;
+    let translatedCat = null;
+
+    if(catSubType === 'Slot') {
+      translatedCat = 'Slot Games';
+    }
+
+    if(catSubType === 'Instant' || catSubType === 'socketgames') {
+      translatedCat = 'Instant Win Games';
+    }
+
+    if(catSubType === 'Blackjack' || catSubType === 'Table' || catSubType === 'Baccarat' || catSubType === 'Roulette' || catSubType === 'Poker') {
+      translatedCat = 'Casino Games';
+    }
+
+    const gameEntry = {
+      GameProvider: 'evoplay',
+      TechnicalName: gameInfo.name,
+      TechnicalCategory: gameInfo.name,
+      GameCategory: translatedCat || catSubType,
+      absolute_name: gameInfo.absolute_name,
+      gameKey: key,
+      _cfg: gameInfo
+    }
+
+    output.push(gameEntry);
+  }
+
+  return output;
+}

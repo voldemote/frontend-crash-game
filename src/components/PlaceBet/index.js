@@ -17,6 +17,7 @@ import PopupTheme from '../Popup/PopupTheme';
 import Input from '../Input';
 import { round } from 'lodash/math';
 import _ from 'lodash';
+import { OnboardingActions } from 'store/actions/onboarding';
 import {
   betInQueue,
   isCashedOut,
@@ -342,15 +343,25 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
   };
 
   const showLoginPopup = () => {
-    dispatch(
-      PopupActions.show({
-        popupType: PopupTheme.auth,
-        options: {
-          small: false,
-          authenticationType: AuthenticationType.register,
-        },
-      })
-    );
+    dispatch(OnboardingActions.start());
+    // dispatch(
+    //   PopupActions.show({
+    //     popupType: PopupTheme.auth,
+    //     options: {
+    //       small: false,
+    //       authenticationType: AuthenticationType.register,
+    //     },
+    //   })
+    // );
+    // dispatch(
+    //   PopupActions.show({
+    //     popupType: PopupTheme.auth,
+    //     options: {
+    //       small: false,
+    //       authenticationType: AuthenticationType.register,
+    //     },
+    //   })
+    // );
   };
 
   const renderButton = () => {

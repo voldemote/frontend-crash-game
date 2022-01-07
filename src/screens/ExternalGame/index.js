@@ -18,12 +18,13 @@ import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
-import { getGameById, ObjectId } from '../../helper/Games';
+import { ObjectId } from '../../helper/Games';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
+import SelectGameModePopup from "../../components/SelectGameModePopup";
 
 const portal = process.env.REACT_APP_SMARTSOFT_PORTALNAME
 const urlLauncher = process.env.REACT_APP_SMARTSOFT_LAUNCHER_URL
@@ -40,20 +41,15 @@ const RouletteGame = ({
   match
 }) => {
   const user = useSelector(selectUser);
-  const game = GAMES.alpacaWheel
   const gameName = match?.params?.game
   const gameCategory = match?.params?.category
 
   const EXTERNAL_GAME_EVENT_ID = ObjectId(gameName)//game.id;
-  const Api = new GameApi(game.url, token);
+  // const Api = new GameApi(game.url, token);
   const dispatch = useDispatch();
-  const [audio, setAudio] = useState(null);
-  const [demo, setDemo] = useState(true);
-  const [spins, setSpins] = useState([]);
-  const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({ready: true});
-  const [amount, setAmount] = useState(50);
   const [init, setInit] = useState(null);
+  const [gameMode, setGameMode] = useState(null);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -65,7 +61,7 @@ const RouletteGame = ({
 
 
   useEffect(() => {
-    if(!user.isLoggedIn){
+    if(!user.isLoggedIn || gameMode === 'demo'){
       if(isMobile) {
         history.push('/games')
         window.location = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
@@ -105,30 +101,6 @@ const RouletteGame = ({
        updateUserBalance(userId);
     }
   }, [bet])
-
-  async function handleBet(payload) {
-    audio.playBetSound();
-    if (!payload) return;
-    try {
-      if(payload.demo) {
-        setBet({...payload, ready: false })
-        //trackAlpacaWheelPlaceBetGuest({ amount: payload.amount, multiplier: risk});
-      } else {
-        const { data } = await Api.createTrade(payload);
-        setBet({...payload, ...data, ready: false});
-        //updateUserBalance(userId);
-        //trackAlpacaWheelPlaceBet({ amount: payload.amount, multiplier: risk, autobet: payload.autobet != null ? 1 : 0 });
-        //trackAlpacaWheelCashout({ amount: data.reward, multiplier: data.winMultiplier, result: data.gameResult, accumulated: payload.accumulated, autobet: payload.autobet != null ? 1 : 0 });
-        return data;
-      }
-    } catch (e) {
-      dispatch(
-        AlertActions.showError({
-          message: 'Alpaca Wheel: Place Bet failed',
-        })
-      );
-    }
-  }
 
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
@@ -197,7 +169,12 @@ const RouletteGame = ({
               onClick={handleHelpClick}
             />
           </div>
-          {init && <iframe onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={user.isLoggedIn?url:urltest} />}
+
+          {!gameMode && <div className={styles.mainContainer}>
+            <SelectGameModePopup user={user} setGameMode={setGameMode}/>
+          </div>}
+
+          {(gameMode && init) && <iframe onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={(user.isLoggedIn && gameMode !== 'demo') ?url:urltest} />}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}

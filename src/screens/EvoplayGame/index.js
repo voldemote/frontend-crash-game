@@ -35,6 +35,7 @@ import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
+import SelectGameModePopup from "../../components/SelectGameModePopup";
 
 const EvoplayGame = ({
   showPopup,
@@ -48,6 +49,7 @@ const EvoplayGame = ({
   match
 }) => {
   const user = useSelector(selectUser);
+  const [gameMode, setGameMode] = useState(null);
   const gameName = match?.params?.game
   const gameCategory = match?.params?.category
   const gameNumber = match?.params?.number
@@ -66,17 +68,21 @@ const EvoplayGame = ({
 
 
   useEffect(() => {
-    getUrlgame({returnUrl: window.location.origin, demo: !user.isLoggedIn, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'evoplay' })
-      .then(({data}) => {
-        if(data?.url) setInit(data?.url)
-      })
-      .catch(error => {
-        dispatch(AlertActions.showError(error.message));
-      });
-    return () => {
-      setInit(null)
+    if(gameMode) {
+      const demo = gameMode === 'demo' || !user.isLoggedIn;
+      getUrlgame({returnUrl: window.location.origin, demo, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'evoplay' })
+        .then(({data}) => {
+          if(data?.url) setInit(data?.url)
+        })
+        .catch(error => {
+          dispatch(AlertActions.showError(error.message));
+        });
+      return () => {
+        setInit(null)
+      }
     }
-  }, [])
+
+  }, [gameMode])
 
   useEffect(() => {
     console.log("EXTERNAL_GAME_EVENT_ID", EXTERNAL_GAME_EVENT_ID)
@@ -140,7 +146,12 @@ const EvoplayGame = ({
               onClick={handleHelpClick}
             />
           </div>
-          {init && <iframe className={styles.mainContainer} src={init}/>}
+
+          {!gameMode && <div className={styles.mainContainer}>
+            <SelectGameModePopup user={user} setGameMode={setGameMode}/>
+          </div>}
+
+          {(gameMode && init) && <iframe className={styles.mainContainer} src={init}/>}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}

@@ -53,6 +53,7 @@ import WalletWithdrawPopup from 'components/WalletBuyWfairPopup/WalletWithdrawPo
 import ToSPopup from 'components/ToSPopup';
 import BanPopup from 'components/BanPopup';
 import WalletDepositPopup from 'components/WalletDepositPopup';
+import SelectGameModePopup from "../SelectGameModePopup";
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -170,6 +171,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <LastGamesDetailPopup data={options?.data} />;
       case PopupTheme.fairnessPopup:
         return <FairnessPopup data={options?.data} />;
+      case PopupTheme.selectGameMode:
+        return <SelectGameModePopup data={options?.data} />;
       case PopupTheme.singleGamesDetail:
         return <SingleGameDetailPopup data={options?.data} />;
       case PopupTheme.loginRegister:

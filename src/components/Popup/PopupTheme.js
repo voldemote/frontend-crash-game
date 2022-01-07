@@ -45,5 +45,6 @@ export default {
   walletDeposit: 'walletDeposit',
   walletDepositCrypto: 'walletDepositCrypto',
   walletDepositFiat: 'walletDepositFiat',
-  walletConnectWallet: 'walletConnectWallet'
+  walletConnectWallet: 'walletConnectWallet',
+  selectGameMode: 'selectGameMode',
 };
