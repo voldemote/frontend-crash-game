@@ -159,7 +159,7 @@ class AnimationController {
     this.game = new Game();
     this.canvas = canvas;
     this.canvas.width = options.width;
-    this.canvas.height = options.height-5;
+    this.canvas.height = options.height;
     this.audio = new AudioController(0);
     this.audio.startBgm();
 
