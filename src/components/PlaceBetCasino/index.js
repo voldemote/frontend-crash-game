@@ -17,6 +17,7 @@ import Input from '../Input';
 import { round } from 'lodash/math';
 import _ from 'lodash';
 import { RiskInput, NgamesInput, StandardInput, ToggleInput } from './components';
+import { OnboardingActions } from 'store/actions/onboarding';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import InfoBox from 'components/InfoBox';
 import IconType from '../Icon/IconType';
@@ -146,15 +147,16 @@ const PlaceBetCasino = ({
     }
   }, [bet])
   const showLoginPopup = () => {
-    dispatch(
-      PopupActions.show({
-        popupType: PopupTheme.auth,
-        options: {
-          small: false,
-          authenticationType: AuthenticationType.register,
-        },
-      })
-    );
+    dispatch(OnboardingActions.start());
+    // dispatch(
+    //   PopupActions.show({
+    //     popupType: PopupTheme.auth,
+    //     options: {
+    //       small: false,
+    //       authenticationType: AuthenticationType.register,
+    //     },
+    //   })
+    // );
   };
 
   const renderButton = () => {
