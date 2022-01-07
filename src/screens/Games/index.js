@@ -12,6 +12,11 @@ import GameCards from '../../components/GameCards';
 import { Grid } from '@material-ui/core';
 import classNames from "classnames";
 import {prepareEvoplayGames} from "../../helper/Games"
+import AuthenticationType from "../../components/Authentication/AuthenticationType";
+import { PopupActions } from '../../store/actions/popup';
+import PopupTheme from '../../components/Popup/PopupTheme';
+import {useDispatch, useSelector} from "react-redux";
+import { selectUser } from 'store/selectors/authentication';
 
 const SearchSection = ({ setGames,
   alpacaGames,
@@ -103,6 +108,8 @@ setExternalGamesEvoplay
 };
 
 const DisplaySection = (props) => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const {smartsoftGames, evoplayGames} = props;
 
   const [games, setGames] = useState([]);
@@ -117,12 +124,28 @@ const DisplaySection = (props) => {
     }
   };
 
+  const handleGameClick = () => {
+    if(!user.isLoggedIn) {
+      dispatch(
+        PopupActions.show({
+          popupType: PopupTheme.auth,
+          options: {
+            authenticationType: AuthenticationType.login,
+            small: true,
+          },
+        })
+      );
+    }
+
+  }
+
   const renderLinkByProvider = (game, index) => {
     if(game.GameProvider === 'evoplay') {
       const cfg = game._cfg;
       const name = cfg.absolute_name.substring(cfg.absolute_name.lastIndexOf("\\") + 1)
-      return <Link
-        to={`/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}`}
+      return <div onClick={handleGameClick}>
+        <Link
+        to={user.isLoggedIn ? `/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}` : undefined}
         className={classNames(
           styles.game,
           styles.gameLink
@@ -138,11 +161,11 @@ const DisplaySection = (props) => {
           <img src={`/images/evoplay/${name}_360x360.jpg`} alt={`${name}`}/>
           <p className={styles.title}>{cfg.name}</p>
         </div>
-      </Link>
+      </Link></div>
     }
 
-    return <Link
-      to={`/external-game/${game.TechnicalName}/${game.TechnicalCategory}`}
+    return <div onClick={handleGameClick}><Link
+      to={user.isLoggedIn ? `/external-game/${game.TechnicalName}/${game.TechnicalCategory}` : undefined}
       className={classNames(
         styles.game,
         styles.gameLink
@@ -158,7 +181,7 @@ const DisplaySection = (props) => {
         <img src={game.picture ? game.picture : `https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName}.png`} alt={`${game.TechnicalName}`}/>
         <p className={styles.title}>{game.TechnicalName}</p>
       </div>
-    </Link>
+    </Link></div>
   }
 
   useEffect(() => {
