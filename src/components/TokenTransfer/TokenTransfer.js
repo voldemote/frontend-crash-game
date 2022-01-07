@@ -13,6 +13,8 @@ import { PopupActions } from 'store/actions/popup';
 import { TxDataActions } from 'store/actions/txProps';
 import { TOKEN_NAME } from 'constants/Token';
 import Button from 'components/Button';
+import useDepositsCounter from 'hooks/useDepositsCounter';
+import { LIMIT_BONUS } from 'constants/Bonus';
 // import AddTokens from 'components/AddTokens';
 
 const TokenTransfer = ({
@@ -39,9 +41,20 @@ const TokenTransfer = ({
   // const [formError, setformError] = useState('');
   const [checkBox, setCheckBox] = useState(false);
 
+  const depositCount = useDepositsCounter();
+  const [bonus, setBonus] = useState(0);
+
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (depositCount > 0) {
+      setBonus(0);
+    } else {
+      setBonus(Math.min(LIMIT_BONUS, transferValue));
+    }
+  }, [depositCount, transferValue]);
 
   useEffect(() => {
     if (!modalOpen) {
@@ -123,15 +136,15 @@ const TokenTransfer = ({
                 Deposit Overview
               </p>
               <div className={styles.overviewItem}>
-                <span>Estimate</span><span>{numberWithCommas(transferValue)} {TOKEN_NAME}</span>
+                <span>Amount</span><span>{numberWithCommas(transferValue)} {TOKEN_NAME}</span>
               </div>
               <hr/>
               <div className={styles.overviewItem}>
-                <span>Bonus</span><span className={styles.bonus}>{numberWithCommas(Math.min(100000, transferValue))} {TOKEN_NAME}</span>
+                <span>Bonus</span><span className={styles.bonus}>{numberWithCommas(bonus)} {TOKEN_NAME}</span>
               </div>
               <hr/>
               <div className={styles.overviewItem}>
-                <span className={styles.total}>Amount</span><span className={styles.total}>{numberWithCommas(parseFloat(transferValue) + parseFloat(Math.min(100000,transferValue)))} {TOKEN_NAME}</span>
+                <span className={styles.total}>Total</span><span className={styles.total}>{numberWithCommas(parseFloat(transferValue) + bonus)} {TOKEN_NAME}</span>
               </div>
               <hr/>
             </div>

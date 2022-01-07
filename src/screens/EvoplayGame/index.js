@@ -147,7 +147,16 @@ const EvoplayGame = ({
             />
           </div>
 
-          {!gameMode && <div className={styles.mainContainer}>
+          {!gameMode && 
+          <div 
+          // style={{  
+          //   backgroundImage: `url(https://main.alpacasino.io/images/evoplay/${gameName}_360x360.jpg)`,
+          //   backgroundPosition: 'center',
+          //   backgroundSize: 'cover',
+          //   backgroundRepeat: 'no-repeat',
+          //   overflow: 'hidden',
+          // }}
+          className={styles.mainContainer}>
             <SelectGameModePopup user={user} setGameMode={setGameMode}/>
           </div>}
 

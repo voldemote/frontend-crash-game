@@ -10,6 +10,7 @@ import PopupTheme from '../../components//Popup/PopupTheme';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import TabOptions from 'components/TabOptions';
 import useRosiData from 'hooks/useRosiData';
+import useDepositsCounter from 'hooks/useDepositsCounter';
 import UserWalletTables from 'components/UserWalletTables';
 import classNames from 'classnames';
 import { useWeb3React } from '@web3-react/core';
