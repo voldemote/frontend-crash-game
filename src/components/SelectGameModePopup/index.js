@@ -17,7 +17,7 @@ const SelectGameModePopup = ({hidePopup, showPopup, user, gameMode, setGameMode}
       setGameMode('real');
     } else {
       trackWalletAddWfair();
-      dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
     }
   }
 

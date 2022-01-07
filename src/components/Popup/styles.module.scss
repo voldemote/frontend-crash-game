@@ -108,6 +108,10 @@
     &.walletDeposit {
       max-width: 320px;
 
+      &.depositWider {
+        max-width: 414px;
+      }
+
       .modalContent {
         min-height: 430px;
         padding: 30px;
