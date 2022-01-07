@@ -1,14 +1,16 @@
 @import '../../styles/all';
 
 .walletsContainer {
-  padding: 50px;
+  padding: 20px 0;
 }
 .modalHeaderDesc {
   color: $colorBlack;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 700;
   font-family: $fontOmnes;
   text-align: center;
-  margin: 10px 0px;
+  margin: 10px 0px 20px;
+  padding: 0 15px;
 }
 
 .modalHeaderTitle {
@@ -35,7 +37,9 @@
   flex-wrap: wrap;
 
   .optionWrap {
-    flex: 0 0 45%;
+    // flex: 0 0 45%;
+    width: 100%;
+    max-width: 200px;
     display: flex;
     align-items: center;
     height: 50px;
@@ -44,7 +48,7 @@
     cursor: pointer;
 
     @media (max-width: 600px) {
-      flex: 0 0 100%;
+      // flex: 0 0 100%;
       justify-content: flex-start;
     }
 

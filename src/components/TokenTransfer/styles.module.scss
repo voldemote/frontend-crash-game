@@ -11,7 +11,7 @@
   margin: 0 auto 15px;
   width: 100%;
   max-width: 460px;
-  padding: 20px;
+  // padding: 20px;
   border-radius: 12px;
 
   .tokenNumberInput {
@@ -25,6 +25,47 @@
 
     & > * {
       color: $colorBlack;
+    }
+  }
+
+  .overview {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: left;
+    }
+    hr {
+      border: none;
+      height: 1px;
+      color: $colorPopBorder;
+      background-color: $colorPopBorder;
+      margin: 15px 0;
+      opacity: 0.6;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    .overviewItem {
+      display: flex;
+      justify-content: space-between;
+
+      & span {
+        font-weight: 600;
+        font-size: 14px;
+
+        &.bonus {
+          color: $colorButton;
+        }
+
+        &.total {
+          font-weight: 700;
+        }
+      }
     }
   }
 

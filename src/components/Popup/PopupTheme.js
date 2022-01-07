@@ -42,5 +42,9 @@ export default {
   walletWithdraw: 'walletWithdraw',
   acceptToS: 'acceptToS',
   ban: 'ban',
-  selectGameMode: 'selectGameMode'
+  walletDeposit: 'walletDeposit',
+  walletDepositCrypto: 'walletDepositCrypto',
+  walletDepositFiat: 'walletDepositFiat',
+  walletConnectWallet: 'walletConnectWallet',
+  selectGameMode: 'selectGameMode',
 };

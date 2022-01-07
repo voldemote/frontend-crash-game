@@ -1,0 +1,24 @@
+@import '../../styles/all';
+
+.container {
+  height: 100%;
+  color: $colorPrimaryDark;
+  border-radius: 10px;
+  flex: auto;
+  width: 400px;
+  max-width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  @media screen and (min-width: $screen-sm) {
+    width: 600px;
+  }
+
+  .contentWrapper {
+    flex: auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
