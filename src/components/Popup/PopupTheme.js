@@ -42,4 +42,5 @@ export default {
   walletWithdraw: 'walletWithdraw',
   acceptToS: 'acceptToS',
   ban: 'ban',
+  selectGameMode: 'selectGameMode'
 };

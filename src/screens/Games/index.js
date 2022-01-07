@@ -17,6 +17,8 @@ import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../../components/Popup/PopupTheme';
 import {useDispatch, useSelector} from "react-redux";
 import { selectUser } from 'store/selectors/authentication';
+import { useHistory } from 'react-router';
+import { OnboardingActions } from 'store/actions/onboarding';
 
 const SearchSection = ({ setGames,
   alpacaGames,
@@ -108,6 +110,7 @@ setExternalGamesEvoplay
 };
 
 const DisplaySection = (props) => {
+  let history = useHistory();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const {smartsoftGames, evoplayGames} = props;
@@ -124,17 +127,24 @@ const DisplaySection = (props) => {
     }
   };
 
-  const handleGameClick = () => {
+  const handleGameClick = (e, gameUrl, gameCfg) => {
     if(!user.isLoggedIn) {
-      dispatch(
-        PopupActions.show({
-          popupType: PopupTheme.auth,
-          options: {
-            authenticationType: AuthenticationType.login,
-            small: true,
-          },
-        })
-      );
+      dispatch(OnboardingActions.start());
+    } else {
+      // history.push(gameUrl)
+      // dispatch(
+      //   PopupActions.show({
+      //     popupType: PopupTheme.selectGameMode,
+      //     options: {
+      //       maxWidth: true,
+      //       data: {
+      //         gameUrl,
+      //         gameCfg,
+      //         user
+      //       }
+      //     },
+      //   })
+      // );
     }
 
   }
@@ -142,10 +152,13 @@ const DisplaySection = (props) => {
   const renderLinkByProvider = (game, index) => {
     if(game.GameProvider === 'evoplay') {
       const cfg = game._cfg;
-      const name = cfg.absolute_name.substring(cfg.absolute_name.lastIndexOf("\\") + 1)
-      return <div onClick={handleGameClick}>
+      const name = cfg.absolute_name.substring(cfg.absolute_name.lastIndexOf("\\") + 1);
+      const evoPlayUrl = `/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}`;
+      return <div onClick={(e) => {
+        handleGameClick(e,evoPlayUrl, game);
+      }}>
         <Link
-        to={user.isLoggedIn ? `/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}` : undefined}
+        to={user.isLoggedIn ? evoPlayUrl : undefined}
         className={classNames(
           styles.game,
           styles.gameLink
@@ -164,8 +177,13 @@ const DisplaySection = (props) => {
       </Link></div>
     }
 
-    return <div onClick={handleGameClick}><Link
-      to={user.isLoggedIn ? `/external-game/${game.TechnicalName}/${game.TechnicalCategory}` : undefined}
+
+    const smartSoftUrl = `/external-game/${game.TechnicalName}/${game.TechnicalCategory}`;
+
+    return <div onClick={(e) => {
+      handleGameClick(e, smartSoftUrl, game);
+    }}><Link
+      to={user.isLoggedIn ? smartSoftUrl : undefined}
       className={classNames(
         styles.game,
         styles.gameLink
@@ -206,7 +224,7 @@ const DisplaySection = (props) => {
               {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
               <h2>{category1}</h2>
             </div>
-          )}
+          )
           <div className={classNames(styles.games)}>
             {games.filter(g => g.GameCategory===category1).map((game, index) => {
 
