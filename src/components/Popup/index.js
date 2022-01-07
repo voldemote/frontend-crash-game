@@ -257,7 +257,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.walletConnectWallet:
         return <WalletDepositPopup type={PopupTheme.walletConnectWallet} />;
       case PopupTheme.walletWithdraw:
-        return <WalletWithdrawPopup />;
+        return <WalletDepositPopup type={PopupTheme.walletWithdraw}/>;
       case PopupTheme.transakSuccess:
         return <TransakSuccess options={options} />;
       case PopupTheme.txModal:
@@ -288,6 +288,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.walletDeposit ? styles.walletDeposit : null,
             type === PopupTheme.walletDepositCrypto ? classNames(styles.walletDeposit, styles.depositWider) : null,
             type === PopupTheme.walletDepositFiat ? classNames(styles.walletDeposit, styles.depositWider) : null,
+            type === PopupTheme.walletWithdraw ? classNames(styles.walletDeposit, styles.depositWider) : null,
             type === PopupTheme.walletConnectWallet ? styles.walletDeposit : null,
             type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.explanation
@@ -324,7 +325,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
                 type !== PopupTheme.walletDeposit &&
                 type !== PopupTheme.walletDepositCrypto &&
                 type !== PopupTheme.walletDepositFiat &&
-                type !== PopupTheme.walletConnectWallet
+                type !== PopupTheme.walletConnectWallet &&
+                type !== PopupTheme.walletWithdraw
               ) && <>
                 <img
                   className={styles.candyTopLeft}

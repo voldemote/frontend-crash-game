@@ -21,6 +21,8 @@ import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import QRCode from 'react-qr-code';
 import classNames from 'classnames';
+import { LIMIT_BONUS } from 'constants/Bonus';
+import useDepositsCounter from 'hooks/useDepositsCounter';
 
 const cryptoShortName = {
   BITCOIN: 'BTC',
@@ -52,6 +54,7 @@ const DepositCrypto = ({user, showWalletDepositPopup}) => {
   const [address, setAddress] = useState('');
   const [uri, setUri] = useState('');
   const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
+  const depositCount = useDepositsCounter();
 
   const selectContent = event => {
     event.target.select();
@@ -96,7 +99,10 @@ const DepositCrypto = ({user, showWalletDepositPopup}) => {
         : roundedAmount;
 
       setTokenValue(WfairTokenValue);
-      setBonus(Math.min(100000, WfairTokenValue));
+
+      const expectedBonus = depositCount > 0 ? 0 : Math.min(LIMIT_BONUS, WfairTokenValue);
+      setBonus(expectedBonus);
+      
     } else {
       setTokenValue(0);
       setBonus(0);

@@ -8,6 +8,7 @@ import { PopupActions } from 'store/actions/popup';
 import DepositCrypto from './DepositCrypto';
 import DepositFiat from './DepositFiat';
 import DepositToken from './DepositToken';
+import WithdrawTab from 'components/WalletBuyWfairPopup/Tabs/WithdrawTab';
 
 
 const WalletDepositPopup = ({visible, type}) => {
@@ -20,7 +21,8 @@ const WalletDepositPopup = ({visible, type}) => {
         return <DepositFiat />;
       case PopupTheme.walletConnectWallet:
         return <DepositToken />;
-
+      case PopupTheme.walletWithdraw:
+        return <WithdrawTab />
       default:
         return <DepositSelection />;
     }
