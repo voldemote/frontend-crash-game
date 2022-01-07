@@ -1,28 +1,31 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import Link from 'components/Link';
 import styles from './styles.module.scss';
 import {
   NEW_SLOTS_GAMES,
   SLOTS_GAMES,
   EXTERNAL_GAMES,
+  EVOPLAY_GAMES
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
-import GameSmartsoft from '../../components/GameSmartsoft';
 import { Grid } from '@material-ui/core';
-import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
+import classNames from "classnames";
+import {prepareEvoplayGames} from "../../helper/Games"
 
 const SearchSection = ({ setGames,
   alpacaGames,
 setAlpacaGame,
 externalGames,
 setExternalGames,
-
+externalGamesEvoplay,
+setExternalGamesEvoplay
  }) => {
   const gamesTitleList = [
     'Alpaca Games',
     'Casino',
     'Slot',
-    // 'Board',
+    'Instant Win',
     'Keno',
     'All',
   ];
@@ -44,10 +47,18 @@ setExternalGames,
       return Array.isArray(match);
     });
 
+    const searchedExternalGamesEvoplay = externalGamesEvoplay.filter(game => {
+      const match = game.TechnicalName.toLowerCase().match(value.toLowerCase());
+      return Array.isArray(match);
+    });
+
     setAlpacaGame(searchedAlpacaGame);
     setExternalGames(searchedExternalGames);
+    setExternalGamesEvoplay(searchedExternalGamesEvoplay);
 
-
+    if(!value) {
+      setGames();
+    }
   };
 
   const selectGame = (gameCategory, searched) => {
@@ -91,12 +102,115 @@ setExternalGames,
   );
 };
 
+const DisplaySection = (props) => {
+  const {smartsoftGames, evoplayGames} = props;
+
+  const [games, setGames] = useState([]);
+  const getGameItemSizeClass = () => {
+    switch (games.length) {
+      case 3:
+        return styles.gameItemMd;
+      case 4:
+        return styles.gameItemSm;
+      default:
+        return styles.gameItemLg;
+    }
+  };
+
+  const renderLinkByProvider = (game, index) => {
+    if(game.GameProvider === 'evoplay') {
+      const cfg = game._cfg;
+      const name = cfg.absolute_name.substring(cfg.absolute_name.lastIndexOf("\\") + 1)
+      return <Link
+        to={`/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}`}
+        className={classNames(
+          styles.game,
+          styles.gameLink
+        )}
+      >
+        <div
+          key={index}
+          className={classNames(
+            styles.gameItem,
+            getGameItemSizeClass()
+          )}
+        >
+          <img src={`/images/evoplay/${name}_360x360.jpg`} alt={`${name}`}/>
+          <p className={styles.title}>{cfg.name}</p>
+        </div>
+      </Link>
+    }
+
+    return <Link
+      to={`/external-game/${game.TechnicalName}/${game.TechnicalCategory}`}
+      className={classNames(
+        styles.game,
+        styles.gameLink
+      )}
+    >
+      <div
+        key={index}
+        className={classNames(
+          styles.gameItem,
+          getGameItemSizeClass()
+        )}
+      >
+        <img src={game.picture ? game.picture : `https://www.smartsoftgaming.com/Content/Images/GameIcons/${game.TechnicalName}.png`} alt={`${game.TechnicalName}`}/>
+        <p className={styles.title}>{game.TechnicalName}</p>
+      </div>
+    </Link>
+  }
+
+  useEffect(() => {
+
+    if(smartsoftGames && evoplayGames) {
+      setGames([...smartsoftGames, ...evoplayGames]);
+    }
+
+    return () => {
+      setGames([])
+    }
+  }, [smartsoftGames, evoplayGames])
+
+  let categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[]);
+
+  return (
+    <div className={styles.gamesContainer}>
+      {categories.map(category1 =>
+        <>
+
+            <div className={styles.gamesCategory}>
+              {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
+              <h2>{category1}</h2>
+            </div>
+          )}
+          <div className={classNames(styles.games)}>
+            {games.filter(g => g.GameCategory===category1).map((game, index) => {
+
+             return <div
+                className={styles.wrapper}
+                key={`gamecard-${index}-`}
+              >
+               {renderLinkByProvider(game, index)}
+              </div>
+
+            }
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
 const Games = () => {
   const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
   const [alpacaGames, setAlpacaGame] = useState(
     showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES
   );
   const [externalGames, setExternalGames] = useState(EXTERNAL_GAMES);
+
+  const [externalGamesEvoplay, setExternalGamesEvoplay] = useState([...prepareEvoplayGames(EVOPLAY_GAMES)]);
 
   const setGames = (selectGame, gameCategory) => {
     if (selectGame) {
@@ -106,22 +220,30 @@ const Games = () => {
             ? NEW_SLOTS_GAMES
             : SLOTS_GAMES
           : [];
-      let externalGamesDisplay =
+      let externalGamesDisplaySmartsoft =
         selectGame === 'external' ? EXTERNAL_GAMES : [];
+      let externalGamesDisplayEvoplay =
+        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES) : [];
 
         if(gameCategory) {
-          externalGamesDisplay = externalGamesDisplay.filter(game => {
-            return game.GameCategory.split(' ')[0] === gameCategory;
+          externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
+            return game.GameCategory.indexOf(gameCategory) > -1;
+          })
+
+          externalGamesDisplayEvoplay = externalGamesDisplayEvoplay.filter(game => {
+            return game.GameCategory.indexOf(gameCategory) > -1;
           })
         }
 
-
       setAlpacaGame(alpacaGamesDisplay);
-      setExternalGames(externalGamesDisplay);
+      setExternalGames(externalGamesDisplaySmartsoft);
+      setExternalGamesEvoplay(externalGamesDisplayEvoplay);
       return;
     }
+
     setAlpacaGame(showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES);
     setExternalGames(EXTERNAL_GAMES);
+    setExternalGamesEvoplay(prepareEvoplayGames(EVOPLAY_GAMES));
   };
 
   return (
@@ -141,6 +263,8 @@ const Games = () => {
           alpacaGames={showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES}
           setAlpacaGame={setAlpacaGame}
           externalGames={EXTERNAL_GAMES}
+          externalGamesEvoplay={externalGamesEvoplay}
+          setExternalGamesEvoplay={setExternalGamesEvoplay}
           setExternalGames={setExternalGames}
         />
 
@@ -148,9 +272,8 @@ const Games = () => {
           <GameCards games={alpacaGames} category="Alpaca Games" />
         )}
 
-        {externalGames.length && (
-          <GameSmartsoft games={externalGames} category="Slot Games" />
-        )}
+
+        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} />
       </div>
     </BaseContainerWithNavbar>
   );
