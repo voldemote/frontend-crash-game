@@ -37,8 +37,9 @@ import { trackWalletConnect } from 'config/gtm';
 import {ReactComponent as LeftArrow} from '../../../data/icons/deposit/left-arrow.svg';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
+import { TransactionActions } from 'store/actions/transaction';
 
-const DepositToken = ({ user, resetState, setNotSelectedNetwork, showWalletDepositPopup }) => {
+const DepositToken = ({ user, resetState, setNotSelectedNetwork, showWalletDepositPopup, fetchWalletTransactions }) => {
   const walletAddress = process.env.REACT_APP_DEPOSIT_WALLET;
   const { active, library, account, chainId, deactivate } = useWeb3React();
   const { currentNetwork } = useWeb3Network();
@@ -51,6 +52,11 @@ const DepositToken = ({ user, resetState, setNotSelectedNetwork, showWalletDepos
   const [notSelectedNetworkId, setNotSelectedNetworkId] = useState('');
   const [activeNetwork, setActiveNetwork] = useState('');
   const signer = library?.getSigner();
+
+  useEffect(() => {
+    fetchWalletTransactions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const sendAccountMappingCall = useCallback(async () => {
     if (account && visibleWalletForm && !signingInProcess) {
@@ -365,6 +371,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(TxDataActions.setNotActiveNetwork(activeNetwork)),
     showWalletDepositPopup: () => { 
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
+    },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions());
     },
   };
 };

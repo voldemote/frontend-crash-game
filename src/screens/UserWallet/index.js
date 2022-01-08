@@ -24,6 +24,9 @@ import * as ApiUrls from 'constants/Api';
 import { resendEmailVerification } from 'api';
 import { trackWalletAddWfair, trackWalletWithdraw } from 'config/gtm';
 
+import Bonus100kDesktop from '../../data/images/deposit/bonus100k-desktop.png'
+import Bonus100kMobile from '../../data/images/deposit/bonus100k-mobile.png'
+
 const UserWallet = ({
   tags,
   setOpenDrawer,
@@ -130,7 +133,10 @@ const UserWallet = ({
 
   const isKycVerified = () => userKyc && userKyc.status === 'approved';
 
-  const showStartButton = () => !isKycStarted() || userKyc.status === 'error' || userKyc.status === 'rejected';
+  const showKycBanner = () => !isKycStarted() || userKyc.status === 'error' || userKyc.status === 'rejected';
+
+  console.log('showKyc', showKycBanner);
+  console.log('send confirmed', user.emailConfirmed);
 
   const openFractal = () => {
     const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
@@ -297,6 +303,81 @@ const UserWallet = ({
             </div>
           </Grid>
         </Grid>
+
+        <Grid
+          className={styles.balanceCard}
+          item
+          justifyContent="flex-start"
+          lg={12}
+          md={12}
+        >
+          <div className={styles.currentBalanceDescription}>
+            {/* <div className={styles.currentBalanceCard}> */}
+              <img src={Bonus100kDesktop} className={styles.bonusDesktop} alt="bonus desktop" />
+              <img src={Bonus100kMobile} className={styles.bonusMobile} alt="bonus mobile" />
+            {/* </div> */}
+          </div>
+        </Grid>
+        
+        {!user.emailConfirmed &&
+          <Grid
+            className={styles.balanceCard}
+            item
+            justifyContent="flex-start"
+            lg={12}
+            md={12}
+            style={{width: "100%"}}
+          >
+            <div style={{width: "100%"}} className={styles.currentBalanceDescription}>
+              <div className={styles.currentBalanceCard}>
+                <div className={classNames(styles.buttonContainer, styles.rowContainer)}>
+                  <div>
+                    <h2>Verify your e-mail</h2>
+                    <p className={styles.label}>
+                      In order to activate full functionality of your account, you must verify your email.
+                    </p>
+                  </div>
+                  <Button
+                    className={styles.buttonBanner}
+                    onClick={handleResendEmailConfirmation}
+                  >
+                    {!emailSent ? 'Resend Email' : 'Email sent'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        }
+
+        {user.emailConfirmed && showKycBanner() &&
+          <Grid
+            className={styles.balanceCard}
+            item
+            justifyContent="flex-start"
+            lg={12}
+            md={12}
+            style={{width: "100%"}}
+          >
+            <div style={{width: "100%"}} className={styles.currentBalanceDescription}>
+              <div className={styles.currentBalanceCard}>
+                <div className={classNames(styles.buttonContainer, styles.rowContainer)}>
+                  <div>
+                    <h2>Verify your identity</h2>
+                    <p className={styles.label}>
+                      In order to activate full functionality of your account, you must provide a proof-of-identity. To ensure your safety and privacy, we use an external provider for this procedure.
+                    </p>
+                  </div>
+                  <Button
+                    className={styles.buttonBanner}
+                    onClick={openFractal}
+                  >
+                    Start
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        }
           
         <Grid container alignContent="center" spacing={1}>
           <Grid
