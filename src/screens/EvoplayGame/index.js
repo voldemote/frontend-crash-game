@@ -26,11 +26,6 @@ import TabOptions from '../../components/TabOptions';
 import Routes from 'constants/Routes';
 import { getGameById, ObjectId } from '../../helper/Games';
 import { EVOPLAY_GAMES, GAMES } from '../../constants/Games';
-import {
-  trackAlpacaWheelPlaceBetGuest,
-  trackAlpacaWheelPlaceBet,
-  trackAlpacaWheelCashout,
-} from '../../config/gtm';
 import { UserActions } from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
