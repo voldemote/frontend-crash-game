@@ -49,7 +49,6 @@ import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
 import TransakSuccess from "../TransakSuccess";
 import TxModal from 'components/TxModal';
-import WalletWithdrawPopup from 'components/WalletBuyWfairPopup/WalletWithdrawPopup';
 import ToSPopup from 'components/ToSPopup';
 import BanPopup from 'components/BanPopup';
 import WalletDepositPopup from 'components/WalletDepositPopup';

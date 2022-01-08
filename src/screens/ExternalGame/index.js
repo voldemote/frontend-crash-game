@@ -25,7 +25,6 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 import SelectGameModePopup from "../../components/SelectGameModePopup";
-import { Hidden } from '@material-ui/core';
 import classNames from 'classnames';
 
 const portal = process.env.REACT_APP_SMARTSOFT_PORTALNAME

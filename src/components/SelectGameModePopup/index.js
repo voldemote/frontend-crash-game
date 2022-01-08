@@ -10,7 +10,6 @@ const SelectGameModePopup = ({hidePopup, showPopup, user, gameMode, setGameMode}
   const dispatch = useDispatch();
 
   const hasBalance = (parseFloat(user?.balance) || 0) > 1;
-  const isLoggedIn = user?.isLoggedIn || false;
 
   const handleRealPlayClick = ()=> {
     if(hasBalance) {
