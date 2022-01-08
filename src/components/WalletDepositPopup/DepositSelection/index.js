@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import styles from './styles.module.scss';
 import {ReactComponent as BitcoinIcon} from '../../../data/icons/deposit/bitcoin.svg';
 import {ReactComponent as EuroIcon} from '../../../data/icons/deposit/euro.svg';
@@ -7,8 +7,14 @@ import {ReactComponent as Arrow} from '../../../data/icons/deposit/arrow.svg';
 import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
+import { TransactionActions } from 'store/actions/transaction';
 
-const DepositSelection = ({showWalletDepositCrypto, showWalletDepositFiat, showWalletConnectWallet}) => {
+const DepositSelection = ({showWalletDepositCrypto, showWalletDepositFiat, showWalletConnectWallet, fetchWalletTransactions}) => {
+
+  useEffect(() => {
+    fetchWalletTransactions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.depositSelectionContainer}>
@@ -64,6 +70,9 @@ const mapDispatchToProps = dispatch => {
     },
     showWalletConnectWallet: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletConnectWallet }));
+    },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions());
     },
   }
 }

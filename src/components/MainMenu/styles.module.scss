@@ -259,6 +259,8 @@ $largeMobileHeight: 700px;
   flex-flow: column;
   overflow-y: auto;
   background-color: $colorPrimary;
+  margin-top: 10px;
+  padding-top: 20px;
 
   @supports (-webkit-touch-callout: none) {
     height: calc(100vh - 150px);

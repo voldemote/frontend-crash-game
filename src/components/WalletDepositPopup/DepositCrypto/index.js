@@ -23,6 +23,7 @@ import QRCode from 'react-qr-code';
 import classNames from 'classnames';
 import { LIMIT_BONUS } from 'constants/Bonus';
 import useDepositsCounter from 'hooks/useDepositsCounter';
+import { TransactionActions } from 'store/actions/transaction';
 
 const cryptoShortName = {
   BITCOIN: 'BTC',
@@ -45,7 +46,7 @@ const CURRENCY_OPTIONS = [
   },
 ];
 
-const DepositCrypto = ({user, showWalletDepositPopup}) => {
+const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) => {
 
   const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
   const [inputAmount, setInputAmount] = useState(0.1);
@@ -55,6 +56,11 @@ const DepositCrypto = ({user, showWalletDepositPopup}) => {
   const [uri, setUri] = useState('');
   const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
   const depositCount = useDepositsCounter();
+
+  useEffect(() => {
+    fetchWalletTransactions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectContent = event => {
     event.target.select();
@@ -269,6 +275,9 @@ const mapDispatchToProps = dispatch => {
   return { 
     showWalletDepositPopup: () => { 
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
+    },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions());
     },
   }
 }

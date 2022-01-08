@@ -14,6 +14,7 @@ import { TOKEN_NAME } from 'constants/Token';
 import useDebounce from 'hooks/useDebounce';
 import useDepositsCounter from 'hooks/useDepositsCounter';
 import { LIMIT_BONUS } from 'constants/Bonus';
+import { TransactionActions } from 'store/actions/transaction';
 
 
 // const stagingGoerliRampURL = "https://ri-widget-staging-goerli2.firebaseapp.com/";
@@ -31,7 +32,7 @@ const CURRENCY_OPTIONS = [
   },
 ];
 
-const DepositFiat = ({user, showWalletDepositPopup}) => {
+const DepositFiat = ({user, showWalletDepositPopup, fetchWalletTransactions}) => {
 
   const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
   const [currency, setCurrency] = useState(100);
@@ -41,6 +42,11 @@ const DepositFiat = ({user, showWalletDepositPopup}) => {
   const [address, setAddress] = useState('');
   const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
   const depositCount = useDepositsCounter();
+
+  useEffect(() => {
+    fetchWalletTransactions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectContent = event => {
     event.target.select();
@@ -242,6 +248,9 @@ const mapDispatchToProps = dispatch => {
   return { 
     showWalletDepositPopup: () => { 
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
+    },
+    fetchWalletTransactions: () => {
+      dispatch(TransactionActions.fetchWalletTransactions());
     },
   }
 }

@@ -408,7 +408,7 @@ const Home = ({
             <span className={styles.limitedOfferDescription}>
               <span className={classNames(styles.highlighted, styles.red)}>100%</span>
               <p>top-up on 1<sup>st</sup> deposit</p>
-              <span>up to 25&nbsp;000 WFAIR<sup>*</sup></span>
+              <span>up to 100&nbsp;000 WFAIR<sup>*</sup></span>
               <ul className={styles.conditionsWrapper}>
                 <li className={styles.conditions}>start playing in 1 min</li>
                 <li className={styles.conditions}>limited to 1000 users</li>

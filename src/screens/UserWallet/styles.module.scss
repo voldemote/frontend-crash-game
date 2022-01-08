@@ -265,7 +265,7 @@
   align-items: center;
   flex-direction: column;
 
-  @media (max-width: $screen-xs) {
+  @media (max-width: $screen-sm) {
     justify-content: center;
     margin: 80px 0 0;
   }
@@ -284,6 +284,11 @@
     padding: 20px;
     justify-content: space-around;
 
+    &.rowBalanceCard {
+      display: flex;
+      flex-direction: row;
+    }
+
     &.smallCard {
       background: $colorPrimary;
     }
@@ -298,7 +303,7 @@
       padding-top: 10px;
       color: $colorWhite;
       font-weight: 600;
-      padding: 20px 40px 20px;
+      padding: 20px;
       line-height: 26px;
       text-align: justify;
       font-size: 24px;
@@ -353,12 +358,35 @@
     }
   }
 
+  & .bonusDesktop {
+    display: block;
+    width: 100%;
+
+    object-fit: cover;
+    margin: 0 auto;
+    margin-right: 10px;
+    border-radius: 12px;
+
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
+  }
+
+  & .bonusMobile {
+    display: none;
+    width: 100%;
+    object-fit: cover;
+
+    @media (max-width: $screen-xs) {
+      display: block;
+    }
+  }
+
   .currentBalanceDescription {
     width: 100%;
     height: 100%;
-    // background: rgba($colorBlue80, 0.6);
     position: relative;
-    min-height: 200px;
+    min-height: 180px;
     padding: 10px;
 
     @media (max-width: $screen-md) {
@@ -367,24 +395,7 @@
 
     &.smallCurrentBalanceDescription {
       border-radius: 12px;
-
-      @media (max-width: $screen-md) {
-        // padding: 10px;
-      }
     }
-
-    // &::after {
-    //   position: absolute;
-    //   content: '';
-    //   background-image: url('../../data/images/balance-coins.svg');
-    //   background-repeat: no-repeat;
-    //   width: 100%;
-    //   height: 100%;
-    //   bottom: 0px;
-    //   left: 300px;
-    //   background-position: bottom;
-    //   pointer-events: none;
-    // }
 
     @media (max-width: $screen-md) {
       padding: 10px;
@@ -396,20 +407,6 @@
       }
     }
 
-    // @media (max-width: $screen-lg) {
-    //   &::after {
-    //     position: absolute;
-    //     content: '';
-    //     background-image: url('../../data/images/balance-coins.svg');
-    //     background-repeat: no-repeat;
-    //     width: 100%;
-    //     height: 100%;
-    //     bottom: 0px;
-    //     left: 47%;
-    //     background-position: bottom;
-    //   }
-    // }
-
     .buttonContainer {
       display: flex;
       flex-direction: column;
@@ -417,6 +414,28 @@
       min-height: 230px;
       justify-content: space-around;
       // margin-bottom: 40px;
+
+      &.rowContainer {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 20px;
+        min-height: 130px;
+
+        @media (max-width: $screen-sm) {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        h2 {
+          text-align: left;
+        }
+
+        .label {
+          margin: 0;
+          padding: 0;
+        }
+      }
 
       .title {
         font-size: 16px;
@@ -447,12 +466,16 @@
 
       .button {
         margin-top: 0px;
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
         width: 240px;
         font-family: $fontOmnes;
 
         &.buttonDeposit {
           margin-top: 10px;
+        }
+
+        &.buttonBanner {
+          margin-bottom: 0;
         }
       }
     }
