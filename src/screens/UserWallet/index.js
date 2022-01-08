@@ -26,6 +26,7 @@ import { trackWalletAddWfair, trackWalletWithdraw } from 'config/gtm';
 
 import Bonus100kDesktop from '../../data/images/deposit/bonus100k-desktop.png'
 import Bonus100kMobile from '../../data/images/deposit/bonus100k-mobile.png'
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const UserWallet = ({
   tags,
@@ -62,6 +63,8 @@ const UserWallet = ({
   const [userKyc, setUserKyc] = useState({...user?.kyc});
 
   const [emailSent, setEmailSent] = useState(false);
+
+  const depositCount = useDepositsCounter();
 
   const activityData = {
     DEPOSITS: transactions.deposit || [],
@@ -134,9 +137,6 @@ const UserWallet = ({
   const isKycVerified = () => userKyc && userKyc.status === 'approved';
 
   const showKycBanner = () => !isKycStarted() || userKyc.status === 'error' || userKyc.status === 'rejected';
-
-  console.log('showKyc', showKycBanner);
-  console.log('send confirmed', user.emailConfirmed);
 
   const openFractal = () => {
     const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
@@ -240,57 +240,13 @@ const UserWallet = ({
                   Alpacasino uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency  or in EUR / USD at any time around the world.
                 </p>
               </div>
-              {/* <div className={styles.buttonContainer}>
-                <p className={styles.label}>Need WFAIR to play? No problem.</p>
-                <Button
-                  className={styles.button}
-                  onClick={showWalletDepositPopup}
-                >
-                  Add WFAIR!
-                </Button>
-                <p className={styles.label}>Want to withdraw WFAIR? No problem.</p>
-                <Button
-                  className={styles.button}
-                  disabled={!isKycVerified() || !user.emailConfirmed}
-                  disabledWithOverlay={false}
-                  onClick={showWithdrawPopup}
-                >
-                  Withdraw
-                </Button>
-                {!user.emailConfirmed ? 
-                  <>
-                    <p className={styles.label}>You must confirm your email to be able to withdraw your tokens.</p>
 
-                    <Button
-                      className={styles.button}
-                      disabled={emailSent}
-                      disabledWithOverlay={false}
-                      onClick={handleResendEmailConfirmation}
-                    >
-                      {!emailSent ? 'Resend Email' : 'Email sent'}
-                    </Button>
-                  </>
-                  : null 
-                }
-              </div>
-              {
-                showStartButton() && (
-                  <div className={styles.buttonContainer}>
-                  <p className={styles.label}>
-                    Enable the full functionality of your account in 30 seconds! Complete our verification process now, and you will be able to withdraw your funds and add an unlimited amount of WFAIR.
-                  </p>
-                  <Button
-                    className={styles.button}
-                    onClick={openFractal}
-                  >
-                    Complete Verification!
-                  </Button>
-                </div>
-                )
-              }
+              {/* 
               <div className={styles.buttonContainer}>
                 <p className={styles.label}>In case of any questions please <span onClick={() => {window.fcWidget.open()}}>click here</span> to contact our Support.</p>
-              </div> */}
+              </div> 
+              */}
+
               {/* <div className={styles.buttonContainer}>
                 <p className={styles.label}>Start the verification</p>
                 <Button
@@ -299,25 +255,26 @@ const UserWallet = ({
                 >
                   Request test tokens
                 </Button>
-              </div> */}
+              </div> 
+              */}
             </div>
           </Grid>
         </Grid>
-
-        <Grid
-          className={styles.balanceCard}
-          item
-          justifyContent="flex-start"
-          lg={12}
-          md={12}
-        >
-          <div className={styles.currentBalanceDescription}>
-            {/* <div className={styles.currentBalanceCard}> */}
-              <img src={Bonus100kDesktop} className={styles.bonusDesktop} alt="bonus desktop" />
-              <img src={Bonus100kMobile} className={styles.bonusMobile} alt="bonus mobile" />
-            {/* </div> */}
-          </div>
-        </Grid>
+        
+        { depositCount != null && depositCount === 0 &&
+          <Grid
+            className={styles.balanceCard}
+            item
+            justifyContent="flex-start"
+            lg={12}
+            md={12}
+          >
+            <div className={styles.currentBalanceDescription}>
+                <img src={Bonus100kDesktop} className={styles.bonusDesktop} alt="bonus desktop" />
+                <img src={Bonus100kMobile} className={styles.bonusMobile} alt="bonus mobile" />
+            </div>
+          </Grid>
+        }
         
         {!user.emailConfirmed &&
           <Grid
@@ -340,6 +297,8 @@ const UserWallet = ({
                   <Button
                     className={styles.buttonBanner}
                     onClick={handleResendEmailConfirmation}
+                    disabled={emailSent}
+                    theme={ButtonTheme.alternativeButton}
                   >
                     {!emailSent ? 'Resend Email' : 'Email sent'}
                   </Button>
@@ -370,6 +329,7 @@ const UserWallet = ({
                   <Button
                     className={styles.buttonBanner}
                     onClick={openFractal}
+                    theme={ButtonTheme.alternativeButton}
                   >
                     Start
                   </Button>
@@ -458,14 +418,19 @@ Your WFAIR is automatically credited in your account.
                 <div className={styles.buttonContainer}>
                   <h2>Withdraw</h2>
                   <p className={styles.label}>
+                    You can withdraw your funds in the casino directly to your wallet. You can then convert your WFAIR to other cryptocurrencies or hold it to have early access to the <a title="Check WFAIR roadmap" href="https://wallfair.io/#roadmap" target="_blank" rel="noreferrer">upcoming utilities</a>.
+                  </p>
+                  {/* <p className={styles.label}>
                     You can withdraw your funds in the casino directly to your wallet. You can then convert your WFAIR to other cryptocurrencies or stake it to increase your gains.
                     Learn more
-                  </p>
+                  </p> */}
                   <Button
                     className={styles.button}
                     disabled={!isKycVerified() || !user.emailConfirmed}
                     disabledWithOverlay={false}
                     onClick={showWithdrawPopup}
+                    title="Withdraw is only possible after the KYC verification is approved and the e-mail address is confirmed."
+                    theme={ButtonTheme.alternativeButton}
                   >
                     Withdraw
                   </Button>

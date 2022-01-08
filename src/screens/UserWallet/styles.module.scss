@@ -112,6 +112,7 @@
 .activityWrapper {
   // margin-top: 32px;
   background: $colorPrimary;
+  border: 1px solid $colorBlueBorder;
 
   .headerTables {
     @media screen and (max-width: $screen-xs) {
@@ -272,6 +273,7 @@
 
   .currentBalanceCard {
     background: rgba($colorBlue80, 0.6);
+    border: 1px solid $colorBlueBorder;
     border-radius: 12px;
     position: relative;
     z-index: 1;
@@ -299,7 +301,7 @@
     }
 
     p.welcome {
-      max-width: 460px;
+      // max-width: 460px;
       padding-top: 10px;
       color: $colorWhite;
       font-weight: 600;
@@ -362,6 +364,9 @@
     display: block;
     width: 100%;
 
+    border: 1px solid $colorBlueBorder;
+    border-radius: 12px;
+
     object-fit: cover;
     margin: 0 auto;
     margin-right: 10px;
@@ -376,6 +381,9 @@
     display: none;
     width: 100%;
     object-fit: cover;
+
+    border: 1px solid $colorBlueBorder;
+    border-radius: 12px;
 
     @media (max-width: $screen-xs) {
       display: block;
@@ -461,6 +469,10 @@
           color: $mainAction;
           text-decoration: underline;
           cursor: pointer;
+        }
+
+        a {
+          text-decoration: underline;
         }
       }
 

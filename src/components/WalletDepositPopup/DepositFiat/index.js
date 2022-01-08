@@ -218,12 +218,10 @@ const DepositFiat = ({user, showWalletDepositPopup, fetchWalletTransactions}) =>
       </div>
 
       <div className={styles.summary}>
-        <span>Explanation explanation Explanation explanation Explanation explanation Explanation explanation Explanation explanation Explanation explanation </span>
-        <span>{cryptoTransaction} Address: {address}</span>
+        <span>For your safety and convenience, we process money payments via an external provider. Please click the button below to continue. <b>Important</b>: DO NOT change the BTC wallet address provided.</span>
+        {/* <span>Your {cryptoTransaction} Deposit Address: {address}</span> */}
       </div>
 
-      
-      {/* <Button>Buy {currency > 0 && `${numberWithCommas(currency)} ${selectedCurrency.label}`}</Button> */}
       {currency > 0 && user.email && address ?
         <a target="_blank" rel="noreferrer" href={`${productionRampURL}?swapAsset=${cryptoTransaction}&fiatValue=${currency}&fiatCurrency=${selectedCurrency.label}&userEmailAddress=${user.email}&userAddress=${address}`}>
           <Button>Proceed with partner</Button>
