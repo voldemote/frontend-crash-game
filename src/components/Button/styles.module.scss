@@ -5,6 +5,37 @@
   position: relative;
   align-items: center;
   justify-content: center;
+  // background: $colorButton;
+  background: $mainAction;
+  color: $colorBlack;
+  box-sizing: border-box;
+  border-radius: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: $fontOmnes;
+  padding: 8px 30px;
+  text-transform: none;
+  user-select: none;
+  text-align: center;
+  @media (max-width: $screen-sm) {
+    font-size: 18px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.alternativeButton {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
   background: $colorButton;
   color: $colorBlack;
   box-sizing: border-box;

@@ -103,7 +103,23 @@ const Button = ({
           data-tracking-id={dataTrackingId}
         > 
           {children}
-        </span> : theme === ButtonTheme.secondaryButton ?
+        </span> 
+
+        : theme === ButtonTheme.alternativeButton ?
+        <span
+          className={classNames(
+            className,
+            style.alternativeButton,
+            disabled ? style.disabled : null,
+          )}
+          disabled={disabled}
+          onClick={disabled ? null : onClick}
+          data-tracking-id={dataTrackingId}
+        > 
+          {children}
+        </span> 
+
+        : theme === ButtonTheme.secondaryButton ?
         <span
           className={classNames(
             className,

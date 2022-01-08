@@ -574,9 +574,9 @@ const Home = ({
           {renderAboutDescription()}
           {/* {renderFreeAlpacaOffer()} */}
           {/* <AmbassadorBanner /> */}
-          <div className={styles.nftBannerWrapper}>
+          {/* <div className={styles.nftBannerWrapper}>
             <NftBanner />
-          </div>
+          </div> */}
           {renderActivities()}
           {/* {renderAlpacaDopter()}
           {renderAlpacaVerse()} */}
