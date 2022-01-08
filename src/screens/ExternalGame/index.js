@@ -26,6 +26,7 @@ import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 import SelectGameModePopup from "../../components/SelectGameModePopup";
 import { Hidden } from '@material-ui/core';
+import classNames from 'classnames';
 
 const portal = process.env.REACT_APP_SMARTSOFT_PORTALNAME
 const urlLauncher = process.env.REACT_APP_SMARTSOFT_LAUNCHER_URL
@@ -172,21 +173,13 @@ const RouletteGame = ({
           </div>
 
           {!gameMode && 
-          <div className={styles.mainContainer} style={{position: 'relative', overflow: 'hidden'}}>
-          <div style={{  
-            backgroundImage: `url(https://www.smartsoftgaming.com/Content/Images/GameIcons/${gameName}.jpg)`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            filter: 'blur(5px) brightness(0.4)',
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            zIndex: '-1',
-          }} />
-          
-            <SelectGameModePopup user={user} setGameMode={setGameMode} style={{position:'relative', zIndex: '1',}} />
-          </div>}
+          <div className={classNames(styles.mainContainer, styles.mainContainerPreview)}>
+            <div className={styles.gamePreviewContainer} style={{  
+              backgroundImage: `url(https://www.smartsoftgaming.com/Content/Images/GameIcons/${gameName}.jpg)`,
+            }} />
+              <SelectGameModePopup className={styles.gameModePopup} user={user} setGameMode={setGameMode} />
+            </div>
+          }
 
           {(gameMode && init) &&
             <iframe title={gameName} onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={(user.isLoggedIn && gameMode !== 'demo') ?url:urltest} />
