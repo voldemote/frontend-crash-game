@@ -172,15 +172,20 @@ const RouletteGame = ({
           </div>
 
           {!gameMode && 
+          <div className={styles.mainContainer} style={{position: 'relative', overflow: 'hidden'}}>
           <div style={{  
             backgroundImage: `url(https://www.smartsoftgaming.com/Content/Images/GameIcons/${gameName}.jpg)`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            overflow: 'hidden',
-          }}
-          className={styles.mainContainer}>
-            <SelectGameModePopup user={user} setGameMode={setGameMode}/>
+            filter: 'blur(5px) brightness(0.4)',
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            zIndex: '-1',
+          }} />
+          
+            <SelectGameModePopup user={user} setGameMode={setGameMode} style={{position:'relative', zIndex: '1',}} />
           </div>}
 
           {(gameMode && init) &&

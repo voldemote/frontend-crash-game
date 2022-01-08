@@ -25,7 +25,7 @@ import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
 import Routes from 'constants/Routes';
 import { getGameById, ObjectId } from '../../helper/Games';
-import { GAMES } from '../../constants/Games';
+import { EVOPLAY_GAMES, GAMES } from '../../constants/Games';
 import {
   trackAlpacaWheelPlaceBetGuest,
   trackAlpacaWheelPlaceBet,
@@ -54,6 +54,9 @@ const EvoplayGame = ({
   const gameCategory = match?.params?.category
   const gameNumber = match?.params?.number
   const EXTERNAL_GAME_EVENT_ID = ObjectId(gameNumber)//game.id;
+
+  const evoPlayGame = EVOPLAY_GAMES[gameNumber];
+  const filename = evoPlayGame.absolute_name.substring(evoPlayGame.absolute_name.lastIndexOf("\\") + 1);
 
   const dispatch = useDispatch();
   const [init, setInit] = useState(null);
@@ -147,10 +150,10 @@ const EvoplayGame = ({
             />
           </div>
 
-          {!gameMode && 
+          {/* {!gameMode && 
           <div 
           // style={{  
-          //   backgroundImage: `url(https://main.alpacasino.io/images/evoplay/${gameName}_360x360.jpg)`,
+          //   backgroundImage: `url(/images/evoplay/${gameName}_360x360.jpg)`,
           //   backgroundPosition: 'center',
           //   backgroundSize: 'cover',
           //   backgroundRepeat: 'no-repeat',
@@ -158,6 +161,23 @@ const EvoplayGame = ({
           // }}
           className={styles.mainContainer}>
             <SelectGameModePopup user={user} setGameMode={setGameMode}/>
+          </div>} */}
+
+          {!gameMode && 
+          <div className={styles.mainContainer} style={{position: 'relative', overflow: 'hidden'}}>
+          <div style={{  
+            backgroundImage: `url(/images/evoplay/${filename}_360x360.jpg)`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            filter: 'blur(5px) brightness(0.4)',
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            zIndex: '-1',
+          }} />
+          
+            <SelectGameModePopup user={user} setGameMode={setGameMode} style={{position:'relative', zIndex: '1',}} />
           </div>}
 
           {(gameMode && init) && <iframe className={styles.mainContainer} src={init}/>}

@@ -418,7 +418,7 @@ Your WFAIR is automatically credited in your account.
                 <div className={styles.buttonContainer}>
                   <h2>Withdraw</h2>
                   <p className={styles.label}>
-                    You can withdraw your funds in the casino directly to your wallet. You can then convert your WFAIR to other cryptocurrencies or hold it to have early access to the <a title="Check WFAIR roadmap" href="https://wallfair.io/#roadmap" target="_blank" rel="noreferrer">upcoming utilities</a>.
+                    You can withdraw your funds in the casino directly to your wallet. You can then convert your WFAIR to other cryptocurrencies or hold it to have early access to the upcoming utilities.
                   </p>
                   {/* <p className={styles.label}>
                     You can withdraw your funds in the casino directly to your wallet. You can then convert your WFAIR to other cryptocurrencies or stake it to increase your gains.
