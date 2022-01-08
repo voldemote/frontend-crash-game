@@ -36,6 +36,7 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 import SelectGameModePopup from "../../components/SelectGameModePopup";
+import classNames from 'classnames';
 
 const EvoplayGame = ({
   showPopup,
@@ -150,37 +151,17 @@ const EvoplayGame = ({
             />
           </div>
 
-          {/* {!gameMode && 
-          <div 
-          // style={{  
-          //   backgroundImage: `url(/images/evoplay/${gameName}_360x360.jpg)`,
-          //   backgroundPosition: 'center',
-          //   backgroundSize: 'cover',
-          //   backgroundRepeat: 'no-repeat',
-          //   overflow: 'hidden',
-          // }}
-          className={styles.mainContainer}>
-            <SelectGameModePopup user={user} setGameMode={setGameMode}/>
-          </div>} */}
-
           {!gameMode && 
-          <div className={styles.mainContainer} style={{position: 'relative', overflow: 'hidden'}}>
-          <div style={{  
-            backgroundImage: `url(/images/evoplay/${filename}_360x360.jpg)`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            filter: 'blur(5px) brightness(0.4)',
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            zIndex: '-1',
-          }} />
-          
-            <SelectGameModePopup user={user} setGameMode={setGameMode} style={{position:'relative', zIndex: '1',}} />
-          </div>}
+            <div className={classNames(styles.mainContainer, styles.mainContainerPreview)}>
+            <div className={styles.gamePreviewContainer} style={{  
+                backgroundImage: `url(/images/evoplay/${filename}_360x360.jpg)`,
+              }} 
+            />
+              <SelectGameModePopup className={styles.gameModePopup} user={user} setGameMode={setGameMode} />
+            </div>
+          }
 
-          {(gameMode && init) && <iframe className={styles.mainContainer} src={init}/>}
+          {(gameMode && init) && <iframe title={gameName} className={styles.mainContainer} src={init}/>}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}

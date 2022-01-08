@@ -76,6 +76,28 @@
     display: flex;
     width: 100%;
     height: 670px;
+
+    &.mainContainerPreview {
+      position: relative;
+      overflow: hidden;
+
+      .gamePreviewContainer {
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: blur(5px) brightness(0.4);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+      }
+
+      .gameModePopup {
+        position: relative;
+        z-index: 1;
+      }
+    }
+
     @media (max-width: $screen-md) {
       flex-direction: column;
     }
