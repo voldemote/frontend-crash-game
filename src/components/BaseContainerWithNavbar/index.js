@@ -6,6 +6,7 @@ import ContentFooter from 'components/ContentFooter';
 import HeaderVideo from 'data/videos/header-video.mp4'
 import AlpacaHeader from 'data/images/alpaca-header.png';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
+import authState from 'constants/AuthState';
 
 
 const BaseContainerWithNavbar = ({
@@ -40,7 +41,7 @@ const BaseContainerWithNavbar = ({
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
-          : <CustomCarousel />
+          : <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} />
           } 
       </div>
       {children}      

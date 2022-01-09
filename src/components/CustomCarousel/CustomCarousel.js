@@ -2,11 +2,15 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import styles from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
+import { useDispatch } from 'react-redux';
+import { OnboardingActions } from 'store/actions/onboarding';
 
-const CustomCarousel = props => {
+const CustomCarousel = ({loggedIn}) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const bannerUrlLinks = [
-    '/external-game/Cappadocia/Games',
+    loggedIn || isMobile ? '/external-game/Cappadocia/Games' : 'hellohuman',
     '/external-game/MoonStone/Slots',
     '/external-game/Samurai/Slots',
     '/external-game/BlazingHot40/Slots',
@@ -17,6 +21,11 @@ const CustomCarousel = props => {
   ];
 
   const onClickItem = itemIndex => {
+    console.log(bannerUrlLinks[itemIndex]);
+    if (bannerUrlLinks[itemIndex] === 'hellohuman') {
+      dispatch(OnboardingActions.start());
+      return;
+    }
     history.push(bannerUrlLinks[itemIndex]);
   };
 
@@ -25,7 +34,7 @@ const CustomCarousel = props => {
       <Carousel
         className={styles.carousel}
         autoPlay
-        interval={4000}
+        interval={5000}
         transitionTime={800}
         infiniteLoop={true}
         stopOnHover={false}
@@ -37,7 +46,7 @@ const CustomCarousel = props => {
         <div>
           <img
             alt=""
-            src="https://files.wallfair.io/alpacasino/games-carousel/games-1.jpeg"
+            src={(loggedIn || isMobile) ? "https://files.wallfair.io/alpacasino/games-carousel/games-1.jpeg" : "https://files.wallfair.io/alpacasino/games-carousel/sliderhuman.jpg"}
           />
         </div>
         <div>
