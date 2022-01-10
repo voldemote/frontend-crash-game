@@ -22,7 +22,7 @@ import Button from 'components/Button';
 import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
 import * as ApiUrls from 'constants/Api';
 import { resendEmailVerification } from 'api';
-import { trackWalletAddWfair, trackWalletWithdraw } from 'config/gtm';
+import { trackWalletAddWfair, trackWalletBuyWfair, trackWalletBuyWithCryptoButton, trackWalletBuyWithFiatButton, trackWalletWithdraw } from 'config/gtm';
 
 import Bonus100kDesktop from '../../data/images/deposit/bonus100k-desktop.png'
 import Bonus100kMobile from '../../data/images/deposit/bonus100k-mobile.png'
@@ -510,7 +510,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletWithdraw }));
     },
     showWalletBuyWfairPopup: () => {
-      trackWalletAddWfair();
+      // trackWalletAddWfair();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
     },
     showWalletDepositPopup: () => {
@@ -524,12 +524,15 @@ const mapDispatchToProps = dispatch => {
       dispatch(TransactionActions.fetchWalletTransactions());
     },
     showWalletDepositCrypto: () => {
+      trackWalletBuyWithCryptoButton();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDepositCrypto }));
     },
     showWalletDepositFiat: () => {
+      trackWalletBuyWithFiatButton();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDepositFiat }));
     },
     showWalletConnectWallet: () => {
+      trackWalletBuyWfair();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletConnectWallet }));
     },
   };
