@@ -196,6 +196,21 @@
       @media (max-width: $screen-sm) {
         font-size: 16px;
       }
+      @media (max-width: 320px) {
+        margin-right: 5px;
+      }
+    }
+
+    .registerButton {
+      margin-right: 10px;
+      font-size: 20px;
+      @media (max-width: $screen-sm) {
+        font-size: 16px;
+      }
+      @media (max-width: 320px) {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
     }
 
     a {

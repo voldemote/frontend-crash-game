@@ -279,6 +279,15 @@ const Navbar = ({
 
     const joinBtn = (
       <div className={style.navbarItems}>
+        {!isLoggedIn() &&
+          <Button
+            className={style.registerButton}
+            theme={ButtonTheme.loginButton}
+            onClick={() => startOnboardingFlow()}
+          >
+            Register
+          </Button>
+        }
         <Button
           className={style.loginButton}
           theme={ButtonTheme.loginButton}
