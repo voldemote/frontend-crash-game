@@ -89,7 +89,7 @@ const AlpacannonGameAnimation = ({
   const interpolate = (number) => 100 - Math.floor((Number(number) + 42)*96/80)
 
   const interpolateMultiplier = (number) => {
-    const EDGE = 0.025
+    const EDGE = 0.020
     return (100 / interpolate(number)) * (1 - EDGE)
   }
 
