@@ -116,7 +116,7 @@ const AlpacannonGameAnimation = ({
         style={{zIndex: game==='ready' && 5, background: `linear-gradient(90deg, rgba(240,0,0,1) ${100 - interpolate(slider)}%, rgba(0,255,0,1) ${100 - interpolate(slider)}%)`}}
         type="range"
         step={1}
-        min={-40}
+        min={-39}
         max={40} />
       <div className={styles.chance}>
         <span>{interpolate(slider)}%</span>
