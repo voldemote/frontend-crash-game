@@ -44,7 +44,7 @@ const BaseContainerWithNavbar = ({
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
           : 
-          <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} carouselType={carouselType} />
+          <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} userId={user.userId} carouselType={carouselType} />
           } 
       </div>
       {children}      

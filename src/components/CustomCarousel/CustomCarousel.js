@@ -3,17 +3,22 @@ import { Carousel } from 'react-responsive-carousel';
 import styles from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { OnboardingActions } from 'store/actions/onboarding';
+import { trackWalletAddWfair } from 'config/gtm';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
+import { GeneralActions } from 'store/actions/general';
+import * as ApiUrls from 'constants/Api';
 
-const CustomCarousel = ({loggedIn, carouselType = 'games'}) => {
+const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId}) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const carouselLinks = {
-    landingpage: loggedIn ? [
+    landingpage: !loggedIn ? [
       'hello-human',
-      'deposit-bonus',
+      'hello-human',
     ] : [
       'deposit-bonus', 
       'verify-kyc',
@@ -31,16 +36,21 @@ const CustomCarousel = ({loggedIn, carouselType = 'games'}) => {
     ]
   };
 
+  const openFractal = () => {
+    const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', userId);
+    window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
+  }
+
   const onClickItem = itemIndex => {
     switch(carouselLinks[carouselType][itemIndex]) {
       case 'hello-human':
         dispatch(OnboardingActions.start());
         break;
       case 'deposit-bonus':
-        dispatch(OnboardingActions.start());
+        showWalletDepositPopup();
         break;
-      case 'verify-kyc':
-        dispatch(OnboardingActions.start());
+      case 'verify-kyc':      
+        openFractal();
         break;
       default:
         history.push(carouselLinks[carouselType][itemIndex]);
@@ -184,4 +194,22 @@ const CustomCarousel = ({loggedIn, carouselType = 'games'}) => {
   );
 };
 
-export default CustomCarousel;
+const mapDispatchToProps = dispatch => {
+  return {
+    showWalletDepositPopup: () => {
+      trackWalletAddWfair();
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
+    },
+    handleKycInfoVisible: bool => {
+      dispatch(GeneralActions.setKycInfoVisible(bool));
+    },
+    setOpenDrawer: drawerName => {
+      dispatch(GeneralActions.setDrawer(drawerName));
+    },
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CustomCarousel);
