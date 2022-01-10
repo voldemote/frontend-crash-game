@@ -124,6 +124,7 @@ const RosiGameAnimation = ({
     return (
       <div
         className={cn(styles.timer, { [styles.flashAnimation]: !gameStarted })}
+        data-wg-notranslate
       >
         {gameStarted && (
           <>
