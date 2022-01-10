@@ -47,6 +47,7 @@ import KYCPolicy from 'screens/KYCPolicy';
 import Imprint from 'screens/Imprint';
 import PrivacyPolicy from 'screens/PrivacyPolicy';
 import PrivateRoute from 'components/PrivateRoute';
+import LandingPageV2 from 'screens/LandingPageV2';
 
 const { store, persistor } = configStore();
 
@@ -83,7 +84,8 @@ const App = () => {
             {/* <TypeformController /> */}
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
-              <Route exact path={Routes.home} component={Home} />
+              {/* <Route exact path={Routes.home} component={Home} /> */}
+              <Route exact path={Routes.home} component={LandingPageV2} />
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
               <Route exact path={Routes.bet} component={EventRouter} />

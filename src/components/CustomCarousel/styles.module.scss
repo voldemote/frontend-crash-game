@@ -7,12 +7,21 @@
   cursor: pointer;
   .carousel {
     margin-top: 10vh;
+
+    @media (max-height: 750px) {
+      margin-top: 15vh;
+    }
+
     @media (max-width: $screen-sm) {
-      margin-top: 8.1vh;
+      margin-top: 8.7vh;
     }
   }
 
   img {
     object-fit: cover !important;
+
+    @media (max-width: $screen-xs) {
+      object-fit: contain !important;
+    }
   }
 }

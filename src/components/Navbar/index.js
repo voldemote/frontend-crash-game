@@ -36,7 +36,7 @@ import Link from 'components/Link';
 import { OnboardingActions } from 'store/actions/onboarding';
 import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
-import { trackWalletIcon } from 'config/gtm';
+import { trackWalletDepositIcon, trackWalletIcon } from 'config/gtm';
 
 import {ReactComponent as WalletIcon} from '../../data/icons/navbar/wallet-icon.svg';
 
@@ -198,7 +198,7 @@ const Navbar = ({
         <span 
           className={style.depositLabel}
           onClick={() => {
-            trackWalletIcon();
+            trackWalletDepositIcon();
             showWalletDepositPopup();
           }}
         >
@@ -279,6 +279,15 @@ const Navbar = ({
 
     const joinBtn = (
       <div className={style.navbarItems}>
+        {!isLoggedIn() &&
+          <Button
+            className={style.registerButton}
+            theme={ButtonTheme.loginButton}
+            onClick={() => startOnboardingFlow()}
+          >
+            Register
+          </Button>
+        }
         <Button
           className={style.loginButton}
           theme={ButtonTheme.loginButton}
@@ -500,6 +509,7 @@ const mapDispatchToProps = dispatch => {
       );
     },
     showWalletDepositPopup: () => {
+      trackWalletDepositIcon();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
     },
   };

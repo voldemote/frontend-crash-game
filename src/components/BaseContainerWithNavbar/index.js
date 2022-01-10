@@ -6,6 +6,7 @@ import ContentFooter from 'components/ContentFooter';
 import HeaderVideo from 'data/videos/header-video.mp4'
 import AlpacaHeader from 'data/images/alpaca-header.png';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
+import authState from 'constants/AuthState';
 
 
 const BaseContainerWithNavbar = ({
@@ -16,7 +17,8 @@ const BaseContainerWithNavbar = ({
   loggedIn,
   home = false,
   user,
-  carousel=false
+  carouselType=null,
+  
 }) => {
   return (
     <>
@@ -29,10 +31,11 @@ const BaseContainerWithNavbar = ({
       )}
     >
       <div className={classNames(styles.headerBackground, loggedIn || !home ? styles.withTransparent : null,
-        carousel && styles.withHalfTransparent,
-        carousel && styles.zIndexheaderBackground
+        carouselType && styles.withHalfTransparent,
+        carouselType === 'landingpage' && styles.solid,
+        carouselType && styles.zIndexheaderBackground
         )}>
-         {! carousel ?
+         {!carouselType ?
          <div className={styles.headerContianer}>
             <video loop autoPlay muted playsInline id="myVideo">
                 <source src={HeaderVideo} type="video/mp4" />
@@ -40,7 +43,8 @@ const BaseContainerWithNavbar = ({
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
-          : <CustomCarousel />
+          : 
+          <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} userId={user.userId} carouselType={carouselType} />
           } 
       </div>
       {children}      

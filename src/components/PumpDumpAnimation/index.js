@@ -135,6 +135,7 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
     return (
       <div
         className={classNames(styles.timer, { [styles.flashAnimation]: !hasStarted })}
+        data-wg-notranslate
       >
         {hasStarted && (
           <>
@@ -151,14 +152,14 @@ const PumpDumpAnimation = ({ isLosing ,muteButtonClick, onInit }) => {
       </div>
     );
   }
-  
+
   return (
     <div className={styles.animation}>
       <div className={styles.audioControls}>
         {audio && (
           <GameAudioControls audio={audio} muteButtonClick={muteButtonClick} />
         )}
-      </div>      
+      </div>
       <canvas
         className={classNames(styles.canvas)}
         id="pump-dump-game-animation"
