@@ -17,7 +17,8 @@ const BaseContainerWithNavbar = ({
   loggedIn,
   home = false,
   user,
-  carousel=false
+  carouselType=null,
+  
 }) => {
   return (
     <>
@@ -30,10 +31,11 @@ const BaseContainerWithNavbar = ({
       )}
     >
       <div className={classNames(styles.headerBackground, loggedIn || !home ? styles.withTransparent : null,
-        carousel && styles.withHalfTransparent,
-        carousel && styles.zIndexheaderBackground
+        carouselType && styles.withHalfTransparent,
+        carouselType === 'landingpage' && styles.solid,
+        carouselType && styles.zIndexheaderBackground
         )}>
-         {! carousel ?
+         {!carouselType ?
          <div className={styles.headerContianer}>
             <video loop autoPlay muted playsInline id="myVideo">
                 <source src={HeaderVideo} type="video/mp4" />
@@ -41,7 +43,8 @@ const BaseContainerWithNavbar = ({
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
-          : <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} />
+          : 
+          <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} carouselType={carouselType} />
           } 
       </div>
       {children}      
