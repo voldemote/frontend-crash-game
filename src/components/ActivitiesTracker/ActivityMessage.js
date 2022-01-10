@@ -359,7 +359,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           </div>
         );
       case 'Casino/EVENT_CASINO_LOST':
-        const multiplier = data?.crashFactor || data?.winMultiplier;
+        const multiplier = data?.crashFactor || data?.winMultiplier || 0;
         const multiplierLabel = data?.crashFactor
           ? 'crash factor'
           : 'multiplier';
