@@ -2,6 +2,9 @@ import { memo } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.scss';
 import LogoFooter from '../../data/icons/wfair-logo-footer.svg';
+import SmartsoftLogo from '../../data/icons/footer/smartsoft.png';
+import EvoplayLogo from '../../data/icons/footer/evoplay.png';
+
 
 import classNames from 'classnames';
 import { LeaderboardActions } from 'store/actions/leaderboard';
@@ -30,6 +33,10 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           </a>
           
           <iframe className={styles.license} title="license" src="https://licensing.gaming-curacao.com/validator/?lh=58e4868441e3bb0ff2fe2230d82a8091&amp;template=seal" width={125} height={50} style={{border:'none'}} />
+
+          <a href="https://www.smartsoftgaming.com/" rel="noreferrer" target="_blank"><img src={SmartsoftLogo} className={styles.partnerLogoSmartsoft} alt="smartsoft games logo" /></a>
+          <a href="https://evoplay.games/" rel="noreferrer" target="_blank"><img src={EvoplayLogo} className={styles.partnerLogoEvoplay} alt="evoplay logo" /></a>
+
         </div>
         <div className={styles.links}>
           <Link
