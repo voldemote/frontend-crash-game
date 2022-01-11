@@ -32,6 +32,10 @@ setExternalGamesEvoplay
     'Alpaca Games',
     'Casino',
     'Slot',
+    'Roulette',
+    'Card Games',
+    'Poker',
+    'Blackjack',
     'Instant Win',
     'Keno',
     'All',
@@ -264,8 +268,7 @@ const Games = () => {
       let externalGamesDisplaySmartsoft =
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
-        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES) : [];
-
+        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;

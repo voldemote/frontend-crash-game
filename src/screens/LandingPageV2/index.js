@@ -6,7 +6,8 @@ import {
   NEW_SLOTS_GAMES,
   SLOTS_GAMES,
   EXTERNAL_GAMES,
-  EVOPLAY_GAMES
+  EVOPLAY_GAMES,
+  TOP_PICKS_GAMES
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
 
@@ -34,6 +35,7 @@ import SocialPiece from '../../data/images/home/social-piece.svg';
 import PlinkoAlpaca from '../../data/images/home/plinko-alpaca.svg';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
+import _ from 'lodash';
 
 const LandingPageV2 = (
   authState,
@@ -233,7 +235,7 @@ const LandingPageV2 = (
       </div>
     );
   };
-  
+
 
   const setGames = (selectGame, gameCategory) => {
     if (selectGame) {
@@ -246,8 +248,8 @@ const LandingPageV2 = (
       let externalGamesDisplaySmartsoft =
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
-        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES) : [];
-
+        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
+     // let ret = [];
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
@@ -256,6 +258,19 @@ const LandingPageV2 = (
           externalGamesDisplayEvoplay = externalGamesDisplayEvoplay.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
           })
+          // let map = new Map();
+          // externalGamesDisplaySmartsoft.forEach((x) => map.set(x.TechnicalName, { ...x }));
+          // externalGamesDisplayEvoplay.forEach((x) => map.set(x.TechnicalName, { ...x }));
+          // ret = [...map.values()];
+          // ret.sort(function (a, b) {
+          //   if (a.TechnicalName < b.TechnicalName) {
+          //     return -1;
+          //   }
+          //   if (a.TechnicalName > b.TechnicalName) {
+          //     return 1;
+          //   }
+          //   return 0;
+          // });
         }
 
       setAlpacaGame(alpacaGamesDisplay);
@@ -273,6 +288,9 @@ const LandingPageV2 = (
     <BaseContainerWithNavbar withPaddingTop={true} carouselType='landingpage'>
       <CustomCarousel loggedIn={authState === authState.LOGGED_IN} userId={userId} carouselType={'landingpage'} />
       <div className={styles.container}>
+
+        <DisplaySection selectedGamesLabel={TOP_PICKS_GAMES.header} selectedGamesNames={TOP_PICKS_GAMES.names} smartsoftGames={EXTERNAL_GAMES} evoplayGames={prepareEvoplayGames(EVOPLAY_GAMES)} />
+
         <SearchSection
           setGames={setGames}
           alpacaGames={showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES}

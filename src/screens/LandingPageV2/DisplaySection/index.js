@@ -5,12 +5,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { selectUser } from 'store/selectors/authentication';
 import styles from '../styles.module.scss';
+import _ from 'lodash';
 
 const DisplaySection = (props) => {
 //   let history = useHistory();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const {smartsoftGames, evoplayGames} = props;
+  const {smartsoftGames, evoplayGames, selectedGamesNames, selectedGamesLabel} = props;
 
   const [games, setGames] = useState([]);
   const getGameItemSizeClass = () => {
@@ -74,7 +75,7 @@ const DisplaySection = (props) => {
       </Link></div>
     }
 
-
+    if (game.TechnicalName !== undefined) {
     const smartSoftUrl = `/external-game/${game.TechnicalName}/${game.TechnicalCategory}`;
 
     return <div onClick={(e) => {
@@ -98,11 +99,41 @@ const DisplaySection = (props) => {
       </div>
     </Link></div>
   }
+}
 
   useEffect(() => {
 
     if(smartsoftGames && evoplayGames) {
-      setGames([...smartsoftGames, ...evoplayGames]);
+      if(selectedGamesNames && selectedGamesNames.length) {
+        const allGames = [...smartsoftGames, ...evoplayGames];
+        const selectedGames = [];
+
+        selectedGamesNames.forEach((item)=> {
+          const findGame = _.find(allGames, {TechnicalName: item});
+
+          if(findGame) {
+            selectedGames.push(findGame);
+          }
+        })
+
+        setGames(selectedGames);
+      } else {
+        let ret = [];
+        let map = new Map();
+        smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        ret = [...map.values()];
+        ret.sort(function (a, b) {
+          if (a.TechnicalName < b.TechnicalName) {
+            return -1;
+          }
+          if (a.TechnicalName > b.TechnicalName) {
+            return 1;
+          }
+          return 0;
+        });
+        setGames([...ret,""]);
+      }
     }
 
     return () => {
@@ -114,14 +145,29 @@ const DisplaySection = (props) => {
 
   return (
     <div className={styles.gamesContainer}>
-      {categories.map(category1 =>
+      {selectedGamesNames ? <div className={classNames(styles.gamesCategorySelected)}>
+        <div className={styles.gamesCategory}>
+          {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
+          <h2>{selectedGamesLabel}</h2>
+        </div>
+        <div className={classNames(styles.games)}>
+          {games.map((game, index) => {
+              return <div
+                className={styles.wrapper}
+                key={`gamecard-${index}-`}
+              >
+                {renderLinkByProvider(game, index)}
+              </div>
+            }
+          )}
+        </div>
+      </div> : (categories.map(category1 =>
         <>
-
             <div className={styles.gamesCategory}>
               {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
               <h2>{category1}</h2>
             </div>
-          
+
           <div className={classNames(styles.games)}>
             {games.filter(g => g.GameCategory===category1).map((game, index) => {
 
@@ -136,7 +182,7 @@ const DisplaySection = (props) => {
             )}
           </div>
         </>
-      )}
+      ))}
     </div>
   );
 };

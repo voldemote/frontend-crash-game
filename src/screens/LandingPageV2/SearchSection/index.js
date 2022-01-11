@@ -14,6 +14,8 @@ setExternalGamesEvoplay
     'Alpaca Games',
     'Casino',
     'Slot',
+    'Roulette',
+    'Card Games',
     'Instant Win',
     'Keno',
     'All',

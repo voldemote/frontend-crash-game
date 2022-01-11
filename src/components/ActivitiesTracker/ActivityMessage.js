@@ -331,12 +331,12 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             <b>{getUserProfileUrl(data)}</b> has signed up.
           </div>
         );
-      case 'Notification/EVENT_USER_UPLOADED_PICTURE':
-        return (
-          <div>
-            <b>{getUserProfileUrl(data)}</b> has updated avatar.
-          </div>
-        );
+      // case 'Notification/EVENT_USER_UPLOADED_PICTURE':
+      //   return (
+      //     <div>
+      //       <b>{getUserProfileUrl(data)}</b> has updated avatar.
+      //     </div>
+      //   );
       case 'Notification/EVENT_USER_CHANGED_USERNAME':
         return (
           <div>
@@ -396,6 +396,9 @@ const ActivityMessage = ({ activity, date, users, events }) => {
     if (!user) {
       user = _.get(activity, 'data.user');
     }
+
+    //avoid showing 'upload picture' notification
+    if (type === 'Notification/EVENT_USER_UPLOADED_PICTURE') return null;
 
     return (
       <div className={classNames(styles.chatMessage, styles.messageItem)}>
