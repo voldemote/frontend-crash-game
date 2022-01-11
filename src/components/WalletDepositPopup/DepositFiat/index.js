@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
-import { trackWalletBuywithfiatRequest } from 'config/gtm';
+import { trackWalletBuywithfiatRequest, trackWalletFiatProceedPartner } from 'config/gtm';
 import { convertCurrency, generateCryptopayChannel, sendBuyWithFiat } from 'api';
 import { numberWithCommas } from 'utils/common';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
@@ -223,7 +223,7 @@ const DepositFiat = ({user, showWalletDepositPopup, fetchWalletTransactions}) =>
       </div>
 
       {currency > 0 && user.email && address ?
-        <a target="_blank" rel="noreferrer" href={`${productionRampURL}?swapAsset=${cryptoTransaction}&fiatValue=${currency}&fiatCurrency=${selectedCurrency.label}&userEmailAddress=${user.email}&userAddress=${address}`}>
+        <a onClick={() => trackWalletFiatProceedPartner()} target="_blank" rel="noreferrer" href={`${productionRampURL}?swapAsset=${cryptoTransaction}&fiatValue=${currency}&fiatCurrency=${selectedCurrency.label}&userEmailAddress=${user.email}&userAddress=${address}`}>
           <Button>Proceed with partner</Button>
         </a>
         :

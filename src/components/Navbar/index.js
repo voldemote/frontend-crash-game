@@ -198,7 +198,6 @@ const Navbar = ({
         <span 
           className={style.depositLabel}
           onClick={() => {
-            trackWalletDepositIcon();
             showWalletDepositPopup();
           }}
         >
