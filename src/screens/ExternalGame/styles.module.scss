@@ -98,6 +98,10 @@
       }
     }
 
+    &.jetXContainer {
+      height: 760px;
+    }
+
     @media (max-width: $screen-md) {
       flex-direction: column;
     }
