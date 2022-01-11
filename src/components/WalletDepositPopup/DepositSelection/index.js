@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { TransactionActions } from 'store/actions/transaction';
+import { trackWalletBuyWfair, trackWalletBuyWithCryptoButton, trackWalletBuyWithFiatButton } from 'config/gtm';
 
 const DepositSelection = ({showWalletDepositCrypto, showWalletDepositFiat, showWalletConnectWallet, fetchWalletTransactions}) => {
 
@@ -63,12 +64,15 @@ const DepositSelection = ({showWalletDepositCrypto, showWalletDepositFiat, showW
 const mapDispatchToProps = dispatch => {
   return { 
     showWalletDepositCrypto: () => {
+      trackWalletBuyWithCryptoButton();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDepositCrypto }));
     },
     showWalletDepositFiat: () => {
+      trackWalletBuyWithFiatButton();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDepositFiat }));
     },
     showWalletConnectWallet: () => {
+      trackWalletBuyWfair();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletConnectWallet }));
     },
     fetchWalletTransactions: () => {
