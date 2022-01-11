@@ -741,4 +741,15 @@ export const trackWalletConnect = () => {
   TagManager.dataLayer(tagManagerArgs);
 }
 
+// Proceed with fiat partner button
+export const trackWalletFiatProceedPartner = () => {
+  const tagManagerArgs = {
+    dataLayer: {
+      event: 'walletBuywithfiatProceed',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+}
+
 export default TagManager;
