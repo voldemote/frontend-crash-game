@@ -108,7 +108,7 @@ const App = () => {
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
-              <Route path={Routes.games} component={Games} />
+              {/* <Route path={Routes.games} component={LandingPageV2} /> */}
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />

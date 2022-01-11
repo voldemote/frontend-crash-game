@@ -35,7 +35,7 @@ const BaseContainerWithNavbar = ({
         carouselType === 'landingpage' && styles.solid,
         carouselType && styles.zIndexheaderBackground
         )}>
-         {!carouselType ?
+         {!carouselType &&
          <div className={styles.headerContianer}>
             <video loop autoPlay muted playsInline id="myVideo">
                 <source src={HeaderVideo} type="video/mp4" />
@@ -43,8 +43,7 @@ const BaseContainerWithNavbar = ({
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
-          : 
-          <CustomCarousel loggedIn={user.authState === authState.LOGGED_IN} userId={user.userId} carouselType={carouselType} />
+          
           } 
       </div>
       {children}      
