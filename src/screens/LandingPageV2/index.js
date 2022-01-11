@@ -247,7 +247,7 @@ const LandingPageV2 = (
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
         selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
-      let ret = [];
+     // let ret = [];
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
@@ -256,23 +256,23 @@ const LandingPageV2 = (
           externalGamesDisplayEvoplay = externalGamesDisplayEvoplay.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
           })
-          const map = new Map();
-          externalGamesDisplaySmartsoft.forEach((x) => map.set(x.TechnicalName, { ...x }));
-          externalGamesDisplayEvoplay.forEach((x) => map.set(x.TechnicalName, { ...x }));
-          ret = [...map.values()];
-          ret.sort(function (a, b) {
-            if (a.TechnicalName < b.TechnicalName) {
-              return -1;
-            }
-            if (a.TechnicalName > b.TechnicalName) {
-              return 1;
-            }
-            return 0;
-          });
+          // let map = new Map();
+          // externalGamesDisplaySmartsoft.forEach((x) => map.set(x.TechnicalName, { ...x }));
+          // externalGamesDisplayEvoplay.forEach((x) => map.set(x.TechnicalName, { ...x }));
+          // ret = [...map.values()];
+          // ret.sort(function (a, b) {
+          //   if (a.TechnicalName < b.TechnicalName) {
+          //     return -1;
+          //   }
+          //   if (a.TechnicalName > b.TechnicalName) {
+          //     return 1;
+          //   }
+          //   return 0;
+          // });
         }
 
       setAlpacaGame(alpacaGamesDisplay);
-      setExternalGames(ret);
+      setExternalGames(externalGamesDisplaySmartsoft);
       setExternalGamesEvoplay(externalGamesDisplayEvoplay);
       return;
     }
