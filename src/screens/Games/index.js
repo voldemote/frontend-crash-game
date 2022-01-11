@@ -291,7 +291,7 @@ const Games = () => {
   };
 
   return (
-    <BaseContainerWithNavbar withPaddingTop={true} carousel>
+    <BaseContainerWithNavbar withPaddingTop={true} carouselType='games'>
         {/* <CustomCarousel /> */}
       <div className={styles.container}>
         {/* <ElonGame /> */}

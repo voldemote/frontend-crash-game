@@ -7,25 +7,57 @@
   background: rgba($colorPrimary, 0.7);
   border-radius: 12px;
   padding: 50px;
-  margin-top: calc(50vh - 50px);
+  // margin-top: 70vh;
   position: relative;
 
-  @media (max-width: $screen-sm) {
-    margin-top: calc(35vh - 50px);
-  }
-
-  @media (max-width: $screen-xs) {
-    margin-top: calc(45vh - 50px);
-  }
+  // @media (max-width: $screen-sm) {
+  //   margin-top: calc(55vh - 20px);
+  // }
+  // @media (max-width: $screen-xs) {
+  //   margin-top: calc(65vh - 20px);
+  // }
+  // @media (max-width: 375px) {
+  //   margin-top: calc(65vh - 40px);
+  // }
+  // @media (max-width: 320px) {
+  //   margin-top: calc(70vh - 20px);
+  // }
 
   @media (max-width: $screen-sm) {
     padding: 0 20px;
+  }
+
+  /* ACTIVITY TRACKER */
+  .activities {
+    margin-top: 40px;
+    .title {
+      display: flex;
+      align-items: center;
+      color: $colorWhite;
+
+      h2 {
+        color: $colorWhite;
+        font-size: 33px;
+
+        @media (max-width: $screen-xs) {
+          font-size: 28px;
+        }
+      }
+
+      img {
+        margin-right: 30px;
+      }
+    }
   }
 }
 
 .searchContainer {
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+
+  @media (max-width: $screen-sm) {
+    margin-top: 20px;
+  }
 
   .search {
     border-radius: 30px;
@@ -386,6 +418,212 @@
 
       &.gameLinkInactive {
         cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.discordBanner {
+  width: 100%;
+  height: 130px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+  &.withPadding {
+    margin-top: 40px;
+  }
+
+  .backgroundWrapper {
+    position: absolute;
+    height: 100px;
+    left: 0;
+    right: 0;
+    background: #f7a800;
+    display: flex;
+
+    .bodyContainer {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 36px;
+      color: $colorBlack;
+
+      @media (max-width: 1366px) {
+        font-size: 32px;
+      }
+
+      p {
+        // margin-left: 20px;
+        padding: 0 30px 0 20px;
+
+        @media (max-width: $screen-md) {
+          font-size: 26px;
+        }
+
+        a {
+          text-decoration: underline;
+        }
+      }
+      .closeButton {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+      }
+    }
+    .whiteWrapper {
+      max-width: 500px;
+      position: relative;
+      margin-right: 50px;
+      margin-top: 0px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 0px solid transparent;
+        border-left: 60px solid #fff;
+        border-bottom: 127px solid transparent;
+
+        @media (max-width: $screen-sm) {
+          border: none;
+        }
+      }
+
+      .whiteContainer {
+        background: white;
+        padding: 6px 30px;
+        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        svg {
+          width: 300px;
+          height: 110px;
+        }
+      }
+    }
+  }
+}
+
+.aboutDescritpion {
+  position: relative;
+  margin: 80px auto 80px;
+  padding: 300px 0;
+  background: url('../../data/images/home/about-background.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  @media (max-width: $screen-lg) {
+    margin-bottom: 140px;
+  }
+  @media (max-width: $screen-xs) {
+    margin-bottom: 180px;
+    padding: 300px 0 0;
+  }
+  .topImage {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  .parentContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .descriptionCardContainer {
+      position: relative;
+      width: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: linear-gradient(180deg, #ffffff 0%, #f1dbd2 51.56%);
+      border-radius: 20px;
+      padding: 10px;
+      position: relative;
+
+      .aboutFirst {
+        position: absolute;
+        top: -59px;
+        left: 130px;
+        width: 130px;
+      }
+
+      .aboutTopAlpaca {
+        position: absolute;
+        bottom: 281px;
+        left: 65px;
+        width: 250px;
+
+        z-index: -1;
+      }
+      .aboutSecond {
+        position: absolute;
+        top: -35px;
+        left: 130px;
+        width: 110px;
+      }
+      .aboutThird {
+        position: absolute;
+        top: -123px;
+        left: 120px;
+        width: 116px;
+
+        z-index: -1;
+      }
+
+      .descriptionCard {
+        width: 100%;
+        border: 3px solid #fbb2a5;
+        box-sizing: border-box;
+        border-radius: 20px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        height: 300px;
+
+        h1 {
+          margin: 20px 0px;
+          font-family: $fontOmnes;
+          font-weight: 600;
+          font-size: 30px;
+          line-height: 20px;
+          /* identical to box height, or 67% */
+
+          text-align: center;
+        }
+        p {
+          margin-bottom: 20px;
+          font-family: $fontOmnes;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+
+          text-align: center;
+        }
+      }
+      .thumbnail {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .thumbnailBack {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
       }
     }
   }

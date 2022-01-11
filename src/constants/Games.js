@@ -2312,84 +2312,77 @@ export const CASINO_GAMES = [
 ];
 
 export const NEW_SLOTS_GAMES = [
-    {
-        background: gameCardPumpDump,
-        title: `Pump and Dump`,
-        subtitle: '',
-        active: true,
-        linkTo: '/games/pump-dump',
-    },
-    {
-        background: gameCardElon,
-        title: `Elon Game`,
-        subtitle: '',
-        active: true,
-        linkTo: '/games/elon-game',
-    },
-    {
-        background: gameCardMines,
-        title: `Mines`,
-        subtitle: '',
-        active: true,
-        linkTo: '/games/mines',
-    },
-    {
-        background: gameCardPlinko,
-        title: 'Plinko',
-        subtitle: '',
-        description: '',
-        active: true,
-        linkTo: '/games/plinko',
-    },
-    {
-        background: gameCardWheel,
-        title: 'Alpaca Wheel',
-        subtitle: '',
-        description: '',
-        active: true,
-        linkTo: '/games/alpaca-wheel',
-    },
-    {
-        background: gameCardAlpacannon,
-        title: `AlpaCannon`,
-        subtitle: '',
-        active: true,
-        linkTo: '/games/alpacannon',
-    },
-//   {
-//     background: gameCard5,
-//     title: `Oil Rush`,
-//     subtitle: '',
-//     active: false,
-//     linkTo: '/games/oilrush',
-//   },
-    /*,
-    {
-      background: Fourth,
-      title: 'Financial Poker',
-      subtitle: '',
-      description:
-        'Bring your poker face and portfolio management skills to live financial poker',
-      active: false,
-      linkTo: '',
-    },
-    {
-      background: Fifth,
-      title: 'Candle Stick',
-      subtitle: '',
-      description:
-        'Game and learn candlestick trading strategy in this jackpot tournament',
-      active: false,
-      linkTo: '',
-    },
-    {
-      background: First,
-      title: 'Midas Trader',
-      subtitle: '',
-      description: 'Market 1X2 – you know where the prices are going? Prove it!',
-      active: false,
-      linkTo: '',
-    },*/
+  {
+    background: gameCardPumpDump,
+    title: `Pump and Dump`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/pump-dump',
+  },
+  {
+    background: gameCardElon,
+    title: `Elon Game`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/elon-game',
+  },
+  {
+    background: gameCardMines,
+    title: `Mines`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/mines',
+  },
+  {
+    background: gameCardPlinko,
+    title: 'Plinko',
+    subtitle: '',
+    description: '',
+    active: true,
+    linkTo: '/games/plinko',
+  },
+  {
+    background: gameCardWheel,
+    title: 'Alpaca Wheel',
+    subtitle: '',
+    description: '',
+    active: true,
+    linkTo: '/games/alpaca-wheel',
+  },
+  {
+    background: gameCardAlpacannon,
+    title: `AlpaCannon`,
+    subtitle: '',
+    active: true,
+    linkTo: '/games/alpacannon',
+  }
+  /*,
+  {
+    background: Fourth,
+    title: 'Financial Poker',
+    subtitle: '',
+    description:
+      'Bring your poker face and portfolio management skills to live financial poker',
+    active: false,
+    linkTo: '',
+  },
+  {
+    background: Fifth,
+    title: 'Candle Stick',
+    subtitle: '',
+    description:
+      'Game and learn candlestick trading strategy in this jackpot tournament',
+    active: false,
+    linkTo: '',
+  },
+  {
+    background: First,
+    title: 'Midas Trader',
+    subtitle: '',
+    description: 'Market 1X2 – you know where the prices are going? Prove it!',
+    active: false,
+    linkTo: '',
+  },*/
 ];
 
 export const SLOTS_GAMES = [

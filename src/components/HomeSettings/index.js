@@ -39,7 +39,7 @@ const HomeSettings = ({
           </div>
           </>
           )}
-        <div
+        {/* <div
           onClick={onGamesClick}
           className={classNames(
             styles.singleSettingHolder
@@ -47,7 +47,7 @@ const HomeSettings = ({
         >
           <Icon className={styles.referralIcon} iconType={'game'} />
           <p className={styles.settingTitle}>Games</p>
-        </div>
+        </div> */}
         <div
           onClick={onActivitiesClick}
           className={classNames(

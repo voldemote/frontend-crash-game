@@ -1,23 +1,23 @@
 @import '../../styles/all';
 
 .gamesContainer {
-  padding: 30px 0px 0px;
+  padding: 20px 0px 0px;
 
-  @media (max-width: $screen-lg) {
-    padding: 90px 0px 0px;
-  }
+  // @media (max-width: $screen-lg) {
+  //   padding: 40px 0px 0px;
+  // }
 
-  @media (max-width: $screen-md) {
-    padding: 90px 0px 0px;
-  }
+  // @media (max-width: $screen-md) {
+  //   padding: 40px 0px 0px;
+  // }
 
-  @media (max-width: $screen-sm) {
-    padding: 90px 0px 0px;
-  }
+  // @media (max-width: $screen-sm) {
+  //   padding: 40px 0px 0px;
+  // }
 
-  @media (max-width: $screen-xs) {
-    padding: 75px 0px 0px;
-  }
+  // @media (max-width: $screen-xs) {
+  //   padding: 40px 0px 0px;
+  // }
 
   &.gamesPageContainer {
     @media (max-width: $screen-xs) {
