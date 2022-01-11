@@ -181,7 +181,7 @@ const RouletteGame = ({
           }
 
           {(gameMode && init) &&
-            <iframe allowFullScreen title={gameName} onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={(user.isLoggedIn && gameMode !== 'demo') ?url:urltest} />
+            <iframe allowFullScreen title={gameName} onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={classNames(styles.mainContainer,gameName === 'JetX' ? styles.jetXContainer : null)} src={(user.isLoggedIn && gameMode !== 'demo') ?url:urltest} />
           }
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
