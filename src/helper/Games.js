@@ -26,7 +26,6 @@ export const prepareEvoplayGames = (evoplayGames,gamesCategory) => {
     const gameInfo = evoplayGames[key];
     const catSubType = gameInfo.game_sub_type;
     const name = gameInfo.name;
-    console.log(gameInfo);
     let translatedCat = null;
 
     if(catSubType === 'Slot') {
@@ -52,6 +51,8 @@ export const prepareEvoplayGames = (evoplayGames,gamesCategory) => {
       if (catSubType === 'Roulette') {
         translatedCat = 'Roulette Games';
       }
+    } else if (name.indexOf('Keno') > -1) {
+        translatedCat = 'Keno Games';
     } else {
       if (catSubType === 'Blackjack' || catSubType === 'Table' || catSubType === 'Baccarat' || catSubType === 'Roulette' || catSubType === 'Poker') {
         translatedCat = 'Casino Games';
