@@ -2356,13 +2356,13 @@ export const NEW_SLOTS_GAMES = [
         active: true,
         linkTo: '/games/alpacannon',
     },
-    {
-        background: gameCard5,
-        title: `Oil Rush`,
-        subtitle: '',
-        active: false,
-        linkTo: '/games/oilrush',
-    },
+//   {
+//     background: gameCard5,
+//     title: `Oil Rush`,
+//     subtitle: '',
+//     active: false,
+//     linkTo: '/games/oilrush',
+//   },
     /*,
     {
       background: Fourth,
