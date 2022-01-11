@@ -16,8 +16,6 @@ setExternalGamesEvoplay
     'Slot',
     'Roulette',
     'Card Games',
-    'Poker',
-    'Blackjack',
     'Instant Win',
     'Keno',
     'All',
