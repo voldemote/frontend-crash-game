@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import styles from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 import { connect, useDispatch } from 'react-redux';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { trackWalletAddWfair } from 'config/gtm';
@@ -70,6 +70,7 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
         showArrows={true}
         showStatus={false}
         showIndicators={false}
+        showThumbs={false}
         onClickItem={onClickItem}
       >
       <div>
@@ -129,25 +130,26 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
       <Carousel
         className={styles.carousel}
         autoPlay
-        interval={6500}
+        interval={7000}
         transitionTime={800}
         infiniteLoop={true}
         stopOnHover={false}
         showArrows={true}
         showStatus={false}
         showIndicators={false}
+        showThumbs={false}
         onClickItem={onClickItem}
       >
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/deposit-bonus-${!isMobile ? 'desktop' : 'mobile'}.jpg`}
+          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/deposit-bonus-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
         />
       </div>
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/verify-kyc-${!isMobile ? 'desktop' : 'mobile'}.jpg`}
+          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/verify-kyc-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
         />
       </div>
       
@@ -167,18 +169,19 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
         showArrows={true}
         showStatus={false}
         showIndicators={false}
+        showThumbs={false}
         onClickItem={onClickItem}
       >
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/hello-human-${!isMobile ? 'desktop' : 'mobile'}.jpg`}
+          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/hello-human-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
         />
       </div>
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/deposit-bonus-${!isMobile ? 'desktop' : 'mobile'}.jpg`}
+          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/deposit-bonus-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
         />
       </div>
       

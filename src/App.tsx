@@ -89,7 +89,7 @@ const App = () => {
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
               <Route exact path={Routes.bet} component={EventRouter} />
-              <Route exact path={Routes.betApproveDirect} component={Home} />
+              <Route exact path={Routes.betApproveDirect} component={LandingPageV2} />
               {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
               <Route exact path={Routes.events} component={Events} />
               <Route
@@ -108,11 +108,11 @@ const App = () => {
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
-              <Route path={Routes.games} component={Games} />
+              {/* <Route path={Routes.games} component={LandingPageV2} /> */}
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
-              <Route exact path={Routes.oauth} component={Home} />
+              <Route exact path={Routes.oauth} component={LandingPageV2} />
               {showUpcoming && <Route exact path={Routes.externalGames} component={ExternalGames} />}
               <Route exact path={Routes.evoplayGame} component={EvoplayGame} />
               <Route exact path={Routes.externalGame} component={ExternalGame} />

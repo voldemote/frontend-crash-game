@@ -7,21 +7,21 @@
   background: rgba($colorPrimary, 0.7);
   border-radius: 12px;
   padding: 50px;
-  margin-top: 70vh;
+  // margin-top: 70vh;
   position: relative;
 
-  @media (max-width: $screen-sm) {
-    margin-top: calc(55vh - 20px);
-  }
-  @media (max-width: $screen-xs) {
-    margin-top: calc(65vh - 20px);
-  }
-  @media (max-width: 375px) {
-    margin-top: calc(65vh - 40px);
-  }
-  @media (max-width: 320px) {
-    margin-top: calc(70vh - 20px);
-  }
+  // @media (max-width: $screen-sm) {
+  //   margin-top: calc(55vh - 20px);
+  // }
+  // @media (max-width: $screen-xs) {
+  //   margin-top: calc(65vh - 20px);
+  // }
+  // @media (max-width: 375px) {
+  //   margin-top: calc(65vh - 40px);
+  // }
+  // @media (max-width: 320px) {
+  //   margin-top: calc(70vh - 20px);
+  // }
 
   @media (max-width: $screen-sm) {
     padding: 0 20px;
@@ -53,7 +53,11 @@
 
 .searchContainer {
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+
+  @media (max-width: $screen-sm) {
+    margin-top: 20px;
+  }
 
   .search {
     border-radius: 30px;

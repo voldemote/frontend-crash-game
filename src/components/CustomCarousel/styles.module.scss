@@ -1,27 +1,60 @@
 @import '../../styles/all';
 
 .carouselContainer {
-  position: absolute;
-  top: 0;
-
   cursor: pointer;
-  .carousel {
-    margin-top: 10vh;
-
-    @media (max-height: 750px) {
-      margin-top: 15vh;
-    }
-
-    @media (max-width: $screen-sm) {
-      margin-top: 8.7vh;
-    }
-  }
 
   img {
     object-fit: cover !important;
 
     @media (max-width: $screen-xs) {
       object-fit: contain !important;
+    }
+  }
+}
+
+.carousel-root {
+  .carousel * {
+    @media (max-width: $screen-md) {
+      height: 430px !important;
+    }
+
+    @media (max-width: $screen-md) {
+      height: 410px !important;
+    }
+  }
+  .carousel {
+    .control-dots {
+      bottom: 35% !important;
+      background: #00092b !important;
+      z-index: 99999999999999 !important;
+      border-radius: 30px !important;
+
+      width: 20% !important;
+      padding: 10px !important;
+      left: 40% !important;
+      align-items: center !important;
+      @media (max-width: $screen-md) {
+        width: 25% !important;
+      }
+      @media (max-width: $screen-sm) {
+        display: none;
+      }
+
+      .dot {
+        height: 20px !important;
+        width: 20px !important;
+        background: rgba(255, 255, 255, 0.5) !important;
+        border: 2px solid #ffd401 !important;
+
+        @media (max-width: $screen-md) {
+          height: 14px !important;
+          width: 14px !important;
+        }
+      }
+    }
+
+    .thumbs-wrapper {
+      display: none !important;
     }
   }
 }

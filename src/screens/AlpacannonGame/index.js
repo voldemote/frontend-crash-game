@@ -202,7 +202,7 @@ const PlinkoGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="AlpaCannon" />
+            <BackLink to="/" text="AlpaCannon" />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}

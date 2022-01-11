@@ -64,7 +64,7 @@ const RouletteGame = ({
   useEffect(() => {
     if(!user.isLoggedIn || gameMode === 'demo'){
       if(isMobile) {
-        history.push('/games')
+        history.push('/')
         window.location = `https://server.ssg-public.com/GameLauncher/Loader.aspx?Token=DEMO&GameCategory=${gameCategory}&GameName=${gameName}&ReturnUrl=${window.location.origin}&Lang=en&PortalName=DEMO`
       }else{
         setInit('faebb4a9-eca3-4720-b6fd-82540f55486a')
@@ -73,7 +73,7 @@ const RouletteGame = ({
       setInitialSession({UserId: userId, GameName: gameName, GameType: gameCategory, Provider: 'smartsoft' })
         .then(({data}) => {
           if(isMobile) {
-            history.push('/games')
+            history.push('/')
             window.location = `${urlLauncher}?GameCategory=${gameCategory}&GameName=${gameName}&Token=${data.TokenID}&PortalName=${portal}&ReturnUrl=${window.location.origin}`
           }else{
             console.log("data.TokenID", data.TokenID)
@@ -159,7 +159,7 @@ const RouletteGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text={gameName} />
+            <BackLink to="/" text={gameName} />
             <Share popupPosition="right" className={styles.shareButton} />
             <Icon
               className={styles.questionIcon}
