@@ -10,7 +10,7 @@ const DisplaySection = (props) => {
 //   let history = useHistory();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const {smartsoftGames, evoplayGames} = props;
+  const {smartsoftGames, evoplayGames, selectedGamesNames, selectedGamesLabel} = props;
 
   const [games, setGames] = useState([]);
   const getGameItemSizeClass = () => {
@@ -114,14 +114,31 @@ const DisplaySection = (props) => {
 
   return (
     <div className={styles.gamesContainer}>
-      {categories.map(category1 =>
+      {selectedGamesNames ? <div className={classNames(styles.gamesCategorySelected)}>
+        <div className={styles.gamesCategory}>
+          {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
+          <h2>{selectedGamesLabel}</h2>
+        </div>
+        <div className={classNames(styles.games)}>
+          {games.filter((item) => {
+            return selectedGamesNames.indexOf(item.TechnicalName) > -1;
+          }).map((game, index) => {
+              return <div
+                className={styles.wrapper}
+                key={`gamecard-${index}-`}
+              >
+                {renderLinkByProvider(game, index)}
+              </div>
+            }
+          )}
+        </div>
+      </div> : (categories.map(category1 =>
         <>
-
             <div className={styles.gamesCategory}>
               {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
               <h2>{category1}</h2>
             </div>
-          
+
           <div className={classNames(styles.games)}>
             {games.filter(g => g.GameCategory===category1).map((game, index) => {
 
@@ -136,7 +153,7 @@ const DisplaySection = (props) => {
             )}
           </div>
         </>
-      )}
+      ))}
     </div>
   );
 };
