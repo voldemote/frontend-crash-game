@@ -74,7 +74,7 @@ const DisplaySection = (props) => {
       </Link></div>
     }
 
-
+    if (game.TechnicalName !== undefined) {
     const smartSoftUrl = `/external-game/${game.TechnicalName}/${game.TechnicalCategory}`;
 
     return <div onClick={(e) => {
@@ -98,11 +98,28 @@ const DisplaySection = (props) => {
       </div>
     </Link></div>
   }
+}
 
   useEffect(() => {
 
     if(smartsoftGames && evoplayGames) {
-      setGames([...smartsoftGames, ...evoplayGames]);
+      console.log(smartsoftGames);
+      console.log(evoplayGames);
+      let ret = [];
+      let map = new Map();
+      smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+      evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+      ret = [...map.values()];
+      ret.sort(function (a, b) {
+        if (a.TechnicalName < b.TechnicalName) {
+          return -1;
+        }
+        if (a.TechnicalName > b.TechnicalName) {
+          return 1;
+        }
+        return 0;
+      });
+      setGames([...ret,""]);
     }
 
     return () => {
