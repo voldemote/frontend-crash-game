@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { selectUser } from 'store/selectors/authentication';
 import styles from '../styles.module.scss';
+import _ from 'lodash';
 
 const DisplaySection = (props) => {
 //   let history = useHistory();
@@ -103,23 +104,36 @@ const DisplaySection = (props) => {
   useEffect(() => {
 
     if(smartsoftGames && evoplayGames) {
-      console.log(smartsoftGames);
-      console.log(evoplayGames);
-      let ret = [];
-      let map = new Map();
-      smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
-      evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
-      ret = [...map.values()];
-      ret.sort(function (a, b) {
-        if (a.TechnicalName < b.TechnicalName) {
-          return -1;
-        }
-        if (a.TechnicalName > b.TechnicalName) {
-          return 1;
-        }
-        return 0;
-      });
-      setGames([...ret,""]);
+      if(selectedGamesNames && selectedGamesNames.length) {
+        const allGames = [...smartsoftGames, ...evoplayGames];
+        const selectedGames = [];
+
+        selectedGamesNames.forEach((item)=> {
+          const findGame = _.find(allGames, {TechnicalName: item});
+
+          if(findGame) {
+            selectedGames.push(findGame);
+          }
+        })
+
+        setGames(selectedGames);
+      } else {
+        let ret = [];
+        let map = new Map();
+        smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        ret = [...map.values()];
+        ret.sort(function (a, b) {
+          if (a.TechnicalName < b.TechnicalName) {
+            return -1;
+          }
+          if (a.TechnicalName > b.TechnicalName) {
+            return 1;
+          }
+          return 0;
+        });
+        setGames([...ret,""]);
+      }
     }
 
     return () => {
@@ -137,9 +151,7 @@ const DisplaySection = (props) => {
           <h2>{selectedGamesLabel}</h2>
         </div>
         <div className={classNames(styles.games)}>
-          {games.filter((item) => {
-            return selectedGamesNames.indexOf(item.TechnicalName) > -1;
-          }).map((game, index) => {
+          {games.map((game, index) => {
               return <div
                 className={styles.wrapper}
                 key={`gamecard-${index}-`}
