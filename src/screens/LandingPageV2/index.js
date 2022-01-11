@@ -246,7 +246,7 @@ const LandingPageV2 = (
       let externalGamesDisplaySmartsoft =
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
-        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES) : [];
+        selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
 
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
