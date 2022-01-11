@@ -171,9 +171,9 @@ const RouletteGame = ({
             />
           </div>
 
-          {!gameMode && 
+          {!gameMode &&
           <div className={classNames(styles.mainContainer, styles.mainContainerPreview)}>
-            <div className={styles.gamePreviewContainer} style={{  
+            <div className={styles.gamePreviewContainer} style={{
               backgroundImage: `url(https://www.smartsoftgaming.com/Content/Images/GameIcons/${gameName}.jpg)`,
             }} />
               <SelectGameModePopup className={styles.gameModePopup} user={user} setGameMode={setGameMode} />
@@ -181,7 +181,7 @@ const RouletteGame = ({
           }
 
           {(gameMode && init) &&
-            <iframe title={gameName} onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={(user.isLoggedIn && gameMode !== 'demo') ?url:urltest} />
+            <iframe allowFullScreen title={gameName} onLoad={() => console.log("URL changed:", contentRef?.contentWindow?.location?.href)} ref={contentRef} className={styles.mainContainer} src={(user.isLoggedIn && gameMode !== 'demo') ?url:urltest} />
           }
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>

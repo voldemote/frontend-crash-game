@@ -146,17 +146,17 @@ const EvoplayGame = ({
             />
           </div>
 
-          {!gameMode && 
+          {!gameMode &&
             <div className={classNames(styles.mainContainer, styles.mainContainerPreview)}>
-            <div className={styles.gamePreviewContainer} style={{  
+            <div className={styles.gamePreviewContainer} style={{
                 backgroundImage: `url(/images/evoplay/${filename}_360x360.jpg)`,
-              }} 
+              }}
             />
               <SelectGameModePopup className={styles.gameModePopup} user={user} setGameMode={setGameMode} />
             </div>
           }
 
-          {(gameMode && init) && <iframe title={gameName} className={styles.mainContainer} src={init}/>}
+          {(gameMode && init) && <iframe allowFullScreen title={gameName} className={styles.mainContainer} src={init}/>}
           {isMiddleOrLargeDevice ? (
             <div className={styles.bottomWrapper}>
               {renderChat()}
