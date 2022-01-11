@@ -208,7 +208,7 @@ const RouletteGame = ({
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.headlineWrapper}>
-            <BackLink to="/games" text="Alpaca Wheel"/>
+            <BackLink to="/" text="Alpaca Wheel"/>
             <Share popupPosition="right" className={styles.shareButton}/>
             <Icon
               className={styles.questionIcon}

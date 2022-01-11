@@ -33,12 +33,14 @@ import UniquePiece from '../../data/images/home/unique-piece.svg';
 import SocialPiece from '../../data/images/home/social-piece.svg';
 import PlinkoAlpaca from '../../data/images/home/plinko-alpaca.svg';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
+import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
 
 const LandingPageV2 = (
   authState,
   showPopup,
   events,
   startOnboardingFlow,
+  userId,
 ) => {
   const isMount = useIsMount();
   const location = useLocation();
@@ -269,6 +271,7 @@ const LandingPageV2 = (
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} carouselType='landingpage'>
+      <CustomCarousel loggedIn={authState === authState.LOGGED_IN} userId={userId} carouselType={'landingpage'} />
       <div className={styles.container}>
         <SearchSection
           setGames={setGames}
@@ -296,6 +299,7 @@ const mapStateToProps = state => {
     authState: state.authentication.authState,
     tags: state.event.tags,
     events: state.event.events,
+    userId: state.authentication.userId,
   };
 };
 

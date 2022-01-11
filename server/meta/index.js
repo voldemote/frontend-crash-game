@@ -36,13 +36,13 @@ let meta = {
     keywords:
       'Alpacasino, Casino, Events, Harris, Biden, Trump, Crypto, Esports, Sports, Gaming',
   },
-  '/games': {
-    title: 'Alpacasino Games',
-    description: 'Earn more with Alpacasino games, all day, everyday',
-    image: 'https://alpacasino.io/logo_512.png?v=3',
-    keywords:
-      'alpacasino, casino, games betting, vegas, gambling, odds, roulette, crypto-casino',
-  },
+  // '/games': {
+  //   title: 'Alpacasino Games',
+  //   description: 'Earn more with Alpacasino games, all day, everyday',
+  //   image: 'https://alpacasino.io/logo_512.png?v=3',
+  //   keywords:
+  //     'alpacasino, casino, games betting, vegas, gambling, odds, roulette, crypto-casino',
+  // },
   '/games/elon-game': {
     title: 'Alpacasino Elon Game',
     description: 'To the Moon with Elon, big wins, tiny rocket',
