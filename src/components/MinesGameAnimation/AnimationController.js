@@ -256,7 +256,16 @@ class AnimationController {
   }
 
   async clickCell(props) {
+    console.log("CLICK");
     return this.game.clickCell(props)
+  }
+  async overCell(props) {
+    console.log("over");
+    return this.game.overCell(props)
+  }
+  async outCell(props) {
+    console.log("out");
+    return this.game.outCell(props)
   }
 
   restart() {
