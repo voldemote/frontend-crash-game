@@ -259,8 +259,6 @@ export default class View extends Factory.Container {
   onMouseOver({ data }) {
     this.grid.children.forEach(element => {
       if (element.isRevealed === false) {
-        element.tint = 0x666666;
-      } else {
         element.tint = 0x999999;
       }  
     });
@@ -271,7 +269,7 @@ export default class View extends Factory.Container {
     const cell = this.grid.cells[row][col];
     this.scaledCell = cell;
     cell.tint = 0xffffff;
-    cell.scale.set(1.05);
+    cell.scale.set(1.1);
 
     //this.emit("overOnCell", { row, col });
   }
