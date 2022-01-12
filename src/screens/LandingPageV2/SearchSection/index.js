@@ -1,6 +1,8 @@
 import { Grid } from "@material-ui/core";
+import classNames from "classnames";
 import { useState } from "react";
 import styles from '../styles.module.scss';
+import {ReactComponent as SearchIcon} from '../../../data/icons/search-small.svg'
 
 const SearchSection = ({ setGames,
   alpacaGames,
@@ -21,12 +23,20 @@ setExternalGamesEvoplay
     'All',
   ];
   const [search, setSearch] = useState('');
+  const [selectedButton, setSelectedButton] = useState('All');
 
   const onChangeSearch = e => {
     const value = e.target.value;
+
+    if (value === null) {
+      setSelectedButton('All');  
+    } else {
+      setSelectedButton(null);
+    }
+
     setSearch(value);
-
-
+    
+    
     const searchedAlpacaGame = alpacaGames.filter(game => {
       const match = game.title.toLowerCase().match(value.toLowerCase());
       return Array.isArray(match);
@@ -71,6 +81,7 @@ setExternalGamesEvoplay
       <Grid container spacing={1} >
         <Grid item lg={2} md={8} sm={8} xs={12}>
           <div className={styles.search}>
+            <SearchIcon />
             <input
               type="text"
               value={search}
@@ -82,7 +93,11 @@ setExternalGamesEvoplay
         {gamesTitleList.map((game, index) => {
           return (
             <Grid item key={index + game}>
-              <p className={styles.searchItem} onClick={e => selectGame(game)}>
+              <p className={classNames(styles.searchItem, selectedButton === game ? styles.active : null)} onClick={e => {
+                selectGame(game);
+                setSelectedButton(game);
+                setSearch('');
+              }}>
                 {game}
               </p>
             </Grid>
