@@ -54,8 +54,8 @@ export default class Controller extends Emitter {
     this.view.creteGrid(grid);
     this.view.on("flagRequested", this.onFlagRequested, this);
     this.view.on("clickOnCell", this.onClickOnCell, this);
-    // this.view.on("overOnCell", this.overOnCell, this);
-    // this.view.on("outOnCell", this.outOnCell, this);
+    this.view.on("overOnCell", this.overOnCell, this);
+    this.view.on("outOnCell", this.outOnCell, this);
     this.view.once("restartGame", this.onRestartGame, this);
 
     //this.view.createHeader();
@@ -79,6 +79,8 @@ export default class Controller extends Emitter {
     this.model.cleanModel();
     this.view.off("flagRequested", this.onFlagRequested, this);
     this.view.off("clickOnCell", this.onClickOnCell, this);
+    this.view.on("overOnCell", this.overOnCell, this);
+    this.view.on("outOnCell", this.outOnCell, this);
     this.emit("restartGame");
   }
 
@@ -100,12 +102,12 @@ export default class Controller extends Emitter {
    *  update model and view */
   async onClickOnCell({ row, col }) {
     return new Promise((resolve, reject) => {
+      console.log("CLICK");
       const { grid: { collection } } = this.model;
       const isLoggedIn = this.gameConfig?.isLoggedIn;
 
       if(isLoggedIn) {
         const cell = this.view.grid.cells[ row ][ col ];
-
         if(!cell.isRevealed) {
           this.handlers.checkSelectedCell({row, col}).then((result) => {
             this.model.updateCellsData([result]);
@@ -167,12 +169,12 @@ export default class Controller extends Emitter {
       }
     })
   }
-  overOnCell({ row, col }) {
+  async overOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
     const result = Engine.checkSelectedCell(collection, row, col);
-     this.view.overCell(result);
+    this.view.overCell(result);
   }
-  outOnCell({ row, col }) {
+  async outOnCell({ row, col }) {
     const { grid: { collection } } = this.model;
     const result = Engine.checkSelectedCell(collection, row, col);
     //this.model.updateCellsData(result);
