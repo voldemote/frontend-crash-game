@@ -10,6 +10,7 @@ import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { GeneralActions } from 'store/actions/general';
 import * as ApiUrls from 'constants/Api';
+import authState from 'constants/AuthState';
 
 const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId}) => {
   const dispatch = useDispatch();
@@ -216,6 +217,13 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    user: state.authentication,
+    loggedIn: state.authentication.authState === authState.LOGGED_IN,
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     showWalletDepositPopup: () => {
@@ -232,6 +240,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CustomCarousel);

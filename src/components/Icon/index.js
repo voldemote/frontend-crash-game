@@ -65,6 +65,7 @@ import { ReactComponent as IconQuestion } from '../../data/icons/question.svg';
 import { ReactComponent as IconTwitch } from '../../data/icons/twitch.svg';
 import { ReactComponent as IconWallet } from '../../data/icons/wallet.svg';
 import { ReactComponent as IconWallet2 } from '../../data/icons/wallet-2.svg';
+import { ReactComponent as IconWallet3 } from '../../data/icons/wallet-3.svg';
 import { ReactComponent as IconWithdrawal } from '../../data/icons/withdrawal.svg';
 import { ReactComponent as NewsIcon } from '../../data/icons/news-icon.svg';
 import { ReactComponent as ShareIcon } from '../../data/icons/share-solid-fa.svg';
@@ -155,6 +156,7 @@ const Icon = ({
       [IconType.twitch]: <IconTwitch />,
       [IconType.wallet]: <IconWallet />,
       [IconType.wallet2]: <IconWallet2 />,
+      [IconType.wallet3]: <IconWallet3 />,
       [IconType.info]: <IconInfo />,
       [IconType.infoReverse]: <IconInfoReverse />,
       [IconType.success]: <IconSuccess />,

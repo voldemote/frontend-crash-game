@@ -44,7 +44,6 @@ import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
 import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
-import WalletBuyWfairPopup from 'components/WalletBuyWfairPopup/WalletBuyWfairPopup';
 import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
 import TransakSuccess from "../TransakSuccess";
@@ -245,8 +244,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.alpacaBuilder:
         return <AlpacaBuilderPopup {...options}/>;
 
-      case PopupTheme.walletBuyWfair:
-        return <WalletBuyWfairPopup />;
       case PopupTheme.walletDeposit:
         return <WalletDepositPopup />;
       case PopupTheme.walletDepositCrypto:

@@ -52,6 +52,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
   const [inputAmount, setInputAmount] = useState(0.1);
   const [tokenValue, setTokenValue] = useState(0);
   const [bonus, setBonus] = useState(0);
+  const [total, setTotal] = useState(0);
   const [address, setAddress] = useState('');
   const [uri, setUri] = useState('');
   const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
@@ -94,10 +95,10 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
       };
 
       const { response } = await convertCurrency(convertCurrencyPayload);
-      const { convertedAmount } = response?.data;
-      const convertedTokenValue = !convertedAmount
+      const data = response.data;
+      const convertedTokenValue = !data.convertedAmount
         ? 0
-        : convertedAmount.toFixed(4);
+        : parseFloat(data.convertedAmount).toFixed(4);
 
       const roundedAmount = Math.floor(Number(convertedTokenValue) * 100) / 100;
       let WfairTokenValue = !roundedAmount
@@ -108,10 +109,15 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
 
       const expectedBonus = depositCount > 0 ? 0 : Math.min(LIMIT_BONUS, WfairTokenValue);
       setBonus(expectedBonus);
+
+      const calculatedTotal = Math.floor((WfairTokenValue + expectedBonus) * 100) / 100;
+
+      setTotal(calculatedTotal);
       
     } else {
       setTokenValue(0);
       setBonus(0);
+      setTotal(0)
     }
   }, [selectedCurrency.label]);
 
@@ -224,14 +230,14 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
         </div>
         <hr/>
         <div className={styles.overviewItem}>
-          <span className={styles.total}>Total</span><span className={styles.total}>{numberWithCommas(parseFloat(tokenValue) + parseFloat(bonus))} {TOKEN_NAME}</span>
+          <span className={styles.total}>Total</span><span className={styles.total}>{numberWithCommas(total)} {TOKEN_NAME}</span>
         </div>
         <hr/>
       </div>
 
       <div className={styles.summary}>
         <span>Add to Alpacasino Account in WFAIR</span>
-        <p className={styles.summaryTotal}>{numberWithCommas(parseFloat(tokenValue) + parseFloat(bonus))} {TOKEN_NAME}</p>
+        <p className={styles.summaryTotal}>{numberWithCommas(total)} {TOKEN_NAME}</p>
       </div>
 
       {!errorFetchingChannel && (
