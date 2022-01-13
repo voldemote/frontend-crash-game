@@ -20,8 +20,10 @@ export default class Game {
   }
 
   clickCell(props) {
+    console.log("clickCell");
     return this.controller.onClickOnCell(props)
   }
+ 
   /** As game is being restarted use original data again.
    * Dispatch dummy event to make LayoutManager does its work */
   restartGame() {

@@ -53,22 +53,48 @@
 
 .searchContainer {
   width: 100%;
+  margin: 0 auto;
   margin-bottom: 20px;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
 
-  @media (max-width: $screen-sm) {
+  .searchWrapper {
+    margin: 0 auto;
+    display: flex;
+    max-width: 500px;
+    gap: 10px;
+  }
+
+  @media (max-width: $screen-xs) {
     margin-top: 20px;
   }
 
-  .search {
+  .search,
+  .searchMobile {
     border-radius: 30px;
-    border: 1px solid $colorButton;
+    border: 2px solid $colorWhite50;
     height: 40px;
     display: flex;
     justify-content: center;
     background: $colorPrimary;
-    margin-right: 10px;
+
+    &.searchMobile {
+      margin-bottom: 10px;
+      @media (min-width: $screen-xs) {
+        display: none;
+      }
+    }
+
+    & svg {
+      margin: 3px 10px;
+      width: 34px;
+      height: 30px;
+      opacity: 0.5;
+    }
 
     input {
+      // padding-left: 20px;
       background: transparent;
       width: 90%;
       border: none;
@@ -77,7 +103,8 @@
       font-weight: 600;
       font-size: 20px;
       line-height: 20px;
-      text-align: center;
+      text-align: left;
+      padding-right: 10px;
 
       &::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -89,30 +116,110 @@
         outline: none;
       }
       &::placeholder {
-        color: $colorWhite;
+        color: $colorWhite30;
       }
     }
   }
-  .searchItem {
-    font-family: $fontOmnes;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 20px;
-    min-width: 150px;
 
-    text-align: center;
-    color: $colorWhite;
-    padding: 10px;
+  .categoryGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 150px repeat(auto-fit, minmax(120px, 5fr));
+
+    gap: 5px;
+
+    @media (max-width: $screen-xs) {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 2fr));
+    }
+  }
+
+  .searchButton {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     background-color: $colorPrimary;
-    border: 1px solid $colorButton;
+    border: 2px solid $colorButton;
     box-sizing: border-box;
     border-radius: 30px;
     cursor: pointer;
+    user-select: none;
+    // width: 50px;
+    height: 40px;
+    color: $colorWhite;
+
+    color: $colorWhite;
+    background-color: $colorPrimary;
+    border: 2px solid $colorButton;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+
+    & svg {
+      margin: 2px 12px 2px 10px;
+      width: 30px;
+      height: 30px;
+    }
+
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
+  }
+
+  .searchItem {
+    font-family: $fontOmnes;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    // min-width: 155px;
+    height: 40px;
+
+    text-align: center;
+    color: $colorWhite;
+    padding: 8px 10px;
+    background-color: $colorPrimary;
+    border: 2px solid $colorButton;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      font-weight: 700;
+    }
+
+    &.active {
+      background-color: $colorButton;
+      // border: 2px solid $colorButton;
+      font-weight: 700;
+      color: $colorBlack;
+    }
+
+    &.selectAllDesktop {
+      @media (max-width: $screen-xs) {
+        display: none;
+      }
+    }
+
+    &.selectAllMobile {
+      display: none;
+      @media (max-width: $screen-xs) {
+        display: block;
+      }
+    }
 
     @media (max-width: $screen-md) {
       font-size: 14px;
-      padding: 5px;
-      min-width: 100px;
+      padding: 8px;
+      // min-width: 100px;
+      // min-width: 158px;
+    }
+
+    @media (max-width: $screen-xs) {
+      font-size: 14px;
+      padding: 8px;
+      // min-width: 120px;
     }
   }
 }

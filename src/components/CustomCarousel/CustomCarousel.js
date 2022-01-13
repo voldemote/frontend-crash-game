@@ -5,11 +5,12 @@ import { useHistory } from 'react-router-dom';
 import { isMobile, isTablet } from 'react-device-detect';
 import { connect, useDispatch } from 'react-redux';
 import { OnboardingActions } from 'store/actions/onboarding';
-import { trackWalletAddWfair } from 'config/gtm';
+import { dataLayerPush, trackWalletAddWfair } from 'config/gtm';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { GeneralActions } from 'store/actions/general';
 import * as ApiUrls from 'constants/Api';
+import authState from 'constants/AuthState';
 
 const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId}) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
   const carouselLinks = {
     landingpage: !loggedIn ? [
       'hello-human',
-      'hello-human',
+      'deposit-bonus-nonlogged',
     ] : [
       'deposit-bonus', 
       'verify-kyc',
@@ -45,12 +46,31 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
     switch(carouselLinks[carouselType][itemIndex]) {
       case 'hello-human':
         dispatch(OnboardingActions.start());
+        dataLayerPush({
+          event:'gtm.click',
+          'gtm.elementId': 'banner--hello-human',
+        });
+        break;
+      case 'deposit-bonus-nonlogged':
+        dispatch(OnboardingActions.start());
+        dataLayerPush({
+          event:'gtm.click',
+          'gtm.elementId': 'banner--deposit-bonus-nonlogged',
+        });
         break;
       case 'deposit-bonus':
         showWalletDepositPopup();
+        dataLayerPush({
+          event:'gtm.click',
+          'gtm.elementId': 'banner--deposit-bonus',
+        });
         break;
       case 'verify-kyc':      
         openFractal();
+        dataLayerPush({
+          event:'gtm.click',
+          'gtm.elementId': 'banner--verify-kyc',
+        });
         break;
       default:
         history.push(carouselLinks[carouselType][itemIndex]);
@@ -197,6 +217,13 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    user: state.authentication,
+    loggedIn: state.authentication.authState === authState.LOGGED_IN,
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     showWalletDepositPopup: () => {
@@ -213,6 +240,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CustomCarousel);
