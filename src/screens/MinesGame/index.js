@@ -33,7 +33,6 @@ import MinesAlpaca from '../../data/images/mines/mines-alpaca.png';
 
 import {trackMinesCashout} from "../../config/gtm";
 import classNames from "classnames";
-
 const outcomeMultipliers = [
   [1.03, 1.09, 1.15, 1.21, 1.28, 1.35, 1.42, 1.5, 1.58, 1.67, 1.76, 1.86, 1.96, 2.07, 2.18, 2.3, 2.43, 2.56, 2.7, 2.85, 3.01, 3.18, 3.35, 3.53],
   [1.08, 1.14, 1.2, 1.27, 1.34, 1.41, 1.49, 1.57, 1.66, 1.75, 1.85, 1.95, 2.06, 2.17, 2.29, 2.42, 2.55, 2.69, 2.84, 3, 3.17, 3.34, 3.52],
@@ -60,6 +59,7 @@ const outcomeMultipliers = [
   [12.38, 16.47],
   [24.75]
 ];
+window.PIXI = PIXI;
 
 const Game = ({
   showPopup,

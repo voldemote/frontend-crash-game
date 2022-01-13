@@ -4,7 +4,9 @@ import Popup from "./Popup.js";
 import Header from "./Header.js";
 import { isMobile } from 'react-device-detect';
 import { result } from "lodash";
+import * as PIXI from 'pixi.js';
 
+PIXI.settings.PRECISION = 'highp';
 /**
  * @class View
  * @extends PIXI.Container
@@ -157,16 +159,20 @@ export default class View extends Factory.Container {
         const y = -(gridHeight / 2) + (height * i);
         const cell = new Cell(texture, cellModel);
         cell.position.set(x, y);
-        cell.position.set(x, y);
+        cell.buttonMode=true;
         cell.on("mouseover", this.onMouseOver, this);
         cell.on("mouseout", this.onMouseOut, this);
         cell.interactive = true;
+        
         return cell;
       });
     });
 
     this.grid.cells.forEach(row => {
-      row.forEach(cell => this.grid.addChild(cell));
+      
+      row.forEach(
+        cell => this.grid.addChild(cell)
+      );
     });
 
 
@@ -242,10 +248,9 @@ export default class View extends Factory.Container {
   /** For mouse left click on PC
    *  @param {Event} */
   onClick({ data }) {
-    console.log("CLICK 2");
-    const { x, y } = data.getLocalPosition(this.grid);
-    const { row, col } = this.convertLocToIndex(x, y);
-    this.emit("clickOnCell", { row, col });
+    // const { x, y } = data.getLocalPosition(this.grid);
+    // const { row, col } = this.convertLocToIndex(x, y);
+    this.emit("clickOnCell", this.overCell);
   }
 
   /** For mouse right click on PC
@@ -262,16 +267,15 @@ export default class View extends Factory.Container {
         element.tint = 0x999999;
       }  
     });
-    
+   
     
     const { x, y } = data.getLocalPosition(this.grid);
     const { row, col } = this.convertLocToIndex(x, y);
     const cell = this.grid.cells[row][col];
+    this.overCell = { row, col };
     this.scaledCell = cell;
     cell.tint = 0xffffff;
     cell.scale.set(1.1);
-
-    //this.emit("overOnCell", { row, col });
   }
   onMouseOut({ data }) {
     this.grid.children.forEach(element => {
