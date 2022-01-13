@@ -118,6 +118,7 @@ setExternalGamesEvoplay
             {selectedButton === 'All' &&
               <div className={styles.searchButton} onClick={e => setSearchSelected(true)}>
                 <SearchIcon />
+                <span>Search</span>
               </div>
               
             }
