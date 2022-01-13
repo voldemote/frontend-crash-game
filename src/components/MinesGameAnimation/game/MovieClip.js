@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-
 export default class MovieClip extends PIXI.AnimatedSprite {
   constructor (config) {
     var textures = []
