@@ -29,14 +29,14 @@ setExternalGamesEvoplay
     const value = e.target.value;
 
     if (value === null) {
-      setSelectedButton('All');  
+      setSelectedButton('All');
     } else {
       setSelectedButton(null);
     }
 
     setSearch(value);
-    
-    
+
+
     const searchedAlpacaGame = alpacaGames.filter(game => {
       const match = game.title.toLowerCase().match(value.toLowerCase());
       return Array.isArray(match);
@@ -85,44 +85,21 @@ setExternalGamesEvoplay
   return (
     <div className={styles.searchContainer}>
 
-        <div className={styles.searchMobile}>
-          <SearchIcon />
-          <input
-            type="text"
-            value={search}
-            placeholder="Search"
-            onChange={onChangeSearch}
-          />
+        <div className={styles.searchWrapper}>
+          <div className={styles.search}>
+            <SearchIcon />
+            <input
+              type="text"
+              value={search}
+              placeholder="Search"
+              onChange={onChangeSearch}
+            />
+          </div>
         </div>
 
-        {searchSelected &&
-          <div className={styles.searchWrapper}>
-            <div className={styles.search}>
-              <SearchIcon />
-              <input
-                type="text"
-                value={search}
-                placeholder="Search"
-                onChange={onChangeSearch}
-              />
-            </div>
-            <div className={classNames(styles.searchItem)} onClick={e => { 
-              handleGameCategory('All');
-              setSearchSelected(false);
-            }}>Show all</div>
-          </div>
-        }
-        
-        {!searchSelected &&
+
           <div className={styles.categoryGrid}>
-            {selectedButton === 'All' &&
-              <div className={styles.searchButton} onClick={e => setSearchSelected(true)}>
-                <SearchIcon />
-                <span>Search</span>
-              </div>
-              
-            }
-            {selectedButton !== 'All' && <div className={classNames(styles.searchItem, styles.selectAllDesktop)} onClick={e => handleGameCategory('All')}>All</div>}
+            {<div className={classNames(styles.searchItem, styles.selectAllDesktop)} onClick={e => handleGameCategory('All')}>All</div>}
             {gamesTitleList.map((game, index) => {
               return (
                 <div key={index + game} className={classNames(styles.searchItem, selectedButton === game ? styles.active : null)} onClick={e => handleGameCategory(game)}>
@@ -132,7 +109,6 @@ setExternalGamesEvoplay
             })}
             {selectedButton !== 'All' && <div className={classNames(styles.searchItem, styles.selectAllMobile)} onClick={e => handleGameCategory('All')}>All</div>}
           </div>
-        }
     </div>
   );
 };
