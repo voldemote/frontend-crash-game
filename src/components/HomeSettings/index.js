@@ -21,7 +21,7 @@ const HomeSettings = ({
   onLogoutClick,
   onCloseProfile,
   onKycInfoClick,
-  onProfileClick
+  onProfileClick,
 }) => {
   return (
     <div className={styles.settings}>
@@ -48,6 +48,15 @@ const HomeSettings = ({
           <Icon className={styles.referralIcon} iconType={'game'} />
           <p className={styles.settingTitle}>Games</p>
         </div> */}
+        <div
+          onClick={onWalletClick}
+          className={classNames(
+            styles.singleSettingHolder
+          )}
+        >
+          <Icon className={styles.referralIcon} iconType={'wallet3'} />
+          <p className={styles.settingTitle}>Wallet</p>
+        </div>
         <div
           onClick={onActivitiesClick}
           className={classNames(
