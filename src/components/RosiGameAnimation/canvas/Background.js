@@ -6,8 +6,10 @@ import {
   intersect,
   getRandomItems,
 } from './utils';
+
 import TWEEN from '@tweenjs/tween.js';
 import { ROSI_GAME_MAX_CRASH_FACTOR } from 'constants/RosiGame';
+window.PIXI = PIXI;
 
 const planetNames = ['planet1', 'planet2', 'planet3', 'planet4'];
 

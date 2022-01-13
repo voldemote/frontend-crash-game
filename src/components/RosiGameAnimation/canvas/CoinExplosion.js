@@ -7,13 +7,14 @@ class CoinExplosion {
   constructor(app) {
     this.app = app;
     this.container = new PIXI.Container();
+    this.container.name ="CoinExplosion";
     this.container.visible = false;
 
     this.coins = [];
     this.createCoins();
 
-    this.fadeOutCoinTween = window.startCoinExplosion =
-      this.startAnimation.bind(this);
+    // this.fadeOutCoinTween = window.startCoinExplosion =
+    //   this.startAnimation.bind(this);
   }
 
   createCoins() {

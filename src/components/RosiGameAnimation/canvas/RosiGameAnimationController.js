@@ -285,6 +285,7 @@ class RosiAnimationController {
 
   start(gameStartTime, musicIndex) {
     this.preparingRound.hide();
+    this.coinExplosion.stopAnimation();
     this.coinAndTrajectory.startCoinFlyingAnimation(gameStartTime);
     this.cashedOut.reset();
     this.gameStartTime = gameStartTime;
