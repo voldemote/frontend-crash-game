@@ -70,7 +70,7 @@ const Error = ({ setModalOpen, hash, showWalletBuyWfairPopup, notActiveNetwork }
 const mapDispatchToProps = dispatch => {
   return {
     showWalletBuyWfairPopup: () => {
-      dispatch(PopupActions.show({ popupType: PopupTheme.walletBuyWfair }));
+      dispatch(PopupActions.show({ popupType: PopupTheme.walletConnectWallet }));
     },
   };
 };

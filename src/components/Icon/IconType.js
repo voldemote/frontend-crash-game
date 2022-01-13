@@ -65,6 +65,7 @@ export default {
   trash: 'trash',
   twitch: 'twitch',
   question: 'question',
+  wallet3: 'wallet3',
   wallet2: 'wallet2',
   wallet: 'wallet',
   withdrawal: 'withdrawal',
