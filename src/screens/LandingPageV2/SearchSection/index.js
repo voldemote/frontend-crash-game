@@ -20,10 +20,10 @@ setExternalGamesEvoplay
     'Card Games',
     'Instant Win',
     'Keno',
-    'All',
   ];
   const [search, setSearch] = useState('');
   const [selectedButton, setSelectedButton] = useState('All');
+  const [searchSelected, setSearchSelected] = useState(false);
 
   const onChangeSearch = e => {
     const value = e.target.value;
@@ -62,6 +62,12 @@ setExternalGamesEvoplay
     }
   };
 
+  const handleGameCategory = (gameCategory) => {
+    selectGame(gameCategory);
+    setSelectedButton(gameCategory);
+    setSearch('');
+  }
+
   const selectGame = (gameCategory, searched) => {
     if (gameCategory === 'All') {
       setGames();
@@ -78,32 +84,55 @@ setExternalGamesEvoplay
 
   return (
     <div className={styles.searchContainer}>
-      <Grid container spacing={1} >
-        <Grid item lg={2} md={8} sm={8} xs={12}>
-          <div className={styles.search}>
-            <SearchIcon />
-            <input
-              type="text"
-              value={search}
-              placeholder="Search"
-              onChange={onChangeSearch}
-            />
+
+        <div className={styles.searchMobile}>
+          <SearchIcon />
+          <input
+            type="text"
+            value={search}
+            placeholder="Search"
+            onChange={onChangeSearch}
+          />
+        </div>
+
+        {searchSelected &&
+          <div className={styles.searchWrapper}>
+            <div className={styles.search}>
+              <SearchIcon />
+              <input
+                type="text"
+                value={search}
+                placeholder="Search"
+                onChange={onChangeSearch}
+              />
+            </div>
+            <div className={classNames(styles.searchItem)} onClick={e => { 
+              handleGameCategory('All');
+              setSearchSelected(false);
+            }}>Show all</div>
           </div>
-        </Grid>
-        {gamesTitleList.map((game, index) => {
-          return (
-            <Grid item key={index + game}>
-              <p className={classNames(styles.searchItem, selectedButton === game ? styles.active : null)} onClick={e => {
-                selectGame(game);
-                setSelectedButton(game);
-                setSearch('');
-              }}>
-                {game}
-              </p>
-            </Grid>
-          );
-        })}
-      </Grid>
+        }
+        
+        {!searchSelected &&
+          <div className={styles.categoryGrid}>
+            {selectedButton === 'All' &&
+              <div className={styles.searchButton} onClick={e => setSearchSelected(true)}>
+                <SearchIcon />
+                <span>Search</span>
+              </div>
+              
+            }
+            {selectedButton !== 'All' && <div className={classNames(styles.searchItem, styles.selectAllDesktop)} onClick={e => handleGameCategory('All')}>All</div>}
+            {gamesTitleList.map((game, index) => {
+              return (
+                <div key={index + game} className={classNames(styles.searchItem, selectedButton === game ? styles.active : null)} onClick={e => handleGameCategory(game)}>
+                  {game}
+                </div>
+            );
+            })}
+            {selectedButton !== 'All' && <div className={classNames(styles.searchItem, styles.selectAllMobile)} onClick={e => handleGameCategory('All')}>All</div>}
+          </div>
+        }
     </div>
   );
 };
