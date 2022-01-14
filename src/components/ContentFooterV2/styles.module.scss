@@ -1,0 +1,340 @@
+@import '../../styles/all';
+
+.container {
+  width: 100%;
+  flex-direction: column;
+  padding: 40px 60px 15px 60px;
+  background-color: $colorBackground;
+  font-size: 18px;
+
+  @media (max-width: $screen-sm) {
+    padding: 15px 0;
+  }
+
+  .footerDisclaimer {
+    color: $colorWhite;
+    font-size: 16px;
+    line-height: 1.2;
+    margin: 0 auto;
+    max-width: 1250px;
+    width: 100%;
+    padding: 0 20px;
+    opacity: 0.5;
+    text-align: center;
+  }
+}
+
+.poweredBy {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+
+  img {
+    display: block;
+  }
+}
+
+.copyrightBlock {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 15px 0 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+.supportBlock {
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  margin: 15px 0 10px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  color: $colorPrimary;
+  margin: 0 auto;
+  justify-content: space-between;
+
+  @media (max-width: $screen-md) {
+    flex-direction: column;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .logosBlock {
+    width: 100%;
+
+    .logosSeparator:first-child {
+      margin-top: 0;
+    }
+
+    .logosSeparator:last-child {
+        margin-bottom: 0;
+    }
+  }
+
+  .logosSeparator {
+    height: 1px;
+    background-color: rgba(255,255,255,0.6);
+    margin: 30px 0;
+
+    @media (max-width: $screen-md) {
+      margin: 15px 0;
+    }
+  }
+
+
+  .footerSeparator {
+    height: 1px;
+    background-color: rgba(255,255,255,0.6);
+    margin: 5px 0;
+    width: 100%;
+
+    //@media (max-width: $screen-md) {
+    //  margin: 15px 0;
+    //}
+  }
+
+  .wfairTokenEmblem {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+
+    @media (max-width: $screen-md) {
+      //margin-bottom: 15px;
+    }
+
+    img {
+      width: 55px;
+      display:block;
+    }
+  }
+
+  .cryptoTokenIcon {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+    img {
+      height: 30px;
+      display:block;
+    }
+
+  }
+
+  .logoContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+
+    a, iframe {
+      height: 50px;
+      margin-right: 25px;
+      display: flex;
+      align-items: center;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    @media (max-width: $screen-md) {
+      flex-direction: column;
+      align-items: center;
+
+      a, iframe {
+        margin: 10px 0;
+      }
+
+      a:not(.wfairTokenEmblem), iframe {
+        //margin-bottom: 25px;
+        height: 50px;
+      }
+    }
+
+    img.moonpayLogo {
+      height: 50px;
+    }
+
+    img.cryptoPayLogo {
+      height: 25px;
+    }
+
+    img.footerGenericIcons {
+      height: 32px;
+    }
+
+    img.responsibleGamingIcon {
+      height: 45px;
+    }
+
+    img.handshakeIcon {
+      height: 45px;
+    }
+
+    .partnerLogoSmartsoft {
+      width: auto;
+      height: 30px;
+
+      @media (max-width: $screen-md) {
+        height: 40px;
+      }
+    }
+    .partnerLogoEvoplay {
+      width: auto;
+      height: 20px;
+
+      @media (max-width: $screen-md) {
+        height: 30px;
+      }
+    }
+
+    .license {
+      border-radius: 8px;
+    }
+  }
+
+  .langSwitcher {
+    display: inline-block;
+    align-items: center;
+    width: auto;
+    background-color: white;
+    margin: 5px 0 10px;
+  }
+
+  .splittedBlock {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    width: 100%;
+
+    @media (max-width: $screen-xs) {
+      flex-direction: column;
+
+      & > div + div {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .links {
+    display: flex;
+    color: white;
+
+    @media (max-width: $screen-md) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .linksGroup {
+      margin-right: 80px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    a,
+    button {
+      font-family: $fontOmnes;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      img {
+        margin-bottom: 0;
+      }
+    }
+
+    button {
+      background: transparent;
+      border: 0;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .trustPilotBlock {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 300px;
+
+    @media (max-width: $screen-xs) {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .trustPilotIcon {
+      width: 140px;
+      margin-right: 38px;
+    }
+  }
+
+  .socialIcons {
+    margin-top: 20px;
+
+    @media (max-width: $screen-md) {
+      padding: 0;
+      max-width: 200px;
+
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+}
+
+.iconsContainer {
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  color: $colorPrimary;
+  //opacity: 0.45;
+  margin: 0 auto;
+  justify-content: space-between;
+  max-width: 600px;
+
+  @media (max-width: $screen-md) {
+    max-width: 300px;
+  }
+
+  .icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 50px;
+      height: 50px;
+
+      @media (max-width: $screen-md) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    span {
+      font-size: 11px;
+      text-align: center;
+    }
+  }
+}

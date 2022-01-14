@@ -48,7 +48,7 @@ const HomeSettings = ({
           <Icon className={styles.referralIcon} iconType={'game'} />
           <p className={styles.settingTitle}>Games</p>
         </div> */}
-        <div
+        {loggedIn && (<div
           onClick={onWalletClick}
           className={classNames(
             styles.singleSettingHolder
@@ -57,6 +57,7 @@ const HomeSettings = ({
           <Icon className={styles.referralIcon} iconType={'wallet3'} />
           <p className={styles.settingTitle}>Wallet</p>
         </div>
+        )}
         <div
           onClick={onActivitiesClick}
           className={classNames(
@@ -113,7 +114,7 @@ const HomeSettings = ({
             <Icon className={styles.referralIcon} iconType={'referral'} />
             <p className={styles.settingTitle}>Referrals</p>
           </div>
-        
+
           <div
             className={classNames(
               styles.singleSettingHolder

@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import ContentFooter from 'components/ContentFooter';
+// import ContentFooter from 'components/ContentFooter';
+import ContentFooter from 'components/ContentFooterV2';
 import HeaderVideo from 'data/videos/header-video.mp4'
 import AlpacaHeader from 'data/images/alpaca-header.png';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
@@ -18,7 +19,7 @@ const BaseContainerWithNavbar = ({
   home = false,
   user,
   carouselType=null,
-  
+
 }) => {
   return (
     <>
@@ -43,10 +44,10 @@ const BaseContainerWithNavbar = ({
             <div className={styles.gradientLayer}></div>
             <img className={styles.aplacaHeader} src={AlpacaHeader} alt="Alpaca-header"/>
           </div>
-          
-          } 
+
+          }
       </div>
-      {children}      
+      {children}
     </div>
     <ContentFooter className={styles.betFooter} />
     </>
