@@ -31,7 +31,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           >
             <img src={LogoFooter} className={styles.footerLogo} alt={'Powered-by-Wallfair'} />
           </a>
-          
+
           <iframe className={styles.license} title="license" src="https://licensing.gaming-curacao.com/validator/?lh=58e4868441e3bb0ff2fe2230d82a8091&amp;template=seal" width={125} height={50} style={{border:'none'}} />
 
           <a href="https://www.smartsoftgaming.com/" rel="noreferrer" target="_blank"><img src={SmartsoftLogo} className={styles.partnerLogoSmartsoft} alt="smartsoft games logo" /></a>
@@ -110,7 +110,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
       </div>
       <p className={styles.footerDisclaimer}>
         This website offers gaming with risk experience. To be a user of our site you must be over 18 y.o. We are not responsible for the violation of your local laws related to i-gaming. Play responsibly and have fun on Alpacasino.
-        <br/ >
+        <br />
         The platform providing the services is owned by Wallfair N.V, a limited liability company registered in Curacao with company registration number 159041, with its registered office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curacao (“Company”), licensed in Curaçao under the Licence no. 365/JAZ Sub-License GLH-OCCHKTW0712022021  issued by Gaming Services Provider N.V. for the provision of online games of chance.</p>
     </div>
   );
