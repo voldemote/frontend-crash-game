@@ -8,6 +8,12 @@ import EvoplayLogo from '../../data/icons/footer/evoplay.png';
 import bitcoinLogo from '../../data/icons/footer/bitcoin_logo.png';
 import ethereumLogo from '../../data/icons/footer/ethereum_logo.png';
 import litecoinLogo from '../../data/icons/footer/litecoin_logo.png';
+import moonPayLogo from '../../data/icons/footer/moon-pay-logo.png';
+import cryptoPay from '../../data/icons/footer/crypto-pay-logo.png';
+import handshakeIcon from '../../data/icons/footer/handshake-icon.png';
+import fair100Icon from '../../data/icons/footer/100-fair-icon.png';
+import responsibleGamingIcon from '../../data/icons/footer/responsible-gaming-icon.png';
+import adultPlusIcon from '../../data/icons/footer/18-icon.png';
 
 
 import classNames from 'classnames';
@@ -114,49 +120,113 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
 
         <div className={styles.logosBlock}>
           <div className={styles.logosSeparator}></div>
-          <div className={styles.logoContainer}>
-            <a
-              href="https://wallfair.io/"
-              target="_blank"
-              rel="noreferrer"
-              className={styles.wfairTokenEmblem}
-            >
-              <img src={WfairTokenEmblem} className={styles.footerLogo} alt={'WFAIR Token emblem'} /> WFAIR
-            </a>
 
-            <a
-              href="https://wallfair.io/"
-              target="_blank"
-              rel="noreferrer"
-              className={styles.cryptoTokenIcon}
-            >
-              <img src={bitcoinLogo}  alt={'Bitcoin logo'} />
-            </a>
 
-            <a
-              href="https://wallfair.io/"
-              target="_blank"
-              rel="noreferrer"
-              className={styles.cryptoTokenIcon}
-            >
-              <img src={ethereumLogo} alt={'Ethereum loco'} />
-            </a>
-            <a
-              href="https://wallfair.io/"
-              target="_blank"
-              rel="noreferrer"
-              className={styles.cryptoTokenIcon}
-            >
-              <img src={litecoinLogo} alt={'Litecoin loco'} />
-            </a>
+          <div className={styles.splittedBlock}>
+            <div className={styles.logoContainer}>
+              <a
+                href="https://wallfair.io/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.wfairTokenEmblem}
+              >
+                <img src={WfairTokenEmblem} className={styles.footerLogo} alt={'WFAIR Token emblem'} /> WFAIR
+              </a>
+
+              <a
+                href="https://wallfair.io/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={bitcoinLogo}  alt={'Bitcoin logo'} />
+              </a>
+
+              <a
+                href="https://wallfair.io/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={ethereumLogo} alt={'Ethereum loco'} />
+              </a>
+              <a
+                href="https://wallfair.io/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={litecoinLogo} alt={'Litecoin loco'} />
+              </a>
+            </div>
+            <div className={styles.logoContainer}>
+              <a
+                href="https://www.moonpay.com/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={moonPayLogo} className={styles.moonpayLogo} alt={'MoonPay logo'} />
+              </a>
+
+              <a
+                href="https://cryptopay.me/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={cryptoPay} className={styles.cryptoPayLogo} alt={'CryptoPay logo'} />
+              </a>
+            </div>
           </div>
+
+
           <div className={styles.logosSeparator}></div>
-          <div className={styles.logoContainer}>
-            <iframe className={styles.license} title="license" src="https://licensing.gaming-curacao.com/validator/?lh=58e4868441e3bb0ff2fe2230d82a8091&amp;template=seal" width={125} height={50} style={{border:'none'}} />
 
-            <a href="https://www.smartsoftgaming.com/" rel="noreferrer" target="_blank"><img src={SmartsoftLogo} className={styles.partnerLogoSmartsoft} alt="smartsoft games logo" /></a>
-            <a href="https://evoplay.games/" rel="noreferrer" target="_blank"><img src={EvoplayLogo} className={styles.partnerLogoEvoplay} alt="evoplay logo" /></a>
+          <div className={styles.splittedBlock}>
+            <div className={styles.logoContainer}>
+              <iframe className={styles.license} title="license" src="https://licensing.gaming-curacao.com/validator/?lh=58e4868441e3bb0ff2fe2230d82a8091&amp;template=seal" width={125} height={50} style={{border:'none'}} />
 
+              <a href="https://www.smartsoftgaming.com/" rel="noreferrer" target="_blank"><img src={SmartsoftLogo} className={styles.partnerLogoSmartsoft} alt="smartsoft games logo" /></a>
+              <a href="https://evoplay.games/" rel="noreferrer" target="_blank"><img src={EvoplayLogo} className={styles.partnerLogoEvoplay} alt="evoplay logo" /></a>
+
+            </div>
+            <div className={styles.logoContainer}>
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={handshakeIcon} className={styles.handshakeIcon} alt={'handshake icon'} />
+              </a>
+
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={fair100Icon} className={styles.footerGenericIcons} alt={'fair 100 icon'} />
+              </a>
+
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={responsibleGamingIcon} className={styles.responsibleGamingIcon} alt={'responsible gaming icon'} />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.cryptoTokenIcon}
+              >
+                <img src={adultPlusIcon} className={styles.footerGenericIcons} alt={'adult plus icon'} />
+              </a>
+            </div>
           </div>
           <div className={styles.logosSeparator}></div>
         </div>
