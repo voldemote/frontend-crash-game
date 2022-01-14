@@ -218,10 +218,10 @@ const UserWallet = ({
                   <p className={styles.currentbalanceHeading}>Current balance:</p>
                   <div className={styles.balanceBottomContainer}>
                     <p className={styles.currentbalanceWFair}>
-                      <span>{balanceFixed}</span><span>{currency}</span> 
+                      <span>{balanceFixed}</span>
                     </p>
                     <p className={styles.symbolContainer}>
-                      WFAIR
+                      {currency}
                     </p>
                   </div>
                 </div>
