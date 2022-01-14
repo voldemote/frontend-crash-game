@@ -206,6 +206,14 @@
     }
   }
 
+  .langSwitcher {
+    display: inline-block;
+    align-items: center;
+    width: auto;
+    background-color: white;
+    margin: 5px 0 10px;
+  }
+
   .splittedBlock {
     display: flex;
     justify-content: space-between;
@@ -269,6 +277,11 @@
     flex-direction: column;
     width: 300px;
 
+    @media (max-width: $screen-xs) {
+      width: 100%;
+      margin-top: 10px;
+    }
+
     .trustPilotIcon {
       width: 140px;
       margin-right: 38px;
@@ -279,7 +292,7 @@
     margin-top: 20px;
 
     @media (max-width: $screen-md) {
-      padding: 0px;
+      padding: 0;
       max-width: 200px;
 
       svg {

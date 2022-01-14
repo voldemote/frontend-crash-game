@@ -107,7 +107,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 <p>Imprint</p>
               </Link>
 
-              <div id="lang-switcher" />
+              <div id="lang-switcher" className={styles.langSwitcher}/>
             </div>
           </div>
 
