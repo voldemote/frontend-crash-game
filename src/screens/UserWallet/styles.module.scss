@@ -19,6 +19,32 @@
   @media (min-width: $screen-lg) {
     max-width: 1300px;
   }
+  .titleSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 100px auto 0;
+    padding: 0 16px;
+
+    @media (max-width: $screen-sm) {
+      flex-direction: column;
+    }
+    h1 {
+      font-family: $fontOmnes;
+      font-size: 30px;
+      color: $colorWhite;
+    }
+    .depositeNumber {
+      display: flex;
+      align-items: center;
+      p {
+        margin-left: 8px;
+        font-family: $fontOmnes;
+        font-size: 12px;
+        color: $colorWhite;
+      }
+    }
+  }
 }
 
 .bottomWrapper {
@@ -194,7 +220,7 @@
 }
 /* ACTIVITY TRACKER */
 .activities {
-  margin-top: 20px;
+  margin-top: 4px;
   padding: 0 10px;
   position: relative;
 
@@ -258,7 +284,7 @@
 }
 
 .currentBalanceSection {
-  margin: 30px auto 0;
+  margin: 12px auto 0;
   border-radius: 12px;
   border: 1px solid transparent;
   display: flex;
@@ -268,7 +294,7 @@
 
   @media (max-width: $screen-sm) {
     justify-content: center;
-    margin: 80px 0 0;
+    margin: 12px 0 0;
   }
 
   .currentBalanceCard {
@@ -322,40 +348,110 @@
       }
     }
 
-    .currentbalanceHeading {
-      font-family: $fontOmnes;
-      color: $colorWhite;
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 20px;
-    }
-
-    .currentbalanceWFair {
+    .balanceContainer {
+      width: 100%;
       display: flex;
-
-      box-sizing: border-box;
-      font-family: $fontOmnes;
-      font-size: 50px;
-      font-weight: 600;
-      text-align: center;
-      color: $colorLightYellow;
-      line-height: 40px;
-
-      gap: 10px;
-
-      &.font30 {
-        font-size: 30px;
-      }
-      &.font50 {
-        font-size: 50px;
-      }
-      &.font20 {
-        font-size: 20px;
-      }
-
-      @media (max-width: $screen-xs) {
-        margin: 10px auto 20px;
+      justify-content: space-between;
+      padding: 50px 50px;
+      @media (max-width: $screen-sm) {
         flex-direction: column;
+        padding: 30px 0px;
+      }
+      .leftCard {
+        display: flex;
+        @media (max-width: $screen-sm) {
+          justify-content: center;
+        }
+        .wfairLogo {
+          width: 64px;
+          height: 64px;
+        }
+        .balanceTextContainer {
+          margin-left: 25px;
+          .currentbalanceHeading {
+            font-family: $fontOmnes;
+            color: $colorWhite;
+            font-weight: 600;
+            font-size: 11px;
+            opacity: 0.41;
+          }
+          .balanceBottomContainer {
+            margin-top: 7px;
+            display: flex;
+            .currentbalanceWFair {
+              display: flex;
+
+              box-sizing: border-box;
+              font-family: $fontOmnes;
+              font-size: 44px;
+              font-weight: 600;
+              text-align: center;
+              color: $colorWhite;
+              line-height: 40px;
+
+              gap: 10px;
+
+              &.font30 {
+                font-size: 30px;
+              }
+              &.font50 {
+                font-size: 50px;
+              }
+              &.font20 {
+                font-size: 20px;
+              }
+            }
+            .symbolContainer {
+              font-family: $fontOmnes;
+              font-size: 16px;
+              font-weight: 600;
+              text-align: center;
+              color: $colorWhite;
+            }
+          }
+        }
+      }
+      .rightCard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        @media (max-width: $screen-sm) {
+          margin-top: 20px;
+        }
+
+        .buttonDeposit {
+          width: 240px;
+        }
+        .presentText {
+          margin-top: 10px;
+          font-size: 11px;
+          font-weight: 500;
+          color: #696e82;
+          text-align: center;
+        }
+      }
+    }
+    .depositCardContainer {
+      width: 100%;
+      cursor: pointer;
+      .depositTitle {
+        font-family: $fontOmnes;
+        font-size: 20px;
+        font-weight: 600;
+        color: $colorWhite;
+      }
+      .depositDescriptionSection {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .depositDescription {
+        font-family: $fontOmnes;
+        font-size: 12px;
+        font-weight: 600;
+        color: #dbe0ff;
+        opacity: 0.5;
       }
     }
   }

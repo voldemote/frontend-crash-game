@@ -19,7 +19,13 @@ import Loader from 'components/Loader/Loader';
 import { WallfairActions } from 'store/actions/wallfair';
 import { TransactionActions } from 'store/actions/transaction';
 import Button from 'components/Button';
-import {ReactComponent as WalletCoins} from 'data/images/wallet-coins.svg'
+import { ReactComponent as WfairIcon } from '../../data/icons/wfair-symbol.svg';
+import {ReactComponent as BitcoinIcon} from '../../data/icons/wallet/bitcoin.svg';
+import {ReactComponent as EuroIcon} from '../../data/icons/wallet/euro.svg';
+import {ReactComponent as WalletIcon} from '../../data/icons/wallet/wallet.svg';
+import { ReactComponent as GreenPathIcon } from '../../data/icons/wallet/green-path.svg';
+import {ReactComponent as RightArrow} from '../../data/icons/wallet/right-arrow.svg';
+
 import * as ApiUrls from 'constants/Api';
 import { resendEmailVerification } from 'api';
 import { trackWalletAddWfair, trackWalletBuyWfair, trackWalletBuyWithCryptoButton, trackWalletBuyWithFiatButton, trackWalletWithdraw } from 'config/gtm';
@@ -51,6 +57,7 @@ const UserWallet = ({
   showWithdrawPopup,
   showWalletDepositPopup,
   showWalletDepositCrypto,
+  showWalletDepositFiat,
   showWalletConnectWallet,
 }) => {
   const { active, library, account, chainId } = useWeb3React();
@@ -197,70 +204,47 @@ const UserWallet = ({
 
   const renderCurrentBalanceSection = () => {
     const balanceFixed = formatToFixed(balance, 0, true);
-    let fontStyling = styles.font50;
 
-    if (balanceFixed.length > 18) {
-      fontStyling = styles.font20;
-    } else if (balanceFixed.length > 13) {
-      fontStyling = styles.font30;
-    }
     return (
       <div className={styles.currentBalanceSection}>
-        <Grid container alignContent="center">
-          <Grid className={styles.balanceCard} item lg={6} md={6} xs={12}>
-            <div className={styles.currentBalanceDescription}>
-              <div className={styles.currentBalanceCard}>
-                <p className={styles.currentbalanceHeading}>Current balance:</p>
-                <p className={classNames(styles.currentbalanceWFair, fontStyling)}>
-                  <span>{balanceFixed}</span><span>{currency}</span> 
-                </p>
+        <div className={styles.currentBalanceDescription}>
+          <div className={styles.currentBalanceCard}>
+            <div className={styles.balanceContainer}>
+              <div className={styles.leftCard}>
+                <WfairIcon
+                  className={styles.wfairLogo}
+                />
+                <div className={styles.balanceTextContainer}>
+                  <p className={styles.currentbalanceHeading}>Current balance:</p>
+                  <div className={styles.balanceBottomContainer}>
+                    <p className={styles.currentbalanceWFair}>
+                      <span>{balanceFixed}</span><span>{currency}</span> 
+                    </p>
+                    <p className={styles.symbolContainer}>
+                      WFAIR
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.rightCard}>
                 <Button
                   className={classNames(styles.button, styles.buttonDeposit)}
                   onClick={showWalletDepositPopup}
                 >
                   Deposit
                 </Button>
+                <span className={styles.presentText}>🎁 We double your deposit!</span>
               </div>
             </div>
-          </Grid>
-
-          <Grid
-            className={styles.balanceCard}
-            item
-            justifyContent="flex-start"
-            item
-            lg={6}
-            md={6}
-            xs={12}
-          >
-            <div className={styles.currentBalanceDescription}>
-              <div className={styles.currentBalanceCard}>
-                <h2>WHY WFAIR?</h2>
-                <p className={styles.welcome}>
-                  Alpacasino uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency  or in EUR / USD at any time around the world.
-                </p>
-              </div>
-
-              {/* 
-              <div className={styles.buttonContainer}>
-                <p className={styles.label}>In case of any questions please <span onClick={() => {window.fcWidget.open()}}>click here</span> to contact our Support.</p>
-              </div> 
-              */}
-
-              {/* <div className={styles.buttonContainer}>
-                <p className={styles.label}>Start the verification</p>
-                <Button
-                  className={styles.button}
-                  // onClick={showRequestTokenPopup}
-                >
-                  Request test tokens
-                </Button>
-              </div> 
-              */}
-            </div>
-          </Grid>
-        </Grid>
-        
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  const renderDepositBonusSection = () => {
+    return (
+      <div className={styles.currentBalanceSection}>
         { depositCount != null && depositCount === 0 &&
           <Grid
             className={styles.balanceCard}
@@ -338,7 +322,6 @@ const UserWallet = ({
             </div>
           </Grid>
         }
-          
         <Grid container alignContent="center" spacing={1}>
           <Grid
             className={styles.balanceCard}
@@ -349,11 +332,88 @@ const UserWallet = ({
           >
             <div className={classNames(styles.currentBalanceDescription, styles.smallCurrentBalanceDescription)}>
               <div className={classNames(styles.currentBalanceCard, styles.smallCard)}>
+                <div className={styles.depositCardContainer} onClick={showWalletDepositCrypto}>
+                  <BitcoinIcon/>
+                  <p className={styles.depositTitle}>
+                    Deposit with Crypto
+                  </p>
+                  <div className={styles.depositDescriptionSection}>
+                    <p className={styles.depositDescription}>
+                      Deposit ETH or BTC and start playing <br/>immediately.
+                    </p>
+                    <RightArrow />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Grid>
+
+          <Grid
+            className={styles.balanceCard}
+            item
+            justifyContent="flex-start"
+            lg={4}
+            md={4}
+            xs={12}
+          >
+            <div className={classNames(styles.currentBalanceDescription, styles.smallCurrentBalanceDescription)}>
+              <div className={classNames(styles.currentBalanceCard, styles.smallCard)}>
+                <div className={styles.depositCardContainer} onClick={showWalletDepositFiat}>
+                  <EuroIcon />
+                  <p className={styles.depositTitle}>Deposit with EUR / USD</p>
+                  <div className={styles.depositDescriptionSection}>
+                    <p className={styles.depositDescription}>
+                      Deposit EUR or USD to start playing in a<br/> few hours.
+                    </p>
+                    <RightArrow />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Grid>
+
+          <Grid
+            className={styles.balanceCard}
+            item
+            justifyContent="flex-start"
+            lg={4}
+            md={4}
+            xs={12}
+          >
+            <div className={classNames(styles.currentBalanceDescription, styles.smallCurrentBalanceDescription)}>
+              <div className={classNames(styles.currentBalanceCard, styles.smallCard)}>
+                <div className={styles.depositCardContainer} onClick={showWalletConnectWallet}>
+                  <WalletIcon />
+                  <p className={styles.depositTitle}>
+                    Connect your Wallet
+                  </p>
+                  <div className={styles.depositDescriptionSection}>
+                    <p className={styles.depositDescription}>
+                      Connect your existing wallet with WFAIR<br/> your bought and start immediately
+                    </p>
+                    <RightArrow />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+        <Grid container alignContent="center" spacing={1}>
+          {/* <Grid
+            className={styles.balanceCard}
+            item
+            lg={4}
+            md={4}
+            xs={12}
+          >
+            <div className={classNames(styles.currentBalanceDescription, styles.smallCurrentBalanceDescription)}>
+              <div className={classNames(styles.currentBalanceCard, styles.smallCard)}>
                 <div className={styles.buttonContainer}>
                   <h2>Buy WFAIR</h2>
-                  <p className={styles.label}>You can buy WFAIR using cryptocurrencies (BTC, ETH, LTC) and regular currencies (EUR, USD, etc.).
-Your WFAIR is automatically credited in your account.
-</p>
+                  <p className={styles.label}>
+                    You can buy WFAIR using cryptocurrencies (BTC, ETH, LTC) and regular currencies (EUR, USD, etc.).
+                    Your WFAIR is automatically credited in your account.
+                  </p>
                   <Button
                     className={styles.button}
                     onClick={showWalletDepositCrypto}
@@ -384,31 +444,15 @@ Your WFAIR is automatically credited in your account.
                   >
                     Deposit WFAIR
                   </Button>
-                  {/* {!user.emailConfirmed ? 
-                    <>
-                      <p className={styles.label}>You must confirm your email to be able to withdraw your tokens.</p>
-
-                      <Button
-                        className={styles.button}
-                        disabled={emailSent}
-                        disabledWithOverlay={false}
-                        onClick={handleResendEmailConfirmation}
-                      >
-                        {!emailSent ? 'Resend Email' : 'Email sent'}
-                      </Button>
-                    </>
-                    : null 
-                  } */}
                 </div>
               </div>
             </div>
-          </Grid>
+          </Grid> */}
 
           <Grid
             className={styles.balanceCard}
             item
             justifyContent="flex-start"
-            item
             lg={4}
             md={4}
             xs={12}
@@ -457,18 +501,25 @@ Your WFAIR is automatically credited in your account.
           </Grid>
         </Grid>
       </div>
-    );
-  };
-
+    )
+  }
   const renderStatusTableSection = () => {};
 
   return (
     <BaseContainerWithNavbar>
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
+          <div className={styles.titleSection}>
+            <h1>Your Wallet</h1>
+            {/* <div className={styles.depositeNumber}>
+              <GreenPathIcon />
+              <p>1,245,894 WFAIR Deposites today</p>
+            </div> */}
+          </div>
           {renderCurrentBalanceSection()}
-          {renderStatusTableSection()}
           {renderCategoriesAndLeaderboard()}
+          {renderDepositBonusSection()}
+          {renderStatusTableSection()}
         </div>
       </div>
     </BaseContainerWithNavbar>
