@@ -90,6 +90,18 @@
     }
   }
 
+
+  .footerSeparator {
+    height: 1px;
+    background-color: rgba(255,255,255,0.6);
+    margin: 5px 0;
+    width: 100%;
+
+    //@media (max-width: $screen-md) {
+    //  margin: 15px 0;
+    //}
+  }
+
   .wfairTokenEmblem {
     color: white;
     display: flex;
@@ -201,7 +213,7 @@
     width: 100%;
 
     @media (max-width: $screen-xs) {
-      flex-direction: column-reverse;
+      flex-direction: column;
 
       & > div + div {
         margin-bottom: 15px;
@@ -254,6 +266,13 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    flex-direction: column;
+    width: 300px;
+
+    .trustPilotIcon {
+      width: 140px;
+      margin-right: 38px;
+    }
   }
 
   .socialIcons {

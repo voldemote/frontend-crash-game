@@ -14,6 +14,7 @@ import handshakeIcon from '../../data/icons/footer/handshake-icon.png';
 import fair100Icon from '../../data/icons/footer/100-fair-icon.png';
 import responsibleGamingIcon from '../../data/icons/footer/responsible-gaming-icon.png';
 import adultPlusIcon from '../../data/icons/footer/18-icon.png';
+import trustPilotIcon from '../../data/icons/footer/trust_pilot_icon.png';
 
 
 import classNames from 'classnames';
@@ -32,7 +33,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   return (
     <div className={styles.container}>
       <div className={classNames(styles.footer, className)}>
-
+        {/*<div className={styles.footerSeparator}></div>*/}
         <div className={styles.splittedBlock}>
           <div className={styles.links}>
             <div className={styles.linksGroup}>
@@ -111,6 +112,10 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           </div>
 
           <div className={styles.trustPilotBlock}>
+            <div>
+              <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener"><img src={trustPilotIcon} className={styles.trustPilotIcon}/></a>
+            </div>
+
             <div className={"trustpilot-widget"} data-locale="en-US" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="61dc05ba2525917592e9d274" data-style-height="24px" data-style-width="100%" data-theme="dark" data-min-review-count="10">
               <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener">Trustpilot</a>
             </div>
