@@ -111,7 +111,9 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
           </div>
 
           <div className={styles.trustPilotBlock}>
-            TRUST PILOT
+            <div className={"trustpilot-widget"} data-locale="en-US" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="61dc05ba2525917592e9d274" data-style-height="24px" data-style-width="100%" data-theme="dark" data-min-review-count="10">
+              <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
           </div>
 
         </div>
@@ -193,7 +195,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
             </div>
             <div className={styles.logoContainer}>
               <a
-                href="#"
+                href="https://wallfair.io/"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.cryptoTokenIcon}
@@ -202,7 +204,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
               </a>
 
               <a
-                href="#"
+                href="https://wallfair.io/"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.cryptoTokenIcon}
@@ -211,7 +213,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
               </a>
 
               <a
-                href="#"
+                href="https://wallfair.io/"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.cryptoTokenIcon}
@@ -219,7 +221,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 <img src={responsibleGamingIcon} className={styles.responsibleGamingIcon} alt={'responsible gaming icon'} />
               </a>
               <a
-                href="#"
+                href="https://wallfair.io/"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.cryptoTokenIcon}

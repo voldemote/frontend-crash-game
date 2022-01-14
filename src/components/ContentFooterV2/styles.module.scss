@@ -251,10 +251,9 @@
   }
 
   .trustPilotBlock {
-    width: 200px;
-    border: 1px solid lime;
-    color: lime;
-    text-align: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 
   .socialIcons {
