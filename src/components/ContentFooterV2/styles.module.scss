@@ -3,26 +3,56 @@
 .container {
   width: 100%;
   flex-direction: column;
-  padding: 40px 20px 10px 20px;
+  padding: 40px 60px 15px 60px;
   background-color: $colorBackground;
+  font-size: 18px;
 
   .footerDisclaimer {
     color: $colorWhite;
-    font-size: 12px;
-    margin: 40px auto 10px;
-    max-width: 800px;
-    width: fit-content;
-    text-align: center;
+    font-size: 16px;
+    line-height: 1.2;
+    margin: 0 auto;
+    max-width: 1250px;
+    width: 100%;
     padding: 0 20px;
     opacity: 0.5;
-    text-align: justify;
+    text-align: center;
   }
+}
+
+.poweredBy {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+
+  img {
+    display: block;
+  }
+}
+
+.copyrightBlock {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 15px 0 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+.supportBlock {
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  margin: 15px 0 10px;
 }
 
 .footer {
   display: flex;
-  flex-direction: row;
-  font-size: 12px;
+  flex-direction: column;
   color: $colorPrimary;
   margin: 0 auto;
   justify-content: space-between;
@@ -30,21 +60,93 @@
   @media (max-width: $screen-md) {
     flex-direction: column;
     padding: 0 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     align-items: center;
+  }
+
+  .logosBlock {
+    width: 100%;
+
+    .logosSeparator:first-child {
+      margin-top: 0;
+    }
+
+    .logosSeparator:last-child {
+        margin-bottom: 0;
+    }
+  }
+
+  .logosSeparator {
+    height: 1px;
+    background-color: rgba(255,255,255,0.6);
+    margin: 30px 0;
+
+    @media (max-width: $screen-md) {
+      margin: 15px 0;
+    }
+  }
+
+  .wfairTokenEmblem {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+
+    @media (max-width: $screen-md) {
+      //margin-bottom: 15px;
+    }
+
+    img {
+      width: 55px;
+      display:block;
+    }
+  }
+
+  .cryptoTokenIcon {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+    img {
+      height: 30px;
+      display:block;
+    }
+
   }
 
   .logoContainer {
     display: flex;
     flex-direction: row;
-    gap: 20px;
     align-items: center;
+
+
+    a, iframe {
+      height: 50px;
+      margin-right: 25px;
+      display: flex;
+      align-items: center;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
 
     @media (max-width: $screen-md) {
       flex-direction: column;
-      // padding: 0 0 20px 0;
-      margin-bottom: 40px;
       align-items: center;
+
+      a, iframe {
+        margin-right: 0;
+        margin: 10px 0;
+      }
+
+      a:not(.wfairTokenEmblem), iframe {
+        //margin-bottom: 25px;
+        height: 50px;
+      }
     }
 
     .partnerLogoSmartsoft {
@@ -64,37 +166,46 @@
       }
     }
 
-    img.footerLogo {
-      max-width: 300px;
-
-      @media (max-width: $screen-md) {
-        margin-bottom: 20px;
-      }
-    }
-
     .license {
       border-radius: 8px;
     }
   }
 
+  .splittedBlock {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0  50px;
+    width: 100%;
+
+    @media (max-width: $screen-xs) {
+      flex-direction: column-reverse;
+
+      & > div + div {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
   .links {
     display: flex;
-    margin: 10px 0;
-    gap: 12px;
     color: white;
 
     @media (max-width: $screen-md) {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      margin: 0 auto;
-      row-gap: 16px;
+    }
+
+    .linksGroup {
+      margin-right: 60px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     a,
     button {
       font-family: $fontOmnes;
-      font-size: 12px;
       display: flex;
       align-items: center;
       text-decoration: none;
@@ -106,10 +217,6 @@
       img {
         margin-bottom: 0;
       }
-
-      p {
-        font-size: 12px;
-      }
     }
 
     button {
@@ -118,6 +225,13 @@
       color: white;
       cursor: pointer;
     }
+  }
+
+  .trustPilotBlock {
+    width: 200px;
+    border: 1px solid lime;
+    color: lime;
+    text-align: center;
   }
 
   .socialIcons {
@@ -131,13 +245,6 @@
         width: 25px;
         height: 25px;
       }
-    }
-  }
-  p {
-    font-size: 10px;
-
-    @media (max-width: $screen-md) {
-      font-size: 12px;
     }
   }
 }
