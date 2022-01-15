@@ -517,9 +517,9 @@ const UserWallet = ({
             </div> */}
           </div>
           {renderCurrentBalanceSection()}
-          {renderCategoriesAndLeaderboard()}
           {renderDepositBonusSection()}
           {renderStatusTableSection()}
+          {renderCategoriesAndLeaderboard()}
         </div>
       </div>
     </BaseContainerWithNavbar>
