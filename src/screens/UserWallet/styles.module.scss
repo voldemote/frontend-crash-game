@@ -465,7 +465,7 @@
 
     object-fit: cover;
     margin: 0 auto;
-    margin-right: 10px;
+    margin-right: 8px;
     border-radius: 12px;
 
     @media (max-width: $screen-xs) {
@@ -501,9 +501,9 @@
       border-radius: 12px;
     }
 
-    @media (max-width: $screen-md) {
-      padding: 10px;
-    }
+    // @media (max-width: $screen-md) {
+    //   padding: 10px;
+    // }
 
     @media (max-width: $screen-xs) {
       &::after {
