@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import * as ApiUrls from 'constants/Api';
 import { useEffect, useState } from 'react';
 import Button from 'components/Button';
-import {getUserKycData, refreshKycStatus} from "../../api";
+import {refreshKycStatus} from "../../api";
 import {AlertActions} from "../../store/actions/alert";
 
 const KycStatus = ({
@@ -63,15 +63,6 @@ const KycStatus = ({
         <label>Reference:</label>
         <p>{userKyc.uid}</p>
       </div>
-      {userKyc.status === 'pending' &&
-      <>
-        <div className={styles.group}>
-          <p className={styles.warning}>Due to an unexpected number of requests, this process is taking longer than usual. Please be patient.</p>
-        
-          <p className={styles.warning}>Important: To avoid delays, please use for KYC the same email used for registration on alpacasino.io ({user.email}).</p>
-        </div>
-      </>
-      }
 
       {(userKyc.status === 'pending') &&
         <Button
@@ -85,7 +76,6 @@ const KycStatus = ({
     </>
   );
 
-
   return user && (
     <div className={styles.kycInfoContainer}>
       {!isKycStarted()
@@ -93,10 +83,9 @@ const KycStatus = ({
           <p>In order to withdraw your funds or make larger deposits, you must perform a "Know Your Customer" (KYC) checks.</p>
           <p>We perform KYC operations via our partner Fractal.</p>
           </>
-        : renderKycStatus()}
+        : renderKycStatus()
+      }
       
-      
-
       {showStartButton() &&
       <>
         <Button
@@ -106,19 +95,14 @@ const KycStatus = ({
           Continue with Fractal
         </Button>
         
-
-          <div className={styles.group}>          
-            <p className={styles.warning}>Important: To avoid delays, please use for KYC the same email used for registration on alpacasino.io ({user.email}).</p>
-          </div>
-        
-        
+        <div className={styles.group}>          
+          <p className={styles.warning}>Important: To avoid delays, please use for KYC the same email used for registration on alpacasino.io ({user.email}).</p>
+        </div>
       </>
       }
-      
     </div>
   );
 };
-
 
 const mapStateToProps = state => {
   return {
