@@ -6,13 +6,11 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import {
-  trackWalletBuywithfiatRequest,
   trackWalletFiatProceedPartner,
 } from 'config/gtm';
 import {
   convertCurrency,
   generateCryptopayChannel,
-  sendBuyWithFiat,
   generateMoonpayUrl,
 } from 'api';
 import { numberWithCommas } from 'utils/common';
@@ -48,8 +46,7 @@ const DepositFiat = ({
   const [currency, setCurrency] = useState(100);
   const [WFAIRToken, setWFAIRToken] = useState(0);
   const [bonus, setBonus] = useState(0);
-  const [requestSent, setRequestSent] = useState(false);
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState();
   const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
   const depositCount = useDepositsCounter();
   const [loading, setLoading] = useState(false);
@@ -61,11 +58,6 @@ const DepositFiat = ({
 
   const selectContent = event => {
     event.target.select();
-  };
-
-  const currencyChange = value => {
-    const inputCurrency = value > 2000 ? 2000 : value;
-    setCurrency(inputCurrency);
   };
 
   const onInputAmountChange = async event => {
@@ -81,7 +73,6 @@ const DepositFiat = ({
       const adjustedAmount = convertedAmount * 0.9; //90% of estimated amount to consider Transak fees
       const roundedAmount = Math.floor(Number(adjustedAmount) * 100) / 100;
 
-      // let WfairTokenValue = !roundedAmount ? 0 : numberWithCommas(roundedAmount);
       let WfairTokenValue = !roundedAmount ? 0 : roundedAmount;
 
       setWFAIRToken(WfairTokenValue);
@@ -96,40 +87,40 @@ const DepositFiat = ({
     onChangeAmount();
   }, [selectedCurrency, currency]);
 
-  // const fetchReceiverAddress = useCallback(async (tab) => {
-  //   const channel = await generateCryptopayChannel({ currency: cryptoTransaction });
-
-  //   if(channel.error) {
-  //     return setErrorFetchingChannel(true);
-  //   }
-
-  //   setErrorFetchingChannel(false);
-  //   setAddress(channel.address);
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchReceiverAddress();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  const OnClickContinue = async () => {
-    if (currency && WFAIRToken) {
-      try {
-        trackWalletBuywithfiatRequest();
-        sendBuyWithFiat({
-          currency: selectedCurrency.label.toLocaleUpperCase(),
-          userId: user.userId,
-          email: user.email,
-          amount: currency,
-          estimate: WFAIRToken,
-        });
-
-        setRequestSent(true);
-      } catch (err) {
-        console.err('mail not sent!');
-      }
+  const fetchReceiverAddress = useCallback(async (tab) => {
+    const channel = await generateCryptopayChannel({ currency: cryptoTransaction });
+    
+    if(channel.error) {
+      return setErrorFetchingChannel(true);
     }
-  };
+
+    setErrorFetchingChannel(false);
+    setAddress(channel.address);
+  }, []);
+
+  useEffect(() => {
+    fetchReceiverAddress();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // const OnClickContinue = async () => {
+  //   if (currency && WFAIRToken) {
+  //     try {
+  //       trackWalletBuywithfiatRequest();
+  //       sendBuyWithFiat({
+  //         currency: selectedCurrency.label.toLocaleUpperCase(),
+  //         userId: user.userId,
+  //         email: user.email,
+  //         amount: currency,
+  //         estimate: WFAIRToken,
+  //       });
+
+  //       setRequestSent(true);
+  //     } catch (err) {
+  //       console.err('mail not sent!');
+  //     }
+  //   }
+  // };
 
   const onChangeAmount = useDebounce({
     callback: onInputAmountChange,
@@ -165,6 +156,23 @@ const DepositFiat = ({
 
     setLoading(false);
   };
+
+  const getRampUrl = () => {
+    if (address) {
+      const rampUrl = `${productionRampURL}?swapAsset=${cryptoTransaction}&fiatValue=${currency}&fiatCurrency=${selectedCurrency.label}&userEmailAddress=${user.email}&userAddress=${address}`;
+      window.open(rampUrl);
+    }
+  }
+
+  const handlePartnerClick = () => {
+    if (process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true') {
+      getMoonpayUrl();
+    } else {
+      getRampUrl();
+    }
+
+    trackWalletFiatProceedPartner();
+  }
 
   return (
     <div className={styles.depositFiat}>
@@ -255,7 +263,7 @@ const DepositFiat = ({
       </div>
 
       {currency > 0 && user.email && !loading ? (
-        <Button onClick={() => getMoonpayUrl()}>Proceed with partner</Button>
+        <Button onClick={() => handlePartnerClick()}>Proceed with partner</Button>
       ) : (
         <Button disabled>Proceed with partner</Button>
       )}
