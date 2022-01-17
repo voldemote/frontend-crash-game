@@ -1,7 +1,18 @@
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
+import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
-const TermsConditions = () => {
+const TermsConditions = (props) => {
+
+  useEffect(() => {
+    const hash = props.history.location.hash;
+
+    const el = hash && document.getElementById(hash.substr(1));
+    if (el) {    
+      el.scrollIntoView({behavior: "smooth"});
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
@@ -99,7 +110,7 @@ const TermsConditions = () => {
           <p>3.21. You agree not to use any third-party software in any of the bets placed on Alpacasino as well as not to abuse any game/functioning bugs found on the platform.</p>
           <p>3.22 All users and/players should be courteous to each other and avoid rude or obscene comments.</p>
 
-          <h2>4. Restricted use</h2>
+          <h2 id="restricted">4. Restricted use</h2>
           <p>4.1. You must not use the service provided on the Website:</p>
           <p>4.1.1. If you are under the age of 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you) or if you are not legally able to enter into a binding legal agreement with us or you acting as an agent for, or otherwise on behalf, of a person under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you);</p>
           <p>4.1.2. If you reside in a country in which access to online gambling to its residents or to any person within such country is prohibited.</p>
