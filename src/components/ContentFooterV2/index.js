@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import { LeaderboardActions } from 'store/actions/leaderboard';
 import { useCallback } from 'react';
 import { GeneralActions } from 'store/actions/general';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import Routes from '../../constants/Routes';
 
 const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
@@ -113,11 +113,11 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
 
           <div className={styles.trustPilotBlock}>
             <div>
-              <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener"><img src={trustPilotIcon} className={styles.trustPilotIcon}/></a>
+              <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener noreferrer"><img src={trustPilotIcon} className={styles.trustPilotIcon}/></a>
             </div>
 
             <div className={"trustpilot-widget"} data-locale="en-US" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="61dc05ba2525917592e9d274" data-style-height="24px" data-style-width="100%" data-theme="dark" data-min-review-count="10">
-              <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener">Trustpilot</a>
+              <a href="https://www.trustpilot.com/review/alpacasino.io" target="_blank" rel="noopener noreferrer">Trustpilot</a>
             </div>
           </div>
 
@@ -199,40 +199,36 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
 
             </div>
             <div className={styles.logoContainer}>
-              <a
-                href="https://wallfair.io/"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.cryptoTokenIcon}
+              <Link
+                data-tracking-id="footer-provably-fair"
+                to={Routes.provablyfair}
               >
                 <img src={handshakeIcon} className={styles.handshakeIcon} alt={'handshake icon'} />
-              </a>
+              </Link>
 
-              <a
-                href="https://wallfair.io/"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.cryptoTokenIcon}
+              <Link
+                data-tracking-id="footer-provably-fair"
+                to={Routes.provablyfair}
               >
                 <img src={fair100Icon} className={styles.footerGenericIcons} alt={'fair 100 icon'} />
-              </a>
+              </Link>
 
-              <a
-                href="https://wallfair.io/"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.cryptoTokenIcon}
+              <Link
+                data-tracking-id="footer-responsible-gambling"
+                to={Routes.responsibleGambling}
               >
                 <img src={responsibleGamingIcon} className={styles.responsibleGamingIcon} alt={'responsible gaming icon'} />
-              </a>
-              <a
-                href="https://wallfair.io/"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.cryptoTokenIcon}
+              </Link>
+              <Link
+                data-tracking-id="footer-18-plus"
+                to={{
+                  pathname: Routes.terms,
+                  hash: "#restricted",
+                }}
+                
               >
                 <img src={adultPlusIcon} className={styles.footerGenericIcons} alt={'adult plus icon'} />
-              </a>
+              </Link>
             </div>
           </div>
           <div className={styles.logosSeparator}></div>
