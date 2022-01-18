@@ -62,6 +62,11 @@ const RouletteGame = ({
 
 
   useEffect(() => {
+    //do nothing until we select game mode
+    if(!gameMode) {
+      return;
+    }
+
     if(!user.isLoggedIn || gameMode === 'demo'){
       if(isMobile) {
         history.push('/')
@@ -87,7 +92,7 @@ const RouletteGame = ({
     return () => {
       setInit(null)
     }
-  }, [])
+  }, [gameMode])
 
   useEffect(() => {
     dispatch(ChatActions.fetchByRoom({ roomId: EXTERNAL_GAME_EVENT_ID }));
