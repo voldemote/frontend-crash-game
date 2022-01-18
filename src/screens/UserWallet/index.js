@@ -60,6 +60,7 @@ const UserWallet = ({
   showWalletDepositFiat,
   showWalletConnectWallet,
 }) => {
+  const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const { active, library, account, chainId } = useWeb3React();
 
   const { balance, currency } = useSelector(selectUser);
@@ -89,11 +90,10 @@ const UserWallet = ({
     'CRYPTO DEPOSITS': 'CRYPTO',
   };
 
-  const [activityTab, setActivityTab] = useState({
-    // name: 'FIAT DEPOSITS',
-    name: 'WFAIR DEPOSITS',
-    index: 1,
-  });
+  const [activityTab, setActivityTab] = useState(
+    showNewFeatures ? { name: 'FIAT DEPOSITS', index: 0 } : { name: 'WFAIR DEPOSITS', index: 1 }
+  );
+
   const [activityTabOptions, setActivityTabOptions] = useState([
     { name: 'FIAT DEPOSITS', index: 0 },
     { name: 'WFAIR DEPOSITS', index: 1 },
@@ -149,14 +149,20 @@ const UserWallet = ({
     const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
     window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
   }
-  const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
+  
   const renderCategoriesAndLeaderboard = () => {
     return (
       <div className={styles.activities}>
         <Grid item xs={12}>
           <div className={styles.activityWrapper}>
             <TabOptions
-              options={activityTabOptions}
+              options={
+                activityTabOptions
+                  ? activityTabOptions.filter(
+                      ({ name }) => ((name !== 'FIAT DEPOSITS') || (name === 'FIAT DEPOSITS' && showNewFeatures))
+                    )
+                  : []
+              }
               className={styles.tabLayout}
             >
               {(option) => {
