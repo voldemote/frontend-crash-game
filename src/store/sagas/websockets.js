@@ -11,7 +11,7 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
-import { UNIVERSAL_EVENTS_ROOM_ID } from 'constants/Activities';
+import { UNIVERSAL_EVENTS_ROOM_ID, API_INFO_CHANNEL } from 'constants/Activities';
 import { EventActions } from '../actions/event';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 import { GAMES } from '../../constants/Games';
@@ -379,6 +379,10 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     newRoomsToJoin.push(ObjectId(pathSlugs[1]));
     newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
+
+  //JOIN TO API INFO CHANNEL
+  console.log('JOIN TO API INFO CHANNEL');
+  newRoomsToJoin.push(API_INFO_CHANNEL);
 
   // leave all non active rooms except UserMessageRoomId
   for (let roomIdToLeave of currentRooms) {

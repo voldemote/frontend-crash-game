@@ -3,8 +3,8 @@ import VegasIcon from '../data/icons/vegas.svg';
 import UserIcon from '../data/icons/user-activtiy-icon.svg';
 import GameIcon from '../data/icons/game-activity-icon.svg';
 
-export const UNIVERSAL_EVENTS_ROOM_ID =
-  process.env.UNIVERSAL_EVENTS_ROOM_ID || 'UNIVERSAL_EVENTS_ROOM_ID';
+export const UNIVERSAL_EVENTS_ROOM_ID = process.env.UNIVERSAL_EVENTS_ROOM_ID || 'UNIVERSAL_EVENTS_ROOM_ID';
+export const API_INFO_CHANNEL = process.env.API_INFO_CHANNEL || 'API_INFO_CHANNEL';
 
 export const ACTIVITIES_TO_TRACK = [
   {
