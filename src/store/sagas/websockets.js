@@ -13,6 +13,7 @@ import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
 import { UNIVERSAL_EVENTS_ROOM_ID, API_INFO_CHANNEL } from 'constants/Activities';
 import { EventActions } from '../actions/event';
+import {InfoChannelActions, infoChannelActions} from '../actions/info-channel';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from '../actions/user';
@@ -124,6 +125,15 @@ function createSocketChannel(socket) {
       emit(message);
     };
 
+    const infoChannelHandler = (data) => {
+      const message = {
+        type: 'INFO_CHANNEL',
+        eventName: data.type,
+        data: data?.data,
+      };
+      emit(message);
+    };
+
     const onAnyListener = (eventName, data) => {
       const message = {
         type: 'any',
@@ -147,6 +157,7 @@ function createSocketChannel(socket) {
     socket.on('CASINO_REWARD', casinoRewardHandler);
     socket.on('EVENT_BET_STARTED', betStartedHandler);
     socket.on('CASINO_CANCEL', casinoBetCanceledHandler);
+    socket.on('INFO_CHANNEL', infoChannelHandler);
     socket.onAny(onAnyListener);
 
     const unsubscribe = () => {
@@ -161,6 +172,7 @@ function createSocketChannel(socket) {
       socket.off('CASINO_REWARD', casinoRewardHandler);
       socket.off('EVENT_BET_STARTED', betStartedHandler);
       socket.off('CASINO_CANCEL', casinoBetCanceledHandler);
+      socket.off('INFO_CHANNEL', infoChannelHandler);
       socket.offAny(onAnyListener);
     };
 
@@ -187,6 +199,7 @@ export function* init() {
         const payload = yield take(socketChannel);
         const type = _.get(payload, 'type');
         let uid;
+
         switch (type) {
           case 'connect':
             if (socket && socket.connected) {
@@ -291,6 +304,9 @@ export function* init() {
             break;
           case notificationTypes.EVENT_BET_STARTED:
             yield put(EventActions.fetchAll());
+            break;
+          case 'INFO_CHANNEL':
+            yield put(InfoChannelActions.setPrices(payload.data))
             break;
           case 'any':
             if (trackedActivities.indexOf(payload.eventName) > -1) {
