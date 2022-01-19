@@ -221,6 +221,7 @@ const mapStateToProps = state => {
   return {
     user: state.authentication,
     loggedIn: state.authentication.authState === authState.LOGGED_IN,
+    userId: state.authentication.userId,
   }
 }
 
