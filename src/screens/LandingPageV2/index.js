@@ -286,7 +286,7 @@ const LandingPageV2 = (
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} carouselType='landingpage'>
-      <CustomCarousel userId={userId} carouselType={'landingpage'} />
+      <CustomCarousel carouselType={'landingpage'} />
       <div className={styles.container}>
 
         <DisplaySection selectedGamesLabel={TOP_PICKS_GAMES.header} selectedGamesNames={TOP_PICKS_GAMES.names} smartsoftGames={EXTERNAL_GAMES} evoplayGames={prepareEvoplayGames(EVOPLAY_GAMES)} />

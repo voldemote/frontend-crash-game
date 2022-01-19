@@ -71,7 +71,15 @@ const EvoplayGame = ({
       const demo = gameMode === 'demo' || !user.isLoggedIn;
       getUrlgame({returnUrl: window.location.origin, demo, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'evoplay' })
         .then(({data}) => {
-          if(data?.url) setInit(data?.url)
+          if(data?.url) {
+            const gameUrl = data?.url;
+            if(isMobile) {
+              history.push('/')
+              window.location = gameUrl;
+            }else{
+              setInit(gameUrl);
+            }
+          }
         })
         .catch(error => {
           dispatch(AlertActions.showError(error.message));
