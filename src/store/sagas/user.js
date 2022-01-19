@@ -4,7 +4,7 @@ import { AuthenticationActions } from '../actions/authentication';
 import { call } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
 import { select } from 'redux-saga/effects';
-import { UserActions, UserTypes } from '../actions/user';
+import { UserActions } from '../actions/user';
 import { LOGGED_IN } from 'constants/AuthState';
 import { AlertActions } from 'store/actions/alert';
 
@@ -58,6 +58,7 @@ const fetchSucceeded = function* (action) {
     } else {
       const profilePicture = user.profilePicture;
       const balance = user.balance;
+      const balances = user.balances;
       const username = user.username;
       const name = user.name;
       const admin = user.admin;
@@ -76,6 +77,7 @@ const fetchSucceeded = function* (action) {
         AuthenticationActions.updateData({
           profilePicture,
           balance,
+          balances,
           username,
           name,
           admin,

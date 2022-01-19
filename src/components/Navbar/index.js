@@ -67,7 +67,7 @@ const Navbar = ({
     closeDrawers();
   });
 
-  const { balance, currency, toNextRank } = useSelector(selectUser);
+  const { balance, balances, currency, toNextRank } = useSelector(selectUser);
 
   const history = useHistory();
 
@@ -173,6 +173,19 @@ const Navbar = ({
     return authState === LOGGED_IN;
   };
 
+  const renderBalances = () => {
+    let response = '';
+    if (balances) {
+      balances.forEach(b => {
+        response =
+          response + `${formatToFixed(b.balance, 0, true)} ${b.symbol}\n`;
+      });
+    } else {
+      response = `${formatToFixed(balance, 0, true)} ${currency}`;
+    }
+    return response.trim();
+  };
+
   const renderWalletButton = () => {
     const walletBtn = (
       <span
@@ -189,19 +202,23 @@ const Navbar = ({
           className={style.walletLinkContainer}
           onClick={() => {
             trackWalletIcon();
-            history.push(Routes.wallet)
+            history.push(Routes.wallet);
           }}
         >
           <img src={CoinIcon} alt="medal" className={style.medal} />
-          <p title={`${formatToFixed(balance, 0, true)} ${currency}`}>{formatToFixed(balance, 0, true)} {currency}</p>
+          <p
+            title={renderBalances()}
+          >
+            {formatToFixed(balance, 0, true)} {currency}
+          </p>
         </div>
-        <span 
+        <span
           className={style.depositLabel}
           onClick={() => {
             showWalletDepositPopup();
           }}
         >
-          <span className={style.deposit}>Deposit</span> <WalletIcon/>
+          <span className={style.deposit}>Deposit</span> <WalletIcon />
         </span>
       </span>
     );
