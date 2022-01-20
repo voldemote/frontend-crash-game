@@ -36,7 +36,7 @@ import { trackWalletAddWfair, trackWalletBuyWfair, trackWalletBuyWithCryptoButto
 import Bonus100kDesktop from '../../data/images/deposit/bonus100k-desktop.png'
 import Bonus100kMobile from '../../data/images/deposit/bonus100k-mobile.png'
 import ButtonTheme from 'components/Button/ButtonTheme';
-import {CURRENCIES} from "../../constants/Currency";
+import {AVAILABLE_GAMES_CURRENCY, CURRENCIES} from "../../constants/Currency";
 import {TOKEN_NAME} from "../../constants/Token";
 
 const UserWallet = ({
@@ -253,11 +253,14 @@ const UserWallet = ({
   const renderWalletPreferencesSection = () => {
     const balanceFixed = formatToFixed(balance, 0, true);
 
-    const options = [
-      { value: 'USD', label: 'USD' },
-      { value: 'EUR', label: 'EUR' },
-      { value: 'WFAIR', label: 'WFAIR' }
-    ]
+    const generateOptions = () => {
+      return AVAILABLE_GAMES_CURRENCY.map((item) => {
+        const currencyCode = item.toUpperCase();
+        return {value: currencyCode, label: currencyCode}
+      })
+    }
+
+    const options = generateOptions();
 
     const getSelected = () => {
       return _.find(options, {value: selectedCurrency})
@@ -286,7 +289,7 @@ const UserWallet = ({
         <div className={styles.settingsMainHeader}>Settings</div>
 
         <div className={styles.currentBalanceCard}>
-          <div className={styles.settingsLabel}>Selected FIAT currency (used for games)</div>
+          <div className={styles.settingsLabel}>Selected currency (in games)</div>
           <Select
             onChange={handleChangeCurrency}
             options={options}
