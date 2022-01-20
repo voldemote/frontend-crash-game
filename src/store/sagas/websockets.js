@@ -397,7 +397,6 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   }
 
   //JOIN TO API INFO CHANNEL
-  console.log('JOIN TO API INFO CHANNEL');
   newRoomsToJoin.push(API_INFO_CHANNEL);
 
   // leave all non active rooms except UserMessageRoomId
