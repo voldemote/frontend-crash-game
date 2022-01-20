@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { connect } from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import styles from './styles.module.scss';
 import WfairTokenEmblem from '../../data/images/token/wfair_token_emblem.png';
 import LogoFooter from '../../data/icons/wfair-logo-footer.svg';
@@ -23,12 +23,17 @@ import { useCallback } from 'react';
 import { GeneralActions } from 'store/actions/general';
 import { Link, Route } from 'react-router-dom';
 import Routes from '../../constants/Routes';
+import {selectPrices} from '../../store/selectors/info-channel';
+import {roundToTwo} from "../../helper/FormatNumbers";
 
 const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   const openLeaderboard = useCallback(event => {
     window.scrollTo(0, 0);
     setOpenDrawer('leaderboard');
   }, []);
+
+  const prices = useSelector(selectPrices);
+  const usdPrice = roundToTwo(prices?.USD, 4) || '-';
 
   return (
     <div className={styles.container}>
@@ -225,7 +230,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                   pathname: Routes.terms,
                   hash: "#restricted",
                 }}
-                
+
               >
                 <img src={adultPlusIcon} className={styles.footerGenericIcons} alt={'adult plus icon'} />
               </Link>
@@ -251,7 +256,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
 
       <div className={styles.copyrightBlock}>
         <div>© 2022 alpacasino.io | All rights reserved.</div>
-        {/*<div>1 WFAIR = 0,02843 $</div>*/}
+        <div>1 WFAIR = {usdPrice} $</div>
       </div>
 
       <p className={styles.footerDisclaimer}>
