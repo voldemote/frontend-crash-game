@@ -50,8 +50,18 @@ const CURRENCY_OPTIONS = [
 const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) => {
 
   const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
-  const prices = useSelector(selectPrices);
-  console.log('prices', prices);
+
+  //get updated prices from WS, without using call example = 1 WFAIR
+  // const prices = useSelector(selectPrices);
+  // console.log('prices', prices);
+  // {
+  //   "EUR": "0.016501625604087633",
+  //   "USD": "0.018742263165526254",
+  //   "BTC": "4.465285745077049e-7",
+  //   "ETH": "0.000005988034703745713",
+  //   "LTC": "0.00013593074842386602",
+  //   "_updatedAt": "Thu, 20 Jan 2022 08:42:16 GMT"
+  // }
 
   const [inputAmount, setInputAmount] = useState(0.1);
   const [tokenValue, setTokenValue] = useState(0);
