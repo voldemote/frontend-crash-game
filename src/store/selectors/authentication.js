@@ -3,8 +3,8 @@ import { convert } from '../../helper/Currency';
 
 export const selectCurrency = ({ authentication }) => {
   const currency = authentication.preferences?.currency;
-  //return currency || TOKEN_NAME;
-  return TOKEN_NAME;
+  return currency || TOKEN_NAME;
+  // return TOKEN_NAME;
 };
 
 export const selectUserId = state => state.authentication.userId;
@@ -24,17 +24,22 @@ export const selectUser = state => {
   return {
     ...user,
     isLoggedIn: state.authentication.authState === 'LOGGED_IN',
-    balance: convert(state.authentication.balance, currency),
-    amountWon: convert(state.authentication.amountWon, currency),
-    toNextRank: convert(state.authentication.toNextRank, currency),
-    totalInvestmentAmount: convert(
-      state.authentication.totalInvestmentAmount,
-      currency
-    ),
-    totalOpenTradesAmount: convert(
-      state.authentication.totalOpenTradesAmount,
-      currency
-    ),
+    balance: state.authentication.balance,
+    // balance: convert(state.authentication.balance, currency),
+    amountWon: state.authentication.amountWon,
+    // amountWon: convert(state.authentication.amountWon, currency),
+    toNextRank: state.authentication.toNextRank,
+    // toNextRank: convert(state.authentication.toNextRank, currency),
+    totalInvestmentAmount: state.authentication.totalInvestmentAmount,
+    // totalInvestmentAmount: convert(
+    //   state.authentication.totalInvestmentAmount,
+    //   currency
+    // ),
+    totalOpenTradesAmount: state.authentication.totalOpenTradesAmount,
+    // totalOpenTradesAmount: convert(
+    //   state.authentication.totalOpenTradesAmount,
+    //   currency
+    // ),
     currency,
     tokensRequestedAt,
   };

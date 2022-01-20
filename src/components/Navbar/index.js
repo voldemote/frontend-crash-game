@@ -39,6 +39,7 @@ import ButtonTheme from 'components/Button/ButtonTheme';
 import { trackWalletDepositIcon, trackWalletIcon } from 'config/gtm';
 
 import {ReactComponent as WalletIcon} from '../../data/icons/navbar/wallet-icon.svg';
+import {TOKEN_NAME} from "../../constants/Token";
 
 
 const Navbar = ({
@@ -181,7 +182,7 @@ const Navbar = ({
           response + `${formatToFixed(b.balance, 0, true)} ${b.symbol}\n`;
       });
     } else {
-      response = `${formatToFixed(balance, 0, true)} ${currency}`;
+      response = `${formatToFixed(balance, 0, true)} ${TOKEN_NAME}`;
     }
     return response.trim();
   };
@@ -209,7 +210,7 @@ const Navbar = ({
           <p
             title={renderBalances()}
           >
-            {formatToFixed(balance, 0, true)} {currency}
+            {formatToFixed(balance, 0, true)} {TOKEN_NAME}
           </p>
         </div>
         <span
@@ -460,7 +461,7 @@ const Navbar = ({
             <span className={style.logoText}>
               Alpacasino
             </span>
-          </div>,          
+          </div>,
           true
         )}
       </div>
