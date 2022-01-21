@@ -30,6 +30,8 @@ import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
 import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
+import {selectPrices} from '../../store/selectors/info-channel';
+import {convertAmount} from '../../helper/Currency';
 
 import moment from 'moment';
 import Link from 'components/Link';
@@ -69,6 +71,7 @@ const Navbar = ({
   });
 
   const { balance, balances, currency, toNextRank } = useSelector(selectUser);
+  const prices = useSelector(selectPrices);
 
   const history = useHistory();
 
@@ -225,7 +228,10 @@ const Navbar = ({
     );
     return (
       <div className={style.centerContainer}>
-        {isLoggedIn() && walletBtn}
+        {isLoggedIn() && (<>
+          {walletBtn}
+          <div className={style.walletEquivalentBlock}>{convertAmount(balance, prices[currency])} <span className={style.walletEquivalentCurrency}>{currency}</span></div>
+        </>)}
       </div>
     )
   }

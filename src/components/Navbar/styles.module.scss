@@ -143,6 +143,17 @@
     }
   }
 
+  .walletEquivalentBlock {
+    margin-top: 2px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+
+    .walletEquivalentCurrency {
+      color: #ffd31a;
+    }
+  }
+
   .navbarItems {
     display: flex;
     align-items: center;
