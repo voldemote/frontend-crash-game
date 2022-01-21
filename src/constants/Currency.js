@@ -4,4 +4,4 @@ export const CONVERSION_RATES = {
 };
 
 export const CURRENCIES = ['WFAIR', 'EUR', 'USD'];
-export const AVAILABLE_GAMES_CURRENCY = ['USD'];
+export const AVAILABLE_GAMES_CURRENCY = ['USD', 'EUR'];

@@ -230,7 +230,7 @@ const Navbar = ({
       <div className={style.centerContainer}>
         {isLoggedIn() && (<>
           {walletBtn}
-          <div className={style.walletEquivalentBlock}>{convertAmount(balance, prices[currency])} <span className={style.walletEquivalentCurrency}>{currency}</span></div>
+          <div className={style.walletEquivalentBlock}><span className={style.walletEquivalentOperator}>~</span>{convertAmount(balance, prices[currency])} <span className={style.walletEquivalentCurrency}>{currency}</span></div>
         </>)}
       </div>
     )
