@@ -367,7 +367,7 @@ const PlaceBetMines = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={onTokenNumberChange}
                 minValue={0}
                 decimalPlaces={0}
@@ -445,7 +445,7 @@ const PlaceBetMines = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={(v)=>setAmount(v)}
                 minValue={1}
                 decimalPlaces={0}

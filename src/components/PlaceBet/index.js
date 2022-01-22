@@ -628,7 +628,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               // LOGGED IN + MANUAL SELECTOR
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={onTokenNumberChange}
                 minValue={0}
                 decimalPlaces={0}
@@ -718,7 +718,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
               // LOGGED IN + AUTOPLAY SELECTOR
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={onTokenNumberChange}
                 minValue={0}
                 decimalPlaces={0}
