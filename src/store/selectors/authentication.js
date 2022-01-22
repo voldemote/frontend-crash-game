@@ -7,6 +7,12 @@ export const selectCurrency = ({ authentication }) => {
   // return TOKEN_NAME;
 };
 
+export const selectGamesCurrency = ({ authentication }) => {
+  const currency = authentication.preferences?.gamesCurrency;
+  return currency;
+  // return TOKEN_NAME;
+};
+
 export const selectUserId = state => state.authentication.userId;
 export const selectUserLoggedIn = state => state.authentication.userId;
 export const selectTokensRequestedAt = state => {
@@ -18,7 +24,9 @@ export const selectTokensRequestedAt = state => {
 
 export const selectUser = state => {
   const user = state.authentication;
+
   const currency = selectCurrency(state);
+  const gamesCurrency = selectGamesCurrency(state);
   const tokensRequestedAt = selectTokensRequestedAt(state);
 
   return {
@@ -41,6 +49,7 @@ export const selectUser = state => {
     //   currency
     // ),
     currency,
+    gamesCurrency,
     tokensRequestedAt,
   };
 };

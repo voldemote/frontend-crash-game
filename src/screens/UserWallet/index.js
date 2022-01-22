@@ -69,8 +69,8 @@ const UserWallet = ({
   const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const { active, library, account, chainId } = useWeb3React();
 
-  const { balance, currency } = useSelector(selectUser);
-  const [selectedCurrency, setSelectedCurrency] = useState(currency);
+  const { balance, gamesCurrency } = useSelector(selectUser);
+  const [selectedGamesCurrency, setSelectedGamesCurrency] = useState(gamesCurrency);
 
   const signer = library?.getSigner();
   const [stakesLoading, setStakesLoading] = useState(true);
@@ -263,15 +263,15 @@ const UserWallet = ({
     const options = generateOptions();
 
     const getSelected = () => {
-      return _.find(options, {value: selectedCurrency})
+      return _.find(options, {value: selectedGamesCurrency})
     }
 
     const handleChangeCurrency = (value, options) => {
-      setSelectedCurrency((state)=> {
+      setSelectedGamesCurrency((state)=> {
         const newCurrency = value.value;
-        if (currency !== newCurrency) {
+        if (gamesCurrency !== newCurrency) {
           updateUser(user.userId, {
-            currency: newCurrency
+            gamesCurrency: newCurrency
           });
         }
 
@@ -289,7 +289,7 @@ const UserWallet = ({
         <div className={styles.settingsMainHeader}>Settings</div>
 
         <div className={styles.currentBalanceCard}>
-          <div className={styles.settingsLabel}>Selected currency (in games)</div>
+          <div className={styles.settingsLabel}>Selected games currency</div>
           <Select
             onChange={handleChangeCurrency}
             options={options}

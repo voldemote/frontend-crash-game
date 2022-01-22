@@ -70,7 +70,7 @@ const Navbar = ({
     closeDrawers();
   });
 
-  const { balance, balances, currency, toNextRank } = useSelector(selectUser);
+  const { balance, balances, currency, gamesCurrency, toNextRank } = useSelector(selectUser);
   const prices = useSelector(selectPrices);
 
   const history = useHistory();
@@ -230,7 +230,7 @@ const Navbar = ({
       <div className={style.centerContainer}>
         {isLoggedIn() && (<>
           {walletBtn}
-          <div className={style.walletEquivalentBlock}><span className={style.walletEquivalentOperator}>~</span>{convertAmount(balance, prices[currency])} <span className={style.walletEquivalentCurrency}>{currency}</span></div>
+          <div className={style.walletEquivalentBlock}><span className={style.walletEquivalentOperator}>~</span>{convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span></div>
         </>)}
       </div>
     )
