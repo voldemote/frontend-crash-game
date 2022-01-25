@@ -270,7 +270,6 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       });
     }
 
-    console.log('placeAutoBet');
     setAutobet(payload);
     setBetted(true);
     await onBet(payload, payload.crashFactor);
@@ -371,13 +370,11 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
           <Button
             role="button"
             tabIndex="0"
-            className={classNames(styles.button, styles.cancel)}
+            className={styles.button}
+            theme={ButtonTheme.secondaryButton}
             onClick={stopAutobet}
-            data-tracking-id={
-              user.isLoggedIn ? null : 'elongame-showloginpopup'
-            }
           >
-            {user.isLoggedIn ? 'Stop Auto Bet' : 'Stop Auto Bet'}
+            Stop Autobet
           </Button>
         </>
       );
