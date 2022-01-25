@@ -11,7 +11,7 @@ const DisplaySection = (props) => {
 //   let history = useHistory();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const {smartsoftGames, evoplayGames, selectedGamesNames, selectedGamesLabel} = props;
+  const {smartsoftGames, evoplayGames, softswissGames, selectedGamesNames, selectedGamesLabel} = props;
 
   const [games, setGames] = useState([]);
   const getGameItemSizeClass = () => {
@@ -122,6 +122,7 @@ const DisplaySection = (props) => {
         let map = new Map();
         smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
         evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        //softswissGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
         ret = [...map.values()];
         ret.sort(function (a, b) {
           if (a.TechnicalName < b.TechnicalName) {

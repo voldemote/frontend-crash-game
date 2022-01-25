@@ -7,11 +7,13 @@ import {
   SLOTS_GAMES,
   EXTERNAL_GAMES,
   EVOPLAY_GAMES,
+  SOFTSWISS_GAMES,
   TOP_PICKS_GAMES
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
 
-import {prepareEvoplayGames} from "../../helper/Games"
+import {prepareEvoplayGames, prepareSoftSwissGames} from "../../helper/Games";
+import {prepareSoftswissGames } from "../../helper/Games"
 import SearchSection from './SearchSection';
 import DisplaySection from './DisplaySection';
 import { useIsMount } from 'components/hoc/useIsMount';
@@ -54,6 +56,7 @@ const LandingPageV2 = (
   );
   const [externalGames, setExternalGames] = useState(EXTERNAL_GAMES);
   const [externalGamesEvoplay, setExternalGamesEvoplay] = useState([...prepareEvoplayGames(EVOPLAY_GAMES)]);
+  const [externalGamesSoftswiss, setExternalGamesSoftswiss] = useState([...prepareSoftSwissGames(SOFTSWISS_GAMES)]);
 
   useOAuthCallback();
 
@@ -249,6 +252,8 @@ const LandingPageV2 = (
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
         selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
+      let externalGamesDisplaySoftswiss =
+        selectGame === 'external' ? prepareSoftSwissGames(SOFTSWISS_GAMES, gameCategory) : [];
      // let ret = [];
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
@@ -276,12 +281,15 @@ const LandingPageV2 = (
       setAlpacaGame(alpacaGamesDisplay);
       setExternalGames(externalGamesDisplaySmartsoft);
       setExternalGamesEvoplay(externalGamesDisplayEvoplay);
+
+      setExternalGamesSoftswiss(externalGamesDisplaySoftswiss);
       return;
     }
 
     setAlpacaGame(showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES);
     setExternalGames(EXTERNAL_GAMES);
     setExternalGamesEvoplay(prepareEvoplayGames(EVOPLAY_GAMES));
+    setExternalGamesSoftswiss(prepareSoftSwissGames(SOFTSWISS_GAMES));
   };
 
   return (
@@ -298,12 +306,14 @@ const LandingPageV2 = (
           externalGames={EXTERNAL_GAMES}
           externalGamesEvoplay={externalGamesEvoplay}
           setExternalGamesEvoplay={setExternalGamesEvoplay}
+          externalGamesSoftswiss={externalGamesSoftswiss}
+          setExternalGamesSoftswiss={setExternalGamesSoftswiss}
           setExternalGames={setExternalGames}
         />
 
         {alpacaGames.length > 0 && <GameCards games={alpacaGames} category="Alpaca Games" />}
 
-        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} />
+        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} evoplayGames={externalGamesSoftswiss} />
         {showDiscordBanner && renderDiscordBanner()}
         {renderAboutDescription()}
         {renderActivities()}
