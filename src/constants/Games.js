@@ -2241,6 +2241,21 @@ export const EVOPLAY_GAMES = {
         ],
         "release_date": "2021-11-03"
     },
+    "5847": {
+      "name": "Budai Reels",
+      "absolute_name": "fullstate\\html5\\evoplay\\budaireels",
+      "developer_id": 13,
+      "type_id": 1,
+      "game_sub_type": "Slot",
+      "mobile": 1,
+      "desktop": 1,
+      "fullstate": 1,
+      "denominations_override_allowed": 0,
+      "extra_bonuses_types": [
+        "bonus_spins"
+      ],
+      "release_date": "2021-12-23"
+    },
     /*
     "5829": {
         "name": "Dragon's Tavern",
