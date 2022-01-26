@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { GameApi, setInitialEvoplaySession, getUrlgame } from 'api/casino-games';
+import { GameApi, setInitialEvoplaySession, getSoftswissgames } from 'api/casino-games';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -69,27 +69,30 @@ const SoftswissGame = ({
 
   useEffect(() => {
     //here we need to send query based on demo / real play
-    // if(gameMode) {
-    //   const demo = gameMode === 'demo' || !user.isLoggedIn;
-    //   getUrlgame({returnUrl: window.location.origin, demo, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'softswiss' })
-    //     .then(({data}) => {
-    //       if(data?.url) {
-    //         const gameUrl = data?.url;
-    //         if(isMobile) {
-    //           history.push('/')
-    //           window.location = gameUrl;
-    //         }else{
-    //           setInit(gameUrl);
-    //         }
-    //       }
-    //     })
-    //     .catch(error => {
-    //       dispatch(AlertActions.showError(error.message));
-    //     });
-    //   return () => {
-    //     setInit(null)
-    //   }
-    // }
+    console.log(gameMode);
+    if(gameMode) {
+      const demo = gameMode === 'demo' || !user.isLoggedIn;
+      console.log(demo);
+      const device = isMobile ? "Mobile" : "Desktop";
+      getSoftswissgames({ returnUrl: window.location.origin, "demo": demo, UserId: userId, GameName: gameName, Language: 'en', ClientType: device })
+        .then(({data}) => {
+          if(data?.url) {
+            const gameUrl = data?.url;
+            if(isMobile) {
+              history.push('/')
+              window.location = gameUrl;
+            }else{
+              setInit(gameUrl);
+            }
+          }
+        })
+        .catch(error => {
+          dispatch(AlertActions.showError(error.message));
+        });
+      return () => {
+        setInit(null)
+      }
+    }
 
   }, [gameMode])
 

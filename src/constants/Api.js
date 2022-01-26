@@ -99,6 +99,7 @@ export const API_WITHDRAW = 'withdraw';
 export const API_WITHDRAW_STATUS = 'withdraw/status/:id';
 export const API_SET_EVOPLAY_SESSION = '/api/evoplay/new-session';
 export const API_GET_EVOPLAY_URLGAME = '/api/evoplay/urlgame';
+export const API_GET_SOFTSWISS_URLGAME = '/api/softswiss/urlgame';
 export const API_GET_EVOPLAY_GAMES = '/api/evoplay/listgames';
 
 //3rd parties
