@@ -32,6 +32,7 @@ import { isMobile } from 'react-device-detect';
 import { selectUser } from 'store/selectors/authentication';
 import SelectGameModePopup from "../../components/SelectGameModePopup";
 import classNames from 'classnames';
+import _ from 'lodash';
 
 const SoftswissGame = ({
   showPopup,
@@ -47,12 +48,12 @@ const SoftswissGame = ({
   const user = useSelector(selectUser);
   const [gameMode, setGameMode] = useState(null);
   const gameName = match?.params?.game
-  const gameCategory = match?.params?.category
-  const gameNumber = match?.params?.number
-  const EXTERNAL_GAME_EVENT_ID = ObjectId(gameNumber)//game.id;
+  const EXTERNAL_GAME_EVENT_ID = ObjectId(gameName)//game.id;
 
-  const softswissGame = SOFTSWISS_GAMES[gameNumber];
-  const filename = softswissGame.absolute_name.substring(softswissGame.absolute_name.lastIndexOf("\\") + 1);
+  const softswissGame = _.find(SOFTSWISS_GAMES, {identifier: gameName});
+  console.log('softswissGame CFG', softswissGame);
+
+  const filename = 'image';
 
   const dispatch = useDispatch();
   const [init, setInit] = useState(null);
@@ -67,27 +68,28 @@ const SoftswissGame = ({
 
 
   useEffect(() => {
-    if(gameMode) {
-      const demo = gameMode === 'demo' || !user.isLoggedIn;
-      getUrlgame({returnUrl: window.location.origin, demo, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'softswiss' })
-        .then(({data}) => {
-          if(data?.url) {
-            const gameUrl = data?.url;
-            if(isMobile) {
-              history.push('/')
-              window.location = gameUrl;
-            }else{
-              setInit(gameUrl);
-            }
-          }
-        })
-        .catch(error => {
-          dispatch(AlertActions.showError(error.message));
-        });
-      return () => {
-        setInit(null)
-      }
-    }
+    //here we need to send query based on demo / real play
+    // if(gameMode) {
+    //   const demo = gameMode === 'demo' || !user.isLoggedIn;
+    //   getUrlgame({returnUrl: window.location.origin, demo, UserId: userId, GameType: gameCategory, GameName: gameName, GameNumber: gameNumber, Provider: 'softswiss' })
+    //     .then(({data}) => {
+    //       if(data?.url) {
+    //         const gameUrl = data?.url;
+    //         if(isMobile) {
+    //           history.push('/')
+    //           window.location = gameUrl;
+    //         }else{
+    //           setInit(gameUrl);
+    //         }
+    //       }
+    //     })
+    //     .catch(error => {
+    //       dispatch(AlertActions.showError(error.message));
+    //     });
+    //   return () => {
+    //     setInit(null)
+    //   }
+    // }
 
   }, [gameMode])
 
