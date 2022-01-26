@@ -13,7 +13,6 @@ import {
 import GameCards from '../../components/GameCards';
 
 import {prepareEvoplayGames, prepareSoftSwissGames} from "../../helper/Games";
-import {prepareSoftswissGames } from "../../helper/Games"
 import SearchSection from './SearchSection';
 import DisplaySection from './DisplaySection';
 import { useIsMount } from 'components/hoc/useIsMount';
@@ -263,6 +262,10 @@ const LandingPageV2 = (
           externalGamesDisplayEvoplay = externalGamesDisplayEvoplay.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
           })
+
+          externalGamesDisplaySoftswiss = externalGamesDisplaySoftswiss.filter(game => {
+            return game.GameCategory.indexOf(gameCategory) > -1;
+          })
           // let map = new Map();
           // externalGamesDisplaySmartsoft.forEach((x) => map.set(x.TechnicalName, { ...x }));
           // externalGamesDisplayEvoplay.forEach((x) => map.set(x.TechnicalName, { ...x }));
@@ -313,7 +316,7 @@ const LandingPageV2 = (
 
         {alpacaGames.length > 0 && <GameCards games={alpacaGames} category="Alpaca Games" />}
 
-        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} evoplayGames={externalGamesSoftswiss} />
+        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} softswissGames={externalGamesSoftswiss} />
         {showDiscordBanner && renderDiscordBanner()}
         {renderAboutDescription()}
         {renderActivities()}

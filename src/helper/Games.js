@@ -26,6 +26,8 @@ export const prepareSoftSwissGames = (softswissGames, gamesCategory) => {
   for (let key in softswissGames) {
     const gameInfo = softswissGames[key];
     console.log(gameInfo);
+    console.log(gamesCategory);
+
     const catSubType = gameInfo.category;
     const name = gameInfo.title;
    let translatedCat = null;
@@ -33,33 +35,42 @@ export const prepareSoftSwissGames = (softswissGames, gamesCategory) => {
     if (catSubType === 'slots') {
       translatedCat = 'Slot Games';
     }
-
-    // if (catSubType === 'Instant' || catSubType === 'socketgames') {
-    //   translatedCat = 'Instant Win Games';
-    // }
-    // if (gamesCategory === "Card Games") {
-    //   if (catSubType === 'Blackjack' || catSubType === 'Baccarat' || catSubType === 'Poker' || (catSubType === 'Table' && name.indexOf('Poker') > -1)) {
-    //     translatedCat = 'Card Games';
-    //   }
-    // } else if (gamesCategory === "Poker") {
-    //   if (catSubType === 'Poker' || (catSubType === 'Table' && name.indexOf('Poker') > -1)) {
-    //     translatedCat = 'Poker Games';
-    //   }
-    // } else if (gamesCategory === "Blackjack") {
-    //   if (catSubType === 'Blackjack') {
-    //     translatedCat = 'Blackjack Games';
-    //   }
-    // } else if (gamesCategory === "Roulette") {
-    //   if (catSubType === 'Roulette') {
-    //     translatedCat = 'Roulette Games';
-    //   }
-    // } else if (name.indexOf('Keno') > -1) {
-    //   translatedCat = 'Keno Games';
-    // } else {
-    //   if (catSubType === 'Blackjack' || catSubType === 'Table' || catSubType === 'Baccarat' || catSubType === 'Roulette' || catSubType === 'Poker') {
-    //     translatedCat = 'Casino Games';
-    //   }
-    //}
+    if (catSubType === 'roulette') {
+      translatedCat = 'Roulette Games';
+    }
+    if (catSubType === 'casual' || catSubType === 'lottery' || catSubType === 'craps' ) {
+      translatedCat = 'Casino Games';
+    }
+    if (catSubType === 'card' || catSubType === 'poker' || catSubType === 'video_poker') {
+      translatedCat = 'Card Games';
+    }
+    if (catSubType === 'Instant' || catSubType === 'socketgames') {
+      translatedCat = 'Instant Win Games';
+    }
+    if (gamesCategory === "Card Games") {
+      if (catSubType === 'Blackjack' || catSubType === 'card' || catSubType === 'Poker' || (catSubType === 'Table' && name.indexOf('Poker') > -1)) {
+        translatedCat = 'Card Games';
+      }
+    } else if (gamesCategory === "Poker") {
+      console.log(catSubType);
+      if (catSubType === 'Poker' || (catSubType === 'Table' && name.indexOf('Poker') > -1)) {
+        translatedCat = 'Poker Games';
+      }
+    } else if (gamesCategory === "Blackjack") {
+      if (catSubType === 'Blackjack') {
+        translatedCat = 'Blackjack Games';
+      }
+    } else if (gamesCategory === "Roulette") {
+      if (catSubType === 'roulette') {
+        translatedCat = 'Roulette Games';
+      }
+    } else if (name.indexOf('Keno') > -1) {
+      translatedCat = 'Keno Games';
+    } else {
+      if (catSubType === 'Blackjack' || catSubType === 'Table' || catSubType === 'Baccarat' || catSubType === 'Roulette' || catSubType === 'Poker') {
+        translatedCat = 'Casino Games';
+      }
+    }
 
 
     const gameEntry = {
@@ -69,7 +80,6 @@ export const prepareSoftSwissGames = (softswissGames, gamesCategory) => {
       GameThumb: thumbUrl + gameInfo.provider +'/'+ gameInfo.identifier2+".png",
       _cfg: gameInfo
     }
-    console.log(gameEntry);
     output.push(gameEntry);
   }
 
@@ -83,7 +93,6 @@ export const prepareEvoplayGames = (evoplayGames,gamesCategory) => {
     const catSubType = gameInfo.game_sub_type;
     const name = gameInfo.name;
     let translatedCat = null;
-
     if(catSubType === 'Slot') {
       translatedCat = 'Slot Games';
     }

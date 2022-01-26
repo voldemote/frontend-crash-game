@@ -74,7 +74,33 @@ const DisplaySection = (props) => {
         </div>
       </Link></div>
     }
-
+    if (game.GameProvider === 'softswiss') {
+      
+      const cfg = game._cfg;
+      const name = cfg.title;
+      const softswissUrl = `/softswiss-game/${cfg.identifier}`;
+      return <div onClick={(e) => {
+        handleGameClick(e, softswissUrl, game);
+      }}>
+        <Link
+          to={user.isLoggedIn ? softswissUrl : undefined}
+          className={classNames(
+            styles.game,
+            styles.gameLink
+          )}
+        >
+          <div
+            key={index}
+            className={classNames(
+              styles.gameItem,
+              getGameItemSizeClass()
+            )}
+          >
+            <img src={`${game.GameThumb}`} alt={`img`} />
+            <p className={styles.title}>{name}</p>
+          </div>
+        </Link></div>
+    }
     if (game.TechnicalName !== undefined) {
     const smartSoftUrl = `/external-game/${game.TechnicalName}/${game.TechnicalCategory}`;
 
@@ -103,9 +129,9 @@ const DisplaySection = (props) => {
 
   useEffect(() => {
 
-    if(smartsoftGames && evoplayGames) {
+    if(smartsoftGames && evoplayGames && softswissGames) {
       if(selectedGamesNames && selectedGamesNames.length) {
-        const allGames = [...smartsoftGames, ...evoplayGames];
+        const allGames = [...smartsoftGames, ...evoplayGames, ...softswissGames];
         const selectedGames = [];
 
         selectedGamesNames.forEach((item)=> {
@@ -122,7 +148,7 @@ const DisplaySection = (props) => {
         let map = new Map();
         smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
         evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
-        //softswissGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        softswissGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
         ret = [...map.values()];
         ret.sort(function (a, b) {
           if (a.TechnicalName < b.TechnicalName) {
@@ -140,9 +166,10 @@ const DisplaySection = (props) => {
     return () => {
       setGames([])
     }
-  }, [smartsoftGames, evoplayGames])
+  }, [smartsoftGames, evoplayGames, softswissGames])
 
   let categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[]);
+  console.log(categories);
 
   return (
     <div className={styles.gamesContainer}>

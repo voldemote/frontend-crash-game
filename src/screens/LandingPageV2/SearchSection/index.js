@@ -10,7 +10,9 @@ setAlpacaGame,
 externalGames,
 setExternalGames,
 externalGamesEvoplay,
-setExternalGamesEvoplay
+setExternalGamesEvoplay,
+  externalGamesSoftswiss,
+  setExternalGameSoftswiss
  }) => {
   const gamesTitleList = [
     'Alpaca Games',
@@ -52,10 +54,15 @@ setExternalGamesEvoplay
       const match = game.TechnicalName.toLowerCase().match(value.toLowerCase());
       return Array.isArray(match);
     });
+    const searchedExternalGamesSoftswiss = externalGamesSoftswiss.filter(game => {
+      const match = game.TechnicalName.toLowerCase().match(value.toLowerCase());
+      return Array.isArray(match);
+    });
 
     setAlpacaGame(searchedAlpacaGame);
     setExternalGames(searchedExternalGames);
     setExternalGamesEvoplay(searchedExternalGamesEvoplay);
+    setExternalGameSoftswiss(searchedExternalGamesSoftswiss);
 
     if(!value) {
       setGames();
