@@ -16,6 +16,7 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import onboardingReducer from './onboarding';
 import txProps from './txProps';
+import infoChannelReducer from '../reducer/info-channel';
 
 export default history =>
   combineReducers({
@@ -36,4 +37,5 @@ export default history =>
     wallfair: wallfairReducer,
     onboarding: onboardingReducer,
     txProps: txProps,
+    infoChannel: infoChannelReducer
   });

@@ -14,6 +14,9 @@ import useDepositsCounter from 'hooks/useDepositsCounter';
 import UserWalletTables from 'components/UserWalletTables';
 import classNames from 'classnames';
 import { useWeb3React } from '@web3-react/core';
+import Select from 'react-select';
+import { UserActions } from 'store/actions/user';
+import _ from 'lodash';
 
 import Loader from 'components/Loader/Loader';
 import { WallfairActions } from 'store/actions/wallfair';
@@ -33,6 +36,8 @@ import { trackWalletAddWfair, trackWalletBuyWfair, trackWalletBuyWithCryptoButto
 import Bonus100kDesktop from '../../data/images/deposit/bonus100k-desktop.png'
 import Bonus100kMobile from '../../data/images/deposit/bonus100k-mobile.png'
 import ButtonTheme from 'components/Button/ButtonTheme';
+import {AVAILABLE_GAMES_CURRENCY, CURRENCIES} from "../../constants/Currency";
+import {TOKEN_NAME} from "../../constants/Token";
 
 const UserWallet = ({
   tags,
@@ -59,11 +64,14 @@ const UserWallet = ({
   showWalletDepositCrypto,
   showWalletDepositFiat,
   showWalletConnectWallet,
+  updateUser
 }) => {
   const showNewFeatures = process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true';
   const { active, library, account, chainId } = useWeb3React();
 
-  const { balance, currency } = useSelector(selectUser);
+  const { balance, gamesCurrency } = useSelector(selectUser);
+  const [selectedGamesCurrency, setSelectedGamesCurrency] = useState(gamesCurrency);
+
   const signer = library?.getSigner();
   const [stakesLoading, setStakesLoading] = useState(true);
 
@@ -149,7 +157,7 @@ const UserWallet = ({
     const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', user.userId);
     window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
   }
-  
+
   const renderCategoriesAndLeaderboard = () => {
     return (
       <div className={styles.activities}>
@@ -221,7 +229,7 @@ const UserWallet = ({
                       <span>{balanceFixed}</span>
                     </p>
                     <p className={styles.symbolContainer}>
-                      {currency}
+                      {TOKEN_NAME}
                     </p>
                   </div>
                 </div>
@@ -241,7 +249,63 @@ const UserWallet = ({
       </div>
     );
   };
-  
+
+  const renderWalletPreferencesSection = () => {
+    const balanceFixed = formatToFixed(balance, 0, true);
+
+    const generateOptions = () => {
+      return AVAILABLE_GAMES_CURRENCY.map((item) => {
+        const currencyCode = item.toUpperCase();
+        return {value: currencyCode, label: currencyCode}
+      })
+    }
+
+    const options = generateOptions();
+
+    const getSelected = () => {
+      return _.find(options, {value: selectedGamesCurrency})
+    }
+
+    const handleChangeCurrency = (value, options) => {
+      setSelectedGamesCurrency((state)=> {
+        const newCurrency = value.value;
+        if (gamesCurrency !== newCurrency) {
+          updateUser(user.userId, {
+            gamesCurrency: newCurrency
+          });
+        }
+
+        return newCurrency;
+      })
+
+
+    }
+
+    return (
+      <div className={styles.walletPreferencesSection}>
+        <div className={styles.boxContainer}>
+
+
+        <div className={styles.settingsMainHeader}>Settings</div>
+
+        <div className={styles.currentBalanceCard}>
+          <div className={styles.settingsLabel}>Selected games currency</div>
+          <Select
+            onChange={handleChangeCurrency}
+            options={options}
+            isClearable={false}
+            name="selected-currency"
+            defaultValue={getSelected()}
+            className={styles.inputSelect}
+          />
+        </div>
+
+        </div>
+
+      </div>
+    );
+  };
+
   const renderDepositBonusSection = () => {
     return (
       <div className={styles.currentBalanceSection}>
@@ -259,7 +323,7 @@ const UserWallet = ({
             </div>
           </Grid>
         }
-        
+
         {!user.emailConfirmed &&
           <Grid
             className={styles.balanceCard}
@@ -478,7 +542,7 @@ const UserWallet = ({
                   >
                     Withdraw
                   </Button>
-                
+
                   {/* {
                   showStartButton() && (
                     <div className={styles.buttonContainer}>
@@ -516,6 +580,7 @@ const UserWallet = ({
               <p>1,245,894 WFAIR Deposites today</p>
             </div> */}
           </div>
+          {renderWalletPreferencesSection()}
           {renderCurrentBalanceSection()}
           {renderDepositBonusSection()}
           {renderStatusTableSection()}
@@ -540,6 +605,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    updateUser: (userId, preferences) => {
+      dispatch(UserActions.updatePreferences({ userId, preferences }));
+    },
     resetState: () => dispatch(WallfairActions.resetState()),
     setHistory: (lockAddress, dataArray) =>
       dispatch(

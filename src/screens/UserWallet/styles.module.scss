@@ -589,3 +589,44 @@
     }
   }
 }
+
+.walletPreferencesSection {
+  position: relative;
+  //color: white;
+  z-index: 5;
+  padding: 14px;
+
+  .boxContainer {
+    background: rgba($colorBlue80, 0.6);
+    border: 1px solid $colorBlueBorder;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .inputSelect {
+    width: 200px;
+  }
+
+  .settingsLabel {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .settingsMainHeader {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+}

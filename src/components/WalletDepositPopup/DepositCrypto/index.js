@@ -14,7 +14,7 @@ import Dropdown from 'components/Dropdown';
 import {ReactComponent as LeftArrow} from '../../../data/icons/deposit/left-arrow.svg';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
-import { connect } from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import { TOKEN_NAME } from 'constants/Token';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
 import ReferralLinkCopyInputBox from 'components/ReferralLinkCopyInputBox';
@@ -24,6 +24,7 @@ import classNames from 'classnames';
 import { LIMIT_BONUS } from 'constants/Bonus';
 import useDepositsCounter from 'hooks/useDepositsCounter';
 import { TransactionActions } from 'store/actions/transaction';
+import {selectPrices} from "../../../store/selectors/info-channel";
 
 const cryptoShortName = {
   BITCOIN: 'BTC',
@@ -49,6 +50,19 @@ const CURRENCY_OPTIONS = [
 const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) => {
 
   const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
+
+  //get updated prices from WS, without using call example = 1 WFAIR
+  // const prices = useSelector(selectPrices);
+  // console.log('prices', prices);
+  // {
+  //   "EUR": "0.016501625604087633",
+  //   "USD": "0.018742263165526254",
+  //   "BTC": "4.465285745077049e-7",
+  //   "ETH": "0.000005988034703745713",
+  //   "LTC": "0.00013593074842386602",
+  //   "_updatedAt": "Thu, 20 Jan 2022 08:42:16 GMT"
+  // }
+
   const [inputAmount, setInputAmount] = useState(0.1);
   const [tokenValue, setTokenValue] = useState(0);
   const [bonus, setBonus] = useState(0);
@@ -75,7 +89,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
   const fetchReceiverAddress = useCallback(async (tab) => {
     const currencyName = cryptoShortName[tab];
     const channel = await generateCryptopayChannel({ currency: currencyName });
-    
+
     if(channel.error) {
       return setErrorFetchingChannel(true);
     }
@@ -113,7 +127,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
       const calculatedTotal = Math.floor((WfairTokenValue + expectedBonus) * 100) / 100;
 
       setTotal(calculatedTotal);
-      
+
     } else {
       setTokenValue(0);
       setBonus(0);
@@ -172,7 +186,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
         </div>
       </div>
 
-      
+
       {!errorFetchingChannel && (
         <div className={styles.transferInformation}>
           <div className={styles.qrCodeImg}>
@@ -243,7 +257,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
       {!errorFetchingChannel && (
         (selectedCurrency.label === 'BITCOIN' &&
             <p className={styles.depositNotes}>
-              
+
               <sup>*</sup>Send any amount of BTC to the following address. 1 confirmation is required. We do not accept BEP20 from Binance.
               Alpacasino does not accept bitcoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
             </p>
@@ -251,7 +265,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
         ||
         (selectedCurrency.label === 'ETHEREUM' &&
           <p className={styles.depositNotes}>
-            
+
             <sup>*</sup>Send any amount of ETH to the following address. 3 confirmations is required.
             Alpacasino does not accept Ethereum that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
           </p>
@@ -259,7 +273,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
         ||
         (selectedCurrency.label === 'LITECOIN' &&
           <p className={styles.depositNotes}>
-            
+
             <sup>*</sup>Send any amount of LTC to the following address. 3 confirmations is required.
             Alpacasino does not accept Litecoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
           </p>
@@ -278,8 +292,8 @@ const mapStateToProps = state => {
 
 
 const mapDispatchToProps = dispatch => {
-  return { 
-    showWalletDepositPopup: () => { 
+  return {
+    showWalletDepositPopup: () => {
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
     },
     fetchWalletTransactions: () => {

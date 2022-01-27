@@ -116,7 +116,7 @@ const updatePreferences = function* (action) {
       })
     );
   } else {
-    yield put(AlertActions.showError(error));
+    yield put(AlertActions.showError({message: error}));
   }
 };
 

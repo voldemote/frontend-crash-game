@@ -200,7 +200,9 @@ const updateUserPreferences = (userId, preferences) => {
     preferences,
   })
     .then(response => ({ response }))
-    .catch(error => ({ error: error.response.message }));
+    .catch(error => {
+      return { error: (error.response?.message || 'Update user preferences failed') }
+    });
 };
 
 const getLeaderboard = (skip, limit) => {
