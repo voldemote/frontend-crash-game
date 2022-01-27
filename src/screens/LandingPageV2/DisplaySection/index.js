@@ -75,7 +75,7 @@ const DisplaySection = (props) => {
       </Link></div>
     }
     if (game.GameProvider === 'softswiss') {
-      
+
       const cfg = game._cfg;
       const name = cfg.title;
       const softswissUrl = `/softswiss-game/${cfg.identifier}`;
@@ -169,7 +169,6 @@ const DisplaySection = (props) => {
   }, [smartsoftGames, evoplayGames, softswissGames])
 
   let categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[]);
-  console.log(categories);
 
   return (
     <div className={styles.gamesContainer}>

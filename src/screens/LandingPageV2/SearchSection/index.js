@@ -12,7 +12,7 @@ setExternalGames,
 externalGamesEvoplay,
 setExternalGamesEvoplay,
   externalGamesSoftswiss,
-  setExternalGameSoftswiss
+  setExternalGamesSoftswiss
  }) => {
   const gamesTitleList = [
     'Alpaca Games',
@@ -62,7 +62,7 @@ setExternalGamesEvoplay,
     setAlpacaGame(searchedAlpacaGame);
     setExternalGames(searchedExternalGames);
     setExternalGamesEvoplay(searchedExternalGamesEvoplay);
-    setExternalGameSoftswiss(searchedExternalGamesSoftswiss);
+    setExternalGamesSoftswiss(searchedExternalGamesSoftswiss);
 
     if(!value) {
       setGames();
