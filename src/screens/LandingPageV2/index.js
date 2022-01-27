@@ -149,7 +149,7 @@ const LandingPageV2 = (
     return (
       <div className={styles.aboutDescritpion}>
         <img className={styles.topImage} src={PlinkoAlpaca} alt="fair-piece" />
-        <Grid container spacing={1} justify="space-between">
+        <Grid container spacing={1} justifyContent="space-between">
           <Grid item lg={4} md={4} xs={12}>
             <div className={styles.parentContainer}>
               <div className={styles.descriptionCardContainer}>

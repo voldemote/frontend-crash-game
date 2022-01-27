@@ -25,8 +25,6 @@ export const prepareSoftSwissGames = (softswissGames, gamesCategory) => {
   const thumbUrl = "https://cdn.softswiss.net/i/s3/";
   for (let key in softswissGames) {
     const gameInfo = softswissGames[key];
-    console.log(gameInfo);
-    console.log(gamesCategory);
 
     const catSubType = gameInfo.category;
     const name = gameInfo.title;
@@ -107,11 +105,11 @@ export const prepareEvoplayGames = (evoplayGames,gamesCategory) => {
     } else if (gamesCategory === "Poker") {
       if (catSubType === 'Poker' || (catSubType === 'Table' && name.indexOf('Poker') > -1) ) {
         translatedCat = 'Poker Games';
-      } 
+      }
     } else if (gamesCategory === "Blackjack") {
       if (catSubType === 'Blackjack') {
         translatedCat = 'Blackjack Games';
-      }   
+      }
     } else if (gamesCategory === "Roulette") {
       if (catSubType === 'Roulette') {
         translatedCat = 'Roulette Games';
@@ -123,7 +121,7 @@ export const prepareEvoplayGames = (evoplayGames,gamesCategory) => {
         translatedCat = 'Casino Games';
       }
     }
-    
+
 
     const gameEntry = {
       GameProvider: 'evoplay',

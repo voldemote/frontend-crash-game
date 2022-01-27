@@ -54,7 +54,7 @@ const DisplaySection = (props) => {
       const evoPlayUrl = `/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}`;
       return <div onClick={(e) => {
         handleGameClick(e,evoPlayUrl, game);
-      }}>
+      }} key={name + game.GameProvider}>
         <Link
         to={user.isLoggedIn ? evoPlayUrl : undefined}
         className={classNames(
@@ -75,13 +75,12 @@ const DisplaySection = (props) => {
       </Link></div>
     }
     if (game.GameProvider === 'softswiss') {
-
       const cfg = game._cfg;
       const name = cfg.title;
       const softswissUrl = `/softswiss-game/${cfg.identifier}`;
       return <div onClick={(e) => {
         handleGameClick(e, softswissUrl, game);
-      }}>
+      }} key={name + game.GameProvider}>
         <Link
           to={user.isLoggedIn ? softswissUrl : undefined}
           className={classNames(
@@ -106,7 +105,9 @@ const DisplaySection = (props) => {
 
     return <div onClick={(e) => {
       handleGameClick(e, smartSoftUrl, game);
-    }}><Link
+    }} key={game.TechnicalName + game.GameProvider}>
+
+      <Link
       to={user.isLoggedIn ? smartSoftUrl : undefined}
       className={classNames(
         styles.game,
@@ -179,36 +180,39 @@ const DisplaySection = (props) => {
         </div>
         <div className={classNames(styles.games)}>
           {games.map((game, index) => {
+              let entryKey = `gamecard-${index}-${game.TechnicalName}`;
               return <div
                 className={styles.wrapper}
-                key={`gamecard-${index}-`}
+                key={entryKey}
               >
                 {renderLinkByProvider(game, index)}
               </div>
             }
           )}
         </div>
-      </div> : (categories.map(category1 =>
-        <>
+      </div> : (categories.map((category1, index) => {
+         return <div key={category1 + index}>
             <div className={styles.gamesCategory}>
               {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
               <h2>{category1}</h2>
             </div>
 
-          <div className={classNames(styles.games)}>
-            {games.filter(g => g.GameCategory===category1).map((game, index) => {
+            <div className={classNames(styles.games)}>
+              {games.filter(g => g.GameCategory===category1).map((game, index) => {
 
-             return <div
-                className={styles.wrapper}
-                key={`gamecard-${index}-`}
-              >
-               {renderLinkByProvider(game, index)}
-              </div>
+                  return <div
+                    className={styles.wrapper}
+                    key={`gamecard-${index}-${game.TechnicalName}`}
+                  >
+                    {renderLinkByProvider(game, index)}
+                  </div>
 
-            }
-            )}
+                }
+              )}
+            </div>
           </div>
-        </>
+      }
+
       ))}
     </div>
   );
