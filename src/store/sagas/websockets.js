@@ -329,6 +329,8 @@ const isExternalPage = (currentAction, pathSlugs) =>
 const isEvoplayPage = (currentAction, pathSlugs) =>
   (currentAction[0] === 'evoplay-game' || pathSlugs[0] === 'evoplay-game') &&
   (pathSlugs.length > 2 || currentAction.length > 2);
+const isSoftswissPage = (currentAction, pathSlugs) =>
+  (currentAction[0] === 'softswiss-game' || pathSlugs[0] === 'softswiss-game');
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -377,6 +379,11 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
   }
   if (isExternalPage(currentAction, pathSlugs)) {
     newRoomsToJoin.push(ObjectId(pathSlugs[1]));
+    newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
+  }
+
+  if (isSoftswissPage(currentAction, pathSlugs)) {
+    newRoomsToJoin.push(pathSlugs[1]);
     newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
 

@@ -47,11 +47,13 @@ const SoftswissGame = ({
 }) => {
   const user = useSelector(selectUser);
   const [gameMode, setGameMode] = useState(null);
-  const gameName = match?.params?.game
-  const EXTERNAL_GAME_EVENT_ID = ObjectId(gameName)//game.id;
+  const gameIdentifier = match?.params?.game;
 
-  const softswissGame = _.find(SOFTSWISS_GAMES, {identifier: gameName});
-  console.log('softswissGame CFG', softswissGame);
+  const softswissGame = _.find(SOFTSWISS_GAMES, {identifier: gameIdentifier});
+  // console.log('softswissGame CFG', softswissGame);
+
+  const gameName = softswissGame?.identifier ? softswissGame?.title : gameIdentifier;
+  const EXTERNAL_GAME_EVENT_ID = gameIdentifier//game.id;
 
   const filename = 'image';
 
@@ -73,8 +75,8 @@ const SoftswissGame = ({
     if(gameMode) {
       const demo = gameMode === 'demo' || !user.isLoggedIn;
       console.log(demo);
-      const device = isMobile ? "Mobile" : "Desktop";
-      getSoftswissgames({ returnUrl: window.location.origin, "demo": demo, UserId: userId, GameName: gameName, Language: 'en', ClientType: device })
+      const device = isMobile ? "mobile" : "desktop";
+      getSoftswissgames({ ReturnUrl: window.location.origin, "demo": demo, UserId: userId, GameName: gameIdentifier, Language: 'en', ClientType: device })
         .then(({data}) => {
           if(data?.url) {
             const gameUrl = data?.url;
