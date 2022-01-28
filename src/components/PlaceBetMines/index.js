@@ -141,31 +141,30 @@ const PlaceBetMines = ({
 
   useEffect(() => {
     if(bet.autobet && !bet.done){
-      let prof = 0
       if(bet.win) {
-        prof = profit + bet.amount
         handleCashout()
         //document.getElementById('mines-cashout-btn').click();
-        const acc = prof + accumulated
-        setAccumulated((a)=> {return prof+ a})
-        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+
+        if(bet.profitStop >= 0 && bet.profitStop > accumulated && bet.lossStop >= 0 && bet.lossStop > -accumulated){
           const newamount = bet.profitStop > 0 && Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease))
-          if(newamount < 1) setBet({autobet: false, pending: false})
-          else {
-            setTimeout(()=> {
-              setAccumulated((a)=> {return a- newamount})
+
+          if(newamount < 1) {
+            setBet({autobet: false, pending: false})
+          } else {
+            // setTimeout(()=> {
+            //   setAccumulated((a)=> {return a- newamount})
               setBet((bet) => {return{...bet, amount: newamount }})
               onBet({...bet, amount: newamount, done: true})
-            }, 1000)
+            // }, 1000)
           }
+
+          setAccumulated((a)=> {return a + profit})
         }
         else {
           setBet({autobet: false, pending: false})
         }
       }else{
-        const acc = accumulated - bet.amount
-        setAccumulated(acc)
-        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+        if(bet.profitStop >= 0 && bet.profitStop > accumulated && bet.lossStop >= 0 && bet.lossStop > -accumulated){
           const newamount = bet.lossStop >= 0 && Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
           if(newamount < 1) setBet({autobet: false, pending: false})
           else {
@@ -176,6 +175,9 @@ const PlaceBetMines = ({
         else {
           setBet({autobet: false, pending: false})
         }
+
+        setAccumulated((a)=> {return a - bet.amount})
+
       }
     }else if(!bet.autobet && bet.stopped){
       setTimeout(()=> {
