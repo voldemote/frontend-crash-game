@@ -730,30 +730,6 @@ export const SOFTSWISS_GAMES =
             }
         },
         {
-            "title": "Elvis Frog in Vegas",
-            "identifier": "softswiss:ElvisFroginVegas",
-            "identifier2": "ElvisFrog",
-            "provider": "softswiss",
-            "producer": "bgaming",
-            "category": "slots",
-            "has_freespins": true,
-            "feature_group": "new",
-            "devices": [
-                "desktop",
-                "mobile"
-            ],
-            "lines": 25,
-            "payout": 94,
-            "volatility_rating": "medium-high",
-            "hd": true,
-            "multiplier": 2500,
-            "restrictions": {
-                "default": {
-                    "blacklist": []
-                }
-            }
-        },
-        {
             "title": "European Roulette",
             "identifier": "softswiss:EuropeanRoulette",
             "identifier2": "EuropeanRoulette",
