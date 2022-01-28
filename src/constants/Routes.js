@@ -46,6 +46,7 @@ export default {
   rouletteGame: '/games/alpaca-wheel',
   elonWallpaper: '/games/elon-wallpaper',
   evoplayGame: '/evoplay-game/:game/:category/:number',
+  softswissGame: '/softswiss-game/:game',
   verify: '/verify',
   chart: 'event/bet/:betId/history/chart',
   rewards: '/rewards',

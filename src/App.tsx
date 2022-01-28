@@ -30,6 +30,7 @@ import ResetPassword from './screens/ResetPassword';
 import UserProfile from './screens/UserProfile';
 import ExternalGames from './screens/ExternalGames';
 import EvoplayGame from './screens/EvoplayGame';
+import SoftswissGame from './screens/SoftswissGame';
 import ExternalGame from './screens/ExternalGame';
 import LeaderboardPage from 'screens/LeaderboardPage';
 import { initTagManager } from './config/gtm';
@@ -69,7 +70,7 @@ const App = () => {
   if (isLoading) {
     return null;
   }
-  
+
   return (
     <div id={'main-scroll-container'}>
       <Provider store={store}>
@@ -115,6 +116,7 @@ const App = () => {
               <Route exact path={Routes.oauth} component={LandingPageV2} />
               {showUpcoming && <Route exact path={Routes.externalGames} component={ExternalGames} />}
               <Route exact path={Routes.evoplayGame} component={EvoplayGame} />
+              <Route exact path={Routes.softswissGame} component={SoftswissGame} />
               <Route exact path={Routes.externalGame} component={ExternalGame} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Route exact path={Routes.provablyfair} component={Fair} />

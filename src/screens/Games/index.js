@@ -6,12 +6,13 @@ import {
   NEW_SLOTS_GAMES,
   SLOTS_GAMES,
   EXTERNAL_GAMES,
-  EVOPLAY_GAMES
+  EVOPLAY_GAMES,
+  SOFTSWISS_GAMES
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
 import { Grid } from '@material-ui/core';
 import classNames from "classnames";
-import {prepareEvoplayGames} from "../../helper/Games"
+import {prepareEvoplayGames, prepareSoftSwissGames} from "../../helper/Games"
 import AuthenticationType from "../../components/Authentication/AuthenticationType";
 import { PopupActions } from '../../store/actions/popup';
 import PopupTheme from '../../components/Popup/PopupTheme';
@@ -22,11 +23,13 @@ import { OnboardingActions } from 'store/actions/onboarding';
 
 const SearchSection = ({ setGames,
   alpacaGames,
-setAlpacaGame,
-externalGames,
-setExternalGames,
-externalGamesEvoplay,
-setExternalGamesEvoplay
+  setAlpacaGame,
+  externalGames,
+  setExternalGames,
+  externalGamesEvoplay,
+  setExternalGamesEvoplay,
+  externalGamesSoftswiss,
+  setExternalGamesSoftswiss
  }) => {
   const gamesTitleList = [
     'Alpaca Games',
@@ -62,10 +65,14 @@ setExternalGamesEvoplay
       const match = game.TechnicalName.toLowerCase().match(value.toLowerCase());
       return Array.isArray(match);
     });
-
+    const searchedExternalGamesSoftswiss = externalGamesSoftswiss.filter(game => {
+      const match = game.TechnicalName.toLowerCase().match(value.toLowerCase());
+      return Array.isArray(match);
+    });
     setAlpacaGame(searchedAlpacaGame);
     setExternalGames(searchedExternalGames);
     setExternalGamesEvoplay(searchedExternalGamesEvoplay);
+    setExternalGamesSoftswiss(searchedExternalGamesSoftswiss);
 
     if(!value) {
       setGames();
@@ -117,7 +124,7 @@ const DisplaySection = (props) => {
   let history = useHistory();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const {smartsoftGames, evoplayGames} = props;
+  const {smartsoftGames, evoplayGames, softswissGames} = props;
 
   const [games, setGames] = useState([]);
   const getGameItemSizeClass = () => {
@@ -181,7 +188,32 @@ const DisplaySection = (props) => {
       </Link></div>
     }
 
-
+    if (game.GameProvider === 'softswiss') {
+      const cfg = game._cfg;
+      const name = cfg.absolute_name.substring(cfg.absolute_name.lastIndexOf("\\") + 1);
+      const evoPlayUrl = `/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}`;
+      return <div onClick={(e) => {
+        handleGameClick(e, evoPlayUrl, game);
+      }}>
+        <Link
+          to={user.isLoggedIn ? evoPlayUrl : undefined}
+          className={classNames(
+            styles.game,
+            styles.gameLink
+          )}
+        >
+          <div
+            key={index}
+            className={classNames(
+              styles.gameItem,
+              getGameItemSizeClass()
+            )}
+          >
+            <img src={game.GameThumb} alt={`${name}`} />
+            <p className={styles.title}>{cfg.name}</p>
+          </div>
+        </Link></div>
+    }
     const smartSoftUrl = `/external-game/${game.TechnicalName}/${game.TechnicalCategory}`;
 
     return <div onClick={(e) => {
@@ -208,14 +240,14 @@ const DisplaySection = (props) => {
 
   useEffect(() => {
 
-    if(smartsoftGames && evoplayGames) {
-      setGames([...smartsoftGames, ...evoplayGames]);
+    if(smartsoftGames && evoplayGames && softswissGames) {
+      setGames([...smartsoftGames, ...evoplayGames, ...softswissGames]);
     }
 
     return () => {
       setGames([])
     }
-  }, [smartsoftGames, evoplayGames])
+  }, [smartsoftGames, evoplayGames, softswissGames])
 
   let categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[]);
 
@@ -256,6 +288,7 @@ const Games = () => {
   const [externalGames, setExternalGames] = useState(EXTERNAL_GAMES);
 
   const [externalGamesEvoplay, setExternalGamesEvoplay] = useState([...prepareEvoplayGames(EVOPLAY_GAMES)]);
+  const [externalGamesSoftswiss, setExternalGamesSoftswiss] = useState([...prepareSoftSwissGames(SOFTSWISS_GAMES)]);
 
   const setGames = (selectGame, gameCategory) => {
     if (selectGame) {
@@ -269,6 +302,8 @@ const Games = () => {
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
         selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
+      let externalGamesDisplaySoftswiss =
+        selectGame === 'external' ? prepareSoftSwissGames(SOFTSWISS_GAMES, gameCategory) : [];
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
@@ -277,17 +312,22 @@ const Games = () => {
           externalGamesDisplayEvoplay = externalGamesDisplayEvoplay.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
           })
+          externalGamesDisplaySoftswiss = externalGamesDisplaySoftswiss.filter(game => {
+            return game.GameCategory.indexOf(gameCategory) > -1;
+          })
         }
 
       setAlpacaGame(alpacaGamesDisplay);
       setExternalGames(externalGamesDisplaySmartsoft);
       setExternalGamesEvoplay(externalGamesDisplayEvoplay);
+      setExternalGamesSoftswiss(externalGamesDisplaySoftswiss);
       return;
     }
 
     setAlpacaGame(showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES);
     setExternalGames(EXTERNAL_GAMES);
     setExternalGamesEvoplay(prepareEvoplayGames(EVOPLAY_GAMES));
+    setExternalGamesSoftswiss(prepareSoftSwissGames(SOFTSWISS_GAMES));
   };
 
   return (
@@ -309,6 +349,8 @@ const Games = () => {
           externalGames={EXTERNAL_GAMES}
           externalGamesEvoplay={externalGamesEvoplay}
           setExternalGamesEvoplay={setExternalGamesEvoplay}
+          externalGamesSoftswiss={externalGamesSoftswiss}
+          setExternalGamesSoftswiss={setExternalGamesSoftswiss}
           setExternalGames={setExternalGames}
         />
 
@@ -317,7 +359,7 @@ const Games = () => {
         )}
 
 
-        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} />
+        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} softswissGames={externalGamesSoftswiss} />
       </div>
     </BaseContainerWithNavbar>
   );
