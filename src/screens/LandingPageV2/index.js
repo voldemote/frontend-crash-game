@@ -316,7 +316,7 @@ const LandingPageV2 = (
 
         {alpacaGames.length > 0 && <GameCards games={alpacaGames} category="Alpaca Games" />}
 
-        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} softswissGames={externalGamesSoftswiss} />
+        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} softswissGames={process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true' ? externalGamesSoftswiss : []} />
         {showDiscordBanner && renderDiscordBanner()}
         {renderAboutDescription()}
         {renderActivities()}
