@@ -15,7 +15,7 @@ export class CoinAnimation {
   constructor(app) {
     this.app = app;
     this.container = new PIXI.Container();
-
+    this.container.name = "CoinAnimation";
     /* axis labels */
     this.axisLabels = [];
     for (let i = 0; i < AXIS_LABEL_NUM; i++) {
