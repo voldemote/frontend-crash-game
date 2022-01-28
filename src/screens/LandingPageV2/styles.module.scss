@@ -365,6 +365,10 @@
     overflow: hidden;
     border-radius: 20px;
     width: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     @media (max-width: $screen-sm) {
       width: 40vw;
       height: 30vw;
