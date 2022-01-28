@@ -15,6 +15,7 @@ import TokenNumberInput from 'components/TokenNumberInput';
 import { StandardInput, ToggleInput } from '../PlaceBetCasino/components';
 import PopupTheme from '../Popup/PopupTheme';
 import Input from '../Input';
+import ButtonTheme from 'components/Button/ButtonTheme';
 import { round } from 'lodash/math';
 import _ from 'lodash';
 /*import {
@@ -257,7 +258,8 @@ const PlaceBetMines = ({
             role="button"
             tabIndex="0"
             style={{display: bet.autobet ? 'auto':'none'}}
-            className={classNames(styles.button, styles.cancel)}
+            className={styles.button}
+            theme={ButtonTheme.secondaryButton}
             onClick={() => setBet({...bet, autobet: false, stopped: true})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
@@ -266,7 +268,7 @@ const PlaceBetMines = ({
             <p>Stop Autobet</p>
           </Button>}
 
-          <Button
+          {!bet.autobet && <Button
             id={"mines-cashout-btn"}
             role="button"
             tabIndex="0"
@@ -278,7 +280,7 @@ const PlaceBetMines = ({
             onClick={currentStep === 0 ? ()=>{} : handleCashout }
           >
             Cashout
-          </Button>
+          </Button>}
         </>
       )
     }
