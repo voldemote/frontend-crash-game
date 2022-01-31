@@ -15,6 +15,7 @@ import fair100Icon from '../../data/icons/footer/100-fair-icon.png';
 import responsibleGamingIcon from '../../data/icons/footer/responsible-gaming-icon.png';
 import adultPlusIcon from '../../data/icons/footer/18-icon.png';
 import trustPilotIcon from '../../data/icons/footer/trust_pilot_icon.png';
+import { selectUser } from 'store/selectors/authentication';
 
 
 import classNames from 'classnames';
@@ -33,7 +34,9 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
   }, []);
 
   const prices = useSelector(selectPrices);
-  const usdPrice = roundToTwo(prices?.USD, 4) || '-';
+  const { gamesCurrency } = useSelector(selectUser);
+
+  const selectedGamesCurrencyPrice = roundToTwo(prices?.[gamesCurrency], 4) || '-';
 
   return (
     <div className={styles.container}>
@@ -256,7 +259,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
 
       <div className={styles.copyrightBlock}>
         <div>© 2022 alpacasino.io | All rights reserved.</div>
-        <div>1 WFAIR = {usdPrice} $</div>
+        <div>1 WFAIR = {selectedGamesCurrencyPrice} {gamesCurrency}</div>
       </div>
 
       <p className={styles.footerDisclaimer}>
