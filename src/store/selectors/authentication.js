@@ -8,7 +8,7 @@ export const selectCurrency = ({ authentication }) => {
 };
 
 export const selectGamesCurrency = ({ authentication }) => {
-  const currency = authentication.preferences?.gamesCurrency;
+  const currency = authentication.preferences?.gamesCurrency || 'USD';
   return currency;
   // return TOKEN_NAME;
 };
