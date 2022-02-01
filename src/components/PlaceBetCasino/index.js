@@ -45,6 +45,7 @@ const PlaceBetCasino = ({
   const history = useHistory();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
+  const gamesCurrency = user.gamesCurrency;
 
   const [ngame, setNgame] = useState(1);
   const [profit, setProfit] = useState(0);
@@ -94,7 +95,8 @@ const PlaceBetCasino = ({
       riskFactor: risk,
       gamesCurrency: user?.gamesCurrency
     }
-    const bet = await onBet(payload)
+
+    await onBet(payload)
   }
 
   const placeAutoBet = async () => {
@@ -109,7 +111,8 @@ const PlaceBetCasino = ({
       lincrease: lossbutton?0:Number(lincrease)/100,
       ngame: null,
       riskFactor: risk,
-      accumulated
+      accumulated,
+      gamesCurrency: user?.gamesCurrency
     };
     setAccumulated(0)
     const bet = await onBet(payload)
@@ -321,7 +324,7 @@ const PlaceBetCasino = ({
                   max={GAMES_CURRENCY_MAX_BET}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>{TOKEN_NAME}</span>
+                  <span>{gamesCurrency}</span>
                 </span>
                 <div className={styles.buttonWrapper}>
                   <span
@@ -357,7 +360,7 @@ const PlaceBetCasino = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={TOKEN_NAME}
+                currency={gamesCurrency}
                 setValue={(v)=>setAmount(v)}
                 minValue={1}
                 decimalPlaces={0}
@@ -387,7 +390,7 @@ const PlaceBetCasino = ({
                   max={GAMES_CURRENCY_MAX_BET}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>{TOKEN_NAME}</span>
+                  <span>{gamesCurrency}</span>
                 </span>
                 <div className={styles.buttonWrapper}>
                   <span
@@ -415,14 +418,14 @@ const PlaceBetCasino = ({
               </div>
             )}
             {gameName !== 'cannon' && <RiskInput disable={!bet.ready || bet.autobet || bet?.ball > 0} number={gameName==='plinko'?3:7} risk={risk} setRisk={setRisk} />}
-            <StandardInput title={'Stop on Profit'} setValue={setProfit} value={profit} />
-            <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
+            <StandardInput title={'Stop on Profit'} setValue={setProfit} value={profit} currency={gamesCurrency}/>
+            <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} currency={gamesCurrency}/>
             <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />
             <ToggleInput title={'On Loss'} setValue={setLincrease} value={lincrease} setToggle={setLossbutton} toggle={lossbutton} />
             {bet.autobet &&
               <div className={styles.spinsleft}>
                 <span className={accumulated > 0 ? styles.reward : styles.lost}>
-                {Math.floor(accumulated)} {TOKEN_NAME}
+                {Math.floor(accumulated)} {gamesCurrency}
                 </span>
                 accumulated
               </div>
@@ -431,7 +434,7 @@ const PlaceBetCasino = ({
               <div className={styles.spinsleft}>
                 Current bet:
                 <span className={styles.neutral}>
-                {Math.floor(bet.amount)} {TOKEN_NAME}
+                {Math.floor(bet.amount)} {gamesCurrency}
                 </span>
               </div>
             }

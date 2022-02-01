@@ -88,7 +88,7 @@ export const NgamesInput = ({ngame, setNgame, game, text}) => {
   )
 }
 
-export const StandardInput = ({setValue, value, title}) => {
+export const StandardInput = ({setValue, value, title, currency = TOKEN_NAME}) => {
   return(
     <div className={styles.inputContainer}>
       <label
@@ -112,7 +112,7 @@ export const StandardInput = ({setValue, value, title}) => {
           max={'100'}
         />
         <span className={styles.eventTokenLabel}>
-          <span>{TOKEN_NAME}</span>
+          <span>{currency}</span>
         </span>
       </div>
     </div>
