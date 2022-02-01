@@ -26,3 +26,12 @@ export const convertAmount = (amount, price, reverseConversion = false) => {
   return roundToTwo(calculattion, 2) || '-';
 };
 
+export const toFixedNoRound = (num, fixed, outNumber = true) => {
+  const re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
+  const stringOutput = num.toString().match(re)[0];
+  return outNumber ? parseFloat(stringOutput, 10) : stringOutput;
+}
+
+export const getUserGamesCurrency = (user) => {
+  return user?.preferences?.gamesCurrency || 'USD';
+}

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
 import {GAMES} from '../../constants/Games';
+import {toFixedNoRound} from "../../helper/Currency";
 
 const GAME_CFG = GAMES.plinko;
 const rows = 12, ball = 20, row = 30, peg = 10, separation = 30;
@@ -15,7 +16,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   const outcomesByRisk = GAME_CFG.outcomesByRisk;
 
   const prevOutcomes = outcomesByRisk[0].reduce((outs, out) => {
-    return outs.concat({value: out, amount: Math.floor(amount*out), bright: false})
+    return outs.concat({value: out, amount: toFixedNoRound(amount*out, 1), bright: false})
   }, [])
   const [outcomes, setOutcomes] = useState(prevOutcomes);
   const [nball, setNball] = useState(0);
@@ -57,7 +58,7 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
   useEffect(() => {
     if(risk){
       const prevOutcomes = GAME_CFG.outcomesByRisk[risk-1].reduce((outs, out, i) => {
-        return outs.concat({value: out, amount: Math.floor(amount*out), bright: outcomes[i].bright})
+        return outs.concat({value: out, amount: toFixedNoRound(amount*out, 1), bright: outcomes[i].bright})
       }, [])
       setOutcomes(prevOutcomes)
     }
@@ -72,7 +73,9 @@ export const AnimationController = ({risk = 1, ballValue, amount, onEnd, setBall
         </div>
       )}
       <div className={styles.boxes}>
-        {outcomes.map((box, index) => <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{formatk(box.amount)}</div>)}
+        {outcomes.map((box, index) => {
+          return <div key={index} className={classNames(styles.box, box.bright && styles.bright, box.bright && 4 > index > 8 && styles.red)}>{formatk(box.amount)}</div>
+        })}
       </div>
     </div>
   )
