@@ -30,6 +30,7 @@ import { TOKEN_NAME } from 'constants/Token';
 import { MinesInput, ClearedInput} from "./MinesInput";
 import { trackMinesPlaceBet, trackMinesPlaceBetGuest } from "../../config/gtm"
 import { OnboardingActions } from 'store/actions/onboarding';
+import { GAMES_CURRENCY_MAX_BET } from '../../constants/Currency';
 
 import {
   FormGroup,
@@ -64,6 +65,7 @@ const PlaceBetMines = ({
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userBalance = parseInt(user?.balance || 0, 10);
+  const gamesCurrency = user.gamesCurrency;
   const [wincrease, setWincrease] = useState(0)
   const [lincrease, setLincrease] = useState(0)
   const [lossbutton, setLossbutton] = useState(false)
@@ -86,13 +88,13 @@ const PlaceBetMines = ({
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
-    setAmount(amount <= 10000 ? amount : 10000);
+    setAmount(amount <= GAMES_CURRENCY_MAX_BET ? amount : GAMES_CURRENCY_MAX_BET);
   };
 
   const onBetAmountChanged = multiplier => {
     const changedValue = _.floor(amount * multiplier, 0);
-    if (changedValue > 10000) {
-      setAmount(10000);
+    if (changedValue > GAMES_CURRENCY_MAX_BET) {
+      setAmount(GAMES_CURRENCY_MAX_BET);
     } else if (changedValue < 1) {
       setAmount(1);
     } else {
@@ -106,7 +108,8 @@ const PlaceBetMines = ({
     setConfetti(false);
     const payload = {
       amount,
-      minesCount: mines
+      minesCount: mines,
+      gamesCurrency
     }
 
     trackMinesPlaceBet({ amount, mines });
@@ -126,7 +129,8 @@ const PlaceBetMines = ({
       wincrease: winbutton?0:Number(wincrease)/100,
       lincrease: lossbutton?0:Number(lincrease)/100,
       minesCount: mines,
-      accumulated
+      accumulated,
+      gamesCurrency
     };
     setAccumulated(0)
     setBet((bet) => {
@@ -371,14 +375,11 @@ const PlaceBetMines = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={TOKEN_NAME}
+                currency={gamesCurrency}
                 setValue={onTokenNumberChange}
                 minValue={0}
                 decimalPlaces={0}
-                // maxValue={formatToFixed(
-                //   user.balance > 10000 ? 10000 : user.balance
-                // )}
-                maxValue={10000}
+                maxValue={GAMES_CURRENCY_MAX_BET}
                 dataTrackingIds={{
                   inputFieldHalf: 'alpacawheel-input-field-half',
                   inputFieldDouble: 'alpacawheel-input-field-double',
@@ -400,10 +401,10 @@ const PlaceBetMines = ({
                   onChange={onGuestAmountChange}
                   step={0.01}
                   min="1"
-                  max={'10000'}
+                  max={GAMES_CURRENCY_MAX_BET}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>{TOKEN_NAME}</span>
+                  <span>{gamesCurrency}</span>
                 </span>
                 <div className={styles.buttonWrapper}>
                   <span
@@ -423,7 +424,7 @@ const PlaceBetMines = ({
                   <span
                     className={styles.buttonItem}
                     data-tracking-id="alpacawheel-input-field-allin"
-                    onClick={() => setAmount(10000)}
+                    onClick={() => setAmount(GAMES_CURRENCY_MAX_BET)}
                   >
                     Max
                   </span>
@@ -449,12 +450,12 @@ const PlaceBetMines = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={TOKEN_NAME}
+                currency={gamesCurrency}
                 setValue={(v)=>setAmount(v)}
                 minValue={1}
                 decimalPlaces={0}
                 maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
+                  user.balance > GAMES_CURRENCY_MAX_BET ? GAMES_CURRENCY_MAX_BET : user.balance
                 )}
                 dataTrackingIds={{
                   inputFieldHalf: 'alpacawheel-input-field-half',
@@ -476,10 +477,10 @@ const PlaceBetMines = ({
                   onChange={onGuestAmountChange}
                   step={0.01}
                   min="1"
-                  max={'10000'}
+                  max={GAMES_CURRENCY_MAX_BET}
                 />
                 <span className={styles.eventTokenLabel}>
-                  <span>{TOKEN_NAME}</span>
+                  <span>{gamesCurrency}</span>
                 </span>
                 <div className={styles.buttonWrapper}>
                   <span
@@ -499,7 +500,7 @@ const PlaceBetMines = ({
                   <span
                     className={styles.buttonItem}
                     data-tracking-id="alpacawheel-input-field-allin"
-                    onClick={() => setAmount(10000)}
+                    onClick={() => setAmount(GAMES_CURRENCY_MAX_BET)}
                   >
                     Max
                   </span>
@@ -530,14 +531,14 @@ const PlaceBetMines = ({
                 <MinesInput mines={mines} setMines={(m)=>{setMines(m);m > 25-cleared && setCleared(25-m)}}/>
               </div>
             </div>
-            <StandardInput title={'Stop on Profit'} setValue={setProfit1} value={profit1} />
-            <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} />
+            <StandardInput title={'Stop on Profit'} setValue={setProfit1} value={profit1} currency={gamesCurrency}/>
+            <StandardInput title={'Stop on Loss'} setValue={setLoss} value={loss} currency={gamesCurrency}/>
             <ToggleInput title={'On Win'} setValue={setWincrease} value={wincrease} setToggle={setWinbutton} toggle={winbutton} />
             <ToggleInput title={'On Loss'} setValue={setLincrease} value={lincrease} setToggle={setLossbutton} toggle={lossbutton} />
             {bet.autobet &&
               <div className={styles.spinsleft}>
                 <span className={accumulated > 0 ? styles.reward : styles.lost}>
-                {Math.floor(accumulated)} {TOKEN_NAME}
+                {Math.floor(accumulated)} {gamesCurrency}
                 </span>
                 accumulated
               </div>
@@ -546,7 +547,7 @@ const PlaceBetMines = ({
               <div className={styles.spinsleft}>
                 Current bet:
                 <span className={styles.neutral}>
-                {Math.floor(bet.amount)} {TOKEN_NAME}
+                {Math.floor(bet.amount)} {gamesCurrency}
                 </span>
               </div>
             }
