@@ -24,6 +24,7 @@ import IconType from '../Icon/IconType';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import Timer from '../RosiGameAnimation/Timer';
 import { TOKEN_NAME } from 'constants/Token';
+import { GAMES_CURRENCY_MAX_BET } from '../../constants/Currency';
 import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import Routes from 'constants/Routes';
@@ -67,13 +68,13 @@ const PlaceBetCasino = ({
   const onGuestAmountChange = event => {
     let value = _.get(event, 'target.value', 0);
     const amount = round(value, 0);
-    setAmount(amount <= 10000 ? amount : 10000);
+    setAmount(amount <= GAMES_CURRENCY_MAX_BET ? amount : GAMES_CURRENCY_MAX_BET);
   };
 
   const onBetAmountChanged = multiplier => {
     const changedValue = _.floor(amount * multiplier, 0);
-    if (changedValue > 10000) {
-      setAmount(10000);
+    if (changedValue > GAMES_CURRENCY_MAX_BET) {
+      setAmount(GAMES_CURRENCY_MAX_BET);
     } else {
       setAmount(changedValue);
     }
@@ -90,7 +91,8 @@ const PlaceBetCasino = ({
     const payload = {
       amount,
       ngame: ngame - 1,
-      riskFactor: risk
+      riskFactor: risk,
+      gamesCurrency: user?.gamesCurrency
     }
     const bet = await onBet(payload)
   }
@@ -291,11 +293,11 @@ const PlaceBetCasino = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={TOKEN_NAME}
+                currency={user.gamesCurrency}
                 setValue={(v)=>setAmount(v)}
                 minValue={0}
                 decimalPlaces={0}
-                maxValue={10000}
+                maxValue={GAMES_CURRENCY_MAX_BET}
                 dataTrackingIds={{
                   inputFieldHalf: 'alpacawheel-input-field-half',
                   inputFieldDouble: 'alpacawheel-input-field-double',
@@ -316,7 +318,7 @@ const PlaceBetCasino = ({
                   onChange={onGuestAmountChange}
                   step={0.01}
                   min="1"
-                  max={'10000'}
+                  max={GAMES_CURRENCY_MAX_BET}
                 />
                 <span className={styles.eventTokenLabel}>
                   <span>{TOKEN_NAME}</span>
@@ -339,7 +341,7 @@ const PlaceBetCasino = ({
                   <span
                     className={styles.buttonItem}
                     data-tracking-id="alpacawheel-input-field-allin"
-                    onClick={() => setAmount(10000)}
+                    onClick={() => setAmount(GAMES_CURRENCY_MAX_BET)}
                   >
                     Max
                   </span>
@@ -360,7 +362,7 @@ const PlaceBetCasino = ({
                 minValue={1}
                 decimalPlaces={0}
                 maxValue={formatToFixed(
-                  user.balance > 10000 ? 10000 : user.balance
+                  user.balance > GAMES_CURRENCY_MAX_BET ? GAMES_CURRENCY_MAX_BET : user.balance
                 )}
                 dataTrackingIds={{
                   inputFieldHalf: 'alpacawheel-input-field-half',
@@ -382,7 +384,7 @@ const PlaceBetCasino = ({
                   onChange={onGuestAmountChange}
                   step={0.01}
                   min="1"
-                  max={'10000'}
+                  max={GAMES_CURRENCY_MAX_BET}
                 />
                 <span className={styles.eventTokenLabel}>
                   <span>{TOKEN_NAME}</span>
@@ -405,7 +407,7 @@ const PlaceBetCasino = ({
                   <span
                     className={styles.buttonItem}
                     data-tracking-id="alpacawheel-input-field-allin"
-                    onClick={() => setAmount(10000)}
+                    onClick={() => setAmount(GAMES_CURRENCY_MAX_BET)}
                   >
                     Max
                   </span>
