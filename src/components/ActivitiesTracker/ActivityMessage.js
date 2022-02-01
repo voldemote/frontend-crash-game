@@ -283,21 +283,26 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             <b>{_.get(data, 'rating')}</b>.
           </div>
         );
-      case 'Casino/CASINO_PLACE_BET':
+      case 'Casino/CASINO_PLACE_BET': {
+        const stakedAmount = data?.amount || data?.stakedAmount;
+        const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
+
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has placed{' '}
             <div className={'global-token-currency'}>
               <b>
-                {formatToFixed(_.get(data, 'amount'), 0, true)} {TOKEN_NAME}
+                {formatToFixed(stakedAmount, 0, true)} {gamesCurrency}
               </b>
             </div>{' '}
             bet on {gameLabel}.{' '}
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
+      }
       case 'Casino/CASINO_CASHOUT':
         const stakedAmount = _.get(data, 'stakedAmount');
+        const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
         const reward = _.get(data, 'reward');
         const gain = calculateGain(stakedAmount, reward);
         const gainValueCasino = _.get(gain, 'value');
@@ -307,7 +312,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <div className={'global-token-currency'}>
               <b>
-                {formatToFixed(_.get(data, 'reward'), 0, true)} {TOKEN_NAME}
+                {formatToFixed(_.get(data, 'reward'), 0, true)} {gamesCurrency}
               </b>
             </div>{' '}
             {gainValueCasino && (
@@ -358,11 +363,13 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             me" section.
           </div>
         );
-      case 'Casino/EVENT_CASINO_LOST':
+      case 'Casino/EVENT_CASINO_LOST': {
         const multiplier = data?.crashFactor || data?.winMultiplier || 0;
         const multiplierLabel = data?.crashFactor
           ? 'crash factor'
           : 'multiplier';
+
+        const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
 
         return (
           <div>
@@ -370,7 +377,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
             <div className={'global-token-currency'}>
               <b className={'global-cashout-loss'}>
                 {formatToFixed(_.get(data, 'stakedAmount'), 0, true)}{' '}
-                {TOKEN_NAME}
+                {gamesCurrency}
               </b>
             </div>{' '}
             at{' '}
@@ -381,6 +388,7 @@ const ActivityMessage = ({ activity, date, users, events }) => {
           </div>
           // TODO: Replace this hardcoded game name with actual one later
         );
+      }
       default:
         return null;
     }
