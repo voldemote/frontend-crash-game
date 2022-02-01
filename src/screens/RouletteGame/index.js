@@ -32,6 +32,7 @@ import {
 import {UserActions} from 'store/actions/user';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import WheelAlpaca from '../../data/images/roulette/wheel-alpaca.png';
+import {GAMES_CURRENCY_DEFAULT_BET} from '../../constants/Currency';
 
 const RouletteGame = ({
                         showPopup,
@@ -51,7 +52,7 @@ const RouletteGame = ({
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({ready: true});
-  const [amount, setAmount] = useState(50);
+  const [amount, setAmount] = useState(GAMES_CURRENCY_DEFAULT_BET);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
   const [chatTabIndex, setChatTabIndex] = useState(0);
@@ -276,7 +277,7 @@ const RouletteGame = ({
               <b>People say Alpacas should not cycle. Some even suggest Alpacas should be banned from enjoying the fun of two wheels! There were press articles, TV coverage, and crazy people saying that Alpaca on a bike generates too much CO2! People say many stupid things, but this is definitely in winning the prize.  </b>
             </p>
             <p>
-              And it all started with pure human jealousy -  look at the human on a bike and Alpaca on a bike. Humans look ridiculous in those tight shorts, all sweaty in that funny thing on the head. And do not forget the grim on the face when they climb up the hill. Hilarious. On the other hand, Alpacas look simply cute, elegant, and they are always smiling. Imagine tour de France, where Alpacas compete with humans - people would cheer to the cute, furry animals, not those unattractive creatures that keep injecting stuff into their bodies to be faster. 
+              And it all started with pure human jealousy -  look at the human on a bike and Alpaca on a bike. Humans look ridiculous in those tight shorts, all sweaty in that funny thing on the head. And do not forget the grim on the face when they climb up the hill. Hilarious. On the other hand, Alpacas look simply cute, elegant, and they are always smiling. Imagine tour de France, where Alpacas compete with humans - people would cheer to the cute, furry animals, not those unattractive creatures that keep injecting stuff into their bodies to be faster.
             </p>
             <p>
               Now it's your chance to feel like Alpaca; turn the wheels and see what's your award.
@@ -307,7 +308,7 @@ const RouletteGame = ({
                 <b>Never forget to turn on the sound!</b>
               </p>
               <p className={styles.importantTip}>
-                <b>Remember: The higher the risk level, the higher are the rewards you might win.</b> 
+                <b>Remember: The higher the risk level, the higher are the rewards you might win.</b>
               </p>
             </div>
           </div>
