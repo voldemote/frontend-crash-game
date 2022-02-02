@@ -140,7 +140,7 @@ const transformUser = user => {
     userId: user.userid,
     username: user.username,
     rewardAmount: user.profit ? user.profit + parseFloat(user.stakedamount) : user.crashfactor * user.stakedamount,
-    gamesCurrency: user.gamesCurrency || TOKEN_NAME
+    gamesCurrency: user.gamescurrency || TOKEN_NAME
   };
 }
 
