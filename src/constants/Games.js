@@ -20,7 +20,7 @@ import gameCardAlpacannon from '../data/images/house-games/card-alpacannon.png';
 
 //
 
-export const SOFTSWISS_GAMES = 
+export const SOFTSWISS_GAMES =
     [
         {
             "title": "All Lucky Clovers",
@@ -1834,7 +1834,7 @@ export const SOFTSWISS_GAMES =
             }
         }
     ]
- 
+
 export const EVOPLAY_GAMES = {
     "556": {
         "name": "Egypt Gods",
