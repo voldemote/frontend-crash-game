@@ -7,11 +7,12 @@ import {
   SLOTS_GAMES,
   EXTERNAL_GAMES,
   EVOPLAY_GAMES,
+  SOFTSWISS_GAMES,
   TOP_PICKS_GAMES
 } from '../../constants/Games';
 import GameCards from '../../components/GameCards';
 
-import {prepareEvoplayGames} from "../../helper/Games"
+import {prepareEvoplayGames, prepareSoftSwissGames} from "../../helper/Games";
 import SearchSection from './SearchSection';
 import DisplaySection from './DisplaySection';
 import { useIsMount } from 'components/hoc/useIsMount';
@@ -54,6 +55,7 @@ const LandingPageV2 = (
   );
   const [externalGames, setExternalGames] = useState(EXTERNAL_GAMES);
   const [externalGamesEvoplay, setExternalGamesEvoplay] = useState([...prepareEvoplayGames(EVOPLAY_GAMES)]);
+  const [externalGamesSoftswiss, setExternalGamesSoftswiss] = useState([...prepareSoftSwissGames(SOFTSWISS_GAMES)]);
 
   useOAuthCallback();
 
@@ -147,7 +149,7 @@ const LandingPageV2 = (
     return (
       <div className={styles.aboutDescritpion}>
         <img className={styles.topImage} src={PlinkoAlpaca} alt="fair-piece" />
-        <Grid container spacing={1} justify="space-between">
+        <Grid container spacing={1} justifyContent="space-between">
           <Grid item lg={4} md={4} xs={12}>
             <div className={styles.parentContainer}>
               <div className={styles.descriptionCardContainer}>
@@ -249,6 +251,8 @@ const LandingPageV2 = (
         selectGame === 'external' ? EXTERNAL_GAMES : [];
       let externalGamesDisplayEvoplay =
         selectGame === 'external' ? prepareEvoplayGames(EVOPLAY_GAMES, gameCategory) : [];
+      let externalGamesDisplaySoftswiss =
+        selectGame === 'external' ? prepareSoftSwissGames(SOFTSWISS_GAMES, gameCategory) : [];
      // let ret = [];
         if(gameCategory) {
           externalGamesDisplaySmartsoft = externalGamesDisplaySmartsoft.filter(game => {
@@ -256,6 +260,10 @@ const LandingPageV2 = (
           })
 
           externalGamesDisplayEvoplay = externalGamesDisplayEvoplay.filter(game => {
+            return game.GameCategory.indexOf(gameCategory) > -1;
+          })
+
+          externalGamesDisplaySoftswiss = externalGamesDisplaySoftswiss.filter(game => {
             return game.GameCategory.indexOf(gameCategory) > -1;
           })
           // let map = new Map();
@@ -276,12 +284,15 @@ const LandingPageV2 = (
       setAlpacaGame(alpacaGamesDisplay);
       setExternalGames(externalGamesDisplaySmartsoft);
       setExternalGamesEvoplay(externalGamesDisplayEvoplay);
+
+      setExternalGamesSoftswiss(externalGamesDisplaySoftswiss);
       return;
     }
 
     setAlpacaGame(showUpcoming ? NEW_SLOTS_GAMES : SLOTS_GAMES);
     setExternalGames(EXTERNAL_GAMES);
     setExternalGamesEvoplay(prepareEvoplayGames(EVOPLAY_GAMES));
+    setExternalGamesSoftswiss(prepareSoftSwissGames(SOFTSWISS_GAMES));
   };
 
   return (
@@ -289,7 +300,7 @@ const LandingPageV2 = (
       <CustomCarousel carouselType={'landingpage'} />
       <div className={styles.container}>
 
-        <DisplaySection selectedGamesLabel={TOP_PICKS_GAMES.header} selectedGamesNames={TOP_PICKS_GAMES.names} smartsoftGames={EXTERNAL_GAMES} evoplayGames={prepareEvoplayGames(EVOPLAY_GAMES)} />
+        <DisplaySection selectedGamesLabel={TOP_PICKS_GAMES.header} selectedGamesNames={TOP_PICKS_GAMES.names} smartsoftGames={EXTERNAL_GAMES} evoplayGames={prepareEvoplayGames(EVOPLAY_GAMES)} softswissGames={prepareSoftSwissGames(SOFTSWISS_GAMES)}/>
 
         <SearchSection
           setGames={setGames}
@@ -298,12 +309,14 @@ const LandingPageV2 = (
           externalGames={EXTERNAL_GAMES}
           externalGamesEvoplay={externalGamesEvoplay}
           setExternalGamesEvoplay={setExternalGamesEvoplay}
+          externalGamesSoftswiss={externalGamesSoftswiss}
+          setExternalGamesSoftswiss={setExternalGamesSoftswiss}
           setExternalGames={setExternalGames}
         />
 
         {alpacaGames.length > 0 && <GameCards games={alpacaGames} category="Alpaca Games" />}
 
-        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} />
+        <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} softswissGames={process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true' ? externalGamesSoftswiss : []} />
         {showDiscordBanner && renderDiscordBanner()}
         {renderAboutDescription()}
         {renderActivities()}

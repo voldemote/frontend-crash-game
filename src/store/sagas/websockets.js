@@ -11,8 +11,9 @@ import { createSocket, websocket } from '../../api/websockets';
 import { createMatchSelector } from 'connected-react-router';
 import Routes from '../../constants/Routes';
 import { matchPath } from 'react-router';
-import { UNIVERSAL_EVENTS_ROOM_ID } from 'constants/Activities';
+import { UNIVERSAL_EVENTS_ROOM_ID, API_INFO_CHANNEL } from 'constants/Activities';
 import { EventActions } from '../actions/event';
+import {InfoChannelActions, infoChannelActions} from '../actions/info-channel';
 import trackedActivities from '../../components/ActivitiesTracker/trackedActivities';
 import { GAMES } from '../../constants/Games';
 import { UserActions } from '../actions/user';
@@ -124,6 +125,15 @@ function createSocketChannel(socket) {
       emit(message);
     };
 
+    const infoChannelHandler = (data) => {
+      const message = {
+        type: 'INFO_CHANNEL',
+        eventName: data.type,
+        data: data?.data,
+      };
+      emit(message);
+    };
+
     const onAnyListener = (eventName, data) => {
       const message = {
         type: 'any',
@@ -147,6 +157,7 @@ function createSocketChannel(socket) {
     socket.on('CASINO_REWARD', casinoRewardHandler);
     socket.on('EVENT_BET_STARTED', betStartedHandler);
     socket.on('CASINO_CANCEL', casinoBetCanceledHandler);
+    socket.on('INFO_CHANNEL', infoChannelHandler);
     socket.onAny(onAnyListener);
 
     const unsubscribe = () => {
@@ -161,6 +172,7 @@ function createSocketChannel(socket) {
       socket.off('CASINO_REWARD', casinoRewardHandler);
       socket.off('EVENT_BET_STARTED', betStartedHandler);
       socket.off('CASINO_CANCEL', casinoBetCanceledHandler);
+      socket.off('INFO_CHANNEL', infoChannelHandler);
       socket.offAny(onAnyListener);
     };
 
@@ -187,6 +199,7 @@ export function* init() {
         const payload = yield take(socketChannel);
         const type = _.get(payload, 'type');
         let uid;
+
         switch (type) {
           case 'connect':
             if (socket && socket.connected) {
@@ -292,6 +305,9 @@ export function* init() {
           case notificationTypes.EVENT_BET_STARTED:
             yield put(EventActions.fetchAll());
             break;
+          case 'INFO_CHANNEL':
+            yield put(InfoChannelActions.setPrices(payload.data))
+            break;
           case 'any':
             if (trackedActivities.indexOf(payload.eventName) > -1) {
               yield put(
@@ -329,6 +345,8 @@ const isExternalPage = (currentAction, pathSlugs) =>
 const isEvoplayPage = (currentAction, pathSlugs) =>
   (currentAction[0] === 'evoplay-game' || pathSlugs[0] === 'evoplay-game') &&
   (pathSlugs.length > 2 || currentAction.length > 2);
+const isSoftswissPage = (currentAction, pathSlugs) =>
+  (currentAction[0] === 'softswiss-game' || pathSlugs[0] === 'softswiss-game');
 
 export function* joinOrLeaveRoomOnRouteChange(action) {
   const ready = yield select(state => state.websockets.init);
@@ -379,6 +397,14 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
     newRoomsToJoin.push(ObjectId(pathSlugs[1]));
     newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
   }
+
+  if (isSoftswissPage(currentAction, pathSlugs)) {
+    newRoomsToJoin.push(pathSlugs[1]);
+    newRoomsToJoin.push(UNIVERSAL_EVENTS_ROOM_ID);
+  }
+
+  //JOIN TO API INFO CHANNEL
+  newRoomsToJoin.push(API_INFO_CHANNEL);
 
   // leave all non active rooms except UserMessageRoomId
   for (let roomIdToLeave of currentRooms) {

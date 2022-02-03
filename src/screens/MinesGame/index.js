@@ -185,10 +185,8 @@ const Game = ({
 
   useEffect(() => {
     if(currentStep === 0) {
-      if(currentStep === 0) {
-        setMultiplier();
-        setProfit();
-      }
+      setMultiplier();
+      setProfit();
     } else {
       setMultiplier((multi) => {
         const currentMulti = outcomes[currentStep-1];
@@ -258,10 +256,14 @@ const Game = ({
         if(!bet.autobet){
           setBet((bet)=> {return{
             ...bet,
+            profit: data.profit,
             pending: false,
             done: false
           }});
         }
+
+        setProfit(data.profit);
+
         trackMinesCashout({
           amount: data.reward,
           multiplier: data.crashFactor,

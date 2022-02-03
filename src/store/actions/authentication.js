@@ -117,6 +117,7 @@ const setReferral = makeActionCreator(AuthenticationTypes.SET_REFERRAL, {
 
 const updateData = makeActionCreator(AuthenticationTypes.UPDATE_DATA, {
   balance: null,
+  balances: null,
   profilePicture: null,
   username: null,
   name: null,

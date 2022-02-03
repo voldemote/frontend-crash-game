@@ -15,6 +15,7 @@ import TokenNumberInput from 'components/TokenNumberInput';
 import { StandardInput, ToggleInput } from '../PlaceBetCasino/components';
 import PopupTheme from '../Popup/PopupTheme';
 import Input from '../Input';
+import ButtonTheme from 'components/Button/ButtonTheme';
 import { round } from 'lodash/math';
 import _ from 'lodash';
 /*import {
@@ -140,31 +141,30 @@ const PlaceBetMines = ({
 
   useEffect(() => {
     if(bet.autobet && !bet.done){
-      let prof = 0
       if(bet.win) {
-        prof = profit + bet.amount
         handleCashout()
         //document.getElementById('mines-cashout-btn').click();
-        const acc = prof + accumulated
-        setAccumulated((a)=> {return prof+ a})
-        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+
+        if(bet.profitStop >= 0 && bet.profitStop > accumulated && bet.lossStop >= 0 && bet.lossStop > -accumulated){
           const newamount = bet.profitStop > 0 && Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease))
-          if(newamount < 1) setBet({autobet: false, pending: false})
-          else {
-            setTimeout(()=> {
-              setAccumulated((a)=> {return a- newamount})
+
+          if(newamount < 1) {
+            setBet({autobet: false, pending: false})
+          } else {
+            // setTimeout(()=> {
+            //   setAccumulated((a)=> {return a- newamount})
               setBet((bet) => {return{...bet, amount: newamount }})
               onBet({...bet, amount: newamount, done: true})
-            }, 1000)
+            // }, 1000)
           }
+
+          setAccumulated((a)=> {return a + profit})
         }
         else {
           setBet({autobet: false, pending: false})
         }
       }else{
-        const acc = accumulated - bet.amount
-        setAccumulated(acc)
-        if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
+        if(bet.profitStop >= 0 && bet.profitStop > accumulated && bet.lossStop >= 0 && bet.lossStop > -accumulated){
           const newamount = bet.lossStop >= 0 && Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
           if(newamount < 1) setBet({autobet: false, pending: false})
           else {
@@ -175,6 +175,9 @@ const PlaceBetMines = ({
         else {
           setBet({autobet: false, pending: false})
         }
+
+        setAccumulated((a)=> {return a - bet.amount})
+
       }
     }else if(!bet.autobet && bet.stopped){
       setTimeout(()=> {
@@ -257,7 +260,8 @@ const PlaceBetMines = ({
             role="button"
             tabIndex="0"
             style={{display: bet.autobet ? 'auto':'none'}}
-            className={classNames(styles.button, styles.cancel)}
+            className={styles.button}
+            theme={ButtonTheme.secondaryButton}
             onClick={() => setBet({...bet, autobet: false, stopped: true})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'
@@ -266,7 +270,7 @@ const PlaceBetMines = ({
             <p>Stop Autobet</p>
           </Button>}
 
-          <Button
+          {!bet.autobet && <Button
             id={"mines-cashout-btn"}
             role="button"
             tabIndex="0"
@@ -278,7 +282,7 @@ const PlaceBetMines = ({
             onClick={currentStep === 0 ? ()=>{} : handleCashout }
           >
             Cashout
-          </Button>
+          </Button>}
         </>
       )
     }
@@ -367,7 +371,7 @@ const PlaceBetMines = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={onTokenNumberChange}
                 minValue={0}
                 decimalPlaces={0}
@@ -445,7 +449,7 @@ const PlaceBetMines = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={(v)=>setAmount(v)}
                 minValue={1}
                 decimalPlaces={0}

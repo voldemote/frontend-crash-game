@@ -59,6 +59,9 @@ const PlaceBetCasino = ({
   const [selector, setSelector] = useState('manual')
   const userUnableToBet = amount < 1;
 
+  const winBtnActive = winbutton ? false : true;
+  const lossBtnActive = lossbutton ? false : true;
+
   const numberOfDemoPlays = Number(localStorage.getItem('numberOfElonGameDemoPlays')) || 0;
 
   const onGuestAmountChange = event => {
@@ -137,15 +140,27 @@ const PlaceBetCasino = ({
       const acc = bet.profit + accumulated
       setAccumulated(acc)
       if(bet.profitStop >= 0 && bet.profitStop > acc && bet.lossStop >= 0 && bet.lossStop > -acc){
-        const newamount = bet.profitStop > 0 ? Math.floor(winbutton ? amount : bet.amount*(1+bet.wincrease)) : Math.floor(lossbutton ? amount : bet.amount*(1+bet.lincrease))
-        if(newamount < 1) setBet({autobet: false, ngame: 0, ready: true})
-        else onBet({...bet, amount: newamount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
+          let newAmount = bet.amount;
+
+          if(bet.profit >= 0) {
+            if(winBtnActive) {
+              newAmount = Math.floor(bet.amount * (1 + bet.wincrease))
+            }
+          } else {
+            if(lossBtnActive) {
+              newAmount = Math.floor(bet.amount*(1+bet.lincrease))
+            }
+          }
+
+        if(newAmount < 1) setBet({autobet: false, ngame: 0, ready: true})
+        else onBet({...bet, amount: newAmount, ngame: bet.ngame ? bet.ngame -1 : bet.ngame})
       }
       else {
         setBet({autobet: false, ngame: 0, ready: true})
       }
     }
   }, [bet])
+
   const showLoginPopup = () => {
     dispatch(OnboardingActions.start());
     // dispatch(
@@ -276,7 +291,7 @@ const PlaceBetCasino = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={(v)=>setAmount(v)}
                 minValue={0}
                 decimalPlaces={0}
@@ -340,7 +355,7 @@ const PlaceBetCasino = ({
             {user?.isLoggedIn ? (
               <TokenNumberInput
                 value={amount}
-                currency={user?.currency}
+                currency={TOKEN_NAME}
                 setValue={(v)=>setAmount(v)}
                 minValue={1}
                 decimalPlaces={0}

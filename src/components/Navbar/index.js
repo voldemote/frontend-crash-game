@@ -30,6 +30,8 @@ import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
 import IconHeaderLogo from '../../data/images/alpaca-logo.svg';
+import {selectPrices} from '../../store/selectors/info-channel';
+import {convertAmount} from '../../helper/Currency';
 
 import moment from 'moment';
 import Link from 'components/Link';
@@ -39,6 +41,7 @@ import ButtonTheme from 'components/Button/ButtonTheme';
 import { trackWalletDepositIcon, trackWalletIcon } from 'config/gtm';
 
 import {ReactComponent as WalletIcon} from '../../data/icons/navbar/wallet-icon.svg';
+import {TOKEN_NAME} from "../../constants/Token";
 
 
 const Navbar = ({
@@ -67,7 +70,8 @@ const Navbar = ({
     closeDrawers();
   });
 
-  const { balance, currency, toNextRank } = useSelector(selectUser);
+  const { balance, balances, currency, gamesCurrency, toNextRank } = useSelector(selectUser);
+  const prices = useSelector(selectPrices);
 
   const history = useHistory();
 
@@ -173,6 +177,19 @@ const Navbar = ({
     return authState === LOGGED_IN;
   };
 
+  const renderBalances = () => {
+    let response = '';
+    if (balances) {
+      balances.forEach(b => {
+        response =
+          response + `${formatToFixed(b.balance, 0, true)} ${b.symbol}\n`;
+      });
+    } else {
+      response = `${formatToFixed(balance, 0, true)} ${TOKEN_NAME}`;
+    }
+    return response.trim();
+  };
+
   const renderWalletButton = () => {
     const walletBtn = (
       <span
@@ -189,25 +206,32 @@ const Navbar = ({
           className={style.walletLinkContainer}
           onClick={() => {
             trackWalletIcon();
-            history.push(Routes.wallet)
+            history.push(Routes.wallet);
           }}
         >
           <img src={CoinIcon} alt="medal" className={style.medal} />
-          <p title={`${formatToFixed(balance, 0, true)} ${currency}`}>{formatToFixed(balance, 0, true)} {currency}</p>
+          <p
+            title={renderBalances()}
+          >
+            {formatToFixed(balance, 0, true)} {TOKEN_NAME}
+          </p>
         </div>
-        <span 
+        <span
           className={style.depositLabel}
           onClick={() => {
             showWalletDepositPopup();
           }}
         >
-          <span className={style.deposit}>Deposit</span> <WalletIcon/>
+          <span className={style.deposit}>Deposit</span> <WalletIcon />
         </span>
       </span>
     );
     return (
       <div className={style.centerContainer}>
-        {isLoggedIn() && walletBtn}
+        {isLoggedIn() && (<>
+          {walletBtn}
+          <div className={style.walletEquivalentBlock}><span className={style.walletEquivalentOperator}>~</span>{convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span></div>
+        </>)}
       </div>
     )
   }
@@ -443,7 +467,7 @@ const Navbar = ({
             <span className={style.logoText}>
               Alpacasino
             </span>
-          </div>,          
+          </div>,
           true
         )}
       </div>

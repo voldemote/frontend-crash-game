@@ -11,6 +11,7 @@ import {
 import {
   convertCurrency,
   generateCryptopayChannel,
+  generateMoonpayUrl,
 } from 'api';
 import { numberWithCommas } from 'utils/common';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
@@ -40,6 +41,7 @@ const DepositFiat = ({
   user,
   showWalletDepositPopup,
   fetchWalletTransactions,
+  hidePopup,
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(CURRENCY_OPTIONS[0]);
   const [currency, setCurrency] = useState(100);
@@ -47,8 +49,8 @@ const DepositFiat = ({
   const [bonus, setBonus] = useState(0);
   const [address, setAddress] = useState();
   const [errorFetchingChannel, setErrorFetchingChannel] = useState(false);
-  const depositCount = useDepositsCounter();
   const [loading, setLoading] = useState(false);
+  const depositCount = useDepositsCounter();
 
   useEffect(() => {
     fetchWalletTransactions();
@@ -86,10 +88,12 @@ const DepositFiat = ({
     onChangeAmount();
   }, [selectedCurrency, currency]);
 
-  const fetchReceiverAddress = useCallback(async (tab) => {
-    const channel = await generateCryptopayChannel({ currency: cryptoTransaction });
-    
-    if(channel.error) {
+  const fetchReceiverAddress = useCallback(async tab => {
+    const channel = await generateCryptopayChannel({
+      currency: cryptoTransaction,
+    });
+
+    if (channel.error) {
       return setErrorFetchingChannel(true);
     }
 
@@ -99,7 +103,7 @@ const DepositFiat = ({
 
   useEffect(() => {
     fetchReceiverAddress();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const OnClickContinue = async () => {
@@ -147,12 +151,27 @@ const DepositFiat = ({
       const rampUrl = `${productionRampURL}?swapAsset=${cryptoTransaction}&fiatValue=${currency}&fiatCurrency=${selectedCurrency.label}&userEmailAddress=${user.email}&userAddress=${address}`;
       window.open(rampUrl);
     }
-  }
+  };
+
+  const proceedWithMoonpay = async () => {
+    setLoading(true);
+    const res = await generateMoonpayUrl({
+      amount: currency,
+      currency: selectedCurrency.label,
+    });
+
+    if (res.response.data.url) {
+      window.open(res.response.data.url, '_blank');
+      setTimeout(() => hidePopup(), 1000);
+    }
+
+    setLoading(false);
+  };
 
   const handlePartnerClick = () => {
-    getRampUrl();
+    proceedWithMoonpay();
     trackWalletFiatProceedPartner();
-  }
+  };
 
   return (
     <div className={styles.depositFiat}>
@@ -235,15 +254,16 @@ const DepositFiat = ({
 
       <div className={styles.summary}>
         <span>
-          For your safety and convenience, we process money payments via an
-          external provider. Please click the button below to continue.{' '}
-          <b>Important</b>: DO NOT change the Wallet address provided.
+          Incoming transactions are processed with <b>MATIC</b> via our
+          supplier Moonpay. The value will be automatically converted to{' '}
+          <b>WFAIR</b> once the transaction is completed.
         </span>
-        {/* <span>Your {cryptoTransaction} Deposit Address: {address}</span> */}
       </div>
 
       {currency > 0 && user.email && !loading ? (
-        <Button onClick={() => handlePartnerClick()}>Proceed with partner</Button>
+        <Button onClick={() => handlePartnerClick()}>
+          Proceed with partner
+        </Button>
       ) : (
         <Button disabled>Proceed with partner</Button>
       )}
@@ -266,6 +286,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchWalletTransactions: () => {
       dispatch(TransactionActions.fetchWalletTransactions());
+    },
+    hidePopup: () => {
+      dispatch(PopupActions.hide());
     },
   };
 };

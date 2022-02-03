@@ -11,7 +11,7 @@ const DisplaySection = (props) => {
 //   let history = useHistory();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const {smartsoftGames, evoplayGames, selectedGamesNames, selectedGamesLabel} = props;
+  const {smartsoftGames, evoplayGames, softswissGames, selectedGamesNames, selectedGamesLabel} = props;
 
   const [games, setGames] = useState([]);
   const getGameItemSizeClass = () => {
@@ -54,7 +54,7 @@ const DisplaySection = (props) => {
       const evoPlayUrl = `/evoplay-game/${cfg.name}/${cfg.game_sub_type}/${game.gameKey}`;
       return <div onClick={(e) => {
         handleGameClick(e,evoPlayUrl, game);
-      }}>
+      }} key={name + game.GameProvider}>
         <Link
         to={user.isLoggedIn ? evoPlayUrl : undefined}
         className={classNames(
@@ -74,13 +74,40 @@ const DisplaySection = (props) => {
         </div>
       </Link></div>
     }
-
+    if (game.GameProvider === 'softswiss') {
+      const cfg = game._cfg;
+      const name = cfg.title;
+      const softswissUrl = `/softswiss-game/${cfg.identifier}`;
+      return <div onClick={(e) => {
+        handleGameClick(e, softswissUrl, game);
+      }} key={name + game.GameProvider}>
+        <Link
+          to={user.isLoggedIn ? softswissUrl : undefined}
+          className={classNames(
+            styles.game,
+            styles.gameLink
+          )}
+        >
+          <div
+            key={index}
+            className={classNames(
+              styles.gameItem,
+              getGameItemSizeClass()
+            )}
+          >
+            <img src={`${game.GameThumb}`} alt={`img`} />
+            <p className={styles.title}>{name}</p>
+          </div>
+        </Link></div>
+    }
     if (game.TechnicalName !== undefined) {
     const smartSoftUrl = `/external-game/${game.TechnicalName}/${game.TechnicalCategory}`;
 
     return <div onClick={(e) => {
       handleGameClick(e, smartSoftUrl, game);
-    }}><Link
+    }} key={game.TechnicalName + game.GameProvider}>
+
+      <Link
       to={user.isLoggedIn ? smartSoftUrl : undefined}
       className={classNames(
         styles.game,
@@ -103,9 +130,9 @@ const DisplaySection = (props) => {
 
   useEffect(() => {
 
-    if(smartsoftGames && evoplayGames) {
+    if(smartsoftGames && evoplayGames && softswissGames) {
       if(selectedGamesNames && selectedGamesNames.length) {
-        const allGames = [...smartsoftGames, ...evoplayGames];
+        const allGames = [...smartsoftGames, ...evoplayGames, ...softswissGames];
         const selectedGames = [];
 
         selectedGamesNames.forEach((item)=> {
@@ -122,6 +149,7 @@ const DisplaySection = (props) => {
         let map = new Map();
         smartsoftGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
         evoplayGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
+        softswissGames.forEach((x) => map.set(x.TechnicalName, { ...x }));
         ret = [...map.values()];
         ret.sort(function (a, b) {
           if (a.TechnicalName < b.TechnicalName) {
@@ -139,7 +167,7 @@ const DisplaySection = (props) => {
     return () => {
       setGames([])
     }
-  }, [smartsoftGames, evoplayGames])
+  }, [smartsoftGames, evoplayGames, softswissGames])
 
   let categories = games.reduce((gs, g) => { return gs.includes(g.GameCategory) ? gs :gs.concat(g.GameCategory) },[]);
 
@@ -152,36 +180,39 @@ const DisplaySection = (props) => {
         </div>
         <div className={classNames(styles.games)}>
           {games.map((game, index) => {
+              let entryKey = `gamecard-${index}-${game.TechnicalName}`;
               return <div
                 className={styles.wrapper}
-                key={`gamecard-${index}-`}
+                key={entryKey}
               >
                 {renderLinkByProvider(game, index)}
               </div>
             }
           )}
         </div>
-      </div> : (categories.map(category1 =>
-        <>
+      </div> : (categories.map((category1, index) => {
+         return <div key={category1 + index}>
             <div className={styles.gamesCategory}>
               {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
               <h2>{category1}</h2>
             </div>
 
-          <div className={classNames(styles.games)}>
-            {games.filter(g => g.GameCategory===category1).map((game, index) => {
+            <div className={classNames(styles.games)}>
+              {games.filter(g => g.GameCategory===category1).map((game, index) => {
 
-             return <div
-                className={styles.wrapper}
-                key={`gamecard-${index}-`}
-              >
-               {renderLinkByProvider(game, index)}
-              </div>
+                  return <div
+                    className={styles.wrapper}
+                    key={`gamecard-${index}-${game.TechnicalName}`}
+                  >
+                    {renderLinkByProvider(game, index)}
+                  </div>
 
-            }
-            )}
+                }
+              )}
+            </div>
           </div>
-        </>
+      }
+
       ))}
     </div>
   );

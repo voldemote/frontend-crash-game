@@ -134,7 +134,12 @@ const getEvoplaygames = (payload) => {
     console.log('[API Error] called: getCurrentGameInfo', error);
   });
 };
-
+const getSoftswissgames = (payload) => {
+  const callThis = ApiUrls.API_GET_SOFTSWISS_URLGAME;
+  return Api.post(callThis, payload).catch(error => {
+    console.log('[API Error] called: getCurrentGameInfo', error);
+  });
+};
 const getUrlgame = (payload) => {
   const callThis = ApiUrls.API_GET_EVOPLAY_URLGAME;
   return Api.post(callThis, payload).catch(error => {
@@ -220,6 +225,7 @@ export {
   setInitialEvoplaySession,
   getEvoplaygames,
   getUrlgame,
+  getSoftswissgames,
   setInitialSession,
   createTrade,
   getSpinsAlpacaWheel,

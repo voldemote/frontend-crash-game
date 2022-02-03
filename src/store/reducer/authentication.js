@@ -215,6 +215,9 @@ const updateData = (action, state) => {
     balance: {
       $set: action.balance,
     },
+    balances: {
+      $set: action.balances,
+    },
     profilePicture: {
       $set: action.profilePicture,
     },

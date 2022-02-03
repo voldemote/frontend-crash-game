@@ -2,7 +2,7 @@ import { TOKEN_NAME } from 'constants/Token';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserBet } from '../../store/selectors/rosi-game';
-import { calcCrashFactorFromElapsedTime } from './canvas/utils';
+import { calcCrashFactorFromElapsedTime } from  "components/RosiGameAnimation/canvas/utils";
 
 const Timer = ({ startTimeMs, showIncome = false }) => {
   const bet = useSelector(selectUserBet);
