@@ -179,7 +179,7 @@ const DepositFiat = ({
         WFAIR conversion calculator
       </p>
       <p>
-        Alpacasino uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency or in EUR / USD at any time around the world.
+        Wallfair uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency or in EUR / USD at any time around the world.
       </p> */}
 
       {renderBackButton()}

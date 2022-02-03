@@ -60,7 +60,7 @@ const GameCards = ({ games,gameTitle = false, category, showHowtoLink, showPopup
       {gameTitle ?
       <div className={styles.title}>
           <h2>Alpaca Games</h2>
-          <p>Games available only in Alpacasino. 100% fun & pure love </p>
+          <p>Games available only in Wallfair. 100% fun &amp; pure love </p>
         </div>
       
       : (

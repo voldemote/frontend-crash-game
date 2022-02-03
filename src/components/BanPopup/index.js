@@ -32,7 +32,7 @@ const BanPopup = ({
           </p>
           <p>
             You can contact{' '}
-            <a href="mailto:support@alpacasino.io">support@alpacasino.io</a> to
+            <a href="mailto:support@wallfair.io">support@wallfair.io</a> to
             dispute the ban.
           </p>
         </div>

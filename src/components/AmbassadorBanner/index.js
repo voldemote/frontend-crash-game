@@ -12,7 +12,7 @@ const AmbassadorBanner = () => {
         <div className={styles.descriptionCard}>
           <h1>How does it work?</h1>
           <p>
-            1. Register on Alpacasino.io, top up your wallet with any amount and
+            1. Register on app.wallfair.io, top up your wallet with any amount and
             play at least once in one of our house games.
           </p>
           <p>

@@ -219,7 +219,7 @@ const Home = ({
               <h3>$PFAIR Token?</h3>
               <p>
                 PFAIR is Wallfair's FREE-TO-PLAY token. The tokens can be used
-                in the ALPACASINO playground for risk and care free betting fun
+                in the WALLFAIR playground for risk and care free betting fun
               </p>
             </div>
           </div>
@@ -230,7 +230,7 @@ const Home = ({
             <div className={styles.detail}>
               <h3>$WFAIR Token?</h3>
               <p>
-                WFAIR is the protocol token used on smart contracts. Alpacasino
+                WFAIR is the protocol token used on smart contracts. Wallfair
                 is a play-money simulation (“PFAIR”) of WFAIR use cases. You can
                 buy and trade WFAIR{' '}
                 <a
@@ -346,7 +346,7 @@ const Home = ({
                 <div className={styles.descriptionCard}>
                   <h1>Unique</h1>
                   <p>
-                    In Alpacasino you play with WFAIR, our own crypto currency.
+                    In Wallfair you play with WFAIR, our own crypto currency.
                     It gives you the advantage to earn money even when you are
                     not playing. Stake your winnings and watch your wallet grow!
                     The more people sign up, deposit and play, the higher the
@@ -367,7 +367,7 @@ const Home = ({
                 <div className={styles.descriptionCard}>
                   <h1>Social</h1>
                   <p>
-                    Alpacasino is a part of Alpacaverse our flagship project
+                    Wallfair is our flagship project
                     that presents the future of the speculative entertainment.
                     The future where world of betting, gambling and gaming is
                     blended into one huge theme park metaverse. The place where
@@ -401,7 +401,7 @@ const Home = ({
           <div className={styles.cardBox}>
             <p>
               Welcome to
-              <br /> <span>Alpacasino</span>
+              <br /> <span>Wallfair</span>
             </p>
 
             <LimitedOfferBanner />
@@ -500,7 +500,7 @@ const Home = ({
                       <h3>What</h3>
                     </div>
                     <p>
-                      Alpacasino is the first betting and gaming platform
+                      Wallfair is the first betting and gaming platform
                       powered by Wallfair.
                     </p>
                   </div>

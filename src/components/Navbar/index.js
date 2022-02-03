@@ -458,16 +458,7 @@ const Navbar = ({
       <div className={classNames(style.navbarItems, style.hideOnMobile)}>
         {renderNavbarLink(
           Routes.home,
-          <div className={style.logoContainer}>
-            <img
-              src={IconHeaderLogo}
-              alt="Header Logo"
-              className={style.logoImg}
-            />
-            <span className={style.logoText}>
-              Alpacasino
-            </span>
-          </div>,
+          <img src={LogoDemo} width={200} alt={'Wallfair'} />,
           true
         )}
       </div>

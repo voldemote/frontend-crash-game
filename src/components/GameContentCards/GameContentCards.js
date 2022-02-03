@@ -36,13 +36,13 @@ const GameContentCards = () => {
               <h3>SOCIAL</h3>
               {!expandSocial ? (
                 <p>
-                  It’s simple: Alpacas are social animals = Alpacasino is a
+                  It’s simple: Alpacas are social animals = Wallfair is a
                   social Betwork. Alpacas from all over the world meet to chat
                   ...
                 </p>
               ) : (
                 <p>
-                  It’s simple: Alpacas are social animals = Alpacasino is a
+                  It’s simple: Alpacas are social animals = Wallfair is a
                   social Betwork. Alpacas from all over the world meet to chat,
                   follow, interact and game together. You can customize and
                   upgrade your Alpaca or check out any Alpacas activity history
