@@ -18,7 +18,7 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
 
   const carouselLinks = {
     landingpage: !loggedIn ? [
-      'hello-human',
+      // 'hello-human',
       'deposit-bonus-nonlogged',
     ] : [
       'deposit-bonus', 
@@ -44,13 +44,13 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
 
   const onClickItem = itemIndex => {
     switch(carouselLinks[carouselType][itemIndex]) {
-      case 'hello-human':
-        dispatch(OnboardingActions.start());
-        dataLayerPush({
-          event:'gtm.click',
-          'gtm.elementId': 'banner--hello-human',
-        });
-        break;
+      // case 'hello-human':
+      //   dispatch(OnboardingActions.start());
+      //   dataLayerPush({
+      //     event:'gtm.click',
+      //     'gtm.elementId': 'banner--hello-human',
+      //   });
+      //   break;
       case 'deposit-bonus-nonlogged':
         dispatch(OnboardingActions.start());
         dataLayerPush({
@@ -192,12 +192,12 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
         showThumbs={false}
         onClickItem={onClickItem}
       >
-      <div>
+      {/* <div>
         <img
           alt=""
           src={`https://files.wallfair.io/alpacasino/landingpage-carousel/hello-human-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
         />
-      </div>
+      </div> */}
       <div>
         <img
           alt=""

@@ -296,7 +296,7 @@ const Home = ({
 
   const renderHouseGames = () => {
     alpacaGames = alpacaGames.filter((game, i) => i < 6);
-    return <GameCards gameTitle games={alpacaGames} category="Alpaca Games" />;
+    return <GameCards gameTitle games={alpacaGames} category="Wallfair Games" />;
   };
 
   const renderSlogGames = () => {

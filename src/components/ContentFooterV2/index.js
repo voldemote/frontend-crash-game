@@ -268,7 +268,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
       </p>
 
       <div className={styles.supportBlock}>
-        <div>Support: <b><a href='ma&#105;lt&#111;&#58;s%7&#53;p%&#55;0%&#54;F&#114;&#37;74%40&#97;&#108;%70ac%61sin&#37;&#54;F&#46;i&#111;'>&#115;uppo&#114;t&#64;al&#112;acasi&#110;&#111;&#46;io</a></b> | Partner: <b><a href='&#109;ailto&#58;p%6&#49;%7&#50;tne&#114;s&#64;%61lp&#97;%63&#97;s%69no&#46;&#105;&#37;6F'>p&#97;r&#116;ners&#64;&#97;lpacasino&#46;i&#111;</a></b></div>
+        <div>Support: <b><a href='ma&#105;lt&#111;&#58;&#115;uppo&#114;t&#64;wallfair.io'>&#115;uppo&#114;t&#64;wallfair.io</a></b> | Partner: <b><a href='&#109;ailto&#58;p%6&#49;%7&#50;tne&#114;s&#64;wallfair&#46;i&#111;'>p&#97;r&#116;ners&#64;wallfair&#46;i&#111;</a></b></div>
       </div>
     </div>
   );
