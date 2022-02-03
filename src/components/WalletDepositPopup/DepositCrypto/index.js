@@ -160,7 +160,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
         WFAIR conversion calculator
       </p>
       <p>
-        Alpacasino uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency  or in EUR / USD at any time around the world.
+        Wallfair uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency  or in EUR / USD at any time around the world.
       </p> */}
 
       {renderBackButton()}
@@ -250,7 +250,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
       </div>
 
       <div className={styles.summary}>
-        <span>Add to Alpacasino Account in WFAIR</span>
+        <span>Add to Wallfair Account in WFAIR</span>
         <p className={styles.summaryTotal}>{numberWithCommas(total)} {TOKEN_NAME}</p>
       </div>
 
@@ -259,7 +259,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
             <p className={styles.depositNotes}>
 
               <sup>*</sup>Send any amount of BTC to the following address. 1 confirmation is required. We do not accept BEP20 from Binance.
-              Alpacasino does not accept bitcoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
+              Wallfair does not accept bitcoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
             </p>
           )
         ||
@@ -267,7 +267,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
           <p className={styles.depositNotes}>
 
             <sup>*</sup>Send any amount of ETH to the following address. 3 confirmations is required.
-            Alpacasino does not accept Ethereum that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
+            Wallfair does not accept Ethereum that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
           </p>
         )
         ||
@@ -275,7 +275,7 @@ const DepositCrypto = ({user, showWalletDepositPopup, fetchWalletTransactions}) 
           <p className={styles.depositNotes}>
 
             <sup>*</sup>Send any amount of LTC to the following address. 3 confirmations is required.
-            Alpacasino does not accept Litecoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
+            Wallfair does not accept Litecoin that originates from any Mixing services; please refrain from depositing directly or indirectly from these services.
           </p>
         )
       )}

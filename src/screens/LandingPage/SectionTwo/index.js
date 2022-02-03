@@ -19,8 +19,8 @@ const SectionTwo = ({ classes }) => {
         </p>
         <br />
         <p className={classes.textParagraph}>
-          To ensure a level of quality and trust in our events, during Alpacasino
-          Alpha we will be creating events exclusively with our partners and
+          To ensure a level of quality and trust in our events, during Wallfair
+          Play we will be creating events exclusively with our partners and
           trusted community members. As we move forward into a new era of
           betting, we will open the flood gates to event creation for everyone,
           yes, that means you, our valuable players. This means anyone can

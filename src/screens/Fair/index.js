@@ -24,12 +24,12 @@ const Fair = () => {
             Provably fair means you don’t need to “trust” us to be fair; it means you can prove our fairness.
           </p>
 
-          <p>Each bet made on Alpacasino.io can be verified so that you know with certainty the house could have in no way “chosen” the outcome.</p>
+          <p>Each bet made on app.wallfair.io can be verified so that you know with certainty the house could have in no way “chosen” the outcome.</p>
           
           <p>To make this possible, two components are needed:</p>
 
           <ol>
-            <li>A server seed - This secret is kept by Alpacasino, and known only by us.</li>
+            <li>A server seed - This secret is kept by Wallfair, and known only by us.</li>
             <li>A client seed - A public seed used to generate hashes, which can then be used by anyone to verify the hashes.</li>
           </ol>
           </div>

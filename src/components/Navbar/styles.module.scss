@@ -372,22 +372,22 @@
       opacity: 1;
       margin: 0;
 
-      .logoContainer {
-        display: flex;
-        align-items: center;
-        .logoText {
-          margin-left: 10px;
-          color: $colorWhite;
-          font-family: $fontOmnes;
-          font-weight: bold;
-          font-size: 30px;
-          line-height: 50px;
-        }
-      }
+      // .logoContainer {
+      //   display: flex;
+      //   align-items: center;
+      //   .logoText {
+      //     margin-left: 10px;
+      //     color: $colorWhite;
+      //     font-family: $fontOmnes;
+      //     font-weight: bold;
+      //     font-size: 30px;
+      //     line-height: 50px;
+      //   }
+      // }
 
       & > img {
         margin: 0;
-        width: 450px;
+        // width: 450px;
       }
 
       &:after {

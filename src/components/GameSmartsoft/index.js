@@ -25,7 +25,7 @@ const GameSmartsoft = ({ games, gameTitle, category, showHowtoLink, showPopup })
        {gameTitle ? (
          <div className={styles.title}>
           <h2>Most played Games</h2>
-          <p>Only the most played and best Games in the Alpacasino</p>
+          <p>Only the most played and best Games in Wallfair</p>
         </div>
        ): (
          <div className={styles.gamesCategory}>

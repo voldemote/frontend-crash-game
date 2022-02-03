@@ -258,17 +258,17 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
       </div>
 
       <div className={styles.copyrightBlock}>
-        <div>© 2022 alpacasino.io | All rights reserved.</div>
+        <div>© 2022 Wallfair N.V. | All rights reserved.</div>
         <div>1 WFAIR = {selectedGamesCurrencyPrice} {gamesCurrency}</div>
       </div>
 
       <p className={styles.footerDisclaimer}>
-        This website offers gaming with risk experience. To be a user of our site you must be over 18 y.o. We are not responsible for the violation of your local laws related to i-gaming. Play responsibly and have fun on Alpacasino.
+        This website offers gaming with risk experience. To be a user of our site you must be over 18 y.o. We are not responsible for the violation of your local laws related to i-gaming. Play responsibly and have fun on Wallfair.
         The platform providing the services is owned by Wallfair N.V, a limited liability company registered in Curacao with company registration number 159041, with its registered office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curacao (“Company”), licensed in Curaçao under the Licence no. 365/JAZ Sub-License GLH-OCCHKTW0712022021 issued by Gaming Services Provider N.V. for the provision of online games of chance.
       </p>
 
       <div className={styles.supportBlock}>
-        <div>Support: <b><a href='ma&#105;lt&#111;&#58;s%7&#53;p%&#55;0%&#54;F&#114;&#37;74%40&#97;&#108;%70ac%61sin&#37;&#54;F&#46;i&#111;'>&#115;uppo&#114;t&#64;al&#112;acasi&#110;&#111;&#46;io</a></b> | Partner: <b><a href='&#109;ailto&#58;p%6&#49;%7&#50;tne&#114;s&#64;%61lp&#97;%63&#97;s%69no&#46;&#105;&#37;6F'>p&#97;r&#116;ners&#64;&#97;lpacasino&#46;i&#111;</a></b></div>
+        <div>Support: <b><a href='ma&#105;lt&#111;&#58;&#115;uppo&#114;t&#64;wallfair.io'>&#115;uppo&#114;t&#64;wallfair.io</a></b> | Partner: <b><a href='&#109;ailto&#58;p%6&#49;%7&#50;tne&#114;s&#64;wallfair&#46;i&#111;'>p&#97;r&#116;ners&#64;wallfair&#46;i&#111;</a></b></div>
       </div>
     </div>
   );

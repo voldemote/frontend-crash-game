@@ -12,7 +12,7 @@ const SectionThree = ({ classes }) => {
           <br /> signing up?
         </h2>
         <p className={classes.textParagraph}>
-          When you sign up to Alpacasino Alpha, not only do you receive 5,000 play
+          When you sign up to Wallfair Play, not only do you receive 5,000 play
           money
           {TOKEN_NAME} Tokens to use on our platform but the more you play, the
           more chances to win there are, we have hidden more ways to earn more
