@@ -20,8 +20,50 @@ import gameCardAlpacannon from '../data/images/house-games/card-alpacannon.png';
 
 //
 
+const softswissAcceptanceTests = [
+  {
+    "title": "Acceptance test 1",
+    "identifier": "acceptance:test",
+    "identifier2": "acceptance:test",
+    "provider": "acceptance",
+    "producer": "softswiss",
+    "category": "slots",
+    "has_freespins": true,
+    "feature_group": "basic",
+    "devices": [
+      "desktop",
+      "mobile"
+    ],
+    "restrictions": {
+      "default": {
+        "blacklist": []
+      }
+    }
+  },
+  {
+    "title": "Acceptance test 2",
+    "identifier": "acceptance:secondary_test",
+    "identifier2": "acceptance:secondary_test",
+    "provider": "acceptance",
+    "producer": "softswiss",
+    "category": "slots",
+    "has_freespins": true,
+    "feature_group": "basic",
+    "devices": [
+      "desktop",
+      "mobile"
+    ],
+    "restrictions": {
+      "default": {
+        "blacklist": []
+      }
+    }
+  }
+];
+
 export const SOFTSWISS_GAMES =
     [
+      ...softswissAcceptanceTests,
         {
             "title": "All Lucky Clovers",
             "identifier": "softswiss:AllLuckyClover",
