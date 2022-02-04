@@ -132,28 +132,12 @@ const transformUser = user => {
   };
 }
 
-const transformUserLuckyHigh = user => {
-  return {
-    crashFactor: user.crashfactor,
-    createdAt: user.created_at,
-    gameMatch: user.game_match,
-    gameHash: user.gamehash,
-    gameId: user.gameid,
-    stakedAmount: user.stakedamount,
-    state: 2,
-    userId: user.userid,
-    username: user.username,
-    rewardAmount: user.profit ? user.profit + parseFloat(user.stakedamount) : user.crashfactor * user.stakedamount,
-    gamesCurrency: TOKEN_NAME
-  };
-}
-
 const getLuckyUsers = data => {
   const { gameId } = data || {};
   const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
   return Api.get(url).then(
     response => ({
-      data: response.data.map(transformUserLuckyHigh),
+      data: response.data.map(transformUser),
     })
   );
 };
@@ -163,7 +147,7 @@ const getHighUsers = data => {
   const url = gameId ? ApiUrls.API_TRADES_HIGH.replace(':gameId', gameId) : ApiUrls.API_TRADES_HIGH.replace('/:gameId', '');
   return Api.get(url).then(
     response => ({
-      data: response.data.map(transformUserLuckyHigh),
+      data: response.data.map(transformUser),
     })
   );
 };

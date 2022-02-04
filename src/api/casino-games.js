@@ -1,16 +1,7 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
-import {
-  API_CURRENT_BY_GAME_TYPE_SIMPLE_GAMES, API_GET_CURRENT_FAIRNESS_SIMPLE_GAMES,
-  API_MINES_BET,
-  API_MINES_CASHOUT,
-  API_MINES_CHECK,
-  API_MINES_CURRENT, API_MINES_LAST_CASHOUTS,
-  API_MINES_START,
-  CRASH_GAME_GET_VOLUME_BETS, SINGLE_GAME_API_GET_GAME_DETAILS
-} from '../constants/Api';
-import {promises} from "stream";
+import {TOKEN_NAME} from "../constants/Token";
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -167,18 +158,21 @@ const createTrade = payload => {
   });
 };
 
-
-const transformUser = user => ({
-  crashFactor: user.crashfactor,
-  createdAt: user.created_at,
-  gameMatch: user.game_match,
-  gameHash: user.gamehash,
-  stakedAmount: user.stakedamount,
-  state: 2,
-  userId: user.userid,
-  username: user.username,
-  rewardAmount: user.crashfactor * user.stakedamount,
-});
+const transformUser = user => {
+  return {
+    crashFactor: user.crashfactor,
+    createdAt: user.created_at,
+    gameMatch: user.game_match,
+    gameHash: user.gamehash,
+    gameId: user.gameid,
+    stakedAmount: user.stakedamount,
+    state: 2,
+    userId: user.userid,
+    username: user.username,
+    rewardAmount: user.profit ? user.profit + parseFloat(user.stakedamount) : user.crashfactor * user.stakedamount,
+    gamesCurrency: user.gamescurrency || TOKEN_NAME
+  };
+}
 
 const getLuckyUsers = () => {
   return Api.get(ApiUrls.API_TRADES_LUCKY).then(response => ({
