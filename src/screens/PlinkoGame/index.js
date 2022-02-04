@@ -23,6 +23,8 @@ import { PopupActions } from 'store/actions/popup';
 import TabOptions from '../../components/TabOptions';
 import { GAMES } from '../../constants/Games';
 import EventActivitiesTabs from 'components/EventActivitiesTabs'
+import {GAMES_CURRENCY_DEFAULT_BET} from '../../constants/Currency';
+
 import {
   trackPlinkoCashout,
   trackPlinkoPlaceBet
@@ -51,7 +53,7 @@ const PlinkoGame = ({
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({ready: true, ball: 0});
-  const [amount, setAmount] = useState(50);
+  const [amount, setAmount] = useState(GAMES_CURRENCY_DEFAULT_BET);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
   const user = useSelector(selectUser);

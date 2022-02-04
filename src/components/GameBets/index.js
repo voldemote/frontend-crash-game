@@ -44,6 +44,7 @@ const renderValue = (bet, gameRunning, endGame) => {
 };
 
 const Bet = ({ cashedOut, bet, gameRunning, endGame }) => {
+  const gamesCurrency = bet?.gamesCurrency || TOKEN_NAME;
   return (
     <div
       className={classNames({
@@ -68,7 +69,7 @@ const Bet = ({ cashedOut, bet, gameRunning, endGame }) => {
             [styles.negative]: endGame && !cashedOut,
           })}
         >
-          {renderValue(bet, gameRunning, endGame)} {TOKEN_NAME}
+          {renderValue(bet, gameRunning, endGame)} {gamesCurrency}
         </span>
         <div className={styles.coin}></div>
       </div>
@@ -87,7 +88,7 @@ const GameBets = ({ bets, endGame, gameRunning }) => {
             [styles.positive]: isCashedOut(bets) && (gameRunning || endGame),
           })}
         >
-          {calculateTotal(bets, gameRunning, endGame)} {TOKEN_NAME}
+          {calculateTotal(bets, gameRunning, endGame)} *
         </div>
       </div>
       <div className={styles.bets}>

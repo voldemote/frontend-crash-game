@@ -1,6 +1,7 @@
 import * as ApiUrls from '../constants/Api';
 import axios from 'axios';
 import ContentTypes from '../constants/ContentTypes';
+import {TOKEN_NAME} from "../constants/Token";
 
 const createInstance = (host, apiPath) => {
   return axios.create({
@@ -51,18 +52,6 @@ class GameApi {
       throw error;
     });
   };
-
-  transformUser = user => ({
-    crashFactor: user.crashfactor,
-    createdAt: user.createdAt,
-    gameMatch: user.gamematch,
-    gameHash: user.gameHash,
-    gameId: user.gameid,
-    stakedAmount: user.stakedamount,
-    state: 2,
-    userId: user.id,
-    rewardAmount: user.crashfactor * user.stakedamount,
-  })
 
   getLuckyUsers = gameId => {
     const url = gameId ? ApiUrls.API_TRADES_LUCKY.replace(':gameId', gameId) : ApiUrls.API_TRADES_LUCKY.replace('/:gameId', '');
@@ -127,18 +116,21 @@ const getGameDetailById = (gameHash, gameTypeId, type) => {
   });
 };
 
-const transformUser = user => ({
-  crashFactor: user.crashfactor,
-  createdAt: user.created_at,
-  gameMatch: user.game_match,
-  gameHash: user.gamehash,
-  gameId: user.gameid,
-  stakedAmount: user.stakedamount,
-  state: 2,
-  userId: user.userid,
-  username: user.username,
-  rewardAmount: user.profit ? user.profit + parseFloat(user.stakedamount) : user.crashfactor * user.stakedamount,
-  });
+const transformUser = user => {
+  return {
+    crashFactor: user.crashfactor,
+    createdAt: user.created_at,
+    gameMatch: user.game_match,
+    gameHash: user.gamehash,
+    gameId: user.gameid,
+    stakedAmount: user.stakedamount,
+    state: 2,
+    userId: user.userid,
+    username: user.username,
+    rewardAmount: user.profit ? user.profit + parseFloat(user.stakedamount) : user.crashfactor * user.stakedamount,
+    gamesCurrency: user.gamescurrency || TOKEN_NAME
+  };
+}
 
 const getLuckyUsers = data => {
   const { gameId } = data || {};

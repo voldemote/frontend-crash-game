@@ -31,6 +31,7 @@ import { selectUser } from 'store/selectors/authentication';
 import Button from 'components/Button';
 import classNames from "classnames";
 import { trackAlpacannonCashout, trackAlpacannonPlaceBet, trackAlpacannonPlaceBetGuest } from 'config/gtm';
+import {GAMES_CURRENCY_DEFAULT_BET} from '../../constants/Currency';
 
 const ALPACANNON_GAME_EVENT_ID = GAMES.cannon.id
 
@@ -48,10 +49,11 @@ const PlinkoGame = ({
   const dispatch = useDispatch();
   const [audio, setAudio] = useState(null);
   const user = useSelector(selectUser);
+  const gamesCurrency = user?.gamesCurrency;
   const [spins, setSpins] = useState([]);
   const [risk, setRisk] = useState(1);
   const [bet, setBet] = useState({ready: true, rollover: 50});
-  const [amount, setAmount] = useState(50);
+  const [amount, setAmount] = useState(GAMES_CURRENCY_DEFAULT_BET);
   const [activityTabIndex, setActivityTabIndex] = useState(0);
 
   const isMiddleOrLargeDevice = useMediaQuery('(min-width:769px)');
@@ -146,10 +148,10 @@ const PlinkoGame = ({
         setBet((bet) => { return {...bet, ...payload, profit: 50, ready: false, rollValue: Math.round(Math.random()*100)} })
         trackAlpacannonPlaceBetGuest({ amount: payload.amount, multiplier: Math.round(Math.random()*100) });
       } else {
-        const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount});
-        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false, gameHash: data.gameHash} })
+        const { data } = await Api.createTradeCannon({rollover: bet.rollover, amount: payload.amount, gamesCurrency});
+        setBet((bet) => { return {...bet, ...payload, profit: data.profit, rollValue: Math.round(data.rollValue), ready: false, gameHash: data.gameHash, gamesCurrency} })
         updateUserBalance(userId);
-        
+
         trackAlpacannonPlaceBet({ amount: payload.amount, multiplier: Math.round(data.rollSelected) });
         trackAlpacannonCashout({ amount: data.profit, multiplier: data.winMultiplier });
         // return data;
@@ -277,7 +279,7 @@ const PlinkoGame = ({
               <b>Everyone talks about the Wolves of Wallstreet. Everyone thinks those aggressive and ruthless creatures are the soil of the investment market, the gurus of investing. But all those stories are smokes and mirrors to protect the real money makers - the Order of the Happy Alpacas. Established back in the days by the genius Warren who discovered that Alpacas developed an astonishing ability to predict market movements way better and more precise than anyone else. </b>
             </p>
             <p>
-              He also knew that the moment the truth was out there, people would try to take advantage of Alpacas, so he had to protect them.He decided to place a decoy on the market back in the 80s, one Jordan Belfort and redirect all the attention to a narcissistic penny maker. It worked back then, but then Elon started this crazy Reddit investigation that got bigger attention than the pizzagate. People started sniffing. 
+              He also knew that the moment the truth was out there, people would try to take advantage of Alpacas, so he had to protect them.He decided to place a decoy on the market back in the 80s, one Jordan Belfort and redirect all the attention to a narcissistic penny maker. It worked back then, but then Elon started this crazy Reddit investigation that got bigger attention than the pizzagate. People started sniffing.
             </p>
             <p>
               Warren had no choice but to pull off the same stunt again, but this time on a broader scale. He talked to his friend Martin, and they decided to remind people about the Jordan and Wolves of Wallstreet and make them the centre of the attention, the icon. It wasn't that expensive, just 5 Oscars, and it worked like a charm. Now it's your turn to see if your prediction skills are on par with Alpacas'. Make Warren proud!

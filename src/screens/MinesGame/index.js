@@ -31,6 +31,8 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import {getLastCashoutsMines} from "../../api/casino-games";
 import MinesAlpaca from '../../data/images/mines/mines-alpaca.png';
 
+import {GAMES_CURRENCY_DEFAULT_BET} from '../../constants/Currency';
+
 import {trackMinesCashout} from "../../config/gtm";
 import classNames from "classnames";
 const outcomeMultipliers = [
@@ -93,7 +95,7 @@ const Game = ({
   });
   const [outcomes, setOutcomes] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [amount, setAmount] = useState(50);
+  const [amount, setAmount] = useState(GAMES_CURRENCY_DEFAULT_BET);
   const [multiplier, setMultiplier] = useState('0.00');
   const [profit, setProfit] = useState();
   const [gameInstance, setGameInstance] = useState();

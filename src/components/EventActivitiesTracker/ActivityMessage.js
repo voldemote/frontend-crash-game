@@ -58,6 +58,8 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
     const multiplier = (_.has(data, 'crashFactor') ? data.crashFactor : data?.winMultiplier) || 0;
     const stakedAmount = data?.stakedAmount;
     const crashFactor = roundToTwo(multiplier);
+    const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
+
     switch (activity.type) {
       case 'Casino/CASINO_CASHOUT':
         const rowData = {
@@ -66,6 +68,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
           stakedAmount,
           crashFactor,
           gameLabel,
+          gamesCurrency
         };
         return (
           <ActivityTableRow
@@ -83,6 +86,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
           stakedAmount,
           crashFactor,
           gameLabel,
+          gamesCurrency
         };
         return (
           <ActivityTableRow

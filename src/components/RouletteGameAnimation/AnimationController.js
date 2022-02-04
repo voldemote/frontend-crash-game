@@ -6,6 +6,7 @@ import { init } from 'store/sagas/websockets';
 //import * as Sound from '@pixi/sound';
 import { isMobile } from 'react-device-detect';
 import { AudioController } from '../AudioController';
+import {toFixedNoRound} from "../../helper/Currency";
 
 let sectionsArray = [[0.5, 1.22, 1.25, 0.3, 2, 1.22, 0.5, 1.25, 1.5, 0.42, 0.5, 1.22],
   [0, 1.22, 1.5, 0.3, 2, 1.22, 0, 1.5, 2, 0.42, 0.5, 1.22],
@@ -84,7 +85,7 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
+        ctx.fillText(toFixedNoRound(sections[i] * options.amount, 1), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
 
@@ -196,7 +197,7 @@ class AnimationController {
         ctx.textBaseline = 'middle';
         ctx.translate(cx, cy);
         ctx.rotate(a);
-        ctx.fillText(Math.floor(sections[i] * options.amount), this.r * (isMobile?0.8:0.62), 0);
+        ctx.fillText(toFixedNoRound(sections[i] * options.amount, 1), this.r * (isMobile?0.8:0.62), 0);
         ctx.restore();
       }
       this.wheels.push(c);

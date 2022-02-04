@@ -14,11 +14,16 @@ import InputBoxTheme from '../InputBox/InputBoxTheme';
 import mineImg from '../../data/images/singleGameDetails/mines/mine.jpg';
 import coinImg from '../../data/images/singleGameDetails/mines/coin.jpg';
 
+import { TOKEN_NAME } from '../../constants/Token';
 import {GAMES} from '../../constants/Games';
+import { roundToTwo } from '../../helper/FormatNumbers';
 
-const roundToTwo = num => {
-  return +(Math.round(num + 'e+2') + 'e-2');
-};
+const GameCurrency = (props) => {
+  return <div>
+    <b>Game currency:</b>{' '}
+    <span>{props?.value || TOKEN_NAME}</span>
+  </div>
+}
 
 const AlpacannonDetails = ({resData}) => {
   const profit = resData?.profit.toFixed(2);
@@ -26,7 +31,7 @@ const AlpacannonDetails = ({resData}) => {
   return  <>
     <div>
       <b>Multiplier:</b>{' '}
-      <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+      <span>{roundToTwo(resData?.crashFactor)}</span>
     </div>
     <div>
       <b>Selected factor:</b>{' '}
@@ -40,6 +45,7 @@ const AlpacannonDetails = ({resData}) => {
       <b>Staked amount:</b>{' '}
       <span>{resData?.stakedAmount}</span>
     </div>
+    <GameCurrency value={resData?.gamesCurrency}/>
     <div>
       <b>Profit:</b>{' '}
       <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
@@ -72,7 +78,7 @@ const PlinkoDetails = ({resData}) => {
   return  <>
     <div>
       <b>Multiplier:</b>{' '}
-      <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+      <span>{roundToTwo(resData?.crashFactor)}</span>
     </div>
     <div>
       <b>Risk factor:</b>{' '}
@@ -86,6 +92,7 @@ const PlinkoDetails = ({resData}) => {
       <b>Staked amount:</b>{' '}
       <span>{resData?.stakedAmount}</span>
     </div>
+    <GameCurrency value={resData?.gamesCurrency}/>
     <div>
       <b>Profit:</b>{' '}
       <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
@@ -103,7 +110,7 @@ const WheelDetails = ({resData}) => {
     return  <>
         <div>
             <b>Multiplier:</b>{' '}
-            <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+            <span>{roundToTwo(resData?.crashFactor)}</span>
         </div>
         <div>
             <b>Risk factor:</b>{' '}
@@ -117,6 +124,7 @@ const WheelDetails = ({resData}) => {
             <b>Staked amount:</b>{' '}
             <span>{resData?.stakedAmount}</span>
         </div>
+        <GameCurrency value={resData?.gamesCurrency}/>
         <div>
             <b>Profit:</b>{' '}
             <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>
@@ -131,7 +139,7 @@ const MinesDetails = ({resData}) => {
     return  <>
         <div>
             <b>Multiplier:</b>{' '}
-            <span>{roundToTwo(resData?.crashFactor).toFixed(2)}</span>
+            <span>{roundToTwo(resData?.crashFactor)}</span>
         </div>
         <div>
             <b>Mines count:</b>{' '}
@@ -145,6 +153,7 @@ const MinesDetails = ({resData}) => {
             <b>Staked amount:</b>{' '}
             <span>{resData?.stakedAmount}</span>
         </div>
+        <GameCurrency value={resData?.gamesCurrency}/>
         <div>
             <b>Profit:</b>{' '}
             <span className={profit > 0 ? 'global-cashout-profit' : 'global-cashout-loss'}>{profit > 0 ? '+' + profit : profit}</span>

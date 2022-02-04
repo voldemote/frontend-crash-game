@@ -46,6 +46,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
   const stakedAmountStr = toNumericString(stakedAmountNum);
   const rewardAmountStr = toNumericString(rewardAmountNum);
   const lostAmountStr = toNumericString(stakedAmountNum - rewardAmountNum);
+
   if(rewardAmountNum<stakedAmountNum) type = 'lost'
   else type = 'win';
   return (
@@ -69,7 +70,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
           </Grid>
           <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <div className={styles.messageRight}>
-              <p>{stakedAmountStr} {TOKEN_NAME}</p>
+              <p>{stakedAmountStr} {data?.gamesCurrency}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
@@ -81,9 +82,9 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
           <Grid item xs>
             <div className={classNames(styles.messageLast, styles.messageRight)} data-wg-notranslate>
               {type==='lost' ? (
-                  <p className={styles.loss}>{`-${lostAmountStr} ${TOKEN_NAME}`}</p>
+                  <p className={styles.loss}>{`-${lostAmountStr} ${data?.gamesCurrency}`}</p>
                 ):(
-                  <p className={styles.reward}>{`${rewardAmountStr} ${TOKEN_NAME}`}</p>
+                  <p className={styles.reward}>{`${rewardAmountStr} ${data?.gamesCurrency}`}</p>
                 )}
               <img src={medalCoin} alt="medal" />
             </div>
