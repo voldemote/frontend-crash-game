@@ -516,6 +516,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             showIncome
             pause={!isGameRunning}
             startTimeMs={gameStartedTime}
+            currency={gamesCurrency}
           />
         </div>
       );
