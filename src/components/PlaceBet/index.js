@@ -192,7 +192,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             (autobet.win ? 1 + autobet.wincrease : 1 + autobet.lincrease)
         ),
       };
-      console.log('newautobet', newautobet);
+
       if (
         newautobet.profit > newautobet.accumulated &&
         newautobet.loss > -newautobet.accumulated
@@ -257,6 +257,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
       wincrease: winbutton ? 0 : Number(wincrease) / 100,
       lincrease: lossbutton ? 0 : Number(lincrease) / 100,
       crashFactor: 999,
+      gamesCurrency
     };
 
     if (slug === GAMES['elonGame'].slug) {
