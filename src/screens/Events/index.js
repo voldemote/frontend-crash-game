@@ -7,7 +7,7 @@ const Events = () => {
   const [categories, setCategories] = useState(EVENT_CATEGORIES);
 
   return (
-    <BaseContainerWithNavbar withPaddingTop={true}>
+    <BaseContainerWithNavbar withPaddingTop={true} backgroundVideo={false}>
       <NonStreamedEventsContent
         eventType="non-streamed"
         categories={categories}

@@ -149,7 +149,6 @@ const NonStreamedEventsContent = ({
       <section className={classNames([styles.main, styles.notStreamed])}>
         <StatusTabs onSelect={setStatus} />
 
-        <div className={styles.nonStreamed}>
           <AdminOnly>
             <div
               className={styles.newEventLink}
@@ -165,6 +164,9 @@ const NonStreamedEventsContent = ({
               <span>New Event</span>
             </div>
           </AdminOnly>
+
+        <div className={styles.nonStreamed}>
+          
 
           {filteredBets
             .filter(item => item.eventSlug && item.slug)
@@ -188,7 +190,7 @@ const NonStreamedEventsContent = ({
                   tags={item.tags}
                   image={item.previewImageUrl}
                   eventEnd={item.endDate}
-                  outcomes={item.outcomes}
+                  // outcomes={item.outcomes}
                   category={item.category}
                   isBookmarked={!!item?.bookmarks?.includes(userId)}
                   onBookmark={e => {
