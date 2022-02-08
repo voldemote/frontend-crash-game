@@ -24,7 +24,6 @@ import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import { Grid } from '@material-ui/core';
 import { GeneralActions } from 'store/actions/general';
-import { EventActions } from 'store/actions/event';
 import { PopupActions } from 'store/actions/popup';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { connect } from 'react-redux';
@@ -33,10 +32,8 @@ import { ReactComponent as DiscordMarker } from '../../data/images/home/discord-
 import FairPiece from '../../data/images/home/fair-piece.svg';
 import UniquePiece from '../../data/images/home/unique-piece.svg';
 import SocialPiece from '../../data/images/home/social-piece.svg';
-import PlinkoAlpaca from '../../data/images/home/plinko-alpaca.svg';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
-import _ from 'lodash';
 
 const LandingPageV2 = (
   authState,
@@ -148,7 +145,6 @@ const LandingPageV2 = (
   const renderAboutDescription = () => {
     return (
       <div className={styles.aboutDescritpion}>
-        <img className={styles.topImage} src={PlinkoAlpaca} alt="fair-piece" />
         <Grid container spacing={1} justifyContent="space-between">
           <Grid item lg={4} md={4} xs={12}>
             <div className={styles.parentContainer}>
@@ -163,11 +159,6 @@ const LandingPageV2 = (
                     tricks just awesome fun!
                   </p>
                 </div>
-                <img
-                  className={styles.thumbnail}
-                  src={FairPiece}
-                  alt="fair-piece"
-                />
               </div>
             </div>
           </Grid>
@@ -184,11 +175,6 @@ const LandingPageV2 = (
                     value of you wallet!{' '}
                   </p>
                 </div>
-                <img
-                  className={styles.thumbnail}
-                  src={UniquePiece}
-                  alt="unique-piece"
-                />
               </div>
             </div>
           </Grid>
@@ -206,11 +192,6 @@ const LandingPageV2 = (
                     rewards!
                   </p>
                 </div>
-                <img
-                  className={styles.thumbnailBack}
-                  src={SocialPiece}
-                  alt="social-piece"
-                />
               </div>
             </div>
           </Grid>

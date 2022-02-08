@@ -33,7 +33,6 @@ export default {
   username: 'username',
   requestTokens: 'requestTokens',
   lastGamesDetail: 'lastGamesDetail',
-  alpacaBuilder: 'alpacaBuilder',
   walletBuyWfair: 'walletBuyWfair',
   fairnessPopup: 'fairnessPopup',
   singleGamesDetail: 'singleGamesDetail',

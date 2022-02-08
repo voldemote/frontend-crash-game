@@ -96,15 +96,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
-  &::after {
-    position: absolute;
-    content: '';
-    background-image: url('../../data/images/alpaca-logo-banner.png');
-    width: 145px;
-    height: 165px;
-    bottom: -15px;
-    right: -60px;
-  }
 
   @media (max-width: $screen-md) {
     background-image: url('../../data/backgrounds/games/wallpaper-banner-mobile.png');

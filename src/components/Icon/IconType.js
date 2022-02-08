@@ -1,5 +1,4 @@
 export default {
-  alpaca: 'alpaca',
   activities: 'activities',
   addBet: 'addBet',
   addYellow: 'addYellow',
@@ -18,7 +17,6 @@ export default {
   bet2: 'bet2',
   bet: 'bet',
   bell: 'bell',
-  buildAlpaca: 'buildAlpaca',
   calendar: 'calendar',
   camera: 'camera',
   chat: 'chat',

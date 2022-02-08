@@ -13,14 +13,12 @@ import {
 import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
 import UniswapContent from '../../components/Lightbox/UniswapContent';
-import Button from '../../components/Button';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { EventActions } from 'store/actions/event';
 import { useIsMount } from 'components/hoc/useIsMount';
 import { PopupActions } from '../../store/actions/popup';
 import State from '../../helper/State';
 import { getTradeById } from '../../api';
-import SocialIcons from 'components/SocialIcons';
 import GameSmartsoft from 'components/GameSmartsoft';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
@@ -28,38 +26,15 @@ import { GeneralActions } from '../../store/actions/general';
 import howTokenWorkPToken from '../../data/images/token/PToken.png';
 import howTokenWorkWToken from '../../data/images/token/WToken.png';
 import EloneWithPhone from '../../data/images/elon-with-phone.png';
-import MagentaAlpaca from '../../data/images/alpaca-dopter/magenta-alpaca.png';
-import MagentaChip from '../../data/images/alpaca-dopter/magenta-chip.png';
-import MagentaThumbnail from '../../data/images/candy-1.png';
-import BlueAlpaca from '../../data/images/alpaca-dopter/blue-alpaca.png';
-import BlueChip from '../../data/images/alpaca-dopter/blue-chip.png';
-import YellowAlpaca from '../../data/images/alpaca-dopter/yellow-alpaca.png';
-import YellowChip from '../../data/images/alpaca-dopter/yellow-chip.png';
-import YellowThumbnail from '../../data/images/candy-3.png';
+
 import { ReactComponent as DiscordMarker } from '../../data/images/home/discord-mark.svg';
-import AlpacaWithShavolImage from '../../data/images/home/alpaca-with-shavol.png'
-import AlphaLogo from '../../data/images/alpaca-dopter/alpha.png';
 import { ReactComponent as LimitedOffer } from '../../data/images/limited-offer.svg';
 
-import AlpacaHeader from 'data/images/alpaca-header.png';
 import TopFront from '../../data/images/top-front-corner-image.png';
 import TopBack from '../../data/images/top-back-corner-image.png';
-import BottomFront from '../../data/images/bottom-front-corner-image.png';
-import BottomBack from '../../data/images/bottom-back-corner-image.png';
-import AlpacaBlue from '../../data/images/bottom-popup-images.png';
-import AlpacaYellow from '../../data/images/home/alpaca-yellow.svg';
-
-import FairPiece from '../../data/images/home/fair-piece.svg';
-import UniquePiece from '../../data/images/home/unique-piece.svg';
-import SocialPiece from '../../data/images/home/social-piece.svg';
-import PlinkoAlpaca from '../../data/images/home/plinko-alpaca.svg';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core';
-import AboutFirstImage from '../../data/images/about-1-image.png';
-import AboutSecondImage from '../../data/images/about-2-image.png';
-import AboutTopAlpaca from '../../data/images/about-top-alpaca.png';
-import AboutThirdImage from '../../data/images/about-3-image.png';
 
 import EventActivitiesTab from 'components/EventActivitiesTabs';
 import classNames from 'classnames';
@@ -67,12 +42,9 @@ import useOAuthCallback from 'hooks/useOAuthCallback';
 import { OnboardingActions } from 'store/actions/onboarding';
 import GameContentCards from 'components/GameContentCards/GameContentCards';
 import { TOKEN_NAME } from 'constants/Token';
-import AmbassadorBanner from 'components/AmbassadorBanner';
-import NftBanner from 'components/NftBanner';
 import GameCards from 'components/GameCards';
 import LimitedOfferBanner from 'components/LimitedOfferBanner';
 import Routes from 'constants/Routes';
-import { AMOUNT_BONUS, CURRENT_BONUS_ID } from 'constants/Bonus';
 
 const Home = ({
   authState,
@@ -317,7 +289,6 @@ const Home = ({
   const renderAboutDescription = () => {
     return (
       <div className={styles.aboutDescritpion}>
-        <img className={styles.topImage} src={PlinkoAlpaca} alt="fair-piece" />
         <Grid container spacing={1} justifyContent="space-between">
           <Grid item lg={4} md={4} xs={12}>
             <div className={styles.parentContainer}>
@@ -332,11 +303,6 @@ const Home = ({
                     tricks just awesome fun!
                   </p>
                 </div>
-                <img
-                  className={styles.thumbnail}
-                  src={FairPiece}
-                  alt="fair-piece"
-                />
               </div>
             </div>
           </Grid>
@@ -353,11 +319,6 @@ const Home = ({
                     value of you wallet!{' '}
                   </p>
                 </div>
-                <img
-                  className={styles.thumbnail}
-                  src={UniquePiece}
-                  alt="unique-piece"
-                />
               </div>
             </div>
           </Grid>
@@ -375,11 +336,6 @@ const Home = ({
                     rewards!
                   </p>
                 </div>
-                <img
-                  className={styles.thumbnailBack}
-                  src={SocialPiece}
-                  alt="social-piece"
-                />
               </div>
             </div>
           </Grid>
@@ -425,146 +381,14 @@ const Home = ({
             <span className={styles.terms}><sup>*</sup><Link target="_blank" to={Routes.terms}>Terms &amp; Conditions</Link></span>
             <img className={styles.topFront} src={TopFront} alt="" />
             <img className={styles.topBack} src={TopBack} alt="" />
-            {/* <img className={styles.bottomFront} src={BottomFront} alt="" /> */}
-            <img className={styles.bottomBack} src={BottomBack} alt="" />
           </div>
         </div>
       </div>
     );
   };
-  const renderAlpacaDopter = () => {
-    return (
-      <div className={styles.alpacadopter}>
-        <div className={styles.title}>
-          <h2>
-            Become an Early <span className={styles.pink}>ALPACA</span>DOPTER
-          </h2>
-        </div>
-        <div className={styles.cardBox}>
-          <Grid container>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className={styles.card}>
-                <div className={styles.thumbnailMagenta}>
-                  <img src={MagentaAlpaca} alt="" />
-                  <img src={MagentaChip} alt="" />
-                </div>
-                <div className={styles.detail}>
-                  <div>
-                    <h3>Choose your Alpaca</h3>
-                    <p>
-                      Choose your Alpacavatar and name to join the gang. Play
-                      fun games, interact, follow, chat to grow your Alpaca to
-                      win the leaderboard and unlock cool NFT and crypto prices.
-                    </p>
-                  </div>
-                  <div
-                    className={classNames(styles.thumbnail, styles.cactusJack)}
-                  >
-                    <img src={YellowThumbnail} alt="" />
-                  </div>
-                </div>
-              </div>
-            </Grid>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className={styles.card}>
-                <div className={styles.thumbnailBlue}>
-                  <img src={BlueAlpaca} alt="" />
-                  <img src={BlueChip} alt="" />
-                </div>
-                <div className={styles.detail}>
-                  <div>
-                    <h3>Grow your Alpaca</h3>
-                    <p>
-                      You can earn {TOKEN_NAME} tokens in multiple ways: You can
-                      play our house games (we are going to launch new games
-                      weekly), invite other alpacas, provide feedback and (soon)
-                      battle other alpacas(or bet on other alpaca fights) and
-                      send tokens among each other.
-                    </p>
-                  </div>
-                  <div className={styles.thumbnail}>
-                    <img src={MagentaThumbnail} alt="" />
-                  </div>
-                </div>
-              </div>
-            </Grid>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className={styles.card}>
-                <div className={styles.thumbnailYellow}>
-                  <img src={YellowAlpaca} alt="" />
-                  <img src={YellowChip} alt="" />
-                </div>
-                <div className={styles.detail}>
-                  <div>
-                    <div className={styles.title}>
-                      <h3>What</h3>
-                    </div>
-                    <p>
-                      Wallfair is the first betting and gaming platform
-                      powered by Wallfair.
-                    </p>
-                  </div>
-                  <div className={styles.thumbnail}>
-                    <img src={YellowThumbnail} alt="" />
-                  </div>
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-        {/* <div className={styles.bottomContainer}>
-          <div className={styles.bottomBox}>
-            <p>CREATE YOUR OWN <span className={styles.pink}>ALPACA</span> NOW!</p>
-          </div>
-        </div> */}
-      </div>
-    );
-  };
-  const renderAlpacaVerse = () => {
-    return (
-      <div className={styles.alpacaverse}>
-        <div className={styles.title}>
-          <h2>
-            Welcome to the <span className={styles.pink}>ALPACA</span>VERSE
-          </h2>
-        </div>
-        <GameContentCards />
-      </div>
-    );
-  };
-
-  const renderFreeAlpacaOffer = () => {
-    return (
-      <div className={styles.freeAlpacaOfferContainer}>
-        <div className={styles.alpacaImage}>
-          <img src={AlpacaWithShavolImage} alt="alpaca with shavol" />
-        </div>
-
-        <div className={styles.backgroundWrapper}>
-          <span className={styles.title}>
-            To the first 1000 Alpacas <br/>
-            we giveaway <span className={styles.underline}>500 WFAIR for free</span>
-          </span>
-          <div className={styles.bottomInfoWrapper}>
-            <div className={styles.whiteWrapper}>
-              <div className={styles.whiteContainer}>
-                <p>Limited offer:</p>
-                <p className={styles.number}>726/1000</p>
-              </div>
-            </div>
-            <button onClick={showPopupForUnauthenticated}>
-              Register for free
-            </button>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
+  
   return (
     <BaseContainerWithNavbar home loggedIn={isLoggedIn()}>
-      {/* {renderHeadline()} */}
-      {/* <Header /> */}
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           {!isLoggedIn() && renderWelcome()}
@@ -572,15 +396,7 @@ const Home = ({
           {renderHouseGames()}
           {renderSlogGames()}
           {renderAboutDescription()}
-          {/* {renderFreeAlpacaOffer()} */}
-          {/* <AmbassadorBanner /> */}
-          {/* <div className={styles.nftBannerWrapper}>
-            <NftBanner />
-          </div> */}
           {renderActivities()}
-          {/* {renderAlpacaDopter()}
-          {renderAlpacaVerse()} */}
-          {/* {renderHowTokenWorks()} */}
         </div>
       </div>
     </BaseContainerWithNavbar>

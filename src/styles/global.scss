@@ -173,19 +173,6 @@ $border: 1px solid $colorWhite30;
     background-repeat: no-repeat;
     background-position: bottom;
   }
-
-  &:after {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: '';
-    z-index: -3;
-    position: absolute;
-    // min-height: 700px;
-    background-repeat: no-repeat;
-    background-image: url('../data/backgrounds/alpaca-main-bg.png');
-    background-position: bottom;
-  }
 }
 
 .copyButton {

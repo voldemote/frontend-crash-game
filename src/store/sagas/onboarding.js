@@ -12,36 +12,14 @@ import { AuthenticationActions } from 'store/actions/authentication';
 const loadOnboardingStep = function* (action) {
   const step = yield select(state => state.onboarding.currentStep);
   switch(step){
-    case OnboardingSteps.buildAvatar:
-      return yield put(
-        PopupActions.show({
-          popupType: PopupTheme.alpacaBuilder,
-          options: {
-            ...action?.options,
-            saveLabel:"Next",
-            cancelLabel: "Skip",
-            popUpTitle: "Alpacavatar",
-            small: false
-          },
-        })
-      );
     case OnboardingSteps.registerEmail:
       const authState = yield select(state => state.authentication.authState);
       if(authState === AuthState.LOGGED_IN) {
-        const alpacaBuilderData = yield select(state => state.authentication.alpacaBuilderData);
         const username = yield select(state => state.onboarding.username);
         const email = yield select(state => state.authentication.email);
         let userData = {
           email
         };
-        if(alpacaBuilderData){
-          userData = {
-            ...userData,
-            imageName: alpacaBuilderData.fileName,
-            profilePic: alpacaBuilderData.base64,
-            alpacaBuilderProps: alpacaBuilderData.alpacaBuilderProps,
-          };
-        }
         if(username) {
           userData = {
             ...userData,

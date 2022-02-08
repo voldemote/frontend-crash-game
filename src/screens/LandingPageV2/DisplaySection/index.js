@@ -175,7 +175,6 @@ const DisplaySection = (props) => {
     <div className={styles.gamesContainer}>
       {selectedGamesNames ? <div className={classNames(styles.gamesCategorySelected)}>
         <div className={styles.gamesCategory}>
-          {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
           <h2>{selectedGamesLabel}</h2>
         </div>
         <div className={classNames(styles.games)}>
@@ -193,7 +192,6 @@ const DisplaySection = (props) => {
       </div> : (categories.map((category1, index) => {
          return <div key={category1 + index}>
             <div className={styles.gamesCategory}>
-              {/* <img src={AlpacaIcon} alt={'Alpaca Icon'} /> */}
               <h2>{category1}</h2>
             </div>
 

@@ -59,14 +59,14 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
               >
                 <p>Blog</p>
               </a>
-              <a
+              {/* <a
                 href="https://wallfair.io/career"
                 target="_blank"
                 rel="noreferrer"
                 data-tracking-id="footer-career"
               >
                 <p>Career</p>
-              </a>
+              </a> */}
               <a
                 href="https://github.com/wallfair-organization"
                 target="_blank"
@@ -99,12 +99,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 <p>{'Responsible Gambling'}</p>
               </Link>
 
-              <Link
-                data-tracking-id="footer-privacy"
-                to={Routes.privacy}
-              >
-                <p>Privacy Policy</p>
-              </Link>
+              
             </div>
 
             <div className={styles.linksGroup}>
@@ -113,6 +108,13 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
                 to={Routes.imprint}
               >
                 <p>Imprint</p>
+              </Link>
+
+              <Link
+                data-tracking-id="footer-privacy"
+                to={Routes.privacy}
+              >
+                <p>Privacy Policy</p>
               </Link>
 
               <div id="lang-switcher" className={styles.langSwitcher}/>

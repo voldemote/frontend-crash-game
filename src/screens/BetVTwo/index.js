@@ -524,7 +524,7 @@ const BetVTwo = ({
                       onBookmark={() => {
                         isLoggedIn()
                           ? bookmarkEvent(event?._id)
-                          : showPopup(PopupTheme.alpacaBuilder, {
+                          : showPopup(PopupTheme.loginRegister, {
                               small: false
                             });
                       }}

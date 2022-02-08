@@ -42,7 +42,6 @@ export const AuthenticationTypes = {
   UPDATE_STATUS: 'Authentication/UPDATE_STATUS',
   LOGIN_EXTERNAL: 'Authentication/LOGIN_EXTERNAL',
   LOGIN_EXTERNAL_FAIL: 'Authentication/LOGIN_EXTERNAL_FAIL',
-  SET_ALPACA_BUILDER_DATA: 'Authentication/SET_ALPACA_BUILDER_DATA',
   ACCEPT_TOS_CONSENT: 'Authentication/ACCEPT_TOS_CONSENT',
   FAILED_TOS_CONSENT: 'Authentication/FAILED_TOS_CONSENT',
 };
@@ -128,7 +127,6 @@ const updateData = makeActionCreator(AuthenticationTypes.UPDATE_DATA, {
   toNextRank: null,
   preferences: null,
   aboutMe: null,
-  alpacaBuilderProps: null,
   emailConfirmed: null,
 });
 
@@ -272,15 +270,6 @@ const loginExternalFail = makeActionCreator(
   }
 );
 
-const setAlpacaBuilderData = makeActionCreator(
-  AuthenticationTypes.SET_ALPACA_BUILDER_DATA,
-  {
-    base64: null,
-    fileName: null,
-    alpacaBuilderProps: null
-  }
-);
-
 const acceptToSConsent = makeActionCreator(
   AuthenticationTypes.ACCEPT_TOS_CONSENT,
   {
@@ -334,7 +323,6 @@ export const AuthenticationActions = {
   updateStatus,
   loginExternal,
   loginExternalFail,
-  setAlpacaBuilderData,
   acceptToSConsent,
   failedToSConsent,
 };
