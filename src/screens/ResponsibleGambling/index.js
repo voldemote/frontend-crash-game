@@ -11,11 +11,11 @@ const ResponsibleGambling = () => {
           <h1>Responsible Gambling</h1>
           <p>Last updated: 16 December 2021</p>
           <p>
-            Alpacasino aims to make every user's experience enjoyable, entertaining and pleasurable.<br/>
+            Wallfair aims to make every user's experience enjoyable, entertaining and pleasurable.<br/>
             Our Responsible Gambling Policy is provided to keep Your gambling habits intact, safe and well looked after. Here You will find the different methods provided to help You understand fundamental facts about gambling, our support options and support partners.
           </p>
           <p>Please read this information carefully for Your own best well-being, benefit and security.</p>
-          <p>Alpacasino is operated by Wallfair N.V. having its office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is registered in the company registration number 159041.</p>
+          <p>Wallfair is operated by Wallfair N.V. having its office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is registered in the company registration number 159041.</p>
 
           <h2>Interpretation</h2>
           <p>
@@ -28,8 +28,8 @@ const ResponsibleGambling = () => {
             <ul>
               <li><b>Account</b> means a unique account created for You to access our Service or parts of our Service.</li>
               <li><b>Company</b> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Wallfair N.V.</li>
-              <li><b>Service</b> refers to this Website, more specifically, Alpacasino.</li>
-              <li><b>Website</b> refers to alpacasino.io</li>
+              <li><b>Service</b> refers to this Website, more specifically, Wallfair.</li>
+              <li><b>Website</b> refers to app.wallfair.io</li>
               <li><b>You (your, yourself)</b> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
             </ul>
           </p>
@@ -52,7 +52,7 @@ const ResponsibleGambling = () => {
           <p>
             Our support will help You via email at all times without any additional costs for You. You can reach our support under the following email:
             <ul>
-              <li>email: <a href={"mailto: support@alpacasino.io"}>support@alpacasino.io</a></li>
+              <li>email: <a href={"mailto: support@wallfair.io"}>support@wallfair.io</a></li>
             </ul>
             Our support will of course not give out any information about You without Your consent to anyone else. <br />
             In addition You also can take a self-test, if You are already gambling addicted at: <a href="https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/" rel="noreferrer" target="_blank">https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/</a><br />
@@ -107,9 +107,9 @@ const ResponsibleGambling = () => {
 
           <h2>Self-Exclusion and Time Out:</h2>
           <p>
-            Should You be diagnosed with a gambling addiction or have the need to stay away from gambling for a different reason, We want to assist You to stay away from anything, that is not in Your best interest. Self-Exclusion and Time Out practices allow You to take some time off and away from gambling on Alpacasino. You can determine the period and/or duration of time You wish to remain absent from Alpacasino. During Your chosen period of time, access to Your Alpacasino Account will be blocked. <br />
+            Should You be diagnosed with a gambling addiction or have the need to stay away from gambling for a different reason, We want to assist You to stay away from anything, that is not in Your best interest. Self-Exclusion and Time Out practices allow You to take some time off and away from gambling on Wallfair. You can determine the period and/or duration of time You wish to remain absent from Wallfair. During Your chosen period of time, access to Your Wallfair Account will be blocked. <br />
             “Self-Exclusion” means, that You exclude Yourself, out of Your own choice, from all gambling Services. This exclusion cannot be undone for a set amount of time.<br/>
-            In order to activate this period of Self Exclusion or Time Out, we request You to kindly contact Our customer support via email: <a href={"mailto: support@alpacasino.io"}>support@alpacasino.io</a>
+            In order to activate this period of Self Exclusion or Time Out, we request You to kindly contact Our customer support via email: <a href={"mailto: support@wallfair.io"}>support@wallfair.io</a>
           </p>
           <p>
             Please keep in mind that Self Exclusion is permanent for the set time span (agreed between You and our customer support for a minimum of 3 months) and will not be undone for Your own protection.

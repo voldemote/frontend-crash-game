@@ -32,7 +32,7 @@ const SearchSection = ({ setGames,
   setExternalGamesSoftswiss
  }) => {
   const gamesTitleList = [
-    'Alpaca Games',
+    'Wallfair Games',
     'Casino',
     'Slot',
     'Roulette',
@@ -355,7 +355,7 @@ const Games = () => {
         />
 
         {alpacaGames.length && (
-          <GameCards games={alpacaGames} category="Alpaca Games" />
+          <GameCards games={alpacaGames} category="Wallfair Games" />
         )}
 
 

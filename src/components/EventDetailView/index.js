@@ -37,7 +37,7 @@ const EventDetailView = ({ event, isAdmin }) => {
   };
 
   const renderEventDetails = () => {
-    const eventCreator = 'Alpacasino Admin';
+    const eventCreator = 'Wallfair Admin';
     const eventTitle = _.get(event, 'name');
     const eventClass = 'Streamed';
     const eventCategory = 'Live Event';

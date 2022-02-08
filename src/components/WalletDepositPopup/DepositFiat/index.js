@@ -154,6 +154,8 @@ const DepositFiat = ({
   };
 
   const proceedWithMoonpay = async () => {
+    const windowRef = window.open();
+
     setLoading(true);
     const res = await generateMoonpayUrl({
       amount: currency,
@@ -161,7 +163,7 @@ const DepositFiat = ({
     });
 
     if (res.response.data.url) {
-      window.open(res.response.data.url, '_blank');
+      windowRef.location = res.response.data.url;
       setTimeout(() => hidePopup(), 1000);
     }
 
@@ -179,7 +181,7 @@ const DepositFiat = ({
         WFAIR conversion calculator
       </p>
       <p>
-        Alpacasino uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency or in EUR / USD at any time around the world.
+        Wallfair uses WFAIR currency to play games and win. You can convert your won WFAIR token back into crypto currency or in EUR / USD at any time around the world.
       </p> */}
 
       {renderBackButton()}

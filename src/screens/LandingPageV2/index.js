@@ -177,7 +177,7 @@ const LandingPageV2 = (
                 <div className={styles.descriptionCard}>
                   <h1>Unique</h1>
                   <p>
-                    In Alpacasino you play with WFAIR, our own crypto currency.
+                    In Wallfair you play with WFAIR, our own crypto currency.
                     It gives you the advantage to earn money even when you are
                     not playing. Stake your winnings and watch your wallet grow!
                     The more people sign up, deposit and play, the higher the
@@ -198,7 +198,7 @@ const LandingPageV2 = (
                 <div className={styles.descriptionCard}>
                   <h1>Social</h1>
                   <p>
-                    Alpacasino is a part of Alpacaverse our flagship project
+                    Wallfair is our flagship project
                     that presents the future of the speculative entertainment.
                     The future where world of betting, gambling and gaming is
                     blended into one huge theme park metaverse. The place where
@@ -314,7 +314,7 @@ const LandingPageV2 = (
           setExternalGames={setExternalGames}
         />
 
-        {alpacaGames.length > 0 && <GameCards games={alpacaGames} category="Alpaca Games" />}
+        {alpacaGames.length > 0 && <GameCards games={alpacaGames} category="Wallfair Games" />}
 
         <DisplaySection smartsoftGames={externalGames} evoplayGames={externalGamesEvoplay} softswissGames={process.env.REACT_APP_SHOW_UPCOMING_FEATURES === 'true' ? externalGamesSoftswiss : []} />
         {showDiscordBanner && renderDiscordBanner()}
