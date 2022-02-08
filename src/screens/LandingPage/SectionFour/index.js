@@ -51,7 +51,7 @@ const SectionFour = ({ classes }) => {
           hidden more ways to earn more tokens everywhere throughout our
           platform, either through rewards or hidden items and collectables.
           Users will get new tokens every week as well as from referring
-          friends, family and completing feedback tasks to help the Alpacasino
+          friends, family and completing feedback tasks to help the Wallfair
           team improve the user journey for our valued players.
         </p>
         {/* <br />

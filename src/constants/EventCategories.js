@@ -4,7 +4,7 @@ import ControllerImageIcon from '../data/icons/controller.svg';
 import PoliticsImageIcon from '../data/icons/news.svg';
 import JokerImageIcon from '../data/icons/joker.svg';
 import TradingImageIcon from '../data/icons/trading.svg';
-import AllImageIcon from '../data/icons/events-all-icon.svg';
+import AllEventImageIcon from '../data/icons/events-all-icon.svg';
 import LoLImage from '../data/images/League of Legends-144x192.jpeg';
 import MinecraftImage from '../data/images/Minecraft-144x192.jpeg';
 import AllImage from '../data/images/wallfair-all-category.png';
@@ -17,7 +17,7 @@ export const EVENT_CATEGORIES = [
   {
     value: 'all',
     label: 'All',
-    image: AllImageIcon,
+    image: AllEventImageIcon,
     isActive: true,
     type: 'icon',
     disabled: false,

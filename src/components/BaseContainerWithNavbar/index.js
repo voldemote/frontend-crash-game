@@ -19,7 +19,7 @@ const BaseContainerWithNavbar = ({
   home = false,
   user,
   carouselType=null,
-
+  backgroundVideo = true,
 }) => {
   return (
     <>
@@ -36,7 +36,7 @@ const BaseContainerWithNavbar = ({
         carouselType === 'landingpage' && styles.solid,
         carouselType && styles.zIndexheaderBackground
         )}>
-         {!carouselType &&
+         {!carouselType && backgroundVideo &&
          <div className={styles.headerContianer}>
             <video loop autoPlay muted playsInline id="myVideo">
                 <source src={HeaderVideo} type="video/mp4" />

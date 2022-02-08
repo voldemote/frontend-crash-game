@@ -19,7 +19,7 @@ const Imprint = () => {
             Curacao<br />
             Registration No. 159041<br />
             <br />
-            E-Mail: <a href="hello@alpacasino.io">hello@alpacasino.io</a><br />
+            E-Mail: <a href="hello@wallfair.io">hello@wallfair.io</a><br />
           </p>
         </div>
         

@@ -15,7 +15,7 @@ setExternalGamesEvoplay,
   setExternalGamesSoftswiss
  }) => {
   const gamesTitleList = [
-    'Alpaca Games',
+    'Wallfair Games',
     'Casino',
     'Slot',
     'Roulette',

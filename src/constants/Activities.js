@@ -1,4 +1,4 @@
-import AllIcon from '../data/icons/events-all-icon.svg';
+import AllIcon from '../data/icons/all-icon.svg';
 import VegasIcon from '../data/icons/vegas.svg';
 import UserIcon from '../data/icons/user-activtiy-icon.svg';
 import GameIcon from '../data/icons/game-activity-icon.svg';

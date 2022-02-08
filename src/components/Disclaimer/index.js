@@ -23,7 +23,7 @@ const Disclaimer = ({ className = '' }) => {
         <div className={styles.content}>
           <ol>
             <li>
-              Alpacasino Alpha is a graphical user interface for visualizing and interacting 
+              Wallfair is a graphical user interface for visualizing and interacting 
               with data stored on a decentralized blockchain network.
             </li>
             <li>
@@ -52,7 +52,7 @@ const Disclaimer = ({ className = '' }) => {
             </li>
               <li>
               All further questions and doubts can be addressed to the team at 
-              <a href="mailto:hello@alpacasino.io">hello@alpacasino.io</a> 
+              <a href="mailto:hello@wallfair.io">hello@wallfair.io</a> 
               as well as on the social media channels, e.g. Telegram and Twitter.
             </li>
           </ol>

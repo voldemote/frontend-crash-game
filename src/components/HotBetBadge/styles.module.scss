@@ -1,23 +1,30 @@
-@import "../../styles/all";
+@import '../../styles/all';
 
-.hotBetBadge
-{
-    display:          inline-block;
-    border-radius:    4px;
-    background-color: $colorRed;
-    font-family:      $fontLight;
-    padding:          0.25rem 0.8rem;
-    font-size:        12px;
-    width:            auto;
-    white-space:      nowrap;
+.hotBetBadge {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: $colorRed;
+  font-family: $fontLight;
+  padding: 0.25rem 0.8rem;
 
-    &.hotBetBadge04
-    {
-        background-color: rgba(255, 88, 88, 0.3);
-    }
+  width: auto;
+  white-space: nowrap;
 
-    &.hotBetBadge01
-    {
-        background-color: rgba(255, 88, 88, 0.1);
-    }
+  &.hotBetBadge04 {
+    background-color: rgba(255, 88, 88, 0.3);
+  }
+
+  &.hotBetBadge01 {
+    background-color: rgba(255, 88, 88, 0.1);
+  }
+
+  &.hotBetBadge05 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    height: 24px;
+    padding: 0 0.5rem;
+    background-color: rgba(0, 0, 0, 0.52);
+  }
 }

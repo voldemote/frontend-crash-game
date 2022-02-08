@@ -109,7 +109,7 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
         </div>
       </div>
       <p className={styles.footerDisclaimer}>
-        This website offers gaming with risk experience. To be a user of our site you must be over 18 y.o. We are not responsible for the violation of your local laws related to i-gaming. Play responsibly and have fun on Alpacasino.
+        This website offers gaming with risk experience. To be a user of our site you must be over 18 y.o. We are not responsible for the violation of your local laws related to i-gaming. Play responsibly and have fun on Wallfair.
         <br />
         The platform providing the services is owned by Wallfair N.V, a limited liability company registered in Curacao with company registration number 159041, with its registered office at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curacao (“Company”), licensed in Curaçao under the Licence no. 365/JAZ Sub-License GLH-OCCHKTW0712022021  issued by Gaming Services Provider N.V. for the provision of online games of chance.</p>
     </div>
