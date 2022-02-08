@@ -120,15 +120,8 @@
 
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
-    &.usernamePopup,
-    &.alpacaBuilderPopup {
+    &.usernamePopup {
       overflow: visible;
-    }
-
-    &.alpacaBuilderPopup {
-      @media screen and (max-width: $screen-md-max) {
-        max-width: calc(100vw - 30px);
-      }
     }
 
     //here specific popup sizes per type, if needed

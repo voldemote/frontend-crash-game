@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const Order = [
-  OnboardingSteps.buildAvatar,
+  // OnboardingSteps.buildAvatar,
   OnboardingSteps.setUsername,
   OnboardingSteps.registerEmail,
   OnboardingSteps.wallet,

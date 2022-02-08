@@ -9,7 +9,7 @@ export const OnboardingTypes = {
 };
 
 export const OnboardingSteps = {
-  buildAvatar: "buildAvatar",
+  // buildAvatar: "buildAvatar",
   registerEmail: "registerEmail",
   setUsername: "setUsername",
   // welcomeScreen: "welcomeScreen",

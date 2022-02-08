@@ -445,7 +445,6 @@
       &:after {
         content: '';
         position: absolute;
-        //background: url('../../data/images/side-panel-alpaca.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -454,10 +453,6 @@
         width: 100px;
         height: 70px;
         z-index: -1;
-
-        // @media (min-width: $screen-sm) {
-        //   display: none;
-        // }
       }
     }
 

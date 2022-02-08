@@ -228,34 +228,6 @@
     padding: 0;
   }
 
-  &::before {
-    position: absolute;
-    content: '';
-    background-image: url('../../data/images/wallet-left-image.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    bottom: 320px;
-    transform: rotate(-20deg);
-    left: -70px;
-    background-position: bottom left;
-    z-index: -1;
-  }
-  &::after {
-    position: absolute;
-    content: '';
-    background-image: url('../../data/images/wallet-right-image.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100px;
-    height: 80%;
-    bottom: 50px;
-    right: -50px;
-    background-position: bottom right;
-    z-index: -1;
-  }
-
   @media (max-width: $screen-md) {
     &::after {
       display: none;
@@ -627,6 +599,5 @@
   }
 
   @media (max-width: $screen-sm) {
-
   }
 }

@@ -242,19 +242,6 @@ const authenticationSucceeded = function* (action) {
     }
 
     if (action.newUser) {
-      const alpacaBuilderData = yield select(state => state.authentication.alpacaBuilderData);
-      if(alpacaBuilderData){
-        const userWithAlpacaBuilderData = {
-          imageName: alpacaBuilderData.fileName,
-          profilePic: alpacaBuilderData.base64,
-          alpacaBuilderProps: alpacaBuilderData.alpacaBuilderProps
-        };
-        yield put(AuthenticationActions.initiateUpdateUserData({
-          user: userWithAlpacaBuilderData,
-          newUser: false //otherwise it triggers welcome popup
-        }));
-        yield put(AuthenticationActions.setAlpacaBuilderData(null));
-      }
       yield put(
         OnboardingActions.next({
           options: {

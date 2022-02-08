@@ -641,11 +641,6 @@
 .aboutDescritpion {
   position: relative;
   margin: 80px auto 80px;
-  padding: 300px 0;
-  background: url('../../data/images/home/about-background.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
   @media (max-width: $screen-lg) {
     margin-bottom: 140px;
   }
@@ -682,14 +677,6 @@
         width: 130px;
       }
 
-      .aboutTopAlpaca {
-        position: absolute;
-        bottom: 281px;
-        left: 65px;
-        width: 250px;
-
-        z-index: -1;
-      }
       .aboutSecond {
         position: absolute;
         top: -35px;

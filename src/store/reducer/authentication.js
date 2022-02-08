@@ -28,7 +28,6 @@ const initialState = {
   totalOpenTradesAmount: 0,
   preferences: {},
   notificationSettings: {},
-  alpacaBuilderData: null,
   kyc: {},
   shouldAcceptToS: false,
 };
@@ -254,9 +253,6 @@ const updateData = (action, state) => {
     notificationSettings: {
       $set: action.notificationSettings,
     },
-    alpacaBuilderProps: {
-      $set: action.alpacaBuilderProps,
-    },
     kyc: {
       $set: action.kyc,
     },
@@ -453,13 +449,6 @@ const onVerify = (action, state) => {
   };
 };
 
-const setAlpacaBuilderData = (action, state) => {
-  return {
-    ...state,
-    alpacaBuilderData: {...action}
-  };
-};
-
 const updateShowToSConsent = (newStatus, state) => {
   return {
     ...state,
@@ -532,8 +521,6 @@ export default function (state = initialState, action) {
       return forgotPasswordFail(action, state);
     case AuthenticationTypes.RESET_PASSWORD_FAIL:
       return resetPasswordFail(action, state);
-    case AuthenticationTypes.SET_ALPACA_BUILDER_DATA:
-      return setAlpacaBuilderData(action, state);
     case AuthenticationTypes.ACCEPT_TOS_CONSENT:
       return updateShowToSConsent(false, state);
     case AuthenticationTypes.FAILED_TOS_CONSENT:

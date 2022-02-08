@@ -1,13 +1,10 @@
 import classNames from 'classnames';
 import Icon from '../Icon';
-import IconTheme from '../Icon/IconTheme';
 import IconType from '../Icon/IconType';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useEffect } from 'react';
-import candyTopLeft from '../../data/images/candy-top-left.png';
-import candyBottomRight from '../../data/images/candy-bottom-right.png';
 import PopupTheme from './PopupTheme';
 import BetView from '../BetView';
 import _ from 'lodash';
@@ -43,7 +40,6 @@ import UsernamePopup from 'components/UsernamePopup';
 import AlphaPlatformPopup from 'components/AlphaPlatformPopup';
 import RequestTokensPopup from '../RequestTokensPopup';
 import LastGamesDetailPopup from '../LastGamesDetailPopup';
-import AlpacaBuilderPopup from 'components/AlpacaBuilderPopup';
 import FairnessPopup from "../FairnessPopup";
 import SingleGameDetailPopup from "../SingleGameDetailPopup";
 import TransakSuccess from "../TransakSuccess";
@@ -241,8 +237,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <UsernamePopup initialReward={options.initialReward} />;
       case PopupTheme.requestTokens:
         return <RequestTokensPopup />;
-      case PopupTheme.alpacaBuilder:
-        return <AlpacaBuilderPopup {...options} />;
 
       case PopupTheme.walletDeposit:
         return <WalletDepositPopup />;
@@ -303,9 +297,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
             type === PopupTheme.username ? styles.usernamePopup : null,
-            type === PopupTheme.alpacaBuilder
-              ? styles.alpacaBuilderPopup
-              : null,
             small ? styles.small : null,
             maxWidth ? styles.maxWidth : null,
             type === PopupTheme.auth && styles.registrationPopupContainer,
@@ -316,27 +307,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           )}
         >
           <div className={styles.modalContent}>
-            {
-              (
-                type !== PopupTheme.walletDeposit &&
-                type !== PopupTheme.walletDepositCrypto &&
-                type !== PopupTheme.walletDepositFiat &&
-                type !== PopupTheme.walletConnectWallet &&
-                type !== PopupTheme.walletWithdraw
-              ) && <>
-                <img
-                  className={styles.candyTopLeft}
-                  src={candyTopLeft}
-                  alt="candy-left-top"
-                />
-                <img
-                  className={styles.candyBottomRight}
-                  src={candyBottomRight}
-                  alt="candy-left-top"
-                />
-              </>
-            }
-
             <div className={styles.closeButtonContainer}>
               {![
                 PopupTheme.signUpNotificationSecond,

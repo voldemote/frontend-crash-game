@@ -1,11 +1,6 @@
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import Icon from '../Icon';
-import IconType from '../Icon/IconType';
-import DefaultProfilePicture from 'data/images/alpaca-logo-mini.svg';
-import EditProfilePicture from 'data/images/profile.svg';
-import SettingNotification from 'data/images/setting-notifications.png';
-import IconTheme from '../Icon/IconTheme';
 
 const HomeSettings = ({
   loggedIn,
@@ -14,7 +9,6 @@ const HomeSettings = ({
   onGamesClick,
   onActivitiesClick,
   onLeaderboardClick,
-  onAlpacaBuilderClick,
   onEditClick,
   onReferralsClick,
   onEmailNotificationClick,
@@ -78,15 +72,6 @@ const HomeSettings = ({
         </div>
         {loggedIn && (
         <>
-          <div
-            onClick={onAlpacaBuilderClick}
-            className={classNames(
-              styles.singleSettingHolder
-            )}
-          >
-            <Icon className={styles.referralIcon} iconType={'alpaca'} />
-            <p className={styles.settingTitle}>Customize your Alpaca</p>
-          </div>
           <div
             onClick={onEditClick}
             className={classNames(
