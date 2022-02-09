@@ -55,7 +55,7 @@ const PhonePopup = ({
   // };
 
   return (
-    <div className={styles.usernamePopup}>
+    <div className={styles.phonePopup}>
       <StepBar step={2} size={4} />
       <h2 className={styles.title}>Verify your phone number</h2>
       <div className={styles.container}>
