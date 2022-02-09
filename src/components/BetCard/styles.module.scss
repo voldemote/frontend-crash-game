@@ -50,7 +50,8 @@
 
       .timerValue {
         font-size: 13px;
-        font-family: $fontBold;
+        font-family: $fontDMSans;
+        font-weight: 700;
         padding-right: 2px;
       }
 
@@ -105,7 +106,8 @@
       }
 
       .title {
-        font-family: $fontBold;
+        font-family: $fontDMSans;
+        font-weight: bold;
         font-size: 15px;
       }
     }
@@ -151,7 +153,7 @@
 //     }
 
 //     .title {
-//       font-family: $fontOmnes;
+//       font-family: $fontDMSans;
 //       font-size: 16px;
 //       font-weight: 500;
 //       line-height: 1.5;
@@ -203,7 +205,7 @@
 //           color: #979ea7;
 //         }
 //         .outcomeName {
-//           font-family: $fontOmnes;
+//           font-family: $fontDMSans;
 //           font-size: 10pt;
 //           line-height: 1.5;
 //           font-weight: 500;
@@ -229,7 +231,7 @@
 //         font-weight: bolder;
 //         display: flex;
 //         align-items: center;
-//         font-family: $fontOmnes;
+//         font-family: $fontDMSans;
 //         justify-content: space-around;
 //         background-image: url('../../data/backgrounds/games/games-highlight.png');
 //         background-repeat: no-repeat;

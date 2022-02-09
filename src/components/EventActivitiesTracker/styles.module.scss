@@ -17,18 +17,18 @@
     text-align: center;
     color: $colorWhite;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
   }
   .titleLeft {
     text-align: left;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: $colorWhite;
   }
   .titleRight {
     text-align: right;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: $colorWhite;
   }
 
@@ -38,12 +38,13 @@
     display: -ms-inline-flexbox;
     display: -webkit-box;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
     //text-align: left;
     hyphens: auto;
     transition: opacity 300ms ease-out, transform 300ms ease-out;
     width: 100%;
     padding: 8px 10px;
+    align-items: center;
 
     .messageFirst {
       display: flex;
@@ -53,6 +54,12 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+    }
+    .messageLeft {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
     }
     .messageRight {
       display: flex;
@@ -87,7 +94,7 @@
 
       :first-child {
         font-size: 12px;
-        font-family: $fontOmnes;
+        font-family: $fontDMSans;
       }
 
       :last-child {
@@ -278,6 +285,7 @@
 
 .messageFirst,
 .messageCenter,
+.messageLeft,
 .messageRight,
 .title,
 .titleLeft,

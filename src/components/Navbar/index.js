@@ -293,7 +293,7 @@ const Navbar = ({
       >
         <Icon
           className={style.menu}
-          iconType={isOpen(drawers.profile) || isOpen(drawers.leaderboard) ? 'close' : 'hamburgerMenu'}
+          iconType={isOpen(drawers.profile) || isOpen(drawers.leaderboard) ? 'closeCoin' : 'hamburgerMenu'}
         />
       </div>
     );
