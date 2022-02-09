@@ -5,6 +5,51 @@
   position: relative;
   align-items: center;
   justify-content: center;
+  color: $colorBlack;
+  box-sizing: border-box;
+  border-radius: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: $fontDMSans;
+  padding: 8px 30px;
+  text-transform: none;
+  user-select: none;
+  text-align: center;
+  position: relative;
+
+  @media (max-width: $screen-sm) {
+    font-size: 18px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .buttonContent {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  & > svg {
+    width: 100%;
+    z-index: 0;
+    position: absolute;
+  }
+}
+
+.primaryButtonOld {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
   // background: $colorButton;
   background: $mainAction;
   color: $colorBlack;

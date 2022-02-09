@@ -46,7 +46,7 @@
     }
 
     @media screen and (min-width: $screen-sm) {
-      padding: 50px;
+      padding: 40px;
     }
 
     @media screen and (min-width: $screen-xs) {
@@ -89,6 +89,8 @@
 
     &.signUpNotificationPopupContainer,
     &.welcomeContainer,
+    &.verifyPhonePopup,
+    &.phoneNumberPopup,
     &.usernamePopup {
       overflow: visible;
     }
