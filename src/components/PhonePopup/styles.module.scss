@@ -1,11 +1,12 @@
 @import '../../styles/all';
 
-.usernamePopup {
+.phonePopup {
   position: relative;
   height: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 100%;
 
   .title {
     width: 100%;
@@ -20,6 +21,7 @@
 
   .container {
     max-width: 452px;
+    width: 100%;
 
     .description {
       font-size: 16px;
