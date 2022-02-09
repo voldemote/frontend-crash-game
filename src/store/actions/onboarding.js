@@ -12,6 +12,8 @@ export const OnboardingSteps = {
   // buildAvatar: "buildAvatar",
   registerEmail: "registerEmail",
   setUsername: "setUsername",
+  setPhoneNumber: "setPhoneNumber",
+  phoneVerification: "phoneVerification",
   // welcomeScreen: "welcomeScreen",
   wallet: "wallet",
 };

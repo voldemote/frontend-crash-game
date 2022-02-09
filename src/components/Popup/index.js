@@ -48,6 +48,8 @@ import ToSPopup from 'components/ToSPopup';
 import BanPopup from 'components/BanPopup';
 import WalletDepositPopup from 'components/WalletDepositPopup';
 import SelectGameModePopup from "../SelectGameModePopup";
+import VerifyPhonePopup from 'components/VerifyPhonePopup';
+import PhonePopup from 'components/PhonePopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -256,6 +258,10 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <ToSPopup isOnboarding={options?.isOnboarding} />;
       case PopupTheme.ban:
         return <BanPopup banData={options?.banData} />;
+      case PopupTheme.phoneNumber:
+        return <PhonePopup />;
+      case PopupTheme.phoneVerification:
+        return <VerifyPhonePopup />;
     }
 
     return null;
@@ -297,6 +303,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.welcome ? styles.welcomeContainer : null,
             type === PopupTheme.betApprove ? styles.betApproveContainer : null,
             type === PopupTheme.username ? styles.usernamePopup : null,
+            type === PopupTheme.phoneNumber ? styles.phoneNumberPopup : null,
+            type === PopupTheme.phoneVerification ? styles.verifyPhonePopup : null,
             small ? styles.small : null,
             maxWidth ? styles.maxWidth : null,
             type === PopupTheme.auth && styles.registrationPopupContainer,

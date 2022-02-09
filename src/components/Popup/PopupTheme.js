@@ -15,6 +15,8 @@ export default {
   reportEvent: 'reportEvent',
   loginRegister: 'loginRegister',
   verifyEmail: 'verifyEmail',
+  phoneNumber: 'phoneNumber',
+  phoneVerification: 'phoneVerification',
   pulloutApprove: 'pulloutApprove',
   lotteryGameAnswered: 'lotteryGameAnswered',
   newEvent: 'newEvent',

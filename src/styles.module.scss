@@ -1,5 +1,13 @@
 @import 'styles/all';
 
+@font-face {
+  font-family: $fontLight;
+  src: url('/fonts/webfonts/PlusJakartaSans-Light.woff2') format('woff2'),
+    url('/fonts/webfonts/PlusJakartaSans-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +22,7 @@ body {
 body,
 html {
   height: 100%;
-  font-family: $fontDMSans;
+  font-family: $fontDMSans, sans-serif;
 
   > div {
     width: 100%;

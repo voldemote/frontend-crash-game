@@ -4,57 +4,49 @@ import InputBox from '../InputBox';
 import Button from '../Button';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { checkUsername } from '../../api';
 import { OnboardingActions } from 'store/actions/onboarding';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import StepBar from 'components/StepBar';
 import Routes from 'constants/Routes';
 
-const UsernamePopup = ({
-                         hidePopup = () => {
-                         },
-                         showOnboardingFlowNext,
-                         suggestion,
-                         getSuggestion
-                       }) => {
-  const [username, setUsername] = useState(suggestion || '');
+const PhonePopup = ({
+  hidePopup = () => {},
+  showOnboardingFlowNext,
+}) => {
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [country, setCountry] = useState('49');
   const [errorMessage, setErrorMessage] = useState();
+
   useEffect(() => {
-    if(!suggestion) {
-      getSuggestion();
-    }
-    setUsername(suggestion)
-  }, [suggestion])
-  useEffect(() => {
-    const len = username.length
-    if(len < 3 || len > 25){
-      setErrorMessage('Username length should be from 3 to 25 characters long');
-    } else {
+    const len = phoneNumber?.length;
+    // if(len < 3 || len > 25){
+    //   setErrorMessage('Username length should be from 3 to 25 characters long');
+    // } else {
       setErrorMessage('');
-    }
-  }, [username])
-  const onConfirm = async () => {
-    //check unique username
+    // }
+  }, [phoneNumber]);
+
+  const sendVerification = async () => {
     let response;
     try {
-      response = await checkUsername(username);
+      // response = await checkPhoneNumber(phoneNumber);
     } catch (err) {
-      console.error('checkUsername err', err);
+      console.error('checkPhoneNumber err', err);
     }
 
-    const isUnique = _.get(response, 'data.isUnique', false);
+    // const isUnique = _.get(response, 'data.isUnique', false);
 
-    if (isUnique) {
+    // if (isUnique) {
       setErrorMessage('');
-      showOnboardingFlowNext(username)
+      showOnboardingFlowNext(phoneNumber)
       hidePopup();
-    } else {
-      setErrorMessage(
-        <div>
-          Username <b>"{username}"</b> already exists. Please use another name.
-        </div>
-      );
-    }
+    // } else {
+    //   setErrorMessage(
+    //     <div>
+    //       Problem <b>"{phoneNumber}"</b>.
+    //     </div>
+    //   );
+    // }
   };
 
   // const skipUsername = () => {
@@ -64,18 +56,21 @@ const UsernamePopup = ({
 
   return (
     <div className={styles.usernamePopup}>
-      <StepBar step={0} size={4} />
-      <h2 className={styles.title}>How should we call you?</h2>
+      <StepBar step={2} size={4} />
+      <h2 className={styles.title}>Verify your phone number</h2>
       <div className={styles.container}>
         <div className={styles.description}>
-          Enter your username or <span onClick={getSuggestion} className={styles.randomizeButton}>randomize</span> it.
+          We'll send you a SMS with a 6-digit code to verify your number
         </div>
         <InputBox
           className={styles.inputBox}
-          placeholder="Your Username..."
-          value={username}
-          setValue={setUsername}
-          onConfirm={onConfirm}
+          placeholder="123 456 789"
+          value={phoneNumber}
+          setValue={setPhoneNumber}
+          // onConfirm={onConfirm}
+          hasCountry={true}
+          setCountry={setCountry}
+          country={country}
         />
         {!_.isEmpty(errorMessage) && (
           <div className={styles.errorHandLing}>{errorMessage}</div>
@@ -83,14 +78,14 @@ const UsernamePopup = ({
         <div className={styles.buttons}>
 
           <Button
-            onClick={onConfirm}
+            onClick={sendVerification}
             withoutBackground={true}
             className={styles.button}
             disabledWithOverlay={false}
             disabled={!!errorMessage}
             theme={ButtonTheme.primaryButtonXL}
           >
-            Next Step
+            Send verification code
           </Button>
         </div>
         <span className={styles.terms}>By continuing I accept the <a href={Routes.terms} target="_blank" rel="noreferrer">Terms and Conditions</a> and <a href={Routes.privacy} target="_blank" rel="noreferrer">Privacy Policy</a>. Also I confirm that I am over 18 years old.</span>
@@ -99,25 +94,17 @@ const UsernamePopup = ({
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    suggestion: state.onboarding.suggestion
-  }
-};
 
 const mapDispatchToProps = dispatch => {
   return {
-    showOnboardingFlowNext: username => {
+    showOnboardingFlowNext: phoneNumber => {
       dispatch(
         OnboardingActions.next({
-            payload: {username}
+            payload: {phoneNumber}
         })
       );
     },
-    getSuggestion: () => {
-      dispatch(OnboardingActions.getUsername())
-    }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsernamePopup);
+export default connect(null, mapDispatchToProps)(PhonePopup);

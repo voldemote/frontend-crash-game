@@ -74,6 +74,26 @@ const loadOnboardingStep = function* (action) {
       //     },
       //   })
       // );
+    case OnboardingSteps.setPhoneNumber:
+      return yield put(
+        PopupActions.show({
+          popupType: PopupTheme.phoneNumber,
+          options: {
+            ...action?.options,
+            small: false,
+          },
+        })
+      );
+    case OnboardingSteps.phoneVerification:
+      return yield put(
+        PopupActions.show({
+          popupType: PopupTheme.phoneVerification,
+          options: {
+            ...action?.options,
+            small: false,
+          },
+        })
+      );
     case OnboardingSteps.wallet:
       yield put(push('/wallet'))
       yield delay(1000);

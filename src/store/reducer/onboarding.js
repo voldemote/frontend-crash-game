@@ -7,9 +7,10 @@ const initialState = {
 };
 
 export const Order = [
-  // OnboardingSteps.buildAvatar,
   OnboardingSteps.setUsername,
   OnboardingSteps.registerEmail,
+  OnboardingSteps.setPhoneNumber,
+  OnboardingSteps.phoneVerification,
   OnboardingSteps.wallet,
 ];
 
@@ -27,7 +28,8 @@ const next = (action, state) => {
   return {
     ...state,
     currentStep: Order[next],
-    username: action?.payload?.username ? action.payload.username : state.username
+    username: action?.payload?.username ? action.payload.username : state.username,
+    phoneNumber: action?.payload?.phoneNumber ? action.payload.phoneNumber : state.phoneNumber
   }
 };
 
