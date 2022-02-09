@@ -27,13 +27,13 @@
 .title {
   color: $colorPrimary;
   font-size: 36px;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   text-align: center;
 }
 
 .authenticationDescription {
   width: 100%;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0;
@@ -48,7 +48,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   text-transform: uppercase;
 
   &.forgotPassword {
@@ -115,7 +115,7 @@
   .forgotPasswordLink {
     align-self: flex-end;
     text-decoration: underline;
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     cursor: pointer;
     color: $colorButton;
     margin: 10px 0;
@@ -133,7 +133,7 @@
   width: (100% - $paddingHTotal);
   margin: 2rem $paddingPercent;
   font-size: 13px;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   line-height: 19.6px;
   letter-spacing: 0;
   color: rgba(2, 6, 30, 0.36);
@@ -165,7 +165,7 @@
 
 .errorText {
   margin: 10px 5px 11px 0;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   font-size: 14px;
   color: $colorRedLight;
   max-width: 390px;
@@ -294,7 +294,7 @@
 .unstyledButton {
   background: transparent;
   border: none;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   cursor: pointer;
   font-size: 16px;
 }

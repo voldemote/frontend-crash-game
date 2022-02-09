@@ -12,7 +12,7 @@
   border-radius: 60px;
   font-size: 20px;
   font-weight: bold;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   padding: 8px 30px;
   text-transform: none;
   user-select: none;
@@ -42,7 +42,7 @@
   border-radius: 60px;
   font-size: 20px;
   font-weight: bold;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   padding: 8px 30px;
   text-transform: none;
   user-select: none;
@@ -74,7 +74,7 @@
   border-radius: 60px;
   font-size: 24px;
   font-weight: bold;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   line-height: 100%;
   text-transform: none;
   user-select: none;
@@ -148,8 +148,8 @@
   justify-content: center;
   align-items: center;
   color: #ffd31a;
-  font-family: $fontOmnes;
-  font-weight: 600;
+  font-family: $fontDMSans;
+  font-weight: 500;
   font-size: 24px;
   text-transform: none;
   border: 2px solid #ffd31a;

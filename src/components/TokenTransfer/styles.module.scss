@@ -3,7 +3,7 @@
 .transferButton {
   margin-top: 10px;
   width: 240px;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
 }
 
 .transferWrapper {
@@ -72,7 +72,7 @@
   strong {
     display: block;
     text-align: center;
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     font-weight: bold;
     margin-bottom: 20px;
     font-size: 20px;
@@ -86,7 +86,7 @@
       width: 20%;
       display: block;
       // text-align: center;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-weight: bold;
       font-size: 12px;
       margin-bottom: 10px;
@@ -98,7 +98,7 @@
       width: 20px;
       border-radius: 12px;
       padding: 0 15px;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-size: 16px;
       margin-bottom: 10px;
       border: 1px solid $colorGrayLight;
@@ -125,7 +125,7 @@
       border: 1px solid $colorWhite;
       width: 240px;
       height: 45px;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       color: $colorWhite;
       cursor: pointer;
       font-size: 18px;

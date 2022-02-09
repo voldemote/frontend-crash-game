@@ -105,7 +105,7 @@
   .betMarketQuestion {
     color: $colorPrimaryDark;
     text-align: center;
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -121,7 +121,7 @@
 
     .info {
       font-size: 14px;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       text-align: left;
       position: absolute;
       padding-top: 3px;
@@ -160,7 +160,7 @@
 
     .label {
       color: $colorPrimaryDark;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-size: 14px;
       font-style: normal;
       font-weight: 500;
@@ -177,7 +177,7 @@
 
     .buttonContainer {
       width: 100%;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
@@ -250,13 +250,13 @@
 
   .tradeDescTitle {
     font-size: 16px;
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     font-weight: bold;
     margin-bottom: 5px;
   }
 
   .tradeDesc {
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -289,7 +289,7 @@
   }
 
   .seeMore {
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
@@ -354,7 +354,7 @@
 
 .timerLabel {
   color: $colorWhite;
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   font-size: 20px;
   margin-bottom: 5px;
 }
@@ -366,7 +366,7 @@
 }
 
 .tooltip {
-  font-family: $fontOmnes;
+  font-family: $fontDMSans;
   max-width: 180px;
   background-color: $colorPrimary45 !important;
 }

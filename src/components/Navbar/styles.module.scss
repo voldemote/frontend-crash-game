@@ -58,7 +58,7 @@
       border: 1px solid $colorLightYellow;
       box-sizing: border-box;
       border-radius: 24px;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-size: 12px;
       cursor: pointer;
       min-width: 80px;
@@ -67,6 +67,7 @@
 
       .walletLinkContainer {
         display: flex;
+        align-items: center;
         p {
           width: 100%;
           min-width: 110px;
@@ -185,7 +186,7 @@
       align-items: center;
       height: 43px;
       border-radius: 30px;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-weight: 600;
       font-size: 20px;
       line-height: 20px;
@@ -351,7 +352,7 @@
 
     .active {
       opacity: 1;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       position: relative;
 
       &:after {
@@ -378,7 +379,7 @@
       //   .logoText {
       //     margin-left: 10px;
       //     color: $colorWhite;
-      //     font-family: $fontOmnes;
+      //     font-family: $fontDMSans;
       //     font-weight: bold;
       //     font-size: 30px;
       //     line-height: 50px;
@@ -460,7 +461,7 @@
       padding: 20px 16px;
       color: $colorWhite;
       width: 100%;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-weight: 600;
       font-size: 24px;
       line-height: 30px;
@@ -517,7 +518,7 @@
       padding: 20px;
       color: $colorWhite;
       height: 100%;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
 
       &:first-child {
         margin: 0 5px 0 30px;

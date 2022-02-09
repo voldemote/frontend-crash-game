@@ -15,7 +15,7 @@ setExternalGamesEvoplay,
   setExternalGamesSoftswiss
  }) => {
   const gamesTitleList = [
-    'Wallfair Games',
+    'House Games',
     'Casino',
     'Slot',
     'Roulette',

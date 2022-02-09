@@ -58,7 +58,7 @@
   }
 
   .choiceName {
-    font-family: $fontOmnes;
+    font-family: $fontDMSans;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -76,7 +76,7 @@
     .choiceWinAmount {
       overflow-wrap: anywhere;
       width: 52%;
-      font-family: $fontOmnes;
+      font-family: $fontDMSans;
       font-size: 28px;
       font-style: normal;
       font-weight: 700;
@@ -91,7 +91,7 @@
       padding-left: 3px;
 
       .choiceWinAmountUnit {
-        font-family: $fontOmnes;
+        font-family: $fontDMSans;
         font-size: 12px;
         font-style: normal;
         font-weight: 500;
@@ -99,7 +99,7 @@
         text-align: left;
       }
       .choiceWinAmountCash {
-        font-family: $fontOmnes;
+        font-family: $fontDMSans;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
