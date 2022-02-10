@@ -20,12 +20,12 @@ const EventActivitiesTabs = ({ refreshHighData, refreshLuckyData, connected, use
   } = useRosiData();
   const [activityTabIndex, setActivityTabIndex] = useState(0);
   let activityTabOptions = [
-    { name: 'ALL', index: 0 },
-    { name: 'HIGH WINS', index: 1 },
-    { name: 'LUCKY WINS', index: 2 },
+    { name: 'All', index: 0 },
+    { name: 'High Wins', index: 1 },
+    { name: 'Lucky Wins', index: 2 },
   ];
 
-  if(userId) activityTabOptions.push({name: 'MY BETS', index: 3});
+  if(userId) activityTabOptions.push({name: 'My Bets', index: 3});
 
   const handleActivitySwitchTab = ({ index }) => {
     switch (index) {

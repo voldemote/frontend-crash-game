@@ -12,7 +12,7 @@
   align-items: center;
   padding: 50px 50px;
   z-index: $sIndexNavbar;
-  background: $colorNavBackground;
+  background: $colorPrimary;
 
   @media (max-width: $screen-md) {
     padding: 36px 24px;
