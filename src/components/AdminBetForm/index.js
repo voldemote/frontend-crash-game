@@ -82,7 +82,7 @@ const AdminBetForm = ({ event, bet = null, visible, createBet, editBet }) => {
 
   const handleTagChange = (name, id) => {
     setOutcomes(prevOutcomes =>
-      prevOutcomes.map(tag => (tag._id === id ? { ...tag, name } : tag))
+      prevOutcomes.map(tag => (tag.id === id ? { ...tag, name } : tag))
     );
   };
 
