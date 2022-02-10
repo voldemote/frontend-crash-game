@@ -265,7 +265,7 @@ const PlaceBetMines = ({
             tabIndex="0"
             style={{display: bet.autobet ? 'auto':'none'}}
             className={styles.button}
-            theme={ButtonTheme.secondaryButton}
+            theme={ButtonTheme.redButton}
             onClick={() => setBet({...bet, autobet: false, stopped: true})}
             data-tracking-id={
               user.isLoggedIn ? null : 'alpacawheel-showloginpopup'

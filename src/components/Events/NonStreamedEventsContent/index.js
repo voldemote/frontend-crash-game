@@ -28,6 +28,8 @@ import {ReactComponent as SearchIcon} from 'data/icons/search-input.svg';
 import InputBox from 'components/InputBox';
 import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import Search from 'components/Search';
+import BuyWFAIRWidget from 'components/BuyWFAIRWidget';
+import EventActivitiesTabs from 'components/EventActivitiesTabs';
 
 const NonStreamedEventsContent = ({
   categories,
@@ -234,8 +236,20 @@ const NonStreamedEventsContent = ({
               </Link>
             ))}
         </div>
+        
+        <Button theme={ButtonTheme.secondaryButton}>Load more</Button>
+
+        <BuyWFAIRWidget />
+
+        <EventActivitiesTabs
+          activitiesLimit={50}
+          className={styles.activities}
+          preselectedCategory={'game'}
+          hideSecondaryColumns={true}
+          layout="wide"
+        />
+
       </section>
-      <ContentFooter />
     </>
   );
 };

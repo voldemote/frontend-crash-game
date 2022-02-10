@@ -1,6 +1,8 @@
 @import '../../styles/all';
 
 .baseContainer {
+  max-width: 1440px;
+  margin: 0 auto;
   position: relative;
   min-height: 100%;
   overflow: hidden;
