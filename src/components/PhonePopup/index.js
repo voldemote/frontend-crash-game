@@ -19,17 +19,10 @@ const PhonePopup = ({
   const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
-    const len = phoneNumber?.length;
-    // if(len < 3 || len > 25){
-    //   setErrorMessage('Username length should be from 3 to 25 characters long');
-    // } else {
       setErrorMessage('');
-    // }
   }, [phoneNumber]);
 
   const sendVerification = async () => {
-
-    //TODO: validate mobile phone number format before sending request
     let fullPhoneNumber = country + phoneNumber;
     if (!fullPhoneNumber.startsWith('+')) {
       fullPhoneNumber = '+' + fullPhoneNumber;
@@ -45,10 +38,10 @@ const PhonePopup = ({
         hidePopup();
       } else {
         setErrorMessage(
-        <div>
-          {response.error.message}
-        </div>
-      );
+          <div>
+            {response.error.message}
+          </div>
+        );
       }
 
     } catch (err) {
@@ -56,11 +49,6 @@ const PhonePopup = ({
       
     }
   };
-
-  // const skipUsername = () => {
-  //   hidePopup();
-  //   showOnboardingFlowNext('');
-  // };
 
   return (
     <div className={styles.phonePopup}>
@@ -101,7 +89,6 @@ const PhonePopup = ({
     </div>
   );
 };
-
 
 const mapDispatchToProps = dispatch => {
   return {

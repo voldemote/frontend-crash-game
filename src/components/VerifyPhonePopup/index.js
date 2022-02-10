@@ -48,7 +48,6 @@ const PhonePopup = ({
           </div>
         );
       }
-
     } catch (err) {
       console.error('verifyCode err', err);
     }
@@ -60,10 +59,10 @@ const PhonePopup = ({
     setCode('');
   }, [phoneNumber]);
 
-  const skipVerification = () => {
-    hidePopup();
-    showOnboardingFlowNext('');
-  };
+  // const skipVerification = () => {
+  //   hidePopup();
+  //   showOnboardingFlowNext('');
+  // };
 
   return (
     <div className={styles.usernamePopup}>
@@ -85,7 +84,7 @@ const PhonePopup = ({
         )}
 
         <div className={styles.resend}>
-           <span>
+          <span>
             Didn't you received any code?
           </span>
           <button onClick={resendSms}>Resend a new code</button>
