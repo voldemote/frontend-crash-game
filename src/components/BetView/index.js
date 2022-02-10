@@ -45,10 +45,10 @@ import EventTypes from 'constants/EventTypes';
 import BetActionsMenu from 'components/BetActionsMenu';
 import { trackNonstreamedEventPlaceTrade } from '../../config/gtm';
 import { OnboardingActions } from 'store/actions/onboarding';
+import { calculateBuyOutcome } from 'api';
 
 const BetView = ({
-  betId,
-  eventId,
+  event,
   openBets,
   actionIsInProgress,
   closed,
@@ -56,15 +56,12 @@ const BetView = ({
   forceSellView,
   // disableSwitcher = false,
   showEventEnd,
-  events,
   placeBet,
   // pullOutBet,
   showPopup,
   isTradeViewPopup,
   handleChartDirectionFilter,
   setOpenDrawer,
-  fetchOutcomes,
-  // fetchSellOutcomes,
   resetOutcomes,
   startOnboarding,
 }) => {
@@ -81,12 +78,7 @@ const BetView = ({
     )
   );
   const defaultBetValue = 50;
-  const event = _.find(events, {
-    _id: eventId,
-  });
-  const bet = _.find(_.get(event, 'bets', []), {
-    _id: betId,
-  });
+  const bet = event.bet;
   const state = _.get(bet, 'status');
   const outcomes = _.get(useSelector(selectOutcomes), 'outcomes', {});
   const sellOutcomes = _.get(useSelector(selectSellOutcomes), 'outcomes', {});
@@ -111,7 +103,7 @@ const BetView = ({
   const hasMounted = useHasMounted();
 
   const validateInput = () => {
-    const betEndDate = _.get(bet, 'endDate');
+    const betEndDate = _.get(bet, 'end_date');
     const current = moment(new Date());
     const isSell = hasSellView();
     let valid = true;
@@ -168,13 +160,21 @@ const BetView = ({
     [hasMounted, closed]
   );
 
+  const fetchOutcomes = () => {
+    bet.outcomes.forEach(outcome => {
+      calculateBuyOutcome(bet.id, commitment, outcome.index).then(res => {
+        console.log(res);
+      });
+    });
+  };
+
   useEffect(() => {
-    if (!closed && !!betId) {
+    if (!closed && !!bet.id) {
       validateInput();
-      fetchOutcomes(commitment, betId);
+      fetchOutcomes();
       setConvertedCommitment(convert(commitment, currency));
     }
-  }, [commitment, currency, betId]);
+  }, [commitment, currency, bet]);
 
   useEffect(() => {
     validateInput();
@@ -200,7 +200,7 @@ const BetView = ({
     const validInput = validateInput();
 
     if (validInput) {
-      placeBet(betId, commitment, choice);
+      placeBet(bet.id, commitment, choice);
     }
   };
 
@@ -325,21 +325,21 @@ const BetView = ({
   };
 
   const renderTradeDesc = (withTitle = true) => {
-    const evidenceSource = bet.evidenceSource;
+    const evidenceSource = bet.evidence_source;
 
     const shortLength = 200;
     const evidenceDescription = TextHelper.linkifyIntextURLS(
-      bet.evidenceDescription
+      bet.evidence_description
     );
     const plainEvidenceDescription = TextHelper.linkifyIntextURLS(
-      bet.evidenceDescription,
+      bet.evidence_description,
       true
     );
     const desc = evidenceSource
-      ? TextHelper.linkifyIntextURLS(bet.evidenceSource)
+      ? TextHelper.linkifyIntextURLS(bet.evidence_source)
       : evidenceDescription;
     const plainDesc = evidenceSource
-      ? TextHelper.linkifyIntextURLS(bet.evidenceSource, true)
+      ? TextHelper.linkifyIntextURLS(bet.evidence_source, true)
       : plainEvidenceDescription;
 
     const isDescShort =
@@ -392,9 +392,9 @@ const BetView = ({
           showJoinPopup();
         } else if (!tradeButtonDisabled) {
           onTradeButtonConfirm();
-          fetchOutcomes(commitment, betId);
+          fetchOutcomes();
           trackNonstreamedEventPlaceTrade({
-            eventTitle: bet?.marketQuestion,
+            eventTitle: bet?.market_question,
             amount: commitment,
           });
         } else {
@@ -404,7 +404,7 @@ const BetView = ({
 
       return (
         <>
-          {/*{renderTradeDesc()}*/}
+          {/* {renderTradeDesc()} */}
           <span
             data-for="tool-tip"
             data-tip={
@@ -545,7 +545,7 @@ const BetView = ({
   };
 
   const renderStateConditionalContent = () => {
-    if (state === BetState.active || state === BetState.canceled) {
+    if (state === BetState.active || state === BetState.published) {
       return (
         <>
           {renderPlaceBetContentContainer()}
@@ -647,31 +647,16 @@ const BetView = ({
           <div
             className={classNames(
               styles.betMarketQuestion,
-              _.get(event, 'type') === EventTypes.nonStreamed &&
-                styles.nonStreamedQuestion
+              styles.nonStreamedQuestion
             )}
           >
-            <span>{bet.marketQuestion}</span>
+            <span>{bet.market_question}</span>
             {bet.description && (
               <span className={styles.info}>
                 <InfoBox>{bet.description}</InfoBox>
               </span>
             )}
           </div>
-          {/*{showEventEnd &&*/}
-          {/*  ![BetState.resolved, BetState.closed].includes(state) && (*/}
-          {/*    <>*/}
-          {/*      <span className={styles.timerLabel}>Event ends in:</span>*/}
-          {/*      <div*/}
-          {/*        className={classNames(*/}
-          {/*          styles.timeLeftCounterContainer,*/}
-          {/*          isTradeViewPopup && styles.fixedTimer*/}
-          {/*        )}*/}
-          {/*      >*/}
-          {/*        <TimeCounter endDate={endDate} />*/}
-          {/*      </div>*/}
-          {/*    </>*/}
-          {/*  )}*/}
           {renderStateConditionalContent()}
         </div>
       </div>
@@ -682,15 +667,11 @@ const BetView = ({
 const mapStateToProps = state => {
   return {
     actionIsInProgress: state.bet.actionIsInProgress,
-    events: state.event.events,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchOutcomes: (amount, betId) => {
-      dispatch(BetActions.fetchOutcomes({ amount, betId }));
-    },
     fetchSellOutcomes: (amount, betId) => {
       dispatch(BetActions.fetchSellOutcomes({ amount, betId }));
     },
@@ -717,7 +698,7 @@ const mapDispatchToProps = dispatch => {
     },
     startOnboarding: () => {
       dispatch(OnboardingActions.start());
-    }
+    },
   };
 };
 

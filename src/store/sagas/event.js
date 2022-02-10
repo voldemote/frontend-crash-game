@@ -198,20 +198,12 @@ const editEvent = function* ({ eventId, event }) {
 const deleteEvent = function* ({ eventId }) {
   try {
     yield put(PopupActions.hide());
-    const {
-      response: { data },
-    } = yield call(Api.deleteEvent, eventId);
-
-    const route =
-      {
-        [EventTypes.streamed]: Routes.liveEvents,
-        [EventTypes.nonStreamed]: Routes.events,
-      }[data.type] || Routes.home;
+    const response = yield call(Api.deleteMarketEvent, eventId);
 
     yield put(EventActions.fetchAll());
-    yield put(push(Routes.getRouteWithParameters(route, { category: 'all' })));
+    yield put(push(Routes.getRouteWithParameters(Routes.events, { category: 'all' })));
     yield delay(1 * 1000);
-    yield put(EventActions.deleteEventSuccess({ event: data }));
+    yield put(EventActions.deleteEventSuccess({ event: response }));
   } catch (error) {
     yield put(EventActions.deleteEventFail());
   }

@@ -51,14 +51,15 @@ const createInstance = (host, apiPath) => {
 };
 
 const Api = createInstance(ApiUrls.BACKEND_URL, '/');
-
 const WithdrawServiceApi = createInstance(ApiUrls.WITHDRAW_SERVICE_URL, '/');
+const EventsServiceApi = createInstance(ApiUrls.EVENTS_SERVICE_URL, '/');
 
 const setToken = token => {
   const authentication = 'Bearer ' + token;
 
   Api.defaults.headers.common['Authorization'] = authentication;
   WithdrawServiceApi.defaults.headers.common['Authorization'] = authentication;
+  EventsServiceApi.defaults.headers.common['Authorization'] = authentication;
 };
 
 const requestSms = (phone, ref) => {
@@ -632,6 +633,68 @@ const getBonusCount = (bonusId) => {
     .catch((error) => ({ error: error.message }));
 }
 
+/// EVENTS-SERVICE API
+
+const createMarketEvent = payload => {
+  return EventsServiceApi.post('/events/market-events', payload)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: createMarketEvent ', err);
+      throw err;
+    });
+};
+
+const editMarketEvent = (id, payload) => {
+  return EventsServiceApi
+    .patch(`/admin/market-events/${id}`, payload)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: editMarketEvent ', err);
+      throw err;
+    });
+};
+
+const deleteMarketEvent = id => {
+  return EventsServiceApi
+    .delete(`/admin/market-events/${id}`)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: deleteMarketEvent ', err);
+      throw err;
+    });
+};
+
+const getMarketEvents = (category, statuses) => {
+  // additionaly provide params for status, search by name sorting, pagination etc
+  return EventsServiceApi.get(
+    `/events/market-events?category=${category}&statuses=${statuses.join(',')}`
+  )
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: getMarketEvents ', err);
+      throw err;
+    });
+};
+
+const getEventBySlug = slug => {
+  return EventsServiceApi
+    .get(`/events/market-events/${slug}`)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: getEventBySlug ', err);
+      throw err;
+    });
+};
+
+const calculateBuyOutcome = (betId, amount, outcome) => {
+  return EventsServiceApi.post(`/bets/${betId}/outcomes/buy`, {
+    amount,
+    outcome,
+  }).catch(error => {
+    console.log('[API Error] called: calculateBuyOutcome', error);
+  });
+};
+
 export {
   Api,
   createBet,
@@ -707,4 +770,10 @@ export {
   getBonusCount,
   refreshKycStatus,
   generateMoonpayUrl,
+  createMarketEvent,
+  editMarketEvent,
+  deleteMarketEvent,
+  getMarketEvents,
+  getEventBySlug,
+  calculateBuyOutcome,
 };

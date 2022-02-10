@@ -21,7 +21,6 @@ const BetCard = ({
   isBookmarked = false,
   tags,
 }) => {
-  eventEnd = new Date("2022-02-16");
   const getEventCardStyle = () => {
     return {
       backgroundImage: 'url("' + image + '")',
@@ -48,6 +47,36 @@ const BetCard = ({
     return () => clearTimeout(timerId);
   }, [eventEnd]);
 
+  // const [outcomeValues, setOutcomeValues] = useState([
+  //   ...outcomes.map(outcome => ({ ...outcome, amount: '...' })),
+  // ]);
+
+  // const roundOutcome = value => {
+  //   return Math.min(100, Math.floor((1 / value) * 100));
+  // };
+
+  useEffect(() => {
+    // const fetchOutcome = async () => {
+    //   const result = await getOutcomes(betId, 1);
+    //   if (result) {
+    //     const populatedValues = result.data;
+    //     const mergedData = outcomes.map(outcome => ({
+    //       ...outcome,
+    //       amount: roundOutcome(+populatedValues[outcome.index].outcome),
+    //     }));
+    //     setOutcomeValues(mergedData);
+    //   }
+    // };
+
+    // fetchOutcome();
+  }, []);
+
+  function getGaugeWidth(amount = 1) {
+    return {
+      width: `${amount}px`,
+    };
+  }
+
   return (
     <div className={styles.betCardContainer} onClick={onClick}>
       <div className={styles.picture} style={getEventCardStyle()} />
@@ -56,15 +85,13 @@ const BetCard = ({
       
         <div className={styles.badgeContainer}>
           {/* <LiveBadge className={styles.liveBadge} /> */}
-          <HotBetBadge className={styles.hotBadge} theme={HotBetBadgeTheme.opacity05}>3,212 Trade Vol.</HotBetBadge>
+          {/* <HotBetBadge className={styles.hotBadge} theme={HotBetBadgeTheme.opacity05}>3,212 Trade Vol.</HotBetBadge> */}
         </div>
         <div className={styles.titleContainer}>
           <span className={styles.title}>{title}</span>
           <div className={styles.tags}>
-            {/* {tags &&  */}
             {
-              ['esports', 'racing'].map(tag => <span>#{tag}</span>)
-              //tags.map(tag => <span>{tag}</span>)
+              tags.map(tag => <span>#{tag.name}</span>)
             }
           </div>
         </div>

@@ -7,6 +7,7 @@ export const CRASH_GAMES_BACKEND_URL = process.env.REACT_APP_CASINO_GAMES_BACKEN
 export const SECOND_CRASH_GAME_BACKEND_URL = process.env.REACT_APP_SECOND_CRASH_GAME_BACKEND_URL;
 export const ACCOUNT_MAPPING = process.env.REACT_APP_ACCOUNT_MAPPER_URL;
 export const WITHDRAW_SERVICE_URL = process.env.REACT_APP_WITHDRAW_SERVICE_URL;
+export const EVENTS_SERVICE_URL = process.env.REACT_APP_EVENTS_SERVICE_URL;
 
 export const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 export const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;

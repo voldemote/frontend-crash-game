@@ -17,7 +17,7 @@ const actionTypes = {
     acceptLabel: 'Cancel Bet',
     declineLabel: "Don't Cancel",
     onAccept: (bet, { hidePopup }, data) =>
-      Api.cancelBet(bet._id, data).then(() => hidePopup()),
+      Api.cancelBet(bet.id, data).then(() => hidePopup()),
     form: (_, setData, setValid) => {
       const setForm = reason => {
         setData({ reasonOfCancellation: reason });
@@ -44,7 +44,7 @@ const actionTypes = {
     text: 'Are you sure you want to delete the event?',
     acceptLabel: 'Delete',
     declineLabel: 'Cancel',
-    onAccept: ({ _id }, { deleteEvent }) => deleteEvent(_id),
+    onAccept: ({ id }, { deleteEvent }) => deleteEvent(id),
     getBody: e => (
       <p className={styles.text}>
         Are you sure you want to delete the event?
@@ -77,7 +77,7 @@ const DialogActionPopup = ({ data, actionType, actionDispatchers }) => {
   ) : (
     <p className={styles.text}>
       {text}
-      {declineLabel !== 'Disabled' && <strong>"{data?.marketQuestion}"</strong>}
+      {declineLabel !== 'Disabled' && <strong>"{data?.market_question}"</strong>}
     </p>
   );
 

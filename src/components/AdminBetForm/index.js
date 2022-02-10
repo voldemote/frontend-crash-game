@@ -25,7 +25,7 @@ const AdminBetForm = ({ event, bet = null, visible, createBet, editBet }) => {
   const isEdit = !!bet;
 
   const [marketQuestion, setMarketQuestion, marketQuestionErrors] =
-    useValidatedState(bet?.marketQuestion, [Validators.required]);
+    useValidatedState(bet?.market_question, [Validators.required]);
   const [description, setDescription, descriptionErrors] = useValidatedState(
     bet?.description,
     [Validators.required]
@@ -41,42 +41,26 @@ const AdminBetForm = ({ event, bet = null, visible, createBet, editBet }) => {
     evidenceDescription,
     setEvidenceDescription,
     evidenceDescriptionErrors,
-  ] = useValidatedState(bet?.evidenceDescription, [Validators.required]);
+  ] = useValidatedState(bet?.evidence_description, [Validators.required]);
 
   const [evidenceSource, setEvidenceSource, evidenceSourceErrors] =
-    useValidatedState(bet?.evidenceSource, [Validators.required]);
+    useValidatedState(bet?.evidence_source, [Validators.required]);
 
   const [endDate, setEndDate, endDateErrors] = useValidatedState(
-    bet?.endDate || new Moment().add(1, 'hour'),
+    bet?.end_date || new Moment().add(1, 'hour'),
     [Validators.required, ...(!bet ? [Validators.dateAfter(new Moment())] : [])]
   );
-  const [betTemplates, setBetTemplates] = useValidatedState([]);
-  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
-  const betSlugs = (
-    !!bet ? event.bets.filter(({ _id }) => bet._id !== _id) : event.bets
-  ).map(({ slug }) => slug);
+  const betSlugs = event.bet.slug;
 
   const onNameChange = newName => {
     setMarketQuestion(newName);
     setUniqueSlug(newName, betSlugs, setSlug);
   };
 
-  useEffect(() => {
-    if (visible) {
-      Api.getBetTemplates().then(({ response }) => {
-        setBetTemplates(response.data);
-        setSelectedTemplateId(
-          betTemplates.find(({ category }) => category === event?.category)
-            ?._id || null
-        );
-      });
-    }
-  }, [visible, event]);
-
   const handleSave = () => {
     const newBet = {
-      event: event._id,
+      event: event.id,
       marketQuestion,
       description,
       slug,
@@ -86,11 +70,11 @@ const AdminBetForm = ({ event, bet = null, visible, createBet, editBet }) => {
         .map((t, index) => ({ name: t.name, index }))
         .filter(t => t.name !== ''),
       endDate,
-      date: bet?.date || new Date(),
+      start_date: bet?.date || new Date(),
     };
 
     if (bet) {
-      editBet({ betId: bet._id, bet: newBet });
+      editBet({ betId: bet.id, bet: newBet });
     } else {
       createBet({ bet: newBet });
     }
@@ -115,24 +99,6 @@ const AdminBetForm = ({ event, bet = null, visible, createBet, editBet }) => {
       setOutcomes(prevOutcomes => prevOutcomes.filter(tag => tag._id !== id));
   };
 
-  const applyTemplate = () => {
-    const template = betTemplates.find(({ _id }) => _id === selectedTemplateId);
-    if (!template) return;
-
-    const { marketQuestion: templateQuestion, outcomes: templateOutcomes } =
-      template;
-
-    onNameChange(templateQuestion);
-    setOutcomes(templateOutcomes);
-  };
-
-  const betTemplateOptions = betTemplates.map(
-    ({ category, marketQuestion, _id }) => ({
-      label: `${category} / ${marketQuestion}`,
-      value: _id,
-    })
-  );
-
   const isFormValid =
     [
       marketQuestionErrors,
@@ -154,30 +120,6 @@ const AdminBetForm = ({ event, bet = null, visible, createBet, editBet }) => {
 
   return (
     <>
-      {!bet?._id && (
-        <FormGroup className={styles.betTemplate}>
-          <span className={styles.betTemplateHint}>
-            Use a template to populate bet details quicker.
-          </span>
-          <div className={styles.templatePicker}>
-            <Dropdown
-              options={betTemplateOptions}
-              placeholder={'Bet templates'}
-              setValue={setSelectedTemplateId}
-              value={selectedTemplateId}
-              className={styles.select}
-            />
-            <Button
-              className={styles.applyButton}
-              onClick={applyTemplate}
-              disabled={selectedTemplateId === null}
-              withoutBackground={true}
-            >
-              Apply
-            </Button>
-          </div>
-        </FormGroup>
-      )}
       <FormGroup className={fgClasses(marketQuestionErrors)}>
         <InputLabel>Name</InputLabel>
         <Input type="text" value={marketQuestion} onChange={onNameChange} />

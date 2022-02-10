@@ -48,11 +48,12 @@ import Favorite from 'components/Favorite';
 import SwitchButton from 'components/SwitchButton';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import { OnboardingActions } from 'store/actions/onboarding';
+import { EventsApi } from 'api/events';
 // import { trackPageView } from 'config/gtm';
 
 const BET_ACTIONS = {
   Chat: 0,
-  News: 1,
+  // News: 1,
   EventTrades: 2,
   MyTrades: 3,
 };
@@ -69,9 +70,11 @@ const BetVTwo = ({
   bookmarkEvent = () => {},
   bookmarkEventCancel = () => {},
   startOnboardingFlow,
+  token,
 }) => {
   const { eventSlug, betSlug } = useParams();
   const isMounted = useIsMount();
+  const api = new EventsApi(token);
 
   const [betId, setBetId] = useState(null);
   const [swiper, setSwiper] = useState(null);
@@ -102,21 +105,14 @@ const BetVTwo = ({
     handleChartDirectionFilter,
   } = useChartData(betId);
 
-  useNewsFeed(event);
+  // useNewsFeed(event);
 
   const eventType = _.get(event, 'type');
 
   const isNonStreamed = eventType === EventTypes.nonStreamed;
-  const canDeleteEvent = _.get(event, 'bets')?.every(
-    ({ status }) => status === BetState.canceled
-  );
+  // const canDeleteEvent = event.bet.status === BetState.canceled;
 
   const { tabOptions, handleSwitchTab, selectedTab } = useTabOptions(event);
-  const { activeBets } = useTrades(event?._id);
-
-  const bet = _.find(_.get(event, 'bets', []), {
-    _id: betId,
-  });
 
   const status = {
     active: 1,
@@ -127,65 +123,27 @@ const BetVTwo = ({
   window.onresize = () => ref.current && setIsMobile(window.innerWidth < 992);
 
   useEffect(() => {
-    const sluggedEvent = _.find(events, {
-      slug: eventSlug,
+    api.getEventBySlug(eventSlug).then(res => {
+      console.log(res);
+      if (!_.isEqual(res, event)) {
+        setEvent(res);
+      }
     });
-    if (!_.isEqual(sluggedEvent, event)) {
-      setEvent(sluggedEvent);
-    }
-  }, [events, eventSlug]);
+  }, [eventSlug]);
 
   useEffect(() => {
     ref.current = true;
     if (!event) return;
 
-    setSingleBet(false);
-    setBetViewIsOpen(false);
-
-    const eventBets = [..._.get(event, 'bets', [])].sort(
-      (a, b) => status[a.status] - status[b.status]
-    );
-
-    setRelatedBets(eventBets);
-
-    const currentBet = _.find(eventBets, {
-      slug: betSlug,
-    });
-    const currentBetId =
-      isNonStreamed || event.bets.length === 1
-        ? _.get(event, 'bets[0]._id')
-        : _.get(currentBet, '_id');
+    const currentBetId = event.bet?.id;
     setBetId(currentBetId);
 
-    if (betSlug) {
-      selectBet(currentBetId, betSlug);
-    }
-
-    if (
-      !isMobile &&
-      eventBets.length === 1 &&
-      !singleBet &&
-      !betSlug &&
-      !betViewIsOpen
-    ) {
-      selectSingleBet(eventBets);
-    }
-
-    fetchChatMessages(event._id);
+    fetchChatMessages(event.id);
     fetchOpenBets();
     fetchTransactions();
 
-    // const currentBetTitle =
-    //   isNonStreamed || event.bets.length === 1
-    //     ? _.get(event, 'bets[0].marketQuestion')
-    //     : _.get(currentBet, 'name');
-
-    // trackPageView({
-    //   pageTitle: `Bet - ${currentBetTitle}`,
-    // });
-
     return () => (ref.current = false);
-  }, [eventSlug, betSlug, event]);
+  }, [eventSlug, event]);
 
   useEffect(() => {
     if (!event) return;
@@ -272,13 +230,13 @@ const BetVTwo = ({
   };
 
   const renderTitle = () => {
-    const key = isNonStreamed ? 'bets[0].marketQuestion' : 'name';
-    const title = _.get(event, key);
+    const key = 'marketQuestion';
+    const title = _.get(event.bet, key);
     return <h2>{title}</h2>;
   };
 
   const renderImage = () => {
-    const key = 'previewImageUrl';
+    const key = 'preview_image_url';
     const imgUrl = _.get(event, key);
     return <img src={imgUrl} alt={`trade`} />;
   };
@@ -294,22 +252,11 @@ const BetVTwo = ({
   const renderBetSidebarContent = () => {
     return (
       <div className={styles.betViewWrapper}>
-        {eventType === EventTypes.streamed && relatedBets.length > 1 && (
-          <div className={styles.betViewClose} onClick={onBetClose()}>
-            <Icon
-              iconType={'arrowLeft'}
-              iconTheme={'white'}
-              className={styles.arrowBack}
-            />
-            <span>Go back to all tracks</span>
-          </div>
-        )}
-
         <div className={styles.betViewContent}>
           <BetView
             betId={betId}
-            eventId={event._id}
-            openBets={_.filter(openBets, { betId })}
+            eventId={event.id}
+            openBets={[event.bet]}
             closed={false}
             showEventEnd={true}
             handleChartDirectionFilter={handleChartDirectionFilter}
@@ -322,10 +269,10 @@ const BetVTwo = ({
   const renderTradeDesc = () => {
     return (
       <p>
-        <div dangerouslySetInnerHTML={{ __html: bet.description }}></div>
+        <div dangerouslySetInnerHTML={{ __html: event.bet.description }}></div>
         <div>
           <strong>Evidence source: </strong>{' '}
-          <span dangerouslySetInnerHTML={{ __html: bet.evidenceSource }}></span>
+          <span dangerouslySetInnerHTML={{ __html: event.bet.evidenceSource }}></span>
         </div>
       </p>
     );
@@ -359,10 +306,10 @@ const BetVTwo = ({
             <span
               className={classNames(
                 styles.deleteEventLink,
-                !canDeleteEvent && styles.fadedLink
+                !false && styles.fadedLink
               )}
               onClick={() =>
-                canDeleteEvent && showPopup(PopupTheme.deleteEvent, { event })
+                true && showPopup(PopupTheme.deleteEvent, { event })
               }
             >
               <Icon
@@ -373,28 +320,13 @@ const BetVTwo = ({
                 width={20}
               />
               Delete Event
-              {!canDeleteEvent && (
+              {!false && (
                 <span className={styles.infoTooltip}>
                   All bets must be cancelled or deleted in order to delete an
                   event.
                 </span>
               )}
             </span>
-            {eventType === EventTypes.streamed && (
-              <span
-                className={styles.newBetLink}
-                onClick={() => showPopup(PopupTheme.newBet, { event })}
-              >
-                <Icon
-                  className={styles.icon}
-                  iconType={IconType.addBet}
-                  iconTheme={IconTheme.white}
-                  height={24}
-                  width={24}
-                />
-                New Bet
-              </span>
-            )}
           </div>
         </AdminOnly>
 
@@ -422,11 +354,11 @@ const BetVTwo = ({
                       isFavorite={!!event?.bookmarks?.includes(userId)}
                       onBookmark={() => {
                         isLoggedIn()
-                          ? bookmarkEvent(event?._id)
-                          : startOnboardingFlow()
+                          ? bookmarkEvent(event?.id)
+                          : startOnboardingFlow();
                       }}
                       onBookmarkCancel={() => {
-                        bookmarkEventCancel(event?._id);
+                        bookmarkEventCancel(event?.id);
                       }}
                       buttonClass={styles.mobileFavorite}
                       isMobile={true}
@@ -440,12 +372,12 @@ const BetVTwo = ({
               </div>
               <div className={styles.headline}>
                 {renderTitle()}
-                {bet && renderTradeDesc()}
+                {event.bet && renderTradeDesc()}
               </div>
             </div>
             <div className={styles.row}>
               <div className={styles.columnLeft}>
-                <div className={styles.timeOutterWrapper}>
+                {/* <div className={styles.timeOutterWrapper}>
                   <div
                     className={classNames(
                       styles.timeLeftCounterContainer,
@@ -454,13 +386,13 @@ const BetVTwo = ({
                     )}
                   >
                     {![BetState.resolved, BetState.closed].includes(
-                      _.get(bet, 'status')
+                      _.get(event.bet, 'status')
                     ) && (
                       <>
                         <div className={styles.timerLabel}>Event ends in:</div>
 
                         <div className={styles.timerParts}>
-                          <TimeCounterVTwo endDate={bet?.endDate} />
+                          <TimeCounterVTwo endDate={event.bet.end_date} />
                         </div>
                       </>
                     )}
@@ -475,16 +407,13 @@ const BetVTwo = ({
                       <SwitchButton checked={showChart} size={`small`} />
                     </div>
                   )}
-                </div>
-                <div
+                </div> */}
+                {/* <div
                   className={classNames(
                     styles.chartMainWrapper,
-                    eventType === 'streamed'
-                      ? styles.streamContainer
-                      : styles.nonStreamContainer
+                    styles.nonStreamContainer
                   )}
                 >
-                  {eventType === 'non-streamed' ? (
                     <div className={styles.chart}>
                       {((matchMediaMobile && showChart) ||
                         !matchMediaMobile) && (
@@ -496,46 +425,37 @@ const BetVTwo = ({
                         />
                       )}
                     </div>
-                  ) : (
-                    <div className={styles.streamPositioner}>
-                      <EmbedVideo
-                        video={event.streamUrl}
-                        autoPlay={true}
-                        controls={true}
-                      />
-                    </div>
-                  )}
                 </div>
                 {!matchMediaMobile && (
                   <div className={styles.chatWrapper}>
                     <Chat
                       className={styles.desktopChat}
-                      roomId={event._id}
+                      roomId={event.id}
                       chatMessageType={ChatMessageType.event}
                     />
                   </div>
-                )}
+                )} */}
               </div>
               <div className={styles.columnRight}>
-                {!matchMediaMobile && (
+                {/* {!matchMediaMobile && (
                   <div className={styles.shareButton}>
                     <Favorite
                       isFavorite={!!event?.bookmarks?.includes(userId)}
                       onBookmark={() => {
                         isLoggedIn()
-                          ? bookmarkEvent(event?._id)
+                          ? bookmarkEvent(event?.id)
                           : showPopup(PopupTheme.loginRegister, {
                               small: false
                             });
                       }}
                       onBookmarkCancel={() => {
-                        bookmarkEventCancel(event?._id);
+                        bookmarkEventCancel(event?.id);
                       }}
                     />
                     <Share />
                   </div>
-                )}
-                {renderBetSidebarContent()}
+                )} */}
+                {/* {renderBetSidebarContent()} */}
               </div>
             </div>
             <div className={styles.row}>
@@ -546,12 +466,12 @@ const BetVTwo = ({
                       className={styles.desktopChat}
                       inputClassName={styles.inputArea}
                       messagesClassName={styles.messageArea}
-                      roomId={event._id}
+                      roomId={event.id}
                       chatMessageType={ChatMessageType.event}
                     />
                   </div>
                 )}
-                {bet && (
+                {/* {event.bet && (
                   <div className={styles.evidenceWrapper}>
                     <div className={styles.sectionHeader}>
                       <h4>{`EVIDENCE`}</h4>
@@ -561,7 +481,7 @@ const BetVTwo = ({
                         <b>Evidence source: </b>{' '}
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: bet.evidenceSource,
+                            __html: event.bet.evidence_source,
                           }}
                         ></span>
                       </div>
@@ -569,14 +489,14 @@ const BetVTwo = ({
                       <div className={styles.evidenceDescription}>
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: bet.evidenceDescription,
+                            __html: event.bet.evidence_description,
                           }}
                         ></div>
                       </div>
                     </div>
                   </div>
-                )}
-                <div className={styles.activitiesWrapper}>
+                )} */}
+                {/* <div className={styles.activitiesWrapper}>
                   <div className={styles.sectionHeader}>
                     <h4>{`ACTIVITIES`}</h4>
                   </div>
@@ -590,8 +510,8 @@ const BetVTwo = ({
                       />
                     )}
                   </div>
-                </div>
-                <div className={styles.newsWrapper}>
+                </div> */}
+                {/* <div className={styles.newsWrapper}>
                   <div className={styles.sectionHeader}>
                     <h4>{`NEWS`}</h4>
                   </div>
@@ -600,7 +520,7 @@ const BetVTwo = ({
                     showMoreButton={true}
                     limit={3}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </>
@@ -614,8 +534,8 @@ const BetVTwo = ({
             </div>
           </div>
         )}
-
       </div>
+
     </BaseContainerWithNavbar>
   );
 };
@@ -623,7 +543,7 @@ const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
     userId: state.authentication.userId,
-    events: state.event.events,
+    token: state.authentication.token,
   };
 };
 
@@ -655,7 +575,7 @@ const mapDispatchToProps = dispatch => {
     bookmarkEventCancel: eventId => {
       dispatch(EventActions.bookmarkEventCancel({ eventId }));
     },
-    startOnboardingFlow: () =>{
+    startOnboardingFlow: () => {
       dispatch(OnboardingActions.start());
     },
   };
