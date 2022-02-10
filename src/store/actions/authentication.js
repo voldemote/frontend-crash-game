@@ -61,23 +61,6 @@ const fetchReferralsSucceeded = makeActionCreator(
 const logout = makeActionCreator(AuthenticationTypes.LOGOUT);
 const forcedLogout = makeActionCreator(AuthenticationTypes.FORCED_LOGOUT);
 
-const requestSms = makeActionCreator(AuthenticationTypes.REQUEST_SMS);
-
-const requestSmsFailed = makeActionCreator(
-  AuthenticationTypes.REQUEST_SMS_FAILED,
-  {
-    phone: null,
-  }
-);
-
-const requestSmsSucceeded = makeActionCreator(
-  AuthenticationTypes.REQUEST_SMS_SUCCEEDED,
-  {
-    phone: null,
-    smsStatus: null,
-  }
-);
-
 const downgradeState = makeActionCreator(
   AuthenticationTypes.DOWNGRADE_AUTH_STATE
 );
@@ -288,9 +271,6 @@ export const AuthenticationActions = {
   fetchReferralsSucceeded,
   logout,
   forcedLogout,
-  requestSms,
-  requestSmsFailed,
-  requestSmsSucceeded,
   saveAdditionalInfoFailed,
   saveAdditionalInfoSucceeded,
   setEmail,

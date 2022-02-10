@@ -37,7 +37,7 @@ const StatusTabs = ({ onSelect = () => {}, preselected = TABS.current }) => {
           {tabLabels[tabName]}
         </button>
       ))}
-      <SuggestEventButton externalClassNames={[styles.suggestEventButton]} />
+      {/* <SuggestEventButton externalClassNames={[styles.suggestEventButton]} /> */}
     </div>
   );
 };

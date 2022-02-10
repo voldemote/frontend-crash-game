@@ -8,6 +8,7 @@ import { OnboardingActions } from 'store/actions/onboarding';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import StepBar from 'components/StepBar';
 import Routes from 'constants/Routes';
+import { sendSms } from 'api';
 
 const PhonePopup = ({
   hidePopup = () => {},
@@ -18,41 +19,36 @@ const PhonePopup = ({
   const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
-    const len = phoneNumber?.length;
-    // if(len < 3 || len > 25){
-    //   setErrorMessage('Username length should be from 3 to 25 characters long');
-    // } else {
       setErrorMessage('');
-    // }
   }, [phoneNumber]);
 
   const sendVerification = async () => {
-    let response;
-    try {
-      // response = await checkPhoneNumber(phoneNumber);
-    } catch (err) {
-      console.error('checkPhoneNumber err', err);
+    let fullPhoneNumber = country + phoneNumber;
+    if (!fullPhoneNumber.startsWith('+')) {
+      fullPhoneNumber = '+' + fullPhoneNumber;
     }
 
-    // const isUnique = _.get(response, 'data.isUnique', false);
+    let response;
+    try {
+      response = await sendSms(fullPhoneNumber);
+      console.log(response);
+      if (!response.error) {
+        setErrorMessage('');
+        showOnboardingFlowNext(fullPhoneNumber);
+        hidePopup();
+      } else {
+        setErrorMessage(
+          <div>
+            {response.error.message}
+          </div>
+        );
+      }
 
-    // if (isUnique) {
-      setErrorMessage('');
-      showOnboardingFlowNext(phoneNumber)
-      hidePopup();
-    // } else {
-    //   setErrorMessage(
-    //     <div>
-    //       Problem <b>"{phoneNumber}"</b>.
-    //     </div>
-    //   );
-    // }
+    } catch (err) {
+      console.error('checkPhoneNumber err', err);
+      
+    }
   };
-
-  // const skipUsername = () => {
-  //   hidePopup();
-  //   showOnboardingFlowNext('');
-  // };
 
   return (
     <div className={styles.phonePopup}>
@@ -93,7 +89,6 @@ const PhonePopup = ({
     </div>
   );
 };
-
 
 const mapDispatchToProps = dispatch => {
   return {

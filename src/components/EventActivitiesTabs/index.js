@@ -7,6 +7,7 @@ import TabOptions from 'components/TabOptions';
 import ActivityTable from 'components/EventActivitiesTracker/ActivityTable';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import useRosiData from 'hooks/useRosiData';
+import classNames from 'classnames';
 
 const EventActivitiesTabs = ({ refreshHighData, refreshLuckyData, connected, userId, refreshMyBetsData, activitiesLimit, className,
   preselectedCategory, hideSecondaryColumns, layout, gameId}) => {
@@ -58,7 +59,7 @@ const EventActivitiesTabs = ({ refreshHighData, refreshLuckyData, connected, use
   }, [dispatch, connected]);
 
   return (
-    <div className={styles.activityWrapper}>
+    <div className={classNames(styles.activityWrapper, className)}>
       <TabOptions options={activityTabOptions} className={styles.tabLayout}>
         {option => (
           <div

@@ -375,7 +375,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             role="button"
             tabIndex="0"
             className={styles.button}
-            theme={ButtonTheme.secondaryButton}
+            theme={ButtonTheme.redButton}
             onClick={stopAutobet}
           >
             Stop Autobet
@@ -427,7 +427,7 @@ const PlaceBet = ({ connected, onBet, onCashout, onCancel }) => {
             role="button"
             tabIndex="0"
             className={styles.button}
-            theme={ButtonTheme.secondaryButton}
+            theme={ButtonTheme.redButton}
             onClick={user.isLoggedIn ? cancelBet : cancelGuestBet}
             data-tracking-id={
               user.isLoggedIn ? null : 'elongame-showloginpopup'

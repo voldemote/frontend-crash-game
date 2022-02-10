@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styles from './styles.module.scss';
 import Button from '../Button';
 import { connect } from 'react-redux';
@@ -8,10 +8,13 @@ import ButtonTheme from 'components/Button/ButtonTheme';
 import StepBar from 'components/StepBar';
 import Routes from 'constants/Routes';
 import CodeInputFields from 'components/CodeInputFields';
+import { verifySms, sendSms} from 'api';
 
 const PhonePopup = ({
   hidePopup = () => {},
   showOnboardingFlowNext,
+  phoneNumber,
+  userId
 }) => {
 
   const [code, setCode] = useState('');
@@ -31,31 +34,35 @@ const PhonePopup = ({
     }
 
     let response;
-    // try {
-    //   response = await verifyCode(code);
-    // } catch (err) {
-    //   console.error('verifyCode err', err);
-    // }
-
-    const success = true;//_.get(response, 'data.success', false);
-
-    if (success) {
-      setErrorMessage('');
-      showOnboardingFlowNext(true);
-      hidePopup();
-    } else {
-      setErrorMessage(
-        <div>
-          Error verifying code. Try again.
-        </div>
-      );
+    try {
+      response = await verifySms(phoneNumber, code, userId);
+      
+      if (!response.error) {
+        setErrorMessage('');
+        showOnboardingFlowNext(true);
+        hidePopup();
+      } else {
+        setErrorMessage(
+          <div>
+            {response.error.message}
+          </div>
+        );
+      }
+    } catch (err) {
+      console.error('verifyCode err', err);
     }
   };
 
-  const skipVerification = () => {
-    hidePopup();
-    showOnboardingFlowNext('');
-  };
+  const resendSms = useCallback(async () => {
+    setErrorMessage('');
+    await sendSms(phoneNumber);
+    setCode('');
+  }, [phoneNumber]);
+
+  // const skipVerification = () => {
+  //   hidePopup();
+  //   showOnboardingFlowNext('');
+  // };
 
   return (
     <div className={styles.usernamePopup}>
@@ -77,10 +84,10 @@ const PhonePopup = ({
         )}
 
         <div className={styles.resend}>
-           <span>
+          <span>
             Didn't you received any code?
           </span>
-          <button onClick={()=>{}}>Resend a new code</button>
+          <button onClick={resendSms}>Resend a new code</button>
         </div>
         <div className={styles.buttons}>
 
@@ -101,6 +108,13 @@ const PhonePopup = ({
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    userId: state.authentication.userId,
+    phoneNumber: state.onboarding.phoneNumber
+  }
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     showOnboardingFlowNext: verified => {
@@ -113,4 +127,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(PhonePopup);
+export default connect(mapStateToProps, mapDispatchToProps)(PhonePopup);

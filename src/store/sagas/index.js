@@ -45,11 +45,6 @@ const root = function* () {
       [AuthenticationTypes.FORCED_LOGOUT],
       AuthenticationSagas.forcedLogout
     ),
-    takeLatest([AuthenticationTypes.VERIFY_SMS], AuthenticationSagas.verifySms),
-    takeLatest(
-      [AuthenticationTypes.REQUEST_SMS],
-      AuthenticationSagas.requestSms
-    ),
     takeLatest(
       [AuthenticationTypes.SET_NAME, AuthenticationTypes.SET_EMAIL],
       AuthenticationSagas.setAdditionalInformation

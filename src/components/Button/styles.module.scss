@@ -30,12 +30,66 @@
     cursor: not-allowed;
   }
 
+  &.primaryButtonS {
+    font-size: 14px;
+  }
+
   .buttonContent {
-    width: 100%;
+    width: fit-content;
+    white-space: nowrap;
     position: relative;
     z-index: 1;
     display: flex;
     justify-content: center;
+    column-gap: 5px;
+    align-items: center;
+  }
+
+  & > svg {
+    width: 100%;
+    z-index: 0;
+    position: absolute;
+  }
+}
+
+.secondaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $colorWhite;
+  background: $colorPrimary;
+  box-sizing: border-box;
+  border: 1px solid $colorLightPurple16;
+  outline: 1px solid $colorLightPurple12;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: $fontDMSans;
+  padding: 8px 30px;
+  text-transform: none;
+  user-select: none;
+  text-align: center;
+
+  @media (max-width: $screen-sm) {
+    font-size: 18px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .buttonContent {
+    width: fit-content;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    column-gap: 5px;
+    align-items: center;
   }
 
   & > svg {
@@ -106,7 +160,7 @@
   }
 }
 
-.secondaryButton {
+.redButton {
   position: relative;
   display: flex;
   position: relative;

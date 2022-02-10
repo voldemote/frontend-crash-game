@@ -20,6 +20,16 @@ import { EventActions } from '../../../store/actions/event';
 import StatusTabs from './StatusTabs';
 import AuthenticationType from 'components/Authentication/AuthenticationType';
 import { OnboardingActions } from 'store/actions/onboarding';
+import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
+
+import {ReactComponent as PlusIcon} from 'data/icons/plus-icon.svg';
+import {ReactComponent as SearchIcon} from 'data/icons/search-input.svg';
+import InputBox from 'components/InputBox';
+import InputBoxTheme from 'components/InputBox/InputBoxTheme';
+import Search from 'components/Search';
+import BuyWFAIRWidget from 'components/BuyWFAIRWidget';
+import EventActivitiesTabs from 'components/EventActivitiesTabs';
 
 const NonStreamedEventsContent = ({
   categories,
@@ -38,6 +48,7 @@ const NonStreamedEventsContent = ({
   const category = decodeURIComponent(encodedCategory);
 
   const [status, setStatus] = useState('current');
+  const [searchTerm, setSearchTerm] = useState();
 
   const { fetchFilteredEvents, resetDefaultParamsValues } =
     useMappedActions(eventType);
@@ -53,6 +64,11 @@ const NonStreamedEventsContent = ({
     },
     [setCategories]
   );
+
+  const onConfirmSearch = useCallback(() => {
+    //SEARCH
+    console.log(`search ${searchTerm}`);
+  }, [searchTerm]);
 
   const mappedTags = id =>
     events.find(event => event._id === id)?.tags.map(tag => tag.name) || [];
@@ -139,35 +155,45 @@ const NonStreamedEventsContent = ({
       <section className={styles.header}>
         <div className={styles.categories}>
           <CategoryList
+            className={styles.categoryList}
             eventType={eventType}
             categories={mappedCategories}
             handleSelect={handleSelectCategory}
           />
+          <div className={styles.containerOptions}>
+            <Search
+              className={styles.searchInput}
+              value={searchTerm}
+              handleChange={setSearchTerm}
+              handleConfirm={onConfirmSearch}
+            />
+            <Button theme={ButtonTheme.primaryButtonS} className={styles.createButton}><PlusIcon /><span>Create an event</span></Button>
+          </div>
+
+          
         </div>
       </section>
 
       <section className={classNames([styles.main, styles.notStreamed])}>
         <StatusTabs onSelect={setStatus} />
 
-          <AdminOnly>
-            <div
-              className={styles.newEventLink}
-              onClick={() => showPopup(PopupTheme.newEvent, { eventType })}
-            >
-              <Icon
-                className={styles.newEventIcon}
-                iconType={IconType.addYellow}
-                iconTheme={IconTheme.white}
-                height={25}
-                width={25}
-              />
-              <span>New Event</span>
-            </div>
-          </AdminOnly>
-
-        <div className={styles.nonStreamed}>
+          
+        {/* <div
+          className={styles.newEventLink}
+          onClick={() => showPopup(PopupTheme.newEvent, { eventType })}
+        >
+          <Icon
+            className={styles.newEventIcon}
+            iconType={IconType.addYellow}
+            iconTheme={IconTheme.white}
+            height={25}
+            width={25}
+          />
+          <span>New Event</span>
+        </div> */}
           
 
+        <div className={styles.nonStreamed}>
           {filteredBets
             .filter(item => item.eventSlug && item.slug)
             .map(item => (
@@ -210,8 +236,20 @@ const NonStreamedEventsContent = ({
               </Link>
             ))}
         </div>
+        
+        <Button theme={ButtonTheme.secondaryButton}>Load more</Button>
+
+        <BuyWFAIRWidget />
+
+        <EventActivitiesTabs
+          activitiesLimit={50}
+          className={styles.activities}
+          preselectedCategory={'game'}
+          hideSecondaryColumns={true}
+          layout="wide"
+        />
+
       </section>
-      <ContentFooter />
     </>
   );
 };

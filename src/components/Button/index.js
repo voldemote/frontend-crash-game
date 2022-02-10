@@ -49,6 +49,7 @@ const Button = ({
         className={classNames(
           className,
           style.primaryButton,
+          style[theme],
           disabled ? style.disabled : null,
         )}
         disabled={disabled}
@@ -56,6 +57,23 @@ const Button = ({
         data-tracking-id={dataTrackingId}
       > 
         {buttonBackground[theme]}
+        <span className={style.buttonContent}>{children}</span>
+      </span> 
+    )
+  }
+
+  const renderSecondaryButton = () => {
+    return (
+      <span
+        className={classNames(
+          className,
+          style.secondaryButton,
+          disabled ? style.disabled : null,
+        )}
+        disabled={disabled}
+        onClick={disabled ? null : onClick}
+        data-tracking-id={dataTrackingId}
+      > 
         <span className={style.buttonContent}>{children}</span>
       </span> 
     )
@@ -72,6 +90,10 @@ const Button = ({
       ].includes(theme) ?
         renderPrimaryButton()
 
+        : theme === ButtonTheme.secondaryButton ?
+          renderSecondaryButton()
+
+
         : theme === ButtonTheme.alternativeButton ?
         <span
           className={classNames(
@@ -86,11 +108,11 @@ const Button = ({
           {children}
         </span> 
 
-        : theme === ButtonTheme.secondaryButton ?
+        : theme === ButtonTheme.redButton ?
         <span
           className={classNames(
             className,
-            style.secondaryButton,
+            style.redButton,
             disabled ? style.disabled : null,
           )}
           disabled={disabled}
