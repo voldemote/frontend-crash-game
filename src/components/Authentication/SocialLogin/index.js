@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 import Icon from 'components/Icon';
 import IconType from 'components/Icon/IconType';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,8 @@ import { useSocialLogins } from './useSocialLogins';
 const LoginButton = ({ children, onClick, styles, disabled }) => (
   <Button
     onClick={onClick}
-    className={classNames(styles.signInButton)}    
+    className={classNames(styles.signInButton)}   
+    theme={ButtonTheme.secondaryButtonLight} 
     // disabled={disabled}
   >
     {children}

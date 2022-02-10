@@ -68,6 +68,7 @@ const Button = ({
         className={classNames(
           className,
           style.secondaryButton,
+          style[theme],
           disabled ? style.disabled : null,
         )}
         disabled={disabled}
@@ -90,9 +91,11 @@ const Button = ({
       ].includes(theme) ?
         renderPrimaryButton()
 
-        : theme === ButtonTheme.secondaryButton ?
+        : [
+          ButtonTheme.secondaryButton,
+          ButtonTheme.secondaryButtonLight
+         ] ?
           renderSecondaryButton()
-
 
         : theme === ButtonTheme.alternativeButton ?
         <span

@@ -214,7 +214,7 @@
   text-transform: none;
 
   a {
-    color: #ea9c00;
+    color: $colorPrimary;
     text-decoration: underline;
   }
   @media screen and (max-width: $screen-sm-max) {
