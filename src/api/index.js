@@ -357,12 +357,6 @@ const createEventBet = payload => {
     .catch(error => ({ error: error.response.data }));
 };
 
-const editEventBet = (betId, payload) => {
-  return EventsServiceApi.put(`/bets/bet/${betId}`, payload)
-    .then(response => ({ response }))
-    .catch(error => ({ error: error.response.data }));
-};
-
 const getBetTemplates = () => {
   return Api.get(ApiUrls.API_BET_TEMPLATES)
     .then(response => ({ response }))
@@ -718,6 +712,15 @@ const getOutcomesHistoryForChart = (betId, params = {}) => {
     .then(res => res.data)
     .catch(err => {
       console.log('[API-Error]: getOutcomesHistoryForChart ', err);
+      throw err;
+    });
+};
+
+const editEventBet = (betId, payload) => {
+  return EventsServiceApi.put(`/bets/bet/${betId}`, payload)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: editEventBet ', err);
       throw err;
     });
 };

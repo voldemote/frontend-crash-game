@@ -35,7 +35,7 @@ import BetView from '../../components/BetView';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import { getEventBySlug, getOutcomesHistoryForChart } from 'api';
 
-const BetVTwo = ({
+const MarketEvent = ({
   showPopup,
   authState,
   userId,
@@ -67,7 +67,6 @@ const BetVTwo = ({
 
   useEffect(() => {
     getEventBySlug(eventSlug).then(res => {
-      console.log(res);
       if (!_.isEqual(res, event)) {
         setEvent(res);
         setCanDeleteEvent(res.bet?.status === BetState.canceled);
@@ -416,4 +415,4 @@ const mapDispatchToProps = dispatch => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(BetVTwo);
+export default connect(mapStateToProps, mapDispatchToProps)(MarketEvent);
