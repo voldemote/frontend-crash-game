@@ -5,6 +5,7 @@ export default {
   primaryButtonL: 'primaryButtonL',
   primaryButtonXL: 'primaryButtonXL',
   secondaryButton: 'secondaryButton',
+  secondaryButtonLight: 'secondaryButtonLight',
   redButton: 'redButton',
   loginButton: 'loginButton',
   alternativeButton: 'alternativeButton',

@@ -52,6 +52,7 @@
   }
 }
 
+.secondaryButtonLight,
 .secondaryButton {
   display: flex;
   align-items: center;
@@ -69,6 +70,13 @@
   text-transform: none;
   user-select: none;
   text-align: center;
+
+  &.secondaryButtonLight {
+    color: $colorPrimary;
+    border: 1px solid $colorLightPurple;
+    outline: 1px solid $colorLightPurple50;
+    background: transparent;
+  }
 
   @media (max-width: $screen-sm) {
     font-size: 18px;
