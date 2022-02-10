@@ -30,12 +30,19 @@
     cursor: not-allowed;
   }
 
+  &.primaryButtonS {
+    font-size: 14px;
+  }
+
   .buttonContent {
-    width: 100%;
+    width: fit-content;
+    white-space: nowrap;
     position: relative;
     z-index: 1;
     display: flex;
     justify-content: center;
+    column-gap: 5px;
+    align-items: center;
   }
 
   & > svg {

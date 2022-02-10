@@ -49,6 +49,7 @@ const Button = ({
         className={classNames(
           className,
           style.primaryButton,
+          style[theme],
           disabled ? style.disabled : null,
         )}
         disabled={disabled}
