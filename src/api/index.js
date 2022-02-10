@@ -352,7 +352,7 @@ const createEventBet = payload => {
 };
 
 const editEventBet = (betId, payload) => {
-  return Api.post(ApiUrls.API_EVENT_BET_EDIT.replace(':betId', betId), payload)
+  return EventsServiceApi.put(`/bets/bet/${betId}`, payload)
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
