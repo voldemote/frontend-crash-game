@@ -33,7 +33,7 @@ import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
 import BetView from '../../components/BetView';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
-import { getEventBySlug } from 'api';
+import { getEventBySlug, getOutcomesHistoryForChart } from 'api';
 
 const BetVTwo = ({
   showPopup,
@@ -44,6 +44,7 @@ const BetVTwo = ({
   fetchTransactions,
   fetchChatMessages,
   handleDislaimerHidden,
+  chartParams,
   bookmarkEvent = () => {},
   bookmarkEventCancel = () => {},
   startOnboardingFlow,
@@ -53,12 +54,11 @@ const BetVTwo = ({
   const [canDeleteEvent, setCanDeleteEvent] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [showChart, setShowChart] = useState(false);
+  const [chartData, setChartData] = useState(null);
 
   const {
-    chartData,
     filterActive,
     handleChartPeriodFilter,
-    handleChartDirectionFilter,
   } = useChartData(event?.bet.id);
 
   const ref = useRef(null);
@@ -71,13 +71,17 @@ const BetVTwo = ({
       if (!_.isEqual(res, event)) {
         setEvent(res);
         setCanDeleteEvent(res.bet?.status === BetState.canceled);
-
         fetchChatMessages(res.id);
-        fetchOpenBets();
-        fetchTransactions();
+        fetchChartHistory(res.bet.id);
       }
     });
   }, [eventSlug]);
+
+  const fetchChartHistory = betId => {
+    getOutcomesHistoryForChart(betId, chartParams).then(history => {
+      setChartData(history);
+    });
+  };
 
   const getStickerStyle = category => {
     const cat = EVENT_CATEGORIES.find(c => c.value === category);
@@ -129,7 +133,7 @@ const BetVTwo = ({
             event={event}
             closed={false}
             showEventEnd={true}
-            handleChartDirectionFilter={handleChartDirectionFilter}
+            // handleChartDirectionFilter={handleChartDirectionFilter}
           />
         </div>
       </div>
@@ -261,14 +265,15 @@ const BetVTwo = ({
                   )}
                 >
                   <div className={styles.chart}>
-                    {((matchMediaMobile && showChart) || !matchMediaMobile) && (
-                      <Chart
-                        height={300}
-                        data={chartData}
-                        filterActive={filterActive}
-                        handleChartPeriodFilter={handleChartPeriodFilter}
-                      />
-                    )}
+                    {((matchMediaMobile && showChart) || !matchMediaMobile) &&
+                      chartData && (
+                        <Chart
+                          height={300}
+                          data={chartData}
+                          filterActive={filterActive}
+                          handleChartPeriodFilter={handleChartPeriodFilter}
+                        />
+                      )}
                   </div>
                 </div>
                 {!matchMediaMobile && (
@@ -374,7 +379,7 @@ const mapStateToProps = state => {
   return {
     authState: state.authentication.authState,
     userId: state.authentication.userId,
-    token: state.authentication.token,
+    chartParams: state.chartParams,
   };
 };
 

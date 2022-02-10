@@ -6,7 +6,11 @@ import Store from '../store';
 import { AuthenticationActions } from 'store/actions/authentication';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
-import {KYC_REFRESH_STATUS, SEND_BUY_WITH_CRYPTO, SEND_BUY_WITH_FIAT} from '../constants/Api';
+import {
+  KYC_REFRESH_STATUS,
+  SEND_BUY_WITH_CRYPTO,
+  SEND_BUY_WITH_FIAT,
+} from '../constants/Api';
 
 const {
   store: { dispatch },
@@ -202,7 +206,9 @@ const updateUserPreferences = (userId, preferences) => {
   })
     .then(response => ({ response }))
     .catch(error => {
-      return { error: (error.response?.message || 'Update user preferences failed') }
+      return {
+        error: error.response?.message || 'Update user preferences failed',
+      };
     });
 };
 
@@ -490,9 +496,12 @@ const signUp = payload => {
 };
 
 const loginExternal = ({ provider, body }) => {
-  return Api.post(ApiUrls.API_AUTH_LOGIN_EXTERNAL.replace(':provider', provider), body)
-    .then((response) => ({ response }))
-    .catch((error) => ({ error: error.response.data }));
+  return Api.post(
+    ApiUrls.API_AUTH_LOGIN_EXTERNAL.replace(':provider', provider),
+    body
+  )
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
 };
 
 const login = payload => {
@@ -534,104 +543,111 @@ const updateStatus = (userId, status) => {
     .catch(error => ({ error: error.response.data }));
 };
 
-const convertCurrency = ({convertFrom, convertTo, amount}) => {
+const convertCurrency = ({ convertFrom, convertTo, amount }) => {
   return Api.get(ApiUrls.CONVERT_CURRENCY, {
     params: {
       convertFrom,
       convertTo,
-      amount
+      amount,
     },
   })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response?.data }));
 };
 
-const generateCryptopayChannel = (body) => {
+const generateCryptopayChannel = body => {
   return Api.post(ApiUrls.GENERATE_CRYPTOPAY_CHANNEL, body)
-    .then(({ data }) => (data.data))
-    .catch((error) => ({ error: error.response?.data }));
-}
+    .then(({ data }) => data.data)
+    .catch(error => ({ error: error.response?.data }));
+};
 
 const getWalletTransactions = () => {
-  return Api.get(ApiUrls.API_USER_WALLET_TRANSACTIONS).catch((error) => {
+  return Api.get(ApiUrls.API_USER_WALLET_TRANSACTIONS).catch(error => {
     console.log('[API Error] called: getWalletTransactions', error);
   });
 };
 
-const getWithdrawQuote = ({amount, network}) => {
-  return WithdrawServiceApi.post(ApiUrls.API_GETQUOTE, {amount, network})
+const getWithdrawQuote = ({ amount, network }) => {
+  return WithdrawServiceApi.post(ApiUrls.API_GETQUOTE, { amount, network })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
 
-const processWithdraw = ({amount, network, toAddress}) => {
-  return WithdrawServiceApi.post(ApiUrls.API_WITHDRAW, {amount, network, 'to_address': toAddress})
+const processWithdraw = ({ amount, network, toAddress }) => {
+  return WithdrawServiceApi.post(ApiUrls.API_WITHDRAW, {
+    amount,
+    network,
+    to_address: toAddress,
+  })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
 
-const getWithdrawStatus = (transactionId) => {
-  return WithdrawServiceApi.post(ApiUrls.API_WITHDRAW_STATUS.replace(':id', transactionId))
+const getWithdrawStatus = transactionId => {
+  return WithdrawServiceApi.post(
+    ApiUrls.API_WITHDRAW_STATUS.replace(':id', transactionId)
+  )
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
 
-const getUserKycData = (userId) => {
+const getUserKycData = userId => {
   return Api.get(ApiUrls.KYC_DATA_FOR_USER.replace(':userId', userId))
     .then(response => ({ response }))
     .catch(error => ({ error: error.message }));
 };
 
-const refreshKycStatus = (userId) => {
+const refreshKycStatus = userId => {
   return Api.get(ApiUrls.KYC_REFRESH_STATUS)
     .then(response => ({ response }))
     .catch(error => ({ error: error.message }));
 };
 
 const getRandomUsername = () => {
-  return Api.get(ApiUrls.RANDOM_USERNAME)
-    .catch(error => ({ error: error.message }));
-}
+  return Api.get(ApiUrls.RANDOM_USERNAME).catch(error => ({
+    error: error.message,
+  }));
+};
 
-const sendBuyWithCrypto = (data) => {
+const sendBuyWithCrypto = data => {
   if (!Api.defaults.headers.common['Authorization']) return;
   return Api.post(ApiUrls.SEND_BUY_WITH_CRYPTO, data)
     .then(response => ({ response }))
-    .catch(error => ({ error: error.message }))
-}
+    .catch(error => ({ error: error.message }));
+};
 
-const sendBuyWithFiat = (data) => {
+const sendBuyWithFiat = data => {
   if (!Api.defaults.headers.common['Authorization']) return;
   return Api.post(ApiUrls.SEND_BUY_WITH_FIAT, data)
     .then(response => ({ response }))
-    .catch(error => ({ error: error.message }))
-}
+    .catch(error => ({ error: error.message }));
+};
 
-const generateMoonpayUrl = (data) => {
+const generateMoonpayUrl = data => {
   if (!Api.defaults.headers.common['Authorization']) return;
   return Api.post(ApiUrls.GENERATE_MOONPAY_URL, data)
     .then(response => ({ response }))
     .catch(error => ({ error: error.message }));
-}
+};
 
 const acceptToS = () => {
   if (!Api.defaults.headers.common['Authorization']) return;
   return Api.post(ApiUrls.ACCEPT_TOS)
-    .then((response) => ({ response }))
-    .catch((error) => ({ error: error.message }));
-}
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
 
 const getUserCount = () => {
   return Api.get(ApiUrls.USER_COUNT)
-    .then((response) => ({ response }))
-    .catch((error) => ({ error: error.message }));
-}
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
 
-const getBonusCount = (bonusId) => {
+const getBonusCount = bonusId => {
   return Api.get(ApiUrls.BONUS_COUNT.replace(':id', bonusId))
-    .then((response) => ({ response }))
-    .catch((error) => ({ error: error.message }));
-}
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.message }));
+};
 
 /// EVENTS-SERVICE API
 
@@ -645,8 +661,7 @@ const createMarketEvent = payload => {
 };
 
 const editMarketEvent = (id, payload) => {
-  return EventsServiceApi
-    .patch(`/admin/market-events/${id}`, payload)
+  return EventsServiceApi.patch(`/admin/market-events/${id}`, payload)
     .then(res => res.data)
     .catch(err => {
       console.log('[API-Error]: editMarketEvent ', err);
@@ -655,8 +670,7 @@ const editMarketEvent = (id, payload) => {
 };
 
 const deleteMarketEvent = id => {
-  return EventsServiceApi
-    .delete(`/admin/market-events/${id}`)
+  return EventsServiceApi.delete(`/admin/market-events/${id}`)
     .then(res => res.data)
     .catch(err => {
       console.log('[API-Error]: deleteMarketEvent ', err);
@@ -677,8 +691,7 @@ const getMarketEvents = (category, statuses) => {
 };
 
 const getEventBySlug = slug => {
-  return EventsServiceApi
-    .get(`/events/market-events/${slug}`)
+  return EventsServiceApi.get(`/events/market-events/${slug}`)
     .then(res => res.data)
     .catch(err => {
       console.log('[API-Error]: getEventBySlug ', err);
@@ -690,9 +703,23 @@ const calculateBuyOutcome = (betId, amount, outcome) => {
   return EventsServiceApi.post(`/bets/${betId}/outcomes/buy`, {
     amount,
     outcome,
-  }).catch(error => {
-    console.log('[API Error] called: calculateBuyOutcome', error);
-  });
+  })
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: calculateBuyOutcome ', err);
+      throw err;
+    });
+};
+
+const getOutcomesHistoryForChart = (betId, params = {}) => {
+  return EventsServiceApi.get(`/bets/${betId}/history`, {
+    params,
+  })
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: getOutcomesHistoryForChart ', err);
+      throw err;
+    });
 };
 
 export {
@@ -776,4 +803,5 @@ export {
   getMarketEvents,
   getEventBySlug,
   calculateBuyOutcome,
+  getOutcomesHistoryForChart,
 };

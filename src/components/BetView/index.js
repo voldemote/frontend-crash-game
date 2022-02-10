@@ -60,7 +60,7 @@ const BetView = ({
   // pullOutBet,
   showPopup,
   isTradeViewPopup,
-  handleChartDirectionFilter,
+  // handleChartDirectionFilter,
   setOpenDrawer,
   resetOutcomes,
   startOnboarding,

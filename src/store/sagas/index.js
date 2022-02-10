@@ -185,10 +185,10 @@ const root = function* () {
       [AuthenticationTypes.ACCEPT_TOS_CONSENT],
       AuthenticationSagas.updateToSConsent
     ),
-    takeLatest(
-      [EventTypes.FETCH_HISTORY_CHART_DATA, EventTypes.UPDATE_CHART_PARAMS],
-      EventSagas.fetchHistoryChartData
-    ),
+    // takeLatest(
+    //   [EventTypes.FETCH_HISTORY_CHART_DATA, EventTypes.UPDATE_CHART_PARAMS],
+    //   EventSagas.fetchHistoryChartData
+    // ),
     takeLatest([EventTypes.FETCH_NEWS_DATA], EventSagas.fetchNewsData),
     takeLatest([EventTypes.CREATE_EVENT], EventSagas.createEvent),
     takeLatest([EventTypes.EDIT_EVENT], EventSagas.editEvent),

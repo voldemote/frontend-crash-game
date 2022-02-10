@@ -123,20 +123,20 @@ const fetchTags = function* (action) {
   }
 };
 
-const fetchHistoryChartData = function* ({ betId, params }) {
-  try {
-    const token = yield select(state => state.authentication.token);
-    Api.setToken(token);
+// const fetchHistoryChartData = function* ({ betId, params }) {
+//   try {
+//     const token = yield select(state => state.authentication.token);
+//     Api.setToken(token);
 
-    const { data } = yield call(() =>
-      Api.getEventHistoryChartData(betId ?? params.betId, params)
-    );
+//     const { data } = yield call(() =>
+//       Api.getOutcomesHistoryForChart(betId ?? params.betId, params)
+//     );
 
-    yield put(EventActions.fetchChartDataSuccess(data));
-  } catch (error) {
-    yield put(EventActions.fetchChartDataFail());
-  }
-};
+//     yield put(EventActions.fetchChartDataSuccess(data));
+//   } catch (error) {
+//     yield put(EventActions.fetchChartDataFail());
+//   }
+// };
 
 const fetchNewsData = function* ({ params }) {
   try {
@@ -261,7 +261,7 @@ export default {
   fetchFilteredEvents,
   fetchHomeEvents,
   fetchTags,
-  fetchHistoryChartData,
+  // fetchHistoryChartData,
   fetchNewsData,
   createEvent,
   editEvent,

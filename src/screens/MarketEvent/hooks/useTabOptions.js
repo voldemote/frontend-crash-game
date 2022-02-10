@@ -6,7 +6,7 @@ import { EventActions } from '../../../store/actions/event';
 export function useTabOptions(event) {
   const [tabOptions, setTabOptions] = useState([
     { name: 'chat', isActive: true },
-    { name: 'news', isActive: false },
+    // { name: 'news', isActive: false },
     { name: 'evidence', isActive: false },
     { name: 'activities', isActive: false },
     // { name: 'all trades', isActive: false },
@@ -17,7 +17,7 @@ export function useTabOptions(event) {
       const updatedTabOptions = tabOptions.filter(item => {
         return (
           event.type === 'streamed' &&
-            item.name !== 'news' &&
+            // item.name !== 'news' &&
             item.name !== 'evidence',
           item.name !== 'activities'
           // item.name !== 'all trades'
