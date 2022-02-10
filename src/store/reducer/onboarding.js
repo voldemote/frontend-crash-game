@@ -11,6 +11,7 @@ export const Order = [
   OnboardingSteps.registerEmail,
   OnboardingSteps.setPhoneNumber,
   OnboardingSteps.phoneVerification,
+  //todo: show success popup
   OnboardingSteps.wallet,
 ];
 

@@ -61,19 +61,19 @@ const setToken = token => {
   WithdrawServiceApi.defaults.headers.common['Authorization'] = authentication;
 };
 
-const requestSms = (phone, ref) => {
-  return Api.post(ApiUrls.API_AUTHENTICATION_REQUEST_SMS_URL, {
+const sendSms = (phone) => {
+  return Api.post(ApiUrls.API_AUTHENTICATION_SEND_SMS, {
     phone,
-    ref,
   })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
 
-const verifySms = (phone, smsToken) => {
-  return Api.post(ApiUrls.API_AUTHENTICATION_VERIFY_SMS_URL, {
+const verifySms = (phone, smsToken, userId) => {
+  return Api.post(ApiUrls.API_AUTHENTICATION_VERIFY_SMS, {
     phone,
     smsToken,
+    userId,
   })
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
@@ -648,7 +648,7 @@ export {
   listEventsFiltered,
   placeBet,
   pullOutBet,
-  requestSms,
+  sendSms,
   saveAdditionalInfo,
   setToken,
   verifySms,
