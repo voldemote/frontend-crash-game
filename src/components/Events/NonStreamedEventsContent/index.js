@@ -6,7 +6,6 @@ import styles from './styles.module.scss';
 import CategoryList from '../../CategoryList';
 import { useMappedActions } from '../hooks/useMappedActions';
 import { useRouteHandling } from '../hooks/useRouteHandling';
-import ContentFooter from 'components/ContentFooter';
 import AdminOnly from 'components/AdminOnly';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
@@ -24,23 +23,22 @@ import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
 
 import {ReactComponent as PlusIcon} from 'data/icons/plus-icon.svg';
-import {ReactComponent as SearchIcon} from 'data/icons/search-input.svg';
-import InputBox from 'components/InputBox';
-import InputBoxTheme from 'components/InputBox/InputBoxTheme';
 import Search from 'components/Search';
 import BuyWFAIRWidget from 'components/BuyWFAIRWidget';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
+import { LOGGED_IN } from 'constants/AuthState';
+import { getMarketEvents } from 'api';
 
 const NonStreamedEventsContent = ({
   categories,
   setCategories,
   showPopup,
   userId,
+  token,
   bookmarkEvent,
   bookmarkEventCancel,
-  events,
-  filteredEvents,
   startOnboarding,
+  authState,
 }) => {
   const eventType = 'non-streamed';
 
@@ -52,12 +50,14 @@ const NonStreamedEventsContent = ({
 
   const { fetchFilteredEvents, resetDefaultParamsValues } =
     useMappedActions(eventType);
+  const [events, setEvents] = useState([]);
 
   const handleSelectCategory = useCallback(
     value => {
+      console.log(value);
       const updatedCats = categories.map(cat => ({
         ...cat,
-        isActive: value !== cat.value,
+        isActive: true,
       }));
 
       setCategories(updatedCats);
@@ -82,49 +82,21 @@ const NonStreamedEventsContent = ({
   const mappedCategories = _.map(categories, c => {
     return {
       ...c,
-      disabled:
-        c.value !== 'all' &&
-        !events.some(e => {
-          return (
-            e.type === eventType &&
-            e.category === c.value &&
-            e.bets?.some(
-              b => b.published && ['closed', 'active'].includes(b.status)
-            )
-          );
-        }),
+      disabled: false,
     };
-  });
-
-  const allBets = filteredEvents.reduce((acc, current) => {
-    const bets = current.bets.map(bet => ({
-      ...bet,
-      eventSlug: current.slug,
-      previewImageUrl: current.previewImageUrl,
-      tags: mappedTags(current._id),
-      category: current.category,
-      eventId: current._id,
-      bookmarks: current.bookmarks,
-    }));
-    const concat = [...acc, ...bets];
-    return concat;
-  }, []);
-
-  const filteredBets = allBets.filter(bet => {
-    return bet.published && statusWhitelist.includes(bet.status);
   });
 
   useEffect(() => {
     handleSelectCategory(category);
-
-    fetchFilteredEvents({
-      category: encodedCategory,
-      sortBy: 'date',
-      count: 0,
+    getMarketEvents(
+      category,
+      status === 'current'
+        ? ['ACTIVE']
+        : ['RESOLVED', 'CANCELLED', 'CLOSED', 'WAITING_RESOLUTION', 'DISPUTED']
+    ).then(res => {
+      setEvents(res);
     });
-  }, [category]);
-
-  useEffect(() => () => resetDefaultParamsValues(), []);
+  }, [category, status]);
 
   const handleHelpClick = useCallback(event => {
     showPopup(PopupTheme.explanation, {
@@ -167,74 +139,62 @@ const NonStreamedEventsContent = ({
               handleChange={setSearchTerm}
               handleConfirm={onConfirmSearch}
             />
-            <Button theme={ButtonTheme.primaryButtonS} className={styles.createButton}><PlusIcon /><span>Create an event</span></Button>
+            {authState === LOGGED_IN && (
+              <Button 
+                theme={ButtonTheme.primaryButtonS} 
+                onClick={() => showPopup(PopupTheme.newEvent, { eventType })} 
+                className={styles.createButton}
+              >
+                <PlusIcon />
+                <span>Create an event</span>
+              </Button>
+            )}
           </div>
-
-          
         </div>
       </section>
 
       <section className={classNames([styles.main, styles.notStreamed])}>
         <StatusTabs onSelect={setStatus} />
 
-          
-        {/* <div
-          className={styles.newEventLink}
-          onClick={() => showPopup(PopupTheme.newEvent, { eventType })}
-        >
-          <Icon
-            className={styles.newEventIcon}
-            iconType={IconType.addYellow}
-            iconTheme={IconTheme.white}
-            height={25}
-            width={25}
-          />
-          <span>New Event</span>
-        </div> */}
-          
-
         <div className={styles.nonStreamed}>
-          {filteredBets
-            .filter(item => item.eventSlug && item.slug)
-            .map(item => (
-              <Link
-                className={styles.betLinkWrapper}
-                to={{
-                  pathname: `/trade/${item.eventSlug}/${item.slug}`,
-                  state: { fromLocation: location },
+          {events.map(item => (
+            <Link
+              className={styles.betLinkWrapper}
+              to={{
+                pathname: `/trade/${item.slug}/${item.bet.slug}`,
+                state: { fromLocation: location },
+              }}
+              key={item.bet.id}
+            >
+              <BetCard
+                item={item.bet}
+                key={item.id}
+                betId={item.bet.id}
+                title={item.bet.market_question}
+                organizer={''}
+                viewers={12345}
+                state={item.bet.status}
+                tags={item.tags}
+                image={item.preview_image_url}
+                eventEnd={item.bet.end_date}
+                category={item.category}
+                isBookmarked={!!item?.bookmarks?.includes(userId)}
+                onBookmark={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (!userId) {
+                    return showJoinPopup(e);
+                  }
+                  bookmarkEvent(item.id);
                 }}
-                key={item._id}
-              >
-                <BetCard
-                  item={item}
-                  key={item._id}
-                  betId={item._id}
-                  title={item.marketQuestion}
-                  organizer={''}
-                  viewers={12345}
-                  state={item.status}
-                  tags={item.tags}
-                  image={item.previewImageUrl}
-                  eventEnd={item.endDate}
-                  // outcomes={item.outcomes}
-                  category={item.category}
-                  isBookmarked={!!item?.bookmarks?.includes(userId)}
-                  onBookmark={e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (!userId) {
-                      return showJoinPopup(e);
-                    }
-                    bookmarkEvent(item.eventId);
-                  }}
-                  onBookmarkCancel={e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    bookmarkEventCancel(item.eventId);
-                  }}
-                />
-              </Link>
-            ))}
+                onBookmarkCancel={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  bookmarkEventCancel(item.id);
+                }}
+              />
+            </Link>
+          ))}
         </div>
         
         <Button theme={ButtonTheme.secondaryButton}>Load more</Button>
@@ -275,15 +235,14 @@ const mapDispatchToProps = dispatch => {
     },
     startOnboarding: () => {
       dispatch(OnboardingActions.start());
-    }
+    },
   };
 };
 
 function mapStateToProps(state) {
   return {
+    authState: state.authentication.authState,
     userId: state.authentication.userId,
-    events: state.event.events,
-    filteredEvents: state.event.filteredEvents,
   };
 }
 

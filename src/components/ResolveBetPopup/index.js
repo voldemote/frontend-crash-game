@@ -9,9 +9,8 @@ import { connect } from 'react-redux';
 import { PopupActions } from 'store/actions/popup';
 import styles from './styles.module.scss';
 
-const ResolveBetPopup = ({ events, betId, eventId, hidePopup, visible }) => {
-  const event = _.find(events, { _id: eventId });
-  const bet = _.find(_.get(event, 'bets', []), { _id: betId });
+const ResolveBetPopup = ({ event, hidePopup, visible }) => {
+  const bet = event.bet;
   const betOutcomes = _.get(bet, 'outcomes').map(({ index, name }) => ({
     value: String(index),
     label: name,
@@ -40,12 +39,12 @@ const ResolveBetPopup = ({ events, betId, eventId, hidePopup, visible }) => {
     } else {
       setEvidenceDescription(_.get(bet, 'evidenceDescription', null));
     }
-  }, [visible, betId]);
+  }, [visible, bet]);
 
   const resolveBet = () => {
     setIsResolving(true);
 
-    Api.resolveBet(betId, {
+    Api.resolveBet(bet.id, {
       evidenceActual: evidenceActual,
       evidenceDescription: evidenceDescription,
       outcomeIndex: +outcome,
@@ -93,7 +92,6 @@ const ResolveBetPopup = ({ events, betId, eventId, hidePopup, visible }) => {
 
 const mapStateToProps = state => {
   return {
-    events: state.event.events,
     visible:
       state.popup.visible && PopupTheme.resolveBet === state.popup.popupType,
   };

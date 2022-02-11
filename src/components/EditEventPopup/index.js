@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import AdminEventForm from 'components/AdminEventForm';
 import styles from './styles.module.scss';
 
-const EditEventPopup = () => {
+const EditEventPopup = ({ token }) => {
   const event = useSelector(state => state.popup.options);
 
   return (

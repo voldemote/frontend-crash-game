@@ -126,10 +126,10 @@ const root = function* () {
       ],
       AlertSagas.handleShown
     ),
-    takeLatest([EventTypes.FETCH_ALL], EventSagas.fetchAll),
+    // takeLatest([EventTypes.FETCH_ALL], EventSagas.fetchAll),
     takeLatest([EventTypes.FETCH_ALL_SUCCEEDED], EventSagas.fetchAllSucceeded),
     takeLatest([EventTypes.FETCH_FILTERED], EventSagas.fetchFilteredEvents),
-    takeEvery([EventTypes.FETCH_HOME_EVENTS], EventSagas.fetchHomeEvents),
+    // takeEvery([EventTypes.FETCH_HOME_EVENTS], EventSagas.fetchHomeEvents),
     takeLatest([BetTypes.PLACE], BetSagas.place),
     takeLatest([BetTypes.CREATE], BetSagas.create),
     takeLatest([BetTypes.EDIT], BetSagas.edit),
@@ -142,10 +142,10 @@ const root = function* () {
       BetSagas.fetchOpenBetsSucceeded
     ),
     takeEvery([BetTypes.PULL_OUT_BET], BetSagas.pullOut),
-    takeLatest(
-      [TransactionTypes.FETCH_ALL],
-      TransactionSagas.fetchTransactions
-    ),
+    // takeLatest(
+    //   [TransactionTypes.FETCH_ALL],
+    //   TransactionSagas.fetchTransactions
+    // ),
     takeEvery([UserTypes.FETCH], UserSagas.fetch),
     takeEvery([UserTypes.FETCH_SUCCEEDED], UserSagas.fetchSucceeded),
     takeLatest([UserTypes.UPDATE_PREFERENCES], UserSagas.updatePreferences),
@@ -180,10 +180,10 @@ const root = function* () {
       [AuthenticationTypes.ACCEPT_TOS_CONSENT],
       AuthenticationSagas.updateToSConsent
     ),
-    takeLatest(
-      [EventTypes.FETCH_HISTORY_CHART_DATA, EventTypes.UPDATE_CHART_PARAMS],
-      EventSagas.fetchHistoryChartData
-    ),
+    // takeLatest(
+    //   [EventTypes.FETCH_HISTORY_CHART_DATA, EventTypes.UPDATE_CHART_PARAMS],
+    //   EventSagas.fetchHistoryChartData
+    // ),
     takeLatest([EventTypes.FETCH_NEWS_DATA], EventSagas.fetchNewsData),
     takeLatest([EventTypes.CREATE_EVENT], EventSagas.createEvent),
     takeLatest([EventTypes.EDIT_EVENT], EventSagas.editEvent),

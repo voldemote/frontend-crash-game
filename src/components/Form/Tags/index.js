@@ -17,17 +17,17 @@ const Tags = ({
   return (
     <div className={styles.tags}>
       {tags.map((tag, index) => (
-        <div key={tag._id} className={styles.tag}>
+        <div key={tag.id} className={styles.tag}>
           <Input
             type="text"
             value={tags[index].name}
-            onChange={value => onTagChange(value, tag._id)}
+            onChange={value => onTagChange(value, tag.id)}
             className={styles.tagInput}
           />
           {!preventRemove && (
             <span
               className={styles.deleteTag}
-              onClick={() => removeTag(tag._id)}
+              onClick={() => removeTag(tag.id)}
             >
               x
             </span>

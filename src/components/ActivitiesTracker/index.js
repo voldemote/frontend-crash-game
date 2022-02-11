@@ -165,7 +165,7 @@ const ActivitiesTracker = ({
       const newFiltered = activities.filter(item => {
         if (selectedCategoryLower === 'all') {
           if (betId) {
-            return item?.data?.bet?._id === betId;
+            return item?.data?.bet?.id === betId;
           }
 
           if (userId) {
