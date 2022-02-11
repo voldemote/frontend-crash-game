@@ -9,6 +9,8 @@ import {
   Tags,
   InputError,
 } from '../Form';
+import { useHistory } from 'react-router';
+import Routes from '../../constants/Routes';
 import { LIVE_EVENTS_CATEGORIES } from 'constants/EventCategories';
 import styles from './styles.module.scss';
 import { connect } from 'react-redux';
@@ -21,6 +23,8 @@ import classNames from 'classnames';
 import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
 import { EventActions } from 'store/actions/event';
+import uuid from 'uuid';
+import { createMarketEvent, editMarketEvent } from 'api';
 
 const categoriesOptions = LIVE_EVENTS_CATEGORIES.map(c => ({
   label: c.value,
@@ -32,9 +36,12 @@ const AdminEventForm = ({
   eventSlugs,
   hidePopup,
   eventType,
-  createEvent,
-  editEvent,
+  createEventSuccess,
+  createEventFail,
+  editEventSuccess,
+  editEventFail
 }) => {
+  const history = useHistory();
   const isStreamedEventType = eventType === eventTypes.streamed;
 
   const [name, setName, nameErrors] = useValidatedState(event?.name, [
@@ -50,8 +57,8 @@ const AdminEventForm = ({
     streamUrlInitialValue,
     (isStreamedEventType && [Validators.required, Validators.isUrl]) || []
   );
-  const [previewImageUrl, setPreviewImageUrl, previewImageUrlErrors] =
-    useValidatedState(event?.previewImageUrl, [
+  const [preview_image_url, set_preview_image_url, preview_image_url_errors] =
+    useValidatedState(event?.preview_image_url, [
       Validators.required,
       Validators.isUrl,
     ]);
@@ -59,7 +66,7 @@ const AdminEventForm = ({
     event?.category || categoriesOptions[0].value
   );
   const [tags, setTags, tagsErrors] = useValidatedState(
-    event?.tags || [{ _id: Date.now().toString(), name: '' }],
+    event?.tags || [{ id: uuid.v4(), name: '' }],
     [Validators.minLength(1), Validators.requiredTags]
   );
   const [date, setDate, dateErrors] = useValidatedState(
@@ -75,7 +82,7 @@ const AdminEventForm = ({
       nameErrors,
       slugErrors,
       streamUrlErrors,
-      previewImageUrlErrors,
+      preview_image_url_errors,
       categoryErrors,
       tagsErrors,
       dateErrors,
@@ -92,40 +99,66 @@ const AdminEventForm = ({
   };
 
   const handleSave = () => {
-    const newEvent = {
+    const eventData = {
       name,
       slug,
-      previewImageUrl,
-      streamUrl: isStreamedEventType ? streamUrl : 'dummy',
+      preview_image_url,
       category,
-      tags: tags.map(t => ({ name: t.name })).filter(t => t.name !== ''),
-      date,
-      type: event ? event.type : eventType,
-      ...(!isStreamedEventType && { bet: betData }),
+      tags,
+      bet: {
+        description: betData.description,
+        start_date: date,
+        end_date: betData.endDate,
+        evidence_description: betData.evidenceDescription,
+        evidence_source: betData.evidenceSource,
+        liquidity: betData.liquidity,
+        market_question: betData.marketQuestion,
+        outcomes: betData.outcomes,
+        slug: betData.slug,
+      },
     };
 
     if (event) {
-      editEvent({ eventId: event._id, event: newEvent });
+      editMarketEvent(event.id, eventData)
+        .then(res => {
+          history.push(
+            Routes.getRouteWithParameters(Routes.event, {
+              eventSlug: res.slug,
+            })
+          );
+          editEventSuccess();
+        })
+        .catch(() => {
+          editEventFail();
+        });
     } else {
-      createEvent({ event: newEvent });
+      createMarketEvent(eventData)
+        .then(res => {
+          history.push(
+            Routes.getRouteWithParameters(Routes.event, {
+              eventSlug: res.slug,
+            })
+          );
+          createEventSuccess();
+        })
+        .catch(() => {
+          createEventFail();
+        });
     }
   };
 
   const handleTagChange = (name, id) => {
     setTags(prevTags =>
-      prevTags.map(tag => (tag._id === id ? { ...tag, name } : tag))
+      prevTags.map(tag => (tag.id === id ? { ...tag, name } : tag))
     );
   };
 
   const addTag = () => {
-    setTags(prevTags => [
-      ...prevTags,
-      { _id: Date.now().toString(), name: '' },
-    ]);
+    setTags(prevTags => [...prevTags, { id: uuid.v4(), name: '' }]);
   };
 
   const removeTag = id => {
-    setTags(prevTags => prevTags.filter(tag => tag._id !== id));
+    setTags(prevTags => prevTags.filter(tag => tag.id !== id));
   };
 
   const fgClasses = (err, ...args) =>
@@ -161,16 +194,16 @@ const AdminEventForm = ({
 
       {isStreamedEventType && renderStreamInput()}
 
-      <FormGroup className={fgClasses(previewImageUrlErrors)}>
+      <FormGroup className={fgClasses(preview_image_url_errors)}>
         <InputLabel>
           {isStreamedEventType ? 'Offline Picture URL' : 'Event Image URL'}
         </InputLabel>
         <Input
           type="text"
-          value={previewImageUrl}
-          onChange={setPreviewImageUrl}
+          value={preview_image_url}
+          onChange={set_preview_image_url}
         />
-        <InputError errors={previewImageUrlErrors} />
+        <InputError errors={preview_image_url_errors} />
       </FormGroup>
 
       <FormGroup className={fgClasses(categoryErrors)}>
@@ -245,11 +278,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createEvent: payload => {
-      dispatch(EventActions.createEvent(payload));
+    createEventSuccess: () => {
+      dispatch(EventActions.createEventSuccess());
     },
-    editEvent: payload => {
-      dispatch(EventActions.editEvent(payload));
+    createEventFail: () => {
+      dispatch(EventActions.createEventFail());
+    },
+    editEventSuccess: () => {
+      dispatch(EventActions.editEventSuccess());
+    },
+    editEventFail: () => {
+      dispatch(EventActions.editEventFail());
     },
   };
 };

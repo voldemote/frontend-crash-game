@@ -24,8 +24,10 @@ const TokenNumberInput = ({
     // @TODO: this needs refactoring imo, a validation function, a base form component that this could based upon or render and may be even refactor the parent forms to a lib like react-final-form or similar
     let targetValue = value;
 
+    const max = _.toNumber(maxValue);
+
     // make sure value is not above maxValue (if given)
-    if (maxValue && targetValue > _.toNumber(maxValue)) {
+    if (max > 0 && targetValue > max) {
       targetValue = maxValue;
     }
 

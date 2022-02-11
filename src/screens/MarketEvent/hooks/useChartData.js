@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { EventActions } from '../../../store/actions/event';
 
@@ -10,11 +9,9 @@ export function useChartData(betId) {
   const currentParams = useRef({
     rangeType: 'hour',
     rangeValue: '24',
-    direction: 'BUY',
   });
 
-  const chartData = useSelector(state => state.event.chartData);
-  const chartParams = useSelector(state => state.event.chartParams);
+  const chartParams = useSelector(state => state.chartParams);
 
   const filterMap = {
     '24H': {
@@ -43,16 +40,6 @@ export function useChartData(betId) {
     }
   };
 
-  const handleChartDirectionFilter = (directionIndex = 0) => {
-    if (betId) {
-      currentParams.current.direction = directionIndex === 0 ? 'BUY' : 'SELL';
-
-      dispatch(
-        EventActions.updateChartParams(betId, { ...currentParams.current })
-      );
-    }
-  };
-
   useEffect(() => {
     if (betId) {
       if (chartParams) {
@@ -65,16 +52,12 @@ export function useChartData(betId) {
         );
         if (active) setFilterActive(active);
       }
-      dispatch(
-        EventActions.initiateFetchChartData(betId, currentParams.current)
-      );
     }
   }, [betId]);
 
   return {
-    chartData,
     filterActive,
     handleChartPeriodFilter,
-    handleChartDirectionFilter,
+    // handleChartDirectionFilter,
   };
 }

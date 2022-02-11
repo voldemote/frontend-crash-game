@@ -30,58 +30,19 @@ const ActivityMessage = ({ activity, date, users, events }) => {
   }, [date, updateDateText]);
 
   const getEventUrl = data => {
-    const event = _.get(data, 'event');
-    const eventType = _.get(event, 'type');
-    const eventSlug = _.get(event, 'slug');
-    const bets = _.get(event, 'bets', []);
+    const eventSlug = _.get(data, 'slug');
+    const betSlug = _.get(data, 'bet.slug');
 
-    if (eventType === 'streamed') {
-      const bet = _.get(data, 'bet');
-      let thisUrl = `${window.location.origin}/trade/${_.get(event, 'slug')}`;
-
-      if (bet) {
-        thisUrl = `${window.location.origin}/trade/${_.get(
-          event,
-          'slug'
-        )}/${_.get(bet, 'slug')}`;
-      }
-
-      return (
-        <a
-          className={'global-link-style'}
-          target={'_blank'}
-          href={thisUrl}
-          rel="noreferrer"
-        >
-          {_.get(event, 'name')}
-        </a>
-      );
-    } else if (eventType === 'non-streamed' && bets.length === 1) {
-      return (
-        <a
-          className={'global-link-style'}
-          target={'_blank'}
-          href={`${window.location.origin}/trade/${eventSlug}/${_.get(
-            bets,
-            '[0].slug'
-          )}`}
-          rel="noreferrer"
-        >
-          {_.get(event, 'bets[0].marketQuestion')}
-        </a>
-      );
-    } else {
-      return (
-        <a
-          className={'global-link-style'}
-          target={'_blank'}
-          href={`${window.location.origin}/trade/${eventSlug}/bet`}
-          rel="noreferrer"
-        >
-          {_.get(event, 'name')}
-        </a>
-      );
-    }
+    return (
+      <a
+        className={'global-link-style'}
+        target={'_blank'}
+        href={`${window.location.origin}/trade/${eventSlug}/${betSlug}`}
+        rel="noreferrer"
+      >
+        {_.get(data, 'name')}
+      </a>
+    );
   };
 
   const getUserProfileUrl = data => {

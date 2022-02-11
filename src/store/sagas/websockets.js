@@ -18,6 +18,7 @@ import trackedActivities from '../../components/ActivitiesTracker/trackedActivit
 import { GAMES } from '../../constants/Games';
 import { UserActions } from '../actions/user';
 import { ObjectId } from '../../helper/Games';
+import * as Api from '../../api';
 
 function createSocketChannel(socket) {
   return eventChannel(emit => {
@@ -366,11 +367,8 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
 
   if (currentAction[0] === 'trade' || pathSlugs[0] === 'trade') {
     const eventSlug = pathSlugs[1];
-    const events = yield select(state => state.event.events);
-    const event = events.find(
-      e => e.slug === (!!currentAction[1] ? currentAction[1] : eventSlug)
-    );
-    if (event) newRoomsToJoin.push(event._id);
+    const event = yield call(Api.getEventBySlug, !!currentAction[1] ? currentAction[1] : eventSlug);
+    if (event) newRoomsToJoin.push(event.id);
   }
 
   if (
