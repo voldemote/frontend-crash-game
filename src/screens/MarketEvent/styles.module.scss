@@ -67,9 +67,18 @@
       padding: 0 0 40px;
       justify-content: space-between;
 
+      @media (max-width: $screen-sm) {
+        flex-direction: column;
+        padding: 20px 0;
+      }
+
       .backButtonTitle {
         display: flex;
         align-items: center;
+
+        @media (max-width: $screen-sm) {
+          align-self: flex-start;
+        }
 
         & > button {
           width: 30px;
@@ -86,6 +95,10 @@
       .timerShareContainer {
         display: flex;
         align-items: center;
+
+        @media (max-width: $screen-sm) {
+          padding: 20px 0 15px;
+        }
       }
     }
 
@@ -658,7 +671,7 @@
   align-items: baseline;
   color: $colorWhite;
   column-gap: 10px;
-  padding: 6px 16px;
+  padding: 6px 16px 6px 0;
 
   .timerLabel {
     color: $colorWhite;
