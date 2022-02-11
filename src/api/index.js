@@ -693,10 +693,9 @@ const getEventBySlug = slug => {
     });
 };
 
-const calculateBuyOutcome = (betId, amount, outcome) => {
+const calculateBuyOutcome = (betId, amount) => {
   return EventsServiceApi.post(`/bets/${betId}/outcomes/buy`, {
     amount,
-    outcome,
   })
     .then(res => res.data)
     .catch(err => {

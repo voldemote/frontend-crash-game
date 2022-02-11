@@ -46,6 +46,7 @@ import BetActionsMenu from 'components/BetActionsMenu';
 import { trackNonstreamedEventPlaceTrade } from '../../config/gtm';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { calculateBuyOutcome } from 'api';
+import { calculateGain } from 'helper/Calculation';
 
 const BetView = ({
   event,
@@ -80,7 +81,7 @@ const BetView = ({
   const defaultBetValue = 50;
   const bet = event.bet;
   const state = _.get(bet, 'status');
-  const outcomes = _.get(useSelector(selectOutcomes), 'outcomes', {});
+  // const outcomes = _.get(useSelector(selectOutcomes), 'outcomes', {});
   const sellOutcomes = _.get(useSelector(selectSellOutcomes), 'outcomes', {});
   const userLoggedIn = useSelector(
     state => state.authentication.authState === 'LOGGED_IN'
@@ -99,6 +100,7 @@ const BetView = ({
   const [convertedCommitment, setConvertedCommitment] = useState(
     convert(commitment, currency)
   );
+  const [outcomes, setOutcomes] = useState({});
 
   const hasMounted = useHasMounted();
 
@@ -161,10 +163,14 @@ const BetView = ({
   );
 
   const fetchOutcomes = () => {
-    bet.outcomes.forEach(outcome => {
-      calculateBuyOutcome(bet.id, commitment, outcome.index).then(res => {
-        console.log(res);
-      });
+    calculateBuyOutcome(bet.id, commitment).then(res => {
+      setOutcomes(res.reduce((map, b) => {
+        map[b.index] = {
+          outcome: b.outcome,
+          gain: calculateGain(commitment, b.outcome),
+        };
+        return map;
+      }, {}));
     });
   };
 
@@ -313,7 +319,9 @@ const BetView = ({
           setValue={onTokenNumberChange}
           currency={currency}
           errorText={commitmentErrorText}
-          maxValue={formatToFixed(userLoggedIn ? balance : BALANCE_NOT_LOGGED)}
+          maxValue={formatToFixed(
+            userLoggedIn ? balance : BALANCE_NOT_LOGGED
+          )}
           dataTrackingIds={{
             inputFieldHalf: 'nonstreamed-event-input-field-half',
             inputFieldDouble: 'nonstreamed-event-input-field-double',
