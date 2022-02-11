@@ -1,181 +1,55 @@
-import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import styles from './styles.module.scss';
 import { useHistory } from 'react-router-dom';
-import { isMobile, isTablet } from 'react-device-detect';
 import { connect, useDispatch } from 'react-redux';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { dataLayerPush, trackWalletAddWfair } from 'config/gtm';
 import { PopupActions } from 'store/actions/popup';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { GeneralActions } from 'store/actions/general';
-import * as ApiUrls from 'constants/Api';
 import authState from 'constants/AuthState';
+import Routes from 'constants/Routes';
 
-const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId}) => {
+const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId, showPopup}) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const carouselLinks = {
-    landingpage: !loggedIn ? [
-      // 'hello-human',
-      'deposit-bonus-nonlogged',
-    ] : [
-      'deposit-bonus', 
-      'verify-kyc',
-    ],
-
-    games: [
-      loggedIn || isMobile ? '/external-game/Cappadocia/Games' : 'hello-human',
-      '/external-game/MoonStone/Slots',
-      '/external-game/Samurai/Slots',
-      '/external-game/BlazingHot40/Slots',
-      '/external-game/Fruit5/Slots',
-      '/external-game/JetX3/XGames',
-      '/external-game/JetX/JetX',
-      '/external-game/Balloon/Games',
-    ]
-  };
-
-  const openFractal = () => {
-    const kycUrl = ApiUrls.BACKEND_URL + ApiUrls.KYC_START_FOR_USER.replace(':userId', userId);
-    window.open(kycUrl, "fractal", "width=480,height=700,top=150,left=150");
-  }
+  const carouselLinks = [
+      'create-events',
+      'fun-events',
+      'bonus',
+  ];
 
   const onClickItem = itemIndex => {
-    switch(carouselLinks[carouselType][itemIndex]) {
-      // case 'hello-human':
-      //   dispatch(OnboardingActions.start());
-      //   dataLayerPush({
-      //     event:'gtm.click',
-      //     'gtm.elementId': 'banner--hello-human',
-      //   });
-      //   break;
-      case 'deposit-bonus-nonlogged':
-        dispatch(OnboardingActions.start());
+    switch(carouselLinks[itemIndex]) {
+      case 'create-events':
+        if (loggedIn) {
+          history.push(Routes.getRouteWithParameters(Routes.events, {category: 'all'}));
+          showPopup(PopupTheme.newEvent, { eventType: 'non-streamed' });
+        } else {
+          dispatch(OnboardingActions.start());
+          dataLayerPush({
+            event:'gtm.click',
+            'gtm.elementId': 'banner--create-events',
+          });
+        }
+        break;
+      case 'fun-events':
+        history.push(Routes.getRouteWithParameters(Routes.events, {category: 'all'}));
         dataLayerPush({
           event:'gtm.click',
-          'gtm.elementId': 'banner--deposit-bonus-nonlogged',
+          'gtm.elementId': 'banner--fun-events',
         });
         break;
-      case 'deposit-bonus':
-        showWalletDepositPopup();
+      case 'bonus':
+        history.push(Routes.leaderboard);
         dataLayerPush({
           event:'gtm.click',
-          'gtm.elementId': 'banner--deposit-bonus',
+          'gtm.elementId': 'banner--bonus',
         });
-        break;
-      case 'verify-kyc':      
-        openFractal();
-        dataLayerPush({
-          event:'gtm.click',
-          'gtm.elementId': 'banner--verify-kyc',
-        });
-        break;
-      default:
-        history.push(carouselLinks[carouselType][itemIndex]);
         break;
     }
   };
-
-  const renderGames = () => {
-    return (
-      <Carousel
-        className={styles.carousel}
-        autoPlay
-        interval={5000}
-        transitionTime={800}
-        infiniteLoop={true}
-        stopOnHover={false}
-        showArrows={true}
-        showStatus={false}
-        showIndicators={false}
-        showThumbs={false}
-        onClickItem={onClickItem}
-      >
-      <div>
-        <img
-          alt=""
-          src={(loggedIn || isMobile) ? "https://files.wallfair.io/alpacasino/games-carousel/games-1.jpeg" : "https://files.wallfair.io/alpacasino/games-carousel/sliderhuman.jpg"}
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-2.jpeg"
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-3.jpeg"
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-4.jpeg"
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-5.jpeg"
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-6.jpeg"
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-7.jpeg"
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src="https://files.wallfair.io/alpacasino/games-carousel/games-8.jpeg"
-        />
-      </div>
-    </Carousel>
-    )
-  }
-
-  const renderLandingPageSlidesLoggedIn = () => {
-    return (
-      <Carousel
-        className={styles.carousel}
-        autoPlay
-        interval={7000}
-        transitionTime={800}
-        infiniteLoop={true}
-        stopOnHover={false}
-        showArrows={true}
-        showStatus={false}
-        showIndicators={false}
-        showThumbs={false}
-        onClickItem={onClickItem}
-      >
-      <div>
-        <img
-          alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/deposit-bonus-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
-        />
-      </div>
-      <div>
-        <img
-          alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/verify-kyc-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
-        />
-      </div>
-      
-    </Carousel>
-    )
-  }
 
   const renderLandingPageSlides = () => {
     return (
@@ -192,27 +66,31 @@ const CustomCarousel = ({loggedIn, carouselType = 'games', showWalletDepositPopu
         showThumbs={false}
         onClickItem={onClickItem}
       >
-      {/* <div>
-        <img
-          alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/hello-human-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
-        />
-      </div> */}
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/alpacasino/landingpage-carousel/deposit-bonus-${!isMobile || isTablet ? 'desktop' : 'mobile'}.jpg`}
+          src={`https://files.wallfair.io/landingpage-carousel/slide_create_own_event.jpg?v=2`}
         />
       </div>
-      
+      <div>
+        <img
+          alt=""
+          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=2`}
+        />
+      </div>
+      <div>
+        <img
+          alt=""
+          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=2`}
+        />
+      </div>
     </Carousel>
     )
   }
 
   return (
     <div className={styles.carouselContainer}>
-      {carouselType === 'games' && renderGames()}
-      {carouselType === 'landingpage' && (loggedIn ? renderLandingPageSlidesLoggedIn() : renderLandingPageSlides())}
+      {renderLandingPageSlides()}
     </div>
   );
 };
@@ -227,6 +105,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
+    },
     showWalletDepositPopup: () => {
       trackWalletAddWfair();
       dispatch(PopupActions.show({ popupType: PopupTheme.walletDeposit }));
