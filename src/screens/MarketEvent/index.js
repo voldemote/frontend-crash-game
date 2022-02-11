@@ -136,7 +136,7 @@ const MarketEvent = ({
             event={event}
             closed={false}
             showEventEnd={true}
-            // handleChartDirectionFilter={handleChartDirectionFilter}
+            fetchChartHistory={fetchChartHistory}
           />
         </div>
       </div>
