@@ -159,22 +159,18 @@
 
   .shareButton {
     display: flex;
-    color: $colorBlack;
-    background-color: $colorLightYellow;
-    border: 1px solid $colorDarkSlateGray;
-    text-align: center;
-    padding: 4px 8px;
-    border-radius: 10px;
+    padding: 7px;
     cursor: pointer;
-    font-size: 15px;
     position: relative;
   }
 
   .shareIcon {
     width: 18px;
     line-height: 1;
-    margin-right: 6px;
-    color: $colorYellowLight;
+
+    svg > * {
+      fill: #fff;
+    }
   }
 }
 

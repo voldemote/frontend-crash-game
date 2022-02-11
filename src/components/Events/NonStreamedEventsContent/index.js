@@ -48,8 +48,8 @@ const NonStreamedEventsContent = ({
   const [status, setStatus] = useState('current');
   const [searchTerm, setSearchTerm] = useState();
 
-  const { fetchFilteredEvents, resetDefaultParamsValues } =
-    useMappedActions(eventType);
+  // const { fetchFilteredEvents, resetDefaultParamsValues } =
+  //   useMappedActions(eventType);
   const [events, setEvents] = useState([]);
 
   const handleSelectCategory = useCallback(
@@ -155,9 +155,11 @@ const NonStreamedEventsContent = ({
 
       <section className={classNames([styles.main, styles.notStreamed])}>
         <StatusTabs onSelect={setStatus} />
-
+        
+        {(events.length === 0) && <span className={styles.notFound}>No events found in this category</span>}
+        
         <div className={styles.nonStreamed}>
-          {events.map(item => (
+          {events && events.map(item => (
             <Link
               className={styles.betLinkWrapper}
               to={{

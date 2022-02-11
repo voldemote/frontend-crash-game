@@ -6,14 +6,29 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-top: 21px;
+  // padding-top: 21px;
   padding-bottom: 12px;
   background-color: $colorWhite;
   color: $colorPrimaryDark;
   border-radius: 10px;
+  // overflow: hidden;
 
   &.isPopup {
     padding-top: 0;
+  }
+
+  .imageContainer {
+    width: 100%;
+    max-height: 147px;
+    overflow: hidden;
+    margin-bottom: 35px;
+    border-radius: 10px 10px 0 0;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .backButton {
@@ -106,7 +121,7 @@
     color: $colorPrimaryDark;
     text-align: center;
     font-family: $fontDMSans;
-    font-size: 18px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
@@ -152,6 +167,17 @@
       display: flex;
       flex-direction: row;
       align-items: flex-start;
+    }
+
+    .tokenNumberInput {
+      height: 60px;
+      border-radius: 6px;
+      background: $colorGrayLight;
+      border: none;
+
+      & > * {
+        color: $colorPrimary;
+      }
     }
 
     .labelWrapper {
@@ -222,7 +248,7 @@
     width: 100%;
     font-size: 16px;
     margin-bottom: auto;
-    display: contents;
+    justify-content: center;
 
     @media (min-width: $screen-sm) {
       margin-bottom: 20px;
@@ -231,9 +257,14 @@
 
     .betButton {
       background-color: transparent;
-      margin-bottom: 12px;
       cursor: pointer;
-      width: 300px;
+      margin: 20px auto;
+      width: 100%;
+
+      @media (max-width: $screen-sm) {
+        max-width: 300px;
+        margin: 5px auto 20px;
+      }
 
       &.sellButton {
         margin-left: 25%;
@@ -413,8 +444,8 @@
   padding-top: 20px;
 }
 
-.nonStreamedQuestion {
-  @media screen and (min-width: 992px) {
-    display: none;
-  }
-}
+// .nonStreamedQuestion {
+//   @media screen and (min-width: 992px) {
+//     display: none;
+//   }
+// }

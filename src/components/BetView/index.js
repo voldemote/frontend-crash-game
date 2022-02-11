@@ -41,6 +41,7 @@ import { trackNonstreamedEventPlaceTrade } from '../../config/gtm';
 import { OnboardingActions } from 'store/actions/onboarding';
 import { calculateBuyOutcome, placeBet } from 'api';
 import { calculateGain } from 'helper/Calculation';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const BetView = ({
   event,
@@ -280,6 +281,16 @@ const BetView = ({
     );
   };
 
+  const renderImage = () => {
+    const key = 'preview_image_url';
+    const imgUrl = _.get(event, key);
+    return (
+      <div className={styles.imageContainer}>
+        <img src={imgUrl} alt={`trade`} />
+      </div>
+    );
+  };
+
   const renderTokenSelection = () => {
     const isSell = hasSellView();
 
@@ -292,6 +303,7 @@ const BetView = ({
         <div className={styles.labelWrapper}>
           <label className={styles.label}>You trade:</label>
           <InfoBox
+            position='topRight'
             autoWidth={true}
             iconType={IconType.question}
             dataTrackingId="nonstreamed-event-trade-help"
@@ -302,6 +314,7 @@ const BetView = ({
           </InfoBox>
         </div>
         <TokenNumberInput
+          className={styles.tokenNumberInput}
           value={convertedCommitment}
           setValue={onTokenNumberChange}
           currency={currency}
@@ -407,7 +420,8 @@ const BetView = ({
             }
           >
             <Button
-              className={classNames(styles.betButton)}
+              theme={ButtonTheme.primaryButtonXL}
+              className={styles.betButton}
               onClick={handleClick}
               highlightType={HighlightType.highlightHomeCtaBet}
               highlightTheme={tradeButtonTheme}
@@ -466,6 +480,7 @@ const BetView = ({
             <div className={styles.pickOutcomeContainer}>
               <label className={styles.label}>Pick outcome</label>
               <InfoBox
+                position='topRight'
                 iconType={IconType.question}
                 dataTrackingId="nonstreamed-event-outcome-help"
               >
@@ -637,16 +652,19 @@ const BetView = ({
         >
           {renderLoadingAnimation()}
           <AdminOnly>{renderMenuContainerWithCurrentBalance()}</AdminOnly>
+          
+          {renderImage()}
+
           <div
             className={classNames(
               styles.betMarketQuestion,
-              styles.nonStreamedQuestion
+              // styles.nonStreamedQuestion
             )}
           >
             <span>{bet.market_question}</span>
             {bet.description && (
               <span className={styles.info}>
-                <InfoBox>{bet.description}</InfoBox>
+                <InfoBox position={'bottomRight'}>{bet.description}</InfoBox>
               </span>
             )}
           </div>
