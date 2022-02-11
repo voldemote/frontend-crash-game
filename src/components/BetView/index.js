@@ -278,6 +278,16 @@ const BetView = ({
     );
   };
 
+  const renderImage = () => {
+    const key = 'preview_image_url';
+    const imgUrl = _.get(event, key);
+    return (
+      <div className={styles.imageContainer}>
+        <img src={imgUrl} alt={`trade`} />
+      </div>
+    );
+  };
+
   const renderTokenSelection = () => {
     const isSell = hasSellView();
 
@@ -635,10 +645,13 @@ const BetView = ({
         >
           {renderLoadingAnimation()}
           <AdminOnly>{renderMenuContainerWithCurrentBalance()}</AdminOnly>
+          
+          {renderImage()}
+
           <div
             className={classNames(
               styles.betMarketQuestion,
-              styles.nonStreamedQuestion
+              // styles.nonStreamedQuestion
             )}
           >
             <span>{bet.market_question}</span>

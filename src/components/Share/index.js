@@ -14,6 +14,8 @@ import IconType from '../Icon/IconType';
 import IconTheme from '../Icon/IconTheme';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import { isMobile } from 'react-device-detect';
+import ButtonTheme from 'components/Button/ButtonTheme';
+import Button from 'components/Button';
 
 const Share = props => {
   const {
@@ -113,15 +115,14 @@ const Share = props => {
       className={classNames(styles.shareTrigger, className)}
     >
       <div className={styles.ShareButtonContainer}>
-        <div
-          ref={shareButtonRef}
-          className={classNames(styles.shareButton, buttonClass)}
+        <Button 
+          theme={ButtonTheme.secondaryButton}
+          className={styles.shareButton}
           onClick={handleShareClicked}
         >
           <div className={styles.shareIcon}>
             <Icon iconType={IconType.shareLink} iconTheme={IconTheme.primary} />
-          </div>{' '}
-          {!isMobile && `Share`}
+          </div>
           <div
             onClick={e => {
               e.stopPropagation();
@@ -152,7 +153,7 @@ const Share = props => {
               dynamicText={dynamicText || ''}
             />
           </div>
-        </div>
+        </Button>
       </div>
     </div>
   );

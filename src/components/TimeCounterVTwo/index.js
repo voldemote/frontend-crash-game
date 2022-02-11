@@ -47,8 +47,8 @@ const TimeCounterVTwo = ({ endDate, externalStyles }) => {
   return (
     <>
       {renderTimeLeft('days', _.get(timeLeft, 'days'), false)}
-      {renderTimeLeft(hoursLabel, _.get(timeLeft, 'hours'))}
-      {renderTimeLeft(minutesLabel, _.get(timeLeft, 'minutes'))}
+      {renderTimeLeft(hoursLabel, _.get(timeLeft, 'hrs'))}
+      {renderTimeLeft(minutesLabel, _.get(timeLeft, 'mins'))}
       {/*<div className={styles.timerColon}>:</div>*/}
       {/* {renderTimeLeft('sec', _.get(timeLeft, 'seconds'))} */}
     </>

@@ -34,6 +34,9 @@ import { useChartData } from './hooks/useChartData';
 import BetView from '../../components/BetView';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
 import { getEventBySlug, getOutcomesHistoryForChart } from 'api';
+import {ReactComponent as ArrowLeft} from 'data/icons/arrow-left.svg';
+import Routes from 'constants/Routes';
+
 
 const MarketEvent = ({
   showPopup,
@@ -55,6 +58,7 @@ const MarketEvent = ({
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [showChart, setShowChart] = useState(false);
   const [chartData, setChartData] = useState(null);
+  const history = useHistory();
 
   const {
     filterActive,
@@ -139,6 +143,49 @@ const MarketEvent = ({
     );
   };
 
+  const renderFavoriteShare = () => {
+    return (
+      <div className={styles.shareButton}>
+        <Favorite
+          isFavorite={!!event?.bookmarks?.includes(userId)}
+          onBookmark={() => {
+            isLoggedIn()
+              ? bookmarkEvent(event?.id)
+              : showPopup(PopupTheme.loginRegister, {
+                  small: false,
+                });
+          }}
+          onBookmarkCancel={() => {
+            bookmarkEventCancel(event?.id);
+          }}
+        />
+        <Share />
+      </div>
+    );
+  }
+
+  const renderTimer = () => {
+    return <div
+      className={classNames(
+        styles.timeLeftCounterContainer,
+        // styles.fixedTimer,
+        // styles.timerOnlyDesktop
+      )}
+    >
+      {![BetState.resolved, BetState.closed].includes(
+        _.get(event.bet, 'status')
+      ) && (
+        <>
+          <div className={styles.timerLabel}>Event ends in:</div>
+
+          <div className={styles.timerParts}>
+            <TimeCounterVTwo externalStyles={styles} endDate={event.bet.end_date} />
+          </div>
+        </>
+      )}
+    </div>;
+  }
+
   let matchMediaMobile = window.matchMedia(`(max-width: ${768}px)`).matches;
 
   return (
@@ -188,75 +235,43 @@ const MarketEvent = ({
                 </span>
               </div>
             </AdminOnly>
-            <div className={styles.headlineContainer}>
-              <div className={styles.headlineImage}>
-                <div>
-                  <div
-                    className={classNames([styles.categorySticker])}
-                    style={getStickerStyle(event.category)}
-                  />
-                  {renderImage()}
+            <div className={styles.topContainer}>
+              <div className={styles.eventTopContainer}>
+                <div className={styles.backButtonTitle}>
+                  <button onClick={() => history.push(Routes.getRouteWithParameters(Routes.events, {category:'all'}))}>
+                    <ArrowLeft />
+                  </button>
+                  <h2>{event.name}</h2>
                 </div>
-                {matchMediaMobile && (
-                  <div className={styles.shareButton}>
-                    <Favorite
-                      isFavorite={!!event?.bookmarks?.includes(userId)}
-                      onBookmark={() => {
-                        isLoggedIn()
-                          ? bookmarkEvent(event?.id)
-                          : startOnboardingFlow();
-                      }}
-                      onBookmarkCancel={() => {
-                        bookmarkEventCancel(event?.id);
-                      }}
-                      buttonClass={styles.mobileFavorite}
-                      isMobile={true}
+                
+                <div className={styles.timerShareContainer}>
+                  {renderTimer()}
+                  {renderFavoriteShare()}
+                </div>
+              </div>
+
+              {/* <div className={styles.headlineContainer}>
+                <div className={styles.headlineImage}>
+                  <div>
+                    <div
+                      className={classNames([styles.categorySticker])}
+                      style={getStickerStyle(event.category)}
                     />
-                    <Share
-                      buttonClass={styles.mobileFavorite}
-                      isMobile={true}
-                    />
+                    {renderImage()}
                   </div>
-                )}
-              </div>
-              <div className={styles.headline}>
-                {renderTitle()}
-                {event.bet && renderTradeDesc()}
-              </div>
+                </div>
+                <div className={styles.headline}>
+                  {renderTitle()}
+                  {event.bet && renderTradeDesc()}
+                </div>
+              </div> */}
+
             </div>
             <div className={styles.row}>
               <div className={styles.columnLeft}>
-                <div className={styles.timeOutterWrapper}>
-                  <div
-                    className={classNames(
-                      styles.timeLeftCounterContainer,
-                      styles.fixedTimer,
-                      styles.timerOnlyDesktop
-                    )}
-                  >
-                    {![BetState.resolved, BetState.closed].includes(
-                      _.get(event.bet, 'status')
-                    ) && (
-                      <>
-                        <div className={styles.timerLabel}>Event ends in:</div>
-
-                        <div className={styles.timerParts}>
-                          <TimeCounterVTwo endDate={event.bet.end_date} />
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  {matchMediaMobile && (
-                    <div
-                      className={styles.diagramButton}
-                      onClick={onShowHideChart}
-                    >
-                      {' '}
-                      <LineChartIcon />
-                      <SwitchButton checked={showChart} size={`small`} />
-                    </div>
-                  )}
-                </div>
+                {renderBetSidebarContent()}
+              </div>
+              <div className={styles.columnRight}>
                 <div
                   className={classNames(
                     styles.chartMainWrapper,
@@ -285,27 +300,7 @@ const MarketEvent = ({
                   </div>
                 )}
               </div>
-              <div className={styles.columnRight}>
-                {!matchMediaMobile && (
-                  <div className={styles.shareButton}>
-                    <Favorite
-                      isFavorite={!!event?.bookmarks?.includes(userId)}
-                      onBookmark={() => {
-                        isLoggedIn()
-                          ? bookmarkEvent(event?.id)
-                          : showPopup(PopupTheme.loginRegister, {
-                              small: false,
-                            });
-                      }}
-                      onBookmarkCancel={() => {
-                        bookmarkEventCancel(event?.id);
-                      }}
-                    />
-                    <Share />
-                  </div>
-                )}
-                {renderBetSidebarContent()}
-              </div>
+              
             </div>
             <div className={styles.row}>
               <div className={styles.columnFull}>
