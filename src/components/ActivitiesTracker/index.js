@@ -93,7 +93,8 @@ const ActivitiesTracker = ({
   userId,
   preselectedCategory,
   cleanUpActivities,
-  showBets
+  showBets,
+  showBetName,
 }) => {
   const messageListRef = useRef();
 
@@ -210,7 +211,7 @@ const ActivitiesTracker = ({
       }
 
       return (
-        <ActivityMessage key={index} activity={activityMessage} date={date} />
+        <ActivityMessage key={index} activity={activityMessage} showBetName={showBetName} date={date} />
       );
     });
   };
