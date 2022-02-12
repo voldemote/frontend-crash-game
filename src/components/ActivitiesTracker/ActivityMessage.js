@@ -13,7 +13,7 @@ import { TOKEN_NAME } from '../../constants/Token';
 import { calculateGain } from '../../helper/Calculation';
 import { getGameById } from '../../helper/Games';
 
-const ActivityMessage = ({ activity, date, users, events }) => {
+const ActivityMessage = ({ activity, date, users, events, showBetName = true }) => {
   const [dateString, setDateString] = useState('');
 
   const updateDateText = useCallback(() => {
@@ -150,21 +150,24 @@ const ActivityMessage = ({ activity, date, users, events }) => {
               {formatToFixed(_.get(data, 'trade.investment_amount'), 0, true)}{' '}
               {TOKEN_NAME}
             </div>{' '}
-            on{' '}
-            {
-              <a
-                className={'global-link-style'}
-                target={'_blank'}
-                href={`${window.location.origin}/trade/${_.get(
-                  event,
-                  'slug'
-                )}/${_.get(data, 'bet.slug')}`}
-                rel="noreferrer"
-              >
-                <b>{_.get(data, 'bet.market_question')}</b>
-              </a>
-            }{' '}
-            with <b>{outcomesName}</b>.
+            {showBetName && <>
+              on{' '}
+              {
+                <a
+                  className={'global-link-style'}
+                  target={'_blank'}
+                  href={`${window.location.origin}/trade/${_.get(
+                    event,
+                    'slug'
+                  )}/${_.get(data, 'bet.slug')}`}
+                  rel="noreferrer"
+                >
+                  <b>{_.get(data, 'bet.market_question')}</b>
+                </a>
+              }{' '}
+              </>
+            }
+            on <b>{outcomesName}</b>.
           </div>
         );
       case 'Notification/EVENT_BET_CASHED_OUT':

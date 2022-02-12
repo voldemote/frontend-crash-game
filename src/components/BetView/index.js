@@ -42,6 +42,7 @@ import { OnboardingActions } from 'store/actions/onboarding';
 import { calculateBuyOutcome, placeBet } from 'api';
 import { calculateGain } from 'helper/Calculation';
 import ButtonTheme from 'components/Button/ButtonTheme';
+import { EVENT_CATEGORIES } from 'constants/EventCategories';
 
 const BetView = ({
   event,
@@ -631,6 +632,14 @@ const BetView = ({
     }
   };
 
+  const getStickerStyle = category => {
+    const cat = EVENT_CATEGORIES.find(c => c.value === category);
+    if (!cat) return {};
+    return {
+      backgroundImage: 'url("' + cat.image + '")',
+    };
+  };
+
   if (!event || !bet) {
     return null;
   }
@@ -654,13 +663,19 @@ const BetView = ({
           <AdminOnly>{renderMenuContainerWithCurrentBalance()}</AdminOnly>
           
           {renderImage()}
-
+          
+          <div
+            className={classNames([styles.categorySticker])}
+            style={getStickerStyle(event.category)}
+          />
+          
           <div
             className={classNames(
               styles.betMarketQuestion,
               // styles.nonStreamedQuestion
             )}
           >
+           
             <span>{bet.market_question}</span>
             {bet.description && (
               <span className={styles.info}>

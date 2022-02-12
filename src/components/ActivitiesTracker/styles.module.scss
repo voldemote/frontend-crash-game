@@ -73,7 +73,7 @@
     width: 47px;
     justify-content: flex-end;
     text-align: right;
-    color: $colorLightYellow;
+    color: $colorWhite50;
     font-family: $fontDMSans;
   }
 
@@ -192,9 +192,11 @@
     //margin-top: 125px;
     height: 500px;
     margin-top: 0;
+    row-gap: 5px;
 
-    > :nth-child(odd) {
-      background-color: rgba(255, 255, 255, 0.1);
+    & > div {
+      border-radius: 4px;
+      background-color: $colorLightPurple12;
     }
 
     &::-webkit-scrollbar {

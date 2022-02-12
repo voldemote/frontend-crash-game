@@ -275,7 +275,6 @@ const MarketEvent = ({
                 <div
                   className={classNames(
                     styles.chartMainWrapper,
-                    styles.nonStreamContainer
                   )}
                 >
                   <div className={styles.chart}>
@@ -304,7 +303,7 @@ const MarketEvent = ({
             </div>
             <div className={styles.row}>
               <div className={styles.columnFull}>
-                {matchMediaMobile && (
+                {/* {matchMediaMobile && (
                   <div className={styles.chatWrapper}>
                     <Chat
                       className={styles.desktopChat}
@@ -314,7 +313,7 @@ const MarketEvent = ({
                       chatMessageType={ChatMessageType.event}
                     />
                   </div>
-                )}
+                )} */}
 
                 <div className={styles.evidenceWrapper}>
                   <div className={styles.sectionHeader}>
@@ -349,6 +348,7 @@ const MarketEvent = ({
                       activitiesLimit={50}
                       betId={event.bet.id}
                       className={styles.activitiesTrackerTabBlock}
+                      showBetName={false}
                     />
                   </div>
                 </div>
@@ -358,11 +358,11 @@ const MarketEvent = ({
         ) : (
           <div className={styles.eventNotExist}>
             <BackLink to="/events/all" text="Events"></BackLink>
-            <div>Event does not exist.</div>
+            {/* <div>Event does not exist.</div>
 
             <div className={styles.eventNotExistLabel}>
               {window.location.href}
-            </div>
+            </div> */}
           </div>
         )}
       </div>

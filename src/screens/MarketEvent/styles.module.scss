@@ -252,6 +252,7 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      justify-content: stretch;
 
       @media (max-width: $screen-md) {
         width: 100%;
@@ -264,14 +265,32 @@
         background-color: $colorBackgroundShadeLighter;
       }
 
-      .timeOutterWrapper {
-        @media all and (max-width: $screen-sm) {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: none;
-          border-radius: 0;
-          margin-bottom: 10px;
+      .chatWrapper {
+        padding: 15px;
+        background-color: rgba(34, 35, 62, 0.65) !important;
+
+        @media (max-width: $screen-sm) {
+          border-radius: 10px;
+        }
+        .desktopChat {
+          // max-height: 250px !important;
+          // height: 250px !important;
+          @media (max-width: $screen-sm) {
+            justify-content: space-between;
+          }
+        }
+        .messageArea {
+          @media (max-width: $screen-sm) {
+            margin-bottom: 25px !important;
+          }
+        }
+        .inputArea {
+          @media (max-width: $screen-sm) {
+            position: static !important;
+            width: 100% !important;
+            padding: 0px 15px !important;
+            border-radius: 10px !important;
+          }
         }
       }
       .streamContainer {
@@ -656,6 +675,11 @@
 
 .evidenceTabContainerDesktop {
   margin-top: 20px;
+  .evidenceSource {
+    span {
+      word-wrap: break-word;
+    }
+  }
 }
 
 .activitiesTabContainerDesktop {
@@ -774,34 +798,7 @@
     word-break: break-all;
   }
 }
-.chatWrapper {
-  padding: 15px;
-  background-color: rgba(34, 35, 62, 0.65) !important;
 
-  @media (max-width: $screen-sm) {
-    border-radius: 10px;
-  }
-  .desktopChat {
-    max-height: 250px !important;
-    height: 250px !important;
-    @media (max-width: $screen-sm) {
-      justify-content: space-between;
-    }
-  }
-  .messageArea {
-    @media (max-width: $screen-sm) {
-      margin-bottom: 25px !important;
-    }
-  }
-  .inputArea {
-    @media (max-width: $screen-sm) {
-      position: static !important;
-      width: 100% !important;
-      padding: 0px 15px !important;
-      border-radius: 10px !important;
-    }
-  }
-}
 .activitiesTrackerTabBlock {
   height: 230px !important;
 }
