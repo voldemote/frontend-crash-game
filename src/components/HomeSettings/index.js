@@ -26,7 +26,7 @@ const HomeSettings = ({
               onClick={onProfileClick}
               className={classNames(styles.singleSettingHolder)}
             >
-              <Icon className={styles.referralIcon} iconType={'userProfile'} />
+              <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'userProfile'} />
               <p className={styles.settingTitle}>My Profile</p>
             </div>
           </>
@@ -35,7 +35,7 @@ const HomeSettings = ({
           onClick={onEventsClick}
           className={classNames(styles.singleSettingHolder)}
         >
-          <Icon className={styles.referralIcon} iconType={'game'} />
+          <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'game'} />
           <p className={styles.settingTitle}>Events</p>
         </div>
         {loggedIn && (
@@ -43,7 +43,7 @@ const HomeSettings = ({
             onClick={onWalletClick}
             className={classNames(styles.singleSettingHolder)}
           >
-            <Icon className={styles.referralIcon} iconType={'wallet3'} />
+            <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'wallet3'} />
             <p className={styles.settingTitle}>Wallet</p>
           </div>
         )}
@@ -51,14 +51,14 @@ const HomeSettings = ({
           onClick={onActivitiesClick}
           className={classNames(styles.singleSettingHolder)}
         >
-          <Icon className={styles.referralIcon} iconType={'activities'} />
+          <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'activities'} />
           <p className={styles.settingTitle}>Activities</p>
         </div>
         <div
           onClick={onLeaderboardClick}
           className={classNames(styles.singleSettingHolder)}
         >
-          <Icon className={styles.referralIcon} iconType={'leaderboard'} />
+          <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'leaderboard'} />
           <p className={styles.settingTitle}>Leaderboard</p>
         </div>
         {loggedIn && (
@@ -70,7 +70,7 @@ const HomeSettings = ({
               styles.singleSettingHolder
             )}
           >
-            <Icon className={styles.referralIcon} iconType={'profile'} />
+            <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'profile'} />
             <p className={styles.settingTitle}>Edit my Profile</p>
           </div>
           <div
@@ -79,7 +79,7 @@ const HomeSettings = ({
               styles.singleSettingHolder
             )}
           >
-            <Icon className={styles.referralIcon} iconType={'question'} />
+            <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'question'} />
             <p className={styles.settingTitle}>KYC Verification</p>
           </div>
           <div
@@ -88,7 +88,7 @@ const HomeSettings = ({
             )}
             onClick={() => onReferralsClick()}
           >
-            <Icon className={styles.referralIcon} iconType={'referral'} />
+            <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'referral'} />
             <p className={styles.settingTitle}>Referrals</p>
           </div>
 
@@ -96,7 +96,7 @@ const HomeSettings = ({
               className={classNames(styles.singleSettingHolder)}
               onClick={onLogoutClick}
             >
-              <Icon className={styles.referralIcon} iconType={'logout'} />
+              <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'logout'} />
               <p className={styles.settingTitle}>Logout</p>
             </div>
           </>

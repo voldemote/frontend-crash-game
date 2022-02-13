@@ -93,7 +93,8 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             <p>Sign up with Google</p>
           </LoginButton>
         ) : (
-          <button
+          <Button
+            theme={ButtonTheme.secondaryButtonLight}
             className={styles.socialCircleButton}
             onClick={(event) => {
               login('google', isRegistration)();
@@ -106,7 +107,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
               iconType={IconType.google}
               {...iconProps}
             />
-          </button>
+          </Button>
         ))}
       {isVisible.twitch &&
         (showLarge ? (
@@ -124,7 +125,8 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             <p>Sign up with Twitch</p>
           </LoginButton>
         ) : (
-          <button
+          <Button
+            theme={ButtonTheme.secondaryButtonLight}
             className={styles.socialCircleButton}
             onClick={(event) => {
               login('twitch', isRegistration)();
@@ -137,7 +139,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
               iconType={IconType.twitch}
               {...iconProps}
             />
-          </button>
+          </Button>
         ))}
       {isVisible.discord &&
         (showLarge ? (
@@ -155,7 +157,8 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
             <p>Sign up with Discord</p>
           </LoginButton>
         ) : (
-          <button
+          <Button
+            theme={ButtonTheme.secondaryButtonLight}
             className={styles.socialCircleButton}
             onClick={(event) => {
               login('discord', isRegistration)();
@@ -168,7 +171,7 @@ const SocialLogin = ({ styles, prepend = [], signUp = true, authenticationType, 
               iconType={IconType.discord}
               {...iconProps}
             />
-          </button>
+          </Button>
         ))}
     </div>
   );

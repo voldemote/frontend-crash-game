@@ -129,7 +129,7 @@
     text-decoration: underline;
     font-family: $fontDMSans;
     cursor: pointer;
-    color: $colorButton;
+    color: $colorPrimary;
     margin: 10px 0;
   }
 
@@ -375,18 +375,13 @@
   .socialCircleButton {
     width: 60px;
     height: 60px;
-    background: $colorButton;
-    border-radius: 30px;
+    border-radius: 50px;
     svg {
       width: 30px;
       height: 30px;
     }
     &[disabled] {
       opacity: 0.7;
-    }
-    @media screen and (max-width: $screen-xs-max) {
-      width: 45px;
-      height: 45px;
     }
   }
 }
