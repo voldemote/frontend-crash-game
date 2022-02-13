@@ -142,7 +142,7 @@ const InputBox = ({
       );
     }
 
-    if (theme === InputBoxTheme.copyToClipboardInputWhite || theme === InputBoxTheme.copyToClipboardInputTransparentWhite) {
+    if (theme === InputBoxTheme.copyToClipboardInputWhite || theme === InputBoxTheme.copyToClipboardInputTransparentWhite || theme === InputBoxTheme.copyToClipboardInputBoxSmall) {
       return (
         <div
           className={styles.inputDeleteIconContainer}
@@ -192,6 +192,7 @@ const InputBox = ({
             [InputBoxTheme.dashedBorderTransparent]:
               styles.dashedBorderTransparent,
             [InputBoxTheme.modalInput]: styles.modalInput,
+            [InputBoxTheme.copyToClipboardInputBoxSmall]: styles.copyToClipboardInputBoxSmall,
           }),
           className
         )}

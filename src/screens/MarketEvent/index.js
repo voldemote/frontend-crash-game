@@ -36,6 +36,7 @@ import ActivitiesTracker from '../../components/ActivitiesTracker';
 import { getEventBySlug, getOutcomesHistoryForChart } from 'api';
 import {ReactComponent as ArrowLeft} from 'data/icons/arrow-left.svg';
 import Routes from 'constants/Routes';
+import EventShareWidget from 'components/EventShareWidget';
 
 
 const MarketEvent = ({
@@ -249,24 +250,10 @@ const MarketEvent = ({
                   {renderFavoriteShare()}
                 </div>
               </div>
-
-              {/* <div className={styles.headlineContainer}>
-                <div className={styles.headlineImage}>
-                  <div>
-                    <div
-                      className={classNames([styles.categorySticker])}
-                      style={getStickerStyle(event.category)}
-                    />
-                    {renderImage()}
-                  </div>
-                </div>
-                <div className={styles.headline}>
-                  {renderTitle()}
-                  {event.bet && renderTradeDesc()}
-                </div>
-              </div> */}
-
             </div>
+
+            <EventShareWidget />
+
             <div className={styles.row}>
               <div className={styles.columnLeft}>
                 {renderBetSidebarContent()}
