@@ -41,6 +41,11 @@ import { trackWalletDepositIcon, trackWalletIcon } from 'config/gtm';
 import {ReactComponent as WalletIcon} from '../../data/icons/navbar/wallet-icon.svg';
 import {TOKEN_NAME} from "../../constants/Token";
 
+import {ReactComponent as ApplePay} from 'data/icons/apple-pay.svg';
+import SamsungPay from 'data/icons/samsung-pay.png';
+import {ReactComponent as Maestro} from 'data/icons/maestro.svg';
+import {ReactComponent as GooglePay} from 'data/icons/google-pay.svg';
+
 
 const Navbar = ({
   user,
@@ -284,8 +289,8 @@ const Navbar = ({
     );
 
     const hamburgerMenuBtn = (
-      <div
-        role="button"
+      <Button
+        theme={ButtonTheme.secondaryButton}
         className={classNames(
           style.menuContainer
         )}
@@ -295,27 +300,27 @@ const Navbar = ({
           className={style.menu}
           iconType={isOpen(drawers.profile) || isOpen(drawers.leaderboard) ? 'closeCoin' : 'hamburgerMenu'}
         />
-      </div>
+      </Button>
     );
 
     const joinBtn = (
       <div className={style.navbarItems}>
-        {!isLoggedIn() &&
+        {!isLoggedIn() && <>
+          <Button
+            className={style.loginButton}
+            theme={ButtonTheme.secondaryButton}
+            onClick={() => showPopupForLogin()}
+          >
+            Login
+          </Button>
           <Button
             className={style.registerButton}
-            theme={ButtonTheme.loginButton}
+            theme={ButtonTheme.primaryButtonL}
             onClick={() => startOnboardingFlow()}
           >
             Register
           </Button>
-        }
-        <Button
-          className={style.loginButton}
-          theme={ButtonTheme.loginButton}
-          onClick={() => showPopupForLogin()}
-        >
-          Login
-        </Button>
+        </>}
       </div>
     );
 
@@ -443,35 +448,48 @@ const Navbar = ({
   };
 
   return (
-    <div
-      className={classNames(style.navbar, (location.pathname === '/') ? style.home : null,hasOpenDrawer && style.navbarSticky)}
-    >
-      <div className={style.logoMobileWrapper}>
-        {renderNavbarLink(
-          Routes.home,
-          <Icon iconType={IconType.logoSmall} className={style.logoMobile} />,
-          true
-        )}
+    <div className={style.topWrapper}>
+      <div className={style.topBar}>
+        <span>No crypto? No problem!</span>
+        <GooglePay />
+        <Maestro />
+        <ApplePay />
+        <img src={SamsungPay} alt="SamsungPay Logo"/>
+        <div>
+          <button onClick={() => {history.push(Routes.wallet)}}>Buy WFAIR</button>
+          <Icon className={style.icon} iconType={IconType.arrowRight} />
+        </div>
       </div>
-      <div className={classNames(style.navbarItems, style.hideOnMobile)}>
-        {renderNavbarLink(
-          Routes.home,
-          <img src={LogoDemo} width={200} alt={'Wallfair'} />,
-          true
-        )}
-      </div>
-      {renderWalletButton()}
-      <div ref={drawerWrapper} className={style.drawerWrapper}>
-        {renderNavButtons()}
-        {renderLeaderboardDrawer()}
-        {renderMenuDrawer()}
-        {isLoggedIn() && (
-          <>
-            {renderNotificationsDrawer()}
-            {renderWalletDrawer()}
-            {renderEmailNotificationDrawer()}
-          </>
-        )}
+      <div
+        className={classNames(style.navbar, (location.pathname === '/') ? style.home : null,hasOpenDrawer && style.navbarSticky)}
+      >
+        <div className={style.logoMobileWrapper}>
+          {renderNavbarLink(
+            Routes.home,
+            <Icon iconType={IconType.logoSmall} className={style.logoMobile} />,
+            true
+          )}
+        </div>
+        <div className={classNames(style.navbarItems, style.hideOnMobile)}>
+          {renderNavbarLink(
+            Routes.home,
+            <img src={LogoDemo} width={200} alt={'Wallfair'} />,
+            true
+          )}
+        </div>
+        {renderWalletButton()}
+        <div ref={drawerWrapper} className={style.drawerWrapper}>
+          {renderNavButtons()}
+          {renderLeaderboardDrawer()}
+          {renderMenuDrawer()}
+          {isLoggedIn() && (
+            <>
+              {renderNotificationsDrawer()}
+              {renderWalletDrawer()}
+              {renderEmailNotificationDrawer()}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
