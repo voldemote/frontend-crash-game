@@ -15,6 +15,7 @@ import Share from '../../components/Share';
 import routes from '../../constants/Routes';
 import useConfettiAnimation from 'hooks/useConfettiAnimation';
 import { toNumericString } from 'helper/FormatNumbers';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const BetApproveView = ({ visible, hidePopup, options }) => {
   const { currency } = useSelector(selectUser);
@@ -53,20 +54,20 @@ const BetApproveView = ({ visible, hidePopup, options }) => {
         Congratulations!
       </span>
       <span className={styles.betPostedHeadline}>
-        Your Bet Has Been <br />
-        Posted
+        Your bet has been <br />
+        posted
       </span>
 
       <div className={styles.betOverview}>
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Amount placed</div>
-          <div className={styles.value}>
+          <div className={classNames(styles.value, styles.alignRight)}>
             {toNumericString(amountPlaced)} <span>{currency}</span>
           </div>
         </div>
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Potential outcome</div>
-          <div className={styles.value}>
+          <div className={classNames(styles.value, styles.alignRight)}>
             {toNumericString(potentialOutcome)}{' '}
             <span>{currency}</span>
           </div>
@@ -85,7 +86,7 @@ const BetApproveView = ({ visible, hidePopup, options }) => {
       <div className={styles.betButtonContainer}>
         <Button
           className={classNames(styles.betButton)}
-          highlightType={HighlightType.highlightHomeCtaBet}
+          theme={ButtonTheme.primaryButtonL}
           disabledWithOverlay={false}
           onClick={hidePopup}
         >
