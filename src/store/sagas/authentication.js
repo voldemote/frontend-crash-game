@@ -137,7 +137,7 @@ const authenticationSucceeded = function* (action) {
     yield put(AuthenticationActions.fetchReferrals());
     yield put(WebsocketsActions.init());
     yield put(RosiGameActions.clearGuestData());
-    yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
+    // yield put(AlertActions.showSuccess({ message: 'Successfully logged in' }));
 
     yield put(
       WebsocketsActions.joinRoom({

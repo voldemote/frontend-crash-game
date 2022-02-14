@@ -17,6 +17,22 @@
     font-family: $fontDMSans;
     column-gap: 10px;
 
+    @media (max-width: $screen-sm) {
+      display: none;
+    }
+
+    &.redBar {
+      column-gap: 0;
+      background: $colorRedLight;
+
+      .gift {
+        font-size: 16px;
+        line-height: 18px;
+        letter-spacing: 0;
+        padding-right: 0;
+      }
+    }
+
     & > svg,
     & > img {
       width: auto;
@@ -45,18 +61,17 @@
       width: fit-content;
       letter-spacing: 0.5px;
       padding-right: 5px;
-
-      @media (max-width: $screen-md) {
-        display: none;
-      }
     }
 
     span.icon {
       display: block;
       padding-top: 2px;
 
-      svg > * {
-        fill: $colorWhite;
+      svg {
+        height: 10px;
+        & > * {
+          fill: $colorWhite;
+        }
       }
     }
   }
@@ -87,6 +102,11 @@
       background: rgba(8, 14, 51, 0);
     }
 
+    .walletDepositContainer {
+      display: flex;
+      column-gap: 15px;
+    }
+
     .drawerWrapper {
       display: contents;
     }
@@ -107,28 +127,29 @@
     }
 
     .centerContainer {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+      // position: absolute;
+      // left: 50%;
+      // transform: translateX(-50%);
       .walletButton {
-        color: $colorLightYellow;
+        color: $colorWhite;
         display: flex;
         align-items: center;
         white-space: nowrap;
         padding-left: 8px;
-        border: 1px solid $colorLightYellow;
         box-sizing: border-box;
-        border-radius: 24px;
+        border-radius: 6px;
         font-family: $fontDMSans;
         font-size: 12px;
         cursor: pointer;
         min-width: 80px;
         height: 38px;
         z-index: 0;
+        background: $colorLightPurple16;
 
         .walletLinkContainer {
           display: flex;
           align-items: center;
+          position: relative;
           p {
             width: 100%;
             min-width: 110px;
@@ -137,6 +158,27 @@
           &:hover {
             & p {
               font-weight: 600;
+            }
+          }
+
+          .infoTooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: $colorLightPurple16;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            width: max-content;
+            max-width: 250px;
+            color: $colorWhite;
+          }
+
+          &:hover {
+            .infoTooltip {
+              display: block;
             }
           }
         }
@@ -241,6 +283,7 @@
           justify-content: flex-end;
         }
       }
+
       .signUpButton {
         display: flex;
         justify-content: center;

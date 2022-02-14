@@ -79,4 +79,5 @@ export default {
   balanceScaleSolid: 'balanceScaleSolid',
   userProfile: 'userProfile',
   discord: 'discord',
+  gift: 'gift',
 };

@@ -107,7 +107,7 @@ const EventShareWidget = ({authentication}) => {
 
   return (
     <div className={classNames(styles.eventShareContainer, !visible ? styles.closed : null)}>
-      <CloseIcon onClick={() => { setVisible(false) }} className={styles.closeIcon} />
+      {/* <CloseIcon onClick={() => { setVisible(false) }} className={styles.closeIcon} /> */}
       <div className={styles.leftContainer}>
         <GiftIcon />
         <span>Share this event <span className={styles.yellow}>and get 50 WFAIR</span></span>
