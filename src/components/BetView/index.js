@@ -508,14 +508,6 @@ const BetView = ({
             </div>
           </div>
         </div>
-        {state === BetState.canceled && (
-          <div className={styles.canceledErrorContainer}>
-            <ErrorHint
-              className={styles.canceledErrorText}
-              errorText={'All participants will be refunded.'}
-            />
-          </div>
-        )}
       </>
     );
   };
@@ -627,6 +619,15 @@ const BetView = ({
               </div>
             </AuthedOnly>
           )}
+        </div>
+      );
+    } else if (state === BetState.canceled) {
+      return (
+        <div className={styles.canceledErrorContainer}>
+          <ErrorHint
+            className={styles.canceledErrorText}
+            errorText={'All participants will be refunded.'}
+          />
         </div>
       );
     }

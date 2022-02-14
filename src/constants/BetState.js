@@ -1,6 +1,6 @@
 export default {
   active: 'ACTIVE',
-  canceled: 'CANCELED',
+  canceled: 'CANCELLED',
   closed: 'CLOSED',
   resolved: 'RESOLVED',
   upcoming: 'UPCOMING',

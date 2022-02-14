@@ -270,7 +270,7 @@ const getTransactions = () => {
 };
 
 const placeBet = (betId, amount, outcome) => {
-  return EventsServiceApi.post(`/bets/bet/${betId}/place`, {
+  return EventsServiceApi.post(`/bets/${betId}/place`, {
     amount,
     outcome,
   }).catch(error => {
@@ -408,13 +408,13 @@ const getCoverStream = () => {
 };
 
 const resolveBet = (betId, data) => {
-  return EventsServiceApi.post(`/bets/bet/${betId}/resolve`, data)
+  return EventsServiceApi.post(`/bets/${betId}/resolve`, data)
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
 
 const cancelBet = (betId, payload) => {
-  return Api.post(ApiUrls.API_BET_CANCEL.replace(':id', betId), payload)
+  return EventsServiceApi.post(`/bets/${betId}/cancel`, payload)
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
