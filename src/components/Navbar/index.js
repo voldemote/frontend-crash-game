@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import classNames from 'classnames';
-import CoinIcon from '../../data/icons/coin.png';
+import CoinIcon from '../../data/icons/wfair-symbol.svg';
 import LogoDemo from '../../data/images/logo-demo.svg';
 import style from './styles.module.scss';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
@@ -45,6 +45,7 @@ import {ReactComponent as ApplePay} from 'data/icons/apple-pay.svg';
 import SamsungPay from 'data/icons/samsung-pay.png';
 import {ReactComponent as Maestro} from 'data/icons/maestro.svg';
 import {ReactComponent as GooglePay} from 'data/icons/google-pay.svg';
+import {ReactComponent as WalletIconWhite} from 'data/icons/wallet-icon-white.svg';
 
 
 const Navbar = ({
@@ -195,45 +196,48 @@ const Navbar = ({
 
   const renderWalletButton = () => {
     const walletBtn = (
-      <span
-        className={classNames(
-          style.balanceOverview,
-          style.walletButton,
-          style.leaderboardValues,
-          isOpen(drawers.wallet) ? style.pillButtonActive : null
-        )}
-        data-wg-notranslate
-        data-tracking-id="menu-wallet-icon"
-      >
-        <div
-          className={style.walletLinkContainer}
-          onClick={() => {
-            trackWalletIcon();
-            history.push(Routes.wallet);
-          }}
-        >
-          <img src={CoinIcon} alt="medal" className={style.medal} />
-          <p
-            title={renderBalances()}
-          >
-            {formatToFixed(balance, 0, true)} {TOKEN_NAME}
-          </p>
-        </div>
+      <div className={style.walletDepositContainer}>
         <span
-          className={style.depositLabel}
+          className={classNames(
+            style.balanceOverview,
+            style.walletButton,
+            isOpen(drawers.wallet) ? style.pillButtonActive : null
+          )}
+          data-wg-notranslate
+          data-tracking-id="menu-wallet-icon"
+        >
+          <div
+            className={style.walletLinkContainer}
+            onClick={() => {
+              trackWalletIcon();
+              history.push(Routes.wallet);
+            }}
+          >
+            <img src={CoinIcon} alt="medal" className={style.medal} />
+            <p
+              // title={renderBalances()}
+            >
+              {formatToFixed(balance, 0, true)} {TOKEN_NAME}
+            </p>
+            <span className={style.infoTooltip}>
+              {convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span>
+            </span>
+          </div>
+        </span>
+        <Button
+          theme={ButtonTheme.primaryButtonS}
           onClick={() => {
             showWalletDepositPopup();
           }}
         >
-          <span className={style.deposit}>Deposit</span> <WalletIcon />
-        </span>
-      </span>
+          <WalletIconWhite /> Deposit
+        </Button>
+      </div>
     );
     return (
       <div className={style.centerContainer}>
         {isLoggedIn() && (<>
           {walletBtn}
-          <div className={style.walletEquivalentBlock}><span className={style.walletEquivalentOperator}>~</span>{convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span></div>
         </>)}
       </div>
     )
@@ -447,8 +451,23 @@ const Navbar = ({
     );
   };
 
-  return (
-    <div className={style.topWrapper}>
+  const renderTopBar = () => {
+    if (!isLoggedIn()) {
+      return (
+        <div className={classNames(style.topBar, style.redBar)}>
+          <span>+++ SPECIAL OFFER! +++</span>
+          <span className={style.gift}>🎁</span>
+          <span>Sign Up now and get 5.000 PFAIR for free!</span>
+          <span className={style.gift}>🎁</span>
+          <div>
+            <button onClick={() => startOnboardingFlow()}>Sign up</button>
+            <Icon className={style.icon} iconType={IconType.arrowRight} />
+          </div>
+        </div>
+      )
+    }
+
+    return (
       <div className={style.topBar}>
         <span>No crypto? No problem!</span>
         <GooglePay />
@@ -460,6 +479,12 @@ const Navbar = ({
           <Icon className={style.icon} iconType={IconType.arrowRight} />
         </div>
       </div>
+    )
+  }
+
+  return (
+    <div className={style.topWrapper}>
+      {renderTopBar()}
       <div
         className={classNames(style.navbar, (location.pathname === '/') ? style.home : null,hasOpenDrawer && style.navbarSticky)}
       >
