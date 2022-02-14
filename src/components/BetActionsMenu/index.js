@@ -32,9 +32,10 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
       case 'resolve':
         return showPopup(PopupTheme.resolveBet, {
           bet,
+          event,
         });
       case 'cancel':
-        return showPopup(PopupTheme.cancelBet, { bet });
+        return showPopup(PopupTheme.cancelBet, { bet, event });
       case 'delete':
         return showPopup(PopupTheme.deleteBet, { bet });
     }

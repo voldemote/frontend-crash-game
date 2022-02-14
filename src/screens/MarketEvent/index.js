@@ -1,7 +1,7 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import _ from 'lodash';
 import styles from './styles.module.scss';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams, useHistory } from 'react-router-dom';
 import { useRef, useState, useEffect, useCallback } from 'react';
@@ -27,8 +27,6 @@ import ChatMessageType from 'components/ChatMessageWrapper/ChatMessageType';
 import BackLink from '../../components/BackLink';
 import BetState from 'constants/BetState';
 import TimeCounterVTwo from 'components/TimeCounterVTwo';
-import { ReactComponent as LineChartIcon } from '../../data/icons/line-chart-new.svg';
-import SwitchButton from 'components/SwitchButton';
 import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
 import BetView from '../../components/BetView';
@@ -83,7 +81,7 @@ const MarketEvent = ({
         Routes.getRouteWithParameters(Routes.events, { category: 'all' })
       );
     });
-  }, [eventSlug]);
+  }, [eventSlug, betSlug]);
 
   const fetchChartHistory = betId => {
     getOutcomesHistoryForChart(betId, chartParams).then(history => {

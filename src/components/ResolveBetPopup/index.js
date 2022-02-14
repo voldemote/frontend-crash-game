@@ -3,13 +3,15 @@ import Button from 'components/Button';
 import { FormGroup, InputLabel, Select, Input } from 'components/Form';
 import {} from 'components/Form';
 import PopupTheme from 'components/Popup/PopupTheme';
+import Routes from 'constants/Routes';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import { PopupActions } from 'store/actions/popup';
 import styles from './styles.module.scss';
 
-const ResolveBetPopup = ({ bet, hidePopup, visible }) => {
+const ResolveBetPopup = ({ bet, event, visible }) => {
   const betOutcomes = _.get(bet, 'outcomes').map(({ index, name }) => ({
     value: String(index),
     label: name,
@@ -23,6 +25,9 @@ const ResolveBetPopup = ({ bet, hidePopup, visible }) => {
 
   const isOutcomeValid = outcome !== null && !isNaN(+outcome) && +outcome >= 0;
   const isValidStringInput = str => str !== null && str.length > 0;
+
+  const history = useHistory();
+  const location = useLocation();
 
   const isFormValid =
     isOutcomeValid &&
@@ -49,7 +54,12 @@ const ResolveBetPopup = ({ bet, hidePopup, visible }) => {
       outcome: +outcome,
     }).then(() => {
       setIsResolving(false);
-      hidePopup();
+      history.push(
+        Routes.getRouteWithParameters(Routes.bet, {
+          eventSlug: event.slug,
+          betSlug: bet.slug,
+        })
+      );
     });
   };
 
@@ -96,12 +106,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    hidePopup: () => {
-      dispatch(PopupActions.hide());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResolveBetPopup);
+export default connect(mapStateToProps, null)(ResolveBetPopup);

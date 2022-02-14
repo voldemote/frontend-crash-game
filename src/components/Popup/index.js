@@ -204,12 +204,12 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <ViewImagePopup imageURL={options.imageURL} />;
       case PopupTheme.resolveBet:
         return (
-          <ResolveBetPopup bet={options.bet} />
+          <ResolveBetPopup bet={options.bet} event={options.event} />
         );
       case PopupTheme.cancelBet:
         return (
           <DialogActionPopup
-            data={options?.bet}
+            data={{ bet: options?.bet, event: options?.event }}
             actionType={DialogActions.cancelBet}
           />
         );

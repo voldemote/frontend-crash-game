@@ -337,8 +337,8 @@ const editEvent = (id, payload) => {
     .catch(error => ({ error: error.response.data }));
 };
 
-const deleteEvent = id => {
-  return Api.delete(ApiUrls.API_EVENT_DELETE.replace(':id', id))
+const deleteEvent = slug => {
+  return EventsServiceApi.delete(`/events/${slug}`)
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };
