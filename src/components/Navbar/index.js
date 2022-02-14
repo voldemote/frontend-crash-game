@@ -219,18 +219,19 @@ const Navbar = ({
             >
               {formatToFixed(balance, 0, true)} {TOKEN_NAME}
             </p>
-            <span className={style.infoTooltip}>
-              {convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span>
+            <span className={classNames(style.infoTooltip, style.hideOnMobile)}>
+              &asymp; {convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span>
             </span>
           </div>
         </span>
         <Button
           theme={ButtonTheme.primaryButtonS}
+          className={style.depositButton}
           onClick={() => {
             showWalletDepositPopup();
           }}
         >
-          <WalletIconWhite /> Deposit
+          <WalletIconWhite className={style.depositIcon} /><span>Deposit</span>
         </Button>
       </div>
     );

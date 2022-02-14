@@ -102,11 +102,6 @@
       background: rgba(8, 14, 51, 0);
     }
 
-    .walletDepositContainer {
-      display: flex;
-      column-gap: 15px;
-    }
-
     .drawerWrapper {
       display: contents;
     }
@@ -127,9 +122,18 @@
     }
 
     .centerContainer {
-      // position: absolute;
-      // left: 50%;
-      // transform: translateX(-50%);
+      .walletDepositContainer {
+        display: flex;
+        column-gap: 15px;
+        .depositButton {
+          @media (max-width: $screen-xs) {
+            width: 80px;
+            .depositIcon {
+              display: none;
+            }
+          }
+        }
+      }
       .walletButton {
         color: $colorWhite;
         display: flex;
@@ -150,10 +154,22 @@
           display: flex;
           align-items: center;
           position: relative;
+
+          .medal {
+            width: 24px;
+            @media (max-width: $screen-xs) {
+              display: none;
+            }
+          }
+
           p {
             width: 100%;
             min-width: 110px;
             text-align: center;
+
+            @media (max-width: $screen-xs) {
+              min-width: 100px;
+            }
           }
           &:hover {
             & p {
@@ -179,70 +195,15 @@
           &:hover {
             .infoTooltip {
               display: block;
+              @media (max-width: $screen-xs) {
+                display: none;
+              }
             }
           }
-        }
-
-        .depositLabel {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 124px;
-          height: 38px;
-          margin-left: 10px;
-          background: #ffd31a;
-          border: 1px solid #ffd401;
-          box-sizing: border-box;
-          border-radius: 25px;
-          color: $colorPrimary;
-          font-style: normal;
-          font-weight: 600;
-          font-size: 16px;
-          line-height: 20px;
-          padding: 0 12px;
-          justify-content: space-around;
-
-          &:hover {
-            & .deposit {
-              padding: 0;
-              font-weight: 700;
-            }
-          }
-
-          @media (max-width: $screen-xs) {
-            width: 38px;
-            padding: 0;
-            & .deposit {
-              display: none;
-            }
-          }
-
-          & svg {
-            margin: 0;
-          }
-        }
-
-        img,
-        svg {
-          margin-right: 10px;
-          max-height: 24px;
         }
 
         p {
           font-size: 16px;
-          // @media (max-width: $screen-md) {
-          //   font-size: 14px;
-          // }
-        }
-
-        &.leaderboardValues {
-          background-color: $colorPrimary;
-        }
-
-        &Active {
-          background-color: transparent;
-          border: 2px solid rgba(172, 196, 255, 0.42);
-          padding: 8px 13px;
         }
       }
     }
@@ -279,7 +240,7 @@
 
       &:not(.hideOnMobile) {
         @media (max-width: $screen-xs-max) {
-          width: 100%;
+          // width: 100%;
           justify-content: flex-end;
         }
       }
