@@ -154,7 +154,7 @@ const BetView = ({
   };
 
   useEffect(() => {
-    if (!closed && !!bet.id) {
+    if (!closed && !!bet?.id) {
       validateInput();
       fetchOutcomes();
       setConvertedCommitment(convert(commitment, currency));

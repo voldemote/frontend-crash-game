@@ -420,7 +420,7 @@ const cancelBet = (betId, payload) => {
 };
 
 const deleteBet = betId => {
-  return Api.delete(ApiUrls.API_BET_DELETE.replace(':id', betId))
+  return EventsServiceApi.delete(`/bets/${betId}`)
     .then(response => ({ response }))
     .catch(error => ({ error: error.response.data }));
 };

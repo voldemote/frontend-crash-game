@@ -37,7 +37,7 @@ const actionTypes = {
     acceptLabel: 'Delete',
     declineLabel: 'Cancel',
     onAccept: (bet, { hidePopup }) =>
-      Api.deleteBet(bet._id).then(() => hidePopup()),
+      Api.deleteBet(bet.id).then(() => hidePopup()),
   },
   [actions.deleteEvent]: {
     title: 'Delete Event',

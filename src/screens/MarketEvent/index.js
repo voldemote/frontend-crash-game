@@ -64,7 +64,7 @@ const MarketEvent = ({
   const {
     filterActive,
     handleChartPeriodFilter,
-  } = useChartData(event?.bet.id);
+  } = useChartData(event?.bet?.id);
 
   const ref = useRef(null);
 
@@ -74,10 +74,14 @@ const MarketEvent = ({
     getEventBySlug(eventSlug).then(res => {
       if (!_.isEqual(res, event)) {
         setEvent(res);
-        setCanDeleteEvent(res.bet?.status === BetState.canceled);
+        setCanDeleteEvent(res.bet.status === BetState.canceled);
         fetchChatMessages(res.id);
         fetchChartHistory(res.bet.id);
       }
+    }).catch(() => {
+      history.push(
+        Routes.getRouteWithParameters(Routes.events, { category: 'all' })
+      );
     });
   }, [eventSlug]);
 
@@ -180,7 +184,7 @@ const MarketEvent = ({
           <div className={styles.timerLabel}>Event ends in:</div>
 
           <div className={styles.timerParts}>
-            <TimeCounterVTwo externalStyles={styles} endDate={event.bet.end_date} />
+            <TimeCounterVTwo externalStyles={styles} endDate={event.bet?.end_date} />
           </div>
         </>
       )}
@@ -311,7 +315,7 @@ const MarketEvent = ({
                       <b>Evidence source: </b>{' '}
                       <span
                         dangerouslySetInnerHTML={{
-                          __html: event.bet.evidence_source,
+                          __html: event.bet?.evidence_source,
                         }}
                       ></span>
                     </div>
@@ -319,7 +323,7 @@ const MarketEvent = ({
                     <div className={styles.evidenceDescription}>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: event.bet.evidence_description,
+                          __html: event.bet?.evidence_description,
                         }}
                       ></div>
                     </div>
@@ -333,7 +337,7 @@ const MarketEvent = ({
                     <ActivitiesTracker
                       showCategories={false}
                       activitiesLimit={50}
-                      betId={event.bet.id}
+                      betId={event.bet?.id}
                       className={styles.activitiesTrackerTabBlock}
                       showBetName={false}
                     />

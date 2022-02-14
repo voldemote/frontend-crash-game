@@ -30,7 +30,6 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
       case 'edit':
         return showPopup(PopupTheme.editBet, { event, bet });
       case 'resolve':
-        console.log(event, bet);
         return showPopup(PopupTheme.resolveBet, {
           bet,
         });
