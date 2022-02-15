@@ -54,6 +54,7 @@
     display: flex;
     position: relative;
     column-gap: 13px;
+    overflow: hidden;
 
     &.blurContainer {
       filter: blur(4px);
