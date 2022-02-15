@@ -7,9 +7,12 @@ import HighlightType from 'components/Highlight/HighlightType';
 import { selectUser } from 'store/selectors/authentication';
 import { trackApproveCashout } from '../../config/gtm';
 import { pullOutBet } from 'api';
+import { AlertActions } from 'store/actions/alert';
 
 const PulloutApprovePopup = ({
   hidePopup,
+  showSuccess,
+  showError,
   betData: { betId, amount, outcome, outcomeName },
 }) => {
   const { currency } = useSelector(selectUser);
@@ -17,7 +20,11 @@ const PulloutApprovePopup = ({
   const onApprovePulloutClick = () => {
     pullOutBet(betId, outcome).then(() => {
       hidePopup();
+      showSuccess(`Successfully cashed out ${amount}`)
       trackApproveCashout({ eventTitle: outcomeName });
+    }).catch(() => {
+      hidePopup();
+      showError('Failed to cash out');
     });
   };
 
@@ -63,6 +70,12 @@ const PulloutApprovePopup = ({
 
 const mapDispatchToProps = dispatch => {
   return {
+    showSuccess: message => {
+      dispatch(AlertActions.showSuccess({ message }));
+    },
+    showError: message => {
+      dispatch(AlertActions.showError({ message }));
+    },
     hidePopup: () => {
       dispatch(PopupActions.hide());
     },
