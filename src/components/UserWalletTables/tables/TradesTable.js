@@ -11,6 +11,7 @@ import { formatToFixed } from "helper/FormatNumbers";
 import { connect } from "react-redux";
 import { PopupActions } from '../../../store/actions/popup';
 import PopupTheme from '../../Popup/PopupTheme';
+import { shortenAddress } from "utils/common";
 
 const isFinalizedTrade = status =>
   [BetState.closed, BetState.canceled, BetState.resolved].includes(status);
@@ -62,7 +63,11 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
           <div className={classNames(styles.messageFirst, styles.messageLeft)}>
             <Link to={`/trade/${event.slug}`} className={styles.titleLink}>
               <div className={styles.titleWithBadge}>
-                {bet.question}
+                {
+                  bet.question?.substr(0, 12) +
+                  '...' +
+                  bet.question?.substr(bet.question?.length - 6)
+                }
                 {status === 'active' && (
                   <StateBadge
                     state={bet.status.toLowerCase()}
@@ -105,7 +110,13 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
           </div>
         </Grid>
         <Grid item xs>
-          <div className={classNames(styles.messageLast, styles.messageRight)}>
+          <div
+            className={
+              allowCashout
+                ? styles.messageCenter
+                : classNames(styles.messageLast, styles.messageRight)
+            }
+          >
             {moment(date).format('DD.MM.YYYY HH:mm:ss')}
           </div>
         </Grid>
@@ -162,7 +173,7 @@ const TradesTable = ({
             <p className={styles.title}>GAIN</p>
           </Grid>
           <Grid item xs>
-            <p className={styles.titleLast}>DATE</p>
+            <p className={allowCashout ? styles.title : styles.titleLast}>DATE</p>
           </Grid>
           {allowCashout && (
             <Grid item xs>
