@@ -43,6 +43,7 @@ export default {
   plinkoGame: '/games/plinko',
   alpacannonGame: '/games/alpacannon',
   elonGame: '/games/elon-game',
+  pumpdumpGame: '/games/pump-dump',
   rouletteGame: '/games/alpaca-wheel',
   elonWallpaper: '/games/elon-wallpaper',
   evoplayGame: '/evoplay-game/:game/:category/:number',

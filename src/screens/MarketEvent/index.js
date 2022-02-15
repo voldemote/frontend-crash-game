@@ -256,11 +256,9 @@ const MarketEvent = ({
                       )
                     }
                   >
-                    <ArrowLeft />
+                    <ArrowLeft /><span>Back to events</span>
                   </button>
-                  <h2>{event.name}</h2>
                 </div>
-
                 <div className={styles.timerShareContainer}>
                   {renderTimer()}
                   {renderFavoriteShare()}
