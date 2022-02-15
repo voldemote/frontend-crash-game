@@ -179,10 +179,9 @@ const fetchOpenBetsSucceeded = function* (action) {
 
 const pullOut = function* (action) {
   const betId = action.betId;
-  const amount = action.amount;
   const outcome = action.outcome;
 
-  const response = yield call(Api.pullOutBet, betId, amount, outcome);
+  const response = yield call(Api.pullOutBet, betId, outcome);
 
   if (response) {
     yield put(BetActions.pullOutBetSucceeded());

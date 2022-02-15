@@ -16,6 +16,7 @@ const createInstance = (host, apiPath) => {
 
 class GameApi {
   constructor(host, token, gameId) {
+    console.log(host, gameId);
     this.host = host;
     this.api = createInstance(host, '/');
     this.setToken(token);

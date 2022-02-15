@@ -9,10 +9,8 @@ import moment from 'moment';
 import { useCallback } from 'react';
 import styles from './styles.module.scss';
 import TokenNumberInput from '../TokenNumberInput';
-import { BetActions } from '../../store/actions/bet';
 import { connect, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useHasMounted } from '../hoc/useHasMounted';
 import { useState } from 'react';
 import ChoiceSelectorList from '../ChoiceSelectorList';
 import LoadingAnimation from '../../data/animations/wcoin.gif';
@@ -24,9 +22,7 @@ import PopupTheme from '../Popup/PopupTheme';
 import ErrorHint from '../ErrorHint';
 import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
-import { GeneralActions } from 'store/actions/general';
 import ReactTooltip from 'react-tooltip';
-import { selectSellOutcomes } from 'store/selectors/bet';
 import { selectUser } from 'store/selectors/authentication';
 import { convert } from 'helper/Currency';
 import DateText from 'helper/DateText';
@@ -46,16 +42,11 @@ import { EVENT_CATEGORIES } from 'constants/EventCategories';
 
 const BetView = ({
   event,
-  openBets,
   actionIsInProgress,
   closed,
   isPopup = false,
-  forceSellView,
-  // disableSwitcher = false,
-  // pullOutBet,
   showPopup,
   isTradeViewPopup,
-  // handleChartDirectionFilter,
   startOnboarding,
   fetchChartHistory,
 }) => {
@@ -66,16 +57,11 @@ const BetView = ({
   const defaultBetValue = 50;
   const bet = event.bet;
   const state = _.get(bet, 'status');
-  // const outcomes = _.get(useSelector(selectOutcomes), 'outcomes', {});
-  const sellOutcomes = _.get(useSelector(selectSellOutcomes), 'outcomes', {});
   const userLoggedIn = useSelector(
     state => state.authentication.authState === 'LOGGED_IN'
   );
 
   // LOCAL
-  const [currentTradeView, setCurrentTradeView] = useState(
-    forceSellView ? 1 : 0
-  );
   const [validInput, setValidInput] = useState(false);
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
   const [commitmentErrorText, setCommitmentErrorText] = useState('');
@@ -87,12 +73,9 @@ const BetView = ({
   );
   const [outcomes, setOutcomes] = useState({});
 
-  const hasMounted = useHasMounted();
-
   const validateInput = () => {
     const betEndDate = _.get(bet, 'end_date');
     const current = moment(new Date());
-    const isSell = hasSellView();
     let valid = true;
 
     if (current.isAfter(betEndDate)) {
@@ -103,14 +86,13 @@ const BetView = ({
       valid = false;
     }
 
-    if (!commitment && !isSell) {
+    if (!commitment) {
       valid = false;
     }
 
     if (
       userLoggedIn &&
-      _.toNumber(commitment) > _.toNumber(balance) &&
-      !isSell
+      _.toNumber(commitment) > _.toNumber(balance)
     ) {
       valid = false;
 
@@ -126,20 +108,6 @@ const BetView = ({
 
     return valid;
   };
-
-  useEffect(
-    () => {
-      if (hasMounted) {
-        setCurrentTradeView(forceSellView ? 1 : 0);
-
-        // loadAfterMount();
-      }
-    },
-    // @TODO: this possibly needs refactoring and or adding remaining deps,
-    // the functions that do not depend on state or props should move out of the component.
-    // for the other functions useCallback() would make sense to prevent unnecessary rerenders
-    [hasMounted, closed]
-  );
 
   const fetchOutcomes = () => {
     calculateBuyOutcome(bet.id, commitment).then(res => {
@@ -172,14 +140,6 @@ const BetView = ({
       setChoice(null);
     }
   }, [actionIsInProgress]);
-
-  const hasSellView = () => {
-    return (currentTradeView === 1 || forceSellView) && _.size(openBets);
-  };
-
-  const getFinalOutcome = () => {
-    return _.get(bet, 'final_outcome', false);
-  };
 
   const onTradeButtonConfirm = () => {
     const validInput = validateInput();
@@ -227,33 +187,6 @@ const BetView = ({
     debouncedSetCommitment(number, currency);
   };
 
-  const getOpenBet = index => {
-    return _.find(openBets, {
-      outcome: index,
-    });
-  };
-
-  const getOpenBetsValue = index => {
-    const openBet = getOpenBet(index);
-
-    if (openBet) {
-      return _.get(openBet, 'outcomeAmount');
-    }
-
-    return 0;
-  };
-
-  const getOutcome = index => {
-    return _.get(hasSellView() ? sellOutcomes : outcomes, [index]);
-  };
-
-  const isChoiceSelectorEnabled = index => {
-    if (state !== BetState.active) {
-      return false;
-    }
-    return !hasSellView() || getOpenBetsValue(index) > 0;
-  };
-
   const renderChoiceSelector = (
     index,
     name,
@@ -262,8 +195,8 @@ const BetView = ({
     resolved = false,
     forceSelect = false
   ) => {
-    const enabled = isChoiceSelectorEnabled(index);
-    const outcome = getOutcome(index);
+    const enabled = state === BetState.active;
+    const outcome = _.get(outcomes, [index]);
 
     return (
       <ChoiceSelector
@@ -293,12 +226,6 @@ const BetView = ({
   };
 
   const renderTokenSelection = () => {
-    const isSell = hasSellView();
-
-    if (isSell) {
-      return null;
-    }
-
     return (
       <>
         <div className={styles.labelWrapper}>
@@ -388,10 +315,9 @@ const BetView = ({
   };
 
   const renderTradeButton = () => {
-    const isSell = hasSellView();
-    const finalOutcome = getFinalOutcome();
+    const finalOutcome = _.get(bet, 'final_outcome', false);
 
-    if (!isSell && !finalOutcome) {
+    if (!finalOutcome) {
       const tradeButtonDisabled =
         !(validInput && state === BetState.active) || !userLoggedIn;
       let tradeButtonTheme = null;
@@ -454,11 +380,9 @@ const BetView = ({
   };
 
   const renderChoiceSelectors = (resolved = false, forceSelect) => {
-    const outcomes = bet.outcomes;
-
     return (
       <ChoiceSelectorList
-        outcomes={outcomes}
+        outcomes={bet.outcomes}
         resolved={resolved}
         forceSelect={forceSelect}
         renderChoiceSelector={renderChoiceSelector}
@@ -472,16 +396,11 @@ const BetView = ({
         {/* {renderSwitchableView()} */}
         <div className={styles.placeBetContentContainer}>
           {renderTokenSelection()}
-          <div
-            className={classNames(
-              styles.buttonContainer,
-              hasSellView() ? styles.sellButtonContainer : null
-            )}
-          >
+          <div className={styles.buttonContainer}>
             <div className={styles.pickOutcomeContainer}>
               <label className={styles.label}>Pick outcome</label>
               <InfoBox
-                position='topRight'
+                position="topRight"
                 iconType={IconType.question}
                 dataTrackingId="nonstreamed-event-outcome-help"
               >
@@ -699,9 +618,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    pullOutBet: (betId, outcome, amount) => {
-      dispatch(BetActions.pullOutBet({ betId, outcome, amount }));
-    },
     showPopup: (popupType, options) => {
       dispatch(
         PopupActions.show({
@@ -709,9 +625,6 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
-    },
-    setOpenDrawer: drawer => {
-      dispatch(GeneralActions.setDrawer(drawer));
     },
     startOnboarding: () => {
       dispatch(OnboardingActions.start());

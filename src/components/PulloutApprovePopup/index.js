@@ -2,23 +2,23 @@ import styles from './styles.module.scss';
 import { connect, useSelector } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import Button from '../Button';
-import { BetActions } from 'store/actions/bet';
 import LikeIcon from '../../data/icons/like-icon.svg';
 import HighlightType from 'components/Highlight/HighlightType';
 import { selectUser } from 'store/selectors/authentication';
 import { trackApproveCashout } from '../../config/gtm';
+import { pullOutBet } from 'api';
 
 const PulloutApprovePopup = ({
   hidePopup,
-  pullOutBet,
   betData: { betId, amount, outcome, outcomeName },
 }) => {
   const { currency } = useSelector(selectUser);
 
   const onApprovePulloutClick = () => {
-    pullOutBet(betId, outcome, amount);
-    hidePopup();
-    trackApproveCashout({ eventTitle: outcomeName });
+    pullOutBet(betId, outcome).then(() => {
+      hidePopup();
+      trackApproveCashout({ eventTitle: outcomeName });
+    });
   };
 
   const onCancelPulloutClick = () => {
@@ -65,9 +65,6 @@ const mapDispatchToProps = dispatch => {
   return {
     hidePopup: () => {
       dispatch(PopupActions.hide());
-    },
-    pullOutBet: (betId, outcome, amount, gain) => {
-      dispatch(BetActions.pullOutBet({ betId, outcome, amount, gain }));
     },
   };
 };

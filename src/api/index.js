@@ -242,9 +242,8 @@ const getSellOutcomes = (betId, amount) => {
   });
 };
 
-const pullOutBet = (betId, amount, outcome) => {
-  return Api.post(_.replace(ApiUrls.API_BET_PULL_OUT, ':id', betId), {
-    amount,
+const pullOutBet = (betId, outcome) => {
+  return EventsServiceApi.post(`/bets/${betId}/sell`, {
     outcome,
   }).catch(error => {
     console.log('[API Error] called: pullOutBet', error);
@@ -252,13 +251,13 @@ const pullOutBet = (betId, amount, outcome) => {
 };
 
 const getOpenBets = () => {
-  return Api.get(ApiUrls.API_USER_OPEN_BETS).catch(error => {
+  return EventsServiceApi.get('/trades?statuses=active').catch(error => {
     console.log('[API Error] called: getOpenBets', error);
   });
 };
 
 const getTradeHistory = () => {
-  return Api.get(ApiUrls.API_USER_TRADE_HISTORY).catch(error => {
+  return EventsServiceApi.get('/trades?statuses=sold,rewarded,closed').catch(error => {
     console.log('[API Error] called: getTradeHistory', error);
   });
 };

@@ -203,7 +203,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
                 )}/${_.get(data, 'bet.slug')}`}
                 rel="noreferrer"
               >
-                <b>{_.get(data, 'bet.marketQuestion')}</b>
+                <b>{_.get(data, 'bet.market_question')}</b>
               </a>
             </b>
             .

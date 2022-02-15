@@ -6,7 +6,6 @@ import { PopupActions } from '../../store/actions/popup';
 import { useParams, useHistory } from 'react-router-dom';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
-import { BetActions } from 'store/actions/bet';
 import { TransactionActions } from 'store/actions/transaction';
 import { ChatActions } from 'store/actions/chat';
 import { GeneralActions } from 'store/actions/general';
@@ -42,7 +41,6 @@ const MarketEvent = ({
   authState,
   userId,
   events,
-  fetchOpenBets,
   fetchTransactions,
   fetchChatMessages,
   handleDislaimerHidden,
@@ -378,9 +376,6 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
-    },
-    fetchOpenBets: () => {
-      dispatch(BetActions.fetchOpenBets());
     },
     fetchTransactions: () => {
       dispatch(TransactionActions.fetchAll());

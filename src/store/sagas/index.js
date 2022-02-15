@@ -135,8 +135,6 @@ const root = function* () {
     takeLatest([BetTypes.EDIT], BetSagas.edit),
     takeEvery([BetTypes.FETCH_OUTCOMES], BetSagas.fetchOutcomes),
     takeEvery([BetTypes.FETCH_SELL_OUTCOMES], BetSagas.fetchSellOutcomes),
-    takeLatest([BetTypes.FETCH_OPEN_BETS], BetSagas.fetchOpenBets),
-    takeLatest([BetTypes.FETCH_TRADE_HISTORY], BetSagas.fetchTradeHistory),
     takeLatest(
       [BetTypes.FETCH_OPEN_BETS_SUCCEEDED],
       BetSagas.fetchOpenBetsSucceeded
