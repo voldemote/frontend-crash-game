@@ -76,6 +76,10 @@ const MainMenu = ({
     onClickGoToRoute('/events/all');
   };
 
+  const onGamesClick = () => {
+    onClickGoToRoute(Routes.games);
+  };
+
   const onProfileClick = () => {
     onClickGoToRoute(`/user/${user.userId}`);
   }
@@ -435,6 +439,7 @@ const MainMenu = ({
             profilePic={profilePic}
             onWalletClick={onWalletClick}
             onEventsClick={onEventsClick}
+            onGamesClick={onGamesClick}
             onActivitiesClick={onActivitiesClick}
             onLeaderboardClick={onLeaderboardClick}
             onEditClick={() => onClickShowEditProfile()}

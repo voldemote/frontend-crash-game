@@ -7,6 +7,7 @@ const HomeSettings = ({
   profilePic,
   onWalletClick,
   onEventsClick,
+  onGamesClick,
   onActivitiesClick,
   onLeaderboardClick,
   onEditClick,
@@ -37,6 +38,14 @@ const HomeSettings = ({
         >
           <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'game'} />
           <p className={styles.settingTitle}>Events</p>
+        </div>
+
+        <div
+          onClick={onGamesClick}
+          className={classNames(styles.singleSettingHolder)}
+        >
+          <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'game'} />
+          <p className={styles.settingTitle}>Games</p>
         </div>
         {loggedIn && (
           <div
