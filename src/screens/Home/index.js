@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import GameCards from '../../components/GameCards';
 
 import { useIsMount } from 'components/hoc/useIsMount';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import useOAuthCallback from 'hooks/useOAuthCallback';
 import { LOGGED_IN } from 'constants/AuthState';
 import classNames from 'classnames';
@@ -18,6 +18,13 @@ import { OnboardingActions } from 'store/actions/onboarding';
 import { connect } from 'react-redux';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
+import EventsCarouselContainer from 'components/EventsCarouselContainer';
+import Routes from 'constants/Routes';
+
+import PumpDumpBanner from 'data/backgrounds/home/pumpdump-banner.jpg';
+import ElonBanner from 'data/backgrounds/home/elon-banner.jpg';
+import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 const Home = (
   authState,
@@ -26,6 +33,7 @@ const Home = (
   startOnboardingFlow,
   userId,
 ) => {
+  const history = useHistory();
   const isMount = useIsMount();
   const location = useLocation();
   let urlParams = new URLSearchParams(location.search);
@@ -71,6 +79,40 @@ const Home = (
     }
   }, []);
 
+  const renderGamesBanner = () => {
+    return (
+
+      <div className={styles.gameBannerContainer}>
+        <div className={styles.title}>
+          <h2>🎮 Discover our Games</h2>
+        </div>
+        <div className={styles.games}>
+          <div onClick={() => history.push(Routes.elonGame)} className={styles.gameBanner}>
+            <img src={ElonBanner} alt="Elon Game banner" />
+            <span className={styles.bannerTitle}>Play the<br />Elon Game</span>
+            <Button
+              theme={ButtonTheme.primaryButtonM}
+              className={styles.bannerButton}
+            >
+              Play now
+            </Button>
+          </div>
+          <div onClick={() => history.push(Routes.pumpdumpGame)} className={styles.gameBanner}>
+            <img src={PumpDumpBanner} alt="Pump Dump Game banner" />
+            <span className={styles.bannerTitle}>Let's play<br />Pump &amp; Dump</span>
+            <Button
+              theme={ButtonTheme.primaryButtonM}
+              className={styles.bannerButton}
+            >
+              Play now
+            </Button>
+          </div>
+        </div>
+      </div>
+
+    );
+  }
+
 
   const renderActivities = () => {
     return (
@@ -97,6 +139,21 @@ const Home = (
       <CustomCarousel carouselType={'landingpage'} />
       
       <div className={styles.container}>
+        <EventsCarouselContainer 
+          title={'🔥 Most popular Events'}
+          titleLink={'Show all events'}
+          titleLinkTo={Routes.getRouteWithParameters(Routes.events, {category: 'all'})}
+        />
+
+        <EventsCarouselContainer 
+          title={'✨ Trading Events'}
+          titleLink={'Show all trading events'}
+          category={'Trading'}
+          titleLinkTo={Routes.getRouteWithParameters(Routes.events, {category: 'Trading'})}
+        />
+
+        {renderGamesBanner()}
+
         {renderActivities()}
       </div>
     </BaseContainerWithNavbar>

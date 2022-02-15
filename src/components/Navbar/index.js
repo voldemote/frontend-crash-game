@@ -228,6 +228,7 @@ const Navbar = ({
           theme={ButtonTheme.primaryButtonS}
           className={style.depositButton}
           onClick={() => {
+            history.push(Routes.wallet);
             showWalletDepositPopup();
           }}
         >
@@ -476,7 +477,10 @@ const Navbar = ({
         <ApplePay />
         <img src={SamsungPay} alt="SamsungPay Logo"/>
         <div>
-          <button onClick={() => {history.push(Routes.wallet)}}>Buy WFAIR</button>
+          <button onClick={() => {
+            history.push(Routes.wallet);
+            showWalletDepositPopup();
+          }}>Buy WFAIR</button>
           <Icon className={style.icon} iconType={IconType.arrowRight} />
         </div>
       </div>
