@@ -1,369 +1,638 @@
 @import '../../styles/all';
 
-.containerWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0;
-  margin-top: 100px;
-
-  @media (max-width: $screen-sm) {
-    margin: 100px 15px;
-  }
-}
-
 .container {
   width: 100%;
+  margin: 0 auto;
+  max-width: 1300px;
+  background: rgba($colorPrimary, 0.7);
+  border-radius: 12px;
+  padding: 50px;
+  // margin-top: 70vh;
+  position: relative;
 
-  @media (min-width: $screen-lg) {
-    max-width: 1300px;
+  // @media (max-width: $screen-sm) {
+  //   margin-top: calc(55vh - 20px);
+  // }
+  // @media (max-width: $screen-xs) {
+  //   margin-top: calc(65vh - 20px);
+  // }
+  // @media (max-width: 375px) {
+  //   margin-top: calc(65vh - 40px);
+  // }
+  // @media (max-width: 320px) {
+  //   margin-top: calc(70vh - 20px);
+  // }
+
+  @media (max-width: $screen-sm) {
+    padding: 0 20px;
+  }
+
+  /* ACTIVITY TRACKER */
+  .activities {
+    margin-top: 40px;
+    .title {
+      display: flex;
+      align-items: center;
+      color: $colorWhite;
+
+      h2 {
+        color: $colorWhite;
+        font-size: 33px;
+
+        @media (max-width: $screen-xs) {
+          font-size: 28px;
+        }
+      }
+
+      img {
+        margin-right: 30px;
+      }
+    }
   }
 }
 
-.sectionHeading {
+.searchContainer {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding-top: 40px;
   display: flex;
-  align-items: center;
-  img {
-    margin-right: 15px;
-  }
-  h3 {
-    padding-bottom: 10px;
-  }
-}
+  flex-direction: column;
 
-.bottomWrapper {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-top: 80px;
-
-  @media (max-width: $screen-md) {
-    flex-direction: column;
-  }
-
-  .categories {
-    width: 100%;
-    padding: 0 10px;
-
-    @media (max-width: $screen-xs-max) {
-      margin-bottom: 40px;
+  .searchWrapper {
+    margin: 0 auto;
+    display: flex;
+    max-width: 500px;
+    gap: 10px;
+    margin-bottom: 15px;
+    @media (max-width: $screen-xs) {
+      width: 100%;
     }
   }
 
-  .leaderboard {
-    width: 100%;
-    padding: 0 10px;
+  @media (max-width: $screen-xs) {
+    margin-top: 20px;
+  }
 
-    @media (max-width: $screen-sm) {
-      padding: 0;
+  .search,
+  .searchMobile {
+    border-radius: 30px;
+    border: 2px solid $colorWhite50;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    background: $colorPrimary;
+
+    &.searchMobile {
+      margin-bottom: 10px;
+      @media (min-width: $screen-xs) {
+        display: none;
+      }
+    }
+
+    &.search {
+      @media (max-width: $screen-xs) {
+        width: 100%;
+      }
+    }
+
+    & svg {
+      margin: 3px 10px;
+      width: 34px;
+      height: 30px;
+      opacity: 0.5;
+    }
+
+    input {
+      // padding-left: 20px;
+      background: transparent;
+      width: 90%;
+      border: none;
+      color: $colorWhite;
+      font-family: $fontDMSans;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: left;
+      padding-right: 10px;
+
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      -moz-appearance: textfield;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: $colorWhite30;
+      }
     }
   }
 
-  .headline {
+  .categoryGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 150px repeat(auto-fit, minmax(120px, 5fr));
+
+    gap: 5px;
+
+    @media (max-width: $screen-xs) {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 2fr));
+    }
+  }
+
+  .searchButton {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    background-color: $colorPrimary;
+    border: 2px solid $colorButton;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    // width: 50px;
+    height: 40px;
     color: $colorWhite;
-    font-family: $fontDMSans;
-    font-size: 24px;
-    margin-bottom: 20px;
 
-    .leaderboardLink {
+    color: $colorWhite;
+    background-color: $colorPrimary;
+    border: 2px solid $colorButton;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+
+    & svg {
+      margin: 2px 12px 2px 10px;
+      width: 30px;
+      height: 30px;
+    }
+
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
+  }
+
+  .searchItem {
+    font-family: $fontDMSans;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    // min-width: 155px;
+    height: 40px;
+
+    text-align: center;
+    color: $colorWhite;
+    padding: 8px 10px;
+    background-color: $colorPrimary;
+    border: 2px solid $colorButton;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+
+    &:hover {
+      font-weight: 700;
+    }
+
+    &.active {
+      background-color: $colorButton;
+      // border: 2px solid $colorButton;
+      font-weight: 700;
+      color: $colorBlack;
+    }
+
+    &.selectAllDesktop {
+      @media (max-width: $screen-xs) {
+        display: none;
+      }
+    }
+
+    &.selectAllMobile {
+      display: none;
+      @media (max-width: $screen-xs) {
+        display: block;
+      }
+    }
+
+    @media (max-width: $screen-md) {
       font-size: 14px;
-      color: $colorWhite;
-      line-height: 12px;
-      letter-spacing: 0.6px;
-      font-family: $fontLight;
-      cursor: pointer;
-      text-decoration: underline;
+      padding: 8px;
+      // min-width: 100px;
+      // min-width: 158px;
+    }
+
+    @media (max-width: $screen-xs) {
+      font-size: 14px;
+      padding: 8px;
+      // min-width: 120px;
     }
   }
 }
 
-.lightboxWrapper {
-  margin-top: 48px;
-}
+// GAMES STYLING
+@import '../../styles/all';
 
-.seeAllActivities {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: $colorWhite;
-  line-height: 12px;
-  letter-spacing: 0.6px;
-  font-family: $fontLight;
-  cursor: pointer;
-  text-decoration: underline;
-}
+.gamesContainer {
+  padding: 0;
 
-.howTokenWorks {
-  padding: 20px 0 0;
+  @media (max-width: $screen-xs) {
+    padding: 0;
+  }
+
   .title {
     display: flex;
-    align-items: center;
-    font-size: 30px;
-    font-weight: 700;
     justify-content: flex-start;
+    flex-direction: column;
 
     h2 {
-      font-size: 33px;
-
+      color: $colorHeading;
+      font-weight: 700;
+      font-size: 50px;
+      line-height: 20px;
+      font-family: $fontDMSans;
       @media (max-width: $screen-xs) {
         font-size: 28px;
       }
     }
 
-    img {
-      margin-right: 10px;
-      width: 80px;
+    p {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-family: $fontDMSans;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 2;
+      color: $colorWhite;
     }
-  }
-  .tokenDetail {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.2fr 0.2fr;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    filter: drop-shadow(0px 9px 16px rgba(159, 162, 191, 0.18))
-      drop-shadow(0px 2px 2px rgba(159, 162, 191, 0.32));
-    padding: 0 10px 0px 20px;
-    margin: 15px 0 0;
-    @media (max-width: $screen-md) {
-      grid-template-columns: auto;
-    }
-    .token {
-      padding: 20px 8px 0;
-      display: flex;
-      @media (max-width: $screen-md) {
-        flex-direction: column;
-        align-items: center;
-      }
-      .thumbnail {
-        padding-right: 10px;
-        img {
-          width: 90px;
-        }
-      }
-      .thumbnails {
-        display: flex;
-        padding-right: 10px;
-        .second {
-          margin: 18px 0 0 -34px;
-        }
-        img {
-          width: 90px;
-          height: 90px;
-        }
-      }
-      .detail {
-        padding-top: 20px;
-        color: #fff;
-        h3 {
-          font-weight: bolder;
-          font-size: 22px;
-          margin-bottom: 6px;
-        }
-        p {
-          font-size: 14px;
 
-          a {
-            text-decoration: underline;
-          }
-        }
-        @media (max-width: $screen-md) {
-          text-align: center;
-        }
-      }
-    }
-    .elonImg {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    img {
+      margin-right: 5px;
     }
   }
 }
 
-.welcomeContainer {
-  margin-top: 100px;
-  margin-bottom: calc(100vh - 538px);
-  // margin-bottom: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: $screen-sm) {
-    margin: 130px 0 0;
-  }
-  .cardContainer {
-    position: relative;
-    height: 580px;
-    width: 402px;
-    background: linear-gradient(163.46deg, #ffffff -21.15%, #f1dbd2 100.59%);
-    padding: 15px;
-    border-radius: 20px;
-    .cardBox {
-      display: flex;
-      flex-direction: column;
-      row-gap: 10px;
-      align-items: center;
-      border: 1px solid $colorPopBorder;
-      border-radius: 20px;
-      height: 550px;
+.gamesCategorySelected {
+  margin-bottom: 30px;
+}
 
-      padding-top: 20px;
-      font-family: $fontDMSans;
-      @media (max-width: $screen-sm) {
+.gamesCategory {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $colorBlack;
+  font-family: $fontDMSans;
+  font-size: 24px;
+  font-weight: 700;
+  padding-bottom: 20px;
+  margin-top: 40px;
+
+  @media (max-width: $screen-lg) {
+    padding: 20px;
+  }
+
+  h2 {
+    color: $colorWhite;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 20px;
+    font-family: $fontDMSans;
+    @media (max-width: $screen-xs) {
+      font-size: 28px;
+    }
+  }
+
+  .howtoLink {
+    cursor: pointer;
+    font-size: 11px;
+    font-family: $fontDMSans;
+    text-decoration: underline;
+    color: $colorYellow;
+
+    @media (max-width: $screen-xs) {
+      display: none;
+      margin: 0;
+      width: 100%;
+      padding: 0 15px 15px;
+    }
+  }
+
+  .questionIcon {
+    cursor: pointer;
+    display: none;
+
+    svg {
+      g,
+      path,
+      circle {
+        fill: $colorYellow;
+      }
+    }
+
+    @media (max-width: $screen-xs) {
+      display: block;
+    }
+  }
+}
+
+.gameSpace {
+  justify-content: space-between;
+}
+
+.games {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 18px;
+
+  @media (max-width: $screen-lg) {
+    padding: 0;
+  }
+
+  @media (max-width: $screen-sm) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(33% - 5px), 1fr));
+  }
+
+  .wrapper {
+    position: relative;
+    height: 148px;
+    overflow: hidden;
+    border-radius: 20px;
+    width: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: $screen-sm) {
+      width: 40vw;
+      height: 30vw;
+      margin: 0 auto;
+    }
+
+    .gameItem {
+      height: 100%;
+
+      display: flex;
+      justify-content: center;
+
+      // @media (max-width: $screen-md) {
+      //   height: auto;
+      // }
+      &:hover {
+        .title {
+          display: block !important;
+        }
+        &::before {
+          content: '';
+          z-index: 2;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          height: 100%;
+          left: 0;
+          width: 100%;
+          background: linear-gradient(
+            180deg,
+            hsla(0, 0%, 100%, 0),
+            #00000060 75%
+          );
+        }
+      }
+      img {
         width: 100%;
-        height: 550px;
-        padding-top: 40px;
+        height: fit-content;
+      }
+      .title {
+        z-index: 3;
+        display: none;
+        padding: 10px;
+        color: white;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
       }
 
-      .terms {
-        font-size: 12px;
-        margin-bottom: 10px;
+      &.gameItemLg {
+        .gameInfo {
+          .title {
+            @media (max-width: $screen-md) {
+              font-size: 16px;
+            }
+          }
+
+          .subtitle {
+            @media (max-width: $screen-md) {
+              font-size: 12px;
+            }
+          }
+
+          .description {
+            @media (max-width: $screen-md) {
+              font-size: 14px;
+            }
+          }
+        }
+
+        .inactivePlaceholder {
+          @media (max-width: $screen-md) {
+            min-width: 150px;
+            min-height: 45px;
+            font-size: 14px;
+          }
+        }
+      }
+
+      &.gameItemMd,
+      &.gameItemSm {
+        .inactivePlaceholder {
+          min-width: 150px;
+          min-height: 45px;
+          font-size: 32px;
+        }
+      }
+
+      &.gameItemMd {
+        .gameInfo {
+          .title {
+            @media (max-width: $screen-md) {
+              font-size: 26px;
+            }
+          }
+        }
+      }
+
+      &.gameItemSm {
+        .gameInfo {
+          .title {
+            font-size: 26px;
+          }
+        }
+
+        .inactivePlaceholder {
+          @media (max-width: $screen-md) {
+            min-width: 250px;
+            min-height: 70px;
+            font-size: 18px;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+        // @media (max-width: $screen-md) {
+        //   width: 100%;
+        //   height: auto;
+        // }
+      }
+
+      .gameInfo {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: $colorWhite;
+        font-family: $fontDMSans;
+        padding: 30px;
+
+        .title {
+          font-size: 36px;
+          font-weight: 700;
+          padding: 10px 0;
+          line-height: 1;
+        }
+
+        .subtitle {
+          font-size: 14px;
+          opacity: 0.7;
+        }
+
+        .description {
+          font-size: 16px;
+          opacity: 0.7;
+          min-height: 60px;
+        }
+      }
+
+      .inactivePlaceholder {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-family: $fontDMSans;
+        color: #f2ff53;
+        text-align: center;
+        font-weight: 700;
+      }
+    }
+
+    .gameLink {
+      text-decoration: none;
+
+      &.gameLinkInactive {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.discordBanner {
+  width: 100%;
+  height: 130px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+  &.withPadding {
+    margin-top: 40px;
+  }
+
+  .backgroundWrapper {
+    position: absolute;
+    height: 100px;
+    left: 0;
+    right: 0;
+    background: #f7a800;
+    display: flex;
+
+    .bodyContainer {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 36px;
+      color: $colorBlack;
+
+      @media (max-width: 1366px) {
+        font-size: 32px;
+      }
+
+      p {
+        // margin-left: 20px;
+        padding: 0 30px 0 20px;
+
+        @media (max-width: $screen-md) {
+          font-size: 26px;
+        }
 
         a {
           text-decoration: underline;
         }
       }
-
-      .topFront {
+      .closeButton {
         position: absolute;
-        width: 150px;
-        height: 190px;
-        left: -60px;
-        top: -19px;
-        z-index: 1;
-      }
-
-      .topBack {
-        position: absolute;
-        width: 330px;
-        left: -110px;
-        top: -120px;
-        z-index: -1;
-      }
-
-      .bottomFront {
-        position: absolute;
-        width: 120px;
-        right: -35px;
-        bottom: 84px;
-        z-index: 1;
-      }
-      .bottomBack {
-        position: absolute;
-        width: 420px;
-        right: -114px;
-        bottom: -105px;
-        z-index: -1;
-      }
-
-      .aplacaHeader {
-        bottom: -170px;
-        left: -510px;
-        position: absolute;
-        width: 450px;
-        display: block;
-      }
-      svg {
-        margin-left: 40%;
-      }
-      p {
-        font-weight: 700;
-        font-size: 35px;
-        line-height: 40px;
-        font-family: $fontDMSans;
-        color: $colorBlack;
-        text-align: center;
-        span {
-          font-size: 50px;
-          line-height: 1;
-        }
-        @media (max-width: $screen-sm) {
-          font-size: 30px;
-          line-height: 24px;
-        }
-      }
-      .limitedOfferDescription {
-        font-weight: 700;
-        font-size: 30px;
-        // line-height: 40px;
-        text-align: center;
-        font-family: $fontDMSans;
-        color: $colorBlack;
-        margin-bottom: 10px;
-        margin-top: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        @media (max-width: $screen-sm) {
-          font-size: 25px;
-          line-height: 30px;
-        }
-
-        span {
-          font-size: 20px;
-        }
-
-        p {
-          font-size: 30px;
-          margin-bottom: 0px;
-
-          sup {
-            font-size: 20px;
-          }
-        }
-
-        .red {
-          font-size: inherit;
-          color: $colorDarkerRed;
-        }
-
-        .conditionsWrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          margin: 20px auto 10px;
-          text-align: left;
-          padding: 0 0 0 30px;
-          width: fit-content;
-
-          .conditions {
-            font-size: 20px;
-            list-style-type: square;
-            list-style-position: outside;
-          }
-        }
-
-        .highlighted {
-          font-size: 90px;
-          line-height: 60px;
-
-          @media (max-width: $screen-xs) {
-            font-size: 70px;
-            line-height: 60px;
-          }
-        }
-      }
-
-      .startButton {
-        width: 240px;
-        height: 45px;
-        text-align: center;
-        font-weight: 700;
-        font-family: $fontDMSans;
-        background: $colorButton;
-        color: $colorBlack;
-        font-size: 20px;
-        border-radius: 30px;
-        border: 1px solid $colorButton;
+        right: 10px;
+        top: 10px;
         cursor: pointer;
-        display: inline-flex;
-        justify-content: center;
+      }
+    }
+    .whiteWrapper {
+      max-width: 500px;
+      position: relative;
+      margin-right: 50px;
+      margin-top: 0px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 0px solid transparent;
+        border-left: 60px solid #fff;
+        border-bottom: 127px solid transparent;
+
+        @media (max-width: $screen-sm) {
+          border: none;
+        }
+      }
+
+      .whiteContainer {
+        background: white;
+        padding: 6px 30px;
+        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
         align-items: center;
-        padding: 0 5px;
-        // margin-bottom: 20px;
+        svg {
+          width: 300px;
+          height: 110px;
+        }
       }
     }
   }
@@ -468,221 +737,6 @@
         left: 50%;
         transform: translateX(-50%);
         z-index: -1;
-      }
-    }
-  }
-}
-
-.nftBannerWrapper {
-  margin-top: 200px;
-  margin-bottom: 200px;
-  @media (max-width: $screen-xl) {
-    margin-top: 200px;
-    margin-top: 150px;
-  }
-
-  @media (max-width: $screen-md) {
-    margin-bottom: 100px;
-  }
-  @media (max-width: $screen-xs) {
-    display: none;
-  }
-}
-
-/* ACTIVITY TRACKER */
-.activityWrapper {
-  margin-top: 32px;
-  background: $colorWhite;
-  border: 1px solid $colorLightGray;
-
-  box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
-    0px 2px 2px rgba(159, 162, 191, 0.32);
-  border-radius: 12px;
-
-  @media screen and (max-width: $screen-xs) {
-    margin-bottom: 20px;
-  }
-  .activityContainer {
-    position: relative;
-    height: 324px;
-  }
-}
-.tabItem {
-  text-align: center;
-  padding-bottom: 12px;
-  opacity: 0.3;
-  cursor: pointer;
-}
-
-.tabItemSelected {
-  text-align: center;
-  padding-bottom: 12px;
-  opacity: 1;
-  cursor: pointer;
-  border-bottom: 3px solid $mainAction;
-}
-.tabLayout {
-  display: flex;
-  align-items: flex-end;
-  color: $colorWhite;
-  font-family: $fontDMSans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 18px;
-  padding-top: 24px;
-  margin-left: 16px;
-
-  @media (max-width: $screen-md) {
-    margin-left: 0px;
-    justify-content: space-between;
-    font-size: 11px;
-    line-height: 14px;
-  }
-}
-.tabOptionsContainer {
-  @media (max-width: $screen-md) {
-    margin-left: 0px;
-    justify-content: space-between;
-    font-size: 11px;
-    line-height: 14px;
-  }
-}
-/* ACTIVITY TRACKER */
-.activities {
-  margin-top: 40px;
-  .title {
-    display: flex;
-    align-items: center;
-    color: $colorWhite;
-
-    h2 {
-      font-size: 33px;
-
-      @media (max-width: $screen-xs) {
-        font-size: 28px;
-      }
-    }
-
-    img {
-      margin-right: 30px;
-    }
-  }
-}
-.gameCards {
-  margin-top: 220px;
-
-  @media (max-width: $screen-sm) {
-    margin-top: 220px;
-  }
-}
-
-.allGamesContiner {
-  margin-top: 50px;
-
-  @media (max-width: $screen-sm) {
-    margin-top: 50px;
-  }
-
-  .allGames {
-    font-family: $fontDMSans;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 20px;
-    align-items: center;
-    text-align: center;
-    text-decoration-line: underline;
-    color: $colorLightYellow;
-    margin-top: 50px;
-    margin-bottom: 100px;
-    cursor: pointer;
-  }
-}
-
-.discordBanner {
-  width: 100%;
-  height: 130px;
-  margin-top: -100px;
-  margin-bottom: 40px;
-  @media (max-width: $screen-sm) {
-    display: none;
-  }
-  &.withPadding {
-    margin-top: 40px;
-  }
-
-  .backgroundWrapper {
-    position: absolute;
-    height: 100px;
-    left: 0;
-    right: 0;
-    background: #f7a800;
-    display: flex;
-
-    .bodyContainer {
-      position: relative;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      font-weight: 600;
-      font-size: 36px;
-      color: $colorBlack;
-
-      @media (max-width: 1366px) {
-        font-size: 32px;
-      }
-
-      p {
-        // margin-left: 20px;
-        padding: 0 30px 0 20px;
-
-        @media (max-width: $screen-md) {
-          font-size: 26px;
-        }
-
-        a {
-          text-decoration: underline;
-        }
-      }
-      .closeButton {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        cursor: pointer;
-      }
-    }
-    .whiteWrapper {
-      max-width: 500px;
-      position: relative;
-      margin-right: 50px;
-      margin-top: 0px;
-
-      &:after {
-        content: '';
-        position: absolute;
-        right: -60px;
-        top: 0;
-        width: 0;
-        height: 0;
-        border-top: 0px solid transparent;
-        border-left: 60px solid #fff;
-        border-bottom: 127px solid transparent;
-
-        @media (max-width: $screen-sm) {
-          border: none;
-        }
-      }
-
-      .whiteContainer {
-        background: white;
-        padding: 6px 30px;
-        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
-        display: flex;
-        align-items: center;
-        svg {
-          width: 300px;
-          height: 110px;
-        }
       }
     }
   }

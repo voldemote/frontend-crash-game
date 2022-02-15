@@ -85,8 +85,8 @@ const App = () => {
             {/* <TypeformController /> */}
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
-              {/* <Route exact path={Routes.home} component={Home} /> */}
-              <Route exact path={Routes.home} component={LandingPageV2} />
+              <Route exact path={Routes.home} component={Home} />
+              {/* <Route exact path={Routes.home} component={LandingPageV2} /> */}
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
               <Route exact path={Routes.bet} component={EventRouter} />
@@ -109,7 +109,7 @@ const App = () => {
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
-              {/* <Route path={Routes.games} component={LandingPageV2} /> */}
+              <Route path={Routes.games} component={Games} />
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
