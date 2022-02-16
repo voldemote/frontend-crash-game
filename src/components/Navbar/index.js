@@ -46,6 +46,8 @@ import SamsungPay from 'data/icons/samsung-pay.png';
 import {ReactComponent as Maestro} from 'data/icons/maestro.svg';
 import {ReactComponent as GooglePay} from 'data/icons/google-pay.svg';
 import {ReactComponent as WalletIconWhite} from 'data/icons/wallet-icon-white.svg';
+import PlayMoneyOnly from 'components/PlayMoneyOnly';
+import RealMoneyOnly from 'components/RealMoneyOnly';
 
 
 const Navbar = ({
@@ -456,34 +458,38 @@ const Navbar = ({
   const renderTopBar = () => {
     if (!isLoggedIn()) {
       return (
-        <div className={classNames(style.topBar, style.redBar)}>
-          <span>+++ SPECIAL OFFER! +++</span>
-          <span className={style.gift}>🎁</span>
-          <span>Sign Up now and get 5.000 PFAIR for free!</span>
-          <span className={style.gift}>🎁</span>
-          <div>
-            <button onClick={() => startOnboardingFlow()}>Sign up</button>
-            <Icon className={style.icon} iconType={IconType.arrowRight} />
+        <PlayMoneyOnly>
+          <div className={classNames(style.topBar, style.redBar)}>
+            <span>+++ SPECIAL OFFER! +++</span>
+            <span className={style.gift}>🎁</span>
+            <span>Sign Up now and get 5.000 PFAIR for free!</span>
+            <span className={style.gift}>🎁</span>
+            <div>
+              <button onClick={() => startOnboardingFlow()}>Sign up</button>
+              <Icon className={style.icon} iconType={IconType.arrowRight} />
+            </div>
           </div>
-        </div>
+        </PlayMoneyOnly>
       )
     }
 
     return (
-      <div className={style.topBar}>
-        <span>No crypto? No problem!</span>
-        <GooglePay />
-        <Maestro />
-        <ApplePay />
-        <img src={SamsungPay} alt="SamsungPay Logo"/>
-        <div>
-          <button onClick={() => {
-            history.push(Routes.wallet);
-            showWalletDepositPopup();
-          }}>Buy WFAIR</button>
-          <Icon className={style.icon} iconType={IconType.arrowRight} />
+      <RealMoneyOnly>
+        <div className={style.topBar}>
+          <span>No crypto? No problem!</span>
+          <GooglePay />
+          <Maestro />
+          <ApplePay />
+          <img src={SamsungPay} alt="SamsungPay Logo"/>
+          <div>
+            <button onClick={() => {
+              history.push(Routes.wallet);
+              showWalletDepositPopup();
+            }}>Buy WFAIR</button>
+            <Icon className={style.icon} iconType={IconType.arrowRight} />
+          </div>
         </div>
-      </div>
+      </RealMoneyOnly>
     )
   }
 

@@ -55,6 +55,7 @@ const { store, persistor } = configStore();
 initTagManager();
 
 const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
+const realMoneyOnly = process.env.REACT_APP_PLAYMONEY !== 'true';
 
 const App = () => {
   const [isLoading, setLoading] = useState(true);
@@ -86,6 +87,7 @@ const App = () => {
             <Switch>
               <Route exact path={Routes.logout} component={Logout} />
               <Route exact path={Routes.home} component={Home} />
+              <Route exact path={Routes.oauth} component={Home} />
               {/* <Route exact path={Routes.home} component={LandingPageV2} /> */}
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
@@ -93,39 +95,34 @@ const App = () => {
               <Route exact path={Routes.betApproveDirect} component={LandingPageV2} />
               {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
               <Route exact path={Routes.events} component={Events} />
-              <Route
-                exact
-                path={Routes.elonWallpaper}
-                component={ElonWallPaper}
-              />
-              <Route
-                exact
-                path={Routes.rouletteGame}
-                component={RouletteGame}
-              />
-              <Route exact path={Routes.minesGame} component={MinesGame} />
-              <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
-              <Route exact path={Routes.alpacannonGame} component={AlpacannonGame} />
+              <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
               <Route path={Routes.verify} component={EmailVerification} />
-              <Route path={Routes.games} component={Games} />
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
               <Route exact path={Routes.leaderboard} component={LeaderboardPage} />
-              <Route exact path={Routes.oauth} component={LandingPageV2} />
               {showUpcoming && <Route exact path={Routes.externalGames} component={ExternalGames} />}
-              <Route exact path={Routes.evoplayGame} component={EvoplayGame} />
-              <Route exact path={Routes.softswissGame} component={SoftswissGame} />
-              <Route exact path={Routes.externalGame} component={ExternalGame} />
               {/* <PrivateRoute path={Routes.rewards} component={Rewards} /> */}
               <Route exact path={Routes.provablyfair} component={Fair} />
               <Route exact path={Routes.terms} component={TermsConditions} />
-              <Route exact path={Routes.responsibleGambling} component={ResponsibleGambling} />
-              <Route exact path={Routes.kyc} component={KYCPolicy} />
               <Route exact path={Routes.imprint} component={Imprint} />
               <Route exact path={Routes.privacy} component={PrivacyPolicy} />
               <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
+
+              {realMoneyOnly && <>
+                <Route path={Routes.games} component={Games} />
+                <Route exact path={Routes.rouletteGame} component={RouletteGame} />
+                <Route exact path={Routes.minesGame} component={MinesGame} />
+                <Route exact path={Routes.plinkoGame} component={PlinkoGame} />
+                <Route exact path={Routes.alpacannonGame} component={AlpacannonGame} />
+                <Route exact path={Routes.evoplayGame} component={EvoplayGame} />
+                <Route exact path={Routes.softswissGame} component={SoftswissGame} />
+                <Route exact path={Routes.externalGame} component={ExternalGame} />
+                <Route exact path={Routes.responsibleGambling} component={ResponsibleGambling} />
+                <Route exact path={Routes.kyc} component={KYCPolicy} />
+              </>}
+
               <Redirect to={Routes.home} />
             </Switch>
             <ScrollToTop />
