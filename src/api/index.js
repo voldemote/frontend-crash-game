@@ -247,6 +247,7 @@ const pullOutBet = (betId, outcome) => {
     outcome,
   }).catch(error => {
     console.log('[API Error] called: pullOutBet', error);
+    throw error;
   });
 };
 
@@ -257,7 +258,7 @@ const getOpenBets = () => {
 };
 
 const getTradeHistory = () => {
-  return EventsServiceApi.get('/trades?statuses=sold,rewarded,closed').catch(error => {
+  return EventsServiceApi.get('/trades/history').catch(error => {
     console.log('[API Error] called: getTradeHistory', error);
   });
 };
@@ -274,6 +275,7 @@ const placeBet = (betId, amount, outcome) => {
     outcome,
   }).catch(error => {
     console.log('[API Error] called: placeBet', error);
+    throw error;
   });
 };
 

@@ -1,4 +1,3 @@
-import React from "react";
 import Grid from '@material-ui/core/Grid';
 import classNames from "classnames";
 import styles from '../styles.module.scss';
@@ -11,7 +10,6 @@ import { formatToFixed } from "helper/FormatNumbers";
 import { connect } from "react-redux";
 import { PopupActions } from '../../../store/actions/popup';
 import PopupTheme from '../../Popup/PopupTheme';
-import { shortenAddress } from "utils/common";
 
 const isFinalizedTrade = status =>
   [BetState.closed, BetState.canceled, BetState.resolved].includes(status);
@@ -43,7 +41,7 @@ const getGain = trade => {
   return gain;
 };
 
-const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
+const TradeRow = ({ data, allowCashout, showPulloutBetPopup, onApproveCashout }) => {
   const {
     bet,
     event,
@@ -53,6 +51,7 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
     outcomeTokens,
     sellAmount,
     outcomeIndex,
+    direction,
   } = data;
   const gain = getGain(data);
 
@@ -63,11 +62,11 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
           <div className={classNames(styles.messageFirst, styles.messageLeft)}>
             <Link to={`/trade/${event.slug}`} className={styles.titleLink}>
               <div className={styles.titleWithBadge}>
-                {
-                  bet.question?.substr(0, 12) +
-                  '...' +
-                  bet.question?.substr(bet.question?.length - 6)
-                }
+                {bet.question?.length > 20
+                  ? bet.question?.substr(0, 14) +
+                    '...' +
+                    bet.question?.substr(bet.question?.length - 6)
+                  : bet.question}
                 {status === 'active' && (
                   <StateBadge
                     state={bet.status.toLowerCase()}
@@ -87,28 +86,36 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
         </Grid>
         <Grid item xs>
           <div className={styles.messageCenter}>
-            <p>{formatToFixed(investmentAmount)}</p>
+            <p>{formatToFixed(direction === 'SELL' ? outcomeTokens : investmentAmount)}</p>
           </div>
         </Grid>
         <Grid item xs>
-          <div className={styles.messageCenter}>
-            <p>
-              {formatToFixed(status === 'sold' ? sellAmount : outcomeTokens)}
-            </p>
-          </div>
+          {allowCashout ? (
+            <div className={styles.messageCenter}>
+              <p>
+                {formatToFixed(status === 'sold' ? sellAmount : outcomeTokens)}
+              </p>
+            </div>
+          ) : (
+            <div className={styles.messageCenter}>
+              <p>{direction}</p>
+            </div>
+          )}
         </Grid>
-        <Grid item xs>
-          <div className={styles.messageCenter}>
-            <span
-              className={classNames(
-                styles.gain,
-                gain.negative ? styles.negative : null
-              )}
-            >
-              {gain.value}
-            </span>
-          </div>
-        </Grid>
+        {allowCashout && (
+          <Grid item xs>
+            <div className={styles.messageCenter}>
+              <span
+                className={classNames(
+                  styles.gain,
+                  gain.negative ? styles.negative : null
+                )}
+              >
+                {gain.value}
+              </span>
+            </div>
+          </Grid>
+        )}
         <Grid item xs>
           <div
             className={
@@ -132,7 +139,8 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup }) => {
                     bet.id,
                     outcomeIndex,
                     sellAmount,
-                    bet.outcome
+                    bet.outcome,
+                    onApproveCashout
                   )
                 }
                 data-tracking-id="wallet-cashout"
@@ -152,7 +160,12 @@ const TradesTable = ({
   tradeRows = [],
   allowCashout,
   showPulloutBetPopup,
+  refresh,
 }) => {
+  const onApproveCashout = () => {
+    refresh();
+  };
+
   return (
     <div className={classNames(styles.activitiesTrackerContainer, className)}>
       <div className={styles.header}>
@@ -164,16 +177,24 @@ const TradesTable = ({
             <p className={styles.title}>YOUR PREDICTION</p>
           </Grid>
           <Grid item xs>
-            <p className={styles.title}>INVESTMENT AMOUNT</p>
+            <p className={styles.title}>
+              {allowCashout ? 'INVESTMENT AMOUNT' : 'AMOUNT'}
+            </p>
           </Grid>
           <Grid item xs>
-            <p className={styles.title}>OUTCOME TOKENS</p>
+            <p className={styles.title}>
+              {allowCashout ? 'OUTCOME TOKENS' : 'DIRECTION'}
+            </p>
           </Grid>
+          {allowCashout && (
+            <Grid item xs>
+              <p className={styles.title}>GAIN</p>
+            </Grid>
+          )}
           <Grid item xs>
-            <p className={styles.title}>GAIN</p>
-          </Grid>
-          <Grid item xs>
-            <p className={allowCashout ? styles.title : styles.titleLast}>DATE</p>
+            <p className={allowCashout ? styles.title : styles.titleLast}>
+              DATE
+            </p>
           </Grid>
           {allowCashout && (
             <Grid item xs>
@@ -187,6 +208,7 @@ const TradesTable = ({
           <TradeRow
             data={row}
             allowCashout={allowCashout}
+            onApproveCashout={onApproveCashout}
             showPulloutBetPopup={showPulloutBetPopup}
             key={index}
           />
@@ -203,12 +225,13 @@ const TradesTable = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    showPulloutBetPopup: (betId, outcome, amount, outcomeName) => {
+    showPulloutBetPopup: (betId, outcome, amount, outcomeName, onApprove) => {
       dispatch(
         PopupActions.show({
           popupType: PopupTheme.pulloutApprove,
           options: {
             small: true,
+            onApprove,
             betData: {
               betId,
               outcome,

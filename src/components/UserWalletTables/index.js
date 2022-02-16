@@ -6,7 +6,7 @@ import OnRampTable from './tables/OnRampTable';
 import CryptosTable from './tables/CryptosTable';
 import TradesTable from './tables/TradesTable';
 
-const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) => {
+const UserWalletTables = ({ type = 'DEPOSITS', rowData, isError, refresh }) => {
 
   if(isError) {
       return (
@@ -31,8 +31,14 @@ const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) =>
   const renderCryptosTableRows = (cryptosRows) => {
     return <CryptosTable renderRow={cryptosRows} />;
   };
-  const renderTradeRows = (tradeRows, allowCashout) => {
-    return <TradesTable tradeRows={tradeRows} allowCashout={allowCashout} />;
+  const renderTradeRows = (tradeRows) => {
+    return (
+      <TradesTable
+        tradeRows={tradeRows}
+        allowCashout={type !== 'TRADE_HISTORY'}
+        refresh={refresh}
+      />
+    );
   }
 
   const renderTableRows = (type) => {
@@ -49,7 +55,7 @@ const UserWalletTables = ({ className, type = 'DEPOSITS', rowData, isError }) =>
         return renderCryptosTableRows(rowData[type]);
       case 'OPEN_TRADES':
       case 'TRADE_HISTORY':
-        return renderTradeRows(rowData[type], type !== 'TRADE_HISTORY');
+        return renderTradeRows(rowData[type]);
       default:
         return renderDepositTableRows(rowData[type]);
     }

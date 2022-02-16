@@ -174,7 +174,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <VerifyEmailPopup closed={false} />;
 
       case PopupTheme.pulloutApprove:
-        return <PulloutApprovePopup betData={_.get(options, 'betData')} />;
+        return <PulloutApprovePopup betData={_.get(options, 'betData')} onApprove={options.onApprove} />;
 
       case PopupTheme.lotteryGameAnswered:
         return (

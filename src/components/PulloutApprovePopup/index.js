@@ -14,13 +14,15 @@ const PulloutApprovePopup = ({
   showSuccess,
   showError,
   betData: { betId, amount, outcome, outcomeName },
+  onApprove,
 }) => {
   const { currency } = useSelector(selectUser);
 
   const onApprovePulloutClick = () => {
     pullOutBet(betId, outcome).then(() => {
       hidePopup();
-      showSuccess(`Successfully cashed out ${amount}`)
+      showSuccess(`Successfully cashed out ${amount}`);
+      onApprove(betId, outcome);
       trackApproveCashout({ eventTitle: outcomeName });
     }).catch(() => {
       hidePopup();

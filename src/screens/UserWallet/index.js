@@ -125,6 +125,11 @@ const UserWallet = ({
     setEmailSent(resultOk);
   };
 
+  const fetchTrades = () => {
+    getOpenBets().then(res => setOpenTrades(res.data));
+    getTradeHistory().then(res => setTradeHistory(res.data));
+  }
+
   useEffect(() => {
     resetState();
   }, [account, active, resetState]);
@@ -135,7 +140,7 @@ const UserWallet = ({
       setActivityTabOptions([
         ...tabOptions,
         { name: 'BETS', index: 4 },
-        { name: 'OPEN TRADES', index: 5 },
+        { name: 'OPEN TRADES', index: 5, refresh: fetchTrades },
         { name: 'TRADE HISTORY', index: 6 },
       ]);
     }
@@ -144,8 +149,7 @@ const UserWallet = ({
 
   useEffect(() => {
     fetchWalletTransactions();
-    getOpenBets().then(res => setOpenTrades(res.data));
-    getTradeHistory().then(res => setTradeHistory(res.data));
+    fetchTrades();
   }, [fetchWalletTransactions, balance]);
 
   useEffect(() => {
@@ -205,6 +209,7 @@ const UserWallet = ({
                   type={activityDataMap[activityTab.name]}
                   rowData={activityData}
                   isError={isTransactionsFetchError}
+                  refresh={activityTab.refresh}
                 />
               )}
             </div>
