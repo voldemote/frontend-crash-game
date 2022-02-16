@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import Icon from '../Icon';
+import RealMoneyOnly from 'components/RealMoneyOnly';
 
 const HomeSettings = ({
   loggedIn,
@@ -39,14 +40,17 @@ const HomeSettings = ({
           <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'game'} />
           <p className={styles.settingTitle}>Events</p>
         </div>
+        
+        <RealMoneyOnly>
+          <div
+            onClick={onGamesClick}
+            className={classNames(styles.singleSettingHolder)}
+          >
+            <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'game'} />
+            <p className={styles.settingTitle}>Games</p>
+          </div>
+        </RealMoneyOnly>
 
-        <div
-          onClick={onGamesClick}
-          className={classNames(styles.singleSettingHolder)}
-        >
-          <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'game'} />
-          <p className={styles.settingTitle}>Games</p>
-        </div>
         {loggedIn && (
           <div
             onClick={onWalletClick}
@@ -56,6 +60,7 @@ const HomeSettings = ({
             <p className={styles.settingTitle}>Wallet</p>
           </div>
         )}
+
         <div
           onClick={onActivitiesClick}
           className={classNames(styles.singleSettingHolder)}
@@ -63,6 +68,7 @@ const HomeSettings = ({
           <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'activities'} />
           <p className={styles.settingTitle}>Activities</p>
         </div>
+
         <div
           onClick={onLeaderboardClick}
           className={classNames(styles.singleSettingHolder)}
@@ -70,8 +76,8 @@ const HomeSettings = ({
           <Icon className={classNames(styles.referralIcon, styles.strokeIcon)} iconType={'leaderboard'} />
           <p className={styles.settingTitle}>Leaderboard</p>
         </div>
-        {loggedIn && (
 
+        {loggedIn && (
         <>
           <div
             onClick={onEditClick}
@@ -82,15 +88,19 @@ const HomeSettings = ({
             <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'profile'} />
             <p className={styles.settingTitle}>Edit my Profile</p>
           </div>
-          <div
-            onClick={() => onKycInfoClick()}
-            className={classNames(
-              styles.singleSettingHolder
-            )}
-          >
-            <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'question'} />
-            <p className={styles.settingTitle}>KYC Verification</p>
-          </div>
+
+          <RealMoneyOnly>
+            <div
+              onClick={() => onKycInfoClick()}
+              className={classNames(
+                styles.singleSettingHolder
+              )}
+            >
+              <Icon className={classNames(styles.referralIcon, styles.fillIcon)} iconType={'question'} />
+              <p className={styles.settingTitle}>KYC Verification</p>
+            </div>
+          </RealMoneyOnly>
+
           <div
             className={classNames(
               styles.singleSettingHolder

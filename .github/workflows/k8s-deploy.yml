@@ -77,6 +77,7 @@ jobs:
                             --build-arg REACT_APP_SMARTSOFT_LAUNCHER_URL="https://eu-staging.ssgportal.com/GameLauncher/Loader.aspx"\
                             --build-arg REACT_APP_SMARTSOFT_PORTALNAME="wallfair"\
                             --build-arg REACT_APP_EVENTS_SERVICE_URL="https://events-staging.wallfair.io"\
+                            --build-arg REACT_APP_PLAYMONEY=true\
                             -t registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
           docker push registry.digitalocean.com/wallfair/frontend_k8s_staging:${GITHUB_SHA::6}
       - name: Build the docker image (development)
