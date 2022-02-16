@@ -29,7 +29,7 @@ import Chart from '../../components/Chart';
 import { useChartData } from './hooks/useChartData';
 import BetView from '../../components/BetView';
 import ActivitiesTracker from '../../components/ActivitiesTracker';
-import { getEventBySlug, getOutcomesHistoryForChart } from 'api';
+import { bookmarkEvent, bookmarkEventCancel, getEventBySlug, getOutcomesHistoryForChart } from 'api';
 import { ReactComponent as ArrowLeft } from 'data/icons/arrow-left.svg';
 import Routes from 'constants/Routes';
 import EventShareWidget from 'components/EventShareWidget';
@@ -43,8 +43,6 @@ const MarketEvent = ({
   fetchChatMessages,
   handleDislaimerHidden,
   chartParams,
-  bookmarkEvent = () => {},
-  bookmarkEventCancel = () => {},
   startOnboardingFlow,
   isAdmin,
 }) => {
@@ -54,6 +52,7 @@ const MarketEvent = ({
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [showChart, setShowChart] = useState(false);
   const [chartData, setChartData] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const userCreator = userId === event?.bet?.creator;
 
@@ -70,6 +69,7 @@ const MarketEvent = ({
       .then(res => {
         if (!_.isEqual(res, event)) {
           setEvent(res);
+          setIsFavorite(!!res.bookmarks?.find(b => b.user_id === userId));
           setCanDeleteEvent(res.bet.status === BetState.canceled);
           fetchChatMessages(res.id);
           fetchChartHistory(res.bet.id);
@@ -149,16 +149,16 @@ const MarketEvent = ({
     return (
       <div className={styles.shareButton}>
         <Favorite
-          isFavorite={!!event?.bookmarks?.includes(userId)}
+          isFavorite={isFavorite}
           onBookmark={() => {
             isLoggedIn()
-              ? bookmarkEvent(event?.id)
+              ? bookmarkEvent(event?.id).then(() => setIsFavorite(true))
               : showPopup(PopupTheme.loginRegister, {
                   small: false,
                 });
           }}
           onBookmarkCancel={() => {
-            bookmarkEventCancel(event?.id);
+            bookmarkEventCancel(event?.id).then(() => setIsFavorite(false));
           }}
         />
         <Share />
@@ -392,12 +392,6 @@ const mapDispatchToProps = dispatch => {
     },
     handleDislaimerHidden: bool => {
       dispatch(GeneralActions.setDisclaimerHidden(bool));
-    },
-    bookmarkEvent: eventId => {
-      dispatch(EventActions.bookmarkEvent({ eventId }));
-    },
-    bookmarkEventCancel: eventId => {
-      dispatch(EventActions.bookmarkEventCancel({ eventId }));
     },
     startOnboardingFlow: () => {
       dispatch(OnboardingActions.start());

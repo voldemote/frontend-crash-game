@@ -345,11 +345,11 @@ const deleteEvent = slug => {
 };
 
 const bookmarkEvent = id => {
-  return Api.put(ApiUrls.API_EVENT_BOOKMARK.replace(':id', id));
+  return EventsServiceApi.put(`/events/${id}/bookmarks/add`);
 };
 
 const bookmarkEventCancel = id => {
-  return Api.put(ApiUrls.API_EVENT_BOOKMARK_CANCEL.replace(':id', id));
+  return EventsServiceApi.put(`/events/${id}/bookmarks/remove`);
 };
 
 const createEventBet = payload => {
