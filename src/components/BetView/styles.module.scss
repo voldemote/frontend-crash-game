@@ -18,15 +18,43 @@
 
   .imageContainer {
     width: 100%;
-    max-height: 200px;
-    overflow: hidden;
+    max-height: 300px;
     margin-bottom: 35px;
     border-radius: 10px 10px 0 0;
     display: flex;
+    position: relative;
 
-    img {
+    .imgWrapper {
       width: 100%;
-      object-fit: cover;
+      height: 100%;
+      max-height: 300px;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+
+      img {
+        width: 100%;
+        // height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .categorySticker {
+      width: 52px;
+      height: 52px;
+      background: url('../../data/icons/all-icon.svg');
+      border-radius: 50%;
+      background-position: center;
+      position: absolute;
+      z-index: 3;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      // @media (max-width: $screen-sm) {
+      //   display: inline-block;
+      //   position: absolute;
+      //   margin-right: 10px;
+      // }
     }
   }
 
@@ -53,24 +81,6 @@
 
     &.isPopup {
       margin-bottom: 70px;
-    }
-
-    .categorySticker {
-      width: 52px;
-      height: 52px;
-      background: url('../../data/icons/all-icon.svg');
-      border-radius: 50%;
-      background-position: center;
-      position: absolute;
-      z-index: 3;
-      top: calc(200px - 52px / 2);
-      left: 50%;
-
-      @media (max-width: $screen-sm) {
-        display: inline-block;
-        position: static;
-        margin-right: 10px;
-      }
     }
   }
 
@@ -144,7 +154,7 @@
     line-height: 24px;
     letter-spacing: 0px;
     padding: 0 16%;
-    margin: 20px 0;
+    margin: 10px 0;
     position: relative;
 
     .info {
@@ -153,6 +163,11 @@
       text-align: left;
       position: absolute;
       padding-top: 3px;
+    }
+
+    .betDescription {
+      font-size: 15px;
+      color: $colorGray;
     }
   }
 
@@ -172,7 +187,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    margin: 2rem 0 6px 0;
+    margin: 0 0 6px 0;
     width: 100%;
     padding: $padding;
 
@@ -262,6 +277,11 @@
     font-size: 16px;
     margin-bottom: auto;
     justify-content: center;
+    padding: 0 40px;
+
+    @media (max-width: $screen-xs) {
+      padding: 0;
+    }
 
     @media (min-width: $screen-sm) {
       margin-bottom: 20px;
@@ -274,7 +294,7 @@
       margin: 20px auto;
       width: 100%;
 
-      @media (max-width: $screen-sm) {
+      @media (max-width: $screen-xs) {
         max-width: 300px;
         margin: 5px auto 20px;
       }

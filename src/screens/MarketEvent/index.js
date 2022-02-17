@@ -311,9 +311,24 @@ const MarketEvent = ({
                   </div>
                 )} */}
 
+                
+                <div className={styles.activitiesWrapper}>
+                  <div className={styles.sectionHeader}>
+                    <h4>{`Activities`}</h4>
+                  </div>
+                  <div className={styles.activitiesTabContainerDesktop}>
+                    <ActivitiesTracker
+                      showCategories={false}
+                      activitiesLimit={50}
+                      betId={event.bet?.id}
+                      className={styles.activitiesTrackerTabBlock}
+                      showBetName={false}
+                    />
+                  </div>
+                </div>
                 <div className={styles.evidenceWrapper}>
                   <div className={styles.sectionHeader}>
-                    <h4>{`EVIDENCE`}</h4>
+                    <h4>{`Evidence`}</h4>
                   </div>
                   <div className={styles.evidenceTabContainerDesktop}>
                     <div className={styles.evidenceSource}>
@@ -332,20 +347,6 @@ const MarketEvent = ({
                         }}
                       ></div>
                     </div>
-                  </div>
-                </div>
-                <div className={styles.activitiesWrapper}>
-                  <div className={styles.sectionHeader}>
-                    <h4>{`ACTIVITIES`}</h4>
-                  </div>
-                  <div className={styles.activitiesTabContainerDesktop}>
-                    <ActivitiesTracker
-                      showCategories={false}
-                      activitiesLimit={50}
-                      betId={event.bet?.id}
-                      className={styles.activitiesTrackerTabBlock}
-                      showBetName={false}
-                    />
                   </div>
                 </div>
               </div>
