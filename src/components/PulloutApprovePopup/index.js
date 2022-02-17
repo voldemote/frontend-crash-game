@@ -8,6 +8,7 @@ import { selectUser } from 'store/selectors/authentication';
 import { trackApproveCashout } from '../../config/gtm';
 import { pullOutBet } from 'api';
 import { AlertActions } from 'store/actions/alert';
+import { currencyDisplay } from 'helper/Currency';
 
 const PulloutApprovePopup = ({
   hidePopup,
@@ -21,12 +22,12 @@ const PulloutApprovePopup = ({
   const onApprovePulloutClick = () => {
     pullOutBet(betId, outcome).then(() => {
       hidePopup();
-      showSuccess(`Successfully cashed out ${amount}`);
+      showSuccess(`Successfully cashed out ${amount} ${currencyDisplay(currency)}`);
       onApprove(betId, outcome);
       trackApproveCashout({ eventTitle: outcomeName });
     }).catch(() => {
       hidePopup();
-      showError('Failed to cash out');
+      showError('Failed to cash out.');
     });
   };
 
@@ -43,7 +44,7 @@ const PulloutApprovePopup = ({
       <p className={styles.pulloutText}>
         Are you sure you want to cash out&nbsp;
         <strong>
-          {amount} {currency}
+          {amount} {currencyDisplay(currency)}
         </strong>
         ?
       </p>

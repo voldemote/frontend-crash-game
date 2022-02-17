@@ -163,7 +163,8 @@ const NonStreamedEventsContent = ({
             <Link
               className={styles.betLinkWrapper}
               to={{
-                pathname: `/trade/${item.slug}/${item.bet.slug}`,
+                // pathname: `/trade/${item.slug}/${item.bet.slug}`,
+                pathname: `/trade/${item.slug}`,
                 state: { fromLocation: location },
               }}
               key={item.bet.id}

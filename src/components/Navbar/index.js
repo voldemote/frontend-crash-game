@@ -228,16 +228,33 @@ const Navbar = ({
             </RealMoneyOnly>
           </div>
         </span>
-        <Button
-          theme={ButtonTheme.primaryButtonS}
-          className={style.depositButton}
-          onClick={() => {
-            history.push(Routes.wallet);
-            showWalletDepositPopup();
-          }}
-        >
-          <WalletIconWhite className={style.depositIcon} /><span>Deposit</span>
-        </Button>
+        
+        <RealMoneyOnly>
+          <Button
+            theme={ButtonTheme.primaryButtonS}
+            className={style.depositButton}
+            onClick={() => {
+              history.push(Routes.wallet);
+              showWalletDepositPopup();
+            }}
+          >
+            <WalletIconWhite className={style.depositIcon} /><span>Deposit</span>
+          </Button>
+        </RealMoneyOnly>
+
+        <PlayMoneyOnly>
+          <Button
+            theme={ButtonTheme.primaryButtonS}
+            className={style.depositButton}
+            onClick={() => {
+              history.push(Routes.wallet);
+              // showWalletDepositPopup();
+            }}
+          >
+            <WalletIconWhite className={style.depositIcon} /><span>Claim PFAIR</span>
+          </Button>
+        </PlayMoneyOnly>
+
       </div>
     );
     return (

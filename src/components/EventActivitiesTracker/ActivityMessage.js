@@ -49,15 +49,19 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
   };
 
   const prepareMessageByType = (activity, user) => {
+
+    const isPlayMoney = process.env.REACT_APP_PLAYMONEY === 'true';
+
     const data = activity.data;
     const userName = getUserProfileUrl(data);
-    const rewardAmountFormatted = formatToFixed(data?.reward ?? 0, 0, false);
+    const initialRewardAmount = isPlayMoney ? data?.reward : data?.rewardWfair;
+    const rewardAmountFormatted = formatToFixed(initialRewardAmount ?? 0, 0, false);
     const rewardAmount = toNumericString(rewardAmountFormatted);
     const gameName = data?.gameName;
     const gameTypeId = data?.gameTypeId;
     const gameLabel = getGameById(gameTypeId)?.name || gameName;
     const multiplier = (_.has(data, 'crashFactor') ? data.crashFactor : data?.winMultiplier) || 0;
-    const stakedAmount = data?.stakedAmount;
+    const stakedAmount = isPlayMoney ? data?.stakedAmountWfair : data?.stakedAmount;
     const crashFactor = roundToTwo(multiplier);
     const gamesCurrency = currencyDisplay(data?.gamesCurrency);
 

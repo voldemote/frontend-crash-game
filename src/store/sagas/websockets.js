@@ -434,11 +434,11 @@ export function* joinOrLeaveRoomOnRouteChange(action) {
 
 export function* connected() {
   const location = yield select(state => state.router.location);
-  const matchesTradeRoute = matchPath(location.pathname, Routes.bet);
+  const matchesTradeRoute = matchPath(location.pathname, Routes.event);
 
   if (matchesTradeRoute) {
     const { params } = yield select(state =>
-      createMatchSelector({ path: Routes.bet })(state)
+      createMatchSelector({ path: Routes.event })(state)
     );
     const { eventId } = params;
 

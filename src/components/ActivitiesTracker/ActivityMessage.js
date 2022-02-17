@@ -14,6 +14,8 @@ import { calculateGain } from '../../helper/Calculation';
 import { getGameById } from '../../helper/Games';
 import { currencyDisplay } from 'helper/Currency';
 
+const isPlayMoney = process.env.REACT_APP_PLAYMONEY === 'true';
+
 const ActivityMessage = ({ activity, date, users, events, showBetName = true }) => {
   const [dateString, setDateString] = useState('');
 
@@ -38,7 +40,8 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
       <a
         className={'global-link-style'}
         target={'_blank'}
-        href={`${window.location.origin}/trade/${eventSlug}/${betSlug}`}
+        // href={`${window.location.origin}/trade/${eventSlug}/${betSlug}`}
+        href={`${window.location.origin}/trade/${eventSlug}`}
         rel="noreferrer"
       >
         {_.get(data, 'name')}
@@ -129,10 +132,14 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
               <a
                 className={'global-link-style'}
                 target={'_blank'}
+                // href={`${window.location.origin}/trade/${_.get(
+                //   event,
+                //   'slug'
+                // )}/${_.get(event, 'bets[0].slug')}`}
                 href={`${window.location.origin}/trade/${_.get(
                   event,
                   'slug'
-                )}/${_.get(event, 'bets[0].slug')}`}
+                )}`}
                 rel="noreferrer"
               >
                 {_.get(event, 'bets[0].marketQuestion')}
@@ -157,10 +164,14 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
                 <a
                   className={'global-link-style'}
                   target={'_blank'}
+                  // href={`${window.location.origin}/trade/${_.get(
+                  //   event,
+                  //   'slug'
+                  // )}/${_.get(data, 'bet.slug')}`}
                   href={`${window.location.origin}/trade/${_.get(
                     event,
                     'slug'
-                  )}/${_.get(data, 'bet.slug')}`}
+                  )}`}
                   rel="noreferrer"
                 >
                   <b>{_.get(data, 'bet.market_question')}</b>
@@ -198,10 +209,14 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
               <a
                 className={'global-link-style'}
                 target={'_blank'}
+                // href={`${window.location.origin}/trade/${_.get(
+                //   event,
+                //   'slug'
+                // )}/${_.get(data, 'bet.slug')}`}
                 href={`${window.location.origin}/trade/${_.get(
                   event,
                   'slug'
-                )}/${_.get(data, 'bet.slug')}`}
+                )}}`}
                 rel="noreferrer"
               >
                 <b>{_.get(data, 'bet.market_question')}</b>
@@ -221,10 +236,11 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
           <a
             className={'global-link-style'}
             target={'_blank'}
-            href={`${window.location.origin}/trade/${eventSlug}/${_.get(
-              bet,
-              'slug'
-            )}`}
+            // href={`${window.location.origin}/trade/${eventSlug}/${_.get(
+            //   bet,
+            //   'slug'
+            // )}`}
+            href={`${window.location.origin}/trade/${eventSlug}`}
             rel="noreferrer"
           >
             {_.get(bet, 'market_question')}
@@ -335,13 +351,13 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
           : 'multiplier';
 
         const gamesCurrency = currencyDisplay(data?.gamesCurrency);
-
+        const stakedAmount =  isPlayMoney ? _.get(data, 'stakedAmountWfair') : _.get(data, 'stakedAmount');
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has lost{' '}
             <div className={'global-token-currency'}>
               <b className={'global-cashout-loss'}>
-                {formatToFixed(_.get(data, 'stakedAmount'), 0, true)}{' '}
+                {formatToFixed(stakedAmount, 0, true)}{' '}
                 {gamesCurrency}
               </b>
             </div>{' '}

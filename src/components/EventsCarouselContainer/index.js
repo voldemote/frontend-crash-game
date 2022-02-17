@@ -108,7 +108,8 @@ const EventsCarouselContainer = ({
         <Link
           key={betId}
           to={{
-            pathname: `/trade/${eventSlug}/${betSlug}`,
+            // pathname: `/trade/${eventSlug}/${betSlug}`,
+            pathname: `/trade/${eventSlug}`,
             state: { fromLocation: location },
           }}
           className={styles.eventLink}

@@ -21,9 +21,8 @@ const actionTypes = {
     onAccept: ({ bet, event }, _actions, data, history) =>
       Api.cancelBet(bet.id, data).then(() =>
         history.push(
-          Routes.getRouteWithParameters(Routes.bet, {
+          Routes.getRouteWithParameters(Routes.event, {
             eventSlug: event.slug,
-            betSlug: bet.slug,
           })
         )
       ),

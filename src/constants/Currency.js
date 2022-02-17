@@ -6,7 +6,7 @@ export const CONVERSION_RATES = {
 };
 
 export const CURRENCIES = [TOKEN_NAME];
-export const AVAILABLE_GAMES_CURRENCY = process.env.REACT_APP_PLAYMONEY !== 'true' ? ['USD', 'EUR'] : ['USD', 'EUR', TOKEN_NAME, 'WFAIR'];
+export const AVAILABLE_GAMES_CURRENCY = process.env.REACT_APP_PLAYMONEY !== 'true' ? ['USD', 'EUR'] : ['USD', 'EUR', TOKEN_NAME];
 export const GAMES_CURRENCY_MAX_BET = 100;
-export const GAMES_CURRENCY_DEFAULT_BET = process.env.REACT_APP_PLAYMONEY !== 'true' ? 5 : 100;
+export const GAMES_CURRENCY_DEFAULT_BET = process.env.REACT_APP_PLAYMONEY !== 'true' ? 5 : 20;
 export const DEFAULT_GAMES_CURRENCY = process.env.REACT_APP_PLAYMONEY !== 'true' ? 'USD' : TOKEN_NAME;
