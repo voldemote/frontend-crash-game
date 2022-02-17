@@ -204,25 +204,27 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
                 ({gainValueEvent})
               </div>
             )}{' '}
-            from{' '}
-            <b>
-              <a
-                className={'global-link-style'}
-                target={'_blank'}
-                // href={`${window.location.origin}/trade/${_.get(
-                //   event,
-                //   'slug'
-                // )}/${_.get(data, 'bet.slug')}`}
-                href={`${window.location.origin}/trade/${_.get(
-                  event,
-                  'slug'
-                )}}`}
-                rel="noreferrer"
-              >
-                <b>{_.get(data, 'bet.market_question')}</b>
-              </a>
-            </b>
-            .
+            {showBetName && <>
+              from{' '}
+              <b>
+                <a
+                  className={'global-link-style'}
+                  target={'_blank'}
+                  // href={`${window.location.origin}/trade/${_.get(
+                  //   event,
+                  //   'slug'
+                  // )}/${_.get(data, 'bet.slug')}`}
+                  href={`${window.location.origin}/trade/${_.get(
+                    event,
+                    'slug'
+                  )}}`}
+                  rel="noreferrer"
+                >
+                  <b>{_.get(data, 'bet.market_question')}</b>
+                </a>
+              </b>
+              .
+            </>}
           </div>
         );
       case 'Notification/EVENT_BET_RESOLVED': {

@@ -6,6 +6,17 @@
   height: 400px;
   position: relative;
 
+  .labelContainer {
+    // position: absolute;
+    // top: 15px;
+    // left: 20px;
+    padding-left: 6px;
+    font-family: $fontDMSans;
+    font-size: 16px;
+    font-weight: 500;
+    color: $colorWhite;
+  }
+
   @media (max-width: $screen-md) {
     padding-top: 0;
     margin-top: 0;

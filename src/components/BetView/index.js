@@ -226,7 +226,13 @@ const BetView = ({
     const imgUrl = _.get(event, key);
     return (
       <div className={styles.imageContainer}>
-        <img src={imgUrl} alt={`trade`} />
+        <div className={styles.imgWrapper}>
+          <img src={imgUrl} alt={`trade`} />
+        </div>
+        <div
+          className={classNames([styles.categorySticker])}
+          style={getStickerStyle(event.category)}
+        />
       </div>
     );
   };
@@ -590,10 +596,7 @@ const BetView = ({
           
           {renderImage()}
           
-          <div
-            className={classNames([styles.categorySticker])}
-            style={getStickerStyle(event.category)}
-          />
+          
           
           <div
             className={classNames(
@@ -603,11 +606,12 @@ const BetView = ({
           >
            
             <span>{bet.market_question}</span>
-            {bet.description && (
+            <p className={styles.betDescription}>{bet.description}</p>
+            {/* {bet.description && (
               <span className={styles.info}>
                 <InfoBox position={'bottomRight'}>{bet.description}</InfoBox>
               </span>
-            )}
+            )} */}
           </div>
           {renderStateConditionalContent()}
         </div>
