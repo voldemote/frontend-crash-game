@@ -26,7 +26,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
       case 'create-events':
         if (loggedIn) {
           history.push(Routes.getRouteWithParameters(Routes.events, {category: 'all'}));
-          showPopup(PopupTheme.newEvent, { eventType: 'non-streamed' });
+          showPopup(PopupTheme.eventForms, {});
         } else {
           dispatch(OnboardingActions.start());
           dataLayerPush({
