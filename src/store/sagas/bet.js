@@ -25,7 +25,7 @@ const create = function* ({ bet }) {
       state.event.events.find(({ _id }) => _id === bet.event)
     );
 
-    const route = Routes.getRouteWithParameters(Routes.bet, {
+    const route = Routes.getRouteWithParameters(Routes.event, {
       eventSlug: event.slug,
       betSlug: bet.slug,
     });

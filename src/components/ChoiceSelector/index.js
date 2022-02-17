@@ -4,6 +4,7 @@ import SelectionHelper from '../../helper/SelectionHelper';
 import ChoiceSelectorTheme from './ChoiceSelectorTheme';
 import _ from 'lodash';
 import { formatToFixed } from '../../helper/FormatNumbers';
+import { currencyDisplay } from 'helper/Currency';
 
 const ChoiceSelector = ({
   name,
@@ -37,7 +38,7 @@ const ChoiceSelector = ({
         <div className={styles.choiceWinAmountContainer}>
           <div className={styles.choiceWinAmount}>{winAmountString}</div>
           <div className={styles.choiceWinAmountUnitContainer}>
-            <div className={styles.choiceWinAmountUnit}>{currency}</div>
+            <div className={styles.choiceWinAmountUnit}>{currencyDisplay(currency)}</div>
             <div className={styles.choiceWinAmountCash}>
               <span
                 className={classNames(

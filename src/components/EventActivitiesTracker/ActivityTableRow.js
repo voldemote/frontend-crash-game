@@ -7,6 +7,7 @@ import { toNumericString } from 'helper/FormatNumbers';
 import classNames from 'classnames';
 import { GAMES } from 'constants/Games';
 import { roundToTwo } from '../../helper/FormatNumbers';
+import { currencyDisplay } from 'helper/Currency';
 
 const UserLink = props => {
   const { userId, username } = props;
@@ -46,6 +47,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
   const stakedAmountStr = toNumericString(stakedAmountNum);
   const rewardAmountStr = toNumericString(rewardAmountNum);
   const lostAmountStr = toNumericString(stakedAmountNum - rewardAmountNum);
+  const currency = currencyDisplay(data?.gamesCurrency);
 
   if(rewardAmountNum<stakedAmountNum) type = 'lost'
   else type = 'win';
@@ -70,7 +72,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
           </Grid>
           <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <div className={styles.messageRight}>
-              <p>{stakedAmountStr} {data?.gamesCurrency}</p>
+              <p>{stakedAmountStr} {currency}</p>
               <img src={medalCoin} alt="medal" />
             </div>
           </Grid>
@@ -82,9 +84,9 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
           <Grid item xs>
             <div className={classNames(styles.messageLast, styles.messageRight)} data-wg-notranslate>
               {type==='lost' ? (
-                  <p className={styles.loss}>{`-${lostAmountStr} ${data?.gamesCurrency}`}</p>
+                  <p className={styles.loss}>{`-${lostAmountStr} ${currency}`}</p>
                 ):(
-                  <p className={styles.reward}>{`${rewardAmountStr} ${data?.gamesCurrency}`}</p>
+                  <p className={styles.reward}>{`${rewardAmountStr} ${currency}`}</p>
                 )}
               <img src={medalCoin} alt="medal" />
             </div>

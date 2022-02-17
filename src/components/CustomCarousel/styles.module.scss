@@ -3,6 +3,21 @@
 .carouselContainer {
   cursor: pointer;
 
+  display: none;
+  &.mobile {
+    display: none;
+    @media (max-width: $screen-xs) {
+      display: block;
+    }
+  }
+
+  &.desktop {
+    display: block;
+    @media (max-width: $screen-xs) {
+      display: none;
+    }
+  }
+
   img {
     object-fit: cover !important;
 

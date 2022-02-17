@@ -10,7 +10,7 @@ import PopupTheme from '../Popup/PopupTheme';
 import { connect, useSelector } from 'react-redux';
 import { calculateGain } from 'helper/Calculation';
 import { selectUser } from 'store/selectors/authentication';
-import { convert } from '../../helper/Currency';
+import { convert, currencyDisplay } from '../../helper/Currency';
 import Share from '../../components/Share';
 import routes from '../../constants/Routes';
 import useConfettiAnimation from 'hooks/useConfettiAnimation';
@@ -62,14 +62,14 @@ const BetApproveView = ({ visible, hidePopup, options }) => {
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Amount placed</div>
           <div className={classNames(styles.value, styles.alignRight)}>
-            {toNumericString(amountPlaced)} <span>{currency}</span>
+            {toNumericString(amountPlaced)} <span>{currencyDisplay(currency)}</span>
           </div>
         </div>
         <div className={classNames(styles.entry)}>
           <div className={styles.label}>Potential outcome</div>
           <div className={classNames(styles.value, styles.alignRight)}>
             {toNumericString(potentialOutcome)}{' '}
-            <span>{currency}</span>
+            <span>{currencyDisplay(currency)}</span>
           </div>
         </div>
         <div className={classNames(styles.entry, styles.alignRight)}>

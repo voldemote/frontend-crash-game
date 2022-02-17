@@ -9,6 +9,7 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { GeneralActions } from 'store/actions/general';
 import authState from 'constants/AuthState';
 import Routes from 'constants/Routes';
+import classNames from 'classnames';
 
 const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId, showPopup}) => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
       case 'create-events':
         if (loggedIn) {
           history.push(Routes.getRouteWithParameters(Routes.events, {category: 'all'}));
-          showPopup(PopupTheme.newEvent, { eventType: 'non-streamed' });
+          showPopup(PopupTheme.eventForms, {});
         } else {
           dispatch(OnboardingActions.start());
           dataLayerPush({
@@ -51,7 +52,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
     }
   };
 
-  const renderLandingPageSlides = () => {
+  const renderDesktopSlides = () => {
     return (
       <Carousel
         className={styles.carousel}
@@ -72,7 +73,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
           src={`https://files.wallfair.io/landingpage-carousel/slide_create_own_event.jpg?v=2`}
         />
       </div>
-      <div>
+      {/* <div>
         <img
           alt=""
           src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=2`}
@@ -83,16 +84,56 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
           alt=""
           src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=2`}
         />
-      </div>
+      </div> */}
     </Carousel>
     )
   }
 
-  return (
-    <div className={styles.carouselContainer}>
-      {renderLandingPageSlides()}
+  const renderMobileSlides = () => {
+    return (
+      <Carousel
+        className={styles.carousel}
+        autoPlay
+        interval={6500}
+        transitionTime={800}
+        infiniteLoop={true}
+        stopOnHover={false}
+        showArrows={true}
+        showStatus={false}
+        showIndicators={false}
+        showThumbs={false}
+        onClickItem={onClickItem}
+      >
+      <div>
+        <img
+          alt=""
+          src={`https://files.wallfair.io/landingpage-carousel/banner-1-mobile.jpg?v=2`}
+        />
+      </div>
+      {/* <div>
+        <img
+          alt=""
+          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=2`}
+        />
+      </div>
+      <div>
+        <img
+          alt=""
+          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=2`}
+        />
+      </div> */}
+    </Carousel>
+    )
+  }
+
+  return <>
+    <div className={classNames(styles.carouselContainer, styles.desktop)}>
+      {renderDesktopSlides()}
     </div>
-  );
+    <div className={classNames(styles.carouselContainer, styles.mobile)}>
+      {renderMobileSlides()}
+    </div>
+  </>;
 };
 
 const mapStateToProps = state => {

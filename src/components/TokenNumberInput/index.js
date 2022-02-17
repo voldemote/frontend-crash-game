@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import ErrorHint from '../ErrorHint';
 import NumberCommaInput from 'components/NumberCommaInput/NumberCommaInput';
+import { currencyDisplay } from 'helper/Currency';
 
 const TokenNumberInput = ({
   value,
@@ -61,7 +62,7 @@ const TokenNumberInput = ({
           withoutDecimals
           {...props}
         />
-        <span className={styles.eventTokenLabel}>{currency}</span>
+        <span className={styles.eventTokenLabel}>{currencyDisplay(currency)}</span>
         <div className={styles.buttonWrapper}>
           {halfIcon && (
             <span

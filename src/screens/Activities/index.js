@@ -15,6 +15,7 @@ import { TOKEN_NAME } from '../../constants/Token';
 import './swiper.scss';
 import { Link } from 'react-router-dom';
 import Routes from 'constants/Routes';
+import { currencyDisplay } from 'helper/Currency';
 
 const Activities = ({showBets = false}) => {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ const Activities = ({showBets = false}) => {
               <div className={styles.statItem}>
                 <div className={styles.statItemHead}>
                   <span>
-                    {toNumericString(data24h?.volume)} {TOKEN_NAME}
+                    {toNumericString(data24h?.volume)} {currencyDisplay(TOKEN_NAME)}
                   </span>{' '}
                   24h volume
                 </div>
@@ -112,7 +113,7 @@ const Activities = ({showBets = false}) => {
               <div className={styles.statItem}>
                 <div className={styles.statItemHead}>
                   <span>
-                    {toNumericString(dataLastWeek?.volume)} {TOKEN_NAME}
+                    {toNumericString(dataLastWeek?.volume)} {currencyDisplay(TOKEN_NAME)}
                   </span>{' '}
                   7d volume
                 </div>
@@ -121,7 +122,7 @@ const Activities = ({showBets = false}) => {
               <div className={styles.statItem}>
                 <div className={styles.statItemHead}>
                   <span>
-                    {toNumericString(dataAllTime?.volume)} {TOKEN_NAME}
+                    {toNumericString(dataAllTime?.volume)} {currencyDisplay(TOKEN_NAME)}
                   </span>{' '}
                   Total volume
                 </div>

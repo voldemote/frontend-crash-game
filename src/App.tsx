@@ -49,6 +49,7 @@ import Imprint from 'screens/Imprint';
 import PrivacyPolicy from 'screens/PrivacyPolicy';
 import PrivateRoute from 'components/PrivateRoute';
 import LandingPageV2 from 'screens/LandingPageV2';
+import PlayMoneyWallet from 'screens/PlayMoneyWallet';
 
 const { store, persistor } = configStore();
 
@@ -91,8 +92,8 @@ const App = () => {
               {/* <Route exact path={Routes.home} component={LandingPageV2} /> */}
               {/* <Route exact path={Routes.bet} component={Bet} /> */}
               {/* <Route exact path={Routes.bet} component={BetVTwo} /> */}
-              <Route exact path={Routes.bet} component={EventRouter} />
-              <Route exact path={Routes.betApproveDirect} component={LandingPageV2} />
+              <Route exact path={Routes.event} component={EventRouter} />
+              <Route exact path={Routes.betApproveDirect} component={Home} />
               {/*<Route exact path={Routes.liveEvents} component={LiveEvents} />*/}
               <Route exact path={Routes.events} component={Events} />
               <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
@@ -108,9 +109,9 @@ const App = () => {
               <Route exact path={Routes.terms} component={TermsConditions} />
               <Route exact path={Routes.imprint} component={Imprint} />
               <Route exact path={Routes.privacy} component={PrivacyPolicy} />
-              <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
+              <PrivateRoute exact path={Routes.wallet} component={realMoneyOnly ? UserWallet : PlayMoneyWallet} />
 
-              {/* {realMoneyOnly && <> */}
+              {realMoneyOnly && <>
                 <Route path={Routes.games} component={Games} />
                 <Route exact path={Routes.rouletteGame} component={RouletteGame} />
                 <Route exact path={Routes.minesGame} component={MinesGame} />
@@ -121,7 +122,7 @@ const App = () => {
                 <Route exact path={Routes.externalGame} component={ExternalGame} />
                 <Route exact path={Routes.responsibleGambling} component={ResponsibleGambling} />
                 <Route exact path={Routes.kyc} component={KYCPolicy} />
-              {/* </>} */}
+              </>}
 
               <Redirect to={Routes.home} />
             </Switch>

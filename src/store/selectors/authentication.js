@@ -2,15 +2,21 @@ import { TOKEN_NAME } from 'constants/Token';
 import { convert } from '../../helper/Currency';
 
 export const selectCurrency = ({ authentication }) => {
-  const currency = authentication.preferences?.currency;
-  return currency || TOKEN_NAME;
-  // return TOKEN_NAME;
+  if (process.env.REACT_APP_PLAYMONEY !== 'true') {
+    const currency = authentication.preferences?.currency;
+    return currency || TOKEN_NAME;
+  }
+  
+  return TOKEN_NAME;
 };
 
 export const selectGamesCurrency = ({ authentication }) => {
-  const currency = authentication.preferences?.gamesCurrency || 'USD';
-  return currency;
-  // return TOKEN_NAME;
+  // if (process.env.REACT_APP_PLAYMONEY !== 'true') {
+    const currency = authentication.preferences?.gamesCurrency || 'USD';
+    return currency;
+  // }
+
+  return TOKEN_NAME;
 };
 
 export const selectUserId = state => state.authentication.userId;
