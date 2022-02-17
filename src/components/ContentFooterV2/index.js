@@ -127,13 +127,6 @@ const ContentFooter = ({ className = '', disclaimerHidden, setOpenDrawer }) => {
             </div>
           </RealMoneyOnly>
 
-          <PlayMoneyOnly>
-             <div className={styles.logoContainer}>
-               <a href="https://www.smartsoftgaming.com/" rel="noreferrer" target="_blank"><img src={SmartsoftLogo} className={styles.partnerLogoSmartsoft} alt="smartsoft games logo" /></a>
-              <a href="https://evoplay.games/" rel="noreferrer" target="_blank"><img src={EvoplayLogo} className={styles.partnerLogoEvoplay} alt="evoplay logo" /></a>
-             </div>
-          </PlayMoneyOnly>
-
         </div>
 
 

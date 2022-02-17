@@ -11,6 +11,7 @@ import medalCoin from '../../data/icons/medal-coin.png';
 import ActivityTableRow from './ActivityTableRow';
 import { roundToTwo } from '../../helper/FormatNumbers';
 import { getGameById } from '../../helper/Games';
+import { currencyDisplay } from 'helper/Currency';
 
 const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
   const getUserProfileUrl = data => {
@@ -58,7 +59,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
     const multiplier = (_.has(data, 'crashFactor') ? data.crashFactor : data?.winMultiplier) || 0;
     const stakedAmount = data?.stakedAmount;
     const crashFactor = roundToTwo(multiplier);
-    const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
+    const gamesCurrency = currencyDisplay(data?.gamesCurrency);
 
     switch (activity.type) {
       case 'Casino/CASINO_CASHOUT':

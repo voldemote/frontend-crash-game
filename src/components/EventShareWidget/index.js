@@ -11,6 +11,8 @@ import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { shortenerTinyUrl } from 'api';
+import { TOKEN_NAME } from 'constants/Token';
+import { currencyDisplay } from 'helper/Currency';
 
 const EventShareWidget = ({authentication}) => {
 
@@ -110,7 +112,7 @@ const EventShareWidget = ({authentication}) => {
       {/* <CloseIcon onClick={() => { setVisible(false) }} className={styles.closeIcon} /> */}
       <div className={styles.leftContainer}>
         <GiftIcon />
-        <span>Share this event <span className={styles.yellow}>and get 50 WFAIR</span></span>
+        <span>Share this event <span className={styles.yellow}>and get 50 {currencyDisplay(TOKEN_NAME)}</span></span>
       </div>
       <div className={styles.rightContainer}>
         <div

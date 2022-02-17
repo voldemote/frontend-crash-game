@@ -30,7 +30,7 @@ import TimeLeftCounter from '../TimeLeftCounter';
 import { UserMessageRoomId } from '../../store/actions/websockets';
 import { ChatActions } from 'store/actions/chat';
 import {selectPrices} from '../../store/selectors/info-channel';
-import {convertAmount} from '../../helper/Currency';
+import {convertAmount, currencyDisplay} from '../../helper/Currency';
 
 import moment from 'moment';
 import { OnboardingActions } from 'store/actions/onboarding';
@@ -219,11 +219,13 @@ const Navbar = ({
             <p
               // title={renderBalances()}
             >
-              {formatToFixed(balance, 0, true)} {TOKEN_NAME}
+              {formatToFixed(balance, 0, true)} {currencyDisplay(TOKEN_NAME)}
             </p>
-            <span className={classNames(style.infoTooltip, style.hideOnMobile)}>
-              &asymp; {convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span>
-            </span>
+            <RealMoneyOnly>
+              <span className={classNames(style.infoTooltip, style.hideOnMobile)}>
+                &asymp; {convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span>
+              </span>
+            </RealMoneyOnly>
           </div>
         </span>
         <Button

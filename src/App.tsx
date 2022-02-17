@@ -110,7 +110,7 @@ const App = () => {
               <Route exact path={Routes.privacy} component={PrivacyPolicy} />
               <PrivateRoute exact path={Routes.wallet} component={UserWallet} />
 
-              {/* {realMoneyOnly && <> */}
+              {realMoneyOnly && <>
                 <Route path={Routes.games} component={Games} />
                 <Route exact path={Routes.rouletteGame} component={RouletteGame} />
                 <Route exact path={Routes.minesGame} component={MinesGame} />
@@ -121,7 +121,7 @@ const App = () => {
                 <Route exact path={Routes.externalGame} component={ExternalGame} />
                 <Route exact path={Routes.responsibleGambling} component={ResponsibleGambling} />
                 <Route exact path={Routes.kyc} component={KYCPolicy} />
-              {/* </>} */}
+              </>}
 
               <Redirect to={Routes.home} />
             </Switch>

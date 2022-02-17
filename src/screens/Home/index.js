@@ -1,4 +1,4 @@
-import {memo, useEffect, useState} from 'react';
+import {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 
 import styles from './styles.module.scss';
@@ -15,7 +15,7 @@ import { Grid } from '@material-ui/core';
 import { GeneralActions } from 'store/actions/general';
 import { PopupActions } from 'store/actions/popup';
 import { OnboardingActions } from 'store/actions/onboarding';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
 import CustomCarousel from 'components/CustomCarousel/CustomCarousel';
 import EventsCarouselContainer from 'components/EventsCarouselContainer';
@@ -25,6 +25,9 @@ import PumpDumpBanner from 'data/backgrounds/home/pumpdump-banner.jpg';
 import ElonBanner from 'data/backgrounds/home/elon-banner.jpg';
 import Button from 'components/Button';
 import ButtonTheme from 'components/Button/ButtonTheme';
+import { UserActions } from 'store/actions/user';
+import { TOKEN_NAME } from 'constants/Token';
+import { selectUser } from 'store/selectors/authentication';
 
 const Home = (
   authState,
@@ -32,18 +35,22 @@ const Home = (
   events,
   startOnboardingFlow,
   userId,
+  updateUser,
 ) => {
   const history = useHistory();
   const isMount = useIsMount();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const userState = useSelector(selectUser);
   let urlParams = new URLSearchParams(location.search);
   const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
+  const isPlayMoney = process.env.REACT_APP_PLAYMONEY === 'true';
 
   useOAuthCallback();
 
-  // const isLoggedIn = () => {
-  //   return authState === LOGGED_IN;
-  // };
+  const isLoggedIn = useMemo(() => {
+    return authState?.authState === LOGGED_IN;
+  }, [authState]);
 
   const handleRefPersistent = () => {
     const ref = urlParams.get('ref');
@@ -72,11 +79,28 @@ const Home = (
   //   }
   // };
 
+  const handlePreferredToken = useCallback(() => {
+    if (isLoggedIn) {      
+      if (userState?.preferences?.gamesCurrency !== TOKEN_NAME) {
+        dispatch(UserActions.updatePreferences({ 
+          userId: userState.userId, 
+          preferences: {
+            gamesCurrency: TOKEN_NAME
+          }
+        }));
+      }
+    }
+  }, [isLoggedIn, userState]);
+
   useEffect(() => {
-    if (isMount) {
+    // if (isMount) {
       handleRefPersistent();
       handleVoluumPersistent();
-    }
+      
+      if (isPlayMoney) {
+        handlePreferredToken();
+      }
+    // }
   }, []);
 
   const renderGamesBanner = () => {

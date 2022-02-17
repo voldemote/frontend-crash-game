@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import { formatToFixed } from 'helper/FormatNumbers';
-import { TOKEN_NAME } from '../../constants/Token';
+import { TOKEN_DISPLAY_NAME } from '../../constants/Token';
 import { calculateGain } from '../../helper/Calculation';
 import { getGameById } from '../../helper/Games';
+import { currencyDisplay } from 'helper/Currency';
 
 const ActivityMessage = ({ activity, date, users, events, showBetName = true }) => {
   const [dateString, setDateString] = useState('');
@@ -104,7 +105,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
             <b>{getUserProfileUrl(data)}</b> has been rewarded with{' '}
             <div className={'global-token-currency'}>
               <b>
-                {formatToFixed(_.get(data, 'winToken'), 0, true)} {TOKEN_NAME}
+                {formatToFixed(_.get(data, 'winToken'), 0, true)} {TOKEN_DISPLAY_NAME}
               </b>
             </div>{' '}
             from <b>{_.get(event, 'name')}</b>.
@@ -148,7 +149,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
             <b>{getUserProfileUrl(data)}</b> has bet{' '}
             <div className={'global-token-currency'}>
               {formatToFixed(_.get(data, 'trade.investment_amount'), 0, true)}{' '}
-              {TOKEN_NAME}
+              {TOKEN_DISPLAY_NAME}
             </div>{' '}
             {showBetName && <>
               on{' '}
@@ -178,7 +179,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <div className={'global-token-currency'}>
               <b>
-                {formatToFixed(_.get(data, 'amount'), 0, true)} {TOKEN_NAME}
+                {formatToFixed(_.get(data, 'amount'), 0, true)} {TOKEN_DISPLAY_NAME}
               </b>
             </div>{' '}
             {gainValueEvent && (
@@ -249,7 +250,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
         );
       case 'Casino/CASINO_PLACE_BET': {
         const stakedAmount = data?.amount || data?.stakedAmount;
-        const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
+        const gamesCurrency = currencyDisplay(data?.gamesCurrency);
 
         return (
           <div>
@@ -266,7 +267,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
       }
       case 'Casino/CASINO_CASHOUT':
         const stakedAmount = _.get(data, 'stakedAmount');
-        const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
+        const gamesCurrency = currencyDisplay(data?.gamesCurrency);
         const reward = _.get(data, 'reward');
         const gain = calculateGain(stakedAmount, reward);
         const gainValueCasino = _.get(gain, 'value');
@@ -333,7 +334,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
           ? 'crash factor'
           : 'multiplier';
 
-        const gamesCurrency = data?.gamesCurrency || TOKEN_NAME;
+        const gamesCurrency = currencyDisplay(data?.gamesCurrency);
 
         return (
           <div>

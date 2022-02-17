@@ -24,7 +24,7 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
 import ReactTooltip from 'react-tooltip';
 import { selectUser } from 'store/selectors/authentication';
-import { convert } from 'helper/Currency';
+import { convert, currencyDisplay } from 'helper/Currency';
 import DateText from 'helper/DateText';
 import AdminOnly from 'components/AdminOnly';
 import StateBadge from 'components/StateBadge';
@@ -53,7 +53,7 @@ const BetView = ({
   // Static balance amount to simulate for non-logged users
   // Slider is also using 2800 as max value
   const BALANCE_NOT_LOGGED = 2800;
-  const { currency, balance } = useSelector(selectUser);
+  const { currency, gamesCurrency, balance } = useSelector(selectUser);
   const defaultBetValue = 50;
   const bet = event.bet;
   const state = _.get(bet, 'status');
@@ -68,9 +68,12 @@ const BetView = ({
   const [showAllEvidence, setShowAllEvidence] = useState(false);
   const [choice, setChoice] = useState(null);
   const [commitment, setCommitment] = useState(defaultBetValue);
-  const [convertedCommitment, setConvertedCommitment] = useState(
-    convert(commitment, currency)
-  );
+
+  // const [convertedCommitment, setConvertedCommitment] = useState(
+  //   convert(commitment, gamesCurrency, currency)
+  // );
+  const [convertedCommitment, setConvertedCommitment] = useState(commitment);
+
   const [outcomes, setOutcomes] = useState({});
 
   const validateInput = () => {
@@ -125,7 +128,8 @@ const BetView = ({
     if (!closed && !!bet?.id) {
       validateInput();
       fetchOutcomes();
-      setConvertedCommitment(convert(commitment, currency));
+      // setConvertedCommitment(convert(commitment, currency));
+      setConvertedCommitment(commitment);
     }
   }, [commitment, currency, bet]);
 
@@ -173,10 +177,11 @@ const BetView = ({
 
   const debouncedSetCommitment = useCallback(
     _.debounce((number, toCurrency) => {
-      const newCommitment =
-        toCurrency !== TOKEN_NAME
-          ? convert(number, TOKEN_NAME, toCurrency)
-          : number;
+      // const newCommitment =
+      //   toCurrency !== TOKEN_NAME
+      //     ? convert(number, TOKEN_NAME, toCurrency)
+      //     : number;
+      const newCommitment = number;
       setCommitment(newCommitment);
     }, 300),
     []
@@ -236,7 +241,7 @@ const BetView = ({
             iconType={IconType.question}
             dataTrackingId="nonstreamed-event-trade-help"
           >
-            You need to have a sufficient amount of {TOKEN_NAME} tokens to
+            You need to have a sufficient amount of {currencyDisplay(TOKEN_NAME)} tokens to
             participate in events
             {/* How to buy {TOKEN_NAME} token? */}
           </InfoBox>
@@ -406,13 +411,13 @@ const BetView = ({
               >
                 <p>How to place a bet?</p>
                 <p>
-                  - First select the amount (in {TOKEN_NAME}) you want to put
+                  - First select the amount (in {currencyDisplay(TOKEN_NAME)}) you want to put
                   into this bet by tapping on the desired percentage of your
                   portfolio or by typing in the amount you want to trade with.
                 </p>
                 <p>
                   - After that pick your outcome by tapping on the outcome you
-                  think will come true. The potential gains in {TOKEN_NAME} and
+                  think will come true. The potential gains in {currencyDisplay(TOKEN_NAME)} and
                   percent will automatically adjust according to your placed bet
                   amount.
                 </p>
