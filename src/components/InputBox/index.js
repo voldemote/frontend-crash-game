@@ -36,6 +36,7 @@ const InputBox = ({
   onKeyDown,
   showDeleteIcon = true,
   disabled = false,
+  maxlength,
 }) => {
   const inputRef = useRef(null);
 
@@ -112,6 +113,7 @@ const InputBox = ({
         reference={inputRef}
         disabled={disabled}
         autoFocus={type === 'email'}
+        maxlength={maxlength}
       />
     );
   };
