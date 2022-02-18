@@ -31,6 +31,8 @@ import { bookmarkEvent, bookmarkEventCancel, getEventBySlug, getOutcomesHistoryF
 import { ReactComponent as ArrowLeft } from 'data/icons/arrow-left.svg';
 import Routes from 'constants/Routes';
 import EventShareWidget from 'components/EventShareWidget';
+import BetActionsMenu from 'components/BetActionsMenu';
+import bet from 'store/reducer/bet';
 
 const MarketEvent = ({
   showPopup,
@@ -95,7 +97,7 @@ const MarketEvent = ({
     );
   };
 
-  const renderFavoriteShare = () => {
+  const renderOptions = () => {
     return (
       <div className={styles.shareButton}>
         <Favorite
@@ -112,6 +114,7 @@ const MarketEvent = ({
           }}
         />
         <Share />
+        <BetActionsMenu event={event} bet={event?.bet} />
       </div>
     );
   };
@@ -144,7 +147,7 @@ const MarketEvent = ({
       <div className={styles.bet}>
         {event ? (
           <>
-            {isLoggedIn && (userCreator || isAdmin) && (
+            {/* {isLoggedIn && (userCreator || isAdmin) && (
               <div className={styles.eventAdminActionsContainer}>
                 <span
                   className={styles.editEventLink}
@@ -187,7 +190,7 @@ const MarketEvent = ({
                   )}
                 </span>
               </div>
-            )}
+            )} */}
             <div className={styles.topContainer}>
               <div className={styles.eventTopContainer}>
                 <div className={styles.backButtonTitle}>
@@ -206,7 +209,7 @@ const MarketEvent = ({
                 </div>
                 <div className={styles.timerShareContainer}>
                   {renderTimer()}
-                  {renderFavoriteShare()}
+                  {renderOptions()}
                 </div>
               </div>
             </div>
