@@ -749,6 +749,15 @@ const getDisputes = (betId) => {
     });
 };
 
+const claimTokens = () => {
+  return Api.post('/api/user/tokens')
+    .then((res) => res.data)
+    .catch((e) => {
+      console.log('[API-Error]: claimTokens ', e);
+      throw e;
+    });
+}
+
 export {
   Api,
   createBet,
@@ -834,4 +843,5 @@ export {
   getOutcomesHistoryForChart,
   openDispute,
   getDisputes,
+  claimTokens,
 };
