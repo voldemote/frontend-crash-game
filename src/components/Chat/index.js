@@ -30,6 +30,7 @@ const Chat = ({
   hideInput = false,
   connected,
   fetchChatMessages,
+  showHeadline = false,
 }) => {
   const messageListRef = useRef();
   const [message, setMessage] = useState('');
@@ -208,7 +209,7 @@ const Chat = ({
 
   return (
     <div className={classNames(styles.chatContainer, className)}>
-      <div className={styles.labelContainer}>Chat</div>
+      {showHeadline && <div className={styles.labelContainer}>Chat</div>}
       <div
         className={classNames(styles.messageContainer, messagesClassName)}
         ref={messageListRef}
