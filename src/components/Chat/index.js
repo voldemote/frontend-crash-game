@@ -172,7 +172,7 @@ const Chat = ({
           const date = _.get(chatMessage, 'date');
           return (
             <ChatMessageWrapper
-              key={chatMessage._id}
+              key={index}
               message={chatMessage}
               date={date}
               parentRef={messageListRef}

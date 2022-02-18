@@ -4,19 +4,17 @@ import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import { PopupActions } from '../../store/actions/popup';
 import { useParams, useHistory } from 'react-router-dom';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import BaseContainerWithNavbar from 'components/BaseContainerWithNavbar';
 import { TransactionActions } from 'store/actions/transaction';
 import { ChatActions } from 'store/actions/chat';
 import { GeneralActions } from 'store/actions/general';
-import { EventActions } from 'store/actions/event';
 import { OnboardingActions } from 'store/actions/onboarding';
 import classNames from 'classnames';
 import PopupTheme from '../../components/Popup/PopupTheme';
 import IconType from 'components/Icon/IconType';
 import IconTheme from 'components/Icon/IconTheme';
 import Icon from '../../components/Icon';
-import { EVENT_CATEGORIES } from 'constants/EventCategories';
 import { LOGGED_IN } from 'constants/AuthState';
 import Favorite from 'components/Favorite';
 import Share from '../../components/Share';
@@ -38,19 +36,13 @@ const MarketEvent = ({
   showPopup,
   authState,
   userId,
-  events,
-  fetchTransactions,
   fetchChatMessages,
-  handleDislaimerHidden,
   chartParams,
-  startOnboardingFlow,
   isAdmin,
 }) => {
   const { eventSlug, betSlug } = useParams();
   const [event, setEvent] = useState(null);
   const [canDeleteEvent, setCanDeleteEvent] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
-  const [showChart, setShowChart] = useState(false);
   const [chartData, setChartData] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
@@ -59,10 +51,6 @@ const MarketEvent = ({
   const { filterActive, handleChartPeriodFilter } = useChartData(
     event?.bet?.id
   );
-
-  const ref = useRef(null);
-
-  window.onresize = () => ref.current && setIsMobile(window.innerWidth < 992);
 
   useEffect(() => {
     getEventBySlug(eventSlug)
@@ -88,46 +76,8 @@ const MarketEvent = ({
     });
   };
 
-  const getStickerStyle = category => {
-    const cat = EVENT_CATEGORIES.find(c => c.value === category);
-    if (!cat) return {};
-    return {
-      backgroundImage: 'url("' + cat.image + '")',
-    };
-  };
-
   const isLoggedIn = () => {
     return authState === LOGGED_IN;
-  };
-
-  const renderImage = () => {
-    const key = 'preview_image_url';
-    const imgUrl = _.get(event, key);
-    return <img src={imgUrl} alt={`trade`} />;
-  };
-
-  const renderTitle = () => {
-    const key = 'market_question';
-    const title = _.get(event.bet, key);
-    return <h2>{title}</h2>;
-  };
-
-  const onShowHideChart = useCallback(event => {
-    setShowChart(current => !current);
-  }, []);
-
-  const renderTradeDesc = () => {
-    return (
-      <p>
-        <div dangerouslySetInnerHTML={{ __html: event.bet.description }}></div>
-        <div>
-          <strong>Evidence source: </strong>{' '}
-          <span
-            dangerouslySetInnerHTML={{ __html: event.bet.evidence_source }}
-          ></span>
-        </div>
-      </p>
-    );
   };
 
   const renderBetSidebarContent = () => {
@@ -168,13 +118,7 @@ const MarketEvent = ({
 
   const renderTimer = () => {
     return (
-      <div
-        className={classNames(
-          styles.timeLeftCounterContainer
-          // styles.fixedTimer,
-          // styles.timerOnlyDesktop
-        )}
-      >
+      <div className={styles.timeLeftCounterContainer}>
         {![BetState.resolved, BetState.closed].includes(
           _.get(event.bet, 'status')
         ) && (
@@ -256,7 +200,8 @@ const MarketEvent = ({
                       )
                     }
                   >
-                    <ArrowLeft /><span>Back to events</span>
+                    <ArrowLeft />
+                    <span>Back to events</span>
                   </button>
                 </div>
                 <div className={styles.timerShareContainer}>
@@ -275,15 +220,14 @@ const MarketEvent = ({
               <div className={styles.columnRight}>
                 <div className={classNames(styles.chartMainWrapper)}>
                   <div className={styles.chart}>
-                    {((matchMediaMobile && showChart) || !matchMediaMobile) &&
-                      chartData && (
-                        <Chart
-                          height={300}
-                          data={chartData}
-                          filterActive={filterActive}
-                          handleChartPeriodFilter={handleChartPeriodFilter}
-                        />
-                      )}
+                    {!matchMediaMobile && chartData && (
+                      <Chart
+                        height={300}
+                        data={chartData}
+                        filterActive={filterActive}
+                        handleChartPeriodFilter={handleChartPeriodFilter}
+                      />
+                    )}
                   </div>
                 </div>
                 {!matchMediaMobile && (
@@ -299,19 +243,6 @@ const MarketEvent = ({
             </div>
             <div className={styles.row}>
               <div className={styles.columnFull}>
-                {/* {matchMediaMobile && (
-                  <div className={styles.chatWrapper}>
-                    <Chat
-                      className={styles.desktopChat}
-                      inputClassName={styles.inputArea}
-                      messagesClassName={styles.messageArea}
-                      roomId={event.id}
-                      chatMessageType={ChatMessageType.event}
-                    />
-                  </div>
-                )} */}
-
-                
                 <div className={styles.activitiesWrapper}>
                   <div className={styles.sectionHeader}>
                     <h4>{`Activities`}</h4>
@@ -355,11 +286,6 @@ const MarketEvent = ({
         ) : (
           <div className={styles.eventNotExist}>
             <BackLink to="/events/all" text="Events"></BackLink>
-            {/* <div>Event does not exist.</div>
-
-            <div className={styles.eventNotExistLabel}>
-              {window.location.href}
-            </div> */}
           </div>
         )}
       </div>

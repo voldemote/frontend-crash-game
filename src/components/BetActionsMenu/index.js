@@ -22,24 +22,32 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
   );
   const isAdmin = useSelector(state => state.authentication.admin);
   const canResolve = [
+    BetState.upcoming,
     BetState.active,
-    BetState.closed,
     BetState.waitingResolution,
   ].includes(bet?.status);
   const canCancel = [
+    BetState.upcoming,
     BetState.active,
-    BetState.closed,
+    BetState.resolved,
+    BetState.disputed,
     BetState.waitingResolution,
   ].includes(bet?.status);
+  const canClose = [
+    BetState.resolved,
+    BetState.disputed,
+  ].includes(bet?.status) && isAdmin;
 
   /** @param {BetManagementActions} name */
   const action = name => () => {
     setMenuOpened(false);
     switch (name) {
       case 'resolve':
+      case 'close':
         return showPopup(PopupTheme.resolveBet, {
           bet,
           event,
+          action: name,
         });
       case 'cancel':
         return showPopup(PopupTheme.cancelBet, { bet, event });
@@ -93,6 +101,8 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
           menuItem('Resolve', action('resolve'), IconType.hourglass)}
         {canCancel &&
           menuItem('Cancel', action('cancel'), IconType.cross, 14, 14)}
+        {canClose &&
+          menuItem('Close', action('close'), IconType.success)}
       </div>
     </div>
   );

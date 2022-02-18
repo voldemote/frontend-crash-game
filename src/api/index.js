@@ -414,6 +414,12 @@ const resolveBet = (betId, data) => {
     .catch(error => ({ error: error.response.data }));
 };
 
+const closeBet = (betId, data) => {
+  return EventsServiceApi.post(`/bets/${betId}/close`, data)
+    .then(response => ({ response }))
+    .catch(error => ({ error: error.response.data }));
+};
+
 const cancelBet = (betId, payload) => {
   return EventsServiceApi.post(`/bets/${betId}/cancel`, payload)
     .then(response => ({ response }))
@@ -767,6 +773,7 @@ export {
   getCoverStream,
   getTradeById,
   resolveBet,
+  closeBet,
   cancelBet,
   deleteBet,
   login,

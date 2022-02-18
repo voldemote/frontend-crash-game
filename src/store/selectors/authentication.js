@@ -39,6 +39,7 @@ export const selectUser = state => {
     ...user,
     isLoggedIn: state.authentication.authState === 'LOGGED_IN',
     balance: state.authentication.balance,
+    balances: state.authentication.balances,
     // balance: convert(state.authentication.balance, currency),
     amountWon: state.authentication.amountWon,
     // amountWon: convert(state.authentication.amountWon, currency),

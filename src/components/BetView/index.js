@@ -26,7 +26,6 @@ import ReactTooltip from 'react-tooltip';
 import { selectUser } from 'store/selectors/authentication';
 import { convert, currencyDisplay } from 'helper/Currency';
 import DateText from 'helper/DateText';
-import AdminOnly from 'components/AdminOnly';
 import StateBadge from 'components/StateBadge';
 import AuthedOnly from 'components/AuthedOnly';
 import ButtonSmall from 'components/ButtonSmall';
@@ -243,7 +242,7 @@ const BetView = ({
         <div className={styles.labelWrapper}>
           <label className={styles.label}>You trade:</label>
           <InfoBox
-            position='topRight'
+            position="topRight"
             autoWidth={true}
             iconType={IconType.question}
             dataTrackingId="nonstreamed-event-trade-help"
@@ -259,9 +258,7 @@ const BetView = ({
           setValue={onTokenNumberChange}
           currency={currency}
           errorText={commitmentErrorText}
-          maxValue={formatToFixed(
-            userLoggedIn ? balance : BALANCE_NOT_LOGGED
-          )}
+          maxValue={formatToFixed(userLoggedIn ? balance : BALANCE_NOT_LOGGED)}
           dataTrackingIds={{
             inputFieldHalf: 'nonstreamed-event-input-field-half',
             inputFieldDouble: 'nonstreamed-event-input-field-double',

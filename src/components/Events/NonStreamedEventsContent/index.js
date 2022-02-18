@@ -54,7 +54,6 @@ const NonStreamedEventsContent = ({
 
   const handleSelectCategory = useCallback(
     value => {
-      console.log(value);
       const updatedCats = categories.map(cat => ({
         ...cat,
         isActive: true,

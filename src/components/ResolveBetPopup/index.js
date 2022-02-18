@@ -7,19 +7,18 @@ import Routes from 'constants/Routes';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import { PopupActions } from 'store/actions/popup';
+import { useHistory } from 'react-router-dom';
 import styles from './styles.module.scss';
 
-const ResolveBetPopup = ({ bet, event, visible }) => {
+const ResolveBetPopup = ({ bet, event, visible, action }) => {
   const betOutcomes = _.get(bet, 'outcomes').map(({ index, name }) => ({
     value: String(index),
     label: name,
   }));
 
   const [outcome, setOutcome] = useState(null);
-  const [evidenceActual, setEvidenceActual] = useState('');
-  const [evidenceDescription, setEvidenceDescription] = useState('');
+  const [evidenceActual, setEvidenceActual] = useState(bet.evidence_actual);
+  const [evidenceDescription, setEvidenceDescription] = useState(bet.evidence_description);
 
   const [isResolving, setIsResolving] = useState(false);
 
@@ -27,7 +26,6 @@ const ResolveBetPopup = ({ bet, event, visible }) => {
   const isValidStringInput = str => str !== null && str.length > 0;
 
   const history = useHistory();
-  const location = useLocation();
 
   const isFormValid =
     isOutcomeValid &&
@@ -41,18 +39,26 @@ const ResolveBetPopup = ({ bet, event, visible }) => {
       setEvidenceDescription('');
       setIsResolving(false);
     } else {
-      setEvidenceDescription(_.get(bet, 'evidenceDescription', null));
+      setEvidenceDescription(_.get(bet, 'evidence_description', null));
+      setOutcome(bet.final_outcome.toString());
     }
   }, [visible, bet]);
 
   const resolveBet = () => {
     setIsResolving(true);
 
-    Api.resolveBet(bet.id, {
+    const payload = {
       evidenceActual: evidenceActual,
       evidenceDescription: evidenceDescription,
       outcome: +outcome,
-    }).then(() => {
+    };
+
+    const response =
+      action === 'close'
+        ? Api.closeBet(bet.id, payload)
+        : Api.resolveBet(bet.id, payload);
+    
+    response.then(() => {
       setIsResolving(false);
       history.push(
         Routes.getRouteWithParameters(Routes.event, {
