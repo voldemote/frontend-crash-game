@@ -468,18 +468,18 @@ const BetView = ({
     return null;
   };
 
-  const renderMenuContainerWithCurrentBalance = () => {
-    return (
-      <div
-        className={classNames(
-          styles.menuContainer,
-          isPopup ? styles.popupMenuContainer : null
-        )}
-      >
-        <BetActionsMenu event={event} bet={bet} />
-      </div>
-    );
-  };
+  // const renderMenuContainerWithCurrentBalance = () => {
+  //   return (
+  //     <div
+  //       className={classNames(
+  //         styles.menuContainer,
+  //         isPopup ? styles.popupMenuContainer : null
+  //       )}
+  //     >
+  //       <BetActionsMenu event={event} bet={bet} />
+  //     </div>
+  //   );
+  // };
 
   const renderStateConditionalContent = () => {
     if (state === BetState.active || state === BetState.published) {
@@ -610,7 +610,7 @@ const BetView = ({
           )}
         >
           {renderLoadingAnimation()}
-          {renderMenuContainerWithCurrentBalance()}
+          {/* {renderMenuContainerWithCurrentBalance()} */}
           
           {renderImage()}
           

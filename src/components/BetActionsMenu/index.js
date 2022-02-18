@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 import Icon from 'components/Icon';
 import BetState from 'constants/BetState';
 import _ from 'lodash';
@@ -21,6 +23,13 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
     state => state.authentication.userId === bet.creator
   );
   const isAdmin = useSelector(state => state.authentication.admin);
+  const canEdit = ![
+    BetState.canceled, 
+    BetState.resolved
+  ].includes(bet?.status);
+  const canDelete = [
+    BetState.canceled
+  ].includes(bet?.status);
   const canResolve = [
     BetState.upcoming,
     BetState.active,
@@ -42,6 +51,8 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
   const action = name => () => {
     setMenuOpened(false);
     switch (name) {
+      case 'edit':
+        return showPopup(PopupTheme.eventForms, { bet, event })
       case 'resolve':
       case 'close':
         return showPopup(PopupTheme.resolveBet, {
@@ -51,6 +62,10 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
         });
       case 'cancel':
         return showPopup(PopupTheme.cancelBet, { bet, event });
+      case 'delete':
+        showPopup(PopupTheme.deleteBet, { bet });
+        //return showPopup(PopupTheme.deleteEvent, { event });
+        
     }
   };
 
@@ -85,24 +100,32 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
           onClick={() => setMenuOpened(false)}
         ></div>
       )}
-      <Icon
-        iconType={IconType.menu}
-        iconTheme={null}
+      <Button
+        theme={ButtonTheme.secondaryButton}
+        className={styles.menuButton}
         onClick={toggleMenu}
-        className={styles.menuIcon}
-      />
+      >
+        <Icon
+          iconType={IconType.menu}
+          className={styles.menuIcon}
+        />
+      </Button>
       <div
         className={classNames(
           styles.menuBox,
           menuOpened ? styles.menuBoxOpened : null
         )}
       >
+        {canEdit && 
+          menuItem('Edit', action('edit'), IconType.edit)}
         {canResolve &&
           menuItem('Resolve', action('resolve'), IconType.hourglass)}
         {canCancel &&
           menuItem('Cancel', action('cancel'), IconType.cross, 14, 14)}
         {canClose &&
           menuItem('Close', action('close'), IconType.success)}
+        {canDelete && 
+          menuItem('Delete', action('delete'), IconType.trash)}
       </div>
     </div>
   );

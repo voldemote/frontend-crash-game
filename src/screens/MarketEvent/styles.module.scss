@@ -13,7 +13,7 @@
   margin: 0 auto;
 
   @media (max-width: $screen-md) {
-    padding-top: 1rem;
+    padding-top: 0;
     padding-bottom: 0;
 
     & .betFooter {
@@ -69,7 +69,7 @@
 
       @media (max-width: $screen-sm) {
         flex-direction: column;
-        padding: 20px 0;
+        padding: 0 0 20px;
       }
 
       .backButtonTitle {
@@ -99,6 +99,8 @@
         align-items: center;
 
         @media (max-width: $screen-sm) {
+          flex-direction: column;
+          row-gap: 15px;
           padding: 20px 0 15px;
         }
       }
@@ -564,58 +566,8 @@
   }
 }
 
-.deleteEventLink,
-.editEventLink,
-.newBetLink {
-  position: relative;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  margin: 10px;
-  color: $colorWhite;
-  cursor: pointer;
-
-  &.fadedLink {
-    color: $colorWhite50;
-    .icon {
-      opacity: 0.5;
-    }
-    cursor: not-allowed;
-  }
-
-  .icon {
-    margin-right: 7px;
-    svg {
-      g,
-      path {
-        fill: $colorWhite;
-      }
-    }
-  }
-  .infoTooltip {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: -50%;
-    transform: translateX(-50%);
-    background-color: $colorLightPurple;
-    font-family: $fontDMSans;
-    border-radius: 8px;
-    padding: 10px;
-    width: max-content;
-    max-width: 250px;
-    color: $colorPrimary;
-    z-index: 909;
-  }
-
-  &:hover {
-    .infoTooltip {
-      display: block;
-    }
-  }
-}
-
 .shareButton {
+  color: $colorPrimary;
   display: flex;
   justify-content: flex-end;
 
@@ -715,14 +667,14 @@
     font-weight: 500;
     font-size: 14px;
     @media (max-width: $screen-sm) {
-      font-size: 10px;
+      font-size: 14px;
     }
   }
 
   .timerParts {
     display: flex;
     justify-content: center;
-    column-gap: 10px;
+    column-gap: 14px;
 
     .timePartContainer {
       width: fit-content;
@@ -735,7 +687,7 @@
       }
       .timePartName {
         font-weight: 400;
-        font-size: 11px;
+        font-size: 12px;
         color: $colorWhite50;
       }
     }
