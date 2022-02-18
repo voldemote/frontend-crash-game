@@ -61,6 +61,7 @@ const BetView = ({
   const auth = useSelector(state => state.authentication);
   const userLoggedIn = auth.authState === 'LOGGED_IN';
   const isAdmin = auth.admin;
+  const isCreator = auth.userId === bet.creator;
 
   // LOCAL
   const [validInput, setValidInput] = useState(false);
@@ -82,7 +83,7 @@ const BetView = ({
       // TODO valid = false;
     }
 
-    if (auth.userId === bet.creator) {
+    if (isCreator) {
       valid = false;
     }
 
@@ -362,7 +363,7 @@ const BetView = ({
           <span
             data-for="tool-tip"
             data-tip={
-              userLoggedIn ? 'You need to select an option first' : null
+              userLoggedIn && !isCreator ? 'You need to select an option first' : null
             }
           >
             <Button
