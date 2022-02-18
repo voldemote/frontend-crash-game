@@ -64,10 +64,10 @@ const ChoiceSelector = ({
         selected ? styles.choiceButtonSelected : null,
         disabled ? styles.choiceButtonDisabled : null,
         SelectionHelper.get(theme, {
-          [ChoiceSelectorTheme.colorOrangeLight]: styles.choiceColorOrangeLight,
-          [ChoiceSelectorTheme.colorGreen]: styles.choiceColorGreen,
-          [ChoiceSelectorTheme.colorPinkLight]: styles.choiceColorPinkLight,
-          [ChoiceSelectorTheme.colorFlamingo]: styles.choiceColorFlamingo,
+          [ChoiceSelectorTheme.choiceColorOne]: styles.choiceColorOne,
+          [ChoiceSelectorTheme.choiceColorTwo]: styles.choiceColorTwo,
+          [ChoiceSelectorTheme.choiceColorThree]: styles.choiceColorThree,
+          [ChoiceSelectorTheme.choiceColorFour]: styles.choiceColorFour,
         }),
         className
       )}

@@ -53,17 +53,17 @@ export const calcDohnutDatasets = data => {
    */
   const colorSchema = {
     main: {
-      0: ['rgba(255, 166, 84, 1)'],
-      1: ['rgba(45, 203, 112, 1)'],
-      2: ['rgba(248, 83, 251, 1)'],
-      3: ['rgba(103, 81, 236, 1)'],
+      0: ['rgba(157, 255, 197, 1)'],
+      1: ['rgba(172, 196, 255, 1)'],
+      2: ['rgba(103, 81, 236, 1)'],
+      3: ['rgba(255, 166, 84, 1)'],
     },
     fill: {
       above: {
-        0: 'rgba(255, 166, 84, 0)',
-        1: 'rgba(45, 203, 112, 0)',
-        2: 'rgba(248, 83, 251, 0)',
-        3: 'rgba(103, 81, 236, 0)',
+      0: ['rgba(157, 255, 197, 0.2)'],
+      1: ['rgba(172, 196, 255, 0.2)'],
+      2: ['rgba(103, 81, 236, 0.2)'],
+      3: ['rgba(255, 166, 84, 0.2)'],
       },
     },
   };
@@ -80,7 +80,7 @@ export const calcDohnutDatasets = data => {
       label: '',
       data: datas,
       backgroundColor: colors,
-      borderColor: ['#120e27', '#120e27', '#120e27', '#120e27', '#120e27'],
+      borderColor: ['rgba(255,255,255, 0.2)', 'rgba(255,255,255, 0.2)', 'rgba(255,255,255, 0.2)', 'rgba(255,255,255, 0.2)', 'rgba(255,255,255, 0.2)'],
       hoverOffset: 4,
     },
   ];
