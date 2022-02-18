@@ -103,11 +103,12 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
         <InputBox
           type="text"
           className={styles.inputBox}
-          placeholder="My first Event"
+          placeholder="Enter the question users will bet on"
           value={name}
           setValue={e => {
             onNameChange(e);
           }}
+          maxlength="100"
         />
         {!formValid && <InputError errors={nameErrors} />}
       </FormGroup>
@@ -117,11 +118,12 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
         <InputBox
           type="text"
           className={styles.inputBox}
-          placeholder="http://google.de/jennifer/2.jpg"
+          placeholder="https://.../image.jpg"
           value={preview_image_url}
           setValue={e => {
             set_preview_image_url(e.trim());
           }}
+          maxlength="100"
         />
         {!formValid && <InputError errors={preview_image_url_errors} />}
       </FormGroup>

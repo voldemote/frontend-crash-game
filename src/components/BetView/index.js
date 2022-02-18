@@ -98,7 +98,7 @@ const BetView = ({
     if (userLoggedIn && _.toNumber(commitment) > _.toNumber(balance)) {
       valid = false;
 
-      setCommitmentErrorText('Not enough balance.');
+      // setCommitmentErrorText('');
     } else if (!userLoggedIn) {
       valid = false;
       // setCommitmentErrorText('Sign in to start trading.');
