@@ -17,19 +17,19 @@
     flex-flow: wrap;
 
     &:nth-child(1) {
-      border-color: $colorOrangeLight;
+      border-color: $colorChoiceColorOne;
     }
 
     &:nth-child(2) {
-      border-color: $colorGreen;
+      border-color: $colorChoiceColorTwo;
     }
 
     &:nth-child(3) {
-      border-color: $colorPinkLight;
+      border-color: $colorChoiceColorThree;
     }
 
     &:nth-child(4) {
-      border-color: $colorFlamingo;
+      border-color: $colorChoiceColorFour;
     }
 
     .index {
