@@ -70,19 +70,19 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_create_own_event.jpg?v=2`}
+          src={`https://files.wallfair.io/landingpage-carousel/slide_create_own_event.jpg?v=3`}
         />
       </div>
       {/* <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=2`}
+          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=3`}
         />
       </div>
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=2`}
+          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=3`}
         />
       </div> */}
     </Carousel>
@@ -107,19 +107,19 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/banner-1-mobile.jpg?v=2`}
+          src={`https://files.wallfair.io/landingpage-carousel/banner-1-mobile.jpg?v=3`}
         />
       </div>
       {/* <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=2`}
+          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=3`}
         />
       </div>
       <div>
         <img
           alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=2`}
+          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=3`}
         />
       </div> */}
     </Carousel>
