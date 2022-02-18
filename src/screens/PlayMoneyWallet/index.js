@@ -62,13 +62,10 @@ const PlayMoneyWallet = ({
   const tabOptions = [
     { name: 'OPEN TRADES', index: 0, refresh: fetchTrades },
     { name: 'BETS', index: 1 },
-    { name: 'TRADE HISTORY', index: 2 },
+    { name: 'TRADE HISTORY', index: 2, refresh: fetchTrades },
   ];
 
-  const [activityTab, setActivityTab] = useState({
-    name: 'OPEN TRADES',
-    index: 0,
-  });
+  const [activityTab, setActivityTab] = useState(tabOptions[0]);
 
   const [activityTabOptions, setActivityTabOptions] = useState(tabOptions);
 
@@ -100,20 +97,11 @@ const PlayMoneyWallet = ({
 
   useEffect(() => {
     refreshMyBetsData({ userId: user.userId });
-    if (user.userId) {
-      setActivityTabOptions([
-        ...tabOptions,        
-      ]);
-    }
   }, [refreshMyBetsData, user]);
 
   useEffect(() => {
     fetchTrades();
   }, [balance]);
-
-  useEffect(() => {
-    fetchTrades();
-  }, []);
 
   // useEffect(() => {
   //   isTransactionsFetchError ? setStakesLoading(false) : setStakesLoading(true);
