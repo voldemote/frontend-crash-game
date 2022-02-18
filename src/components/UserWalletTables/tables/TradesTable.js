@@ -132,29 +132,32 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup, onApproveCashout })
           </div>
         </Grid>
 
-        <Grid item xs>
-          <div className={classNames(styles.messageLast, styles.messageRight)}>
-            {allowCashout &&
-              bet.status === BetState.active &&
-              !isFinalizedTrade(bet.status) && (
-                <button
-                  className={styles.styledButton}
-                  onClick={() =>
-                    showPulloutBetPopup(
-                      bet.id,
-                      outcomeIndex,
-                      sellAmount,
-                      bet.outcome,
-                      onApproveCashout
-                    )
-                  }
-                  data-tracking-id="wallet-cashout"
-                >
-                  Cashout
-                </button>
-              )}
-          </div>
-        </Grid>
+        {allowCashout && (
+          <Grid item xs>
+            <div
+              className={classNames(styles.messageLast, styles.messageRight)}
+            >
+              {bet.status === BetState.active &&
+                !isFinalizedTrade(bet.status) && (
+                  <button
+                    className={styles.styledButton}
+                    onClick={() =>
+                      showPulloutBetPopup(
+                        bet.id,
+                        outcomeIndex,
+                        sellAmount,
+                        bet.outcome,
+                        onApproveCashout
+                      )
+                    }
+                    data-tracking-id="wallet-cashout"
+                  >
+                    Cashout
+                  </button>
+                )}
+            </div>
+          </Grid>
+        )}
       </Grid>
     </div>
   );
@@ -188,7 +191,7 @@ const TradesTable = ({
           </Grid>
           <Grid item xs>
             <p className={styles.title}>
-              {allowCashout ? 'OUTCOME TOKENS' : 'DIRECTION'}
+              {allowCashout ? 'OUTCOME TOKENS' : 'TRANSACTION TYPE'}
             </p>
           </Grid>
           {allowCashout && (

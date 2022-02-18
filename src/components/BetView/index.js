@@ -38,6 +38,7 @@ import { calculateBuyOutcome, getDisputes, placeBet } from 'api';
 import { calculateGain } from 'helper/Calculation';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import { EVENT_CATEGORIES } from 'constants/EventCategories';
+import { AlertActions } from 'store/actions/alert';
 
 const BetView = ({
   event,
@@ -48,6 +49,7 @@ const BetView = ({
   isTradeViewPopup,
   startOnboarding,
   fetchChartHistory,
+  showError,
 }) => {
   // Static balance amount to simulate for non-logged users
   // Slider is also using 2800 as max value
@@ -59,6 +61,7 @@ const BetView = ({
   const auth = useSelector(state => state.authentication);
   const userLoggedIn = auth.authState === 'LOGGED_IN';
   const isAdmin = auth.admin;
+  const isCreator = auth.userId === bet.creator;
 
   // LOCAL
   const [validInput, setValidInput] = useState(false);
@@ -80,7 +83,7 @@ const BetView = ({
       // TODO valid = false;
     }
 
-    if (auth.userId === bet.creator) {
+    if (isCreator) {
       valid = false;
     }
 
@@ -92,10 +95,7 @@ const BetView = ({
       valid = false;
     }
 
-    if (
-      userLoggedIn &&
-      _.toNumber(commitment) > _.toNumber(balance)
-    ) {
+    if (userLoggedIn && _.toNumber(commitment) > _.toNumber(balance)) {
       valid = false;
 
       setCommitmentErrorText('Not enough balance.');
@@ -114,19 +114,21 @@ const BetView = ({
 
   const fetchOutcomes = () => {
     calculateBuyOutcome(bet.id, commitment).then(res => {
-      setOutcomes(res.reduce((map, b) => {
-        map[b.index] = {
-          outcome: b.outcome,
-          gain: calculateGain(commitment, b.outcome),
-        };
-        return map;
-      }, {}));
+      setOutcomes(
+        res.reduce((map, b) => {
+          map[b.index] = {
+            outcome: b.outcome,
+            gain: calculateGain(commitment, b.outcome),
+          };
+          return map;
+        }, {})
+      );
     });
   };
 
   useEffect(() => {
     if (bet.status === BetState.disputed) {
-      getDisputes(bet.id).then((res) => setDisputes(res));
+      getDisputes(bet.id).then(res => setDisputes(res));
     }
   }, [bet]);
 
@@ -155,17 +157,20 @@ const BetView = ({
     const validInput = validateInput();
 
     if (validInput) {
-      placeBet(bet.id, commitment, choice).then((res) => {
-        showPopup(PopupTheme.betApprove,
-        {
-          data: {
-            ...res.data,
-            event,
-          },
-          hideShare: true,
+      placeBet(bet.id, commitment, choice)
+        .then(res => {
+          showPopup(PopupTheme.betApprove, {
+            data: {
+              ...res.data,
+              event,
+            },
+            hideShare: true,
+          });
+          fetchChartHistory(bet.id);
+        })
+        .catch(() => {
+          showError('Failed to place a bet');
         });
-        fetchChartHistory(bet.id);
-      });
     }
   };
 
@@ -253,8 +258,8 @@ const BetView = ({
             iconType={IconType.question}
             dataTrackingId="nonstreamed-event-trade-help"
           >
-            You need to have a sufficient amount of {currencyDisplay(TOKEN_NAME)} tokens to
-            participate in events
+            You need to have a sufficient amount of{' '}
+            {currencyDisplay(TOKEN_NAME)} tokens to participate in events
             {/* How to buy {TOKEN_NAME} token? */}
           </InfoBox>
         </div>
@@ -358,7 +363,7 @@ const BetView = ({
           <span
             data-for="tool-tip"
             data-tip={
-              userLoggedIn ? 'You need to select an option first' : null
+              userLoggedIn && !isCreator ? 'You need to select an option first' : null
             }
           >
             <Button
@@ -421,15 +426,16 @@ const BetView = ({
               >
                 <p>How to place a bet?</p>
                 <p>
-                  - First select the amount (in {currencyDisplay(TOKEN_NAME)}) you want to put
-                  into this bet by tapping on the desired percentage of your
-                  portfolio or by typing in the amount you want to trade with.
+                  - First select the amount (in {currencyDisplay(TOKEN_NAME)})
+                  you want to put into this bet by tapping on the desired
+                  percentage of your portfolio or by typing in the amount you
+                  want to trade with.
                 </p>
                 <p>
                   - After that pick your outcome by tapping on the outcome you
-                  think will come true. The potential gains in {currencyDisplay(TOKEN_NAME)} and
-                  percent will automatically adjust according to your placed bet
-                  amount.
+                  think will come true. The potential gains in{' '}
+                  {currencyDisplay(TOKEN_NAME)} and percent will automatically
+                  adjust according to your placed bet amount.
                 </p>
                 <p>
                   - To finalize your bet click on the Place bet Button and enjoy
@@ -489,7 +495,9 @@ const BetView = ({
           <div className={styles.betButtonContainer}>{renderTradeButton()}</div>
         </>
       );
-    } else if ([BetState.resolved, BetState.disputed, BetState.closed].includes(state)) {
+    } else if (
+      [BetState.resolved, BetState.disputed, BetState.closed].includes(state)
+    ) {
       const isResolved = [BetState.resolved, BetState.disputed].includes(state);
       const outcomeNames = _.map(bet.outcomes, 'name') || [];
       const finalOutcome = _.get(bet, [
@@ -613,16 +621,13 @@ const BetView = ({
           {/* {renderMenuContainerWithCurrentBalance()} */}
           
           {renderImage()}
-          
-          
-          
+
           <div
             className={classNames(
-              styles.betMarketQuestion,
+              styles.betMarketQuestion
               // styles.nonStreamedQuestion
             )}
           >
-           
             <span>{bet.market_question}</span>
             <p className={styles.betDescription}>{bet.description}</p>
           </div>
@@ -648,6 +653,9 @@ const mapDispatchToProps = dispatch => {
           options,
         })
       );
+    },
+    showError: message => {
+      dispatch(AlertActions.showError({ message }));
     },
     startOnboarding: () => {
       dispatch(OnboardingActions.start());

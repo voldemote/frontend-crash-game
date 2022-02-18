@@ -5,8 +5,6 @@ import BaseContainerWithNavbar from '../../components/BaseContainerWithNavbar';
 import { connect, useSelector } from 'react-redux';
 import { selectUser } from 'store/selectors/authentication';
 import { formatToFixed } from 'helper/FormatNumbers';
-import { PopupActions } from '../../store/actions/popup';
-import PopupTheme from '../../components//Popup/PopupTheme';
 import { RosiGameActions } from 'store/actions/rosi-game';
 import TabOptions from 'components/TabOptions';
 import useRosiData from 'hooks/useRosiData';
@@ -22,6 +20,8 @@ import ButtonTheme from 'components/Button/ButtonTheme';
 import { TOKEN_NAME } from '../../constants/Token';
 import { currencyDisplay } from 'helper/Currency';
 import UserWalletTables from 'components/UserWalletTables';
+import { claimTokens } from 'api';
+import { AlertActions } from 'store/actions/alert';
 
 const PlayMoneyWallet = ({
   user,
@@ -30,6 +30,8 @@ const PlayMoneyWallet = ({
   connected,
   isTransactionsFetchLoading,
   isTransactionsFetchError,
+  showSuccess,
+  showError,
 }) => {
   
   const { balance, balances, gamesCurrency } = useSelector(selectUser);
@@ -81,6 +83,16 @@ const PlayMoneyWallet = ({
 
     setEmailSent(resultOk);
   };
+
+  const onTokensClaim = () => {
+    claimTokens()
+      .then((res) => {
+        showSuccess('You have successfully claimed 100 PFAIR');
+      })
+      .catch((e) => {
+        showError('You reached the daily limit');
+      })
+  }
 
   useEffect(() => {
     resetState();
@@ -165,28 +177,34 @@ const PlayMoneyWallet = ({
                 {/* <WfairIcon
                   className={styles.wfairLogo}
                 /> */}
-                {
-                  balances && balances.map(b => {
+                {balances &&
+                  balances.map(b => {
                     return (
-                      <div className={styles.balanceTextContainer} key={b.symbol}>
+                      <div
+                        className={styles.balanceTextContainer}
+                        key={b.symbol}
+                      >
                         <p className={styles.currentbalanceHeading}>
-                          {b.symbol === TOKEN_NAME ? 'Current balance:' : 'Bonus balance:'}
+                          {b.symbol === TOKEN_NAME
+                            ? 'Current balance:'
+                            : 'Bonus balance:'}
                         </p>
                         <div className={styles.balanceBottomContainer}>
                           <p className={styles.currentbalanceWFair}>
                             <span>{formatToFixed(b.balance, 0, true)}</span>
                           </p>
-                          <p className={styles.symbolContainer}>{currencyDisplay(b.symbol)}</p>
+                          <p className={styles.symbolContainer}>
+                            {currencyDisplay(b.symbol)}
+                          </p>
                         </div>
                       </div>
                     );
-                  })
-                }
+                  })}
               </div>
               <div className={styles.rightCard}>
                 <Button
                   className={classNames(styles.button, styles.buttonDeposit)}
-                  onClick={() => { /* TODO CLAIM */}}
+                  onClick={onTokensClaim}
                 >
                   Claim PFAIR
                 </Button>
@@ -365,6 +383,12 @@ const mapDispatchToProps = dispatch => {
     },
     resetState: () => dispatch(WallfairActions.resetState()),
     refreshMyBetsData: data => dispatch(RosiGameActions.fetchMyBetsData(data)),
+    showSuccess: message => {
+      dispatch(AlertActions.showSuccess({ message }));
+    },
+    showError: message => {
+      dispatch(AlertActions.showError({ message }));
+    },
   };
 };
 
