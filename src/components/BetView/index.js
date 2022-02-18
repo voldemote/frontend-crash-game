@@ -24,7 +24,7 @@ import { formatToFixed } from '../../helper/FormatNumbers';
 import { TOKEN_NAME } from '../../constants/Token';
 import ReactTooltip from 'react-tooltip';
 import { selectUser } from 'store/selectors/authentication';
-import { convert, currencyDisplay } from 'helper/Currency';
+import { currencyDisplay } from 'helper/Currency';
 import DateText from 'helper/DateText';
 import StateBadge from 'components/StateBadge';
 import AuthedOnly from 'components/AuthedOnly';
@@ -34,7 +34,7 @@ import InfoBox from 'components/InfoBox';
 import BetActionsMenu from 'components/BetActionsMenu';
 import { trackNonstreamedEventPlaceTrade } from '../../config/gtm';
 import { OnboardingActions } from 'store/actions/onboarding';
-import { calculateBuyOutcome, placeBet } from 'api';
+import { calculateBuyOutcome, getDisputes, placeBet } from 'api';
 import { calculateGain } from 'helper/Calculation';
 import ButtonTheme from 'components/Button/ButtonTheme';
 import { EVENT_CATEGORIES } from 'constants/EventCategories';
@@ -52,13 +52,13 @@ const BetView = ({
   // Static balance amount to simulate for non-logged users
   // Slider is also using 2800 as max value
   const BALANCE_NOT_LOGGED = 2800;
-  const { currency, gamesCurrency, balance } = useSelector(selectUser);
+  const { currency, balance } = useSelector(selectUser);
   const defaultBetValue = 50;
   const bet = event.bet;
   const state = _.get(bet, 'status');
-  const userLoggedIn = useSelector(
-    state => state.authentication.authState === 'LOGGED_IN'
-  );
+  const auth = useSelector(state => state.authentication);
+  const userLoggedIn = auth.authState === 'LOGGED_IN';
+  const isAdmin = auth.admin;
 
   // LOCAL
   const [validInput, setValidInput] = useState(false);
@@ -67,13 +67,9 @@ const BetView = ({
   const [showAllEvidence, setShowAllEvidence] = useState(false);
   const [choice, setChoice] = useState(null);
   const [commitment, setCommitment] = useState(defaultBetValue);
-
-  // const [convertedCommitment, setConvertedCommitment] = useState(
-  //   convert(commitment, gamesCurrency, currency)
-  // );
   const [convertedCommitment, setConvertedCommitment] = useState(commitment);
-
   const [outcomes, setOutcomes] = useState({});
+  const [disputes, setDisputes] = useState([]);
 
   const validateInput = () => {
     const betEndDate = _.get(bet, 'end_date');
@@ -82,6 +78,10 @@ const BetView = ({
 
     if (current.isAfter(betEndDate)) {
       // TODO valid = false;
+    }
+
+    if (auth.userId === bet.creator) {
+      valid = false;
     }
 
     if (choice === null) {
@@ -123,6 +123,12 @@ const BetView = ({
       }, {}));
     });
   };
+
+  useEffect(() => {
+    if (bet.status === BetState.disputed) {
+      getDisputes(bet.id).then((res) => setDisputes(res));
+    }
+  }, [bet]);
 
   useEffect(() => {
     if (!closed && !!bet?.id) {
@@ -483,8 +489,8 @@ const BetView = ({
           <div className={styles.betButtonContainer}>{renderTradeButton()}</div>
         </>
       );
-    } else if (state === BetState.resolved || state === BetState.closed) {
-      const isClosed = state === BetState.closed;
+    } else if ([BetState.resolved, BetState.disputed, BetState.closed].includes(state)) {
+      const isResolved = [BetState.resolved, BetState.disputed].includes(state);
       const outcomeNames = _.map(bet.outcomes, 'name') || [];
       const finalOutcome = _.get(bet, [
         'outcomes',
@@ -513,10 +519,10 @@ const BetView = ({
           </div>
           <div className={styles.summaryRowContainer}>
             {data(
-              `Bet ${isClosed ? 'closed' : 'resolved'} at`,
+              `Bet ${isResolved ? 'resolved' : 'closed'} at`,
               DateText.formatDate(bet.end_date)
             )}
-            {isClosed &&
+            {isResolved &&
               data(
                 'Outcomes',
                 <ul>
@@ -527,23 +533,38 @@ const BetView = ({
               )}
             {data(
               'Outcome',
-              isClosed
+              isResolved
                 ? 'This bet is awaiting resolution, see details below'
                 : finalOutcome
             )}
             {data('Evidence', renderTradeDesc(false))}
-            {!isClosed && data('Final Evidence', evidence, { smallText: true })}
+            {data('Final Evidence', evidence, { smallText: true })}
           </div>
-          {!isClosed && (
+          {isResolved && (
             <AuthedOnly>
               <div className={styles.disputeButtonContainer}>
-                <ButtonSmall
-                  text="Dispute"
-                  butonTheme={ButtonSmallTheme.red}
-                  onClick={() =>
-                    showPopup(PopupTheme.reportEvent, { small: true })
-                  }
-                />
+                {!disputes.find(d => d.user_id === auth.userId) && !isAdmin && (
+                  <ButtonSmall
+                    text="Dispute"
+                    butonTheme={ButtonSmallTheme.red}
+                    onClick={() =>
+                      showPopup(PopupTheme.reportEvent, {
+                        betId: bet.id,
+                      })
+                    }
+                  />
+                )}
+                {isAdmin && (
+                  <ButtonSmall
+                    text="Disputes"
+                    butonTheme={ButtonSmallTheme.grey}
+                    onClick={() =>
+                      showPopup(PopupTheme.disputes, {
+                        disputes,
+                      })
+                    }
+                  />
+                )}
               </div>
             </AuthedOnly>
           )}
@@ -604,11 +625,6 @@ const BetView = ({
            
             <span>{bet.market_question}</span>
             <p className={styles.betDescription}>{bet.description}</p>
-            {/* {bet.description && (
-              <span className={styles.info}>
-                <InfoBox position={'bottomRight'}>{bet.description}</InfoBox>
-              </span>
-            )} */}
           </div>
           {renderStateConditionalContent()}
         </div>

@@ -47,6 +47,7 @@ import WalletDepositPopup from 'components/WalletDepositPopup';
 import SelectGameModePopup from "../SelectGameModePopup";
 import VerifyPhonePopup from 'components/VerifyPhonePopup';
 import PhonePopup from 'components/PhonePopup';
+import DisputesPopup from 'components/DisputesPopup';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -159,7 +160,7 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
           />
         );
       case PopupTheme.reportEvent:
-        return <ReportEventPopup />;
+        return <ReportEventPopup betId={options?.betId} />;
       case PopupTheme.lastGamesDetail:
         return <LastGamesDetailPopup data={options?.data} />;
       case PopupTheme.fairnessPopup:
@@ -255,6 +256,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <PhonePopup />;
       case PopupTheme.phoneVerification:
         return <VerifyPhonePopup />;
+      case PopupTheme.disputes:
+        return <DisputesPopup disputes={options?.disputes} />
     }
 
     return null;
@@ -279,8 +282,6 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
             type === PopupTheme.walletDepositFiat ? classNames(styles.walletDeposit, styles.depositWider) : null,
             type === PopupTheme.walletWithdraw ? classNames(styles.walletDeposit, styles.depositWider) : null,
             type === PopupTheme.walletConnectWallet ? styles.walletDeposit : null,
-            type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
-            type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.disclaimer ? styles.disclaimerContainer : null,
             type === PopupTheme.eventForms ? styles.eventForms : null,
             type === PopupTheme.explanation

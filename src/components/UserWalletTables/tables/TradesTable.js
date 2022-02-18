@@ -86,7 +86,11 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup, onApproveCashout })
         </Grid>
         <Grid item xs>
           <div className={styles.messageCenter}>
-            <p>{formatToFixed(direction === 'SELL' ? outcomeTokens : investmentAmount)}</p>
+            <p>
+              {formatToFixed(
+                direction === 'SELL' ? outcomeTokens : investmentAmount
+              )}
+            </p>
           </div>
         </Grid>
         <Grid item xs>
@@ -127,29 +131,30 @@ const TradeRow = ({ data, allowCashout, showPulloutBetPopup, onApproveCashout })
             {moment(date).format('DD.MM.YYYY HH:mm:ss')}
           </div>
         </Grid>
-        {allowCashout && status === 'active' && !isFinalizedTrade(bet.status) && (
-          <Grid item xs>
-            <div
-              className={classNames(styles.messageLast, styles.messageRight)}
-            >
-              <button
-                className={styles.styledButton}
-                onClick={() =>
-                  showPulloutBetPopup(
-                    bet.id,
-                    outcomeIndex,
-                    sellAmount,
-                    bet.outcome,
-                    onApproveCashout
-                  )
-                }
-                data-tracking-id="wallet-cashout"
-              >
-                Cashout
-              </button>
-            </div>
-          </Grid>
-        )}
+
+        <Grid item xs>
+          <div className={classNames(styles.messageLast, styles.messageRight)}>
+            {allowCashout &&
+              bet.status === BetState.active &&
+              !isFinalizedTrade(bet.status) && (
+                <button
+                  className={styles.styledButton}
+                  onClick={() =>
+                    showPulloutBetPopup(
+                      bet.id,
+                      outcomeIndex,
+                      sellAmount,
+                      bet.outcome,
+                      onApproveCashout
+                    )
+                  }
+                  data-tracking-id="wallet-cashout"
+                >
+                  Cashout
+                </button>
+              )}
+          </div>
+        </Grid>
       </Grid>
     </div>
   );

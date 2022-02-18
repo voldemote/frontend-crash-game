@@ -3,11 +3,9 @@ import Button from 'components/Button';
 import { FormGroup, InputLabel, Select, Input } from 'components/Form';
 import {} from 'components/Form';
 import PopupTheme from 'components/Popup/PopupTheme';
-import Routes from 'constants/Routes';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 const ResolveBetPopup = ({ bet, event, visible, action }) => {
@@ -25,8 +23,6 @@ const ResolveBetPopup = ({ bet, event, visible, action }) => {
   const isOutcomeValid = outcome !== null && !isNaN(+outcome) && +outcome >= 0;
   const isValidStringInput = str => str !== null && str.length > 0;
 
-  const history = useHistory();
-
   const isFormValid =
     isOutcomeValid &&
     isValidStringInput(evidenceActual) &&
@@ -40,7 +36,7 @@ const ResolveBetPopup = ({ bet, event, visible, action }) => {
       setIsResolving(false);
     } else {
       setEvidenceDescription(_.get(bet, 'evidence_description', null));
-      setOutcome(bet.final_outcome.toString());
+      setOutcome(bet.final_outcome?.toString());
     }
   }, [visible, bet]);
 
@@ -60,11 +56,7 @@ const ResolveBetPopup = ({ bet, event, visible, action }) => {
     
     response.then(() => {
       setIsResolving(false);
-      history.push(
-        Routes.getRouteWithParameters(Routes.event, {
-          eventSlug: event.slug,
-        })
-      );
+      window.location.reload(false);
     });
   };
 

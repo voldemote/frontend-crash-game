@@ -73,7 +73,7 @@ const BetActionsMenu = ({ event, bet, showPopup }) => {
   );
 
   // dont render anything if no actions are available
-  if (!userCreator && !isAdmin) {
+  if ((!userCreator && !isAdmin) || bet?.status === BetState.closed) {
     return null;
   }
 

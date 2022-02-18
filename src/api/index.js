@@ -731,6 +731,24 @@ const editEventBet = (betId, payload) => {
     });
 };
 
+const openDispute = (betId, payload) => {
+  return EventsServiceApi.post(`/bets/${betId}/disputes`, payload)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: openDispute ', err);
+      throw err;
+    });
+};
+
+const getDisputes = (betId) => {
+  return EventsServiceApi.get(`/bets/${betId}/disputes`)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('[API-Error]: getDisputes ', err);
+      throw err;
+    });
+};
+
 export {
   Api,
   createBet,
@@ -814,4 +832,6 @@ export {
   getEventBySlug,
   calculateBuyOutcome,
   getOutcomesHistoryForChart,
+  openDispute,
+  getDisputes,
 };

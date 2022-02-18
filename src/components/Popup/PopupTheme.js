@@ -45,4 +45,5 @@ export default {
   walletDepositFiat: 'walletDepositFiat',
   walletConnectWallet: 'walletConnectWallet',
   selectGameMode: 'selectGameMode',
+  disputes: 'disputes',
 };
