@@ -19,16 +19,17 @@ const PulloutApprovePopup = ({
 }) => {
   const { currency } = useSelector(selectUser);
 
-  const onApprovePulloutClick = () => {
-    pullOutBet(betId, outcome).then(() => {
+  const onApprovePulloutClick = async () => {
+    try {
+      await pullOutBet(betId, outcome);
       hidePopup();
       showSuccess(`Successfully cashed out ${amount} ${currencyDisplay(currency)}`);
       onApprove(betId, outcome);
       trackApproveCashout({ eventTitle: outcomeName });
-    }).catch(() => {
+    } catch (error) {
       hidePopup();
       showError('Failed to cash out.');
-    });
+    }
   };
 
   const onCancelPulloutClick = () => {
