@@ -79,7 +79,10 @@ module.exports = {
   appendRoutes: async (apiPath, listPaths = []) => {
     for (let listCounter = 0; listCounter < listPaths.length; listCounter++) {
       // quering api to get data
+
+      console.log(`${apiPath}${listPaths[listCounter]}`);
       const response = await axios.get(`${apiPath}${listPaths[listCounter]}`);
+
 
       if (response && response.data) {
         const dataKeys = Object.keys(response.data);
@@ -121,6 +124,7 @@ module.exports = {
   },
   // Append routes
   appendRoutesForUser: async (apiPath, userId) => {
+    console.log(apiPath);
     const response = await axios.get(apiPath);
     if (response && response.data) {
       let data = response.data;

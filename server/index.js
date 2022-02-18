@@ -9,8 +9,7 @@ const { replaceMeta } = require('./utils/replaceMetaUtil');
 const PORT = process.env.PORT || 3000;
 // set API path
 const apiEventsPath = process.env.REACT_APP_EVENTS_SERVICE_URL || 'https://events-staging.wallfair.io/';
-const apiBackendPath = process.env.REACT_APP_BACKEND_URL || 'https://rm-api.alpacasino.io/';
-  //process.env.REACT_APP_BACKEND_URL || 'https://rm-api.alpacasino.io/';
+const apiBackendPath = process.env.REACT_APP_BACKEND_URL || 'https://staging-api.alpacasino.io/';
 
 // set apiEndpoints which you want to get data from and make them dynamic
 //ACTIVE,RESOLVED,CANCELLED,CLOSED,WAITING_RESOLUTION,DISPUTED;
@@ -35,10 +34,12 @@ appendRoutes(apiEventsPath, listPaths).then(meta => {
 
   // in case of new events
   app.get('/trade/:eventSlug?/:betSlug?', (req, res) => {
-    appendRoutes(listPaths, listPaths).then(updatedMeta => {
+    appendRoutes(apiEventsPath, listPaths).then(updatedMeta => {
       const indexFile = fs.readFileSync(indexPath, 'utf8');
       let data = updatedMeta[req.path] ? updatedMeta[req.path] : meta['/'];
       res.send(replaceMeta(indexFile, data));
+    }).catch(err => {
+      console.error(err);
     });
   });
 
