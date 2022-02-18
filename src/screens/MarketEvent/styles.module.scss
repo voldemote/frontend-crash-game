@@ -596,14 +596,16 @@
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
+    right: -50%;
     transform: translateX(-50%);
-    background-color: $colorBlack;
+    background-color: $colorLightPurple;
+    font-family: $fontDMSans;
     border-radius: 8px;
     padding: 10px;
     width: max-content;
     max-width: 250px;
-    color: $colorWhite;
+    color: $colorPrimary;
+    z-index: 909;
   }
 
   &:hover {

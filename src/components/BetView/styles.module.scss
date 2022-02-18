@@ -338,7 +338,7 @@
 
     a {
       text-decoration: underline;
-      color: $colorPurple;
+      color: $colorLightPurple;
     }
     &.hidden {
       -webkit-line-clamp: 3;
@@ -361,7 +361,7 @@
     background: none;
     text-align: center;
     text-transform: capitalize;
-    color: $colorPurpleDark;
+    color: $colorLightPurple;
     cursor: pointer;
     margin: 10px 0;
     letter-spacing: 1px;
@@ -432,7 +432,14 @@
 .tooltip {
   font-family: $fontDMSans;
   max-width: 180px;
-  background-color: $colorPrimary45 !important;
+  background-color: $colorLightPurple !important;
+  color: $colorPrimary !important;
+  text-align: left;
+  font-size: 15px !important;
+
+  &::after {
+    border-top-color: $colorLightPurple !important;
+  }
 }
 
 .dateTimeLabel {

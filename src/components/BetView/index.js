@@ -358,7 +358,7 @@ const BetView = ({
           <span
             data-for="tool-tip"
             data-tip={
-              userLoggedIn ? 'You Need To Select An Option First' : null
+              userLoggedIn ? 'You need to select an option first' : null
             }
           >
             <Button

@@ -236,6 +236,7 @@ const MarketEvent = ({
                       className={styles.desktopChat}
                       roomId={event.id}
                       chatMessageType={ChatMessageType.event}
+                      showHeadline={true}
                     />
                   </div>
                 )}
@@ -243,6 +244,20 @@ const MarketEvent = ({
             </div>
             <div className={styles.row}>
               <div className={styles.columnFull}>
+                {/* {matchMediaMobile && (
+                  <div className={styles.chatWrapper}>
+                    <Chat
+                      className={styles.desktopChat}
+                      inputClassName={styles.inputArea}
+                      messagesClassName={styles.messageArea}
+                      roomId={event.id}
+                      chatMessageType={ChatMessageType.event}
+                      showHeadline={true}
+                    />
+                  </div>
+                )} */}
+
+                
                 <div className={styles.activitiesWrapper}>
                   <div className={styles.sectionHeader}>
                     <h4>{`Activities`}</h4>
