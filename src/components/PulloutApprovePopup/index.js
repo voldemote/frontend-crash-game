@@ -29,8 +29,7 @@ const PulloutApprovePopup = ({
         onApprove(betId, outcome);
         trackApproveCashout({ eventTitle: outcomeName });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(_ => {
         hidePopup();
         showError('Failed to cash out.');
       });
