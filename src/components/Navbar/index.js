@@ -481,7 +481,7 @@ const Navbar = ({
           <div className={classNames(style.topBar, style.redBar)}>
             <span>+++ SPECIAL OFFER! +++</span>
             <span className={style.gift}>🎁</span>
-            <span>Sign Up now and get 5.000 PFAIR for free!</span>
+            <span>Sign up now and get 100 PFAIR for free!</span>
             <span className={style.gift}>🎁</span>
             <div>
               <button onClick={() => startOnboardingFlow()}>Sign up</button>
