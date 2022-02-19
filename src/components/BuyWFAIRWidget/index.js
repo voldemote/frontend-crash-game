@@ -19,7 +19,9 @@ const BuyWFAIRWidget = () => {
         <ApplePay />
         <img src={SamsungPay} alt="SamsungPay Logo"/>
       </div>
-      <Button theme={ButtonTheme.primaryButtonL}>Buy WFAIR</Button>
+      <a href={'https://staking.wallfair.io/dashboard/buy-wfair'} target="_blank" rel="noreferrer">
+        <Button theme={ButtonTheme.primaryButtonL}>Buy WFAIR</Button>
+      </a>
     </div>
   );
 };
