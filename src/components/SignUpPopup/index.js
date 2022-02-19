@@ -20,7 +20,7 @@ const SignUpPopup = ({ authState, startOnboarding }) => {
         <img className={styles.logoMini} src={LogoMini} alt="logo" />
         <span className={styles.welcomeTextText}>Sign up now and get</span>
         <span className={styles.welcomeTextHeadline}>
-          5,000 {currencyDisplay(TOKEN_NAME)} for testing.
+          100 {currencyDisplay(TOKEN_NAME)} for testing.
           <span className={styles.welcomeTextHeadlineUnderline}></span>
         </span>
         <ul className={styles.featureList}>
