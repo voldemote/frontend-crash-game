@@ -39,6 +39,8 @@ const NonStreamedEventsContent = ({
   bookmarkEventCancel,
   startOnboarding,
   authState,
+  phoneConfirmed,
+  requirePhoneNumberVerification,
 }) => {
   const eventType = 'non-streamed';
 
@@ -147,6 +149,14 @@ const NonStreamedEventsContent = ({
     startOnboarding();
   }, []);
 
+  const handleEventCreation = useCallback(() => {
+    if (phoneConfirmed) {
+      showPopup(PopupTheme.eventForms, {})
+    } else {
+      requirePhoneNumberVerification();
+    }
+  }, [phoneConfirmed])
+
   return (
     <>
       <section className={styles.title}>
@@ -181,7 +191,7 @@ const NonStreamedEventsContent = ({
             {authState === LOGGED_IN && (
               <Button
                 theme={ButtonTheme.primaryButtonS}
-                onClick={() => showPopup(PopupTheme.eventForms, {})}
+                onClick={handleEventCreation}
                 className={styles.createButton}
               >
                 <PlusIcon />
@@ -284,6 +294,9 @@ const mapDispatchToProps = dispatch => {
     startOnboarding: () => {
       dispatch(OnboardingActions.start());
     },
+    requirePhoneNumberVerification: () => {
+      dispatch(OnboardingActions.addPhoneNumber({initialOnboarding: false}));
+    },
   };
 };
 
@@ -291,6 +304,7 @@ function mapStateToProps(state) {
   return {
     authState: state.authentication.authState,
     userId: state.authentication.userId,
+    phoneConfirmed: state.authentication.phoneConfirmed,
   };
 }
 

@@ -10,11 +10,12 @@ import Routes from 'constants/Routes';
 import CodeInputFields from 'components/CodeInputFields';
 import { verifySms, sendSms} from 'api';
 
-const PhonePopup = ({
+const VerifyPhonePopup = ({
   hidePopup = () => {},
   showOnboardingFlowNext,
   phoneNumber,
-  userId
+  userId,
+  initialOnboarding
 }) => {
 
   const [code, setCode] = useState('');
@@ -39,7 +40,10 @@ const PhonePopup = ({
       
       if (!response.error) {
         setErrorMessage('');
-        showOnboardingFlowNext(true);
+        showOnboardingFlowNext({
+          verified:true,
+          initialOnboarding,
+        });
         hidePopup();
       } else {
         setErrorMessage(
@@ -111,20 +115,24 @@ const PhonePopup = ({
 const mapStateToProps = state => {
   return {
     userId: state.authentication.userId,
-    phoneNumber: state.onboarding.phoneNumber
+    phoneNumber: state.onboarding.phoneNumber,
+    initialOnboarding: state.onboarding.initialOnboarding,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    showOnboardingFlowNext: verified => {
+    showOnboardingFlowNext: ({verified, initialOnboarding}) => {
       dispatch(
         OnboardingActions.next({
-            payload: {verified}
+            payload: {
+              verified,
+              initialOnboarding,
+            }
         })
       );
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhonePopup);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyPhonePopup);

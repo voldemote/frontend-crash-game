@@ -111,6 +111,7 @@ const updateData = makeActionCreator(AuthenticationTypes.UPDATE_DATA, {
   preferences: null,
   aboutMe: null,
   emailConfirmed: null,
+  phoneConfirmed: null
 });
 
 const verifySms = makeActionCreator(AuthenticationTypes.VERIFY_SMS, {
@@ -243,6 +244,7 @@ const loginExternal = makeActionCreator(AuthenticationTypes.LOGIN_EXTERNAL, {
   sid: null,
   cid: null,
   emailConfirmed: false,
+  phoneConfirmed: false,
 });
 
 
