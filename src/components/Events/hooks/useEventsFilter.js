@@ -10,13 +10,14 @@ export function useEventsFilter(
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-
-    getMarketEvents(
-      category,
-      !statuses ? [BetState.active] : statuses,
-    ).then(res => {
-      setEvents(res);
-    });
+    if (getMarketEvents) {
+      getMarketEvents(
+        category,
+        !statuses ? [BetState.active] : statuses,
+      ).then(res => {
+        setEvents(res);
+      });
+    }
   }, []);
 
   return { events };

@@ -80,7 +80,11 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       PopupTheme.newEvent ||
       PopupTheme.editEvent ||
       PopupTheme.newBet ||
-      PopupTheme.editBet
+      PopupTheme.editBet ||
+      PopupTheme.eventForms ||
+      PopupTheme.eventDetails ||
+      PopupTheme.phoneVerification ||
+      PopupTheme.phoneNumber
     )
       return;
     hidePopup();
