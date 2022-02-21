@@ -36,6 +36,7 @@ appendRoutes(apiEventsPath, listPaths).then(meta => {
   app.get('/trade/:eventSlug?/:betSlug?', (req, res) => {
     appendRoutes(apiEventsPath, listPaths).then(updatedMeta => {
       const indexFile = fs.readFileSync(indexPath, 'utf8');
+      console.log(updatedMeta);
       let data = updatedMeta[req.path] ? updatedMeta[req.path] : meta['/'];
       res.send(replaceMeta(indexFile, data));
     }).catch(err => {
