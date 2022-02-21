@@ -426,20 +426,18 @@ const BetView = ({
               >
                 <p>How to place a bet?</p>
                 <p>
-                  - First select the amount (in {currencyDisplay(TOKEN_NAME)})
-                  you want to put into this bet by tapping on the desired
-                  percentage of your portfolio or by typing in the amount you
-                  want to trade with.
+                  - First enter the amount (in {currencyDisplay(TOKEN_NAME)})
+                  you want to put into this bet by typing in the amount.
                 </p>
                 <p>
-                  - After that pick your outcome by tapping on the outcome you
-                  think will come true. The potential gains in{' '}
+                  - After that, select the outcome you
+                  think will become true. The potential gains in{' '}
                   {currencyDisplay(TOKEN_NAME)} and percent will automatically
                   adjust according to your placed bet amount.
                 </p>
                 <p>
-                  - To finalize your bet click on the Place bet Button and enjoy
-                  the thrill
+                  - To finalize your bet, click on the "Place Trade" button and enjoy
+                  the thrill.
                 </p>
               </InfoBox>
             </div>
