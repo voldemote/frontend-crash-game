@@ -11,7 +11,7 @@ import authState from 'constants/AuthState';
 import Routes from 'constants/Routes';
 import classNames from 'classnames';
 
-const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId, showPopup}) => {
+const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible, setOpenDrawer, userId, showPopup, phoneConfirmed}) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -26,7 +26,13 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
       case 'create-events':
         if (loggedIn) {
           history.push(Routes.getRouteWithParameters(Routes.events, {category: 'all'}));
-          showPopup(PopupTheme.eventForms, {});
+
+          if (phoneConfirmed) {
+            showPopup(PopupTheme.eventForms, {});
+          } else {
+            dispatch(OnboardingActions.addPhoneNumber());
+          }
+
         } else {
           dispatch(OnboardingActions.start());
           dataLayerPush({
@@ -141,6 +147,7 @@ const mapStateToProps = state => {
     user: state.authentication,
     loggedIn: state.authentication.authState === authState.LOGGED_IN,
     userId: state.authentication.userId,
+    phoneConfirmed: state.authentication.phoneConfirmed,
   }
 }
 

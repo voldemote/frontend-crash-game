@@ -80,6 +80,12 @@ const Home = (
   // };
 
   useEffect(() => {
+    if (isLoggedIn && !userState.phoneConfirmed) {
+      dispatch(OnboardingActions.addPhoneNumber());
+    }
+  }, [isLoggedIn, userState.phoneConfirmed]);
+
+  useEffect(() => {
     // if (isMount) {
       handleRefPersistent();
       handleVoluumPersistent();
@@ -173,6 +179,7 @@ const mapStateToProps = state => {
     tags: state.event.tags,
     events: state.event.events,
     userId: state.authentication.userId,
+    phoneConfirmed: state.phoneConfirmed,
   };
 };
 

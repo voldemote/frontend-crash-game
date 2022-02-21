@@ -58,5 +58,6 @@ export const selectUser = state => {
     currency,
     gamesCurrency,
     tokensRequestedAt,
+    phoneConfirmed: state.authentication.phoneConfirmed,
   };
 };

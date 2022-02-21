@@ -257,9 +257,10 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.ban:
         return <BanPopup banData={options?.banData} />;
       case PopupTheme.phoneNumber:
-        return <PhonePopup />;
+        return <PhonePopup initialOnboarding={options?.initialOnboarding} />;
       case PopupTheme.phoneVerification:
-        return <VerifyPhonePopup />;
+        const initialOnboarding = _.get(options, 'initialOnboarding', true);
+        return <VerifyPhonePopup initialOnboarding={initialOnboarding} />;
       case PopupTheme.disputes:
         return <DisputesPopup disputes={options?.disputes} />
     }

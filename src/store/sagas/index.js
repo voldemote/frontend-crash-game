@@ -210,14 +210,14 @@ const root = function* () {
       TransactionSagas.fetchWalletTransactions
     ),
     takeLatest(
-      [OnboardingTypes.START, OnboardingTypes.NEXT],
+      [OnboardingTypes.START, OnboardingTypes.NEXT, OnboardingTypes.ADD_PHONE],
       OnboardingSaga.loadOnboardingStep
     ),
     takeEvery([OnboardingTypes.START], OnboardingSaga.getUsernameSuggestion),
     takeEvery(
       [OnboardingTypes.GET_USERNAME],
       OnboardingSaga.getUsernameSuggestion
-    ),
+    )
     // @formatter:on
   ]);
 };
