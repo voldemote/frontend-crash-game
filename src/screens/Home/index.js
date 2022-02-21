@@ -79,19 +79,6 @@ const Home = (
   //   }
   // };
 
-  const handlePreferredToken = useCallback(() => {
-    if (isLoggedIn) {      
-      if (userState?.preferences?.gamesCurrency !== TOKEN_NAME) {
-        dispatch(UserActions.updatePreferences({ 
-          userId: userState.userId, 
-          preferences: {
-            gamesCurrency: TOKEN_NAME
-          }
-        }));
-      }
-    }
-  }, [isLoggedIn, userState]);
-
   useEffect(() => {
     if (isLoggedIn && !userState.phoneConfirmed) {
       dispatch(OnboardingActions.addPhoneNumber());
@@ -102,10 +89,6 @@ const Home = (
     // if (isMount) {
       handleRefPersistent();
       handleVoluumPersistent();
-      
-      if (isPlayMoney) {
-        handlePreferredToken();
-      }
     // }
   }, []);
 
