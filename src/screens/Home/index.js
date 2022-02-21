@@ -28,6 +28,7 @@ import ButtonTheme from 'components/Button/ButtonTheme';
 import { UserActions } from 'store/actions/user';
 import { TOKEN_NAME } from 'constants/Token';
 import { selectUser } from 'store/selectors/authentication';
+import DiscordWidget from 'components/DiscordWidget';
 
 const Home = (
   authState,
@@ -152,6 +153,7 @@ const Home = (
       <CustomCarousel carouselType={'landingpage'} />
       
       <div className={styles.container}>
+        <DiscordWidget />
         <EventsCarouselContainer 
           title={'🔥 Most popular Events'}
           titleLink={'Show all events'}
