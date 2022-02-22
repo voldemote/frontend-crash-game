@@ -9,6 +9,7 @@ import { createMarketEvent, editMarketEvent } from 'api';
 import EventScreen from './EventScreen';
 import OutcomesScreen from './OutcomesScreen';
 import { BetActions } from 'store/actions/bet';
+import { trackCreateEvent } from 'config/gtm';
 
 const EventForms = ({
   event = null,
@@ -87,6 +88,7 @@ const EventForms = ({
             })
           );
           createEventSuccess();
+          trackCreateEvent({ slug: res.slug });
         })
         .catch(() => {
           createEventFail();
