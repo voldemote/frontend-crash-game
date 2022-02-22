@@ -155,9 +155,15 @@
       background: rgba(14, 9, 39, 0.803032);
       align-items: center;
       justify-content: center;
+      overflow: auto;
+      @media (max-width: $screen-xs) {
+        justify-content: flex-start;
+      }
+
       .bottomBanner {
-        padding: 0 16px;
+        margin: 0 16px;
         display: flex;
+
         img {
           width: 40px;
           height: 40px;
@@ -165,6 +171,9 @@
         }
         .bottomBannerContent {
           margin-left: 8px;
+          @media (max-width: $screen-xs) {
+            width: 120px;
+          }
           .title {
             font-size: 14px;
             color: white;
