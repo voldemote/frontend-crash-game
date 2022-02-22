@@ -40,12 +40,8 @@ const Home = (
 ) => {
   const history = useHistory();
   const isMount = useIsMount();
-  const location = useLocation();
   const dispatch = useDispatch();
   const userState = useSelector(selectUser);
-  let urlParams = new URLSearchParams(location.search);
-  const showUpcoming = process.env.REACT_APP_SHOW_UPCOMING_FEATURES || 'false';
-  const isPlayMoney = process.env.REACT_APP_PLAYMONEY === 'true';
 
   useOAuthCallback();
 
@@ -53,26 +49,7 @@ const Home = (
     return authState?.authState === LOGGED_IN;
   }, [authState]);
 
-  const handleRefPersistent = () => {
-    const ref = urlParams.get('ref');
-
-    if (ref) {
-      localStorage.setItem('urlParam_ref', ref);
-    }
-  };
-
-  const handleVoluumPersistent = () => {
-    const sid = urlParams.get('sid');
-    const cid = urlParams.get('cid');
-
-    if (sid) {
-      localStorage.setItem('urlParam_sid', sid);
-    }
-
-    if (cid) {
-      localStorage.setItem('urlParam_cid', cid);
-    }
-  };
+  
 
   // const showPopupForUnauthenticated = () => {
   //   if (!isLoggedIn()) {
@@ -85,13 +62,6 @@ const Home = (
       dispatch(OnboardingActions.addPhoneNumber());
     }
   }, [isLoggedIn, userState.phoneConfirmed]);
-
-  useEffect(() => {
-    // if (isMount) {
-      handleRefPersistent();
-      handleVoluumPersistent();
-    // }
-  }, []);
 
   const renderGamesBanner = () => {
     return (
@@ -123,10 +93,8 @@ const Home = (
           </div>
         </div>
       </div>
-
     );
   }
-
 
   const renderActivities = () => {
     return (
@@ -140,6 +108,7 @@ const Home = (
             className={styles.activitiesTrackerGamesBlock}
             preselectedCategory={'game'}
             hideSecondaryColumns={true}
+            hideFirstColumn={true}
             layout="wide"
           ></EventActivitiesTabs>
         </Grid>
