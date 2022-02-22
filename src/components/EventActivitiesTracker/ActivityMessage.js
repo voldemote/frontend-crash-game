@@ -13,7 +13,7 @@ import { roundToTwo } from '../../helper/FormatNumbers';
 import { getGameById } from '../../helper/Games';
 import { currencyDisplay } from 'helper/Currency';
 
-const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
+const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout, date, gameScreen = false }) => {
   const getUserProfileUrl = data => {
     let user = _.get(data, 'user');
     let userId = _.get(user, '_id');
@@ -73,7 +73,8 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
           stakedAmount,
           crashFactor,
           gameLabel,
-          gamesCurrency
+          gamesCurrency,
+          date
         };
         return (
           <ActivityTableRow
@@ -82,6 +83,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
             gameLabel={gameLabel}
             hideSecondaryColumns={hideSecondaryColumns}
             layout={layout}
+            gameScreen={gameScreen}
           />
         );
       case 'Casino/EVENT_CASINO_LOST': {
@@ -91,7 +93,8 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
           stakedAmount,
           crashFactor,
           gameLabel,
-          gamesCurrency
+          gamesCurrency,
+          date
         };
         return (
           <ActivityTableRow
@@ -100,6 +103,7 @@ const ActivityMessage = ({ activity, users, hideSecondaryColumns, layout }) => {
             gameLabel={gameLabel}
             hideSecondaryColumns={hideSecondaryColumns}
             layout={layout}
+            gameScreen={gameScreen}
           />
         );
       }
