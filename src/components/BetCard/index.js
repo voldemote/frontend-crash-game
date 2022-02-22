@@ -91,7 +91,7 @@ const BetCard = ({
           <span className={styles.title}>{title}</span>
           <div className={styles.tags}>
             {
-              tags.map(tag => <span>#{tag.name}</span>)
+              tags && tags.map(tag => <span>#{tag.name}</span>)
             }
           </div>
         </div>

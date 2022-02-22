@@ -75,9 +75,18 @@
       .secondContainer {
         display: flex;
         align-items: center;
+        position: relative;
+
         @media (max-width: $screen-xs) {
           padding: 60px 0;
           justify-content: center;
+        }
+        .coins {
+          position: absolute;
+          top: 25%;
+          left: 6%;
+          width: 352px;
+          height: 234px;
         }
         .card {
           position: relative;
@@ -156,6 +165,7 @@
       align-items: center;
       justify-content: center;
       overflow: auto;
+      position: relative;
       @media (max-width: $screen-xs) {
         justify-content: flex-start;
       }
