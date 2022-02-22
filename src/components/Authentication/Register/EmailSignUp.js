@@ -41,7 +41,7 @@ const EmailSignUp = ({
   useEffect(() => {
     ReactTooltip.rebuild();
 
-    if (error) {
+    if (error || errorState) {
       ReactTooltip.show(fooRef.current);
       setSubmitInProgress(false);
     } else {
