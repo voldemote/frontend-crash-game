@@ -1,28 +1,180 @@
 @import '../../styles/all';
 
 .carouselContainer {
-  cursor: pointer;
+  display: block;
 
-  display: none;
-  &.mobile {
-    display: none;
-    @media (max-width: $screen-xs) {
-      display: block;
+  .container {
+    display: flex;
+    flex-direction: column;
+    .topContainer {
+      position: relative;
+      height: 552px;
+      display: flex;
+      justify-content: space-evenly;
+      @media (max-width: $screen-xs) {
+        flex-direction: column;
+        height: auto;
+        padding: 60px 0px;
+      }
+      .backgroundImg {
+        position: absolute;
+        height: 552px;
+        top: 0;
+        bottom: 0;
+        object-fit: cover !important;
+        z-index: -1;
+
+        @media (max-width: $screen-xs) {
+          height: 100%;
+        }
+      }
+      .firstContainer {
+        display: flex;
+        align-items: center;
+        @media (max-width: $screen-xs) {
+          justify-content: center;
+          padding: 0 20px;
+        }
+        h2 {
+          width: 428px;
+          color: white;
+          font-family: $fontDMSans;
+          font-size: 50px;
+          text-align: left;
+          .secondTitle {
+            color: #efff54;
+          }
+          @media (max-width: $screen-xs) {
+            width: 100%;
+            font-size: 40px;
+            text-align: center;
+          }
+        }
+        .description {
+          width: 390px;
+          margin-top: 33px;
+          color: white;
+          font-size: 16px;
+          text-align: left;
+          @media (max-width: $screen-xs) {
+            width: 100%;
+            text-align: center;
+          }
+        }
+        .buttonWrapper {
+          margin-top: 33px;
+          display: flex;
+          @media (max-width: $screen-xs) {
+            justify-content: center;
+          }
+          .button {
+            font-size: 16px;
+          }
+        }
+      }
+      .secondContainer {
+        display: flex;
+        align-items: center;
+        @media (max-width: $screen-xs) {
+          padding: 60px 0;
+          justify-content: center;
+        }
+        .card {
+          position: relative;
+          width: 300px;
+          height: 220px;
+          background: linear-gradient(
+            180deg,
+            rgba(41, 32, 79, 0.372183) 0%,
+            rgba(25, 20, 52, 0.672307) 74.19%,
+            rgba(18, 14, 39, 0.7104) 100%
+          );
+          .liveReact {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            top: 16px;
+            left: 16px;
+            border-radius: 8px;
+            height: 22px;
+            background: #ff5858;
+            .oval {
+              width: 8px;
+              height: 8px;
+              margin-right: 8px;
+              background-color: white;
+              border-radius: 8px;
+            }
+            p {
+              font-family: $fontDMSans;
+              font-size: 12px;
+              color: white;
+            }
+          }
+
+          .cardContent {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 20px;
+            h2 {
+              font-family: $fontDMSans;
+              font-size: 20px;
+              text-align: left;
+              color: white;
+            }
+            .lockWrapper {
+              margin-top: 16px;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+            p {
+              text-align: left;
+              font-size: 11px;
+              font-weight: 500;
+              color: white;
+              letter-spacing: 1.375px;
+              opacity: 0.33;
+            }
+          }
+          .cardImage {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            z-index: -1;
+          }
+        }
+      }
     }
-  }
-
-  &.desktop {
-    display: block;
-    @media (max-width: $screen-xs) {
-      display: none;
-    }
-  }
-
-  img {
-    object-fit: cover !important;
-
-    @media (max-width: $screen-xs) {
-      object-fit: contain !important;
+    .bottomBannerContainner {
+      display: flex;
+      height: 73px;
+      background: rgba(14, 9, 39, 0.803032);
+      align-items: center;
+      justify-content: center;
+      .bottomBanner {
+        padding: 0 16px;
+        display: flex;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 6px;
+        }
+        .bottomBannerContent {
+          margin-left: 8px;
+          .title {
+            font-size: 14px;
+            color: white;
+          }
+          .price {
+            font-size: 18px;
+            color: #3aff1d;
+          }
+        }
+      }
     }
   }
 }
