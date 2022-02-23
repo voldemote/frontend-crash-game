@@ -252,17 +252,18 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
           <div className={styles.secondContainer}>
             {render3BetCards()}
           </div>
+          <div className={styles.bottomBannerContainner}>
+            {notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username} earned`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
         </div>
-        <div className={styles.bottomBannerContainner}>
-          {notifications.slice(0, 5).map(activity => {
-            return (
-              <BottomBanner
-                title={`${activity.data?.user?.username} earned`}
-                price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
-              />
-            )
-          })}
-        </div>
+        
       </div>
       <div className={styles.container}>
         <div className={styles.topContainer}>
@@ -287,16 +288,16 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             <img src={JackpotImage} alt='' />
             <img src={Coins} className={styles.coins} alt="coins" />
           </div>
-        </div>
-        <div className={styles.bottomBannerContainner}>
-          {notifications.slice(0, 5).map(activity => {
-            return (
-              <BottomBanner
-                title={`${activity.data?.user?.username} earned`}
-                price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
-              />
-            )
-          })}
+          <div className={styles.bottomBannerContainner}>
+            {notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username} earned`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
     </Carousel>
