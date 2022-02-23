@@ -126,14 +126,24 @@ const Home = (
         <EventsCarouselContainer 
           title={'🔥 Most popular Events'}
           titleLink={'Show all events'}
+          orderBy={'most_popular'}
           titleLinkTo={Routes.getRouteWithParameters(Routes.events, {category: 'all'})}
         />
 
         <EventsCarouselContainer 
-          title={'✨ Trading Events'}
-          titleLink={'Show all trading events'}
-          category={'Trading'}
-          titleLinkTo={Routes.getRouteWithParameters(Routes.events, {category: 'Trading'})}
+          title={'✨ Latest Events Added'}
+          titleLink={'Show all events'}
+          category={'all'}
+          titleLinkTo={Routes.getRouteWithParameters(Routes.events, {category: 'all'})}
+        />
+
+        <EventsCarouselContainer 
+          title={'⏱️ Events ending soon'}
+          titleLink={'Show all events'}
+          category={'all'}
+          orderBy={'bet_end_date'}
+          order={'ASC'}
+          titleLinkTo={Routes.getRouteWithParameters(Routes.events, {category: 'all'})}
         />
 
         {renderGamesBanner()}
