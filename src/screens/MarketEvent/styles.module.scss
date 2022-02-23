@@ -275,6 +275,10 @@
         margin-bottom: 30px;
         border-radius: 10px;
         // background-color: $colorBackgroundShadeLighter;
+
+        @media (max-width: $screen-sm) {
+          margin-bottom: 0px;
+        }
       }
 
       .chatWrapper {

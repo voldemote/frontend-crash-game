@@ -98,6 +98,8 @@ const MarketEvent = ({
   };
 
   const renderOptions = () => {
+    if (!isLoggedIn()) return null;
+
     return (
       <div className={styles.shareButton}>
         <Favorite
@@ -223,7 +225,8 @@ const MarketEvent = ({
               <div className={styles.columnRight}>
                 <div className={classNames(styles.chartMainWrapper)}>
                   <div className={styles.chart}>
-                    {!matchMediaMobile && chartData && (
+                    {/* {!matchMediaMobile && chartData && ( */}
+                    {chartData && (
                       <Chart
                         height={300}
                         data={chartData}

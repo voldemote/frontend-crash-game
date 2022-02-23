@@ -46,7 +46,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   const location = useLocation();
 
   const { events } = useEventsFilter([BetState.active], 'all', null, true);
-  const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 3);
+  const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 3, '', 'most_popular');
 
   const {notifications} = useNotificationFilter('Notification/EVENT_USER_REWARD');
 
@@ -77,13 +77,13 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
         });
   }, []);
 
-  const onClickItemThirdBanner = useCallback(() => {
-        history.push(Routes.leaderboard);
-        dataLayerPush({
-          event:'gtm.click',
-          'gtm.elementId': 'banner--bonus',
-        });
-  }, []);
+  // const onClickItemThirdBanner = useCallback(() => {
+  //       history.push(Routes.leaderboard);
+  //       dataLayerPush({
+  //         event:'gtm.click',
+  //         'gtm.elementId': 'banner--bonus',
+  //       });
+  // }, []);
 
   const renderBetCard = () => {
     if (events.length > 0) {
@@ -128,7 +128,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
     return (
       <div className={styles.cardContainer}>
         {/* <span className={styles.title}>TOP 3 EVENTS</span> */}
-        <span className={styles.title}>LATEST EVENTS ADDED</span>
+        <span className={styles.title}>TOP 3 EVENTS</span>
         <div className={styles.cardsWrapper}>
 
         { eventsByCreationDate?.length && eventsByCreationDate?.map((event, index) => {
@@ -186,11 +186,11 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
       <div className={styles.winnerContainer}>
         <span className={styles.title}>The 3 Winners</span>
         <WinnerItem number={1} title={'Highest multiplier cashed out in an Event'} />
-        <WinnerItem number={2} title={'Highest cashout value from Elon / Pump and Dump'} />
+        <WinnerItem number={2} title={'Highest cashout value from Elon Game and Pump & Dump'} />
         <WinnerItem number={3} title={'Creator of the event with highest volume'} />
 
         <div className={classNames(styles.buttonWrapper, styles.desktop)}>
-          <Button className={styles.button} onClick={onClickItemThirdBanner}>Create Event now</Button>
+          <Button className={styles.button} onClick={onClickItemFirstBanner}>Create Event now</Button>
         </div>
       </div>
     )
@@ -294,10 +294,10 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             <div className={styles.contentWrapper}>
               <span className={styles.title}>MARCH COMPETITION</span>
               <h2>
-                WE WILL DRAW 5 WINNERS<br/>
+                WE WILL DRAW 3 WINNERS<br/>
                 AT THE END OF MARCH.<br/>
                 THE TOTAL PRIZE POOL IS<br/>
-                WORTH <span className={styles.secondTitle}>5000 EURO IN ETH.</span></h2>
+                WORTH <span className={styles.secondTitle}>5,000 EURO IN ETH.</span></h2>
             <div className={classNames(styles.buttonWrapper, styles.mobile)}>
               <Button className={styles.button} onClick={onClickItemFirstBanner}>Create Event now</Button>
             </div>
