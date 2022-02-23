@@ -74,7 +74,7 @@
     padding-bottom: 20px;
     margin-top: 50px;
     overflow: auto;
-    @media (max-width: $screen-xs) {
+    @media (max-width: $screen-lg) {
       justify-content: flex-start;
     }
 
