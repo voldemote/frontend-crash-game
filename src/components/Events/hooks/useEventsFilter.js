@@ -26,15 +26,14 @@ export function useEventsFilter(
         orderBy,
         order
       ).then(res => {
-        console.log(res);
         if (random) {
-          const randomIndex = Math.floor(Math.random() * res.length);
-          const randomEvent = res[randomIndex];
+          const randomIndex = Math.floor(Math.random() * res.events.length);
+          const randomEvent = res.events[randomIndex];
           setEvents([randomEvent]);
           return;
         }
 
-        setEvents(res);
+        setEvents(res.events);
       });
     }
   }, []);

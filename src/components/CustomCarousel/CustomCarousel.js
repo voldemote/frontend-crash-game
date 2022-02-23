@@ -49,7 +49,6 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 3);
 
   const {notifications} = useNotificationFilter('Notification/EVENT_USER_REWARD');
-  console.log('notifications', notifications);
 
   const onClickItemFirstBanner = useCallback(() => {
     if (loggedIn) {
@@ -238,7 +237,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             <img src={Coins} className={styles.coins} alt="coins" />
           </div>
           <div className={styles.bottomBannerContainner}>
-            {notifications.slice(0, 5).map(activity => {
+            {notifications && notifications.slice(0, 5).map(activity => {
               return (
                 <BottomBanner
                   title={`${activity.data?.user?.username}`}
@@ -272,7 +271,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             {render3BetCards()}
           </div>
           <div className={styles.bottomBannerContainner}>
-            {notifications.slice(0, 5).map(activity => {
+            {notifications && notifications.slice(0, 5).map(activity => {
               return (
                 <BottomBanner
                   title={`${activity.data?.user?.username}`}
