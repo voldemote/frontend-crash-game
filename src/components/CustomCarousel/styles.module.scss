@@ -36,13 +36,15 @@
           padding: 0 20px;
         }
         h2 {
-          width: 428px;
           color: white;
           font-family: $fontDMSans;
           font-size: 50px;
           text-align: left;
           .secondTitle {
             color: #efff54;
+          }
+          .thirdTitle {
+            color: #3aff1d;
           }
           @media (max-width: $screen-xs) {
             width: 100%;
@@ -51,7 +53,6 @@
           }
         }
         .description {
-          width: 390px;
           margin-top: 33px;
           color: white;
           font-size: 16px;
@@ -88,9 +89,29 @@
           width: 352px;
           height: 234px;
         }
+        .cardContainer {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          background: rgba(0, 0, 0, 0.31922);
+          backdrop-filter: blur(27.1828px);
+          border-radius: 8px;
+          padding: 30px 30px;
+          overflow: auto;
+          .title {
+            font-size: 11px;
+            color: white;
+            opacity: 0.54;
+          }
+          .cardsWrapper {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+          }
+        }
         .card {
           position: relative;
-          width: 300px;
+          width: 181px;
           height: 220px;
           background: linear-gradient(
             180deg,
