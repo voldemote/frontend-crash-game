@@ -224,7 +224,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             <div>
               <h2>CREATE YOUR<br/>OWN EVENT AND<br/><span className={styles.secondTitle}>MAKE MONEY!</span></h2>
               <p className={styles.description}>
-                Create events within 2 minutes, share them with<br/> 
+                Create events within 2 minutes, share them<br />with 
                 your friends and earn real money.
               </p>
               <div className={styles.buttonWrapper}>
