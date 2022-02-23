@@ -46,7 +46,8 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   const history = useHistory();
   const location = useLocation();
 
-  const { events } = useEventsFilter([BetState.active], 'all', 0, true);
+  const { events } = useEventsFilter([BetState.active], 'all', null, true);
+  const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 3);
 
   const {notifications} = useNotificationFilter('Notification/EVENT_USER_REWARD');
   console.log('notifications', notifications);
@@ -128,55 +129,48 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   const render3BetCards = () => {
     return (
       <div className={styles.cardContainer}>
-        <span className={styles.title}>TOP 3 EVENTS</span>
+        {/* <span className={styles.title}>TOP 3 EVENTS</span> */}
+        <span className={styles.title}>LATEST EVENTS ADDED</span>
         <div className={styles.cardsWrapper}>
-          <BetCard
-            key={'1'}
-            betId={'bet2'}
-            title={'eSports Alliance JIB PUBG'}
-            organizer={''}
-            image={CardBg}
-            eventEnd={'2022-02-28'}
-            outcomes={[]}
-            eventCardClass={styles.card}
-            category={'all'}
-            isBookmarked={false}
-            tags={[{name: 'esports'}, {name: 'racing'}]}
-            onBookmark={() => {}}
-            onBookmarkCancel={() => {}}
-          />
-          <BetCard
-            key={'1'}
-            betId={'bet2'}
-            title={'eSports Alliance JIB PUBG'}
-            organizer={''}
-            image={CardBg}
-            eventEnd={'2022-02-28'}
-            outcomes={[]}
-            eventCardClass={styles.card}
-            category={'all'}
-            isBookmarked={false}
-            tags={[{name: 'esports'}, {name: 'racing'}]}
-            onBookmark={() => {}}
-            onBookmarkCancel={() => {}}
-          />
-          <BetCard
-            key={'1'}
-            betId={'bet2'}
-            title={'eSports Alliance JIB PUBG'}
-            organizer={''}
-            image={CardBg}
-            eventEnd={'2022-02-28'}
-            outcomes={[]}
-            eventCardClass={styles.card}
-            category={'all'}
-            isBookmarked={false}
-            tags={[{name: 'esports'}, {name: 'racing'}]}
-            onBookmark={() => {}}
-            onBookmarkCancel={() => {}}
-          />
-        </div>
 
+        { eventsByCreationDate.map((event, index) => {
+
+          const bet = event.bet;
+          const betId = _.get(event.bet, 'id');
+          const eventSlug = _.get(event, 'slug');
+          const tags = _.get(event, 'tags');
+          const marketQuestion = _.get(bet, 'market_question');
+          const outcomes = _.get(bet, 'outcomes');
+
+          return (
+            <Link
+              key={betId}
+              to={{
+                pathname: `/trade/${eventSlug}`,
+                state: { fromLocation: location },
+              }}
+              className={styles.eventLink}
+            >
+              <BetCard
+                key={betId}
+                betId={betId}
+                title={marketQuestion}
+                organizer={''}
+                image={event.preview_image_url}
+                eventEnd={bet.end_date}
+                outcomes={outcomes}
+                eventCardClass={styles.card}
+                category={event?.category ? event.category : 'all'}
+                isBookmarked={!!bet?.bookmarks?.includes(userId)}
+                tags={tags}
+                onBookmark={() => {}}
+                onBookmarkCancel={() => {}}
+                small={true}
+              />
+            </Link>
+          );
+        })}
+        </div>
       </div>
     )
   }
@@ -247,7 +241,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
                 The best and most interesting events will be rewarded.
               </p>
               <div className={styles.buttonWrapper}>
-                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemFirstBanner}>Discover all Events</Button>
+                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemSecondBanner}>Discover all Events</Button>
               </div>
             </div>
           </div>
@@ -258,7 +252,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             {notifications.slice(0, 5).map(activity => {
               return (
                 <BottomBanner
-                  title={`${activity.data?.user?.username} earned`}
+                  title={`${activity.data?.user?.username}`}
                   price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
                 />
               )
@@ -282,19 +276,18 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
                 your event and make sure that you might hit the weekly jackpot.
               </p>
               <div className={styles.buttonWrapper}>
-                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemFirstBanner}>Go to Leaderboard</Button>
+                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemThirdBanner}>Go to Leaderboard</Button>
               </div>
             </div>
           </div>
           <div className={styles.secondContainer}>
             <img src={JackpotImage} alt='' />
-            <img src={Coins} className={styles.coins} alt="coins" />
           </div>
           <div className={styles.bottomBannerContainner}>
             {notifications.slice(0, 5).map(activity => {
               return (
                 <BottomBanner
-                  title={`${activity.data?.user?.username} earned`}
+                  title={`${activity.data?.user?.username}`}
                   price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
                 />
               )

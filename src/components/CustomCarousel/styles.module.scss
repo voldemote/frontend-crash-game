@@ -97,12 +97,24 @@
           left: -15%;
           width: 402px;
           height: 234px;
+          animation: floating 10s ease-in-out infinite;
 
           @media (max-width: $screen-xs) {
             top: 15%;
             left: 0;
           }
         }
+
+        @keyframes floating {
+          0% {
+            transform: rotateZ(0);
+          }
+
+          50% {
+            transform: rotateZ(-6deg);
+          }
+        }
+
         .cardContainer {
           display: flex;
           flex-direction: column;
@@ -113,7 +125,7 @@
           padding: 30px 30px;
           overflow: auto;
           .title {
-            font-size: 11px;
+            font-size: 12px;
             color: white;
             opacity: 0.54;
           }
@@ -135,6 +147,10 @@
             rgba(25, 20, 52, 0.672307) 74.19%,
             rgba(18, 14, 39, 0.7104) 100%
           );
+
+          .timerContainer {
+            background: red;
+          }
         }
       }
 
@@ -149,6 +165,11 @@
         justify-content: center;
         overflow: auto;
         column-gap: 60px;
+
+        @media (max-width: $screen-sm) {
+          // justify-content: flex-start;
+          column-gap: 20px;
+        }
 
         @media (max-width: $screen-xs) {
           justify-content: flex-start;

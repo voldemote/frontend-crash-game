@@ -681,12 +681,12 @@ const deleteMarketEvent = id => {
     });
 };
 
-const getMarketEvents = (category, statuses, page, limit, name = '') => {
+const getMarketEvents = (category, statuses, page = null, limit, name = '', orderBy = 'created_at', order = 'DESC') => {
   // additionaly provide params for status, search by name sorting, pagination etc
   return EventsServiceApi.get(
     `/events/market-events?category=${category}&statuses=${statuses.join(
       ','
-    )}&name=${name}&limit=${limit}&page=${page}`
+    )}&name=${name}&limit=${limit}&page=${page}&orderBy=${orderBy}&order=${order}`
   )
     .then(res => res.data)
     .catch(err => {

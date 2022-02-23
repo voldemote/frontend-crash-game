@@ -8,7 +8,9 @@ export function useEventsFilter(
   page,
   random = false,
   limit = 12,
-  name
+  name,
+  orderBy,
+  order
 ) {
 
   const [events, setEvents] = useState([]);
@@ -20,7 +22,9 @@ export function useEventsFilter(
         !statuses ? [BetState.active] : statuses,
         page,
         limit,
-        name
+        name,
+        orderBy,
+        order
       ).then(res => {
         console.log(res);
         if (random) {
