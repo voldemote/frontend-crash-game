@@ -12,9 +12,14 @@ import Routes from 'constants/Routes';
 import classNames from 'classnames';
 
 import BackgroundFirst from '../../data/images/carousel/bg-first.png';
+import BackgroundSecond from '../../data/images/carousel/bg-second.png';
+import BackgroundThird from '../../data/images/carousel/bg-third.png';
 import BannerImage1 from '../../data/images/carousel/banner-img1.png';
+import JackpotImage from '../../data/images/carousel/jackpot.png';
+import CardBg from '../../data/images/carousel/bg-card2.png';
 import Coins from '../../data/images/carousel/coins.png';
 import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 import BetCard from 'components/BetCard';
 import { useEventsFilter } from 'components/Events/hooks/useEventsFilter';
 import BetState from 'constants/BetState';
@@ -29,7 +34,7 @@ const BottomBanner = ({title, price}) => {
     <div className={styles.bottomBanner}>
       {/* <img src={BannerImage1} alt='' /> */}
       <div className={styles.bottomBannerContent}>
-        <p className={styles.title}>{title}</p>
+        <p className={styles.title}>{title}<br />just earned</p>
         <p className={styles.price}>{price}</p>
       </div>
     </div>
@@ -41,7 +46,8 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   const history = useHistory();
   const location = useLocation();
 
-  const { events } = useEventsFilter([BetState.active], 'all', 0, true);
+  const { events } = useEventsFilter([BetState.active], 'all', null, true);
+  const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 3);
 
   const {notifications} = useNotificationFilter('Notification/EVENT_USER_REWARD');
   console.log('notifications', notifications);
@@ -82,7 +88,6 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   }, []);
 
   const renderBetCard = () => {
-    console.log('events!!!', events);
     if (events.length > 0) {
       const event = events[0];    
       const bet = event.bet;
@@ -121,15 +126,65 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
     }
   };
 
+  const render3BetCards = () => {
+    return (
+      <div className={styles.cardContainer}>
+        {/* <span className={styles.title}>TOP 3 EVENTS</span> */}
+        <span className={styles.title}>LATEST EVENTS ADDED</span>
+        <div className={styles.cardsWrapper}>
+
+        { eventsByCreationDate.map((event, index) => {
+
+          const bet = event.bet;
+          const betId = _.get(event.bet, 'id');
+          const eventSlug = _.get(event, 'slug');
+          const tags = _.get(event, 'tags');
+          const marketQuestion = _.get(bet, 'market_question');
+          const outcomes = _.get(bet, 'outcomes');
+
+          return (
+            <Link
+              key={betId}
+              to={{
+                pathname: `/trade/${eventSlug}`,
+                state: { fromLocation: location },
+              }}
+              className={styles.eventLink}
+            >
+              <BetCard
+                key={betId}
+                betId={betId}
+                title={marketQuestion}
+                organizer={''}
+                image={event.preview_image_url}
+                eventEnd={bet.end_date}
+                outcomes={outcomes}
+                eventCardClass={styles.card}
+                category={event?.category ? event.category : 'all'}
+                isBookmarked={!!bet?.bookmarks?.includes(userId)}
+                tags={tags}
+                onBookmark={() => {}}
+                onBookmarkCancel={() => {}}
+                small={true}
+              />
+            </Link>
+          );
+        })}
+        </div>
+      </div>
+    )
+  }
   const renderSlides = () => {
     return (
       <Carousel
         className={styles.carousel}
-        autoPlay
+        autoPlay={true}
         interval={6500}
         transitionTime={800}
         infiniteLoop={true}
-        stopOnHover={false}
+        preventMovementUntilSwipeScrollTolerance={true}
+        swipeable={false}
+        stopOnHover={true}
         showArrows={true}
         showStatus={false}
         showIndicators={false}
@@ -145,9 +200,9 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
           />
           <div className={styles.firstContainer}>
             <div>
-              <h2>CREATE YOUR OWN EVENT AND <span className={styles.secondTitle}>MAKE MONEY!</span></h2>
+              <h2>CREATE YOUR<br/>OWN EVENT AND<br/><span className={styles.secondTitle}>MAKE MONEY!</span></h2>
               <p className={styles.description}>
-                Create events within 2 minutes, share them with 
+                Create events within 2 minutes, share them with<br/> 
                 your friends and earn real money.
               </p>
               <div className={styles.buttonWrapper}>
@@ -159,30 +214,87 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             {renderBetCard()}
             <img src={Coins} className={styles.coins} alt="coins" />
           </div>
-        </div>
-        <div className={styles.bottomBannerContainner}>
-          {notifications.slice(0, 5).map(activity => {
-            return (
-              <BottomBanner
-                title={`${activity.data?.user?.username} earned`}
-                price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
-              />
-            )
-          })}
+          <div className={styles.bottomBannerContainner}>
+            {notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username}`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
-      {/* <div>
-        <img
-          alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_2_bg.jpg?v=3`}
-        />
+      <div className={styles.container}>
+        <div className={styles.topContainer}>
+          <img
+            className={styles.backgroundImg}
+            alt=""
+            src={BackgroundSecond}
+          />
+          <div className={styles.firstContainer}>
+            <div>
+              <h2>TRADE ON<br/><span className={styles.secondTitle}>FUN EVENTS!</span></h2>
+              <p className={styles.description}>
+                Share the events with your friends or community. <br/>
+                The best and most interesting events will be rewarded.
+              </p>
+              <div className={styles.buttonWrapper}>
+                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemSecondBanner}>Discover all Events</Button>
+              </div>
+            </div>
+          </div>
+          <div className={styles.secondContainer}>
+            {render3BetCards()}
+          </div>
+          <div className={styles.bottomBannerContainner}>
+            {notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username}`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
+        </div>
+        
       </div>
-      <div>
-        <img
-          alt=""
-          src={`https://files.wallfair.io/landingpage-carousel/slide_3_bg.jpg?v=3`}
-        />
-      </div> */}
+      <div className={styles.container}>
+        <div className={styles.topContainer}>
+          <img
+            className={styles.backgroundImg}
+            alt=""
+            src={BackgroundThird}
+          />
+          <div className={styles.firstContainer}>
+            <div>
+              <h2>WEEKLY CHANCE TO<br/><span className={styles.thirdTitle}>WIN 2,500 USD!</span></h2>
+              <p className={styles.description}>
+                Your community and your friends can actively participate in<br/> 
+                your event and make sure that you might hit the weekly jackpot.
+              </p>
+              <div className={styles.buttonWrapper}>
+                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemThirdBanner}>Go to Leaderboard</Button>
+              </div>
+            </div>
+          </div>
+          <div className={styles.secondContainer}>
+            <img src={JackpotImage} alt='' />
+          </div>
+          <div className={styles.bottomBannerContainner}>
+            {notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username}`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
+        </div>
+      </div>
     </Carousel>
     )
   }

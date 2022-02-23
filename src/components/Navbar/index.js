@@ -426,7 +426,7 @@ const Navbar = ({
     if (!isLoggedIn()) {
       return (
         <PlayMoneyOnly>
-          <div className={classNames(style.topBar, style.redBar)}>
+          <div className={classNames(style.topBar)}>
             <span>+++ SPECIAL OFFER! +++</span>
             <span className={style.gift}>🎁</span>
             <span>Sign up now and get 100 PFAIR for free!</span>

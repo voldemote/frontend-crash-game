@@ -254,9 +254,11 @@ const NonStreamedEventsContent = ({
             ))}
         </div>
 
-        <Button onClick={loadMoreEvents} theme={ButtonTheme.secondaryButton}>
-          Load more
-        </Button>
+        <div className={styles.loadMore}>
+          <Button onClick={loadMoreEvents} theme={ButtonTheme.secondaryButton}>
+            Load more
+          </Button>
+        </div>
 
         <BuyWFAIRWidget />
 

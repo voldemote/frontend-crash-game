@@ -20,6 +20,7 @@ const BetCard = ({
   item,
   isBookmarked = false,
   tags,
+  small = false,
 }) => {
   const getEventCardStyle = () => {
     return {
@@ -47,41 +48,11 @@ const BetCard = ({
     return () => clearTimeout(timerId);
   }, [eventEnd]);
 
-  // const [outcomeValues, setOutcomeValues] = useState([
-  //   ...outcomes.map(outcome => ({ ...outcome, amount: '...' })),
-  // ]);
-
-  // const roundOutcome = value => {
-  //   return Math.min(100, Math.floor((1 / value) * 100));
-  // };
-
-  useEffect(() => {
-    // const fetchOutcome = async () => {
-    //   const result = await getOutcomes(betId, 1);
-    //   if (result) {
-    //     const populatedValues = result.data;
-    //     const mergedData = outcomes.map(outcome => ({
-    //       ...outcome,
-    //       amount: roundOutcome(+populatedValues[outcome.index].outcome),
-    //     }));
-    //     setOutcomeValues(mergedData);
-    //   }
-    // };
-
-    // fetchOutcome();
-  }, []);
-
-  function getGaugeWidth(amount = 1) {
-    return {
-      width: `${amount}px`,
-    };
-  }
-
   return (
-    <div className={styles.betCardContainer} onClick={onClick}>
+    <div className={classNames(styles.betCardContainer, eventCardClass)} onClick={onClick}>
       <div className={styles.picture} style={getEventCardStyle()} />
       <div className={classNames(styles.picture, styles.overlay)} />
-      <div className={classNames(styles.betCard, eventCardClass)}>
+      <div className={classNames(styles.betCard)}>
       
         <div className={styles.badgeContainer}>
           {/* <LiveBadge className={styles.liveBadge} /> */}
@@ -91,7 +62,7 @@ const BetCard = ({
           <span className={styles.title}>{title}</span>
           <div className={styles.tags}>
             {
-              tags && tags.map(tag => <span>#{tag.name}</span>)
+              (!small && tags) && tags.map(tag => <span>#{tag.name}</span>)
             }
           </div>
         </div>
@@ -99,8 +70,9 @@ const BetCard = ({
       
       {eventEnd && new Date(eventEnd) > new Date() ? (
         <div className={styles.timerContainer}>
-          <div className={styles.contentWrapper}>
-            <span className={styles.timerLabel}>Event end in:{' '}</span>
+          <div className={classNames(styles.contentWrapper, small ? styles.smallTimer : null)}>
+            {!small && <span className={styles.timerLabel}>Event ends in:{' '}</span>}
+            {small && <span className={styles.timerLabel}>Ends in:{' '}</span>}
             <span className={styles.timerValue}>
               {timeLeft?.days || 0}
             </span>
