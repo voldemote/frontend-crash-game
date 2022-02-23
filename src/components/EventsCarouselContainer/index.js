@@ -16,6 +16,8 @@ const EventsCarouselContainer = ({
   eventType = 'non-streamed',
   statuses = [BetState.active],
   category = 'all',
+  orderBy = 'created_at',
+  order = 'DESC',
   title,
   titleLink,
   titleLinkTo,
@@ -36,7 +38,7 @@ const EventsCarouselContainer = ({
     },
   };
 
-  const { events } = useEventsFilter(statuses, category);
+  const { events } = useEventsFilter(statuses, category, undefined, false, undefined, undefined, orderBy, order);
 
   const [page, setPage] = useState(1);
   const COUNT = 4;
