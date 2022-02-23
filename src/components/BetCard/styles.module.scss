@@ -46,20 +46,19 @@
       color: $colorWhite;
       font-family: $fontDMSans;
       .timerLabel {
-        font-size: 12px;
+        font-size: 8px;
         padding-right: 10px;
       }
 
       .timerValue {
-        font-size: 13px;
-        line-height: 15px;
+        font-size: 8px;
         font-family: $fontDMSans;
         font-weight: 700;
         padding-right: 2px;
       }
 
       .timerUnit {
-        font-size: 10px;
+        font-size: 8px;
         color: $colorWhite30;
         padding-right: 10px;
       }

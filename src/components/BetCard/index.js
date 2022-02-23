@@ -78,10 +78,10 @@ const BetCard = ({
   }
 
   return (
-    <div className={styles.betCardContainer} onClick={onClick}>
+    <div className={classNames(styles.betCardContainer, eventCardClass)} onClick={onClick}>
       <div className={styles.picture} style={getEventCardStyle()} />
       <div className={classNames(styles.picture, styles.overlay)} />
-      <div className={classNames(styles.betCard, eventCardClass)}>
+      <div className={classNames(styles.betCard)}>
       
         <div className={styles.badgeContainer}>
           {/* <LiveBadge className={styles.liveBadge} /> */}
