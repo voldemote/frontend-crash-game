@@ -185,11 +185,13 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
     return (
       <Carousel
         className={styles.carousel}
-        autoPlay
+        autoPlay={true}
         interval={6500}
         transitionTime={800}
         infiniteLoop={true}
-        stopOnHover={false}
+        preventMovementUntilSwipeScrollTolerance={true}
+        swipeable={false}
+        stopOnHover={true}
         showArrows={true}
         showStatus={false}
         showIndicators={false}
