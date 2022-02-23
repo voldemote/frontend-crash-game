@@ -6,16 +6,20 @@
   .container {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+
     .topContainer {
       position: relative;
       height: 552px;
       display: flex;
       justify-content: space-evenly;
+
       @media (max-width: $screen-xs) {
         flex-direction: column;
         height: auto;
         padding: 60px 0px;
       }
+
       .backgroundImg {
         position: absolute;
         height: 552px;
@@ -31,6 +35,8 @@
       .firstContainer {
         display: flex;
         align-items: center;
+        height: calc(100% - 73px);
+
         @media (max-width: $screen-xs) {
           justify-content: center;
           padding: 0 20px;
@@ -39,6 +45,7 @@
           width: 428px;
           color: white;
           font-family: $fontDMSans;
+          font-style: italic;
           font-size: 50px;
           text-align: left;
           .secondTitle {
@@ -76,6 +83,8 @@
         display: flex;
         align-items: center;
         position: relative;
+        height: calc(100% - 73px);
+        text-align: left;
 
         @media (max-width: $screen-xs) {
           padding: 60px 0;
@@ -84,13 +93,18 @@
         .coins {
           position: absolute;
           top: 25%;
-          left: 6%;
-          width: 352px;
+          left: -15%;
+          width: 402px;
           height: 234px;
+
+          @media (max-width: $screen-xs) {
+            top: 15%;
+            left: 0;
+          }
         }
         .card {
           position: relative;
-          width: 300px;
+          min-width: 300px;
           height: 220px;
           background: linear-gradient(
             180deg,
@@ -98,99 +112,48 @@
             rgba(25, 20, 52, 0.672307) 74.19%,
             rgba(18, 14, 39, 0.7104) 100%
           );
-          .liveReact {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            padding: 0 8px;
-            top: 16px;
-            left: 16px;
-            border-radius: 8px;
-            height: 22px;
-            background: #ff5858;
-            .oval {
-              width: 8px;
-              height: 8px;
-              margin-right: 8px;
-              background-color: white;
-              border-radius: 8px;
-            }
-            p {
-              font-family: $fontDMSans;
-              font-size: 12px;
-              color: white;
-            }
-          }
-
-          .cardContent {
-            position: absolute;
-            left: 16px;
-            right: 16px;
-            bottom: 20px;
-            h2 {
-              font-family: $fontDMSans;
-              font-size: 20px;
-              text-align: left;
-              color: white;
-            }
-            .lockWrapper {
-              margin-top: 16px;
-              display: flex;
-              align-items: center;
-              gap: 10px;
-            }
-            p {
-              text-align: left;
-              font-size: 11px;
-              font-weight: 500;
-              color: white;
-              letter-spacing: 1.375px;
-              opacity: 0.33;
-            }
-          }
-          .cardImage {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            z-index: -1;
-          }
         }
       }
-    }
-    .bottomBannerContainner {
-      display: flex;
-      height: 73px;
-      background: rgba(14, 9, 39, 0.803032);
-      align-items: center;
-      justify-content: center;
-      overflow: auto;
-      position: relative;
-      @media (max-width: $screen-xs) {
-        justify-content: flex-start;
-      }
 
-      .bottomBanner {
-        margin: 0 16px;
+      .bottomBannerContainner {
+        position: absolute;
+        bottom: 0;
         display: flex;
+        height: 73px;
+        width: 100%;
+        background: rgba(14, 9, 39, 0.803032);
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        column-gap: 60px;
 
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 6px;
+        @media (max-width: $screen-xs) {
+          justify-content: flex-start;
+          column-gap: 0;
         }
-        .bottomBannerContent {
-          margin-left: 8px;
-          @media (max-width: $screen-xs) {
-            width: 120px;
+
+        .bottomBanner {
+          margin: 0 16px;
+          display: flex;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
           }
-          .title {
-            font-size: 14px;
-            color: white;
-          }
-          .price {
-            font-size: 18px;
-            color: #3aff1d;
+          .bottomBannerContent {
+            margin-left: 8px;
+            @media (max-width: $screen-xs) {
+              width: 120px;
+            }
+            .title {
+              font-size: 14px;
+              color: white;
+            }
+            .price {
+              font-size: 18px;
+              color: #3aff1d;
+            }
           }
         }
       }

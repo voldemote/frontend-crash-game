@@ -29,7 +29,7 @@ const BottomBanner = ({title, price}) => {
     <div className={styles.bottomBanner}>
       {/* <img src={BannerImage1} alt='' /> */}
       <div className={styles.bottomBannerContent}>
-        <p className={styles.title}>{title}</p>
+        <p className={styles.title}>{title}<br />just earned</p>
         <p className={styles.price}>{price}</p>
       </div>
     </div>
@@ -82,7 +82,6 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   }, []);
 
   const renderBetCard = () => {
-    console.log('events!!!', events);
     if (events.length > 0) {
       const event = events[0];    
       const bet = event.bet;
@@ -159,16 +158,16 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             {renderBetCard()}
             <img src={Coins} className={styles.coins} alt="coins" />
           </div>
-        </div>
-        <div className={styles.bottomBannerContainner}>
-          {notifications.slice(0, 5).map(activity => {
-            return (
-              <BottomBanner
-                title={`${activity.data?.user?.username} earned`}
-                price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
-              />
-            )
-          })}
+          <div className={styles.bottomBannerContainner}>
+            {notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username}`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
       {/* <div>
