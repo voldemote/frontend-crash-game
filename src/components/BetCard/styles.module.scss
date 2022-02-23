@@ -3,6 +3,8 @@
 .betCardContainer {
   position: relative;
   border-radius: 12px;
+  width: 300px;
+  height: 220px;
   overflow: hidden;
 
   .picture {
@@ -64,8 +66,6 @@
   }
 
   .betCard {
-    width: 300px;
-    height: 220px;
     position: relative;
     padding: 0;
     font-family: $fontLight;
