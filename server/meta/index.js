@@ -84,10 +84,10 @@ module.exports = {
       const response = await axios.get(`${apiPath}${listPaths[listCounter]}`);
 
 
-      if (response && response.data) {
-        const dataKeys = Object.keys(response.data);
+      if (response && response.data && response.data.events) {
+        const dataKeys = Object.keys(response.data.events);
         dataKeys.forEach(key => {
-          const singleEvent = response.data[key];
+          const singleEvent = response.data.events[key];
           const { slug, name, preview_image_url : previewImageUrl, bet, tags } = singleEvent;
 
           const eventTags = _.map(tags, 'name') || [];
