@@ -112,7 +112,7 @@ const NonStreamedEventsContent = ({
         limit,
         search
       ).then(res => {
-        setEvents(res);
+        setEvents(res.events);
       });
     },
     [status, page, category, searchTerm]
@@ -135,7 +135,7 @@ const NonStreamedEventsContent = ({
       limit,
       searchTerm
     ).then(res => {
-      setEvents([...events, ...res]);
+      setEvents([...events, ...res.events]);
     });
   }, [page, events, status]);
 
