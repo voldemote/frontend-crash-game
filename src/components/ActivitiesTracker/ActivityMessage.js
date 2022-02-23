@@ -7,14 +7,27 @@ import State from '../../helper/State';
 import { roundToTwo } from '../../helper/FormatNumbers';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { getProfilePictureUrl } from '../../helper/ProfilePicture';
 import { formatToFixed } from 'helper/FormatNumbers';
 import { TOKEN_DISPLAY_NAME } from '../../constants/Token';
 import { calculateGain } from '../../helper/Calculation';
 import { getGameById } from '../../helper/Games';
 import { currencyDisplay } from 'helper/Currency';
+import moment from 'moment';
 
 const isPlayMoney = process.env.REACT_APP_PLAYMONEY === 'true';
+
+const ActivityLink = ({ path, text }) => (
+  <b>
+    <a
+      className={'global-link-style'}
+      target={'_blank'}
+      href={`${window.location.origin}${path}`}
+      rel="noreferrer"
+    >
+      {text}
+    </a>
+  </b>
+);
 
 const ActivityMessage = ({ activity, date, users, events, showBetName = true }) => {
   const [dateString, setDateString] = useState('');
@@ -31,23 +44,6 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
 
     return () => clearInterval(timerId);
   }, [date, updateDateText]);
-
-  const getEventUrl = data => {
-    const eventSlug = _.get(data, 'slug');
-    const betSlug = _.get(data, 'bet.slug');
-
-    return (
-      <a
-        className={'global-link-style'}
-        target={'_blank'}
-        // href={`${window.location.origin}/trade/${eventSlug}/${betSlug}`}
-        href={`${window.location.origin}/trade/${eventSlug}`}
-        rel="noreferrer"
-      >
-        {_.get(data, 'name')}
-      </a>
-    );
-  };
 
   const getUserProfileUrl = data => {
     let user = _.get(data, 'user');
@@ -108,7 +104,8 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
             <b>{getUserProfileUrl(data)}</b> has been rewarded with{' '}
             <div className={'global-token-currency'}>
               <b>
-                {formatToFixed(_.get(data, 'winToken'), 0, true)} {TOKEN_DISPLAY_NAME}
+                {formatToFixed(_.get(data, 'winToken'), 0, true)}{' '}
+                {TOKEN_DISPLAY_NAME}
               </b>
             </div>{' '}
             from <b>{_.get(event, 'name')}</b>.
@@ -121,33 +118,21 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
       case 'Notification/EVENT_NEW':
         return (
           <div>
-            New event has been created <b>{getEventUrl(data)}</b>.
+            New event has been created{' '}
+            <ActivityLink path={'/trade/' + data.slug} text={data.name} />.
           </div>
-        ); //EDITED
+        );
       case 'Notification/EVENT_NEW_BET':
         return (
           <div>
-            New event has been created:
-            <b>
-              <a
-                className={'global-link-style'}
-                target={'_blank'}
-                // href={`${window.location.origin}/trade/${_.get(
-                //   event,
-                //   'slug'
-                // )}/${_.get(event, 'bets[0].slug')}`}
-                href={`${window.location.origin}/trade/${_.get(
-                  event,
-                  'slug'
-                )}`}
-                rel="noreferrer"
-              >
-                {_.get(event, 'bets[0].marketQuestion')}
-              </a>
-            </b>
+            New event has been created:{' '}
+            <ActivityLink
+              path={'/trade/' + event?.slug}
+              text={event.bets[0]?.market_question}
+            />
             .
           </div>
-        ); //EDITED
+        );
       case 'Notification/EVENT_BET_PLACED':
         const outcomeIndex = _.get(data, 'trade.outcome_index');
         const outcomesName = _.get(data, `bet.outcomes[${outcomeIndex}].name`);
@@ -158,27 +143,15 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
               {formatToFixed(_.get(data, 'trade.investment_amount'), 0, true)}{' '}
               {TOKEN_DISPLAY_NAME}
             </div>{' '}
-            {showBetName && <>
-              on{' '}
-              {
-                <a
-                  className={'global-link-style'}
-                  target={'_blank'}
-                  // href={`${window.location.origin}/trade/${_.get(
-                  //   event,
-                  //   'slug'
-                  // )}/${_.get(data, 'bet.slug')}`}
-                  href={`${window.location.origin}/trade/${_.get(
-                    event,
-                    'slug'
-                  )}`}
-                  rel="noreferrer"
-                >
-                  <b>{_.get(data, 'bet.market_question')}</b>
-                </a>
-              }{' '}
+            {showBetName && (
+              <>
+                on{' '}
+                <ActivityLink
+                  path={'/trade/' + event?.slug}
+                  text={data.bet?.market_question}
+                />{' '}
               </>
-            }
+            )}
             on <b>{outcomesName}</b>.
           </div>
         );
@@ -190,7 +163,8 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
             <b>{getUserProfileUrl(data)}</b> has cashed out{' '}
             <div className={'global-token-currency'}>
               <b>
-                {formatToFixed(_.get(data, 'amount'), 0, true)} {TOKEN_DISPLAY_NAME}
+                {formatToFixed(_.get(data, 'amount'), 0, true)}{' '}
+                {TOKEN_DISPLAY_NAME}
               </b>
             </div>{' '}
             {gainValueEvent && (
@@ -204,61 +178,88 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
                 ({gainValueEvent})
               </div>
             )}{' '}
-            {showBetName && <>
-              from{' '}
-              <b>
-                <a
-                  className={'global-link-style'}
-                  target={'_blank'}
-                  // href={`${window.location.origin}/trade/${_.get(
-                  //   event,
-                  //   'slug'
-                  // )}/${_.get(data, 'bet.slug')}`}
-                  href={`${window.location.origin}/trade/${_.get(
-                    event,
-                    'slug'
-                  )}}`}
-                  rel="noreferrer"
-                >
-                  <b>{_.get(data, 'bet.market_question')}</b>
-                </a>
-              </b>
-              .
-            </>}
+            {showBetName && (
+              <>
+                from{' '}
+                <ActivityLink
+                  path={'/trade/' + event?.slug}
+                  text={data.bet?.market_question}
+                />
+                .
+              </>
+            )}
           </div>
         );
-      case 'Notification/EVENT_BET_RESOLVED': {
+      case 'Notification/EVENT_BET_RESOLVED':
+      case 'Notification/EVENT_BET_CLOSED': {
         const event = _.get(data, 'event');
         const eventSlug = _.get(event, 'slug');
         const bet = _.get(data, 'bet', []);
         const outcomeIndex = _.get(bet, 'final_outcome');
         const outcomesName = _.get(bet, `outcomes[${outcomeIndex}].name`);
 
-        const ResolveLink = () => (
-          <a
-            className={'global-link-style'}
-            target={'_blank'}
-            // href={`${window.location.origin}/trade/${eventSlug}/${_.get(
-            //   bet,
-            //   'slug'
-            // )}`}
-            href={`${window.location.origin}/trade/${eventSlug}`}
-            rel="noreferrer"
-          >
-            {_.get(bet, 'market_question')}
-          </a>
-        );
-
         return (
           <div>
             Bet{' '}
-            <b>
-              <ResolveLink />
-            </b>{' '}
-            has been resolved with <b>{outcomesName}</b>.
+            <ActivityLink
+              path={'/trade/' + eventSlug}
+              text={bet?.market_question}
+            />{' '}
+            has been{' '}
+            {activity.type === 'Notification/EVENT_BET_CLOSED'
+              ? 'closed'
+              : 'resolved'}{' '}
+            with <b>{outcomesName}</b>.
           </div>
         );
       }
+      case 'Notification/EVENT_BET_DISPUTED': {
+        const user = data.user;
+        const event = data.event;
+
+        return (
+          <div>
+            User{' '}
+            <ActivityLink
+              path={'/user/' + user._id}
+              text={user.username || 'User'}
+            />{' '}
+            has disputed event{' '}
+            <ActivityLink
+              path={'/trade/' + event.slug}
+              text={event.name || 'Event'}
+            />
+            : {data.explanation}
+          </div>
+        );
+      }
+      case 'Notification/EVENT_BET_WAITING_RESOLUTION':
+        return (
+          <div>
+            Event{' '}
+            {showBetName && (
+              <ActivityLink
+                path={'/trade/' + data.event?.slug}
+                text={data.bet?.market_question}
+              />
+            )}{' '}
+            is waiting to be resolved
+          </div>
+        );
+      case 'Notification/EVENT_BET_ACTIVE':
+        return (
+          <div>
+            Event{' '}
+            {showBetName && (
+              <ActivityLink
+                path={'/trade/' + data.event?.slug}
+                text={data.bet?.market_question}
+              />
+            )}{' '}
+            has been activated at{' '}
+            {moment(data.bet?.start_date).format('DD.MM.YYYY HH:mm')}
+          </div>
+        );
       case 'Notification/EVENT_BET_EVALUATED':
         return (
           <div>
@@ -353,14 +354,15 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
           : 'multiplier';
 
         const gamesCurrency = currencyDisplay(data?.gamesCurrency);
-        const stakedAmount =  isPlayMoney ? _.get(data, 'stakedAmountWfair') : _.get(data, 'stakedAmount');
+        const stakedAmount = isPlayMoney
+          ? _.get(data, 'stakedAmountWfair')
+          : _.get(data, 'stakedAmount');
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has lost{' '}
             <div className={'global-token-currency'}>
               <b className={'global-cashout-loss'}>
-                {formatToFixed(stakedAmount, 0, true)}{' '}
-                {gamesCurrency}
+                {formatToFixed(stakedAmount, 0, true)} {gamesCurrency}
               </b>
             </div>{' '}
             at{' '}
@@ -400,8 +402,6 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
         </div>
       </div>
     );
-
-    return null;
   };
 
   return renderMessageContent();

@@ -216,19 +216,22 @@ const Navbar = ({
             }}
           >
             <img src={CoinIcon} alt="medal" className={style.medal} />
-            <p
-              // title={renderBalances()}
-            >
+            <div className={style.balance}>
               {formatToFixed(balance, 0, true)} {currencyDisplay(TOKEN_NAME)}
-            </p>
+            </div>
             <RealMoneyOnly>
-              <span className={classNames(style.infoTooltip, style.hideOnMobile)}>
-                &asymp; {convertAmount(balance, prices[gamesCurrency])} <span className={style.walletEquivalentCurrency}>{gamesCurrency}</span>
+              <span
+                className={classNames(style.infoTooltip, style.hideOnMobile)}
+              >
+                &asymp; {convertAmount(balance, prices[gamesCurrency])}{' '}
+                <span className={style.walletEquivalentCurrency}>
+                  {gamesCurrency}
+                </span>
               </span>
             </RealMoneyOnly>
           </div>
         </span>
-        
+
         <RealMoneyOnly>
           <Button
             theme={ButtonTheme.primaryButtonS}
@@ -238,7 +241,8 @@ const Navbar = ({
               showWalletDepositPopup();
             }}
           >
-            <WalletIconWhite className={style.depositIcon} /><span>Deposit</span>
+            <WalletIconWhite className={style.depositIcon} />
+            <span>Deposit</span>
           </Button>
         </RealMoneyOnly>
 
@@ -251,10 +255,10 @@ const Navbar = ({
               // showWalletDepositPopup();
             }}
           >
-            <WalletIconWhite className={style.depositIcon} /><span>Claim PFAIR</span>
+            <WalletIconWhite className={style.depositIcon} />
+            <span>Claim PFAIR</span>
           </Button>
         </PlayMoneyOnly>
-
       </div>
     );
     return (
@@ -266,55 +270,6 @@ const Navbar = ({
     )
   }
   const renderNavButtons = () => {
-    const leaderboardBtn = (
-      <span
-        className={classNames(style.ranking, style.pillButton, style.hiddenMobile)}
-        onClick={() => toggleOpenDrawer(drawers.leaderboard)}
-        data-tracking-id="menu-leaderboard"
-      >
-        <img src={CoinIcon} alt="medal" className={style.medal} />
-        <p className={style.rankingText}>
-          {isLoggedIn() ? `# ${user.rank}` : 'Leaderboard'}
-        </p>
-      </span>
-    );
-
-    const notificationsBtn = (
-      <div
-        className={style.notificationOverview}
-        onClick={() => toggleOpenDrawer(drawers.notifications)}
-      >
-        <Icon iconType={IconType.bell} className={style.notificationIcon} />
-        {userMessages?.total > 0 && (
-          <div className={style.notificationNew}>
-            <p className={style.notificationNewText}>{userMessages.total}</p>
-          </div>
-        )}
-      </div>
-    );
-
-    const profileBtn = (
-      <div
-        role="button"
-        className={classNames(
-          style.profileContainer,
-          isOpen(drawers.profile) && style.menuOpened
-        )}
-        onClick={() => toggleOpenDrawer(drawers.profile)}
-      >
-        <div
-          role="img"
-          className={style.profile}
-          style={getProfileStyle()}
-        ></div>
-        <Icon
-          className={style.downCaret}
-          iconType={'arrowDown'}
-          iconTheme={'white'}
-        />
-      </div>
-    );
-
     const hamburgerMenuBtn = (
       <Button
         theme={ButtonTheme.secondaryButton}
@@ -354,9 +309,6 @@ const Navbar = ({
     if (isLoggedIn()) {
       return (
         <div className={style.navbarItems}>
-          {/* {leaderboardBtn} */}
-          {/* {notificationsBtn} */}
-          {/* {profileBtn} */}
           {hamburgerMenuBtn}
         </div>
       );
@@ -393,14 +345,10 @@ const Navbar = ({
       >
         <div className={classNames(style.drawerContent)}>
           <div className={style.leaderboardHeadingWrapper}>
-            <Icon
-              iconType={'leaderboard'}
-              className={style.leaderboardIcon}
-            />
-            <p className={style.leaderboardHeading}>
-              Community
-              Leaderboard
-            </p>
+            <Icon iconType={'leaderboard'} className={style.leaderboardIcon} />
+            <div className={style.leaderboardHeading}>
+              Community Leaderboard
+            </div>
             {isLoggedIn() && (
               <div className={style.leaderboardHeadingRank}>
                 <div className={style.leaderboardHeadingRankText}>MY RANK</div>

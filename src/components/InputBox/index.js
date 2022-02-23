@@ -113,7 +113,7 @@ const InputBox = ({
         reference={inputRef}
         disabled={disabled}
         autoFocus={type === 'email'}
-        maxlength={maxlength}
+        maxLength={maxlength}
       />
     );
   };

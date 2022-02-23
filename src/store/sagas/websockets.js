@@ -282,6 +282,7 @@ export function* init() {
             break;
           case 'notification':
           case UserNotificationTypes.BET_RESOLVED:
+          case UserNotificationTypes.BET_CLOSED:
           case UserNotificationTypes.EVENT_BET_CANCELLED:
           case UserNotificationTypes.EVENT_CANCEL:
           case UserNotificationTypes.EVENT_RESOLVE:
