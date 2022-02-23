@@ -234,10 +234,12 @@ const RosiGame = ({
   const renderActivities = () => (
     <Grid item xs={12} md={6}>
       <EventActivitiesTabs
-              activitiesLimit={50}
-              className={styles.activitiesTrackerGamesBlock}
-              preselectedCategory={'game'}
-              gameId={GAME_TYPE_ID}></EventActivitiesTabs>
+        activitiesLimit={50}
+        className={styles.activitiesTrackerGamesBlock}
+        preselectedCategory={'game'}
+        gameId={GAME_TYPE_ID}
+        gameScreen={true}
+      />
     </Grid>
   );
 

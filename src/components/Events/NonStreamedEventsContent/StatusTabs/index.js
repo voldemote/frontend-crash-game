@@ -25,7 +25,7 @@ const StatusTabs = ({ onSelect = () => {}, preselected = TABS.current }) => {
 
   return (
     <div className={styles.statusPicker}>
-      {Object.keys(TABS).map(tabName => (
+      {Object.keys(TABS).map((tabName, index) => (
         <button
           type="button"
           className={classNames(
@@ -33,6 +33,7 @@ const StatusTabs = ({ onSelect = () => {}, preselected = TABS.current }) => {
             activeTab === tabName && styles.tabButtonActive
           )}
           onClick={() => setSelection(tabName)}
+          key={index}
         >
           {tabLabels[tabName]}
         </button>

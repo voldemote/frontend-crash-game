@@ -308,7 +308,7 @@ const BetView = ({
         {evidenceSource && withTitle && (
           <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
         )}
-        <p
+        <div
           className={classNames(
             styles.tradeDesc,
             !isDescShort && !showAllEvidence && styles.hidden,
@@ -317,9 +317,11 @@ const BetView = ({
         >
           {desc}
           {evidenceSource && evidenceDescription && showAllEvidence && (
-            <p className={styles.evidenceDescription}>{evidenceDescription}</p>
+            <div className={styles.evidenceDescription}>
+              {evidenceDescription}
+            </div>
           )}
-        </p>
+        </div>
 
         {((desc && !isDescShort) ||
           (evidenceSource && plainEvidenceDescription)) && (
@@ -508,13 +510,13 @@ const BetView = ({
       const data = (label, value, opts = {}) => (
         <div className={styles.resolutionData}>
           <h3>{label}</h3>
-          <p
-            className={classNames({
+          <div
+            className={classNames(styles.value, {
               [styles.smallText]: opts.smallText,
             })}
           >
             {value}
-          </p>
+          </div>
         </div>
       );
 
@@ -532,8 +534,8 @@ const BetView = ({
               data(
                 'Outcomes',
                 <ul>
-                  {outcomeNames.map(outcome => (
-                    <li>{outcome}</li>
+                  {outcomeNames.map((outcome, index) => (
+                    <li key={index}>{outcome}</li>
                   ))}
                 </ul>
               )}
@@ -617,7 +619,7 @@ const BetView = ({
         >
           {renderLoadingAnimation()}
           {/* {renderMenuContainerWithCurrentBalance()} */}
-          
+
           {renderImage()}
 
           <div
@@ -627,7 +629,7 @@ const BetView = ({
             )}
           >
             <span>{bet.market_question}</span>
-            <p className={styles.betDescription}>{bet.description}</p>
+            <div className={styles.betDescription}>{bet.description}</div>
           </div>
           {renderStateConditionalContent()}
         </div>

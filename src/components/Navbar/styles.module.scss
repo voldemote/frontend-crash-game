@@ -162,17 +162,20 @@
             }
           }
 
-          p {
+          .balance {
             width: 100%;
             min-width: 110px;
             text-align: center;
+            font-size: 16px;
+            padding: 0 10px;
 
             @media (max-width: $screen-xs) {
               min-width: 100px;
             }
           }
+
           &:hover {
-            & p {
+            & .balance {
               font-weight: 600;
             }
           }
@@ -200,10 +203,6 @@
               }
             }
           }
-        }
-
-        p {
-          font-size: 16px;
         }
       }
     }
