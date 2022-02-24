@@ -90,14 +90,8 @@
   }
 
   .categoryList {
-    @media (max-width: $screen-lg) {
-      justify-content: center;
-    }
-
     @media (max-width: $screen-sm) {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      max-width: 500px;
+      justify-content: space-between;
     }
   }
 

@@ -13,11 +13,17 @@ import ApexLegendsImage from '../data/images/Apex Legends-144x192.jpeg';
 import GTAImage from '../data/images/Grand Theft Auto V-144x192.jpeg';
 import CSImage from '../data/images/Counter-Strike_ Global Offensive-144x192.jpeg';
 
+import IconEventAll from '../data/icons/icon-event-all.svg';
+import IconEventSports from '../data/icons/icon-event-sports.svg';
+import IconEventPolitics from '../data/icons/icon-event-politics.svg';
+import IconEventNFT from '../data/icons/icon-event-nft.svg';
+import IconEventCrypto from '../data/icons/icon-event-crypto.svg';
+
 export const EVENT_CATEGORIES = [
   {
     value: 'all',
     label: 'All',
-    image: AllEventImageIcon,
+    image: IconEventAll,
     isActive: true,
     type: 'icon',
     disabled: false,
@@ -25,35 +31,35 @@ export const EVENT_CATEGORIES = [
   {
     value: 'Gaming / E-Sports',
     label: 'Gaming',
-    image: ControllerImageIcon,
+    image: IconEventSports,
     isActive: false,
     type: 'icon',
     disabled: false,
   },
   {
     value: 'Sports',
-    image: SportsImageIcon,
+    image: IconEventSports,
     isActive: false,
     type: 'icon',
     disabled: false,
   },
   {
     value: 'Politics',
-    image: PoliticsImageIcon,
+    image: IconEventPolitics,
     isActive: false,
     type: 'icon',
     disabled: false,
   },
   {
     value: 'Sick Society',
-    image: JokerImageIcon,
+    image: IconEventAll,
     isActive: false,
     type: 'icon',
     disabled: false,
   },
   {
     value: 'Trading',
-    image: TradingImageIcon,
+    image: IconEventAll,
     isActive: false,
     type: 'icon',
     disabled: false,
@@ -61,7 +67,7 @@ export const EVENT_CATEGORIES = [
   {
     value: 'Wallfair Bets',
     label: 'Wallfair',
-    image: CryptoImageIcon,
+    image: IconEventCrypto,
     isActive: false,
     type: 'icon',
     disabled: false,
