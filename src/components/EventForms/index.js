@@ -71,7 +71,6 @@ const EventForms = ({
             })
           );
           editEventSuccess();
-          showPopup(PopupTheme.eventConfirmation, {event: res});
         })
         .catch(() => {
           editEventFail();
