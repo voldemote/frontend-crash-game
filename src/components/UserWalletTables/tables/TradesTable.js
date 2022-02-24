@@ -191,7 +191,7 @@ const TradesTable = ({
           </Grid>
           <Grid item xs>
             <p className={styles.title}>
-              {allowCashout ? 'OUTCOME TOKENS' : 'TRANSACTION TYPE'}
+              {allowCashout ? 'POTENTIAL REWARD' : 'TRANSACTION TYPE'}
             </p>
           </Grid>
           {allowCashout && (

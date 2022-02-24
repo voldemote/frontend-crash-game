@@ -253,41 +253,6 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
           <img
             className={styles.backgroundImg}
             alt=""
-            src={BackgroundSecond}
-          />
-          <div className={styles.firstContainer}>
-            <div>
-              <h2>TRADE ON<br/><span className={styles.secondTitle}>FUN EVENTS!</span></h2>
-              <p className={styles.description}>
-                Share the events with your friends or community. <br/>
-                The best and most interesting events will be rewarded.
-              </p>
-              <div className={styles.buttonWrapper}>
-                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemSecondBanner}>Discover all Events</Button>
-              </div>
-            </div>
-          </div>
-          <div className={styles.secondContainer}>
-            {render3BetCards()}
-          </div>
-          <div className={styles.bottomBannerContainner}>
-            {notifications && notifications.slice(0, 5).map(activity => {
-              return (
-                <BottomBanner
-                  title={`${activity.data?.user?.username}`}
-                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
-                />
-              )
-            })}
-          </div>
-        </div>
-        
-      </div>
-      <div className={styles.container}>
-        <div className={styles.topContainer}>
-          <img
-            className={styles.backgroundImg}
-            alt=""
             src={BackgroundThird}
           />
           <div className={styles.firstContainer}>
@@ -317,6 +282,41 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
             })}
           </div> */}
         </div>
+      </div>
+      <div className={styles.container}>
+        <div className={styles.topContainer}>
+          <img
+            className={styles.backgroundImg}
+            alt=""
+            src={BackgroundSecond}
+          />
+          <div className={styles.firstContainer}>
+            <div>
+              <h2>TRADE ON<br/><span className={styles.secondTitle}>FUN EVENTS!</span></h2>
+              <p className={styles.description}>
+                Share the events with your friends or community. <br/>
+                The best and most interesting events will be rewarded.
+              </p>
+              <div className={styles.buttonWrapper}>
+                <Button className={styles.button} theme={ButtonTheme.secondaryButton} onClick={onClickItemSecondBanner}>Discover all Events</Button>
+              </div>
+            </div>
+          </div>
+          <div className={styles.secondContainer}>
+            {render3BetCards()}
+          </div>
+          <div className={styles.bottomBannerContainner}>
+            {notifications && notifications.slice(0, 5).map(activity => {
+              return (
+                <BottomBanner
+                  title={`${activity.data?.user?.username}`}
+                  price={`${Math.floor(activity.data?.winToken)} ${currencyDisplay(TOKEN_NAME)}`}
+                />
+              )
+            })}
+          </div>
+        </div>
+        
       </div>
     </Carousel>
     )
