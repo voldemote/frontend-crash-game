@@ -40,7 +40,7 @@ export const trackNonstreamedEventPlaceTrade = dataLayerProps => {
     dataLayer: {
       ...dataLayerProps,
       pageUrl: window.location.href,
-      event: 'nonstreamedEventPlaceTrade',
+      event: 'placeBet',
     },
   };
 
@@ -76,6 +76,17 @@ export const trackSignup = ({ method, ...dataLayerProps }) => {
       ...dataLayerProps,
       method,
       event: 'signUp',
+    },
+  };
+
+  TagManager.dataLayer(tagManagerArgs);
+};
+
+export const trackSignupPhone = ({...dataLayerProps }) => {
+  const tagManagerArgs = {
+    dataLayer: {
+      ...dataLayerProps,
+      event: 'signUpPhone',
     },
   };
 
