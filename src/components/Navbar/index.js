@@ -423,22 +423,52 @@ const Navbar = ({
   };
 
   const renderTopBar = () => {
-    if (!isLoggedIn()) {
+    
       return (
         <PlayMoneyOnly>
-          <div className={classNames(style.topBar)}>
-            <span>+++ SPECIAL OFFER! +++</span>
-            <span className={style.gift}>🎁</span>
-            <span>Sign up now and get 100 PFAIR for free!</span>
-            <span className={style.gift}>🎁</span>
-            <div>
-              <button onClick={() => startOnboardingFlow()}>Sign up</button>
-              <Icon className={style.icon} iconType={IconType.arrowRight} />
-            </div>
-          </div>
+          {!isLoggedIn() ? 
+            <>
+              <div className={classNames(style.topBar)}>
+                <span>+++ SPECIAL OFFER! +++</span>
+                <span className={style.gift}>🎁</span>
+                <span>Get ahead of others. Sign up now and get 100 PFAIR for free!</span>
+                <span className={style.gift}>🎁</span>
+                <div>
+                  <button onClick={() => startOnboardingFlow()}>Sign up</button>
+                  <Icon className={style.icon} iconType={IconType.arrowRight} />
+                </div>
+              </div>
+              <div className={classNames(style.topBarMobile)}>
+                <span className={style.gift}>🎁</span>
+                <span>Sign up and get 100 PFAIR for free!</span>
+                <div>
+                  <button onClick={() => startOnboardingFlow()}>Sign up</button>
+                  <Icon className={style.icon} iconType={IconType.arrowRight} />
+                </div>
+              </div>
+            </>
+          :
+            <>
+              <div className={classNames(style.topBar)}>
+                {/* <span>+++ SPECIAL OFFER! +++</span> */}
+                {/* <span className={style.gift}>🎁</span> */}
+                <span>Join our discord to engage the community, get prizes and more!</span>
+                {/* <span className={style.gift}>🎁</span> */}
+                <div>
+                  <a href={'https://discord.gg/VjYUYBKhTc'} target="_blank" rel="noreferrer">Join</a>
+                  <Icon className={style.icon} iconType={IconType.arrowRight} />
+                </div>
+              </div>
+              <div className={classNames(style.topBarMobile)}>
+                <div>
+                  <a href={'https://discord.gg/VjYUYBKhTc'} target="_blank" rel="noreferrer">Join our community on discord</a>
+                  <Icon className={style.icon} iconType={IconType.arrowRight} />
+                </div>
+              </div>
+            </>
+          }
         </PlayMoneyOnly>
       )
-    }
 
     return (
       <RealMoneyOnly>
@@ -456,6 +486,16 @@ const Navbar = ({
             <Icon className={style.icon} iconType={IconType.arrowRight} />
           </div>
         </div>
+        <div className={classNames(style.topBarMobile)}>
+             <span>No crypto? No problem!</span>
+            <div>
+              <button onClick={() => {
+                history.push(Routes.wallet);
+                showWalletDepositPopup();
+              }}>Buy WFAIR</button>
+              <Icon className={style.icon} iconType={IconType.arrowRight} />
+            </div>
+          </div>
       </RealMoneyOnly>
     )
   }

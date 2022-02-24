@@ -39,6 +39,70 @@
       height: 14px;
     }
 
+    a,
+    button {
+      width: fit-content;
+      text-decoration: underline;
+      cursor: pointer;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: $colorWhite;
+    }
+
+    & > div {
+      white-space: nowrap;
+      display: flex;
+      column-gap: 3px;
+      padding-left: 5px;
+    }
+
+    & > span {
+      display: flex;
+      width: fit-content;
+      letter-spacing: 0.5px;
+      padding-right: 5px;
+    }
+
+    span.icon {
+      display: block;
+      padding-top: 2px;
+
+      svg {
+        height: 10px;
+        & > * {
+          fill: $colorWhite;
+        }
+      }
+    }
+  }
+
+  .topBarMobile {
+    display: none;
+    background: $colorBlue;
+    width: 100%;
+    height: 30px;
+    color: $colorWhite;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+    font-family: $fontDMSans;
+    column-gap: 10px;
+
+    @media (max-width: $screen-sm) {
+      display: flex;
+    }
+
+    & > svg,
+    & > img {
+      width: auto;
+      height: 14px;
+    }
+
+    a,
     button {
       width: fit-content;
       text-decoration: underline;

@@ -28,6 +28,7 @@ import BuyWFAIRWidget from 'components/BuyWFAIRWidget';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
 import { LOGGED_IN } from 'constants/AuthState';
 import { getMarketEvents } from 'api';
+import { isMobileOnly } from 'react-device-detect';
 
 const NonStreamedEventsContent = ({
   categories,
@@ -50,7 +51,7 @@ const NonStreamedEventsContent = ({
   const [status, setStatus] = useState('current');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(isMobileOnly ? 10 : 40);
 
   // const { fetchFilteredEvents, resetDefaultParamsValues } =
   //   useMappedActions(eventType);

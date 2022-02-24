@@ -9,6 +9,7 @@ import StepBar from 'components/StepBar';
 import Routes from 'constants/Routes';
 import CodeInputFields from 'components/CodeInputFields';
 import { verifySms, sendSms} from 'api';
+import { trackSignupPhone } from 'config/gtm';
 
 const VerifyPhonePopup = ({
   hidePopup = () => {},
@@ -44,6 +45,8 @@ const VerifyPhonePopup = ({
           verified:true,
           initialOnboarding,
         });
+        trackSignupPhone();
+
         hidePopup();
       } else {
         setErrorMessage(
