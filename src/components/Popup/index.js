@@ -26,6 +26,7 @@ import DialogActionPopup from '../DialogActionPopup';
 import DialogActions from 'components/DialogActionPopup/DialogActions';
 import LotteryGamePopup from '../LotteryGamePopup';
 import EventForms from '../EventForms';
+import EventConfirmationView from '../EventConfirmationView';
 import AuthenticationPopup from '../AuthenticationPopup';
 import ViewImagePopup from 'components/ViewImagePopup';
 import ResolveBetPopup from 'components/ResolveBetPopup';
@@ -102,6 +103,9 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
     }
 
     switch (type) {
+      case PopupTheme.eventConfirmation:
+        return <EventConfirmationView hidePopup={hidePopup} options={options}/>;
+
       case PopupTheme.betApprove:
         return <BetApproveView options={options} />;
 

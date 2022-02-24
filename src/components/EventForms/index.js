@@ -5,6 +5,8 @@ import styles from './styles.module.scss';
 import { connect } from 'react-redux';
 import BetScreen from './BetScreen';
 import { EventActions } from 'store/actions/event';
+import { PopupActions } from 'store/actions/popup';
+import PopupTheme from 'components/Popup/PopupTheme';
 import { createMarketEvent, editMarketEvent } from 'api';
 import EventScreen from './EventScreen';
 import OutcomesScreen from './OutcomesScreen';
@@ -15,6 +17,7 @@ const EventForms = ({
   event = null,
   bet = null,
   step = 0,
+  showPopup,
   createEventSuccess,
   createEventFail,
   editEventSuccess,
@@ -89,6 +92,7 @@ const EventForms = ({
           );
           createEventSuccess();
           trackCreateEvent({ slug: res.slug });
+          showPopup(PopupTheme.eventConfirmation, {event: res});
         })
         .catch(() => {
           createEventFail();
@@ -144,6 +148,14 @@ const EventForms = ({
 
 const mapDispatchToProps = dispatch => {
   return {
+    showPopup: (popupType, options) => {
+      dispatch(
+        PopupActions.show({
+          popupType,
+          options,
+        })
+      );
+    },
     createEventSuccess: () => {
       dispatch(EventActions.createEventSuccess());
     },
