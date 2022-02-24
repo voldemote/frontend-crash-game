@@ -138,6 +138,14 @@
       z-index: 50;
     }
 
+    &.popup-position-bottom {
+      // bottom: 32px;
+      top: 32px;
+      left: -355px;
+      right: auto;
+      z-index: 50;
+    }
+
     &.popup-position-right {
       right: auto;
       left: 0;
@@ -154,6 +162,10 @@
 
       &.popup-position-top {
         left: -110px;
+      }
+
+      &.popup-position-bottom {
+        left: -250px;
       }
     }
   }

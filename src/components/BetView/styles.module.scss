@@ -165,6 +165,12 @@
       padding-top: 3px;
     }
 
+    .eventTitle {
+      @media (max-width: $screen-sm) {
+        display: none;
+      }
+    }
+
     .betDescription {
       font-size: 15px;
       color: $colorGray;
