@@ -69,12 +69,34 @@
 
       @media (max-width: $screen-sm) {
         flex-direction: column;
-        padding: 0 0 20px;
+        padding: 10px 0;
       }
 
       .backButtonTitle {
+        align-self: flex-start;
+
+        @media (max-width: $screen-sm) {
+          margin-bottom: 15px;
+        }
+
+        .titleLabelMobile {
+          display: none;
+
+          @media (max-width: $screen-sm) {
+            display: block;
+          }
+        }
+
+        .titleLabel {
+          display: block;
+
+          @media (max-width: $screen-sm) {
+            display: none;
+          }
+        }
+
         & > button {
-          height: 30px;
+          // height: 30px;
           text-align: left;
           cursor: pointer;
           outline: none;
@@ -84,8 +106,14 @@
 
           display: flex;
           align-items: center;
+          justify-content: flex-start;
+
+          & > svg {
+            width: 20px;
+          }
 
           span {
+            max-width: 95%;
             color: white;
             padding-left: 10px;
             font-weight: bold;
@@ -99,9 +127,11 @@
         align-items: center;
 
         @media (max-width: $screen-sm) {
-          flex-direction: column;
-          row-gap: 15px;
-          padding: 20px 0 15px;
+          // flex-direction: column;
+          width: 100%;
+          justify-content: space-between;
+          gap: 15px;
+          // padding: 20px 0 15px;
         }
       }
     }
@@ -209,13 +239,16 @@
     flex: 1;
     margin-left: -1rem;
     margin-right: -1rem;
-    margin-bottom: 40px;
     z-index: 1;
 
     @media (max-width: $screen-md) {
       margin-left: -1.7rem;
       margin-right: -1.7rem;
+      margin-bottom: 0px;
       flex-direction: column;
+    }
+    @media (max-width: $screen-sm) {
+      margin-bottom: 20px;
     }
     .columnFull {
       width: 100%;
@@ -665,14 +698,20 @@
   column-gap: 10px;
   padding: 6px 16px 6px 0;
 
+  @media (max-width: $screen-sm) {
+    flex-direction: column;
+    // align-items: center;
+    padding: 6px 0;
+  }
+
   .timerLabel {
     color: $colorWhite;
     font-family: $fontDMSans;
     font-weight: 500;
     font-size: 14px;
-    @media (max-width: $screen-sm) {
-      font-size: 14px;
-    }
+    // @media (max-width: $screen-sm) {
+    //   font-size: 20px;
+    // }
   }
 
   .timerParts {
@@ -688,11 +727,17 @@
       .timePartValue {
         font-weight: 500;
         font-size: 16px;
+        // @media (max-width: $screen-sm) {
+        //   font-size: 25px;
+        // }
       }
       .timePartName {
         font-weight: 400;
         font-size: 12px;
         color: $colorWhite50;
+        // @media (max-width: $screen-sm) {
+        //   font-size: 14px;
+        // }
       }
     }
   }

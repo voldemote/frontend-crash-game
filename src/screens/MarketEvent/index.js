@@ -115,7 +115,7 @@ const MarketEvent = ({
             bookmarkEventCancel(event?.id).then(() => setIsFavorite(false));
           }}
         />
-        <Share />
+        <Share popupPosition={'bottom'} skipCalculatePos={true} />
         <BetActionsMenu event={event} bet={event?.bet} />
       </div>
     );
@@ -206,7 +206,10 @@ const MarketEvent = ({
                     }
                   >
                     <ArrowLeft />
-                    <span>Back to events</span>
+
+                    <span className={styles.titleLabelMobile}>{event.name}</span>
+                    <span className={styles.titleLabel}>Back to events</span>
+
                   </button>
                 </div>
                 <div className={styles.timerShareContainer}>
@@ -215,8 +218,6 @@ const MarketEvent = ({
                 </div>
               </div>
             </div>
-
-            <EventShareWidget />
 
             <div className={styles.row}>
               <div className={styles.columnLeft}>
@@ -248,6 +249,7 @@ const MarketEvent = ({
                 )}
               </div>
             </div>
+            <EventShareWidget />
             <div className={styles.row}>
               <div className={styles.columnFull}>
                 {/* {matchMediaMobile && (

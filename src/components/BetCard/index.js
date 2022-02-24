@@ -33,7 +33,7 @@ const BetCard = ({
     [BetState.closed]: 'Event closed',
     [BetState.canceled]: 'Event cancelled',
     [BetState.resolved]: 'Event resolved',
-    [BetState.waitingResolution]: 'Event waiting for resoultion',
+    [BetState.waitingResolution]: 'Event waiting for resolution',
   }
 
   const [timeLeft, setTimeLeft] = useState(
