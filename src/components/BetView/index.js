@@ -551,7 +551,7 @@ const BetView = ({
           {isResolved && (
             <AuthedOnly>
               <div className={styles.disputeButtonContainer}>
-                {!disputes.find(d => d.user_id === auth.userId) && !isAdmin && (
+                {!disputes.find(d => d.user_id === auth.userId) && !isAdmin && !isCreator && (
                   <ButtonSmall
                     text="Dispute"
                     butonTheme={ButtonSmallTheme.red}
