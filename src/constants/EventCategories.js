@@ -19,7 +19,7 @@ import IconEventPolitics from '../data/icons/icon-event-politics.svg';
 import IconEventNFT from '../data/icons/icon-event-nft.svg';
 import IconEventCrypto from '../data/icons/icon-event-crypto.svg';
 
-export const EVENT_CATEGORIES = [
+export const EVENT_CATEGORIES_SECOND = [
   {
     value: 'all',
     label: 'All',
@@ -68,6 +68,61 @@ export const EVENT_CATEGORIES = [
     value: 'Wallfair Bets',
     label: 'Wallfair',
     image: IconEventCrypto,
+    isActive: false,
+    type: 'icon',
+    disabled: false,
+  },
+];
+
+export const EVENT_CATEGORIES = [
+  {
+    value: 'all',
+    label: 'All',
+    image: AllEventImageIcon,
+    isActive: true,
+    type: 'icon',
+    disabled: false,
+  },
+  {
+    value: 'Gaming / E-Sports',
+    label: 'Gaming',
+    image: ControllerImageIcon,
+    isActive: false,
+    type: 'icon',
+    disabled: false,
+  },
+  {
+    value: 'Sports',
+    image: SportsImageIcon,
+    isActive: false,
+    type: 'icon',
+    disabled: false,
+  },
+  {
+    value: 'Politics',
+    image: PoliticsImageIcon,
+    isActive: false,
+    type: 'icon',
+    disabled: false,
+  },
+  {
+    value: 'Sick Society',
+    image: JokerImageIcon,
+    isActive: false,
+    type: 'icon',
+    disabled: false,
+  },
+  {
+    value: 'Trading',
+    image: TradingImageIcon,
+    isActive: false,
+    type: 'icon',
+    disabled: false,
+  },
+  {
+    value: 'Wallfair Bets',
+    label: 'Wallfair',
+    image: CryptoImageIcon,
     isActive: false,
     type: 'icon',
     disabled: false,
