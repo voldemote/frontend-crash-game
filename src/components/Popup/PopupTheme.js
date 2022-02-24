@@ -20,6 +20,7 @@ export default {
   pulloutApprove: 'pulloutApprove',
   lotteryGameAnswered: 'lotteryGameAnswered',
   eventForms: 'eventForms',
+  eventConfirmation: 'eventConfirmation',
   deleteEvent: 'deleteEvent',
   disableSharing: 'disableSharing',
   viewImage: 'viewImage',
