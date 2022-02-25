@@ -50,6 +50,7 @@ import PrivacyPolicy from 'screens/PrivacyPolicy';
 import PrivateRoute from 'components/PrivateRoute';
 import LandingPageV2 from 'screens/LandingPageV2';
 import PlayMoneyWallet from 'screens/PlayMoneyWallet';
+import Winners from 'screens/Winners';
 
 const { store, persistor } = configStore();
 
@@ -132,6 +133,7 @@ const App = () => {
               <Route exact path={Routes.elonWallpaper} component={ElonWallPaper} />
               <Route exact path={Routes.rosiGame} component={RosiGame} />
               <Route exact path={Routes.activities} component={Activities} />
+              <Route exact path={Routes.winners} component={Winners} />
               <Route path={Routes.verify} component={EmailVerification} />
               <Route path={Routes.resetPassword} component={ResetPassword} />
               <Route exact path={Routes.user} component={UserProfile} />
