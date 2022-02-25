@@ -61,4 +61,5 @@ export default {
   privacy: '/privacypolicy',
   imprint: '/imprint',
   oauth: '/oauth/:provider',
+  winners: '/winners',
 };
