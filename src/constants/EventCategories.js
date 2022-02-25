@@ -18,6 +18,9 @@ import IconEventSports from '../data/icons/icon-event-sports.svg';
 import IconEventPolitics from '../data/icons/icon-event-politics.svg';
 import IconEventNFT from '../data/icons/icon-event-nft.svg';
 import IconEventCrypto from '../data/icons/icon-event-crypto.svg';
+import IconEventGaming from '../data/icons/icon-event-gaming.svg';
+import IconEventStar from '../data/icons/icon-event-star.svg';
+import IconEventTrading from '../data/icons/icon-event-trading.svg';
 
 export const EVENT_CATEGORIES = [
   {
@@ -31,7 +34,7 @@ export const EVENT_CATEGORIES = [
   {
     value: 'Gaming / E-Sports',
     label: 'Gaming',
-    image: IconEventSports,
+    image: IconEventGaming,
     isActive: false,
     type: 'icon',
     disabled: false,
@@ -52,14 +55,14 @@ export const EVENT_CATEGORIES = [
   },
   {
     value: 'Sick Society',
-    image: IconEventAll,
+    image: IconEventStar,
     isActive: false,
     type: 'icon',
     disabled: false,
   },
   {
     value: 'Trading',
-    image: IconEventAll,
+    image: IconEventTrading,
     isActive: false,
     type: 'icon',
     disabled: false,
