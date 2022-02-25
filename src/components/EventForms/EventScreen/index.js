@@ -136,6 +136,7 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
 
       <FormGroup className={fgClasses(categoryErrors)}>
         <InputLabel
+          className={styles.inputLabel}
           infoboxText={"Select a category which best relates to the event you are adding"}
         >
           Category
@@ -152,6 +153,7 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
 
       <FormGroup className={fgClasses(tagsErrors)}>
         <InputLabel
+          className={styles.inputLabel}
           infoboxText={"Add tags relates to the event you are adding. e.g.: reality show, NFT, ..."}
         >
           Tags

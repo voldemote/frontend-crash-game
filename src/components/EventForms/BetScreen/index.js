@@ -111,6 +111,7 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
 
       <FormGroup className={fgClasses(startDateErrors)}>
         <InputLabel
+          className={styles.inputLabel}
           infoboxText={"Add the date of start of the trading phase. A date placed in the future will turn the event as an \"Upcoming Event\"."}
         >
           Start Date &amp; Time
@@ -126,6 +127,7 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
 
       <FormGroup className={fgClasses(endDateErrors)}>
         <InputLabel
+          className={styles.inputLabel}
           infoboxText={"The date and time when the betting phase should close. Depending on the case, it's recommended to set a date/time right before the real event starts."}
         >
           End Date &amp; Time
@@ -142,7 +144,7 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
       <FormGroup className={fgClasses(evidenceSourceErrors)}>
         <InputLabel 
           infoboxText={"The single source of truth that shows the result of the event. The more precise it is, the less the chance to have the event outcome disputed by users in the end. e.g. URL to a website, news, streaming, TV show, etc."}
-        className={styles.inputLabel}
+          className={styles.inputLabel}
         >
           Evidence Source
         </InputLabel>
