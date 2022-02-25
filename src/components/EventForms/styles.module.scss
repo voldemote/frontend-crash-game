@@ -42,7 +42,9 @@
 
 .formHeader {
   margin-bottom: 20px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
 }
 
 .backIcon {

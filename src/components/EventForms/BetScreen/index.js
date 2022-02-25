@@ -91,7 +91,12 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
       <h2 className={styles.formHeader}>Bet Settings</h2>
 
       <FormGroup className={fgClasses(descriptionErrors)}>
-        <InputLabel className={styles.inputLabel}>Bet Description</InputLabel>
+        <InputLabel 
+          infoboxText={"Add more information about the event. e.g.: Choose which team will win the match on DD/MM/YYYY 00:00 GMT."}
+          className={styles.inputLabel}
+        >
+          Bet Description
+        </InputLabel>
         <InputBox
           type="text"
           className={styles.inputBox}
@@ -105,7 +110,11 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(startDateErrors)}>
-        <InputLabel>Start Date & Time</InputLabel>
+        <InputLabel
+          infoboxText={"Add the date of start of the trading phase. A date placed in the future will turn the event as an \"Upcoming Event\"."}
+        >
+          Start Date &amp; Time
+        </InputLabel>
         <DateTimePicker
           value={startDate}
           className={styles.datePickerInput}
@@ -116,7 +125,11 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(endDateErrors)}>
-        <InputLabel>End Date & Time</InputLabel>
+        <InputLabel
+          infoboxText={"The date and time when the betting phase should close. Depending on the case, it's recommended to set a date/time right before the real event starts."}
+        >
+          End Date &amp; Time
+        </InputLabel>
         <DateTimePicker
           value={endDate}
           className={styles.datePickerInput}
@@ -127,7 +140,12 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(evidenceSourceErrors)}>
-        <InputLabel className={styles.inputLabel}>Evidence Source</InputLabel>
+        <InputLabel 
+          infoboxText={"The single source of truth that shows the result of the event. The more precise it is, the less the chance to have the event outcome disputed by users in the end. e.g. URL to a website, news, streaming, TV show, etc."}
+        className={styles.inputLabel}
+        >
+          Evidence Source
+        </InputLabel>
         <InputBox
           type="text"
           className={styles.inputBox}
@@ -141,7 +159,10 @@ const BetScreen = ({ bet = null, proceedBet, isNew }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(evidenceDescriptionErrors)}>
-        <InputLabel className={styles.inputLabel}>
+        <InputLabel 
+          infoboxText={"Describe the exact context, conditions, date and time for the event to be resolved. The more precise you describe it, the lower is the chance to have the outcome challenged and disputed by users in the end."}
+          className={styles.inputLabel}
+        >
           Evidence Description
         </InputLabel>
         <InputBox

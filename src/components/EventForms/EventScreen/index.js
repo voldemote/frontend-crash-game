@@ -99,7 +99,10 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
     <>
       <h2 className={styles.formHeader}>Event Settings</h2>
       <FormGroup className={fgClasses(nameErrors)}>
-        <InputLabel className={styles.inputLabel}>Market Question</InputLabel>
+        <InputLabel 
+          className={styles.inputLabel} 
+          infoboxText={"Add the question for your event. e.g. \"Who will win the match on DD/MM/YYYY?\""}
+        >Market Question</InputLabel>
         <InputBox
           type="text"
           className={styles.inputBox}
@@ -114,7 +117,10 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(preview_image_url_errors)}>
-        <InputLabel className={styles.inputLabel}>Bet Image URL</InputLabel>
+        <InputLabel 
+          className={styles.inputLabel}
+          infoboxText={"Copy and paste the image URL you wish to show as the image for this event. e.g.: https://path.to/image.jpg"}
+        >Bet Image URL</InputLabel>
         <InputBox
           type="text"
           className={styles.inputBox}
@@ -129,7 +135,11 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(categoryErrors)}>
-        <InputLabel>Category</InputLabel>
+        <InputLabel
+          infoboxText={"Select a category which best relates to the event you are adding"}
+        >
+          Category
+        </InputLabel>
         <Select
           value={category}
           handleSelect={setCategory}
@@ -141,7 +151,11 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(tagsErrors)}>
-        <InputLabel>Tags</InputLabel>
+        <InputLabel
+          infoboxText={"Add tags relates to the event you are adding. e.g.: reality show, NFT, ..."}
+        >
+          Tags
+        </InputLabel>
         <Tags
           tags={tags}
           onTagChange={handleTagChange}
