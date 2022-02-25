@@ -122,7 +122,7 @@ const Winners = (
   }
 
   return (
-    <BaseContainerWithNavbar withPaddingTop={true} carouselType='landingpage'>
+    <BaseContainerWithNavbar withPaddingTop={true}>
       {renderHeader()}
       
       <div className={styles.gainContainer}>
