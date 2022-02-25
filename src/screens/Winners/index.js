@@ -19,6 +19,7 @@ import PopupTheme from 'components/Popup/PopupTheme';
 import { dataLayerPush } from 'config/gtm';
 import GainBanner from 'components/GainBanner';
 import Button from 'components/Button';
+import FAQ from 'components/FAQ';
 
 const Winners = (
   authState,
@@ -75,7 +76,7 @@ const Winners = (
       </div>
     )
   }
-  const renderWinners = () => {
+  const renderWinnersConditions = () => {
     return (
       <div className={styles.winnerContainer}>
         <span className={styles.title}>The 3 Winners</span>
@@ -90,7 +91,7 @@ const Winners = (
     )
   }
 
-  const renderWinner = () => {
+  const renderHeader = () => {
     return (
       <div className={styles.container}>
         <div className={styles.topContainer}>
@@ -113,7 +114,7 @@ const Winners = (
             </div>
           </div>
           <div className={styles.secondContainer}>
-            {renderWinners()}
+            {renderWinnersConditions()}
           </div>
         </div>
       </div>
@@ -122,7 +123,7 @@ const Winners = (
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true} carouselType='landingpage'>
-      {renderWinner()}
+      {renderHeader()}
       
       <div className={styles.gainContainer}>
         <GainBanner
@@ -131,6 +132,8 @@ const Winners = (
           handleClickCreateEvent={handleClickCreateEvent}
         />
       </div>
+
+      <FAQ />
     </BaseContainerWithNavbar>
   );
 };
