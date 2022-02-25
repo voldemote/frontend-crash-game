@@ -14,8 +14,8 @@ const apiBackendPath = process.env.REACT_APP_BACKEND_URL || 'https://staging-api
 // set apiEndpoints which you want to get data from and make them dynamic
 //ACTIVE,RESOLVED,CANCELLED,CLOSED,WAITING_RESOLUTION,DISPUTED;
 const listPaths = [
-  'events/market-events?category=all&statuses=ACTIVE',
-  'events/market-events?category=all&statuses=RESOLVED,CANCELLED,CLOSED,WAITING_RESOLUTION,DISPUTED',
+  'events/market-events?category=all&statuses=ACTIVE&limit=200',
+  'events/market-events?category=all&statuses=RESOLVED,CANCELLED,CLOSED,WAITING_RESOLUTION,DISPUTED&limit=200',
 ];
 const listPathForUser = 'api/user/';
 
@@ -36,6 +36,7 @@ appendRoutes(apiEventsPath, listPaths).then(meta => {
   app.get('/trade/:eventSlug?/:betSlug?', (req, res) => {
     appendRoutes(apiEventsPath, listPaths).then(updatedMeta => {
       const indexFile = fs.readFileSync(indexPath, 'utf8');
+      console.log(updatedMeta);
       let data = updatedMeta[req.path] ? updatedMeta[req.path] : meta['/'];
       res.send(replaceMeta(indexFile, data));
     }).catch(err => {

@@ -26,6 +26,7 @@ import DialogActionPopup from '../DialogActionPopup';
 import DialogActions from 'components/DialogActionPopup/DialogActions';
 import LotteryGamePopup from '../LotteryGamePopup';
 import EventForms from '../EventForms';
+import EventConfirmationView from '../EventConfirmationView';
 import AuthenticationPopup from '../AuthenticationPopup';
 import ViewImagePopup from 'components/ViewImagePopup';
 import ResolveBetPopup from 'components/ResolveBetPopup';
@@ -80,7 +81,11 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       PopupTheme.newEvent ||
       PopupTheme.editEvent ||
       PopupTheme.newBet ||
-      PopupTheme.editBet
+      PopupTheme.editBet ||
+      PopupTheme.eventForms ||
+      PopupTheme.eventDetails ||
+      PopupTheme.phoneVerification ||
+      PopupTheme.phoneNumber
     )
       return;
     hidePopup();
@@ -98,6 +103,9 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
     }
 
     switch (type) {
+      case PopupTheme.eventConfirmation:
+        return <EventConfirmationView hidePopup={hidePopup} options={options}/>;
+
       case PopupTheme.betApprove:
         return <BetApproveView options={options} />;
 
@@ -253,9 +261,10 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
       case PopupTheme.ban:
         return <BanPopup banData={options?.banData} />;
       case PopupTheme.phoneNumber:
-        return <PhonePopup />;
+        return <PhonePopup initialOnboarding={options?.initialOnboarding} />;
       case PopupTheme.phoneVerification:
-        return <VerifyPhonePopup />;
+        const initialOnboarding = _.get(options, 'initialOnboarding', true);
+        return <VerifyPhonePopup initialOnboarding={initialOnboarding} />;
       case PopupTheme.disputes:
         return <DisputesPopup disputes={options?.disputes} />
     }

@@ -5,18 +5,37 @@ import { useEffect, useState } from 'react';
 export function useEventsFilter(
   statuses,
   category = 'all',
+  page,
+  random = false,
+  limit = 12,
+  name,
+  orderBy,
+  order
 ) {
 
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
+    if (getMarketEvents) {
+      getMarketEvents(
+        category,
+        !statuses ? [BetState.active] : statuses,
+        page,
+        limit,
+        name,
+        orderBy,
+        order
+      ).then(res => {
+        if (random) {
+          const randomIndex = Math.floor(Math.random() * res.events.length);
+          const randomEvent = res.events[randomIndex];
+          setEvents([randomEvent]);
+          return;
+        }
 
-    getMarketEvents(
-      category,
-      !statuses ? [BetState.active] : statuses,
-    ).then(res => {
-      setEvents(res);
-    });
+        setEvents(res.events);
+      });
+    }
   }, []);
 
   return { events };

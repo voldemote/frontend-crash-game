@@ -123,7 +123,7 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
           setValue={e => {
             set_preview_image_url(e.trim());
           }}
-          maxlength="100"
+          maxlength="300"
         />
         {!formValid && <InputError errors={preview_image_url_errors} />}
       </FormGroup>

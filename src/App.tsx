@@ -61,6 +61,39 @@ const realMoneyOnly = process.env.REACT_APP_PLAYMONEY !== 'true';
 const App = () => {
   const [isLoading, setLoading] = useState(true);
 
+  const handleRefPersistent = () => {
+    const locationSearch = window.location.search;
+    const urlParams = new URLSearchParams(locationSearch);
+    const ref = urlParams.get('ref');
+
+    if (ref) {
+      console.log(`persisting referral id ${ref}`);
+      localStorage.setItem('urlParam_ref', ref);
+    }
+  };
+
+  const handleVoluumPersistent = () => {
+    const locationSearch = window.location.search;
+    const urlParams = new URLSearchParams(locationSearch);
+    const sid = urlParams.get('sid');
+    const cid = urlParams.get('cid');
+
+    if (sid) {
+      console.log(`persisting sid id ${sid}`);
+      localStorage.setItem('urlParam_sid', sid);
+    }
+
+    if (cid) {
+      console.log(`persisting cid id ${cid}`);
+      localStorage.setItem('urlParam_cid', cid);
+    }
+  };
+
+  useEffect(() => {
+    handleRefPersistent();
+    handleVoluumPersistent();
+  }, []);
+
   useEffect(() => {
     const el = document.querySelector(".preloader");
     if (el) {

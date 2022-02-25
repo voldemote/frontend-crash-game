@@ -55,7 +55,7 @@ const BetView = ({
   // Slider is also using 2800 as max value
   const BALANCE_NOT_LOGGED = 2800;
   const { currency, balance } = useSelector(selectUser);
-  const defaultBetValue = 50;
+  const defaultBetValue = 10;
   const bet = event.bet;
   const state = _.get(bet, 'status');
   const auth = useSelector(state => state.authentication);
@@ -308,7 +308,7 @@ const BetView = ({
         {evidenceSource && withTitle && (
           <h4 className={styles.tradeDescTitle}>Evidence Source</h4>
         )}
-        <p
+        <div
           className={classNames(
             styles.tradeDesc,
             !isDescShort && !showAllEvidence && styles.hidden,
@@ -317,9 +317,11 @@ const BetView = ({
         >
           {desc}
           {evidenceSource && evidenceDescription && showAllEvidence && (
-            <p className={styles.evidenceDescription}>{evidenceDescription}</p>
+            <div className={styles.evidenceDescription}>
+              {evidenceDescription}
+            </div>
           )}
-        </p>
+        </div>
 
         {((desc && !isDescShort) ||
           (evidenceSource && plainEvidenceDescription)) && (
@@ -426,20 +428,18 @@ const BetView = ({
               >
                 <p>How to place a bet?</p>
                 <p>
-                  - First select the amount (in {currencyDisplay(TOKEN_NAME)})
-                  you want to put into this bet by tapping on the desired
-                  percentage of your portfolio or by typing in the amount you
-                  want to trade with.
+                  - First enter the amount (in {currencyDisplay(TOKEN_NAME)})
+                  you want to put into this bet by typing in the amount.
                 </p>
                 <p>
-                  - After that pick your outcome by tapping on the outcome you
-                  think will come true. The potential gains in{' '}
+                  - After that, select the outcome you
+                  think will become true. The potential gains in{' '}
                   {currencyDisplay(TOKEN_NAME)} and percent will automatically
                   adjust according to your placed bet amount.
                 </p>
                 <p>
-                  - To finalize your bet click on the Place bet Button and enjoy
-                  the thrill
+                  - To finalize your bet, click on the "Place Trade" button and enjoy
+                  the thrill.
                 </p>
               </InfoBox>
             </div>
@@ -510,13 +510,13 @@ const BetView = ({
       const data = (label, value, opts = {}) => (
         <div className={styles.resolutionData}>
           <h3>{label}</h3>
-          <p
-            className={classNames({
+          <div
+            className={classNames(styles.value, {
               [styles.smallText]: opts.smallText,
             })}
           >
             {value}
-          </p>
+          </div>
         </div>
       );
 
@@ -534,8 +534,8 @@ const BetView = ({
               data(
                 'Outcomes',
                 <ul>
-                  {outcomeNames.map(outcome => (
-                    <li>{outcome}</li>
+                  {outcomeNames.map((outcome, index) => (
+                    <li key={index}>{outcome}</li>
                   ))}
                 </ul>
               )}
@@ -551,7 +551,7 @@ const BetView = ({
           {isResolved && (
             <AuthedOnly>
               <div className={styles.disputeButtonContainer}>
-                {!disputes.find(d => d.user_id === auth.userId) && !isAdmin && (
+                {!disputes.find(d => d.user_id === auth.userId) && !isAdmin && !isCreator && (
                   <ButtonSmall
                     text="Dispute"
                     butonTheme={ButtonSmallTheme.red}
@@ -619,7 +619,7 @@ const BetView = ({
         >
           {renderLoadingAnimation()}
           {/* {renderMenuContainerWithCurrentBalance()} */}
-          
+
           {renderImage()}
 
           <div
@@ -628,8 +628,8 @@ const BetView = ({
               // styles.nonStreamedQuestion
             )}
           >
-            <span>{bet.market_question}</span>
-            <p className={styles.betDescription}>{bet.description}</p>
+            <span className={styles.eventTitle}>{bet.market_question}</span>
+            <div className={styles.betDescription}>{bet.description}</div>
           </div>
           {renderStateConditionalContent()}
         </div>

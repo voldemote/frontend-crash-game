@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { GAMES } from 'constants/Games';
 import { roundToTwo } from '../../helper/FormatNumbers';
 import { currencyDisplay } from 'helper/Currency';
+import DateText from 'helper/DateText';
 
 const UserLink = props => {
   const { userId, username } = props;
@@ -31,7 +32,7 @@ const extractNumber = (data) => {
   } else return data;
 }
 
-const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false, layout = 'compact'}) => {
+const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false, layout = 'compact', gameScreen = false}) => {
   const layoutCss = layout === 'compact' ? styles.compact : null;
   gameLabel = gameLabel ?? (Object.values(GAMES).find(g => g.id.indexOf(data.gameId) > -1))?.name ?? "Game";
   const {
@@ -40,6 +41,8 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
     stakedAmount,
     rewardAmount,
     crashFactor,
+    date,
+    createdAt,
   } = data;
   const stakedAmountNum = Math.round(extractNumber(stakedAmount));
   const rewardAmountNum = Math.round(extractNumber(rewardAmount));
@@ -54,13 +57,15 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
   return (
     <div className={classNames(styles.messageItem, layoutCss)}>
         <Grid container className={styles.flexContainer}>
-          <Grid item xs>
-            <div className={classNames(styles.messageFirst, styles.messageLeft)}>
-              <p>{gameLabel}</p>
-            </div>
-          </Grid>
+          {!gameScreen && 
+            <Grid item xs>
+              <div className={classNames(styles.messageFirst, styles.messageLeft)}>
+                <p>{gameLabel}</p>
+              </div>
+            </Grid>
+          }
           <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
-            <div className={styles.messageLeft}>
+            <div className={classNames(styles.messageLeft, styles.username)}>
               <p>
                 {username ? (
                   <UserLink userId={userId} username={username} />
@@ -70,6 +75,17 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
               </p>
             </div>
           </Grid>
+          {!gameScreen && 
+            <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
+              <div className={styles.messageLeft}>
+                <p>
+                  {date && DateText.formatDate(date)}
+                  {!date && createdAt && DateText.formatDate(createdAt)}
+                  {!date && !createdAt && '-'}
+                </p>
+              </div>
+            </Grid>
+          }
           <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
             <div className={styles.messageRight}>
               <p>{stakedAmountStr} {currency}</p>
@@ -77,7 +93,7 @@ const ActivityTableRow = ({ data, type, gameLabel, hideSecondaryColumns = false,
             </div>
           </Grid>
           <Grid item xs className={hideSecondaryColumns ? styles.hideSecondaryColumns : null}>
-            <div className={styles.messageCenter}>
+            <div className={classNames(styles.messageCenter, styles.mult)}>
               <p className={styles.rewardMulti}>{crashFactorStr}x</p>
             </div>
           </Grid>

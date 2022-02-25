@@ -79,6 +79,7 @@ const loadOnboardingStep = function* (action) {
         PopupActions.show({
           popupType: PopupTheme.phoneNumber,
           options: {
+            initialOnboarding: action?.initialOnboarding,
             ...action?.options,
             small: false,
           },
@@ -95,7 +96,14 @@ const loadOnboardingStep = function* (action) {
         })
       );
     case OnboardingSteps.wallet:
-      yield put(push('/wallet'))
+      const initialOnboarding = yield select(state => state.onboarding.initialOnboarding);
+      if (initialOnboarding) {
+        yield put(push('/wallet'));
+      } else {
+        yield put(
+          PopupActions.hide()
+        )
+      }
       yield delay(1000);
       yield put(OnboardingActions.reset());
   }

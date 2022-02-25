@@ -90,14 +90,8 @@
   }
 
   .categoryList {
-    @media (max-width: $screen-lg) {
-      justify-content: center;
-    }
-
     @media (max-width: $screen-sm) {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      max-width: 500px;
+      justify-content: space-between;
     }
   }
 
@@ -154,6 +148,25 @@
   padding: 30px 0;
   width: 100%;
   text-align: center;
+}
+
+.loadMore {
+  animation: shake 2.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+@keyframes shake {
+  10%,
+  15%,
+  20% {
+    transform: rotateZ(-5deg);
+  }
+  12%,
+  18% {
+    transform: rotateZ(5deg);
+  }
+  25% {
+    transform: rotateZ(0);
+  }
 }
 
 .nonStreamed {

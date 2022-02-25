@@ -43,6 +43,17 @@ const requestEmailVerified = (action, state) => {
   });
 };
 
+const requestPhoneConfirmed = (action, state) => {
+  return update(state, {
+    phoneConfirmedState: {
+      $set: true,
+    },
+    phoneConfirmed: {
+      $set: true,
+    }
+  });
+};
+
 const requestEmailFailed = (action, state) => {
   return update(state, {
     emailVerificationState: {
@@ -172,6 +183,9 @@ const updateData = (action, state) => {
     },
     emailConfirmed: {
       $set: action.emailConfirmed,
+    },
+    phoneConfirmed: {
+      $set: action.phoneConfirmed,
     }
   });
 };
@@ -275,6 +289,9 @@ const loginSuccess = (action, state) => {
     },
     emailConfirmed: {
       $set: action.emailConfirmed,
+    },
+    phoneConfirmed: {
+      $set: action.phoneConfirmed,
     }
   });
 };

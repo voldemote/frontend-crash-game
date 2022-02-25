@@ -13,6 +13,7 @@ import { sendSms } from 'api';
 const PhonePopup = ({
   hidePopup = () => {},
   showOnboardingFlowNext,
+  initialOnboarding
 }) => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [country, setCountry] = useState('49');
@@ -34,7 +35,10 @@ const PhonePopup = ({
       console.log(response);
       if (!response.error) {
         setErrorMessage('');
-        showOnboardingFlowNext(fullPhoneNumber);
+        showOnboardingFlowNext({
+          phoneNumber: fullPhoneNumber,
+          initialOnboarding
+        });
         hidePopup();
       } else {
         setErrorMessage(
@@ -92,10 +96,13 @@ const PhonePopup = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    showOnboardingFlowNext: phoneNumber => {
+    showOnboardingFlowNext: ({ phoneNumber, initialOnboarding }) => {
       dispatch(
         OnboardingActions.next({
-            payload: {phoneNumber}
+            payload: {
+              phoneNumber,
+              initialOnboarding,
+            }
         })
       );
     },

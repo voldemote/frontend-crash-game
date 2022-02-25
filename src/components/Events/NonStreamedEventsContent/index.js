@@ -28,6 +28,7 @@ import BuyWFAIRWidget from 'components/BuyWFAIRWidget';
 import EventActivitiesTabs from 'components/EventActivitiesTabs';
 import { LOGGED_IN } from 'constants/AuthState';
 import { getMarketEvents } from 'api';
+import { isMobileOnly } from 'react-device-detect';
 
 const NonStreamedEventsContent = ({
   categories,
@@ -39,6 +40,8 @@ const NonStreamedEventsContent = ({
   bookmarkEventCancel,
   startOnboarding,
   authState,
+  phoneConfirmed,
+  requirePhoneNumberVerification,
 }) => {
   const eventType = 'non-streamed';
 
@@ -48,7 +51,7 @@ const NonStreamedEventsContent = ({
   const [status, setStatus] = useState('current');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(isMobileOnly ? 10 : 40);
 
   // const { fetchFilteredEvents, resetDefaultParamsValues } =
   //   useMappedActions(eventType);
@@ -58,7 +61,7 @@ const NonStreamedEventsContent = ({
     value => {
       const updatedCats = categories.map(cat => ({
         ...cat,
-        isActive: true,
+        isActive: value === cat.value,
       }));
 
       setCategories(updatedCats);
@@ -110,7 +113,7 @@ const NonStreamedEventsContent = ({
         limit,
         search
       ).then(res => {
-        setEvents(res);
+        setEvents(res.events);
       });
     },
     [status, page, category, searchTerm]
@@ -133,7 +136,7 @@ const NonStreamedEventsContent = ({
       limit,
       searchTerm
     ).then(res => {
-      setEvents([...events, ...res]);
+      setEvents([...events, ...res.events]);
     });
   }, [page, events, status]);
 
@@ -146,6 +149,14 @@ const NonStreamedEventsContent = ({
   const showJoinPopup = useCallback(event => {
     startOnboarding();
   }, []);
+
+  const handleEventCreation = useCallback(() => {
+    if (phoneConfirmed) {
+      showPopup(PopupTheme.eventForms, {})
+    } else {
+      requirePhoneNumberVerification();
+    }
+  }, [phoneConfirmed])
 
   return (
     <>
@@ -181,7 +192,7 @@ const NonStreamedEventsContent = ({
             {authState === LOGGED_IN && (
               <Button
                 theme={ButtonTheme.primaryButtonS}
-                onClick={() => showPopup(PopupTheme.eventForms, {})}
+                onClick={handleEventCreation}
                 className={styles.createButton}
               >
                 <PlusIcon />
@@ -244,9 +255,11 @@ const NonStreamedEventsContent = ({
             ))}
         </div>
 
-        <Button onClick={loadMoreEvents} theme={ButtonTheme.secondaryButton}>
-          Load more
-        </Button>
+        <div className={styles.loadMore}>
+          <Button onClick={loadMoreEvents} theme={ButtonTheme.secondaryButton}>
+            Load more
+          </Button>
+        </div>
 
         <BuyWFAIRWidget />
 
@@ -284,6 +297,9 @@ const mapDispatchToProps = dispatch => {
     startOnboarding: () => {
       dispatch(OnboardingActions.start());
     },
+    requirePhoneNumberVerification: () => {
+      dispatch(OnboardingActions.addPhoneNumber({initialOnboarding: false}));
+    },
   };
 };
 
@@ -291,6 +307,7 @@ function mapStateToProps(state) {
   return {
     authState: state.authentication.authState,
     userId: state.authentication.userId,
+    phoneConfirmed: state.authentication.phoneConfirmed,
   };
 }
 

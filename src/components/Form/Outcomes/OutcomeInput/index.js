@@ -55,7 +55,12 @@ const OutcomeInput = ({ outcome, onChange, setIsValid, betEdit }) => {
   return (
     <div className={styles.outcomeForm}>
       <label htmlFor={getId('name')}>Name</label>
-      <Input id={getId('name')} value={name} onChange={update('name')} maxlength={30} />
+      <Input
+        id={getId('name')}
+        value={name}
+        onChange={update('name')}
+        maxLength={30}
+      />
       <InputError errors={nameErrors} />
       {!betEdit && (
         <>
@@ -64,7 +69,7 @@ const OutcomeInput = ({ outcome, onChange, setIsValid, betEdit }) => {
             id={getId('probability')}
             value={probability}
             onChange={update('probability')}
-            maxlength={4}
+            maxLength={4}
           />
           <InputError
             errors={probabilityErrors}
