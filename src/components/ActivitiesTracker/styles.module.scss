@@ -253,4 +253,44 @@
       }
     }
   }
+
+  .tabLayout {
+    display: flex;
+    align-items: flex-end;
+    color: $colorBlack;
+    font-family: $fontDMSans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    padding-top: 24px;
+    margin-left: 16px;
+    margin-bottom: 8px;
+    @media (max-width: $screen-sm) {
+      margin-left: 0px;
+      font-size: 11px;
+      line-height: 14px;
+    }
+
+    .tabItem {
+      text-align: center;
+      padding-bottom: 12px;
+      opacity: 0.3;
+      cursor: pointer;
+      @media (max-width: $screen-sm) {
+        padding: 12px 20px;
+      }
+    }
+
+    .tabItemSelected {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 2px solid $mainAction;
+      opacity: 1;
+      cursor: pointer;
+      @media (max-width: $screen-sm) {
+        padding: 12px 20px;
+      }
+    }
+  }
 }
