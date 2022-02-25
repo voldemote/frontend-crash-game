@@ -31,6 +31,7 @@ import ButtonTheme from 'components/Button/ButtonTheme';
 import { UserActions } from 'store/actions/user';
 import { TOKEN_NAME } from 'constants/Token';
 import { selectUser } from 'store/selectors/authentication';
+import FAQ from 'components/FAQ';
 import DiscordWidget from 'components/DiscordWidget';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { dataLayerPush } from 'config/gtm';
@@ -237,6 +238,8 @@ const Home = (
         {renderGamesBanner()}
 
         {renderActivities()}
+
+        <FAQ />
       </div>
     </BaseContainerWithNavbar>
   );
