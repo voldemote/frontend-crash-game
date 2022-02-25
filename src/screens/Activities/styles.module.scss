@@ -39,13 +39,11 @@
     width: 100%;
 
     .statItem {
-      border-radius: 50px;
-      border: 2px solid $colorLightYellow;
       width: 16%;
-      padding: 8px 10px;
+      padding: 16px 0 16px 20px;
       margin-bottom: 10px;
-      box-shadow: 0px 2px 3px rgba(159, 162, 191, 0.18),
-        0px 1px 1px rgba(159, 162, 191, 0.32);
+      background: rgba(172, 196, 255, 0.10077);
+      border-radius: 12px;
 
       @media (max-width: $screen-lg) {
         width: 33%;
@@ -60,21 +58,23 @@
       }
 
       .statItemHead {
-        font-weight: bold;
         display: flex;
-        align-items: center;
-        font-family: $fontDMSans;
-        font-size: 16px;
+        flex-direction: column;
         justify-content: center;
         flex-wrap: wrap;
-        flex-direction: column;
         color: $colorWhite;
 
-        span {
-          font-size: 16px;
-          color: $colorLightYellow;
+        .title {
           font-family: $fontDMSans;
-          font-weight: bold;
+          font-size: 12px;
+          font-weight: normal;
+          opacity: 0.6;
+        }
+
+        span {
+          font-family: $fontDMSans;
+          font-size: 24px;
+          font-weight: normal;
         }
       }
 
