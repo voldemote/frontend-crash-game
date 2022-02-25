@@ -10,14 +10,15 @@
     max-width: 1270px;
   }
 
+  & > h1 {
+    color: $colorWhite;
+    padding-bottom: 30px;
+  }
+
   .activitiesTrackerContainerFull {
     margin-top: 24px;
     height: auto;
     background: $colorPrimary;
-    border: 1px solid $colorGrayLight;
-    border-radius: 12px;
-    box-shadow: 0px 9px 16px rgba(159, 162, 191, 0.18),
-      0px 2px 2px rgba(159, 162, 191, 0.32);
   }
 
   .globalStats {
@@ -29,7 +30,6 @@
     font-family: $fontDMSans;
     font-size: 24px;
     font-weight: 700;
-    padding-bottom: 30px;
   }
 
   .statsBlock {
@@ -37,6 +37,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
+    // column-gap: 10px;
 
     .statItem {
       width: 16%;
@@ -50,7 +51,7 @@
       }
 
       @media (max-width: $screen-md) {
-        width: 50%;
+        width: 49%;
       }
 
       @media (max-width: $screen-xs) {

@@ -260,16 +260,16 @@
     color: $colorBlack;
     font-family: $fontDMSans;
     font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
+    font-weight: normal;
+    font-size: 16px;
     line-height: 18px;
     padding-top: 24px;
     margin-left: 16px;
     margin-bottom: 8px;
     @media (max-width: $screen-sm) {
       margin-left: 0px;
-      font-size: 11px;
-      line-height: 14px;
+      font-size: 16px;
+      line-height: 16px;
     }
 
     .tabItem {

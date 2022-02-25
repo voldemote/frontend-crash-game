@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 import Routes from 'constants/Routes';
 import { currencyDisplay } from 'helper/Currency';
 
-const Activities = ({showBets = false}) => {
+const Activities = ({showBets = true}) => {
   const dispatch = useDispatch();
 
   const [data24h, setData24h] = useState();
@@ -74,8 +74,11 @@ const Activities = ({showBets = false}) => {
 
   return (
     <BaseContainerWithNavbar withPaddingTop={true}>
+
+      
       {ready && (
         <div className={styles.container}>
+          <h1>Activities</h1>
           <div className={styles.globalStats}>
             <div className={styles.statsBlock}>
               <div className={styles.statItem}>
@@ -141,7 +144,7 @@ const Activities = ({showBets = false}) => {
             }
             showBets={showBets}
           />
-          {renderWallpaperBanner()}
+          {/* {renderWallpaperBanner()} */}
         </div>
       )}
     </BaseContainerWithNavbar>
