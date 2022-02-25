@@ -13,6 +13,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import Routes from 'constants/Routes';
 
 import BackgroundThird from 'data/images/carousel/bg-third.png';
+import JackpotImg from 'data/images/carousel/jackpot.png';
 
 import { selectUser } from 'store/selectors/authentication';
 import PopupTheme from 'components/Popup/PopupTheme';
@@ -111,10 +112,11 @@ const Winners = (
             <div className={classNames(styles.buttonWrapper, styles.mobile)}>
               <Button className={styles.button} onClick={handleClickCreateEvent}>Create Event now</Button>
             </div>
-            </div>
+            {renderWinnersConditions()}
+          </div>
           </div>
           <div className={styles.secondContainer}>
-            {renderWinnersConditions()}
+            <img src={JackpotImg} alt='jackpot' />
           </div>
         </div>
       </div>
@@ -122,7 +124,7 @@ const Winners = (
   }
 
   return (
-    <BaseContainerWithNavbar withPaddingTop={true} carouselType='landingpage'>
+    <BaseContainerWithNavbar withPaddingTop={true}>
       {renderHeader()}
       
       <div className={styles.gainContainer}>
@@ -131,9 +133,10 @@ const Winners = (
           handleClickSignUp={handleClickSignUp}
           handleClickCreateEvent={handleClickCreateEvent}
         />
+        <FAQ />
       </div>
 
-      <FAQ />
+      
     </BaseContainerWithNavbar>
   );
 };
