@@ -29,7 +29,7 @@ const FAQItem = ({title, answer, align}) => {
         )}
       </div>
 
-      {show && <div className={styles.faqLine}></div>}
+      {/* {show && <div className={styles.faqLine}></div>} */}
 
       {show && <div className={classNames(styles.faqAnswer, align === 'left' ? styles.left : null)} dangerouslySetInnerHTML={{__html: answer.split('\n').join('<br />')}} />}
     </div>
