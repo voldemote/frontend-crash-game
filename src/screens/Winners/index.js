@@ -133,9 +133,10 @@ const Winners = (
           handleClickSignUp={handleClickSignUp}
           handleClickCreateEvent={handleClickCreateEvent}
         />
+        <FAQ />
       </div>
 
-      <FAQ />
+      
     </BaseContainerWithNavbar>
   );
 };
