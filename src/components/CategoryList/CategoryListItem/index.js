@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import Routes from '../../../constants/Routes';
 import styles from './styles.module.scss';
 import EventTypes from 'constants/EventTypes';
+import Button from 'components/Button';
+import ButtonTheme from 'components/Button/ButtonTheme';
 
 function CategoryListItem({ categoryItem, eventType }) {
+  
   return (
     <>
       <section className={styles.categoryListItem}>
@@ -21,7 +24,13 @@ function CategoryListItem({ categoryItem, eventType }) {
           )}
           className={categoryItem.disabled ? styles.linkDisabled : null}
         >
-          <div
+          <Button className={classNames(styles.categoryButton, categoryItem.isActive && styles.active)} theme={ButtonTheme.secondaryButton}>
+            <img
+              src={categoryItem.image}
+              alt={`category ${categoryItem.value}`}/>
+            {categoryItem.label ?? categoryItem.value}
+          </Button>
+          {/* <div
             className={classNames({
               [styles.box]: categoryItem.type === 'image',
               [styles.boxIcon]: categoryItem.type === 'icon',
@@ -50,7 +59,7 @@ function CategoryListItem({ categoryItem, eventType }) {
                 {categoryItem.label ?? categoryItem.value}
               </label>
             )}
-          </div>
+          </div> */}
         </Link>
       </section>
     </>

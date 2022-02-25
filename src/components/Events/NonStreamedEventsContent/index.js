@@ -61,7 +61,7 @@ const NonStreamedEventsContent = ({
     value => {
       const updatedCats = categories.map(cat => ({
         ...cat,
-        isActive: true,
+        isActive: value === cat.value,
       }));
 
       setCategories(updatedCats);
