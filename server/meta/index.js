@@ -37,6 +37,13 @@ let meta = {
     keywords:
       'wallfair, pump, dump, crash, Casino, Games, Crypto, Betting',
   },
+  '/winners': {
+    title: 'Wallfair',
+    description: 'Create events, earn free tokens and have a chance to win 5,000 EUR',
+    image: 'https://files.wallfair.io/share/winners-page.png',
+    keywords:
+      'wallfair, social, games, crypto, betting',
+  },
   // '/games': {
   //   title: 'Wallfair Games',
   //   description: 'Earn more with Wallfair games, all day, everyday',
