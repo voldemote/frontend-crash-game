@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Icon from 'components/Icon';
 import IconTheme from 'components/Icon/IconTheme';
 import IconType from 'components/Icon/IconType';
+import InfoBox from 'components/InfoBox';
 
 const OutcomesScreen = ({
   outcomesData = null,
@@ -50,7 +51,11 @@ const OutcomesScreen = ({
         iconType={IconType.arrowLeft}
         onClick={goStepBack}
       />
-      <h2 className={styles.formHeader}>Outcome Options</h2>
+      <div className={styles.formHeader}>
+        <h2>Outcome Options</h2> 
+        <InfoBox position="bottomRight" autoWidth={true}>Add up to 4 possible outcomes to the event and the initial probabilities to each (in a range from 0 to 1) for them to happen. e.g. Outcome #1: Yes - Probability: 0.5</InfoBox>
+      </div>
+      
       <FormGroup className={fgClasses({}, styles.fullWidthContainer)}>
         <Outcomes
           value={outcomes}
