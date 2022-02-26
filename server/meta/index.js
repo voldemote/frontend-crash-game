@@ -14,14 +14,14 @@ let meta = {
     description: 'Intense, high-paced and hilarious events for everyone',
     image: 'https://staking.wallfair.io/logo512y.png?v=3',
     keywords:
-      'wallfair, events, politics, news, sports, esports, gaming, crypto',
+      'wallfair, events, news, sports, esports, gaming, crypto',
   },
   '/events': {
     title: 'Wallfair Events',
     description: 'Intense, high-paced and hilarious events for everyone',
     image: 'https://staking.wallfair.io/logo512y.png?v=3',
     keywords:
-      'wallfair, events, politics, news, sports, esports, gaming, crypto',
+      'wallfair, events, news, sports, esports, gaming, crypto',
   },
   '/games/elon-game': {
     title: 'Wallfair Elon Game',

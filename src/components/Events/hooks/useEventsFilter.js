@@ -26,14 +26,17 @@ export function useEventsFilter(
         orderBy,
         order
       ).then(res => {
+
+        const filteredEvents = res.events.filter(event => category !== 'Politics');
+
         if (random) {
-          const randomIndex = Math.floor(Math.random() * res.events.length);
-          const randomEvent = res.events[randomIndex];
+          const randomIndex = Math.floor(Math.random() * filteredEvents.length);
+          const randomEvent = filteredEvents[randomIndex];
           setEvents([randomEvent]);
           return;
         }
 
-        setEvents(res.events);
+        setEvents(filteredEvents);
       });
     }
   }, []);

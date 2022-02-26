@@ -46,7 +46,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
   const location = useLocation();
 
   const { events } = useEventsFilter([BetState.active], 'all', null, true);
-  const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 3, '', 'most_popular');
+  const { events : eventsByCreationDate } = useEventsFilter([BetState.active], 'all', null, false, 15, '', 'most_popular');
 
   const {notifications} = useNotificationFilter('Notification/EVENT_USER_REWARD');
 
@@ -131,7 +131,7 @@ const CustomCarousel = ({loggedIn, showWalletDepositPopup, handleKycInfoVisible,
         <span className={styles.title}>TOP 3 EVENTS</span>
         <div className={styles.cardsWrapper}>
 
-        { eventsByCreationDate?.length && eventsByCreationDate?.map((event, index) => {
+        { eventsByCreationDate?.length && eventsByCreationDate?.slice(0, 3).map((event, index) => {
 
           const bet = event.bet;
           const betId = _.get(event.bet, 'id');
