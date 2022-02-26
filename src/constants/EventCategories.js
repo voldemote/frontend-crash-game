@@ -46,13 +46,13 @@ export const EVENT_CATEGORIES_SECOND = [
     type: 'icon',
     disabled: false,
   },
-  {
-    value: 'Politics',
-    image: IconEventPolitics,
-    isActive: false,
-    type: 'icon',
-    disabled: false,
-  },
+  // {
+  //   value: 'Politics',
+  //   image: IconEventPolitics,
+  //   isActive: false,
+  //   type: 'icon',
+  //   disabled: false,
+  // },
   {
     value: 'Sick Society',
     image: IconEventStar,
