@@ -27,7 +27,7 @@ export function useEventsFilter(
         order
       ).then(res => {
 
-        const filteredEvents = res.events.filter(event => category !== 'Politics');
+        const filteredEvents = res.events.filter(event => event.category !== 'Politics');
 
         if (random) {
           const randomIndex = Math.floor(Math.random() * filteredEvents.length);
