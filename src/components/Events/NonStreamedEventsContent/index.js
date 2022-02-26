@@ -113,7 +113,8 @@ const NonStreamedEventsContent = ({
         limit,
         search
       ).then(res => {
-        setEvents(res.events);
+        const filteredEvents = res.events.filter(event => event.category !== 'Politics');
+        setEvents(filteredEvents);
       });
     },
     [status, page, category, searchTerm]
