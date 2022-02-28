@@ -49,6 +49,7 @@ import SelectGameModePopup from "../SelectGameModePopup";
 import VerifyPhonePopup from 'components/VerifyPhonePopup';
 import PhonePopup from 'components/PhonePopup';
 import DisputesPopup from 'components/DisputesPopup';
+import CashoutPopupView from '../CashoutPopupView';
 
 const Popup = ({ type, visible, options = {}, hidePopup }) => {
   const small = _.get(options, 'small', false);
@@ -267,6 +268,8 @@ const Popup = ({ type, visible, options = {}, hidePopup }) => {
         return <VerifyPhonePopup initialOnboarding={initialOnboarding} />;
       case PopupTheme.disputes:
         return <DisputesPopup disputes={options?.disputes} />
+      case PopupTheme.cashoutPopupView:
+        return <CashoutPopupView options={options} />
     }
 
     return null;
