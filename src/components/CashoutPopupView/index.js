@@ -35,7 +35,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
 
   let isNativeShare = false;
 
-  const shareMessage = `I have won ${amount} ${currencyDisplay(TOKEN_NAME)} with a multiple of ${multiplier}x! Play ${game} now! #wallfair`;
+  const shareMessage = `I have won ${amount} ${currencyDisplay(TOKEN_NAME)} with a multiple of ${multiplier}x! Play ${game} now!`;
 
   useEffect(() => {
     (async () => {
@@ -61,8 +61,9 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
       case ShareType.facebook:
         return (
           <FacebookShareButton
-            title={shareMessage}
+            quote={`${shareMessage} #wallfair`}
             url={shortUrl}
+            hashtag="wallfair"
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -74,6 +75,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
           <TwitterShareButton
             title={shareMessage}
             url={shortUrl}
+            hashtags={["wallfair"]}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -83,7 +85,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
       case ShareType.discord:
         return (
           <TelegramShareButton
-            title={shareMessage}
+            title={`${shareMessage} #wallfair`}
             url={shortUrl}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
