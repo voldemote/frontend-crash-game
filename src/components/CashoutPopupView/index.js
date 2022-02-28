@@ -33,11 +33,6 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
 
   const userId = _.get(authentication, 'userId');
 
-  let realUrl = new URL(urlOrigin + urlPath);
-  
-  if (userId) {
-    realUrl.searchParams.set('ref', userId);
-  }
   let isNativeShare = false;
 
   const shareMessage = `I have won ${amount} ${currencyDisplay(TOKEN_NAME)} with a multiple of ${multiplier}x! Play ${game} now! #wallfair`;
@@ -45,10 +40,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
   useEffect(() => {
     (async () => {
       if (isMounted) {
-
-        if (userId) {
-          realUrl.searchParams.set('ref', userId);
-        }
+        let realUrl = new URL(`${urlOrigin}${urlPath}${userId ? `&ref=${userId}` : ``}`);
         
         const shorterUrl = await shortenerTinyUrl(realUrl.toString()).catch(
           err => {
@@ -155,6 +147,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
+    authentication: state.authentication,
     visible:
       state.popup.popupType === PopupTheme.eventConfirmation && state.popup.visible,
   };
