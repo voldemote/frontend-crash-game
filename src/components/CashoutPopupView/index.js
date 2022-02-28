@@ -41,8 +41,6 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
     (async () => {
       if (isMounted) {
         let realUrl = new URL(`${urlOrigin}${urlPath}${userId ? `&ref=${userId}` : ``}`);
-
-        console.log(realUrl.toString());
         
         const shorterUrl = await shortenerTinyUrl(realUrl.toString()).catch(
           err => {
