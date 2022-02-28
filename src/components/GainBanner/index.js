@@ -7,35 +7,37 @@ import GainBg1 from 'data/images/home/gain-bg1.png';
 import GainBg2 from 'data/images/home/gain-bg2.png';
 import GainBg3 from 'data/images/home/gain-bg3.png';
 
-const GainBanner = ({isLoggedIn, handleClickSignUp, handleClickCreateEvent}) => {
+const GainBanner = ({isLoggedIn, handleClickSignUp, handleClickCreateEvent, showSignup = true}) => {
 
   return (
     <div className={styles.howToGainBannerContainer}>
       <div className={styles.title}>
-        <span className={styles.tip}>EARN MONEY</span>
+        <span className={styles.tip}>{showSignup ? `EARN MONEY` : `NO PFAIR?`}</span>
         <h2>How to gain more PFAIR 💰</h2>
         <div className={styles.underline} />
       </div>
       <div className={styles.gainCards}>
-        <div className={styles.gainCard}>
-          <div className={styles.topBanner}>
-            <img src={GainBg1} alt="Gain Banner 1" />
-            <h3 className={styles.bannerTitle}>SIGN UP<br/><span className={styles.second}>AND GET<br/>100 PFAIR</span></h3>
+        {showSignup &&
+          <div className={styles.gainCard}>
+            <div className={styles.topBanner}>
+              <img src={GainBg1} alt="Gain Banner 1" />
+              <h3 className={styles.bannerTitle}>SIGN UP<br/><span className={styles.second}>AND GET<br/>100 PFAIR</span></h3>
+            </div>
+            <div className={styles.bottomBanner}>
+              <h3>Sign up | 100 PFAIR</h3>
+              <p>You can play out awesome house games to win on some PFAIR or bet on all kind of events.</p>
+              {!isLoggedIn &&
+                <Button
+                  onClick={handleClickSignUp}
+                  theme={ButtonTheme.primaryButtonM}
+                  className={styles.bannerButton}
+                >
+                  Sign Up
+                </Button>
+              }
+            </div>
           </div>
-          <div className={styles.bottomBanner}>
-            <h3>Sign up | 100 PFAIR</h3>
-            <p>You can play out awesome house games to win on some PFAIR or bet on all kind of events.</p>
-            {!isLoggedIn &&
-              <Button
-                onClick={handleClickSignUp}
-                theme={ButtonTheme.primaryButtonM}
-                className={styles.bannerButton}
-              >
-                Sign Up
-              </Button>
-            }
-          </div>
-        </div>
+        }
         <div className={styles.gainCard}>
           <div className={styles.topBanner}>
             <img src={GainBg2} alt="Gain Banner 2" />

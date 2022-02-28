@@ -127,7 +127,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
           <div>
             New event has been created:{' '}
             <ActivityLink
-              path={'/trade/' + event?.slug}
+              path={'/trade/' + data.bet?.market_event?.slug}
               text={event.bets[0]?.market_question}
             />
             .
@@ -136,6 +136,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
       case 'Notification/EVENT_BET_PLACED':
         const outcomeIndex = _.get(data, 'trade.outcome_index');
         const outcomesName = _.get(data, `bet.outcomes[${outcomeIndex}].name`);
+        console.log('EVENT_BET_PLACED', data);
         return (
           <div>
             <b>{getUserProfileUrl(data)}</b> has bet{' '}
@@ -147,7 +148,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
               <>
                 on{' '}
                 <ActivityLink
-                  path={'/trade/' + event?.slug}
+                  path={'/trade/' + data.bet?.market_event?.slug}
                   text={data.bet?.market_question}
                 />{' '}
               </>
@@ -182,7 +183,7 @@ const ActivityMessage = ({ activity, date, users, events, showBetName = true }) 
               <>
                 from{' '}
                 <ActivityLink
-                  path={'/trade/' + event?.slug}
+                  path={'/trade/' +data.bet?.market_event?.slug}
                   text={data.bet?.market_question}
                 />
                 .

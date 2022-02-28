@@ -33,6 +33,7 @@ import FAQ from 'components/FAQ';
 import DiscordWidget from 'components/DiscordWidget';
 import PopupTheme from 'components/Popup/PopupTheme';
 import { dataLayerPush } from 'config/gtm';
+import ActivitiesTracker from 'components/ActivitiesTracker';
 
 const Home = (
   authState,
@@ -122,14 +123,24 @@ const Home = (
           <h2>Activities</h2>
         </div>
         <Grid item xs={12}>
-          <EventActivitiesTabs
+          <ActivitiesTracker
+            preselectedCategory='bets'
+            showCategories={false}
+            activitiesLimit={30}
+            className={
+              styles.activitiesTrackerContainerFull +
+              ' activities-tracker-swiper'
+            }
+            showBets={true}
+          />
+          {/* <EventActivitiesTabs
             activitiesLimit={50}
             className={styles.activitiesTrackerGamesBlock}
-            preselectedCategory={'game'}
+            preselectedCategory={'bets'}
             hideSecondaryColumns={true}
             hideFirstColumn={true}
             layout="wide"
-          ></EventActivitiesTabs>
+          ></EventActivitiesTabs> */}
         </Grid>
       </div>
     );
