@@ -10,6 +10,9 @@ import BetCard from 'components/BetCard';
 import ShareType from 'components/Share/ShareType';
 import { FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 import ConfirmCongrat from '../../data/images/confirm-congrat.png';
+import { useEffect, useState } from 'react';
+import { useIsMount } from 'components/hoc/useIsMount';
+import { shortenerTinyUrl } from 'api';
 
 const EventConfirmationView = ({ authentication, visible, hidePopup, options }) => {
   const defaultSharing = ['facebook', 'twitter', 'discord'];
@@ -17,8 +20,11 @@ const EventConfirmationView = ({ authentication, visible, hidePopup, options }) 
     visible,
   });
 
+  const [shortUrl, setShortUrl] = useState('');
+
   const {event} = options;
   const location = useLocation();
+  const isMounted = useIsMount();
 
   const urlOrigin = window.location.origin;
   const urlPath = location.pathname;
@@ -27,10 +33,23 @@ const EventConfirmationView = ({ authentication, visible, hidePopup, options }) 
 
   let realUrl = new URL(urlOrigin + urlPath);
   
-  if (userId) {
-    realUrl.searchParams.set('ref', userId);
-  }
   let isNativeShare = false;
+
+  useEffect(() => {
+    (async () => {
+      if (isMounted) {
+        let realUrl = new URL(`${urlOrigin}${urlPath}${userId ? `&ref=${userId}` : ``}`);
+        
+        const shorterUrl = await shortenerTinyUrl(realUrl.toString()).catch(
+          err => {
+            console.error('[Share shortenerTinyUrl]', err);
+          }
+        );
+
+        setShortUrl(_.get(shorterUrl, 'response.data', null));
+      }
+    })();
+  }, [isMounted]);
 
   const renderBetCard = () => {
     const bet = event?.bet;
@@ -76,8 +95,9 @@ const EventConfirmationView = ({ authentication, visible, hidePopup, options }) 
       case ShareType.facebook:
         return (
           <FacebookShareButton
-            title={''}
-            url={realUrl}
+            quote={''}
+            url={shortUrl}
+            tag={'wallfair'}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -88,7 +108,8 @@ const EventConfirmationView = ({ authentication, visible, hidePopup, options }) 
         return (
           <TwitterShareButton
             title={''}
-            url={realUrl}
+            url={shortUrl}
+            hashtags={['wallfair']}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -99,7 +120,7 @@ const EventConfirmationView = ({ authentication, visible, hidePopup, options }) 
         return (
           <TelegramShareButton
             title={''}
-            url={realUrl}
+            url={shortUrl}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -153,6 +174,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
+    authentication: state.authentication,
     visible:
       state.popup.popupType === PopupTheme.eventConfirmation && state.popup.visible,
   };
