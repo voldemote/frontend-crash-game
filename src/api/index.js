@@ -762,6 +762,15 @@ const claimTokens = () => {
     });
 }
 
+const uploadImage = (payload) => {
+  return Api.post('/api/user/upload-image', payload)
+    .then(res => res.data)
+    .catch(e => {
+      console.log('[API-Error]: uploadImage ', e);
+      throw e;
+    });
+};
+
 export {
   Api,
   createBet,
@@ -848,4 +857,5 @@ export {
   openDispute,
   getDisputes,
   claimTokens,
+  uploadImage,
 };

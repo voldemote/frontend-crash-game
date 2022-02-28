@@ -1,22 +1,19 @@
-import {
-  FormGroup,
-  InputLabel,
-  Select,
-  Tags,
-  InputError,
-} from '../../Form';
+import { FormGroup, InputLabel, Select, Tags, InputError } from '../../Form';
 import { EVENT_CATEGORIES } from '../../../constants/EventCategories';
 import styles from '../styles.module.scss';
 import { useValidatedState } from 'components/Form/hooks/useValidatedState';
 import { Validators, isValid } from '../../Form/utils/validators';
 import classNames from 'classnames';
+import Compressor from 'compressorjs';
 import uuid from 'uuid';
 import { connect } from 'react-redux';
 import InputBox from 'components/InputBox';
 import Button from 'components/Button';
 import HighlightType from 'components/Highlight/HighlightType';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { setUniqueSlug } from 'helper/Slug';
+import ButtonSmall from 'components/ButtonSmall';
+import { uploadImage } from 'api';
 
 const categoriesOptions = EVENT_CATEGORIES.map(c => ({
   label: c.value,
@@ -43,6 +40,13 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
     [Validators.minLength(1), Validators.requiredTags]
   );
 
+  const [uploadInProgress, setUploadInProgress] = useState(false);
+  const eventImageRefName = useRef(null);
+
+  const clickUploadProfilePicture = () => {
+    eventImageRefName.current?.click();
+  };
+
   const handleTagChange = (name, id) => {
     setTags(prevTags =>
       prevTags.map(tag => (tag.id === id ? { ...tag, name } : tag))
@@ -66,12 +70,7 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
 
   const handleForm = () => {
     const valid =
-      [
-        nameErrors,
-        preview_image_url_errors,
-        categoryErrors,
-        tagsErrors,
-      ]
+      [nameErrors, preview_image_url_errors, categoryErrors, tagsErrors]
         .map(isValid)
         .filter(valid => !valid).length === 0;
     setFormValid(valid);
@@ -95,14 +94,62 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
     setUniqueSlug(newName, slugs, setSlug);
   };
 
+  const handleEventImageUpload = async e => {
+    if (!e.target.files.length) return;
+    setUploadInProgress(true);
+
+    new Compressor(e.target.files[0], {
+      quality: 0.8,
+      maxWidth: 1024,
+      maxHeight: 1024,
+      convertTypes: ['image/png', 'image/webp', 'image/bmp'],
+      convertSize: 2000000,
+      success: async compressed => {
+        const base64 = await convertToBase64(compressed);
+        const data = {
+          src: base64,
+          filename: e.target.files[0].name,
+        };
+
+        uploadImage(data)
+          .then(res => {
+            set_preview_image_url(res.url);
+          })
+          .finally(() => {
+            setUploadInProgress(false);
+          });
+      },
+      error: () => {
+        setUploadInProgress(false);
+      }
+    });
+  };
+
+  const convertToBase64 = file => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = error => {
+        reject(error);
+      };
+    });
+  };
+
   return (
     <>
       <h2 className={styles.formHeader}>Event Settings</h2>
       <FormGroup className={fgClasses(nameErrors)}>
-        <InputLabel 
-          className={styles.inputLabel} 
-          infoboxText={"Add the question for your event. e.g. \"Who will win the match on DD/MM/YYYY?\""}
-        >Market Question</InputLabel>
+        <InputLabel
+          className={styles.inputLabel}
+          infoboxText={
+            'Add the question for your event. e.g. "Who will win the match on DD/MM/YYYY?"'
+          }
+        >
+          Market Question
+        </InputLabel>
         <InputBox
           type="text"
           className={styles.inputBox}
@@ -117,27 +164,54 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
       </FormGroup>
 
       <FormGroup className={fgClasses(preview_image_url_errors)}>
-        <InputLabel 
+        <InputLabel
           className={styles.inputLabel}
-          infoboxText={"Copy and paste the image URL you wish to show as the image for this event. e.g.: https://path.to/image.jpg"}
-        >Bet Image URL</InputLabel>
-        <InputBox
-          type="text"
-          className={styles.inputBox}
-          placeholder="https://.../image.jpg"
-          value={preview_image_url}
-          setValue={e => {
-            set_preview_image_url(e.trim());
-          }}
-          maxlength="300"
-        />
+          infoboxText={
+            'Copy and paste the image URL / or Upload your own image, you wish to show as the image for this event. e.g.: https://path.to/image.jpg'
+          }
+        >
+          Bet Image URL
+        </InputLabel>
+
+        <div className={styles.uploadBlock}>
+          <InputBox
+            type="text"
+            className={styles.inputBox}
+            containerClassName={styles.inputBoxContainer}
+            placeholder="https://.../image.jpg"
+            value={preview_image_url}
+            setValue={e => {
+              set_preview_image_url(e.trim());
+            }}
+            maxlength="300"
+            disabled={uploadInProgress}
+          />
+
+          <input
+            ref={eventImageRefName}
+            type={'file'}
+            accept={'image/*'}
+            style={{ display: 'none' }}
+            onChange={handleEventImageUpload}
+          />
+
+          <ButtonSmall
+            text="Upload"
+            classNameExtended={styles.buttonSmall}
+            onClick={clickUploadProfilePicture}
+            disabled={uploadInProgress}
+          ></ButtonSmall>
+        </div>
+
         {!formValid && <InputError errors={preview_image_url_errors} />}
       </FormGroup>
 
       <FormGroup className={fgClasses(categoryErrors)}>
         <InputLabel
           className={styles.inputLabel}
-          infoboxText={"Select a category which best relates to the event you are adding"}
+          infoboxText={
+            'Select a category which best relates to the event you are adding'
+          }
         >
           Category
         </InputLabel>
@@ -154,7 +228,9 @@ const EventScreen = ({ event = null, proceedEvent, isNew, eventSlugs }) => {
       <FormGroup className={fgClasses(tagsErrors)}>
         <InputLabel
           className={styles.inputLabel}
-          infoboxText={"Add tags relates to the event you are adding. e.g.: reality show, NFT, ..."}
+          infoboxText={
+            'Add tags relates to the event you are adding. e.g.: reality show, NFT, ...'
+          }
         >
           Tags
         </InputLabel>
@@ -195,6 +271,5 @@ const mapStateToProps = state => {
     eventSlugs: state.event.events.map(({ slug }) => slug).filter(Boolean),
   };
 };
-
 
 export default connect(mapStateToProps, null)(EventScreen);
