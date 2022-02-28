@@ -12,9 +12,13 @@ import ConfirmCongrat from '../../data/images/coins-popup.png';
 import ShadowAmount from '../../data/images/cashout-amount-shadow.png';
 import { TOKEN_NAME } from 'constants/Token';
 import { currencyDisplay } from 'helper/Currency';
+import { useEffect, useState } from 'react';
+import { shortenerTinyUrl } from 'api';
+import { useIsMount } from 'components/hoc/useIsMount';
 
 const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
   const defaultSharing = ['facebook', 'twitter', 'discord'];
+  const [shortUrl, setShortUrl] = useState('');
   // const { getAnimationInstance, canvasStyles } = useConfettiAnimation({
   //   visible,
   // });
@@ -22,6 +26,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
   const { multiplier, amount, game } = options;
 
   const location = useLocation();
+  const isMounted = useIsMount();
 
   const urlOrigin = window.location.origin;
   const urlPath = location.pathname;
@@ -35,7 +40,26 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
   }
   let isNativeShare = false;
 
-  const shareMessage = `I have won ${amount} ${currencyDisplay(TOKEN_NAME)} with a multiple of ${multiplier}x! Play ${game} now!`;
+  const shareMessage = `I have won ${amount} ${currencyDisplay(TOKEN_NAME)} with a multiple of ${multiplier}x! Play ${game} now! #wallfair`;
+
+  useEffect(() => {
+    (async () => {
+      if (isMounted) {
+
+        if (userId) {
+          realUrl.searchParams.set('ref', userId);
+        }
+        
+        const shorterUrl = await shortenerTinyUrl(realUrl.toString()).catch(
+          err => {
+            console.error('[Share shortenerTinyUrl]', err);
+          }
+        );
+
+        setShortUrl(_.get(shorterUrl, 'response.data', null));
+      }
+    })();
+  }, [isMounted]);
   
   const renderShareIcon = shareIconType => {
     const iconSize = 26;
@@ -46,7 +70,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
         return (
           <FacebookShareButton
             title={shareMessage}
-            url={realUrl}
+            url={shortUrl}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -57,7 +81,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
         return (
           <TwitterShareButton
             title={shareMessage}
-            url={realUrl}
+            url={shortUrl}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -68,7 +92,7 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
         return (
           <TelegramShareButton
             title={shareMessage}
-            url={realUrl}
+            url={shortUrl}
             openShareDialogOnClick={isNativeShare ? false : true}
             // beforeOnClick={handleNativeShare}
           >
@@ -86,7 +110,6 @@ const CashoutPopupView = ({ authentication, visible, hidePopup, options }) => {
     ));
   };
 
-  
   return (
     <div className={styles.cashoutPopupContainer}>
       <span className={styles.headLine}>
