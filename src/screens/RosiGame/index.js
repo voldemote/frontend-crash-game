@@ -40,7 +40,7 @@ import EventActivitiesTabs from 'components/EventActivitiesTabs'
 import TabOptions from 'components/TabOptions';
 import PumpDumpAlpaca from '../../data/images/pump-dump/content-pumpdump.png';
 import ElonAlpaca from '../../data/images/elongame/content-elon.png';
-
+import { numberWithCommas } from 'utils/common';
 import classNames from "classnames";
 
 
@@ -220,7 +220,17 @@ const RosiGame = ({
         });
       }
       updateUserBalance(userId);
-      AlertActions.showSuccess(JSON.stringify(response));
+      //AlertActions.showSuccess(JSON.stringify(response));
+
+      const roundedMultiplier = Math.floor(parseFloat(crashFactorCashout) * 100) / 100;
+      const roundedReward = Math.floor(parseFloat(reward));
+
+      showPopup(PopupTheme.cashoutPopupView, {
+        multiplier: numberWithCommas(roundedMultiplier),
+        amount: numberWithCommas(roundedReward),
+        game: game.name
+      });
+
       return response;
     } catch (e) {
       dispatch(

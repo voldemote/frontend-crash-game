@@ -47,4 +47,5 @@ export default {
   walletConnectWallet: 'walletConnectWallet',
   selectGameMode: 'selectGameMode',
   disputes: 'disputes',
+  cashoutPopupView: 'cashoutPopupView',
 };
