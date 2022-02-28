@@ -33,8 +33,10 @@ const BottomBanner = ({title, price}) => {
     <div className={styles.bottomBanner}>
       {/* <img src={BannerImage1} alt='' /> */}
       <div className={styles.bottomBannerContent}>
-        <p className={styles.title}>{title}<br />just earned</p>
-        <p className={styles.price}>{price}</p>
+        <a href={`/activities`} >
+          <p className={styles.title}>{title}<br />just earned</p>
+          <p className={styles.price}>{price}</p>
+        </a>
       </div>
     </div>
   )

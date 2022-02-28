@@ -247,13 +247,22 @@
             @media (max-width: $screen-sm) {
               width: 120px;
             }
-            .title {
-              font-size: 14px;
-              color: white;
-            }
-            .price {
-              font-size: 18px;
-              color: #3aff1d;
+
+            a {
+              .title {
+                font-size: 14px;
+                color: white;
+              }
+              .price {
+                font-size: 18px;
+                color: #3aff1d;
+              }
+
+              &:hover {
+                & > * {
+                  text-decoration: underline;
+                }
+              }
             }
           }
         }

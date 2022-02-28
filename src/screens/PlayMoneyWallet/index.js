@@ -22,6 +22,7 @@ import { currencyDisplay } from 'helper/Currency';
 import UserWalletTables from 'components/UserWalletTables';
 import { claimTokens } from 'api';
 import { AlertActions } from 'store/actions/alert';
+import GainBanner from 'components/GainBanner';
 
 const PlayMoneyWallet = ({
   user,
@@ -207,6 +208,15 @@ const PlayMoneyWallet = ({
     );
   };
 
+  const renderHowToGainPFAIR = () => {
+    return balance < 1 ?
+      <div className={styles.currentBalanceSection}>
+        <GainBanner showSignup={false} />
+      </div>
+    :
+    null;
+  }
+
   const renderDepositBonusSection = () => {
     return (
       <div className={styles.currentBalanceSection}>
@@ -345,6 +355,7 @@ const PlayMoneyWallet = ({
             <h1>Your Wallet</h1>
           </div>
           {renderCurrentBalanceSection()}
+          {renderHowToGainPFAIR()}
           {renderDepositBonusSection()}
           {renderStats()}
         </div>
